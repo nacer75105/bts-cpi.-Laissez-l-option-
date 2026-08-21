@@ -112,7 +112,7 @@ PAGE = st.sidebar.radio(
 )
 
 st.sidebar.divider()
-nb_fiches = sum(len(b["fiches"]) for b in BLOCS)
+nb_fiches = sum(len(b.get("fiches", b.get("chapitres", {}))) for b in BLOCS)
 lues = len(set(P["fiches_lues"]))
 st.sidebar.progress(lues / nb_fiches if nb_fiches else 0)
 st.sidebar.caption(f"Fiches lues : {lues}/{nb_fiches}")
