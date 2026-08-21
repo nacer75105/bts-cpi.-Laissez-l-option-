@@ -38,6 +38,7 @@ except ModuleNotFoundError:
     from cours_bloc_11_12 import BLOC_11, BLOC_12
     from cours_bloc_13_14 import BLOC_13, BLOC_14
     from cours_bloc_15_16 import BLOC_15, BLOC_16
+
 BLOCS = [BLOC_1, BLOC_2, BLOC_3, BLOC_4, BLOC_5, BLOC_6, BLOC_7, BLOC_8, BLOC_9, BLOC_10, BLOC_11, BLOC_12, BLOC_13, BLOC_14, BLOC_15, BLOC_16]
 FICHIER_PROGRESSION = os.path.join(os.path.dirname(__file__), "progression.json")
 
@@ -134,20 +135,27 @@ if PAGE == "🏠 Tableau de bord":
     c4.metric("Matériaux référencés", len(mat.MATERIAUX))
 
     st.divider()
-    st.subheader("Les six blocs du programme")
+    st.subheader("Les blocs du programme")
 
     for bloc in BLOCS:
-        fiches_bloc = [f"{bloc['id']}#{f['id']}" for f in bloc["fiches"]]
+        fiches_data = bloc.get("fiches", {})
+        if isinstance(fiches_data, dict):
+            fiches_bloc = [f"{bloc.get('id', 'bloc')}#{k}" for k in fiches_data.keys()]
+            fiches_titles = [f"{k}" for k in fiches_data.keys()]
+        else:
+            fiches_bloc = [f"{bloc.get('id', 'bloc')}#{f.get('id', '')}" for f in fiches_data]
+            fiches_titles = [f"{f.get('titre', '')}" for f in fiches_data]
+
         lues_bloc = sum(1 for f in fiches_bloc if f in P["fiches_lues"])
         with st.container(border=True):
             col_a, col_b = st.columns([5, 1])
             with col_a:
                 st.markdown(f"**{bloc['titre']}**")
-                st.caption(bloc["resume"])
-                st.caption(" · ".join(f"{f['id']} {f['titre']}" for f in bloc["fiches"]))
+                st.caption(bloc.get("resume", ""))
+                st.caption(" · ".join(fiches_titles))
             with col_b:
-                st.metric("Lues", f"{lues_bloc}/{len(bloc['fiches'])}")
-
+                st.metric("Lues", f"{lues_bloc}/{len(fiches_data)}")
+                
     st.divider()
     st.subheader("Par où commencer ?")
     col1, col2, col3 = st.columns(3)
@@ -201,15 +209,23 @@ elif PAGE == "📚 Cours (18 fiches)":
                 f'<span style="font-size:0.9em">{bloc["resume"]}</span></div>',
                 unsafe_allow_html=True)
 
-    noms_fiches = [f"Fiche {f['id']} — {f['titre']}" for f in bloc["fiches"]]
-    choix_fiche = st.selectbox("Fiche", noms_fiches)
-    fiche = bloc["fiches"][noms_fiches.index(choix_fiche)]
+    fiches_list = bloc.get("fiches", [])
+    if isinstance(fiches_list, dict):
+        noms_fiches = list(fiches_list.keys())
+        choix_fiche = st.selectbox("Fiche", noms_fiches)
+        fiche = fiches_list[choix_fiche]
+        fiche_id = choix_fiche
+    else:
+        noms_fiches = [f"Fiche {f['id']} — {f['titre']}" for f in fiches_list]
+        choix_fiche = st.selectbox("Fiche", noms_fiches)
+        fiche = fiches_list[noms_fiches.index(choix_fiche)]
+        fiche_id = fiche['id']
 
-    cle = f"{bloc['id']}#{fiche['id']}"
+    cle = f"{bloc['id']}#{fiche_id}"
     col_t, col_c = st.columns([4, 1])
     with col_t:
-        st.header(f"{fiche['id']} — {fiche['titre']}")
-        st.markdown(f'<div class="fiche-meta">Volume horaire indicatif : {fiche["duree"]}</div>',
+        st.header(f"{fiche_id} — {fiche.get('titre', '')}")
+        st.markdown(f'<div class="fiche-meta">Volume horaire indicatif : {fiche.get("duree", "N/A")}</div>',
                     unsafe_allow_html=True)
     with col_c:
         deja = cle in P["fiches_lues"]
@@ -225,18 +241,18 @@ elif PAGE == "📚 Cours (18 fiches)":
         ["📖 Cours", "📐 Formules", "🏭 Cas industriel", "✍️ Exercice", "✅ Corrigé"])
 
     with t1:
-        st.markdown(fiche["cours"])
+        st.markdown(fiche.get("cours", ""))
     with t2:
-        st.markdown(fiche["formules"])
+        st.markdown(fiche.get("formules", ""))
     with t3:
-        st.markdown(fiche["exemple"])
+        st.markdown(fiche.get("exemple", ""))
     with t4:
-        st.markdown(fiche["exercice"])
+        st.markdown(fiche.get("exercice", ""))
         st.markdown('<div class="warn-box">Cherchez l\'exercice complètement avant '
                     'd\'ouvrir le corrigé. Un corrigé lu trop tôt donne l\'illusion de '
                     'comprendre.</div>', unsafe_allow_html=True)
     with t5:
-        st.markdown(fiche["corrige"])
+        st.markdown(fiche.get("corrige", ""))
 
     st.divider()
     note = st.text_area("Mes notes personnelles sur cette fiche",
@@ -553,7 +569,7 @@ elif PAGE == "🔧 Calculateurs RDM":
 
     def choisir_materiau(cle):
         noms = [m["nom"] for m in mat.MATERIAUX]
-        nom = st.selectbox("Matériau", noms, index=noms.index("S355"), key=cle)
+        nom = st.selectbox("Matériau", noms, index=noms.index("S355") if "S355" in noms else 0, key=cle)
         return mat.get_materiau(nom)
 
     def choisir_section(cle, avec_rect=True):
@@ -701,281 +717,170 @@ elif PAGE == "🔧 Calculateurs RDM":
                 charge = st.number_input("Charge répartie q (N/mm)", 0.001, 1000.0, 0.155,
                                          step=0.01, format="%.3f")
             else:
-                charge = st.number_input("Charge F (N)", 1.0, 1e7, 11772.0, step=100.0)
-            Lf = st.number_input("Portée L (mm)", 1.0, 50000.0, 4000.0, step=10.0)
-            s = st.number_input("Coefficient de sécurité", 1.0, 15.0, 5.0, step=0.5, key="sfl")
+                charge = st.number_input("Force ponctuelle F (N)", 1.0, 1e7, 3500.0, step=100.0)
+            
+            L_flex = st.number_input("Portée L (mm)", 1.0, 100000.0, 1200.0, step=50.0)
+            s_flex = st.number_input("Coefficient de sécurité", 1.0, 15.0, 3.0, step=0.5, key="sfl")
+            
         with c2:
             forme, kw = choisir_section("fl")
-            div = st.number_input("Flèche admissible = L / …", 50, 5000, 500, step=50)
+            lim_fleche = st.number_input("Flèche max admissible (ex: L/500 = 1/500)", 
+                                         0.0001, 0.05, 1/500, format="%.4f")
 
-        I, v = mat.section_igz(forme, **kw)
-        r = mat.flexion(cas, charge, Lf, I, v, m["E"] * 1000, m["Re"], s,
-                        fleche_adm=Lf / div)
+        I_flex, v_flex = mat.section_i_v(forme, **kw)
+        r = mat.flexion(cas, charge, L_flex, I_flex, v_flex, m["Re"], s_flex, E=m["E"] * 1000)
 
-        st.caption(r["description"])
         st.divider()
         k = st.columns(4)
-        k[0].metric("IGz", f"{I:,.0f} mm⁴".replace(",", " "))
-        k[1].metric("Moment Mf max", f"{r['Mf']/1000:.1f} N·m")
-        k[2].metric("Contrainte σ", f"{r['sigma']:.1f} MPa")
+        k[0].metric("Moment Mf max", f"{r['Mf_max_Nmm']/1000:.1f} N·m")
+        k[1].metric("Contrainte σ", f"{r['sigma']:.1f} MPa")
+        k[2].metric("Rpe admissible", f"{r['Rpe']:.1f} MPa")
         k[3].metric("Sécurité réelle", f"{r['s_reel']:.2f}")
-        verdict(r["ok_resistance"],
-                f"<b>✅ RÉSISTANCE VÉRIFIÉE</b> — σ = {r['sigma']:.1f} ≤ {r['Rpe']:.1f} MPa",
-                f"<b>❌ RÉSISTANCE INSUFFISANTE</b> — σ = {r['sigma']:.1f} > {r['Rpe']:.1f} MPa")
+        verdict(r["ok"], "<b>✅ RÉSISTANCE VÉRIFIÉE</b>", "<b>❌ RÉSISTANCE INSUFFISANTE</b>")
 
-        st.write("")
-        k2 = st.columns(3)
-        k2[0].metric("Flèche f", f"{r['fleche']:.3f} mm")
-        k2[1].metric("Flèche admissible", f"{r['fleche_adm']:.3f} mm")
-        k2[2].metric("Ratio", f"{r['fleche']/r['fleche_adm']*100:.0f} %")
-        verdict(r["ok_rigidite"], "<b>✅ RIGIDITÉ VÉRIFIÉE</b>",
-                "<b>❌ FLÈCHE EXCESSIVE</b> — rappel : changer de nuance d'acier ne sert à rien "
-                "(E identique). Agir sur la hauteur de section (en h³) ou sur la portée (en L³).")
+        if "fleche_max" in r:
+            f_adm = L_flex * lim_fleche
+            st.write("")
+            k2 = st.columns(3)
+            k2[0].metric("Flèche f max", f"{r['fleche_max']:.3f} mm")
+            k2[1].metric("Flèche admissible", f"{f_adm:.3f} mm")
+            k2[2].metric("Ratio calculé", f"L / {L_flex/r['fleche_max']:.0f}" if r['fleche_max'] > 0 else "N/A")
+            verdict(r["fleche_max"] <= f_adm,
+                    "<b>✅ RIGIDITÉ VÉRIFIÉE</b>",
+                    "<b>❌ FLÈCHE EXCESSIF</b> — augementer l'inertie $I_Gz$ ou changer de profilé.")
 
     # ------------- Flambage -------------
     with onglets[4]:
         c1, c2 = st.columns(2)
         with c1:
-            m = choisir_materiau("mat_fb")
-            F = st.number_input("Effort de compression F (N)", 1.0, 1e7, 32000.0, step=100.0)
-            Lfb = st.number_input("Longueur L (mm)", 1.0, 50000.0, 600.0, step=10.0)
-            liaison = st.selectbox("Liaisons aux extrémités",
-                                   ["Rotule - rotule", "Encastrement - libre",
-                                    "Encastrement - rotule", "Encastrement - encastrement"])
+            m = choisir_materiau("mat_fla")
+            F_comp = st.number_input("Effort de compression F (N)", 1.0, 1e7, 15000.0, step=500.0)
+            L_poutre = st.number_input("Longueur physique L (mm)", 1.0, 50000.0, 1500.0, step=50.0)
+            conditions = st.selectbox("Conditions aux limites", [
+                "Articulé - Articulé (K = 1.0)",
+                "Encastré - Libre (K = 2.0)",
+                "Encastré - Articulé (K = 0.7)",
+                "Encastré - Encastré (K = 0.5)"
+            ])
+            K_dict = {"Articulé - Articulé (K = 1.0)": 1.0, "Encastré - Libre (K = 2.0)": 2.0,
+                      "Encastré - Articulé (K = 0.7)": 0.7, "Encastré - Encastré (K = 0.5)": 0.5}
+            K = K_dict[conditions]
+            s_fla = st.number_input("Coefficient de sécurité", 1.0, 15.0, 3.0, step=0.5, key="sfla")
         with c2:
-            forme, kw = choisir_section("fb")
+            forme, kw = choisir_section("fla")
 
-        I, v = mat.section_igz(forme, **kw)
-        S = mat.section_aire(forme, **kw)
-        r = mat.flambage(m["E"] * 1000, I, Lfb, liaison, F=F)
-        rho = math.sqrt(I / S)
-        lam = r["Lf"] / rho
+        S_fla = mat.section_aire(forme, **kw)
+        I_fla, _ = mat.section_i_v(forme, **kw)
+        r = mat.flambage(F_comp, S_fla, I_fla, m["Re"], m["E"] * 1000, L_poutre, K, s_fla)
 
         st.divider()
         k = st.columns(4)
-        k[0].metric("Longueur libre Lf", f"{r['Lf']:.0f} mm")
-        k[1].metric("Rayon de giration ρ", f"{rho:.2f} mm")
-        k[2].metric("Élancement λ", f"{lam:.1f}")
-        k[3].metric("Charge critique Fc", f"{r['Fc']/1000:.1f} kN")
-        st.metric("Coefficient de sécurité au flambage", f"{r['s_flambage']:.2f}")
-        verdict(r["ok"], "<b>✅ FLAMBAGE VÉRIFIÉ</b> (s ≥ 3)",
-                "<b>❌ RISQUE DE FLAMBAGE</b> — augmentez le moment quadratique (tube plutôt "
-                "que barre pleine) ou réduisez la longueur libre.")
-        if lam < 100:
-            st.markdown('<div class="warn-box"><b>λ &lt; 100 :</b> on est dans le domaine du '
-                        'flambage plastique. La formule d\'Euler <b>surestime</b> la charge '
-                        'critique réelle. Une vérification par les courbes de l\'Eurocode 3 '
-                        'donnerait une valeur inférieure. Le mentionner en copie.</div>',
-                        unsafe_allow_html=True)
+        k[0].metric("Élancement λ", f"{r['lambda_élancement']:.1f}")
+        k[1].metric("Charge critique Euler", f"{r['F_critique_Euler']/1000:.1f} kN")
+        k[2].metric("Charge adm. Rankine", f"{r['F_adm_Rankine']/1000:.1f} kN")
+        k[3].metric("Sécurité réelle", f"{r['s_reel']:.2f}")
 
-    # ------------- Flexion + torsion -------------
+        verdict(r["ok_Euler"] and r["ok_Rankine"],
+                "<b>✅ FLAMBAGE ÉVITÉ (Sécurité OK)</b>",
+                "<b>❌ RISQUE DE FLAMBAGE CRITIQUE</b>")
+
+    # ------------- Flexion + Torsion -------------
     with onglets[5]:
-        st.markdown("Dimensionnement d'un **arbre** soumis simultanément à flexion et torsion.")
         c1, c2 = st.columns(2)
         with c1:
             m = choisir_materiau("mat_ft")
-            Mf = st.number_input("Moment de flexion Mf (N·m)", 0.0, 1e6, 360.0, step=1.0)
-            Mt = st.number_input("Moment de torsion Mt (N·m)", 0.0, 1e6, 159.2, step=1.0)
-            s = st.number_input("Coefficient de sécurité", 1.0, 15.0, 4.0, step=0.5, key="sft")
+            Mf_input = st.number_input("Moment fléchissant Mf (N·m)", 0.0, 1e6, 350.0, step=10.0)
+            Mt_input = st.number_input("Moment de torsion Mt (N·m)", 0.0, 1e6, 250.0, step=10.0)
+            s_ft = st.number_input("Coefficient de sécurité", 1.0, 15.0, 3.0, step=0.5, key="sft")
+            critere = st.selectbox("Critère d'équivalence", ["Von Mises", "Tresca"])
         with c2:
-            critere = st.radio("Critère", ["Tresca", "Von Mises"])
-            Kt = st.number_input("Coefficient de concentration Kt", 1.0, 4.0, 2.0, step=0.1,
-                                 help="Rainure de clavette fond arrondi ≈ 1,6-2,0 ; "
-                                      "fond vif ≈ 2,5-3,5 ; épaulement r/d=0,05 ≈ 1,8")
-            d_ex = st.number_input("Diamètre à vérifier (mm)", 1.0, 1000.0, 40.0, step=1.0)
+            forme, kw = choisir_section("ft", avec_rect=False)
 
-        Mi = mat.flexion_torsion(Mf * 1000, Mt * 1000, critere)
-        Rpe = m["Re"] / s
-        d_min = (32 * Mi / (math.pi * Rpe)) ** (1 / 3)
-        d_min_kt = d_min * Kt ** (1 / 3)
-        module = math.pi * d_ex ** 3 / 32
-        sigma_nom = Mi / module
-        sigma_max = sigma_nom * Kt
+        I_ft, v_ft = mat.section_i_v(forme, **kw)
+        I0_ft, _ = mat.section_i0(forme, **kw)
+        
+        Mf_nmm = Mf_input * 1000
+        Mt_nmm = Mt_input * 1000
+        if critere == "Von Mises":
+            M_eq = math.sqrt(Mf_nmm**2 + 0.75 * Mt_nmm**2)
+        else:
+            M_eq = math.sqrt(Mf_nmm**2 + Mt_nmm**2)
+
+        sigma_eq = (M_eq / I_ft) * v_ft
+        Rpe = m["Re"] / s_ft
+        ok_ft = sigma_eq <= Rpe
 
         st.divider()
         k = st.columns(4)
-        k[0].metric("Moment idéal", f"{Mi/1000:.1f} N·m")
-        k[1].metric("Ø mini (sans Kt)", f"{d_min:.1f} mm")
-        k[2].metric("Ø mini (avec Kt)", f"{d_min_kt:.1f} mm")
-        k[3].metric("Rpe", f"{Rpe:.1f} MPa")
+        k[0].metric("Moment équivalent", f"{M_eq/1000:.1f} N·m")
+        k[1].metric("Contrainte eq. σ_eq", f"{sigma_eq:.1f} MPa")
+        k[2].metric("Rpe admissible", f"{Rpe:.1f} MPa")
+        k[3].metric("Sécurité réelle", f"{m['Re']/sigma_eq:.2f}" if sigma_eq > 0 else "∞")
 
-        st.write("")
-        k2 = st.columns(3)
-        k2[0].metric(f"σ nominale (Ø{d_ex:.0f})", f"{sigma_nom:.1f} MPa")
-        k2[1].metric("σ max avec Kt", f"{sigma_max:.1f} MPa")
-        k2[2].metric("Sécurité réelle", f"{m['Re']/sigma_max:.2f}")
-        verdict(sigma_max <= Rpe,
-                f"<b>✅ Ø{d_ex:.0f} CONVIENT</b> — σmax = {sigma_max:.1f} ≤ {Rpe:.1f} MPa",
-                f"<b>❌ Ø{d_ex:.0f} INSUFFISANT</b> — σmax = {sigma_max:.1f} > {Rpe:.1f} MPa. "
-                f"Diamètre minimal nécessaire : <b>{d_min_kt:.1f} mm</b>")
-
-        st.latex(rf"M_{{idéal}} = \sqrt{{M_f^2 + M_t^2}} = "
-                 rf"\sqrt{{{Mf:.0f}^2 + {Mt:.1f}^2}} = {Mi/1000:.1f}\ \mathrm{{N \cdot m}}")
-        st.info("Le diamètre calculé est un **minimum**. Le diamètre final est généralement "
-                "imposé par les composants standards (roulements, accouplements) et par la "
-                "tenue en fatigue.")
+        verdict(ok_ft,
+                f"<b>✅ SOLICITATION COMPOSÉE VÉRIFIÉE ({critere})</b>",
+                f"<b>❌ RÉSISTANCE INSUFFISANTE EN SOLICITATION COMPOSÉE</b>")
 
 
 # ===========================================================================
-# PAGE : MATÉRIAUX
+# PAGE : BASE MATÉRIAUX
 # ===========================================================================
 
 elif PAGE == "🧱 Base matériaux":
-    st.title("Base matériaux")
+    st.title("Base de données Matériaux")
+    st.caption("Propriétés mécaniques et caractéristiques d'emploi des matériaux courants en conception.")
 
-    t1, t2, t3 = st.tabs(["📋 Tableau", "⚖️ Comparateur", "🎯 Indices de performance"])
+    df_mat = pd.DataFrame(mat.MATERIAUX)
+    
+    familles = ["Toutes"] + list(df_mat["famille"].unique())
+    f_choisie = st.selectbox("Filtrer par famille", familles)
+    
+    if f_choisie != "Toutes":
+        df_display = df_mat[df_mat["famille"] == f_choisie]
+    else:
+        df_display = df_mat.copy()
 
-    with t1:
-        familles = st.multiselect("Familles", mat.FAMILLES, default=mat.FAMILLES)
-        data = [m for m in mat.MATERIAUX if m["famille"] in familles]
-        df = pd.DataFrame([{
-            "Désignation": m["nom"], "Famille": m["famille"],
-            "Re (MPa)": m["Re"], "Rm (MPa)": m["Rm"], "E (GPa)": m["E"],
-            "ρ (kg/m³)": m["rho"], "A (%)": m["A"], "Prix rel.": m["prix"],
-        } for m in data])
-        st.dataframe(df, hide_index=True, width="stretch", height=520)
-
-        st.divider()
-        noms = [m["nom"] for m in data]
-        if noms:
-            sel = st.selectbox("Fiche détaillée", noms)
-            m = mat.get_materiau(sel)
-            with st.container(border=True):
-                st.subheader(m["nom"])
-                st.caption(f"{m['famille']} — {m['designation']}")
-                k = st.columns(5)
-                k[0].metric("Re", f"{m['Re']} MPa")
-                k[1].metric("Rm", f"{m['Rm']} MPa")
-                k[2].metric("E", f"{m['E']} GPa")
-                k[3].metric("ρ", f"{m['rho']} kg/m³")
-                k[4].metric("A", f"{m['A']} %")
-                st.markdown(f"**Emploi :** {m['emploi']}")
-
-    with t2:
-        noms = [m["nom"] for m in mat.MATERIAUX]
-        choix = st.multiselect("Matériaux à comparer (2 à 4)", noms,
-                               default=["S355", "EN AW-6082 T6", "EN-GJS-500-7"],
-                               max_selections=4)
-        if len(choix) >= 2:
-            sel = [mat.get_materiau(n) for n in choix]
-            df = pd.DataFrame({
-                "Critère": ["Limite élastique Re (MPa)", "Résistance Rm (MPa)",
-                            "Module de Young E (GPa)", "Masse volumique ρ (kg/m³)",
-                            "Allongement A (%)", "Prix relatif",
-                            "Re/ρ (résistance spécifique)", "E/ρ (rigidité spécifique)",
-                            "√E/ρ (flexion)"],
-                **{m["nom"]: [
-                    f"{m['Re']}", f"{m['Rm']}", f"{m['E']}", f"{m['rho']}", f"{m['A']}",
-                    f"×{m['prix']:.1f}",
-                    f"{m['Re']/m['rho']*1000:.1f}",
-                    f"{m['E']*1000/m['rho']*1000:.1f}",
-                    f"{math.sqrt(m['E']*1000)/m['rho']*1000:.2f}",
-                ] for m in sel}
-            })
-            st.dataframe(df, hide_index=True, width="stretch")
-
-            st.divider()
-            st.subheader("Masse d'une même pièce selon le matériau")
-            vol = st.number_input("Volume de la pièce (cm³)", 1.0, 100000.0, 500.0, step=10.0)
-            masses = pd.DataFrame({
-                "Matériau": [m["nom"] for m in sel],
-                "Masse (kg)": [m["rho"] * vol * 1e-6 for m in sel],
-                "Coût matière relatif": [m["rho"] * vol * 1e-6 * m["prix"] for m in sel],
-            })
-            st.bar_chart(masses.set_index("Matériau")["Masse (kg)"])
-            st.dataframe(masses, hide_index=True, width="stretch")
-        else:
-            st.info("Sélectionnez au moins deux matériaux.")
-
-    with t3:
-        st.markdown("""
-Un bon choix de matériau ne consiste jamais à prendre « le plus résistant », mais celui qui
-offre le meilleur **rapport performance / masse** pour la sollicitation dominante.
-        """)
-        objectif = st.selectbox("Objectif de conception", [
-            "Pièce légère et résistante (traction) — maximiser Re/ρ",
-            "Pièce légère et rigide (traction) — maximiser E/ρ",
-            "Poutre légère et rigide (flexion) — maximiser √E/ρ",
-            "Ressort (énergie élastique) — maximiser Re²/E",
-        ])
-        def indice(m):
-            if objectif.startswith("Pièce légère et résistante"):
-                return m["Re"] / m["rho"] * 1000
-            if objectif.startswith("Pièce légère et rigide"):
-                return m["E"] * 1e6 / m["rho"]
-            if objectif.startswith("Poutre"):
-                return math.sqrt(m["E"] * 1000) / m["rho"] * 1000
-            return m["Re"] ** 2 / (m["E"] * 1000)
-
-        classement = sorted(mat.MATERIAUX, key=indice, reverse=True)[:12]
-        df = pd.DataFrame({
-            "Rang": range(1, len(classement) + 1),
-            "Matériau": [m["nom"] for m in classement],
-            "Famille": [m["famille"] for m in classement],
-            "Indice": [round(indice(m), 2) for m in classement],
-            "Prix rel.": [m["prix"] for m in classement],
-        })
-        st.dataframe(df, hide_index=True, width="stretch")
-        st.info("L'indice ne tient compte ni du coût, ni de la mise en œuvre, ni de la "
-                "corrosion. Le titane sort souvent premier — et reste souvent injustifiable.")
+    st.dataframe(
+        df_display[["nom", "famille", "Re", "Rm", "E", "masse_volumique", "description"]],
+        column_config={
+            "nom": "Désignation",
+            "famille": "Famille",
+            "Re": st.column_config.NumberColumn("Re (MPa)", help="Limite d'élasticité"),
+            "Rm": st.column_config.NumberColumn("Rm (MPa)", help="Résistance à la rupture"),
+            "E": st.column_config.NumberColumn("E (GPa)", help="Module de Young"),
+            "masse_volumique": st.column_config.NumberColumn("Masse vol. (kg/m³)"),
+            "description": "Utilisation / Remarques",
+        },
+        hide_index=True,
+        width="stretch"
+    )
 
 
 # ===========================================================================
-# PAGE : PROGRESSION
+# PAGE : MA PROGRESSION
 # ===========================================================================
 
 elif PAGE == "📊 Ma progression":
     st.title("Ma progression")
 
-    c1, c2, c3 = st.columns(3)
-    c1.metric("Fiches lues", f"{lues}/{nb_fiches}")
-    res = P["resultats_quiz"]
-    c2.metric("Quiz réalisés", len(res))
-    if res:
-        moy = sum(r["score"] / r["total"] for r in res) / len(res) * 20
-        c3.metric("Moyenne /20", f"{moy:.1f}")
+    st.subheader("Fiches de cours consultées")
+    st.progress(lues / nb_fiches if nb_fiches else 0)
+    st.caption(f"{lues} fiches validées sur un total de {nb_fiches}")
+
+    st.divider()
+    st.subheader("Historique des quiz")
+    if P["resultats_quiz"]:
+        df_quiz = pd.DataFrame(P["resultats_quiz"])
+        st.dataframe(df_quiz, hide_index=True, width="stretch")
     else:
-        c3.metric("Moyenne /20", "—")
+        st.info("Aucun résultat de quiz enregistré pour le moment.")
 
     st.divider()
-    st.subheader("Avancement par bloc")
-    for bloc in BLOCS:
-        fiches_bloc = [f"{bloc['id']}#{f['id']}" for f in bloc["fiches"]]
-        n = sum(1 for f in fiches_bloc if f in P["fiches_lues"])
-        st.write(f"**{bloc['titre']}** — {n}/{len(bloc['fiches'])}")
-        st.progress(n / len(bloc["fiches"]))
-
-    if res:
-        st.divider()
-        st.subheader("Historique des quiz")
-        df = pd.DataFrame([{
-            "Date": r["date"], "Thèmes": r["themes"],
-            "Score": f"{r['score']}/{r['total']}",
-            "Note /20": round(r["score"] / r["total"] * 20, 1),
-        } for r in reversed(res)])
-        st.dataframe(df, hide_index=True, width="stretch")
-        st.line_chart(pd.DataFrame({
-            "Note /20": [r["score"] / r["total"] * 20 for r in res]
-        }))
-
-    notes = {k: v for k, v in P["notes"].items() if v.strip()}
-    if notes:
-        st.divider()
-        st.subheader("Mes notes personnelles")
-        for cle, txt in notes.items():
-            with st.expander(cle):
-                st.write(txt)
-
-    st.divider()
-    with st.expander("⚠️ Réinitialiser la progression"):
-        st.warning("Cette action efface les fiches lues, les résultats de quiz et les notes.")
-        if st.button("Tout effacer", type="secondary"):
-            st.session_state.progression = {"fiches_lues": [], "resultats_quiz": [], "notes": {}}
-            sauver_progression(st.session_state.progression)
-            st.success("Progression réinitialisée.")
-            st.rerun()
-
-
-st.sidebar.divider()
-st.sidebar.caption("Les calculateurs vérifient un résultat, ils ne remplacent pas "
-                   "la démarche écrite attendue en examen.")
+    st.subheader("Mes notes personnelles")
+    if P["notes"]:
+        for cle_note, texte_note in P["notes"].items():
+            if texte_note.strip():
+                with st.expander(f"📝 Note sur {cle_note}"):
+                    st.write(texte_note)
+    else:
+        st.info("Aucune note personnelle enregistrée.")
