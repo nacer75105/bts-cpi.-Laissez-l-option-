@@ -6,7 +6,7 @@ RDM Avancée, Injection Plastique et Matériaux Composites
 
 BLOC_13 = {
     "titre": "Bloc 13 : RDM Avancée (Flambement & Torsion)",
-    "chapitres": {
+    "fiches": {
         "1. Flambement des Poutres Comprimées (Formule d'Euler)": """
 ### Résistance à l'instabilité élastique
 
@@ -33,7 +33,7 @@ BLOC_13 = {
 
 BLOC_14 = {
     "titre": "Bloc 14 : Mise en Œuvre des Plastiques & Composites",
-    "chapitres": {
+    "fiches": {
         "1. Conception de Pièces Injectées en Thermoplastique": """
 ### Règles de tracé des pièces plastique
 
