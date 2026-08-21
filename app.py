@@ -22,6 +22,7 @@ try:
     from donnees.cours_bloc_5_6 import BLOC_5, BLOC_6
     from cours_bloc_7_8 import BLOC_7, BLOC_8
     from cours_bloc_9_10 import BLOC_9, BLOC_10
+    from cours_bloc_11_12 import BLOC_11, BLOC_12
 except ModuleNotFoundError:
     # Fichiers de donnees places a la racine (a plat)
     import iso286
@@ -32,7 +33,8 @@ except ModuleNotFoundError:
     from cours_bloc_5_6 import BLOC_5, BLOC_6
     from cours_bloc_7_8 import BLOC_7, BLOC_8
     from cours_bloc_9_10 import BLOC_9, BLOC_10
-BLOCS = [BLOC_1, BLOC_2, BLOC_3, BLOC_4, BLOC_5, BLOC_6, BLOC_7,BLOC_8, BLOC_9, BLOC_10 ]
+    from cours_bloc_11_12 import BLOC_11, BLOC_12
+BLOCS = [BLOC_1, BLOC_2, BLOC_3, BLOC_4, BLOC_5, BLOC_6, BLOC_7, BLOC_8, BLOC_9, BLOC_10, BLOC_11, BLOC_12]
 FICHIER_PROGRESSION = os.path.join(os.path.dirname(__file__), "progression.json")
 
 st.set_page_config(page_title="BTS CPI — Révisions", page_icon="⚙️", layout="wide")
