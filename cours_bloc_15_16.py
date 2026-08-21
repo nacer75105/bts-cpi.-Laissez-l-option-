@@ -6,7 +6,7 @@ Métrologie, Contrôle Qualité et Analyse Fonctionnelle APTE
 
 BLOC_15 = {
     "titre": "Bloc 15 : Métrologie & Contrôle Qualité",
-    "chapitres": {
+    "fiches": {
         "1. Mesure et Instruments de Contrôle": """
 ### Instruments de métrologie dimensionnelle
 
@@ -30,7 +30,7 @@ BLOC_15 = {
 
 BLOC_16 = {
     "titre": "Bloc 16 : Analyse Fonctionnelle & Cahier des Charges (APTE)",
-    "chapitres": {
+    "fiches": {
         "1. Analyse Fonctionnelle Externe": """
 ### Méthode APTE & Diagramme Pieuvre
 
