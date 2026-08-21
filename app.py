@@ -15,10 +15,19 @@ from datetime import datetime
 import pandas as pd
 import streamlit as st
 
-from donnees import iso286, materiaux as mat, quiz as qz
-from donnees.cours_bloc_1_2 import BLOC_1, BLOC_2
-from donnees.cours_bloc_3_4 import BLOC_3, BLOC_4
-from donnees.cours_bloc_5_6 import BLOC_5, BLOC_6
+try:
+    from donnees import iso286, materiaux as mat, quiz as qz
+    from donnees.cours_bloc_1_2 import BLOC_1, BLOC_2
+    from donnees.cours_bloc_3_4 import BLOC_3, BLOC_4
+    from donnees.cours_bloc_5_6 import BLOC_5, BLOC_6
+except ModuleNotFoundError:
+    # Fichiers de donnees places a la racine (a plat)
+    import iso286
+    import materiaux as mat
+    import quiz as qz
+    from cours_bloc_1_2 import BLOC_1, BLOC_2
+    from cours_bloc_3_4 import BLOC_3, BLOC_4
+    from cours_bloc_5_6 import BLOC_5, BLOC_6
 
 BLOCS = [BLOC_1, BLOC_2, BLOC_3, BLOC_4, BLOC_5, BLOC_6]
 FICHIER_PROGRESSION = os.path.join(os.path.dirname(__file__), "progression.json")
