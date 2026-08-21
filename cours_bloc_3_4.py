@@ -2306,3 +2306,15 @@ transmissions à fort couple et haute fiabilité.
         },
     ],
 }
+
+
+# --- Schémas pédagogiques (marqueurs [[FIG:...]] rendus par figures.py) ---
+_SCHEMAS = {
+    '4.3': '[[FIG:flexion_hauteur]]\n',
+}
+
+for _b in [BLOC_3, BLOC_4]:
+    for _f in _b["fiches"]:
+        _fig = _SCHEMAS.get(_f["id"])
+        if _fig and "[[FIG:" not in _f["cours"]:
+            _f["cours"] = "\n" + _fig + _f["cours"]

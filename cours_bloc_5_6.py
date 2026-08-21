@@ -2811,3 +2811,16 @@ $$ \\boxed{\\textbf{PROPOSITION À REJETER}} $$
         },
     ],
 }
+
+
+# --- Schémas pédagogiques (marqueurs [[FIG:...]] rendus par figures.py) ---
+_SCHEMAS = {
+    '6.1': '[[FIG:liaisons_de_base]]\n',
+    '6.3': '[[FIG:engrenage_module]]\n',
+}
+
+for _b in [BLOC_5, BLOC_6]:
+    for _f in _b["fiches"]:
+        _fig = _SCHEMAS.get(_f["id"])
+        if _fig and "[[FIG:" not in _f["cours"]:
+            _f["cours"] = "\n" + _fig + _f["cours"]

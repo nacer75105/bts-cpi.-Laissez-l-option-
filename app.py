@@ -8,6 +8,7 @@ Lancement :  streamlit run app.py
 
 import json
 import math
+import re
 import os
 import random
 from datetime import datetime
@@ -15,16 +16,13 @@ from datetime import datetime
 import pandas as pd
 import streamlit as st
 
+import figures
+
 try:
     from donnees import iso286, materiaux as mat, quiz as qz
     from donnees.cours_bloc_1_2 import BLOC_1, BLOC_2
     from donnees.cours_bloc_3_4 import BLOC_3, BLOC_4
     from donnees.cours_bloc_5_6 import BLOC_5, BLOC_6
-    from cours_bloc_7_8 import BLOC_7, BLOC_8
-    from cours_bloc_9_10 import BLOC_9, BLOC_10
-    from cours_bloc_11_12 import BLOC_11, BLOC_12
-    from cours_bloc_13_14 import BLOC_13, BLOC_14
-    from cours_bloc_15_16 import BLOC_15, BLOC_16
 except ModuleNotFoundError:
     # Fichiers de donnees places a la racine (a plat)
     import iso286
@@ -33,16 +31,24 @@ except ModuleNotFoundError:
     from cours_bloc_1_2 import BLOC_1, BLOC_2
     from cours_bloc_3_4 import BLOC_3, BLOC_4
     from cours_bloc_5_6 import BLOC_5, BLOC_6
-    from cours_bloc_7_8 import BLOC_7, BLOC_8
-    from cours_bloc_9_10 import BLOC_9, BLOC_10
-    from cours_bloc_11_12 import BLOC_11, BLOC_12
-    from cours_bloc_13_14 import BLOC_13, BLOC_14
-    from cours_bloc_15_16 import BLOC_15, BLOC_16
 
-BLOCS = [BLOC_1, BLOC_2, BLOC_3, BLOC_4, BLOC_5, BLOC_6, BLOC_7, BLOC_8, BLOC_9, BLOC_10, BLOC_11, BLOC_12, BLOC_13, BLOC_14, BLOC_15, BLOC_16]
+BLOCS = [BLOC_1, BLOC_2, BLOC_3, BLOC_4, BLOC_5, BLOC_6]
 FICHIER_PROGRESSION = os.path.join(os.path.dirname(__file__), "progression.json")
 
 st.set_page_config(page_title="BTS CPI — Révisions", page_icon="⚙️", layout="wide")
+
+
+def afficher_contenu(texte):
+    """Affiche un texte de fiche en remplacant les marqueurs [[FIG:cle]] par le schema."""
+    if not texte:
+        return
+    morceaux = re.split(r"\[\[FIG:([a-z0-9_]+)\]\]", texte)
+    for i, morceau in enumerate(morceaux):
+        if i % 2 == 0:
+            if morceau.strip():
+                st.markdown(morceau)
+        else:
+            st.markdown(figures.html(morceau), unsafe_allow_html=True)
 
 
 # ===========================================================================
@@ -100,10 +106,13 @@ st.markdown("""
 st.sidebar.title("⚙️ BTS CPI")
 st.sidebar.caption("Conception de Produits Industriels — 1re année")
 
+NB_FICHES = sum(len(b.get("fiches", [])) for b in BLOCS)
+PAGE_COURS = f"📚 Cours ({NB_FICHES} fiches)"
+
 PAGE = st.sidebar.radio(
     "Navigation",
     ["🏠 Tableau de bord",
-     "📚 Cours (18 fiches)",
+     PAGE_COURS,
      "🎯 Quiz interactif",
      "📐 Calculateur d'ajustements ISO",
      "🔧 Calculateurs RDM",
@@ -113,7 +122,7 @@ PAGE = st.sidebar.radio(
 )
 
 st.sidebar.divider()
-nb_fiches = sum(len(b.get("fiches", b.get("chapitres", {}))) for b in BLOCS)
+nb_fiches = NB_FICHES
 lues = len(set(P["fiches_lues"]))
 st.sidebar.progress(lues / nb_fiches if nb_fiches else 0)
 st.sidebar.caption(f"Fiches lues : {lues}/{nb_fiches}")
@@ -198,7 +207,7 @@ if PAGE == "🏠 Tableau de bord":
 # PAGE : COURS
 # ===========================================================================
 
-elif PAGE == "📚 Cours (18 fiches)":
+elif PAGE == PAGE_COURS:
     st.title("Cours")
 
     noms_blocs = [b["titre"] for b in BLOCS]
@@ -241,18 +250,18 @@ elif PAGE == "📚 Cours (18 fiches)":
         ["📖 Cours", "📐 Formules", "🏭 Cas industriel", "✍️ Exercice", "✅ Corrigé"])
 
     with t1:
-        st.markdown(fiche.get("cours", ""))
+        afficher_contenu(fiche.get("cours", ""))
     with t2:
-        st.markdown(fiche.get("formules", ""))
+        afficher_contenu(fiche.get("formules", ""))
     with t3:
-        st.markdown(fiche.get("exemple", ""))
+        afficher_contenu(fiche.get("exemple", ""))
     with t4:
-        st.markdown(fiche.get("exercice", ""))
+        afficher_contenu(fiche.get("exercice", ""))
         st.markdown('<div class="warn-box">Cherchez l\'exercice complètement avant '
                     'd\'ouvrir le corrigé. Un corrigé lu trop tôt donne l\'illusion de '
                     'comprendre.</div>', unsafe_allow_html=True)
     with t5:
-        st.markdown(fiche.get("corrige", ""))
+        afficher_contenu(fiche.get("corrige", ""))
 
     st.divider()
     note = st.text_area("Mes notes personnelles sur cette fiche",
@@ -727,27 +736,28 @@ elif PAGE == "🔧 Calculateurs RDM":
             lim_fleche = st.number_input("Flèche max admissible (ex: L/500 = 1/500)", 
                                          0.0001, 0.05, 1/500, format="%.4f")
 
-        I_flex, v_flex = mat.section_i_v(forme, **kw)
-        r = mat.flexion(cas, charge, L_flex, I_flex, v_flex, m["Re"], s_flex, E=m["E"] * 1000)
+        I_flex, v_flex = mat.section_igz(forme, **kw)
+        r = mat.flexion(cas, charge, L_flex, I_flex, v_flex, m["E"] * 1000, m["Re"], s_flex,
+                        fleche_adm=L_flex * lim_fleche)
 
         st.divider()
         k = st.columns(4)
-        k[0].metric("Moment Mf max", f"{r['Mf_max_Nmm']/1000:.1f} N·m")
+        k[0].metric("Moment Mf max", f"{r['Mf']/1000:.1f} N·m")
         k[1].metric("Contrainte σ", f"{r['sigma']:.1f} MPa")
         k[2].metric("Rpe admissible", f"{r['Rpe']:.1f} MPa")
         k[3].metric("Sécurité réelle", f"{r['s_reel']:.2f}")
-        verdict(r["ok"], "<b>✅ RÉSISTANCE VÉRIFIÉE</b>", "<b>❌ RÉSISTANCE INSUFFISANTE</b>")
+        verdict(r["ok_resistance"], "<b>✅ RÉSISTANCE VÉRIFIÉE</b>", "<b>❌ RÉSISTANCE INSUFFISANTE</b>")
 
-        if "fleche_max" in r:
+        if "fleche" in r:
             f_adm = L_flex * lim_fleche
             st.write("")
             k2 = st.columns(3)
-            k2[0].metric("Flèche f max", f"{r['fleche_max']:.3f} mm")
+            k2[0].metric("Flèche f max", f"{r['fleche']:.3f} mm")
             k2[1].metric("Flèche admissible", f"{f_adm:.3f} mm")
-            k2[2].metric("Ratio calculé", f"L / {L_flex/r['fleche_max']:.0f}" if r['fleche_max'] > 0 else "N/A")
-            verdict(r["fleche_max"] <= f_adm,
+            k2[2].metric("Ratio calculé", f"L / {L_flex/r['fleche']:.0f}" if r['fleche'] > 0 else "N/A")
+            verdict(r["fleche"] <= f_adm,
                     "<b>✅ RIGIDITÉ VÉRIFIÉE</b>",
-                    "<b>❌ FLÈCHE EXCESSIF</b> — augementer l'inertie $I_Gz$ ou changer de profilé.")
+                    "<b>❌ FLÈCHE EXCESSIVE</b> — augmenter l'inertie $I_Gz$ ou changer de profilé.")
 
     # ------------- Flambage -------------
     with onglets[4]:
@@ -770,7 +780,7 @@ elif PAGE == "🔧 Calculateurs RDM":
             forme, kw = choisir_section("fla")
 
         S_fla = mat.section_aire(forme, **kw)
-        I_fla, _ = mat.section_i_v(forme, **kw)
+        I_fla, _ = mat.section_igz(forme, **kw)
         r = mat.flambage(F_comp, S_fla, I_fla, m["Re"], m["E"] * 1000, L_poutre, K, s_fla)
 
         st.divider()
@@ -796,7 +806,7 @@ elif PAGE == "🔧 Calculateurs RDM":
         with c2:
             forme, kw = choisir_section("ft", avec_rect=False)
 
-        I_ft, v_ft = mat.section_i_v(forme, **kw)
+        I_ft, v_ft = mat.section_igz(forme, **kw)
         I0_ft, _ = mat.section_i0(forme, **kw)
         
         Mf_nmm = Mf_input * 1000
@@ -818,8 +828,8 @@ elif PAGE == "🔧 Calculateurs RDM":
         k[3].metric("Sécurité réelle", f"{m['Re']/sigma_eq:.2f}" if sigma_eq > 0 else "∞")
 
         verdict(ok_ft,
-                f"<b>✅ SOLICITATION COMPOSÉE VÉRIFIÉE ({critere})</b>",
-                f"<b>❌ RÉSISTANCE INSUFFISANTE EN SOLICITATION COMPOSÉE</b>")
+                f"<b>✅ SOLLICITATION COMPOSÉE VÉRIFIÉE ({critere})</b>",
+                f"<b>❌ RÉSISTANCE INSUFFISANTE EN SOLLICITATION COMPOSÉE</b>")
 
 
 # ===========================================================================
@@ -841,15 +851,15 @@ elif PAGE == "🧱 Base matériaux":
         df_display = df_mat.copy()
 
     st.dataframe(
-        df_display[["nom", "famille", "Re", "Rm", "E", "masse_volumique", "description"]],
+        df_display[["nom", "famille", "Re", "Rm", "E", "rho", "emploi"]],
         column_config={
             "nom": "Désignation",
             "famille": "Famille",
             "Re": st.column_config.NumberColumn("Re (MPa)", help="Limite d'élasticité"),
             "Rm": st.column_config.NumberColumn("Rm (MPa)", help="Résistance à la rupture"),
             "E": st.column_config.NumberColumn("E (GPa)", help="Module de Young"),
-            "masse_volumique": st.column_config.NumberColumn("Masse vol. (kg/m³)"),
-            "description": "Utilisation / Remarques",
+            "rho": st.column_config.NumberColumn("Masse vol. (kg/m³)"),
+            "emploi": "Utilisation / Remarques",
         },
         hide_index=True,
         width="stretch"

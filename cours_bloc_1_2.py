@@ -1481,3 +1481,116 @@ Trois raisons :
         },
     ],
 }
+
+
+# ===========================================================================
+# VERSION DÉBUTANT DE LA FICHE 2.2 (ajoutée après coup)
+# Le cours d'origine partait de la définition. Cette version part du problème
+# concret, met le mot technique à la fin, et s'appuie sur trois schémas.
+# Pour revenir à l'ancienne version, il suffit de supprimer ce bloc.
+# ===========================================================================
+
+COURS_2_2_DEBUTANT = """
+### 1. Le problème, avant tout vocabulaire
+
+Tu dois faire tourner un axe de 30 mm dans un trou de 30 mm.
+
+Question toute bête : est-ce que ça tourne ?
+
+**Non.** Si le trou fait exactement 30 et l'axe exactement 30, l'axe entre en force,
+ou n'entre pas du tout. Pour que ça tourne, il faut **du vide entre les deux**.
+
+Deuxième problème : aucune machine ne sort du 30,000 exact. Chaque pièce sort un peu
+différente de la précédente.
+
+[[FIG:pourquoi_tolerance]]
+
+Le concepteur ne peut donc pas écrire « 30 » sur son plan. Il doit écrire :
+**« fais-moi un trou entre telle et telle valeur, et un axe entre telle et telle valeur,
+et je te garantis que ça tournera à tous les coups »**.
+
+### 2. Trois situations possibles, pas une de plus
+
+Quand on assemble un trou et un axe fabriqués chacun dans leur fourchette, il n'y a que
+trois résultats possibles.
+
+[[FIG:trois_ajustements]]
+
+- **Il reste toujours du vide** → la pièce tourne ou coulisse. On dit qu'il y a du **jeu**.
+- **L'axe est toujours trop gros** → il faut le forcer à la presse. On dit qu'il y a **serrage**.
+- **Ça dépend de la pièce qu'on prend** → parfois un peu de vide, parfois un peu de serrage.
+  On dit que c'est **incertain**.
+
+C'est tout. Un montage de mécanique, c'est forcément l'un de ces trois cas.
+
+Le mot qui désigne cette association trou + axe s'appelle un **ajustement**.
+Tu viens de comprendre la chose avant d'apprendre le mot : c'est le bon ordre.
+
+### 3. Comment on l'écrit sur un plan
+
+Écrire à chaque fois « trou entre 30,000 et 30,021 » serait long. La norme ISO a donc
+inventé un code, toujours le même :
+
+[[FIG:lire_h7g6]]
+
+Les tables ISO donnent ensuite les valeurs exactes, et le **calculateur d'ajustements**
+de cette application les affiche directement.
+
+### 4. Le seul calcul à savoir faire
+
+Deux soustractions, et rien d'autre :
+
+- **Le vide le plus grand possible** = le plus grand trou − le plus petit axe
+- **Le vide le plus petit possible** = le plus petit trou − le plus gros axe
+
+Pour Ø30 H7/g6 :
+
+| | plus petit | plus grand |
+|---|---|---|
+| Trou (H7) | 30,000 | 30,021 |
+| Axe (g6) | 29,980 | 29,993 |
+
+- Vide maxi = 30,021 − 29,980 = **0,041 mm**
+- Vide mini = 30,000 − 29,993 = **0,007 mm**
+
+Il reste donc **toujours** entre 7 et 41 millièmes de millimètre de vide. Ça tourne, quelle
+que soit la pièce qu'on attrape dans le bac. C'est exactement ce qu'on voulait.
+
+*Si un résultat sort négatif, ce n'est pas une erreur : ça veut dire que l'axe est plus gros
+que le trou. Ce n'est plus du vide, c'est du serrage.*
+
+### 5. Les trois ajustements à connaître par cœur en première année
+
+| Écriture | Ce que ça fait | Où on le trouve |
+|---|---|---|
+| **H7/g6** | ça tourne librement | un axe dans son palier, une tige de vérin |
+| **H7/k6** | ça se centre bien, ça se démonte au maillet | une bague de roulement sur son arbre |
+| **H7/p6** | c'est bloqué, il faut une presse | une bague montée à demeure |
+
+Retiens la logique plutôt que la liste : **plus la lettre de l'axe avance dans l'alphabet,
+plus l'axe est gros, et plus on serre.**
+
+### 6. L'erreur que tout le monde fait la première fois
+
+Confondre la majuscule et la minuscule. **H7 c'est le trou, g6 c'est l'axe.** Inversés, le
+montage prévu pour tourner devient un montage bloqué — et la pièce part à la benne.
+
+Moyen mnémotechnique : la majuscule est **grande**, comme le trou qui doit accueillir l'autre.
+"""
+
+for _fiche in BLOC_2["fiches"]:
+    if _fiche["id"] == "2.2":
+        _fiche["cours"] = COURS_2_2_DEBUTANT
+
+
+# --- Schémas pédagogiques (marqueurs [[FIG:...]] rendus par figures.py) ---
+_SCHEMAS = {
+    '1.2': '[[FIG:projection_europeenne]]\n\n[[FIG:types_de_traits]]\n',
+    '1.3': '[[FIG:rugosite_ra]]\n',
+}
+
+for _b in [BLOC_1, BLOC_2]:
+    for _f in _b["fiches"]:
+        _fig = _SCHEMAS.get(_f["id"])
+        if _fig and "[[FIG:" not in _f["cours"]:
+            _f["cours"] = "\n" + _fig + _f["cours"]

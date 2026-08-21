@@ -303,20 +303,34 @@ def flexion_torsion(Mf, Mt, critere="Tresca"):
     return math.sqrt(Mf ** 2 + 0.75 * Mt ** 2)
 
 
-def flambage(E, I, L, liaison="Rotule - rotule", F=None):
-    coefs = {
-        "Rotule - rotule": 1.0,
-        "Encastrement - libre": 2.0,
-        "Encastrement - rotule": 0.7,
-        "Encastrement - encastrement": 0.5,
+def flambage(F, S, I, Re, E, L, K=1.0, s=3.0):
+    """Flambement d'une poutre comprimee.
+
+    F  : effort de compression applique (N)      S : aire de la section (mm2)
+    I  : moment quadratique minimal (mm4)        Re, E : en MPa
+    L  : longueur physique (mm)                  K : coefficient de liaison
+    s  : coefficient de securite exige
+    """
+    Lf = K * L                       # longueur libre de flambement
+    i = math.sqrt(I / S)             # rayon de giration
+    lam = Lf / i                     # elancement
+    lam_c = math.pi * math.sqrt(E / Re)   # elancement critique
+    F_euler = math.pi ** 2 * E * I / Lf ** 2
+    a = Re / (math.pi ** 2 * E)      # coefficient de Rankine-Gordon
+    F_rankine = (Re * S / (1 + a * lam ** 2)) / s
+    return {
+        "Lf": Lf,
+        "rayon_giration": i,
+        "lambda_élancement": lam,
+        "lambda_critique": lam_c,
+        "F_critique_Euler": F_euler,
+        "F_adm_Rankine": F_rankine,
+        "s_reel": F_euler / F if F else float("inf"),
+        "ok_Euler": F_euler / F >= s if F else True,
+        "ok_Rankine": F <= F_rankine,
+        "regime": "Poutre élancée : flambement dimensionnant" if lam >= lam_c
+                  else "Poutre courte : la compression simple reste dimensionnante",
     }
-    Lf = coefs[liaison] * L
-    Fc = math.pi ** 2 * E * I / Lf ** 2
-    res = {"Lf": Lf, "Fc": Fc, "coef_liaison": coefs[liaison]}
-    if F:
-        res["s_flambage"] = Fc / F
-        res["ok"] = Fc / F >= 3
-    return res
 
 
 def couple_depuis_puissance(P_watt, N_tr_min):
