@@ -33,6 +33,22 @@ except ModuleNotFoundError:
     from cours_bloc_5_6 import BLOC_5, BLOC_6
 
 BLOCS = [BLOC_1, BLOC_2, BLOC_3, BLOC_4, BLOC_5, BLOC_6]
+
+# Matières complémentaires : maths, physique, méthodologie, anglais, éco-gestion,
+# panorama de 2e année (voir cours_complements.py). Absent = application inchangée.
+try:
+    import cours_complements
+    BLOCS = BLOCS + cours_complements.BLOCS_COMPLEMENTAIRES
+except ImportError:
+    pass
+
+# Versions longues et progressives de certaines fiches (voir cours_debutant.py).
+# Si le fichier est absent, l'application continue avec les fiches d'origine.
+try:
+    import cours_debutant
+    cours_debutant.appliquer(BLOCS)
+except ImportError:
+    pass
 FICHIER_PROGRESSION = os.path.join(os.path.dirname(__file__), "progression.json")
 
 st.set_page_config(page_title="BTS CPI — Révisions", page_icon="⚙️", layout="wide")

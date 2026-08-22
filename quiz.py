@@ -753,3 +753,211 @@ def stats():
     for question in toutes_les_questions():
         par_niv[question["niveau"]] = par_niv.get(question["niveau"], 0) + 1
     return {"total": total, "par_categorie": par_cat, "par_niveau": par_niv}
+
+
+# ===========================================================================
+# COMPLÉMENT DE QUESTIONS (ajouté après coup)
+# Couvre les notions traitées dans les fiches réécrites : analyse
+# fonctionnelle, cotation fonctionnelle, procédés, guidage.
+# Pour retirer ce complément, il suffit de supprimer tout ce qui suit.
+# ===========================================================================
+
+QUIZ["Analyse fonctionnelle et cahier des charges"] = [
+    q("Parmi ces formulations, laquelle est une FONCTION et non une solution ?",
+      ["Utiliser un vérin pneumatique Ø32",
+       "Maintenir la pièce pendant l'usinage",
+       "Prévoir une clavette parallèle 8 × 7",
+       "Monter un roulement à billes 6206"], 1,
+      "Une fonction s'écrit avec un verbe à l'infinitif + un complément, sans jamais nommer de "
+      "composant. Les trois autres réponses désignent déjà une solution technique : les écrire "
+      "dans un cahier des charges interdirait de chercher mieux.", "Base"),
+
+    q("Dans un diagramme pieuvre, une fonction qui relie le produit à UN SEUL élément du milieu "
+      "extérieur est :",
+      ["Une fonction principale (FP)", "Une fonction contrainte (FC)",
+       "Une fonction technique", "Une solution constructive"], 1,
+      "FP = relie DEUX éléments extérieurs en traversant le produit (sa raison d'être). "
+      "FC = relie le produit à UN seul élément : c'est une contrainte subie (résister à "
+      "l'humidité, respecter un budget, se fixer sur un support existant).", "Base"),
+
+    q("Un client demande un carter « solide et facile à nettoyer ». Que manque-t-il ?",
+      ["Rien, c'est exploitable tel quel",
+       "Le nom du matériau",
+       "Un critère, un niveau chiffré et une flexibilité pour chaque exigence",
+       "Le prix de vente"], 2,
+      "Une exigence non chiffrée n'est ni vérifiable ni contestable. Il faut : critère (énergie "
+      "de choc), niveau (5 J sans déformation permanente), flexibilité (F0). Sinon, impossible "
+      "de valider le produit en fin de projet ni de juger une offre fournisseur.", "Base"),
+
+    q("La classe de flexibilité F0 signifie :",
+      ["Fonction facultative", "Exigence impérative, non négociable",
+       "Exigence négociable", "Fonction principale numéro 0"], 1,
+      "F0 = impératif · F1 = peu négociable · F2 = négociable · F3 = simple souhait. Les "
+      "exigences de sécurité et les contraintes d'interface avec l'existant sont typiquement "
+      "en F0.", "Base"),
+
+    q("Un distributeur automatique de croquettes pour chat : à QUI rend-il service ?",
+      ["Au chat", "Au propriétaire", "Au fabricant", "Au vétérinaire"], 1,
+      "PIÈGE FRÉQUENT. Le service est rendu à celui qui a le problème et qui achète : le "
+      "propriétaire, qui veut partir en week-end. Le chat est la matière d'œuvre — l'élément "
+      "sur lequel le produit agit.", "Piège"),
+
+    q("Dans un diagramme FAST, où apparaît le nom d'un composant réel (roulement, vérin) ?",
+      ["Dans la première colonne, avec la fonction de service",
+       "Au milieu, avec les fonctions techniques",
+       "À l'extrémité droite, dans les solutions techniques",
+       "Nulle part, le FAST ne contient jamais de composant"], 2,
+      "Le FAST se lit de gauche à droite en répondant à « comment ? ». Les composants réels "
+      "n'apparaissent qu'à la dernière colonne. Écrire « roulement à billes » dans la première "
+      "colonne, c'est avoir sauté toute l'analyse.", "Intermédiaire"),
+
+    q("Quelle question NE fait PAS partie de la bête à cornes ?",
+      ["À qui le produit rend-il service ?", "Sur quoi agit-il ?",
+       "Dans quel but ?", "Avec quelle technologie ?"], 3,
+      "La bête à cornes cadre le BESOIN, jamais la solution. La technologie viendra beaucoup "
+      "plus tard, à l'extrémité droite du FAST.", "Base"),
+]
+
+QUIZ["Cotation fonctionnelle et chaînes de cotes"] = [
+    q("Dans une chaîne de cotes, l'intervalle de tolérance de la condition ITja vaut :",
+      ["La somme de tous les IT de la chaîne", "La différence entre le plus grand et le plus petit IT",
+       "La moyenne des IT", "L'IT de la pièce la plus grande"], 0,
+      "Les dispersions s'ACCUMULENT toujours : ITja = ITa + ITb + ITc + … quel que soit le sens "
+      "des cotes. Conséquence directe : plus la chaîne est longue, plus chaque pièce doit être "
+      "précise, donc chère.", "Base"),
+
+    q("Une condition fonctionnelle Ja doit rester entre 0,2 et 0,8 mm. La chaîne comporte 4 "
+      "cotes. En répartition uniforme, quelle tolérance par cote ?",
+      ["0,15 mm", "0,6 mm", "0,05 mm", "0,3 mm"], 0,
+      "ITja = 0,8 − 0,2 = 0,6 mm, réparti sur 4 cotes → 0,15 mm chacune. C'est très large : "
+      "aucun usinage spécial n'est nécessaire.", "Calcul"),
+
+    q("Dans une chaîne de cotes, combien de cotes une même pièce peut-elle fournir ?",
+      ["Autant que nécessaire", "Une seule", "Deux au maximum", "Cela dépend de sa taille"], 1,
+      "Chaque pièce traversée fournit UNE cote et une seule, entre ses deux surfaces d'appui. "
+      "Si une pièce apparaît deux fois, le trajet n'est pas le plus direct ou une surface de "
+      "contact a été mal identifiée.", "Base"),
+
+    q("Toutes les cotes d'un sous-ensemble sont très serrées à cause d'une chaîne de 6 pièces. "
+      "Quelle est la solution la plus économique ?",
+      ["Rectifier toutes les pièces",
+       "Introduire une cale de réglage qui absorbe la dispersion",
+       "Changer de matériau", "Augmenter le coefficient de sécurité"], 1,
+      "Une cale ou une entretoise usinée à la demande absorbe toute la dispersion : les autres "
+      "cotes redeviennent larges. Raccourcir la chaîne est l'autre levier. Rectifier six pièces "
+      "coûte infiniment plus cher qu'une cale à 3 €.", "Intermédiaire"),
+
+    q("Une tolérance de PLANÉITÉ nécessite-t-elle une référence ?",
+      ["Oui, toujours", "Non, jamais", "Seulement si la surface est grande",
+       "Seulement sur un dessin d'ensemble"], 1,
+      "Les tolérances de FORME (rectitude, planéité, circularité, cylindricité) se suffisent à "
+      "elles-mêmes. Ce sont les tolérances d'orientation, de position et de battement qui "
+      "exigent une référence.", "Base"),
+
+    q("Dans un cadre de tolérance, le signe Ø placé devant la valeur signifie :",
+      ["La cote concernée est un diamètre", "La zone de tolérance est cylindrique",
+       "La tolérance est doublée", "La surface doit être tournée"], 1,
+      "Sans Ø, la zone est comprise entre deux plans parallèles. Avec Ø, elle devient un "
+      "cylindre de diamètre t — écriture typique de la localisation d'un axe de perçage.", "Intermédiaire"),
+
+    q("Un arbre coté Ø20 h6 mesure 20 mm en tout point au micromètre, mais n'entre pas dans son "
+      "alésage. Cause la plus probable ?",
+      ["Une erreur de mesure", "Un défaut de forme : l'arbre est cintré ou ovale",
+       "L'alésage est trop petit", "La matière a gonflé"], 1,
+      "La cotation dimensionnelle ne dit rien sur la FORME. Chaque section peut mesurer 20 sans "
+      "que l'ensemble soit un cylindre droit. D'où l'ajout d'une tolérance de rectitude ou de "
+      "cylindricité.", "Piège"),
+]
+
+QUIZ["Procédés et conception pour la fabrication"] = [
+    q("Pourquoi une dépouille est-elle obligatoire en moulage et en injection ?",
+      ["Pour rigidifier la pièce", "Pour permettre le démoulage",
+       "Pour améliorer l'aspect", "Pour réduire la masse"], 1,
+      "Sans angle de dépouille (1 à 3°), la pièce se coince ou se raye dans le moule. C'est la "
+      "première chose que vérifie un mouliste sur un plan.", "Base"),
+
+    q("Une pièce injectée présente une marque creuse exactement en face d'une nervure "
+      "intérieure. De quoi s'agit-il ?",
+      ["D'une bavure", "D'une retassure due à une nervure trop épaisse",
+       "D'une ligne de soudure", "D'un défaut de moule"], 1,
+      "La matière en excès à la jonction refroidit plus lentement, se contracte et tire la "
+      "surface. Correction : nervure à 50-60 % de l'épaisseur de la paroi, congé modéré à la "
+      "base.", "Intermédiaire"),
+
+    q("Quel format envoyer à un bureau d'études qui doit MODIFIER la géométrie ?",
+      [".stl", ".step", ".pdf", ".dxf"], 1,
+      "STEP conserve la géométrie exacte (surfaces et volumes) et s'ouvre dans tous les "
+      "logiciels. STL n'est qu'un maillage de triangles destiné à l'impression : on ne "
+      "remodélise jamais dessus.", "Base"),
+
+    q("En impression FDM, dans quelle direction la pièce est-elle la plus fragile ?",
+      ["Dans le plan des couches", "Perpendiculairement aux couches",
+       "Elle est isotrope", "Cela dépend uniquement du matériau"], 1,
+      "La liaison entre couches est le point faible : la pièce se sépare comme un mille-feuille. "
+      "Il faut orienter la pièce pour que les efforts travaillent DANS le plan des couches.", "Intermédiaire"),
+
+    q("Un angle intérieur parfaitement vif est-il réalisable en fraisage ?",
+      ["Oui, avec une fraise adaptée", "Non : une fraise laisse toujours un rayon égal au sien",
+       "Oui, mais seulement dans l'aluminium", "Oui, en deux passes"], 1,
+      "Un outil rotatif ne peut pas créer un angle intérieur vif. Il faut donc dessiner le congé "
+      "sur le plan — sinon l'atelier le fera à sa façon, et la cote ne sera pas celle prévue.", "Base"),
+
+    q("Une tôle de 2 mm doit être percée à 4 mm d'un pli à 90°. Quel problème ?",
+      ["Aucun", "Le trou tombe dans la zone déformée et devient ovale",
+       "Le pli sera trop grand", "La tôle va casser au pliage"], 1,
+      "Règle : distance du bord du trou au pli supérieure à environ 2,5 × épaisseur + rayon, "
+      "soit 5 à 7 mm ici. Sinon, percer après pliage ou prévoir un dégagement.", "Intermédiaire"),
+]
+
+QUIZ["Guidage et montage de roulements"] = [
+    q("Arbre tournant, charge radiale fixe. Comment monte-t-on la bague intérieure ?",
+      ["Glissante", "Serrée", "Collée", "Avec un jeu de 0,1 mm"], 1,
+      "La bague tourne par rapport à la direction de la charge : elle doit être SERRÉE (arbre en "
+      "k6 ou m6). Montée avec du jeu, elle fluerait sur sa portée et la materait en quelques "
+      "dizaines d'heures.", "Base"),
+
+    q("Sur un tambour de convoyeur, c'est le tambour qui tourne et la charge (le poids de la "
+      "bande) qui reste fixe. Quelle bague est serrée ?",
+      ["La bague intérieure", "La bague extérieure", "Les deux", "Aucune"], 1,
+      "C'est l'inverse du cas classique : la bague EXTÉRIEURE, solidaire du tambour, tourne par "
+      "rapport à la charge → serrée dans le tambour (M7 ou N7). La bague intérieure est "
+      "glissante sur l'arbre fixe (h6 ou g6).", "Piège"),
+
+    q("Sur un arbre à deux paliers, combien de paliers doivent être bloqués axialement ?",
+      ["Aucun", "Un seul", "Les deux", "Cela dépend de la longueur"], 1,
+      "Un seul palier fixe positionne l'arbre ; l'autre doit rester libre pour absorber la "
+      "dilatation. Deux paliers bloqués = précontrainte, échauffement, puis grippage.", "Base"),
+
+    q("Un montage à deux roulements bloqués des deux côtés grippe après 20 minutes. Pourquoi ?",
+      ["Manque de graisse", "L'arbre se dilate sans pouvoir s'allonger et précontraint les roulements",
+       "Les roulements sont trop petits", "La vitesse est trop élevée"], 1,
+      "C'est un emballement : la précontrainte augmente le frottement, donc la température, donc "
+      "la dilatation. Correction : libérer axialement un des deux paliers.", "Intermédiaire"),
+
+    q("Quelle rugosité viser sur une portée d'arbre recevant un joint à lèvres ?",
+      ["Ra 12,5", "Ra 6,3", "Ra 3,2", "Ra 0,8"], 3,
+      "Une surface trop rugueuse abrase la lèvre en élastomère en quelques heures et le joint "
+      "fuit. Il faut Ra 0,8 environ, sans stries hélicoïdales, avec un chanfrein d'introduction "
+      "pour le montage.", "Base"),
+
+    q("Un roulement à rouleaux coniques peut-il être monté seul ?",
+      ["Oui, comme un roulement à billes", "Non, il se monte obligatoirement par paire",
+       "Oui, s'il n'y a pas de charge axiale", "Oui, en le collant"], 1,
+      "Il n'encaisse l'axial que dans UN sens : il faut un second roulement opposé, monté en X "
+      "ou en O. Même règle pour les roulements à billes à contact oblique.", "Intermédiaire"),
+
+    q("Quelle quantité de graisse mettre dans un roulement ?",
+      ["Le remplir complètement", "Environ un tiers du volume libre",
+       "Le minimum possible", "Aux deux tiers"], 1,
+      "Trop de graisse chauffe autant que pas assez : elle est brassée en permanence et "
+      "s'échauffe. Un tiers du volume libre est la règle usuelle.", "Base"),
+
+    q("La clavette parallèle sert à :",
+      ["Maintenir le moyeu axialement", "Transmettre le couple",
+       "Centrer le moyeu sur l'arbre", "Rattraper le jeu"], 1,
+      "Elle transmet le COUPLE par ses flancs. Le centrage vient de l'ajustement (H7/j6 par "
+      "exemple), l'arrêt axial d'un épaulement, d'un anneau élastique ou d'une vis de bout "
+      "d'arbre.", "Base"),
+]
+
+CATEGORIES = list(QUIZ.keys())
