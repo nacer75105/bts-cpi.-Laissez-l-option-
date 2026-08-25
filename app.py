@@ -29822,7 +29822,7 @@ def charger_progression():
                 return json.load(f)
         except (json.JSONDecodeError, OSError):
             pass
-    return {"fiches_lues": [], "resultats_quiz": [], "notes": {}}
+    return {"fiches_lues": [], "resultats_quiz": [], "notes": {}, "erreurs": {}}
 
 
 def sauver_progression(p):
@@ -29913,8 +29913,14 @@ st.markdown("""
 # NAVIGATION
 # ===========================================================================
 
+VERSION_APP = "v25-08 · 45 fiches · 182 quiz"
+
 st.sidebar.title("⚙️ BTS CPI")
 st.sidebar.caption("Conception de Produits Industriels — 1re année")
+st.sidebar.markdown(
+    f"<div style='background:#14375e;color:white;padding:5px 10px;border-radius:6px;"
+    f"font-size:.78em;text-align:center;font-weight:600;margin:6px 0 10px 0'>"
+    f"{VERSION_APP}</div>", unsafe_allow_html=True)
 
 NB_FICHES = sum(len(b.get("fiches", [])) for b in BLOCS)
 PAGE_COURS = f"📚 Cours ({NB_FICHES} fiches)"
@@ -29933,6 +29939,7 @@ PAGE = st.sidebar.radio(
 
 st.sidebar.divider()
 nb_fiches = NB_FICHES
+P.setdefault("erreurs", {})
 lues = len(set(P["fiches_lues"]))
 _pct = int(100 * lues / nb_fiches) if nb_fiches else 0
 st.sidebar.progress(lues / nb_fiches if nb_fiches else 0)
@@ -30182,14 +30189,29 @@ elif PAGE == "🎯 Quiz interactif":
     with col3:
         niveaux = st.multiselect("Niveaux", NIVEAUX, default=NIVEAUX)
 
-    mode_examen = st.checkbox(
-        "⏱️ Mode examen blanc — 20 questions tirées dans TOUS les thèmes, 15 minutes",
-        help="Les filtres ci-dessus sont ignorés : le tirage se fait sur l'ensemble de la banque, "
-             "comme à l'épreuve.")
+    nb_erreurs = len(P["erreurs"])
+
+    c_mode1, c_mode2 = st.columns(2)
+    with c_mode1:
+        mode_examen = st.checkbox(
+            "⏱️ Mode examen blanc — 20 questions dans TOUS les thèmes, 15 minutes",
+            help="Les filtres ci-dessus sont ignorés : le tirage se fait sur l'ensemble de la "
+                 "banque, comme à l'épreuve.")
+    with c_mode2:
+        mode_erreurs = st.checkbox(
+            f"🎯 Mode révision — mes erreurs ({nb_erreurs} question{'s' if nb_erreurs != 1 else ''})",
+            disabled=nb_erreurs == 0,
+            help="Rejoue uniquement les questions déjà manquées. Une question sort de cette "
+                 "liste après deux réussites d'affilée.")
+    if mode_examen and mode_erreurs:
+        st.warning("Un seul mode à la fois : le mode examen blanc est prioritaire.")
+        mode_erreurs = False
 
     if st.button("🚀 Démarrer le quiz", type="primary"):
         if mode_examen:
             pool = list(toutes_les_questions())
+        elif mode_erreurs:
+            pool = [q for q in toutes_les_questions() if q["question"] in P["erreurs"]]
         else:
             pool = [q for q in toutes_les_questions()
                     if q["categorie"] in cats and q["niveau"] in niveaux]
@@ -30201,6 +30223,10 @@ elif PAGE == "🎯 Quiz interactif":
                 st.session_state.quiz_questions = pool[:20]
                 st.session_state.quiz_debut = time.time()
                 st.session_state.quiz_limite = 15 * 60
+            elif mode_erreurs:
+                st.session_state.quiz_questions = pool  # toutes les erreurs, pas de tirage partiel
+                st.session_state.quiz_debut = None
+                st.session_state.quiz_limite = None
             else:
                 st.session_state.quiz_questions = pool[:int(nb)]
                 st.session_state.quiz_debut = None
@@ -30249,6 +30275,19 @@ elif PAGE == "🎯 Quiz interactif":
                     juste = idx == q["correct"]
                     if juste:
                         st.session_state.quiz_score += 1
+                        # une question réussie deux fois de suite en révision sort du suivi
+                        if q["question"] in P["erreurs"]:
+                            P["erreurs"][q["question"]]["reussites"] = \
+                                P["erreurs"][q["question"]].get("reussites", 0) + 1
+                            if P["erreurs"][q["question"]]["reussites"] >= 2:
+                                del P["erreurs"][q["question"]]
+                    else:
+                        P["erreurs"][q["question"]] = {
+                            "categorie": q["categorie"], "niveau": q["niveau"],
+                            "reussites": 0,
+                            "date": datetime.now().strftime("%Y-%m-%d"),
+                        }
+                    sauver_progression(P)
                     st.session_state.quiz_reponses.append({
                         "question": q["question"], "categorie": q["categorie"],
                         "juste": juste, "donnee": choix,
@@ -30911,6 +30950,27 @@ elif PAGE == "📊 Ma progression":
     st.subheader("Fiches de cours consultées")
     st.progress(lues / nb_fiches if nb_fiches else 0)
     st.caption(f"{lues} fiches validées sur un total de {nb_fiches}")
+
+    st.divider()
+    st.subheader("Mes erreurs en attente de révision")
+    if P["erreurs"]:
+        _par_theme = {}
+        for _q, _info in P["erreurs"].items():
+            _par_theme.setdefault(_info["categorie"], []).append((_q, _info))
+        st.caption(
+            f"{len(P['erreurs'])} question(s) à revoir, réparties sur {len(_par_theme)} thème(s). "
+            f"Une question sort de cette liste après deux réussites d'affilée en mode révision "
+            f"(page Quiz interactif).")
+        for _theme, _items in sorted(_par_theme.items(), key=lambda t: -len(t[1])):
+            with st.expander(f"{_theme} — {len(_items)} question(s)"):
+                for _q, _info in _items:
+                    st.markdown(
+                        f"<div style='font-size:.88em;padding:4px 0;border-bottom:1px solid "
+                        f"#e5e7eb'>{_q}<br><span style='color:#94a3b8'>ratée le {_info['date']} · "
+                        f"niveau {_info['niveau']}</span></div>", unsafe_allow_html=True)
+    else:
+        st.success("Aucune erreur en attente : tout ce que vous avez raté a été repassé avec "
+                   "succès, ou vous n'avez pas encore fait d'erreur.")
 
     st.divider()
     st.subheader("Historique des quiz")
