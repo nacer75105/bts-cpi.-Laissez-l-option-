@@ -5012,6 +5012,61 @@ QUIZ["Anglais technique et coût"] = [
 
 CATEGORIES = list(QUIZ.keys())
 
+
+# ===========================================================================
+# COMPLÉMENT 4 — normes, sécurité et qualité
+# ===========================================================================
+
+QUIZ["Normes, sécurité et qualité"] = [
+    q("Le marquage CE sur une machine signifie :",
+      ["un label de qualité", "une déclaration du fabricant de conformité aux exigences de sécurité",
+       "une garantie de bon fonctionnement", "un contrôle par un organisme d'État"], 1,
+      "Le CE n'est pas un label : c'est le fabricant lui-même qui déclare respecter les exigences "
+      "essentielles de santé et de sécurité. Derrière, un dossier technique doit exister et être "
+      "conservé.", "Base"),
+
+    q("Dans une analyse de risque, quel est l'ORDRE des mesures ?",
+      ["protéger → informer → supprimer", "supprimer le danger → protéger → informer",
+       "informer → protéger → supprimer", "cela dépend de la machine"], 1,
+      "L'ordre est imposé. On ne passe à l'information — le niveau le plus faible, qui repose sur "
+      "le comportement humain — qu'après avoir démontré que supprimer et protéger ne sont pas "
+      "applicables.", "Base"),
+
+    q("Une protection qui rallonge chaque intervention de deux minutes, dix fois par heure :",
+      ["sera respectée si l'opérateur est formé", "sera neutralisée",
+       "améliore la sécurité", "n'a aucune conséquence"], 1,
+      "Ce n'est pas une question de discipline mais une donnée de conception : une protection "
+      "incompatible avec le travail réel est contournée. Il faut traiter la cause — pourquoi "
+      "l'opérateur doit-il entrer dans la zone ?", "Piège"),
+
+    q("La sécurité positive signifie que :",
+      ["la machine redémarre seule après une coupure", "un fil coupé provoque l'ARRÊT",
+       "les protections sont peintes en vert", "l'arrêt d'urgence est facultatif"], 1,
+      "Le circuit est conçu pour que toute défaillance — fil coupé, pression perdue — conduise à "
+      "l'arrêt, jamais à la mise en marche. C'est le principe de l'arrêt d'urgence.", "Intermédiaire"),
+
+    q("Quelle phase de vie d'une machine est la plus accidentogène ?",
+      ["la production normale", "la maintenance et le dégagement d'incidents",
+       "le transport", "le stockage"], 1,
+      "C'est hors du cas nominal que l'on se blesse : réglage, déblocage, nettoyage. Une machine "
+      "conçue uniquement pour la production sera dangereuse tous les jours.", "Intermédiaire"),
+
+    q("Un procédé affiche Cp = 1,25 et Cpk = 1,25. Que peut-on dire ?",
+      ["il est déréglé", "il est centré, mais sous le seuil usuel de 1,33",
+       "il est incapable", "il est parfait"], 1,
+      "Cp = Cpk signifie production parfaitement centrée. Mais 1,25 reste sous le seuil industriel "
+      "de 1,33 : la marge est faible, à surveiller par carte de contrôle.", "Calcul"),
+
+    q("La consignation d'une machine consiste à :",
+      ["couper et VERROUILLER les énergies avant intervention", "arrêter le cycle",
+       "prévenir le chef d'atelier", "mettre un panneau"], 0,
+      "Couper ne suffit pas : il faut pouvoir verrouiller par cadenas, et purger les énergies "
+      "résiduelles — vérin sous pression, volant lancé, charge suspendue. Cela se prévoit en "
+      "conception.", "Base"),
+]
+
+CATEGORIES = list(QUIZ.keys())
+
 # ==========================================================================
 # CONTENU DE cours_bloc_1_2.py
 # ==========================================================================
@@ -29199,6 +29254,514 @@ sujet plus long :
    compte des temps de sortie et de rentrée du vérin (fiche 8.2, débit et vitesse).
 """,
         },
+        {
+    "id": "14.2",
+    "titre": "Étude de cas 2 — Réducteur de tapis roulant",
+    "duree": "4 h",
+    "cours": """
+### Comment travailler cette étude de cas
+
+**Deuxième sujet d'épreuve.** Il est plus calculatoire que le premier : engrenage, arbre en
+flexion-torsion, roulements, matériaux, gamme de fabrication. C'est le format typique d'une
+épreuve de conception détaillée.
+
+**Deux conseils propres à ce sujet :**
+
+1. **Travaillez en newtons et en millimètres** du début à la fin. Les couples sont donnés en N·m :
+   convertissez-les **une seule fois, au début**, et n'y revenez plus. La moitié des erreurs sur ce
+   type de sujet vient d'un facteur 1 000.
+2. **Chaque partie fournit une donnée à la suivante.** Le couple de sortie calculé en A sert à
+   dimensionner l'arbre en B, qui détermine les roulements en C. Encadrez vos résultats
+   intermédiaires : vous les relirez.
+
+**Durée conseillée : 3 heures.**
+
+---
+
+### Présentation du système
+
+Un **tapis roulant** de tri postal doit être entraîné par un motoréducteur. Le moteur électrique
+disponible délivre **4 kW à 1 450 tr/min**. Le tambour d'entraînement doit tourner à environ
+**290 tr/min**.
+
+On réalise la réduction par **un seul étage d'engrenage droit**, logé dans un carter.
+
+**Les données**
+
+| Élément | Valeur |
+|---|---|
+| puissance moteur | **4 kW** |
+| vitesse d'entrée | **1 450 tr/min** |
+| vitesse de sortie souhaitée | **290 tr/min** |
+| pignon : nombre de dents | Z₁ = **20** |
+| coefficient de largeur | k = 10 (b = 10 m) |
+| facteur de forme (Lewis) | Y = 0,4 |
+| pignon : 16MnCr5 cémenté trempé | Rpe = **300 MPa** |
+| rendement de l'engrenage | η = **0,97** |
+| moment fléchissant sur l'arbre de sortie | **350 N·m** |
+| arbre de sortie : 42CrMo4 trempé revenu | Re = 750 MPa, **s = 4** |
+| charge radiale sur le roulement côté tambour | **4 200 N**, direction fixe |
+| série | 12 réducteurs |
+""",
+    "formules": """
+**Cinématique** — r = N₂/N₁ = Z₁/Z₂ · ω = 2π N / 60 · Mt = P / ω · 1 N·m = 1 000 N·mm
+
+**Engrenage** — m ≥ ∛( 2 Mt / (k Z Y Rpe) ) · série : 1 · 1,25 · 1,5 · 2 · 2,5 · 3 · 4 · 5 · 6
+d = m Z · da = d + 2m · df = d − 2,5m · a = m(Z₁+Z₂)/2 · b = k m
+Ft = 2 Mt / d · σ pied = Ft / (b m Y) ≤ Rpe
+
+**Arbre en flexion-torsion** — Tresca : **Méq = √(Mf² + Mt²)**
+d ≥ ∛( 32 Méq / (π Rpe) ) · vérification : σ = Méq / (π d³/32)
+
+**Roulements** — bague tournante par rapport à la charge → serrée
+arbre tournant, charge fixe : arbre **k6**, alésage **H7**
+
+**Coût** — coût unitaire = coût variable + outillage / quantité
+""",
+    "exercice": """
+## PARTIE A — L'engrenage (45 points)
+
+**A1.** Calculez le **rapport de réduction** nécessaire, puis le nombre de dents Z₂ de la roue.
+Quelle vitesse de sortie réelle obtenez-vous ?
+
+**A2.** Calculez la **vitesse angulaire** de l'arbre d'entrée, puis le **couple** qu'il transmet.
+Donnez le résultat en N·m **et** en N·mm.
+
+**A3.** Calculez le **couple sur l'arbre de sortie**, en tenant compte du rendement.
+
+**A4.** Déterminez le **module minimal** par la formule de Lewis, puis choisissez le module
+normalisé. Justifiez le choix.
+
+**A5.** Donnez la **géométrie complète** : d₁, d₂, da₁, da₂, df₁, df₂, l'entraxe et la largeur de
+denture.
+
+**A6.** Calculez l'**effort tangentiel** puis la **contrainte en pied de dent**. Concluez et donnez
+le taux d'utilisation de l'admissible.
+
+**A7.** Pourquoi le pignon est-il en 16MnCr5 et non en C45, alors que le 16MnCr5 contient moins de
+carbone ?
+
+---
+
+## PARTIE B — L'arbre de sortie (40 points)
+
+**B1.** Convertissez le couple de sortie et le moment fléchissant en **N·mm**.
+
+**B2.** Pourquoi ne peut-on pas additionner directement la contrainte de flexion et celle de
+torsion ? Quelle grandeur calcule-t-on à la place ?
+
+**B3.** Calculez le **moment équivalent** selon Tresca.
+
+**B4.** Calculez le **diamètre minimal** de l'arbre, puis choisissez une valeur normalisée.
+
+**B5.** Vérifiez la contrainte obtenue avec le diamètre retenu.
+
+**B6.** L'arbre tourne à 290 tr/min, 8 h par jour, 250 jours par an. Combien de **cycles** subit-il
+en 5 ans ? Quelle conséquence pour votre choix de diamètre ?
+
+---
+
+## PARTIE C — Roulements et ajustements (35 points)
+
+**C1.** L'arbre tourne, la charge du tambour est **fixe en direction**. Quelle bague doit être
+montée **serrée** ? Justifiez par le mécanisme physique.
+
+**C2.** Donnez les **ajustements** à porter sur le plan pour l'arbre et pour l'alésage du carter.
+
+**C3.** Sur l'arbre à deux paliers, combien de paliers doivent être **bloqués axialement** ?
+Que se passe-t-il si les deux le sont ? Chiffrez la dilatation pour un entraxe de 400 mm et un
+échauffement de 40 °C (α = 12·10⁻⁶ /°C).
+
+**C4.** Proposez un **ajustement pour le montage de la roue dentée** sur l'arbre, sachant qu'elle
+devra être démontée en maintenance. Comment le couple est-il transmis, et comment la roue est-elle
+tenue axialement ?
+
+**C5.** Quel **état de surface** demandez-vous sur la portée de roulement et sur la portée de joint
+à lèvres en sortie de carter ?
+
+---
+
+## PARTIE D — Matériaux, gamme et coût (30 points)
+
+**D1.** Le carter est en **EN-GJL-250**. Décodez cette désignation et donnez **deux raisons** de ce
+choix.
+
+**D2.** Écrivez la **gamme de fabrication du pignon**, de la barre brute au contrôle final, en
+justifiant la position du traitement thermique.
+
+**D3.** Le carter peut être **usiné dans la masse** (310 € la pièce, aucun outillage) ou **moulé**
+(outillage 5 800 €, puis 62 € la pièce, plus 45 € de reprise d'usinage). Pour **12 réducteurs**,
+que choisissez-vous ? Donnez le seuil de rentabilité.
+
+**D4.** Quelle information devez-vous écrire sur le plan du pignon à propos du traitement, pour
+que ce soit **contractuel** ?
+
+---
+
+## PARTIE E — Synthèse (10 points)
+
+**E1.** Dressez le **tableau de validation** des exigences chiffrées.
+
+**E2.** Citez **deux vérifications** que ce sujet ne demande pas mais qu'un bureau d'études ferait
+avant de lancer la fabrication.
+""",
+    "corrige": """
+## CORRIGÉ — PARTIE A · L'engrenage
+
+**A1. Rapport et nombre de dents**
+
+r = N₂ / N₁ = 290 / 1 450 = **0,20**, soit **1/5**
+
+Z₂ = Z₁ / r = 20 × 5 = **100 dents**
+
+Vitesse réelle : N₂ = 1 450 × 20/100 = **290 tr/min exactement**.
+
+*Remarque de conception qu'un bon candidat ajoute : 20 et 100 ne sont pas premiers entre eux, donc
+les mêmes dents se retrouvent toujours en contact. On préférerait **Z₂ = 101** pour répartir
+l'usure — la vitesse deviendrait 287 tr/min, écart de 1 %, sans conséquence.*
+
+**A2. Vitesse angulaire et couple d'entrée**
+
+ω₁ = 2π N₁ / 60 = 2 × 3,1416 × 1 450 / 60 = **151,8 rad/s**
+
+Mt₁ = P / ω₁ = 4 000 / 151,8 = **26,3 N·m = 26 300 N·mm**
+
+*Contrôle par le repère de la fiche 4.2 : environ 6,4 N·m par kW à 1 500 tr/min → 4 × 6,4 = 25,6.
+On est bien dans l'ordre de grandeur.*
+
+**A3. Couple de sortie**
+
+La vitesse est divisée par 5, donc le couple est multiplié par 5, au rendement près :
+
+Mt₂ = 26,3 × 5 × 0,97 = **127,8 N·m = 127 800 N·mm**
+
+*Vérification par la puissance : P₂ = 4 000 × 0,97 = 3 880 W · ω₂ = 2π × 290/60 = 30,4 rad/s
+→ Mt₂ = 3 880 / 30,4 = 127,8 N·m. Les deux méthodes concordent.*
+
+**A4. Module minimal**
+
+m ≥ ∛( 2 Mt / (k Z₁ Y Rpe) ) = ∛( 2 × 26 300 / (10 × 20 × 0,4 × 300) )
+m ≥ ∛( 52 600 / 24 000 ) = ∛2,19 = **1,30 mm**
+
+Série normalisée : 1 · 1,25 · **1,5** · 2 · 2,5…
+
+On retient **m = 1,5**, premier module normalisé **supérieur** au calcul.
+
+*On ne prend jamais le module inférieur, même s'il est proche : 1,25 donnerait une denture
+sous-dimensionnée. Et on ne prend pas 2,5 « pour être tranquille » : la roue passerait de 150 à
+250 mm de diamètre, pour rien.*
+
+**A5. Géométrie complète**
+
+| Grandeur | Pignon | Roue |
+|---|---|---|
+| diamètre primitif d = m Z | **30 mm** | **150 mm** |
+| diamètre de tête da = d + 2m | **33 mm** | **153 mm** |
+| diamètre de pied df = d − 2,5m | **26,25 mm** | **146,25 mm** |
+
+Entraxe : a = (30 + 150) / 2 = **90 mm**
+Largeur de denture : b = k m = 10 × 1,5 = **15 mm**
+
+**A6. Effort tangentiel et contrainte**
+
+Ft = 2 Mt₁ / d₁ = 2 × 26 300 / 30 = **1 756 N**
+
+σ = Ft / (b × m × Y) = 1 756 / (15 × 1,5 × 0,4) = 1 756 / 9 = **195 MPa**
+
+195 ≤ 300 → **la condition est vérifiée**, à **65 %** de l'admissible.
+
+*C'est une marge correcte mais pas généreuse. Sur une application avec des chocs — un tapis de tri
+postal où les colis tombent —, on appliquerait un **facteur de service de 1,3 à 1,5**, ce qui
+porterait la contrainte à 254-293 MPa. On serait alors à la limite : c'est exactement le piège du
+cas industriel de la fiche 12.5.*
+
+**A7. Pourquoi le 16MnCr5 et non le C45**
+
+Parce que le pignon doit être **cémenté**.
+
+Une denture a deux exigences contradictoires : une **surface très dure** pour résister à l'usure
+et au pitting, et un **cœur tenace** pour encaisser les chocs d'engrènement.
+
+La cémentation enrichit la peau en carbone sur 0,5 à 1,5 mm, puis on trempe : seule la peau
+durcit. Il faut donc partir d'un acier **pauvre en carbone** — 0,16 % pour le 16MnCr5.
+
+Un C45 trempé serait dur **à cœur** : il casserait net à la première surcharge.
+
+---
+
+## CORRIGÉ — PARTIE B · L'arbre de sortie
+
+**B1. Conversions**
+
+Mt₂ = 127,8 N·m = **127 800 N·mm** · Mf = 350 N·m = **350 000 N·mm**
+
+**B2. Pourquoi on n'additionne pas**
+
+La contrainte de flexion **σ** agit perpendiculairement à la section ; la contrainte de torsion
+**τ** agit **dans le plan** de la section. Ce sont deux grandeurs de directions différentes : les
+additionner n'a pas de sens physique, pas plus qu'additionner une force verticale et une force
+horizontale sans passer par Pythagore.
+
+On calcule donc un **moment équivalent** — celui d'une flexion seule qui produirait le même risque
+de ruine.
+
+**B3. Moment équivalent (Tresca)**
+
+Méq = √(Mf² + Mt²) = √(350 000² + 127 800²)
+= √(1,225·10¹¹ + 1,633·10¹⁰) = √(1,388·10¹¹) = **372 600 N·mm**
+
+*Constatez : la flexion (350 000) domine largement la torsion (127 800). Sur un arbre de sortie de
+réducteur, c'est fréquent — et c'est pourquoi vérifier la torsion seule serait une faute grave.*
+
+**B4. Diamètre minimal**
+
+Rpe = Re / s = 750 / 4 = **187,5 MPa**
+
+d ≥ ∛( 32 Méq / (π Rpe) ) = ∛( 32 × 372 600 / (3,1416 × 187,5) )
+= ∛( 11 923 200 / 589 ) = ∛20 243 = **27,3 mm**
+
+On retient **Ø30 mm** — valeur normalisée immédiatement supérieure, et diamètre courant de
+roulement (6206).
+
+**B5. Vérification**
+
+σ = Méq / (π d³ / 32) = 372 600 / (3,1416 × 27 000 / 32) = 372 600 / 2 651 = **140,6 MPa**
+
+140,6 ≤ 187,5 → **vérifié**, à **75 %** de l'admissible.
+
+**B6. Fatigue**
+
+290 × 60 × 8 × 250 × 5 = **174 millions de cycles** en cinq ans.
+
+**Conséquence : l'arbre travaille en fatigue, pas en statique.** Or chaque fibre passe de tendue à
+comprimée à chaque tour, et la limite d'endurance vaut environ 40 à 50 % de Rm — bien moins que le
+Rpe utilisé ici.
+
+À 75 % de l'admissible statique, la marge est **insuffisante** pour de la fatigue. Un bureau
+d'études retiendrait donc **Ø35** (σ = 88,5 MPa, soit 47 % de l'admissible), ou conserverait Ø30
+en soignant les congés de raccordement — car en fatigue, c'est la concentration de contrainte aux
+épaulements qui décide (fiche 4.1).
+
+*Répondre « Ø30 convient » sans mentionner la fatigue fait perdre l'essentiel des points de cette
+question.*
+
+---
+
+## CORRIGÉ — PARTIE C · Roulements et ajustements
+
+**C1. Quelle bague serrée**
+
+**La bague intérieure.**
+
+L'arbre tourne, la charge du tambour reste fixe en direction. C'est donc la bague intérieure qui
+**tourne par rapport à la direction de la charge**.
+
+*Le mécanisme physique : si elle était montée avec du jeu, elle roulerait lentement sur sa portée —
+elle « flue » —, avançant de quelques micromètres à chaque tour. La portée serait matée en
+quelques dizaines d'heures, du jeu apparaîtrait, et le montage se détruirait.*
+
+**C2. Les ajustements**
+
+- arbre : **Ø30 k6** (ou m6 si la charge était plus forte)
+- alésage du carter : **Ø62 H7**, bague extérieure glissante
+
+**C3. Palier fixe et palier libre**
+
+**Un seul** palier doit être bloqué axialement. L'autre doit pouvoir coulisser.
+
+Si les deux sont bloqués : l'arbre chauffe, cherche à s'allonger, ne peut pas — il **précontraint
+les roulements**. Le frottement augmente, donc la température, donc la dilatation : c'est un
+emballement qui finit par le grippage.
+
+Le chiffre :
+ΔL = L α ΔT = 400 × 12·10⁻⁶ × 40 = **0,192 mm**
+
+*Près de deux dixièmes, à comparer au jeu interne d'un roulement qui se compte en centièmes. La
+règle n'est donc pas théorique.*
+
+**C4. Montage de la roue sur l'arbre**
+
+Trois fonctions, trois éléments distincts :
+
+| Fonction | Solution |
+|---|---|
+| **centrer** | ajustement **H7/k6** — incertain, il centre précisément et se démonte à l'extracteur |
+| **transmettre le couple** | **clavette parallèle**, ajustée sans jeu sur les flancs, avec jeu en fond de rainure |
+| **tenir axialement** | **épaulement** d'un côté, **anneau élastique** ou entretoise de l'autre |
+
+*Erreur classique à éviter : compter sur la clavette pour centrer ou pour tenir axialement. Elle ne
+fait ni l'un ni l'autre.*
+
+Un H7/p6 serait excessif : il faudrait une presse à chaque intervention de maintenance.
+
+**C5. États de surface**
+
+- portée de roulement : **Ra 0,8**, rectifiée ;
+- portée de joint à lèvres : **Ra 0,8** également, sans stries hélicoïdales, **avec un chanfrein
+  d'introduction** pour ne pas couper la lèvre au montage.
+
+*Une portée laissée brute de tournage à Ra 3,2 abrase la lèvre en quelques heures : le joint fuit
+et la panne paraît inexplicable.*
+
+---
+
+## CORRIGÉ — PARTIE D · Matériaux, gamme et coût
+
+**D1. EN-GJL-250**
+
+**GJ** = fonte moulée · **L** = graphite **lamellaire** · **250** = **Rm = 250 MPa**
+
+Deux raisons du choix :
+
+1. **Elle amortit remarquablement les vibrations** grâce à ses lamelles de graphite — ce qui
+   réduit le bruit d'engrènement, un vrai sujet sur un réducteur.
+2. **Elle se moule facilement en formes complexes** : un carter comporte des logements de
+   roulement, des nervures, des pattes de fixation, un plan de joint. L'usiner dans la masse
+   coûterait bien plus cher.
+
+*On peut ajouter : elle s'usine très bien, et son coût matière est faible.*
+
+**D2. Gamme du pignon**
+
+| Phase | Opération | Justification |
+|---|---|---|
+| 10 | barre 16MnCr5 | acier à bas carbone, prévu pour être cémenté |
+| 20 | tournage d'ébauche, surépaisseur 0,3 mm | la matière est encore tendre |
+| 30 | taillage de la denture | tailler après trempe serait très coûteux |
+| 40 | **cémentation + trempe** | **ça déforme : donc avant la finition** |
+| 50 | **revenu** | on récupère la ténacité perdue |
+| 60 | rectification de l'alésage et des flancs | on rattrape les déformations, on tient les cotes |
+| 70 | contrôle | dureté superficielle, profondeur cémentée, géométrie |
+
+**La règle qui commande tout : ÉBAUCHE → TRAITEMENT → FINITION.** Une trempe déforme de plusieurs
+dixièmes ; usiner à la cote avant, c'est jeter la pièce. Tout usiner après, c'est user les outils
+sur une matière devenue très dure.
+
+**D3. Le choix économique**
+
+Pour **12 carters** :
+
+- usinage dans la masse : 12 × 310 = **3 720 €**
+- moulage : 5 800 + 12 × (62 + 45) = 5 800 + 1 284 = **7 084 €**
+
+**On retient l'usinage dans la masse.**
+
+Seuil de rentabilité :
+310 N = 5 800 + 107 N → 203 N = 5 800 → **N ≈ 29 carters**
+
+*Il faudrait donc 29 réducteurs pour amortir le moule. Avec 12, on en est loin — mais si une
+seconde série était probable, la décision changerait. C'est la question à poser au client.*
+
+**D4. Ce qu'on écrit sur le plan**
+
+> *Matière : **16MnCr5** — Cémenté trempé revenu, profondeur cémentée **0,4 ± 0,1 mm**, dureté
+> superficielle **58-62 HRC**, dureté à cœur **30-40 HRC**.*
+
+**Écrire seulement « traité » n'est pas contractuel** : ce n'est pas mesurable, donc pas
+vérifiable. Le fournisseur choisirait — et il choisirait le moins cher.
+
+*L'ordre de grandeur de la profondeur : environ 0,2 à 0,3 × le module, soit 0,3 à 0,45 mm pour un
+module 1,5.*
+
+---
+
+## CORRIGÉ — PARTIE E · Synthèse
+
+**E1. Tableau de validation**
+
+| Exigence | Demandé | Obtenu | Verdict |
+|---|---|---|---|
+| vitesse de sortie | ≈ 290 tr/min | 290 tr/min | ✅ |
+| couple de sortie | — | 127,8 N·m | ✅ |
+| contrainte en pied de dent | ≤ 300 MPa | 195 MPa (65 %) | ✅ |
+| contrainte dans l'arbre | ≤ 187,5 MPa | 140,6 MPa (75 %) | ⚠️ juste en fatigue |
+| entraxe | — | 90 mm | ✅ |
+| coût carter (12 pièces) | le plus bas | 3 720 € en usinage | ✅ |
+
+**E2. Deux vérifications supplémentaires**
+
+Plusieurs réponses valables. Les meilleures :
+
+- **la durée de vie des roulements** (calcul L₁₀ à partir de la charge de 4 200 N et de la vitesse) —
+  c'est le calcul qui manque à ce sujet, et il relève de la deuxième année ;
+- **l'échauffement du carter** : le rendement de 0,97 signifie 120 W dissipés en chaleur ; il faut
+  vérifier que la surface du carter les évacue, ou prévoir des ailettes ;
+- **le couple de démarrage** : un tapis chargé demande 1,8 à 2 fois le couple nominal — c'est
+  souvent lui qui dimensionne le moteur ;
+- **l'accessibilité** pour la maintenance : peut-on extraire l'arbre sans démonter tout le carter ?
+
+---
+
+## BARÈME ET AUTO-ÉVALUATION
+
+| Partie | Points | Ce qui est évalué |
+|---|---|---|
+| A — engrenage | 45 | rapport, couple, module normalisé, géométrie, contrainte |
+| B — arbre | 40 | flexion-torsion, moment équivalent, fatigue |
+| C — roulements | 35 | règle des charges, palier libre, clavette, états de surface |
+| D — matériaux et coût | 30 | désignation, gamme, seuil de rentabilité |
+| E — synthèse | 10 | tableau de validation, esprit critique |
+| **Total** | **160** | |
+
+**Les quatre erreurs les plus coûteuses de ce sujet :**
+
+1. **Oublier de convertir les N·m en N·mm** : le module sort dix fois trop petit.
+2. **Prendre le module normalisé inférieur** au calcul pour « tomber juste ».
+3. **Vérifier la torsion seule** sur l'arbre, sans le moment équivalent.
+4. **Conclure « Ø30 convient » sans parler de fatigue** en B6.
+""",
+    "exemple": """
+### Ce que ce sujet vous apprend
+
+**Il enchaîne huit fiches différentes** : 12.5 pour l'engrenage, 12.2 pour la flexion-torsion, 6.2
+pour les roulements, 6.3 pour la clavette, 3.2 pour la désignation, 3.3 pour la cémentation, 10.2
+pour le coût, 13.5 pour la fatigue.
+
+**C'est exactement ce qu'on attend à l'épreuve** : non pas savoir appliquer une formule, mais
+savoir **laquelle appliquer, dans quel ordre, et avec quelles données**.
+
+---
+
+### Les renvois vers les fiches
+
+| Partie | Fiches à revoir |
+|---|---|
+| A1 à A6 | **12.5** dimensionner un engrenage · **6.3** formules de base |
+| A7 | **3.3** cémentation, peau dure et cœur tenace |
+| B | **12.2** sollicitations composées · **4.2** torsion · **13.5** fatigue |
+| C | **6.2** règle des charges et palier libre · **6.3** clavette · **1.3** états de surface |
+| D | **3.2** désignations · **12.4** gammes · **10.2** seuil de rentabilité |
+| E | **9.3** tableau de validation |
+
+---
+
+### Les trois automatismes à prendre
+
+**1. Convertir une seule fois, au début.** Écrivez en haut de votre copie :
+*Mt₁ = 26 300 N·mm · Mt₂ = 127 800 N·mm · Mf = 350 000 N·mm.* Vous n'y reviendrez plus.
+
+**2. Vérifier chaque résultat par une seconde méthode quand c'est possible.** Le couple de sortie
+se calcule de deux façons — par le rapport, ou par la puissance et la vitesse de sortie. Les deux
+doivent concorder. Trente secondes, et vous êtes certain de votre chiffre.
+
+**3. Toujours conclure une vérification par un pourcentage.** « 195 MPa contre 300 admissibles,
+soit 65 % » en dit beaucoup plus que « ça passe » — et c'est ce qui permet, en E2, de repérer que
+l'arbre à 75 % est juste en fatigue alors que la denture à 65 % est confortable.
+
+---
+
+### Pour aller plus loin
+
+Trois questions qu'un sujet de deuxième année ajouterait :
+
+1. **Calculer la durée de vie L₁₀ des roulements** à partir du catalogue, et vérifier qu'elle
+   dépasse les 20 000 heures demandées.
+2. **Dimensionner la clavette** : longueur nécessaire pour que la pression de matage reste sous
+   100 MPa (fiche 6.3).
+3. **Vérifier l'échauffement du carter** : 120 W dissipés, quelle surface d'échange faut-il
+   (fiche 8.2) ?
+"""
+        },
     ],
 }
 
@@ -29937,7 +30500,8 @@ elif PAGE == "🔧 Calculateurs RDM":
     st.write("")
 
     onglets = st.tabs(["Traction / Compression", "Cisaillement + matage",
-                       "Torsion", "Flexion", "Flambage", "Flexion + torsion"])
+                       "Torsion", "Flexion", "Flambage", "Flexion + torsion",
+                       "📏 Chaîne de cotes"])
 
     def choisir_materiau(cle):
         noms = [m["nom"] for m in MATERIAUX]
@@ -30198,6 +30762,114 @@ elif PAGE == "🔧 Calculateurs RDM":
 # ===========================================================================
 # PAGE : BASE MATÉRIAUX
 # ===========================================================================
+
+    # -----------------------------------------------------------------
+    # ONGLET 7 — CHAÎNE DE COTES
+    # -----------------------------------------------------------------
+    with onglets[6]:
+        st.subheader("Chaîne de cotes — calcul d'une condition fonctionnelle")
+        st.markdown(
+            '<div class="info-box">Une condition fonctionnelle (un jeu, un dépassement) dépend '
+            'de plusieurs pièces à la fois. Les tolérances de toutes ces pièces '
+            '<b>s\'additionnent</b> — elles ne se compensent jamais. Cet outil fait le calcul '
+            'et la vérification aux extrêmes. Méthode complète : fiche 2.3.</div>',
+            unsafe_allow_html=True)
+        st.write("")
+
+        cc1, cc2 = st.columns([1, 1])
+        with cc1:
+            n_cotes = st.number_input("Nombre de cotes dans la chaîne", 2, 8, 3, step=1,
+                                      key="cc_n")
+        with cc2:
+            st.caption("Sens : **+** si la cote va dans le sens du vecteur condition, "
+                       "**−** si elle va en sens inverse. Les valeurs par défaut reprennent "
+                       "l'exemple de la fiche 2.3 : carter 60, roue 40, couvercle 19,75.")
+
+        cotes_saisies = []
+        for i in range(int(n_cotes)):
+            c_a, c_b, c_c, c_d = st.columns([2, 2, 2, 1])
+            with c_a:
+                nom_c = st.text_input("Repère", value=f"L{i+1}", key=f"cc_nom_{i}")
+            with c_b:
+                _defauts = [60.0, 40.0, 19.75]
+                val_c = st.number_input("Nominal (mm)", 0.0, 10000.0,
+                                        _defauts[i] if i < 3 else 10.0,
+                                        step=0.05, format="%.2f", key=f"cc_val_{i}")
+            with c_c:
+                tol_c = st.number_input("Tolérance ± (mm)", 0.0, 5.0, 0.05,
+                                        step=0.01, format="%.3f", key=f"cc_tol_{i}")
+            with c_d:
+                sgn_c = st.selectbox("Sens", ["+", "−"], index=0 if i == 0 else 1,
+                                     key=f"cc_sgn_{i}")
+            cotes_saisies.append({"nom": nom_c, "val": val_c, "tol": tol_c,
+                                  "signe": 1 if sgn_c == "+" else -1})
+
+        st.write("")
+        cond_mini = st.number_input("Condition à respecter — jeu MINI (mm)", -100.0, 100.0,
+                                    0.10, step=0.01, format="%.3f", key="cc_jmin")
+        cond_maxi = st.number_input("Condition à respecter — jeu MAXI (mm)", -100.0, 100.0,
+                                    0.40, step=0.01, format="%.3f", key="cc_jmax")
+
+        if st.button("Calculer la chaîne", type="primary", key="cc_calc"):
+            j_nom = sum(c["signe"] * c["val"] for c in cotes_saisies)
+            it_total = sum(2 * c["tol"] for c in cotes_saisies)
+            # vérification aux extrêmes : positives au maxi, négatives au mini
+            j_max = sum(c["signe"] * (c["val"] + c["signe"] * c["tol"]) for c in cotes_saisies)
+            j_min = sum(c["signe"] * (c["val"] - c["signe"] * c["tol"]) for c in cotes_saisies)
+
+            m1, m2, m3 = st.columns(3)
+            m1.metric("Jeu nominal", f"{j_nom:.3f} mm")
+            m2.metric("Jeu mini", f"{j_min:.3f} mm")
+            m3.metric("Jeu maxi", f"{j_max:.3f} mm")
+            st.caption(f"Intervalle de tolérance de la condition : ITja = {it_total:.3f} mm "
+                       f"(somme de tous les IT)")
+
+            st.write("")
+            largeur_ok = it_total <= (cond_maxi - cond_mini) + 1e-9
+            plage_ok = (j_min >= cond_mini - 1e-9) and (j_max <= cond_maxi + 1e-9)
+
+            if plage_ok:
+                st.markdown(
+                    f'<div class="ok-box"><b>Condition satisfaite.</b> La plage obtenue '
+                    f'({j_min:.3f} à {j_max:.3f}) tient dans la condition demandée '
+                    f'({cond_mini:.3f} à {cond_maxi:.3f}), dans tous les cas de figure.</div>',
+                    unsafe_allow_html=True)
+            elif largeur_ok:
+                decalage = ((j_min + j_max) / 2) - ((cond_mini + cond_maxi) / 2)
+                st.markdown(
+                    f'<div class="warn-box"><b>Largeur correcte, mais plage mal centrée.</b><br>'
+                    f'La somme des IT ({it_total:.3f} mm) tient dans l\'intervalle disponible '
+                    f'({cond_maxi - cond_mini:.3f} mm) — mais la plage est décalée de '
+                    f'<b>{decalage:+.3f} mm</b>.<br>'
+                    f'Ne resserrez pas les tolérances : corrigez un <b>NOMINAL</b> de '
+                    f'{-decalage:+.3f} mm.</div>', unsafe_allow_html=True)
+            else:
+                manque = it_total - (cond_maxi - cond_mini)
+                st.markdown(
+                    f'<div class="ko-box"><b>Condition impossible à tenir.</b><br>'
+                    f'La somme des IT vaut {it_total:.3f} mm pour un intervalle disponible de '
+                    f'seulement {cond_maxi - cond_mini:.3f} mm : il manque '
+                    f'<b>{manque:.3f} mm</b>.<br>'
+                    f'Trois leviers, dans l\'ordre : <b>raccourcir la chaîne</b> (moins de pièces), '
+                    f'ajouter une <b>cale de réglage</b> qui absorbe la dispersion, ou en dernier '
+                    f'recours resserrer les tolérances — ce qui coûte cher.</div>',
+                    unsafe_allow_html=True)
+
+            st.write("")
+            st.markdown("**Répartition uniforme, si vous devez répartir les tolérances**")
+            it_par_cote = (cond_maxi - cond_mini) / len(cotes_saisies)
+            st.write(f"ITja disponible = {cond_maxi - cond_mini:.3f} mm ÷ {len(cotes_saisies)} "
+                     f"cotes = **{it_par_cote:.3f} mm par cote**, soit ± {it_par_cote/2:.3f} mm.")
+
+            df_cc = pd.DataFrame([{
+                "Repère": c["nom"],
+                "Sens": "+" if c["signe"] > 0 else "−",
+                "Nominal": f"{c['val']:.2f}",
+                "Tolérance": f"± {c['tol']:.3f}",
+                "IT": f"{2 * c['tol']:.3f}",
+            } for c in cotes_saisies])
+            st.dataframe(df_cc, hide_index=True, width="stretch")
+
 
 elif PAGE == "🧱 Base matériaux":
     st.title("Base de données Matériaux")
