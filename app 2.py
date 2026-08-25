@@ -29,6 +29,7 @@ import json
 import re
 import os
 import random
+import time
 from datetime import datetime
 import pandas as pd
 import streamlit as st
@@ -4869,6 +4870,144 @@ QUIZ["Métrologie et automatismes"] = [
       "La pression donne l'EFFORT, le débit donne la VITESSE. Le limiteur se monte à "
       "l'échappement : le vérin est freiné par l'air qu'il chasse, le mouvement est régulier.",
       "Piège"),
+]
+
+CATEGORIES = list(QUIZ.keys())
+
+
+# ===========================================================================
+# COMPLÉMENT 3 — questions sur les blocs 7 à 11
+# (maths, physique, projet, anglais, économie-gestion)
+# ===========================================================================
+
+QUIZ["Mathématiques appliquées"] = [
+    q("Une rampe monte de 300 mm sur 1 200 mm à l'horizontale. Quel est son angle ?",
+      ["14,0°", "25,0°", "4,0°", "76,0°"], 0,
+      "tan α = 300/1200 = 0,25 → α = arctan 0,25 = 14°. Vérifiez que la calculatrice est en mode "
+      "DEG : en RAD, elle donnerait 0,245.", "Calcul"),
+
+    q("Un effort de 1 500 N est incliné de 25° par rapport à l'axe d'une poutre. Quelle composante "
+      "la fait fléchir ?",
+      ["1 500 N", "1 360 N", "634 N", "750 N"], 2,
+      "C'est la composante PERPENDICULAIRE : Fy = F sin 25° = 634 N. La composante 1 360 N agit le "
+      "long de la poutre et la comprime ou la tend.", "Piège"),
+
+    q("Un tube acier Ø60/Ø50 de 2 m. Quelle est sa masse ? (ρ = 7,85 kg/dm³)",
+      ["13,6 kg", "44 kg", "6,8 kg", "27 kg"], 0,
+      "S = π(60²−50²)/4 = 864 mm² · V = 1,728 dm³ · m = 13,6 kg. Une barre pleine Ø60 pèserait "
+      "44 kg : le tube est trois fois plus léger pour une résistance à peine inférieure.", "Calcul"),
+
+    q("Une pièce moulée doit mesurer 240 mm après refroidissement, retrait 1 %. Le modèle fait :",
+      ["237,6 mm", "242,4 mm", "240 mm", "264 mm"], 1,
+      "La pièce RÉTRÉCIT en refroidissant : le modèle doit être plus GRAND. 240 × 1,01 = 242,4 mm. "
+      "Retrancher le retrait est l'erreur classique.", "Piège"),
+
+    q("Sur un profil de vitesse trapézoïdal, que représente l'aire sous la courbe ?",
+      ["L'accélération", "La distance parcourue", "La force", "Le temps de cycle"], 1,
+      "L'intégrale d'une vitesse est une distance. La PENTE des rampes donne l'accélération, donc "
+      "l'effort à fournir par le moteur.", "Intermédiaire"),
+
+    q("Un procédé a un Cp de 1,4 et un Cpk de 0,4. Que faut-il faire ?",
+      ["Changer de machine", "Recentrer le réglage", "Élargir la tolérance", "Rien, c'est correct"], 1,
+      "Cp élevé = la machine est assez précise. Cpk faible = elle est DÉRÉGLÉE, décalée vers une "
+      "limite. Un simple recentrage suffit : changer de machine serait un gaspillage.", "Avancé"),
+]
+
+QUIZ["Physique appliquée"] = [
+    q("Un tambour Ø400 tourne à 60 tr/min. Vitesse linéaire de la bande ?",
+      ["1,26 m/s", "2,51 m/s", "0,63 m/s", "25 m/s"], 0,
+      "ω = 2π×60/60 = 6,28 rad/s · v = ω R = 6,28 × 0,20 = 1,26 m/s. Attention : R = 0,2 m, pas "
+      "0,4 — c'est le rayon, pas le diamètre.", "Calcul"),
+
+    q("Un arbre acier de 800 mm passe de 20 à 70 °C. De combien s'allonge-t-il ?",
+      ["0,05 mm", "0,48 mm", "4,8 mm", "0,005 mm"], 1,
+      "ΔL = L α ΔT = 800 × 12·10⁻⁶ × 50 = 0,48 mm. C'est bien plus que le jeu d'un roulement : "
+      "d'où la règle du palier libre.", "Calcul"),
+
+    q("Comment règle-t-on l'effort d'un vérin pneumatique ?",
+      ["Par le débit", "Par la pression", "Par la longueur de course", "Par le distributeur"], 1,
+      "F = p × S : la pression donne l'EFFORT. Le débit, lui, donne la VITESSE. Confondre les deux "
+      "est l'erreur la plus fréquente en pneumatique.", "Base"),
+
+    q("Un moteur porte 1 445 tr/min sur sa plaque. Pourquoi pas 1 500 ?",
+      ["Erreur du fabricant", "À cause du glissement", "Usure du moteur", "Perte de charge"], 1,
+      "La vitesse de synchronisme d'un moteur 4 pôles à 50 Hz est 1 500 tr/min. Le rotor tourne "
+      "toujours un peu moins vite : c'est le glissement, sans lequel aucun couple ne serait "
+      "produit. Ici 3,7 %, valeur normale en charge.", "Intermédiaire"),
+
+    q("Un réducteur transmet 5,5 kW avec un rendement de 0,95. Quelle puissance part en chaleur ?",
+      ["275 W", "55 W", "5 225 W", "2 750 W"], 0,
+      "Pertes = 5 500 × (1 − 0,95) = 275 W. Dans un carter fermé, c'est presque trois ampoules : "
+      "il faut des ailettes ou de la ventilation.", "Calcul"),
+
+    q("Un détecteur inductif face à une pièce en polyamide :",
+      ["détecte normalement", "ne détecte rien", "détecte à mi-distance", "détecte par intermittence"], 1,
+      "Un inductif ne réagit qu'aux MÉTAUX. Solutions : détecteur capacitif, cellule "
+      "photoélectrique, ou cible métallique rapportée sur la pièce mobile.", "Piège"),
+]
+
+QUIZ["Méthodologie de projet et communication"] = [
+    q("Dans un planning, le chemin critique est :",
+      ["la suite de tâches la plus courte", "la suite de tâches qui fixe la durée totale",
+       "les tâches qu'on peut retarder", "le chemin le plus coûteux"], 1,
+      "Tout retard sur le chemin critique retarde le projet entier. Un retard ailleurs peut être "
+      "absorbé. C'est lui qu'on surveille en priorité.", "Base"),
+
+    q("Quelle part du temps d'un projet consacrer à l'analyse du besoin ?",
+      ["5 %", "environ 20 %", "50 %", "le minimum possible"], 1,
+      "Contre-intuitif mais décisif : une erreur d'analyse coûte cent fois plus cher corrigée en "
+      "phase de réalisation. C'est le seul moment du projet où corriger ne coûte rien.", "Base"),
+
+    q("Le jury demande : « pourquoi ce matériau ? ». Que devez-vous pouvoir sortir ?",
+      ["rien, une explication orale suffit", "le tableau comparatif et la note de calcul",
+       "le catalogue fournisseur", "le plan de la pièce"], 1,
+      "Un « ça me semblait bien » vaut zéro. Une décision tracée — tableau multicritère, calcul, "
+      "ligne datée du cahier de projet — vaut tous les points.", "Intermédiaire"),
+
+    q("Votre essai donne 6,4 s alors que le cahier des charges impose 6 s. Que faites-vous ?",
+      ["vous ne le mentionnez pas", "vous l'écrivez et vous l'analysez",
+       "vous arrondissez à 6 s", "vous refaites l'essai jusqu'à obtenir 6 s"], 1,
+      "Un écart analysé prouve que vous comprenez votre système. Un écart caché, découvert par le "
+      "jury, détruit la confiance sur tout le reste du dossier.", "Base"),
+
+    q("Combien de diapositives pour une soutenance de 20 minutes ?",
+      ["une trentaine", "15 au maximum", "5", "autant que nécessaire"], 1,
+      "Environ une diapositive par minute. Les vues de CAO supplémentaires et les notes de calcul "
+      "vont en ANNEXE, pour les questions.", "Base"),
+]
+
+QUIZ["Anglais technique et coût"] = [
+    q("Que signifie « yield strength » ?",
+      ["résistance à la rupture", "limite élastique", "module d'Young", "dureté"], 1,
+      "Yield strength = limite élastique (Re). Tensile strength = résistance à la rupture (Rm). "
+      "Confondre les deux fausse tout dimensionnement.", "Base"),
+
+    q("Un plan américain porte « 2.500 in ». En millimètres ?",
+      ["63,5 mm", "25,4 mm", "2,5 mm", "250 mm"], 0,
+      "1 inch = 25,4 mm → 2,500 × 25,4 = 63,5 mm. Attention au point décimal anglo-saxon : 2.500 "
+      "signifie deux virgule cinq, pas deux mille cinq cents.", "Piège"),
+
+    q("Un fournisseur écrit « lead time: 6 weeks from receipt of purchase order ». Cela signifie :",
+      ["6 semaines depuis le devis", "6 semaines depuis la réception de la commande",
+       "6 semaines de fabrication seulement", "6 jours ouvrés"], 1,
+      "Le délai court à partir de la COMMANDE, pas de la demande de prix. Et il exclut souvent le "
+      "traitement de surface et le transport : il faut le faire préciser.", "Intermédiaire"),
+
+    q("Une fiche indique « recommended shaft tolerance: k6 ». Que faut-il en faire ?",
+      ["c'est une suggestion facultative", "c'est l'ajustement à porter sur le plan de l'arbre",
+       "c'est la tolérance du carter", "c'est une valeur de contrôle"], 1,
+      "Le fabricant de roulements donne les ajustements à respecter : arbre k6, alésage H7 pour "
+      "une charge tournante. Beaucoup d'erreurs de montage viennent du fait que personne n'a lu "
+      "la fiche — souvent parce qu'elle était en anglais.", "Intermédiaire"),
+
+    q("Une pièce coûte 46 € en usinage, ou 8 500 € d'outillage + 7 € en fonderie. Seuil ?",
+      ["environ 100 pièces", "environ 218 pièces", "environ 500 pièces", "environ 1 200 pièces"], 1,
+      "46 N = 8 500 + 7 N → 39 N = 8 500 → N ≈ 218. En dessous on usine, au-dessus on moule.", "Calcul"),
+
+    q("Quelle part du coût d'un produit est figée pendant la conception ?",
+      ["environ 20 %", "environ 50 %", "environ 80 %", "environ 5 %"], 2,
+      "80 % du coût est décidé en conception, alors qu'elle ne représente que 5 à 10 % des "
+      "dépenses. Chaque tolérance serrée sans raison se paie ensuite, multipliée par la série.", "Base"),
 ]
 
 CATEGORIES = list(QUIZ.keys())
@@ -28502,7 +28641,569 @@ Accélération mesurée après modification : **1,4 g** au lieu de 28. Aucune fi
 }
 
 
-BLOCS_COMPLEMENTAIRES = [BLOC_7, BLOC_8, BLOC_9, BLOC_10, BLOC_11, BLOC_12, BLOC_13]
+BLOC_14 = {
+    "id": 14,
+    "titre": "Bloc 14 — Études de cas : sujets complets d'examen",
+    "resume": "Des sujets transversaux qui enchaînent tous les blocs, comme à l'épreuve.",
+    "fiches": [
+        {
+            "id": "14.1",
+            "titre": "Étude de cas 1 — Poste de bridage pneumatique",
+            "duree": "4 h",
+            "cours": """
+### Comment travailler cette étude de cas
+
+**Ce n'est pas une fiche de cours : c'est un sujet d'épreuve.** Il enchaîne l'analyse
+fonctionnelle, le schéma cinématique, la statique, le dimensionnement d'un vérin, la RDM, les
+ajustements et le coût — exactement comme à l'examen.
+
+**La méthode que je vous recommande, et elle compte autant que le résultat :**
+
+1. Lisez **tout le sujet** avant de répondre à quoi que ce soit. Les questions se répondent
+   souvent les unes les autres, et la dernière éclaire parfois la première.
+2. Traitez les parties **dans l'ordre** : chacune fournit un résultat utilisé par la suivante.
+3. Si vous bloquez sur un calcul, **prenez une valeur plausible et continuez**. À l'examen, une
+   partie non traitée vaut zéro ; une partie traitée avec une valeur reprise du sujet vaut presque
+   tous les points.
+4. **Contrôlez chaque ordre de grandeur** avant de passer à la suite.
+
+**Durée conseillée : 3 heures**, calculatrice et formulaire autorisés.
+
+Le corrigé est dans l'onglet **Corrigé** — n'y allez qu'après avoir vraiment cherché. Un corrigé
+lu avant l'effort n'apprend rien.
+
+---
+
+### Présentation du système
+
+Sur une ligne d'assemblage, un poste doit **maintenir une pièce en aluminium pendant le vissage
+de deux composants**. L'opérateur pose la pièce sur un posage, appuie sur un bouton, un vérin
+pneumatique fait basculer un levier qui vient serrer la pièce. Le vissage automatique se
+déclenche, puis le bridage se relâche.
+
+**Les données du système**
+
+| Élément | Valeur |
+|---|---|
+| effort de serrage nécessaire sur la pièce | **900 N** |
+| pression du réseau d'air comprimé de l'atelier | **6 bars** |
+| bras de levier côté vérin | **40 mm** |
+| bras de levier côté pièce | **65 mm** |
+| levier : acier S235, section rectangulaire | b = 12 mm, h = 30 mm |
+| distance entre l'axe d'articulation et le point de serrage | **65 mm** |
+| axe d'articulation du levier | Ø10, monté en chape à deux joues de 8 mm |
+| cadence | 240 pièces par heure, 7 h/jour |
+| série prévue | 4 postes identiques |
+
+**Le cahier des charges partiel remis par le client**
+
+> *« Il faut un dispositif qui tienne la pièce pendant le vissage. Il doit être rapide et ne pas
+> marquer la pièce, qui est en aluminium anodisé. L'opérateur doit pouvoir charger et décharger
+> facilement. On veut que ça reste serré même si l'air est coupé. »*
+""",
+            "formules": """
+**Rappels utiles pour cette étude de cas**
+
+**Statique** — M = F × d (d perpendiculaire) · ΣM = 0 · ΣF = 0
+
+**Vérin** — F = p × S · 1 bar sur 1 cm² = 10 N · en rentrée : S utile = S piston − S tige
+Alésages normalisés : 12 · 16 · 20 · 25 · 32 · 40 · 50 · 63 · 80 · 100 mm
+
+**RDM flexion** — σ = Mf / (I/v) · rectangle : I/v = b h² / 6 · Rpe = Re / s
+
+**Cisaillement** — τ = T / S · double cisaillement : S totale = 2 S · Rpg ≈ 0,5 Rpe
+
+**Matage** — p = F / (d × e) · p adm acier/acier ≈ 100 MPa
+
+**Ajustements** — H7/g6 : jeu faible · H7/k6 : incertain · H7/p6 : serrage
+
+**Coût** — coût unitaire = coût variable + outillage / quantité
+""",
+            "exercice": """
+## PARTIE A — Analyse fonctionnelle (25 points)
+
+**A1.** Établissez la **bête à cornes** du dispositif de bridage : à qui rend-il service, sur quoi
+agit-il, dans quel but ?
+
+**A2.** Le client écrit « il doit être rapide » et « ne pas marquer la pièce ». Reformulez ces deux
+exigences en **fonctions correctement écrites**, puis caractérisez-les (critère, niveau chiffré,
+flexibilité). Justifiez les niveaux que vous choisissez.
+
+**A3.** Relevez dans le texte du client **une exigence de classe F0** et expliquez pourquoi elle
+est impérative.
+
+**A4.** Le client a-t-il exprimé un besoin ou une solution ? Justifiez en une phrase.
+
+---
+
+## PARTIE B — Schéma cinématique (20 points)
+
+Le mécanisme comprend : le bâti, le corps du vérin fixé au bâti, l'ensemble tige + piston, le
+levier articulé sur le bâti, et l'axe reliant la tige au levier.
+
+**B1.** Identifiez les **classes d'équivalence**.
+
+**B2.** Nommez les **liaisons** entre ces classes, avec leur axe.
+
+**B3.** Combien de degrés de liberté indépendants reste-t-il ? Est-ce cohérent avec le
+fonctionnement attendu ?
+
+---
+
+## PARTIE C — Statique et dimensionnement du vérin (30 points)
+
+**C1.** Le levier est articulé sur le bâti. Le vérin agit à 40 mm de l'axe, la pièce est serrée à
+65 mm de ce même axe. Calculez l'**effort que le vérin doit exercer** pour obtenir 900 N sur la
+pièce.
+
+**C2.** Calculez la **section de piston nécessaire** à 6 bars, puis le diamètre correspondant.
+
+**C3.** Choisissez l'**alésage normalisé** et calculez l'effort réellement disponible. Quelle marge
+obtenez-vous ?
+
+**C4.** Le serrage doit-il se faire **en poussée ou en traction** ? Justifiez par le calcul, en
+prenant une tige Ø16.
+
+**C5.** Quel **type de distributeur** choisissez-vous, compte tenu de l'exigence du client sur la
+coupure d'air ? Justifiez.
+
+---
+
+## PARTIE D — Résistance du levier et de son axe (35 points)
+
+**D1.** Calculez le **moment fléchissant maximal** dans le levier, et dites où il se situe.
+
+**D2.** Calculez la **contrainte maximale** dans le levier (section 12 × 30, fléchie selon h).
+
+**D3.** Le levier est en S235 (Re = 235 MPa) avec un coefficient de sécurité de 4. **Conclut-il ?**
+Quelle est la marge ?
+
+**D4.** L'axe d'articulation Ø10 est monté en **chape à deux joues**. Calculez la contrainte de
+cisaillement. Rpg = 0,5 × Rpe, axe en C45 (Re = 340 MPa), s = 4. Conclut-il ?
+
+**D5.** Vérifiez le **matage** dans les joues de la chape (épaisseur 8 mm chacune, acier,
+p admissible 100 MPa).
+
+**D6.** Si l'une des vérifications échoue, proposez **deux corrections chiffrées** et dites laquelle
+vous retenez.
+
+---
+
+## PARTIE E — Ajustements, matériaux et coût (30 points)
+
+**E1.** L'axe doit pouvoir **pivoter** dans le levier, avec un centrage correct. Proposez un
+**ajustement** et justifiez.
+
+**E2.** Ce même axe doit être **immobilisé dans les joues de la chape**. Proposez un ajustement
+différent et expliquez la différence.
+
+**E3.** La pièce serrée est en **aluminium anodisé** et ne doit pas être marquée. Que proposez-vous
+au point de contact ? Citez deux solutions.
+
+**E4.** Le levier peut être obtenu par **découpe laser dans du plat** (18 € la pièce, aucun
+outillage) ou par **découpe + pliage sur outil** (outillage 900 €, puis 4 € la pièce). Pour
+**4 postes**, que choisissez-vous ? À partir de combien de pièces l'autre solution deviendrait-elle
+plus intéressante ?
+
+**E5.** Le poste tourne 240 pièces/heure, 7 h/jour. Combien de **cycles par an** l'axe
+d'articulation subit-il (220 jours) ? Que faut-il en conclure pour son dimensionnement ?
+
+---
+
+## PARTIE F — Synthèse (10 points)
+
+**F1.** Reprenez les exigences chiffrées de la partie A et dressez le **tableau de validation** :
+exigence, niveau demandé, valeur obtenue, verdict.
+
+**F2.** Citez **un point du dossier que vous feriez vérifier** avant de lancer la fabrication.
+""",
+            "corrige": """
+## CORRIGÉ — PARTIE A · Analyse fonctionnelle
+
+**A1. Bête à cornes**
+
+- **À qui rend-il service ?** À l'opérateur du poste d'assemblage.
+- **Sur quoi agit-il ?** La pièce à visser — c'est la matière d'œuvre.
+- **Dans quel but ?** La maintenir immobile pendant le vissage, pour que l'opération soit correcte
+  et sans danger.
+
+*Erreur fréquente : répondre « au vissage » ou « à la machine ». Le service est rendu à celui qui
+a le problème.*
+
+**A2. Deux exigences reformulées et caractérisées**
+
+| Fonction | Critère | Niveau | Flex. |
+|---|---|---|---|
+| **Serrer et desserrer rapidement** | temps de serrage | ≤ 0,5 s | F1 |
+| **Ne pas marquer la pièce** | dureté du contact et pression locale | contact non métallique, p ≤ 5 MPa | **F0** |
+
+*Justification du 0,5 s : à 240 pièces/heure, le temps de cycle total est de 15 s. Un serrage de
+0,5 s représente 3 % du cycle — au-delà, on grignote la cadence.*
+
+*Justification du F0 sur le marquage : l'aluminium anodisé est un état de surface fini. Une marque
+est un rebut définitif, non réparable.*
+
+**A3. L'exigence F0**
+
+> « **On veut que ça reste serré même si l'air est coupé.** »
+
+C'est impératif pour une raison de **sécurité** : si le bridage se relâche pendant le vissage, la
+pièce peut être entraînée par la visseuse et projetée. Aucune négociation possible.
+
+**A4. Besoin ou solution ?**
+
+Le client exprime **majoritairement un besoin** — sauf sur un point : il ne dit pas « je veux un
+vérin pneumatique ». C'est nous qui l'avons choisi. En revanche, le texte est **incomplet** : il ne
+chiffre rien. C'est notre travail de le transformer en exigences mesurables, comme en A2.
+
+---
+
+## CORRIGÉ — PARTIE B · Schéma cinématique
+
+**B1. Les classes d'équivalence**
+
+| Classe | Contenu |
+|---|---|
+| **S1 — bâti** | bâti, posage, corps du vérin et sa visserie de fixation |
+| **S2 — tige** | tige + piston du vérin |
+| **S3 — levier** | levier et son patin de serrage |
+
+*La visserie de fixation du vérin appartient à S1 : elle ne crée aucun mouvement, elle réalise un
+encastrement.*
+
+**B2. Les liaisons**
+
+- **S1 / S2** : la tige coulisse dans le corps → **pivot glissant d'axe x** (en pratique, on la
+  modélise souvent en **glissière** si la tige est empêchée de tourner).
+- **S1 / S3** : le levier pivote sur son axe fixé au bâti → **pivot d'axe z**.
+- **S2 / S3** : l'axe relie la tige au levier → **pivot d'axe z**.
+
+**B3. Degrés de liberté restants**
+
+Il reste **un seul mouvement indépendant** : on commande la sortie de tige, et le levier bascule.
+
+C'est cohérent : un système de bridage n'a qu'un seul mouvement d'entrée. Si le schéma en laissait
+deux, il serait faux.
+
+*Remarque : la chaîne est fermée (S1-S2-S3-S1). C'est normal — un mécanisme qui transmet un
+mouvement forme toujours une boucle.*
+
+---
+
+## CORRIGÉ — PARTIE C · Statique et vérin
+
+**C1. Effort demandé au vérin**
+
+Le levier est en équilibre autour de son axe. On écrit la somme des moments **à l'axe du levier**,
+ce qui élimine la réaction d'articulation :
+
+F vérin × 40 = 900 × 65
+F vérin = 900 × 65 / 40 = **1 462,5 N**
+
+*Contrôle de bon sens : le vérin agit sur un bras plus court (40 contre 65), il doit donc pousser
+**plus fort** que l'effort obtenu. 1 462 > 900 : c'est cohérent. Si vous aviez trouvé 554 N, vous
+auriez inversé le rapport.*
+
+**C2. Section nécessaire**
+
+S = F / p = 1 462,5 / (6 × 10) = **24,4 cm²** = 2 440 mm²
+
+d = √(4 × 2 440 / π) = √3 106 = **55,7 mm**
+
+**C3. Alésage normalisé**
+
+Dans la série 12-16-20-25-32-40-50-**63**-80, on prend **Ø63** (le Ø50 donnerait 1 178 N,
+insuffisant).
+
+S = π × 63² / 4 = 3 117 mm² = 31,17 cm²
+F disponible = 6 × 31,17 × 10 = **1 870 N**
+
+Marge = 1 870 / 1 462 = **1,28**, soit **28 %**.
+
+*Cette marge n'est pas du luxe : la pression réseau chute souvent à 5 bars quand plusieurs
+machines démarrent ensemble. À 5 bars, on aurait encore 1 559 N — toujours suffisant.*
+
+**C4. Poussée ou traction ?**
+
+**En poussée**, et le calcul le prouve.
+
+En rentrée, avec une tige Ø16 : S tige = π × 16² / 4 = 201 mm²
+S utile = 3 117 − 201 = 2 916 mm² = 29,16 cm²
+F = 6 × 29,16 × 10 = **1 750 N**
+
+C'est encore suffisant ici, mais **6,4 % de moins**. Le principe reste : on oriente toujours un
+vérin de bridage pour que le serrage se fasse en poussant.
+
+**C5. Type de distributeur**
+
+Un **5/2 bistable**.
+
+Le client exige que le serrage soit maintenu en cas de coupure d'air. Un distributeur
+**monostable** reviendrait au repos et **libérerait la pièce** — c'est exactement le risque
+identifié en A3. Un bistable garde sa position.
+
+*Complément qu'un bon candidat ajoute : le bistable seul ne suffit pas si l'air lui-même
+disparaît du circuit. Pour une sécurité complète, on ajoute un **clapet anti-retour piloté** au
+plus près du vérin, qui emprisonne l'air dans la chambre.*
+
+---
+
+## CORRIGÉ — PARTIE D · Résistance
+
+**D1. Moment fléchissant maximal**
+
+Le levier est chargé par le vérin à 40 mm de l'axe et par la réaction de la pièce à 65 mm. Le
+moment est maximal **au droit de l'axe d'articulation**, là où les deux efforts se rencontrent.
+
+Mf = 900 × 65 = **58 500 N·mm**
+
+*On peut aussi le calculer côté vérin : 1 462,5 × 40 = 58 500 N·mm. Les deux donnent le même
+résultat, ce qui confirme l'équilibre — c'est un bon autocontrôle.*
+
+**D2. Contrainte maximale**
+
+Section rectangulaire 12 × 30, fléchie selon h = 30 :
+
+I / v = b h² / 6 = 12 × 30² / 6 = 12 × 900 / 6 = **1 800 mm³**
+
+σ = Mf / (I/v) = 58 500 / 1 800 = **32,5 MPa**
+
+**D3. Conclusion pour le levier**
+
+Rpe = Re / s = 235 / 4 = **58,75 MPa**
+
+32,5 ≤ 58,75 → **la condition est vérifiée**. Le levier travaille à **55 %** de l'admissible : la
+marge est correcte.
+
+*Attention au sens de la section : posée à plat (30 × 12 fléchi selon 12), on aurait
+I/v = 30 × 12²/6 = 720 mm³ et σ = 81 MPa — la pièce ne passerait plus. Le sens de montage n'est pas
+un détail.*
+
+**D4. Cisaillement de l'axe**
+
+Chape à **deux joues** → **double cisaillement**, deux sections travaillent.
+
+S unitaire = π × 10² / 4 = 78,5 mm² → S totale = **157 mm²**
+
+L'effort transmis par l'axe est celui du vérin : **1 462,5 N**
+
+τ = 1 462,5 / 157 = **9,3 MPa**
+
+Rpe = 340 / 4 = 85 MPa → Rpg ≈ 0,5 × 85 = **42,5 MPa**
+
+9,3 ≪ 42,5 → **largement vérifié**, à 22 % de l'admissible.
+
+*L'oubli du double cisaillement donnerait 18,6 MPa — encore acceptable ici, mais l'erreur reste
+une erreur : elle vaut un facteur 2 sur d'autres sujets.*
+
+**D5. Matage dans les joues**
+
+Chaque joue reprend la moitié de l'effort : 1 462,5 / 2 = **731 N**
+
+p = F / (d × e) = 731 / (10 × 8) = 731 / 80 = **9,1 MPa**
+
+9,1 ≪ 100 → **très largement acceptable**.
+
+**D6. Corrections éventuelles**
+
+Toutes les vérifications passent : **aucune correction n'est nécessaire**.
+
+*Un candidat qui écrit « tout passe » sans commenter perd des points. Ce qu'il faut dire : le
+levier est le point le plus chargé (55 % de l'admissible) tandis que l'axe est très surdimensionné
+(22 %). Si l'on devait alléger, ce serait sur l'axe — mais un Ø10 est déjà une valeur minimale
+pratique, et le gain serait dérisoire. **On ne touche à rien.***
+
+---
+
+## CORRIGÉ — PARTIE E · Ajustements, matériaux, coût
+
+**E1. Axe / levier : il doit pivoter**
+
+**Ø10 H7/g6.**
+
+Jeu faible et garanti : la rotation est libre, sans battement. Sur un Ø10, cela donne environ 5 à
+25 µm de jeu — assez pour tourner, assez peu pour ne pas cogner.
+
+*H8/f7 donnerait un jeu plus franc, acceptable aussi ; H7/h6 serait limite (jeu mini nul).*
+
+**E2. Axe / joues de la chape : il doit être immobile**
+
+**Ø10 H7/k6** ou **H7/m6**.
+
+La différence : ici on ne veut **aucun mouvement**, mais on veut pouvoir démonter pour la
+maintenance. Un ajustement incertain à tendance serrage retient l'axe tout en permettant la dépose
+à l'extracteur.
+
+*Un H7/p6 serait excessif : il faudrait une presse à chaque démontage. Et si l'axe est en plus
+retenu par des circlips, un H7/j6 suffirait.*
+
+**E3. Ne pas marquer l'aluminium anodisé**
+
+Deux solutions :
+
+1. **Un patin en polyuréthane ou en POM** rapporté au bout du levier : il répartit la pression et
+   ne raye pas. C'est la solution la plus courante.
+2. **Une empreinte large épousant la forme de la pièce** : en augmentant la surface de contact, on
+   fait chuter la pression locale.
+
+*On peut ajouter : éviter tout contact glissant — le patin doit arriver **perpendiculairement**,
+sans frotter, sinon il raye même s'il est tendre.*
+
+**E4. Le choix économique**
+
+Pour **4 postes** :
+
+- découpe laser : 4 × 18 = **72 €**
+- outil de pliage : 900 + 4 × 4 = **916 €**
+
+**On retient la découpe laser**, sans hésitation.
+
+Seuil de rentabilité :
+18 N = 900 + 4 N → 14 N = 900 → **N = 64 pièces**
+
+*Il faudrait donc 64 leviers pour amortir l'outil. Avec 4 postes, on en est très loin. La bonne
+réponse comporte les deux éléments : le choix ET le seuil.*
+
+**E5. Nombre de cycles**
+
+240 × 7 × 220 = **369 600 cycles par an**
+
+Sur cinq ans : environ **1,85 million de cycles**.
+
+**Ce qu'il faut en conclure :** l'axe travaille en **fatigue**, pas en statique. Or la limite
+d'endurance est bien inférieure à Re — de l'ordre de 40 à 50 % de Rm.
+
+Ici, la marge est énorme (τ à 22 % de l'admissible), donc **il n'y a pas de risque**. Mais le
+raisonnement doit être écrit : sur un sujet où la marge serait de 80 %, la pièce casserait au bout
+de quelques mois malgré un calcul statique correct.
+
+*C'est exactement le cas du pignon de la fiche 12.5.*
+
+---
+
+## CORRIGÉ — PARTIE F · Synthèse
+
+**F1. Tableau de validation**
+
+| Exigence | Niveau demandé | Obtenu | Verdict |
+|---|---|---|---|
+| effort de serrage | 900 N | 1 870 N disponibles (1,28 ×) | ✅ |
+| maintien en cas de coupure d'air | impératif F0 | distributeur bistable + clapet piloté | ✅ |
+| ne pas marquer la pièce | contact non métallique | patin polyuréthane | ✅ |
+| résistance du levier | σ ≤ 58,75 MPa | 32,5 MPa | ✅ |
+| résistance de l'axe | τ ≤ 42,5 MPa | 9,3 MPa | ✅ |
+| matage des joues | p ≤ 100 MPa | 9,1 MPa | ✅ |
+| coût pour 4 postes | le plus bas | 72 € en découpe laser | ✅ |
+
+**F2. Un point à faire vérifier avant fabrication**
+
+Plusieurs réponses sont acceptables. Les meilleures :
+
+- **la pression réelle du réseau** en heure de pointe : tout le dimensionnement repose sur 6 bars ;
+- **l'accessibilité** pour l'opérateur : peut-il charger et décharger sans passer la main sous le
+  levier ? C'est une question de sécurité (fiche 12.8) ;
+- **la géométrie du contact** : le patin arrive-t-il bien perpendiculairement à la pièce sur toute
+  la course ?
+
+*Une réponse de type « vérifier les cotes » ne vaut rien : elle ne montre aucune compréhension du
+système.*
+
+---
+
+## BARÈME ET AUTO-ÉVALUATION
+
+| Partie | Points | Ce qui est évalué |
+|---|---|---|
+| A — analyse fonctionnelle | 25 | savoir écrire une fonction et la chiffrer |
+| B — schéma cinématique | 20 | classes d'équivalence, liaisons, contrôle des ddl |
+| C — statique et vérin | 30 | moments, effort, choix normalisé, distributeur |
+| D — résistance | 35 | flexion, double cisaillement, matage |
+| E — ajustements et coût | 30 | H7/g6 vs H7/k6, seuil de rentabilité, fatigue |
+| F — synthèse | 10 | tableau de validation, esprit critique |
+| **Total** | **150** | |
+
+**Comment vous situer :**
+
+- **plus de 120** — vous maîtrisez l'enchaînement des blocs. Travaillez la rapidité.
+- **90 à 120** — les calculs sont bons, les liens entre parties restent à consolider. Refaites les
+  parties ratées **sans le corrigé**.
+- **moins de 90** — reprenez les fiches concernées avant de refaire le sujet. Les renvois sont
+  indiqués dans le corrigé.
+
+**Les trois erreurs les plus coûteuses de ce sujet :**
+
+1. **Inverser le rapport de bras de levier** en C1 : tout le sujet en découle.
+2. **Oublier le double cisaillement** en D4.
+3. **Écrire « ça passe » sans commenter** en D6 et F1 : le jury évalue le raisonnement, pas
+   seulement le résultat.
+""",
+            "exemple": """
+### Ce que ce sujet vous apprend sur l'épreuve
+
+**Il n'y a presque aucun calcul difficile.** Un rapport de bras de levier, une section de piston,
+une flexion, un cisaillement. Chacun tient en deux lignes, et vous les avez tous rencontrés dans
+les fiches.
+
+**La difficulté est ailleurs : elle est dans l'enchaînement.** L'effort trouvé en C1 sert en C2,
+puis en D1, puis en D4. Une erreur au début se propage jusqu'à la fin.
+
+*C'est pour cela qu'il faut **contrôler chaque ordre de grandeur avant de passer à la suite** :
+« le vérin agit sur un bras plus court, il doit donc pousser plus fort ». Dix secondes de bon sens
+qui sauvent quarante points.*
+
+---
+
+### Les renvois vers les fiches, question par question
+
+| Partie | Fiches à revoir en cas de difficulté |
+|---|---|
+| A | **1.1** analyse fonctionnelle |
+| B | **6.1** liaisons et schéma cinématique |
+| C | **12.1** statique · **8.2** vérins · **12.7** distributeurs |
+| D | **4.3** flexion · **4.2** cisaillement et matage |
+| E | **2.2** ajustements · **10.2** coût et seuil de rentabilité · **13.5** fatigue |
+| F | **9.3** tableau de validation |
+
+---
+
+### La stratégie de copie, qui vaut des points à elle seule
+
+**1. Écrivez ce que vous cherchez avant de calculer.** « Je cherche l'effort du vérin, je connais
+l'effort sur la pièce et les deux bras de levier. » Cette phrase seule montre au correcteur que
+vous avez compris, même si le calcul dérape ensuite.
+
+**2. Encadrez vos résultats** et donnez toujours l'**unité**. Un nombre sans unité ne vaut rien.
+
+**3. Commentez chaque résultat en une ligne.** « 32,5 ≤ 58,75, la condition est vérifiée avec 45 %
+de marge » vaut bien plus que « 32,5 MPa » seul.
+
+**4. Ne laissez jamais une partie vide.** Si vous n'avez pas trouvé la valeur de la partie
+précédente, **prenez-en une plausible et dites-le** : « je reprends F = 1 500 N ». Le correcteur
+évalue la suite du raisonnement.
+
+**5. Gardez dix minutes pour la synthèse.** Le tableau de validation de F1 rapporte des points
+faciles, et beaucoup de candidats n'y arrivent jamais faute de temps.
+
+---
+
+### Pour aller plus loin sur ce même système
+
+Si vous voulez pousser l'exercice, voici trois questions supplémentaires que pourrait poser un
+sujet plus long :
+
+1. **Dimensionner la vis de fixation** du corps de vérin sur le bâti, en tenant compte de la
+   précharge (fiche 6.3).
+2. **Écrire le GRAFCET** du poste complet : bridage, vissage, desserrage, avec les comptes rendus
+   de capteurs (fiche 12.7).
+3. **Calculer le temps de cycle** réel et vérifier qu'on tient les 240 pièces/heure, en tenant
+   compte des temps de sortie et de rentrée du vérin (fiche 8.2, débit et vitesse).
+""",
+        },
+    ],
+}
+
+
+BLOCS_COMPLEMENTAIRES = [BLOC_7, BLOC_8, BLOC_9, BLOC_10, BLOC_11, BLOC_12, BLOC_13, BLOC_14]
 
 # ==========================================================================
 # L'APPLICATION STREAMLIT
@@ -28581,16 +29282,66 @@ P = st.session_state.progression
 
 st.markdown("""
 <style>
-  .bloc-titre {
-      background: linear-gradient(90deg, #1f4e79 0%, #2e75b6 100%);
-      color: white; padding: 14px 18px; border-radius: 8px; margin-bottom: 6px;
+  /* ---------- CONFORT DE LECTURE ---------- */
+  /* Un texte trop large fatigue : on limite la longueur de ligne et on aère. */
+  .block-container { padding-top: 2.2rem; max-width: 1050px; }
+  .stMarkdown p, .stMarkdown li {
+      font-size: 1.02rem; line-height: 1.75; color: #1f2937;
   }
-  .fiche-meta { color:#555; font-size:0.88em; margin-bottom:14px; }
-  .ok-box  { background:#e7f5e9; border-left:5px solid #2e7d32; padding:12px; border-radius:4px; }
-  .ko-box  { background:#fdecea; border-left:5px solid #c62828; padding:12px; border-radius:4px; }
-  .info-box{ background:#e8f1fa; border-left:5px solid #1f4e79; padding:12px; border-radius:4px; }
-  .warn-box{ background:#fff6e5; border-left:5px solid #ef6c00; padding:12px; border-radius:4px; }
-  div[data-testid="stMetricValue"] { font-size: 1.5rem; }
+  .stMarkdown h3 {
+      margin-top: 1.9rem; padding-bottom: .35rem;
+      border-bottom: 2px solid #e5e7eb; color: #14375e;
+  }
+  .stMarkdown h2 { margin-top: 2rem; color: #14375e; }
+  .stMarkdown strong { color: #0f2f52; }
+  .stMarkdown blockquote {
+      border-left: 4px solid #2e75b6; background: #f1f6fb;
+      padding: .7rem 1rem; border-radius: 0 6px 6px 0; margin: 1.1rem 0;
+  }
+  .stMarkdown blockquote p { margin: .25rem 0; }
+  .stMarkdown em { color: #475569; }
+  .stMarkdown table { font-size: .95rem; }
+  .stMarkdown th { background: #eef4fa !important; color: #14375e !important; }
+  .stMarkdown code { background: #eef2f7; color: #0f2f52; padding: 1px 5px; border-radius: 4px; }
+  .stMarkdown img { border-radius: 8px; margin: .6rem 0 1.1rem 0; }
+
+  /* ---------- EN-TÊTE DE BLOC ---------- */
+  .bloc-titre {
+      background: linear-gradient(90deg, #14375e 0%, #2e75b6 100%);
+      color: white; padding: 16px 20px; border-radius: 10px; margin-bottom: 4px;
+      box-shadow: 0 2px 8px rgba(20,55,94,.18);
+  }
+
+  /* ---------- BANDEAU DE FICHE ---------- */
+  .fiche-bandeau {
+      display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+      margin: 2px 0 16px 0;
+  }
+  .chip {
+      display: inline-block; padding: 3px 11px; border-radius: 999px;
+      font-size: .8rem; font-weight: 600; letter-spacing: .01em;
+  }
+  .chip-bloc { background: #e8f1fa; color: #14375e; }
+  .chip-duree { background: #f1f5f9; color: #475569; }
+  .chip-lue  { background: #dcfce7; color: #166534; }
+  .chip-nonlue { background: #fef3c7; color: #92400e; }
+
+  /* ---------- ONGLETS PLUS LISIBLES ---------- */
+  .stTabs [data-baseweb="tab"] { font-size: 1rem; font-weight: 600; padding: 10px 6px; }
+  .stTabs [aria-selected="true"] { color: #2e75b6 !important; }
+
+  /* ---------- ENCADRÉS ---------- */
+  .ok-box  { background:#f0fdf4; border-left:5px solid #16a34a; padding:13px 16px; border-radius:6px; }
+  .ko-box  { background:#fef2f2; border-left:5px solid #dc2626; padding:13px 16px; border-radius:6px; }
+  .info-box{ background:#eff6ff; border-left:5px solid #2563eb; padding:13px 16px; border-radius:6px;
+             height:100%; }
+  .warn-box{ background:#fff7ed; border-left:5px solid #ea580c; padding:13px 16px; border-radius:6px; }
+
+  /* ---------- DIVERS ---------- */
+  div[data-testid="stMetricValue"] { font-size: 1.6rem; color: #14375e; }
+  div[data-testid="stMetricLabel"] { color: #64748b; }
+  section[data-testid="stSidebar"] { background: #f8fafc; }
+  .stButton button { border-radius: 8px; font-weight: 600; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -28620,8 +29371,21 @@ PAGE = st.sidebar.radio(
 st.sidebar.divider()
 nb_fiches = NB_FICHES
 lues = len(set(P["fiches_lues"]))
+_pct = int(100 * lues / nb_fiches) if nb_fiches else 0
 st.sidebar.progress(lues / nb_fiches if nb_fiches else 0)
-st.sidebar.caption(f"Fiches lues : {lues}/{nb_fiches}")
+st.sidebar.caption(f"**{lues} / {nb_fiches} fiches lues** — {_pct} %")
+
+if lues:
+    with st.sidebar.expander("Détail par bloc"):
+        for _b in BLOCS:
+            _tot = len(_b.get("fiches", []))
+            _lu = sum(1 for _f in _b.get("fiches", [])
+                      if f"{_b['id']}#{_f.get('id')}" in P["fiches_lues"])
+            _puce = "🟢" if _lu == _tot else ("🟡" if _lu else "⚪")
+            st.markdown(
+                f"<div style='font-size:.82em;margin:2px 0'>{_puce} "
+                f"<b>{_b['titre'].split(' — ')[0]}</b> — {_lu}/{_tot}</div>",
+                unsafe_allow_html=True)
 
 
 # ===========================================================================
@@ -28706,8 +29470,45 @@ if PAGE == "🏠 Tableau de bord":
 elif PAGE == PAGE_COURS:
     st.title("Cours")
 
+    recherche = st.text_input(
+        "🔍 Rechercher dans toutes les fiches",
+        placeholder="un mot, une formule, une notion — par exemple : flambement, k6, retassure",
+        key="recherche_cours")
+
+    if recherche and len(recherche.strip()) >= 2:
+        terme = recherche.strip().lower()
+        trouvees = []
+        for _bl in BLOCS:
+            for _fi in _bl.get("fiches", []):
+                texte = " ".join(str(v) for v in _fi.values() if isinstance(v, str)).lower()
+                if terme in texte:
+                    occurrences = texte.count(terme)
+                    trouvees.append((_bl, _fi, occurrences))
+        trouvees.sort(key=lambda t: -t[2])
+        if not trouvees:
+            st.warning(f"Aucune fiche ne contient « {recherche} ». Essayez un autre mot.")
+        else:
+            st.success(f"{len(trouvees)} fiche(s) contiennent « {recherche} »")
+            for _bl, _fi, _n in trouvees[:12]:
+                onglets_trouves = [nom for nom, cle_o in
+                                   (("Cours", "cours"), ("Formules", "formules"),
+                                    ("Cas industriel", "exemple"), ("Exercice", "exercice"),
+                                    ("Corrigé", "corrige"))
+                                   if terme in str(_fi.get(cle_o, "")).lower()]
+                st.markdown(
+                    f"**Fiche {_fi['id']} — {_fi['titre']}**  \n"
+                    f"<span style='color:#64748b;font-size:0.85em'>{_bl['titre']} · "
+                    f"{_n} occurrence(s) · onglet(s) : {', '.join(onglets_trouves) or 'titre'}</span>",
+                    unsafe_allow_html=True)
+            if len(trouvees) > 12:
+                st.caption(f"… et {len(trouvees) - 12} autre(s). Affinez votre recherche.")
+        st.caption("Sélectionnez ensuite le bloc et la fiche ci-dessous pour l'ouvrir.")
+        st.divider()
+
     noms_blocs = [b["titre"] for b in BLOCS]
-    choix_bloc = st.selectbox("Bloc", noms_blocs)
+    _saut = st.session_state.pop("_saut", None)
+    _idx_bloc = noms_blocs.index(_saut[0]) if _saut else 0
+    choix_bloc = st.selectbox("Bloc", noms_blocs, index=_idx_bloc)
     bloc = BLOCS[noms_blocs.index(choix_bloc)]
 
     st.markdown(f'<div class="bloc-titre"><b>{bloc["titre"]}</b><br>'
@@ -28722,18 +29523,28 @@ elif PAGE == PAGE_COURS:
         fiche_id = choix_fiche
     else:
         noms_fiches = [f"Fiche {f['id']} — {f['titre']}" for f in fiches_list]
-        choix_fiche = st.selectbox("Fiche", noms_fiches)
+        _idx_fiche = 0
+        if _saut:
+            _idx_fiche = next((k for k, f in enumerate(fiches_list)
+                               if f.get("id") == _saut[1]), 0)
+        choix_fiche = st.selectbox("Fiche", noms_fiches, index=_idx_fiche)
         fiche = fiches_list[noms_fiches.index(choix_fiche)]
         fiche_id = fiche['id']
 
     cle = f"{bloc['id']}#{fiche_id}"
+    deja = cle in P["fiches_lues"]
+
     col_t, col_c = st.columns([4, 1])
     with col_t:
         st.header(f"{fiche_id} — {fiche.get('titre', '')}")
-        st.markdown(f'<div class="fiche-meta">Volume horaire indicatif : {fiche.get("duree", "N/A")}</div>',
-                    unsafe_allow_html=True)
+        _etat = ('<span class="chip chip-lue">✓ fiche lue</span>' if deja
+                 else '<span class="chip chip-nonlue">à lire</span>')
+        st.markdown(
+            f'<div class="fiche-bandeau">'
+            f'<span class="chip chip-bloc">Bloc {str(fiche_id).split(".")[0]}</span>'
+            f'<span class="chip chip-duree">⏱ {fiche.get("duree", "N/A")}</span>'
+            f'{_etat}</div>', unsafe_allow_html=True)
     with col_c:
-        deja = cle in P["fiches_lues"]
         if st.checkbox("Fiche lue", value=deja, key=f"lu_{cle}") != deja:
             if deja:
                 P["fiches_lues"].remove(cle)
@@ -28741,6 +29552,31 @@ elif PAGE == PAGE_COURS:
                 P["fiches_lues"].append(cle)
             sauver_progression(P)
             st.rerun()
+
+    # --- Navigation d'une fiche à l'autre, sans repasser par les menus ---
+    _toutes = [(b, f) for b in BLOCS for f in b.get("fiches", [])]
+    _pos = next((k for k, (b, f) in enumerate(_toutes)
+                 if b["id"] == bloc["id"] and f.get("id") == fiche_id), None)
+    if _pos is not None:
+        _nav_g, _nav_m, _nav_d = st.columns([1, 2, 1])
+        with _nav_g:
+            if _pos > 0:
+                _bp, _fp = _toutes[_pos - 1]
+                if st.button(f"← {_fp['id']}", key="nav_prec", width="stretch",
+                             help=_fp.get("titre", "")):
+                    st.session_state["_saut"] = (_bp["titre"], _fp["id"])
+                    st.rerun()
+        with _nav_m:
+            st.markdown(
+                f"<div style='text-align:center;color:#64748b;font-size:.85em;padding-top:6px'>"
+                f"fiche {_pos + 1} sur {len(_toutes)}</div>", unsafe_allow_html=True)
+        with _nav_d:
+            if _pos < len(_toutes) - 1:
+                _bs, _fs = _toutes[_pos + 1]
+                if st.button(f"{_fs['id']} →", key="nav_suiv", width="stretch",
+                             help=_fs.get("titre", "")):
+                    st.session_state["_saut"] = (_bs["titre"], _fs["id"])
+                    st.rerun()
 
     t1, t2, t3, t4, t5 = st.tabs(
         ["📖 Cours", "📐 Formules", "🏭 Cas industriel", "✍️ Exercice", "✅ Corrigé"])
@@ -28783,14 +29619,29 @@ elif PAGE == "🎯 Quiz interactif":
     with col3:
         niveaux = st.multiselect("Niveaux", NIVEAUX, default=NIVEAUX)
 
+    mode_examen = st.checkbox(
+        "⏱️ Mode examen blanc — 20 questions tirées dans TOUS les thèmes, 15 minutes",
+        help="Les filtres ci-dessus sont ignorés : le tirage se fait sur l'ensemble de la banque, "
+             "comme à l'épreuve.")
+
     if st.button("🚀 Démarrer le quiz", type="primary"):
-        pool = [q for q in toutes_les_questions()
-                if q["categorie"] in cats and q["niveau"] in niveaux]
+        if mode_examen:
+            pool = list(toutes_les_questions())
+        else:
+            pool = [q for q in toutes_les_questions()
+                    if q["categorie"] in cats and q["niveau"] in niveaux]
         if not pool:
             st.error("Aucune question ne correspond à ces filtres.")
         else:
             random.shuffle(pool)
-            st.session_state.quiz_questions = pool[:int(nb)]
+            if mode_examen:
+                st.session_state.quiz_questions = pool[:20]
+                st.session_state.quiz_debut = time.time()
+                st.session_state.quiz_limite = 15 * 60
+            else:
+                st.session_state.quiz_questions = pool[:int(nb)]
+                st.session_state.quiz_debut = None
+                st.session_state.quiz_limite = None
             st.session_state.quiz_index = 0
             st.session_state.quiz_score = 0
             st.session_state.quiz_reponses = []
@@ -28800,6 +29651,22 @@ elif PAGE == "🎯 Quiz interactif":
     if "quiz_questions" in st.session_state and st.session_state.quiz_questions:
         questions = st.session_state.quiz_questions
         i = st.session_state.quiz_index
+
+        if st.session_state.get("quiz_debut"):
+            reste = int(st.session_state.quiz_limite - (time.time() - st.session_state.quiz_debut))
+            if reste <= 0:
+                st.error("⏰ Temps écoulé — le quiz s'arrête ici.")
+                st.session_state.quiz_index = len(questions)
+                st.session_state.quiz_debut = None
+                i = len(questions)
+            else:
+                couleur = "#dc2626" if reste < 120 else "#2563eb"
+                st.markdown(
+                    f"<div style='text-align:right;color:{couleur};font-weight:700;font-size:1.1em'>"
+                    f"⏱️ {reste // 60:02d}:{reste % 60:02d} — question {min(i + 1, len(questions))}"
+                    f"/{len(questions)}</div>", unsafe_allow_html=True)
+                if reste < 120:
+                    st.caption("Le temps affiché se met à jour à chaque réponse.")
 
         if i < len(questions):
             q = questions[i]
@@ -29383,6 +30250,16 @@ elif PAGE == "📊 Ma progression":
 
     st.divider()
     st.subheader("Mes notes personnelles")
+
+    _notes_utiles = {k: v for k, v in P["notes"].items() if v.strip()}
+    if _notes_utiles:
+        _txt = ["MES NOTES — BTS CPI", "=" * 60, ""]
+        for _k, _v in _notes_utiles.items():
+            _txt += [f"--- {_k} ---", _v.strip(), ""]
+        st.download_button("📥 Télécharger toutes mes notes (.txt)",
+                           data="\n".join(_txt).encode("utf-8"),
+                           file_name="mes_notes_bts_cpi.txt", mime="text/plain")
+
     if P["notes"]:
         for cle_note, texte_note in P["notes"].items():
             if texte_note.strip():
