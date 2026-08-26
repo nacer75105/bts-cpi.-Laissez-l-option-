@@ -3009,6 +3009,197 @@ def intention_conception():
 
 
 # ===========================================================================
+# 82. LES TROIS TEMPS D'UNE MÉTHODE
+# ===========================================================================
+
+def trois_temps_methode(titre_avant="AVANT de calculer", titre_pendant="PENDANT le calcul",
+                        titre_apres="APRÈS le résultat"):
+    p = [_txt(40, 24, "Le même réflexe, quel que soit l'exercice :", 13, TRAIT, "start", True)]
+    temps = [(55, titre_avant, ALESAGE), (285, titre_pendant, ARBRE), (515, titre_apres, OK)]
+    for x0, titre, couleur in temps:
+        p.append(f"<rect x='{x0}' y='55' width='200' height='40' rx='8' fill='{couleur}'/>")
+        p.append(_txt(x0 + 100, 80, titre, 12, "#ffffff", "middle", True))
+    for x0 in (255, 485):
+        p.append(f"<path d='M{x0},75 l24,0' stroke='{FIN}' stroke-width='2.4' marker-end='url(#zz)'/>")
+    p.append("<defs><marker id='zz' markerWidth='9' markerHeight='9' refX='8' refY='4.5' orient='auto'>"
+             f"<path d='M0,0 L9,4.5 L0,9 z' fill='{FIN}'/></marker></defs>")
+    p.append(f"<rect x='40' y='115' width='680' height='70' fill='#eff6ff' stroke='{ALESAGE}' rx='6'/>")
+    p.append(_txt(56, 138, "La plupart des points perdus ne viennent pas d'un mauvais calcul :", 12, TRAIT, "start", True))
+    p.append(_txt(56, 158, "ils viennent d'une étape sautée, avant ou après. Le calcul lui-même est", 12, FIN))
+    p.append(_txt(56, 176, "souvent la partie la plus facile.", 12, FIN))
+    return _svg("".join(p), 760, 205)
+
+
+# ===========================================================================
+# 83. SCHÉMA DU SYSTÈME — POSTE DE BRIDAGE (étude de cas 14.1)
+# ===========================================================================
+
+def schema_bridage_etude_cas():
+    p = [_txt(40, 24, "Le système complet de l'étude de cas, avec les cotes de l'énoncé :",
+              13, TRAIT, "start", True)]
+    # bati
+    p.append(f"<rect x='60' y='250' width='640' height='20' fill='#cbd5e1' stroke='{TRAIT}' stroke-width='1.6'/>")
+    p.append(_txt(72, 282, "bâti", 10, FIN, "start"))
+    # pivot du levier
+    px, py = 360, 200
+    p.append(f"<circle cx='{px}' cy='{py}' r='7' fill='#ffffff' stroke='{TRAIT}' stroke-width='2'/>")
+    p.append(f"<path d='M{px - 12},{py + 10} L{px},{py - 4} L{px + 12},{py + 10} Z' fill='none' stroke='{TRAIT}' stroke-width='1.6'/>")
+    p.append(_txt(px, 178, "axe Ø10", 10, TRAIT, "middle"))
+    # levier : de 40mm vers le verin (gauche-bas), a 65mm vers la piece (droite)
+    vx, vy = px - 56, py + 44
+    sx, sy = px + 65, py - 6
+    p.append(f"<line x1='{vx}' y1='{vy}' x2='{sx}' y2='{sy}' stroke='{TRAIT}' stroke-width='7' stroke-linecap='round'/>")
+    p.append(f"<line x1='{px}' y1='{py}' x2='{vx}' y2='{vy}' stroke='{ALESAGE}' stroke-width='1.2' stroke-dasharray='4 3'/>")
+    p.append(f"<line x1='{px}' y1='{py}' x2='{sx}' y2='{sy}' stroke='{ARBRE}' stroke-width='1.2' stroke-dasharray='4 3'/>")
+    p.append(_txt((px + vx) / 2 - 18, (py + vy) / 2 + 6, "40 mm", 11, ALESAGE, "end", True))
+    p.append(_txt((px + sx) / 2, (py + sy) / 2 - 12, "65 mm", 11, ARBRE, "middle", True))
+    # verin, decale a gauche pour ne pas croiser les cotes
+    p.append(f"<rect x='{vx - 110}' y='{vy - 12}' width='55' height='24' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='1.8'/>")
+    p.append(f"<line x1='{vx - 55}' y1='{vy}' x2='{vx}' y2='{vy}' stroke='{TRAIT}' stroke-width='5'/>")
+    p.append(_txt(vx - 115, vy - 20, "vérin Ø63", 10, TRAIT, "start", True))
+    p.append(f"<circle cx='{vx}' cy='{vy}' r='5' fill='#ffffff' stroke='{TRAIT}' stroke-width='1.6'/>")
+    p.append(f"<line x1='{vx - 110}' y1='{vy}' x2='{vx - 110}' y2='250' stroke='{TRAIT}' stroke-width='1.4'/>")
+    # piece serree
+    p.append(f"<rect x='{sx - 5}' y='{sy - 46}' width='70' height='22' fill='{OK}' opacity='0.28' stroke='{OK}' stroke-width='1.8'/>")
+    p.append(_txt(sx + 30, sy - 52, "pièce (alu anodisé)", 10, OK, "middle", True))
+    p.append(f"<circle cx='{sx}' cy='{sy}' r='5' fill='#ffffff' stroke='{TRAIT}' stroke-width='1.6'/>")
+    p.append(f"<line x1='{sx}' y1='{sy - 24}' x2='{sx}' y2='{sy}' stroke='{OK}' stroke-width='3'/>")
+    p.append(f"<line x1='{sx}' y1='{sy - 24}' x2='{sx - 9}' y2='{sy - 12}' stroke='{OK}' stroke-width='2' marker-end='url(#bb1)'/>")
+    p.append("<defs><marker id='bb1' markerWidth='8' markerHeight='8' refX='7' refY='4' orient='auto'>"
+             f"<path d='M0,0 L8,4 L0,8 z' fill='{OK}'/></marker></defs>")
+    p.append(_txt(sx + 12, sy - 30, "F = 900 N", 11, OK, "start", True))
+    p.append(f"<rect x='40' y='300' width='680' height='68' fill='#eff6ff' stroke='{ALESAGE}' rx='6'/>")
+    p.append(_txt(56, 323, "Le levier bascule autour de son axe : le vérin pousse à 40 mm, la pièce", 12, TRAIT, "start", True))
+    p.append(_txt(56, 343, "est serrée à 65 mm. C'est ce rapport de bras qui gouverne toute la partie C", 12, FIN))
+    p.append(_txt(56, 361, "de l'étude de cas — avant même de parler de résistance.", 12, FIN))
+    return _svg("".join(p), 760, 387)
+
+
+# ===========================================================================
+# 84. SCHÉMA DU SYSTÈME — RÉDUCTEUR DE TAPIS (étude de cas 14.2)
+# ===========================================================================
+
+def schema_reducteur_etude_cas():
+    p = [_txt(40, 24, "La chaîne de puissance de l'étude de cas, du moteur au tambour :",
+              13, TRAIT, "start", True)]
+    etapes = [
+        (70, "MOTEUR", "4 kW", "1450 tr/min", FIN),
+        (250, "PIGNON Z₁=20", "m = 1,5", "Ø30", ALESAGE),
+        (430, "ROUE Z₂=100", "Ø150", "290 tr/min", ARBRE),
+        (610, "TAMBOUR", "roulement", "charge 4200 N", OK),
+    ]
+    for x0, nom, l1, l2, couleur in etapes:
+        p.append(f"<rect x='{x0}' y='90' width='100' height='70' rx='8' fill='#ffffff' stroke='{couleur}' stroke-width='2'/>")
+        p.append(_txt(x0 + 50, 114, nom, 11, couleur, "middle", True))
+        p.append(_txt(x0 + 50, 132, l1, 10, FIN, "middle"))
+        p.append(_txt(x0 + 50, 148, l2, 10, FIN, "middle"))
+    for x0 in (170, 350, 530):
+        p.append(f"<line x1='{x0}' y1='125' x2='{x0 + 78}' y2='125' stroke='{FIN}' stroke-width='2.4' marker-end='url(#cc1)'/>")
+    p.append("<defs><marker id='cc1' markerWidth='9' markerHeight='9' refX='8' refY='4.5' orient='auto'>"
+             f"<path d='M0,0 L9,4.5 L0,9 z' fill='{FIN}'/></marker></defs>")
+    p.append(_txt(210, 116, "Mt₁ = 26,3 N·m", 9, FIN, "middle"))
+    p.append(_txt(390, 116, "r = 1/5", 9, FIN, "middle"))
+    p.append(_txt(570, 116, "Mt₂ = 127,8 N·m", 9, FIN, "middle"))
+    p.append(f"<rect x='40' y='185' width='680' height='90' fill='#fff7ed' stroke='{ARBRE}' rx='6'/>")
+    p.append(_txt(56, 208, "La vitesse est divisée par 5 → le couple est MULTIPLIÉ par 5 (au rendement", 12, TRAIT, "start", True))
+    p.append(_txt(56, 226, "près). C'est pourquoi l'arbre de sortie, qui reprend 127,8 N·m, doit être", 12, FIN))
+    p.append(_txt(56, 244, "vérifié en flexion-torsion — c'est tout l'objet de la partie B du sujet —", 12, FIN))
+    p.append(_txt(56, 262, "alors que l'arbre d'entrée, à 26,3 N·m seulement, ne pose aucun problème.", 12, FIN))
+    return _svg("".join(p), 760, 285)
+
+
+# ===========================================================================
+# 85. LA MÉTHODE DE LA SYNTHÈSE DE DOCUMENTS
+# ===========================================================================
+
+def methode_synthese():
+    p = [_txt(40, 24, "Quatre documents, une seule voix : la vôtre, qui les organise :",
+              13, TRAIT, "start", True)]
+    etapes = [
+        ("1", "LIRE", "survol de chaque document : thème, thèse, type (article, graphique, image)", ALESAGE),
+        ("2", "CONFRONTER", "quels documents se répondent, se complètent, se contredisent ?", ALESAGE),
+        ("3", "PLANIFIER", "2 ou 3 axes, chacun nourri par PLUSIEURS documents", ARBRE),
+        ("4", "RÉDIGER", "reformuler avec VOS mots, jamais recopier ni citer votre avis", OK),
+    ]
+    x = 60
+    for num, titre, detail, couleur in etapes:
+        p.append(f"<rect x='{x}' y='55' width='150' height='150' rx='8' fill='#ffffff' stroke='{couleur}' stroke-width='2'/>")
+        p.append(f"<circle cx='{x + 75}' cy='85' r='16' fill='{couleur}'/>")
+        p.append(_txt(x + 75, 91, num, 14, "#ffffff", "middle", True))
+        p.append(_txt(x + 75, 118, titre, 12, couleur, "middle", True))
+        mots = detail.split(" ")
+        ligne = ""
+        yy = 138
+        for mo in mots:
+            if len(ligne + mo) > 20:
+                p.append(_txt(x + 75, yy, ligne.strip(), 9, FIN, "middle"))
+                ligne = ""
+                yy += 14
+            ligne += mo + " "
+        if ligne:
+            p.append(_txt(x + 75, yy, ligne.strip(), 9, FIN, "middle"))
+        x += 165
+    p.append(f"<rect x='40' y='225' width='680' height='68' fill='#fef2f2' stroke='{ALERTE}' rx='6'/>")
+    p.append(_txt(56, 248, "L'erreur qui coûte le plus de points : résumer les documents L'UN APRÈS L'AUTRE.",
+                  12, TRAIT, "start", True))
+    p.append(_txt(56, 268, "Une vraie synthèse croise les sources dans CHAQUE paragraphe — jamais un", 12, FIN))
+    p.append(_txt(56, 286, "paragraphe = un document.", 12, FIN))
+    return _svg("".join(p), 760, 310)
+
+
+# ===========================================================================
+# 86. LE PLAN D'UNE ARGUMENTATION
+# ===========================================================================
+
+def plan_argumentation():
+    p = [_txt(40, 24, "Une thèse défendue ne suffit pas : il faut montrer que vous avez pesé le pour et le contre :",
+              13, TRAIT, "start", True)]
+    blocs_ = [
+        (60, "INTRODUCTION", "reformuler le sujet, annoncer le plan", FIN),
+        (60, "THÈSE 1", "des arguments EXPLIQUÉS, chacun avec un exemple précis", ALESAGE),
+        (60, "THÈSE 2 (nuance)", "les limites de la thèse 1 : ce qu'elle n'explique pas", ARBRE),
+        (60, "CONCLUSION", "une réponse personnelle, qui ne répète pas l'intro", OK),
+    ]
+    y = 55
+    for x, titre, detail, couleur in blocs_:
+        p.append(f"<rect x='{x}' y='{y}' width='660' height='46' rx='6' fill='#ffffff' stroke='{couleur}' stroke-width='1.8'/>")
+        p.append(f"<rect x='{x}' y='{y}' width='10' height='46' fill='{couleur}'/>")
+        p.append(_txt(x + 26, y + 20, titre, 12, couleur, "start", True))
+        p.append(_txt(x + 26, y + 37, detail, 10, FIN, "start"))
+        y += 54
+    p.append(f"<rect x='40' y='{y + 10}' width='680' height='66' fill='#eff6ff' stroke='{ALESAGE}' rx='6'/>")
+    p.append(_txt(56, y + 33, "Un argument sans exemple ne convainc personne : « c'est important » ne", 12, TRAIT, "start", True))
+    p.append(_txt(56, y + 53, "prouve rien. Un fait précis, une date, un chiffre, un auteur nommé le fait.", 12, FIN))
+    return _svg("".join(p), 760, y + 90)
+
+
+# ===========================================================================
+# 87. LA RELECTURE EN TROIS PASSAGES
+# ===========================================================================
+
+def relecture_trois_passages():
+    p = [_txt(40, 24, "Une relecture unique 'pour le sens' ne voit presque aucune faute d'accord :",
+              13, TRAIT, "start", True)]
+    passages = [
+        (60, "1er PASSAGE", "LE SENS", "la copie répond-elle au sujet ? l'enchaînement est-il logique ?", ALESAGE),
+        (60, "2e PASSAGE", "LES ACCORDS", "sujet-verbe, adjectifs, participes passés avec avoir", ARBRE),
+        (60, "3e PASSAGE", "PONCTUATION", "a/à, on/ont, ce/se, ces/ses", OK),
+    ]
+    y = 55
+    for x, num, titre, detail, couleur in passages:
+        p.append(f"<rect x='{x}' y='{y}' width='660' height='56' rx='6' fill='#ffffff' stroke='{couleur}' stroke-width='1.8'/>")
+        p.append(f"<rect x='{x}' y='{y}' width='130' height='56' fill='{couleur}' opacity='0.12'/>")
+        p.append(_txt(x + 65, y + 24, num, 11, couleur, "middle", True))
+        p.append(_txt(x + 65, y + 42, titre, 11, couleur, "middle", True))
+        p.append(_txt(x + 150, y + 33, detail, 11, TRAIT, "start"))
+        y += 64
+    p.append(f"<rect x='40' y='{y + 10}' width='680' height='66' fill='#fef2f2' stroke='{ALERTE}' rx='6'/>")
+    p.append(_txt(56, y + 33, "L'œil corrige inconsciemment les fautes en lisant pour le sens : c'est pour cela", 12, TRAIT, "start", True))
+    p.append(_txt(56, y + 53, "qu'un seul passage de relecture laisse passer la majorité des erreurs d'accord.", 12, FIN))
+    return _svg("".join(p), 760, y + 90)
+
+
+# ===========================================================================
 # REGISTRE DES FIGURES
 # ===========================================================================
 
@@ -3094,6 +3285,12 @@ FIGURES = {
     "contraintes_esquisse": ("Les contraintes d'esquisse", contraintes_esquisse),
     "chaine_numerique": ("La chaîne numérique : du modèle à la pièce", chaine_numerique),
     "intention_conception": ("L'intention de conception en CAO", intention_conception),
+    "trois_temps_methode": ("Les trois temps d'une méthode", trois_temps_methode),
+    "schema_bridage_etude_cas": ("Le système du poste de bridage", schema_bridage_etude_cas),
+    "schema_reducteur_etude_cas": ("La chaîne de puissance du réducteur", schema_reducteur_etude_cas),
+    "methode_synthese": ("La méthode de la synthèse de documents", methode_synthese),
+    "plan_argumentation": ("Le plan d'une argumentation", plan_argumentation),
+    "relecture_trois_passages": ("La relecture en trois passages", relecture_trois_passages),
 }
 
 
@@ -5065,6 +5262,94 @@ QUIZ["Normes, sécurité et qualité"] = [
       "conception.", "Base"),
 ]
 
+CATEGORIES = list(QUIZ.keys())
+
+
+# ===========================================================================
+# COMPLÉMENT 5 — Culture générale et expression
+# ===========================================================================
+
+QUIZ["Culture générale et expression"] = [
+    q("Dans une synthèse de documents, l'opinion personnelle est-elle autorisée ?",
+      ["Oui, en conclusion seulement", "Non, jamais, y compris en conclusion",
+       "Oui, si elle est nuancée", "Oui, dans l'introduction"], 1,
+      "L'objectivité totale est la règle numéro un de la synthèse. Aucune opinion personnelle "
+      "n'est autorisée, à aucun moment du devoir, y compris de façon déguisée en conclusion.",
+      "Base"),
+
+    q("Un plan de synthèse qui traite le document 1, puis le document 2, puis le document 3 :",
+      ["Est la structure attendue", "Est une erreur : il faut un plan thématique",
+       "N'est pénalisé que légèrement", "Dépend du nombre de documents"], 1,
+      "C'est l'erreur la plus fréquente et la plus sanctionnée : un résumé juxtaposé n'est pas "
+      "une synthèse. Le plan doit être thématique, avec plusieurs documents croisés dans chaque "
+      "partie.", "Piège"),
+
+    q("En écriture personnelle, un argument sans exemple précis :",
+      ["Suffit s'il est bien formulé", "Reste au niveau de l'affirmation, sans preuve",
+       "Est accepté en introduction", "N'est jamais nécessaire"], 1,
+      "Un argument sans exemple (fait, date, nom, chiffre) n'est qu'une opinion énoncée, pas "
+      "démontrée. C'est l'exemple précis qui transforme une affirmation en preuve.", "Base"),
+
+    q("La deuxième partie d'une écriture personnelle en deux temps doit :",
+      ["Répéter la première partie avec d'autres mots", "Apporter une VRAIE nuance ou limite",
+       "Résumer la conclusion à venir", "Être plus courte que la première"], 1,
+      "Une deuxième partie qui se contente d'un « cependant » de façade sans réel changement "
+      "d'angle ne nuance rien. Il faut montrer une limite réelle, un cas où la thèse ne "
+      "s'applique pas, ou un argument d'une autre famille.", "Intermédiaire"),
+
+    q("« Les documents que j'ai lus » — pourquoi ce participe passé s'accorde-t-il ?",
+      ["Toujours avec avoir", "Le COD (que) est placé avant le verbe",
+       "Parce que le sujet est pluriel", "Par exception"], 1,
+      "Avec l'auxiliaire avoir, le participe passé ne s'accorde que si le COD est placé AVANT "
+      "le verbe. « J'ai lu les documents » (COD après) ne s'accorde pas ; « les documents que "
+      "j'ai lus » (COD avant) s'accorde.", "Base"),
+
+    q("Comment trancher entre « on » et « ont » dans une phrase ?",
+      ["On regarde si le sujet est singulier", "On remplace par « il » ou par « avaient »",
+       "On regarde la ponctuation", "Les deux s'écrivent pareil à l'oral, peu importe"], 1,
+      "« On » se remplace par « il » (pronom) ; « ont » se remplace par « avaient » (verbe "
+      "avoir). Cette substitution tranche la quasi-totalité des cas.", "Base"),
+
+    q("Quel registre de langue est attendu en synthèse et en écriture personnelle ?",
+      ["Familier, pour être naturel", "Courant à soutenu", "Uniquement soutenu, jamais courant",
+       "Peu importe si les idées sont bonnes"], 1,
+      "Le registre attendu est courant à soutenu. Les tournures orales (« y a », « du coup ») "
+      "sont à proscrire à l'écrit argumentatif.", "Base"),
+
+    q("Pourquoi les connecteurs logiques (cependant, par conséquent...) sont-ils importants ?",
+      ["Ils allongent le devoir", "Ils rendent visible l'articulation du raisonnement",
+       "Ils sont obligatoires en début de chaque phrase", "Ils remplacent les exemples"], 1,
+      "Un texte peut contenir de bonnes idées et paraître décousu s'il manque de connecteurs : "
+      "ce sont eux qui montrent au lecteur COMMENT les idées s'articulent entre elles — "
+      "opposition, conséquence, ajout.", "Intermédiaire"),
+
+    q("La méthode de relecture recommandée consiste à :",
+      ["Relire une seule fois attentivement", "Relire plusieurs fois avec un objectif différent "
+       "à chaque passage", "Ne relire que la conclusion", "Relire seulement l'orthographe"], 1,
+      "Une relecture unique 'pour le sens' laisse passer la plupart des fautes d'accord, l'œil "
+      "corrigeant inconsciemment en lisant. Il faut au moins trois passages : le sens, les "
+      "accords, puis la ponctuation et les homophones.", "Intermédiaire"),
+
+    q("« Cette solution à était choisie » — quelle est l'erreur ?",
+      ["Aucune, c'est correct", "Confusion entre « à » (préposition) et « a » (verbe avoir)",
+       "Un problème de conjugaison au futur", "Une faute de style seulement"], 1,
+      "On teste en remplaçant par « avait » : « cette solution avait été choisie » fonctionne, "
+      "donc c'est le verbe avoir : « a été choisie », pas « à était ».", "Piège"),
+
+    q("« Certains limites reste à prouver » contient combien de fautes d'accord ?",
+      ["Aucune", "Une seule", "Deux : l'adjectif et le verbe", "Trois"], 2,
+      "« Limites » est féminin pluriel : il faut « certaines » (pas « certains ») ET le verbe "
+      "doit s'accorder au pluriel : « restent » (pas « reste »).", "Calcul"),
+
+    q("Dans un sujet d'écriture personnelle, pourquoi analyser chaque mot du sujet avant de "
+      "répondre ?",
+      ["Ce n'est pas nécessaire si on a des idées", "Des mots comme « toujours » ou « selon "
+       "vous » changent radicalement ce qui est attendu", "Pour gagner du temps",
+       "Uniquement pour la longueur du devoir"], 1,
+      "Un sujet qui demande si la technologie rend « plus libre » n'appelle pas la même réponse "
+      "qu'un sujet sur si elle rend « heureux ». Une réponse hors sujet, même bien écrite, part "
+      "de très bas dans la notation.", "Intermédiaire"),
+]
 CATEGORIES = list(QUIZ.keys())
 
 # ==========================================================================
@@ -22491,6 +22776,267 @@ choix étaient fondés, et constater que les écarts étaient compris.
 comment vous avez **décidé**. C'est cela, le métier de technicien supérieur.
 """,
         },
+        {
+    "id": "9.4",
+    "titre": "SolidWorks pas à pas — Trois pièces avancées",
+    "duree": "5 h",
+    "cours": """
+### 1. La suite de la fiche 9.2
+
+Vous avez modélisé une entretoise, une équerre et un support de palier. Cette fiche va plus loin
+avec trois pièces plus complexes — et surtout, **la dernière n'est pas un exercice inventé** :
+c'est le levier de bridage **déjà calculé** dans l'étude de cas 14.1. Vous allez modéliser une
+pièce dont vous connaissez déjà les efforts, les contraintes, et pourquoi chaque cote a la valeur
+qu'elle a.
+
+Même règle qu'en 9.2 : suivez l'ordre, ne sautez pas d'étape, et faites le test de robustesse à
+la fin de chaque pièce.
+
+[[FIG:arbre_de_creation]]
+
+### 2. PIÈCE 4 — Une poulie à gorge (45 minutes)
+
+*Corps Ø80, gorge trapézoïdale pour courroie, moyeu central alésé Ø25 H7, rainure de clavette
+8×4, deux vis de blocage M5 taraudées à 90° l'une de l'autre, congés R2.*
+
+| Étape | Action | Le point à comprendre |
+|---|---|---|
+| 1 | Plan de **Droite**, profil du demi-corps : disque, gorge en V, moyeu | **la gorge fait partie du profil**, pas une fonction séparée |
+| 2 | Contraintes géométriques : symétrie par rapport à l'axe, tangences | esquisse totalement contrainte avant de fermer |
+| 3 | **Révolution** 360° | le corps, la gorge et le moyeu sortent d'un coup |
+| 4 | **Assistant de perçage** Ø25 H7, traversant, dans l'axe | tolérance renseignée directement dans l'assistant |
+| 5 | Esquisse de la rainure sur la **face du moyeu** (dérivée du plan de Droite) | rainure 8×4, profondeur 4 |
+| 6 | **Extrusion coupée** de la rainure | pas de révolution ici : ce n'est plus axisymétrique |
+| 7 | **Assistant de perçage** M5 taraudé, puis **répétition circulaire** à 90°, 2 occurrences | jamais deux perçages créés séparément |
+| 8 | **Congés R2** sur les arêtes vives, en fin d'arbre | comme toujours, en dernier |
+
+**Test de robustesse.** Changez le diamètre du corps de Ø80 à Ø100. La gorge, le moyeu et la
+rainure doivent suivre sans erreur — parce que tout l'axisymétrique est dans le même profil.
+
+**Le piège de cette pièce.** Un débutant modélise souvent la gorge par une **révolution coupée
+après coup**. Cela fonctionne, mais ajoute une fonction inutile, et surtout casse si l'on modifie
+la largeur du corps — la gorge coupée risque de sortir de la matière. En la mettant dans le
+profil dès le départ, ce risque disparaît.
+
+### 3. PIÈCE 5 — Un carter de pompe avec volute (1 h 30)
+
+*Corps cylindrique Ø120 avec un canal en spirale (volute) qui accélère le liquide, bride de
+fixation avec 4 trous oblongs, alésage Ø52 H7 pour un roulement, deux nervures de renfort.*
+
+| Étape | Action | Le point à comprendre |
+|---|---|---|
+| 1 | Plan de **Face**, extrusion du corps cylindrique principal | le volume de base d'abord, toujours |
+| 2 | Esquisse du **profil de la volute** sur un plan dédié, et d'une **courbe guide** en spirale | on prépare les deux ingrédients d'un balayage |
+| 3 | **Balayage coupé** du profil le long de la courbe guide | crée le canal en spirale en une fonction |
+| 4 | **Assistant de perçage** Ø52 H7 pour le roulement | tolérance dans l'assistant, comme toujours |
+| 5 | Esquisse des **nervures** sur un plan perpendiculaire à la bride | pas sur une face, sur un plan de référence |
+| 6 | Fonction **Nervure**, épaisseur 6, plan milieu | elle gère seule le raccordement |
+| 7 | Esquisse d'**un trou oblong** de fixation, puis **répétition circulaire** ×4 | jamais quatre lumières dessinées à la main |
+| 8 | **Congés** partout, en une seule fonction multi-arêtes, en dernier | |
+
+**Test de robustesse.** Le client demande de passer le roulement de Ø52 à Ø62 (un modèle plus
+chargé). Changez uniquement cette cote. Si la volute ou les nervures tombent en erreur, c'est
+qu'elles ont été esquissées **en référence à l'alésage** au lieu d'un plan indépendant — reprenez
+l'étape concernée.
+
+**Pourquoi le balayage et pas une extrusion.** Le canal de la volute change de section et de
+direction en même temps : ni une extrusion ni une révolution ne peuvent le faire en une fonction.
+C'est exactement le cas d'usage du balayage, annoncé en fiche 5.2.
+
+### 4. PIÈCE 6 — Le levier de l'étude de cas 14.1 (1 heure)
+
+C'est ici que le calcul et la CAO se rejoignent. Reprenez les données de la fiche **14.1** : le
+levier de bridage est en **S235**, section rectangulaire **12 × 30**, avec un trou d'articulation
+sur le bâti, un point d'appui du vérin à **40 mm**, et le point de serrage à **65 mm**.
+
+*Rappel du calcul déjà fait : Mf maxi = 58 500 N·mm à l'axe d'articulation, σ = 32,5 MPa pour
+Rpe = 58,75 MPa — le levier travaille à 55 % de l'admissible (fiche 14.1, partie D).*
+
+| Étape | Action | Le lien avec le calcul |
+|---|---|---|
+| 1 | Plan de **Face**, esquisse du contour du levier : 12 × 30 sur toute sa longueur | la section est celle qui a été vérifiée en flexion |
+| 2 | Cotes : 40 mm entre l'axe d'articulation et le point du vérin, 65 mm jusqu'au point de serrage | **exactement les distances utilisées dans le calcul de moment** |
+| 3 | **Extrusion**, épaisseur 12, plan milieu | 12 mm : la hauteur qui a servi à I/v = b h²/6 |
+| 4 | **Assistant de perçage** Ø10 pour l'axe d'articulation (chape à deux joues, fiche 14.1) | ce diamètre a été choisi en double cisaillement |
+| 5 | **Assistant de perçage** Ø17 pour l'axe côté vérin | jeu autour de l'axe Ø16 de la tige |
+| 6 | **Congés R4** à la jonction des deux bras du levier | zone de moment maximal : indispensable (fiche 4.1, Kt) |
+| 7 | Renommer chaque fonction avec le repère du calcul | *Contour_12x30*, *Axe_articulation_Ø10*, *Congés_R4* |
+
+**Test de robustesse — et il a un sens physique cette fois.** Changez la distance de 65 à 80 mm.
+Le modèle doit suivre sans erreur. Et si vous vouliez vraiment aller au bout de la démarche :
+recalculez à la main le nouveau moment fléchissant (Mf = 900 × 80 = 72 000 N·mm) et vérifiez que
+la section 12 × 30 tient encore — c'est exactement le travail d'un bureau d'études quand un client
+modifie une cote.
+
+**Ce que cette pièce apprend, au-delà de la CAO.** Le modèle 3D n'est pas un dessin détaché du
+calcul : les cotes qu'il porte sont **les mêmes** que celles qui ont servi à vérifier la
+résistance. Si vous modifiez le modèle sans refaire le calcul, vous obtenez une pièce qui existe
+en 3D mais dont plus personne ne sait si elle tient.
+
+[[FIG:isostatique_hyperstatique]]
+
+### 5. Un mini-assemblage : monter la poulie sur un arbre
+
+Pour relier cette fiche à la 5.3, assemblez la **Pièce 4** (la poulie) sur un arbre simple que
+vous modélisez en cinq minutes (un cylindre Ø25 h6 de 150 mm, avec une rainure de clavette
+correspondante).
+
+**Les contraintes à poser, dans l'ordre :**
+
+1. **Ancrer l'arbre** — c'est le composant fixe.
+2. **Coïncidence des axes** poulie/arbre — supprime 4 degrés de liberté (2 translations, 2
+   rotations).
+3. **Coïncidence de face** — supprime la translation restante le long de l'axe.
+
+**Le contrôle qui ne trompe pas** (fiche 5.3) : il doit rester **une seule rotation possible** —
+la poulie tourne librement autour de l'arbre. Si vous pouvez encore la faire coulisser, une
+contrainte manque. Si elle est totalement bloquée, vous en avez mis une de trop : l'assemblage
+serait alors sur-contraint, exactement comme une esquisse sur-contrainte (fiche 5.1).
+
+*Ne posez pas la clavette en position dans l'assemblage pour l'instant — elle transmettrait le
+couple, mais ce n'est pas elle qui doit fixer les degrés de liberté du montage : c'est
+l'ajustement qui centre (fiche 6.3).*
+
+### 6. Ce qu'il faut retenir de ces trois pièces
+
+| Pièce | La difficulté nouvelle |
+|---|---|
+| poulie à gorge | une forme axisymétrique complexe, entièrement dans le profil de révolution |
+| carter à volute | un balayage pour une forme qui change de section ET de direction |
+| levier calculé | la CAO qui **prolonge** un calcul déjà fait, cote pour cote |
+
+Dans les trois cas, la méthode ne change pas : plan de référence, esquisse contrainte, ordre
+canonique de l'arbre, congés en dernier, test de robustesse. Ce qui change, c'est la difficulté de
+la **forme** — jamais la méthode.
+""",
+    "formules": """
+**Rappel de l'ordre canonique** — forme générale → enlèvements → perçages (assistant) →
+répétitions/symétries → nervures/coque → congés, chanfreins, dépouilles
+
+**Choisir la bonne fonction de base** — axisymétrique → révolution (tout dans le profil) ·
+section constante en ligne droite → extrusion · section qui varie en suivant un chemin → balayage
+
+**Assemblage — compter les degrés de liberté** — coïncidence d'axes : −4 ddl (2T + 2R) ·
+coïncidence de face : −1 ddl (T restante) · contrôle final : ddl restants = liaison voulue
+
+**Lien calcul ↔ CAO** — les cotes du modèle sont celles utilisées dans le calcul RDM ;
+modifier l'une sans revérifier l'autre laisse une pièce non garantie
+""",
+    "exercice": """
+### Une septième pièce, sans les étapes cette fois
+
+Vous avez suivi trois pas à pas détaillés. Voici un énoncé seul — à vous de construire la
+stratégie avant d'ouvrir SolidWorks, comme le demande la fiche 5.2.
+
+**Énoncé.** Un galet tendeur de courroie : corps cylindrique Ø60 en forme de double tronc de cône
+(pour centrer la courroie automatiquement), alésage central Ø15 H7 pour un roulement à billes,
+moyeu débordant de chaque côté sur 3 mm, congés R1,5 partout.
+
+**Répondez à ces quatre questions avant de modéliser :**
+
+1. Quelle **fonction de base** utilisez-vous pour la forme générale, et pourquoi ?
+2. L'alésage central et les moyeux débordants : combien de **fonctions** au minimum ?
+3. Dans quel **ordre** placez-vous les congés par rapport au reste ?
+4. Quel **test de robustesse** feriez-vous, et sur quelle cote ?
+""",
+    "corrige": """
+### Corrigé — la stratégie avant le clic
+
+**1. La fonction de base**
+
+**Une révolution.** Le galet est entièrement axisymétrique — corps conique double, alésage,
+moyeux débordants — donc **tout** se dessine dans un seul profil, tourné en une fois. C'est
+exactement le principe de la Pièce 4 de cette fiche : une pièce axisymétrique complexe ne demande
+qu'une seule révolution si le profil est bien construit.
+
+**2. Nombre de fonctions minimal**
+
+**Deux fonctions** : la révolution du profil complet (qui inclut déjà le double cône, l'alésage
+Ø15 et les moyeux débordants, puisque tout est axisymétrique), puis les congés.
+
+*L'erreur classique serait de faire une révolution pour le corps, puis une extrusion coupée pour
+l'alésage, puis deux extrusions pour les moyeux : quatre fonctions au lieu d'une seule, pour
+strictement le même résultat, mais un modèle quatre fois plus fragile aux modifications.*
+
+**3. L'ordre des congés**
+
+**En tout dernier**, après la révolution — comme dans les six pièces précédentes de cette fiche et
+de la 9.2. Aucune exception à cette règle, quelle que soit la complexité de la pièce.
+
+**4. Le test de robustesse**
+
+Changer le **diamètre de l'alésage**, de Ø15 à Ø17 par exemple — c'est la modification la plus
+probable en vraie vie, si le fournisseur de roulement change. Si toute la géométrie (double cône,
+moyeux) a bien été construite dans le même profil que l'alésage, elle doit rester cohérente
+automatiquement puisque tout dépend des mêmes contraintes géométriques de l'esquisse.
+
+*On pourrait aussi tester le diamètre extérieur Ø60, ou l'angle du double cône — dans tous les
+cas, le principe reste : une seule modification, aucune erreur en cascade.*
+""",
+    "exemple": """
+### Avant de lire le cas : de quoi parle-t-on ?
+
+**La situation.** Un bureau d'études reçoit un modèle 3D d'un sous-traitant pour une pièce de
+révolution. Le modèle « a l'air » correct à l'écran, mais personne n'arrive à le modifier sans
+qu'il s'effondre.
+
+**Le vocabulaire, en clair :**
+
+| Terme | Ce que ça veut dire |
+|---|---|
+| **arbre de création opaque** | des fonctions non renommées, impossibles à suivre |
+| **référence externe cassée** | une esquisse qui s'appuyait sur une face qui a disparu |
+| **reverse engineering du modèle** | comprendre un modèle 3D fait par quelqu'un d'autre |
+
+---
+
+### Cas industriel — Un modèle reçu, impossible à modifier
+
+**La situation.** Le client demande de passer le diamètre d'un galet tendeur (proche de celui de
+l'exercice ci-dessus) de Ø60 à Ø65. Le sous-traitant renvoie le fichier avec l'arbre suivant :
+
+| Fonction | Nom dans l'arbre |
+|---|---|
+| 1 | Révolution1 |
+| 2 | Extrusion-Coupée1 |
+| 3 | Extrusion-Coupée2 |
+| 4 | Congé1 |
+| 5 | Extrusion-Coupée3 |
+| 6 | Congé2 |
+
+Rien n'est renommé. En ouvrant chaque esquisse, le bureau d'études découvre :
+
+- **Révolution1** ne contient que le corps conique, **sans** l'alésage ni les moyeux ;
+- **Extrusion-Coupée1** perce l'alésage Ø15, mais son esquisse est posée **sur une face du
+  cône**, pas sur un plan ;
+- **Extrusion-Coupée2** et **Extrusion-Coupée3** créent les moyeux débordants, chacune avec ses
+  propres cotes, redondantes avec celles de la révolution ;
+- **Congé1** est placé **entre** les deux extrusions coupées, pas à la fin.
+
+**Ce qui se passe en changeant le diamètre**
+
+Dès qu'on passe de Ø60 à Ø65, la face sur laquelle **Extrusion-Coupée1** était posée se déplace.
+L'esquisse de l'alésage perd sa référence : **erreur en cascade**, les trois fonctions suivantes
+tombent aussi.
+
+**La correction, appliquée par le bureau d'études**
+
+Plutôt que de réparer fonction par fonction — ce qui aurait pris une heure et resterait fragile —,
+ils **reconstruisent le modèle en suivant exactement la méthode de cette fiche** :
+
+1. Un seul profil de révolution contenant le cône, l'alésage et les deux moyeux, contraint par
+   symétrie sur l'axe.
+2. Les congés regroupés en une seule fonction, à la toute fin.
+
+**Résultat : deux fonctions au lieu de six.** Le nouveau diamètre se change en modifiant une seule
+cote, en cinq secondes, sans aucune erreur.
+
+**Ce que le cas apprend.** Un modèle qui « a l'air bon » à l'écran peut être un piège complet pour
+qui doit le modifier ensuite — client, collègue, ou vous-même dans six mois. La méthode enseignée
+dans cette fiche n'est pas une préférence esthétique : c'est ce qui évite de reconstruire une
+pièce à chaque demande de modification.
+""",
+        },
     ],
 }
 
@@ -28731,6 +29277,8 @@ lu avant l'effort n'apprend rien.
 
 ### Présentation du système
 
+[[FIG:schema_bridage_etude_cas]]
+
 Sur une ligne d'assemblage, un poste doit **maintenir une pièce en aluminium pendant le vissage
 de deux composants**. L'opérateur pose la pièce sur un posage, appuie sur un bouton, un vérin
 pneumatique fait basculer un levier qui vient serrer la pièce. Le vissage automatique se
@@ -29280,6 +29828,8 @@ flexion-torsion, roulements, matériaux, gamme de fabrication. C'est le format t
 
 ### Présentation du système
 
+[[FIG:schema_reducteur_etude_cas]]
+
 Un **tapis roulant** de tri postal doit être entraîné par un motoréducteur. Le moteur électrique
 disponible délivre **4 kW à 1 450 tr/min**. Le tambour d'entraînement doit tourner à environ
 **290 tr/min**.
@@ -29766,7 +30316,1203 @@ Trois questions qu'un sujet de deuxième année ajouterait :
 }
 
 
-BLOCS_COMPLEMENTAIRES = [BLOC_7, BLOC_8, BLOC_9, BLOC_10, BLOC_11, BLOC_12, BLOC_13, BLOC_14]
+BLOC_15 = {
+    "id": 15,
+    "titre": "Bloc 15 — Fiches méthode : dans quel ordre s'y prendre",
+    "resume": "Pas de nouvelles notions : comment attaquer chaque type d'exercice, et les erreurs qui coûtent le plus de points.",
+    "fiches": [
+        {
+            "id": "15.1",
+            "titre": "Méthode — Un exercice de RDM",
+            "duree": "2 h",
+            "cours": """
+### Pourquoi cette fiche
+
+Vous connaissez les formules — elles sont dans les fiches 4.1 à 4.3 et dans le formulaire. Ce qui
+manque souvent, ce n'est pas la formule : c'est **l'ordre dans lequel s'en servir**. Cette fiche
+ne réexplique rien : elle donne la check-list.
+
+[[FIG:trois_temps_methode]]
+
+### AVANT de calculer
+
+**1. Isolez la pièce.** Redessinez-la seule, avec toutes les actions extérieures qui s'exercent
+sur elle.
+
+**2. Identifiez LA sollicitation.** Une seule question suffit : l'effort qui traverse la section
+est-il **perpendiculaire** à elle (traction, flexion) ou **dans son plan** (cisaillement,
+torsion) ?
+
+| Ce qui traverse la section | Sollicitation |
+|---|---|
+| un effort N, dans l'axe de la pièce | traction / compression |
+| un effort T, perpendiculaire à l'axe, dans le plan de coupe | cisaillement |
+| un moment Mt, autour de l'axe | torsion |
+| un moment Mf, qui plie la pièce | flexion |
+| plusieurs à la fois | sollicitation composée (fiche 12.2) |
+
+**3. Convertissez toutes les unités MAINTENANT, une fois pour toutes.** Les couples sont presque
+toujours donnés en N·m : passez-les en N·mm avant la première ligne de calcul. C'est l'erreur la
+plus fréquente de tout le programme, et elle se corrige en une habitude.
+
+**4. Repérez où l'effort intérieur est maximal.** Ce n'est pas toujours évident : pour une
+flexion, tracez ou rappelez le diagramme (fiche 4.1). On dimensionne **là**, jamais ailleurs.
+
+### PENDANT le calcul
+
+**5. Comptez les sections qui travaillent.** En cisaillement, une chape à deux joues **double** la
+section résistante. C'est l'erreur qui coûte un facteur 2 entier.
+
+**6. Vérifiez si une seconde vérification s'impose en même temps.**
+
+| Si vous calculez… | … pensez aussi à vérifier |
+|---|---|
+| un cisaillement (axe, goupille) | le **matage** — p = F/(d×e) |
+| une flexion | la **flèche**, en plus de la contrainte |
+| une compression sur pièce élancée | l'**élancement**, avant même la contrainte |
+| flexion + torsion ensemble | la **contrainte équivalente** — jamais σ + τ |
+
+**7. Comparez à Rpe = Re / s — jamais à Re, jamais à Rm.** Une pièce dimensionnée sur Re seul
+casse en dessous de ce qu'on croit sûr.
+
+### APRÈS avoir un résultat
+
+**8. Contrôlez l'ordre de grandeur.** Une contrainte de 3 MPa ou de 3 000 MPa sur une pièce
+mécanique courante doit vous alerter — les valeurs usuelles vont de quelques dizaines à quelques
+centaines de MPa.
+
+**9. Concluez par un pourcentage**, pas par « ça passe ». « 195 ≤ 300, soit 65 % de l'admissible »
+prouve que vous avez compris le résultat, pas seulement calculé un nombre.
+
+**10. Demandez-vous si une deuxième pièce de la chaîne d'efforts a été oubliée.** Un axe qui tient
+ne dit rien de la chape qui le reçoit.
+""",
+            "formules": """
+**Check-list RDM, dans l'ordre** — isoler · identifier la sollicitation · convertir en N·mm ·
+localiser le maximum · compter les sections · vérifier la sollicitation secondaire ·
+comparer à Rpe = Re/s (jamais Re ni Rm) · contrôler l'ordre de grandeur · conclure en %
+
+**Les cinq sollicitations et leur formule** — σ = N/S · τ = T/S · τ = Mt/(I₀/v) ·
+σ = Mf/(I/v) · σéq = √(σ² + 3τ²)
+
+**Les vérifications qu'on oublie** — matage après un cisaillement · flèche après une flexion ·
+élancement avant une compression · fatigue sur une pièce qui tourne
+""",
+            "exercice": """
+### Une copie à corriger — pas un calcul à refaire
+
+Voici trois extraits de copies d'élèves. Chacun contient **une erreur de méthode**, pas une
+erreur de calcul : les opérations sont justes, mais quelque chose a été oublié ou mal appliqué.
+Identifiez l'erreur avant de regarder le corrigé.
+
+---
+
+**Copie A — Traction**
+
+*« Tige Ø20, tirée par 15 000 N, acier C45 (Re = 340 MPa), s = 3.*
+
+*S = π × 20² / 4 = 314 mm²*
+*σ = 15 000 / 314 = 47,8 MPa*
+*Comparé à Re = 340 MPa : 47,8 ≪ 340, la pièce est très largement acceptée. »*
+
+Quelle est l'erreur ?
+
+---
+
+**Copie B — Torsion**
+
+*« Arbre Ø25, couple 180 N·m.*
+
+*I/v = π × 25³ / 32 = 1 534 mm³*
+*τ = 180 000 / 1 534 = 117,3 MPa »*
+
+Quelle est l'erreur ?
+
+---
+
+**Copie C — Cisaillement**
+
+*« Axe Ø12 dans une chape à deux joues, effort 9 000 N.*
+
+*S = π × 12² / 4 = 113 mm²*
+*τ = 9 000 / 113 = 79,6 MPa »*
+
+Quelle est l'erreur ?
+""",
+            "corrige": """
+### Corrigé — les trois erreurs
+
+**Copie A — l'erreur est à l'étape 7 : comparer à Re au lieu de Rpe**
+
+Le calcul de σ est juste. Mais on ne compare jamais à Re directement.
+
+Rpe = Re / s = 340 / 3 = **113,3 MPa**
+
+47,8 ≤ 113,3 → la pièce reste acceptée, mais l'élève a **utilisé le mauvais critère**, pas
+seulement écrit une comparaison en plus. Sur un autre exercice, comparer à Re au lieu de Rpe peut
+faire accepter une pièce qui casse en réalité.
+
+*Réflexe à prendre : dès que vous écrivez une contrainte calculée, la ligne suivante est
+systématiquement « Rpe = Re / s = … », jamais « Re = … ».*
+
+**Copie B — l'erreur est à l'étape 5 : mauvaise formule pour la section**
+
+L'élève a utilisé **I/v**, le module de **flexion** (π d³/32), pour un calcul de **torsion**, qui
+doit utiliser **I₀/v** (π d³/16) — le double.
+
+Calcul correct :
+I₀/v = π × 25³ / 16 = **3 068 mm³**
+τ = 180 000 / 3 068 = **58,7 MPa**
+
+L'élève a trouvé **117,3 MPa**, soit exactement le double de la bonne valeur — la signature de
+cette confusion précise.
+
+*Réflexe à prendre : le repère de la fiche 4.2 — torsion, c'est 32 et 16 ; flexion, c'est 64 et
+32. Le module de torsion vaut toujours le double du module de flexion.*
+
+**Copie C — l'erreur est à l'étape 5 : la chape a deux joues, donc double cisaillement**
+
+Le calcul utilise **une seule section**, comme en simple cisaillement. Or une chape à deux joues
+fait travailler **deux sections en parallèle**.
+
+Calcul correct :
+S totale = 2 × 113 = **226 mm²**
+τ = 9 000 / 226 = **39,8 MPa**
+
+L'élève a trouvé **79,6 MPa** — exactement le double de la bonne valeur.
+
+*Réflexe à prendre : avant tout calcul de cisaillement, comptez les sections coupées par l'effort.
+C'est un dessin de deux secondes, pas un calcul.*
+
+---
+
+### Ce que ces trois copies ont en commun
+
+Aucune des trois erreurs n'est une faute de calcul. Ce sont des **erreurs de méthode**, et toutes
+les trois donnent un résultat qui « a l'air » plausible — c'est ce qui les rend dangereuses : rien
+dans le nombre obtenu ne signale qu'il est faux.
+
+**C'est exactement pourquoi la check-list existe** : elle vous fait vérifier la méthode, pas
+seulement l'arithmétique.
+""",
+            "exemple": """
+### Comment utiliser cette fiche pendant les révisions
+
+Ne la lisez pas comme un cours : gardez-la ouverte **à côté** de vos exercices, et cochez
+mentalement chaque étape en la traitant. Après une quinzaine d'exercices, la check-list devient un
+réflexe et vous n'aurez plus besoin de la relire.
+
+**Le signe que vous progressez** : vous commencez à repérer vous-même, dans vos propres copies,
+le genre d'erreurs qui apparaissent dans l'exercice ci-dessus — avant même de comparer au corrigé.
+
+**Un dernier conseil, pour le jour de l'épreuve.** Si un résultat vous semble bizarre — trop petit,
+trop grand, une contrainte négative — ne l'effacez pas en vitesse : c'est souvent le signe que
+vous venez de trouver, par le calcul, une des trois erreurs ci-dessus. Remontez la check-list
+depuis l'étape 5.
+""",
+        },
+        {
+    "id": "15.2",
+    "titre": "Méthode — Ajustements, tolérances et chaînes de cotes",
+    "duree": "2 h",
+    "cours": """
+### Pourquoi cette fiche
+
+Les formules d'ajustement (fiche 2.2) et de chaîne de cotes (fiche 2.3) tiennent en deux lignes.
+Ce qui fait perdre des points, c'est presque toujours une **lecture de table mal faite** ou un
+**sens de calcul inversé**. Cette fiche donne la check-list, pas les formules.
+
+[[FIG:trois_temps_methode]]
+
+### AVANT de calculer un ajustement
+
+**1. Identifiez qui est l'alésage, qui est l'arbre.** La règle ne change jamais : **MAJUSCULE =
+alésage (le trou) · minuscule = arbre**. Ø30 H7 est un trou ; Ø30 g6 est un axe.
+
+**2. Repérez la plage de la table à utiliser.** Les tables ISO sont découpées en plages de
+diamètre (« au-dessus de 18, jusqu'à 30 »). Une lecture dans la mauvaise ligne fausse tout.
+
+**3. Repérez le sens de lecture selon la lettre de l'arbre.**
+
+| Lettres | Ce que la table donne directement | Ce qu'il faut calculer |
+|---|---|---|
+| a à h | l'écart **supérieur** es | ei = es − IT |
+| k à z | l'écart **inférieur** ei | es = ei + IT |
+
+### PENDANT le calcul
+
+**4. Convertissez immédiatement micromètres en millimètres.** La table donne des µm ; le plan
+attend des mm. **21 µm = 0,021 mm**, jamais 0,21. C'est l'erreur la plus fréquente du bloc 2, et
+elle fausse une pièce d'un facteur 10.
+
+**5. Pour un ajustement, appliquez toujours la même paire de formules :**
+
+> Jmax = Alésage maxi − arbre mini
+> Jmin = Alésage mini − arbre maxi
+
+Ne changez jamais l'ordre : c'est toujours « le plus grand trou moins le plus petit axe » pour le
+jeu maximal.
+
+**6. Pour une chaîne de cotes, tracez le vecteur AVANT d'écrire une équation.** Partez de
+l'origine de la condition, traversez chaque pièce une fois, revenez à l'extrémité. Si la chaîne ne
+se referme pas, il y a une pièce oubliée ou comptée deux fois.
+
+### APRÈS avoir un résultat
+
+**7. Un résultat négatif n'est pas une erreur : c'est un serrage.** Ne cherchez pas à le
+« corriger » — interprétez-le.
+
+**8. Pour une chaîne de cotes, vérifiez TOUJOURS aux deux extrêmes**, pas seulement au nominal :
+Ja mini et Ja maxi doivent tous les deux tomber dans la condition demandée. La somme des IT peut
+être correcte et la plage être quand même mal placée (fiche 2.3).
+
+**9. Si la condition n'est pas respectée, ne resserrez pas au hasard.** Trois leviers, dans
+l'ordre : raccourcir la chaîne, ajouter une cale de réglage, et seulement en dernier recours
+resserrer une tolérance.
+""",
+    "formules": """
+**Check-list ajustement, dans l'ordre** — identifier alésage/arbre par la casse ·
+repérer la plage de la table · lire ES ou ei selon la lettre · convertir µm → mm ·
+Jmax = Amaxi − amini · Jmin = Amini − amaxi · négatif = serrage
+
+**Check-list chaîne de cotes** — tracer le vecteur avant l'équation · une pièce = une cote ·
+Ja = Σ positives − Σ négatives · ITja = somme de tous les IT ·
+vérifier aux DEUX extrêmes, pas seulement au nominal
+
+**Le piège numéro un** — 21 µm = 0,021 mm, pas 0,21 mm (facteur 10)
+""",
+    "exercice": """
+### Une copie à corriger
+
+**Copie D — Ajustement Ø30 H7/g6**
+
+*« Table pour la plage 18-30 : IT7 = 21 µm, IT6 = 13 µm, écart de g : es = −7 µm.*
+
+*Alésage H7 : EI = 0, ES = 21 → de 30,000 à 30,21*
+*Arbre g6 : es = −7, ei = −7−13 = −20 → de 29,980 à 29,993*
+*Jmax = 30,21 − 29,980 = 0,23 mm »*
+
+Quelle est l'erreur ?
+
+---
+
+**Copie E — Chaîne de cotes**
+
+*« Carter A = 60, roue B = 40, couvercle C = 19,7. Condition Ja entre 0,1 et 0,4.*
+
+*Ja nominal = 60 − 40 − 19,7 = 0,3 mm*
+*ITja disponible = 0,4 − 0,1 = 0,3 mm, réparti sur 3 cotes → IT = 0,1 mm par cote, donc
+± 0,05 mm chacune.*
+*Conclusion : la répartition est correcte, on peut coter. »*
+
+Que manque-t-il pour être certain que ça marche ?
+""",
+    "corrige": """
+### Corrigé
+
+**Copie D — l'erreur est à l'étape 4 : oubli de la conversion µm → mm**
+
+L'alésage a été écrit « 30,21 » au lieu de **30,021**. La table donne des micromètres ; 21 µm
+vaut 0,021 mm, pas 0,21.
+
+Avec la bonne conversion :
+Jmax = 30,021 − 29,980 = **0,041 mm**, et non 0,23 mm — une pièce dix fois moins « en jeu » que ce
+que la copie affirmait.
+
+*C'est l'erreur la plus fréquente du bloc 2 : elle ne saute pas aux yeux, parce que le nombre
+« 30,21 » ressemble à une cote plausible. Le seul réflexe qui protège : écrire systématiquement le
+calcul en micromètres D'ABORD, et ne convertir qu'à la toute fin — « ES = 21 µm = 0,021 mm ».*
+
+**Copie E — il manque l'étape 8 : la vérification aux extrêmes**
+
+La répartition des tolérances est arithmétiquement correcte : 3 × 0,1 = 0,3 mm, qui correspond
+bien à l'intervalle disponible. **Mais ce n'est pas suffisant.**
+
+Avec des écarts symétriques (± 0,05 sur chaque cote) :
+
+Ja maxi = (60 + 0,05) − (40 − 0,05) − (19,7 − 0,05) = 60,05 − 39,95 − 19,65 = **0,45 mm**
+Ja mini = (60 − 0,05) − (40 + 0,05) − (19,7 + 0,05) = 59,95 − 40,05 − 19,75 = **0,15 mm**
+
+La plage réelle est **0,15 à 0,45**, alors que la condition demande **0,1 à 0,4**. Le maxi
+dépasse : **0,45 > 0,4**.
+
+La largeur était bonne (0,30 = 0,30), mais la plage est décalée. La correction ne porte pas sur
+les tolérances : il faut **déplacer un nominal** — par exemple porter le couvercle à 19,75, ce qui
+recentre exactement la plage sur 0,10 à 0,40 (calcul détaillé en fiche 2.3).
+
+*C'est le piège le plus fréquent des chaînes de cotes : une répartition qui « tombe juste » en
+arithmétique et qui échoue quand même à la vérification aux extrêmes.*
+""",
+    "exemple": """
+### Le geste qui évite les deux erreurs
+
+Pour l'ajustement : **écrivez toujours les écarts en micromètres avant de les convertir**, sur une
+ligne séparée. « ES = +21 µm » puis, ligne suivante, « soit 30,000 à 30,021 mm ». Ne convertissez
+jamais « dans votre tête » en même temps que vous lisez la table.
+
+Pour la chaîne de cotes : **ne vous arrêtez jamais au calcul du nominal.** Le nominal ne prouve
+rien sur la faisabilité — seule la vérification aux deux extrêmes le fait. Prenez l'habitude
+d'écrire systématiquement les trois lignes : nominal, maxi, mini — même quand l'énoncé ne le
+demande pas explicitement, parce que c'est souvent là que se cache la vraie question.
+""",
+        },
+        {
+    "id": "15.3",
+    "titre": "Méthode — Statique, schéma cinématique et choix de matériau",
+    "duree": "2 h",
+    "cours": """
+### Pourquoi cette fiche
+
+Trois familles d'exercices très différentes en apparence, mais qui échouent pour la **même
+raison** : on se lance dans le calcul avant d'avoir posé le problème. Cette fiche donne les trois
+check-lists, plus courtes que les précédentes parce que le vrai travail se fait **avant** de
+calculer.
+
+[[FIG:trois_temps_methode]]
+
+### Statique : AVANT d'écrire une équation
+
+**1. Isolez le solide et dessinez TOUTES les actions extérieures** — pas seulement celle que
+l'énoncé met en avant.
+
+**2. Comptez les inconnues avant de commencer.** Appui simple = 1, articulation = 2,
+encastrement = 3. Si le total dépasse 3 en plan, le problème est hyperstatique : la statique seule
+ne suffit pas, il faut le dire plutôt que de forcer un calcul.
+
+**3. Choisissez le point de calcul des moments AVANT d'écrire l'équation.** Prenez-le là où
+passent les inconnues que vous voulez éliminer — jamais un point choisi au hasard.
+
+**4. Contrôlez par le bon sens** : l'appui le plus proche de la charge doit reprendre la plus
+grosse part.
+
+### Schéma cinématique : AVANT de dessiner
+
+**5. Listez toutes les pièces**, puis regroupez celles qui n'ont **aucun mouvement relatif** entre
+elles — la visserie en particulier disparaît toujours dans une classe.
+
+**6. Nommez chaque liaison en comptant ce qui RESTE possible**, pas ce qui est bloqué. Pivot =
+il reste une rotation. Glissière = il reste une translation.
+
+**7. Vérifiez à la fin que les degrés de liberté restants correspondent au mouvement réel du
+mécanisme.** Un schéma qui laisse deux mouvements indépendants pour un mécanisme qui n'en a qu'un
+est faux, même si chaque liaison individuelle semblait juste.
+
+### Choix de matériau : AVANT de proposer une nuance
+
+**8. Une seule question d'abord : la pièce doit-elle résister, ou ne pas plier ?** La réponse
+oriente vers deux mondes différents — la nuance dans un cas, la forme dans l'autre. Se tromper ici
+fait proposer un acier allié cher pour un problème que seule une nervure aurait résolu.
+
+**9. Éliminez ensuite par les contraintes : soudée ? trempée ? milieu corrosif ?** Chaque question
+retire des nuances de la liste, dans cet ordre — pas dans le désordre.
+
+**10. Le budget et la disponibilité viennent en DERNIER**, jamais en premier. On ne part pas du
+prix pour choisir une nuance : on part de la fonction, on élimine, et on regarde le prix parmi ce
+qui reste.
+""",
+    "formules": """
+**Statique** — isoler, dessiner TOUTES les actions · compter les inconnues avant de calculer ·
+appui simple 1 · articulation 2 · encastrement 3 · moments au point qui élimine une inconnue
+
+**Schéma cinématique** — classes d'équivalence (visserie incluse dedans) · nommer par ce qui
+RESTE possible · vérifier les ddl restants contre le mouvement réel
+
+**Choix de matériau** — résister (Re, nuance) ou ne pas plier (E, forme) ? · puis soudable ? ·
+trempable ? · corrosion ? · EN DERNIER : budget et disponibilité
+""",
+    "exercice": """
+### Une copie à corriger
+
+**Copie F — Statique**
+
+*« Poutre sur une articulation A et un appui simple B, charge F au milieu.*
+
+*Je prends les moments au point B :*
+*ΣM(B) = 0 → −F × (L/2) + Ax × L = 0*
+*→ Ax = F/2 »*
+
+Quelle est l'erreur de méthode (pas de calcul) ?
+
+---
+
+**Copie G — Matériau**
+
+*« La pièce plie de 3 mm, alors que 0,5 mm sont admis. Je passe du S235 (Re = 235) au 42CrMo4
+traité (Re = 750) pour renforcer la pièce. »*
+
+Quelle est l'erreur ?
+""",
+    "corrige": """
+### Corrigé
+
+**Copie F — l'erreur est à l'étape 3 : mauvais choix du point de calcul**
+
+Rien n'est faux dans l'écriture de l'équation elle-même — mais **prendre les moments en B ne fait
+disparaître aucune inconnue utile**. B est un appui simple : sa réaction est perpendiculaire au
+contact, donc son moment en B est déjà nul, qu'on le choisisse ou non. Ax, la composante
+horizontale en A, ne disparaît pas de l'équation : le calcul mélange des inconnues sans en
+éliminer aucune, et le résultat « Ax = F/2 » n'a pas de sens physique (Ax devrait valoir 0 en
+l'absence de charge horizontale).
+
+**Le bon choix : prendre les moments en A.** Cela élimine directement Ax et Ay, et l'équation ne
+contient plus que By, l'inconnue qu'on cherche.
+
+*Réflexe à prendre : avant d'écrire ΣM = 0, demandez-vous « quelle inconnue vais-je faire
+disparaître avec ce choix de point ? ». Si la réponse est « aucune », changez de point.*
+
+**Copie G — l'erreur est à l'étape 8 : confusion entre résistance et rigidité**
+
+Le problème est une **flèche excessive** — c'est un problème de **rigidité**, gouverné par **E**,
+pas par Re.
+
+Or **E est identique pour tous les aciers**, environ 210 000 MPa, quelle que soit la nuance ou le
+traitement. Passer du S235 au 42CrMo4 traité **ne changera strictement rien à la flèche** : la
+pièce pliera exactement autant, pour un coût matière trois à quatre fois supérieur.
+
+La vraie solution agit sur **I**, donc sur la **forme** : augmenter la hauteur de la section
+(effet en h³), passer à un profil creux ou nervuré, ou raccourcir la portée si c'est possible
+(effet en L³ sur la flèche).
+
+*Réflexe à prendre : dès qu'un énoncé parle de flèche, de flambement ou de rigidité, la première
+question est « quelle forme ? », jamais « quel acier ? ».*
+""",
+    "exemple": """
+### Le point commun aux trois check-lists
+
+Statique, schéma cinématique, choix de matériau : dans les trois cas, l'erreur qui coûte le plus
+cher se produit **avant le premier calcul**, au moment de poser le problème. Un élève qui isole
+mal, qui regroupe mal les classes d'équivalence, ou qui confond résistance et rigidité peut
+enchaîner ensuite des calculs parfaitement corrects — et arriver quand même à une réponse fausse.
+
+**C'est pourquoi ces trois check-lists insistent sur les étapes 1 à 3 de chaque famille : c'est
+là, et seulement là, que se joue l'essentiel.**
+""",
+        },
+    ],
+}
+
+
+BLOC_16 = {
+    "id": 16,
+    "titre": "Bloc 16 — Culture générale et expression",
+    "resume": "La matière générale obligatoire de l'examen : synthèse de documents et écriture personnelle.",
+    "fiches": [
+        {
+            "id": "16.1",
+            "titre": "La synthèse de documents : méthode",
+            "duree": "6 h",
+            "cours": """
+### 1. Ce qu'on vous demande vraiment
+
+On vous donne 4 à 6 documents — articles, graphique, extrait littéraire, caricature — qui
+tournent tous autour d'un même thème. Votre tâche : rédiger un texte **objectif et organisé** qui
+rend compte de ce que disent ces documents, **sans jamais donner votre avis**.
+
+**C'est un exercice de mécanicien, au fond** : on vous donne des pièces (les documents), et il
+faut les assembler en un ensemble cohérent, en respectant des règles précises. Une synthèse
+bâclée, c'est comme une pièce mal cotée — le fond peut être juste et la forme vous fait perdre
+tous les points.
+
+**La règle absolue, celle qui domine tout :** **objectivité totale**. Pas de « je pense que »,
+pas de jugement de valeur, pas d'exemple personnel. Vous êtes une caméra qui filme les documents,
+pas un participant au débat.
+
+### 2. La méthode en quatre temps
+
+[[FIG:methode_synthese]]
+
+**Temps 1 — Lire, une première fois, sans annoter.** Repérez pour chaque document : son thème
+précis, sa thèse ou son message, sa nature (article de presse, étude, texte littéraire, image),
+sa date, son auteur. Cette étape seule prend un tiers du temps disponible — ne la bâclez pas pour
+gagner du temps sur la rédaction.
+
+**Temps 2 — Confronter les documents entre eux.** C'est l'étape que tout le monde saute, et
+c'est elle qui fait la différence de note. Posez-vous, document par document : lequel dit la même
+chose qu'un autre ? Lequel le nuance ? Lequel le contredit ? Lequel illustre concrètement une idée
+abstraite énoncée ailleurs ?
+
+**Temps 3 — Construire un plan thématique, jamais document par document.** Deux ou trois grands
+axes, et **chaque axe doit s'appuyer sur plusieurs documents à la fois**. Un plan qui traite le
+document 1, puis le document 2, puis le document 3 n'est pas une synthèse : c'est un résumé
+juxtaposé, et il est sanctionné lourdement.
+
+**Temps 4 — Rédiger avec vos propres mots.** On ne recopie jamais une phrase d'un document : on
+la reformule. Les citations courtes et entre guillemets restent possibles, mais rares et
+justifiées.
+
+### 3. Confronter les documents : la compétence clé
+
+C'est la partie la plus difficile, et celle qui distingue une bonne copie d'une copie moyenne.
+Un tableau à deux colonnes vous aide à visualiser les liens avant de rédiger :
+
+| Relation entre deux documents | Ce que ça donne dans votre texte |
+|---|---|
+| ils **disent la même chose** | vous les citez ensemble, comme deux preuves d'une idée |
+| l'un **nuance** l'autre | vous montrez la limite, la restriction |
+| ils **se contredisent** | vous exposez le désaccord sans trancher |
+| l'un **illustre** l'idée générale d'un autre | vous les enchaînez pour aller du général au concret |
+
+**Un exemple concret.** Sur le thème du travail à distance : un document affirme qu'il améliore
+la productivité, un autre cite une étude montrant l'inverse au bout de plusieurs mois, un
+troisième donne un témoignage individuel. Une bonne synthèse ne dit pas « le document 1 dit ceci,
+le document 2 dit cela » : elle écrit quelque chose comme *« Si le télétravail semble d'abord
+gagner en efficacité, plusieurs études nuancent ce constat sur le moyen terme, comme en témoigne
+le cas rapporté par [auteur] »* — trois documents en une phrase, organisés par l'idée, pas par
+leur ordre d'apparition.
+
+### 4. Construire le plan
+
+**Deux structures reviennent le plus souvent :**
+
+- **Par aspects du problème** : par exemple, les causes / les conséquences / les solutions
+  envisagées.
+- **Par tensions** : les avantages mis en avant / les limites soulevées / ce sur quoi les
+  documents s'accordent malgré tout.
+
+**Chaque paragraphe suit la même construction interne** : une idée annoncée en une phrase, puis
+les documents qui l'étayent, reformulés et mis en relation, puis une phrase de transition vers le
+paragraphe suivant.
+
+### 5. L'introduction et la conclusion
+
+**L'introduction** présente le thème commun aux documents (sans les citer un par un), formule la
+problématique qui unifie l'ensemble, et annonce le plan. Trois à cinq lignes suffisent.
+
+**La conclusion résume**, en une ou deux phrases, ce que les documents apportent sur le sujet —
+sans ajouter d'idée nouvelle, et surtout **sans donner votre avis**. C'est le piège classique de
+fin de copie : après avoir été rigoureusement objectif pendant tout le devoir, on glisse une
+opinion personnelle dans les deux dernières lignes. Elle sera sanctionnée.
+
+### 6. Longueur et présentation
+
+Comptez vos mots régulièrement pendant l'entraînement : une synthèse trop courte est
+superficielle, trop longue signale un manque de sélection. Rédigez en paragraphes structurés, avec
+des connecteurs logiques (« cependant », « de plus », « en revanche ») qui rendent visible
+l'articulation entre vos idées — c'est ce qui distingue un texte organisé d'un empilement de
+phrases.
+
+### 7. Exemple entièrement déroulé
+
+**Le corpus (résumé).** Quatre documents sur le thème de l'intelligence artificielle au travail :
+un article expliquant les gains de productivité annoncés par les entreprises, une étude
+universitaire pointant les risques de dépendance aux outils, un témoignage d'employé décrivant sa
+perte d'autonomie, une caricature montrant un cadre remplacé par un écran.
+
+**Étape 1 — Fiche de lecture de chaque document.**
+
+| Doc | Nature | Thème précis | Position |
+|---|---|---|---|
+| 1 | article de presse | gains de productivité annoncés | plutôt favorable |
+| 2 | étude universitaire | risque de dépendance | critique |
+| 3 | témoignage | perte d'autonomie ressentie | critique, vécu individuel |
+| 4 | caricature | déshumanisation du travail | critique, satirique |
+
+**Étape 2 — Confrontation.** Trois documents sur quatre sont critiques : le corpus n'est pas
+équilibré, il faut le signaler avec justesse plutôt que de forcer un « pour/contre » artificiel.
+Le document 3 **illustre concrètement** ce que le document 2 démontre de façon abstraite. Le
+document 4 **résume par l'image** l'inquiétude exprimée dans les documents 2 et 3.
+
+**Étape 3 — Plan retenu.**
+
+1. Les gains annoncés par les promoteurs de l'IA au travail (doc 1)
+2. Les limites documentées : dépendance et perte d'autonomie (docs 2, 3, 4 ensemble)
+3. Une tension qui reste ouverte entre promesse et vécu
+
+**Étape 4 — Rédaction du paragraphe 2 (extrait reformulé, pas recopié)**
+
+> *« Ces gains annoncés sont cependant à nuancer. Une étude universitaire souligne un risque de
+> dépendance croissante aux outils numériques, phénomène que confirme le témoignage d'un salarié
+> décrivant une perte d'autonomie dans ses missions quotidiennes. La caricature accompagnant ce
+> corpus résume, par l'image d'un cadre remplacé par un écran, cette même inquiétude portée à son
+> paroxysme. »*
+
+**Le contrôle de bon sens.** Ce paragraphe mobilise trois documents en quelques phrases,
+reformule sans jamais recopier, et ne contient aucune trace d'opinion personnelle. C'est
+exactement ce niveau d'intégration qui est attendu.
+
+### 8. Les erreurs classiques
+
+1. **Résumer les documents l'un après l'autre** au lieu de les croiser par idée.
+2. **Donner son avis**, même discrètement, y compris dans la conclusion.
+3. **Recopier des phrases entières** au lieu de reformuler.
+4. **Ne pas nommer ni dater les documents** quand c'est pertinent.
+5. **Un plan en deux parties déséquilibrées**, ou en quatre parties qui dispersent le propos.
+6. **Oublier les connecteurs logiques**, qui rendent le raisonnement visible.
+7. **Une longueur mal maîtrisée**, trop courte ou trop longue par rapport à la consigne.
+
+### 9. À retenir
+
+- Objectivité totale : aucune opinion personnelle, du début à la fin, y compris en conclusion.
+- **Confronter avant de rédiger** : qui dit quoi, qui nuance qui, qui illustre qui.
+- Plan **thématique**, jamais document par document.
+- Chaque paragraphe mobilise **plusieurs documents**, reformulés avec vos propres mots.
+- Introduction : thème commun + problématique + annonce du plan.
+- Conclusion : synthèse des documents, sans opinion ni idée nouvelle.
+""",
+            "formules": """
+**Méthode en 4 temps** — lire sans annoter (repérer thème, thèse, nature de chaque document) ·
+confronter (accord, nuance, contradiction, illustration) · planifier (thématique, 2-3 axes) ·
+rédiger (reformuler, jamais recopier)
+
+**Structure d'un paragraphe** — idée annoncée → documents croisés qui l'étayent → transition
+
+**Ce qui est interdit** — opinion personnelle · exemple tiré de sa propre expérience ·
+citation longue non reformulée · jugement de valeur, même implicite
+
+**Structure globale** — introduction (thème + problématique + plan) → 2-3 parties thématiques →
+conclusion (synthèse, sans opinion ni idée nouvelle)
+""",
+            "exercice": """
+### Une copie à corriger
+
+Voici un extrait de synthèse rédigé par un élève, sur un corpus de trois documents traitant des
+transports urbains (document 1 : article sur le vélo en ville ; document 2 : étude sur la
+pollution automobile ; document 3 : témoignage d'un habitant favorable à la voiture individuelle).
+
+*« Le document 1 explique que le vélo se développe dans les grandes villes. Le document 2 montre
+que les voitures polluent beaucoup. Le document 3 raconte qu'un habitant préfère sa voiture pour
+des raisons pratiques. Je pense personnellement que le vélo est une meilleure solution pour
+l'avenir, même si je comprends que certaines personnes en aient encore besoin. »*
+
+**Identifiez au moins trois erreurs de méthode dans cet extrait.**
+""",
+            "corrige": """
+### Corrigé — les erreurs identifiées
+
+**Erreur 1 — un plan document par document, pas thématique**
+
+Chaque phrase traite un document séparément, dans l'ordre où ils sont donnés. Rien ne les
+confronte : le texte est un résumé juxtaposé, pas une synthèse.
+
+*Ce qu'il fallait faire : croiser les documents 2 et 3, qui s'opposent directement — la pollution
+automobile démontrée par l'étude contre l'attachement pratique à la voiture exprimé dans le
+témoignage — dans un même mouvement de phrase.*
+
+**Erreur 2 — une opinion personnelle, explicite et non déguisée**
+
+*« Je pense personnellement que… »* est la faute la plus grave possible dans cet exercice :
+l'objectivité totale est la règle numéro un, et elle est violée frontalement ici.
+
+*Une synthèse ne prend jamais parti. Même formulée avec prudence (« même si je comprends… »),
+une opinion reste une opinion, et elle est sanctionnée lourdement, où qu'elle apparaisse dans la
+copie.*
+
+**Erreur 3 — un résumé plutôt qu'une reformulation intégrée**
+
+Les phrases se contentent de répéter la thèse de chaque document (« explique que… », « montre
+que… », « raconte que… ») sans jamais les mettre en relation logique — pas de « cependant », pas
+de « cette contradiction révèle… ».
+
+**Une version corrigée du même passage, à titre de comparaison :**
+
+> *« Si le développement du vélo en ville répond en partie aux préoccupations environnementales
+> soulevées par les études sur la pollution automobile, les usages individuels restent partagés :
+> certains habitants, comme en témoigne le troisième document, continuent de privilégier la
+> voiture pour des raisons pratiques que le vélo ne résout pas encore complètement. »*
+
+*Cette version croise les trois documents en une seule phrase construite, sans aucune trace
+d'opinion, et articulée par un connecteur logique (« si… restent partagés »).*
+""",
+            "exemple": """
+### Comment s'entraîner efficacement
+
+**Chronométrez-vous dès le premier entraînement.** L'épreuve dure plusieurs heures et comprend
+aussi l'écriture personnelle (fiche 16.2) : une synthèse qui déborde le temps imparti pénalise le
+reste du devoir. Fixez-vous des jalons — fin de lecture, fin de plan, fin de rédaction — et
+respectez-les à l'entraînement pour qu'ils deviennent des réflexes le jour de l'épreuve.
+
+**Le test le plus révélateur, une fois votre synthèse rédigée :** relisez chaque paragraphe et
+demandez-vous « est-ce que je pourrais citer, sans relire le texte, au moins deux documents
+mobilisés dans ce paragraphe ? ». Si la réponse est non pour plusieurs paragraphes, votre plan
+est probablement resté trop proche de l'ordre des documents plutôt que de leurs idées.
+""",
+        },
+        {
+    "id": "16.2",
+    "titre": "L'écriture personnelle : construire une argumentation",
+    "duree": "6 h",
+    "cours": """
+### 1. L'exercice inverse de la synthèse
+
+Après la synthèse, où toute opinion est interdite, l'écriture personnelle vous demande
+l'exact contraire : **prendre position** sur une question liée au thème du corpus, et la
+défendre avec des arguments organisés.
+
+**Attention au piège de transition.** Beaucoup d'élèves, après des heures à s'interdire toute
+opinion en synthèse, se relâchent dans l'écriture personnelle et perdent en rigueur. C'est
+l'inverse qui doit se produire : ici, on attend une opinion, mais **construite et prouvée**,
+pas un avis jeté sans étayage.
+
+> **Une thèse sans arguments n'est qu'une opinion. Un argument sans exemple n'est qu'une
+> affirmation.**
+
+### 2. Comprendre le sujet avant de répondre
+
+Le sujet prend souvent la forme d'une question ou d'une citation à discuter. **Analysez chaque
+mot avant de vous lancer** : un sujet qui demande « la technologie nous rend-elle plus libres »
+n'appelle pas la même réponse qu'un sujet qui demande « la technologie nous rend-elle
+heureux » — même s'ils partagent un thème proche.
+
+**Repérez les mots qui bornent le sujet** : « toujours », « uniquement », « selon vous » changent
+radicalement ce qu'on attend. Une réponse hors sujet, même brillante, part de très bas dans la
+notation.
+
+**Vous pouvez vous appuyer sur les documents du corpus**, mais l'écriture personnelle va **au-delà**
+: elle mobilise aussi votre culture générale, vos lectures, l'actualité, des connaissances issues
+d'autres matières.
+
+### 3. Construire une argumentation qui tient
+
+[[FIG:plan_argumentation]]
+
+**La structure la plus sûre**, pour qui débute :
+
+1. **Introduction** — reformuler le sujet avec vos mots, annoncer la problématique et le plan.
+2. **Première partie** — une thèse défendue par des arguments **expliqués**, chacun appuyé par
+   un exemple précis.
+3. **Deuxième partie** — une nuance ou une limite à cette thèse : ce qu'elle n'explique pas, ou
+   un contre-exemple qui la fragilise.
+4. **Conclusion** — une réponse personnelle à la question posée, qui **ne répète pas
+   l'introduction** mais synthétise le chemin parcouru.
+
+**Ce que « expliqué » veut dire concrètement.** Un argument brut — « les réseaux sociaux isolent
+les gens » — ne convainc personne seul. Il faut :
+
+> **l'idée** (les réseaux sociaux isolent) → **le mécanisme** (ils remplacent les interactions
+> physiques par des échanges superficiels) → **l'exemple** (une étude, un fait, une observation
+> précise, datée si possible).
+
+### 4. Trouver des arguments : les familles à connaître
+
+Quand vous manquez d'idées, passez en revue ces catégories, presque toujours applicables :
+
+| Type d'argument | Ce qu'il mobilise |
+|---|---|
+| historique | un exemple du passé, une évolution dans le temps |
+| économique | un coût, un marché, un chiffre |
+| social | l'effet sur un groupe, une classe, une génération |
+| éthique | une valeur, un principe, un droit |
+| scientifique / technique | une connaissance factuelle, une donnée vérifiable |
+| littéraire ou artistique | une œuvre, un auteur, comme illustration |
+
+*Vous n'avez pas besoin de mobiliser toutes les catégories — deux ou trois arguments solides
+valent mieux que six arguments vagues.*
+
+### 5. L'exemple : ce qui fait la différence
+
+Un exemple vague (« on le voit souvent », « beaucoup de gens pensent que ») ne prouve rien. Un bon
+exemple est **précis** : un fait, une date, un nom, un chiffre, une œuvre citée avec son auteur.
+
+**Comparez ces deux versions du même argument :**
+
+- ❌ *« Le progrès technique a souvent des conséquences négatives sur l'emploi. »*
+- ✅ *« L'automatisation des lignes de production dans l'industrie automobile a réduit certains
+  postes ouvriers, tout en créant de nouveaux emplois qualifiés en maintenance et
+  programmation — illustrant que l'effet du progrès technique sur l'emploi est moins un
+  remplacement pur qu'une transformation des métiers. »*
+
+La seconde version prouve ce qu'elle affirme ; la première se contente de l'énoncer.
+
+### 6. La nuance : montrer que vous avez réfléchi
+
+Un devoir qui ne défend qu'une thèse, sans jamais envisager ses limites, paraît naïf — même si
+chaque argument est bon. La deuxième partie doit **réellement nuancer**, pas se contenter de
+répéter la première partie avec un « cependant » de façade.
+
+**Nuancer, concrètement, c'est :**
+
+- montrer un **cas où la thèse ne s'applique pas** ;
+- signaler une **conséquence non désirée** de la position défendue ;
+- opposer un **argument d'une autre famille** (par exemple, un argument éthique à un argument
+  économique).
+
+### 7. La conclusion : conclure, pas résumer
+
+La conclusion **répond explicitement à la question posée** dans le sujet, en s'appuyant sur le
+raisonnement qui précède — elle ne se contente pas de recopier l'introduction avec d'autres mots.
+
+*Une bonne pratique : formulez votre conclusion **avant** de rédiger l'introduction, une fois
+votre plan terminé. Cela évite la conclusion vague, écrite dans la précipitation en fin de devoir.*
+
+### 8. Exemple entièrement déroulé
+
+**Le sujet.** « Le progrès technique nous libère-t-il vraiment ? »
+
+**Étape 1 — Analyser le sujet.** Le mot clé est « vraiment » : le sujet suppose qu'on pourrait
+croire que oui, et invite à interroger cette évidence. La problématique possible : *dans quelle
+mesure le progrès technique, souvent présenté comme libérateur, produit-il aussi de nouvelles
+formes de dépendance ?*
+
+**Étape 2 — Trouver les arguments de la thèse 1 (le progrès libère).**
+
+- historique : les machines ont supprimé des tâches physiques pénibles (exemple : la
+  mécanisation agricole a réduit le temps de travail paysan) ;
+- social : l'accès à l'information s'est démocratisé (exemple : l'accès aux cours en ligne).
+
+**Étape 3 — Trouver les arguments de la thèse 2 (les limites).**
+
+- social : la dépendance aux outils numériques crée de nouvelles contraintes (notifications,
+  disponibilité permanente) ;
+- économique : l'accès au progrès reste inégal selon les moyens, ce qui questionne l'idée d'une
+  libération universelle.
+
+**Étape 4 — La conclusion.** Le progrès technique élargit le champ des possibles, mais ne libère
+pleinement que ceux qui en maîtrisent l'usage et y ont accès : la liberté qu'il procure est donc
+**conditionnelle**, pas automatique.
+
+**Le contrôle de bon sens.** Chaque argument est accompagné d'un exemple précis, la nuance ne
+répète pas la première partie mais lui oppose une famille d'arguments différente (social puis
+économique), et la conclusion répond à la question posée sans se contenter de la reformuler.
+
+### 9. Les erreurs classiques
+
+1. **Hors sujet** : ne pas tenir compte des mots qui bornent la question posée.
+2. **Arguments sans exemples** : des affirmations qui restent au niveau de l'opinion.
+3. **Une deuxième partie qui répète la première** au lieu de la nuancer réellement.
+4. **Une conclusion qui recopie l'introduction** sans répondre à la question.
+5. **Trop d'arguments, aucun développé** : mieux vaut deux arguments solides que six esquissés.
+6. **Un plan non annoncé** : le correcteur doit savoir où vous l'emmenez dès l'introduction.
+
+### 10. À retenir
+
+- Ici, contrairement à la synthèse, on attend **une opinion — mais construite et prouvée**.
+- Argument = **idée + mécanisme + exemple précis**. Un argument sans exemple ne prouve rien.
+- Plan en deux temps : une thèse défendue, puis une **vraie** nuance — pas une répétition.
+- La conclusion **répond à la question posée**, elle ne résume pas l'introduction.
+- Deux ou trois arguments bien développés valent mieux que six arguments esquissés.
+""",
+    "formules": """
+**Structure d'un argument** — idée annoncée → mécanisme expliqué → exemple précis (fait, date,
+nom, chiffre)
+
+**Plan en quatre mouvements** — introduction (reformulation + problématique + annonce du plan) ·
+thèse défendue · nuance réelle (pas une répétition) · conclusion (réponse à la question posée)
+
+**Familles d'arguments** — historique · économique · social · éthique · scientifique/technique ·
+littéraire ou artistique
+
+**Ce qui distingue un bon devoir** — des exemples précis et datés · une vraie nuance, pas un
+"cependant" de façade · une conclusion qui répond à la question, pas qui la recopie
+""",
+    "exercice": """
+### Une copie à corriger
+
+Sujet : « Faut-il craindre l'intelligence artificielle ? »
+
+Voici l'introduction et le début de la première partie rédigés par un élève :
+
+*« L'intelligence artificielle est partout aujourd'hui. Beaucoup de gens en ont peur, d'autres
+pensent que c'est une bonne chose. Nous allons voir si on doit avoir peur ou non.
+D'abord, l'intelligence artificielle fait peur parce qu'elle est nouvelle et qu'on ne sait pas où
+elle va. Beaucoup de films montrent des robots qui deviennent méchants. Donc c'est normal d'avoir
+peur. »*
+
+**Identifiez au moins trois erreurs de méthode.**
+""",
+    "corrige": """
+### Corrigé — les erreurs identifiées
+
+**Erreur 1 — une introduction sans véritable problématique ni plan annoncé**
+
+*« Nous allons voir si on doit avoir peur ou non »* n'est pas une problématique : c'est une
+reformulation plate du sujet, sans angle ni annonce claire de la structure du devoir. Le
+correcteur ne sait pas où l'élève l'emmène.
+
+*Une meilleure formulation annoncerait, par exemple : « Si les craintes suscitées par "l'IA"
+s'expliquent par la nouveauté du phénomène, elles méritent d'être mises en regard des bénéfices
+concrets qu'elle apporte déjà — nous verrons d'abord les raisons de cette inquiétude, avant d'en
+interroger les limites. »*
+
+**Erreur 2 — un argument qui n'est ni expliqué ni appuyé par un exemple précis**
+
+*« Beaucoup de films montrent des robots qui deviennent méchants »* est une observation vague :
+quels films ? Pourquoi cette représentation ? En quoi éclaire-t-elle une peur réelle et pas
+seulement une fiction ?
+
+*Un exemple précis renforcerait l'argument : « La représentation récurrente, au cinéma, d'une
+intelligence artificielle échappant au contrôle humain — de HAL 9000 à Terminator — nourrit un
+imaginaire collectif de la machine incontrôlable, indépendamment des risques réels documentés par
+les chercheurs en éthique de l'IA. »*
+
+**Erreur 3 — une conclusion hâtive non justifiée : « donc c'est normal d'avoir peur »**
+
+Cette phrase saute directement à une conclusion sans avoir véritablement démontré le lien entre
+« nouveauté » et « peur légitime ». Un raisonnement construit établirait ce lien explicitement,
+au lieu de l'affirmer.
+
+**Ce qu'il faudrait ajouter pour que ce paragraphe soit solide**
+
+- un exemple **réel**, pas seulement fictionnel (une étude sur la perception du public,
+  un sondage, un cas documenté d'usage problématique de l'IA) ;
+- une explication du **mécanisme** : pourquoi la nouveauté engendre-t-elle spécifiquement de la
+  peur, et pas simplement de la prudence ou de la curiosité ?
+- éviter le mot « donc » employé comme un raccourci qui dispense de prouver.
+""",
+    "exemple": """
+### La méthode pour trouver des idées rapidement, le jour de l'épreuve
+
+**Utilisez la liste des familles d'arguments comme un aide-mémoire mental** (fiche 16.2, section
+4). Face à un sujet qui vous bloque, passez-la en revue en deux minutes : historique, économique,
+social, éthique, scientifique, artistique. Vous trouverez presque toujours au moins deux
+arguments exploitables dans deux familles différentes — ce qui donne naturellement la matière
+d'un plan en deux parties nuancées.
+
+**Constituez-vous, pendant l'année, une réserve de trois ou quatre exemples précis** que vous
+maîtrisez bien — un fait historique, une œuvre, une donnée économique récente — et entraînez-vous
+à les adapter à des sujets différents. Un même exemple bien choisi (l'automatisation industrielle,
+par exemple) peut servir aussi bien pour un sujet sur le progrès, sur le travail, ou sur la
+liberté.
+""",
+        },
+        {
+    "id": "16.3",
+    "titre": "Grammaire, orthographe et expression : les pièges qui coûtent le plus",
+    "duree": "4 h",
+    "cours": """
+### 1. Pourquoi cette fiche existe
+
+En synthèse comme en écriture personnelle, **la forme fait partie de la note**. Un contenu
+excellent perd des points s'il est truffé de fautes — et à l'inverse, connaître une dizaine de
+pièges fréquents suffit à éliminer la majorité des erreurs d'une copie.
+
+Cette fiche ne prétend pas remplacer des années de grammaire : elle cible **les erreurs les plus
+fréquentes**, celles qu'on retrouve dans presque toutes les copies d'un même niveau.
+
+### 2. Les accords qui piègent le plus
+
+**Le participe passé avec avoir.** Il s'accorde avec le complément d'objet direct **seulement
+s'il est placé avant** le verbe.
+
+> *« Les documents que j'ai lus »* (COD « que » placé avant, accord) — mais
+> *« J'ai lu les documents »* (COD placé après, pas d'accord).
+
+**« Tout » : adjectif, pronom ou adverbe.** Comme adjectif, il s'accorde (*« toutes les
+solutions »*). Comme adverbe (devant un adjectif, au sens de « entièrement »), il reste invariable
+sauf devant un adjectif féminin commençant par une consonne (*« elle est tout étonnée »* mais
+*« elle est toute contente »*).
+
+**Les verbes pronominaux.** Le participe passé s'accorde avec le sujet si le pronom réfléchi est
+COD (*« ils se sont lavés »*), mais **pas** s'il est COI ou si un COD suit (*« ils se sont lavé
+les mains »* — pas d'accord, « les mains » est le COD).
+
+### 3. Les confusions homophoniques les plus fréquentes
+
+| Confusion | Comment trancher |
+|---|---|
+| **a / à** | « a » se remplace par « avait » (verbe avoir) ; « à » ne se remplace pas |
+| **on / ont** | « on » se remplace par « il » ; « ont » se remplace par « avaient » |
+| **ce / se** | « ce » précède un nom (« ce document ») ; « se » précède un verbe pronominal |
+| **ces / ses** | « ces » = pluriel de « ce/cette » ; « ses » = possessif (« ses propres idées ») |
+| **quel(le) / qu'elle** | « qu'elle » se décompose en « que » + « elle » |
+| **leur / leurs** | « leur » devant un verbe est invariable ; comme déterminant, il s'accorde |
+| **davantage / d'avantage** | « davantage » = adverbe (plus) ; « d'avantage » = un avantage |
+
+*Le réflexe qui fonctionne presque toujours : essayez de remplacer par un mot de la même famille
+grammaticale pour voir si la phrase reste correcte.*
+
+### 4. La ponctuation qui structure l'argumentation
+
+**La virgule avant « et », « ou »** : en général absente sauf pour séparer des propositions de
+sujets différents, ou éviter une ambiguïté.
+
+**Le point-virgule** : il relie deux propositions indépendantes mais liées par le sens — utile
+pour marquer une nuance sans repartir sur une nouvelle phrase.
+
+**Les deux-points** : ils annoncent une explication, une conséquence, ou une énumération —
+jamais une simple continuation.
+
+*En dissertation et en synthèse, une ponctuation soignée rend visible la structure de votre
+pensée : c'est un outil argumentatif, pas seulement une norme à respecter.*
+
+### 5. Les niveaux de langue
+
+**On distingue trois registres** : familier (à l'oral, entre proches), courant (l'écrit standard),
+soutenu (littéraire, argumenté).
+
+**En synthèse et en écriture personnelle, le registre attendu est courant à soutenu.** Évitez
+systématiquement :
+
+- les tournures orales : *« y a »* au lieu de *« il y a »*, *« du coup »* comme connecteur
+  logique ;
+- les anglicismes évitables quand un mot français existe (« impacter » plutôt que « influencer »
+  est toléré à l'oral, mais préférez la forme la plus précise à l'écrit) ;
+- les répétitions de mots simples — variez le vocabulaire (« montrer », « souligner »,
+  « mettre en évidence », « révéler »).
+
+### 6. Les connecteurs logiques : l'outil le plus rentable
+
+Ils rendent visible l'articulation de votre pensée — et leur absence est l'une des causes les plus
+fréquentes de perte de points, même quand les idées elles-mêmes sont bonnes.
+
+| Fonction | Connecteurs utiles |
+|---|---|
+| ajouter | de plus, en outre, par ailleurs |
+| opposer | cependant, néanmoins, en revanche, toutefois |
+| illustrer | par exemple, ainsi, notamment |
+| conséquence | par conséquent, dès lors, ainsi |
+| conclure | en définitive, en somme, finalement |
+
+*Un texte sans connecteurs peut contenir de bonnes idées, mais il donne l'impression d'une liste
+plutôt que d'un raisonnement construit.*
+
+### 7. La relecture méthodique : le geste qui rapporte le plus
+
+[[FIG:relecture_trois_passages]]
+
+Une relecture faite « en lisant normalement » ne repère presque rien : l'œil corrige
+inconsciemment les fautes en lisant pour le sens. Il faut donc **relire plusieurs fois, avec un
+objectif différent à chaque passage** :
+
+1. **Un premier passage pour le sens** : la copie répond-elle au sujet, l'enchaînement des idées
+   est-il logique ?
+2. **Un second passage pour les accords** : sujet-verbe, adjectifs, participes passés.
+3. **Un troisième passage pour la ponctuation et les homophones** les plus fréquents.
+
+*C'est contraignant, mais c'est le geste le plus rentable de toute la copie en termes de points
+gagnés par minute investie — bien plus rentable que de rédiger une phrase supplémentaire.*
+
+### 8. Exemple entièrement déroulé
+
+**La phrase à corriger.**
+
+*« Les solutions que les entreprises ont mise en place à permit une meilleur organisation du
+travail, mais certaine limite reste à prendre en compte. »*
+
+**Correction pas à pas.**
+
+1. *« ont mise »* → le COD « que » (mises pour « les solutions ») est placé avant le verbe :
+   accord obligatoire. Il faut **« ont mises »**.
+2. *« à permit »* → confusion entre la préposition « à » et le verbe avoir conjugué : on peut
+   remplacer par « avait » → **« a permis »**.
+3. *« une meilleur organisation »* → « meilleur » est un adjectif qui s'accorde avec le nom
+   féminin « organisation » → **« une meilleure organisation »**.
+4. *« certaine limite »* → le sens est pluriel (plusieurs limites) → **« certaines limites »**.
+
+**La phrase corrigée :**
+
+> *« Les solutions que les entreprises ont mises en place ont permis une meilleure organisation
+> du travail, mais certaines limites restent à prendre en compte. »*
+
+**Le contrôle de bon sens.** Chaque correction a été justifiée par une règle précise, pas par
+« intuition » — c'est cette méthode, appliquée systématiquement en relecture, qui élimine la
+majorité des fautes d'une copie.
+
+### 9. Les erreurs classiques
+
+1. **Ne pas relire du tout**, faute de temps mal géré pendant l'épreuve.
+2. **Relire une seule fois, pour le sens** — les fautes d'accord passent inaperçues.
+3. **Employer un registre trop familier** dans un devoir argumentatif.
+4. **Répéter les mêmes mots** faute de connecteurs et de synonymes.
+5. **Confondre homophones grammaticaux** (a/à, on/ont, ce/se) sous la pression du temps.
+6. **Une ponctuation absente ou erratique**, qui rend la structure du raisonnement illisible.
+
+### 10. À retenir
+
+- Participe passé avec avoir : accord **seulement si le COD est placé avant** le verbe.
+- Homophones les plus piégeurs : **a/à, on/ont, ce/se, ces/ses** — remplacez pour trancher.
+- Registre attendu : **courant à soutenu**, jamais familier.
+- Les **connecteurs logiques** rendent visible un raisonnement que de bonnes idées seules ne
+  suffisent pas à faire percevoir.
+- **Relire trois fois, avec un objectif différent** à chaque passage : sens, accords, puis
+  ponctuation et homophones.
+""",
+    "formules": """
+**Participe passé avec avoir** — accord si le COD est placé AVANT le verbe, jamais s'il est
+placé après ou absent
+
+**Homophones à trancher par substitution** — a/à (remplacer par « avait ») · on/ont (remplacer
+par « il »/« avaient ») · ce/se (devant un nom / devant un verbe pronominal) · ces/ses (pluriel
+de ce-cette / possessif)
+
+**Connecteurs utiles** — ajout : de plus, en outre · opposition : cependant, néanmoins ·
+conséquence : par conséquent, dès lors · conclusion : en définitive, en somme
+
+**Méthode de relecture** — 1er passage : le sens · 2e passage : les accords ·
+3e passage : ponctuation et homophones — jamais un seul passage global
+""",
+    "exercice": """
+### Une copie à corriger
+
+Corrigez les erreurs dans les phrases suivantes, en identifiant la règle appliquée pour chacune.
+
+**Phrase A.** *« Les arguments qu'il a développé son convaincant, mais il oublie certains
+limites. »*
+
+**Phrase B.** *« Cette solution à était choisie car elle s'avère la meilleur, même si ces
+avantages reste à prouver. »*
+
+**Phrase C.** *« Les entreprises ce sont adaptées rapidement, ce qui leurs a permis de garder
+leurs clients. »*
+""",
+    "corrige": """
+### Corrigé — phrase par phrase
+
+**Phrase A**
+
+*« Les arguments qu'il a développé son convaincant, mais il oublie certains limites. »*
+
+- *« a développé »* → le COD « qu' » (pour « les arguments ») est placé avant : accord
+  obligatoire → **« a développés »**.
+- *« son convaincant »* → confusion entre « son » (déterminant possessif) et « sont » (verbe
+  être) ; on remplace par « étaient » → **« sont convaincants »**.
+- *« certains limites »* → « limites » est féminin, l'adjectif indéfini doit s'accorder →
+  **« certaines limites »**.
+
+> Corrigée : *« Les arguments qu'il a développés sont convaincants, mais il oublie certaines
+> limites. »*
+
+**Phrase B**
+
+*« Cette solution à était choisie car elle s'avère la meilleur, même si ces avantages reste à
+prouver. »*
+
+- *« à était »* → confusion préposition/verbe, on remplace par « avait » → **« a été »**.
+- *« la meilleur »* → « meilleur » qualifie « solution », féminin → **« la meilleure »**.
+- *« ces avantages »* → le sens est possessif (les avantages DE la solution), pas démonstratif
+  → **« ses avantages »**.
+- *« avantages reste »* → sujet pluriel « avantages », le verbe doit s'accorder →
+  **« restent »**.
+
+> Corrigée : *« Cette solution a été choisie car elle s'avère la meilleure, même si ses
+> avantages restent à prouver. »*
+
+**Phrase C**
+
+*« Les entreprises ce sont adaptées rapidement, ce qui leurs a permis de garder leurs clients. »*
+
+- *« ce sont »* → verbe pronominal, on attend le pronom réfléchi « se » → **« se sont »**.
+- *« adaptées »* → accord correct ici : le sujet « les entreprises » (féminin pluriel) fait
+  l'accord du participe pronominal, cette partie ne comportait pas d'erreur.
+- *« leurs a permis »* → « leur » devant un verbe est un pronom personnel invariable, pas un
+  déterminant possessif → **« leur a permis »**.
+
+> Corrigée : *« Les entreprises se sont adaptées rapidement, ce qui leur a permis de garder
+> leurs clients. »*
+
+*Remarquez que « leurs clients », plus loin dans la même phrase, est correct : c'est un
+déterminant possessif devant un nom, qui s'accorde. Le même mot « leur(s) » suit deux règles
+différentes selon sa fonction dans la phrase — c'est exactement le type de piège qui mérite
+d'être repéré à l'entraînement, pas découvert le jour de l'épreuve.*
+""",
+    "exemple": """
+### Comment utiliser cette fiche efficacement
+
+**Ne cherchez pas à tout mémoriser d'un coup.** Concentrez-vous d'abord sur les deux ou trois
+erreurs qui reviennent le plus souvent dans **vos propres** copies — demandez-vous, en relisant
+vos derniers devoirs, quelles fautes vous corrigez le plus fréquemment. C'est probablement là
+que se trouve votre marge de progression la plus rapide.
+
+**Le jour de l'épreuve, réservez explicitement du temps pour la relecture** — cinq à dix minutes
+en fin de devoir, en suivant la méthode en trois passages de la section 7. C'est un temps souvent
+sacrifié par manque d'anticipation, alors qu'il rapporte plus de points par minute que n'importe
+quelle autre étape de la rédaction.
+""",
+        },
+    ],
+}
+
+
+BLOCS_COMPLEMENTAIRES = [BLOC_7, BLOC_8, BLOC_9, BLOC_10, BLOC_11, BLOC_12, BLOC_13, BLOC_14, BLOC_15, BLOC_16]
 
 # ==========================================================================
 # L'APPLICATION STREAMLIT
@@ -29775,6 +31521,12 @@ BLOCS_COMPLEMENTAIRES = [BLOC_7, BLOC_8, BLOC_9, BLOC_10, BLOC_11, BLOC_12, BLOC
 # -*- coding: utf-8 -*-
 
 
+
+try:
+    import anthropic
+    _ANTHROPIC_DISPONIBLE = True
+except ModuleNotFoundError:
+    _ANTHROPIC_DISPONIBLE = False
 
 
 
@@ -29913,7 +31665,9 @@ st.markdown("""
 # NAVIGATION
 # ===========================================================================
 
-VERSION_APP = "v25-08 · 45 fiches · 182 quiz"
+_nb_fiches_version = sum(len(b.get("fiches", [])) for b in BLOCS)
+_nb_quiz_version = stats()["total"]
+VERSION_APP = f"v25-08 · {_nb_fiches_version} fiches · {_nb_quiz_version} quiz"
 
 st.sidebar.title("⚙️ BTS CPI")
 st.sidebar.caption("Conception de Produits Industriels — 1re année")
@@ -29922,20 +31676,722 @@ st.sidebar.markdown(
     f"font-size:.78em;text-align:center;font-weight:600;margin:6px 0 10px 0'>"
     f"{VERSION_APP}</div>", unsafe_allow_html=True)
 
+
+# ===========================================================================
+# EXERCICES GUIDÉS — moteur pas à pas avec diagnostic d'erreur
+# ===========================================================================
+
+def _diagnostic_erreur(soumis, attendu):
+    """Compare la valeur soumise à l'attendue et tente de reconnaître une
+    erreur TYPIQUE (facteur 2, conversion d'unité, signe...) pour donner
+    une explication ciblée plutôt qu'un simple "faux"."""
+    if attendu == 0:
+        return None
+    ratio = soumis / attendu
+    tests = [
+        (1.9, 2.15, "Le résultat est environ **le double** de la valeur attendue. "
+                     "Avez-vous oublié un **double cisaillement**, ou confondu le "
+                     "**module de torsion (πd³/16)** avec celui de **flexion (πd³/32)** — "
+                     "qui vaut exactement la moitié ?"),
+        (0.44, 0.53, "Le résultat est environ **la moitié** de la valeur attendue. "
+                     "Avez-vous compté une section en double par erreur, ou utilisé "
+                     "πd³/16 à la place de πd³/32 ?"),
+        (900, 1100, "Le résultat est environ **1000 fois trop grand**. "
+                     "Avez-vous oublié de convertir des **N·m en N·mm** (× 1000) ?"),
+        (0.0009, 0.0011, "Le résultat est environ **1000 fois trop petit**. "
+                     "Avez-vous laissé un couple en **N·m** dans une formule qui attend "
+                     "des N·mm ?"),
+        (9, 11, "Le résultat est environ **10 fois trop grand**. "
+                 "Une conversion **micromètres → millimètres** a-t-elle été oubliée "
+                 "(21 µm = 0,021 mm, pas 0,21) ?"),
+        (0.09, 0.11, "Le résultat est environ **10 fois trop petit**. "
+                      "Vérifiez le sens de la conversion micromètres → millimètres."),
+        (-1.15, -0.85, "Le résultat a **le bon ordre de grandeur mais un signe opposé**. "
+                        "Un signe inversé change un jeu en serrage, ou une réaction en "
+                        "son contraire — reprenez le sens de vos conventions."),
+    ]
+    for lo, hi, msg in tests:
+        if lo <= ratio <= hi:
+            return msg
+    return None
+
+
+EXERCICES_GUIDES = [
+    {
+        "id": "eg1", "titre": "Traction — Tige tendue",
+        "theme": "RDM", "fiche": "4.1",
+        "enonce": "Une tige ronde de **Ø20 mm**, en acier **C45** (Re = 340 MPa), est tendue par "
+                  "un effort de **15 000 N**. Coefficient de sécurité **s = 3**.",
+        "etapes": [
+            {"label": "Section S de la tige", "unite": "mm²", "attendu": 314.16, "tol": 0.02,
+             "formule": "S = π × d² / 4 = π × 20² / 4"},
+            {"label": "Contrainte σ", "unite": "MPa", "attendu": 47.75, "tol": 0.02,
+             "formule": "σ = N / S = 15 000 / 314,16"},
+            {"label": "Contrainte admissible Rpe", "unite": "MPa", "attendu": 113.33, "tol": 0.02,
+             "formule": "Rpe = Re / s = 340 / 3"},
+        ],
+        "conclusion": {
+            "question": "La tige résiste-t-elle à l'effort demandé ?",
+            "options": ["Oui, σ ≤ Rpe", "Non, σ > Rpe"],
+            "bonne": 0,
+            "explication": "σ = 47,75 MPa ≤ Rpe = 113,33 MPa : la tige résiste, à **42 % de "
+                           "l'admissible**. On compare toujours à Rpe = Re/s, jamais à Re seul.",
+        },
+    },
+    {
+        "id": "eg2", "titre": "Cisaillement — Axe en chape à deux joues",
+        "theme": "RDM", "fiche": "4.2",
+        "enonce": "Un axe **Ø12 mm** est monté dans une **chape à deux joues** et transmet un "
+                  "effort tranchant de **9 000 N**. Rpg = 90 MPa.",
+        "etapes": [
+            {"label": "Section d'UNE coupe", "unite": "mm²", "attendu": 113.10, "tol": 0.02,
+             "formule": "S = π × 12² / 4"},
+            {"label": "Section RÉSISTANTE totale (deux joues)", "unite": "mm²",
+             "attendu": 226.19, "tol": 0.02,
+             "formule": "Chape à deux joues → double cisaillement : S totale = 2 × S"},
+            {"label": "Contrainte de cisaillement τ", "unite": "MPa", "attendu": 39.79, "tol": 0.02,
+             "formule": "τ = T / S totale = 9 000 / 226,19"},
+        ],
+        "conclusion": {
+            "question": "L'axe résiste-t-il au cisaillement ?",
+            "options": ["Oui, τ ≤ Rpg", "Non, τ > Rpg"],
+            "bonne": 0,
+            "explication": "τ = 39,79 MPa ≤ Rpg = 90 MPa : l'axe résiste. Oublier le double "
+                           "cisaillement aurait donné 79,6 MPa — encore acceptable ici, mais "
+                           "c'est un facteur 2 qui peut faire toute la différence ailleurs.",
+        },
+    },
+    {
+        "id": "eg3", "titre": "Torsion — Arbre de transmission",
+        "theme": "RDM", "fiche": "4.2",
+        "enonce": "Un arbre plein **Ø25 mm** transmet un couple de **180 N·m**.",
+        "etapes": [
+            {"label": "Couple Mt converti", "unite": "N·mm", "attendu": 180000, "tol": 0.01,
+             "formule": "Mt = 180 N·m × 1000"},
+            {"label": "Module de torsion I₀/v", "unite": "mm³", "attendu": 3068.0, "tol": 0.02,
+             "formule": "I₀/v = π × d³ / 16 = π × 25³ / 16"},
+            {"label": "Contrainte de torsion τ", "unite": "MPa", "attendu": 58.67, "tol": 0.02,
+             "formule": "τ = Mt / (I₀/v) = 180 000 / 3 068"},
+        ],
+        "conclusion": {
+            "question": "Si Rpg = 90 MPa, l'arbre convient-il ?",
+            "options": ["Oui, τ ≤ Rpg", "Non, τ > Rpg"],
+            "bonne": 0,
+            "explication": "τ = 58,67 MPa ≤ 90 MPa : l'arbre convient. Le module de torsion "
+                           "(πd³/16) vaut le double de celui de flexion (πd³/32) — les confondre "
+                           "change le résultat d'un facteur 2.",
+        },
+    },
+    {
+        "id": "eg4", "titre": "Flexion — Bras en porte-à-faux",
+        "theme": "RDM", "fiche": "4.3",
+        "enonce": "Un bras rectangulaire **b = 30 mm, h = 70 mm** (fléchi selon h), encastré, "
+                  "porte une charge de **1 200 N** à **700 mm** de l'encastrement.",
+        "etapes": [
+            {"label": "Moment fléchissant maxi Mf", "unite": "N·mm", "attendu": 840000, "tol": 0.01,
+             "formule": "encastrée, charge en bout : Mf = F × L = 1 200 × 700"},
+            {"label": "Module de flexion I/v", "unite": "mm³", "attendu": 24500.0, "tol": 0.02,
+             "formule": "I/v = b × h² / 6 = 30 × 70² / 6"},
+            {"label": "Contrainte de flexion σ", "unite": "MPa", "attendu": 34.29, "tol": 0.02,
+             "formule": "σ = Mf / (I/v) = 840 000 / 24 500"},
+        ],
+        "conclusion": {
+            "question": "Pour du S235 (Re = 235 MPa, s = 4), le bras résiste-t-il ?",
+            "options": ["Oui, σ ≤ Rpe", "Non, σ > Rpe"],
+            "bonne": 0,
+            "explication": "Rpe = 235/4 = 58,75 MPa. Comme 34,29 ≤ 58,75, le bras résiste à "
+                           "58 % de l'admissible. Poser la section à plat (30 en hauteur au lieu "
+                           "de 70) aurait donné une contrainte trois fois plus élevée.",
+        },
+    },
+    {
+        "id": "eg5", "titre": "Ajustement — Ø30 H7/g6",
+        "theme": "Tolérances", "fiche": "2.2",
+        "enonce": "Table pour la plage 18-30 : **IT7 = 21 µm, IT6 = 13 µm**, écart de g : "
+                  "**es = −7 µm**. Calculez l'ajustement Ø30 H7/g6.",
+        "etapes": [
+            {"label": "Cote maxi de l'alésage (H7)", "unite": "mm", "attendu": 30.021, "tol": 0.001,
+             "formule": "EI = 0, ES = IT7 = 21 µm = 0,021 mm → maxi = 30 + 0,021"},
+            {"label": "Cote mini de l'arbre (g6)", "unite": "mm", "attendu": 29.980, "tol": 0.001,
+             "formule": "es = −7 µm, ei = es − IT6 = −20 µm = −0,020 mm → mini = 30 − 0,020"},
+            {"label": "Jeu maximal", "unite": "mm", "attendu": 0.041, "tol": 0.05,
+             "formule": "Jmax = Alésage maxi − arbre mini"},
+            {"label": "Jeu minimal", "unite": "mm", "attendu": 0.007, "tol": 0.1,
+             "formule": "Jmin = Alésage mini − arbre maxi"},
+        ],
+        "conclusion": {
+            "question": "Ce montage est-il un jeu, un serrage, ou incertain ?",
+            "options": ["Toujours du jeu", "Toujours du serrage", "Incertain (jeu ou serrage)"],
+            "bonne": 0,
+            "explication": "Jmini (0,007) et Jmaxi (0,041) sont tous les deux positifs : il y a "
+                           "TOUJOURS du jeu, quelles que soient les pièces prises dans le lot.",
+        },
+    },
+    {
+        "id": "eg6", "titre": "Chaîne de cotes — Jeu axial d'une roue",
+        "theme": "Tolérances", "fiche": "2.3",
+        "enonce": "Carter A = 60 ± 0,05, roue B = 40 ± 0,05, couvercle C = 19,75 ± 0,05. "
+                  "Condition Ja = A − B − C.",
+        "etapes": [
+            {"label": "Ja nominal", "unite": "mm", "attendu": 0.25, "tol": 0.02,
+             "formule": "Ja = A − B − C = 60 − 40 − 19,75"},
+            {"label": "Ja maximal (vérification aux extrêmes)", "unite": "mm", "attendu": 0.40,
+             "tol": 0.05, "formule": "Ja maxi = A maxi − B mini − C mini"},
+            {"label": "Ja minimal (vérification aux extrêmes)", "unite": "mm", "attendu": 0.10,
+             "tol": 0.1, "formule": "Ja mini = A mini − B maxi − C maxi"},
+        ],
+        "conclusion": {
+            "question": "Si la condition exige Ja entre 0,10 et 0,40 mm, est-elle respectée ?",
+            "options": ["Oui, dans tous les cas", "Non, jamais", "Seulement au nominal"],
+            "bonne": 0,
+            "explication": "Ja mini (0,10) et Ja maxi (0,40) tombent exactement dans "
+                           "l'intervalle demandé : la condition est respectée dans TOUS les cas "
+                           "de figure — pas seulement au nominal.",
+        },
+    },
+    {
+        "id": "eg7", "titre": "Engrenage — Dimensionnement du module",
+        "theme": "Transmission", "fiche": "12.5",
+        "enonce": "Un moteur de **5,5 kW à 1 450 tr/min** entraîne un pignon **Z₁ = 20**, "
+                  "k = 10, Y = 0,4, Rpe = 300 MPa.",
+        "etapes": [
+            {"label": "Couple moteur Mt", "unite": "N·mm", "attendu": 36220, "tol": 0.03,
+             "formule": "ω = 2πN/60 = 151,8 rad/s → Mt = P/ω × 1000"},
+            {"label": "Module minimal m", "unite": "mm", "attendu": 1.445, "tol": 0.03,
+             "formule": "m ≥ ∛( 2 Mt / (k × Z₁ × Y × Rpe) )"},
+        ],
+        "conclusion": {
+            "question": "Quel module normalisé retenir ?",
+            "options": ["1,25 (inférieur, plus économique)", "1,5 (supérieur au calcul)",
+                       "2 (grande marge de sécurité)"],
+            "bonne": 1,
+            "explication": "On prend TOUJOURS le module normalisé immédiatement SUPÉRIEUR au "
+                           "calcul (1,5), jamais l'inférieur — la denture serait "
+                           "sous-dimensionnée — ni un module trop grand, qui alourdit la pièce "
+                           "sans aucun gain fonctionnel.",
+        },
+    },
+    {
+        "id": "eg8", "titre": "Flambement — Bielle comprimée",
+        "theme": "RDM", "fiche": "12.2",
+        "enonce": "Une bielle **Ø20 mm**, longueur **900 mm**, articulée aux deux extrémités, "
+                  "comprimée par **12 000 N**. Acier S235 (E = 210 000 MPa, λc ≈ 94).",
+        "etapes": [
+            {"label": "Rayon de giration i", "unite": "mm", "attendu": 5.0, "tol": 0.02,
+             "formule": "Section ronde : i = d / 4"},
+            {"label": "Élancement λ", "unite": "", "attendu": 180.0, "tol": 0.02,
+             "formule": "λ = Lf / i (articulée-articulée : Lf = L)"},
+            {"label": "Charge critique d'Euler Fcrit", "unite": "N", "attendu": 20097, "tol": 0.03,
+             "formule": "Fcrit = π² × E × I / Lf², avec I = π d⁴/64"},
+        ],
+        "conclusion": {
+            "question": "Le coefficient de sécurité exigé est 3. La bielle convient-elle ?",
+            "options": ["Oui, Fcrit / F ≥ 3", "Non, Fcrit / F < 3"],
+            "bonne": 1,
+            "explication": "Fcrit / F = 20 097 / 12 000 = 1,67, très inférieur à 3 exigé : la "
+                           "bielle NE convient PAS. Un calcul en compression simple "
+                           "(σ = N/S = 38 MPa ≪ Re) aurait laissé croire, à tort, à une marge "
+                           "énorme. C'est l'élancement (λ = 180 ≫ λc = 94) qui révèle le "
+                           "flambement.",
+        },
+    },
+    {
+        "id": "eg9", "titre": "Matage — Axe dans une chape",
+        "theme": "RDM", "fiche": "4.2",
+        "enonce": "Un axe **Ø20 mm** traverse une joue d'épaisseur **10 mm**, sous un effort "
+                  "de **11 000 N**. Pression admissible acier/acier : 100 MPa.",
+        "etapes": [
+            {"label": "Pression de matage p", "unite": "MPa", "attendu": 55.0, "tol": 0.02,
+             "formule": "p = F / (d × e) = 11 000 / (20 × 10) — surface PROJETÉE"},
+        ],
+        "conclusion": {
+            "question": "Le matage est-il acceptable ?",
+            "options": ["Oui, p ≤ 100 MPa", "Non, p > 100 MPa"],
+            "bonne": 0,
+            "explication": "p = 55 MPa ≤ 100 MPa admissible : c'est acceptable. On calcule "
+                           "toujours sur la surface PROJETÉE (d × e), pas sur le développé du "
+                           "demi-cercle — exactement comme pour un palier lisse.",
+        },
+    },
+    {
+        "id": "eg10", "titre": "Statique — Poutre sur deux appuis",
+        "theme": "Statique", "fiche": "12.1",
+        "enonce": "Une poutre de **3 000 mm** repose sur une articulation en A et un appui "
+                  "simple en B. Une charge de **1 200 N** est appliquée à **1 000 mm** de A.",
+        "etapes": [
+            {"label": "Réaction en B (moments pris en A)", "unite": "N", "attendu": 400.0,
+             "tol": 0.02, "formule": "ΣM(A) = 0 → RB × L = F × a → RB = F × a / L"},
+            {"label": "Réaction verticale en A", "unite": "N", "attendu": 800.0, "tol": 0.02,
+             "formule": "ΣFy = 0 → RAy = F − RB"},
+        ],
+        "conclusion": {
+            "question": "Pourquoi RA est-elle plus grande que RB ?",
+            "options": ["La charge est plus proche de A", "A est toujours l'appui principal",
+                       "C'est un hasard du calcul"],
+            "bonne": 0,
+            "explication": "La charge est à 1 000 mm de A, contre 2 000 mm de B : l'appui le "
+                           "plus proche de la charge reprend toujours la plus grande part. "
+                           "C'est le contrôle de bon sens à faire systématiquement après un "
+                           "calcul de statique.",
+        },
+    },
+    {
+        "id": "eg11", "titre": "Palier lisse — Vérification du facteur pV",
+        "theme": "Tribologie", "fiche": "13.4",
+        "enonce": "Un arbre **Ø30 mm** tourne à **40 tr/min** dans un coussinet bronze de "
+                  "**40 mm** de long, sous une charge radiale de **2 400 N**. "
+                  "pV admissible ≈ 2 MPa·m/s.",
+        "etapes": [
+            {"label": "Pression de contact p", "unite": "MPa", "attendu": 2.0, "tol": 0.02,
+             "formule": "p = F / (d × L) — surface projetée"},
+            {"label": "Vitesse de glissement v", "unite": "m/s", "attendu": 0.0628, "tol": 0.03,
+             "formule": "v = π × d × N / 60 000 (d en mm, N en tr/min)"},
+            {"label": "Facteur pV", "unite": "MPa·m/s", "attendu": 0.1257, "tol": 0.03,
+             "formule": "pV = p × v"},
+        ],
+        "conclusion": {
+            "question": "Ce palier va-t-il chauffer excessivement ?",
+            "options": ["Non, pV très inférieur à l'admissible", "Oui, pV dépasse l'admissible"],
+            "bonne": 0,
+            "explication": "pV = 0,126 MPa·m/s, très inférieur aux 2 MPa·m/s admissibles pour "
+                           "un bronze : ce palier ne chauffera pas. Vérifier SEULEMENT la "
+                           "pression aurait été insuffisant — c'est le pV qui traduit "
+                           "l'échauffement réel.",
+        },
+    },
+    {
+        "id": "eg12", "titre": "Inertie ramenée — Dimensionner un moteur",
+        "theme": "Motorisation", "fiche": "13.3",
+        "enonce": "Une charge d'inertie **J = 3,6 kg·m²** est entraînée à travers un réducteur "
+                  "de rapport **r = 1/8**.",
+        "etapes": [
+            {"label": "Inertie ramenée sur l'arbre moteur", "unite": "kg·m²", "attendu": 0.05625,
+             "tol": 0.02, "formule": "J ramenée = J × r² (le rapport intervient AU CARRÉ)"},
+        ],
+        "conclusion": {
+            "question": "Si le moteur choisi a une inertie propre de 0,010 kg·m², le rapport "
+                        "d'inertie (5 max conseillé pour un axe précis) est-il correct ?",
+            "options": ["Non, il vaut environ 5,6 : trop élevé", "Oui, largement en dessous de 5"],
+            "bonne": 0,
+            "explication": "0,05625 / 0,010 = 5,6, au-dessus du seuil de 5 pour un axe précis. "
+                           "L'axe risque d'osciller en fin de course. Deux leviers : un "
+                           "réducteur à rapport plus élevé (l'inertie ramenée chute au carré), "
+                           "ou un moteur à plus forte inertie propre.",
+        },
+    },
+    {
+        "id": "eg13", "titre": "Cordon de soudure — Console en angle",
+        "theme": "Soudage", "fiche": "13.2",
+        "enonce": "Une console est soudée par **2 cordons de 150 mm**, gorge **a = 7 mm** "
+                  "(cordon coté z10), et supporte un effort de **16 000 N**. Rpg = 90 MPa.",
+        "etapes": [
+            {"label": "Longueur utile d'UN cordon", "unite": "mm", "attendu": 136.0, "tol": 0.02,
+             "formule": "L utile = L − 2a (on retranche 2a à chaque extrémité)"},
+            {"label": "Section résistante totale", "unite": "mm²", "attendu": 272.0, "tol": 0.02,
+             "formule": "S = a × (L utile totale) = a × 2 × L utile"},
+            {"label": "Contrainte de cisaillement τ", "unite": "MPa", "attendu": 8.40, "tol": 0.03,
+             "formule": "τ = F / S"},
+        ],
+        "conclusion": {
+            "question": "Les cordons résistent-ils ?",
+            "options": ["Oui, τ ≤ Rpg", "Non, τ > Rpg"],
+            "bonne": 0,
+            "explication": "τ = 8,4 MPa, très inférieur à Rpg = 90 MPa : les cordons résistent "
+                           "très largement. Avec une telle marge, on pourrait même réduire la "
+                           "gorge — un cordon surdimensionné déforme davantage la pièce sans "
+                           "aucun gain.",
+        },
+    },
+    {
+        "id": "eg14", "titre": "Vibrations — Risque de résonance",
+        "theme": "Vibrations", "fiche": "13.5",
+        "enonce": "Un support a une raideur **k = 45 000 N/m** et porte une masse de **1,8 kg**. "
+                  "Il est excité par un moteur tournant à **1 450 tr/min**.",
+        "etapes": [
+            {"label": "Fréquence propre du support", "unite": "Hz", "attendu": 25.16, "tol": 0.02,
+             "formule": "f = (1 / 2π) × √(k / m)"},
+            {"label": "Fréquence d'excitation du moteur", "unite": "Hz", "attendu": 24.17,
+             "tol": 0.02, "formule": "f = N / 60"},
+        ],
+        "conclusion": {
+            "question": "Le support respecte-t-il la règle des ±20 % d'écart avec l'excitation ?",
+            "options": ["Non : l'écart n'est que de 4 %, risque de résonance",
+                       "Oui, l'écart est largement suffisant"],
+            "bonne": 0,
+            "explication": "f propre / f excitation = 25,16 / 24,17 = 1,04, alors qu'il faut au "
+                           "moins 1,3 (ou au plus 0,7). L'écart n'est que de 4 % : ce support "
+                           "entrera en résonance, avec une amplification pouvant atteindre 10 à "
+                           "50 fois l'effort statique.",
+        },
+    },
+    {
+        "id": "eg15", "titre": "Grammaire — Repérer et corriger une erreur",
+        "theme": "Culture générale", "fiche": "16.3",
+        "enonce": "Une phrase de copie contient plusieurs erreurs. Repérez-les une par une, "
+                  "comme à la relecture d'un vrai devoir.",
+        "etapes": [
+            {"type": "qcm",
+             "texte": "Les solutions que les entreprises ont mise en place à permit une "
+                      "meilleur organisation du travail.",
+             "label": "Erreur n°1 : « ont mise »",
+             "question": "Pourquoi « mise » est-il mal accordé ici ?",
+             "options": [
+                 "Le COD « que » (= les solutions) est placé avant le verbe : il faut l'accorder",
+                 "On n'accorde jamais un participe passé avec avoir",
+                 "« mise » est déjà correct dans cette phrase"],
+             "bonne": 0,
+             "indice": "Cherchez le COD du verbe « ont mis(e) » et sa position dans la phrase.",
+             "explication": "Avec l'auxiliaire avoir, le participe passé s'accorde SEULEMENT si "
+                            "le COD est placé avant le verbe. Ici, « que » reprend « les "
+                            "solutions » (féminin pluriel) et précède le verbe : il faut "
+                            "« ont mises », pas « ont mise ».",
+            },
+            {"type": "qcm",
+             "texte": "… à permit une meilleur organisation du travail.",
+             "label": "Erreur n°2 : « à permit »",
+             "question": "Quelle est la bonne correction ?",
+             "options": ["a permis", "avait permit", "à permis"],
+             "bonne": 0,
+             "indice": "Remplacez « à » par « avait » : la phrase garde-t-elle un sens ?",
+             "explication": "On teste en remplaçant par « avait » : « cela avait permis » "
+                            "fonctionne, donc c'est le verbe avoir, pas la préposition « à ». "
+                            "Et le participe passé de « permettre » est « permis », pas "
+                            "« permit ».",
+            },
+            {"type": "qcm",
+             "texte": "… une meilleur organisation du travail.",
+             "label": "Erreur n°3 : « meilleur »",
+             "question": "Pourquoi faut-il « meilleure » ?",
+             "options": ["« meilleur » est un adjectif qui s'accorde avec « organisation », "
+                        "féminin", "« meilleur » ne s'accorde jamais",
+                        "C'est une question de style, les deux se disent"],
+             "bonne": 0,
+             "indice": "« Organisation » est-il masculin ou féminin ?",
+             "explication": "« Meilleur » est un adjectif qualificatif : il s'accorde avec le "
+                            "nom qu'il qualifie. « Organisation » est féminin, donc "
+                            "« meilleure organisation ».",
+            },
+        ],
+        "conclusion": {
+            "question": "Une fois ces trois corrections faites, quelle est la phrase correcte ?",
+            "options": [
+                "Les solutions que les entreprises ont mises en place ont permis une "
+                "meilleure organisation du travail.",
+                "Les solutions que les entreprises ont mise en place ont permit une "
+                "meilleur organisation du travail.",
+                "Les solutions que les entreprises ont mises en place à permis une "
+                "meilleure organisation du travail."],
+            "bonne": 0,
+            "explication": "Trois corrections indépendantes, chacune justifiée par une règle "
+                           "précise — c'est cette méthode, appliquée à la relecture, qui "
+                           "élimine la majorité des fautes d'une copie.",
+        },
+    },
+    {
+        "id": "eg16", "titre": "Synthèse — Reconnaître une erreur de méthode",
+        "theme": "Culture générale", "fiche": "16.1",
+        "enonce": "Un extrait de synthèse, sur un corpus de trois documents traitant des "
+                  "transports urbains, contient une faute grave de méthode.",
+        "etapes": [
+            {"type": "qcm",
+             "texte": "Le document 1 explique que le vélo se développe dans les grandes "
+                      "villes. Le document 2 montre que les voitures polluent beaucoup. Le "
+                      "document 3 raconte qu'un habitant préfère sa voiture.",
+             "label": "Premier défaut de méthode",
+             "question": "Quel est le problème de ce passage ?",
+             "options": [
+                 "Le plan traite les documents un par un, sans jamais les croiser",
+                 "Les phrases sont trop longues",
+                 "Il manque une citation entre guillemets"],
+             "bonne": 0,
+             "indice": "Regardez l'ordre des phrases par rapport à l'ordre des documents.",
+             "explication": "Chaque document est résumé séparément, dans l'ordre où il a été "
+                            "donné. C'est un résumé juxtaposé, pas une synthèse : il fallait "
+                            "confronter le document 2 (pollution) et le document 3 "
+                            "(attachement à la voiture), qui s'opposent directement, dans un "
+                            "même mouvement de phrase.",
+            },
+            {"type": "qcm",
+             "texte": "Je pense personnellement que le vélo est une meilleure solution pour "
+                      "l'avenir, même si je comprends que certaines personnes en aient encore "
+                      "besoin.",
+             "label": "Second défaut de méthode",
+             "question": "Quel est le problème, plus grave encore, de cette phrase ?",
+             "options": [
+                 "Une opinion personnelle est exprimée, ce qui est interdit en synthèse",
+                 "La phrase est trop courte",
+                 "Le mot « avenir » est mal choisi"],
+             "bonne": 0,
+             "indice": "Relisez la règle numéro un de la synthèse de documents.",
+             "explication": "« Je pense personnellement que… » viole frontalement la règle "
+                            "d'objectivité totale, qui est LA règle numéro un de l'exercice. "
+                            "Aucune opinion n'est autorisée, à aucun moment du devoir — même "
+                            "nuancée, même en fin de texte.",
+            },
+        ],
+        "conclusion": {
+            "question": "Comment appelle-t-on un plan qui traite les documents un par un au "
+                        "lieu de les croiser par idée ?",
+            "options": ["Un plan thématique", "Un résumé juxtaposé", "Un plan dialectique"],
+            "bonne": 1,
+            "explication": "Un résumé juxtaposé n'est pas une synthèse. La synthèse exige un "
+                           "plan THÉMATIQUE, où chaque partie mobilise plusieurs documents "
+                           "croisés autour d'une même idée.",
+        },
+    },
+    {
+        "id": "eg17", "titre": "Anglais technique — Vocabulaire de la RDM",
+        "theme": "Anglais technique", "fiche": "10.1",
+        "enonce": "Une fiche technique en anglais utilise un vocabulaire précis, à ne pas "
+                  "confondre.",
+        "etapes": [
+            {"type": "qcm",
+             "label": "Yield strength",
+             "question": "Que signifie « yield strength » ?",
+             "options": ["La résistance à la rupture (Rm)", "La limite élastique (Re)",
+                        "Le module d'Young (E)"],
+             "bonne": 1,
+             "indice": "C'est la limite au-delà de laquelle la déformation devient permanente.",
+             "explication": "Yield strength = limite élastique (Re). Tensile strength = "
+                            "résistance à la rupture (Rm). Confondre les deux fausse tout "
+                            "dimensionnement, puisqu'on compare toujours σ à Re/s, jamais à Rm.",
+            },
+            {"type": "qcm",
+             "label": "Bore / Shaft",
+             "question": "Dans une fiche de roulement, à quoi correspond « bore » ?",
+             "options": ["L'arbre", "L'alésage (le trou qui reçoit le roulement)",
+                        "Le joint d'étanchéité"],
+             "bonne": 1,
+             "indice": "« Bore » est un alésage usiné avec précision, pas n'importe quel trou.",
+             "explication": "« Bore » = alésage. « Shaft » = arbre. Une fiche technique de "
+                            "roulement donne typiquement : « Bore: 25 mm » (l'alésage, donc le "
+                            "diamètre de l'arbre à prévoir) et les tolérances recommandées "
+                            "pour chacun.",
+            },
+            {"type": "qcm",
+             "label": "Lead time",
+             "question": "Un fournisseur écrit « lead time: 6 weeks ». Cela désigne :",
+             "options": ["Le délai de livraison à partir de la commande",
+                        "La durée de la garantie", "Le temps de réponse au devis"],
+             "bonne": 0,
+             "indice": "C'est un terme qu'on retrouve dans tout devis ou accusé de commande.",
+             "explication": "« Lead time » = délai de livraison, à compter de la réception de "
+                            "la commande — pas de la demande de devis. Et il exclut souvent le "
+                            "traitement de surface et le transport : à faire préciser.",
+            },
+        ],
+        "conclusion": {
+            "question": "Une fiche indique « recommended shaft tolerance: k6 ». Que faire ?",
+            "options": [
+                "L'ignorer, ce n'est qu'une suggestion",
+                "Reporter k6 sur le plan de l'arbre : c'est l'ajustement à respecter",
+                "Demander une nouvelle fiche en français"],
+            "bonne": 1,
+            "explication": "Le fabricant donne directement l'ajustement à respecter. Beaucoup "
+                           "d'erreurs de montage viennent du fait que personne n'a lu la "
+                           "fiche — souvent parce qu'elle était en anglais.",
+        },
+    },
+]
+
+def _rendre_exercice_interactif(_ex, _prefixe):
+    """Moteur pas à pas réutilisable : étapes numériques ou QCM, historique,
+    diagnostic d'erreur, conclusion. Utilisé par la page Exercices guidés ET
+    par les exercices générés depuis un document importé."""
+    _cle_etat = f"{_prefixe}_etape"
+    _cle_hist = f"{_prefixe}_historique"
+    if _cle_etat not in st.session_state:
+        st.session_state[_cle_etat] = 0
+        st.session_state[_cle_hist] = []
+
+    if st.button("↺ Recommencer cet exercice", key=f"reset_{_prefixe}"):
+        st.session_state[_cle_etat] = 0
+        st.session_state[_cle_hist] = []
+        st.rerun()
+
+    st.write("")
+    with st.container(border=True):
+        st.markdown(f"**{_ex['titre']}**")
+        st.markdown(_ex["enonce"])
+
+    _etape_idx = st.session_state[_cle_etat]
+    _total_etapes = len(_ex["etapes"]) + 1  # +1 pour la conclusion
+
+    st.write("")
+    st.progress(_etape_idx / _total_etapes)
+
+    # --- Historique des étapes déjà validées ---
+    for _h in st.session_state[_cle_hist]:
+        if str(_h.get("unite", "")).startswith("✓"):
+            _ligne_h = f'{_h["unite"]}'
+        else:
+            _ligne_h = f'{_h["valeur"]:g} {_h["unite"]}'
+        st.markdown(
+            f'<div class="ok-box" style="margin-bottom:8px">✅ <b>{_h["label"]}</b> = '
+            f'{_ligne_h}</div>', unsafe_allow_html=True)
+
+    # --- Étape en cours (numérique ou QCM) ---
+    if _etape_idx < len(_ex["etapes"]):
+        _et = _ex["etapes"][_etape_idx]
+        _type_etape = _et.get("type", "numerique")
+        st.markdown(f"#### Étape {_etape_idx + 1}/{len(_ex['etapes'])} — {_et['label']}")
+
+        if _et.get("texte"):
+            st.markdown(
+                f'<div class="warn-box" style="font-style:italic">« {_et["texte"]} »</div>',
+                unsafe_allow_html=True)
+
+        if _type_etape == "qcm":
+            _cle_rep = f"{_prefixe}_qcm_{_etape_idx}"
+            _rep = st.radio(_et.get("question", "Votre réponse"), _et["options"],
+                            key=_cle_rep, index=None)
+            _valider = st.button("Valider cette étape", type="primary",
+                                 key=f"{_prefixe}_valider_{_etape_idx}",
+                                 disabled=_rep is None)
+            if _et.get("indice"):
+                with st.popover("💡 Indice"):
+                    st.write(_et["indice"])
+
+            if _valider and _rep is not None:
+                _idx_rep = _et["options"].index(_rep)
+                if _idx_rep == _et["bonne"]:
+                    st.session_state[_cle_hist].append(
+                        {"label": _et["label"], "valeur": 0, "unite": "✓ " + _rep})
+                    st.session_state[_cle_etat] += 1
+                    st.rerun()
+                else:
+                    st.markdown(
+                        f'<div class="ko-box"><b>❌ Pas encore</b><br>'
+                        f'Vous avez choisi « {_rep} ».</div>', unsafe_allow_html=True)
+                    st.markdown(
+                        f'<div class="warn-box">🔍 <b>Explication —</b> '
+                        f'{_et["explication"]}</div>', unsafe_allow_html=True)
+                    st.write("")
+                    if st.button("Voir la bonne réponse et continuer",
+                                 key=f"{_prefixe}_passer_{_etape_idx}"):
+                        st.session_state[_cle_hist].append(
+                            {"label": _et["label"] + " (donnée)", "valeur": 0,
+                             "unite": "✓ " + _et["options"][_et["bonne"]]})
+                        st.session_state[_cle_etat] += 1
+                        st.rerun()
+
+        else:
+            _cle_input = f"{_prefixe}_input_{_etape_idx}"
+            _val = st.number_input(
+                f"Votre valeur ({_et['unite']})" if _et['unite'] else "Votre valeur",
+                value=None, format="%.4f", key=_cle_input, step=0.01)
+
+            c_valider, c_indice = st.columns([1, 1])
+            with c_valider:
+                _valider = st.button("Valider cette étape", type="primary",
+                                     key=f"{_prefixe}_valider_{_etape_idx}",
+                                     disabled=_val is None)
+            with c_indice:
+                with st.popover("💡 Indice"):
+                    st.write(f"Formule à utiliser : **{_et['formule']}**")
+
+            if _valider and _val is not None:
+                _attendu = _et["attendu"]
+                _tol = _et["tol"]
+                _ok = abs(_val - _attendu) <= max(abs(_attendu) * _tol, 1e-9)
+                if _ok:
+                    st.session_state[_cle_hist].append(
+                        {"label": _et["label"], "valeur": _val, "unite": _et["unite"]})
+                    st.session_state[_cle_etat] += 1
+                    st.rerun()
+                else:
+                    _diag = _diagnostic_erreur(_val, _attendu)
+                    st.markdown(
+                        f'<div class="ko-box"><b>❌ Pas encore</b><br>'
+                        f'Vous avez entré <b>{_val:g}</b>, la valeur attendue est '
+                        f'<b>{_attendu:g} {_et["unite"]}</b>.</div>', unsafe_allow_html=True)
+                    if _diag:
+                        st.markdown(f'<div class="warn-box">🔍 <b>Diagnostic —</b> {_diag}</div>',
+                                  unsafe_allow_html=True)
+                    st.info(f"**Formule à appliquer :** {_et['formule']}")
+                    st.write("")
+                    c_retry, c_pass = st.columns(2)
+                    with c_retry:
+                        st.caption("Corrigez votre valeur ci-dessus puis validez à nouveau.")
+                    with c_pass:
+                        if st.button("Voir la valeur correcte et continuer",
+                                     key=f"{_prefixe}_passer_{_etape_idx}"):
+                            st.session_state[_cle_hist].append(
+                                {"label": _et["label"] + " (donnée)", "valeur": _attendu,
+                                 "unite": _et["unite"]})
+                            st.session_state[_cle_etat] += 1
+                            st.rerun()
+
+    # --- Conclusion (QCM) ---
+    elif _etape_idx == len(_ex["etapes"]):
+        _cc = _ex["conclusion"]
+        st.markdown(f"#### Conclusion — {_cc['question']}")
+        _rep = st.radio("Votre réponse", _cc["options"], key=f"{_prefixe}_concl", index=None)
+        if st.button("Valider la conclusion", type="primary",
+                     key=f"{_prefixe}_valider_concl", disabled=_rep is None):
+            _idx_rep = _cc["options"].index(_rep)
+            if _idx_rep == _cc["bonne"]:
+                st.session_state[_cle_hist].append(
+                    {"label": "Conclusion", "valeur": 0, "unite": "✓ correcte"})
+                st.session_state[_cle_etat] += 1
+                st.rerun()
+            else:
+                st.markdown('<div class="ko-box"><b>❌ Ce n\'est pas la bonne conclusion.</b>'
+                           '</div>', unsafe_allow_html=True)
+                st.info(_cc["explication"])
+
+    # --- Exercice terminé ---
+    else:
+        st.balloons()
+        st.success(f"🎉 Exercice terminé — **{_ex['titre']}**")
+        st.markdown(f"**Ce qu'il fallait retenir :** {_ex['conclusion']['explication']}")
+        return True
+    return False
+
+
 NB_FICHES = sum(len(b.get("fiches", [])) for b in BLOCS)
 PAGE_COURS = f"📚 Cours ({NB_FICHES} fiches)"
 
+_OPTIONS_NAV = ["🏠 Tableau de bord",
+                PAGE_COURS,
+                "🎯 Quiz interactif",
+                "🧪 Exercices guidés",
+                "🤖 Importer un cours (IA)",
+                "📐 Calculateur d'ajustements ISO",
+                "🔧 Calculateurs RDM",
+                "🧱 Base matériaux",
+                "📋 Formulaire",
+                "📊 Ma progression"]
+
+# Un widget avec clé ne peut pas être modifié après sa création dans le même run :
+# on applique donc le changement de page EN ATTENTE avant de créer le radio.
+if "_page_en_attente" in st.session_state:
+    st.session_state["nav_radio"] = st.session_state.pop("_page_en_attente")
+if st.session_state.get("nav_radio") not in _OPTIONS_NAV:
+    st.session_state["nav_radio"] = _OPTIONS_NAV[0]
+
 PAGE = st.sidebar.radio(
     "Navigation",
-    ["🏠 Tableau de bord",
-     PAGE_COURS,
-     "🎯 Quiz interactif",
-     "📐 Calculateur d'ajustements ISO",
-     "🔧 Calculateurs RDM",
-     "🧱 Base matériaux",
-     "📊 Ma progression"],
+    _OPTIONS_NAV,
     label_visibility="collapsed",
+    key="nav_radio",
 )
+
+
+def _aller_a_fiche(bloc_titre, fiche_id):
+    """Bascule sur la page Cours et ouvre directement la fiche demandée."""
+    st.session_state["_saut"] = (bloc_titre, fiche_id)
+    st.session_state["_page_en_attente"] = PAGE_COURS
+    st.rerun()
+
+
+def _premiere_fiche_utile(bloc):
+    """La première fiche non lue d'un bloc, ou sa première fiche si tout est lu."""
+    for _f in bloc.get("fiches", []):
+        if f"{bloc['id']}#{_f.get('id')}" not in P["fiches_lues"]:
+            return _f.get("id")
+    _fiches = bloc.get("fiches", [])
+    return _fiches[0].get("id") if _fiches else None
 
 st.sidebar.divider()
 nb_fiches = NB_FICHES
@@ -29945,17 +32401,36 @@ _pct = int(100 * lues / nb_fiches) if nb_fiches else 0
 st.sidebar.progress(lues / nb_fiches if nb_fiches else 0)
 st.sidebar.caption(f"**{lues} / {nb_fiches} fiches lues** — {_pct} %")
 
-if lues:
-    with st.sidebar.expander("Détail par bloc"):
-        for _b in BLOCS:
-            _tot = len(_b.get("fiches", []))
-            _lu = sum(1 for _f in _b.get("fiches", [])
-                      if f"{_b['id']}#{_f.get('id')}" in P["fiches_lues"])
-            _puce = "🟢" if _lu == _tot else ("🟡" if _lu else "⚪")
-            st.markdown(
-                f"<div style='font-size:.82em;margin:2px 0'>{_puce} "
-                f"<b>{_b['titre'].split(' — ')[0]}</b> — {_lu}/{_tot}</div>",
-                unsafe_allow_html=True)
+# --- Saut rapide par numéro de fiche, depuis n'importe quelle page ---
+_jump_val = st.sidebar.text_input(
+    "Aller directement à une fiche", placeholder="ex : 4.3, 12.5, 15.1",
+    key="sidebar_jump_input")
+if _jump_val and _jump_val.strip() != st.session_state.get("_dernier_saut_traite"):
+    st.session_state["_dernier_saut_traite"] = _jump_val.strip()
+    _trouve = None
+    for _b in BLOCS:
+        for _f in _b.get("fiches", []):
+            if _f.get("id") == _jump_val.strip():
+                _trouve = _b["titre"]
+                break
+        if _trouve:
+            break
+    if _trouve:
+        _aller_a_fiche(_trouve, _jump_val.strip())
+    else:
+        st.sidebar.caption(f"⚠️ Fiche « {_jump_val.strip()} » introuvable.")
+
+with st.sidebar.expander("Détail par bloc", expanded=False):
+    for _b in BLOCS:
+        _tot = len(_b.get("fiches", []))
+        _lu = sum(1 for _f in _b.get("fiches", [])
+                  if f"{_b['id']}#{_f.get('id')}" in P["fiches_lues"])
+        _puce = "🟢" if _lu == _tot else ("🟡" if _lu else "⚪")
+        if st.button(f"{_puce} {_b['titre'].split(' — ')[0]} — {_lu}/{_tot}",
+                     key=f"jump_bloc_{_b['id']}", width="stretch"):
+            _cible = _premiere_fiche_utile(_b)
+            if _cible:
+                _aller_a_fiche(_b["titre"], _cible)
 
 
 # ===========================================================================
@@ -29972,6 +32447,28 @@ if PAGE == "🏠 Tableau de bord":
     c2.metric("Fiches détaillées", nb_fiches)
     c3.metric("Questions de quiz", s["total"])
     c4.metric("Matériaux référencés", len(MATERIAUX))
+
+    # --- Reprendre où on s'est arrêté ---
+    _toutes_fiches_ord = [(b, f) for b in BLOCS for f in b.get("fiches", [])]
+    _prochaine = next((tf for tf in _toutes_fiches_ord
+                       if f"{tf[0]['id']}#{tf[1].get('id')}" not in P["fiches_lues"]), None)
+    st.write("")
+    if _prochaine:
+        _b_suiv, _f_suiv = _prochaine
+        _rang = _toutes_fiches_ord.index(_prochaine) + 1
+        st.markdown(
+            f'<div class="info-box" style="display:flex;justify-content:space-between;'
+            f'align-items:center;flex-wrap:wrap;gap:10px">'
+            f'<div><b>Reprendre où vous en étiez</b><br>'
+            f'<span style="color:#475569">Fiche {_rang}/{len(_toutes_fiches_ord)} — '
+            f'{_f_suiv["id"]} · {_f_suiv.get("titre", "")}</span></div></div>',
+            unsafe_allow_html=True)
+        st.write("")
+        if st.button(f"▶ Continuer — fiche {_f_suiv['id']}", type="primary", key="btn_reprendre"):
+            _aller_a_fiche(_b_suiv["titre"], _f_suiv["id"])
+    else:
+        st.success(f"🎉 Les {nb_fiches} fiches ont été lues au moins une fois. Bravo — direction "
+                  "le mode révision du quiz pour consolider.")
 
     st.divider()
     st.subheader("Les blocs du programme")
@@ -30355,6 +32852,244 @@ elif PAGE == "🎯 Quiz interactif":
 # ===========================================================================
 # PAGE : AJUSTEMENTS ISO
 # ===========================================================================
+
+elif PAGE == "🧪 Exercices guidés":
+    st.title("Exercices guidés")
+    st.markdown(
+        '<div class="info-box">Entrez votre propre résultat à chaque étape. Si le nombre est '
+        'juste, vous passez à la suite. Si un écart apparaît, l\'application essaie de '
+        '<b>reconnaître le TYPE d\'erreur</b> — facteur 2 oublié, conversion d\'unité, '
+        'signe — plutôt que de dire simplement « faux ».</div>', unsafe_allow_html=True)
+    st.write("")
+
+    _noms_ex = [f"{e['titre']} — {e['theme']} (fiche {e['fiche']})" for e in EXERCICES_GUIDES]
+    _choix_ex = st.selectbox("Choisissez un exercice", _noms_ex, key="choix_exercice_guide")
+    _ex = EXERCICES_GUIDES[_noms_ex.index(_choix_ex)]
+
+    _termine = _rendre_exercice_interactif(_ex, f"eg_{_ex['id']}")
+    if _termine:
+        _termines = P.setdefault("exercices_guides_termines", [])
+        if _ex["id"] not in _termines:
+            _termines.append(_ex["id"])
+            sauver_progression(P)
+        st.write("")
+        _autres = [n for i, n in enumerate(_noms_ex) if EXERCICES_GUIDES[i]["id"] != _ex["id"]]
+        if _autres and st.button("Exercice suivant →", type="primary"):
+            _prochain = next((e for e in EXERCICES_GUIDES if e["id"] != _ex["id"]
+                             and e["id"] not in _termines), None)
+            if _prochain:
+                st.session_state["choix_exercice_guide"] = (
+                    f"{_prochain['titre']} — {_prochain['theme']} (fiche {_prochain['fiche']})")
+                st.rerun()
+
+
+elif PAGE == "🤖 Importer un cours (IA)":
+    st.title("Importer un cours (IA)")
+    st.markdown(
+        '<div class="info-box">Déposez un PDF, une image ou un document Word : Claude lit le '
+        'contenu, rédige un cours dans le style de l\'application et génère un exercice '
+        'interactif utilisable immédiatement dans le même moteur que les autres exercices.'
+        '</div>', unsafe_allow_html=True)
+
+    def _cle_api_disponible():
+        try:
+            return str(st.secrets.get("ANTHROPIC_API_KEY", "") or "")
+        except Exception:
+            return ""
+
+    _cle_api = _cle_api_disponible()
+
+    if not _ANTHROPIC_DISPONIBLE or not _cle_api:
+        st.write("")
+        st.markdown(
+            '<div class="warn-box"><b>Cette fonctionnalité n\'est pas encore activée.</b><br>'
+            'Elle nécessite une clé API Anthropic — différente de Claude Pro, qui ne donne pas '
+            'accès à l\'API.</div>', unsafe_allow_html=True)
+        st.write("")
+        st.markdown("""
+**Pour l'activer :**
+
+1. Créez un compte sur [console.anthropic.com](https://console.anthropic.com) et ajoutez un
+   moyen de paiement — la facturation est à l'usage, quelques centimes par document analysé.
+2. Générez une clé API (elle commence par `sk-ant-`).
+3. Dans **Streamlit Cloud → Manage app → Settings → Secrets**, ajoutez :
+   ```
+   ANTHROPIC_API_KEY = "sk-ant-votre-clé-ici"
+   ```
+4. Dans le fichier `requirements.txt` du dépôt GitHub, ajoutez une ligne : `anthropic`
+5. Redéployez l'application (Reboot).
+
+Une fois ces étapes faites, cette page s'active automatiquement — rien d'autre à changer.
+        """)
+        st.stop()
+
+    st.write("")
+    _fichier = st.file_uploader(
+        "Déposez un fichier",
+        type=["pdf", "png", "jpg", "jpeg", "docx", "txt"],
+        help="PDF et images : lus directement par Claude, schémas compris. "
+             "Word et texte : le texte est extrait puis envoyé.")
+
+    if _fichier is not None:
+        _taille_mo = _fichier.size / (1024 * 1024)
+        st.caption(f"Fichier : {_fichier.name} ({_taille_mo:.1f} Mo)")
+        if _taille_mo > 15:
+            st.warning("Fichier volumineux (> 15 Mo) : l'analyse peut être coûteuse ou "
+                      "échouer. Préférez un extrait plus court si possible.")
+
+        _theme_utilisateur = st.text_input(
+            "Thème ou consigne (optionnel)",
+            placeholder="ex : concentre-toi sur la partie tolérancement uniquement")
+
+        if st.button("🔎 Analyser avec l'IA", type="primary"):
+            _contenu_blocs = []
+            _extension = _fichier.name.lower().rsplit(".", 1)[-1]
+
+            try:
+                if _extension == "pdf":
+                    _b64 = base64.b64encode(_fichier.getvalue()).decode()
+                    _contenu_blocs.append({
+                        "type": "document",
+                        "source": {"type": "base64", "media_type": "application/pdf",
+                                  "data": _b64},
+                    })
+                elif _extension in ("png", "jpg", "jpeg"):
+                    _mime = "image/png" if _extension == "png" else "image/jpeg"
+                    _b64 = base64.b64encode(_fichier.getvalue()).decode()
+                    _contenu_blocs.append({
+                        "type": "image",
+                        "source": {"type": "base64", "media_type": _mime, "data": _b64},
+                    })
+                elif _extension == "docx":
+                    try:
+                        import docx as _docxlib
+                        import io as _io
+                        _doc = _docxlib.Document(_io.BytesIO(_fichier.getvalue()))
+                        _texte_docx = "\n".join(p.text for p in _doc.paragraphs if p.text.strip())
+                        _contenu_blocs.append({"type": "text", "text": _texte_docx})
+                    except ModuleNotFoundError:
+                        st.error("La lecture des fichiers .docx nécessite le paquet "
+                                "`python-docx` — ajoutez-le à requirements.txt.")
+                        st.stop()
+                else:  # txt
+                    _texte_brut = _fichier.getvalue().decode("utf-8", errors="ignore")
+                    _contenu_blocs.append({"type": "text", "text": _texte_brut})
+            except Exception as _e:
+                st.error(f"Impossible de lire ce fichier : {_e}")
+                st.stop()
+
+            _consigne = f"\n\nConsigne particulière de l'utilisateur : {_theme_utilisateur}" \
+                       if _theme_utilisateur else ""
+
+            _prompt_texte = f"""Tu es un professeur de BTS CPI (Conception de Produits Industriels,
+1re année) qui rédige des fiches de cours pour une application pédagogique.
+
+Analyse le document fourni et produis DEUX parties, dans cet ordre exact.
+
+PARTIE 1 — Un cours en français, au format Markdown, dans ce style précis :
+- Un problème concret amène la notion, avant tout vocabulaire technique.
+- La notion est construite pas à pas, en français courant.
+- Au moins un exemple ENTIÈREMENT chiffré, avec des valeurs réalistes et vérifiables.
+- Une section "Erreurs classiques".
+- Un court récapitulatif final ("À retenir").
+- Longueur : 3000 à 6000 caractères.
+
+PARTIE 2 — Exactement UN exercice interactif, au format JSON STRICT, encadré exactement par
+les marqueurs <<<EXERCICE_JSON>>> et <<<FIN_EXERCICE_JSON>>> (rien d'autre entre les deux
+marqueurs que le JSON lui-même). Le JSON doit respecter EXACTEMENT ce schéma :
+
+{{
+  "titre": "Titre court de l'exercice",
+  "theme": "Thème en 2-3 mots",
+  "fiche": "Import IA",
+  "enonce": "Énoncé du problème, en français, avec Markdown pour les valeurs en gras",
+  "etapes": [
+    {{"label": "Nom de l'étape", "unite": "MPa", "attendu": 42.5, "tol": 0.02,
+      "formule": "Formule à appliquer, en texte"}},
+    {{"type": "qcm", "label": "Nom de l'étape", "question": "Question posée",
+      "options": ["Option A", "Option B", "Option C"], "bonne": 0,
+      "explication": "Pourquoi c'est la bonne réponse"}}
+  ],
+  "conclusion": {{"question": "Question de synthèse", "options": ["Réponse A", "Réponse B"],
+                 "bonne": 0, "explication": "Explication complète de la conclusion"}}
+}}
+
+Règles impératives :
+- 2 à 4 étapes maximum, mélange possible de numérique et de QCM.
+- Pour une étape numérique : "attendu" est un NOMBRE (pas de texte), "tol" est une tolérance
+  relative entre 0.01 et 0.05.
+- Pour une étape QCM : "bonne" est l'INDEX (0, 1 ou 2) de la bonne option dans la liste.
+- Tous les calculs doivent être vérifiables et exacts.
+- Le JSON doit être strictement valide (guillemets doubles, pas de virgule finale).{_consigne}
+"""
+
+            _contenu_blocs.append({"type": "text", "text": _prompt_texte})
+
+            with st.spinner("Claude lit et analyse le document…"):
+                try:
+                    _client = anthropic.Anthropic(api_key=_cle_api)
+                    _reponse = _client.messages.create(
+                        model="claude-sonnet-5",
+                        max_tokens=4000,
+                        messages=[{"role": "user", "content": _contenu_blocs}],
+                    )
+                    _texte_reponse = "".join(
+                        bloc.text for bloc in _reponse.content if hasattr(bloc, "text"))
+                except Exception as _e:
+                    st.error(f"L'appel à l'API a échoué : {_e}")
+                    st.stop()
+
+            if "<<<EXERCICE_JSON>>>" in _texte_reponse:
+                _cours_genere, _reste = _texte_reponse.split("<<<EXERCICE_JSON>>>", 1)
+                _json_brut = _reste.split("<<<FIN_EXERCICE_JSON>>>")[0].strip()
+            else:
+                _cours_genere = _texte_reponse
+                _json_brut = ""
+
+            st.session_state["cours_importe"] = _cours_genere.strip()
+            st.session_state["cours_importe_nom"] = _fichier.name
+
+            _exercice_valide = None
+            if _json_brut:
+                try:
+                    _ex_candidat = json.loads(_json_brut)
+                    _ok_structure = (
+                        isinstance(_ex_candidat.get("etapes"), list)
+                        and len(_ex_candidat["etapes"]) > 0
+                        and "conclusion" in _ex_candidat
+                        and all(0 <= et.get("bonne", 0) < len(et.get("options", [1]))
+                               for et in _ex_candidat["etapes"] if et.get("type") == "qcm")
+                        and 0 <= _ex_candidat["conclusion"].get("bonne", 0) < \
+                            len(_ex_candidat["conclusion"].get("options", [1]))
+                    )
+                    if _ok_structure:
+                        _ex_candidat.setdefault("id", "import_" + str(abs(hash(_json_brut)))[:8])
+                        _exercice_valide = _ex_candidat
+                except Exception:
+                    _exercice_valide = None
+
+            st.session_state["exercice_importe"] = _exercice_valide
+            st.rerun()
+
+    if st.session_state.get("cours_importe"):
+        st.divider()
+        st.subheader(f"📄 Cours généré depuis « {st.session_state.get('cours_importe_nom', '')} »")
+        with st.container(border=True):
+            st.markdown(st.session_state["cours_importe"])
+        st.download_button(
+            "📥 Télécharger ce cours (.md)",
+            data=st.session_state["cours_importe"].encode("utf-8"),
+            file_name="cours_importe.md", mime="text/markdown")
+
+        st.divider()
+        if st.session_state.get("exercice_importe"):
+            st.subheader("🧪 Exercice interactif généré")
+            _rendre_exercice_interactif(
+                st.session_state["exercice_importe"], "import_ex")
+        else:
+            st.info("Aucun exercice interactif n'a pu être généré ou validé pour ce document. "
+                   "Le cours ci-dessus reste utilisable.")
+
 
 elif PAGE == "📐 Calculateur d'ajustements ISO":
     st.title("Calculateur d'ajustements ISO 286")
@@ -30944,12 +33679,87 @@ elif PAGE == "🧱 Base matériaux":
 # PAGE : MA PROGRESSION
 # ===========================================================================
 
+elif PAGE == "📋 Formulaire":
+    st.title("Formulaire")
+    st.markdown(
+        '<div class="info-box">Toutes les formules de l\'application, dans l\'ordre des blocs. '
+        'Ce n\'est pas un contenu réécrit à part : c\'est l\'onglet <b>Formules</b> de chaque '
+        'fiche, rassemblé sur une seule page — donc toujours identique au cours. '
+        'Utilisez <b>Ctrl+P</b> (ou Cmd+P) pour l\'imprimer.</div>',
+        unsafe_allow_html=True)
+    st.write("")
+
+    recherche_f = st.text_input(
+        "🔍 Filtrer le formulaire",
+        placeholder="par exemple : flexion, ajustement, k6, module",
+        key="recherche_formulaire")
+
+    _terme_f = recherche_f.strip().lower() if recherche_f else ""
+    _blocs_affiches = 0
+    _fiches_affichees = 0
+
+    for _bl in BLOCS:
+        _fiches_avec_formule = [f for f in _bl.get("fiches", []) if f.get("formules", "").strip()]
+        if _terme_f:
+            _fiches_avec_formule = [
+                f for f in _fiches_avec_formule
+                if _terme_f in f["formules"].lower() or _terme_f in f.get("titre", "").lower()
+            ]
+        if not _fiches_avec_formule:
+            continue
+        _blocs_affiches += 1
+        st.markdown(
+            f'<div class="bloc-titre" style="margin-top:22px"><b>{_bl["titre"]}</b></div>',
+            unsafe_allow_html=True)
+        for _fi in _fiches_avec_formule:
+            _fiches_affichees += 1
+            st.markdown(f"#### {_fi['id']} — {_fi['titre']}")
+            st.markdown(_fi["formules"])
+            st.markdown("<hr style='margin:6px 0 18px 0;border-color:#e5e7eb'>",
+                       unsafe_allow_html=True)
+
+    if _terme_f and _fiches_affichees == 0:
+        st.warning(f"Aucune formule ne contient « {recherche_f} ».")
+    elif _terme_f:
+        st.caption(f"{_fiches_affichees} fiche(s) affichée(s) sur {_blocs_affiches} bloc(s).")
+
+    st.divider()
+    _tout_le_formulaire = []
+    for _bl in BLOCS:
+        _fiches_f = [f for f in _bl.get("fiches", []) if f.get("formules", "").strip()]
+        if not _fiches_f:
+            continue
+        _tout_le_formulaire.append(f"\n\n## {_bl['titre']}\n")
+        for _fi in _fiches_f:
+            _tout_le_formulaire.append(f"\n### {_fi['id']} — {_fi['titre']}\n\n{_fi['formules']}\n")
+    st.download_button(
+        "📥 Télécharger le formulaire complet (.md)",
+        data="# Formulaire — BTS CPI\n" + "".join(_tout_le_formulaire),
+        file_name="formulaire_bts_cpi.md", mime="text/markdown")
+
+
 elif PAGE == "📊 Ma progression":
     st.title("Ma progression")
 
     st.subheader("Fiches de cours consultées")
     st.progress(lues / nb_fiches if nb_fiches else 0)
     st.caption(f"{lues} fiches validées sur un total de {nb_fiches}")
+
+    st.divider()
+    st.subheader("Exercices guidés terminés")
+    _eg_termines = P.get("exercices_guides_termines", [])
+    _eg_total = len(EXERCICES_GUIDES)
+    st.progress(len(_eg_termines) / _eg_total if _eg_total else 0)
+    st.caption(f"{len(_eg_termines)} exercice(s) terminé(s) sur {_eg_total}")
+    if _eg_termines:
+        _titres_termines = [e["titre"] for e in EXERCICES_GUIDES if e["id"] in _eg_termines]
+        st.markdown(
+            "<div style='font-size:.88em;color:#475569'>" +
+            " · ".join(f"✅ {t}" for t in _titres_termines) + "</div>",
+            unsafe_allow_html=True)
+    _eg_restants = [e for e in EXERCICES_GUIDES if e["id"] not in _eg_termines]
+    if _eg_restants:
+        st.caption("À faire : " + " · ".join(e["titre"] for e in _eg_restants))
 
     st.divider()
     st.subheader("Mes erreurs en attente de révision")
