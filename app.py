@@ -12504,1590 +12504,2282 @@ fréquente de la mise en plan automatique.
 
 BLOC_6 = {
     "id": "bloc6",
-    "titre": "Bloc 6 — Liaisons mécaniques et conception d'ensembles",
-    "resume": "Assembler, guider, transmettre : les solutions constructives du mécanicien.",
+    "titre": "Bloc 6 — Liaisons, guidages et conception d'ensembles",
+    "resume": "Décrire les liaisons, guider en rotation et en translation, assembler, transmettre la puissance et monter le mécanisme.",
     "fiches": [
         {
-            "id": "6.1",
-            "titre": "Liaisons mécaniques et schéma cinématique",
-            "duree": "10 h",
+            "id": '6.1',
+            "titre": 'Le concept de liaison et les degrés de liberté',
+            "duree": '4 h',
             "cours": """
-### 1. Le concept de liaison
+### Le vocabulaire, en français courant
 
-Une **liaison** est le résultat du contact entre deux solides. Elle **supprime** certains
-degrés de liberté et en **autorise** d'autres. Un solide libre dans l'espace possède
-**6 degrés de liberté** : 3 translations (Tx, Ty, Tz) et 3 rotations (Rx, Ry, Rz).
+| Terme | Ce que ça veut dire |
+|---|---|
+| **liaison** | la façon dont deux pièces sont assemblées, décrite par ce qu'elles peuvent encore faire l'une par rapport à l'autre |
+| **degré de liberté (ddl)** | un mouvement encore possible : 3 translations + 3 rotations au maximum |
+| **schéma cinématique** | un dessin symbolique qui montre les mouvements, pas les formes |
+| **isostatique** | chaque mouvement est bloqué **une seule fois** |
 
-$$ \\text{Nombre de DDL de la liaison} + \\text{Degré d'hyperstatisme local} = 6 $$
+### 1. Décrire un mécanisme sans dessiner les pièces
 
-### 2. Les 11 liaisons normalisées (NF EN ISO 3952)
+Imaginez que vous deviez expliquer au téléphone comment fonctionne un étau. Vous n'allez pas
+décrire la forme des pièces : vous allez dire **ce qui tourne, ce qui coulisse, ce qui est fixe**.
 
-| Liaison | DDL | Mouvements autorisés | Réalisation typique |
+C'est exactement ce que fait le **schéma cinématique** : il décrit les **mouvements**, pas les
+formes. Deux mécanismes très différents d'aspect peuvent avoir le même schéma ; deux pièces qui se
+ressemblent peuvent avoir des liaisons totalement différentes.
+
+**À quoi ça sert vraiment**, au-delà de l'exercice scolaire :
+
+- **comprendre** un mécanisme qu'on découvre, en le réduisant à sa logique ;
+- **communiquer** une idée en trois traits, avant toute CAO ;
+- **vérifier** qu'un assemblage 3D se comporte comme prévu (fiche 5.3) ;
+- **repérer l'hyperstatisme**, donc les tolérances inutilement serrées.
+
+### 2. Compter ce qui peut bouger
+
+Un solide libre dans l'espace possède **six degrés de liberté** (ddl) : trois translations et
+trois rotations. Une liaison supprime certains de ces mouvements, et **ce qui reste donne son nom
+à la liaison**.
+
+[[FIG:liaisons_de_base]]
+
+| Liaison | ddl | Ce qui reste possible | Exemple |
 |---|---|---|---|
-| **Encastrement** | **0** | aucun | Vissage, soudure, frettage, clavetage + épaulement |
-| **Pivot** | **1** | 1 rotation | Roulements, palier lisse + butée |
-| **Glissière** | **1** | 1 translation | Queue d'aronde, rail à billes |
-| **Hélicoïdale** | **1** | rotation **liée** à translation | Vis-écrou |
-| **Pivot glissant** | **2** | 1 rotation + 1 translation (même axe) | Arbre lisse dans bague |
-| **Rotule (sphérique)** | **3** | 3 rotations | Rotule de direction, articulation à bille |
-| **Appui plan** | **3** | 2 translations + 1 rotation | Deux surfaces planes en contact |
-| **Linéaire annulaire** | **4** | 3 rotations + 1 translation | Sphère dans cylindre |
-| **Linéaire rectiligne** | **4** | 2 T + 2 R | Cylindre sur plan |
-| **Sphère-plan (ponctuelle)** | **5** | 3 R + 2 T | Bille sur plan |
-| **Sphérique à doigt** | **2** | 2 rotations | Rotule + ergot |
+| encastrement | 0 | rien | pièces vissées, soudées |
+| **pivot** | 1 | une rotation | arbre sur roulements, charnière |
+| **glissière** | 1 | une translation | tiroir, table de fraiseuse |
+| **pivot glissant** | 2 | rotation + translation, même axe | tige de vérin dans son guide |
+| **hélicoïdale** | 1 | rotation **liée** à une translation | système vis-écrou |
+| rotule | 3 | trois rotations | rotule de direction |
+| appui plan | 3 | deux translations + une rotation | pièce posée sur un marbre |
+| linéaire annulaire | 4 | — | contact court sur un arbre |
+| ponctuelle | 5 | — | contact en un point |
 
-**Les 4 à connaître par cœur pour le BTS : encastrement, pivot, glissière, pivot glissant.**
-Ce sont 90 % des cas réels.
+**Le piège de l'hélicoïdale**, qui tombe souvent. On voit une rotation **et** une translation, donc
+on répond 2 ddl. C'est faux : les deux ne sont **pas indépendantes**. Le pas de la vis les lie —
+tourner d'un tour, c'est avancer d'un pas, obligatoirement. Un seul mouvement peut être commandé
+librement : **1 ddl**.
 
-### 3. Le schéma cinématique
+### 3. Les erreurs classiques
 
-C'est une **représentation symbolique minimale** d'un mécanisme : on ne dessine ni les formes,
-ni les dimensions, seulement les **liaisons** et les **classes d'équivalence**.
+1. **Faire apparaître la visserie** sur le schéma : elle fait partie d'une classe d'équivalence.
+2. **Confondre pivot et pivot glissant** : si la pièce peut aussi coulisser, ce n'est pas un pivot.
+3. **Compter 2 ddl pour l'hélicoïdale** : c'est 1, les deux mouvements sont liés.
+4. **Oublier de vérifier les ddl restants** : ils doivent correspondre aux mouvements réels du
+   mécanisme.
+5. **Bloquer deux fois le même mouvement** sans s'en rendre compte : c'est de l'hyperstatisme subi.
+6. **Poser une pièce sur quatre points** au lieu de trois.
+7. **Dessiner des formes** sur un schéma cinématique : il ne montre que des liaisons.
 
-**Méthode en 4 étapes :**
 
-1. **Identifier les classes d'équivalence** : regrouper toutes les pièces qui n'ont **aucun
-   mouvement relatif** entre elles (elles forment un même « bloc »). Les vis, clavettes,
-   goupilles, roulements font partie du bloc qu'ils solidarisent.
-2. **Colorier** chaque classe sur le dessin d'ensemble (méthode de travail éprouvée).
-3. **Identifier les liaisons** entre classes (une liaison par couple de classes en contact).
-4. **Tracer** le schéma avec les symboles normalisés, en respectant les positions relatives
-   et les axes.
+### 4. À retenir
 
-**Graphe de liaisons** : outil intermédiaire très utile. Un cercle par classe, un trait par
-liaison, avec le nom de la liaison et son axe.
-
-### 4. Isostatisme et hyperstatisme
-
-**Isostatique** : chaque degré de liberté est supprimé **exactement une fois**. Le montage est
-possible sans déformer les pièces, les efforts sont bien définis.
-
-**Hyperstatique** : un même degré est supprimé **plusieurs fois**. Conséquences :
-- ✅ Meilleure **rigidité** et répartition des charges
-- ❌ **Montage impossible** sans jeu ou sans déformation
-- ❌ Exigences de **précision géométrique** très sévères (coaxialité, parallélisme)
-- ❌ Efforts **indéterminés** par la statique seule
-
-**Degré d'hyperstatisme :**
-$$ h = 6(n-1) - \\sum(\\text{DDL supprimés}) + m $$
-
-**Exemple canonique — arbre sur deux paliers :**
-
-| Solution | Liaisons | Nature |
-|---|---|---|
-| 2 roulements à billes (2 pivots) | pivot + pivot | **Hyperstatique de degré 4** — exige une coaxialité parfaite des logements |
-| 1 pivot + 1 pivot glissant | pivot + pivot glissant | **Isostatique** ✅ — c'est le **montage à palier libre**, standard en réducteur |
-
-> **Le montage « un palier fixe + un palier libre » est LA solution industrielle de référence.**
-> Il rend le système isostatique et permet à l'arbre de **dilater** librement.
-
-### 5. La mise en position isostatique (MiP)
-
-Pour poser une pièce sur un montage d'usinage, on applique la règle **3-2-1** :
-
-| Appui | Nombre de points | DDL supprimés |
-|---|---|---|
-| **Appui plan** (primaire) | 3 points | 3 (1 T + 2 R) |
-| **Appui linéaire** (secondaire) | 2 points | 2 (1 T + 1 R) |
-| **Appui ponctuel** (tertiaire) | 1 point | 1 (1 T) |
-| | **6 points** | **6 DDL → pièce isostatiquement posée** |
-
-C'est exactement la logique des **références A, B, C** du tolérancement géométrique
-(fiche 2.3). **MiP et tolérancement géométrique sont les deux faces d'une même pièce.**
+- **6 ddl** : 3 translations + 3 rotations. Nommer une liaison, c'est compter ce qui reste.
+- Encastrement 0 · pivot 1 · glissière 1 · **hélicoïdale 1** · pivot glissant 2 · rotule 3.
+- Méthode : **classes d'équivalence → graphe → schéma**. La visserie n'apparaît jamais.
+- **Isostatique** = chaque mouvement supprimé une seule fois. L'hyperstatisme se paie en
+  tolérances et en déformations.
+- Mise en position : **règle 3-2-1**, qui correspond aux références A, B, C des plans.
+- Contrôle final : les mouvements restants doivent être exactement ceux du mécanisme réel.
 """,
             "formules": """
-**DEGRÉS DE LIBERTÉ**
+**Degrés de liberté** — une pièce libre dans l'espace : **3 translations + 3 rotations = 6 ddl**
 
-$$ \\text{DDL d'un solide libre dans l'espace} = 6 $$
-$$ \\text{DDL d'un solide libre dans le plan} = 3 $$
+**Compter une liaison** — ddl supprimés + ddl restants = 6, toujours
 
-**MOBILITÉ D'UN MÉCANISME — formule générale (espace)**
-
-$$ m = 6(n-1) - \\sum_{i} (6 - DDL_i) $$
-
-où $n$ = nombre de solides (bâti compris), $DDL_i$ = degrés de liberté de la liaison $i$.
-
-**Formule dans le plan (Grübler) :**
-$$ m = 3(n-1) - 2j_1 - j_2 $$
-
-**DEGRÉ D'HYPERSTATISME**
-
-$$ \\boxed{h = m_c - m_u} $$
-
-où $m_c$ = mobilité calculée, $m_u$ = mobilité utile (réellement souhaitée).
-
-Formule équivalente :
-$$ h = 6(n-1) - \\sum(6 - DDL_i) - m_u \\quad \\text{... exprimée en inconnues statiques} $$
-
-**En pratique en BTS, on retient :**
-$$ h = I_s - E_s $$
-$I_s$ = nombre d'inconnues statiques, $E_s$ = nombre d'équations d'équilibre indépendantes
-(6 par solide isolé, 3 dans le plan).
-
-| Valeur de $h$ | Interprétation |
-|---|---|
-| $h = 0$ | **Isostatique** — montage facile, efforts calculables |
-| $h > 0$ | **Hyperstatique** — rigide mais exigeant en précision |
-
-**INTERPRÉTATION DES RÉSULTATS DE MOBILITÉ**
-
-| $m$ | Signification |
-|---|---|
-| $m = 0$ | Structure **fixe** (treillis, bâti) |
-| $m = 1$ | Mécanisme à **1 entrée** (le cas le plus courant) |
-| $m \\ge 2$ | Plusieurs actionneurs nécessaires (robot, machine multi-axes) |
-| $m < 0$ | Système **hyperstatique** — vérifier le calcul |
-
-**LOI ENTRÉE-SORTIE — mécanisme bielle-manivelle**
-
-Position du piston en fonction de l'angle de manivelle $\\theta$ :
-
-$$ x = R\\cos\\theta + \\sqrt{L^2 - R^2\\sin^2\\theta} $$
-
-avec $R$ le rayon de manivelle et $L$ la longueur de bielle.
-
-Course du piston : $C = 2R$
+**Liaisons usuelles** — encastrement 0 ddl · pivot 1 rotation · glissière 1 translation ·
+pivot glissant 1 rotation + 1 translation · rotule 3 rotations · appui plan 2 translations +
+1 rotation
 """,
             "exemple": """
-**Cas industriel — Analyse d'un vérin pneumatique et de son mécanisme de bridage**
+### Cas industriel — La liaison qu'on croit connaître
 
-Un dispositif de bridage sur une machine d'assemblage comporte : le **bâti** (1), le **corps
-du vérin** (2) fixé au bâti, la **tige + piston** (3), la **biellette** (4), et le
-**levier de bridage** (5) articulé sur le bâti.
+Sur un plan d'ensemble, un arbre monté sur deux roulements à billes est presque toujours décrit
+comme un **pivot** : une seule rotation possible.
 
-**Étape 1 — Classes d'équivalence**
+**Ce que le comptage révèle.** Un roulement à billes à gorge profonde bloque, à lui seul, les
+trois translations et deux rotations : il laisse **1 ddl**. En monter **deux** sur le même arbre
+revient donc à bloquer deux fois les mêmes mouvements.
 
-| Classe | Pièces regroupées | Justification |
-|---|---|---|
-| **A** (bâti) | Bâti, corps du vérin, vis de fixation, axes fixes | Le corps du vérin est **vissé** au bâti : aucun mouvement relatif → même classe |
-| **B** | Tige, piston, écrou de tige, joint | Solidaires entre eux |
-| **C** | Biellette + ses bagues | |
-| **D** | Levier de bridage + patin de serrage | |
+**La conséquence.** La liaison obtenue est bien un pivot du point de vue de l'utilisateur — une
+seule rotation — mais elle est **hyperstatique** : le moindre défaut d'alignement entre les deux
+paliers se traduit par des efforts internes que rien n'absorbe.
 
-**Étape 2 — Graphe de liaisons**
-
-```
-        pivot glissant (axe x)
-   A ─────────────────────────── B
-   │                             │
-   │ pivot (axe z)               │ pivot (axe z)
-   │                             │
-   D ─────────────────────────── C
-              pivot (axe z)
-```
-
-**Étape 3 — Calcul de mobilité (dans le plan)**
-
-$n = 4$ classes ; liaisons : 3 pivots + 1 pivot glissant.
-En schéma plan, le pivot glissant se comporte comme une **glissière** (1 DDL) car la rotation
-est bloquée par le guidage de la tige :
-
-$$ m = 3(4-1) - 2 \\times 4 = 9 - 8 = \\mathbf{1} $$
-
-✔️ **Un seul actionneur (le vérin) suffit.** Le mécanisme est cinématiquement correct.
-
-**Étape 4 — Analyse de l'hyperstatisme réel du guidage de tige**
-
-Dans le vérin réel, la tige est guidée par **deux bagues** (une à l'avant du corps, une sur le
-piston). Deux pivots glissants coaxiaux sur le même axe = **hyperstatisme de degré 4**.
-
-**Pourquoi c'est acceptable ici :** les deux bagues sont **usinées dans le même corps, en une
-seule prise**, ce qui garantit une coaxialité de quelques centièmes. Le constructeur du vérin
-maîtrise cette contrainte. C'est un hyperstatisme **assumé et rentable** : il apporte la
-rigidité nécessaire pour reprendre les efforts radiaux parasites.
-
-**Le contre-exemple qui illustre le danger :** si le concepteur du bridage avait ajouté un
-**troisième guidage** de la tige sur le bâti (par exemple une bague de guidage extérieure),
-l'hyperstatisme serait devenu **incontrôlable** : la moindre imprécision de position entre le
-bâti et le vérin créerait un effort de flexion sur la tige, un grippage, et une usure
-prématurée du joint. **On ne guide jamais une tige de vérin une seconde fois.**
-
-> **Règle de conception :** l'articulation d'un vérin sur son bâti se fait toujours par une
-> liaison **laissant au moins un DDL** (chape à axe, tourillon, rotule) — jamais par un
-> encastrement rigide aux deux extrémités.
+**C'est exactement pourquoi** le montage réel n'utilise jamais deux paliers strictement
+identiques, mais un **palier fixe et un palier libre** (fiche 6.6) : le second laisse une
+translation, ce qui rétablit l'isostatisme sans changer la fonction.
 """,
             "exercice": """
-**Exercice type examen — Étude cinématique d'un système de levage à ciseaux**
+### Exercice — Compter les degrés de liberté
 
-Une table élévatrice à ciseaux comporte : le **châssis fixe** (1), deux **bras croisés**
-(2) et (3) articulés entre eux en leur milieu, le **plateau** (4), et un **vérin** dont on
-notera le corps (5) et la tige (6).
+**1.** Une pièce est posée librement sur une table, sans être fixée. Combien de degrés de liberté
+lui reste-t-il ? Détaillez-les.
 
-Liaisons identifiées :
-- Bras (2) / châssis (1) : **pivot** en A
-- Bras (3) / châssis (1) : **pivot glissant** (galet dans rail) en B
-- Bras (2) / bras (3) : **pivot** central en C
-- Bras (2) / plateau (4) : **pivot glissant** en D
-- Bras (3) / plateau (4) : **pivot** en E
-- Corps du vérin (5) / châssis (1) : **pivot** en F
-- Tige (6) / corps (5) : **pivot glissant** en G
-- Tige (6) / bras (2) : **pivot** en H
+**2.** On ajoute une liaison **pivot** entre cette pièce et la table. Combien de ddl sont
+supprimés, combien restent ?
 
-**Questions :**
+**3.** Un **pivot glissant** laisse une rotation et une translation autour du même axe. Combien de
+ddl supprime-t-il ?
 
-1. Établir le **graphe de liaisons** du mécanisme (description textuelle acceptée).
-2. Calculer la **mobilité** dans le plan. Combien d'actionneurs sont nécessaires ?
-3. Expliquer pourquoi les liaisons en B et D sont des **pivots glissants** et non des pivots
-   simples. Que se passerait-il si on les remplaçait par des pivots ?
-4. Le plateau doit rester **horizontal** à toute hauteur. Quelle propriété géométrique du
-   mécanisme le garantit ? Justifier.
-5. Déterminer les **classes d'équivalence** et proposer un schéma cinématique (description
-   des symboles et de leur disposition).
-6. Le bureau d'études envisage d'ajouter un **second vérin symétrique** pour doubler la
-   capacité. Analyser les conséquences sur l'hyperstatisme et formuler une recommandation.
+**4.** Une **rotule** laisse les trois rotations. Combien de ddl supprime-t-elle, et lesquels ?
+
+**5.** Vérifiez vos quatre réponses par la relation « ddl supprimés + ddl restants = 6 ».
 """,
             "corrige": """
-**1. Graphe de liaisons**
+### Corrigé, en six temps
 
-```
-                        (1) CHÂSSIS
-                    ╱      │        ╲
-        pivot A    ╱  pivot glissant B  ╲  pivot F
-                  ╱        │              ╲
-              (2) BRAS ─── (3) BRAS      (5) CORPS VÉRIN
-                  │  pivot C   │              │
-   pivot glissant D│           │pivot E       │ pivot glissant G
-                  │           │              │
-                  └──── (4) PLATEAU          (6) TIGE
-                                              │
-              (2) BRAS ──────────────────────┘
-                        pivot H
-```
+#### 1. Ce que dit l'énoncé
 
-**Inventaire des liaisons :**
+Quatre liaisons à analyser, toujours de la même façon : **combien de mouvements restent
+possibles ?** L'énoncé donne les ddl restants pour les questions 3 et 4 — il faut en déduire les
+ddl supprimés.
 
-| Repère | Liaison | Solides | DDL (plan) |
+#### 2. Quelle règle, et pourquoi
+
+**Une pièce libre dans l'espace possède 6 degrés de liberté** : trois translations (x, y, z) et
+trois rotations (autour de x, y, z). Une liaison ne fait qu'une chose : **en supprimer
+certains**.
+
+D'où la relation qui sert de contrôle permanent :
+
+> **ddl supprimés + ddl restants = 6**
+
+#### 3. Les conversions
+
+Aucune conversion numérique. **Le travail est de traduire une description en comptage** : « elle
+peut tourner autour d'un axe » signifie 1 rotation restante, donc 5 ddl supprimés.
+
+#### 4. Le remplacement
+
+pivot : restants = 1 → supprimés = 6 − 1
+pivot glissant : restants = 2 → supprimés = 6 − 2
+rotule : restants = 3 → supprimés = 6 − 3
+
+#### 5. Le calcul
+
+**1.** Une pièce libre conserve **6 ddl** : trois translations (avancer selon x, y, z) et trois
+rotations (tourner autour de x, y, z). *Posée sur une table sans être fixée, elle n'est pas
+« libre » au sens strict — mais l'énoncé dit bien librement, donc on raisonne sur la pièce
+isolée.*
+
+**2.** Un **pivot** laisse **1 ddl** (une rotation autour de son axe) : il en supprime donc
+**5**.
+
+**3.** Un **pivot glissant** laisse **2 ddl** (1 rotation + 1 translation autour du même axe) : il
+en supprime **4**.
+
+**4.** Une **rotule** laisse **3 ddl**, les trois rotations : elle supprime donc **3 ddl**, à
+savoir **les trois translations**. C'est un point qui trompe souvent : une rotule bloque tout
+déplacement du centre, mais aucune orientation.
+
+#### 6. La vérification
+
+Le contrôle est immédiat pour chaque réponse :
+
+| Liaison | Supprimés | Restants | Somme |
 |---|---|---|---|
-| A | Pivot | 1-2 | 1 |
-| B | Pivot glissant | 1-3 | 2 |
-| C | Pivot | 2-3 | 1 |
-| D | Pivot glissant | 2-4 | 2 |
-| E | Pivot | 3-4 | 1 |
-| F | Pivot | 1-5 | 1 |
-| G | Pivot glissant | 5-6 | 2 |
-| H | Pivot | 2-6 | 1 |
+| pivot | 5 | 1 | **6** ✅ |
+| pivot glissant | 4 | 2 | **6** ✅ |
+| rotule | 3 | 3 | **6** ✅ |
 
----
-
-**2. Calcul de la mobilité (dans le plan)**
-
-Nombre de solides : $n = 6$ (châssis 1, bras 2, bras 3, plateau 4, corps 5, tige 6)
-
-Dans le plan, un pivot glissant se réduit à une **glissière** (1 DDL) ou reste à 2 DDL selon
-la modélisation. **Ici, les liaisons B, D et G autorisent chacune 1 translation ET la rotation
-est bloquée par la géométrie** (galet dans rail, tige guidée) → on les modélise en
-**glissières à 1 DDL** dans le plan.
-
-$$ j_1 = 8 \\text{ liaisons à 1 DDL} \\qquad j_2 = 0 $$
-
-$$ m = 3(n-1) - 2j_1 - j_2 = 3(6-1) - 2\\times8 - 0 = 15 - 16 = \\mathbf{-1} $$
-
-**Résultat négatif → le mécanisme est HYPERSTATIQUE de degré 1 dans cette modélisation.**
-
-**Analyse à mener (c'est ce qui est attendu) :**
-
-Le résultat $m = -1$ signifie que la formule de Grübler, appliquée brutalement, révèle une
-contrainte surabondante. En réalité, **le mécanisme fonctionne** avec **une mobilité utile
-$m_u = 1$** (la montée du plateau, pilotée par le vérin).
-
-$$ h = m_c - m_u = -1 - 1 = -2 \\quad \\Rightarrow \\quad \\textbf{hyperstatisme de degré 2} $$
-
-**Origine physique de cet hyperstatisme :** la boucle fermée
-`châssis → bras 2 → plateau → bras 3 → châssis` impose une contrainte géométrique
-supplémentaire. En pratique, cet hyperstatisme est **résolu par les jeux de fonctionnement**
-des galets dans leurs rails.
-
-$$ \\boxed{\\textbf{UN SEUL actionneur (le vérin) est nécessaire}} $$
-
----
-
-**3. Pourquoi des pivots glissants en B et D**
-
-**Raisonnement géométrique — c'est le cœur de la question :**
-
-Quand la table monte, les deux bras croisés **se redressent** : l'angle qu'ils forment avec
-l'horizontale augmente. Or **la longueur des bras est constante**.
-
-$$ \\text{Si } L \\text{ est constante et l'angle } \\alpha \\text{ augmente} \\;\\Rightarrow\\; \\text{la projection horizontale } L\\cos\\alpha \\text{ DIMINUE} $$
-
-Concrètement : la distance horizontale entre les extrémités des bras **se réduit** au fur et
-à mesure de la montée. Il faut donc que **les extrémités puissent se rapprocher**.
-
-- En **A** (pivot fixe) et **E** (pivot) : les points sont fixes sur leur solide.
-- En **B** et **D** : les extrémités **doivent coulisser** pour absorber la variation
-  $\\Delta x = L(\\cos\\alpha_1 - \\cos\\alpha_2)$.
-
-**Que se passerait-il avec des pivots simples en B et D ?**
-
-$$ m = 3(6-1) - 2 \\times 10 = 15 - 20 = -5 $$
-
-Le mécanisme deviendrait **totalement bloqué** (hyperstatisme de degré 6). Physiquement :
-
-| Conséquence | Explication |
-|---|---|
-| **Blocage complet** | Le quadrilatère châssis-bras-plateau-bras devient un système **triangulé indéformable** |
-| Si on force malgré tout | Les bras travaillent en **flexion pure** au lieu de la compression prévue |
-| Rupture | L'effort du vérin (plusieurs tonnes) se transforme intégralement en effort de déformation → **rupture des articulations ou flambage des bras** |
-
-*C'est une erreur de conception classique et fatale : oublier une liaison glissante dans une
-boucle fermée transforme un mécanisme en structure.*
-
----
-
-**4. Horizontalité du plateau**
-
-$$ \\boxed{\\textbf{La SYMÉTRIE du mécanisme par rapport au pivot central C}} $$
-
-**Démonstration géométrique :**
-
-Les deux bras (2) et (3) sont de **même longueur** $L$ et articulés **exactement en leur
-milieu** en C. Ils forment donc deux triangles isocèles symétriques.
-
-Soit $\\alpha$ l'angle des bras avec l'horizontale :
-- Extrémités basses (A et B) : à la hauteur $y = 0$
-- Point central C : à la hauteur $y_C = \\dfrac{L}{2}\\sin\\alpha$
-- Extrémités hautes (D et E) : à la hauteur $y = L\\sin\\alpha$
-
-**Les deux points d'attache du plateau (D et E) sont à la MÊME hauteur** $L\\sin\\alpha$,
-quel que soit $\\alpha$.
-
-$$ y_D = y_E = L\\sin\\alpha \\quad \\forall \\alpha \\;\\Longrightarrow\\; \\textbf{plateau horizontal} $$
-
-**Les trois conditions à respecter impérativement à la fabrication :**
-
-1. **Bras strictement de même longueur** (tolérance serrée sur l'entraxe)
-2. **Articulation centrale exactement à mi-longueur** des deux bras
-3. **Rails B et D parfaitement horizontaux** et à la même cote
-
-⚠️ Si l'une de ces conditions n'est pas respectée — par exemple un bras 2 mm plus long — le
-plateau **s'inclinera progressivement** avec la montée, et l'erreur sera **maximale en position
-haute**. C'est le défaut de fabrication le plus courant sur ce type de table.
-
-**Hauteur de levage :**
-$$ H = L\\sin\\alpha \\qquad \\text{course maximale pour } \\alpha \\text{ de } \\alpha_{min} \\text{ à } \\alpha_{max} $$
-
----
-
-**5. Classes d'équivalence et schéma cinématique**
-
-**Classes d'équivalence** (aucun mouvement relatif interne) :
-
-| Classe | Composition |
-|---|---|
-| **S1** | Châssis + rails + axes fixes en A et F + patins de sol |
-| **S2** | Bras (2) + ses bagues et axes solidaires |
-| **S3** | Bras (3) + galets d'extrémité |
-| **S4** | Plateau + platine de roulement en D + axe en E |
-| **S5** | Corps du vérin + fixation en F |
-| **S6** | Tige + piston + chape en H |
-
-*Note : les galets, bagues, roulements ne constituent PAS des classes séparées — ils font
-partie de la classe qu'ils guident, sauf si l'on étudie finement le contact.*
-
-**Description du schéma cinématique à tracer :**
-
-```
-                  ┌─────────── PLATEAU (S4) ───────────┐
-                  │                                     │
-             [D] ═╪═ glissière                     [E] ─○─ pivot
-                  │                                     │
-                   ╲                                   ╱
-                    ╲          BRAS S2  /  BRAS S3    ╱
-                     ╲                ╳              ╱
-                      ╲          [C] ─○─ pivot      ╱
-                       ╲            ╱   ╲          ╱
-                        ╲          ╱     ╲        ╱
-              [H] ─○─────╲────────╱       ╲──────╱
-                    ╲     ╲      ╱         ╲    ╱
-              TIGE S6╲     ╲    ╱           ╲  ╱
-                      ╲     ╲  ╱             ╲╱
-              [G] ═╪═  ╲     ╲╱              ╱╲
-              CORPS S5  ╲    ╱              ╱  ╲
-                    ╲    ╲  ╱              ╱    ╲
-        ▓▓▓▓▓▓▓▓[F]─○─▓▓▓[A]─○─▓▓▓▓▓▓▓[B]═╪═▓▓▓▓▓▓▓
-                       CHÂSSIS S1 (hachuré = bâti)
-```
-
-**Symboles à employer :**
-- **○** avec trait perpendiculaire : **pivot** (A, C, E, F, H)
-- **╪** dans une glissière : **pivot glissant / glissière** (B, D, G)
-- **▓▓▓** hachures : le **bâti** (S1)
-- Traits pleins reliant les liaisons : les **barres rigides** (bras, plateau)
-
----
-
-**6. Ajout d'un second vérin symétrique — analyse**
-
-**a) Nouveau calcul de mobilité**
-
-L'ajout du second vérin apporte : 2 solides ($n$ passe de 6 à 8) et 3 liaisons
-(pivot F', pivot glissant G', pivot H').
-
-$$ m = 3(8-1) - 2 \\times 11 = 21 - 22 = \\mathbf{-1} $$
-
-Avec $m_u = 1$ (les deux vérins sont pilotés **ensemble**, ils ne constituent qu'une seule
-commande) :
-
-$$ h = -1 - 1 = -2 \\;\\rightarrow\\; \\textbf{l'hyperstatisme AUGMENTE de 3 degrés} $$
-
-**b) Conséquences concrètes**
-
-| ✅ Avantages | ❌ Inconvénients |
-|---|---|
-| **Capacité doublée** (2 × l'effort) | **Synchronisation obligatoire** : si un vérin sort plus vite que l'autre, le plateau se **vrille** |
-| Meilleure **répartition des efforts** sur les bras | Les vérins **luttent l'un contre l'autre** en cas de désynchronisation → efforts internes énormes |
-| **Redondance** de sécurité en cas de défaillance d'un vérin | Exigences de **précision géométrique** accrues (positions de F' et H' à quelques dixièmes) |
-| Réduction de la flexion des bras | Risque de **grippage** des articulations sous les efforts parasites |
-
-**c) Recommandation argumentée**
-
-**⚠️ NE PAS installer deux vérins en parallèle sans dispositif de synchronisation.**
-
-Le problème physique : deux vérins hydrauliques alimentés par la même ligne ne sortent
-**jamais** exactement à la même vitesse (différences de frottement, de fuites internes, de
-charge). L'écart, même de 1 mm, crée une **torsion du plateau** que les articulations doivent
-encaisser — et elles ne sont pas dimensionnées pour cela.
-
-**Trois solutions par ordre de préférence :**
-
-| Solution | Principe | Avis |
-|---|---|---|
-| **1. Un seul vérin plus gros** ⭐ | Augmenter le Ø du vérin unique et/ou la pression | **Recommandée.** Supprime le problème à la racine. Un vérin Ø100 au lieu de Ø70 double la capacité sans aucun hyperstatisme ajouté. |
-| **2. Deux vérins + diviseur de débit** | Un bloc hydraulique répartit le débit à 1-2 % près | Acceptable. Coût du diviseur + réglage. |
-| **3. Deux vérins + barre de synchronisation mécanique** | Un arbre de torsion relie les deux côtés | Robuste mais lourd et encombrant. Utilisé sur les grandes tables. |
-
-**Conclusion à formuler en copie :**
-
-> *« Doubler le vérin double la capacité mais augmente l'hyperstatisme de 3 degrés, ce qui rend
-> le mécanisme sensible au moindre défaut de synchronisation. La solution la plus simple et la
-> plus fiable est d'augmenter le diamètre du vérin unique existant. Si l'encombrement l'interdit,
-> deux vérins sont envisageables **à condition impérative** d'installer un diviseur de débit ou
-> une synchronisation mécanique. »*
-
-> **Principe général à retenir : on n'ajoute jamais un actionneur en parallèle sans se demander
-> qui garantit leur synchronisme. Deux moteurs sur un même arbre, deux vérins sur un même
-> plateau, deux ressorts sur une même course — c'est toujours le même problème.**
+**Si la somme ne fait pas 6, il y a une erreur de comptage** — c'est le contrôle le plus rapide
+de toute la fiche, et il fonctionne pour n'importe quelle liaison.
 """,
         },
         {
-            "id": "6.2",
-            "titre": "Guidage en rotation : paliers et roulements",
-            "duree": "12 h",
-            "cours": """
-### 1. Les trois familles de solutions
+            "id": '6.2',
+            "titre": 'Construire un schéma cinématique',
+            "duree": '5 h',
+            "cours": """### 1. La méthode en trois temps
 
-| Solution | Principe | Charge | Vitesse | Frottement | Coût |
-|---|---|---|---|---|---|
-| **Contact direct** (arbre dans alésage) | Glissement métal/métal | Faible | Très faible | Élevé (µ ≈ 0,15) | Très bas |
-| **Palier lisse** (coussinet, bague) | Glissement sur matériau antifriction | Moyenne à forte | Faible à moyenne | Moyen (µ ≈ 0,05-0,1) | Bas |
-| **Roulement** | Roulement de billes/rouleaux | Forte | Élevée | **Très faible (µ ≈ 0,0015)** | Moyen |
+[[FIG:methode_schema]]
 
-### 2. Paliers lisses
+**Temps 1 — les classes d'équivalence.** On regroupe toutes les pièces qui n'ont **aucun mouvement
+relatif** entre elles.
 
-Le **coussinet** est une bague en matériau antifriction (bronze CuSn8, bronze fritté imprégné
-d'huile, PTFE, polyamide) **emmanchée serrée** dans le logement, l'arbre tournant **avec jeu**
-à l'intérieur.
+C'est l'étape qui simplifie tout : un étau de quinze pièces se ramène à **trois groupes**. La
+visserie, les rondelles, les clavettes et les goupilles disparaissent — elles ne servent qu'à
+réaliser un encastrement, donc à souder deux pièces en une seule classe.
 
-**Montage type :** logement **H7**, coussinet monté en **p6/r6** (serré), alésage du coussinet
-après montage en **H8** avec un arbre en **f7** (jeu).
+*Le critère est simple : si deux pièces bougent toujours ensemble, elles sont dans la même classe.*
 
-⚠️ **Point crucial : le coussinet se déforme au montage.** Un coussinet de Ø20 alésé à H8 avant
-montage se retrouvera à Ø19,95 après emmanchement serré. D'où deux stratégies :
-- **coussinet auto-lubrifiant calibré** : la déformation est prévue par le fabricant
-- **alésage après montage** : on rectifie le coussinet une fois en place (solution précise)
+**Temps 2 — le graphe des liaisons.** Un cercle par classe, un trait par liaison, avec le nom de
+la liaison et son axe. C'est un brouillon — mais il évite d'oublier une liaison, et il fait
+apparaître les boucles.
 
-**Critère de dimensionnement : la pression × vitesse (facteur PV)**
+**Temps 3 — le schéma.** On remplace chaque trait par le symbole normalisé, en respectant la
+**position relative réelle** des liaisons. Avec un repère, propre, et les classes numérotées.
 
-$$ p = \\frac{F}{d \\cdot L} \\qquad v = \\frac{\\pi d N}{60\\,000} \\qquad PV = p \\times v $$
+### 2. Les erreurs classiques
 
-Chaque matériau a un $PV_{adm}$ à ne pas dépasser (échauffement, fusion du polymère).
+1. **Faire apparaître la visserie** sur le schéma : elle fait partie d'une classe d'équivalence.
+2. **Confondre pivot et pivot glissant** : si la pièce peut aussi coulisser, ce n'est pas un pivot.
+3. **Compter 2 ddl pour l'hélicoïdale** : c'est 1, les deux mouvements sont liés.
+4. **Oublier de vérifier les ddl restants** : ils doivent correspondre aux mouvements réels du
+   mécanisme.
+5. **Bloquer deux fois le même mouvement** sans s'en rendre compte : c'est de l'hyperstatisme subi.
+6. **Poser une pièce sur quatre points** au lieu de trois.
+7. **Dessiner des formes** sur un schéma cinématique : il ne montre que des liaisons.
 
-### 3. Roulements : les types et leur choix
 
-| Type | Charge radiale | Charge axiale | Vitesse | Rotulage | Emploi |
-|---|---|---|---|---|---|
-| **Rigide à billes** (6xxx) | ++ | + | +++ | ~0,15° | **Le plus courant, 80 % des cas** |
-| Contact oblique (7xxx) | ++ | ++ (1 sens) | ++ | non | Broches, montage par paire |
-| **Rouleaux cylindriques** (NUxxx) | +++ | 0 | ++ | non | Fortes charges radiales |
-| **Rouleaux coniques** (3xxxx) | +++ | +++ | + | non | Roues de véhicule, montage en O ou X |
-| Butée à billes (5xxxx) | 0 | +++ | + | non | Charge axiale pure |
-| Rotule sur billes/rouleaux | ++ | + | + | **2-3°** | Défauts d'alignement importants |
-| Aiguilles | +++ | 0 | ++ | non | Encombrement radial minimal |
+### 3. À retenir
 
-**Désignation d'un roulement rigide à billes 6205 :**
-- **6** : série (rigide à billes)
-- **2** : série de largeur/diamètre (série légère)
-- **05** : $05 \\times 5 = \\mathbf{25\\ mm}$ d'alésage
-
-**Règle de l'alésage :** pour les 2 derniers chiffres ≥ 04, multiplier par 5.
-(00 = 10 mm, 01 = 12 mm, 02 = 15 mm, 03 = 17 mm, 04 = 20 mm, 05 = 25 mm…)
-
-### 4. La règle des charges — ce qui détermine les ajustements
-
-C'est **la** notion à maîtriser (déjà rencontrée en fiche 2.2) :
-
-| Situation | Bague concernée | Type de charge | Ajustement |
-|---|---|---|---|
-| Arbre tournant, charge fixe en direction | Bague **intérieure** | **Tournante** | **Serrée** (k6, m6) |
-| Arbre tournant, charge fixe en direction | Bague **extérieure** | **Fixe** | **Glissante** (H7) |
-| Alésage tournant (poulie folle), charge fixe | Bague **extérieure** | **Tournante** | **Serrée** (N7, P7) |
-| Alésage tournant, charge fixe | Bague **intérieure** | **Fixe** | **Glissante** (g6, h6) |
-
-**Mnémotechnique : la bague qui subit une charge TOURNANTE doit être SERRÉE.**
-Sinon elle « rampe » dans son logement et l'use.
-
-### 5. Montage à palier fixe / palier libre
-
-**Principe :** un seul palier assure le **positionnement axial** (palier fixe) ; l'autre laisse
-l'arbre **libre de dilater** (palier libre).
-
-| Palier | Rôle | Réalisation |
-|---|---|---|
-| **Fixe** | Bloque l'arbre axialement dans les deux sens | Bague intérieure ET extérieure épaulées + circlips |
-| **Libre** | Reprend la charge radiale seulement | Bague extérieure **libre de coulisser** dans son logement (ou roulement à rouleaux cylindriques) |
-
-**Pourquoi c'est indispensable :** un arbre en acier de 500 mm chauffé de 40 °C s'allonge de
-$$ \\Delta L = 11\\times10^{-6} \\times 500 \\times 40 = 0,22\\ \\mathrm{mm} $$
-Si les deux paliers étaient fixes, cette dilatation créerait un **effort axial de plusieurs
-tonnes** sur les roulements → destruction en quelques heures.
-
-**Deux dispositions classiques pour les roulements à contact oblique :**
-- **Montage en X** (directions de charge convergentes vers l'extérieur) : bon pour les arbres
-  courts, tolère la dilatation du carter
-- **Montage en O** (directions divergentes) : plus grand écartement des points d'application,
-  meilleure reprise des moments de basculement (roues de véhicule)
-
-### 6. Lubrification et étanchéité
-
-| Mode | Domaine | Remarque |
-|---|---|---|
-| **Graisse** | $n \\cdot d_m < 500\\,000$ | 90 % des cas. Remplir à **30-50 %** du volume libre (pas plus : échauffement) |
-| **Bain d'huile** | Vitesses élevées, forte charge | Niveau au centre de la bille la plus basse |
-| Brouillard d'huile | Très hautes vitesses | Broches de machine-outil |
-
-**Étanchéité :** joints à lèvres (type A ou AS), déflecteurs, chicanes, roulements étanches
-(2RS = 2 joints caoutchouc, ZZ = 2 flasques métalliques).
+- **6 ddl** : 3 translations + 3 rotations. Nommer une liaison, c'est compter ce qui reste.
+- Encastrement 0 · pivot 1 · glissière 1 · **hélicoïdale 1** · pivot glissant 2 · rotule 3.
+- Méthode : **classes d'équivalence → graphe → schéma**. La visserie n'apparaît jamais.
+- **Isostatique** = chaque mouvement supprimé une seule fois. L'hyperstatisme se paie en
+  tolérances et en déformations.
+- Mise en position : **règle 3-2-1**, qui correspond aux références A, B, C des plans.
+- Contrôle final : les mouvements restants doivent être exactement ceux du mécanisme réel.
 """,
             "formules": """
-**DIMENSIONNEMENT D'UN ROULEMENT — durée de vie**
+**La méthode en trois temps** — 1. identifier les **classes d'équivalence** (les groupes de
+pièces qui ne bougent pas les unes par rapport aux autres) · 2. identifier la **liaison** entre
+chaque classe · 3. tracer avec les **symboles normalisés**
 
-Durée de vie nominale $L_{10}$ (en **millions de tours**) :
+**Contrôle** — le schéma doit reproduire exactement les mouvements du mécanisme réel :
+ni plus, ni moins
 
-$$ \\boxed{L_{10} = \\left(\\frac{C}{P}\\right)^n} $$
-
-- $C$ : **charge dynamique de base** (donnée catalogue, en N)
-- $P$ : **charge dynamique équivalente** appliquée (N)
-- $n = 3$ pour les roulements à **billes**, $n = 10/3$ pour les roulements à **rouleaux**
-
-Durée de vie en **heures** :
-
-$$ \\boxed{L_{10h} = \\frac{10^6}{60 \\, N} \\left(\\frac{C}{P}\\right)^n} \\qquad N \\text{ en tr/min} $$
-
-**Charge dynamique équivalente** (roulement rigide à billes) :
-
-$$ P = X F_r + Y F_a $$
-
-Avec la règle simplifiée usuelle :
-- Si $\\dfrac{F_a}{F_r} \\le e$ : $X = 1$, $Y = 0$ → $P = F_r$
-- Si $\\dfrac{F_a}{F_r} > e$ : $X = 0,56$, $Y$ selon catalogue (1,2 à 2,3)
-
-$e \\approx 0,22$ à $0,44$ selon $F_a/C_0$.
-
-**Charge à appliquer pour un dimensionnement — durées usuelles**
-
-| Application | $L_{10h}$ visée |
-|---|---|
-| Électroménager | 1 000 à 2 000 h |
-| Machine-outil | 20 000 à 30 000 h |
-| Réducteur industriel (service continu) | 20 000 à 40 000 h |
-| Moteur électrique | 20 000 à 30 000 h |
-| Roue de véhicule | 5 000 à 10 000 h |
-
----
-
-**PALIERS LISSES — critère PV**
-
-$$ p = \\frac{F}{d \\times L} \\quad \\mathrm{[MPa]} \\qquad v = \\frac{\\pi \\, d \\, N}{60\\,000} \\quad \\mathrm{[m/s]} $$
-
-$$ \\boxed{PV = p \\times v \\le PV_{adm}} $$
-
-| Matériau du coussinet | $p_{max}$ (MPa) | $v_{max}$ (m/s) | $PV_{adm}$ (MPa·m/s) |
-|---|---|---|---|
-| Bronze CuSn8 | 25 | 8 | 1,8 |
-| Bronze fritté imprégné | 14 | 6 | 1,6 |
-| PTFE + bronze (bague composite) | 80 | 2 | 1,8 |
-| Polyamide PA6-6 | 10 | 3 | 0,10 |
-| POM | 14 | 3 | 0,14 |
-
-**Rapport L/d recommandé pour un palier lisse : 0,5 à 1,5** (au-delà, risque d'arc-boutement).
-
----
-
-**PUISSANCE PERDUE PAR FROTTEMENT**
-
-$$ P_{perdue} = \\mu \\cdot F \\cdot v \\qquad \\mathrm{[W]} $$
-
-Couple de frottement d'un roulement :
-$$ M_f = \\frac{\\mu \\cdot F \\cdot d}{2} \\qquad \\mathrm{[N \\cdot mm]} $$
-
-| Type de guidage | $\\mu$ |
-|---|---|
-| Roulement à billes | 0,0015 |
-| Roulement à rouleaux | 0,0018 |
-| Coussinet bronze lubrifié | 0,05 à 0,10 |
-| Acier sur acier sec | 0,15 à 0,20 |
-
----
-
-**DILATATION AXIALE À COMPENSER**
-
-$$ \\Delta L = \\alpha \\cdot L \\cdot \\Delta T $$
-
-**VITESSE LIMITE**
-
-$$ n \\cdot d_m \\le \\text{valeur limite} \\qquad d_m = \\frac{d + D}{2} $$
-
-| Lubrification | Limite $n \\cdot d_m$ (mm·tr/min) |
-|---|---|
-| Graisse | 500 000 |
-| Bain d'huile | 700 000 |
-| Brouillard d'huile | 1 500 000 |
+**Règle pratique** — une classe d'équivalence se repère en cherchant ce qui est **vissé, collé,
+serré ou emmanché** ensemble : tout cela ne forme qu'une seule pièce du point de vue cinématique
 """,
             "exemple": """
-**Cas industriel — Montage complet de l'arbre intermédiaire d'un réducteur**
 
-Un arbre intermédiaire porte deux pignons et tourne à **480 tr/min**. Les efforts d'engrènement
-donnent une charge radiale de **3 200 N** sur le palier gauche et **2 400 N** sur le palier
-droit, plus une charge axiale de **850 N** (denture hélicoïdale). Entraxe entre paliers :
-**280 mm**. Durée de vie visée : **25 000 h** (service continu 3×8).
+**L'énoncé.** Un étau comprend : le corps, le mors fixe vissé sur le corps, trois vis de fixation,
+la vis de manœuvre avec sa poignée et sa goupille, l'écrou solidaire du mors mobile, et le mors
+mobile guidé dans une rainure du corps.
 
-**ÉTAPE 1 — Choix de l'architecture**
+**Étape 1 — Les classes d'équivalence**
 
-| Palier | Rôle | Choix |
+| Classe | Pièces | Justification |
 |---|---|---|
-| **Gauche** | **FIXE** — reprend la charge radiale de 3 200 N **et** toute la charge axiale de 850 N | Roulement **rigide à billes 6208**, épaulé des deux côtés (arbre + carter) |
-| **Droit** | **LIBRE** — charge radiale seule, laisse dilater | Roulement **rigide à billes 6207**, bague extérieure **libre de coulisser** dans son logement |
+| **S1** | corps + mors fixe + 3 vis | aucune ne bouge par rapport aux autres |
+| **S2** | vis de manœuvre + poignée + goupille | la goupille les rend solidaires |
+| **S3** | mors mobile + écrou | l'écrou est emmanché dans le mors |
 
-*Pourquoi le palier fixe est celui le plus chargé radialement ?* Ce n'est pas obligatoire, mais
-c'est cohérent : on place le palier fixe **côté entraînement**, là où les efforts sont maîtrisés
-et où l'accès au montage est le plus facile.
+Quinze pièces → **trois classes**.
 
-**ÉTAPE 2 — Charge équivalente sur le palier fixe (6208)**
+**Étape 2 — Les liaisons, une par une**
 
-Données catalogue du 6208 : $C = 30\\,700$ N, $C_0 = 19\\,000$ N.
+- **S1/S2** : la vis tourne dans le corps, mais un épaulement et une butée l'empêchent de se
+  déplacer axialement → il reste **une rotation** → **liaison PIVOT d'axe x**.
+- **S1/S3** : le mors mobile ne peut que coulisser dans la rainure → **une translation** →
+  **liaison GLISSIÈRE d'axe x**.
+- **S2/S3** : la vis tourne dans l'écrou et le fait avancer ; rotation et translation sont liées
+  par le pas → **liaison HÉLICOÏDALE d'axe x**.
 
-$$ \\frac{F_a}{C_0} = \\frac{850}{19\\,000} = 0,045 \\;\\Rightarrow\\; e \\approx 0,26 $$
+**Étape 3 — Le graphe**
 
-$$ \\frac{F_a}{F_r} = \\frac{850}{3\\,200} = 0,266 \\;>\\; e = 0,26 $$
+Un triangle S1-S2-S3, chaque côté portant sa liaison. **La boucle est fermée** : c'est normal, un
+mécanisme qui fonctionne forme toujours une chaîne fermée.
 
-Donc $X = 0,56$ et $Y \\approx 1,71$ :
+**Étape 4 — La lecture du schéma**
 
-$$ P = 0,56 \\times 3\\,200 + 1,71 \\times 850 = 1\\,792 + 1\\,454 = \\mathbf{3\\,246\\ N} $$
+La rotation de la vis (pivot) est transformée en translation du mors (glissière) par la liaison
+hélicoïdale. **C'est un transformateur de mouvement.**
 
-**ÉTAPE 3 — Durée de vie**
+**Étape 5 — Le contrôle de bon sens**
 
-$$ L_{10h} = \\frac{10^6}{60 \\times 480}\\left(\\frac{30\\,700}{3\\,246}\\right)^3 = 34,72 \\times (9,458)^3 $$
+Combien de mouvements indépendants reste-t-il ? Un seul : on tourne la poignée, le mors avance.
+C'est bien ce que fait un étau. Si le schéma laissait deux mouvements indépendants, il serait faux.
 
-$$ L_{10h} = 34,72 \\times 846,1 = \\mathbf{29\\,378\\ heures} \\quad ✔️ \\; (>25\\,000\\ h) $$
-
-**ÉTAPE 4 — Ajustements (application de la règle des charges)**
-
-L'arbre tourne, la charge (efforts d'engrènement) est **fixe en direction** :
-
-| Bague | Charge | Ajustement | Cotes (Ø40, tranche 30-50) |
-|---|---|---|---|
-| Intérieure | **tournante** | **k6** serré | IT6 = 16 µm, ei = +2 → **40,002 / 40,018** |
-| Extérieure | **fixe** | **H7** glissant | IT7 = 25 µm → **80,000 / 80,025** (Ø80) |
-
-**ÉTAPE 5 — Vérification de la dilatation**
-
-Arbre en acier, longueur entre paliers 280 mm, échauffement estimé 35 °C :
-
-$$ \\Delta L = 11\\times10^{-6} \\times 280 \\times 35 = \\mathbf{0,108\\ mm} $$
-
-Le palier libre doit permettre **au moins 0,11 mm** de coulissement. Avec le jeu H7/h6 du
-logement (0 à 44 µm) plus une longueur de portée suffisante, c'est assuré. ✔️
-
-**ÉTAPE 6 — Montage et lubrification**
-
-- **Ordre de montage :** chauffer les bagues intérieures à 80 °C (jamais plus de 120 °C : le
-  revenu du 100Cr6 est à 150 °C), les emmancher, laisser refroidir, puis engager l'arbre dans
-  le carter.
-- ⚠️ **Ne jamais frapper sur la bague extérieure pour monter la bague intérieure** — l'effort
-  transiterait par les billes et **matèrait les pistes** (marques de brinelling). Le roulement
-  serait détruit avant sa première rotation.
-- **Lubrification :** graisse, vérification $n \\cdot d_m = 480 \\times \\dfrac{40+80}{2} = 28\\,800 \\ll 500\\,000$ ✔️
-- **Remplissage :** 30 à 50 % du volume libre du logement.
 """,
             "exercice": """
-**Exercice type examen — Choix et vérification d'un guidage en rotation**
+### Exercice — Schématiser un mécanisme simple
 
-**PARTIE A — Roulement d'un tambour de convoyeur**
+Une **chape** est fixée au bâti par quatre vis. Un **axe** traverse la chape et porte une
+**biellette** qui peut tourner autour de cet axe. L'axe est immobilisé en rotation dans la chape
+par une goupille.
 
-Un tambour d'entraînement de convoyeur à bande tourne à **N = 65 tr/min**. Il est supporté par
-**deux roulements identiques**. La charge totale (poids du tambour + tension de la bande) vaut
-**F = 14 000 N**, répartie **également** sur les deux paliers. Aucune charge axiale.
-L'arbre du tambour a un diamètre de **50 mm** aux portées.
+**1.** Combien de **classes d'équivalence** identifiez-vous ? Listez les pièces de chacune.
 
-*Données catalogue :*
-| Roulement | $d$ | $D$ | $C$ (N) | $C_0$ (N) |
-|---|---|---|---|---|
-| 6210 | 50 | 90 | 35 100 | 23 200 |
-| 6310 | 50 | 110 | 65 000 | 38 000 |
-| NU210 (rouleaux) | 50 | 90 | 64 400 | 54 000 |
+**2.** Justifiez pourquoi l'axe n'appartient pas à la même classe que la biellette.
 
-Durée de vie exigée : **50 000 heures** (installation industrielle, service continu).
+**3.** Quelle **liaison** relie les deux classes ? Combien de ddl laisse-t-elle ?
 
-1. Calculer la charge radiale sur chaque palier et la charge équivalente $P$.
-2. Calculer la durée de vie $L_{10h}$ du **6210**. Conclure.
-3. Faire de même pour le **6310** et le **NU210**. Établir un tableau comparatif.
-4. Recommander une solution en tenant compte de l'encombrement, du coût et de la fonction.
-5. Le tambour tourne dans un carter fixe, la charge est fixe en direction et l'arbre tourne.
-   Préciser les ajustements des deux bagues et justifier par la règle des charges.
-6. Vérifier la vitesse limite du roulement retenu (lubrification à la graisse).
+**4.** La chape appartient-elle à une classe distincte du bâti ? Pourquoi ?
 
-**PARTIE B — Palier lisse d'un galet de guidage**
-
-Un galet de Ø80 tourne sur un axe fixe Ø25 via un **coussinet en bronze fritté imprégné**
-($p_{max} = 14$ MPa, $v_{max} = 6$ m/s, $PV_{adm} = 1,6$ MPa·m/s). Le galet subit une charge
-radiale de **1 800 N** et roule à **7 m/min** sur un rail.
-
-7. Calculer la vitesse de rotation du galet, puis la vitesse de glissement dans le coussinet.
-8. Déterminer la longueur minimale du coussinet pour respecter $p_{max}$, puis $PV_{adm}$.
-   Quelle condition est dimensionnante ?
-9. Vérifier le rapport $L/d$ et conclure sur la validité du choix.
+**5.** Combien de symboles votre schéma cinématique comportera-t-il au minimum ?
 """,
             "corrige": """
-**PARTIE A — ROULEMENT DE TAMBOUR**
+### Corrigé, en six temps
 
-**1. Charge par palier et charge équivalente**
+#### 1. Ce que dit l'énoncé
 
-$$ F_r = \\frac{F}{2} = \\frac{14\\,000}{2} = \\mathbf{7\\,000\\ N\\ \\text{par palier}} $$
+Quatre pièces citées : bâti, chape, axe, biellette. Deux mots sont décisifs : la chape est
+**vissée** au bâti, et l'axe est **goupillé** dans la chape. Ces deux mots disent que ces pièces
+ne bougent pas les unes par rapport aux autres.
 
-Aucune charge axiale ($F_a = 0$), donc $X = 1$ et $Y = 0$ :
+#### 2. Quelle règle, et pourquoi
 
-$$ P = X F_r + Y F_a = 1 \\times 7\\,000 + 0 = \\mathbf{7\\,000\\ N} $$
+**La méthode en trois temps** : classes d'équivalence → liaisons → tracé.
 
----
+Et la règle pratique qui résout la question 1 : **tout ce qui est vissé, collé, serré ou goupillé
+ensemble forme UNE SEULE pièce du point de vue cinématique**. Le nombre de pièces au sens de la
+nomenclature n'a aucune importance ici.
 
-**2. Durée de vie du 6210**
+#### 3. Les conversions
 
-Roulement à **billes** → exposant $n = 3$.
+Aucune conversion numérique. **La « conversion » est celle d'une liste de pièces en classes
+d'équivalence** — c'est le geste qui simplifie le mécanisme avant tout tracé.
 
-$$ L_{10h} = \\frac{10^6}{60 N}\\left(\\frac{C}{P}\\right)^3 = \\frac{10^6}{60 \\times 65}\\left(\\frac{35\\,100}{7\\,000}\\right)^3 $$
+#### 4. Le remplacement
 
-$$ \\frac{10^6}{3\\,900} = 256,4 \\qquad \\frac{35\\,100}{7\\,000} = 5,014 \\qquad 5,014^3 = 126,1 $$
+Classe A = bâti + chape (vissée) + axe (goupillé dans la chape)
+Classe B = biellette
 
-$$ L_{10h} = 256,4 \\times 126,1 = \\mathbf{32\\,332\\ heures} $$
+liaison entre A et B : la biellette tourne autour de l'axe → 1 rotation restante
 
-$$ 32\\,332\\ \\mathrm{h} \\;<\\; 50\\,000\\ \\mathrm{h} \\quad ❌ \\;\\; \\textbf{INSUFFISANT} $$
+#### 5. Le calcul
 
-*Le 6210 tiendrait environ 3,7 ans en service continu, contre les 5,7 ans exigés.*
+**1.** **Deux classes d'équivalence** :
+- **classe A** : bâti + chape + axe ;
+- **classe B** : la biellette seule.
 
----
+**2.** L'axe est **goupillé dans la chape** : il ne peut ni tourner ni coulisser par rapport à
+elle. Il fait donc partie de la même classe que la chape. C'est la biellette qui tourne **autour
+de** l'axe, pas l'axe qui tourne dans la chape.
 
-**3. Comparaison des trois solutions**
+**3.** Une **liaison pivot**, d'axe celui de l'axe goupillé. Elle laisse **1 ddl** (une rotation)
+et en supprime 5.
 
-**6310** (billes, $n = 3$) :
-$$ \\frac{65\\,000}{7\\,000} = 9,286 \\qquad 9,286^3 = 800,7 $$
-$$ L_{10h} = 256,4 \\times 800,7 = \\mathbf{205\\,300\\ heures} \\quad ✔️ $$
+**4.** **Non.** La chape est fixée au bâti par quatre vis : c'est un **encastrement**, donc 0 ddl
+entre elles. Deux pièces liées par un encastrement appartiennent toujours à la **même** classe
+d'équivalence.
 
-**NU210** (rouleaux, $n = 10/3$) :
-$$ \\frac{64\\,400}{7\\,000} = 9,200 \\qquad 9,200^{10/3} = e^{(10/3) \\times \\ln 9,2} = e^{3,333 \\times 2,219} = e^{7,397} = 1\\,631 $$
-$$ L_{10h} = 256,4 \\times 1\\,631 = \\mathbf{418\\,200\\ heures} \\quad ✔️ $$
+**5.** Le schéma comportera au minimum **un seul symbole de liaison** (le pivot), reliant les deux
+classes, plus le symbole du bâti. Quatre pièces réelles se ramènent à **deux classes et une
+liaison**.
 
-**Tableau comparatif :**
+#### 6. La vérification
 
-| | **6210** | **6310** | **NU210** |
-|---|---|---|---|
-| Type | Billes | Billes | Rouleaux cylindriques |
-| $D$ extérieur | 90 mm | **110 mm** | 90 mm |
-| $C$ | 35 100 N | 65 000 N | 64 400 N |
-| $L_{10h}$ | **32 332 h** ❌ | **205 300 h** ✔️ | **418 200 h** ✔️ |
-| Marge / 50 000 h | −35 % | ×4,1 | ×8,4 |
-| Charge axiale supportée | Oui (modérée) | Oui (modérée) | **NON** |
-| Encombrement radial | Compact | **+22 %** | Compact |
-| Coût relatif | 1 | 1,8 | 2,4 |
+**Le contrôle qui vaut pour tout schéma cinématique :** le schéma reproduit-il exactement les
+mouvements du mécanisme réel, ni plus ni moins ?
 
----
+Ici, le mécanisme réel permet **une seule chose** : faire pivoter la biellette. Le schéma montre
+**un seul pivot**. La correspondance est exacte.
 
-**4. Recommandation**
-
-$$ \\boxed{\\textbf{Solution retenue : 6310}} $$
-
-**Justification :**
-
-| Critère | Analyse |
-|---|---|
-| **Durée de vie** | 205 300 h = **4,1 fois** l'exigence. Marge confortable pour absorber les surcharges de démarrage et les variations de tension de bande. |
-| **Charge axiale** | Le **NU210 n'en supporte AUCUNE**. Or un convoyeur subit inévitablement des efforts axiaux parasites : bande légèrement désalignée, tambour non parfaitement perpendiculaire, dilatation. **C'est rédhibitoire** — le NU210 est écarté malgré ses performances. |
-| **Encombrement** | Le Ø110 au lieu de Ø90 impose un palier plus gros, mais sur un convoyeur industriel l'espace n'est pas critique. |
-| **Coût** | +80 % sur le roulement, mais le roulement représente une part faible du coût du tambour. À comparer au coût d'un **arrêt de production** pour changement prématuré. |
-| **Standardisation** | Le 6310 est un roulement très courant, disponible partout. |
-
-**Analyse économique décisive :** un remplacement de roulement sur convoyeur immobilise la ligne
-4 à 8 heures. Sur 15 ans, le 6210 imposerait **1 à 2 remplacements** supplémentaires. Le
-surcoût initial de quelques dizaines d'euros est sans commune mesure.
-
-*Si l'encombrement radial était vraiment critique, la solution serait le **NU210 associé à un
-roulement rigide** sur l'autre palier pour reprendre l'axial (montage fixe/libre classique).*
-
----
-
-**5. Ajustements des bagues**
-
-Configuration : **arbre tournant**, **charge fixe en direction** (le poids et la tension de bande
-ne tournent pas).
-
-| Bague | Type de charge subie | Raisonnement | Ajustement |
-|---|---|---|---|
-| **Intérieure** (sur l'arbre Ø50) | **TOURNANTE** — chaque point de la bague passe successivement sous la zone chargée | Sans serrage, elle « ramperait » sur l'arbre et l'userait | **Ø50 k6** → serré |
-| **Extérieure** (dans le carter Ø110) | **FIXE** — la zone chargée reste toujours la même | Pas de tendance au rampement ; on veut pouvoir démonter et laisser dilater | **Ø110 H7** → glissant |
-
-**Cotes calculées :**
-
-*Arbre Ø50 k6* — tranche 30-50 : IT6 = 16 µm ; $ei = +2$ µm → $es = +18$ µm
-$$ \\boxed{50,002 \\;\\text{à}\\; 50,018\\ \\mathrm{mm}} $$
-
-*Alésage Ø110 H7* — tranche 80-120 : IT7 = 35 µm ; $EI = 0$ → $ES = +35$ µm
-$$ \\boxed{110,000 \\;\\text{à}\\; 110,035\\ \\mathrm{mm}} $$
-
-**Énoncé de la règle :** *« La bague soumise à une charge tournante doit être montée serrée ;
-la bague soumise à une charge fixe peut être montée glissante. »*
-
----
-
-**6. Vérification de la vitesse limite (graisse)**
-
-Diamètre moyen du 6310 :
-$$ d_m = \\frac{d + D}{2} = \\frac{50 + 110}{2} = 80\\ \\mathrm{mm} $$
-
-$$ n \\cdot d_m = 65 \\times 80 = \\mathbf{5\\,200\\ mm \\cdot tr/min} $$
-
-$$ 5\\,200 \\;\\ll\\; 500\\,000 \\quad ✔️ \\;\\; \\textbf{TRÈS LARGEMENT VÉRIFIÉ} $$
-
-Le rapport est de **96 fois inférieur** à la limite. La lubrification à la graisse est
-parfaitement adaptée — c'est d'ailleurs le cas de toutes les applications lentes.
-
-*Conséquence pratique :* on peut utiliser des **roulements étanches 6310-2RS** (graissés à vie),
-ce qui supprime le graisseur et la maintenance périodique. Recommandation à formuler au BE.
-
----
-
-**PARTIE B — PALIER LISSE DE GALET**
-
-**7. Vitesses**
-
-**a) Vitesse de rotation du galet**
-
-Le galet Ø80 roule sans glisser à 7 m/min sur le rail :
-
-$$ v_{lineaire} = 7\\ \\mathrm{m/min} = \\frac{7}{60} = 0,1167\\ \\mathrm{m/s} $$
-
-$$ N = \\frac{v \\times 1\\,000 \\times 60}{\\pi \\times D_{galet}} = \\frac{7 \\times 1\\,000}{\\pi \\times 80} = \\frac{7\\,000}{251,3} = \\mathbf{27,9\\ tr/min} $$
-
-**b) Vitesse de glissement DANS le coussinet**
-
-⚠️ **Le point clé : la vitesse dans le coussinet se calcule sur le Ø25 de l'axe, PAS sur le Ø80
-du galet.** C'est l'erreur classique.
-
-$$ v = \\frac{\\pi \\, d \\, N}{60\\,000} = \\frac{\\pi \\times 25 \\times 27,9}{60\\,000} = \\frac{2\\,191}{60\\,000} $$
-
-$$ \\boxed{v = 0,0365\\ \\mathrm{m/s}} $$
-
-*La vitesse de glissement est 3,2 fois plus faible que la vitesse de roulement, dans le rapport
-des diamètres $25/80$. C'est tout l'intérêt d'un galet de grand diamètre sur petit axe.*
-
----
-
-**8. Longueur minimale du coussinet**
-
-**a) Condition de PRESSION** ($p \\le p_{max} = 14$ MPa)
-
-$$ p = \\frac{F}{d \\times L} \\le 14 \\;\\Longrightarrow\\; L \\ge \\frac{F}{d \\times p_{max}} = \\frac{1\\,800}{25 \\times 14} $$
-
-$$ L \\ge \\frac{1\\,800}{350} = \\mathbf{5,14\\ mm} $$
-
-**b) Condition de PV** ($PV \\le PV_{adm} = 1,6$ MPa·m/s)
-
-$$ PV = p \\times v = \\frac{F}{d \\times L} \\times v \\le 1,6 $$
-
-$$ L \\ge \\frac{F \\times v}{d \\times PV_{adm}} = \\frac{1\\,800 \\times 0,0365}{25 \\times 1,6} = \\frac{65,7}{40} $$
-
-$$ L \\ge \\mathbf{1,64\\ mm} $$
-
-**c) Condition dimensionnante**
-
-| Critère | $L_{min}$ |
-|---|---|
-| **Pression** $p_{max}$ | **5,14 mm** ⬅️ **DIMENSIONNANTE** |
-| Facteur $PV$ | 1,64 mm |
-
-$$ \\boxed{\\textbf{C'est la PRESSION qui dimensionne le coussinet}} $$
-
-**Explication physique :** la vitesse de glissement est **très faible** (0,0365 m/s, soit
-2,2 m/min). Le facteur $PV$ traduit l'**échauffement** par frottement ; à cette vitesse, la
-chaleur dégagée est négligeable. En revanche, la charge de 1 800 N sur une petite surface
-génère une pression importante → risque d'**écrasement (matage)** du bronze.
-
-*Règle générale : à basse vitesse, c'est la pression qui commande ; à haute vitesse, c'est le PV.*
-
----
-
-**9. Vérification du rapport L/d et conclusion**
-
-Le calcul donne $L_{min} = 5,14$ mm, mais il faut vérifier la **règle de proportion** :
-
-$$ \\frac{L}{d} = 0,5 \\;\\text{à}\\; 1,5 \\quad \\Longrightarrow \\quad L = 12,5 \\;\\text{à}\\; 37,5\\ \\mathrm{mm} $$
-
-$$ \\text{Avec } L = 5,14 : \\quad \\frac{L}{d} = \\frac{5,14}{25} = \\mathbf{0,21} \\;<\\; 0,5 \\quad ❌ $$
-
-**Le coussinet calculé est TROP COURT au regard du rapport L/d.**
-
-**Pourquoi c'est un problème :**
-
-| Risque | Explication |
-|---|---|
-| **Arc-boutement / basculement** | Un coussinet trop court ne guide pas : le galet peut basculer sur l'axe (« coincement en biais »), comme un tiroir mal guidé |
-| **Pression de bord** | Le moindre défaut de perpendicularité concentre la charge sur les arêtes du coussinet → matage local très supérieur au calcul moyen |
-| **Fragilité au montage** | Une bague de 5 mm sur Ø25 est difficile à emmancher droite |
-
-**Longueur retenue :**
-
-$$ \\boxed{L = 20\\ \\mathrm{mm} \\;\\Rightarrow\\; \\frac{L}{d} = \\frac{20}{25} = 0,8 \\quad ✔️} $$
-
-**Vérifications finales avec L = 20 mm :**
-
-$$ p = \\frac{1\\,800}{25 \\times 20} = \\mathbf{3,6\\ MPa} \\;\\le\\; 14\\ \\mathrm{MPa} \\quad ✔️ \\;(\\text{coefficient } 3,9) $$
-
-$$ v = 0,0365\\ \\mathrm{m/s} \\;\\le\\; 6\\ \\mathrm{m/s} \\quad ✔️ \\;(\\text{coefficient } 164) $$
-
-$$ PV = 3,6 \\times 0,0365 = \\mathbf{0,131\\ MPa\\cdot m/s} \\;\\le\\; 1,6 \\quad ✔️ \\;(\\text{coefficient } 12) $$
-
-**CONCLUSION :**
-
-Le choix d'un **coussinet en bronze fritté imprégné Ø25 × Ø31 × 20** (dimensions normalisées
-courantes) est **parfaitement validé**, avec des marges très confortables sur les trois critères.
-
-**Ce que l'exercice enseigne — la leçon centrale :**
-
-> **Un calcul de RDM ou de tribologie donne un MINIMUM, jamais une dimension de plan.**
-> Ici, le calcul de pression autorise 5,14 mm, mais les règles de proportion imposent 20 mm.
-> Les règles empiriques (L/d, épaisseur minimale, diamètres normalisés) **encadrent** toujours
-> le résultat du calcul. Un technicien qui ne retiendrait que le calcul concevrait une pièce
-> qui ne fonctionne pas.
-
-*Recommandation complémentaire :* prévoir un **jeu de fonctionnement** entre axe et coussinet
-de l'ordre de **H8/f7** (soit 20 à 74 µm sur Ø25), et un **épaulement ou circlips** pour
-l'immobilisation axiale du galet.
+**Le piège évité** : dessiner quatre symboles parce qu'il y a quatre pièces. Un schéma
+cinématique ne représente pas les pièces, il représente les **mouvements** — c'est toute la
+différence avec un dessin d'ensemble.
 """,
         },
         {
-            "id": "6.3",
-            "titre": "Guidage en translation, assemblages et transmission de puissance",
-            "duree": "12 h",
-            "cours": """
-### 1. Guidage en translation
+            "id": '6.3',
+            "titre": 'Isostatisme, hyperstatisme et mise en position',
+            "duree": '5 h',
+            "cours": """### 1. Isostatique ou hyperstatique : le point qui compte vraiment
 
-**Principe :** ne laisser qu'**un seul degré de liberté**, la translation selon un axe.
+Un montage est **isostatique** quand chaque mouvement est supprimé **une seule fois**. Il est
+**hyperstatique** quand plusieurs liaisons suppriment le même mouvement.
 
-| Solution | Précision | Charge | Frottement | Coût |
-|---|---|---|---|---|
-| Glissière prismatique (queue d'aronde) | ++ | +++ | Élevé | Moyen |
-| Arbres cylindriques + douilles à billes | ++ | + | Très faible | Moyen |
-| **Rail à billes / patins (guidage linéaire)** | +++ | ++ | Très faible | Élevé |
-| Glissière à galets | + | ++ | Faible | Bas |
-| Cylindre + clavette (anti-rotation) | + | + | Moyen | Bas |
+[[FIG:isostatique_hyperstatique]]
 
-**Le problème de l'arc-boutement** — phénomène à comprendre absolument :
+**Pourquoi c'est un vrai problème, et pas une subtilité théorique :**
 
-Quand l'effort moteur est appliqué **loin** de la glissière (grand porte-à-faux), le coulisseau
-tend à se coincer. La condition de non-arc-boutement s'écrit :
+- il faut des **tolérances beaucoup plus serrées** pour que les pièces s'assemblent quand même —
+  donc des pièces plus chères (fiche 2.1) ;
+- les pièces se **contraignent entre elles** : elles se déforment, forcent, chauffent ;
+- **la dilatation n'est plus absorbée** : c'est le grippage du montage à deux paliers bloqués.
 
-$$ \\frac{L_{guidage}}{d_{porte-à-faux}} > 2\\mu $$
+**La parade classique** consiste à remplacer une liaison par une liaison à **moins de contacts** :
+deux paliers dont un libre axialement, un roulement à rotule sur un arbre long, un appui ponctuel
+plutôt qu'un appui plan.
 
-**Règle pratique : $L_{guidage} \\ge 1,5 \\times$ le porte-à-faux.** Un coulisseau court avec un
-grand bras de levier se bloquera systématiquement, quelle que soit la force appliquée.
-C'est le principe du **serre-joint** — qu'on utilise volontairement dans ce cas.
+**Une nuance importante.** L'hyperstatisme n'est pas interdit. Il est parfois voulu, pour la
+rigidité — un bâti de machine-outil est massivement hyperstatique, et c'est ce qui le rend précis.
+Mais il doit être **choisi et assumé**, jamais subi par ignorance : il se paie alors en tolérances,
+en usinage et en montage.
 
-### 2. Assemblages démontables : la visserie
+### 2. La mise en position isostatique : la règle 3-2-1
 
-**Classes de qualité (ISO 898-1)** — désignation à deux nombres, ex. **8.8** :
-- Premier nombre × 100 = $R_m$ en MPa → **800 MPa**
-- Produit des deux × 10 = $R_e$ en MPa → $8 \\times 8 \\times 10 = \\mathbf{640}$ MPa
+Pour poser une pièce de façon parfaitement définie — en montage d'usinage comme en conception —
+on supprime les six degrés de liberté avec **six points d'appui**, répartis ainsi :
 
-| Classe | $R_m$ | $R_e$ | Emploi |
-|---|---|---|---|
-| 4.6 | 400 | 240 | Charpente légère |
-| **8.8** | 800 | 640 | **Mécanique générale — le standard** |
-| **10.9** | 1000 | 900 | **Assemblages fortement sollicités** |
-| 12.9 | 1200 | 1080 | Haute performance, moteur |
-
-**Le principe fondamental de l'assemblage vissé :**
-
-> **Une vis ne doit JAMAIS travailler en cisaillement.**
-> Elle sert à créer une **précontrainte axiale** qui plaque les pièces l'une contre l'autre.
-> C'est l'**adhérence** entre les pièces qui transmet l'effort tangentiel.
-
-Si l'effort tangentiel dépasse l'adhérence, on ajoute des **pions de centrage** ou des
-**goupilles** — jamais on ne compte sur les vis en cisaillement.
-
-**Précontrainte et couple de serrage :**
-
-$$ C = K \\cdot F_0 \\cdot d $$
-
-avec $K \\approx 0,20$ (acier non lubrifié), $F_0$ la précontrainte visée
-(typiquement $0,7 \\times R_e \\times A_s$), $d$ le diamètre nominal.
-
-**Freinage :** rondelle élastique (Grower — peu efficace), rondelle éventail, écrou Nylstop,
-frein filet chimique (Loctite), goupille, écrou à créneaux, contre-écrou.
-
-### 3. Assemblages arbre-moyeu
-
-| Solution | Couple transmis | Démontable | Centrage | Remarque |
-|---|---|---|---|---|
-| **Clavette parallèle** | ++ | ✅ | Non (jeu latéral) | Le plus courant. Affaiblit l'arbre ($K_t \\approx 2$) |
-| Cannelures | +++ | ✅ | ✅ | Fort couple, coûteux |
-| **Frettage** (H7/s6, u6) | +++ | ❌ | ✅ | Pas d'entaille → **meilleure tenue en fatigue** |
-| Moyeu conique / anneaux de serrage | +++ | ✅ | ✅ | Solution moderne, sans entaille |
-| Goupille | + | ✅ | ✅ | Faible couple, positionnement |
-| Vis de pression | + | ✅ | Non | Marque l'arbre |
-
-**Dimensionnement d'une clavette parallèle** — deux vérifications :
-- **Matage** sur les flancs : $p = \\dfrac{2 M_t}{d \\cdot L \\cdot (h/2)} \\le p_{adm}$
-- **Cisaillement** : $\\tau = \\dfrac{2 M_t}{d \\cdot L \\cdot b} \\le R_{pg}$
-
-Le **matage est presque toujours dimensionnant**.
-
-### 4. Transmission de puissance
-
-| Solution | Rapport | Rendement | Distance | Remarque |
-|---|---|---|---|---|
-| **Engrenage droit** | jusqu'à 1:8 | 0,96-0,98 | Courte | Bruyant à haute vitesse |
-| **Engrenage hélicoïdal** | jusqu'à 1:8 | 0,96-0,98 | Courte | Silencieux, mais **effort axial** |
-| Roue et vis sans fin | jusqu'à 1:100 | **0,5-0,8** | Courte | Compact, souvent **irréversible** |
-| **Courroie crantée** | jusqu'à 1:8 | 0,95-0,98 | Moyenne | Pas de glissement, silencieux |
-| Courroie trapézoïdale | jusqu'à 1:8 | 0,92-0,96 | Moyenne | Glissement possible = sécurité |
-| **Chaîne** | jusqu'à 1:7 | 0,95-0,98 | Moyenne | Fort couple, bruyante, lubrification |
-
-**Relations d'engrenage — à connaître par cœur :**
-
-$$ m = \\frac{d}{Z} \\qquad d = m Z \\qquad \\text{entraxe } a = \\frac{d_1 + d_2}{2} = \\frac{m(Z_1 + Z_2)}{2} $$
-
-**Rapport de transmission :**
-$$ i = \\frac{N_{sortie}}{N_{entrée}} = \\frac{Z_{menante}}{Z_{menée}} = \\frac{d_{menante}}{d_{menée}} $$
-
-Pour un train à plusieurs étages, les rapports se **multiplient**.
-
-### 5. Étanchéité
-
-| Type | Solution | Domaine |
+| Face | Points | Ce qu'ils suppriment |
 |---|---|---|
-| **Statique** | Joint plat, joint torique, silicone | Plans de joint, brides |
-| **Dynamique en rotation** | Joint à lèvre (type A/AS), garniture mécanique | Sortie d'arbre |
-| **Dynamique en translation** | Joint torique, joint à lèvre, racleur | Tige de vérin |
-| Sans contact | Chicane, déflecteur, labyrinthe | Vitesses élevées |
+| face principale | **3** | une translation et deux rotations |
+| face latérale | **2** | une translation et une rotation |
+| dernière face | **1** | la dernière translation |
 
-**Le joint à lèvre :** lèvre orientée **vers le fluide à retenir**, ressort côté huile.
-Exige un état de surface **Ra 0,2 à 0,8**, sans stries hélicoïdales, dureté ≥ 45 HRC si
-service continu.
+**Pourquoi trois et pas quatre sur la face principale ?** Parce qu'un plan est défini par trois
+points. Avec un quatrième, la pièce **bascule** : elle s'appuie sur trois d'entre eux, mais
+lesquels dépend du défaut de planéité de chaque pièce. La position varie donc d'une pièce à
+l'autre, et les cotes usinées dispersent — sans que la machine ni l'outil ne soient en cause.
+
+*C'est exactement le problème du meuble bancal à quatre pieds. Et c'est pourquoi les montages
+d'usinage sont conçus en 3-2-1, avec des appuis réglables.*
+
+**Le lien avec les tolérances géométriques :** les références A, B, C d'un cadre GPS (fiche 2.3)
+correspondent précisément à ces trois faces, dans cet ordre. Le plan et le montage de contrôle
+parlent alors le même langage.
+
+### 3. Les erreurs classiques
+
+1. **Faire apparaître la visserie** sur le schéma : elle fait partie d'une classe d'équivalence.
+2. **Confondre pivot et pivot glissant** : si la pièce peut aussi coulisser, ce n'est pas un pivot.
+3. **Compter 2 ddl pour l'hélicoïdale** : c'est 1, les deux mouvements sont liés.
+4. **Oublier de vérifier les ddl restants** : ils doivent correspondre aux mouvements réels du
+   mécanisme.
+5. **Bloquer deux fois le même mouvement** sans s'en rendre compte : c'est de l'hyperstatisme subi.
+6. **Poser une pièce sur quatre points** au lieu de trois.
+7. **Dessiner des formes** sur un schéma cinématique : il ne montre que des liaisons.
+
+
+### 4. À retenir
+
+- **6 ddl** : 3 translations + 3 rotations. Nommer une liaison, c'est compter ce qui reste.
+- Encastrement 0 · pivot 1 · glissière 1 · **hélicoïdale 1** · pivot glissant 2 · rotule 3.
+- Méthode : **classes d'équivalence → graphe → schéma**. La visserie n'apparaît jamais.
+- **Isostatique** = chaque mouvement supprimé une seule fois. L'hyperstatisme se paie en
+  tolérances et en déformations.
+- Mise en position : **règle 3-2-1**, qui correspond aux références A, B, C des plans.
+- Contrôle final : les mouvements restants doivent être exactement ceux du mécanisme réel.
 """,
             "formules": """
-**VISSERIE**
+**Isostatique** — chaque mouvement bloqué **une seule fois** · montage sans contrainte interne,
+mais exige des pièces bien positionnées
 
-Section résistante d'une vis :
-$$ A_s = \\frac{\\pi}{4}\\left(\\frac{d_2 + d_3}{2}\\right)^2 $$
+**Hyperstatique** — un mouvement bloqué **plusieurs fois** · plus rigide, mais sensible aux
+défauts : impose des tolérances serrées
 
-| Vis | $d$ (mm) | Pas | $A_s$ (mm²) |
-|---|---|---|---|
-| M5 | 5 | 0,8 | 14,2 |
-| M6 | 6 | 1,0 | 20,1 |
-| M8 | 8 | 1,25 | 36,6 |
-| M10 | 10 | 1,5 | 58,0 |
-| M12 | 12 | 1,75 | 84,3 |
-| M16 | 16 | 2,0 | 157 |
-| M20 | 20 | 2,5 | 245 |
+**Règle 3-2-1** — 3 points : face principale (appui plan) · 2 points : orientation ·
+1 point : blocage du dernier ddl
 
-Précontrainte recommandée :
-$$ F_0 = 0,7 \\times R_e \\times A_s $$
-
-Couple de serrage :
-$$ \\boxed{C = K \\cdot F_0 \\cdot d} \\qquad K \\approx 0,20 \\text{ (sec)}, \\; 0,15 \\text{ (lubrifié)} $$
-
-Effort transmissible par adhérence ($n$ vis, $f$ = coefficient d'adhérence, $j$ = plans de joint) :
-$$ \\boxed{F_T = n \\cdot j \\cdot f \\cdot F_0} $$
-
-$f \\approx 0,15$ (acier/acier usiné), $0,10$ (peint), $0,20$ (grenaillé).
-
----
-
-**CLAVETTE PARALLÈLE**
-
-Dimensions normalisées (NF E 22-177) :
-
-| Ø arbre (mm) | $b \\times h$ |
-|---|---|
-| 10 à 12 | 4 × 4 |
-| 12 à 17 | 5 × 5 |
-| 17 à 22 | 6 × 6 |
-| 22 à 30 | 8 × 7 |
-| 30 à 38 | 10 × 8 |
-| 38 à 44 | 12 × 8 |
-| 44 à 50 | 14 × 9 |
-| 50 à 58 | 16 × 10 |
-
-**Vérification au matage** (dimensionnante dans 90 % des cas) :
-$$ \\boxed{p = \\frac{4 M_t}{d \\cdot L \\cdot h} \\le p_{adm}} $$
-$p_{adm} \\approx 100$ MPa (acier courant), 150 MPa (acier traité).
-
-**Vérification au cisaillement :**
-$$ \\tau = \\frac{2 M_t}{d \\cdot L \\cdot b} \\le R_{pg} $$
-
----
-
-**ENGRENAGES**
-
-$$ m = \\frac{d}{Z} \\qquad d = mZ \\qquad d_a = m(Z+2) \\qquad d_f = m(Z - 2,5) $$
-$$ p = \\pi m \\qquad a = \\frac{m(Z_1+Z_2)}{2} $$
-
-**Rapport de transmission :**
-$$ i = \\frac{N_2}{N_1} = \\frac{Z_1}{Z_2} \\qquad \\text{(train simple)} $$
-
-$$ i_{global} = i_1 \\times i_2 \\times \\dots \\times i_n \\qquad \\text{(train à n étages)} $$
-
-**Efforts sur une denture droite :**
-$$ F_t = \\frac{2 M_t}{d} \\qquad F_r = F_t \\tan\\alpha \\qquad (\\alpha = 20°) $$
-
-**Denture hélicoïdale** (angle d'hélice $\\beta$) :
-$$ F_t = \\frac{2M_t}{d} \\qquad F_a = F_t \\tan\\beta \\qquad F_r = \\frac{F_t \\tan\\alpha}{\\cos\\beta} $$
-
----
-
-**COURROIES ET CHAÎNES**
-
-$$ i = \\frac{d_1}{d_2} = \\frac{Z_1}{Z_2} \\qquad v = \\frac{\\pi d_1 N_1}{60\\,000} \\;\\mathrm{[m/s]} $$
-
-Longueur approchée d'une courroie (entraxe $a$) :
-$$ L \\approx 2a + \\frac{\\pi(d_1+d_2)}{2} + \\frac{(d_2-d_1)^2}{4a} $$
-
----
-
-**PUISSANCE ET RENDEMENT**
-
-$$ P = M_t \\, \\omega \\qquad P_{sortie} = \\eta \\, P_{entrée} \\qquad \\eta_{global} = \\eta_1 \\times \\eta_2 \\times \\dots $$
-
-**NON-ARC-BOUTEMENT D'UNE GLISSIÈRE**
-$$ \\frac{L_{guidage}}{d_{porte-à-faux}} > 2\\mu $$
+**Correspondance** — la face 3-2-1 = la surface de référence des cotes (fiche 5.2) =
+la référence A du cadre GPS (fiche 5.5) = la mise en position du montage d'usinage
 """,
             "exemple": """
-**Cas industriel — Conception complète d'un étage de réduction**
+### Cas industriel — Deux paliers alignés qui ne le sont jamais
 
-Un motoréducteur doit entraîner un tapis. Cahier des charges : moteur **4 kW à 1 450 tr/min**,
-vitesse de sortie souhaitée **≈ 290 tr/min**, arbre de sortie Ø40.
+**Le symptôme.** Un arbre monté sur deux paliers à billes chauffe anormalement et les roulements
+se détruisent en quelques centaines d'heures, alors que le calcul de durée de vie annonçait
+plusieurs années.
 
-**ÉTAPE 1 — Rapport de réduction**
+**L'analyse.** Chaque roulement à billes bloque à lui seul les trois translations et deux
+rotations. En monter deux revient à bloquer **deux fois** les mêmes mouvements : le montage est
+**hyperstatique**.
 
-$$ i = \\frac{N_{sortie}}{N_{entrée}} = \\frac{290}{1\\,450} = \\frac{1}{5} $$
+Tant que les deux alésages sont parfaitement coaxiaux, tout va bien. Mais un défaut de
+coaxialité de quelques centièmes — parfaitement normal en usinage courant — force l'arbre à se
+déformer entre les deux paliers. Les roulements encaissent en permanence un effort que rien
+n'avait prévu.
 
-Choix des dentures : $Z_1 = 19$ dents (pignon), $Z_2 = 95$ dents (roue)
-$$ i = \\frac{19}{95} = \\frac{1}{5} \\quad ✔️ \\qquad N_2 = 1\\,450 \\times \\frac{19}{95} = \\mathbf{290\\ tr/min} $$
+**La correction.** Rendre le montage isostatique en libérant une translation : **un palier fixe**
+(qui tient axialement) et **un palier libre** (qui laisse l'arbre coulisser). Le défaut
+d'alignement et la dilatation thermique sont alors absorbés sans effort parasite.
 
-*Pourquoi 19 et non 20 ? Un nombre de dents **premier** avec l'autre roue répartit l'usure :
-chaque dent du pignon rencontre toutes les dents de la roue avant de retomber sur la même. Avec
-20/100, une dent du pignon ne verrait que 5 dents de la roue — usure localisée.*
-
-**ÉTAPE 2 — Module et géométrie**
-
-Module normalisé retenu : **m = 3 mm**
-
-$$ d_1 = mZ_1 = 3 \\times 19 = 57\\ \\mathrm{mm} \\qquad d_2 = mZ_2 = 3 \\times 95 = 285\\ \\mathrm{mm} $$
-
-$$ a = \\frac{d_1 + d_2}{2} = \\frac{57 + 285}{2} = \\mathbf{171\\ mm} $$
-
-**ÉTAPE 3 — Couples et efforts**
-
-$$ M_{t1} = \\frac{30 P}{\\pi N_1} = \\frac{30 \\times 4\\,000}{\\pi \\times 1\\,450} = 26,3\\ \\mathrm{N\\cdot m} $$
-
-$$ M_{t2} = \\frac{M_{t1}}{i} \\times \\eta = \\frac{26,3}{0,2} \\times 0,97 = \\mathbf{127,6\\ N\\cdot m} $$
-
-Effort tangentiel sur la denture :
-$$ F_t = \\frac{2 M_{t1}}{d_1} = \\frac{2 \\times 26\\,300}{57} = \\mathbf{923\\ N} $$
-
-Effort radial : $F_r = F_t \\tan 20° = 923 \\times 0,364 = \\mathbf{336\\ N}$
-
-**ÉTAPE 4 — Liaison roue/arbre de sortie (Ø40) : clavette**
-
-Clavette normalisée pour Ø40 : **12 × 8**. Longueur à déterminer.
-
-$$ p = \\frac{4 M_t}{d \\cdot L \\cdot h} \\le 100\\ \\mathrm{MPa} $$
-
-$$ L \\ge \\frac{4 \\times 127\\,600}{40 \\times 8 \\times 100} = \\frac{510\\,400}{32\\,000} = \\mathbf{15,95\\ mm} $$
-
-**Clavette retenue : 12 × 8 × 40** (longueur normalisée supérieure, alignée sur la largeur du moyeu).
-
-Vérification au cisaillement :
-$$ \\tau = \\frac{2 \\times 127\\,600}{40 \\times 40 \\times 12} = \\frac{255\\,200}{19\\,200} = 13,3\\ \\mathrm{MPa} \\;\\ll\\; R_{pg} \\quad ✔️ $$
-
-**Le matage est bien dimensionnant** (facteur 8 d'écart entre les deux critères) — c'est le cas
-général.
-
-**ÉTAPE 5 — Fixation du carter : assemblage vissé**
-
-Le carter est fixé au bâti par **4 vis M10 classe 8.8**. Le couple de réaction vaut 127,6 N·m
-sur un rayon de fixation de 90 mm.
-
-$$ F_{tangentiel} = \\frac{M_t}{r} = \\frac{127\\,600}{90} = 1\\,418\\ \\mathrm{N} $$
-
-Précontrainte par vis :
-$$ F_0 = 0,7 \\times 640 \\times 58,0 = \\mathbf{25\\,984\\ N} $$
-
-Effort transmissible par adhérence (4 vis, 1 plan de joint, $f = 0,15$) :
-$$ F_T = n \\cdot j \\cdot f \\cdot F_0 = 4 \\times 1 \\times 0,15 \\times 25\\,984 = \\mathbf{15\\,590\\ N} $$
-
-$$ \\frac{15\\,590}{1\\,418} = \\mathbf{11} \\quad ✔️ \\;\\text{coefficient de sécurité très confortable} $$
-
-**Couple de serrage à prescrire :**
-$$ C = K F_0 d = 0,20 \\times 25\\,984 \\times 10 = 51\\,968\\ \\mathrm{N\\cdot mm} = \\mathbf{52\\ N\\cdot m} $$
-
-> **Ce couple doit figurer sur le plan d'ensemble.** Un assemblage vissé non prescrit en couple
-> est un assemblage non maîtrisé : trop serré, la vis casse ; trop peu, l'adhérence disparaît et
-> les vis se retrouvent en cisaillement — exactement ce qu'on voulait éviter.
+**Ce que le cas apprend.** L'hyperstatisme n'est pas une faute en soi — il est parfois recherché
+pour la rigidité. Mais il **impose alors des tolérances serrées et coûteuses**. Le choix est
+économique autant que technique.
 """,
             "exercice": """
-**Exercice type examen — Conception d'un poste de perçage automatisé**
+### Exercice — Diagnostiquer un montage
 
-Un poste de perçage comporte une **broche** montée sur un **coulisseau** guidé en translation
-verticale, entraîné par un système **vis-écrou** motorisé.
+Un arbre est monté sur **deux roulements à billes à gorge profonde**, tous deux serrés
+axialement entre un épaulement et un anneau élastique.
 
-**Données :**
-- Effort de poussée maximal en perçage : **F = 2 400 N**
-- Masse du coulisseau + broche : **35 kg**
-- Course : **250 mm**, vitesse d'avance : **0,05 m/s**
-- Vis à billes Ø25, pas **p = 5 mm**, rendement $\\eta = 0,90$
-- Le moteur tourne à **1 500 tr/min** max
-- Coefficient de frottement dans les guidages : $\\mu = 0,01$ (rail à billes)
+**1.** Combien de ddl un roulement à billes supprime-t-il à lui seul ? Combien laisse-t-il ?
 
-**PARTIE A — Guidage en translation**
+**2.** Le montage décrit est-il isostatique ou hyperstatique ? Justifiez par le comptage.
 
-1. Le porte-à-faux entre l'axe de la broche et le plan des rails est de **180 mm**.
-   Déterminer la longueur minimale de guidage pour éviter l'arc-boutement, puis proposer
-   une valeur conforme aux bonnes pratiques.
-2. Le concepteur hésite entre des **rails à billes** et une **glissière queue d'aronde**.
-   Comparer les deux solutions sur 4 critères et recommander.
+**3.** Citez deux conséquences concrètes de ce choix sur le fonctionnement réel.
 
-**PARTIE B — Entraînement vis-écrou**
+**4.** Quelle modification rend le montage isostatique, sans changer la fonction attendue ?
 
-3. Calculer l'effort axial total sur la vis (perçage + poids + frottements).
-4. Calculer la vitesse de rotation de la vis pour l'avance demandée. Faut-il un réducteur ?
-5. Calculer le couple moteur nécessaire.
-6. Calculer la puissance du moteur, puis choisir dans la série normalisée
-   (0,25 / 0,37 / 0,55 / 0,75 / 1,1 / 1,5 kW).
-
-**PARTIE C — Assemblage de la broche**
-
-7. La broche est fixée au coulisseau par **4 vis M8 classe 8.8** ($A_s = 36,6$ mm²).
-   Calculer la précontrainte par vis et le couple de serrage ($K = 0,20$).
-8. Vérifier que l'assemblage résiste par adhérence à l'effort de perçage
-   ($f = 0,15$, 1 plan de joint).
-9. Un technicien propose de remplacer les 4 vis M8 par **2 vis M12 classe 8.8**
-   ($A_s = 84,3$ mm²) « puisque la section totale est équivalente ». Analyser cette
-   proposition par le calcul et conclure.
+**5.** Appliquez la règle 3-2-1 à une pièce prismatique posée sur un montage d'usinage : quelles
+surfaces choisissez-vous, et dans quel ordre ?
 """,
             "corrige": """
-**PARTIE A — GUIDAGE EN TRANSLATION**
+### Corrigé, en six temps
 
-**1. Longueur minimale de guidage (non-arc-boutement)**
+#### 1. Ce que dit l'énoncé
 
-Condition théorique :
-$$ \\frac{L_{guidage}}{d_{porte-à-faux}} > 2\\mu $$
+Deux roulements **identiques**, tous deux **bloqués axialement**. Ces deux mots suffisent au
+diagnostic : si les deux tiennent axialement, la même translation est bloquée deux fois.
 
-$$ L > 2 \\times 0,01 \\times 180 = \\mathbf{3,6\\ mm} $$
+#### 2. Quelle règle, et pourquoi
 
-**Ce résultat est théoriquement correct mais pratiquement inutilisable.**
+**Un mouvement bloqué plusieurs fois = hyperstatique.**
 
-*Analyse :* avec un rail à billes ($\\mu = 0,01$), la condition d'arc-boutement est satisfaite
-avec une longueur dérisoire — c'est justement l'intérêt du roulement. **Mais l'arc-boutement
-n'est pas le seul critère.**
+L'hyperstatisme apporte de la rigidité, mais il **transforme tout défaut géométrique en effort
+interne** : la pièce ne peut plus s'adapter, elle se déforme.
 
-**Critère réellement dimensionnant : la RIGIDITÉ et la reprise du moment de basculement.**
+#### 3. Les conversions
 
-L'effort de perçage de 2 400 N appliqué à 180 mm crée un moment :
-$$ M = F \\times d = 2\\,400 \\times 180 = 432\\,000\\ \\mathrm{N\\cdot mm} = 432\\ \\mathrm{N\\cdot m} $$
+Aucune conversion. **Le comptage se fait mouvement par mouvement** : on liste les 6 ddl, et on
+regarde combien de fois chacun est bloqué.
 
-Ce moment est repris par un **couple de forces** sur les patins, distants de $L$ :
-$$ F_{patin} = \\frac{M}{L} = \\frac{432\\,000}{L} $$
+#### 4. Le remplacement
 
-| $L$ | Effort par patin | Commentaire |
-|---|---|---|
-| 100 mm | 4 320 N | Élevé, déformation du guidage |
-| **200 mm** | **2 160 N** | Raisonnable |
-| 300 mm | 1 440 N | Confortable, mais encombrant |
+Un roulement à billes : supprime 5 ddl (3 translations + 2 rotations), laisse **1 rotation**.
 
-**Règle de bonne pratique à appliquer :**
-$$ \\boxed{L_{guidage} \\ge 1,5 \\times d_{porte-à-faux} = 1,5 \\times 180 = \\mathbf{270\\ mm}} $$
+Deux roulements identiques :
+- rotation axiale : bloquée **0 fois** ✅
+- translation axiale : bloquée **2 fois** ❌
+- les autres : bloqués **2 fois** ❌
 
-**Valeur retenue : L = 280 mm** (entraxe des patins), soit $L/d = 1,56$.
+#### 5. Le calcul
+
+**1.** Un roulement à billes à gorge profonde supprime **5 ddl** (les 3 translations et 2
+rotations) et laisse **1 ddl** : la rotation autour de son axe.
+
+**2.** **Hyperstatique.** Deux roulements supprimant chacun 5 ddl donnent 10 ddl supprimés pour
+une pièce qui n'en compte que 6 — plusieurs mouvements sont donc bloqués deux fois, en
+particulier la **translation axiale**, puisque les deux sont serrés.
+
+**3.** Deux conséquences concrètes :
+- le moindre **défaut de coaxialité** entre les deux alésages force l'arbre à se déformer, et les
+  roulements encaissent un effort permanent ;
+- la **dilatation thermique** de l'arbre en fonctionnement ne peut pas être absorbée : l'arbre
+  pousse sur les deux paliers en même temps.
+
+**4.** Libérer la **translation axiale sur un des deux paliers** : c'est le montage **palier fixe
+/ palier libre** (fiche 6.6). Le palier libre laisse la bague extérieure coulisser dans son
+logement. La fonction — faire tourner l'arbre — est strictement identique.
+
+**5.** Règle 3-2-1 sur une pièce prismatique :
+- **3 points** sur la plus grande face plane usinée : c'est l'appui principal, il supprime 1
+  translation et 2 rotations ;
+- **2 points** sur un chant perpendiculaire : orientation, supprime 1 translation et 1 rotation ;
+- **1 point** sur le dernier chant : il bloque le sixième et dernier ddl.
+
+#### 6. La vérification
+
+**Le contrôle du comptage** : 3 + 2 + 1 = **6 points, 6 ddl supprimés**, chacun une seule fois.
+C'est la définition même de l'isostatisme — si l'on ajoutait un quatrième point sur la face
+principale, on retomberait dans l'hyperstatisme.
+
+**Le contrôle de cohérence avec le reste du programme** : la face choisie comme appui principal
+doit être **la même** que la surface de référence des cotes (fiche 5.2) et que la référence A du
+cadre GPS (fiche 5.5). Si ces trois surfaces diffèrent, la pièce sera conçue, cotée et usinée
+selon trois logiques différentes.
+""",
+        },
+        {
+            "id": '6.4',
+            "titre": "Guidage en rotation : familles et choix d'un roulement",
+            "duree": '5 h',
+            "cours": """### 1. Faire tourner un arbre : trois familles de solutions
+
+**Contact direct** — palier lisse, coussinet, bague bronze ou polymère. L'arbre frotte
+directement dans une bague. Silencieux, très compact radialement, insensible aux chocs et à la
+poussière, bon marché. En contrepartie : frottement plus élevé, échauffement, vitesse limitée, et
+il faut lubrifier. Idéal pour les mouvements **lents, alternatifs, ou en milieu sale**.
 
-**Justification complémentaire :** la course étant de 250 mm, un entraxe de 280 mm impose des
-rails d'environ 530 mm — dimension parfaitement standard. Le surcoût est marginal au regard
-du gain en précision de perçage (un basculement de 0,05 mm en bout de broche décale le trou
-d'autant).
+**Roulement** — on remplace le frottement de glissement par du roulement de billes ou de
+rouleaux. Rendement excellent, guidage précis, vitesses élevées, entretien réduit. Mais : plus
+encombrant, sensible aux chocs, au désalignement et à la pollution, et plus cher.
 
----
+**Film fluide** — palier hydrodynamique : l'arbre flotte sur un coin d'huile (fiche 13.4).
+Réservé aux très grandes vitesses et fortes charges — turbines, vilebrequins.
+
+*Le choix se fait donc en croisant deux critères : la vitesse et la propreté du milieu. Un
+convoyeur agroalimentaire lavé au jet, tournant à 30 tr/min, sera mieux servi par un coussinet
+polymère que par un roulement.*
 
-**2. Comparaison rails à billes / queue d'aronde**
+### 2. Choisir un type de roulement
 
-| Critère | **Rails à billes** | **Queue d'aronde** |
-|---|---|---|
-| **Frottement** | $\\mu \\approx 0,005$ à $0,01$ → moteur plus petit, pas d'échauffement | $\\mu \\approx 0,10$ à $0,20$ → il faut vaincre ~700 N de frottement en plus |
-| **Précision / rigidité** | Précision de positionnement élevée, **précontrainte réglable**, faible jeu | Excellente rigidité en compression, mais **jeu à rattraper par lardon** (réglage manuel, dérive dans le temps) |
-| **Amortissement des vibrations** | ❌ **Faible** — le contact ponctuel bille/piste transmet les vibrations | ✅ **Excellent** — grande surface de contact, film d'huile amortissant |
-| **Vitesse** | ✅ Jusqu'à plusieurs m/s | ❌ Limitée (échauffement, usure) |
-| **Résistance aux copeaux** | ❌ Sensible : un copeau qui entre détruit les pistes → **soufflets obligatoires** | ✅ Robuste, tolère un environnement sale |
-| **Coût** | Élevé (rails rectifiés + patins) | Modéré (usinage + grattage) |
-| **Maintenance** | Graissage périodique, patins remplaçables | Réglage du lardon, rodage |
+| Type | Charge radiale | Charge axiale | Quand l'utiliser |
+|---|---|---|---|
+| **billes à gorge profonde** | moyenne | moyenne, deux sens | **le choix par défaut** |
+| rouleaux cylindriques | forte | aucune | fortes charges radiales, palier libre |
+| billes à contact oblique | moyenne | forte, **un sens** | charges combinées — **par paire** |
+| rouleaux coniques | forte | forte, un sens | roues, broches — **par paire** |
+| à rotule | moyenne | faible | arbres longs, carters peu précis |
+| butée | aucune | forte | charge purement axiale, ne guide pas |
 
-**RECOMMANDATION : rails à billes avec soufflets de protection.**
+**Le réflexe :** on part toujours du **roulement à billes à gorge profonde**, et on ne change que
+si une contrainte l'impose. C'est le moins cher, le plus disponible, et il accepte les deux sens
+de charge axiale.
 
-**Justification pour ce cas précis :**
+**Pourquoi les obliques et les coniques se montent par paire.** Ils n'encaissent l'axial que dans
+**un seul sens** : seuls, ils se déchargent et se démontent. Il faut donc un second roulement
+opposé, monté en **X** ou en **O** — le montage en O donnant un meilleur appui pour un porte-à-faux.
 
-1. **L'avance est motorisée et asservie** (vis à billes + moteur). Un frottement de 700 N dans
-   une queue d'aronde exigerait un moteur **3 fois plus puissant** et rendrait l'asservissement
-   imprécis (phénomène de *stick-slip* : le coulisseau avance par à-coups).
-2. La **précision de position** est critique en perçage automatisé.
-3. **Le point faible (copeaux) est maîtrisable** : un soufflet ou un capot de protection résout
-   le problème, alors que le frottement d'une queue d'aronde est irréductible.
+### 3. Les erreurs classiques
 
-*Si le poste était une machine d'usinage lourde avec fortes vibrations (fraisage, rabotage), la
-queue d'aronde reprendrait l'avantage grâce à son amortissement. Le perçage génère peu de
-vibrations : ce critère ne tranche pas ici.*
+1. **Inverser la règle des charges** : la bague tournante montée glissante flue et détruit sa
+   portée.
+2. **Bloquer axialement les deux paliers** : précontrainte, échauffement, grippage.
+3. **Frapper sur la bague opposée** au montage : brinelling, panne différée.
+4. **Portée d'arbre brute** sous un joint à lèvres : fuite en quelques heures.
+5. **Trop de graisse** : échauffement.
+6. **Roulement à contact oblique ou conique monté seul.**
+7. **Congé d'épaulement trop grand** : la bague porte sur l'arrondi.
+8. **Oublier la place pour l'extracteur** : le démontage détruit la pièce.
 
----
 
-**PARTIE B — ENTRAÎNEMENT VIS-ÉCROU**
+### 4. À retenir
 
-**3. Effort axial total sur la vis**
+- Par défaut : **roulement à billes à gorge profonde**.
+- **Charge tournante par rapport à la bague → SERRÉE. Charge fixe → GLISSANTE.**
+- Cas courant : **arbre k6, alésage H7**. Cas inverse (moyeu tournant) : **alésage M7, arbre h6**.
+- **Un seul palier fixe par arbre** — la dilatation atteint le demi-millimètre sur 800 mm.
+- Graisse : **un tiers** du volume libre. Joint à lèvres : portée **Ra 0,8**, lèvre vers
+  l'intérieur.
+- Rayon d'épaulement **< rayon de la bague** · l'effort de montage passe par la bague emmanchée.
+""",
+            "formules": """
+**Trois familles** — **contact direct** (arbre dans un alésage) : lent, peu chargé, bon marché ·
+**palier lisse** (bague, coussinet) : silencieux, encombrement réduit ·
+**roulement** : rendement élevé, vitesse et charge élevées
 
-| Contribution | Calcul | Valeur |
-|---|---|---|
-| Effort de perçage | donné | 2 400 N |
-| Poids du coulisseau (descente : aide / montée : résiste) | $35 \\times 9,81$ | 343 N |
-| Frottement dans les guidages | $\\mu \\times F_{normal}$ — la charge normale sur les patins provient du moment de basculement, majorée : $0,01 \\times (343 + 2\\,160 \\times 2)$ | ≈ 47 N |
+**Choisir un roulement** — charge **radiale** seule → billes à gorge profonde ou rouleaux
+cylindriques · charge **axiale** aussi → billes à contact oblique, rouleaux coniques ·
+**désalignement** → rotule sur billes ou sur rouleaux
 
-**Cas le plus défavorable — la remontée en charge n'existe pas (perçage à la descente), mais
-le cas dimensionnant est la DESCENTE en perçage où l'effort résiste :**
+**Repère** — à charge égale, un roulement à **rouleaux** porte plus qu'un roulement à **billes**,
+mais tolère moins bien le désalignement
+""",
+            "exemple": """
+### Cas industriel — Le roulement choisi sur le seul diamètre
 
-$$ F_{axial} = F_{perçage} - P_{poids} + F_{frottement} = 2\\,400 - 343 + 47 = \\mathbf{2\\,104\\ N} $$
+**Le symptôme.** Sur un ventilateur à arbre vertical, les roulements sont remplacés tous les
+quatre mois. Le diamètre d'arbre est respecté, la référence commandée correspond bien au
+catalogue.
 
-**Par prudence, on retient le cas où le poids ne peut pas être compté comme aidant** (position
-horizontale possible, ou remontée sous charge résiduelle) :
+**L'analyse.** Le montage utilisait deux **roulements à billes à gorge profonde**, choisis parce
+qu'ils correspondaient au Ø30 de l'arbre. Or l'arbre est **vertical** : tout le poids du rotor,
+soit une charge purement **axiale**, repose sur ces roulements.
 
-$$ \\boxed{F_{axial} = 2\\,400 + 343 + 47 \\approx \\mathbf{2\\,790\\ N}} $$
+Un roulement à gorge profonde accepte une charge axiale, mais **modérée** : ce n'est pas sa
+fonction principale. Sollicité en permanence dans cette direction, il s'use prématurément.
 
-*Justification du choix : dimensionner sur le cas favorable serait une faute. On retient
-l'hypothèse enveloppe.*
+**La correction.** Remplacement du roulement inférieur par un **roulement à contact oblique**,
+conçu pour reprendre une charge axiale importante, le roulement supérieur restant en gorge
+profonde pour le guidage radial.
 
----
+**Ce que le cas apprend.** Le diamètre d'arbre ne détermine que la **taille** du roulement. C'est
+la **direction de la charge** qui détermine son **type** — et se tromper de type ne se voit
+jamais au montage, seulement après quelques mois de fonctionnement.
+""",
+            "exercice": """
+### Exercice — Choisir une solution de guidage
 
-**4. Vitesse de rotation de la vis**
+Pour chacune des quatre situations, choisissez une famille (contact direct, palier lisse,
+roulement) et, s'il s'agit d'un roulement, précisez le type. Justifiez en une ligne.
 
-La vis à billes avance de **1 pas (5 mm) par tour** :
+**1.** La charnière d'un capot de machine, ouverte quelques fois par jour.
 
-$$ N_{vis} = \\frac{v_{avance}}{p} = \\frac{0,05\\ \\mathrm{m/s} \\times 1\\,000 \\times 60}{5} = \\frac{3\\,000}{5} $$
+**2.** L'arbre d'une broche de fraiseuse tournant à 6 000 tr/min sous charge radiale importante.
 
-$$ \\boxed{N_{vis} = 600\\ \\mathrm{tr/min}} $$
+**3.** L'arbre vertical d'un mélangeur, dont le rotor pèse 80 kg.
 
-**Faut-il un réducteur ?**
+**4.** Un axe de galet dans un environnement très poussiéreux, où la lubrification est difficile
+à maintenir.
 
-Le moteur tourne à **1 500 tr/min** max, la vis doit tourner à **600 tr/min**.
+**5.** Dans quel cas préféreriez-vous un roulement à **rouleaux** plutôt qu'à **billes** ?
+""",
+            "corrige": """
+### Corrigé, en six temps
 
-$$ i = \\frac{600}{1\\,500} = \\frac{2}{5} = 0,4 $$
+#### 1. Ce que dit l'énoncé
 
-$$ \\boxed{\\textbf{OUI, un réducteur de rapport 1:2,5 est nécessaire}} $$
+Quatre situations très différentes par la **vitesse**, la **charge** et son **orientation**, et
+par l'**environnement**. Aucune ne se résout par le diamètre de l'arbre — c'est le piège du cas
+industriel de cette fiche.
 
-**Solutions possibles :**
-- **Courroie crantée** poulies 20/50 dents ($i = 0,4$) — solution la plus simple et la plus
-  économique, absorbe les vibrations, permet le déport du moteur
-- Réducteur planétaire i = 1:3 avec vitesse moteur ajustée à 1 800 tr/min (variateur)
-- **Entraînement direct** avec un servomoteur piloté à 600 tr/min (le plus élégant si le budget
-  le permet — supprime tout jeu de transmission)
+#### 2. Quelle règle, et pourquoi
 
-*Recommandation : courroie crantée, car elle isole aussi le moteur des efforts axiaux parasites.*
+**Trois questions, dans cet ordre :**
 
----
+1. quelle **vitesse** ? (lente → contact direct ou palier lisse possible) ;
+2. quelle **charge**, et dans quelle **direction** ? (radiale, axiale, ou les deux) ;
+3. quel **environnement** ? (poussière, absence de lubrification, désalignement)
 
-**5. Couple moteur nécessaire**
+La direction de la charge détermine le **type**, le diamètre ne détermine que la **taille**.
 
-Couple sur la vis :
-$$ M_{t,vis} = \\frac{F_{axial} \\times p}{2\\pi \\times \\eta} = \\frac{2\\,790 \\times 5}{2\\pi \\times 0,90} $$
+#### 3. Les conversions
 
-$$ M_{t,vis} = \\frac{13\\,950}{5,655} = \\mathbf{2\\,467\\ N\\cdot mm} = 2,47\\ \\mathrm{N\\cdot m} $$
+Aucune conversion numérique. **Le travail est de traduire un contexte d'usage en critère
+technique** : « arbre vertical » signifie charge axiale, « poussiéreux » signifie étanchéité
+difficile.
 
-*C'est là toute la magie de la vis à billes : un effort de 2 790 N est vaincu par un couple de
-2,5 N·m seulement, grâce au faible pas (5 mm) qui agit comme une démultiplication.*
+#### 4. Le remplacement
 
-Couple moteur (en tenant compte du réducteur $i = 0,4$ et de son rendement $\\eta_r = 0,95$) :
-
-$$ M_{moteur} = \\frac{M_{t,vis} \\times i}{\\eta_r} = \\frac{2,47 \\times 0,4}{0,95} = \\mathbf{1,04\\ N\\cdot m} $$
-
----
-
-**6. Puissance du moteur**
-
-$$ \\omega_{moteur} = \\frac{2\\pi \\times 1\\,500}{60} = 157,1\\ \\mathrm{rad/s} $$
-
-$$ P = M_{moteur} \\times \\omega = 1,04 \\times 157,1 = \\mathbf{163\\ W} $$
-
-**Vérification par le chemin direct (contrôle de cohérence) :**
-$$ P_{utile} = F \\times v = 2\\,790 \\times 0,05 = 139,5\\ \\mathrm{W} $$
-$$ P_{absorbée} = \\frac{139,5}{0,90 \\times 0,95} = 163\\ \\mathrm{W} \\quad ✔️ \\text{ cohérent} $$
-
-**Choix dans la série normalisée :**
-
-| Puissance | Marge | Verdict |
-|---|---|---|
-| 0,25 kW | 250/163 = **1,53** | Un peu juste |
-| **0,37 kW** | 370/163 = **2,27** | ✅ **RETENU** |
-| 0,55 kW | ×3,4 | Surdimensionné |
-
-$$ \\boxed{\\textbf{Moteur 0,37 kW}} $$
-
-**Justification de la marge de 2,3 :** il faut couvrir les **pointes au démarrage**
-(accélération de la masse de 35 kg), les **surcharges de perçage** (perçage d'un matériau plus
-dur, foret émoussé), et le **vieillissement** des composants (rendement qui se dégrade). Un
-moteur à 1,5 de marge décrocherait à la première contrainte.
-
----
-
-**PARTIE C — ASSEMBLAGE DE LA BROCHE**
-
-**7. Précontrainte et couple de serrage (M8 classe 8.8)**
-
-Classe **8.8** → $R_m = 800$ MPa, $R_e = 8 \\times 8 \\times 10 = 640$ MPa
-
-$$ F_0 = 0,7 \\times R_e \\times A_s = 0,7 \\times 640 \\times 36,6 $$
-
-$$ \\boxed{F_0 = 16\\,397\\ \\mathrm{N} \\approx 16,4\\ \\mathrm{kN\\ par\\ vis}} $$
-
-Couple de serrage :
-$$ C = K \\cdot F_0 \\cdot d = 0,20 \\times 16\\,397 \\times 8 = 26\\,235\\ \\mathrm{N\\cdot mm} $$
-
-$$ \\boxed{C \\approx 26\\ \\mathrm{N\\cdot m}} $$
-
-*Cette valeur doit figurer sur le plan d'ensemble et dans la notice de montage.*
-
----
-
-**8. Vérification de la tenue par adhérence**
-
-Effort transmissible par adhérence :
-$$ F_T = n \\cdot j \\cdot f \\cdot F_0 = 4 \\times 1 \\times 0,15 \\times 16\\,397 $$
-
-$$ \\boxed{F_T = 9\\,838\\ \\mathrm{N}} $$
-
-Comparaison à l'effort de perçage (qui sollicite l'assemblage en cisaillement) :
-
-$$ s = \\frac{F_T}{F} = \\frac{9\\,838}{2\\,400} = \\mathbf{4,1} \\quad ✔️ $$
-
-**L'assemblage résiste par adhérence avec un coefficient de 4,1.** Les vis ne travaillent
-**jamais en cisaillement** — c'est exactement le principe recherché.
-
-⚠️ **Remarque essentielle à formuler :** il faut aussi vérifier le **moment de basculement**.
-L'effort de 2 400 N appliqué à 180 mm crée $M = 432$ N·m que l'assemblage doit reprendre par
-**décollement**. Avec 4 vis M8 sur un carré de 100 mm de côté, l'effort d'arrachement par vis
-vaut environ $432\\,000 / (2 \\times 100) = 2\\,160$ N, très inférieur à la précontrainte de
-16 400 N → **pas de décollement** ✔️
-
----
-
-**9. Analyse de la proposition « 2 vis M12 au lieu de 4 vis M8 »**
-
-**a) Vérification de l'affirmation sur les sections**
-
-$$ 4 \\times A_{s,M8} = 4 \\times 36,6 = \\mathbf{146,4\\ mm^2} $$
-$$ 2 \\times A_{s,M12} = 2 \\times 84,3 = \\mathbf{168,6\\ mm^2} $$
-
-L'affirmation est **approximativement vraie** (168,6 > 146,4, soit +15 %).
-
-**b) Calcul de l'effort transmissible par adhérence**
-
-Précontrainte par vis M12 :
-$$ F_{0,M12} = 0,7 \\times 640 \\times 84,3 = 37\\,766\\ \\mathrm{N} $$
-
-$$ F_T = n \\cdot j \\cdot f \\cdot F_0 = 2 \\times 1 \\times 0,15 \\times 37\\,766 = \\mathbf{11\\,330\\ N} $$
-
-$$ s = \\frac{11\\,330}{2\\,400} = \\mathbf{4,7} $$
-
-**En adhérence pure, la proposition est même LÉGÈREMENT MEILLEURE** (4,7 contre 4,1).
-
-**c) MAIS — l'analyse du moment de basculement change tout**
-
-C'est ici que la proposition s'effondre.
-
-| | **4 vis M8** | **2 vis M12** |
-|---|---|---|
-| Disposition | Carré 100 × 100 mm | Ligne, entraxe 100 mm |
-| Reprise du moment dans l'axe X | ✅ 2 vis de chaque côté | ✅ 1 vis de chaque côté |
-| **Reprise du moment dans l'axe Y** | ✅ 2 vis de chaque côté | ❌ **AUCUNE** — les deux vis sont alignées |
-| Effort d'arrachement (axe défavorable) | 2 160 N/vis | **basculement libre autour de l'axe des 2 vis** |
-
-**Le problème fondamental :** deux vis alignées définissent un **axe de rotation**. L'assemblage
-peut **pivoter autour de cette ligne** — seule l'adhérence des surfaces s'y oppose, et cette
-adhérence n'est pas fiable sous vibrations.
-
-Or le porte-à-faux de la broche est de **180 mm** : le moment de basculement de 432 N·m
-s'applique dans **toutes les directions** selon l'orientation du perçage et les efforts
-latéraux de coupe.
-
-**d) Autres inconvénients**
-
-| Inconvénient | Explication |
+| Situation | Critère dominant |
 |---|---|
-| **Perte de redondance** | Si une vis M8 sur 4 se desserre, il reste 75 % de la capacité. Si une vis M12 sur 2 se desserre, il ne reste que **50 %** — et l'assemblage devient un pivot |
-| **Concentration de contrainte** | Deux M12 concentrent 37,8 kN chacune sur une petite zone → risque de **matage** du coulisseau si celui-ci est en aluminium |
-| **Répartition de la pression de contact** | 4 points répartissent mieux la pression sur le plan de joint → contact plus uniforme, meilleure rigidité |
-| **Couple de serrage** | $C = 0,20 \\times 37\\,766 \\times 12 = 91$ N·m — nécessite une clé dynamométrique plus grosse, moins d'accessibilité |
+| charnière | vitesse quasi nulle, charge faible |
+| broche | vitesse élevée + charge radiale |
+| mélangeur vertical | charge **axiale** (80 kg de poids) |
+| galet poussiéreux | environnement, pas la charge |
 
-**e) CONCLUSION**
+#### 5. Le calcul
 
-$$ \\boxed{\\textbf{PROPOSITION À REJETER}} $$
+**1. Charnière** : **contact direct** ou **palier lisse**. La vitesse est quasi nulle et la charge
+faible — un roulement serait un surcoût sans aucun gain.
 
-**Argumentaire à formuler en copie :**
+**2. Broche de fraiseuse** : **roulement**, à **billes à contact oblique** ou à **rouleaux
+cylindriques** selon la précision recherchée. À 6 000 tr/min, seul le roulement offre le
+rendement et la tenue nécessaires.
 
-> *« La proposition est valide sur le seul critère de la section résistante et de l'adhérence
-> (coefficient 4,7 contre 4,1). Elle est cependant **à rejeter** car deux vis alignées ne
-> reprennent le moment de basculement que dans **une seule direction**. Or la broche présente un
-> porte-à-faux de 180 mm générant un moment de 432 N·m dont l'orientation varie avec les efforts
-> de coupe. Un assemblage à 2 points constitue un axe de pivotement potentiel. S'y ajoutent la
-> perte de redondance et le risque de matage du support. **On conserve les 4 vis M8**, disposées
-> en carré pour reprendre le basculement dans toutes les directions. »*
+**3. Mélangeur vertical** : **roulement à contact oblique** ou à **rouleaux coniques** en
+position basse. La charge est **axiale** (le poids du rotor), ce qui exclut un simple roulement à
+gorge profonde comme choix principal.
 
-> **PRINCIPE GÉNÉRAL À RETENIR — c'est le message de l'exercice :**
-> **Le nombre et la DISPOSITION des vis comptent autant que leur section.**
-> Un assemblage se dimensionne sur trois critères, jamais un seul :
-> 1. la **résistance** (section, précontrainte)
-> 2. la **transmission d'effort** (adhérence)
-> 3. la **reprise des moments** (répartition géométrique)
->
-> La règle d'atelier : **jamais moins de 3 points de fixation** pour une pièce soumise à un
-> moment, et de préférence **4 en carré**.
+**4. Galet en milieu poussiéreux** : **palier lisse**, en bronze fritté autolubrifiant ou en
+polymère. Il tolère bien mieux la pollution qu'un roulement, dont les pistes sont détruites par
+les particules abrasives.
+
+**5.** On préfère les **rouleaux** quand la **charge est élevée** : le contact se fait sur une
+ligne au lieu d'un point, donc la pression est mieux répartie. En contrepartie, un roulement à
+rouleaux **tolère beaucoup moins le désalignement** qu'un roulement à billes.
+
+#### 6. La vérification
+
+**Le contrôle de cohérence** : dans les quatre cas, la solution retenue correspond au critère
+**dominant**, et non au plus visible. Une charnière n'a pas besoin d'un roulement parce qu'elle
+tourne ; un arbre vertical a besoin d'un roulement axial parce qu'il porte un poids.
+
+**Le test qui reste valable partout** : si vous ne pouvez pas nommer **la charge et sa
+direction**, vous ne pouvez pas choisir un roulement — vous ne pouvez que choisir un diamètre,
+ce qui n'est pas la même chose.
+""",
+        },
+        {
+            "id": '6.5',
+            "titre": 'La règle des charges et les ajustements de roulements',
+            "duree": '5 h',
+            "cours": """### 1. La règle des charges : quelle bague serrer ?
+
+C'est le point le plus important de toute la fiche, et celui qui distingue un montage qui dure
+d'un montage détruit en quelques semaines.
+
+[[FIG:regle_des_charges]]
+
+> **La bague qui tourne PAR RAPPORT À LA DIRECTION DE LA CHARGE est montée SERRÉE.**
+> **La bague qui reste fixe par rapport à la charge est montée GLISSANTE.**
+
+**Pourquoi.** Une bague serrée est solidaire de sa portée : rien ne bouge. Une bague montée avec
+du jeu, mais soumise à une charge tournante, se met à rouler lentement sur sa portée — on dit
+qu'elle **flue**. À chaque tour, elle avance de quelques micromètres. La portée est matée, du jeu
+apparaît, et le montage se détruit en quelques dizaines d'heures.
+
+**Les deux cas, à savoir distinguer :**
+
+| Situation | Ce qui tourne | Bague serrée | Ajustements |
+|---|---|---|---|
+| **arbre tournant, charge fixe** | l'arbre | **intérieure** | arbre **k6** (ou m6), alésage **H7** |
+| **moyeu tournant, charge fixe** | le moyeu | **extérieure** | alésage **M7** (ou N7), arbre **h6** |
+
+*Le premier cas est celui des réducteurs, pompes, ventilateurs. Le second celui des tambours de
+convoyeur, roues folles, poulies libres. La question à se poser est toujours la même : **quelle
+bague voit la charge tourner autour d'elle ?***
+
+### 2. Les erreurs classiques
+
+1. **Inverser la règle des charges** : la bague tournante montée glissante flue et détruit sa
+   portée.
+2. **Bloquer axialement les deux paliers** : précontrainte, échauffement, grippage.
+3. **Frapper sur la bague opposée** au montage : brinelling, panne différée.
+4. **Portée d'arbre brute** sous un joint à lèvres : fuite en quelques heures.
+5. **Trop de graisse** : échauffement.
+6. **Roulement à contact oblique ou conique monté seul.**
+7. **Congé d'épaulement trop grand** : la bague porte sur l'arrondi.
+8. **Oublier la place pour l'extracteur** : le démontage détruit la pièce.
+
+
+### 3. À retenir
+
+- Par défaut : **roulement à billes à gorge profonde**.
+- **Charge tournante par rapport à la bague → SERRÉE. Charge fixe → GLISSANTE.**
+- Cas courant : **arbre k6, alésage H7**. Cas inverse (moyeu tournant) : **alésage M7, arbre h6**.
+- **Un seul palier fixe par arbre** — la dilatation atteint le demi-millimètre sur 800 mm.
+- Graisse : **un tiers** du volume libre. Joint à lèvres : portée **Ra 0,8**, lèvre vers
+  l'intérieur.
+- Rayon d'épaulement **< rayon de la bague** · l'effort de montage passe par la bague emmanchée.
+""",
+            "formules": """
+**La règle des charges** — la bague qui voit la charge **tourner autour d'elle** doit être
+**SERRÉE** · la bague dont la charge reste **fixe par rapport à elle** peut être **glissante**
+
+**Cas le plus fréquent** (arbre tournant, charge fixe en direction) —
+bague intérieure serrée sur l'arbre : **k6** · bague extérieure glissante dans le carter : **H7**
+
+**Cas inverse** (arbre fixe, moyeu tournant) — bague extérieure serrée : **M7** ·
+bague intérieure glissante : **h6**
+
+**Pourquoi c'est impératif** — une bague non serrée qui voit la charge tourner **roule** sur sa
+portée : elle la mate en quelques semaines
+""",
+            "exemple": """
+
+**L'énoncé.** Arbre de réducteur, **Ø30**, tournant à 1 450 tr/min, charge radiale fixe de 2 800 N
+due à une courroie, carter en fonte, atelier propre, températures modérées.
+
+**Étape 1 — Type de roulement**
+
+Charge radiale moyenne, pas d'axial significatif, vitesse courante → **roulements à billes à gorge
+profonde 6206** (alésage 30, extérieur 62, largeur 16).
+
+**Étape 2 — La règle des charges**
+
+L'arbre tourne, la charge de courroie est fixe en direction. C'est donc la **bague intérieure**
+qui voit la charge tourner autour d'elle → **elle est serrée**.
+
+- arbre : **Ø30 k6**
+- alésage du carter : **Ø62 H7**, bague extérieure glissante
+
+**Étape 3 — Palier fixe et palier libre**
+
+- **Palier fixe, côté poulie** : bague intérieure entre l'épaulement de l'arbre et un anneau
+  élastique ; bague extérieure entre l'épaulement du carter et le couvercle. Les deux bagues sont
+  bloquées : l'arbre est positionné.
+- **Palier libre, à l'opposé** : bague intérieure bloquée sur l'arbre, bague extérieure **libre de
+  coulisser** dans son alésage.
+
+**Étape 4 — Lubrification**
+
+Vitesse modérée, atelier propre → **graisse**, remplissage au tiers. Ou **roulements 2RS** si l'on
+veut supprimer tout entretien.
+
+**Étape 5 — Étanchéité**
+
+Joint à lèvres en sortie d'arbre, **portée rectifiée Ra 0,8**, lèvre vers l'intérieur, chanfrein
+d'introduction sur l'arbre.
+
+**Étape 6 — Les contrôles finaux**
+
+- rayon du congé d'épaulement **inférieur** au r min du catalogue ;
+- place pour l'extracteur au démontage ;
+- vérifier que l'arbre en k6 se monte à la presse ou au maillet avec douille — **jamais en
+  frappant sur la bague extérieure**.
+
+**Étape 7 — Contrôle de bon sens**
+
+Un 6206 supporte plusieurs milliers de newtons en charge dynamique : 2 800 N est très
+confortable. Si la charge avait été de 20 000 N, il aurait fallu vérifier la durée de vie au
+catalogue — ce qui est au programme de deuxième année.
+
+""",
+            "exercice": """
+### Exercice — Appliquer la règle des charges
+
+**Cas A.** Un arbre de réducteur tourne à 1 450 tr/min. Il porte un pignon ; l'effort d'engrènement
+est constant en direction. L'arbre est monté sur deux roulements dans un carter fixe.
+
+**Cas B.** Un galet tendeur : l'axe est **fixe**, vissé sur le bâti, et c'est le **galet** qui
+tourne autour de lui sous la tension de la courroie.
+
+**1.** Dans le cas A, quelle bague voit la charge tourner autour d'elle ? Justifiez.
+
+**2.** Quels ajustements retenez-vous dans le cas A, pour l'arbre et pour le carter ?
+
+**3.** Dans le cas B, la situation est-elle la même ? Quelle bague voit la charge tourner ?
+
+**4.** Quels ajustements retenez-vous dans le cas B ?
+
+**5.** Que se passe-t-il concrètement si l'on monte la bague concernée avec du jeu au lieu d'un
+serrage ?
+""",
+            "corrige": """
+### Corrigé, en six temps
+
+#### 1. Ce que dit l'énoncé
+
+Deux cas volontairement **inversés** : dans le premier c'est l'arbre qui tourne, dans le second
+c'est le moyeu. Dans les deux cas, la charge est **constante en direction** — c'est cette
+constance qui permet de raisonner.
+
+#### 2. Quelle règle, et pourquoi
+
+> **La bague qui voit la charge tourner autour d'elle doit être serrée.**
+
+**Pourquoi cette règle et pas l'inverse :** si la charge se déplace continuellement autour d'une
+bague non serrée, celle-ci **roule** lentement dans son logement, quelques micromètres à chaque
+tour. En quelques semaines, cela représente des millions de micro-glissements, et la portée est
+matée.
+
+#### 3. Les conversions
+
+Aucune conversion. **Le raisonnement se fait en se plaçant DANS le repère de chaque bague** :
+depuis la bague intérieure d'un arbre tournant, une charge fixe dans l'espace paraît tourner.
+
+#### 4. Le remplacement
+
+**Cas A** — arbre tournant, charge fixe en direction :
+- bague **intérieure** (solidaire de l'arbre) : la charge tourne autour d'elle → **serrée**
+- bague **extérieure** (dans le carter fixe) : la charge la frappe toujours au même endroit →
+  **glissante**
+
+**Cas B** — axe fixe, galet tournant : la situation est inversée.
+
+#### 5. Le calcul
+
+**1.** La bague **intérieure**. L'arbre tourne, donc en se plaçant dans le repère de cette bague,
+l'effort d'engrènement — pourtant fixe dans l'espace — semble tourner autour d'elle. Elle est en
+**charge tournante**.
+
+**2.** Cas A : bague intérieure **serrée sur l'arbre → k6** · bague extérieure **glissante dans le
+carter → H7**. C'est le montage le plus fréquent en mécanique.
+
+**3.** **Non, la situation est inversée.** L'axe est fixe, donc la bague intérieure voit la
+tension de la courroie toujours au même endroit : elle est en charge **fixe**. C'est la bague
+**extérieure**, solidaire du galet qui tourne, qui voit la charge tourner autour d'elle.
+
+**4.** Cas B : bague extérieure **serrée dans le galet → M7** · bague intérieure **glissante sur
+l'axe → h6**.
+
+**5.** La bague non serrée **roule** sur sa portée à chaque tour. La portée est progressivement
+**matée et ovalisée**, du jeu apparaît, et le montage se détruit — typiquement en quelques
+semaines à quelques mois, alors que le calcul de durée de vie annonçait des années.
+
+#### 6. La vérification
+
+**Le contrôle qui ne trompe pas :** dans les deux cas, la bague serrée est celle **solidaire de
+la pièce qui tourne**. Ce raccourci fonctionne chaque fois que la charge est fixe en direction —
+et c'est la très grande majorité des cas.
+
+**Le contrôle de cohérence des ajustements** : on ne serre jamais **les deux** bagues. Si votre
+réponse comporte k6 et M7 sur le même roulement, le montage devient impossible à assembler et
+totalement hyperstatique.
+""",
+        },
+        {
+            "id": '6.6',
+            "titre": 'Palier fixe, palier libre et détails de montage',
+            "duree": '5 h',
+            "cours": """### 1. Palier fixe, palier libre
+
+[[FIG:isostatique_hyperstatique]]
+
+Sur un arbre à deux paliers, **un seul** assure le positionnement axial. L'autre doit pouvoir
+coulisser pour absorber la dilatation et les écarts de longueur.
+
+**Le chiffre qui convainc.** Un arbre acier de 800 mm qui passe de 20 à 70 °C s'allonge de
+800 × 12·10⁻⁶ × 50 = **0,48 mm** (fiche 8.2). C'est bien plus que le jeu interne d'un roulement,
+qui se compte en centièmes. S'il ne peut pas s'allonger, il précontraint les roulements — et
+l'échauffement s'emballe.
+
+**Comment réaliser le palier libre**, trois façons :
+
+1. laisser la **bague extérieure libre** de coulisser dans son alésage — le plus courant ;
+2. utiliser un **roulement à rouleaux cylindriques**, dont les rouleaux coulissent dans la bague ;
+3. monter avec un **jeu axial contrôlé**, pour les petits arbres.
+
+### 2. Le montage complet, décision par décision
+
+[[FIG:montage_arbre_complet]]
+
+Un montage de roulements, c'est **cinq décisions** — et chacune découle d'une règle, pas d'une
+habitude :
+
+1. **Quelle bague serrée ?** → la règle des charges.
+2. **Quel palier fixe ?** → un seul, l'autre libre pour la dilatation.
+3. **Quels arrêts axiaux ?** → épaulement (le plus solide) d'un côté, anneau élastique, écrou ou
+   couvercle de l'autre.
+4. **Quelle lubrification ?** → graisse au tiers du volume libre, ou roulements 2RS graissés à vie.
+5. **Quelle étanchéité ?** → joint à lèvres sur portée rectifiée Ra 0,8, lèvre vers l'intérieur.
+
+### 3. Les détails de montage qui font la différence
+
+Ce sont eux qui séparent un montage de catalogue d'un montage qui tient dix ans.
+
+**Le rayon de l'épaulement.** Il doit être **inférieur** au rayon de congé de la bague, sinon la
+bague porte sur l'arrondi et non sur la face : elle se monte de travers, et le positionnement
+axial est faux. La valeur est donnée dans le catalogue du fabricant, sous le symbole r min.
+
+**L'effort de montage doit passer par la bague qu'on emmanche.** Frapper sur la bague opposée fait
+transiter tout l'effort par les billes et les pistes : elles sont marquées par des impacts
+ponctuels — c'est le **brinelling**. Le roulement tournera d'abord normalement, puis deviendra
+bruyant, puis se détruira. Le défaut est invisible au montage : c'est ce qui le rend grave.
+
+**Le chanfrein d'introduction.** Sur l'arbre, avant la portée de joint : sans lui, la lèvre du
+joint est coupée au montage, et l'étanchéité est perdue dès le premier jour.
+
+**Prévoir la dépose.** Un roulement se démonte à l'extracteur : il faut de la place pour les
+griffes, et parfois des trous de dégagement dans l'épaulement.
+
+### 4. Les erreurs classiques
+
+1. **Inverser la règle des charges** : la bague tournante montée glissante flue et détruit sa
+   portée.
+2. **Bloquer axialement les deux paliers** : précontrainte, échauffement, grippage.
+3. **Frapper sur la bague opposée** au montage : brinelling, panne différée.
+4. **Portée d'arbre brute** sous un joint à lèvres : fuite en quelques heures.
+5. **Trop de graisse** : échauffement.
+6. **Roulement à contact oblique ou conique monté seul.**
+7. **Congé d'épaulement trop grand** : la bague porte sur l'arrondi.
+8. **Oublier la place pour l'extracteur** : le démontage détruit la pièce.
+
+
+### 5. À retenir
+
+- Par défaut : **roulement à billes à gorge profonde**.
+- **Charge tournante par rapport à la bague → SERRÉE. Charge fixe → GLISSANTE.**
+- Cas courant : **arbre k6, alésage H7**. Cas inverse (moyeu tournant) : **alésage M7, arbre h6**.
+- **Un seul palier fixe par arbre** — la dilatation atteint le demi-millimètre sur 800 mm.
+- Graisse : **un tiers** du volume libre. Joint à lèvres : portée **Ra 0,8**, lèvre vers
+  l'intérieur.
+- Rayon d'épaulement **< rayon de la bague** · l'effort de montage passe par la bague emmanchée.
+""",
+            "formules": """
+**Le principe** — sur deux paliers : **un seul** tient l'arbre axialement (palier **fixe**),
+l'autre laisse coulisser (palier **libre**)
+
+**Pourquoi** — absorber la **dilatation thermique** de l'arbre et les **défauts d'alignement**
+entre les deux alésages, sans créer d'effort interne
+
+**Le palier libre** — on laisse coulisser la bague **extérieure** dans son logement
+(jamais la bague serrée sur l'arbre)
+
+**Détails qui comptent** — épaulement de hauteur suffisante pour porter la bague ·
+rayon de congé **inférieur** au rayon du roulement · chanfrein d'introduction ·
+prévoir la surface d'appui de l'extracteur au démontage
+""",
+            "exemple": """
+### Cas industriel — L'arbre qui grandit de trois dixièmes
+
+**Le symptôme.** Un arbre de 600 mm entre paliers, dans une machine qui monte à 70 °C en
+fonctionnement, casse ses roulements après quelques semaines. À froid, tout est parfait.
+
+**Le calcul qui explique tout.** L'arbre est en acier (α = 12·10⁻⁶ /°C), et passe de 20 à 70 °C,
+soit ΔT = 50 °C :
+
+ΔL = L × α × ΔT = 600 × 12·10⁻⁶ × 50 = **0,36 mm**
+
+L'arbre s'allonge de plus de trois dixièmes de millimètre. Les deux paliers étant tous deux
+bloqués axialement, cet allongement n'a **nulle part où aller** : il se transforme en effort
+axial pur sur les deux roulements, en permanence, tant que la machine est chaude.
+
+**La correction.** Libérer un des deux paliers : la bague extérieure du palier libre coulisse
+dans son logement, et absorbe les 0,36 mm sans aucun effort.
+
+**Ce que le cas apprend.** Le montage était correct à froid, au moment du contrôle. **La
+défaillance ne pouvait apparaître qu'en fonctionnement** — c'est ce qui rend ce type d'erreur
+difficile à diagnostiquer si l'on ne pense pas à la dilatation.
+""",
+            "exercice": """
+### Exercice — Concevoir un montage à deux paliers
+
+Un arbre de **500 mm** entre paliers, en acier (α = 12·10⁻⁶ /°C), fonctionne dans une machine
+dont la température passe de 20 à 60 °C.
+
+**1.** Calculez l'allongement de l'arbre en fonctionnement.
+
+**2.** Si les deux paliers sont bloqués axialement, où va cet allongement ? Quelle en est la
+conséquence ?
+
+**3.** Quel montage adoptez-vous ? Précisez le rôle de chaque palier.
+
+**4.** Sur le palier libre, quelle bague laissez-vous coulisser, et pourquoi pas l'autre ?
+
+**5.** Citez deux détails de montage à ne pas oublier sur les portées de roulement.
+""",
+            "corrige": """
+### Corrigé, en six temps
+
+#### 1. Ce que dit l'énoncé
+
+Un arbre **long** (500 mm) et un **écart de température important** (40 °C). Ces deux données
+suffisent : c'est un problème de dilatation, pas de charge.
+
+#### 2. Quelle règle, et pourquoi
+
+**Sur deux paliers, un seul tient l'arbre axialement.** L'autre doit pouvoir coulisser, sinon la
+dilatation thermique et les défauts d'alignement se transforment en efforts internes que rien
+n'absorbe.
+
+C'est l'application directe de l'isostatisme (fiche 6.3) à un cas concret.
+
+#### 3. Les conversions
+
+**ΔT = 60 − 20 = 40 °C** (une différence, pas une température absolue).
+
+α = 12·10⁻⁶ /°C, L = 500 mm — tout est déjà cohérent, le résultat sortira en millimètres.
+
+#### 4. Le remplacement
+
+ΔL = L × α × ΔT = 500 × 12·10⁻⁶ × 40
+
+#### 5. Le calcul
+
+**1.** ΔL = 500 × 12·10⁻⁶ × 40 = **0,24 mm**
+
+**2.** Si les deux paliers sont bloqués, cet allongement **n'a nulle part où aller**. Il se
+transforme intégralement en **effort axial** sur les deux roulements, présent en permanence tant
+que la machine est chaude. Les roulements travaillent alors sous une charge que le calcul de
+durée de vie n'avait pas prévue, et se détruisent prématurément.
+
+**3.** Un montage **palier fixe / palier libre** :
+- le **palier fixe** tient l'arbre axialement dans les deux sens (bague extérieure bloquée entre
+  un épaulement et un couvercle ou un anneau) ;
+- le **palier libre** ne reprend que la charge radiale et laisse l'arbre s'allonger.
+
+**4.** On laisse coulisser la **bague extérieure**, dans son logement du carter. La bague
+intérieure, elle, est **serrée sur l'arbre** par la règle des charges (fiche 6.5) : on ne peut
+pas la laisser glisser sans détruire la portée de l'arbre.
+
+**5.** Deux détails parmi d'autres :
+- l'**épaulement** doit être assez haut pour porter réellement sur la bague, sans venir toucher
+  la cage ou la partie tournante ;
+- le **rayon de congé** de l'épaulement doit être **inférieur** au rayon de chanfrein du
+  roulement, sinon la bague porte sur le congé au lieu de l'épaulement et ne s'appuie sur rien.
+
+*On peut ajouter : prévoir un chanfrein d'introduction, et laisser une surface accessible pour
+l'extracteur au démontage.*
+
+#### 6. La vérification
+
+**Ordre de grandeur** : 0,24 mm sur 500 mm, c'est près d'un quart de millimètre — à comparer aux
+serrages d'ajustement qui se comptent en **centièmes** (fiche 5.4). La dilatation est donc dix
+fois plus grande que les jeux de montage : elle ne peut pas être « absorbée toute seule ».
+
+**Le contrôle du montage** : un seul palier bloqué axialement. Si vous en avez bloqué deux, vous
+avez reproduit exactement le montage hyperstatique de la fiche 6.3.
+""",
+        },
+        {
+            "id": '6.7',
+            "titre": 'Lubrification et étanchéité',
+            "duree": '4 h',
+            "cours": """### 1. Lubrification et étanchéité
+
+**Graisse** : simple, reste en place, protège de la pollution. On remplit **un tiers du volume
+libre**, jamais plus. Trop de graisse est brassée en permanence par les billes : elle s'échauffe,
+se dégrade, et fait chauffer le roulement — exactement comme un manque de graisse.
+
+**Huile** : nécessaire à haute vitesse, et quand il faut **évacuer la chaleur** (réducteurs par
+barbotage).
+
+**Étanchéité** : joint à lèvres (portée **Ra 0,8**, lèvre orientée vers l'intérieur pour retenir
+l'huile), déflecteur, chicane, ou roulement **2RS** pour les cas simples et sans entretien.
+
+*Une portée brute de tournage à Ra 6,3 abrase la lèvre en quelques heures : le joint fuit et la
+panne semble inexplicable.*
+
+### 2. L'étanchéité
+
+**Statique** — entre deux pièces fixes : joint plat, joint torique dans sa gorge, pâte à joint.
+Un joint torique doit être **comprimé de 15 à 30 %**, jamais écrasé à fond : au-delà, il flue et
+perd son élasticité.
+
+**Dynamique** — une pièce bouge : joint à lèvres pour un arbre tournant, joint racleur pour une
+tige de vérin, chicane ou déflecteur quand il n'y a pas de contact.
+
+**Le réflexe :** partout où il y a un joint dynamique, la portée doit être **rectifiée Ra 0,8**,
+avec un **chanfrein d'introduction** pour ne pas couper la lèvre au montage.
+
+### 3. Les erreurs classiques
+
+1. **Inverser la règle des charges** : la bague tournante montée glissante flue et détruit sa
+   portée.
+2. **Bloquer axialement les deux paliers** : précontrainte, échauffement, grippage.
+3. **Frapper sur la bague opposée** au montage : brinelling, panne différée.
+4. **Portée d'arbre brute** sous un joint à lèvres : fuite en quelques heures.
+5. **Trop de graisse** : échauffement.
+6. **Roulement à contact oblique ou conique monté seul.**
+7. **Congé d'épaulement trop grand** : la bague porte sur l'arrondi.
+8. **Oublier la place pour l'extracteur** : le démontage détruit la pièce.
+
+
+### 4. À retenir
+
+- Par défaut : **roulement à billes à gorge profonde**.
+- **Charge tournante par rapport à la bague → SERRÉE. Charge fixe → GLISSANTE.**
+- Cas courant : **arbre k6, alésage H7**. Cas inverse (moyeu tournant) : **alésage M7, arbre h6**.
+- **Un seul palier fixe par arbre** — la dilatation atteint le demi-millimètre sur 800 mm.
+- Graisse : **un tiers** du volume libre. Joint à lèvres : portée **Ra 0,8**, lèvre vers
+  l'intérieur.
+- Rayon d'épaulement **< rayon de la bague** · l'effort de montage passe par la bague emmanchée.
+""",
+            "formules": """
+**Lubrification** — **graisse** : simple, étanche par elle-même, vitesses modérées ·
+**huile** : évacue la chaleur, vitesses élevées, exige une étanchéité soignée
+
+**Étanchéité statique** (pièces immobiles) — joint plat, joint torique, pâte à joint
+
+**Étanchéité dynamique** (une pièce tourne) — joint à lèvres (le plus courant) ·
+déflecteur, chicane, joint à labyrinthe pour les milieux très pollués
+
+**Le joint à lèvres exige trois choses de la portée** — **Ra 0,8** rectifié ·
+**pas de stries hélicoïdales** · un **chanfrein d'introduction** pour ne pas couper la lèvre au
+montage
+""",
+            "exemple": """
+### Cas industriel — Le graissage qui détruit le roulement
+
+**Le symptôme.** Sur une ligne de production, la maintenance applique une consigne simple :
+regraisser tous les roulements chaque mois, généreusement. Les roulements d'un groupe de
+ventilateurs, tournant à 2 800 tr/min, chauffent pourtant de plus en plus et finissent par
+gripper.
+
+**L'analyse.** Un roulement ne doit être rempli de graisse qu'à **30 à 50 % du volume libre**.
+Rempli complètement, la graisse n'a plus la place de se déplacer : elle est **brassée** en
+permanence par les billes.
+
+Ce brassage produit de la chaleur — d'autant plus que la vitesse est élevée. La température monte,
+la graisse se dégrade et perd son pouvoir lubrifiant, ce qui augmente encore le frottement.
+L'emballement est progressif, ce qui explique que la panne n'apparaisse qu'après plusieurs
+semaines.
+
+**La correction.** Consigne de regraissage revue : quantité mesurée, remplissage partiel, et
+intervalle défini selon la vitesse plutôt qu'un mois forfaitaire.
+
+**Ce que le cas apprend.** « Plus de lubrifiant » n'est pas « mieux lubrifié ». C'est le même
+raisonnement que pour l'état de surface (fiche 5.6) : **trop lisse est un défaut, trop graissé
+aussi**. En mécanique, la bonne valeur est presque toujours un intervalle, jamais un maximum.
+""",
+            "exercice": """
+### Exercice — Choisir lubrification et étanchéité
+
+Un réducteur comporte un arbre de sortie qui **traverse le carter** pour recevoir une poulie. Le
+carter contient de l'huile. La machine travaille dans un atelier de menuiserie, très poussiéreux.
+
+**1.** L'étanchéité entre le carter et son couvercle est-elle statique ou dynamique ? Quelle
+solution retenez-vous ?
+
+**2.** L'étanchéité à la traversée de l'arbre de sortie : statique ou dynamique ? Quelle
+solution ?
+
+**3.** Quelles **trois exigences** la portée de l'arbre doit-elle respecter pour ce joint ?
+
+**4.** L'environnement est très poussiéreux. Que proposez-vous en complément, et pourquoi ?
+
+**5.** Un technicien propose de remplir complètement de graisse un roulement tournant à
+3 000 tr/min. Que lui répondez-vous ?
+""",
+            "corrige": """
+### Corrigé, en six temps
+
+#### 1. Ce que dit l'énoncé
+
+Deux étanchéités de **natures différentes** sur le même carter : l'une entre deux pièces
+immobiles, l'autre autour d'un arbre qui tourne. Plus une contrainte d'environnement
+(**poussière**) qui appelle une solution supplémentaire.
+
+#### 2. Quelle règle, et pourquoi
+
+**La question qui trie :** les deux pièces bougent-elles l'une par rapport à l'autre ?
+
+- **non** → étanchéité **statique** : joint plat, torique, ou pâte à joint ;
+- **oui** → étanchéité **dynamique** : joint à lèvres, et en milieu pollué, une protection
+  amont.
+
+#### 3. Les conversions
+
+Aucune conversion numérique. **Le tri se fait sur la nature du contact**, pas sur une valeur.
+
+#### 4. Le remplacement
+
+| Interface | Mouvement relatif | Nature |
+|---|---|---|
+| carter / couvercle | aucun | **statique** |
+| carter / arbre de sortie | rotation | **dynamique** |
+
+#### 5. Le calcul
+
+**1.** **Statique** : le couvercle ne bouge pas par rapport au carter. Un **joint plat** ou une
+**pâte à joint** convient, avec un serrage régulier des vis pour répartir la pression.
+
+**2.** **Dynamique** : l'arbre tourne dans le carter. La solution courante est un **joint à
+lèvres** (bague à lèvre avec ressort), monté lèvre tournée vers l'intérieur, côté huile.
+
+**3.** Les trois exigences de la portée, déjà rencontrées en fiche 5.6 :
+- **Ra 0,8**, obtenu par rectification ;
+- **aucune strie hélicoïdale** — des stries orientées agissent comme une vis et pompent l'huile
+  vers l'extérieur ;
+- un **chanfrein d'introduction**, sans lequel la lèvre est coupée au montage.
+
+**4.** En milieu très poussiéreux, un joint à lèvres seul est abrasé par les particules. On ajoute
+en amont un **déflecteur** ou un **joint à labyrinthe** : il ne fait pas l'étanchéité à l'huile,
+mais il **protège le joint à lèvres** en arrêtant l'essentiel des poussières.
+
+**5.** **Non.** Un roulement se remplit à **30 à 50 % du volume libre**. Rempli complètement, la
+graisse est brassée en permanence par les billes : elle chauffe, se dégrade, perd son pouvoir
+lubrifiant — et le roulement grippe. À 3 000 tr/min, l'effet est d'autant plus rapide que la
+vitesse est élevée.
+
+#### 6. La vérification
+
+**Le contrôle de cohérence** : à chaque interface, la solution correspond bien à la nature du
+mouvement. Mettre un joint à lèvres entre le carter et son couvercle serait un surcoût inutile ;
+mettre un joint plat autour d'un arbre tournant ne tiendrait pas une heure.
+
+**Le principe qui se retrouve partout dans le programme** : la bonne valeur est un
+**intervalle**, jamais un maximum. Trop lisse est un défaut (fiche 5.6), trop graissé aussi,
+trop serré également (fiche 5.4).
+""",
+        },
+        {
+            "id": '6.8',
+            "titre": 'Guidage en translation et arc-boutement',
+            "duree": '4 h',
+            "cours": """### 1. Guider en translation : l'arc-boutement
+
+Faire coulisser une pièce demande deux choses : la **guider** — empêcher tous les mouvements sauf
+un — et éviter qu'elle **se coince**.
+
+[[FIG:arc_boutement]]
+
+**L'arc-boutement, c'est ce qui se passe quand un tiroir se bloque parce qu'on tire d'un seul
+côté.** L'effort excentré fait pivoter le chariot ; il vient toucher le rail en deux points
+opposés, et le frottement de ces deux contacts s'oppose au mouvement. Plus on pousse, plus ça
+serre : la situation s'auto-aggrave.
+
+**La règle géométrique :**
+
+> **Longueur de guidage ≈ 1,5 à 2 fois la course**
+> ou, plus précisément : au moins **le double de la distance** entre le point d'application de
+> l'effort et l'axe du guidage.
+
+**Ce qu'il faut bien comprendre :** un guidage trop court se coince **quel que soit le soin
+apporté à l'usinage**. Ce n'est pas un problème de précision, c'est un problème de géométrie et de
+frottement. Aucune rectification ne rattrapera une longueur insuffisante.
+
+**Les solutions courantes**, du plus simple au plus performant :
+
+| Solution | Points forts | Limites |
+|---|---|---|
+| glissière prismatique ou queue d'aronde | rigide, réglable par lardon | frottement élevé, usure |
+| arbre + douille lisse | simple, économique | frottement, précision moyenne |
+| douille à billes sur arbre rectifié | frottement très faible | sensible à la pollution |
+| **rail à patins à billes** | précis, rigide, standard industriel | coût |
+| galets sur profilé | grandes courses, tolérant | précision limitée |
+
+### 2. Les erreurs classiques
+
+1. **Guidage trop court** par rapport à la course : arc-boutement garanti.
+2. **Compter sur la clavette pour tenir axialement**, ou pour centrer.
+3. **Remplacer une clavette par une plus courte** : matage des rainures.
+4. **Serrer au jugé** au lieu d'utiliser la clé dynamométrique.
+5. **Croire qu'une rondelle plate freine.**
+6. **Oublier que la tension de courroie charge les paliers** — parfois plus que le couple.
+7. **Monter deux roues de modules différents** : elles ne peuvent pas engrener.
+8. **Écraser un joint torique à fond** : il flue et l'étanchéité disparaît.
+
+
+### 3. À retenir
+
+- Longueur de guidage ≈ **1,5 à 2 × la course**, sinon arc-boutement.
+- C'est la **précharge** et l'adhérence qui tiennent un assemblage vissé, pas le cisaillement des
+  vis.
+- Classe **8.8 → Re = 640 MPa** · **10.9 → Re = 900 MPa**.
+- **Clavette = couple · ajustement = centrage · épaulement = arrêt axial.** Trois fonctions, trois
+  éléments.
+- Une clavette travaille au **matage sur les flancs** : on l'allonge, on ne la grossit pas.
+- **d = m Z** · **a = m (Z1+Z2)/2** · même module obligatoire · Z ≥ 17.
+- Joint dynamique : portée **Ra 0,8** et chanfrein d'introduction.
+""",
+            "formules": """
+**Arc-boutement** — le coulisseau se coince au lieu de glisser, quel que soit l'effort appliqué
+
+**La règle du rapport L/D** — guidage **court** poussé loin de son axe → il se coince ·
+il faut un guidage **long** par rapport au porte-à-faux · repère usuel : **L ≥ 1,5 à 2 × le
+porte-à-faux**
+
+**Ce qui aggrave** — un effort appliqué **loin** de l'axe de guidage · un **jeu** important ·
+un **coefficient de frottement** élevé
+
+**Solutions** — allonger le guidage · rapprocher le point d'application de l'effort ·
+réduire le frottement (galets, patins, douilles à billes)
+""",
+            "exemple": """
+### Cas industriel — Le tiroir qui coince quand on le prend par le coin
+
+**Le symptôme.** Un chariot de manutention coulisse sur deux glissières. Tiré par sa poignée
+centrale, il glisse sans effort. Tiré par un angle, il **se bloque** — et forcer ne fait
+qu'aggraver le blocage.
+
+**L'analyse.** C'est de l'**arc-boutement**, et c'est un phénomène purement géométrique : quand
+l'effort est appliqué loin de l'axe de guidage, il crée un moment qui met le coulisseau en biais
+dans ses glissières. Les deux coins opposés viennent porter, et la force de frottement qui en
+résulte **croît proportionnellement à l'effort appliqué**.
+
+C'est ce qui rend le phénomène si déroutant : **plus on tire fort, plus ça bloque**. Augmenter
+la force ne résout jamais un arc-boutement.
+
+**Les trois corrections possibles**, par ordre d'efficacité :
+
+| Action | Effet |
+|---|---|
+| **allonger le guidage** | augmente le rapport L/porte-à-faux — la plus efficace |
+| **rapprocher le point de traction** de l'axe | réduit le moment qui met en biais |
+| **réduire le frottement** (galets) | repousse le seuil, sans supprimer la cause |
+
+**Ce que le cas apprend.** Un même mécanisme peut fonctionner ou se bloquer **selon l'endroit où
+on applique l'effort** — sans qu'aucune pièce ne soit défectueuse. C'est un problème de
+conception, pas de fabrication.
+""",
+            "exercice": """
+### Exercice — Diagnostiquer un blocage
+
+Un coulisseau est guidé sur une glissière de **longueur L = 80 mm**. L'effort de manœuvre est
+appliqué à **120 mm** de l'axe de la glissière. Le coulisseau se bloque dès qu'on pousse un peu
+fort.
+
+**1.** Comment s'appelle ce phénomène ? Décrivez ce qui se passe géométriquement.
+
+**2.** Pourquoi augmenter la force de poussée aggrave-t-il le problème au lieu de le résoudre ?
+
+**3.** Calculez le rapport actuel entre la longueur de guidage et le porte-à-faux. Comparez au
+repère usuel.
+
+**4.** Quelle longueur de guidage faudrait-il pour respecter ce repère ?
+
+**5.** Citez deux autres solutions si l'on ne peut pas allonger la glissière.
+""",
+            "corrige": """
+### Corrigé, en six temps
+
+#### 1. Ce que dit l'énoncé
+
+Deux longueurs à comparer : le **guidage** (80 mm) et le **porte-à-faux** (120 mm). Le fait que
+le blocage apparaisse « dès qu'on pousse fort » est le signe caractéristique de
+l'arc-boutement — un défaut de fabrication donnerait un blocage constant.
+
+#### 2. Quelle règle, et pourquoi
+
+**L'arc-boutement est un phénomène géométrique, pas un problème d'effort.**
+
+Quand l'effort est appliqué loin de l'axe, il crée un moment qui met le coulisseau **en biais**.
+Les coins opposés portent, et la force de frottement produite est **proportionnelle à l'effort
+appliqué** — d'où le repère de conception :
+
+> **longueur de guidage ≥ 1,5 à 2 × le porte-à-faux**
+
+#### 3. Les conversions
+
+Aucune conversion d'unité : les deux longueurs sont déjà en millimètres. **Le calcul est un
+simple rapport**, sans dimension.
+
+#### 4. Le remplacement
+
+rapport actuel = L / porte-à-faux = 80 / 120
+
+longueur nécessaire = porte-à-faux × 1,5 = 120 × 1,5 (au minimum)
+
+#### 5. Le calcul
+
+**1.** C'est l'**arc-boutement**. L'effort appliqué loin de l'axe crée un moment qui fait pivoter
+légèrement le coulisseau dans son jeu : il se met en biais et vient porter par deux coins
+opposés, ce qui le coince.
+
+**2.** Parce que la force de frottement au niveau des deux coins est **proportionnelle à l'effort
+appliqué**. Pousser deux fois plus fort double aussi la force qui bloque : le rapport ne change
+pas, et le coulisseau reste coincé. **Augmenter la force ne résout jamais un arc-boutement.**
+
+**3.** rapport = 80 / 120 = **0,67**. Le repère usuel demande **au moins 1,5**. On est donc à
+moins de la moitié de ce qu'il faudrait — le blocage était prévisible dès la conception.
+
+**4.** L ≥ 1,5 × 120 = **180 mm** au minimum, et **240 mm** pour respecter le rapport de 2. Il
+faudrait donc plus que doubler la longueur de guidage actuelle.
+
+**5.** Deux autres solutions :
+- **rapprocher le point d'application de l'effort** de l'axe de la glissière : cela réduit
+  directement le porte-à-faux, donc le moment ;
+- **réduire le coefficient de frottement** (galets, patins, douilles à billes) : cela repousse le
+  seuil de blocage, sans supprimer la cause géométrique.
+
+#### 6. La vérification
+
+**Le contrôle par le rapport** : 0,67 contre 1,5 attendu — l'écart est tel qu'il n'y a pas de
+doute sur le diagnostic. Si le rapport avait été de 1,4, on aurait pu hésiter entre
+l'arc-boutement et une autre cause (jeu excessif, désalignement).
+
+**Le contrôle de bon sens** : le mécanisme fonctionne quand on pousse dans l'axe et bloque quand
+on pousse au coin. Une pièce défectueuse bloquerait dans les deux cas — **c'est bien la
+géométrie du montage qui est en cause**, pas la fabrication.
+""",
+        },
+        {
+            "id": '6.9',
+            "titre": 'La visserie : ce qui tient vraiment',
+            "duree": '5 h',
+            "cours": """### 1. La visserie : ce qui tient vraiment
+
+Voici le point contre-intuitif de la fiche, et celui qu'on explique rarement.
+
+[[FIG:precharge_vissage]]
+
+Dans un assemblage boulonné correct, **les vis ne travaillent pas en cisaillement**. Le serrage
+étire la vis, qui se comporte comme un **ressort tendu** : cette tension, appelée **précharge**,
+plaque les pièces l'une contre l'autre. Et c'est **l'adhérence entre les pièces** qui transmet
+l'effort.
+
+**La preuve est sous vos yeux sur n'importe quel plan** : les trous de passage sont toujours
+percés **avec du jeu** (Ø9 pour une vis M8, par exemple). Si les vis devaient travailler en
+cisaillement, il faudrait des trous ajustés et des vis calibrées — ce qui existe, mais reste
+l'exception.
+
+**Trois conséquences directes :**
+
+1. **Un serrage insuffisant est la première cause de desserrage** sous vibrations. Ce n'est pas la
+   vis qui « se dévisse » : c'est la précharge qui a disparu.
+2. **On serre à la clé dynamométrique**, au couple correspondant à la classe de la vis. Serrer au
+   jugé donne des précharges variant du simple au triple.
+3. **La rondelle plate ne freine rien.** Elle répartit la pression sous la tête et protège la
+   surface. C'est tout.
+
+**Boulon, vis ou goujon ?**
+
+| Solution | Quand | Pourquoi |
+|---|---|---|
+| **boulon** (vis + écrou) | accès des deux côtés | le plus économique : deux pièces simplement percées |
+| **vis** dans un taraudage | accès d'un seul côté | pas d'écrou à tenir |
+| **goujon** | pièce taraudée en aluminium, démontages fréquents | il reste en place : le taraudage fragile est préservé |
+
+**La classe de qualité**, écrite sur la tête : 8.8, 10.9, 12.9.
+
+> premier nombre × 100 = **Rm** en MPa · produit des deux × 10 = **Re** en MPa
+
+Une 8.8 : Rm = 800 MPa, Re = 640 MPa. Une 10.9 : Rm = 1 000, Re = 900.
+
+**Les freinages**, quand les vibrations persistent malgré une précharge correcte :
+
+- **par obstacle** : goupille fendue avec écrou à créneaux, fil frein, rondelle arrêtoir à ailettes ;
+- **par adhérence** : écrou autofreiné à bague nylon, rondelle à dents, frein filet chimique.
+
+### 2. Les erreurs classiques
+
+1. **Guidage trop court** par rapport à la course : arc-boutement garanti.
+2. **Compter sur la clavette pour tenir axialement**, ou pour centrer.
+3. **Remplacer une clavette par une plus courte** : matage des rainures.
+4. **Serrer au jugé** au lieu d'utiliser la clé dynamométrique.
+5. **Croire qu'une rondelle plate freine.**
+6. **Oublier que la tension de courroie charge les paliers** — parfois plus que le couple.
+7. **Monter deux roues de modules différents** : elles ne peuvent pas engrener.
+8. **Écraser un joint torique à fond** : il flue et l'étanchéité disparaît.
+
+
+### 3. À retenir
+
+- Longueur de guidage ≈ **1,5 à 2 × la course**, sinon arc-boutement.
+- C'est la **précharge** et l'adhérence qui tiennent un assemblage vissé, pas le cisaillement des
+  vis.
+- Classe **8.8 → Re = 640 MPa** · **10.9 → Re = 900 MPa**.
+- **Clavette = couple · ajustement = centrage · épaulement = arrêt axial.** Trois fonctions, trois
+  éléments.
+- Une clavette travaille au **matage sur les flancs** : on l'allonge, on ne la grossit pas.
+- **d = m Z** · **a = m (Z1+Z2)/2** · même module obligatoire · Z ≥ 17.
+- Joint dynamique : portée **Ra 0,8** et chanfrein d'introduction.
+""",
+            "formules": """
+**Le principe** — une vis serrée est une vis **TENDUE** : c'est la **précharge** qui tient
+l'assemblage, pas le frottement de la tête
+
+**Conséquence** — une vis correctement précontrainte ne « travaille » presque pas sous charge
+variable : c'est ce qui la rend endurante en **fatigue**
+
+**Classe de qualité** — 1er chiffre × 100 = Rm · produit des deux × 10 = Re
+4.6 → 400/240 · **8.8 → 800/640** · 10.9 → 1000/900 · 12.9 → 1200/1080
+
+**Repère de serrage** — M8 en 8.8 : couple ≈ **25 N·m**, précharge ≈ **15 000 N**
+
+**Freinage** — rondelle élastique, frein filet, écrou Nylstop, rondelle-frein :
+ils empêchent le **desserrage**, ils ne remplacent pas la précharge
+""",
+            "exemple": """
+### Cas industriel — Les vis qui cassent parce qu'elles étaient trop peu serrées
+
+**Le symptôme.** Sur une machine vibrante, quatre vis M10 rompent après quelques semaines. Le
+réflexe de l'équipe est de conclure à un serrage **excessif** — on desserre donc un peu au
+remontage. Les vis cassent encore plus vite.
+
+**L'analyse, contre-intuitive.** Une vis correctement serrée est **tendue** à une valeur élevée et
+constante. Sous une charge extérieure variable, la tension de la vis ne varie que très peu :
+l'essentiel de la variation est absorbé par les pièces assemblées, qui se détendent légèrement.
+
+Une vis **insuffisamment serrée**, au contraire, voit passer **toute la variation de charge**.
+Elle est donc soumise à une sollicitation alternée de grande amplitude — exactement ce qui
+provoque une rupture en **fatigue** (fiche 13.5).
+
+**La correction.** Serrage au couple contrôlé (clé dynamométrique) à la valeur calculée pour la
+classe 10.9 utilisée, et non « au ressenti ». Aucune rupture depuis.
+
+**Ce que le cas apprend.** Le réflexe « ça casse, donc c'était trop serré » est faux dans la
+majorité des cas de rupture en fatigue. **C'est le défaut de précharge qui tue les vis**, pas
+l'excès — dans la limite, bien sûr, de la limite élastique de la classe utilisée.
+""",
+            "exercice": """
+### Exercice — Choisir et serrer une visserie
+
+Un assemblage soumis à des **vibrations** doit être fixé par des vis M8. Le calcul suppose une
+classe **8.8**.
+
+**1.** Calculez Rm et Re pour une vis 8.8, puis pour une vis 4.6.
+
+**2.** Par quel facteur la limite élastique est-elle divisée si l'on substitue une 4.6 ?
+
+**3.** Qu'est-ce qui tient réellement l'assemblage : le frottement sous la tête, ou autre chose ?
+Expliquez.
+
+**4.** Un opérateur serre « au ressenti », nettement moins que la valeur préconisée. Pourquoi
+cela favorise-t-il la rupture en fatigue plutôt que de la retarder ?
+
+**5.** Quelle information doit impérativement figurer sur la nomenclature, et pourquoi ne
+peut-on pas s'en passer ?
+""",
+            "corrige": """
+### Corrigé, en six temps
+
+#### 1. Ce que dit l'énoncé
+
+Un assemblage **vibrant**, donc soumis à une charge **variable** — c'est le contexte où la
+précharge devient déterminante. La classe 8.8 est une hypothèse de **calcul** : encore faut-il
+qu'elle soit respectée au montage.
+
+#### 2. Quelle règle, et pourquoi
+
+**Une vis serrée est une vis tendue.** C'est la **précharge** qui maintient l'assemblage.
+
+Conséquence directe, et c'est le cœur de l'exercice : une vis bien préchargée ne voit passer
+qu'une **faible part** de la variation de charge extérieure ; une vis mal serrée les encaisse
+**toutes**.
+
+Et pour la classe : **Rm = 1er chiffre × 100**, **Re = produit des deux × 10**.
+
+#### 3. Les conversions
+
+Aucune conversion d'unité — les résultats sortent directement en mégapascals.
+
+#### 4. Le remplacement
+
+**8.8** : Rm = 8 × 100 · Re = 8 × 8 × 10
+**4.6** : Rm = 4 × 100 · Re = 4 × 6 × 10
+
+facteur = Re(8.8) / Re(4.6)
+
+#### 5. Le calcul
+
+**1.** **8.8** : Rm = **800 MPa**, Re = **640 MPa**. **4.6** : Rm = **400 MPa**, Re = **240 MPa**.
+
+**2.** 640 / 240 = **2,67** — la limite élastique est divisée par près de 3. Le couple de serrage
+calculé pour une 8.8 dépasserait alors la limite élastique de la 4.6, qui s'allongerait
+plastiquement dès le serrage.
+
+**3.** Ce n'est pas le frottement sous la tête : c'est la **précharge**, c'est-à-dire la
+**tension** de la vis. En serrant, on étire la vis comme un ressort ; cette tension plaque les
+pièces l'une contre l'autre et les empêche de bouger.
+
+**4.** Parce qu'une vis peu serrée voit passer **toute la variation de charge**. Elle est alors
+soumise à une sollicitation **alternée de grande amplitude**, précisément ce qui amorce une
+fissure de fatigue. Une vis correctement préchargée, elle, reste à une tension quasi constante :
+sa variation est faible, donc sa durée de vie en fatigue est bien supérieure.
+
+**5.** La **classe de qualité** (8.8, 10.9…). Sans elle, un remplacement en maintenance peut
+introduire une vis de dimensions identiques mais **trois fois moins résistante** — et rien ne le
+montre à l'œil, seul le marquage sur la tête le dit.
+
+#### 6. La vérification
+
+**Contrôle de cohérence des classes** : Re doit toujours être inférieur à Rm (640 < 800 et
+240 < 400). Si le calcul donnait l'inverse, la formule aurait été mal appliquée.
+
+**Le contrôle contre-intuitif à retenir** : face à des vis qui cassent, le réflexe « c'était trop
+serré » est faux dans la majorité des cas de fatigue. Vérifiez d'abord **la classe utilisée** et
+**le couple réellement appliqué** avant de conclure.
+""",
+        },
+        {
+            "id": '6.10',
+            "titre": 'Assemblages arbre-moyeu',
+            "duree": '4 h',
+            "cours": """### 1. Transmettre le couple entre un arbre et un moyeu
+
+[[FIG:liaison_arbre_moyeu]]
+
+**Le point à ne jamais confondre**, et il tombe à tous les contrôles :
+
+> **La clavette transmet le COUPLE. Elle ne maintient JAMAIS le moyeu axialement.**
+> **Le centrage vient de l'AJUSTEMENT**, pas de la clavette.
+
+Les trois fonctions sont donc assurées par trois éléments différents :
+
+| Fonction | Élément |
+|---|---|
+| transmettre le couple | clavette, cannelures, serrage, goupille |
+| centrer | l'ajustement (H7/j6, H7/k6…) |
+| maintenir axialement | épaulement, anneau élastique, écrou, vis de bout d'arbre |
+
+**Comment travaille une clavette.** Par **matage sur ses flancs** — pas par cisaillement, contrairement
+à l'intuition. Elle est donc ajustée **sans jeu latéralement**, mais **avec du jeu en fond de
+rainure** : si elle portait par le fond, elle soulèverait le moyeu et le décentrerait.
+
+La pression de matage vaut :
+
+> **p = 2 Mt / (d × h' × L)**, avec h' la hauteur en contact et L la longueur
+
+**C'est pourquoi on allonge une clavette plutôt que de la grossir** : la pression est inversement
+proportionnelle à la longueur. Remplacer une clavette par une plus courte, comme dans le cas
+classique, fait grimper la pression, mate les rainures de l'arbre et du moyeu, crée du jeu, et
+finit par la casser.
+
+### 2. Les erreurs classiques
+
+1. **Guidage trop court** par rapport à la course : arc-boutement garanti.
+2. **Compter sur la clavette pour tenir axialement**, ou pour centrer.
+3. **Remplacer une clavette par une plus courte** : matage des rainures.
+4. **Serrer au jugé** au lieu d'utiliser la clé dynamométrique.
+5. **Croire qu'une rondelle plate freine.**
+6. **Oublier que la tension de courroie charge les paliers** — parfois plus que le couple.
+7. **Monter deux roues de modules différents** : elles ne peuvent pas engrener.
+8. **Écraser un joint torique à fond** : il flue et l'étanchéité disparaît.
+
+
+### 3. À retenir
+
+- Longueur de guidage ≈ **1,5 à 2 × la course**, sinon arc-boutement.
+- C'est la **précharge** et l'adhérence qui tiennent un assemblage vissé, pas le cisaillement des
+  vis.
+- Classe **8.8 → Re = 640 MPa** · **10.9 → Re = 900 MPa**.
+- **Clavette = couple · ajustement = centrage · épaulement = arrêt axial.** Trois fonctions, trois
+  éléments.
+- Une clavette travaille au **matage sur les flancs** : on l'allonge, on ne la grossit pas.
+- **d = m Z** · **a = m (Z1+Z2)/2** · même module obligatoire · Z ≥ 17.
+- Joint dynamique : portée **Ra 0,8** et chanfrein d'introduction.
+""",
+            "formules": """
+**La répartition des rôles, jamais confondue** —
+l'**ajustement** centre · la **clavette** transmet le couple ·
+l'**épaulement / anneau élastique** tient axialement
+
+**Solutions courantes** — clavette parallèle (simple, économique, couple modéré) ·
+cannelures (couple élevé, coulissement possible) ·
+frettage / serrage seul (couple élevé, sans usinage de rainure) ·
+goupille (couple faible, sert aussi de fusible mécanique)
+
+**Attention** — une rainure de clavette **affaiblit l'arbre** : concentration de contrainte,
+à vérifier en torsion (fiche 4.2)
+""",
+            "exemple": """
+### Cas industriel — La clavette accusée à tort
+
+**Le symptôme.** Sur une transmission, une poulie prend du jeu sur son arbre. Au démontage, la
+clavette est matée et la rainure ovalisée. Le diagnostic immédiat de l'atelier : « clavette
+sous-dimensionnée ».
+
+**L'analyse.** Le montage utilisait un ajustement **H7/h6** entre le moyeu et l'arbre — c'est-à-
+dire, au mieux, un contact sans serrage, au pire un léger jeu (fiche 5.4).
+
+Or **la clavette n'a jamais eu pour rôle de centrer la poulie**. Avec du jeu dans l'ajustement,
+la poulie peut basculer légèrement à chaque inversion de couple. Toute la charge se reporte alors
+sur la clavette, qui travaille en matage sur une surface bien plus faible que prévu.
+
+**La correction.** Passer l'ajustement en **H7/k6** : la poulie est centrée et maintenue, la
+clavette ne fait plus que transmettre le couple, dans les conditions pour lesquelles elle a été
+dimensionnée. La clavette d'origine, inchangée, a tenu sans problème.
+
+**Ce que le cas apprend.** La pièce qui casse n'est pas toujours la pièce fautive. Ici, la
+clavette **subissait** un défaut d'ajustement. Remplacer la clavette par une plus grosse aurait
+retardé la panne sans traiter la cause.
+""",
+            "exercice": """
+### Exercice — Assembler une poulie sur un arbre
+
+Une poulie doit être montée en bout d'arbre Ø30. Elle transmet un couple modéré et doit pouvoir
+être démontée en maintenance.
+
+**1.** Quels sont les **trois rôles** à assurer dans cet assemblage ? Attribuez à chacun l'élément
+qui le remplit.
+
+**2.** Quel ajustement retenez-vous entre l'arbre et le moyeu ? Justifiez par rapport à la
+contrainte de démontabilité.
+
+**3.** Pourquoi ne peut-on pas confier le centrage à la clavette ?
+
+**4.** Quelle conséquence la rainure de clavette a-t-elle sur la résistance de l'arbre ?
+
+**5.** Si le couple à transmettre était beaucoup plus élevé, quelle autre solution
+envisageriez-vous ?
+""",
+            "corrige": """
+### Corrigé, en six temps
+
+#### 1. Ce que dit l'énoncé
+
+Trois informations décisives : un **couple modéré** (donc une clavette suffit), une exigence de
+**démontabilité** (donc pas de frettage), et un montage **en bout d'arbre** (donc accessible).
+
+#### 2. Quelle règle, et pourquoi
+
+**Les trois rôles ne se confondent jamais :**
+
+> **l'ajustement centre · la clavette transmet · l'épaulement tient axialement**
+
+C'est la règle la plus utile de toute la fiche, parce qu'elle explique la quasi-totalité des
+défaillances d'assemblages arbre-moyeu : elles viennent presque toujours d'un rôle confié au
+mauvais élément.
+
+#### 3. Les conversions
+
+Aucune conversion numérique. **Le travail est d'attribuer chaque fonction à un élément** avant
+tout choix de dimension.
+
+#### 4. Le remplacement
+
+| Rôle | Élément |
+|---|---|
+| centrer | **ajustement** H7/k6 ou H7/js6 |
+| transmettre le couple | **clavette parallèle** |
+| tenir axialement | **épaulement + anneau élastique** (ou rondelle et vis en bout) |
+
+#### 5. Le calcul
+
+**1.** *(voir tableau ci-dessus)* — trois rôles, trois éléments distincts.
+
+**2.** **H7/k6**, ou **H7/js6** si le démontage doit être très fréquent. Ces deux ajustements sont
+**incertains** : ils assurent un centrage précis tout en restant démontables, au maillet ou à
+l'extracteur. Un H7/p6 (serrage) tiendrait mieux mais compliquerait la maintenance ; un H7/h6
+laisserait du jeu et reporterait tout sur la clavette.
+
+**3.** Parce que la clavette porte **sur ses flancs seulement** : elle n'a aucun contact
+diamétral capable de centrer le moyeu. S'il y a du jeu dans l'ajustement, la poulie bascule
+légèrement à chaque inversion de couple, et la clavette encaisse un matage pour lequel elle n'a
+pas été dimensionnée — c'est exactement le cas industriel de cette fiche.
+
+**4.** La rainure **enlève de la matière** et crée une **concentration de contrainte** dans un
+angle rentrant. L'arbre est donc affaibli en torsion, et il faut le vérifier au calcul
+(fiche 4.2) sur la section **avec rainure**, pas sur la section pleine.
+
+**5.** Pour un couple élevé : des **cannelures** (elles répartissent l'effort sur toute la
+circonférence au lieu d'une seule clavette) ou un **frettage** — c'est-à-dire un serrage
+important seul, sans aucune rainure, ce qui évite d'affaiblir l'arbre.
+
+#### 6. La vérification
+
+**Le contrôle par les trois rôles** : chaque rôle est-il attribué à **un seul** élément, et
+chaque élément a-t-il **un seul** rôle ? Si la clavette apparaît deux fois dans votre réponse,
+c'est le signe d'une confusion.
+
+**Le contrôle de cohérence avec la contrainte de l'énoncé** : l'ajustement retenu doit rester
+**démontable**. H7/p6 ne l'aurait pas été raisonnablement — c'est la contrainte de maintenance,
+et non le couple, qui tranche ici.
+""",
+        },
+        {
+            "id": '6.11',
+            "titre": 'Transmission de puissance entre deux arbres',
+            "duree": '5 h',
+            "cours": """### 1. Transmettre entre deux arbres
+
+| Solution | Rendement | Points forts | Limites |
+|---|---|---|---|
+| **engrenages** | 0,97 / étage | compact, rapport rigoureux | bruyant, carter lubrifié, entraxe précis |
+| **courroie** | 0,95 | silencieuse, amortit, grand entraxe, **patine si blocage** | glissement sauf crantée, tension sur les paliers |
+| **chaîne** | 0,96 | pas de glissement, milieux difficiles, températures | bruyante, lubrification, rattrapage de tension |
+| **roue et vis sans fin** | 0,5 à 0,8 | grand rapport en un étage, renvoi 90°, souvent irréversible | rendement faible, échauffement |
+
+[[FIG:engrenage_module]]
+
+**Les formules de l'engrenage droit**, à savoir de tête :
+
+> **r = Z menante / Z menée** — et pour un train, on multiplie les rapports
+> **d = m × Z** · **da = d + 2m** · **df = d − 2,5m**
+> **entraxe a = m (Z1 + Z2) / 2**
+
+**Deux règles absolues :**
+
+- deux roues qui engrènent ont **obligatoirement le même module** ;
+- **Z ≥ 17 dents** environ, sinon l'outil de taillage entame le pied de la dent (interférence).
+
+*Le dimensionnement complet — comment on trouve le module à partir du couple — est traité en
+fiche 12.5.*
+
+**Le lien avec la puissance**, déjà vu en RDM : **P = C ω**, donc **diviser la vitesse par 5
+multiplie le couple par 5**. L'arbre de sortie d'un réducteur est toujours nettement plus gros que
+celui d'entrée : ce n'est pas de la surqualité.
+
+**Un point qu'on oublie souvent : la tension de courroie charge les paliers.** Elle peut atteindre
+deux à trois fois l'effort utile, et c'est parfois elle, et non le couple, qui dimensionne les
+roulements.
+
+### 2. Les erreurs classiques
+
+1. **Guidage trop court** par rapport à la course : arc-boutement garanti.
+2. **Compter sur la clavette pour tenir axialement**, ou pour centrer.
+3. **Remplacer une clavette par une plus courte** : matage des rainures.
+4. **Serrer au jugé** au lieu d'utiliser la clé dynamométrique.
+5. **Croire qu'une rondelle plate freine.**
+6. **Oublier que la tension de courroie charge les paliers** — parfois plus que le couple.
+7. **Monter deux roues de modules différents** : elles ne peuvent pas engrener.
+8. **Écraser un joint torique à fond** : il flue et l'étanchéité disparaît.
+
+
+### 3. À retenir
+
+- Longueur de guidage ≈ **1,5 à 2 × la course**, sinon arc-boutement.
+- C'est la **précharge** et l'adhérence qui tiennent un assemblage vissé, pas le cisaillement des
+  vis.
+- Classe **8.8 → Re = 640 MPa** · **10.9 → Re = 900 MPa**.
+- **Clavette = couple · ajustement = centrage · épaulement = arrêt axial.** Trois fonctions, trois
+  éléments.
+- Une clavette travaille au **matage sur les flancs** : on l'allonge, on ne la grossit pas.
+- **d = m Z** · **a = m (Z1+Z2)/2** · même module obligatoire · Z ≥ 17.
+- Joint dynamique : portée **Ra 0,8** et chanfrein d'introduction.
+""",
+            "formules": """
+**La relation de base** — **P = C × ω** · ω = 2πN/60 (rad/s, N en tr/min)
+
+**Rapport de transmission** — r = N_sortie / N_entrée = Z_menant / Z_mené (engrenages) ·
+= D_menant / D_mené (poulies)
+
+**Ce qui se conserve, ce qui ne se conserve pas** — la **puissance** se conserve (au rendement
+près) · le **couple** et la **vitesse** varient en sens inverse
+
+**Rendements en chaîne** — ils se **MULTIPLIENT**, jamais ils ne s'additionnent
+
+**Choisir** — engrenages : rapport précis, couple élevé, encombrement réduit ·
+courroie : silencieuse, absorbe les à-coups, tolère l'entraxe · chaîne : couple élevé,
+pas de glissement, exige une lubrification
+""",
+            "exemple": """
+
+**L'énoncé.** Une poulie doit être montée en bout d'arbre de moteur **Ø30**, transmettre **25 N·m**,
+et pouvoir être démontée pour changer la courroie.
+
+**Étape 1 — Le centrage**
+
+Ajustement **H7/j6** : incertain, il centre précisément sans empêcher le démontage à la main ou à
+l'extracteur. Un H7/p6 serait excessif — il faudrait une presse à chaque changement de courroie.
+
+**Étape 2 — La transmission du couple**
+
+Clavette parallèle forme A, dimension donnée par le diamètre d'arbre : pour un Ø30, **8 × 7**.
+Ajustée **sans jeu sur les flancs**, avec **jeu en fond de rainure**.
+
+Vérification du matage, avec une longueur de 40 mm et une hauteur en contact de 3,5 mm :
+
+p = 2 Mt / (d × h' × L) = 2 × 25 000 / (30 × 3,5 × 40) = 50 000 / 4 200 = **11,9 MPa**
+
+C'est très inférieur aux 80-100 MPa admissibles pour un acier : **largement suffisant**.
+
+**Étape 3 — L'arrêt axial côté moteur**
+
+**Épaulement de l'arbre** : c'est le plus solide, et il encaisse la poussée.
+
+**Étape 4 — L'arrêt axial côté extérieur**
+
+**Rondelle d'appui + vis CHC** dans un taraudage en bout d'arbre. Solution démontable et sûre.
+
+**Étape 5 — Le freinage**
+
+**Frein filet moyen** sur la vis de bout d'arbre : les vibrations de courroie sont permanentes, et
+une rondelle plate ne freinerait rien.
+
+**Étape 6 — Le contrôle de bon sens**
+
+Longueur de moyeu ≈ **1,5 × diamètre d'arbre**, soit 45 mm. En dessous, le moyeu ovalise sous
+charge et la portée s'use.
+
+**Étape 7 — Ce qu'il reste à vérifier**
+
+La **tension de courroie** charge le roulement le plus proche. Sur un porte-à-faux, cet effort
+crée aussi un moment de flexion sur l'arbre — à combiner avec la torsion (fiche 12.2).
+
+""",
+            "exercice": """
+### Exercice — Dimensionner une transmission
+
+Un moteur tourne à **1 450 tr/min** et fournit **4 kW**. Il entraîne, par une courroie, un arbre
+récepteur qui doit tourner à environ **580 tr/min**. Le rendement de la courroie est de **0,95**.
+
+**1.** Calculez la vitesse angulaire ω du moteur, en rad/s.
+
+**2.** Calculez le couple fourni par le moteur.
+
+**3.** Quel rapport de transmission faut-il ? Si la poulie menante fait Ø100, quel diamètre pour
+la poulie menée ?
+
+**4.** Quelle puissance arrive réellement sur l'arbre récepteur ?
+
+**5.** Quel couple est disponible sur l'arbre récepteur ? Comparez-le au couple moteur et
+concluez.
+""",
+            "corrige": """
+### Corrigé, en six temps
+
+#### 1. Ce que dit l'énoncé
+
+Un moteur **rapide et peu couplé** entraînant un récepteur **plus lent**. C'est une réduction :
+on doit donc s'attendre à un couple de sortie **plus grand** que le couple d'entrée — c'est le
+contrôle final de l'exercice.
+
+#### 2. Quelle règle, et pourquoi
+
+**P = C × ω** relie les trois grandeurs. Elle impose la conséquence la plus utile :
+
+> à puissance constante, si la **vitesse diminue**, le **couple augmente** dans le même rapport.
+
+Et pour la chaîne : les rendements se **multiplient**.
+
+#### 3. Les conversions
+
+**La conversion décisive : tr/min → rad/s.**
+
+ω = 2πN/60 · **1 450 tr/min ne s'utilise jamais tel quel dans P = Cω**
+
+4 kW = **4 000 W**
+
+#### 4. Le remplacement
+
+ω_moteur = 2π × 1450 / 60
+C_moteur = P / ω = 4000 / ω_moteur
+r = 580 / 1450
+D_menée = D_menante / r
+P_sortie = 4000 × 0,95
+C_sortie = P_sortie / ω_sortie, avec ω_sortie = 2π × 580 / 60
+
+#### 5. Le calcul
+
+**1.** ω = 2π × 1450 / 60 = **151,8 rad/s**
+
+**2.** C = P / ω = 4000 / 151,8 = **26,3 N·m**
+
+**3.** r = 580 / 1450 = **0,4** (réduction). Pour une courroie, r = D_menante / D_menée, donc
+D_menée = 100 / 0,4 = **Ø250**.
+
+**4.** P_sortie = 4000 × 0,95 = **3 800 W**
+
+**5.** ω_sortie = 2π × 580 / 60 = **60,7 rad/s**
+C_sortie = 3800 / 60,7 = **62,6 N·m**
+
+Le couple disponible est donc **2,4 fois plus élevé** que le couple moteur, alors que la vitesse
+a été divisée par 2,5. La légère différence entre ces deux facteurs (2,4 contre 2,5) est
+exactement la perte due au rendement de 0,95.
+
+#### 6. La vérification
+
+**Le contrôle croisé, qui valide tout l'exercice :**
+
+rapport des vitesses = 1450 / 580 = **2,5**
+rapport des couples = 62,6 / 26,3 = **2,38**
+
+Le second doit être légèrement **inférieur** au premier, et l'écart doit correspondre au
+rendement : 2,38 / 2,5 = **0,95** — exactement le rendement annoncé. Le calcul est cohérent de
+bout en bout.
+
+**Le contrôle de bon sens** : une réduction augmente toujours le couple. Si vous aviez trouvé un
+couple de sortie **inférieur** au couple d'entrée, il y aurait une erreur de sens dans le rapport
+de transmission.
+""",
+        },
+        {
+            "id": '6.12',
+            "titre": 'La gamme de montage',
+            "duree": '4 h',
+            "cours": """
+### Le vocabulaire, en français courant
+
+| Terme | Ce que ça veut dire |
+|---|---|
+| **gamme de montage** | la liste ordonnée des opérations pour assembler un mécanisme |
+| **opération** | une action élémentaire : poser, emmancher, serrer, contrôler |
+| **sous-ensemble** | un groupe de pièces assemblé à part, puis monté d'un bloc |
+| **montabilité** | la capacité d'un mécanisme à être assemblé sans opération impossible |
+
+### 1. Un mécanisme juste sur le plan peut être impossible à monter
+
+C'est l'erreur que le dessin ne montre pas. Toutes les cotes peuvent être bonnes, tous les
+ajustements corrects, et pourtant l'ordre d'assemblage être **impossible** : une bague qu'on ne
+peut plus enfiler parce qu'un épaulement est déjà en place, un roulement qu'on ne peut pas
+extraire faute d'accès.
+
+> **La gamme de montage se pense À LA CONCEPTION, pas à l'atelier.**
+
+*C'est le prolongement direct de la question posée en fiche 5.13 : « l'atelier peut-il fabriquer
+sans m'appeler ? » — ici, la question devient : « le monteur peut-il assembler dans un ordre qui
+existe ? »*
+
+### 2. Ce que contient une gamme de montage
+
+| Colonne | Contenu |
+|---|---|
+| **n°** | l'ordre des opérations |
+| **opération** | l'action, à l'infinitif : « emmancher », « serrer », « contrôler » |
+| **pièces concernées** | les repères de la nomenclature |
+| **outillage** | presse, maillet, clé dynamométrique, douille de montage |
+| **paramètre** | couple de serrage, température de chauffe, jeu à obtenir |
+| **contrôle** | ce qu'on vérifie avant de passer à la suite |
+
+**La colonne la plus oubliée est la dernière.** Une gamme sans point de contrôle laisse
+découvrir l'erreur à la fin, quand tout est remonté.
+
+### 3. La méthode, en 5 gestes numérotés
+
+**Geste 1 — Identifier les sous-ensembles.** Ce qui peut être assemblé à part le sera : c'est
+plus simple, plus contrôlable, et souvent réalisable en parallèle.
+
+**Geste 2 — Repérer la pièce de base.** Celle qui ne bouge plus ensuite — le carter, le bâti.
+C'est sur elle qu'on empile le reste.
+
+**Geste 3 — Ordonner par accessibilité.** À chaque étape, se demander : *ce que je viens de poser
+m'empêche-t-il d'atteindre ce qui vient après ?*
+
+**Geste 4 — Placer les contrôles aux points sans retour.** Juste avant une opération
+irréversible : un emmanchement à la presse, un frein filet, un rivetage.
+
+**Geste 5 — Vérifier le démontage.** Une maintenance devra défaire l'assemblage. Prévoir les
+accès d'extracteur et les prises d'outil.
+
+**Application immédiate.** Sur un arbre portant deux roulements et une poulie : on emmanche les
+roulements **avant** de poser la poulie si celle-ci est en bout d'arbre — sinon la poulie
+interdit l'accès de la douille de montage à la bague intérieure.
+
+### 4. Les règles de montage qui reviennent toujours
+
+**Un emmanchement se pousse sur la bague concernée, jamais à travers le roulement.** Pour monter
+une bague intérieure serrée, l'effort doit porter **sur la bague intérieure** — via une douille
+adaptée. Pousser sur la bague extérieure fait transiter tout l'effort par les billes et marque
+les pistes définitivement.
+
+**Un serrage important se monte à chaud** (fiche 5.4) plutôt qu'en force : ΔD = D × α × ΔT.
+
+**Un couple de serrage se contrôle**, il ne s'estime pas (fiche 6.9).
+
+**On monte du plus rigide vers le plus fragile** : joints, capteurs et pièces plastiques en
+dernier.
+
+### 5. Les erreurs classiques
+
+1. **Concevoir sans jamais écrire la gamme** : l'impossibilité se découvre au premier prototype.
+2. **Emmancher en poussant sur la mauvaise bague** : le roulement est détruit avant même le
+   démarrage.
+3. **Oublier les accès d'extracteur** : le démontage impose de casser une pièce.
+4. **Aucun point de contrôle** : l'erreur se découvre à la fin.
+5. **Placer une opération irréversible trop tôt**, avant un réglage encore modifiable.
+
+### 6. À retenir
+
+- Une gamme de montage se pense **à la conception**, pas à l'atelier.
+- Contenu : opération, pièces, **outillage**, paramètre, **contrôle**.
+- Méthode : sous-ensembles → pièce de base → ordre par **accessibilité** → contrôles aux points
+  sans retour → vérifier le **démontage**.
+- **On pousse toujours sur la bague qu'on emmanche**, jamais à travers le roulement.
+- Du plus rigide vers le plus fragile ; joints et plastiques en dernier.
+""",
+            "formules": """
+**Contenu d'une gamme** — n° · opération (à l'infinitif) · pièces (repères) · **outillage** ·
+paramètre (couple, température) · **contrôle**
+
+**Méthode en 5 gestes** — sous-ensembles → pièce de base → ordre par accessibilité →
+contrôles aux points sans retour → vérifier le démontage
+
+**Règles de montage** — pousser **sur la bague emmanchée**, jamais à travers le roulement ·
+serrage important → montage **à chaud** (ΔD = D × α × ΔT) ·
+couple **contrôlé**, jamais estimé · du plus rigide vers le plus fragile
+
+**Le test** — le monteur peut-il assembler dans un ordre qui existe, et le démonter ensuite ?
+""",
+            "exemple": """
+### Cas industriel — Le roulement détruit avant le premier démarrage
+
+**Le symptôme.** Sur une présérie, plusieurs réducteurs sont bruyants dès le premier démarrage.
+Les roulements, neufs, présentent au démontage des **marques régulièrement espacées** sur les
+pistes — l'empreinte exacte des billes.
+
+**L'analyse.** La gamme de montage indiquait simplement : « emmancher l'ensemble arbre-roulements
+dans le carter ». Le monteur poussait donc **sur la bague extérieure** pour emmancher un
+roulement dont la **bague intérieure** était serrée sur l'arbre.
+
+Résultat : tout l'effort d'emmanchement — plusieurs kilonewtons — transitait **par les billes**,
+qui marquaient les pistes sous la pression. Le roulement était détruit avant d'avoir tourné une
+seule fois.
+
+**La correction.** Deux lignes ajoutées à la gamme :
+
+| n° | Opération | Outillage | Contrôle |
+|---|---|---|---|
+| 30 | Emmancher le roulement sur l'arbre | **douille portant sur la bague INTÉRIEURE** | rotation libre à la main |
+| 40 | Engager l'ensemble dans le carter | douille sur bague **extérieure** | pas de point dur |
+
+**Ce que le cas apprend.** Le montage n'est pas une évidence qu'on peut laisser à
+l'interprétation. **Une gamme qui ne précise pas l'outillage laisse le monteur choisir — et il
+choisira le plus simple**, pas le plus juste.
+""",
+            "exercice": """
+### Exercice — Écrire une gamme de montage
+
+Un arbre porte, dans cet ordre depuis une extrémité : une **poulie** (clavetée, ajustement
+H7/k6), un **roulement A** (bague intérieure serrée k6), un **épaulement**, un **roulement B**
+(bague intérieure serrée), puis un **anneau élastique**. L'ensemble se monte dans un carter en
+deux parties.
+
+**1.** Quels **sous-ensembles** identifiez-vous avant de commencer ?
+
+**2.** Dans quel ordre montez-vous la poulie et les roulements ? Justifiez par l'accessibilité.
+
+**3.** Pour emmancher le roulement A sur l'arbre, sur quelle bague l'effort doit-il porter ?
+Quelle est la conséquence d'une erreur ici ?
+
+**4.** Le serrage k6 est important. Quelle alternative à l'emmanchement en force proposez-vous,
+et sur quelle formule repose-t-elle ?
+
+**5.** Placez **deux points de contrôle** dans votre gamme et justifiez leur position.
+""",
+            "corrige": """
+### Corrigé, en six temps
+
+#### 1. Ce que dit l'énoncé
+
+Un arbre avec **plusieurs pièces serrées** et un **ordre géométrique imposé** (la poulie est en
+bout, l'anneau élastique à l'autre extrémité). Le carter en deux parties est une information
+utile : il autorise un montage de l'arbre équipé.
+
+#### 2. Quelle règle, et pourquoi
+
+**L'ordre se décide par l'accessibilité :** à chaque étape, ce que je viens de poser
+m'empêche-t-il d'atteindre ce qui vient après ?
+
+Et la règle de montage la plus impérative : **l'effort d'emmanchement porte sur la bague qu'on
+emmanche**, jamais à travers le roulement.
+
+#### 3. Les conversions
+
+Aucune conversion dans les questions 1 à 3 et 5. Pour la question 4, la formule de dilatation :
+
+**ΔD = D × α × ΔT**, avec α = 12·10⁻⁶ /°C pour l'acier
+
+#### 4. Le remplacement
+
+**Sous-ensemble arbre** = arbre + roulement A + roulement B + anneau élastique
+**Puis** : ensemble dans le carter, **puis** poulie en bout
+
+L'alternative au forçage : chauffer la bague intérieure, ΔD = D × 12·10⁻⁶ × ΔT
+
+#### 5. Le calcul
+
+**1.** Deux sous-ensembles principaux : **l'arbre équipé** (arbre + les deux roulements + anneau
+élastique) et le **carter** (ses deux parties, avec joints et goupilles de positionnement). La
+poulie reste une pièce à monter après.
+
+**2.** On monte **les roulements d'abord, la poulie en dernier**. Si la poulie était posée en
+premier, elle occuperait le bout d'arbre et **interdirait le passage de la douille de montage**
+nécessaire pour emmancher le roulement A. L'ordre est imposé par l'accès à l'outillage, pas par
+la géométrie seule.
+
+**3.** L'effort doit porter **sur la bague intérieure**, celle qui est serrée sur l'arbre, via une
+douille adaptée. En poussant sur la bague extérieure, tout l'effort — plusieurs kilonewtons —
+transite **par les billes** et marque les pistes de façon définitive : le roulement est détruit
+avant d'avoir tourné, comme dans le cas industriel de cette fiche.
+
+**4.** Le **montage à chaud** : on dilate la bague intérieure au lieu de la forcer. La formule est
+**ΔD = D × α × ΔT**. Pour un Ø30 chauffé de 100 °C : ΔD = 30 × 12·10⁻⁶ × 100 = **0,036 mm**,
+soit plus que le serrage maximal d'un k6 — la bague se pose sans effort et se bloque en
+refroidissant.
+
+**5.** Deux points de contrôle pertinents :
+- **après emmanchement de chaque roulement** : vérifier que l'arbre tourne **librement à la
+  main**, sans point dur. C'est le moment où une erreur est encore réparable ;
+- **avant fermeture du carter** : vérifier le **jeu axial** et la présence de l'anneau élastique.
+  Une fois le carter fermé et goupillé, l'oubli coûte un démontage complet.
+
+#### 6. La vérification
+
+**Le contrôle par l'accessibilité** : reprenez votre gamme dans l'ordre et demandez-vous, à
+chaque ligne, si l'outillage nécessaire peut physiquement atteindre la pièce. C'est ce test qui
+révèle les impossibilités avant le premier prototype.
+
+**Le contrôle du démontage** : votre gamme permet-elle de défaire l'ensemble en maintenance ? Les
+roulements serrés exigeront un **extracteur** : il faut donc qu'une surface de prise reste
+accessible, ce qui se décide **à la conception**, pas au démontage.
 """,
         },
     ],
 }
-
-
-# --- Schémas pédagogiques (marqueurs [[FIG:...]] rendus par figures.py) ---
-_SCHEMAS = {
-    '6.1': '[[FIG:liaisons_de_base]]\n',
-    '6.3': '[[FIG:engrenage_module]]\n',
-}
-
-for _b in [BLOC_5, BLOC_6]:
-    for _f in _b["fiches"]:
-        _fig = _SCHEMAS.get(_f["id"])
-        if _fig and "[[FIG:" not in _f["cours"]:
-            _f["cours"] = "\n" + _fig + _f["cours"]
 
 # ==========================================================================
 # CONTENU DE cours_debutant.py
@@ -15612,327 +16304,13 @@ contrainte équivalente comparée à Rpe. C'est au programme de deuxième année
 # FICHE 6.1 — LIAISONS MÉCANIQUES ET SCHÉMA CINÉMATIQUE
 # ===========================================================================
 
-FICHES["6.1"] = {"cours": """
-### 1. Décrire un mécanisme sans dessiner les pièces
-
-Imaginez que vous deviez expliquer au téléphone comment fonctionne un étau. Vous n'allez pas
-décrire la forme des pièces : vous allez dire **ce qui tourne, ce qui coulisse, ce qui est fixe**.
-C'est exactement ce que fait le schéma cinématique : il décrit les **mouvements**, pas les formes.
-
-Deux mécanismes très différents d'aspect peuvent avoir le même schéma. Et inversement, deux
-pièces qui se ressemblent peuvent avoir des liaisons totalement différentes.
-
-### 2. Compter ce qui peut bouger
-
-Un solide libre dans l'espace possède **six degrés de liberté** (ddl) : trois translations et
-trois rotations. Une liaison mécanique supprime certains de ces mouvements, et **ce qui reste
-donne son nom à la liaison**.
-
-[[FIG:liaisons_de_base]]
-
-Les liaisons à connaître en première année :
-
-| Liaison | ddl | Ce qui reste possible | Exemple |
-|---|---|---|---|
-| encastrement | 0 | rien | pièces vissées, soudées |
-| pivot | 1 | une rotation | arbre sur roulements, charnière |
-| glissière | 1 | une translation | tiroir, table de fraiseuse |
-| pivot glissant | 2 | rotation + translation, même axe | tige de vérin dans son guide |
-| hélicoïdale | 1 | rotation **liée** à une translation | système vis-écrou |
-| rotule | 3 | trois rotations | rotule de direction |
-| appui plan | 3 | deux translations + une rotation | pièce posée sur un marbre |
-| linéaire annulaire | 4 | — | contact court sur un arbre |
-| ponctuelle | 5 | — | contact en un point |
-
-Un cas particulier utile : la liaison **hélicoïdale** n'a qu'un seul degré de liberté, parce que
-la rotation et la translation ne sont pas indépendantes — c'est le pas de la vis qui les lie.
-
-### 3. La méthode en trois temps
-
-**Temps 1 — les classes d'équivalence.** On regroupe toutes les pièces qui n'ont **aucun
-mouvement relatif** entre elles. La visserie, les rondelles, les clavettes, les goupilles
-disparaissent : elles ne servent qu'à réaliser un encastrement. Un étau se ramène ainsi à trois
-groupes, pas à quinze pièces.
-
-**Temps 2 — le graphe des liaisons.** Un cercle par classe, un trait par liaison, le nom et l'axe
-sur le trait. C'est un brouillon, mais il évite d'oublier une liaison.
-
-**Temps 3 — le schéma.** On remplace chaque trait par le symbole normalisé, en respectant la
-position relative réelle des liaisons. Avec un repère, propre, et les classes numérotées.
-
-### 4. Isostatique ou hyperstatique : le point qui compte vraiment
-
-Un montage est **isostatique** quand chaque mouvement est supprimé **une seule fois**. Il est
-**hyperstatique** quand plusieurs liaisons suppriment le même mouvement.
-
-[[FIG:isostatique_hyperstatique]]
-
-Pourquoi c'est un vrai problème :
-
-- il faut des **tolérances beaucoup plus serrées** (donc plus chères) pour que les pièces
-  s'assemblent quand même ;
-- les pièces se **contraignent entre elles** : elles se déforment, forcent, chauffent ;
-- la dilatation n'est plus absorbée.
-
-**La parade classique** : on remplace une liaison par une liaison à moins de contacts. Deux
-paliers dont un libre axialement, un roulement à rotule sur un arbre long, un appui ponctuel
-plutôt qu'un appui plan.
-
-Nuance importante : l'hyperstatisme n'est pas interdit. Il est parfois voulu, pour la rigidité
-(un bâti de machine-outil). Mais il doit être **choisi**, jamais subi par ignorance.
-
-### 5. La mise en position isostatique : la règle 3-2-1
-
-Pour poser une pièce de façon parfaitement définie — en montage d'usinage comme en conception —
-on supprime les six degrés de liberté avec six points d'appui, répartis ainsi :
-
-- **3 points** sur la face principale : elle supprime une translation et deux rotations ;
-- **2 points** sur une face latérale : une translation et une rotation ;
-- **1 point** sur la dernière face : la dernière translation.
-
-C'est la règle **3-2-1**. Elle explique pourquoi les tables de fraiseuse et les montages d'usinage
-sont conçus comme ils le sont, et pourquoi une pièce posée sur quatre points bascule toujours.
-
-### 6. Les erreurs classiques
-
-1. **Faire apparaître la visserie** sur le schéma : elle fait partie d'une classe d'équivalence.
-2. **Confondre pivot et pivot glissant.** Si la pièce peut aussi coulisser, ce n'est pas un pivot.
-3. **Oublier de vérifier les ddl restants** : ils doivent correspondre aux mouvements réels.
-4. **Bloquer deux fois le même mouvement** sans s'en rendre compte.
-5. **Dessiner des formes** sur un schéma cinématique : il ne montre que des liaisons.
-
-### 7. À retenir
-
-- 6 ddl : 3 translations + 3 rotations. La liaison se nomme par ce qui reste.
-- Méthode : classes d'équivalence → graphe → schéma.
-- La visserie n'apparaît jamais.
-- Isostatique = chaque mouvement supprimé une seule fois.
-- Mise en position : règle 3-2-1.
-"""}
-
-
 # ===========================================================================
 # FICHE 6.2 — GUIDAGE EN ROTATION : PALIERS ET ROULEMENTS
 # ===========================================================================
 
-FICHES["6.2"] = {"cours": """
-### 1. Faire tourner un arbre : trois familles de solutions
-
-**Contact direct (palier lisse, coussinet, bague bronze ou polymère).** L'arbre frotte
-directement dans une bague. C'est silencieux, très compact radialement, insensible aux chocs et à
-la poussière, et bon marché. En contrepartie : frottement plus élevé, échauffement, vitesse
-limitée, et il faut lubrifier. Idéal pour les mouvements lents, alternatifs, ou en milieu sale.
-
-**Roulement.** On remplace le frottement de glissement par du roulement de billes ou de rouleaux.
-Rendement excellent, guidage précis, vitesses élevées, entretien réduit. Mais : plus encombrant,
-sensible aux chocs, au désalignement et à la pollution, et plus cher.
-
-**Film fluide (palier hydrodynamique).** L'arbre flotte sur un coin d'huile. Réservé aux très
-grandes vitesses et fortes charges : turbines, vilebrequins de moteurs thermiques.
-
-En première année, on conçoit surtout avec des roulements, et c'est là que se concentrent les
-règles à connaître.
-
-### 2. Choisir un type de roulement
-
-| Type | Charge radiale | Charge axiale | Quand l'utiliser |
-|---|---|---|---|
-| billes à gorge profonde | moyenne | moyenne, deux sens | **le choix par défaut** : simple, économique |
-| rouleaux cylindriques | forte | aucune | fortes charges radiales, palier libre |
-| billes à contact oblique | moyenne | forte, **un sens** | charges combinées — **toujours par paire** |
-| rouleaux coniques | forte | forte, un sens | roues de véhicules, broches — **par paire** |
-| à rotule | moyenne | faible | arbres longs, carters peu précis (désalignement) |
-| butée | aucune | forte | charge purement axiale, ne guide pas |
-
-Retenez le réflexe : **on part toujours du roulement à billes à gorge profonde**, et on ne change
-que si une contrainte l'impose.
-
-### 3. La règle des charges : quelle bague serrer ?
-
-C'est le point le plus important de toute la fiche, et celui qui distingue un montage qui dure
-d'un montage qui se détruit en quelques semaines.
-
-[[FIG:regle_des_charges]]
-
-Formulée simplement :
-
-> **La bague qui tourne par rapport à la direction de la charge est montée SERRÉE.**
-> **La bague qui reste fixe par rapport à la charge est montée GLISSANTE.**
-
-Cas courant — arbre tournant, charge fixe (un réducteur, une pompe) : bague intérieure serrée
-(**arbre en k6** ou m6), bague extérieure glissante (**alésage en H7**).
-
-Cas inverse — moyeu tournant, charge fixe (un tambour de convoyeur, une roue folle) : bague
-extérieure serrée (**alésage en M7** ou N7), bague intérieure glissante (**arbre en h6** ou g6).
-
-Et le pourquoi : si la bague qui devrait être serrée est montée avec du jeu, elle tourne
-lentement sur sa portée — on dit qu'elle **flue**. La portée est matée, du jeu apparaît, et le
-montage est détruit.
-
-### 4. Palier fixe, palier libre
-
-Sur un arbre à deux paliers, **un seul** assure le positionnement axial. L'autre doit pouvoir
-coulisser pour absorber la dilatation thermique et les écarts de longueur.
-
-Le rappel visuel est dans la fiche 6.1 : deux paliers bloqués, c'est la précontrainte, puis
-l'échauffement, puis le grippage.
-
-Comment réaliser le palier libre ? Trois façons : laisser la bague extérieure libre dans son
-alésage (le plus courant), utiliser un roulement à rouleaux cylindriques dont les rouleaux
-coulissent, ou monter une bague avec un jeu axial contrôlé.
-
-### 5. Lubrification et étanchéité
-
-**Graisse** : simple, reste en place, protège de la pollution. On remplit environ **un tiers du
-volume libre**, jamais plus : trop de graisse chauffe autant que pas assez. Suffisante jusqu'à
-des vitesses moyennes.
-
-**Huile** : nécessaire à haute vitesse, et quand il faut évacuer la chaleur (réducteurs par
-barbotage).
-
-**Étanchéité** : joint à lèvres (portée d'arbre rectifiée **Ra 0,8**, lèvre orientée vers
-l'intérieur pour retenir l'huile), déflecteur, chicane, ou roulement étanche 2RS pour les cas
-simples et sans entretien.
-
-### 6. Les détails de montage qui font la différence
-
-- Le **rayon du congé d'épaulement** de l'arbre doit être **inférieur** au rayon de la bague,
-  sinon la bague porte sur le congé et non sur l'épaulement.
-- On **ne monte jamais un roulement en frappant sur la bague opposée** : l'effort doit passer par
-  la bague qu'on emmanche, sinon les pistes sont marquées (brinelling).
-- Prévoir un **chanfrein d'introduction** sur l'arbre pour ne pas couper la lèvre du joint.
-- Prévoir la **dépose** : un roulement se démonte à l'extracteur, il faut de la place pour ses
-  griffes.
-
-### 7. Les erreurs classiques
-
-1. **Deux paliers bloqués axialement.**
-2. **Inverser la règle des charges** : la bague tournante montée glissante.
-3. **Portée d'arbre brute** sous un joint à lèvres : le joint fuit en quelques heures.
-4. **Trop de graisse.**
-5. **Roulement à contact oblique monté seul.**
-6. **Épaulement avec un congé trop grand.**
-
-### 8. À retenir
-
-- Par défaut : roulement à billes à gorge profonde.
-- Charge tournante par rapport à la bague → serrée. Charge fixe → glissante.
-- Cas courant : arbre k6, alésage H7.
-- Un seul palier fixe par arbre.
-- Graisse : un tiers du volume. Joint à lèvres : portée Ra 0,8.
-"""}
-
-
 # ===========================================================================
 # FICHE 6.3 — GUIDAGE EN TRANSLATION, ASSEMBLAGES ET TRANSMISSION
 # ===========================================================================
-
-FICHES["6.3"] = {"cours": """
-### 1. Guider en translation
-
-Faire coulisser une pièce proprement demande deux choses : **guider** (empêcher tous les
-mouvements sauf un) et **éviter l'arc-boutement**.
-
-L'arc-boutement, c'est ce qui se passe quand un tiroir se coince parce qu'on tire d'un seul côté.
-La règle est géométrique : **la longueur de guidage doit valoir environ 1,5 à 2 fois la course**,
-ou au moins le double de la distance entre le point d'application de l'effort et l'axe de
-guidage. Un guidage trop court se coince, quel que soit le soin apporté à l'usinage.
-
-Les solutions courantes, du plus simple au plus performant : glissière prismatique ou en queue
-d'aronde (machines-outils, réglable par lardon), arbre et douille (simple, économique), douille à
-billes (frottement très faible), rail à patins à billes (précision et rigidité, standard de
-l'industrie), et guidage par galets pour les grandes courses.
-
-### 2. La visserie : ce qui tient vraiment un assemblage
-
-Un point contre-intuitif : dans un assemblage boulonné correct, **ce ne sont pas les vis qui
-travaillent en cisaillement**. Le serrage étire la vis, qui se comporte comme un ressort tendu :
-cette **précharge** plaque les pièces l'une contre l'autre, et c'est **l'adhérence** entre les
-pièces qui transmet l'effort.
-
-D'où trois conséquences :
-
-- un serrage insuffisant est **la première cause de desserrage** sous vibrations ;
-- on serre à la **clé dynamométrique**, avec le couple correspondant à la classe de la vis ;
-- la rondelle plate **ne freine rien** : elle répartit la pression sous la tête.
-
-**Boulon, vis ou goujon ?** Boulon (vis + écrou) quand on accède des deux côtés : le plus
-économique. Vis dans un taraudage quand on n'accède que d'un côté. **Goujon** quand la pièce
-taraudée est en aluminium et qu'on démonte souvent : le goujon reste en place, le démontage se
-fait sur l'écrou, et le taraudage fragile est préservé.
-
-**Classe de qualité** : 8.8, 10.9, 12.9. Le premier nombre × 100 donne Rm en MPa, le produit des
-deux × 10 donne Re. Une 8.8 : Rm = 800 MPa, Re = 640 MPa.
-
-**Freinages** : par obstacle (goupille fendue, fil frein, rondelle arrêtoir) ou par adhérence
-(écrou Nylstop, rondelle à dents, frein filet chimique).
-
-### 3. Transmettre le couple entre un arbre et un moyeu
-
-[[FIG:liaison_arbre_moyeu]]
-
-Le point à ne pas confondre :
-
-> **La clavette transmet le couple. Elle ne maintient JAMAIS le moyeu axialement.**
-
-L'arrêt axial se fait par un épaulement (le plus solide), un anneau élastique, un écrou, une
-entretoise ou une vis en bout d'arbre. Et le **centrage** vient de l'ajustement — typiquement
-H7/j6 ou H7/k6 — pas de la clavette.
-
-Une clavette travaille par **matage sur ses flancs** : elle est ajustée sans jeu latéralement,
-mais avec du jeu en fond de rainure. La remplacer par une plus courte fait grimper la pression,
-mate les rainures et finit par casser.
-
-### 4. Transmettre la puissance entre deux arbres
-
-| Solution | Rendement | Points forts | Limites |
-|---|---|---|---|
-| engrenages | 0,97 par étage | compact, rapport rigoureux | bruyant, carter lubrifié, entraxe précis |
-| courroie | 0,95 | silencieuse, amortit, grand entraxe, patine en cas de blocage | glissement (sauf crantée), tension sur les paliers |
-| chaîne | 0,96 | pas de glissement, milieux difficiles | bruyante, lubrification, rattrapage de tension |
-| roue et vis sans fin | 0,5 à 0,8 | grand rapport en un étage, renvoi à 90°, souvent irréversible | rendement faible, échauffement |
-
-[[FIG:engrenage_module]]
-
-Les formules de l'engrenage droit, à savoir de tête :
-
-- rapport **r = Z menante / Z menée** — et pour un train, on multiplie les rapports ;
-- diamètre primitif **d = m × Z** ; entraxe **a = m (Z1 + Z2) / 2** ;
-- deux roues qui engrènent ont **obligatoirement le même module** ;
-- environ **17 dents minimum** pour éviter l'interférence de taillage.
-
-Et le lien avec la puissance, déjà vu en RDM : **P = C ω**, donc **diviser la vitesse par 5
-multiplie le couple par 5**. L'arbre de sortie d'un réducteur est toujours nettement plus gros
-que celui d'entrée.
-
-### 5. L'étanchéité
-
-- **Statique** (entre deux pièces fixes) : joint plat, joint torique dans sa gorge, pâte à joint.
-  Le joint torique doit être **comprimé de 15 à 30 %**, jamais écrasé à fond.
-- **Dynamique** (une pièce bouge) : joint à lèvres pour un arbre tournant, joint racleur pour une
-  tige de vérin, chicane ou déflecteur quand il n'y a pas de contact.
-
-Réflexe de conception : partout où il y a un joint dynamique, la portée doit être **rectifiée
-Ra 0,8**, avec un chanfrein d'introduction.
-
-### 6. Les erreurs classiques
-
-1. **Guidage trop court** par rapport à la course : arc-boutement garanti.
-2. **Compter sur la clavette pour tenir axialement.**
-3. **Serrer au jugé** au lieu de la clé dynamométrique.
-4. **Croire qu'une rondelle plate freine.**
-5. **Oublier que la tension d'une courroie charge les paliers** — parfois plus que le couple.
-6. **Monter deux roues de modules différents** : elles ne peuvent pas engrener.
-
-### 7. À retenir
-
-- Longueur de guidage ≈ 1,5 à 2 × course, sinon arc-boutement.
-- C'est la précharge qui tient un assemblage vissé, pas le cisaillement des vis.
-- Classe 8.8 → Re = 640 MPa · 10.9 → Re = 900 MPa.
-- La clavette transmet le couple ; l'épaulement tient axialement ; l'ajustement centre.
-- d = m Z · a = m (Z1+Z2)/2 · même module obligatoire · r = Z menante / Z menée.
-"""}
-
 
 # ===========================================================================
 # FICHE 2.2 — LES AJUSTEMENTS (version regroupée ici avec les autres)
@@ -16850,216 +17228,6 @@ elle ne coûte qu'un support, pas de la matière.*
 # EXERCICES D'ÉCHAUFFEMENT — BLOC 6 (CONCEPTION)
 # ===========================================================================
 
-FICHES["6.1"]["exercice_avant"] = """
-### Exercice d'échauffement — Nommer les liaisons
-
-**1.** Pour chaque cas, donne le nom de la liaison et le nombre de degrés de liberté restants :
-   - a) une porte sur ses gonds ;
-   - b) un tiroir dans son meuble ;
-   - c) une tige de vérin libre de tourner dans son guide ;
-   - d) deux tôles assemblées par quatre vis.
-
-**2.** Une vis et son écrou : combien de degrés de liberté ? Attention, la réponse surprend.
-
-**3.** Un ensemble comprend : un carter, un mors fixe vissé dessus, trois vis et deux goupilles.
-Combien de classes d'équivalence ?
-
-**4.** Un arbre est monté sur deux roulements, **tous deux bloqués axialement**. Que va-t-il se
-passer en fonctionnement ? Comment corriges-tu ?
-
-**5.** Combien de points d'appui faut-il pour positionner complètement une pièce, et comment se
-répartissent-ils ?
-"""
-
-FICHES["6.1"]["corrige_avant"] = """
-### Corrigé de l'exercice d'échauffement
-
-**1. Les quatre liaisons**
-
-| Cas | Liaison | ddl |
-|---|---|---|
-| a) porte sur ses gonds | **pivot** | 1 (une rotation) |
-| b) tiroir | **glissière** | 1 (une translation) |
-| c) tige de vérin libre en rotation | **pivot glissant** | 2 (rotation + translation, même axe) |
-| d) deux tôles vissées | **encastrement** | 0 |
-
-**2. La liaison hélicoïdale n'a qu'UN seul degré de liberté**
-
-C'est le piège. On voit une rotation **et** une translation, donc on répond 2. Mais les deux ne
-sont **pas indépendantes** : le pas de la vis les lie. Tourner d'un tour, c'est avancer d'un pas,
-obligatoirement.
-
-Un seul mouvement peut être commandé librement → **1 ddl**.
-
-**3. Une seule classe d'équivalence**
-
-Le carter, le mors fixe, les trois vis et les deux goupilles n'ont **aucun mouvement relatif** :
-ils forment un seul groupe.
-
-*La visserie ne réalise jamais une liaison sur un schéma cinématique : elle crée un encastrement,
-donc elle disparaît dans une classe d'équivalence.*
-
-**4. Le montage va gripper**
-
-L'arbre chauffe en fonctionnement et cherche à s'allonger. Comme il ne le peut pas, il
-**précontraint les roulements** : le frottement augmente, donc la température, donc la dilatation.
-C'est un emballement qui finit par le grippage.
-
-**Correction : libérer axialement un des deux paliers** — bague extérieure libre de coulisser dans
-son alésage. Règle absolue : **un seul palier fixe par arbre**.
-
-**5. Six points, répartis 3 - 2 - 1**
-
-- **3 points** sur la face principale : suppriment une translation et deux rotations ;
-- **2 points** sur une face latérale : une translation et une rotation ;
-- **1 point** sur la dernière face : la dernière translation.
-
-*C'est la règle 3-2-1. Elle explique pourquoi une pièce posée sur quatre points bascule toujours :
-le quatrième point est en trop, et c'est le défaut de planéité qui décide sur lequel elle repose.*
-"""
-
-FICHES["6.2"]["exercice_avant"] = """
-### Exercice d'échauffement — Monter un roulement correctement
-
-**1.** Un arbre de pompe tourne, la charge (le poids de la poulie et la tension de courroie) reste
-fixe. Quelle bague est montée serrée ? Quel ajustement pour l'arbre et pour l'alésage ?
-
-**2.** Sur une roue de brouette, c'est la **roue** qui tourne autour d'un axe fixe. Quelle bague
-est serrée cette fois ?
-
-**3.** Un mécanicien monte un roulement en frappant au maillet sur la **bague extérieure** pour
-l'emmancher sur l'arbre. Pourquoi est-ce une faute grave ?
-
-**4.** L'épaulement de l'arbre a été usiné avec un congé R2, et le rayon de la bague vaut R1.
-Quel problème ?
-
-**5.** Quelle quantité de graisse mettre, et pourquoi pas plus ?
-"""
-
-FICHES["6.2"]["corrige_avant"] = """
-### Corrigé de l'exercice d'échauffement
-
-**1. Arbre tournant, charge fixe**
-
-La **bague intérieure** tourne par rapport à la direction de la charge : elle est montée
-**SERRÉE**.
-
-- arbre : **k6** (ou m6 si la charge est forte)
-- alésage du carter : **H7**, bague extérieure glissante
-
-*C'est le cas le plus fréquent en mécanique : réducteurs, pompes, ventilateurs.*
-
-**2. Roue tournante, axe fixe : c'est l'inverse**
-
-La **bague extérieure**, solidaire de la roue, tourne par rapport à la charge : c'est elle qui est
-**SERRÉE** dans le moyeu de la roue (**M7** ou N7). La bague intérieure est **glissante** sur
-l'axe fixe (**h6** ou g6).
-
-*La question à se poser est toujours la même : quelle bague tourne par rapport à la direction de
-la charge ?*
-
-**3. L'effort traverse les billes**
-
-En frappant sur la bague extérieure pour emmancher la bague intérieure, tout l'effort de montage
-passe **par les billes et les pistes**. Elles reçoivent des impacts ponctuels qui marquent les
-chemins de roulement : c'est le **brinelling**.
-
-Le roulement tournera d'abord normalement, puis deviendra bruyant, puis se détruira. Le défaut
-est invisible au montage — d'où sa gravité.
-
-**Règle : l'outil de montage doit porter sur la bague qu'on emmanche, jamais sur l'autre.**
-
-**4. La bague porte sur le congé, pas sur l'épaulement**
-
-Si le rayon de l'épaulement (R2) est **plus grand** que celui de la bague (R1), la bague vient
-buter sur l'arrondi : elle n'est plus perpendiculaire à l'axe, elle se coince en biais et le
-positionnement axial est faux.
-
-**Règle : rayon du congé d'arbre < rayon de la bague.** C'est une cote à vérifier sur le
-catalogue du fabricant, pas à improviser.
-
-**5. Environ un tiers du volume libre**
-
-Trop de graisse est brassée en permanence par les éléments roulants : elle s'échauffe, se dégrade
-et fait chauffer le roulement — exactement comme un manque de graisse.
-
-*« Bien graisser » ne veut pas dire « remplir ».*
-"""
-
-FICHES["6.3"]["exercice_avant"] = """
-### Exercice d'échauffement — Guider, assembler, transmettre
-
-**1.** Un chariot doit coulisser sur une course de **300 mm**. Quelle longueur de guidage
-prévois-tu au minimum, et que se passe-t-il si elle est trop courte ?
-
-**2.** Un assemblage boulonné se desserre malgré des **rondelles plates**. Deux causes possibles,
-et la correction.
-
-**3.** Une vis de classe **10.9** : quelles sont ses valeurs de Rm et de Re ?
-
-**4.** Un technicien remplace une clavette cassée par une **plus courte** trouvée en stock.
-Qu'est-ce qui va se passer ?
-
-**5.** Un pignon de **20 dents** entraîne une roue de **60 dents**, module **3**. Calcule le
-rapport, les deux diamètres primitifs et l'entraxe.
-"""
-
-FICHES["6.3"]["corrige_avant"] = """
-### Corrigé de l'exercice d'échauffement
-
-**1. Environ 450 à 600 mm de guidage**
-
-La règle : **longueur de guidage ≈ 1,5 à 2 fois la course**. Pour 300 mm de course, il faut
-compter 450 à 600 mm.
-
-Si le guidage est trop court, le chariot **s'arc-boute** : il se coince dès qu'on pousse d'un
-seul côté, exactement comme un tiroir tiré par un coin. Aucun soin d'usinage ne rattrape une
-géométrie de guidage insuffisante.
-
-**2. Précharge insuffisante, ou tassement**
-
-- **Cause 1 : le serrage est insuffisant.** Un assemblage vissé tient par la **précharge** : la
-  vis étirée plaque les pièces l'une contre l'autre. Une rondelle plate ne freine rien, elle
-  répartit seulement la pression. Correction : serrer à la **clé dynamométrique**, au couple
-  correspondant à la classe de la vis.
-- **Cause 2 : un élément souple se tasse** — peinture épaisse, joint, revêtement. La précharge
-  chute toute seule après quelques heures. Correction : supprimer l'élément souple sous la tête,
-  ou reprendre le serrage après rodage.
-
-Si les vibrations persistent, ajouter un **vrai freinage** : écrou Nylstop, frein filet, rondelle
-à dents ou goupille.
-
-**3. Classe 10.9**
-
-- Rm = 10 × 100 = **1 000 MPa**
-- Re = 10 × 9 × 10 = **900 MPa**
-
-*Même méthode pour la 8.8 : Rm = 800 MPa, Re = 640 MPa.*
-
-**4. La rainure va être matée, puis la clavette cassera**
-
-Une clavette travaille **par matage sur ses flancs**. La pression est inversement proportionnelle
-à la surface de contact, donc à la longueur.
-
-Une clavette plus courte fait grimper la pression : elle mate la rainure de l'arbre et celle du
-moyeu, du jeu apparaît, le moyeu commence à cogner à chaque inversion de couple, et l'ensemble
-casse.
-
-**Il faut respecter la longueur d'origine**, ou refaire le calcul de pression de matage.
-
-**5. Engrenage 20/60, module 3**
-
-- Rapport : r = Z menante / Z menée = 20 / 60 = **1/3** — la roue tourne trois fois moins vite,
-  et le couple est multiplié par 3.
-- d1 = m × Z1 = 3 × 20 = **60 mm**
-- d2 = m × Z2 = 3 × 60 = **180 mm**
-- Entraxe : a = (d1 + d2) / 2 = (60 + 180) / 2 = **120 mm**
-
-*Et les deux roues tournent en sens inverse. Pour retrouver le même sens, il faudrait une roue
-intermédiaire — qui ne changerait pas le rapport.*
-"""
-
-
 # ===========================================================================
 # MISES EN SITUATION — placées AVANT les cas industriels d'origine
 # Objectif : planter le décor et décoder le vocabulaire technique du cas,
@@ -17325,71 +17493,6 @@ le cas en conception de précision, et c'est ce qui explique des sections appare
 surdimensionnées.
 """
 
-FICHES["6.1"]["exemple_avant"] = """
-### Avant de lire le cas : de quoi parle-t-on ?
-
-**La situation.** Un dispositif de **bridage** sert à maintenir une pièce pendant qu'une machine
-travaille dessus. Ici, un vérin pneumatique pousse une tige, qui fait pivoter une biellette, qui
-fait basculer un levier venant serrer la pièce. Cinq éléments, quatre liaisons.
-
-**Le vocabulaire du cas, en clair :**
-
-| Terme | Ce que ça veut dire |
-|---|---|
-| **bâti** | la partie fixe de la machine, la référence de tout le mécanisme |
-| **biellette** | une barre articulée aux deux bouts, qui transmet un mouvement |
-| **tige + piston** | l'ensemble mobile du vérin, qui sort et rentre |
-| **classe d'équivalence** | un groupe de pièces qui ne bougent pas les unes par rapport aux autres |
-
-**Ce qu'il faut observer en lisant.** Suivez la méthode dans l'ordre : d'abord les **groupes** de
-pièces solidaires, ensuite les liaisons entre ces groupes, et seulement à la fin le schéma. Et
-remarquez que la visserie n'apparaît nulle part.
-"""
-
-FICHES["6.2"]["exemple_avant"] = """
-### Avant de lire le cas : de quoi parle-t-on ?
-
-**La situation.** Dans un réducteur à deux étages, l'arbre du milieu — dit **arbre
-intermédiaire** — porte deux pignons : l'un reçoit le mouvement du premier étage, l'autre le
-transmet au second. Il est donc chargé des deux côtés, et doit être monté avec soin.
-
-**Le vocabulaire du cas, en clair :**
-
-| Terme | Ce que ça veut dire |
-|---|---|
-| **effort d'engrènement** | la force que les dents exercent l'une sur l'autre |
-| **charge radiale** | l'effort perpendiculaire à l'arbre, qui le fait fléchir |
-| **charge axiale** | l'effort le long de l'arbre, qui cherche à le pousser de côté |
-| **palier** | l'ensemble roulement + logement qui soutient l'arbre |
-
-**Ce qu'il faut observer en lisant.** Trois décisions structurent tout le montage : quelle bague
-est serrée, quel palier est fixe, et comment l'étanchéité est assurée en sortie. Chacune découle
-d'une règle vue dans le cours, pas d'une habitude.
-"""
-
-FICHES["6.3"]["exemple_avant"] = """
-### Avant de lire le cas : de quoi parle-t-on ?
-
-**La situation.** Un moteur de 4 kW tourne à 1 450 tr/min, et le tapis a besoin d'environ
-290 tr/min. Il faut donc **diviser la vitesse par cinq** — et au passage, le couple sera
-multiplié par cinq. Le cas conçoit cet étage de réduction de bout en bout.
-
-**Le vocabulaire du cas, en clair :**
-
-| Terme | Ce que ça veut dire |
-|---|---|
-| **rapport de réduction** | le rapport entre vitesse de sortie et vitesse d'entrée |
-| **module** | la taille d'une dent — deux roues qui engrènent ont le même |
-| **entraxe** | la distance entre les deux axes des roues |
-| **motoréducteur** | l'ensemble moteur + réducteur monté en un seul bloc |
-
-**Ce qu'il faut observer en lisant.** Le déroulé est celui d'un vrai calcul de conception :
-rapport, puis nombres de dents, puis module, puis entraxe, puis couple de sortie, puis diamètre
-d'arbre. Chaque étape s'appuie sur la précédente — c'est la méthode à reproduire en projet.
-"""
-
-
-# --- Version approfondie de la fiche 4.1 (reprise du 22/08) ---
 FICHES["4.1"]["cours"] = """
 ### 1. À quoi sert la RDM, exactement
 
@@ -18922,670 +19025,6 @@ Ja maxi = A maxi − B mini − C mini · Ja mini = A mini − B maxi − C maxi
 
 
 # --- Version approfondie de la fiche 6.1 (reprise du 23/08) ---
-FICHES["6.1"]["cours"] = """
-### 1. Décrire un mécanisme sans dessiner les pièces
-
-Imaginez que vous deviez expliquer au téléphone comment fonctionne un étau. Vous n'allez pas
-décrire la forme des pièces : vous allez dire **ce qui tourne, ce qui coulisse, ce qui est fixe**.
-
-C'est exactement ce que fait le **schéma cinématique** : il décrit les **mouvements**, pas les
-formes. Deux mécanismes très différents d'aspect peuvent avoir le même schéma ; deux pièces qui se
-ressemblent peuvent avoir des liaisons totalement différentes.
-
-**À quoi ça sert vraiment**, au-delà de l'exercice scolaire :
-
-- **comprendre** un mécanisme qu'on découvre, en le réduisant à sa logique ;
-- **communiquer** une idée en trois traits, avant toute CAO ;
-- **vérifier** qu'un assemblage 3D se comporte comme prévu (fiche 5.3) ;
-- **repérer l'hyperstatisme**, donc les tolérances inutilement serrées.
-
-### 2. Compter ce qui peut bouger
-
-Un solide libre dans l'espace possède **six degrés de liberté** (ddl) : trois translations et
-trois rotations. Une liaison supprime certains de ces mouvements, et **ce qui reste donne son nom
-à la liaison**.
-
-[[FIG:liaisons_de_base]]
-
-| Liaison | ddl | Ce qui reste possible | Exemple |
-|---|---|---|---|
-| encastrement | 0 | rien | pièces vissées, soudées |
-| **pivot** | 1 | une rotation | arbre sur roulements, charnière |
-| **glissière** | 1 | une translation | tiroir, table de fraiseuse |
-| **pivot glissant** | 2 | rotation + translation, même axe | tige de vérin dans son guide |
-| **hélicoïdale** | 1 | rotation **liée** à une translation | système vis-écrou |
-| rotule | 3 | trois rotations | rotule de direction |
-| appui plan | 3 | deux translations + une rotation | pièce posée sur un marbre |
-| linéaire annulaire | 4 | — | contact court sur un arbre |
-| ponctuelle | 5 | — | contact en un point |
-
-**Le piège de l'hélicoïdale**, qui tombe souvent. On voit une rotation **et** une translation, donc
-on répond 2 ddl. C'est faux : les deux ne sont **pas indépendantes**. Le pas de la vis les lie —
-tourner d'un tour, c'est avancer d'un pas, obligatoirement. Un seul mouvement peut être commandé
-librement : **1 ddl**.
-
-### 3. La méthode en trois temps
-
-[[FIG:methode_schema]]
-
-**Temps 1 — les classes d'équivalence.** On regroupe toutes les pièces qui n'ont **aucun mouvement
-relatif** entre elles.
-
-C'est l'étape qui simplifie tout : un étau de quinze pièces se ramène à **trois groupes**. La
-visserie, les rondelles, les clavettes et les goupilles disparaissent — elles ne servent qu'à
-réaliser un encastrement, donc à souder deux pièces en une seule classe.
-
-*Le critère est simple : si deux pièces bougent toujours ensemble, elles sont dans la même classe.*
-
-**Temps 2 — le graphe des liaisons.** Un cercle par classe, un trait par liaison, avec le nom de
-la liaison et son axe. C'est un brouillon — mais il évite d'oublier une liaison, et il fait
-apparaître les boucles.
-
-**Temps 3 — le schéma.** On remplace chaque trait par le symbole normalisé, en respectant la
-**position relative réelle** des liaisons. Avec un repère, propre, et les classes numérotées.
-
-### 4. Isostatique ou hyperstatique : le point qui compte vraiment
-
-Un montage est **isostatique** quand chaque mouvement est supprimé **une seule fois**. Il est
-**hyperstatique** quand plusieurs liaisons suppriment le même mouvement.
-
-[[FIG:isostatique_hyperstatique]]
-
-**Pourquoi c'est un vrai problème, et pas une subtilité théorique :**
-
-- il faut des **tolérances beaucoup plus serrées** pour que les pièces s'assemblent quand même —
-  donc des pièces plus chères (fiche 2.1) ;
-- les pièces se **contraignent entre elles** : elles se déforment, forcent, chauffent ;
-- **la dilatation n'est plus absorbée** : c'est le grippage du montage à deux paliers bloqués.
-
-**La parade classique** consiste à remplacer une liaison par une liaison à **moins de contacts** :
-deux paliers dont un libre axialement, un roulement à rotule sur un arbre long, un appui ponctuel
-plutôt qu'un appui plan.
-
-**Une nuance importante.** L'hyperstatisme n'est pas interdit. Il est parfois voulu, pour la
-rigidité — un bâti de machine-outil est massivement hyperstatique, et c'est ce qui le rend précis.
-Mais il doit être **choisi et assumé**, jamais subi par ignorance : il se paie alors en tolérances,
-en usinage et en montage.
-
-### 5. La mise en position isostatique : la règle 3-2-1
-
-Pour poser une pièce de façon parfaitement définie — en montage d'usinage comme en conception —
-on supprime les six degrés de liberté avec **six points d'appui**, répartis ainsi :
-
-| Face | Points | Ce qu'ils suppriment |
-|---|---|---|
-| face principale | **3** | une translation et deux rotations |
-| face latérale | **2** | une translation et une rotation |
-| dernière face | **1** | la dernière translation |
-
-**Pourquoi trois et pas quatre sur la face principale ?** Parce qu'un plan est défini par trois
-points. Avec un quatrième, la pièce **bascule** : elle s'appuie sur trois d'entre eux, mais
-lesquels dépend du défaut de planéité de chaque pièce. La position varie donc d'une pièce à
-l'autre, et les cotes usinées dispersent — sans que la machine ni l'outil ne soient en cause.
-
-*C'est exactement le problème du meuble bancal à quatre pieds. Et c'est pourquoi les montages
-d'usinage sont conçus en 3-2-1, avec des appuis réglables.*
-
-**Le lien avec les tolérances géométriques :** les références A, B, C d'un cadre GPS (fiche 2.3)
-correspondent précisément à ces trois faces, dans cet ordre. Le plan et le montage de contrôle
-parlent alors le même langage.
-
-### 6. Exemple entièrement déroulé : l'étau de fraiseuse
-
-**L'énoncé.** Un étau comprend : le corps, le mors fixe vissé sur le corps, trois vis de fixation,
-la vis de manœuvre avec sa poignée et sa goupille, l'écrou solidaire du mors mobile, et le mors
-mobile guidé dans une rainure du corps.
-
-**Étape 1 — Les classes d'équivalence**
-
-| Classe | Pièces | Justification |
-|---|---|---|
-| **S1** | corps + mors fixe + 3 vis | aucune ne bouge par rapport aux autres |
-| **S2** | vis de manœuvre + poignée + goupille | la goupille les rend solidaires |
-| **S3** | mors mobile + écrou | l'écrou est emmanché dans le mors |
-
-Quinze pièces → **trois classes**.
-
-**Étape 2 — Les liaisons, une par une**
-
-- **S1/S2** : la vis tourne dans le corps, mais un épaulement et une butée l'empêchent de se
-  déplacer axialement → il reste **une rotation** → **liaison PIVOT d'axe x**.
-- **S1/S3** : le mors mobile ne peut que coulisser dans la rainure → **une translation** →
-  **liaison GLISSIÈRE d'axe x**.
-- **S2/S3** : la vis tourne dans l'écrou et le fait avancer ; rotation et translation sont liées
-  par le pas → **liaison HÉLICOÏDALE d'axe x**.
-
-**Étape 3 — Le graphe**
-
-Un triangle S1-S2-S3, chaque côté portant sa liaison. **La boucle est fermée** : c'est normal, un
-mécanisme qui fonctionne forme toujours une chaîne fermée.
-
-**Étape 4 — La lecture du schéma**
-
-La rotation de la vis (pivot) est transformée en translation du mors (glissière) par la liaison
-hélicoïdale. **C'est un transformateur de mouvement.**
-
-**Étape 5 — Le contrôle de bon sens**
-
-Combien de mouvements indépendants reste-t-il ? Un seul : on tourne la poignée, le mors avance.
-C'est bien ce que fait un étau. Si le schéma laissait deux mouvements indépendants, il serait faux.
-
-### 7. Les erreurs classiques
-
-1. **Faire apparaître la visserie** sur le schéma : elle fait partie d'une classe d'équivalence.
-2. **Confondre pivot et pivot glissant** : si la pièce peut aussi coulisser, ce n'est pas un pivot.
-3. **Compter 2 ddl pour l'hélicoïdale** : c'est 1, les deux mouvements sont liés.
-4. **Oublier de vérifier les ddl restants** : ils doivent correspondre aux mouvements réels du
-   mécanisme.
-5. **Bloquer deux fois le même mouvement** sans s'en rendre compte : c'est de l'hyperstatisme subi.
-6. **Poser une pièce sur quatre points** au lieu de trois.
-7. **Dessiner des formes** sur un schéma cinématique : il ne montre que des liaisons.
-
-### 8. À retenir
-
-- **6 ddl** : 3 translations + 3 rotations. Nommer une liaison, c'est compter ce qui reste.
-- Encastrement 0 · pivot 1 · glissière 1 · **hélicoïdale 1** · pivot glissant 2 · rotule 3.
-- Méthode : **classes d'équivalence → graphe → schéma**. La visserie n'apparaît jamais.
-- **Isostatique** = chaque mouvement supprimé une seule fois. L'hyperstatisme se paie en
-  tolérances et en déformations.
-- Mise en position : **règle 3-2-1**, qui correspond aux références A, B, C des plans.
-- Contrôle final : les mouvements restants doivent être exactement ceux du mécanisme réel.
-"""
-FICHES["6.1"]["formules"] = """
-**Degrés de liberté** — 6 pour un solide libre : Tx Ty Tz Rx Ry Rz
-
-**Les liaisons normalisées**
-encastrement 0 · pivot 1 (R) · glissière 1 (T) · **hélicoïdale 1** (R liée à T) ·
-pivot glissant 2 · rotule 3 (R) · appui plan 3 (2T + 1R) · linéaire annulaire 4 · ponctuelle 5
-
-**Méthode** — 1. classes d'équivalence (pièces sans mouvement relatif)
-2. graphe des liaisons (un cercle par classe) · 3. schéma avec les symboles normalisés
-
-**Règle 3-2-1** — 3 points sur la face principale · 2 sur une face latérale · 1 sur la dernière
-correspond aux références A, B, C d'un cadre GPS
-
-**Contrôle** — les ddl restants du schéma = les mouvements réels du mécanisme
-
-**Isostatisme** — chaque mouvement supprimé une seule fois · sinon : tolérances serrées,
-contraintes internes, dilatation bloquée
-"""
-
-
-# --- Version approfondie de la fiche 6.2 (reprise du 23/08) ---
-FICHES["6.2"]["cours"] = """
-### 1. Faire tourner un arbre : trois familles de solutions
-
-**Contact direct** — palier lisse, coussinet, bague bronze ou polymère. L'arbre frotte
-directement dans une bague. Silencieux, très compact radialement, insensible aux chocs et à la
-poussière, bon marché. En contrepartie : frottement plus élevé, échauffement, vitesse limitée, et
-il faut lubrifier. Idéal pour les mouvements **lents, alternatifs, ou en milieu sale**.
-
-**Roulement** — on remplace le frottement de glissement par du roulement de billes ou de
-rouleaux. Rendement excellent, guidage précis, vitesses élevées, entretien réduit. Mais : plus
-encombrant, sensible aux chocs, au désalignement et à la pollution, et plus cher.
-
-**Film fluide** — palier hydrodynamique : l'arbre flotte sur un coin d'huile (fiche 13.4).
-Réservé aux très grandes vitesses et fortes charges — turbines, vilebrequins.
-
-*Le choix se fait donc en croisant deux critères : la vitesse et la propreté du milieu. Un
-convoyeur agroalimentaire lavé au jet, tournant à 30 tr/min, sera mieux servi par un coussinet
-polymère que par un roulement.*
-
-### 2. Choisir un type de roulement
-
-| Type | Charge radiale | Charge axiale | Quand l'utiliser |
-|---|---|---|---|
-| **billes à gorge profonde** | moyenne | moyenne, deux sens | **le choix par défaut** |
-| rouleaux cylindriques | forte | aucune | fortes charges radiales, palier libre |
-| billes à contact oblique | moyenne | forte, **un sens** | charges combinées — **par paire** |
-| rouleaux coniques | forte | forte, un sens | roues, broches — **par paire** |
-| à rotule | moyenne | faible | arbres longs, carters peu précis |
-| butée | aucune | forte | charge purement axiale, ne guide pas |
-
-**Le réflexe :** on part toujours du **roulement à billes à gorge profonde**, et on ne change que
-si une contrainte l'impose. C'est le moins cher, le plus disponible, et il accepte les deux sens
-de charge axiale.
-
-**Pourquoi les obliques et les coniques se montent par paire.** Ils n'encaissent l'axial que dans
-**un seul sens** : seuls, ils se déchargent et se démontent. Il faut donc un second roulement
-opposé, monté en **X** ou en **O** — le montage en O donnant un meilleur appui pour un porte-à-faux.
-
-### 3. La règle des charges : quelle bague serrer ?
-
-C'est le point le plus important de toute la fiche, et celui qui distingue un montage qui dure
-d'un montage détruit en quelques semaines.
-
-[[FIG:regle_des_charges]]
-
-> **La bague qui tourne PAR RAPPORT À LA DIRECTION DE LA CHARGE est montée SERRÉE.**
-> **La bague qui reste fixe par rapport à la charge est montée GLISSANTE.**
-
-**Pourquoi.** Une bague serrée est solidaire de sa portée : rien ne bouge. Une bague montée avec
-du jeu, mais soumise à une charge tournante, se met à rouler lentement sur sa portée — on dit
-qu'elle **flue**. À chaque tour, elle avance de quelques micromètres. La portée est matée, du jeu
-apparaît, et le montage se détruit en quelques dizaines d'heures.
-
-**Les deux cas, à savoir distinguer :**
-
-| Situation | Ce qui tourne | Bague serrée | Ajustements |
-|---|---|---|---|
-| **arbre tournant, charge fixe** | l'arbre | **intérieure** | arbre **k6** (ou m6), alésage **H7** |
-| **moyeu tournant, charge fixe** | le moyeu | **extérieure** | alésage **M7** (ou N7), arbre **h6** |
-
-*Le premier cas est celui des réducteurs, pompes, ventilateurs. Le second celui des tambours de
-convoyeur, roues folles, poulies libres. La question à se poser est toujours la même : **quelle
-bague voit la charge tourner autour d'elle ?***
-
-### 4. Palier fixe, palier libre
-
-[[FIG:isostatique_hyperstatique]]
-
-Sur un arbre à deux paliers, **un seul** assure le positionnement axial. L'autre doit pouvoir
-coulisser pour absorber la dilatation et les écarts de longueur.
-
-**Le chiffre qui convainc.** Un arbre acier de 800 mm qui passe de 20 à 70 °C s'allonge de
-800 × 12·10⁻⁶ × 50 = **0,48 mm** (fiche 8.2). C'est bien plus que le jeu interne d'un roulement,
-qui se compte en centièmes. S'il ne peut pas s'allonger, il précontraint les roulements — et
-l'échauffement s'emballe.
-
-**Comment réaliser le palier libre**, trois façons :
-
-1. laisser la **bague extérieure libre** de coulisser dans son alésage — le plus courant ;
-2. utiliser un **roulement à rouleaux cylindriques**, dont les rouleaux coulissent dans la bague ;
-3. monter avec un **jeu axial contrôlé**, pour les petits arbres.
-
-### 5. Le montage complet, décision par décision
-
-[[FIG:montage_arbre_complet]]
-
-Un montage de roulements, c'est **cinq décisions** — et chacune découle d'une règle, pas d'une
-habitude :
-
-1. **Quelle bague serrée ?** → la règle des charges.
-2. **Quel palier fixe ?** → un seul, l'autre libre pour la dilatation.
-3. **Quels arrêts axiaux ?** → épaulement (le plus solide) d'un côté, anneau élastique, écrou ou
-   couvercle de l'autre.
-4. **Quelle lubrification ?** → graisse au tiers du volume libre, ou roulements 2RS graissés à vie.
-5. **Quelle étanchéité ?** → joint à lèvres sur portée rectifiée Ra 0,8, lèvre vers l'intérieur.
-
-### 6. Les détails de montage qui font la différence
-
-Ce sont eux qui séparent un montage de catalogue d'un montage qui tient dix ans.
-
-**Le rayon de l'épaulement.** Il doit être **inférieur** au rayon de congé de la bague, sinon la
-bague porte sur l'arrondi et non sur la face : elle se monte de travers, et le positionnement
-axial est faux. La valeur est donnée dans le catalogue du fabricant, sous le symbole r min.
-
-**L'effort de montage doit passer par la bague qu'on emmanche.** Frapper sur la bague opposée fait
-transiter tout l'effort par les billes et les pistes : elles sont marquées par des impacts
-ponctuels — c'est le **brinelling**. Le roulement tournera d'abord normalement, puis deviendra
-bruyant, puis se détruira. Le défaut est invisible au montage : c'est ce qui le rend grave.
-
-**Le chanfrein d'introduction.** Sur l'arbre, avant la portée de joint : sans lui, la lèvre du
-joint est coupée au montage, et l'étanchéité est perdue dès le premier jour.
-
-**Prévoir la dépose.** Un roulement se démonte à l'extracteur : il faut de la place pour les
-griffes, et parfois des trous de dégagement dans l'épaulement.
-
-### 7. Lubrification et étanchéité
-
-**Graisse** : simple, reste en place, protège de la pollution. On remplit **un tiers du volume
-libre**, jamais plus. Trop de graisse est brassée en permanence par les billes : elle s'échauffe,
-se dégrade, et fait chauffer le roulement — exactement comme un manque de graisse.
-
-**Huile** : nécessaire à haute vitesse, et quand il faut **évacuer la chaleur** (réducteurs par
-barbotage).
-
-**Étanchéité** : joint à lèvres (portée **Ra 0,8**, lèvre orientée vers l'intérieur pour retenir
-l'huile), déflecteur, chicane, ou roulement **2RS** pour les cas simples et sans entretien.
-
-*Une portée brute de tournage à Ra 6,3 abrase la lèvre en quelques heures : le joint fuit et la
-panne semble inexplicable.*
-
-### 8. Exemple entièrement déroulé
-
-**L'énoncé.** Arbre de réducteur, **Ø30**, tournant à 1 450 tr/min, charge radiale fixe de 2 800 N
-due à une courroie, carter en fonte, atelier propre, températures modérées.
-
-**Étape 1 — Type de roulement**
-
-Charge radiale moyenne, pas d'axial significatif, vitesse courante → **roulements à billes à gorge
-profonde 6206** (alésage 30, extérieur 62, largeur 16).
-
-**Étape 2 — La règle des charges**
-
-L'arbre tourne, la charge de courroie est fixe en direction. C'est donc la **bague intérieure**
-qui voit la charge tourner autour d'elle → **elle est serrée**.
-
-- arbre : **Ø30 k6**
-- alésage du carter : **Ø62 H7**, bague extérieure glissante
-
-**Étape 3 — Palier fixe et palier libre**
-
-- **Palier fixe, côté poulie** : bague intérieure entre l'épaulement de l'arbre et un anneau
-  élastique ; bague extérieure entre l'épaulement du carter et le couvercle. Les deux bagues sont
-  bloquées : l'arbre est positionné.
-- **Palier libre, à l'opposé** : bague intérieure bloquée sur l'arbre, bague extérieure **libre de
-  coulisser** dans son alésage.
-
-**Étape 4 — Lubrification**
-
-Vitesse modérée, atelier propre → **graisse**, remplissage au tiers. Ou **roulements 2RS** si l'on
-veut supprimer tout entretien.
-
-**Étape 5 — Étanchéité**
-
-Joint à lèvres en sortie d'arbre, **portée rectifiée Ra 0,8**, lèvre vers l'intérieur, chanfrein
-d'introduction sur l'arbre.
-
-**Étape 6 — Les contrôles finaux**
-
-- rayon du congé d'épaulement **inférieur** au r min du catalogue ;
-- place pour l'extracteur au démontage ;
-- vérifier que l'arbre en k6 se monte à la presse ou au maillet avec douille — **jamais en
-  frappant sur la bague extérieure**.
-
-**Étape 7 — Contrôle de bon sens**
-
-Un 6206 supporte plusieurs milliers de newtons en charge dynamique : 2 800 N est très
-confortable. Si la charge avait été de 20 000 N, il aurait fallu vérifier la durée de vie au
-catalogue — ce qui est au programme de deuxième année.
-
-### 9. Les erreurs classiques
-
-1. **Inverser la règle des charges** : la bague tournante montée glissante flue et détruit sa
-   portée.
-2. **Bloquer axialement les deux paliers** : précontrainte, échauffement, grippage.
-3. **Frapper sur la bague opposée** au montage : brinelling, panne différée.
-4. **Portée d'arbre brute** sous un joint à lèvres : fuite en quelques heures.
-5. **Trop de graisse** : échauffement.
-6. **Roulement à contact oblique ou conique monté seul.**
-7. **Congé d'épaulement trop grand** : la bague porte sur l'arrondi.
-8. **Oublier la place pour l'extracteur** : le démontage détruit la pièce.
-
-### 10. À retenir
-
-- Par défaut : **roulement à billes à gorge profonde**.
-- **Charge tournante par rapport à la bague → SERRÉE. Charge fixe → GLISSANTE.**
-- Cas courant : **arbre k6, alésage H7**. Cas inverse (moyeu tournant) : **alésage M7, arbre h6**.
-- **Un seul palier fixe par arbre** — la dilatation atteint le demi-millimètre sur 800 mm.
-- Graisse : **un tiers** du volume libre. Joint à lèvres : portée **Ra 0,8**, lèvre vers
-  l'intérieur.
-- Rayon d'épaulement **< rayon de la bague** · l'effort de montage passe par la bague emmanchée.
-"""
-FICHES["6.2"]["formules"] = """
-**Règle des charges** — bague tournante par rapport à la direction de charge → **SERRÉE**
-bague fixe par rapport à la charge → **GLISSANTE**
-
-**Arbre tournant, charge fixe** (réducteur, pompe) — arbre **k6** ou m6 · alésage **H7**
-**Moyeu tournant, charge fixe** (tambour, roue folle) — alésage **M7** ou N7 · arbre **h6** ou g6
-
-**Dilatation à absorber** — ΔL = L α ΔT · acier α = 12·10⁻⁶ /°C
-exemple : 800 mm et +50 °C → 0,48 mm → un seul palier fixe
-
-**Lubrification** — graisse : **1/3 du volume libre** · huile : haute vitesse et évacuation de
-la chaleur · 2RS : graissé à vie, sans entretien
-
-**Étanchéité** — joint à lèvres : portée **Ra 0,8**, lèvre vers l'intérieur, chanfrein
-d'introduction
-
-**Détails de montage** — rayon du congé d'arbre < r min de la bague ·
-effort de montage par la bague emmanchée (sinon brinelling)
-"""
-
-
-# --- Version approfondie de la fiche 6.3 (reprise du 23/08) ---
-FICHES["6.3"]["cours"] = """
-### 1. Trois questions qui reviennent dans tout mécanisme
-
-Cette fiche répond à trois besoins qu'on retrouve dans presque toute machine :
-
-1. **guider** une pièce en translation, sans qu'elle se coince ;
-2. **assembler** deux pièces, de façon démontable ou permanente ;
-3. **transmettre** le mouvement d'un arbre à un autre.
-
-Trois sujets différents, une même exigence : comprendre **ce qui tient vraiment**, plutôt que
-reproduire ce qu'on a vu ailleurs.
-
-### 2. Guider en translation : l'arc-boutement
-
-Faire coulisser une pièce demande deux choses : la **guider** — empêcher tous les mouvements sauf
-un — et éviter qu'elle **se coince**.
-
-[[FIG:arc_boutement]]
-
-**L'arc-boutement, c'est ce qui se passe quand un tiroir se bloque parce qu'on tire d'un seul
-côté.** L'effort excentré fait pivoter le chariot ; il vient toucher le rail en deux points
-opposés, et le frottement de ces deux contacts s'oppose au mouvement. Plus on pousse, plus ça
-serre : la situation s'auto-aggrave.
-
-**La règle géométrique :**
-
-> **Longueur de guidage ≈ 1,5 à 2 fois la course**
-> ou, plus précisément : au moins **le double de la distance** entre le point d'application de
-> l'effort et l'axe du guidage.
-
-**Ce qu'il faut bien comprendre :** un guidage trop court se coince **quel que soit le soin
-apporté à l'usinage**. Ce n'est pas un problème de précision, c'est un problème de géométrie et de
-frottement. Aucune rectification ne rattrapera une longueur insuffisante.
-
-**Les solutions courantes**, du plus simple au plus performant :
-
-| Solution | Points forts | Limites |
-|---|---|---|
-| glissière prismatique ou queue d'aronde | rigide, réglable par lardon | frottement élevé, usure |
-| arbre + douille lisse | simple, économique | frottement, précision moyenne |
-| douille à billes sur arbre rectifié | frottement très faible | sensible à la pollution |
-| **rail à patins à billes** | précis, rigide, standard industriel | coût |
-| galets sur profilé | grandes courses, tolérant | précision limitée |
-
-### 3. La visserie : ce qui tient vraiment
-
-Voici le point contre-intuitif de la fiche, et celui qu'on explique rarement.
-
-[[FIG:precharge_vissage]]
-
-Dans un assemblage boulonné correct, **les vis ne travaillent pas en cisaillement**. Le serrage
-étire la vis, qui se comporte comme un **ressort tendu** : cette tension, appelée **précharge**,
-plaque les pièces l'une contre l'autre. Et c'est **l'adhérence entre les pièces** qui transmet
-l'effort.
-
-**La preuve est sous vos yeux sur n'importe quel plan** : les trous de passage sont toujours
-percés **avec du jeu** (Ø9 pour une vis M8, par exemple). Si les vis devaient travailler en
-cisaillement, il faudrait des trous ajustés et des vis calibrées — ce qui existe, mais reste
-l'exception.
-
-**Trois conséquences directes :**
-
-1. **Un serrage insuffisant est la première cause de desserrage** sous vibrations. Ce n'est pas la
-   vis qui « se dévisse » : c'est la précharge qui a disparu.
-2. **On serre à la clé dynamométrique**, au couple correspondant à la classe de la vis. Serrer au
-   jugé donne des précharges variant du simple au triple.
-3. **La rondelle plate ne freine rien.** Elle répartit la pression sous la tête et protège la
-   surface. C'est tout.
-
-**Boulon, vis ou goujon ?**
-
-| Solution | Quand | Pourquoi |
-|---|---|---|
-| **boulon** (vis + écrou) | accès des deux côtés | le plus économique : deux pièces simplement percées |
-| **vis** dans un taraudage | accès d'un seul côté | pas d'écrou à tenir |
-| **goujon** | pièce taraudée en aluminium, démontages fréquents | il reste en place : le taraudage fragile est préservé |
-
-**La classe de qualité**, écrite sur la tête : 8.8, 10.9, 12.9.
-
-> premier nombre × 100 = **Rm** en MPa · produit des deux × 10 = **Re** en MPa
-
-Une 8.8 : Rm = 800 MPa, Re = 640 MPa. Une 10.9 : Rm = 1 000, Re = 900.
-
-**Les freinages**, quand les vibrations persistent malgré une précharge correcte :
-
-- **par obstacle** : goupille fendue avec écrou à créneaux, fil frein, rondelle arrêtoir à ailettes ;
-- **par adhérence** : écrou autofreiné à bague nylon, rondelle à dents, frein filet chimique.
-
-### 4. Transmettre le couple entre un arbre et un moyeu
-
-[[FIG:liaison_arbre_moyeu]]
-
-**Le point à ne jamais confondre**, et il tombe à tous les contrôles :
-
-> **La clavette transmet le COUPLE. Elle ne maintient JAMAIS le moyeu axialement.**
-> **Le centrage vient de l'AJUSTEMENT**, pas de la clavette.
-
-Les trois fonctions sont donc assurées par trois éléments différents :
-
-| Fonction | Élément |
-|---|---|
-| transmettre le couple | clavette, cannelures, serrage, goupille |
-| centrer | l'ajustement (H7/j6, H7/k6…) |
-| maintenir axialement | épaulement, anneau élastique, écrou, vis de bout d'arbre |
-
-**Comment travaille une clavette.** Par **matage sur ses flancs** — pas par cisaillement, contrairement
-à l'intuition. Elle est donc ajustée **sans jeu latéralement**, mais **avec du jeu en fond de
-rainure** : si elle portait par le fond, elle soulèverait le moyeu et le décentrerait.
-
-La pression de matage vaut :
-
-> **p = 2 Mt / (d × h' × L)**, avec h' la hauteur en contact et L la longueur
-
-**C'est pourquoi on allonge une clavette plutôt que de la grossir** : la pression est inversement
-proportionnelle à la longueur. Remplacer une clavette par une plus courte, comme dans le cas
-classique, fait grimper la pression, mate les rainures de l'arbre et du moyeu, crée du jeu, et
-finit par la casser.
-
-### 5. Transmettre entre deux arbres
-
-| Solution | Rendement | Points forts | Limites |
-|---|---|---|---|
-| **engrenages** | 0,97 / étage | compact, rapport rigoureux | bruyant, carter lubrifié, entraxe précis |
-| **courroie** | 0,95 | silencieuse, amortit, grand entraxe, **patine si blocage** | glissement sauf crantée, tension sur les paliers |
-| **chaîne** | 0,96 | pas de glissement, milieux difficiles, températures | bruyante, lubrification, rattrapage de tension |
-| **roue et vis sans fin** | 0,5 à 0,8 | grand rapport en un étage, renvoi 90°, souvent irréversible | rendement faible, échauffement |
-
-[[FIG:engrenage_module]]
-
-**Les formules de l'engrenage droit**, à savoir de tête :
-
-> **r = Z menante / Z menée** — et pour un train, on multiplie les rapports
-> **d = m × Z** · **da = d + 2m** · **df = d − 2,5m**
-> **entraxe a = m (Z1 + Z2) / 2**
-
-**Deux règles absolues :**
-
-- deux roues qui engrènent ont **obligatoirement le même module** ;
-- **Z ≥ 17 dents** environ, sinon l'outil de taillage entame le pied de la dent (interférence).
-
-*Le dimensionnement complet — comment on trouve le module à partir du couple — est traité en
-fiche 12.5.*
-
-**Le lien avec la puissance**, déjà vu en RDM : **P = C ω**, donc **diviser la vitesse par 5
-multiplie le couple par 5**. L'arbre de sortie d'un réducteur est toujours nettement plus gros que
-celui d'entrée : ce n'est pas de la surqualité.
-
-**Un point qu'on oublie souvent : la tension de courroie charge les paliers.** Elle peut atteindre
-deux à trois fois l'effort utile, et c'est parfois elle, et non le couple, qui dimensionne les
-roulements.
-
-### 6. L'étanchéité
-
-**Statique** — entre deux pièces fixes : joint plat, joint torique dans sa gorge, pâte à joint.
-Un joint torique doit être **comprimé de 15 à 30 %**, jamais écrasé à fond : au-delà, il flue et
-perd son élasticité.
-
-**Dynamique** — une pièce bouge : joint à lèvres pour un arbre tournant, joint racleur pour une
-tige de vérin, chicane ou déflecteur quand il n'y a pas de contact.
-
-**Le réflexe :** partout où il y a un joint dynamique, la portée doit être **rectifiée Ra 0,8**,
-avec un **chanfrein d'introduction** pour ne pas couper la lèvre au montage.
-
-### 7. Exemple entièrement déroulé : une poulie en bout d'arbre
-
-**L'énoncé.** Une poulie doit être montée en bout d'arbre de moteur **Ø30**, transmettre **25 N·m**,
-et pouvoir être démontée pour changer la courroie.
-
-**Étape 1 — Le centrage**
-
-Ajustement **H7/j6** : incertain, il centre précisément sans empêcher le démontage à la main ou à
-l'extracteur. Un H7/p6 serait excessif — il faudrait une presse à chaque changement de courroie.
-
-**Étape 2 — La transmission du couple**
-
-Clavette parallèle forme A, dimension donnée par le diamètre d'arbre : pour un Ø30, **8 × 7**.
-Ajustée **sans jeu sur les flancs**, avec **jeu en fond de rainure**.
-
-Vérification du matage, avec une longueur de 40 mm et une hauteur en contact de 3,5 mm :
-
-p = 2 Mt / (d × h' × L) = 2 × 25 000 / (30 × 3,5 × 40) = 50 000 / 4 200 = **11,9 MPa**
-
-C'est très inférieur aux 80-100 MPa admissibles pour un acier : **largement suffisant**.
-
-**Étape 3 — L'arrêt axial côté moteur**
-
-**Épaulement de l'arbre** : c'est le plus solide, et il encaisse la poussée.
-
-**Étape 4 — L'arrêt axial côté extérieur**
-
-**Rondelle d'appui + vis CHC** dans un taraudage en bout d'arbre. Solution démontable et sûre.
-
-**Étape 5 — Le freinage**
-
-**Frein filet moyen** sur la vis de bout d'arbre : les vibrations de courroie sont permanentes, et
-une rondelle plate ne freinerait rien.
-
-**Étape 6 — Le contrôle de bon sens**
-
-Longueur de moyeu ≈ **1,5 × diamètre d'arbre**, soit 45 mm. En dessous, le moyeu ovalise sous
-charge et la portée s'use.
-
-**Étape 7 — Ce qu'il reste à vérifier**
-
-La **tension de courroie** charge le roulement le plus proche. Sur un porte-à-faux, cet effort
-crée aussi un moment de flexion sur l'arbre — à combiner avec la torsion (fiche 12.2).
-
-### 8. Les erreurs classiques
-
-1. **Guidage trop court** par rapport à la course : arc-boutement garanti.
-2. **Compter sur la clavette pour tenir axialement**, ou pour centrer.
-3. **Remplacer une clavette par une plus courte** : matage des rainures.
-4. **Serrer au jugé** au lieu d'utiliser la clé dynamométrique.
-5. **Croire qu'une rondelle plate freine.**
-6. **Oublier que la tension de courroie charge les paliers** — parfois plus que le couple.
-7. **Monter deux roues de modules différents** : elles ne peuvent pas engrener.
-8. **Écraser un joint torique à fond** : il flue et l'étanchéité disparaît.
-
-### 9. À retenir
-
-- Longueur de guidage ≈ **1,5 à 2 × la course**, sinon arc-boutement.
-- C'est la **précharge** et l'adhérence qui tiennent un assemblage vissé, pas le cisaillement des
-  vis.
-- Classe **8.8 → Re = 640 MPa** · **10.9 → Re = 900 MPa**.
-- **Clavette = couple · ajustement = centrage · épaulement = arrêt axial.** Trois fonctions, trois
-  éléments.
-- Une clavette travaille au **matage sur les flancs** : on l'allonge, on ne la grossit pas.
-- **d = m Z** · **a = m (Z1+Z2)/2** · même module obligatoire · Z ≥ 17.
-- Joint dynamique : portée **Ra 0,8** et chanfrein d'introduction.
-"""
-FICHES["6.3"]["formules"] = """
-**Guidage** — longueur ≈ 1,5 à 2 × course, ou ≥ 2 × distance effort-axe
-
-**Visserie — classes** — Rm = premier nombre × 100 · Re = produit des deux × 10
-8.8 : Rm 800, Re 640 · 10.9 : Rm 1000, Re 900 · 12.9 : Rm 1200, Re 1080
-
-**Clavette — pression de matage** — p = 2 Mt / (d × h' × L)
-p admissible ≈ 80 à 100 MPa (acier) · on ALLONGE la clavette, on ne la grossit pas
-
-**Longueur de moyeu** — ≈ 1,5 × diamètre d'arbre
-
-**Engrenages** — r = Z menante / Z menée · d = m Z · da = d + 2m · df = d − 2,5m
-a = m (Z1 + Z2)/2 · même module obligatoire · Z ≥ 17 dents
-
-**Rendements** — engrenage 0,97/étage · courroie 0,95 · chaîne 0,96 · roue-vis 0,5 à 0,8
-
-**Joints** — torique : compression 15 à 30 % · joint à lèvres : portée Ra 0,8 + chanfrein
-"""
-
-
-# --- Version approfondie de la fiche 1.1 (reprise du 23/08) ---
 FICHES["1.1"]["cours"] = """
 ### 1. Une histoire vraie, pour commencer
 
