@@ -32633,6 +32633,279 @@ ATELIERS = [
                      "On **hachure la matière, jamais le vide**. Et ISO 2768 n'est pas "
                      "« aucune tolérance » : c'est une tolérance implicite et contractuelle.",
     },
+    {
+        "id": 'at2',
+        "chapitre": 'Chapitre 3',
+        "titre": 'Lire une table ISO 286',
+        "theme": 'Tolérances',
+        "fiche": '5.3',
+        "figure": 'lire_table_iso',
+        "vocabulaire": [
+            ('IT', "l'intervalle de tolérance : la LARGEUR de la zone acceptée, toujours positive."),
+            ('écart supérieur', "ce qu'on ajoute au nominal pour obtenir la cote MAXI."),
+            ('écart inférieur', "ce qu'on ajoute au nominal pour obtenir la cote MINI."),
+            ('µm (micromètre)', 'un millième de millimètre. La table est en µm, le plan en mm.'),
+            ('lettre', "elle place la zone par rapport au nominal — c'est elle qui crée le jeu."),
+            ('grade (le chiffre)', 'il donne la largeur de la zone, pas sa position.'),
+        ],
+        "enonce": 'Décodez la cote **Ø45 f7**. Données de table, plage 30 à 50 mm : **IT7 = 25 µm**, écart de **f** : **es = −25 µm**.',
+        "etapes": [
+            {
+                "type": 'qcm',
+                "label": 'Arbre ou alésage ?',
+                "question": "La lettre est en minuscule. De quoi s'agit-il ?",
+                "options": ['Un arbre (pièce contenue)', 'Un alésage (pièce contenante)', 'On ne peut pas savoir'],
+                "bonne": 0,
+                "indice": 'MAJUSCULE = alésage · minuscule = arbre.',
+                "diagnostics": {1: "Vous avez inversé la convention. La MAJUSCULE désigne l'alésage — le trou, qui est grand et contient l'autre pièce. La minuscule désigne l'arbre.", 2: "L'information est bien là : la casse de la lettre suffit à trancher, c'est justement pourquoi la norme l'utilise."},
+            },
+            {
+                "type": 'numerique',
+                "label": 'IT7 en millimètres',
+                "unite": 'mm',
+                "attendu": 0.025,
+                "tol": 0.001,
+                "consigne": 'La table donne 25 µm. Convertissez en millimètres.',
+                "indice": '1 µm = 0,001 mm.',
+                "pieges": [(0.25, "Vous avez divisé par 100 au lieu de 1000. 25 µm valent 0,025 mm — dix fois moins que ce que vous avez écrit. C'est l'erreur la plus coûteuse de tout le tolérancement."), (25, 'Vous avez gardé la valeur en micromètres. Le plan attend des millimètres.'), (2.5, "Erreur d'un facteur 100 dans la conversion : 25 µm = 0,025 mm.")],
+            },
+            {
+                "type": 'qcm',
+                "label": 'Sens de lecture de la lettre',
+                "question": 'La lettre f est dans la plage a-h. Que donne la table ?',
+                "options": ["L'écart SUPÉRIEUR (es), et on calcule ei = es − IT", "L'écart INFÉRIEUR (ei), et on calcule es = ei + IT", 'Les deux écarts directement'],
+                "bonne": 0,
+                "indice": "Les premières lettres placent l'arbre SOUS le nominal.",
+                "diagnostics": {1: "C'est la règle des lettres k à z, pas a à h. Les premières lettres placent l'arbre sous le nominal : c'est donc l'écart supérieur qui est tabulé.", 2: "La table ne donne qu'un seul écart par lettre — le second se calcule avec l'IT. C'est ce qui rend la lecture rapide, mais impose de connaître le sens."},
+            },
+            {
+                "type": 'numerique',
+                "label": "Cote maxi de l'arbre",
+                "unite": 'mm',
+                "attendu": 44.975,
+                "tol": 0.0002,
+                "consigne": 'es = −0,025 mm. Calculez la cote maximale.',
+                "indice": 'cote maxi = nominal + es',
+                "pieges": [(45.025, "Vous avez ajouté +0,025 au lieu de −0,025. Pour un arbre f, l'écart est NÉGATIF : la zone est entièrement sous le nominal."), (45, "Vous avez donné le nominal sans appliquer l'écart. Pour un arbre f7, une pièce mesurant exactement 45,000 serait REBUTÉE."), (44.95, "Vous avez appliqué l'écart inférieur (−0,050) au lieu du supérieur.")],
+            },
+            {
+                "type": 'numerique',
+                "label": "Cote mini de l'arbre",
+                "unite": 'mm',
+                "attendu": 44.95,
+                "tol": 0.0002,
+                "consigne": 'ei = es − IT. Calculez la cote minimale.',
+                "indice": 'ei = −0,025 − 0,025 = −0,050 mm',
+                "pieges": [(44.975, "C'est la cote MAXI que vous venez de trouver. La mini s'obtient avec l'écart inférieur, plus négatif."), (45.05, "Signe inversé : les deux écarts d'un arbre f sont négatifs.")],
+            },
+        ],
+        "corrige": {
+            "enonce": 'Une cote **Ø45 f7** : lettre **minuscule** donc un **arbre**, grade 7. Toutes les données de table sont fournies — rien à chercher ailleurs.',
+            "regle": "**MAJUSCULE = alésage · minuscule = arbre.**\\n\\nPuis le sens de lecture dépend de la lettre : **a à h** → la table donne l'écart **supérieur** (es), et ei = es − IT. **k à z** → la table donne l'écart **inférieur** (ei), et es = ei + IT.\\n\\nC'est logique : les premières lettres placent l'arbre **sous** le nominal (donc du jeu), les dernières **au-dessus** (donc du serrage).",
+            "conversions": "**La conversion décisive, et la plus piégeuse : µm → mm.**\\n\\nIT7 = 25 µm = **0,025 mm** · es = −25 µm = **−0,025 mm**\\n\\nÉcrire 0,25 au lieu de 0,025 fait accepter des pièces dix fois hors tolérance, sans que rien dans le nombre ne signale l'erreur.",
+            "remplacement": 'es = **−0,025 mm**\\n\\nei = es − IT = −0,025 − 0,025\\n\\ncote maxi = 45 + es · cote mini = 45 + ei',
+            "calcul": "ei = −0,025 − 0,025 = **−0,050 mm**\\n\\ncote maxi = 45 − 0,025 = **44,975 mm**\\n\\ncote mini = 45 − 0,050 = **44,950 mm**\\n\\nL'arbre est donc bon entre **44,950 et 44,975 mm**.",
+            "verification": "**Trois contrôles :**\\n\\n1. **La largeur obtenue** : 44,975 − 44,950 = 0,025 mm — c'est exactement l'IT7 annoncé. Si l'écart entre vos deux cotes ne redonne pas l'IT, il y a une erreur.\\n\\n2. **L'ordre de grandeur** : un IT de 25 µm sur Ø45 est cohérent avec le repère à retenir (IT7 ≈ 21 µm sur Ø30, un peu plus au-delà). Une zone de 0,25 mm aurait dû alerter.\\n\\n3. **La position** : les deux cotes sont **sous** 45. Pour une lettre de la plage a-h, c'est obligatoire — sinon le signe a été inversé.",
+        },
+        "a_retenir": "À retenir : **minuscule = arbre**, majuscule = alésage. Table en **µm**, plan en **mm** (25 µm = 0,025 mm). Lettres **a-h** : la table donne es, et ei = es − IT. Contrôle final : **maxi − mini doit redonner l'IT**.",
+    },
+    {
+        "id": 'at3',
+        "chapitre": 'Chapitre 4',
+        "titre": 'Calculer un ajustement',
+        "theme": 'Ajustements',
+        "fiche": '5.4',
+        "figure": 'calcul_ajustement_etapes',
+        "vocabulaire": [
+            ('ajustement', 'un alésage et un arbre de MÊME cote nominale, montés ensemble.'),
+            ('jeu', 'il reste du vide entre les deux : ça tourne ou ça coulisse.'),
+            ('serrage', "l'arbre est plus gros que le trou : il faut une presse pour monter."),
+            ('incertain', 'selon les pièces réelles, on obtient du jeu OU un léger serrage.'),
+            ('alésage normal (H)', "l'alésage garde toujours H ; on fait varier la lettre de l'arbre. C'est un choix économique : l'outil d'alésage est normalisé."),
+        ],
+        "enonce": "Étudiez l'ajustement **Ø30 H7/g6**. Données : **IT7 = 21 µm**, **IT6 = 13 µm**, écart de **g** : **es = −7 µm**.",
+        "etapes": [
+            {
+                "type": 'numerique',
+                "label": 'Alésage maxi',
+                "unite": 'mm',
+                "attendu": 30.021,
+                "tol": 0.0002,
+                "consigne": 'Pour un alésage H, EI = 0 par définition. Calculez la cote maxi.',
+                "indice": 'alésage maxi = nominal + IT7',
+                "pieges": [(30, "Vous avez donné le nominal. Pour H7, la zone va du nominal jusqu'au nominal + IT : la cote maxi est 30,021."), (29.979, 'Signe inversé : pour un alésage H, la zone est entièrement AU-DESSUS du nominal, jamais en dessous.')],
+            },
+            {
+                "type": 'numerique',
+                "label": 'Arbre maxi',
+                "unite": 'mm',
+                "attendu": 29.993,
+                "tol": 0.0002,
+                "consigne": "es = −7 µm. Calculez la cote maxi de l'arbre.",
+                "indice": 'arbre maxi = nominal + es = 30 − 0,007',
+                "pieges": [(30.007, "Vous avez ajouté +0,007. Pour un arbre g, l'écart est négatif : la zone est sous le nominal, c'est ce qui crée le jeu."), (29.98, "C'est la cote MINI de l'arbre (avec ei). La maxi utilise es.")],
+            },
+            {
+                "type": 'numerique',
+                "label": 'Arbre mini',
+                "unite": 'mm',
+                "attendu": 29.98,
+                "tol": 0.0002,
+                "consigne": "ei = es − IT6. Calculez la cote mini de l'arbre.",
+                "indice": 'ei = −0,007 − 0,013 = −0,020 mm',
+                "pieges": [(29.993, "C'est la cote MAXI. La mini s'obtient en retranchant encore l'IT6."), (29.987, "Vous avez utilisé l'IT7 (21 µm) au lieu de l'IT6 (13 µm) : l'arbre est en qualité 6, pas 7.")],
+            },
+            {
+                "type": 'numerique',
+                "label": 'Jeu maxi',
+                "unite": 'µm',
+                "attendu": 41,
+                "tol": 0.02,
+                "consigne": 'Jeu maxi = alésage MAXI − arbre MINI. Répondez en micromètres.',
+                "indice": 'Le plus grand trou avec le plus petit axe.',
+                "pieges": [(7, 'Vous avez calculé le jeu MINI (alésage mini − arbre maxi). Pour le jeu maximal, on prend le plus GRAND trou et le plus PETIT axe.'), (28, "Vous avez croisé les cotes du même côté (maxi avec maxi). Le jeu maxi croise toujours maxi d'alésage avec mini d'arbre."), (34, "Vous avez additionné les deux IT (21 + 13). C'est la tolérance de l'ajustement, pas le jeu maximal.")],
+            },
+            {
+                "type": 'qcm',
+                "label": "Nature de l'ajustement",
+                "question": 'Jmax = +41 µm et Jmin = +7 µm. Quelle est la nature ?',
+                "options": ['Avec jeu — il reste toujours du vide', "Avec serrage — l'arbre est toujours plus gros", 'Incertain — jeu ou serrage selon les pièces'],
+                "bonne": 0,
+                "diagnostics": {1: 'Un serrage donnerait DEUX valeurs négatives. Ici les deux sont positives : il y a toujours du vide entre les pièces.', 2: 'Un ajustement incertain a un jeu maxi POSITIF et un jeu mini NÉGATIF — les deux zones se chevauchent. Ici les deux valeurs sont positives.'},
+            },
+        ],
+        "corrige": {
+            "enonce": "Un alésage **H7** et un arbre **g6**, même nominal Ø30. Toutes les données de table sont fournies. La question finale porte sur la nature de l'ajustement, qui se déduit du signe des deux jeux.",
+            "regle": '**Deux formules, et une seule difficulté : ne pas croiser les cotes du même côté.**\\n\\n> **Jeu maxi = Alésage MAXI − arbre MINI**\\n> **Jeu mini = Alésage MINI − arbre MAXI**\\n\\nLe moyen de retenir : pour le jeu **maximal**, on prend le cas le plus favorable au vide — le plus grand trou avec le plus petit axe.',
+            "conversions": "IT7 = 21 µm = **0,021 mm** · IT6 = 13 µm = **0,013 mm** · es = −7 µm = **−0,007 mm**\\n\\nLes cotes se calculent en millimètres, mais les jeux s'expriment habituellement en **micromètres** — d'où l'aller-retour entre les deux unités dans cet atelier.",
+            "remplacement": '**Alésage H7** : EI = 0 → 30,000 à 30 + 0,021\\n\\n**Arbre g6** : es = −0,007 · ei = −0,007 − 0,013\\n\\nJmax = 30,021 − 29,980 · Jmin = 30,000 − 29,993',
+            "calcul": 'Alésage : **30,000 à 30,021 mm**\\n\\nArbre : ei = −0,020 → **29,980 à 29,993 mm**\\n\\nJeu maxi = 30,021 − 29,980 = **+0,041 mm = +41 µm**\\n\\nJeu mini = 30,000 − 29,993 = **+0,007 mm = +7 µm**\\n\\nLes deux étant positifs : **ajustement AVEC JEU**, garanti entre 7 et 41 µm quelles que soient les pièces du lot.',
+            "verification": "**Le contrôle qui valide tout :**\\n\\nJmax − Jmin doit être égal à **IT alésage + IT arbre** :\\n\\n41 − 7 = 34 µm, et 21 + 13 = 34 µm ✅\\n\\nSi l'écart entre vos deux jeux ne redonne pas la somme des deux IT, c'est que vous avez croisé les cotes du même côté.\\n\\n**Contrôle de cohérence** : g est dans la plage a-h, qui donne toujours du jeu. Si vous aviez trouvé un serrage, il y aurait une erreur de signe.",
+        },
+        "a_retenir": "À retenir : **Jmax = Amaxi − amini** · **Jmin = Amini − amaxi**. Un résultat négatif n'est pas une erreur : c'est un **serrage**. Et le contrôle final : **Jmax − Jmin = IT alésage + IT arbre**.",
+    },
+    {
+        "id": 'at4',
+        "chapitre": 'Chapitre 5',
+        "titre": 'Décoder un cadre de tolérance GPS',
+        "theme": 'Tolérancement géométrique',
+        "fiche": '5.5',
+        "figure": 'cadre_tolerance',
+        "vocabulaire": [
+            ('GPS', 'le langage de la FORME et de la POSITION, en complément des cotes.'),
+            ('zone de tolérance', 'un espace dans lequel la surface réelle doit tenir ENTIÈREMENT.'),
+            ('référence', 'la surface à partir de laquelle on juge, notée A, B, C.'),
+            ('Ø devant la valeur', 'la zone devient un CYLINDRE au lieu de deux plans parallèles.'),
+            ('tolérance de forme', 'elle se juge toute seule : elle ne prend JAMAIS de référence.'),
+        ],
+        "enonce": "Un plan de carter porte le cadre **⊥ | Ø0,05 | A** appliqué à l'axe d'un alésage, et une **planéité 0,05** sur la face d'appui.",
+        "etapes": [
+            {
+                "type": 'qcm',
+                "label": 'Famille du premier cadre',
+                "question": 'Le symbole ⊥ (perpendicularité) appartient à quelle famille ?',
+                "options": ['Orientation', 'Forme', 'Position'],
+                "bonne": 0,
+                "indice": "Être perpendiculaire, c'est forcément perpendiculaire À quelque chose.",
+                "diagnostics": {1: "Les tolérances de forme (rectitude, planéité, circularité) se jugent SEULES, sans référence. Or ⊥ est suivi de la référence A : c'est donc une tolérance d'orientation.", 2: "La position (localisation, coaxialité) fixe un EMPLACEMENT. Ici, on ne dit pas où se trouve l'axe, seulement sous quel ANGLE il doit être."},
+            },
+            {
+                "type": 'qcm',
+                "label": 'Rôle du signe Ø',
+                "question": 'Que change le Ø devant la valeur 0,05 ?',
+                "options": ['La zone est un cylindre de 0,05 mm de diamètre', 'La zone est comprise entre deux plans distants de 0,05 mm', "Rien, c'est une notation d'usage"],
+                "bonne": 0,
+                "diagnostics": {1: "C'est ce que signifierait l'ABSENCE de Ø. Avec le Ø, la zone devient cylindrique — le défaut est contrôlé dans toutes les directions, ce qui est indispensable pour l'axe d'un perçage.", 2: "Le Ø change réellement la nature de la zone. Sans lui, le défaut n'est contrôlé que dans une seule direction : une inclinaison latérale passerait inaperçue."},
+            },
+            {
+                "type": 'qcm',
+                "label": 'La planéité et sa référence',
+                "question": 'Peut-on écrire « planéité 0,05 A » ?',
+                "options": ['Non : la planéité est une tolérance de forme, sans référence', "Oui, si A est bien la face d'appui", "Oui, c'est même obligatoire"],
+                "bonne": 0,
+                "diagnostics": {1: "Non : être plan est une propriété de la surface elle-même. Aucune référence n'a de sens ici, même une référence correcte par ailleurs.", 2: "C'est l'inverse : ajouter une référence à une tolérance de forme rend le cadre incorrect et non interprétable au contrôle."},
+            },
+            {
+                "type": 'numerique',
+                "label": 'Diamètre de la zone en µm',
+                "unite": 'µm',
+                "attendu": 50,
+                "tol": 0.02,
+                "consigne": 'La zone cylindrique fait Ø0,05 mm. Combien en micromètres ?',
+                "indice": '1 mm = 1000 µm',
+                "pieges": [(5, "Erreur d'un facteur 10 : 0,05 mm = 50 µm."), (500, "Erreur d'un facteur 10 dans l'autre sens : 0,05 mm = 50 µm, pas 0,5 mm."), (0.05, 'Vous avez gardé la valeur en millimètres.')],
+            },
+        ],
+        "corrige": {
+            "enonce": "Deux spécifications de **familles différentes** sur le même plan : une **orientation** (perpendicularité, avec référence) et une **forme** (planéité, sans référence). C'est la distinction que l'atelier teste.",
+            "regle": '**Une seule question permet de trier les familles :** ce défaut se juge-t-il tout seul, ou par rapport à quelque chose ?\\n\\n- **forme** (rectitude, planéité, circularité, cylindricité) → **JAMAIS de référence** ;\\n- **orientation, position, battement** → **toujours une référence**.\\n\\nEt le **Ø** devant la valeur transforme la zone : deux plans parallèles sans lui, un **cylindre** avec.',
+            "conversions": "Une seule conversion, mais elle revient constamment en GPS :\\n\\n**0,05 mm = 50 µm** (1 mm = 1000 µm)\\n\\nLes valeurs GPS s'écrivent en millimètres sur le plan, mais se discutent souvent en micromètres à l'atelier.",
+            "remplacement": '**⊥ | Ø0,05 | A** se décompose en trois cases :\\n\\nsymbole ⊥ = **perpendicularité** (orientation)\\n\\nvaleur **Ø0,05** = zone **cylindrique** de 0,05 mm de diamètre\\n\\nréférence **A** = la surface par rapport à laquelle on juge',
+            "calcul": "**1.** Famille **orientation** — le cadre porte une référence, ce que la forme n'admet jamais.\\n\\n**2.** Le **Ø** rend la zone **cylindrique** : l'axe de l'alésage doit tenir dans un cylindre de 0,05 mm de diamètre, perpendiculaire à A. Sans le Ø, le défaut ne serait contrôlé que dans une seule direction.\\n\\n**3.** **Non**, « planéité 0,05 A » est incorrect : la planéité est une tolérance de **forme**, qui ne prend jamais de référence. On écrit simplement « planéité 0,05 ».\\n\\n**4.** 0,05 mm = **50 µm**.",
+            "verification": "**Le contrôle par la fonction** : à chaque spécification doit correspondre une panne évitée.\\n\\n- perpendicularité de l'axe : sans elle, l'arbre entre de travers et le roulement travaille en coin ;\\n- planéité de l'appui : sans elle, le carter bascule au serrage.\\n\\n**Si vous ne pouvez pas nommer la défaillance qu'une spécification empêche, elle est probablement inutile** — et elle coûte cher au contrôle.\\n\\n**Contrôle de cohérence des valeurs** : Ø0,05 sur l'axe est plus serré que la planéité 0,05 rapportée à toute une face — c'est logique, un roulement mal orienté se détruit.",
+        },
+        "a_retenir": "À retenir : **forme = sans référence**, tout le reste **avec**. Le **Ø** rend la zone cylindrique — indispensable pour l'axe d'un perçage. Et l'ordre des références A, B, C n'est jamais arbitraire : c'est la mise en position 3-2-1.",
+    },
+    {
+        "id": 'at5',
+        "chapitre": 'Chapitre 6',
+        "titre": 'Choisir un état de surface',
+        "theme": 'États de surface',
+        "fiche": '5.6',
+        "figure": 'etats_surface_cout',
+        "vocabulaire": [
+            ('Ra', "l'écart moyen du profil, en micromètres : plus il est petit, plus c'est lisse."),
+            ('portée', 'une surface qui reçoit une autre pièce (roulement, joint, moyeu).'),
+            ('rectification', 'un procédé de finition à la meule, qui donne Ra 0,8 et mieux.'),
+            ('joint à lèvres', "une bague souple qui frotte sur l'arbre pour retenir l'huile."),
+        ],
+        "enonce": 'Un arbre de réducteur comporte quatre zones : **A** deux portées de roulement Ø30 k6 · **B** une portée de joint à lèvres · **C** une portée de moyeu de poulie · **D** les parties courantes, qui ne touchent rien.',
+        "etapes": [
+            {
+                "type": 'qcm',
+                "label": 'Zone A — portées de roulement',
+                "question": 'Quel Ra retenez-vous pour les portées de roulement ?',
+                "options": ['Ra 0,8', 'Ra 3,2', 'Ra 6,3'],
+                "bonne": 0,
+                "indice": 'Une bague montée serrée écrase les aspérités si la surface est rugueuse.',
+                "diagnostics": {1: "Ra 3,2 convient à une face d'appui boulonnée, pas à une portée serrée. À cette rugosité, les aspérités sont écrasées au montage et le serrage calculé disparaît.", 2: "Ra 6,3 est un état d'ébauche. Sur une portée de roulement, le serrage k6 serait perdu dès le premier montage."},
+            },
+            {
+                "type": 'qcm',
+                "label": 'Zone B — portée de joint',
+                "question": 'Outre le Ra 0,8, que faut-il impérativement prévoir ?',
+                "options": ["Un chanfrein d'introduction et aucune strie hélicoïdale", 'Une rainure de graissage', 'Un traitement de surface dur'],
+                "bonne": 0,
+                "diagnostics": {1: "Une rainure ferait exactement l'inverse : elle créerait un chemin de fuite sous la lèvre.", 2: "Un traitement dur peut aider à l'usure, mais ne résout ni la coupure de la lèvre au montage, ni le pompage de l'huile par les stries de tournage."},
+            },
+            {
+                "type": 'qcm',
+                "label": 'Zone D — parties courantes',
+                "question": 'Quel Ra pour les zones qui ne touchent rien ?',
+                "options": ['Ra 6,3 ou brut de tournage', 'Ra 0,8 par sécurité', 'Ra 0,4'],
+                "bonne": 0,
+                "diagnostics": {1: "« Par sécurité » n'est pas un argument technique : imposer Ra 0,8 sur une surface sans fonction, c'est payer une rectification pour rien.", 2: "Ra 0,4 est un état de guidage de précision. Sur une zone qui ne touche rien, c'est un surcoût pur."},
+            },
+            {
+                "type": 'qcm',
+                "label": 'La limite basse',
+                "question": 'Un technicien propose Ra 0,05 sur un guidage lubrifié. Que répondre ?',
+                "options": ['Non : sous Ra 0,1, le lubrifiant ne se maintient plus', "Oui, plus c'est lisse mieux c'est", 'Oui, mais seulement si la pièce est en acier'],
+                "bonne": 0,
+                "indice": "Une surface a besoin d'aspérités pour retenir l'huile.",
+                "diagnostics": {1: "C'est l'idée reçue que cette fiche corrige. Sous Ra 0,1, il n'y a plus assez d'aspérités pour retenir le film d'huile : il se rompt, et le frottement AUGMENTE au lieu de diminuer.", 2: "Le matériau n'y change rien : c'est le film lubrifiant qui a besoin d'une micro-rugosité pour se maintenir, quel que soit le métal."},
+            },
+        ],
+        "corrige": {
+            "enonce": 'Quatre zones sur **une seule pièce**, avec **quatre fonctions différentes** : porter un roulement, étancher, centrer un moyeu, ne rien toucher. La dernière question est un piège volontaire sur « plus lisse = mieux ».',
+            "regle": '**On choisit le Ra selon la FONCTION de la surface**, pas selon son importance apparente. Trois niveaux suffisent presque toujours :\\n\\n- **Ra 3,2** : ça pose, ça appuie ;\\n- **Ra 1,6** : ça frotte ;\\n- **Ra 0,8** : ça porte un roulement, ça étanche.\\n\\nEt **deux limites, symétriques** : trop rugueux use et fuit · **trop lisse (sous Ra 0,1) ne retient plus le lubrifiant**.',
+            "conversions": "Aucune conversion : Ra s'exprime directement en micromètres sur le plan.\\n\\n**Attention à ne pas le confondre** avec les micromètres des tolérances ISO : ce sont deux grandeurs différentes qui partagent la même unité. Un Ø30 H7 (21 µm de tolérance) n'a rien à voir avec un Ra 0,8 µm.",
+            "remplacement": '| Zone | Fonction | Ra |\\n|---|---|---|\\n| A | porter une bague serrée | **0,8** |\\n| B | étancher contre une lèvre | **0,8** |\\n| C | centrer un moyeu démontable | **1,6** |\\n| D | aucune | **6,3** ou brut |',
+            "calcul": "**A — Ra 0,8** : une bague montée serrée sur une surface rugueuse écrase les aspérités au montage, et le serrage calculé disparaît.\\n\\n**B — Ra 0,8, plus un chanfrein d'introduction et aucune strie hélicoïdale.** Sans chanfrein, la lèvre est coupée au montage ; des stries orientées pompent l'huile vers l'extérieur.\\n\\n**D — Ra 6,3 ou brut** : aucune fonction, donc aucun surcoût justifié.\\n\\n**La limite basse — non à Ra 0,05.** Sous Ra 0,1, la surface est trop lisse pour retenir le lubrifiant : le film se rompt et le frottement augmente.",
+            "verification": "**Le contrôle économique** : combien de surfaces exigent une rectification ? Ici trois (les deux portées A et la portée B), sur une pièce qui compte une dizaine de surfaces.\\n\\n**Si toutes les surfaces d'un plan portaient Ra 0,8**, il faudrait se demander lesquelles ont réellement une fonction — c'est le même raisonnement que les 20 % de cotes fonctionnelles de la fiche 5.2.\\n\\n**Le contrôle de cohérence** : les Ra retenus décroissent avec l'exigence (6,3 → 1,6 → 0,8) sans jamais descendre sous 0,4. La bonne valeur est toujours un **intervalle**, jamais un maximum.",
+        },
+        "a_retenir": 'À retenir : **Ra 3,2** sur un appui · **Ra 0,8** seulement où ça porte, ça frotte ou ça étanche. Chaque cran change le moyen de production, donc le prix. Et **trop lisse est aussi un défaut** : sous Ra 0,1, le lubrifiant ne tient plus.',
+    },
 ]
 
 
@@ -32696,17 +32969,32 @@ def _rendre_atelier(_at, _prefixe):
         st.session_state[_cle_hist] = []
         st.session_state[_cle_temps] = 0
 
-    if st.button("↺ Recommencer cet atelier", key=f"{_prefixe}_at_reset"):
-        st.session_state[_cle_etape] = 0
-        st.session_state[_cle_hist] = []
-        st.session_state[_cle_temps] = 0
-        st.rerun()
+    _cnav1, _cnav2 = st.columns(2)
+    with _cnav1:
+        if st.button("← Étape précédente", key=f"{_prefixe}_at_prev",
+                     disabled=st.session_state[_cle_etape] == 0):
+            st.session_state[_cle_etape] = max(0, st.session_state[_cle_etape] - 1)
+            if st.session_state[_cle_hist]:
+                st.session_state[_cle_hist].pop()
+            st.session_state[_cle_temps] = 0
+            st.rerun()
+    with _cnav2:
+        if st.button("↺ Recommencer cet atelier", key=f"{_prefixe}_at_reset"):
+            st.session_state[_cle_etape] = 0
+            st.session_state[_cle_hist] = []
+            st.session_state[_cle_temps] = 0
+            st.rerun()
 
     # --- Vocabulaire traduit, avant toute chose ---
     if _at.get("vocabulaire"):
-        with st.expander("📖 Le vocabulaire de cet atelier, en français courant", expanded=False):
+        with st.expander("📖 Glossaire — les mots de cet atelier (à lire, rien à cliquer)",
+                         expanded=False):
+            st.caption("Ce n'est pas un menu : c'est la liste des termes techniques employés "
+                       "dans l'atelier, traduits en français courant.")
+            _tab = "| Terme | Ce que ça veut dire |\n|---|---|\n"
             for _mot, _sens in _at["vocabulaire"]:
-                st.markdown(f"**{_mot}** — {_sens}")
+                _tab += f"| **{_mot}** | {_sens} |\n"
+            st.markdown(_tab)
 
     # --- Le document à exploiter ---
     st.write("")
@@ -32746,8 +33034,10 @@ def _rendre_atelier(_at, _prefixe):
         if _type == "qcm":
             _rep = st.radio(_et.get("question", "Votre réponse"), _et["options"],
                             key=_cle_in, index=None)
-            _go = st.button("Valider", type="primary", key=f"{_prefixe}_at_go_{_idx}",
-                            disabled=_rep is None)
+            _go = st.button("Valider", type="primary", key=f"{_prefixe}_at_go_{_idx}")
+            if _go and _rep is None:
+                st.warning("Choisissez d'abord une réponse ci-dessus.")
+                _go = False
             if _et.get("indice"):
                 with st.popover("💡 Indice"):
                     st.write(_et["indice"])
@@ -32778,8 +33068,11 @@ def _rendre_atelier(_at, _prefixe):
             _val = st.number_input(
                 f"Votre valeur ({_et['unite']})" if _et.get("unite") else "Votre valeur",
                 value=None, format="%.4f", step=0.001, key=_cle_in)
-            _go = st.button("Valider", type="primary", key=f"{_prefixe}_at_go_{_idx}",
-                            disabled=_val is None)
+            _go = st.button("Valider", type="primary", key=f"{_prefixe}_at_go_{_idx}")
+            if _go and _val is None:
+                st.warning("Entrez d'abord une valeur dans le champ ci-dessus, "
+                           "puis appuyez sur Valider.")
+                _go = False
             if _et.get("indice"):
                 with st.popover("💡 Indice"):
                     st.write(_et["indice"])
@@ -32849,10 +33142,19 @@ def _rendre_exercice_interactif(_ex, _prefixe):
         st.session_state[_cle_etat] = 0
         st.session_state[_cle_hist] = []
 
-    if st.button("↺ Recommencer cet exercice", key=f"reset_{_prefixe}"):
-        st.session_state[_cle_etat] = 0
-        st.session_state[_cle_hist] = []
-        st.rerun()
+    _c1, _c2 = st.columns(2)
+    with _c1:
+        if st.button("← Étape précédente", key=f"prev_{_prefixe}",
+                     disabled=st.session_state[_cle_etat] == 0):
+            st.session_state[_cle_etat] = max(0, st.session_state[_cle_etat] - 1)
+            if st.session_state[_cle_hist]:
+                st.session_state[_cle_hist].pop()
+            st.rerun()
+    with _c2:
+        if st.button("↺ Recommencer cet exercice", key=f"reset_{_prefixe}"):
+            st.session_state[_cle_etat] = 0
+            st.session_state[_cle_hist] = []
+            st.rerun()
 
     st.write("")
     with st.container(border=True):
@@ -32891,8 +33193,10 @@ def _rendre_exercice_interactif(_ex, _prefixe):
             _rep = st.radio(_et.get("question", "Votre réponse"), _et["options"],
                             key=_cle_rep, index=None)
             _valider = st.button("Valider cette étape", type="primary",
-                                 key=f"{_prefixe}_valider_{_etape_idx}",
-                                 disabled=_rep is None)
+                                 key=f"{_prefixe}_valider_{_etape_idx}")
+            if _valider and _rep is None:
+                st.warning("Choisissez d'abord une réponse ci-dessus.")
+                _valider = False
             if _et.get("indice"):
                 with st.popover("💡 Indice"):
                     st.write(_et["indice"])
@@ -32929,12 +33233,14 @@ def _rendre_exercice_interactif(_ex, _prefixe):
             c_valider, c_indice = st.columns([1, 1])
             with c_valider:
                 _valider = st.button("Valider cette étape", type="primary",
-                                     key=f"{_prefixe}_valider_{_etape_idx}",
-                                     disabled=_val is None)
+                                     key=f"{_prefixe}_valider_{_etape_idx}")
             with c_indice:
                 with st.popover("💡 Indice"):
                     st.write(f"Formule à utiliser : **{_et['formule']}**")
 
+            if _valider and _val is None:
+                st.warning("Entrez d'abord une valeur dans le champ ci-dessus, "
+                           "puis appuyez sur Valider.")
             if _valider and _val is not None:
                 _attendu = _et["attendu"]
                 _tol = _et["tol"]
@@ -32972,8 +33278,12 @@ def _rendre_exercice_interactif(_ex, _prefixe):
         _cc = _ex["conclusion"]
         st.markdown(f"#### Conclusion — {_cc['question']}")
         _rep = st.radio("Votre réponse", _cc["options"], key=f"{_prefixe}_concl", index=None)
-        if st.button("Valider la conclusion", type="primary",
-                     key=f"{_prefixe}_valider_concl", disabled=_rep is None):
+        _vc = st.button("Valider la conclusion", type="primary",
+                        key=f"{_prefixe}_valider_concl")
+        if _vc and _rep is None:
+            st.warning("Choisissez d'abord une réponse ci-dessus.")
+            _vc = False
+        if _vc:
             _idx_rep = _cc["options"].index(_rep)
             if _idx_rep == _cc["bonne"]:
                 st.session_state[_cle_hist].append(
