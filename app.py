@@ -3679,6 +3679,154 @@ def dyn_regle_charges(arbre_tourne, charge_tourne):
 
 
 
+
+def dyn_traction(F, d, Re, sec):
+    """Tige tendue : la section croît en d², donc doubler le diamètre divise
+    la contrainte par quatre."""
+    import math as _m
+    S = _m.pi * d * d / 4.0
+    sigma = F / S if S else 0.0
+    rpe = Re / float(sec)
+    tient = sigma <= rpe
+    taux = 100.0 * sigma / rpe if rpe else 0.0
+
+    W, H = 700, 320
+    coul = OK if tient else ALERTE
+    p = [_txt(W/2, 24, "Traction — la contrainte et la marge de sécurité", 13, TRAIT, "middle", True)]
+
+    # la tige, dont l'épaisseur suit le diamètre
+    ep = max(8, min(70, d * 1.6))
+    x0, x1, y = 150, 470, 120
+    p.append("<rect x='%s' y='%s' width='%s' height='%s' fill='#fed7aa' stroke='%s' "
+             "stroke-width='2.2' rx='2'/>" % (x0, y - ep/2, x1 - x0, ep, ARBRE))
+    p.append(_txt((x0+x1)/2, y + 5, "Ø%.0f" % d, 12, ARBRE, "middle", True))
+    # les deux efforts, opposés
+    p.append("<line x1='%s' y1='%s' x2='%s' y2='%s' stroke='%s' stroke-width='2.6' "
+             "marker-end='url(#tf)'/>" % (x0 - 20, y, x0 - 78, y, ALERTE))
+    p.append("<line x1='%s' y1='%s' x2='%s' y2='%s' stroke='%s' stroke-width='2.6' "
+             "marker-end='url(#tf)'/>" % (x1 + 20, y, x1 + 78, y, ALERTE))
+    p.append(_txt(W/2, y - ep/2 - 22, "F = %s N" % ("%d" % F).replace(",", " "),
+                  12, ALERTE, "middle", True))
+
+    # la jauge : où l'on se situe par rapport à l'admissible
+    gx, gy, gw = 150, 210, 400
+    p.append("<rect x='%s' y='%s' width='%s' height='18' rx='9' fill='#e2e8f0'/>" % (gx, gy, gw))
+    rempli = max(0.0, min(1.0, taux/100.0)) * gw
+    p.append("<rect x='%s' y='%s' width='%.1f' height='18' rx='9' fill='%s'/>" % (gx, gy, rempli, coul))
+    p.append(_txt(gx, gy - 8, "0", 10, FIN, "middle"))
+    p.append(_txt(gx + gw, gy - 8, "Rpe = %.0f MPa" % rpe, 10, FIN, "middle"))
+    p.append(_txt(gx + gw/2, gy + 34, "%.0f %% de l'admissible" % taux, 12, coul, "middle", True))
+
+    p.append("<rect x='150' y='%s' width='400' height='58' rx='6' fill='%s' stroke='%s' "
+             "stroke-width='1'/>" % (H - 74, FOND, FIN))
+    p.append(_txt(168, H - 52, "S = π d²/4 = %.0f mm²   ·   σ = F/S = %.1f MPa" % (S, sigma),
+                  12, TRAIT, "start", True))
+    p.append(_txt(168, H - 30, "TIENT" if tient else "NE TIENT PAS", 14, coul, "start", True))
+
+    defs = ("<defs><marker id='tf' viewBox='0 0 10 10' refX='9' refY='5' markerWidth='6' "
+            "markerHeight='6' orient='auto'><path d='M0,0 L10,5 L0,10 z' fill='%s'/></marker></defs>" % ALERTE)
+    return ("<svg viewBox='0 0 %s %s' width='100%%' xmlns='http://www.w3.org/2000/svg'>%s"
+            "<rect width='%s' height='%s' fill='white'/>%s</svg>" % (W, H, defs, W, H, "".join(p)))
+
+
+def dyn_duree_roulement(C, P, N):
+    """Durée de vie L10 d'un roulement à billes : elle varie comme le CUBE du
+    rapport charge/capacité. Diviser la charge par deux la multiplie par huit."""
+    r = (C / P) if P else 0.0
+    L10 = r ** 3                       # en millions de tours
+    heures = (1.0e6 * L10) / (60.0 * N) if N else 0.0
+
+    W, H = 700, 330
+    p = [_txt(W/2, 24, "Roulement — la durée de vie varie comme le cube", 13, TRAIT, "middle", True)]
+
+    # la courbe L10 = (C/P)^3, et le point courant
+    ox, oy, lw, lh = 90, 250, 300, 180
+    p.append("<line x1='%s' y1='%s' x2='%s' y2='%s' stroke='%s' stroke-width='1.6'/>"
+             % (ox, oy, ox + lw, oy, FIN))
+    p.append("<line x1='%s' y1='%s' x2='%s' y2='%s' stroke='%s' stroke-width='1.6'/>"
+             % (ox, oy, ox, oy - lh, FIN))
+    p.append(_txt(ox + lw, oy + 18, "charge P", 11, FIN, "end"))
+    p.append(_txt(ox - 6, oy - lh - 6, "durée", 11, FIN, "end"))
+
+    pmax = max(P * 2.0, C / 2.0)
+    pts = []
+    for k in range(41):
+        pk = pmax * (0.12 + 0.88 * k / 40.0)
+        vk = (C / pk) ** 3
+        pts.append((ox + lw * pk / pmax, oy - min(lh, lh * vk / max(L10 * 2.2, 1e-9))))
+    p.append("<path d='%s' fill='none' stroke='%s' stroke-width='2.4'/>"
+             % (" ".join(("M " if i == 0 else "L ") + "%.1f %.1f" % q for i, q in enumerate(pts)), ALESAGE))
+    px = ox + lw * P / pmax
+    py = oy - min(lh, lh * L10 / max(L10 * 2.2, 1e-9))
+    p.append("<line x1='%.1f' y1='%s' x2='%.1f' y2='%.1f' stroke='%s' stroke-width='1.4' "
+             "stroke-dasharray='5 4'/>" % (px, oy, px, py, FIN))
+    p.append("<circle cx='%.1f' cy='%.1f' r='6' fill='%s'/>" % (px, py, ALERTE))
+
+    # ce que donnerait la moitié de la charge
+    p2 = P / 2.0
+    if p2 > 0:
+        x2 = ox + lw * p2 / pmax
+        v2 = (C / p2) ** 3
+        y2 = oy - min(lh, lh * v2 / max(L10 * 2.2, 1e-9))
+        p.append("<circle cx='%.1f' cy='%.1f' r='5' fill='none' stroke='%s' stroke-width='2'/>"
+                 % (x2, y2, OK))
+        p.append(_txt(x2 + 8, y2 + 4, "P/2 → × 8", 11, OK, "start", True))
+
+    p.append("<rect x='430' y='95' width='210' height='120' rx='8' fill='%s' stroke='%s' "
+             "stroke-width='1'/>" % (FOND, FIN))
+    p.append(_txt(446, 122, "C / P = %.2f" % r, 13, TRAIT, "start", True))
+    p.append(_txt(446, 150, "L10 = (C/P)³", 12, FIN, "start"))
+    p.append(_txt(446, 174, "= %.0f millions tr" % L10, 13, ALESAGE, "start", True))
+    p.append(_txt(446, 200, "≈ %s h" % ("%d" % round(heures)).replace(",", " "),
+                  15, ALERTE, "start", True))
+    return ("<svg viewBox='0 0 %s %s' width='100%%' xmlns='http://www.w3.org/2000/svg'>"
+            "<rect width='%s' height='%s' fill='white'/>%s</svg>" % (W, H, W, H, "".join(p)))
+
+
+_PROCEDES_RA = [
+    (12.5, "tournage d'ébauche", 1.0),
+    (6.3, "tournage courant", 1.3),
+    (3.2, "tournage de finition", 1.8),
+    (1.6, "fraisage de finition", 2.6),
+    (0.8, "rectification", 4.5),
+    (0.4, "rectification fine", 7.0),
+    (0.2, "rodage", 12.0),
+    (0.1, "superfinition, polissage", 20.0),
+]
+
+
+def dyn_etat_surface(ra):
+    """Chaque cran de rugosité change le procédé — donc le prix. Et trop lisse
+    est un défaut : sous Ra 0,1 le lubrifiant ne tient plus."""
+    accessibles = [x for x in _PROCEDES_RA if x[0] >= ra]
+    choisi = accessibles[-1] if accessibles else _PROCEDES_RA[-1]
+
+    W, H = 700, 330
+    p = [_txt(W/2, 24, "État de surface — ce que coûte chaque cran", 13, TRAIT, "middle", True)]
+
+    y0 = 62
+    for k, (r, nom, cout) in enumerate(_PROCEDES_RA):
+        y = y0 + k * 29
+        ok = (r >= ra)
+        c = TRAIT if ok else "#cbd5e1"
+        p.append(_txt(150, y + 4, "Ra %s" % ("%.1f" % r).replace(".", ","), 12, c, "end", ok))
+        p.append(_txt(168, y + 4, nom, 12, c, "start", r == choisi[0]))
+        # barre de coût relatif
+        p.append("<rect x='420' y='%s' width='%.0f' height='13' rx='6' fill='%s' opacity='%s'/>"
+                 % (y - 6, min(200.0, cout * 9.0), ARBRE if ok else "#e2e8f0", "0.85" if ok else "0.6"))
+        if r == choisi[0]:
+            p.append("<circle cx='138' cy='%s' r='5' fill='%s'/>" % (y, ALERTE))
+    p.append(_txt(420, y0 - 12, "coût relatif de fabrication", 10, FIN, "start"))
+
+    p.append("<rect x='60' y='%s' width='580' height='42' rx='6' fill='%s' stroke='%s' "
+             "stroke-width='1'/>" % (H - 54, FOND, FIN))
+    p.append(_txt(78, H - 28, "Ra %s demandé → %s, environ %.0f fois le prix d'une ébauche"
+                  % (("%.1f" % ra).replace(".", ","), choisi[1], choisi[2]),
+                  12, TRAIT, "start", True))
+    return ("<svg viewBox='0 0 %s %s' width='100%%' xmlns='http://www.w3.org/2000/svg'>"
+            "<rect width='%s' height='%s' fill='white'/>%s</svg>" % (W, H, W, H, "".join(p)))
+
+
 def dyn_chaine_cotes(jeu_nom, it_a, it_b):
     """Condition de montage J = A - B. Les deux IT s'AJOUTENT sur la condition,
     quel que soit le signe de l'opération sur les cotes."""
@@ -31834,9 +31982,6 @@ st.markdown("""
   .chip-lue  { background: #dcfce7; color: #166534; }
   .chip-nonlue { background: #fef3c7; color: #92400e; }
 
-  /* ---------- ONGLETS PLUS LISIBLES ---------- */
-  .stTabs [data-baseweb="tab"] { font-size: 1rem; font-weight: 600; padding: 10px 6px; }
-  .stTabs [aria-selected="true"] { color: #2e75b6 !important; }
 
   /* ---------- ENCADRÉS ---------- */
   .ok-box  { background:#f0fdf4; border-left:5px solid #16a34a; padding:13px 16px; border-radius:6px; }
@@ -31850,6 +31995,112 @@ st.markdown("""
   div[data-testid="stMetricLabel"] { color: #64748b; }
   section[data-testid="stSidebar"] { background: #f8fafc; }
   .stButton button { border-radius: 8px; font-weight: 600; }
+
+  /* ================= COULEUR DES ONGLETS =================
+     Streamlit 1.62 rend chaque onglet comme div[data-testid="stTab"] — et non
+     comme un button[data-baseweb="tab"] : les anciennes règles visaient un
+     sélecteur inexistant et n'ont jamais rien fait.
+
+     Chaque onglet porte SA couleur en permanence, pas seulement quand il est
+     actif. D'abord parce que cinq couleurs distinctes se repèrent d'un coup
+     d'œil — utile sur un iPhone où la barre déborde et défile. Ensuite parce
+     que le fond ne se recalculait pas de façon fiable quand aria-selected
+     changeait à l'intérieur d'un sélecteur composé : la couleur restait
+     accrochée à l'onglet précédent. L'onglet actif se distingue par son
+     soulignement et sa graisse, qui eux suivent correctement. */
+  .stTabs [role="tablist"] {
+      gap: 4px; border-bottom: 2px solid #e5e7eb;
+      overflow-x: auto; scrollbar-width: thin; scroll-behavior: smooth;
+  }
+  .stTabs [data-testid="stTab"] {
+      border-radius: 9px 9px 0 0; padding: 9px 14px; font-weight: 600;
+      border-bottom: 3px solid transparent; white-space: nowrap;
+  }
+  /* 1 Cours · 2 Formules · 3 Cas industriel · 4 Exercice · 5 Corrigé */
+  .stTabs [data-testid="stTab"]:nth-of-type(1) { color: #2e75b6; background: #eff6ff; }
+  .stTabs [data-testid="stTab"]:nth-of-type(2) { color: #7c3aed; background: #f5f3ff; }
+  .stTabs [data-testid="stTab"]:nth-of-type(3) { color: #b45309; background: #fffbeb; }
+  .stTabs [data-testid="stTab"]:nth-of-type(4) { color: #ea580c; background: #fff7ed; }
+  .stTabs [data-testid="stTab"]:nth-of-type(5) { color: #16a34a; background: #f0fdf4; }
+  .stTabs [data-testid="stTab"]:nth-of-type(6) { color: #0891b2; background: #ecfeff; }
+  .stTabs [data-testid="stTab"]:nth-of-type(7) { color: #be185d; background: #fdf2f8; }
+  /* l'onglet ouvert : plus gras, souligné de SA propre couleur */
+  .stTabs [data-testid="stTab"][aria-selected="true"] {
+      font-weight: 800; border-bottom-color: currentColor;
+  }
+  .stTabs [data-testid="stTab"]:hover { filter: brightness(.96); }
+  /* Streamlit pose sa propre barre rouge sous l'onglet actif — un div
+     .react-aria-SelectionIndicator positionné en absolu. Elle se décale quand
+     la barre défile, et se retrouvait sous le mauvais onglet sur iPhone. Nous
+     avons notre propre soulignement, aux couleurs des onglets : on la retire. */
+  .stTabs .react-aria-SelectionIndicator { display: none !important; }
+
+  /* ================= MENU DE GAUCHE =================
+     Un liseré coloré marque l'entrée courante : sur téléphone, le menu
+     s'ouvre par-dessus la page et il faut se repérer vite. */
+  section[data-testid="stSidebar"] {
+      background: linear-gradient(180deg, #f8fafc 0%, #eef4fa 100%);
+      border-right: 1px solid #e2e8f0;
+  }
+  section[data-testid="stSidebar"] label {
+      border-radius: 7px; padding: 3px 8px 3px 6px;
+      border-left: 3px solid transparent; transition: background .12s;
+  }
+  section[data-testid="stSidebar"] label:hover { background: #e2ecf7; }
+  section[data-testid="stSidebar"] input:checked + div + div,
+  section[data-testid="stSidebar"] [aria-checked="true"] + div {
+      font-weight: 700; color: #14375e;
+  }
+
+  /* ================= REPÈRES DE COULEUR =================
+     Les quatre encadrés existaient ; on leur ajoute un fond de titre et on
+     colore aussi les curseurs, les métriques et les boutons. */
+  .stSlider [data-baseweb="slider"] div[role="slider"] { border-color: #2e75b6; }
+  div[data-testid="stMetricValue"] { color: #14375e; font-weight: 700; }
+  .stButton button[kind="primary"] {
+      background: linear-gradient(90deg, #2e75b6 0%, #14375e 100%);
+      border: none; color: #fff;
+  }
+  .stButton button[kind="primary"]:hover { filter: brightness(1.08); }
+  .stExpander summary { font-weight: 600; color: #14375e; }
+  hr { border-color: #dbe4ee; }
+
+  /* ================= TÉLÉPHONE ET TABLETTE =================
+     Rien n'était prévu : sur un écran de 390 px, les titres débordaient et
+     les tableaux forçaient un défilement de toute la page. */
+  @media (max-width: 820px) {
+      .block-container { padding: 1rem .8rem 2rem .8rem; max-width: 100%; }
+      .stMarkdown p, .stMarkdown li { font-size: 1.0rem; line-height: 1.68; }
+      .stMarkdown h1, h1 { font-size: 1.55rem !important; line-height: 1.25; }
+      .stMarkdown h2, h2 { font-size: 1.3rem !important; }
+      .stMarkdown h3, h3 { font-size: 1.12rem !important; }
+
+      /* un tableau large défile DANS son cadre, jamais toute la page */
+      .stMarkdown table { display: block; overflow-x: auto; white-space: nowrap;
+                          font-size: .9rem; }
+
+      /* les onglets restent lisibles et le doigt les attrape */
+      .stTabs [data-testid="stTab"] { padding: 8px 11px; font-size: .93rem; }
+
+      /* cibles tactiles : rien en dessous de 44 px de haut */
+      .stButton button { min-height: 44px; font-size: 1rem; }
+      .stTextInput input, .stNumberInput input { min-height: 44px; font-size: 1rem; }
+      .stSelectbox div[data-baseweb="select"] { min-height: 44px; }
+
+      .bloc-titre { padding: 12px 14px; }
+      .fiche-bandeau { gap: 6px; }
+      .chip { font-size: .74rem; padding: 3px 9px; }
+      div[data-testid="stMetricValue"] { font-size: 1.35rem; }
+      /* les schémas SVG suivent la largeur de l'écran */
+      .stMarkdown img, .stMarkdown svg { max-width: 100%; height: auto; }
+  }
+
+  /* iPhone étroit : on serre encore un peu */
+  @media (max-width: 430px) {
+      .stMarkdown h1, h1 { font-size: 1.4rem !important; }
+      .stTabs [data-testid="stTab"] { padding: 7px 9px; font-size: .87rem; }
+      .block-container { padding-left: .6rem; padding-right: .6rem; }
+  }
 </style>
 """, unsafe_allow_html=True)
 
@@ -33467,6 +33718,284 @@ ATELIERS = [
                      "**comment** — sinon il interdit les meilleures solutions. Et la criticité "
                      "est un **produit**, pas une somme.",
     },
+    {
+        "id": "at9",
+        "chapitre": "Sujet d'examen",
+        "titre": "Sujet — Le support de rouleau d'un convoyeur",
+        "theme": "Sujet complet : analyse fonctionnelle, RDM, conception",
+        "fiche": "4.1",
+        "vocabulaire": [
+            ("Sujet d'examen",
+             "on part d'un système réel et on l'étudie sous plusieurs angles. Les questions "
+             "s'enchaînent : le résultat de l'une sert à la suivante."),
+            ("Charge répartie",
+             "une charge totale qui se partage entre plusieurs appuis. On ramène toujours à "
+             "l'effort sur UN appui avant de dimensionner."),
+            ("Coefficient de sécurité réel",
+             "celui qu'on obtient après coup, en divisant Re par la contrainte trouvée. Il dit "
+             "si l'on a vu juste — ou beaucoup trop large."),
+            ("Surdimensionnement",
+             "une pièce dix fois trop solide n'est pas « prudente » : elle coûte plus cher, "
+             "pèse plus lourd, et signale surtout qu'on n'a pas identifié ce qui dimensionne "
+             "vraiment."),
+        ],
+        "document": ("**Convoyeur à bande — support de rouleau.**\n\n"
+                     "| Donnée | Valeur |\n|---|---|\n"
+                     "| Charge totale sur le rouleau | 2400 N |\n"
+                     "| Nombre de supports | 4 |\n"
+                     "| Tige de support | Ø 12 mm, sollicitée en traction |\n"
+                     "| Matériau | S235, Re = 235 MPa |\n\n"
+                     "*La fonction étudiée : « maintenir le rouleau parallèle au tapis ».*"),
+        "enonce": "Un convoyeur porte un rouleau soutenu par quatre supports identiques. "
+                  "On vous demande de vérifier le dimensionnement — et de dire ce qu'il vaut.",
+        "etapes": [
+            {
+                "type": "qcm",
+                "label": "La fonction étudiée",
+                "consigne": "« Maintenir le rouleau parallèle au tapis » met en relation le "
+                            "rouleau et le tapis, par l'intermédiaire du support.",
+                "question": "Fonction principale ou fonction contrainte ?",
+                "options": ["Principale : elle relie deux éléments du milieu extérieur",
+                            "Contrainte : elle ne concerne que le support",
+                            "Ni l'une ni l'autre : c'est une solution technique"],
+                "bonne": 0,
+                "indice": "Comptez les éléments du milieu extérieur mis en relation.",
+                "diagnostics": {
+                    1: "Une contrainte relie le produit à UN seul élément — par exemple "
+                       "« résister à l'humidité de l'atelier ». Ici, deux éléments sont reliés.",
+                    2: "L'énoncé ne dit ni comment ni avec quoi : « maintenir parallèle » décrit "
+                       "un service rendu. Une solution serait « une équerre boulonnée ».",
+                },
+            },
+            {
+                "type": "numerique",
+                "label": "L'effort sur un seul support",
+                "unite": "N",
+                "attendu": 600,
+                "tol": 0.01,
+                "consigne": "La charge se répartit également entre les quatre supports.",
+                "indice": "Divisez la charge totale par le nombre de supports.",
+                "pieges": [
+                    (2400, "C'est la charge TOTALE. Chaque support n'en reprend qu'une part — "
+                           "dimensionner un support pour la charge entière est l'erreur la plus "
+                           "coûteuse d'un sujet, parce qu'elle multiplie tout par quatre."),
+                    (9600, "Vous avez multiplié au lieu de diviser."),
+                ],
+                "aide": "F = 2400 / 4 = 600 N par support.",
+            },
+            {
+                "type": "numerique",
+                "label": "La contrainte dans la tige",
+                "unite": "MPa",
+                "attendu": 5.31,
+                "tol": 0.03,
+                "consigne": "La tige de Ø12 travaille en traction pure sous cet effort.",
+                "indice": "σ = F/S, avec S = π d²/4.",
+                "pieges": [
+                    (50, "Vous avez divisé par le diamètre au lieu de la section. Une contrainte "
+                         "est une force par unité de SURFACE, pas par unité de longueur."),
+                    (21.2, "Vous avez utilisé la charge totale de 2400 N au lieu des 600 N qui "
+                           "reviennent à un support."),
+                    (1.33, "Vous avez sans doute pris S = π d² sans diviser par 4."),
+                ],
+                "aide": "S = π × 12²/4 = 113,1 mm², donc σ = 600 / 113,1 = 5,31 MPa.",
+            },
+            {
+                "type": "numerique",
+                "label": "Le coefficient de sécurité réel",
+                "unite": "sans unité",
+                "attendu": 44.3,
+                "tol": 0.04,
+                "consigne": "Comparez la limite élastique du S235 à la contrainte trouvée.",
+                "indice": "s = Re / σ.",
+                "pieges": [
+                    (1248, "Vous avez multiplié Re par σ. Le coefficient est un rapport."),
+                    (0.023, "La division est inversée : c'est Re qui va au numérateur."),
+                ],
+                "aide": "s = 235 / 5,31 ≈ 44.",
+            },
+            {
+                "type": "qcm",
+                "label": "Ce que dit ce coefficient",
+                "consigne": "On attend habituellement un coefficient compris entre 2 et 5.",
+                "question": "Que conclure d'un coefficient de 44 ?",
+                "options": ["La tige n'est pas dimensionnée par la résistance, mais par autre chose",
+                            "C'est parfait : plus le coefficient est grand, mieux c'est",
+                            "Le calcul est faux, un tel coefficient est impossible"],
+                "bonne": 0,
+                "indice": "Un facteur 44 n'est pas une marge de sécurité : c'est un signal.",
+                "diagnostics": {
+                    1: "Un coefficient énorme n'est pas une qualité. Il veut dire qu'on paie de "
+                       "la matière et du poids pour rien — et surtout qu'on n'a pas identifié ce "
+                       "qui dimensionne réellement la pièce.",
+                    2: "Le calcul est juste. C'est justement l'intérêt de la question : un "
+                       "résultat correct peut révéler un problème de conception.",
+                },
+            },
+        ],
+        "corrige": {
+            "enonce": "Un rouleau de convoyeur sur quatre supports. On vérifie une tige en "
+                      "traction, puis on juge le dimensionnement obtenu.",
+            "regle": "Trois outils enchaînés. L'**analyse fonctionnelle** pour classer la "
+                     "fonction. La **répartition de charge** pour ramener à un support. La "
+                     "**traction** : σ = F/S avec S = πd²/4, puis s = Re/σ.",
+            "conversions": "Aucune : millimètres et newtons donnent directement des MPa, "
+                           "puisque 1 MPa = 1 N/mm². Seule vigilance, la charge totale et la "
+                           "charge par support ne sont pas la même chose.",
+            "remplacement": "F = 2400/4. S = π × 12²/4. σ = F/S. s = 235/σ.",
+            "calcul": "F = **600 N**. S = 113,1 mm². σ = **5,31 MPa**. s = **44**.",
+            "verification": "Le contrôle est ici une **lecture**, pas un calcul. Un coefficient "
+                            "de 44 pour un usage courant signale que la résistance n'est pas ce "
+                            "qui dimensionne : c'est la **rigidité** (le rouleau ne doit pas "
+                            "fléchir), le **diamètre normalisé** disponible, ou la reprise du "
+                            "roulement. Une tige de Ø4 suffirait en résistance pure — mais "
+                            "personne ne la monterait.",
+        },
+        "a_retenir": "À retenir : dans un sujet, **on ramène toujours à un seul appui** avant de "
+                     "dimensionner. Et un coefficient de sécurité **trop grand est une "
+                     "information**, pas une réussite : il dit que la pièce est dimensionnée par "
+                     "autre chose que la résistance.",
+    },
+    {
+        "id": "at10",
+        "chapitre": "Sujet d'examen",
+        "titre": "Sujet — L'arbre d'un ventilateur industriel",
+        "theme": "Sujet complet : charges, roulements, durée de vie",
+        "fiche": "6.5",
+        "vocabulaire": [
+            ("Capacité dynamique C",
+             "la charge qui donnerait au roulement une durée de vie d'un million de tours. "
+             "Elle est gravée dans le catalogue, jamais calculée."),
+            ("Charge équivalente P",
+             "la charge réellement vue par le roulement. Ici, la somme des efforts radiaux."),
+            ("L10",
+             "la durée que 90 % des roulements dépassent. Ce n'est pas une garantie individuelle : "
+             "un roulement sur dix cassera avant."),
+            ("Loi en cube",
+             "L10 = (C/P)³ pour les billes. Diviser la charge par deux multiplie la durée par "
+             "huit — et une charge sous-estimée de 20 % fait surestimer la durée de moitié."),
+        ],
+        "document": ("**Ventilateur industriel — palier côté poulie.**\n\n"
+                     "| Donnée | Valeur |\n|---|---|\n"
+                     "| Poids repris par le palier | 400 N |\n"
+                     "| Tension de la courroie | 900 N |\n"
+                     "| Roulement monté | capacité C = 13 kN |\n"
+                     "| Vitesse de rotation | 1450 tr/min |\n"
+                     "| Durée exigée au cahier des charges | 20 000 h |\n\n"
+                     "*Les deux efforts sont radiaux et de même direction.*"),
+        "enonce": "Un ventilateur tourne en continu. Le bureau d'études veut savoir si le "
+                  "roulement monté tiendra les 20 000 heures exigées — et sinon, quoi changer.",
+        "etapes": [
+            {
+                "type": "numerique",
+                "label": "La charge sur le roulement",
+                "unite": "N",
+                "attendu": 1300,
+                "tol": 0.01,
+                "consigne": "Les deux efforts radiaux ont la même direction.",
+                "indice": "Ils s'additionnent.",
+                "pieges": [
+                    (500, "Vous avez soustrait. Les deux efforts tirent dans le même sens : "
+                          "ils s'ajoutent. Les soustraire diviserait la charge par deux et "
+                          "multiplierait la durée annoncée par près de vingt."),
+                    (900, "Vous n'avez retenu que la courroie. Le poids de l'arbre et de la "
+                          "poulie pèse aussi sur le roulement."),
+                ],
+                "aide": "P = 400 + 900 = 1300 N, soit 1,3 kN.",
+            },
+            {
+                "type": "numerique",
+                "label": "Le rapport C/P",
+                "unite": "sans unité",
+                "attendu": 10,
+                "tol": 0.02,
+                "consigne": "Attention aux unités : C est en kilonewtons.",
+                "indice": "Ramenez les deux valeurs à la même unité avant de diviser.",
+                "pieges": [
+                    (0.1, "La division est inversée. C est bien plus grand que P, le rapport "
+                          "doit dépasser 1."),
+                    (0.01, "Vous avez mélangé les unités : 13 kN valent 13 000 N."),
+                ],
+                "aide": "C/P = 13 000 / 1300 = 10.",
+            },
+            {
+                "type": "numerique",
+                "label": "La durée L10, en millions de tours",
+                "unite": "millions de tours",
+                "attendu": 1000,
+                "tol": 0.02,
+                "consigne": "Pour un roulement à billes, L10 = (C/P)³.",
+                "indice": "Élevez le rapport au cube.",
+                "pieges": [
+                    (30, "Vous avez multiplié par 3 au lieu d'élever au cube. 10³ = 1000, "
+                         "pas 30 — et c'est toute la différence entre un roulement qui tient "
+                         "et un qui casse."),
+                    (100, "C'est le carré. La loi est en cube pour les billes."),
+                ],
+                "aide": "L10 = 10³ = 1000 millions de tours.",
+            },
+            {
+                "type": "numerique",
+                "label": "La durée en heures",
+                "unite": "h",
+                "attendu": 11494,
+                "tol": 0.03,
+                "consigne": "À 1450 tr/min. Un million de tours se convertit en heures par "
+                            "la vitesse.",
+                "indice": "L10h = 10⁶ × L10 / (60 × N).",
+                "pieges": [
+                    (689655, "Vous avez oublié de diviser par 60 : la vitesse est en tours par "
+                             "MINUTE, la durée demandée en heures."),
+                    (690, "Vous avez divisé par 10⁶ au lieu de multiplier : L10 est exprimée en "
+                          "MILLIONS de tours."),
+                ],
+                "aide": "L10h = 10⁶ × 1000 / (60 × 1450) ≈ 11 494 h.",
+            },
+            {
+                "type": "qcm",
+                "label": "La conclusion",
+                "consigne": "Le cahier des charges exige 20 000 h.",
+                "question": "Que faut-il faire ?",
+                "options": ["Monter un roulement de capacité supérieure, environ 16 kN",
+                            "Rien : 11 494 h suffisent, la marge viendra à l'usage",
+                            "Doubler la vitesse pour atteindre les heures demandées"],
+                "bonne": 0,
+                "indice": "Il faut passer de 1000 à environ 1740 millions de tours. Quelle "
+                          "capacité donne ce rapport ?",
+                "diagnostics": {
+                    1: "11 494 h, c'est un peu plus de la moitié de ce qui est exigé — sur un "
+                       "ventilateur qui tourne en continu, cela fait un remplacement au bout de "
+                       "seize mois au lieu de trois ans. Le cahier des charges n'est pas tenu.",
+                    2: "Augmenter la vitesse fait tourner le roulement PLUS vite : il atteindra "
+                       "son million de tours plus tôt, donc la durée en heures **diminue**. "
+                       "C'est l'inverse de ce qu'on cherche.",
+                },
+            },
+        ],
+        "corrige": {
+            "enonce": "Un palier de ventilateur qui doit tenir 20 000 heures. On calcule la "
+                      "charge, la durée obtenue, puis on conclut sur le choix du roulement.",
+            "regle": "Trois relations. La **charge équivalente** : ici une simple somme, les "
+                     "deux efforts étant radiaux et de même direction. La **durée en tours** : "
+                     "L10 = (C/P)³. La **conversion en heures** : L10h = 10⁶ L10 / (60 N).",
+            "conversions": "Deux pièges d'unités, et ce sont eux qui font perdre les points : "
+                           "**C est en kilonewtons** quand P est en newtons, et **L10 est en "
+                           "millions de tours** quand la vitesse est en tours par minute.",
+            "remplacement": "P = 400 + 900. C/P = 13 000/1300. L10 = 10³. "
+                            "L10h = 10⁶ × 1000/(60 × 1450).",
+            "calcul": "P = **1300 N**. C/P = **10**. L10 = **1000 millions de tours**. "
+                      "L10h ≈ **11 494 h**, contre 20 000 exigées.",
+            "verification": "Pour atteindre 20 000 h il faut L10 = 20 000 × 60 × 1450/10⁶ ≈ "
+                            "1740 millions de tours, donc C/P = 1740^(1/3) ≈ 12, soit "
+                            "C ≈ **15,6 kN** : on montera le roulement normalisé de 16 kN. "
+                            "Remarquez le rapport : **+23 % de capacité suffit à +74 % de "
+                            "durée** — c'est la loi en cube qui joue en notre faveur cette fois.",
+        },
+        "a_retenir": "À retenir : la durée d'un roulement varie comme le **cube** de C/P. Une "
+                     "petite erreur sur la charge en produit une énorme sur la durée — d'où "
+                     "l'importance de n'oublier aucun effort. Et augmenter la vitesse **réduit** "
+                     "la durée en heures, elle ne l'augmente pas.",
+    },
 ]
 
 
@@ -34458,6 +34987,9 @@ elif PAGE == "🎛️ Schémas interactifs":
         "Engrenages — module et nombre de dents",
         "Chaîne de cotes — les IT s'additionnent",
         "Barre pleine ou tube — la matière utile",
+        "Traction — contrainte et marge de sécurité",
+        "Roulements — la durée de vie en cube",
+        "États de surface — ce que coûte chaque cran",
     ]
     _choix_si = st.selectbox("Choisissez un schéma", _SCHEMAS_INTERACTIFS, key="choix_schema_inter")
     st.divider()
@@ -34673,7 +35205,7 @@ elif PAGE == "🎛️ Schémas interactifs":
                    "et chaque cote ajoutée à la chaîne dégrade la condition.")
 
     # ---------------------------------------------------------------- 7
-    else:
+    elif _choix_si == _SCHEMAS_INTERACTIFS[6]:
         c1, c2 = st.columns(2)
         with c1:
             _dext = st.slider("Diamètre extérieur (mm)", 16, 80, 40, 2, key="tb_d")
@@ -34705,6 +35237,103 @@ elif PAGE == "🎛️ Schémas interactifs":
         st.caption("C'est pour cela que les cadres de vélo, les mâts, les arbres de transmission "
                    "et les tubes d'échafaudage sont creux. Le moment quadratique varie en D⁴, "
                    "la masse seulement en D² : élargir coûte peu et rapporte beaucoup.")
+
+
+    # ---------------------------------------------------------------- 8
+    elif _choix_si == _SCHEMAS_INTERACTIFS[7]:
+        c1, c2, c3, c4 = st.columns(4)
+        with c1:
+            _F = st.slider("Effort F (N)", 2000, 60000, 15000, 1000, key="tr_f")
+        with c2:
+            _d = st.slider("Diamètre (mm)", 6, 40, 20, 1, key="tr_d")
+        with c3:
+            _Re = st.select_slider("Nuance (Re en MPa)",
+                                   options=[235, 275, 340, 420, 600], value=340, key="tr_re")
+        with c4:
+            _sec = st.slider("Coefficient s", 1.5, 6.0, 3.0, 0.5, key="tr_s")
+
+        st.markdown(html_dyn(dyn_traction(float(_F), float(_d), float(_Re), float(_sec))),
+                    unsafe_allow_html=True)
+
+        _S = 3.141592653589793 * _d * _d / 4.0
+        _sig = _F / _S
+        _rpe = _Re / float(_sec)
+        m1, m2, m3 = st.columns(3)
+        m1.metric("Section", "%.0f mm²" % _S)
+        m2.metric("Contrainte σ", "%.1f MPa" % _sig)
+        m3.metric("Admissible Rpe", "%.0f MPa" % _rpe)
+
+        if _sig > _rpe:
+            st.markdown(
+                "**Ce qu'il faut remarquer :** la contrainte dépasse l'admissible — la pièce "
+                "n'est pas acceptable. **Augmentez le diamètre d'un seul millimètre** et regardez "
+                "la contrainte chuter : la section croît comme le **carré** du diamètre, "
+                "c'est le levier le plus efficace, bien avant de changer de nuance.")
+        else:
+            st.markdown(
+                "**Ce qu'il faut remarquer :** on travaille à **%.0f %%** de l'admissible. "
+                "Passez le coefficient de sécurité de %.1f à %.1f : rien ne change dans la pièce, "
+                "mais la marge qu'on s'accorde, si. Le coefficient n'est pas une propriété du "
+                "matériau, c'est une **décision**." % (100*_sig/_rpe, _sec, min(6.0, _sec + 1.5)))
+        st.caption("Doubler le diamètre divise la contrainte par quatre ; doubler la nuance ne "
+                   "fait que doubler l'admissible. La géométrie paie plus que le matériau.")
+
+    # ---------------------------------------------------------------- 9
+    elif _choix_si == _SCHEMAS_INTERACTIFS[8]:
+        c1, c2, c3 = st.columns(3)
+        with c1:
+            _C = st.slider("Capacité C du roulement (kN)", 5, 60, 25, 1, key="rl_c")
+        with c2:
+            _P = st.slider("Charge P appliquée (kN)", 1, 30, 5, 1, key="rl_p")
+        with c3:
+            _N = st.slider("Vitesse N (tr/min)", 100, 3000, 1500, 100, key="rl_n")
+
+        st.markdown(html_dyn(dyn_duree_roulement(float(_C), float(_P), float(_N))),
+                    unsafe_allow_html=True)
+
+        _L10 = (float(_C)/float(_P))**3
+        _h = 1.0e6*_L10/(60.0*_N)
+        m1, m2, m3 = st.columns(3)
+        m1.metric("C / P", "%.2f" % (_C/float(_P)))
+        m2.metric("L10", "%.0f millions tr" % _L10)
+        m3.metric("Durée", "%s h" % ("%d" % round(_h)))
+
+        st.markdown(
+            "**Ce qu'il faut remarquer :** la durée varie comme le **cube** du rapport C/P. "
+            "**Divisez la charge par deux** : elle n'est pas doublée, elle est **multipliée par "
+            "huit** — le petit cercle vert sur la courbe le montre. À l'inverse, une charge "
+            "estimée 20 %% trop bas fait surestimer la durée de près de moitié.")
+        st.caption("C'est pourquoi une erreur sur la charge coûte bien plus cher qu'une erreur "
+                   "sur la vitesse : la vitesse n'intervient qu'au premier degré pour convertir "
+                   "les tours en heures, la charge au cube.")
+
+    # ---------------------------------------------------------------- 10
+    else:
+        _ra = st.select_slider("Rugosité Ra demandée (µm)",
+                               options=[12.5, 6.3, 3.2, 1.6, 0.8, 0.4, 0.2, 0.1],
+                               value=1.6, key="ra_v")
+        st.markdown(html_dyn(dyn_etat_surface(float(_ra))), unsafe_allow_html=True)
+
+        _acc = [x for x in _PROCEDES_RA if x[0] >= _ra]
+        _ch = _acc[-1] if _acc else _PROCEDES_RA[-1]
+        m1, m2 = st.columns(2)
+        m1.metric("Procédé nécessaire", _ch[1])
+        m2.metric("Coût relatif", "× %.1f" % _ch[2])
+
+        if _ra <= 0.2:
+            st.markdown(
+                "**Ce qu'il faut remarquer :** à ce niveau, on entre dans le rodage et le "
+                "polissage — **plus de dix fois le prix d'une ébauche**. Et c'est rarement "
+                "utile : **sous Ra 0,1, le lubrifiant ne tient plus dans les aspérités** et le "
+                "frottement remonte. Trop lisse est un défaut, pas une qualité.")
+        else:
+            st.markdown(
+                "**Ce qu'il faut remarquer :** demander Ra %s impose « %s », soit environ "
+                "**%.0f fois** le prix d'une ébauche. **Descendez d'un seul cran** : le coût "
+                "grimpe d'un coup, alors que la surface n'a l'air que « un peu plus lisse »."
+                % (("%.1f" % _ra).replace(".", ","), _ch[1], _ch[2]))
+        st.caption("Règle de terrain : Ra 3,2 sur un appui, Ra 0,8 seulement là où ça porte, "
+                   "ça frotte ou ça étanche. Chaque cran inutile se paie sur toute la série.")
 
 
 elif PAGE == "🎬 Vidéos":
