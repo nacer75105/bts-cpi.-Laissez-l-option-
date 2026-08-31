@@ -5595,6 +5595,7 @@ solution ne permet de comparer que des prix.*
 
 C'est le premier outil, et le plus simple. Trois questions, dans cet ordre :
 
+
 La réponse à la troisième question — le but — s'appelle la **fonction globale** du produit. C'est
 la phrase qu'on écrira tout en haut du cahier des charges.
 
@@ -5769,6 +5770,7 @@ conforme à une norme, se démonter pour la maintenance…
 On dessine donc le produit au centre, et tout ce qui l'entoure autour. Ces éléments s'appellent
 les **éléments du milieu extérieur** (EME).
 
+
 **Deux types de fonctions, et la différence tombe à tous les contrôles :**
 
 | Type | Combien d'EME | Ce que c'est |
@@ -5935,6 +5937,7 @@ un moyen technique ? Si oui, c'est une solution déguisée.
 
 Une fonction non chiffrée ne sert à rien. « Le carter doit être solide » n'est ni vérifiable, ni
 contestable, ni utile à un fournisseur.
+
 
 **La classe de flexibilité** dit à quel point l'exigence est négociable :
 
@@ -6145,6 +6148,7 @@ formulée — ou si le produit ne répond pas au besoin qu'on croit.
 
 Une fois les fonctions écrites et chiffrées, on a le droit de chercher des solutions. Le diagramme
 FAST sert à faire ce passage **sans sauter d'étape**.
+
 
 On le lit de gauche à droite avec trois questions :
 
@@ -7986,18 +7990,6 @@ for _fiche in BLOC_2["fiches"]:
     if _fiche["id"] == "2.2":
         _fiche["cours"] = COURS_2_2_DEBUTANT
 
-
-# --- Schémas pédagogiques (marqueurs [[FIG:...]] rendus par figures.py) ---
-_SCHEMAS = {
-    '1.2': '[[FIG:projection_europeenne]]\n\n[[FIG:types_de_traits]]\n',
-    '1.3': '[[FIG:rugosite_ra]]\n',
-}
-
-for _b in [BLOC_1, BLOC_2]:
-    for _f in _b["fiches"]:
-        _fig = _SCHEMAS.get(_f["id"])
-        if _fig and "[[FIG:" not in _f["cours"]:
-            _f["cours"] = "\n" + _fig + _f["cours"]
 
 # ==========================================================================
 # CONTENU DE cours_bloc_3_4.py
