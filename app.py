@@ -3678,6 +3678,100 @@ def dyn_regle_charges(arbre_tourne, charge_tourne):
     return _svg(defs + "".join(p), W, H)
 
 
+
+def dyn_chaine_cotes(jeu_nom, it_a, it_b):
+    """Condition de montage J = A - B. Les deux IT s'AJOUTENT sur la condition,
+    quel que soit le signe de l'opération sur les cotes."""
+    it_j = it_a + it_b                      # en micromètres
+    j_max = jeu_nom + it_j / 2000.0         # en millimètres
+    j_min = jeu_nom - it_j / 2000.0
+
+    W, H = 700, 330
+    p = [_txt(W/2, 24, "Chaîne de cotes — la condition de montage", 13, TRAIT, "middle", True)]
+
+    # le logement (cote A) et la pièce qu'on y glisse (cote B)
+    lx, ly, lw, lh = 90, 70, 420, 84
+    p.append(f"<rect x='{lx}' y='{ly}' width='{lw}' height='{lh}' fill='none' "
+             f"stroke='{ALESAGE}' stroke-width='2.4'/>")
+    p.append(_txt(lx + lw/2, ly - 10, "A — le logement", 11, ALESAGE, "middle", True))
+
+    pw = lw - 46
+    p.append(f"<rect x='{lx+6}' y='{ly+16}' width='{pw}' height='{lh-32}' fill='#fed7aa' "
+             f"stroke='{ARBRE}' stroke-width='2.2'/>")
+    p.append(_txt(lx + 6 + pw/2, ly + lh/2 + 5, "B — la pièce", 11, ARBRE, "middle", True))
+
+    # le jeu, en bout
+    jx = lx + 6 + pw
+    p.append(f"<rect x='{jx}' y='{ly+16}' width='{lx+lw-jx}' height='{lh-32}' "
+             f"fill='{'#fecaca' if j_min < 0 else '#bbf7d0'}' stroke='none'/>")
+    p.append(_txt((jx + lx + lw)/2, ly + lh + 22, "J", 12,
+                  ALERTE if j_min < 0 else OK, "middle", True))
+
+    # les trois lignes de cote, empilées
+    def cote(y, x1, x2, couleur, libelle):
+        r = [f"<line x1='{x1}' y1='{y}' x2='{x2}' y2='{y}' stroke='{couleur}' stroke-width='1.6'/>"]
+        for x in (x1, x2):
+            r.append(f"<line x1='{x}' y1='{y-6}' x2='{x}' y2='{y+6}' stroke='{couleur}' stroke-width='1.6'/>")
+        r.append(_txt((x1+x2)/2, y - 9, libelle, 11, couleur, "middle", True))
+        return r
+
+    p += cote(ly + lh + 46, lx, lx + lw, ALESAGE, f"A ± {it_a/2:.0f} µm")
+    p += cote(ly + lh + 82, lx + 6, jx, ARBRE, f"B ± {it_b/2:.0f} µm")
+
+    # le résultat
+    coul = ALERTE if j_min < 0 else OK
+    p.append(f"<rect x='90' y='{H-92}' width='520' height='72' rx='6' fill='{FOND}' "
+             f"stroke='{FIN}' stroke-width='1'/>")
+    p.append(_txt(108, H-66, f"IT sur la condition = {it_a:.0f} + {it_b:.0f} = {it_j:.0f} µm",
+                  13, TRAIT, "start", True))
+    p.append(_txt(108, H-40, f"J varie de {j_min:.3f} mm à {j_max:.3f} mm", 14, coul, "start", True))
+
+    defs = "<defs></defs>"
+    return (f"<svg viewBox='0 0 {W} {H}' width='100%' xmlns='http://www.w3.org/2000/svg'>"
+            f"{defs}<rect width='{W}' height='{H}' fill='white'/>" + "".join(p) + "</svg>")
+
+
+def dyn_tube(D, e):
+    """Barre pleine contre tube de même diamètre extérieur : ce que coûte la
+    matière du centre, qui ne travaille presque pas en flexion."""
+    d = max(0.0, D - 2.0*e)
+    import math as _m
+    i_plein = _m.pi * D**4 / 64.0
+    i_tube = _m.pi * (D**4 - d**4) / 64.0
+    s_plein = _m.pi * D**2 / 4.0
+    s_tube = _m.pi * (D**2 - d**2) / 4.0
+    pc_rig = 100.0 * i_tube / i_plein if i_plein else 0.0
+    pc_mas = 100.0 * s_tube / s_plein if s_plein else 0.0
+    gain = (pc_rig / pc_mas) if pc_mas else 0.0
+
+    W, H = 700, 330
+    p = [_txt(W/2, 24, "Barre pleine ou tube — où travaille la matière", 13, TRAIT, "middle", True)]
+
+    ech = 150.0 / max(D, 1.0)
+    r_ext = D * ech / 2.0
+    r_int = d * ech / 2.0
+
+    cx1, cy = 200, 150
+    p.append(f"<circle cx='{cx1}' cy='{cy}' r='{r_ext}' fill='#fed7aa' stroke='{ARBRE}' stroke-width='2.2'/>")
+    p.append(_txt(cx1, cy + r_ext + 26, f"pleine · Ø{D:.0f}", 12, ARBRE, "middle", True))
+
+    cx2 = 470
+    p.append(f"<circle cx='{cx2}' cy='{cy}' r='{r_ext}' fill='#dbeafe' stroke='{ALESAGE}' stroke-width='2.2'/>")
+    if r_int > 0:
+        p.append(f"<circle cx='{cx2}' cy='{cy}' r='{r_int}' fill='white' stroke='{ALESAGE}' stroke-width='1.8'/>")
+    p.append(_txt(cx2, cy + r_ext + 26, f"tube · Ø{D:.0f} / ép. {e:.0f}", 12, ALESAGE, "middle", True))
+
+    p.append(f"<rect x='60' y='{H-108}' width='580' height='88' rx='6' fill='{FOND}' "
+             f"stroke='{FIN}' stroke-width='1'/>")
+    p.append(_txt(78, H-84, f"Rigidité conservée : {pc_rig:.0f} %", 13, TRAIT, "start", True))
+    p.append(_txt(78, H-60, f"Masse conservée : {pc_mas:.0f} %", 13, TRAIT, "start", True))
+    p.append(_txt(78, H-34, f"Rigidité par kilo : × {gain:.2f} par rapport au plein",
+                  14, OK if gain > 1.05 else ALERTE, "start", True))
+
+    return (f"<svg viewBox='0 0 {W} {H}' width='100%' xmlns='http://www.w3.org/2000/svg'>"
+            f"<rect width='{W}' height='{H}' fill='white'/>" + "".join(p) + "</svg>")
+
+
 def dyn_engrenage(module, z1, z2):
     """Deux roues dentées : diamètres primitifs, entraxe et rapport."""
     import math as _m
@@ -32906,6 +33000,473 @@ ATELIERS = [
         },
         "a_retenir": 'À retenir : **Ra 3,2** sur un appui · **Ra 0,8** seulement où ça porte, ça frotte ou ça étanche. Chaque cran change le moyen de production, donc le prix. Et **trop lisse est aussi un défaut** : sous Ra 0,1, le lubrifiant ne tient plus.',
     },
+    {
+        "id": "at6",
+        "chapitre": "Chapitre 4",
+        "titre": "Dimensionner une poutre en flexion",
+        "theme": "Résistance des matériaux",
+        "fiche": "4.3",
+        "vocabulaire": [
+            ("Moment fléchissant",
+             "ce qui tend à plier la poutre en un point. Il se mesure en N·mm et vaut, pour une "
+             "charge unique au centre de deux appuis, F·L/4."),
+            ("Contrainte σ",
+             "la tension interne dans la matière, en MPa (N/mm²). Ce n'est pas une force : c'est "
+             "une force ramenée à la section qui l'encaisse."),
+            ("Re — limite élastique",
+             "la contrainte au-delà de laquelle la pièce se déforme définitivement. Pour un "
+             "S235 : 235 MPa. C'est la valeur à ne jamais atteindre."),
+            ("Coefficient de sécurité s",
+             "la marge qu'on s'impose. On travaille non pas à Re mais à Re/s. Un s de 3 signifie "
+             "qu'on ne s'autorise que le tiers de ce que le matériau supporterait."),
+            ("Module de flexion I/v",
+             "ce qui résume la forme de la section face à la flexion. Pour un rectangle posé de "
+             "chant : b·h²/6. C'est ce qu'il faut dimensionner."),
+        ],
+        "document": ("| Donnée | Valeur |\n|---|---|\n"
+                     "| Portée entre appuis L | 800 mm |\n"
+                     "| Charge au centre F | 1200 N |\n"
+                     "| Largeur de la section b | 20 mm |\n"
+                     "| Matériau | S235, Re = 235 MPa |\n"
+                     "| Coefficient de sécurité s | 3 |\n\n"
+                     "*La hauteur h est l'inconnue : c'est elle qu'on cherche.*"),
+        "enonce": "Un support en acier repose sur deux appuis et reçoit une charge au centre. "
+                  "La largeur est imposée par l'encombrement ; il faut trouver la **hauteur** "
+                  "minimale de la section.",
+        "etapes": [
+            {
+                "type": "numerique",
+                "label": "Le moment fléchissant maximal",
+                "unite": "N·mm",
+                "attendu": 240000,
+                "tol": 0.01,
+                "consigne": "Pour une charge unique au centre de deux appuis, le moment est "
+                            "maximal juste sous la charge et vaut F·L/4.",
+                "indice": "Multipliez la charge par la portée, puis divisez par 4.",
+                "pieges": [
+                    (960000, "Vous avez calculé F·L sans diviser par 4. Ce serait le moment si "
+                             "toute la charge agissait au bout d'une poutre encastrée — un cas "
+                             "bien plus sévère. Sur deux appuis, la moitié de la charge part "
+                             "dans chaque appui, et le bras de levier n'est que L/2 : d'où le 4."),
+                    (480000, "Vous avez divisé par 2 au lieu de 4. La formule sur deux appuis "
+                             "avec charge centrale est F·L/4, pas F·L/2."),
+                    (60000, "Vous avez divisé par 16, ou divisé deux fois par 4. Une seule "
+                            "division : 1200 × 800 / 4."),
+                ],
+                "aide": "Mf = F·L/4 = 1200 × 800 / 4.",
+            },
+            {
+                "type": "numerique",
+                "label": "La contrainte admissible",
+                "unite": "MPa",
+                "attendu": 78.3,
+                "tol": 0.02,
+                "consigne": "On ne dimensionne jamais à la limite élastique : on s'impose une "
+                            "marge. Quelle contrainte s'autorise-t-on ?",
+                "indice": "La limite élastique divisée par le coefficient de sécurité.",
+                "pieges": [
+                    (705, "Vous avez multiplié Re par s. Un coefficient de sécurité **réduit** "
+                          "ce qu'on s'autorise : il divise. Multiplier reviendrait à se donner "
+                          "le droit de dépasser trois fois la limite du matériau."),
+                    (235, "C'est la limite élastique elle-même. Dimensionner à Re, c'est "
+                          "accepter que la pièce se déforme définitivement au premier "
+                          "dépassement, même minime. D'où la marge."),
+                ],
+                "aide": "Rpe = Re / s = 235 / 3.",
+            },
+            {
+                "type": "numerique",
+                "label": "Le module de flexion nécessaire",
+                "unite": "mm³",
+                "attendu": 3064,
+                "tol": 0.02,
+                "consigne": "La condition de résistance s'écrit σ ≤ Rpe, c'est-à-dire "
+                            "Mf/(I/v) ≤ Rpe. Quel module de flexion faut-il au minimum ?",
+                "indice": "Isolez I/v : c'est le moment divisé par la contrainte admissible.",
+                "pieges": [
+                    (18800000, "Vous avez multiplié Mf par Rpe. La contrainte est un quotient "
+                               "Mf/(I/v) : pour isoler I/v, on divise Mf par la contrainte."),
+                    (0.00033, "La division est inversée. On cherche des mm³, donc "
+                              "N·mm divisés par N/mm² — le résultat est grand, pas minuscule."),
+                ],
+                "aide": "I/v ≥ Mf / Rpe = 240 000 / 78,3.",
+            },
+            {
+                "type": "numerique",
+                "label": "La hauteur minimale",
+                "unite": "mm",
+                "attendu": 30.3,
+                "tol": 0.03,
+                "consigne": "Pour un rectangle posé de chant, I/v = b·h²/6. Avec b = 20 mm, "
+                            "quelle hauteur h faut-il au minimum ?",
+                "indice": "Isolez h² puis prenez la racine carrée. N'oubliez pas le 6.",
+                "pieges": [
+                    (153, "Vous avez fait 3064/20 sans le facteur 6 ni la racine carrée. "
+                          "La relation est b·h²/6, donc h = √(6·(I/v)/b)."),
+                    (919, "C'est h² et non h : il reste à prendre la racine carrée."),
+                    (12.4, "Vous avez oublié le facteur 6 : √(3064/20) = 12,4. Avec le 6, "
+                           "on trouve √(919) ≈ 30,3."),
+                ],
+                "aide": "h = √(6 × 3064 / 20) = √919 ≈ 30,3 mm. En pratique on retiendra 32 mm.",
+            },
+            {
+                "type": "qcm",
+                "label": "Ce que change un doublement de la hauteur",
+                "consigne": "Vous doublez h en gardant tout le reste identique.",
+                "question": "Que devient la contrainte dans la poutre ?",
+                "options": ["Elle est divisée par 4",
+                            "Elle est divisée par 2",
+                            "Elle est divisée par 8"],
+                "bonne": 0,
+                "indice": "Le module de flexion contient h au carré.",
+                "diagnostics": {
+                    1: "Ce serait vrai si le module variait comme h. Il varie comme h² : "
+                       "doubler la hauteur multiplie b·h²/6 par 4, donc divise la contrainte "
+                       "par 4. C'est pour cela qu'on pose toujours une poutre **de chant**.",
+                    2: "Le facteur 8 correspond à h³, qui gouverne la **flèche** (la déformation), "
+                       "pas la contrainte. La contrainte dépend de I/v, donc de h².",
+                },
+            },
+        ],
+        "corrige": {
+            "enonce": "Une poutre sur deux appuis, chargée au centre. On connaît la portée, la "
+                      "charge, la largeur, le matériau et la marge de sécurité. On cherche la "
+                      "hauteur minimale de la section.",
+            "regle": "Deux relations, et une condition entre les deux. La sollicitation : "
+                     "**Mf = F·L/4**. La résistance de la forme : **I/v = b·h²/6**. La condition "
+                     "à respecter : **σ = Mf/(I/v) ≤ Re/s**. Tout le problème consiste à écrire "
+                     "cette inégalité puis à en extraire h.",
+            "conversions": "Rien à convertir ici, et c'est volontaire : les millimètres et les "
+                           "newtons donnent directement des N·mm pour les moments et des MPa "
+                           "pour les contraintes, puisque 1 MPa = 1 N/mm². C'est la raison pour "
+                           "laquelle on travaille en millimètres en construction mécanique.",
+            "remplacement": "Mf = 1200 × 800 / 4. Rpe = 235 / 3. Puis I/v ≥ Mf / Rpe, et enfin "
+                            "20 × h² / 6 ≥ I/v.",
+            "calcul": "Mf = 240 000 N·mm. Rpe = 78,3 MPa. I/v ≥ 240 000 / 78,3 = 3064 mm³. "
+                      "h ≥ √(6 × 3064 / 20) = √919 ≈ **30,3 mm**. On retiendra 32 mm, valeur "
+                      "courante en stock.",
+            "verification": "Contrôle à rebours avec h = 32 mm : I/v = 20 × 32² / 6 = 3413 mm³, "
+                            "donc σ = 240 000 / 3413 = 70,3 MPa. C'est bien en dessous des "
+                            "78,3 MPa admissibles, et le coefficient de sécurité réel vaut "
+                            "235/70,3 = 3,3 — un peu mieux que les 3 demandés. Un résultat qui "
+                            "dépasserait Rpe signalerait une erreur de sens dans une division.",
+        },
+        "a_retenir": "À retenir : la contrainte est un **quotient**, moment sur module de "
+                     "flexion. Le module d'un rectangle vaut **b·h²/6** — le **carré** sur la "
+                     "hauteur, pas sur la largeur. D'où la règle de chantier : une poutre se "
+                     "pose toujours **de chant**. Et l'on ne dimensionne jamais à Re, mais à "
+                     "**Re/s**.",
+    },
+    {
+        "id": "at7",
+        "chapitre": "Chapitre 12",
+        "titre": "Calculer un réducteur à engrenages",
+        "theme": "Transmission de puissance",
+        "fiche": "12.5",
+        "vocabulaire": [
+            ("Module m",
+             "la taille des dents, en millimètres. Deux roues ne peuvent engrener que si elles "
+             "ont le **même module**. C'est la première chose qu'on fixe."),
+            ("Nombre de dents Z",
+             "ce qui fixe le rapport de transmission — et lui seul. Le module n'y intervient pas."),
+            ("Diamètre primitif d",
+             "le diamètre du cercle qui roule sans glisser sur celui de l'autre roue : d = m·Z. "
+             "Ce n'est pas le diamètre extérieur, qui est plus grand de deux modules."),
+            ("Entraxe a",
+             "la distance entre les deux axes : la demi-somme des diamètres primitifs."),
+            ("Rapport r",
+             "vitesse de sortie divisée par vitesse d'entrée. Inférieur à 1 : on réduit la "
+             "vitesse et on multiplie le couple. C'est l'objet même d'un réducteur."),
+        ],
+        "document": ("| Donnée | Valeur |\n|---|---|\n"
+                     "| Vitesse du moteur N1 | 1500 tr/min |\n"
+                     "| Vitesse voulue en sortie N2 | 375 tr/min |\n"
+                     "| Module m | 2 mm |\n"
+                     "| Roue menante Z1 | 20 dents |\n"
+                     "| Couple moteur C1 | 5 N·m |\n"
+                     "| Rendement de l'engrènement | 0,95 |"),
+        "enonce": "Un moteur tourne trop vite pour l'application. On interpose un train "
+                  "d'engrenages simple. Il faut déterminer la roue menée, l'entraxe, et le "
+                  "couple réellement disponible en sortie.",
+        "etapes": [
+            {
+                "type": "numerique",
+                "label": "Le rapport de réduction",
+                "unite": "sans unité",
+                "attendu": 0.25,
+                "tol": 0.02,
+                "consigne": "Le rapport compare la vitesse de sortie à celle d'entrée.",
+                "indice": "N2 divisé par N1.",
+                "pieges": [
+                    (4, "Vous avez calculé N1/N2. C'est le rapport de **réduction inversé**, "
+                        "parfois appelé « raison ». Le rapport r se définit sortie sur entrée, "
+                        "et vaut donc moins de 1 pour un réducteur."),
+                    (1125, "Vous avez soustrait les deux vitesses. Un rapport est un quotient."),
+                ],
+                "aide": "r = N2 / N1 = 375 / 1500.",
+            },
+            {
+                "type": "numerique",
+                "label": "Le nombre de dents de la roue menée",
+                "unite": "dents",
+                "attendu": 80,
+                "tol": 0.01,
+                "consigne": "Le rapport vaut aussi Z1/Z2. Combien de dents faut-il sur la "
+                            "seconde roue ?",
+                "indice": "Z2 = Z1 / r.",
+                "pieges": [
+                    (5, "Vous avez multiplié Z1 par r. Pour réduire la vitesse, la roue menée "
+                        "doit être **plus grande** que la menante, donc porter plus de dents."),
+                    (100, "Vous avez sans doute additionné ou pris un rapport de 5. Avec "
+                          "r = 0,25 : Z2 = 20 / 0,25 = 80."),
+                ],
+                "aide": "Z2 = Z1 / r = 20 / 0,25 = 80 dents.",
+            },
+            {
+                "type": "numerique",
+                "label": "L'entraxe",
+                "unite": "mm",
+                "attendu": 100,
+                "tol": 0.01,
+                "consigne": "Les deux diamètres primitifs valent m·Z. Quelle distance sépare "
+                            "les deux axes ?",
+                "indice": "La demi-somme des deux diamètres primitifs.",
+                "pieges": [
+                    (200, "Vous avez additionné les deux diamètres sans diviser par deux. "
+                          "L'entraxe joint les deux **centres** : il vaut un rayon de chaque "
+                          "roue, donc la demi-somme des diamètres."),
+                    (60, "Vous avez additionné les rayons en oubliant le module sur l'une des "
+                         "roues, ou utilisé Z1 deux fois."),
+                ],
+                "aide": "a = m(Z1 + Z2)/2 = 2 × (20 + 80) / 2 = 100 mm.",
+            },
+            {
+                "type": "numerique",
+                "label": "Le couple disponible en sortie",
+                "unite": "N·m",
+                "attendu": 19,
+                "tol": 0.02,
+                "consigne": "Ce qu'on perd en vitesse, on le gagne en couple — moins les pertes.",
+                "indice": "Le couple est multiplié par Z2/Z1, puis affecté du rendement.",
+                "pieges": [
+                    (20, "C'est le couple théorique, sans pertes. L'engrènement a un rendement "
+                         "de 0,95 : 5 % du couple part en frottement et en chaleur. Négliger le "
+                         "rendement fait toujours surestimer ce dont on dispose."),
+                    (1.25, "Vous avez divisé au lieu de multiplier. Un réducteur **augmente** "
+                           "le couple : c'est même sa raison d'être."),
+                    (4.75, "Vous avez appliqué le rendement mais pas le rapport de "
+                           "multiplication du couple."),
+                ],
+                "aide": "C2 = C1 × (Z2/Z1) × η = 5 × 4 × 0,95 = 19 N·m.",
+            },
+            {
+                "type": "qcm",
+                "label": "Ce que change le module",
+                "consigne": "Vous passez du module 2 au module 4, sans toucher aux nombres de dents.",
+                "question": "Que devient le rapport de réduction ?",
+                "options": ["Il ne change pas",
+                            "Il est divisé par deux",
+                            "Il est multiplié par deux"],
+                "bonne": 0,
+                "indice": "Le rapport s'écrit Z1/Z2. Le module y figure-t-il ?",
+                "diagnostics": {
+                    1: "Le module disparaît du rapport : r = d1/d2 = (m·Z1)/(m·Z2) = Z1/Z2. "
+                       "Il se simplifie. Ce qui change, c'est l'encombrement — l'entraxe passe "
+                       "de 100 à 200 mm — et le couple transmissible par dent.",
+                    2: "Même remarque : le module se simplifie dans le rapport. Il fixe la "
+                       "**taille** des dents, donc la robustesse et la place occupée, jamais "
+                       "le rapport.",
+                },
+            },
+        ],
+        "corrige": {
+            "enonce": "Un moteur à 1500 tr/min, une sortie voulue à 375 tr/min, un module et "
+                      "une roue menante imposés. On cherche la roue menée, l'entraxe et le "
+                      "couple de sortie.",
+            "regle": "Trois relations, toutes élémentaires. Le rapport : **r = N2/N1 = Z1/Z2**. "
+                     "Le diamètre primitif : **d = m·Z**. L'entraxe : **a = (d1+d2)/2**. Et pour "
+                     "le couple, la conservation de la puissance : ce qu'on perd en vitesse est "
+                     "gagné en couple, au rendement près.",
+            "conversions": "Les vitesses restent en tours par minute des deux côtés du quotient : "
+                           "elles se simplifient, aucune conversion en rad/s n'est nécessaire. "
+                           "C'est le genre de conversion inutile qui fait perdre du temps et "
+                           "introduit des erreurs.",
+            "remplacement": "r = 375/1500. Z2 = 20/r. a = 2 × (20 + Z2)/2. C2 = 5 × (Z2/20) × 0,95.",
+            "calcul": "r = **0,25**. Z2 = **80 dents**. d1 = 40 mm, d2 = 160 mm, donc "
+                      "a = **100 mm**. C2 = 5 × 4 × 0,95 = **19 N·m**.",
+            "verification": "Deux contrôles. D'abord la cohérence physique : la puissance "
+                            "d'entrée vaut C1·ω1 = 5 × 157 = 785 W ; en sortie, 19 × 39,3 = "
+                            "747 W, soit 95 % — exactement le rendement annoncé. Ensuite le bon "
+                            "sens : un réducteur doit **augmenter** le couple. Un résultat "
+                            "inférieur à 5 N·m aurait signalé une division prise à l'envers.",
+        },
+        "a_retenir": "À retenir : le rapport ne dépend **que des nombres de dents**. Le module "
+                     "fixe la taille des dents, donc l'encombrement et le couple transmissible — "
+                     "ce sont deux décisions indépendantes. Et ce qu'on perd en vitesse, on le "
+                     "gagne en couple, **moins le rendement**, jamais plus.",
+    },
+    {
+        "id": "at8",
+        "chapitre": "Chapitre 1",
+        "titre": "Du besoin au cahier des charges",
+        "theme": "Analyse fonctionnelle",
+        "fiche": "1.6",
+        "vocabulaire": [
+            ("Bête à cornes",
+             "trois questions pour cadrer un projet : à qui le produit rend-il service, sur quoi "
+             "agit-il, dans quel but. La réponse à la troisième est la fonction globale."),
+            ("Fonction principale",
+             "elle relie **deux** éléments du milieu extérieur en passant par le produit. C'est "
+             "la raison d'être de l'objet."),
+            ("Fonction contrainte",
+             "elle relie le produit à **un seul** élément. Elle n'est pas la raison d'être, mais "
+             "elle est aussi obligatoire que le reste."),
+            ("Critère, niveau, flexibilité",
+             "les trois choses sans lesquelles une fonction ne veut rien dire : ce qu'on mesure, "
+             "la valeur visée, et le droit de s'en écarter. F0 = aucun écart toléré."),
+            ("Criticité (AMDEC)",
+             "le produit de trois notes : fréquence × gravité × détectabilité. On traite en "
+             "priorité ce qui dépasse un seuil fixé d'avance."),
+        ],
+        "document": ("**Projet : un support de vidéoprojecteur pour salle de classe.**\n\n"
+                     "| Élément | Note |\n|---|---|\n"
+                     "| Milieu extérieur identifié | l'enseignant, le vidéoprojecteur, le plafond, "
+                     "l'électricité, les normes de sécurité |\n"
+                     "| Fonction étudiée | « maintenir le vidéoprojecteur face au tableau » |\n"
+                     "| Défaillance envisagée | desserrage progressif de la fixation |\n"
+                     "| Fréquence F | 3 |\n| Gravité G | 4 |\n| Détectabilité D | 2 |\n"
+                     "| Seuil d'action | 20 |"),
+        "enonce": "On lance l'étude d'un support de vidéoprojecteur. Il faut cadrer le besoin, "
+                  "classer les fonctions, puis évaluer un risque.",
+        "etapes": [
+            {
+                "type": "qcm",
+                "label": "La troisième question de la bête à cornes",
+                "consigne": "« À qui rend-il service ? » — l'enseignant. « Sur quoi agit-il ? » — "
+                            "le vidéoprojecteur.",
+                "question": "Que demande la troisième question ?",
+                "options": ["Dans quel but le produit existe-t-il ?",
+                            "Combien coûtera le produit ?",
+                            "Quelle technologie utiliser ?"],
+                "bonne": 0,
+                "indice": "La réponse à cette question est la fonction globale du produit.",
+                "diagnostics": {
+                    1: "Le coût est une **contrainte**, qui viendra dans le cahier des charges. "
+                       "La bête à cornes ne s'occupe que du besoin, avant toute considération "
+                       "de moyens ou de prix.",
+                    2: "Surtout pas. L'analyse fonctionnelle est **neutre en solutions** : "
+                       "évoquer une technologie à ce stade fermerait des portes avant même "
+                       "d'avoir listé les fonctions.",
+                },
+            },
+            {
+                "type": "qcm",
+                "label": "Principale ou contrainte ?",
+                "consigne": "La fonction étudiée relie le vidéoprojecteur au tableau, par "
+                            "l'intermédiaire du support.",
+                "question": "De quel type de fonction s'agit-il ?",
+                "options": ["Une fonction principale : elle relie deux éléments du milieu",
+                            "Une fonction contrainte : elle ne concerne qu'un élément",
+                            "Ce n'est pas une fonction, c'est une solution"],
+                "bonne": 0,
+                "indice": "Comptez les éléments du milieu extérieur que la fonction met en relation.",
+                "diagnostics": {
+                    1: "Une contrainte ne relie le produit qu'à **un seul** élément — par "
+                       "exemple « résister au poids du plafond ». Ici, deux éléments sont mis "
+                       "en relation : c'est la définition d'une fonction principale.",
+                    2: "L'énoncé ne dit ni comment ni avec quoi : « maintenir face au tableau » "
+                       "décrit un service rendu, pas un moyen. C'est bien une fonction.",
+                },
+            },
+            {
+                "type": "qcm",
+                "label": "Une fonction correctement caractérisée",
+                "consigne": "Quatre formulations de la même exigence sont proposées.",
+                "question": "Laquelle est utilisable dans un cahier des charges ?",
+                "options": ["Masse ≤ 2,5 kg, classe de flexibilité F0",
+                            "Le support doit être léger",
+                            "Le support sera en aluminium pour être léger"],
+                "bonne": 0,
+                "indice": "Une fonction se caractérise par un critère, un niveau et une flexibilité.",
+                "diagnostics": {
+                    1: "« Léger » n'est ni mesurable, ni vérifiable, ni contestable. Aucun "
+                       "fournisseur ne peut s'engager là-dessus, et aucun contrôle ne peut le "
+                       "valider. Il manque le critère chiffré.",
+                    2: "Cette formulation impose une **solution** — l'aluminium. Elle interdit "
+                       "à un fournisseur de proposer un composite plus léger et moins cher. "
+                       "Un cahier des charges dit le **quoi**, jamais le **comment**.",
+                },
+            },
+            {
+                "type": "numerique",
+                "label": "La criticité AMDEC",
+                "unite": "sans unité",
+                "attendu": 24,
+                "tol": 0.01,
+                "consigne": "Le desserrage progressif a été noté F = 3, G = 4, D = 2. Calculez "
+                            "sa criticité.",
+                "indice": "La criticité est le produit des trois notes.",
+                "pieges": [
+                    (9, "Vous avez additionné les trois notes. La criticité est un **produit** : "
+                        "c'est ce qui la rend sévère — une seule note élevée suffit à faire "
+                        "grimper le résultat."),
+                    (12, "Vous n'avez multiplié que deux des trois notes. Les trois entrent "
+                         "dans le calcul : fréquence, gravité et détectabilité."),
+                    (6, "Vous avez sans doute multiplié F par G en oubliant D, ou fait une "
+                        "autre combinaison partielle. C'est 3 × 4 × 2."),
+                ],
+                "aide": "C = F × G × D = 3 × 4 × 2 = 24.",
+            },
+            {
+                "type": "qcm",
+                "label": "Que faire de ce résultat",
+                "consigne": "Le seuil d'action fixé par l'équipe est 20.",
+                "question": "Quelle décision s'impose ?",
+                "options": ["Une action corrective est obligatoire : 24 dépasse le seuil",
+                            "Rien à faire : la gravité seule reste acceptable",
+                            "Il faut recalculer avec d'autres notes"],
+                "bonne": 0,
+                "indice": "Comparez la criticité obtenue au seuil annoncé dans le document.",
+                "diagnostics": {
+                    1: "C'est justement l'intérêt de la criticité : elle refuse qu'on juge sur "
+                       "une seule note. Ici la gravité 4 est déjà sérieuse, mais c'est le "
+                       "**produit** 24 qui déclenche l'action.",
+                    2: "Les notes ne se rediscutent pas parce que le résultat déplaît. Ce qui se "
+                       "révise, c'est la **conception** — par exemple un frein filet ou un "
+                       "contre-écrou, qui feraient tomber la fréquence de 3 à 1, donc la "
+                       "criticité de 24 à 8.",
+                },
+            },
+        ],
+        "corrige": {
+            "enonce": "Un support de vidéoprojecteur à concevoir. On part du besoin, on classe "
+                      "une fonction, on juge une formulation, puis on évalue un risque.",
+            "regle": "Quatre outils, dans l'ordre. La **bête à cornes** cadre le besoin en trois "
+                     "questions. Le **diagramme pieuvre** distingue fonctions principales (deux "
+                     "éléments reliés) et contraintes (un seul). La **caractérisation** rend "
+                     "chaque fonction mesurable : critère, niveau, flexibilité. L'**AMDEC** "
+                     "hiérarchise les risques par C = F × G × D.",
+            "conversions": "Rien à convertir : l'analyse fonctionnelle ne manipule pas d'unités "
+                           "physiques à ce stade. C'est même son principe — on décrit ce qu'il "
+                           "faut obtenir avant de savoir avec quoi on l'obtiendra.",
+            "remplacement": "Fonction reliant deux éléments du milieu → principale. Formulation "
+                            "retenue : critère « masse », niveau « ≤ 2,5 kg », flexibilité F0. "
+                            "Criticité : C = 3 × 4 × 2.",
+            "calcul": "La fonction est **principale**. La formulation utilisable est celle qui "
+                      "porte un critère chiffré et une classe de flexibilité. La criticité vaut "
+                      "**24**, au-dessus du seuil de 20 : **action corrective obligatoire**.",
+            "verification": "Le contrôle se fait par l'usage qu'on peut en faire. Un fournisseur "
+                            "peut-il s'engager sur « masse ≤ 2,5 kg, F0 » ? Oui. Sur « léger » ? "
+                            "Non. Et l'action corrective se vérifie par recalcul : ajouter un "
+                            "frein filet ferait passer la fréquence de 3 à 1, donc la criticité "
+                            "de 24 à 8 — sous le seuil.",
+        },
+        "a_retenir": "À retenir : une fonction **principale** relie deux éléments du milieu, une "
+                     "**contrainte** un seul. Une fonction non chiffrée ne vaut rien : critère, "
+                     "niveau, flexibilité. Un cahier des charges dit le **quoi**, jamais le "
+                     "**comment** — sinon il interdit les meilleures solutions. Et la criticité "
+                     "est un **produit**, pas une somme.",
+    },
 ]
 
 
@@ -33313,6 +33874,7 @@ _OPTIONS_NAV = ["🏠 Tableau de bord",
                 "🧪 Exercices guidés",
                 "🏗️ Ateliers guidés",
                 "🎛️ Schémas interactifs",
+                "🎬 Vidéos",
                 "🤖 Importer un cours (IA)",
                 "📐 Calculateur d'ajustements ISO",
                 "🔧 Calculateurs RDM",
@@ -33894,6 +34456,8 @@ elif PAGE == "🎛️ Schémas interactifs":
         "Tolérances ISO — la largeur d'un IT",
         "Roulements — la règle des charges",
         "Engrenages — module et nombre de dents",
+        "Chaîne de cotes — les IT s'additionnent",
+        "Barre pleine ou tube — la matière utile",
     ]
     _choix_si = st.selectbox("Choisissez un schéma", _SCHEMAS_INTERACTIFS, key="choix_schema_inter")
     st.divider()
@@ -34039,7 +34603,7 @@ elif PAGE == "🎛️ Schémas interactifs":
                    "comptent, pas seulement le premier.")
 
     # ---------------------------------------------------------------- 5
-    else:
+    elif _choix_si == _SCHEMAS_INTERACTIFS[4]:
         c1, c2, c3 = st.columns(3)
         with c1:
             _mod = st.select_slider("Module m (mm)",
@@ -34069,6 +34633,207 @@ elif PAGE == "🎛️ Schémas interactifs":
         st.caption("Le module fixe la TAILLE des dents (donc le couple transmissible et "
                    "l'encombrement) ; le nombre de dents fixe le RAPPORT. Deux décisions "
                    "indépendantes.")
+
+
+    # ---------------------------------------------------------------- 6
+    elif _choix_si == _SCHEMAS_INTERACTIFS[5]:
+        c1, c2, c3 = st.columns(3)
+        with c1:
+            _jn = st.slider("Jeu nominal visé (mm)", 0.05, 3.0, 0.50, 0.05, key="ch_jn")
+        with c2:
+            _ita = st.slider("IT sur la cote A (µm)", 10, 400, 120, 10, key="ch_ita")
+        with c3:
+            _itb = st.slider("IT sur la cote B (µm)", 10, 400, 120, 10, key="ch_itb")
+
+        st.markdown(html_dyn(dyn_chaine_cotes(_jn, _ita, _itb)), unsafe_allow_html=True)
+
+        _itj = _ita + _itb
+        _jmax = _jn + _itj/2000.0
+        _jmin = _jn - _itj/2000.0
+        m1, m2, m3 = st.columns(3)
+        m1.metric("IT sur la condition", f"{_itj} µm")
+        m2.metric("Jeu mini", f"{_jmin:.3f} mm")
+        m3.metric("Jeu maxi", f"{_jmax:.3f} mm")
+
+        if _jmin < 0:
+            st.markdown(
+                f"**Ce qu'il faut remarquer :** le jeu mini est **négatif** ({_jmin:.3f} mm) : "
+                f"sur certaines pièces du lot, la pièce ne rentre pas. Le montage est impossible "
+                f"une fois sur combien ? On ne le sait pas — et c'est bien le problème. "
+                f"**Resserrez un des deux IT jusqu'à repasser au-dessus de zéro.**")
+        else:
+            st.markdown(
+                f"**Ce qu'il faut remarquer :** l'IT de la condition vaut **{_ita} + {_itb} = "
+                f"{_itj} µm**. Les deux intervalles s'**additionnent**, alors que les cotes, elles, "
+                f"se **soustraient**. C'est le point que tout le monde rate. "
+                f"**Doublez un seul des deux IT : la condition se dégrade autant que si vous "
+                f"aviez doublé l'autre.**")
+        st.caption("Conséquence pratique : pour tenir une condition serrée, il ne sert à rien "
+                   "de soigner une seule cote. C'est la SOMME des IT de la chaîne qui compte, "
+                   "et chaque cote ajoutée à la chaîne dégrade la condition.")
+
+    # ---------------------------------------------------------------- 7
+    else:
+        c1, c2 = st.columns(2)
+        with c1:
+            _dext = st.slider("Diamètre extérieur (mm)", 16, 80, 40, 2, key="tb_d")
+        with c2:
+            _ep = st.slider("Épaisseur du tube (mm)", 1, 15, 3, 1, key="tb_e")
+
+        if 2*_ep >= _dext:
+            st.warning("L'épaisseur dépasse le rayon : le tube devient une barre pleine.")
+        st.markdown(html_dyn(dyn_tube(float(_dext), float(_ep))), unsafe_allow_html=True)
+
+        _di = max(0.0, _dext - 2.0*_ep)
+        _ip = 3.141592653589793 * _dext**4 / 64.0
+        _it_ = 3.141592653589793 * (_dext**4 - _di**4) / 64.0
+        _sp = 3.141592653589793 * _dext**2 / 4.0
+        _st_ = 3.141592653589793 * (_dext**2 - _di**2) / 4.0
+        _pr = 100.0*_it_/_ip
+        _pm = 100.0*_st_/_sp
+        m1, m2, m3 = st.columns(3)
+        m1.metric("Rigidité conservée", f"{_pr:.0f} %")
+        m2.metric("Masse conservée", f"{_pm:.0f} %")
+        m3.metric("Rigidité par kilo", f"× {(_pr/_pm if _pm else 0):.2f}")
+
+        st.markdown(
+            f"**Ce qu'il faut remarquer :** en retirant tout le centre, on garde **{_pr:.0f} %** "
+            f"de la rigidité pour seulement **{_pm:.0f} %** de la matière. La flexion fait "
+            f"travailler les fibres **loin de l'axe** ; celles du centre ne servent presque à rien, "
+            f"mais elles pèsent. **Amincissez encore la paroi : le rapport s'améliore, jusqu'au "
+            f"moment où la paroi flambe — c'est ce qui fixe l'épaisseur minimale.**")
+        st.caption("C'est pour cela que les cadres de vélo, les mâts, les arbres de transmission "
+                   "et les tubes d'échafaudage sont creux. Le moment quadratique varie en D⁴, "
+                   "la masse seulement en D² : élargir coûte peu et rapporte beaucoup.")
+
+
+elif PAGE == "🎬 Vidéos":
+    st.title("Vidéos")
+    st.markdown(
+        '<div class="info-box">Une notion qui résiste passe souvent mieux en vidéo. '
+        'Choisissez une fiche : trois recherches sont préparées pour elle. Collez ensuite le '
+        'lien de celle que vous avez retenue — elle se regarde ici même et reste attachée à la '
+        'fiche, pour la retrouver au moment des révisions.</div>', unsafe_allow_html=True)
+
+    _VID = P.setdefault("videos", {})
+
+    # ---- la fiche concernée
+    _ib = st.selectbox("Bloc", range(len(BLOCS)),
+                       format_func=lambda i: BLOCS[i]["titre"], key="vid_bloc")
+    _bloc_v = BLOCS[_ib]
+    _fiches_v = _bloc_v.get("fiches", [])
+    if not _fiches_v:
+        st.info("Ce bloc n'a pas encore de fiche.")
+    else:
+        _if = st.selectbox("Fiche", range(len(_fiches_v)),
+                           format_func=lambda i: f"{_fiches_v[i]['id']} · {_fiches_v[i]['titre']}",
+                           key="vid_fiche")
+        _fiche_v = _fiches_v[_if]
+        _cle_f = _fiche_v["id"]
+
+        st.divider()
+
+        # ---- trouver une vidéo
+        st.subheader("Trouver une vidéo")
+        st.caption("Aucun lien n'est fourni d'avance : une adresse inventée mènerait à une page "
+                   "morte, ou pire, à une vidéo hors sujet. Ces trois recherches ouvrent YouTube "
+                   "avec les mots-clés de la fiche.")
+        for _lib, _req in _requetes_video(_fiche_v, _bloc_v.get("id", "")):
+            st.markdown(f"- [{_lib}]({_lien_youtube(_req)})")
+        _perso = st.text_input("Ou vos propres mots-clés", key="vid_perso")
+        if _perso.strip():
+            st.markdown(f"[Rechercher « {_perso.strip()} » sur YouTube]"
+                        f"({_lien_youtube(_perso.strip())})")
+
+        st.divider()
+
+        # ---- garder et regarder
+        st.subheader("Ma vidéo pour cette fiche")
+        _deja = _VID.get(_cle_f, {}).get("lien", "")
+        _lien = st.text_input("Collez ici le lien de la vidéo", value=_deja, key="vid_lien",
+                              placeholder="https://www.youtube.com/watch?v=…")
+        _c1, _c2 = st.columns(2)
+        with _c1:
+            if st.button("Garder cette vidéo", key="vid_save", type="primary",
+                         use_container_width=True):
+                if _lien.strip():
+                    _VID[_cle_f] = {"lien": _lien.strip(), "titre": _fiche_v["titre"]}
+                    sauver_progression(P)
+                    st.success(f"Vidéo attachée à la fiche {_cle_f}.")
+                else:
+                    st.warning("Collez d'abord un lien.")
+        with _c2:
+            if _deja and st.button("Retirer", key="vid_del", use_container_width=True):
+                _VID.pop(_cle_f, None)
+                sauver_progression(P)
+                st.rerun()
+
+        _actif = (_lien or "").strip() or _deja
+        if _actif:
+            try:
+                st.video(_actif)
+            except Exception:
+                st.warning("Ce lien ne peut pas être lu ici, mais il s'ouvre dans le navigateur :")
+                st.markdown(f"[Ouvrir la vidéo]({_actif})")
+
+        # ---- analyse par Claude
+        st.divider()
+        st.subheader("Faire analyser la vidéo par Claude")
+        st.markdown(
+            '<div class="warn-box"><b>Claude ne voit pas la vidéo.</b> Il travaille sur le texte '
+            "que vous lui donnez. Sur YouTube : sous la vidéo, les trois points « … » puis "
+            "<b>Afficher la transcription</b> ; copiez-la et collez-la ici. À défaut, la "
+            "description de la vidéo ou vos propres notes font l'affaire.</div>",
+            unsafe_allow_html=True)
+
+        _txt = st.text_area("Transcription, description ou notes", height=180, key="vid_txt",
+                            placeholder="Collez ici le texte de la vidéo…")
+
+        def _cle_api_video():
+            try:
+                return str(st.secrets.get("ANTHROPIC_API_KEY", "") or "")
+            except Exception:
+                return ""
+
+        _cle_v = _cle_api_video()
+        if not _ANTHROPIC_DISPONIBLE or not _cle_v:
+            st.caption("L'analyse par Claude demande une clé API Anthropic, à renseigner dans "
+                       "Manage app → Settings → Secrets. Le reste de la page fonctionne sans.")
+        elif st.button("Analyser", key="vid_ia", type="primary", disabled=not _txt.strip()):
+            _prompt_v = (
+                "Tu aides un étudiant de première année de BTS CPI (Conception de Produits "
+                "Industriels). Il vient de regarder une vidéo en complément de sa fiche de cours "
+                f"« {_fiche_v['id']} · {_fiche_v['titre']} », dans le bloc « {_bloc_v['titre']} ».\n\n"
+                "Voici la transcription ou les notes de cette vidéo :\n\n"
+                f"{_txt.strip()[:20000]}\n\n"
+                "Réponds en français, en trois parties séparées par des titres en gras :\n\n"
+                "**Ce que dit la vidéo** — un résumé en cinq à huit points, dans l'ordre.\n\n"
+                "**Ce qu'elle apporte en plus de la fiche** — ou, si elle contredit le cours ou "
+                "emploie des notations différentes, dis-le franchement : c'est le plus utile.\n\n"
+                "**Trois questions pour vérifier** — trois questions courtes auxquelles l'étudiant "
+                "doit savoir répondre après la vidéo, chacune suivie de sa réponse en une phrase.\n\n"
+                "Si le texte fourni est trop court ou hors sujet pour permettre une analyse "
+                "sérieuse, dis-le simplement au lieu d'inventer.")
+            with st.spinner("Claude lit la transcription…"):
+                try:
+                    _cl = anthropic.Anthropic(api_key=_cle_v)
+                    _rep = _cl.messages.create(
+                        model="claude-sonnet-5", max_tokens=2500,
+                        messages=[{"role": "user", "content": _prompt_v}])
+                    _out = "".join(b.text for b in _rep.content if hasattr(b, "text"))
+                except Exception as _e:
+                    st.error(f"L'appel à l'API a échoué : {_e}")
+                    _out = ""
+            if _out:
+                st.markdown(_out)
+
+    # ---- toutes les vidéos gardées
+    if _VID:
+        st.divider()
+        st.subheader(f"Mes vidéos ({len(_VID)})")
+        for _k in sorted(_VID, key=lambda x: [int(n) for n in x.split(".")]):
+            _v = _VID[_k]
+            st.markdown(f"- **{_k}** · {_v.get('titre','')} — [ouvrir]({_v.get('lien','')})")
 
 
 elif PAGE == "🤖 Importer un cours (IA)":
