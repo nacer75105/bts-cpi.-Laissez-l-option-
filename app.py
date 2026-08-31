@@ -3287,6 +3287,92 @@ def dessin_definition_atelier():
 
 
 # ===========================================================================
+# 89-90. SADT (actigramme) et grille AMDEC
+# ===========================================================================
+
+def sadt_actigramme():
+    p = []
+    p.append(_txt(340, 24, "L'actigramme A-0 : une boîte, quatre familles de flèches", 13, TRAIT, "middle", True))
+
+    bx, by, bw, bh = 230, 120, 230, 130
+    p.append(f"<rect x='{bx}' y='{by}' width='{bw}' height='{bh}' rx='6' fill='#dbeafe' stroke='{TRAIT}' stroke-width='2.4'/>")
+    p.append(_txt(bx+bw/2, by+58, "VERBE À L'INFINITIF", 13, TRAIT, "middle", True))
+    p.append(_txt(bx+bw/2, by+80, "(la fonction du système)", 10, FIN, "middle"))
+    p.append(_txt(bx+bw-8, by+bh-8, "A-0", 10, FIN, "end", True))
+
+    # ENTREE (gauche)
+    p.append(f"<line x1='60' y1='{by+65}' x2='{bx-4}' y2='{by+65}' stroke='{OK}' stroke-width='2.4' marker-end='url(#fl)'/>")
+    p.append(_txt(60, by+52, "ENTRÉE", 11, OK, "start", True))
+    p.append(_txt(60, by+90, "matière, énergie", 10, FIN, "start"))
+    p.append(_txt(60, by+104, "ou information", 10, FIN, "start"))
+    p.append(_txt(60, by+118, "AVANT transformation", 10, FIN, "start"))
+
+    # SORTIE (droite)
+    p.append(f"<line x1='{bx+bw+4}' y1='{by+65}' x2='{bx+bw+180}' y2='{by+65}' stroke='{ALESAGE}' stroke-width='2.4' marker-end='url(#fl)'/>")
+    p.append(_txt(bx+bw+10, by+52, "SORTIE", 11, ALESAGE, "start", True))
+    p.append(_txt(bx+bw+10, by+90, "le MÊME flux,", 10, FIN, "start"))
+    p.append(_txt(bx+bw+10, by+104, "après transformation", 10, FIN, "start"))
+
+    # CONTROLES (haut)
+    for i, lab in enumerate(["W", "C", "R", "E"]):
+        x = bx + 30 + i*55
+        p.append(f"<line x1='{x}' y1='{by-58}' x2='{x}' y2='{by-4}' stroke='{ARBRE}' stroke-width='2' marker-end='url(#fl)'/>")
+        p.append(_txt(x, by-64, lab, 11, ARBRE, "middle", True))
+    p.append(_txt(bx+bw/2, by-80, "CONTRÔLES (ce qui pilote, ne se transforme pas)", 10, ARBRE, "middle", True))
+
+    # MECANISME (bas)
+    p.append(f"<line x1='{bx+bw/2}' y1='{by+bh+58}' x2='{bx+bw/2}' y2='{by+bh+4}' stroke='{FIN}' stroke-width='2' marker-end='url(#fl)'/>")
+    p.append(_txt(bx+bw/2, by+bh+76, "MÉCANISME — ce qui réalise (la matière d'œuvre du support)", 10, FIN, "middle", True))
+
+    # legende WCRE
+    yl = 340
+    p.append(f"<rect x='60' y='{yl}' width='620' height='72' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    for i,(l,t) in enumerate([("W","énergie (Watt)"),("C","configuration / réglage"),
+                               ("R","réglage / consigne"),("E","exploitation / marche-arrêt")]):
+        p.append(_txt(76 + (i%2)*310, yl+26+(i//2)*26, f"{l} —", 11, ARBRE, "start", True))
+        p.append(_txt(108 + (i%2)*310, yl+26+(i//2)*26, t, 11, TRAIT, "start"))
+
+    defs = ("<defs><marker id='fl' viewBox='0 0 10 10' refX='9' refY='5' markerWidth='6' "
+            f"markerHeight='6' orient='auto'><path d='M0,0 L10,5 L0,10 z' fill='{TRAIT}'/></marker></defs>")
+    return _svg(defs + "".join(p), 720, 430)
+
+
+def grille_amdec():
+    p = []
+    p.append(_txt(360, 24, "La grille AMDEC : de la défaillance à l'action", 13, TRAIT, "middle", True))
+
+    cols = [("Fonction", 60), ("Mode de\ndéfaillance", 150), ("Cause", 250),
+            ("Effet", 340), ("G", 430), ("O", 470), ("D", 510), ("C = G×O×D", 550), ("Action", 640)]
+    y0 = 52
+    p.append(f"<rect x='50' y='{y0}' width='620' height='36' fill='#dbeafe' stroke='{TRAIT}' stroke-width='1.4'/>")
+    for lab, x in cols:
+        for k, part in enumerate(lab.split("\n")):
+            p.append(_txt(x, y0+22+k*12-(6 if "\n" in lab else 0), part, 10, TRAIT, "start", True))
+
+    lignes = [("Guider en", "Grippage", "Défaut de", "Arrêt", "4", "2", "3", "24", "Contrôle jeu"),
+              ("rotation", "du palier", "lubrification", "machine", "", "", "", "", "au montage"),
+              ("Transmettre", "Rupture", "Sous-", "Perte", "5", "3", "4", "60", "Recalculer,"),
+              ("le couple", "clavette", "dimensionnt", "fonction", "", "", "", "", "cannelures")]
+    for i, ligne in enumerate(lignes):
+        y = y0 + 44 + i*24
+        if i % 2 == 0:
+            p.append(f"<rect x='50' y='{y-16}' width='620' height='48' fill='{'#f8fafc' if i==0 else '#fef2f2'}' stroke='{FIN}' stroke-width='0.8'/>")
+        for (lab, x), val in zip(cols, ligne):
+            coul = ALERTE if (i >= 2 and lab in ("G","O","D","C = G×O×D")) else TRAIT
+            gras = lab in ("G","O","D","C = G×O×D")
+            p.append(_txt(x, y, val, 10, coul, "start", gras))
+
+    yb = 196
+    p.append(f"<rect x='50' y='{yb}' width='620' height='96' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p.append(_txt(64, yb+24, "G — Gravité de l'effet pour l'utilisateur", 11, TRAIT, "start", True))
+    p.append(_txt(64, yb+46, "O — Occurrence : la fréquence d'apparition", 11, TRAIT, "start", True))
+    p.append(_txt(64, yb+68, "D — Détection : 1 = on le voit tout de suite · 10 = invisible avant la panne", 11, TRAIT, "start", True))
+    p.append(_txt(64, yb+88, "C = G × O × D : au-delà du seuil fixé (souvent 40 à 100), une action est OBLIGATOIRE",
+                  11, ALERTE, "start", True))
+    return _svg("".join(p), 720, 320)
+
+
+# ===========================================================================
 # REGISTRE DES FIGURES
 # ===========================================================================
 
@@ -3379,6 +3465,8 @@ FIGURES = {
     "plan_argumentation": ("Le plan d'une argumentation", plan_argumentation),
     "relecture_trois_passages": ("La relecture en trois passages", relecture_trois_passages),
     "dessin_definition_atelier": ("Dessin de définition à lire (atelier)", dessin_definition_atelier),
+    "sadt_actigramme": ("L'actigramme SADT", sadt_actigramme),
+    "grille_amdec": ("La grille AMDEC", grille_amdec),
 }
 
 
@@ -5448,601 +5536,1472 @@ CATEGORIES = list(QUIZ.keys())
 
 BLOC_1 = {
     "id": "bloc1",
-    "titre": "Bloc 1 — Analyse fonctionnelle et lecture de plan",
-    "resume": "Comprendre pourquoi un produit existe, puis savoir lire le langage normalisé qui le décrit.",
+    "titre": "Bloc 1 — Analyse fonctionnelle",
+    "resume": "Du besoin au cahier des charges : bête à cornes, pieuvre, caractérisation, FAST, SADT, CDCF et AMDEC.",
     "fiches": [
         {
-            "id": "1.1",
-            "titre": "Analyse du besoin et cahier des charges fonctionnel",
-            "duree": "6 h",
-            "cours": """
-### 1. De quoi part un concepteur ?
+            "id": '1.1',
+            "titre": 'Le besoin et la bête à cornes',
+            "duree": '4 h',
+            "cours": """### 1. Une histoire vraie, pour commencer
 
-Un produit industriel n'existe jamais « parce qu'on avait envie de le dessiner ». Il existe parce
-qu'un **utilisateur a un besoin** et qu'un **client est prêt à payer** pour qu'on le satisfasse.
-Toute la démarche du BTS CPI part de là : on ne commence pas par SolidWorks, on commence par
-**écrire ce que le produit doit faire**, sans dire comment il le fera.
+Un client téléphone à un bureau d'études et dit :
 
-C'est la distinction la plus importante de l'année :
+> « J'ai besoin d'une équerre en inox de 100 × 60, avec deux trous taraudés M6. »
 
-| On exprime… | Exemple | Nom |
+Le dessinateur ouvre SolidWorks et dessine l'équerre. Trois semaines plus tard, la pièce est
+fabriquée, livrée… et le client rappelle : **ça ne marche pas.**
+
+Que s'est-il passé ? Le client n'avait pas besoin d'une équerre. Il avait besoin de **tenir un
+capteur en face des bouteilles qui défilent sur sa ligne d'embouteillage**. L'équerre, c'était
+**sa** solution à lui — une idée qu'il avait eue, pas un besoin. Et sa solution était mauvaise : à
+cet endroit, la ligne vibre, et l'équerre a bougé.
+
+Si le dessinateur avait posé une seule question — « pour faire quoi ? » — il aurait proposé un
+support avec un réglage et un contre-écrou, et le problème aurait été réglé.
+
+**Toute cette fiche sert à ne plus jamais faire cette erreur.** Et elle vaut bien au-delà du BTS :
+c'est la différence entre exécuter une commande et rendre un service.
+
+### 2. La distinction qui commande tout le reste
+
+Il faut apprendre à séparer deux choses que tout le monde confond :
+
+| On exprime… | Exemple | Comment ça s'appelle |
 |---|---|---|
-| **Ce que le produit doit faire** | « Maintenir la pièce pendant l'usinage » | Fonction (le *quoi*) |
-| **Comment il le fait** | « Avec un vérin pneumatique Ø32 » | Solution technique (le *comment*) |
+| ce que le produit doit **faire** | « maintenir la pièce pendant l'usinage » | une **fonction** — le *quoi* |
+| **comment** il le fait | « avec un vérin pneumatique Ø32 » | une **solution technique** — le *comment* |
 
-Si vous écrivez la solution dans le cahier des charges, vous vous interdisez d'en trouver une
-meilleure. Un cahier des charges bien écrit est **neutre technologiquement**.
+Une fonction s'écrit toujours de la même façon : **un verbe à l'infinitif + un complément**. Aucun
+nom de composant, aucune marque, aucun matériau, aucune dimension imposée.
 
-### 2. La bête à cornes (outil de cadrage du besoin)
+- ✅ « transmettre un couple de 12 N·m entre le moteur et le réducteur »
+- ❌ « utiliser une clavette parallèle 8 × 7 » — c'est déjà une solution
 
-Trois questions, et une seule fonction en sortie :
+**Pourquoi c'est si important.** En écrivant la solution dans le cahier des charges, on s'interdit
+d'en trouver une meilleure. « Transmettre un couple » laisse ouvertes la clavette, les cannelures,
+le frettage, la goupille, l'emmanchement serré (fiche 6.3). « Utiliser une clavette » ferme la
+porte avant même d'avoir cherché.
 
-- **À qui le produit rend-il service ?** → l'utilisateur
-- **Sur quoi agit-il ?** → la matière d'œuvre
-- **Dans quel but ?** → la fonction globale
+On dit qu'un cahier des charges bien écrit est **neutre technologiquement**.
 
-> *Exemple — étau de bridage d'établi* : rend service à **l'opérateur**, agit sur **la pièce à usiner**,
-> dans le but de **l'immobiliser pendant l'opération**.
+*Et il y a un enjeu commercial : un cahier des charges neutre permet de comparer des offres de
+fournisseurs qui proposent des solutions différentes. Un cahier des charges qui impose une
+solution ne permet de comparer que des prix.*
 
-Test de validation en trois questions (à savoir par cœur pour l'examen) :
-1. Pourquoi ce besoin existe-t-il ? (sa cause)
-2. Qu'est-ce qui pourrait le faire disparaître ? (sa fin de vie)
-3. Ce risque est-il probable ? (sa robustesse)
+### 3. La bête à cornes : cadrer le besoin
 
-### 3. Le diagramme pieuvre et les fonctions
+[[FIG:bete_a_cornes]]
 
-On place le produit au centre, les **éléments du milieu extérieur** (EME) autour, puis on relie :
+C'est le premier outil, et le plus simple. Trois questions, dans cet ordre :
 
-- **Fonction principale (FP)** : relie **deux** EME *à travers* le produit. C'est la raison d'être.
-- **Fonction contrainte (FC)** : relie le produit à **un seul** EME. C'est une adaptation imposée.
+La réponse à la troisième question — le but — s'appelle la **fonction globale** du produit. C'est
+la phrase qu'on écrira tout en haut du cahier des charges.
 
-> Étau : **FP1** = « permettre à l'opérateur de serrer la pièce ». **FC1** = « résister aux copeaux et
-> au liquide de coupe », **FC2** = « se fixer sur la table de la machine », **FC3** = « respecter un
-> budget de 80 € ».
+**Attention au piège le plus fréquent : le service est rendu à celui qui a le problème**, pas
+forcément à celui qui subit l'action.
 
-### 4. Caractériser une fonction : critère, niveau, flexibilité
+*Pour un distributeur de croquettes, le produit rend service **au propriétaire** — c'est lui qui
+part en week-end et qui achète l'appareil. Le chat, lui, est la matière d'œuvre : l'élément sur
+lequel le produit agit. Il n'est même pas au courant.*
 
-Une fonction non chiffrée est inutilisable. Chaque fonction reçoit :
+**Valider le besoin — trois questions à connaître par cœur :**
 
-- un **critère d'appréciation** (la grandeur observée : effort, masse, durée…)
-- un **niveau** (la valeur à atteindre : 5 000 N, 2,5 kg, 10 s…)
-- une **flexibilité** (la tolérance admise : ± 5 %, mini, maxi)
-- une **classe de flexibilité** F0 (impératif) → F3 (souhait)
+1. **Pourquoi ce besoin existe-t-il ?** → sa cause
+2. **Qu'est-ce qui pourrait le faire disparaître ?** → sa fin de vie
+3. **Ce risque est-il probable ?** → sa robustesse
 
-C'est ce tableau qui deviendra plus tard votre **critère de validation** : à la fin du projet, on
-reprend le cahier des charges ligne par ligne et on coche.
+*Exemple : le besoin d'un support de tablette dans un atelier disparaîtrait si l'entreprise
+passait au tout-papier ou aux lunettes connectées. Est-ce probable à court terme ? Non. Le besoin
+est robuste, le projet a un sens.*
 
-### 5. Le FAST : passer de la fonction à la solution
+### 4. Les erreurs classiques
 
-Le diagramme FAST se lit de gauche à droite avec trois questions :
-**Pourquoi ?** (on remonte vers le besoin) — **Comment ?** (on descend vers la solution) —
-**Quand ?** (fonctions simultanées, branches verticales).
+1. **Écrire une solution à la place d'une fonction.** Dès qu'un nom de composant apparaît dans le
+   cahier des charges, c'est perdu.
+2. **Oublier de chiffrer.** « Léger », « silencieux », « robuste » ne veulent rien dire.
+3. **Confondre FP et FC** : une fonction qui ne relie le produit qu'à un seul EME est forcément
+   une contrainte.
+4. **Se tromper d'utilisateur** : le service est rendu à celui qui a le problème et qui paie.
+5. **Oublier la méthode de mesure** : l'exigence devient invérifiable, donc source de litige.
+6. **Sauter la phase d'analyse** pour ouvrir la CAO : c'est l'erreur du cas de la fiche 9.1, qui
+   coûte cinq semaines de projet.
+7. **Ne pas classer les flexibilités** : impossible de négocier quand le projet dérape.
 
-Fonction de service → fonctions techniques → **solutions constructives**. C'est seulement à
-l'extrémité droite du FAST que le nom d'un composant réel apparaît.
+
+### 5. À retenir
+
+- On écrit ce que le produit doit **faire**, jamais **comment** il le fera.
+- Une fonction = **verbe à l'infinitif + complément**, sans aucun composant.
+- **Bête à cornes** : à qui, sur quoi, dans quel but. Le service va à celui qui a le problème.
+- **Pieuvre** : FP relie **deux** EME à travers le produit, FC en relie **un seul**.
+- Chaque fonction : **critère, niveau chiffré, flexibilité F0 à F3**.
+- **FAST** : pourquoi à gauche, comment à droite — le composant n'apparaît qu'à la fin.
+- Le CdCF est **contractuel**, et c'est lui qui servira à valider le produit.
 """,
             "formules": """
-**Il n'y a pas de formule physique ici, mais une syntaxe à respecter scrupuleusement.**
+**La distinction fondatrice** — le **besoin** est ce que l'utilisateur veut obtenir ·
+la **solution** est une façon d'y parvenir · on ne mélange jamais les deux
 
-Rédaction normalisée d'une fonction : **verbe à l'infinitif + complément**, sans nom de composant.
+**Le test** — si votre énoncé de besoin contient déjà une solution technique
+(« un support en aluminium à vérin »), il est faux : recommencez
 
-- ✅ « Transmettre un couple de 12 N·m entre l'arbre moteur et le réducteur »
-- ❌ « Utiliser une clavette parallèle 8×7 » *(c'est une solution, pas une fonction)*
+**La bête à cornes — trois questions** —
+1. À qui le produit rend-il service ? · 2. Sur quoi agit-il ? ·
+3. Dans quel but ? (le besoin, exprimé par un **verbe**)
 
-**Taux de satisfaction d'une fonction** (utilisé en revue de projet) :
-
-$$ T = \\frac{\\text{niveau atteint}}{\\text{niveau demandé}} \\times 100 \\;(\\%) $$
-
-**Coût de l'estimation fonctionnelle** — analyse de la valeur :
-
-$$ \\text{Valeur} = \\frac{\\text{Satisfaction des fonctions}}{\\text{Coût}} $$
-
-On améliore la valeur en augmentant le service rendu **ou** en baissant le coût. Une fonction qui
-coûte 30 % du prix de revient pour 5 % de la satisfaction est le premier candidat à la refonte.
+**Formulation d'un besoin** — verbe à l'infinitif + complément, sans aucun moyen technique
 """,
             "exemple": """
-**Cas industriel — Support de capteur pour ligne d'embouteillage (client : agro-alimentaire)**
+### Cas industriel — Le besoin remplacé par la première idée
 
-Le client demande d'abord : « Je veux une équerre en inox avec deux trous taraudés M6. »
-Le concepteur reformule en fonctions :
+**Le symptôme.** Un service demande « une étagère à roulettes » pour un atelier. Elle est
+conçue, fabriquée, livrée — et n'est jamais utilisée.
+
+**L'analyse a posteriori.** En interrogeant les opérateurs, le besoin réel apparaît : ils
+voulaient **poser un document à hauteur des yeux pendant qu'ils travaillent**, sans lâcher leur
+outil. Une étagère mobile ne répond pas à ça : il faut la déplacer, elle occupe du sol, et le
+document reste trop bas.
+
+**Où l'erreur s'est produite.** Le demandeur avait exprimé son besoin sous la forme d'une
+**solution** — « une étagère à roulettes » — et personne n'est remonté à la question « pour
+quoi faire ? ». Le bureau d'études a donc parfaitement conçu le mauvais produit.
+
+**La reformulation correcte** : *permettre à l'opérateur de consulter un document sans
+interrompre son geste*. Ce besoin-là ouvre plusieurs solutions — un bras articulé, une potence
+murale, un écran — que la formulation initiale avait fermées d'emblée.
+
+**Ce que le cas apprend.** L'analyse fonctionnelle ne sert pas à trouver des solutions : elle
+sert à **empêcher de choisir une solution trop tôt**. C'est l'étape la moins chère du projet, et
+la plus coûteuse à sauter.
+""",
+            "exercice": """
+### Exercice — Formuler un besoin et tracer la bête à cornes
+
+Un service de maintenance demande : « il nous faudrait un chariot avec un plateau élévateur
+hydraulique pour les moteurs. »
+
+**1.** Cette phrase exprime-t-elle un besoin ou une solution ? Justifiez.
+
+**2.** Quelles questions poseriez-vous pour remonter au besoin réel ?
+
+**3.** Reformulez le besoin correctement, sans aucun moyen technique.
+
+**4.** Tracez la bête à cornes : à qui le produit rend-il service, sur quoi agit-il, dans quel
+but ?
+
+**5.** Citez deux solutions différentes que votre reformulation laisse ouvertes, et que la
+demande initiale fermait.
+""",
+            "corrige": """
+### Corrigé, en six temps
+
+#### 1. Ce que dit l'énoncé
+
+La demande contient **trois moyens techniques** : « chariot », « plateau élévateur »,
+« hydraulique ». Aucun n'est un besoin — ce sont des réponses données avant que la question ne
+soit posée.
+
+#### 2. Quelle règle, et pourquoi
+
+> **Un besoin se formule par un VERBE, jamais par un objet.**
+
+Si l'énoncé nomme un objet ou une technologie, il fixe la solution et **ferme toutes les
+autres**. C'est l'erreur la moins chère à corriger au début, et la plus chère à découvrir à la
+fin.
+
+#### 3. Les conversions
+
+Aucune conversion numérique. **La « conversion » à faire est celle d'une solution en besoin** :
+on remonte d'un « quoi » vers un « pour quoi faire ».
+
+#### 4. Le remplacement
+
+demande initiale : *un chariot à plateau élévateur hydraulique*
+→ question : **pour quoi faire ?**
+→ réponse : *déplacer des moteurs lourds entre deux postes sans les porter*
+
+#### 5. Le calcul
+
+**1.** C'est une **solution**, pas un besoin. Elle nomme un objet (chariot), un mécanisme
+(plateau élévateur) et une technologie (hydraulique) — trois décisions techniques prises avant
+toute analyse.
+
+**2.** Trois questions utiles : *que faites-vous aujourd'hui, et qu'est-ce qui pose problème ?*
+· *quelle est la masse et l'encombrement réels des moteurs ?* · *à quelle hauteur faut-il les
+amener, et pourquoi ?*
+
+**3.** Reformulation possible : **« déplacer un moteur de 80 kg entre deux postes et l'amener à
+hauteur d'établi, sans effort physique pour l'opérateur »**. Un verbe, un complément, aucun
+moyen technique.
+
+**4.** Bête à cornes :
+- **à qui rend-il service ?** à l'opérateur de maintenance ;
+- **sur quoi agit-il ?** sur le moteur à déplacer ;
+- **dans quel but ?** permettre son déplacement et sa mise à hauteur sans effort.
+
+**5.** Deux solutions que la reformulation rouvre : une **potence murale avec palan** (aucun
+chariot, aucun plateau), ou une **table élévatrice fixe** à chaque poste avec un transfert par
+rail. Ni l'une ni l'autre n'est un chariot hydraulique, et les deux peuvent répondre au besoin.
+
+#### 6. La vérification
+
+**Le test de formulation** : relisez votre énoncé de besoin. S'il contient un nom d'objet
+technique (chariot, vérin, moteur, aluminium), il est encore une solution — recommencez.
+
+**Le test d'ouverture** : votre besoin laisse-t-il **au moins deux solutions différentes**
+possibles ? Si une seule reste envisageable, c'est que la solution est encore cachée dans
+l'énoncé.
+""",
+        },
+        {
+            "id": '1.2',
+            "titre": 'Le diagramme pieuvre et les fonctions de service',
+            "duree": '4 h',
+            "cours": """### 1. Le diagramme pieuvre : trouver TOUTES les fonctions
+
+[[FIG:diagramme_pieuvre]]
+
+La bête à cornes donne une seule fonction, la principale. Or un produit doit satisfaire bien
+d'autres exigences : tenir dans un espace donné, résister à l'huile, respecter un budget, être
+conforme à une norme, se démonter pour la maintenance…
+
+On dessine donc le produit au centre, et tout ce qui l'entoure autour. Ces éléments s'appellent
+les **éléments du milieu extérieur** (EME).
+
+**Deux types de fonctions, et la différence tombe à tous les contrôles :**
+
+| Type | Combien d'EME | Ce que c'est |
+|---|---|---|
+| **Fonction principale (FP)** | relie **deux** EME **en traversant** le produit | la raison d'être |
+| **Fonction contrainte (FC)** | relie le produit à **un seul** EME | une obligation subie |
+
+*« Permettre à l'opérateur de serrer la pièce » relie l'opérateur et la pièce : sans le produit, le
+lien n'existe pas. C'est une FP. « Résister aux copeaux » ne relie le produit qu'à un seul élément :
+c'est une FC.*
+
+**Un produit a en général une ou deux FP, et beaucoup de FC** — cinq, dix, parfois plus. Si vous
+trouvez six FP, c'est presque sûrement que vous avez mal identifié les EME.
+
+**Comment ne rien oublier ?** Passez en revue une liste type, toujours la même : l'utilisateur, la
+matière d'œuvre, l'énergie, le support ou le bâti, l'ambiance (température, humidité, poussière,
+produits chimiques), la maintenance, les normes et la sécurité, le budget, l'esthétique, le
+recyclage en fin de vie.
+
+### 2. Les erreurs classiques
+
+1. **Écrire une solution à la place d'une fonction.** Dès qu'un nom de composant apparaît dans le
+   cahier des charges, c'est perdu.
+2. **Oublier de chiffrer.** « Léger », « silencieux », « robuste » ne veulent rien dire.
+3. **Confondre FP et FC** : une fonction qui ne relie le produit qu'à un seul EME est forcément
+   une contrainte.
+4. **Se tromper d'utilisateur** : le service est rendu à celui qui a le problème et qui paie.
+5. **Oublier la méthode de mesure** : l'exigence devient invérifiable, donc source de litige.
+6. **Sauter la phase d'analyse** pour ouvrir la CAO : c'est l'erreur du cas de la fiche 9.1, qui
+   coûte cinq semaines de projet.
+7. **Ne pas classer les flexibilités** : impossible de négocier quand le projet dérape.
+
+
+### 3. À retenir
+
+- On écrit ce que le produit doit **faire**, jamais **comment** il le fera.
+- Une fonction = **verbe à l'infinitif + complément**, sans aucun composant.
+- **Bête à cornes** : à qui, sur quoi, dans quel but. Le service va à celui qui a le problème.
+- **Pieuvre** : FP relie **deux** EME à travers le produit, FC en relie **un seul**.
+- Chaque fonction : **critère, niveau chiffré, flexibilité F0 à F3**.
+- **FAST** : pourquoi à gauche, comment à droite — le composant n'apparaît qu'à la fin.
+- Le CdCF est **contractuel**, et c'est lui qui servira à valider le produit.
+""",
+            "formules": """
+**Principe** — on place le produit au centre, les **éléments du milieu extérieur** autour,
+et on relie
+
+**Deux types de fonctions** —
+**FP (fonction principale)** : relie **DEUX** éléments extérieurs *à travers* le produit —
+c'est la raison d'être du produit
+**FC (fonction contrainte)** : relie le produit à **UN SEUL** élément — une adaptation imposée
+
+**Le test qui tranche** — comptez les éléments reliés : deux → FP · un → FC
+
+**Formulation** — verbe à l'infinitif, jamais de solution technique
+""",
+            "exemple": """
+### Cas industriel — La fonction qu'on oublie toujours
+
+**Le symptôme.** Un support de capteur est conçu, validé, installé. Six mois plus tard,
+l'entreprise doit tout redéposer : le capteur ne peut pas être remplacé sans démonter la
+machine.
+
+**L'analyse.** Le diagramme pieuvre d'origine comportait bien le capteur, la structure, et
+l'environnement. Il ne comportait **pas l'opérateur de maintenance** — pourtant un élément du
+milieu extérieur à part entière.
+
+La fonction manquante était : *permettre le remplacement du capteur sans démontage de
+l'ensemble*. Elle n'a jamais été écrite, donc jamais vérifiée à la recette.
+
+**Ce que ça coûte.** Ajouter cette fonction au début aurait modifié une fixation. La découvrir
+après installation impose une reprise complète.
+
+**La leçon de méthode.** Le diagramme pieuvre n'a d'intérêt que s'il est **exhaustif** sur le
+milieu extérieur. Les éléments les plus souvent oubliés sont toujours les mêmes : **la
+maintenance, le transport, le stockage, le recyclage** — c'est-à-dire tout ce qui n'est pas le
+fonctionnement normal.
+""",
+            "exercice": """
+### Exercice — Construire un diagramme pieuvre
+
+Produit à étudier : une **cafetière électrique domestique**.
+
+**1.** Listez au moins **six** éléments du milieu extérieur.
+
+**2.** Écrivez la fonction principale (FP). Quels deux éléments relie-t-elle ?
+
+**3.** Écrivez **quatre** fonctions contraintes (FC), chacune reliée à un seul élément.
+
+**4.** Expliquez comment vous distinguez une FP d'une FC, en une phrase.
+
+**5.** Quel élément du milieu extérieur est le plus souvent oublié dans ce type d'étude ? Quelle
+fonction lui associeriez-vous ?
+""",
+            "corrige": """
+### Corrigé, en six temps
+
+#### 1. Ce que dit l'énoncé
+
+Un produit **domestique**, donc un milieu extérieur riche : l'utilisateur, mais aussi
+l'alimentation électrique, le plan de travail, l'eau, le café, le nettoyage.
+
+#### 2. Quelle règle, et pourquoi
+
+**Le critère de tri est le nombre d'éléments reliés :**
+
+> **FP** : le produit sert d'intermédiaire entre **deux** éléments extérieurs
+> **FC** : le produit doit s'adapter à **un seul** élément
+
+C'est un critère mécanique, qui évite de discuter à l'infini : on compte les extrémités du trait.
+
+#### 3. Les conversions
+
+Aucune conversion. **Le travail est de traduire chaque relation en verbe à l'infinitif**, sans
+jamais nommer de solution.
+
+#### 4. Le remplacement
+
+éléments extérieurs = utilisateur · eau · café moulu · énergie électrique · plan de travail ·
+produit de nettoyage *(et : opérateur d'entretien, détartrage)*
+
+FP relie : **utilisateur** ↔ **café/eau**
+
+#### 5. Le calcul
+
+**1.** Six éléments : l'**utilisateur**, l'**eau**, le **café moulu**, l'**énergie électrique**,
+le **plan de travail**, le **produit de nettoyage**.
+
+**2.** **FP : permettre à l'utilisateur d'obtenir une boisson chaude à partir d'eau et de café
+moulu.** Elle relie **deux** éléments extérieurs — l'utilisateur d'un côté, l'eau et le café de
+l'autre — *à travers* le produit.
+
+**3.** Quatre FC possibles :
+- **FC1** : s'alimenter sur le réseau électrique domestique ;
+- **FC2** : tenir stablement sur un plan de travail standard ;
+- **FC3** : résister aux produits de nettoyage courants ;
+- **FC4** : ne pas dépasser un niveau sonore acceptable en cuisine.
+
+**4.** Une **FP relie deux éléments extérieurs** à travers le produit (c'est un service rendu) ;
+une **FC relie le produit à un seul élément** (c'est une adaptation subie).
+
+**5.** L'élément le plus souvent oublié est celui de l'**entretien** : le calcaire et le
+détartrage. La fonction associée serait : *permettre le détartrage sans démontage*. C'est
+exactement l'oubli du cas industriel de cette fiche — tout ce qui n'est pas le fonctionnement
+normal.
+
+#### 6. La vérification
+
+**Le contrôle d'exhaustivité** : passez en revue le **cycle de vie complet** du produit —
+fabrication, transport, stockage, utilisation, **entretien**, fin de vie. Chaque étape apporte
+généralement au moins un élément du milieu extérieur.
+
+**Le contrôle de formulation** : chaque fonction commence-t-elle par un **verbe** ? Contient-elle
+un moyen technique ? Si oui, c'est une solution déguisée.
+""",
+        },
+        {
+            "id": '1.3',
+            "titre": 'Caractériser et hiérarchiser les fonctions',
+            "duree": '4 h',
+            "cours": """### 1. Caractériser une fonction : critère, niveau, flexibilité
+
+[[FIG:caracteriser_fonction]]
+
+Une fonction non chiffrée ne sert à rien. « Le carter doit être solide » n'est ni vérifiable, ni
+contestable, ni utile à un fournisseur.
+
+**La classe de flexibilité** dit à quel point l'exigence est négociable :
+
+- **F0** — impératif, aucune négociation (sécurité, interface avec l'existant, norme légale)
+- **F1** — peu négociable
+- **F2** — négociable
+- **F3** — simple souhait
+
+*À quoi ça sert concrètement : quand le projet dérape en coût ou en délai, on sait immédiatement
+sur quoi on peut céder. Sans classe de flexibilité, toute négociation devient un rapport de force.*
+
+**Reprenons l'exigence floue du début, et rendons-la exploitable :**
+
+> ❌ « le carter doit être solide et facile à nettoyer »
+
+> ✅ **FC1 — résister aux chocs** : critère = énergie de choc · niveau = 5 J sans déformation
+> permanente · flexibilité = **F0**.
+> ✅ **FC2 — permettre le nettoyage** : critère = temps de nettoyage complet et absence de zones de
+> rétention · niveau = moins de 10 minutes, aucun angle rentrant inférieur à 90° · flexibilité =
+> **F1**.
+
+**Ce tableau n'est pas de la paperasse : c'est lui qui servira à valider le produit à la fin.** On
+reprend chaque ligne, on mesure, on coche. C'est exactement le tableau de validation d'une
+soutenance (fiche 9.3).
+
+
+### 2. Hiérarchiser : toutes les fonctions ne se valent pas
+
+Une fois les fonctions listées, il faut savoir **lesquelles comptent le plus**. Sans
+hiérarchisation, un arbitrage de conception se fait au ressenti — et c'est toujours la fonction
+la plus visible qui gagne, pas la plus importante.
+
+**La méthode du tri croisé, en 4 gestes :**
+
+1. **Comparer les fonctions deux à deux**, dans un tableau à double entrée.
+2. Pour chaque paire, désigner **laquelle est la plus importante**.
+3. Attribuer un **poids à l'écart** : 1 (légèrement), 2 (nettement), 3 (beaucoup plus).
+4. **Additionner les points** de chaque fonction, puis calculer son **pourcentage** du total.
+
+**Application immédiate.** Sur quatre fonctions comparées deux à deux, il y a 6 comparaisons
+(4×3/2). Si FP1 obtient 9 points sur un total de 24, elle pèse 9/24 = **37,5 %** du besoin.
+
+**Ce que ça change concrètement :** quand il faudra arbitrer entre deux exigences
+contradictoires — la légèreté contre la rigidité, par exemple — le pourcentage donne un
+argument chiffré au lieu d'un avis.
+
+
+### 3. Les erreurs classiques
+
+1. **Écrire une solution à la place d'une fonction.** Dès qu'un nom de composant apparaît dans le
+   cahier des charges, c'est perdu.
+2. **Oublier de chiffrer.** « Léger », « silencieux », « robuste » ne veulent rien dire.
+3. **Confondre FP et FC** : une fonction qui ne relie le produit qu'à un seul EME est forcément
+   une contrainte.
+4. **Se tromper d'utilisateur** : le service est rendu à celui qui a le problème et qui paie.
+5. **Oublier la méthode de mesure** : l'exigence devient invérifiable, donc source de litige.
+6. **Sauter la phase d'analyse** pour ouvrir la CAO : c'est l'erreur du cas de la fiche 9.1, qui
+   coûte cinq semaines de projet.
+7. **Ne pas classer les flexibilités** : impossible de négocier quand le projet dérape.
+
+
+### 4. À retenir
+
+- On écrit ce que le produit doit **faire**, jamais **comment** il le fera.
+- Une fonction = **verbe à l'infinitif + complément**, sans aucun composant.
+- **Bête à cornes** : à qui, sur quoi, dans quel but. Le service va à celui qui a le problème.
+- **Pieuvre** : FP relie **deux** EME à travers le produit, FC en relie **un seul**.
+- Chaque fonction : **critère, niveau chiffré, flexibilité F0 à F3**.
+- **FAST** : pourquoi à gauche, comment à droite — le composant n'apparaît qu'à la fin.
+- Le CdCF est **contractuel**, et c'est lui qui servira à valider le produit.
+""",
+            "formules": """
+**Caractériser une fonction — trois éléments obligatoires** —
+le **critère** (la grandeur observable) · le **niveau** (sa valeur chiffrée) ·
+la **flexibilité** (la marge de négociation : F0 impératif → F3 très négociable)
+
+**Le test** — une fonction non chiffrée n'est pas vérifiable, donc pas contractuelle
+
+**Hiérarchiser : le tri croisé** — comparer deux à deux · poids de l'écart 1, 2 ou 3 ·
+additionner · exprimer en pourcentage du total
+
+**Nombre de comparaisons** — n fonctions → **n(n−1)/2** comparaisons
+""",
+            "exemple": """
+### Cas industriel — La fonction impossible à vérifier
+
+**Le symptôme.** À la recette d'un équipement, le client refuse la livraison : selon lui, le
+produit n'est « pas assez robuste ». Le fournisseur estime au contraire avoir respecté le cahier
+des charges. Aucun des deux ne peut prouver quoi que ce soit.
+
+**L'analyse.** Le cahier des charges contenait la ligne suivante :
+
+> *FC3 — Le support doit être robuste.*
+
+Aucun **critère**, aucun **niveau**, aucune **flexibilité**. « Robuste » ne se mesure pas : ce
+n'est pas une exigence, c'est un souhait.
+
+**Ce qu'il aurait fallu écrire :**
 
 | Fonction | Critère | Niveau | Flexibilité |
 |---|---|---|---|
-| FP1 — Positionner le capteur face aux bouteilles | Distance capteur/bouteille | 45 mm | ± 2 mm |
-| FP1 — (suite) | Répétabilité après démontage | ≤ 0,2 mm | F0 |
-| FC1 — Résister au lavage haute pression | Indice de protection | IP69K | F0 |
-| FC2 — Résister aux produits chlorés | Matériau | Inox X2CrNiMo17-12-2 | F1 |
-| FC3 — Se monter sur profilé existant | Profilé alu 40×40, rainure 8 | — | F0 |
-| FC4 — Être réglable en hauteur | Course | 0 à 120 mm | ± 10 mm |
-| FC5 — Coût unitaire | Prix pour 50 pièces | ≤ 35 € | F2 |
+| FC3 | charge statique admissible | **120 kg** | F1 |
+| | déformation sous charge nominale | **≤ 2 mm** | F1 |
+| | nombre de cycles avant défaillance | **50 000** | F2 |
 
-**Ce que la reformulation a changé :** en ne figeant pas « équerre à deux trous », le concepteur a
-pu proposer un **collier de serrage sur tige lisse Ø12**, qui satisfait FC4 (réglage continu) que
-l'équerre percée ne satisfaisait pas. Le client n'avait pas vu que son besoin réel incluait le réglage.
+Avec ces trois lignes, la recette devient une **mesure**, pas une discussion.
 
-**Leçon :** le client exprime souvent une solution. Le travail du technicien CPI est de remonter au besoin.
+**Ce que le cas apprend.** Une fonction sans critère chiffré n'est **pas vérifiable**, donc pas
+opposable. Le jour du litige, elle ne protège personne — ni le client, ni le fournisseur.
 """,
             "exercice": """
-**Exercice type examen — Distributeur automatique de croquettes pour animal domestique**
+### Exercice — Caractériser et hiérarchiser
 
-Un particulier souhaite nourrir son chat pendant une absence de 3 jours. Le produit doit délivrer
-une ration à heures fixes, être posé au sol dans une cuisine, et fonctionner sans être branché sur
-le secteur (risque que l'animal débranche le câble).
+Un cahier des charges de support d'écran d'atelier contient ces quatre fonctions :
 
-**Questions :**
-1. Tracer la bête à cornes et énoncer la fonction globale.
-2. Identifier au minimum 5 éléments du milieu extérieur et tracer le diagramme pieuvre.
-3. Énoncer FP1 et quatre fonctions contraintes en respectant la syntaxe normalisée.
-4. Caractériser FP1 et deux FC avec critère, niveau et flexibilité.
-5. Sur la fonction « alimenter le système en énergie », proposer deux solutions techniques et
-   justifier le choix en une phrase.
+- **FP1** — permettre à l'opérateur de consulter l'écran depuis son poste
+- **FC1** — résister à l'environnement d'atelier (poussière, projections)
+- **FC2** — se fixer sur une structure existante
+- **FC3** — être déplaçable par une seule personne
+
+**1.** Pour FP1, proposez un **critère**, un **niveau** et une **flexibilité**.
+
+**2.** Faites de même pour FC3.
+
+**3.** Combien de comparaisons deux à deux le tri croisé de ces quatre fonctions demande-t-il ?
+Donnez le calcul.
+
+**4.** À l'issue du tri croisé, FP1 obtient 9 points, FC1 6, FC2 5, FC3 4. Calculez le poids de
+chaque fonction en pourcentage.
+
+**5.** Le budget impose de sacrifier partiellement une fonction. Laquelle, et sur quel argument ?
 """,
             "corrige": """
-**1. Bête à cornes**
+### Corrigé, en six temps
 
-- À qui rend-il service ? → **au propriétaire de l'animal** (et non au chat : c'est le propriétaire
-  qui achète et qui a le problème à résoudre).
-- Sur quoi agit-il ? → **les croquettes** (la matière d'œuvre est ce qui est transformé/déplacé).
-- Dans quel but ? → **distribuer une ration déterminée à heure programmée en l'absence du propriétaire**.
+#### 1. Ce que dit l'énoncé
 
-*Erreur classique :* écrire « agit sur le chat ». Le produit n'agit pas sur l'animal, il agit sur la nourriture.
+Quatre fonctions formulées correctement (verbe à l'infinitif, sans solution) mais **non
+caractérisées** : aucune n'est chiffrée. C'est exactement l'état d'un cahier des charges à
+mi-parcours.
 
-**2. Éléments du milieu extérieur**
+#### 2. Quelle règle, et pourquoi
 
-Propriétaire — Croquettes — Chat — Sol de la cuisine — Énergie — Ambiance (humidité, poussière) —
-Normes de sécurité alimentaire.
+**Trois éléments obligatoires par fonction : critère, niveau, flexibilité.**
 
-Le produit est au centre, une liaison par EME.
+Sans critère, la fonction n'est pas mesurable. Sans niveau, elle n'est pas vérifiable. Sans
+flexibilité, on ne sait pas ce qui est négociable le jour où il faut arbitrer.
 
-**3. Fonctions (syntaxe verbe à l'infinitif + complément)**
+Et pour le tri croisé : **n(n−1)/2 comparaisons** pour n fonctions.
 
-- **FP1** : Permettre au propriétaire de délivrer les croquettes au chat à heure programmée.
-  *(relie deux EME : propriétaire et chat → c'est bien une fonction principale)*
-- **FC1** : Stocker les croquettes à l'abri de l'humidité.
-- **FC2** : Reposer de façon stable sur le sol de la cuisine.
-- **FC3** : Fonctionner en autonomie énergétique pendant 72 h minimum.
-- **FC4** : Résister aux tentatives d'ouverture par l'animal.
-- **FC5** : Utiliser des matériaux de contact alimentaire.
+#### 3. Les conversions
 
-**4. Caractérisation**
+Le seul calcul numérique est le passage **points → pourcentage** :
 
-| Fonction | Critère | Niveau | Flexibilité | Classe |
-|---|---|---|---|---|
-| FP1 | Masse d'une ration | 60 g | ± 5 g | F1 |
-| FP1 | Précision horaire sur 72 h | ≤ 5 min de dérive | maxi | F1 |
-| FP1 | Nombre de rations programmables/jour | 4 | mini | F2 |
-| FC3 | Autonomie | 72 h | mini, F0 | F0 |
-| FC4 | Effort d'ouverture du couvercle | ≥ 40 N | mini | F0 |
+pourcentage = points de la fonction / **total des points** × 100
 
-*Justification de FC4 à 40 N :* un chat exerce en poussée de patte environ 10 à 20 N ; un coefficient
-2 sur cette valeur garantit que le couvercle reste fermé.
+#### 4. Le remplacement
 
-**5. Solutions pour « alimenter en énergie »**
+nombre de comparaisons = 4 × 3 / 2
 
-| Solution | Avantage | Inconvénient |
+total des points = 9 + 6 + 5 + 4
+
+#### 5. Le calcul
+
+**1. FP1** :
+- critère : **distance et angle de lecture depuis le poste** ;
+- niveau : **lisible à 1,5 m, dans un cône de ± 30°** ;
+- flexibilité : **F0** (impératif — c'est la raison d'être du produit).
+
+**2. FC3** :
+- critère : **masse de l'ensemble** ;
+- niveau : **≤ 15 kg** ;
+- flexibilité : **F2** (négociable — on peut accepter un peu plus si une poignée est prévue).
+
+**3.** n(n−1)/2 = 4 × 3 / 2 = **6 comparaisons**.
+
+**4.** Total = 9 + 6 + 5 + 4 = **24 points**
+
+| Fonction | Points | Poids |
 |---|---|---|
-| 4 piles LR6 (6 V) | Aucun câble, coût faible, changement facile | Autonomie à vérifier, déchet |
-| Batterie Li-ion rechargeable + USB | Rechargeable, plus compacte | Nécessite de penser à recharger avant l'absence |
+| FP1 | 9 | **37,5 %** |
+| FC1 | 6 | **25,0 %** |
+| FC2 | 5 | **20,8 %** |
+| FC3 | 4 | **16,7 %** |
 
-**Choix retenu : piles LR6.** L'usage est **occasionnel** (départs en week-end) : une batterie
-Li-ion se décharge lentement au repos et risque d'être vide au moment précis où on en a besoin,
-alors que des piles neuves offrent une autonomie garantie et satisfont FC3 sans dépendre d'un
-geste de l'utilisateur. C'est FC3 (classe F0) qui tranche, pas le coût.
+**5.** **FC3** (16,7 %), la fonction la moins pondérée, et dont la flexibilité était déjà **F2**.
+L'argument n'est pas un avis : c'est le **croisement du poids le plus faible et de la
+flexibilité la plus grande**. Sacrifier FP1, à 37,5 % et F0, reviendrait à livrer un produit qui
+ne rend plus le service attendu.
+
+#### 6. La vérification
+
+**Contrôle de la somme** : 37,5 + 25,0 + 20,8 + 16,7 = **100 %**. Si le total ne fait pas 100,
+il y a une erreur de division.
+
+**Contrôle de cohérence** : la fonction principale doit normalement sortir en tête du tri croisé.
+Si une fonction contrainte pesait plus que la FP, il faudrait se demander si la FP a été bien
+formulée — ou si le produit ne répond pas au besoin qu'on croit.
 """,
         },
         {
-            "id": "1.2",
-            "titre": "Lecture de plan : projections, coupes et sections",
-            "duree": "10 h",
-            "cours": """
-### 1. Le principe de la projection orthogonale
+            "id": '1.4',
+            "titre": 'Le diagramme FAST',
+            "duree": '3 h',
+            "cours": """### 1. Le FAST : passer enfin aux solutions
 
-Un dessin technique représente un volume 3D sur une feuille 2D. On projette la pièce sur les faces
-d'un cube qui l'entoure, puis on **déplie** ce cube. En Europe on utilise la **méthode du premier
-dièdre** (symbole ISO : un cône tronqué vu de face et de gauche).
+[[FIG:diagramme_fast]]
 
-Règle mnémotechnique du premier dièdre : **la vue se place du côté opposé au regard.**
-Si je regarde la pièce **par la gauche**, je dessine cette vue **à droite** de la vue de face.
+Une fois les fonctions écrites et chiffrées, on a le droit de chercher des solutions. Le diagramme
+FAST sert à faire ce passage **sans sauter d'étape**.
 
-Disposition normalisée :
+On le lit de gauche à droite avec trois questions :
 
-```
-              vue de dessous
-vue de droite   VUE DE FACE   vue de gauche
-              vue de dessus                    (+ vue arrière à l'extrême droite)
-```
+- **POURQUOI ?** — on remonte vers la gauche, vers le besoin
+- **COMMENT ?** — on descend vers la droite, vers la solution
+- **QUAND ?** — les fonctions à assurer en même temps, en branches verticales
 
-**La vue de face** est choisie par le dessinateur : c'est celle qui montre le plus d'informations,
-et généralement la pièce dans sa **position d'utilisation** ou **d'usinage** (un arbre se dessine
-couché, axe horizontal, comme sur le tour).
+**Le nom d'un composant réel n'apparaît qu'à l'extrémité droite.** Si vous écrivez « roulement à
+billes » dans la première colonne, le FAST est faux — et surtout, vous avez sauté l'étape où l'on
+aurait pu trouver mieux.
 
-### 2. Les traits normalisés (ISO 128)
+*L'intérêt du FAST n'est pas de produire un joli diagramme : c'est de rendre visible **où** vous
+avez fait un choix, et donc de pouvoir le discuter. C'est ce que cherche un jury.*
 
-| Type de trait | Emploi |
-|---|---|
-| Continu fort | Arêtes et contours **vus** |
-| Interrompu fin (tirets) | Arêtes et contours **cachés** |
-| Mixte fin (axe) | Axes de révolution, plans de symétrie |
-| Mixte fin à éléments forts | Trace d'un **plan de coupe** |
-| Continu fin | Lignes d'attache, de cote, hachures |
-| Continu fin ondulé | Limite de vue ou de coupe partielle |
+### 2. Les erreurs classiques
 
-Règle de priorité quand deux traits se superposent : **vu > caché > axe**.
+1. **Écrire une solution à la place d'une fonction.** Dès qu'un nom de composant apparaît dans le
+   cahier des charges, c'est perdu.
+2. **Oublier de chiffrer.** « Léger », « silencieux », « robuste » ne veulent rien dire.
+3. **Confondre FP et FC** : une fonction qui ne relie le produit qu'à un seul EME est forcément
+   une contrainte.
+4. **Se tromper d'utilisateur** : le service est rendu à celui qui a le problème et qui paie.
+5. **Oublier la méthode de mesure** : l'exigence devient invérifiable, donc source de litige.
+6. **Sauter la phase d'analyse** pour ouvrir la CAO : c'est l'erreur du cas de la fiche 9.1, qui
+   coûte cinq semaines de projet.
+7. **Ne pas classer les flexibilités** : impossible de négocier quand le projet dérape.
 
-### 3. Les coupes
 
-Une pièce creuse dessinée en vues extérieures devient illisible (forêt de tirets). On la **coupe**
-par un plan imaginaire, on retire la partie avant, et on dessine ce qu'on voit.
+### 3. À retenir
 
-Procédure en 4 temps :
-1. Choisir le plan de coupe (il passe par les formes intéressantes : alésages, rainures).
-2. Indiquer sa trace sur une autre vue par un trait mixte à éléments forts, avec deux flèches
-   donnant le **sens d'observation**, et deux lettres majuscules (A-A).
-3. Supprimer la matière située entre l'observateur et le plan.
-4. **Hachurer les surfaces réellement coupées** (à 45°, régulières). La matière **derrière** le plan
-   n'est pas hachurée mais reste dessinée en trait fort.
-
-**Règle d'or à ne jamais oublier :** on ne coupe **jamais** dans le sens de la longueur une **vis,
-un écrou, une rondelle, une goupille, une clavette, une bille ou un rayon de roue**. Ces éléments
-sont dessinés **non coupés** — ils n'ont pas de forme intérieure à révéler, et les hachurer nuirait
-à la lisibilité.
-
-Variantes : **demi-coupe** (pièce symétrique, moitié en vue / moitié en coupe), **coupe brisée à
-plans parallèles**, **coupe brisée à plans sécants** (le second plan est rabattu), **coupe locale**
-(délimitée par un trait fin ondulé).
-
-### 4. Les sections
-
-La section ne dessine **que** la surface coupée, sans ce qui se trouve derrière. C'est plus léger
-qu'une coupe et idéal pour montrer la forme d'un profil, d'une rainure de clavette ou d'un méplat
-sur un arbre.
-
-- **Section sortie** : dessinée à côté de la vue, contour en trait fort. Préférée car plus lisible.
-- **Section rabattue** : dessinée directement sur la vue, contour en **trait fin**, en superposition.
-
-### 5. Vues particulières
-
-**Vue interrompue** (pièce très longue et de section constante), **vue partielle** (limitée par un
-trait ondulé), **vue de détail agrandie** (repérée par un cercle et une lettre, avec l'échelle
-indiquée : *Détail A — Échelle 5:1*), **demi-vue** pour les pièces symétriques.
+- On écrit ce que le produit doit **faire**, jamais **comment** il le fera.
+- Une fonction = **verbe à l'infinitif + complément**, sans aucun composant.
+- **Bête à cornes** : à qui, sur quoi, dans quel but. Le service va à celui qui a le problème.
+- **Pieuvre** : FP relie **deux** EME à travers le produit, FC en relie **un seul**.
+- Chaque fonction : **critère, niveau chiffré, flexibilité F0 à F3**.
+- **FAST** : pourquoi à gauche, comment à droite — le composant n'apparaît qu'à la fin.
+- Le CdCF est **contractuel**, et c'est lui qui servira à valider le produit.
 """,
             "formules": """
-**Échelle du dessin**
+**Ce que fait le FAST** — il passe des **fonctions** (le quoi) aux **solutions techniques**
+(le comment), par déroulement logique
 
-$$ \\text{Échelle} = \\frac{\\text{dimension sur le dessin}}{\\text{dimension réelle de l'objet}} $$
+**Les trois questions, et leur sens de lecture** —
+**Pourquoi ?** → on remonte vers la gauche (vers la fonction) ·
+**Comment ?** → on descend vers la droite (vers la solution) ·
+**Quand ?** → fonctions simultanées, empilées verticalement
 
-- Échelle **1:1** → vraie grandeur
-- Échelle **1:2**, 1:5, 1:10 → **réduction** (l'objet est plus grand que le dessin)
-- Échelle **2:1**, 5:1, 10:1 → **agrandissement**
-
-⚠️ **Les cotes portées sur un dessin sont TOUJOURS les cotes réelles de la pièce**, jamais les cotes
-mesurées à la règle sur le papier. L'échelle ne modifie pas les valeurs inscrites.
-
-**Formats de papier normalisés (ISO 216)** — chaque format est le double du suivant :
-
-| Format | Dimensions (mm) |
-|---|---|
-| A0 | 1189 × 841 |
-| A1 | 841 × 594 |
-| A2 | 594 × 420 |
-| A3 | 420 × 297 |
-| A4 | 297 × 210 |
-
-**Correspondance entre vues (règle de construction)** — les vues sont **alignées** :
-- vue de face et vues de gauche/droite : **même hauteur** (lignes de rappel horizontales)
-- vue de face et vues de dessus/dessous : **même largeur** (lignes de rappel verticales)
-- report entre vue de dessus et vue de gauche : par une **droite à 45°** ou un arc de cercle.
+**La règle d'or** — le FAST est le **premier** outil de l'analyse fonctionnelle où l'on a le
+droit de nommer une solution technique. Avant lui (bête à cornes, pieuvre, caractérisation),
+c'est interdit.
 """,
             "exemple": """
-**Cas industriel — Corps de palier en fonte EN-GJL-250**
+### Cas industriel — Le FAST qui rouvre une solution abandonnée
 
-La pièce est un bloc de 120 × 80 × 60 mm avec un alésage traversant Ø50 H7 pour le roulement, deux
-trous de fixation Ø11 débouchants, un lamage Ø18 profondeur 8, et une rainure de graissage.
+**La situation.** Une équipe conçoit un système de bridage. La solution retenue d'emblée est un
+**vérin pneumatique**, parce que c'est ce qui se fait toujours dans l'atelier.
 
-**Représentation retenue par le bureau d'études : 2 vues seulement.**
+**Ce que le FAST révèle.** En déroulant la fonction *maintenir la pièce pendant l'usinage*, la
+question « comment ? » donne trois branches :
 
-1. **Vue de face en coupe A-A** (plan vertical passant par l'axe de l'alésage) : elle montre d'un
-   seul coup l'alésage Ø50, sa longueur, le lamage et la rainure de graissage. Sans la coupe, il
-   aurait fallu 6 traits interrompus superposés → illisible.
-2. **Vue de dessus** : elle montre l'entraxe des deux trous de fixation et la forme extérieure de la semelle.
+| Branche | Solution technique |
+|---|---|
+| par effort continu | vérin pneumatique, vérin hydraulique |
+| par blocage mécanique | came, excentrique, genouillère |
+| par adhérence | ventouse, électro-aimant |
 
-**Décisions de dessinateur à comprendre :**
-- La **vue de gauche n'est pas dessinée** : elle n'apporterait aucune information nouvelle (la pièce
-  est symétrique). *Une vue qui n'apporte rien ne doit pas être tracée* — c'est un critère de notation.
-- Les **nervures de renfort** sous la semelle, bien que traversées par le plan de coupe, sont
-  représentées **non hachurées** lorsque la coupe est longitudinale : c'est la même logique que pour
-  les vis, éviter de faire croire à un bloc massif.
-- Un **détail B à l'échelle 5:1** est ajouté pour la gorge de dégagement de rectification en fond
-  d'alésage (largeur 2 mm, rayon 0,4) : à l'échelle 1:1 elle serait invisible.
+La branche « blocage mécanique » n'avait jamais été envisagée. Or une **genouillère** maintient
+l'effort **sans alimentation** : en cas de coupure d'air, la pièce reste bridée — ce que le vérin
+ne garantit pas.
+
+**Le résultat.** Solution retenue : genouillère à commande manuelle. Moins chère, plus sûre, et
+sans besoin de réseau pneumatique au poste.
+
+**Ce que le cas apprend.** Le FAST ne sert pas à justifier la solution qu'on a déjà en tête : il
+sert à **rendre visibles celles qu'on n'a pas envisagées**. C'est pour cela qu'il vient après la
+pieuvre, et jamais avant.
 """,
             "exercice": """
-**Exercice type examen — Chape de vérin**
+### Exercice — Dérouler un FAST
 
-On donne une pièce prismatique de base 70 × 40 × 25 mm. Elle comporte :
-- un alésage traversant **Ø20 H8** dont l'axe est horizontal, à 30 mm du fond ;
-- une **rainure en U** de largeur 22 mm et profondeur 35 mm, ouverte vers le haut, centrée ;
-- deux trous **Ø9** débouchants dans la semelle, entraxe 50 mm ;
-- un **chanfrein 2 × 45°** sur toutes les arêtes extérieures supérieures.
+Fonction de départ : **« permettre le réglage en hauteur d'un plan de travail »**.
 
-**Questions :**
-1. Justifier le choix de la vue de face.
-2. Combien de vues sont strictement nécessaires ? Lesquelles ? Justifier.
-3. Sur la vue de face, faut-il une coupe ? Si oui, où placer le plan A-A et pourquoi ?
-4. Dans cette coupe, les deux trous Ø9 de la semelle apparaissent-ils hachurés ? Justifier.
-5. Une vis CHc M8 est montée dans l'un des trous, l'ensemble étant coupé longitudinalement.
-   Comment représente-t-on la vis ? Énoncer la règle.
-6. La pièce est dessinée sur un format A3 à l'échelle 2:1. Quelle valeur inscrit-on sur la cote
-   de l'alésage, et quelle longueur mesure-t-on à la règle sur le papier ?
+**1.** Posez la question « comment ? » et proposez **trois** branches de solutions
+techniquement différentes.
+
+**2.** Pour la branche que vous jugez la plus prometteuse, descendez d'un niveau
+supplémentaire : comment cette solution se réalise-t-elle concrètement ?
+
+**3.** Depuis une de vos solutions techniques, posez la question « pourquoi ? ». Que devez-vous
+retrouver ?
+
+**4.** À quel moment de l'analyse fonctionnelle a-t-on le droit de nommer une solution
+technique ? Pourquoi pas avant ?
+
+**5.** Que signale un FAST dont toutes les branches mènent à la même technologie ?
 """,
             "corrige": """
-**1. Choix de la vue de face**
+### Corrigé, en six temps
 
-On choisit la vue qui montre le **contour caractéristique en U** et qui correspond à la **position
-d'utilisation** de la chape (rainure vers le haut, axe d'articulation horizontal). C'est la vue la
-plus « parlante » : un lecteur reconnaît immédiatement une chape.
+#### 1. Ce que dit l'énoncé
 
-**2. Nombre de vues nécessaires : 2 vues.**
+Une **fonction** correctement formulée (un verbe, aucun moyen technique). C'est la bonne entrée
+d'un FAST : on part toujours d'une fonction, jamais d'un objet.
 
-- **Vue de face (en coupe)** : donne la hauteur, la rainure en U, l'alésage Ø20 et sa position.
-- **Vue de dessus** : donne la longueur 70, la largeur 40, l'entraxe 50 des trous Ø9 et la largeur
-  22 de la rainure.
+#### 2. Quelle règle, et pourquoi
 
-La **vue de gauche est inutile** : elle ne montrerait que la largeur 40 et la hauteur, déjà données
-par les deux autres vues. *Règle : le nombre minimal de vues est celui qui permet de définir
-complètement la pièce sans redondance.*
+**Les trois questions structurent le diagramme :**
 
-**3. Plan de coupe**
+> **Comment ?** fait descendre vers les solutions (vers la droite)
+> **Pourquoi ?** fait remonter vers la fonction (vers la gauche)
+> **Quand ?** empile les fonctions simultanées (verticalement)
 
-Oui, une coupe est nécessaire : sans elle l'alésage Ø20 et les trous Ø9 apparaîtraient en traits
-interrompus, superposés aux arêtes de la rainure.
+Et la règle qui donne au FAST sa raison d'être : **c'est le premier outil où nommer une solution
+est autorisé**. Le faire plus tôt ferme les alternatives avant de les avoir vues.
 
-Le plan **A-A est vertical, longitudinal, passant par l'axe des deux trous Ø9 et par le plan de
-symétrie de la rainure**. Sa trace est portée sur la **vue de dessus**, en trait mixte à éléments
-forts, avec deux flèches indiquant le sens d'observation et deux lettres A.
+#### 3. Les conversions
 
-⚠️ Attention : ce plan **ne passe pas** par l'axe de l'alésage Ø20 (qui est horizontal et
-perpendiculaire). L'alésage Ø20 sera donc coupé **transversalement** et apparaîtra comme deux
-surfaces hachurées de part et d'autre du U.
+Aucune conversion numérique. **Le FAST est un outil de déroulement logique**, pas de calcul.
 
-**4. Les trous Ø9 dans la coupe**
+#### 4. Le remplacement
 
-**Non, ils ne sont pas hachurés — ce sont des vides.** On hachure la **matière** rencontrée par le
-plan de coupe, pas les trous. Concrètement : la semelle est hachurée, et le passage du trou Ø9
-crée une **interruption des hachures** délimitée par deux traits forts verticaux distants de 9 mm.
+fonction : *permettre le réglage en hauteur*
+→ **comment ?** → trois familles de solutions
+→ pour chacune → **comment ?** à nouveau, jusqu'à une solution réalisable
 
-*C'est l'erreur n°1 des débutants : hachurer le trou parce qu'il est « dedans ».*
+#### 5. Le calcul
 
-**5. Représentation de la vis CHc M8**
+**1.** Trois branches, techniquement distinctes :
+- **par vis** : vis sans fin, vis à billes, manivelle et écrou ;
+- **par vérin** : pneumatique, hydraulique, électrique ;
+- **par crémaillère ou indexage** : crémaillère et pignon, ou goupille dans une série de trous.
 
-**La vis est représentée NON COUPÉE**, c'est-à-dire dessinée en vue extérieure, sans hachures,
-alors même que le plan de coupe la traverse dans sa longueur.
+**2.** Branche « par vis », niveau supplémentaire : *comment obtenir le mouvement de la vis ?* →
+manivelle manuelle, ou motoréducteur avec commande au pied. *Comment guider le plateau ?* →
+colonnes télescopiques, ou glissières à galets.
 
-**Règle normalisée à citer :** *« Les pièces pleines (vis, écrous, rondelles, goupilles, clavettes,
-rivets, billes, arbres pleins) ne sont jamais coupées longitudinalement. »* Justification : ces
-éléments n'ont pas de forme intérieure à révéler ; les hachurer alourdirait le dessin sans apporter
-d'information.
+**3.** En posant « pourquoi ? » depuis une solution technique, on doit **retrouver exactement la
+fonction de départ** — ici *permettre le réglage en hauteur*. Si l'on retrouve autre chose, la
+branche a dérivé et ne répond plus au besoin : c'est le contrôle interne du FAST.
 
-En revanche, si le plan de coupe était **perpendiculaire** à l'axe de la vis, elle serait **coupée
-et hachurée** normalement (on verrait un disque). La règle ne concerne que la coupe *longitudinale*.
+**4.** Au niveau du **FAST**, et pas avant. Les outils précédents — bête à cornes, diagramme
+pieuvre, caractérisation — servent précisément à **empêcher** de choisir une solution trop tôt.
+Nommer une technologie dès la bête à cornes ferme toutes les alternatives, comme dans le cas
+industriel de la fiche 1.1.
 
-**6. Échelle 2:1**
+**5.** C'est le signe que **la solution a été choisie avant l'analyse**, et que le FAST a été
+construit pour la justifier après coup. Un FAST utile fait apparaître des branches qu'on
+n'avait pas envisagées — c'est même sa seule utilité réelle.
 
-- **Cote inscrite sur le dessin : Ø20 H8.** On inscrit **toujours la dimension réelle** de la pièce.
-  L'échelle n'affecte jamais la valeur cotée.
-- **Longueur mesurée à la règle sur le papier :**
+#### 6. La vérification
 
-$$ L_{papier} = L_{reel} \\times \\frac{2}{1} = 20 \\times 2 = \\mathbf{40\\ mm} $$
+**Le contrôle « pourquoi ? »** est le plus efficace : depuis n'importe quelle case de droite,
+remonter doit ramener à la fonction de départ. Toute branche qui ne remonte pas correctement est
+hors sujet.
 
-L'échelle **2:1** est un **agrandissement** : le dessin est deux fois plus grand que l'objet, ce qui
-se justifie ici car la pièce (70 mm) tiendrait largement sur un A3 et les détails (chanfrein 2×45°)
-gagnent en lisibilité.
-
-*Vérification de cohérence : la pièce agrandie occupe 140 × 80 mm en vue de face, plus la vue de
-dessus 140 × 50 mm. Le format A3 (420 × 297) est confortable. ✔️*
+**Le contrôle de diversité** : vos branches sont-elles réellement différentes ? « Vérin
+pneumatique » et « vérin hydraulique » sont **la même branche** vue à deux niveaux de détail —
+pas deux solutions concurrentes.
 """,
         },
         {
-            "id": "1.3",
-            "titre": "Cotation dimensionnelle et états de surface",
-            "duree": "8 h",
+            "id": '1.5',
+            "titre": 'SADT et actigramme : modéliser ce que fait le système',
+            "duree": '4 h',
             "cours": """
-### 1. Fonction de la cotation
+### Le vocabulaire, en français courant
 
-Le dessin donne la **forme**, la cotation donne les **dimensions**. Une pièce mal cotée est une
-pièce qui sera fabriquée hors service, même si le dessin est magnifique. La cotation doit être
-**complète** (toutes les dimensions nécessaires), **non redondante** (chaque dimension une seule
-fois) et **fonctionnelle** (cotée là où ça compte pour l'usage).
+| Terme | Ce que ça veut dire |
+|---|---|
+| **SADT** | une méthode de description d'un système par boîtes emboîtées |
+| **actigramme** | la boîte elle-même : une **action**, décrite par un verbe |
+| **matière d'œuvre** | ce qui entre dans le système et en ressort transformé |
+| **valeur ajoutée** | ce que le système a changé entre l'entrée et la sortie |
 
-### 2. Éléments d'une cote
+### 1. Le problème que la pieuvre ne résout pas
 
-- **Ligne de cote** : parallèle à l'élément coté, terminée par deux flèches.
-- **Lignes d'attache** : perpendiculaires, dépassant légèrement la ligne de cote, sans la toucher
-  au départ (petit espace avec le contour de la pièce).
-- **Valeur** : placée au-dessus et au milieu de la ligne de cote, lisible depuis le bas ou la droite.
+Le diagramme pieuvre (fiche 1.2) dit **à quoi sert** un produit. Il ne dit pas **ce qui se passe
+à l'intérieur** : quelle matière entre, ce qui la transforme, ce qui pilote l'opération.
 
-**Règles à respecter :**
-- Ne jamais coter sur des traits interrompus (traits cachés) : coter dans une coupe.
-- Les lignes de cote ne se croisent pas ; les plus courtes sont les plus proches de la pièce.
-- Une dimension n'apparaît **qu'une seule fois** sur l'ensemble du dessin.
+Pour un objet simple, cela suffit. Pour un **système** — une machine, un poste automatisé, un
+processus — il faut décrire le **flux** : c'est ce que fait le SADT.
 
-### 3. Symboles normalisés
+### 2. L'actigramme : une boîte, quatre familles de flèches
 
-| Symbole | Signification | Exemple |
+[[FIG:sadt_actigramme]]
+
+Une seule règle de lecture, et tout devient simple :
+
+> **La flèche qui entre à GAUCHE ressort à DROITE, transformée. Tout ce qui arrive par le HAUT
+> ou par le BAS ne se transforme pas.**
+
+| Position | Nom | Ce que c'est |
 |---|---|---|
-| **Ø** | Diamètre | Ø20 |
-| **R** | Rayon | R5 |
-| **SØ** / **SR** | Diamètre / rayon de sphère | SØ12 |
-| **□** | Carré | □25 |
-| **▽** ou ↧ | Profondeur | ↧15 |
-| **⌴** | Lamage | ⌴Ø18↧8 |
-| **⌵** | Fraisure (chanfrein conique) | ⌵Ø14×90° |
-| **×** | Nombre d'éléments identiques | 4× Ø9 |
-| **M** | Filetage métrique ISO | M8, M10×1,25 |
-| **( )** | Cote auxiliaire (informative, non contrôlée) | (95) |
+| **gauche** | entrée | la matière d'œuvre **avant** transformation |
+| **droite** | sortie | la **même** matière d'œuvre, **après** transformation |
+| **haut** | contrôles | ce qui **pilote** sans être consommé |
+| **bas** | mécanisme | ce qui **réalise** l'action (les moyens matériels) |
 
-### 4. Modes de cotation
+**Le verbe dans la boîte est toujours à l'infinitif**, comme pour une fonction.
 
-- **Cotation en série (à la chaîne)** : cotes bout à bout. ⚠️ Les tolérances **s'additionnent** :
-  trois cotes à ±0,1 donnent ±0,3 sur la longueur totale. À éviter sur les fonctions précises.
-- **Cotation en parallèle (depuis une origine commune)** : toutes les cotes partent d'une même
-  référence. Les erreurs **ne se cumulent pas**. C'est le mode à privilégier.
-- **Cotation par coordonnées (tabulée)** : un tableau X/Y/Ø, utilisé pour les tôles percées et la
-  programmation CN.
+### 3. Les contrôles : le fameux W, C, R, E
 
-### 5. Les états de surface (ISO 21920, ex-ISO 1302)
+Les quatre contrôles standards, à connaître :
 
-Une surface usinée n'est jamais parfaitement lisse : elle porte des irrégularités. On distingue les
-**écarts de forme** (ordre 1), l'**ondulation** (ordre 2) et la **rugosité** (ordres 3 et 4).
-
-**Ra — écart moyen arithmétique** : c'est le paramètre le plus utilisé, exprimé en **µm**. C'est la
-moyenne des valeurs absolues des écarts par rapport à la ligne moyenne sur la longueur d'évaluation.
-
-Le symbole de base est un « check » ; complété d'un trait horizontal il indique un **enlèvement de
-matière obligatoire** ; complété d'un cercle, un **enlèvement de matière interdit** (surface brute).
-
-**Ordres de grandeur à connaître par cœur :**
-
-| Ra (µm) | Procédé typique | Application |
+| Lettre | Signification | Exemple sur une perceuse |
 |---|---|---|
-| 12,5 – 25 | Sciage, brut de fonderie | Surfaces libres |
-| 6,3 | Fraisage / tournage d'ébauche | Faces d'appui non critiques |
-| 3,2 | Tournage de finition | Portées courantes |
-| 1,6 | Fraisage de finition, alésage | Portées de roulement, plans de joint |
-| 0,8 | Rectification | Portées de roulement précises, glissières |
-| 0,4 – 0,1 | Rectification fine, rodage | Portées hydrauliques, alésages de vérin |
-| 0,05 | Superfinition, polissage | Miroirs, portées de joint dynamique |
+| **W** | énergie (Watt) | l'alimentation électrique |
+| **C** | configuration | le choix du foret, le montage |
+| **R** | réglage | la vitesse de rotation choisie |
+| **E** | exploitation | l'ordre de marche/arrêt donné par l'opérateur |
 
-**Règle économique fondamentale : diviser Ra par 2 double approximativement le coût de la surface.**
-On ne demande donc Ra 0,4 que si la fonction l'exige réellement.
+*Le piège classique : mettre l'énergie électrique en **entrée** parce qu'« elle entre dans la
+machine ». Non — l'entrée est réservée à ce qui **ressort transformé**. L'électricité pilote,
+elle ne devient pas le produit : elle va en **haut**, en W.*
+
+### 4. La méthode, en 4 gestes numérotés
+
+**Geste 1 — Nommer la matière d'œuvre.** Qu'est-ce qui entre et ressort **modifié** ? C'est la
+question qui structure tout le reste.
+
+**Geste 2 — Écrire l'entrée et la sortie**, qui sont **le même flux à deux états**. « Pièce
+brute » → « pièce percée ». Si l'entrée et la sortie n'ont aucun rapport, l'actigramme est faux.
+
+**Geste 3 — Placer les contrôles en haut** (W, C, R, E) et les **mécanismes en bas**.
+
+**Geste 4 — Vérifier la valeur ajoutée** : la différence entre entrée et sortie doit être
+exactement ce que le système apporte.
+
+**Application immédiate.** Pour une machine à laver : entrée = *linge sale*, sortie = *linge
+propre*, contrôles = W (électricité, eau), C (programme choisi), R (température), E (marche),
+mécanisme = *le tambour, la pompe, la résistance*. La valeur ajoutée est la propreté — et rien
+d'autre.
+
+### 5. Les niveaux A-0, A0, A1
+
+Le SADT se lit **par niveaux emboîtés**, du général au détail :
+
+- **A-0** : le système entier, une seule boîte — la vue d'ensemble ;
+- **A0** : le même système décomposé en 3 à 6 boîtes ;
+- **A1, A2…** : chaque boîte d'A0 décomposée à son tour.
+
+*La règle de cohérence : les flèches qui entrent et sortent d'un niveau doivent se retrouver
+**exactement** au niveau inférieur. Aucun flux n'apparaît ni ne disparaît en descendant.*
+
+### 6. Les erreurs classiques
+
+1. **Mettre l'énergie en entrée** au lieu des contrôles : l'entrée est réservée à ce qui
+   ressort transformé.
+2. **Une sortie sans rapport avec l'entrée** : il n'y a alors pas de matière d'œuvre identifiable.
+3. **Un nom d'objet dans la boîte** au lieu d'un verbe.
+4. **Confondre contrôle et mécanisme** : le contrôle pilote, le mécanisme réalise.
+5. **Des flux qui apparaissent au niveau inférieur** sans exister au niveau supérieur.
+
+### 7. À retenir
+
+- L'actigramme décrit une **action** (verbe à l'infinitif), pas un objet.
+- **Entrée → sortie : le même flux, transformé.** C'est la matière d'œuvre.
+- **Haut = contrôles** (W, C, R, E), **bas = mécanismes**. Ni l'un ni l'autre ne se transforme.
+- L'**énergie va en haut**, jamais en entrée.
+- Les niveaux s'emboîtent : **aucun flux n'apparaît ni ne disparaît** en descendant.
 """,
             "formules": """
-**Rugosité arithmétique Ra**
+**L'actigramme** — une boîte = une action, **verbe à l'infinitif**
 
-$$ R_a = \\frac{1}{l}\\int_0^l |y(x)|\\,dx \\quad \\approx \\quad \\frac{1}{n}\\sum_{i=1}^{n}|y_i| $$
+**Les quatre positions** — **gauche** : entrée (matière d'œuvre avant) ·
+**droite** : sortie (la même, transformée) · **haut** : contrôles (pilotent, ne se transforment
+pas) · **bas** : mécanismes (réalisent)
 
-où $y$ est l'écart au profil moyen, en **µm**, sur la longueur d'évaluation $l$.
+**Les contrôles W, C, R, E** — W énergie · C configuration · R réglage · E exploitation
 
-**Rugosité totale Rz** (hauteur maximale du profil, moyenne sur 5 longueurs de base) :
+**Le test de l'entrée** — si le flux ne ressort pas transformé, ce n'est pas une entrée :
+c'est un contrôle (haut) ou un mécanisme (bas)
 
-$$ R_z = \\frac{1}{5}\\sum_{i=1}^{5}(y_{p_i} + y_{v_i}) $$
-
-Relation empirique très utile en atelier : $ R_z \\approx 4 \\; \\text{à} \\; 6 \\times R_a $
-
-**Rugosité théorique en tournage** (permet de choisir l'avance pour atteindre un Ra visé) :
-
-$$ R_a \\approx \\frac{f^2}{32 \\, r_\\varepsilon} \\times 1000 \\quad (\\mu m) $$
-
-avec $f$ l'avance par tour (mm/tr) et $r_\\varepsilon$ le rayon de bec de l'outil (mm).
-
-*Exemple : $f = 0,2$ mm/tr, $r_\\varepsilon = 0,8$ mm → $R_a \\approx \\frac{0,04}{25,6}\\times 1000 = 1,56\\ \\mu m$.*
-
-**Cumul de tolérances en cotation à la chaîne** (à connaître pour l'exercice de la fiche 2.1) :
-
-$$ IT_{total} = \\sum_{i=1}^{n} IT_i $$
+**Niveaux** — A-0 (système entier) → A0 (3 à 6 boîtes) → A1, A2… ·
+**aucun flux n'apparaît ni ne disparaît** entre deux niveaux
 """,
             "exemple": """
-**Cas industriel — Arbre de réducteur, choix des états de surface**
+### Cas industriel — L'électricité mise du mauvais côté
 
-Un arbre en C45 traité comporte 5 zones fonctionnelles distinctes. Le bureau d'études attribue à
-chacune un Ra **justifié par sa fonction**, et non « pour faire propre » :
+**Le symptôme.** Un groupe d'étudiants présente le SADT d'un poste de perçage automatisé. Le
+jury signale que l'actigramme est faux, sans que le groupe comprenne pourquoi : « toutes les
+flèches y sont ».
 
-| Zone | Fonction | Ra imposé | Justification |
+**L'analyse.** Leur actigramme A-0 comportait :
+
+| Position | Ce qu'ils avaient mis |
+|---|---|
+| entrée | pièce brute **+ énergie électrique + air comprimé** |
+| sortie | pièce percée |
+| contrôles | programme |
+| mécanismes | perceuse |
+
+Le problème : l'énergie électrique et l'air comprimé étaient placés **en entrée**. Or l'entrée est
+réservée à ce qui **ressort transformé**. L'électricité ne ressort pas : elle n'est pas la
+matière d'œuvre du système.
+
+**L'actigramme corrigé :**
+
+| Position | Contenu |
+|---|---|
+| entrée | **pièce brute** (seule) |
+| sortie | **pièce percée** |
+| contrôles | **W** (électricité, air), **C** (choix du foret), **R** (vitesse), **E** (marche) |
+| mécanismes | perceuse, montage d'usinage, opérateur |
+
+**Ce que le cas apprend.** La question qui tranche n'est pas « est-ce que ça entre dans la
+machine ? » mais **« est-ce que ça ressort transformé ? »**. Tout ce qui entre sans ressortir est
+un contrôle ou un mécanisme, jamais une entrée.
+""",
+            "exercice": """
+### Exercice — Construire un actigramme A-0
+
+Système à modéliser : un **poste de lavage de pièces** en atelier. Les pièces arrivent grasses,
+repartent propres. Le poste utilise de l'eau chaude, un détergent, de l'électricité, et il est
+piloté par un automate selon un programme sélectionné par l'opérateur.
+
+**1.** Quelle est la **matière d'œuvre** de ce système ? Justifiez.
+
+**2.** Écrivez l'entrée et la sortie. Quelle est la **valeur ajoutée** ?
+
+**3.** Classez les éléments suivants en contrôle (haut) ou mécanisme (bas) : électricité, cuve
+de lavage, programme sélectionné, pompe, opérateur, température de consigne.
+
+**4.** L'eau chaude et le détergent : entrée, contrôle ou mécanisme ? Justifiez soigneusement —
+c'est le point délicat.
+
+**5.** Quel verbe placez-vous dans la boîte ?
+""",
+            "corrige": """
+### Corrigé, en six temps
+
+#### 1. Ce que dit l'énoncé
+
+Une phrase contient toute la réponse à la question 1 : *« les pièces arrivent grasses, repartent
+propres »*. C'est la définition même d'une matière d'œuvre — **le même objet, dans deux
+états**.
+
+#### 2. Quelle règle, et pourquoi
+
+> **Est en entrée uniquement ce qui RESSORT transformé.**
+
+Tout le reste se répartit entre le **haut** (ce qui pilote) et le **bas** (ce qui réalise). Cette
+seule règle résout la totalité de l'exercice, y compris le cas piégeux de la question 4.
+
+#### 3. Les conversions
+
+Aucune conversion numérique. **Le travail est un tri** : pour chaque élément, se demander s'il
+ressort transformé, s'il pilote, ou s'il réalise.
+
+#### 4. Le remplacement
+
+Pour chaque élément, la question : *ressort-il transformé ?*
+
+- pièce → **oui** → entrée/sortie
+- électricité, programme, température → **non**, ils pilotent → **contrôles**
+- cuve, pompe, opérateur → **non**, ils réalisent → **mécanismes**
+
+#### 5. Le calcul
+
+**1.** La matière d'œuvre est **la pièce**. C'est le seul élément qui entre dans le système et en
+ressort **modifié** — les autres entrent sans en ressortir, ou ne font que le piloter.
+
+**2.** entrée = **pièce grasse** · sortie = **pièce propre**. La **valeur ajoutée** est la
+**propreté** : c'est exactement la différence entre les deux états, et rien d'autre.
+
+**3.** Classement :
+
+| Élément | Position | Pourquoi |
+|---|---|---|
+| électricité | **contrôle (W)** | pilote, ne ressort pas transformée |
+| cuve de lavage | **mécanisme** | réalise physiquement l'action |
+| programme sélectionné | **contrôle (C)** | configure |
+| pompe | **mécanisme** | réalise |
+| opérateur | **mécanisme** | réalise (il met en œuvre) |
+| température de consigne | **contrôle (R)** | règle |
+
+**4.** L'eau chaude et le détergent sont des **contrôles** (famille W, les énergies et
+consommables). Le raisonnement : ils entrent dans le système, mais **ils n'en ressortent pas
+transformés en produit fini** — la pièce, elle, en ressort. Ils sont consommés pour permettre la
+transformation, ils n'en sont pas l'objet.
+
+*C'est le point où la plupart des erreurs se produisent, exactement comme dans le cas industriel
+de cette fiche : « ça entre dans la machine » n'est pas le critère.*
+
+**5.** Un **verbe à l'infinitif** décrivant l'action : **« Laver »** (ou « nettoyer des pièces
+mécaniques »). Jamais un nom d'objet comme « poste de lavage » — ce serait décrire le mécanisme,
+pas l'action.
+
+#### 6. La vérification
+
+**Le test de la valeur ajoutée** : la différence entre l'entrée et la sortie est-elle exactement
+ce que le système apporte ? Ici, grasse → propre. Si l'entrée et la sortie n'avaient aucun
+rapport, l'actigramme serait faux.
+
+**Le test du haut et du bas** : aucun élément placé en haut ou en bas ne doit apparaître dans la
+sortie. Si le détergent ressortait en sortie, il faudrait le traiter en matière d'œuvre — ce
+qui serait le cas, par exemple, pour un système de **recyclage** de détergent.
+""",
+        },
+        {
+            "id": '1.6',
+            "titre": 'Le cahier des charges fonctionnel complet',
+            "duree": '4 h',
+            "cours": """### 1. Le cahier des charges fonctionnel
+
+Le CdCF rassemble tout, et il est **contractuel** :
+
+| Partie | Contenu |
+|---|---|
+| contexte et besoin | issus de la bête à cornes |
+| liste des FP et FC | issues de la pieuvre |
+| pour chaque fonction | critère, niveau, flexibilité |
+| contraintes générales | délai, coût objectif, normes |
+| conditions de recette | qui vérifie, comment, avec quel moyen |
+
+**La dernière ligne est celle qu'on oublie le plus.** Une exigence sans **méthode de mesure** est
+une source de litige : « moins de 65 dB » — mesurés à quelle distance, à quelle vitesse, avec quel
+appareil ?
+
+
+### 2. La structure complète d'un CDCF
+
+| Partie | Contenu | Pourquoi elle existe |
+|---|---|---|
+| 1. Présentation | contexte, enjeux, périmètre | situer le projet pour qui découvre le dossier |
+| 2. Expression du besoin | la **bête à cornes** (fiche 1.1) | dire à quoi sert le produit |
+| 3. Milieu extérieur | le **diagramme pieuvre** (fiche 1.2) | montrer que rien n'a été oublié |
+| 4. **Fonctions caractérisées** | le tableau critère / niveau / flexibilité | **la partie contractuelle** |
+| 5. Hiérarchisation | les pourcentages du tri croisé (fiche 1.3) | permettre les arbitrages |
+| 6. Contraintes de réalisation | budget, délai, normes applicables | cadrer sans imposer de solution |
+| 7. Modalités de validation | comment chaque fonction sera **vérifiée** | rendre la recette possible |
+
+**La partie 4 est le cœur du document.** Les autres l'expliquent ou l'encadrent ; c'est elle qui
+engage les deux parties.
+
+### 3. La règle qui distingue un vrai CDCF
+
+> **Un CDCF décrit ce que le produit doit FAIRE, jamais ce qu'il doit ÊTRE.**
+
+Dès qu'une ligne impose une technologie, une matière ou une forme, elle sort du cahier des
+charges fonctionnel — sauf si c'est une contrainte réellement subie (une norme, une interface
+avec de l'existant), et il faut alors le justifier explicitement.
+
+**Le test, en une question :** *cette ligne laisse-t-elle au moins deux solutions possibles ?*
+Si non, c'est une solution déguisée en exigence.
+
+### 4. La partie oubliée : les modalités de validation
+
+C'est la partie que presque personne n'écrit, et celle qui évite les litiges. Pour **chaque**
+fonction caractérisée, elle précise :
+
+- **comment** on mesure (moyen d'essai, méthode) ;
+- **qui** mesure (le fournisseur, le client, un tiers) ;
+- **quand** (à la conception, à la recette, en série).
+
+*Sans elle, deux personnes de bonne foi peuvent lire le même niveau chiffré et ne pas être
+d'accord sur le résultat — parce qu'elles ne mesurent pas de la même façon.*
+
+
+### 5. Les erreurs classiques
+
+1. **Écrire une solution à la place d'une fonction.** Dès qu'un nom de composant apparaît dans le
+   cahier des charges, c'est perdu.
+2. **Oublier de chiffrer.** « Léger », « silencieux », « robuste » ne veulent rien dire.
+3. **Confondre FP et FC** : une fonction qui ne relie le produit qu'à un seul EME est forcément
+   une contrainte.
+4. **Se tromper d'utilisateur** : le service est rendu à celui qui a le problème et qui paie.
+5. **Oublier la méthode de mesure** : l'exigence devient invérifiable, donc source de litige.
+6. **Sauter la phase d'analyse** pour ouvrir la CAO : c'est l'erreur du cas de la fiche 9.1, qui
+   coûte cinq semaines de projet.
+7. **Ne pas classer les flexibilités** : impossible de négocier quand le projet dérape.
+
+
+### 6. À retenir
+
+- On écrit ce que le produit doit **faire**, jamais **comment** il le fera.
+- Une fonction = **verbe à l'infinitif + complément**, sans aucun composant.
+- **Bête à cornes** : à qui, sur quoi, dans quel but. Le service va à celui qui a le problème.
+- **Pieuvre** : FP relie **deux** EME à travers le produit, FC en relie **un seul**.
+- Chaque fonction : **critère, niveau chiffré, flexibilité F0 à F3**.
+- **FAST** : pourquoi à gauche, comment à droite — le composant n'apparaît qu'à la fin.
+- Le CdCF est **contractuel**, et c'est lui qui servira à valider le produit.
+""",
+            "formules": """
+**Les 7 parties d'un CDCF** — présentation · besoin (bête à cornes) · milieu extérieur
+(pieuvre) · **fonctions caractérisées** (partie contractuelle) · hiérarchisation ·
+contraintes de réalisation · **modalités de validation**
+
+**La règle** — un CDCF dit ce que le produit doit **FAIRE**, jamais ce qu'il doit **ÊTRE**
+
+**Le test d'une ligne** — laisse-t-elle au moins deux solutions possibles ?
+sinon, c'est une solution déguisée
+
+**Chaque fonction** — critère + niveau chiffré + flexibilité (F0 à F3) + **modalité de
+vérification**
+""",
+            "exemple": """
+### Cas industriel — Le cahier des charges qui imposait la solution
+
+**Le symptôme.** Un donneur d'ordre lance une consultation. Sur cinq fournisseurs, quatre
+répondent des prix très proches ; le cinquième propose une solution 40 % moins chère, mais est
+écarté comme « non conforme ».
+
+**L'analyse du cahier des charges.** Il contenait notamment :
+
+> *Le système comportera un vérin pneumatique double effet de diamètre 63 mm.*
+
+Ce n'est pas une fonction, c'est une **solution**. La formulation fonctionnelle aurait été :
+
+> *Exercer un effort de bridage de 1 800 N ± 100 N, débrayable en moins de 2 s.*
+
+Le cinquième fournisseur proposait une **genouillère mécanique** qui remplissait exactement cette
+fonction, sans réseau d'air comprimé — d'où l'écart de prix.
+
+**Ce qui s'est réellement passé.** Le cahier des charges avait figé une solution avant la
+consultation. Les quatre premiers fournisseurs ont donc tous chiffré **le même produit**, ce qui
+explique la proximité de leurs prix : la consultation ne comparait rien.
+
+**Ce que le cas apprend.** Un CDCF qui impose une technologie **supprime la concurrence sur
+laquelle il prétend s'appuyer**. Le test est simple : si toutes les offres se ressemblent, c'est
+souvent que le cahier des charges avait déjà choisi.
+""",
+            "exercice": """
+### Exercice — Auditer un cahier des charges
+
+Voici quatre lignes extraites d'un CDCF de support d'écran :
+
+- **L1** — Le support sera réalisé en profilé aluminium 40 × 40.
+- **L2** — Le support doit être facile à installer.
+- **L3** — Le support doit supporter un écran de 8 kg maximum, avec une flèche ≤ 1,5 mm.
+- **L4** — Le support doit résister à un environnement d'atelier.
+
+**1.** Pour chaque ligne, dites si elle est **acceptable**, et pourquoi.
+
+**2.** Reformulez L1 en langage fonctionnel.
+
+**3.** Complétez L2 et L4 avec un critère, un niveau et une flexibilité.
+
+**4.** L3 est la seule correctement rédigée. Que lui manque-t-il malgré tout pour être
+pleinement contractuelle ?
+
+**5.** Dans quelle partie du CDCF chacune de ces lignes doit-elle figurer ?
+""",
+            "corrige": """
+### Corrigé, en six temps
+
+#### 1. Ce que dit l'énoncé
+
+Quatre lignes de **qualités très différentes** : une solution déguisée, deux exigences non
+mesurables, et une exigence correcte. C'est un échantillon représentatif d'un cahier des charges
+réel avant relecture.
+
+#### 2. Quelle règle, et pourquoi
+
+**Deux tests, appliqués à chaque ligne :**
+
+> **Test 1 — Dit-elle ce que le produit doit FAIRE, ou ce qu'il doit ÊTRE ?**
+> **Test 2 — Est-elle mesurable ?** (critère + niveau chiffré)
+
+Une ligne qui échoue au test 1 ferme la concurrence ; une ligne qui échoue au test 2 n'est pas
+opposable le jour de la recette.
+
+#### 3. Les conversions
+
+Aucune conversion numérique. **Le travail est une requalification** : transformer une solution ou
+un souhait en exigence mesurable.
+
+#### 4. Le remplacement
+
+| Ligne | Test 1 (faire/être) | Test 2 (mesurable) |
+|---|---|---|
+| L1 | **échec** — impose une solution | — |
+| L2 | ok | **échec** — « facile » ne se mesure pas |
+| L3 | ok | **ok** |
+| L4 | ok | **échec** — « résister » sans niveau |
+
+#### 5. Le calcul
+
+**1.** **L1 inacceptable** : elle impose une solution technique (profilé aluminium 40×40), ce qui
+exclut toute autre réponse. **L2 inacceptable** : « facile » n'est pas mesurable. **L3
+acceptable** : critère (masse, flèche) et niveaux chiffrés. **L4 inacceptable** : « résister » à
+quoi, mesuré comment ?
+
+**2.** Reformulation de L1 : **« supporter la charge définie en L3 en se fixant sur une structure
+existante de type profilé ou mur »**. On exprime la fonction et l'interface, sans imposer la
+matière ni la section — ce qui rouvre la concurrence.
+
+**3.** Compléments :
+- **L2** → critère : *temps d'installation par une personne seule* · niveau : **≤ 15 min, sans
+  outil spécifique** · flexibilité : **F2** ;
+- **L4** → critère : *indice de protection contre poussière et projections* · niveau : **IP54**
+  · flexibilité : **F1**.
+
+**4.** Il manque à L3 sa **modalité de validation** : comment la flèche de 1,5 mm sera-t-elle
+mesurée, par qui, et à quel moment ? Sans cela, deux personnes de bonne foi peuvent mesurer
+différemment et aboutir à des verdicts opposés — c'est précisément ce qui déclenche les litiges
+de recette.
+
+**5.** L1 reformulée et L3 vont en **partie 4 (fonctions caractérisées)**, la partie
+contractuelle. L2 et L4 complétées y vont également, puisque ce sont des fonctions contraintes
+chiffrées. Une éventuelle exigence de norme ou de budget irait en **partie 6 (contraintes de
+réalisation)**.
+
+#### 6. La vérification
+
+**Le test des deux solutions** : relisez chaque ligne finale et demandez-vous si **au moins deux
+réponses techniques différentes** restent possibles. Si une seule subsiste, la solution est
+encore cachée dans l'énoncé.
+
+**Le test de la recette** : pour chaque ligne, pouvez-vous décrire **l'essai** qui dira oui ou
+non ? Si vous ne le pouvez pas, la ligne n'est pas contractuelle — quelle que soit sa
+formulation.
+""",
+        },
+        {
+            "id": '1.7',
+            "titre": "L'AMDEC : anticiper les défaillances",
+            "duree": '5 h',
+            "cours": """
+### Le vocabulaire, en français courant
+
+| Terme | Ce que ça veut dire |
+|---|---|
+| **AMDEC** | Analyse des Modes de Défaillance, de leurs Effets et de leur Criticité |
+| **mode de défaillance** | **comment** la pièce cesse de remplir sa fonction (elle casse, elle grippe, elle fuit) |
+| **cause** | **pourquoi** cela se produit |
+| **effet** | ce que l'**utilisateur** constate |
+| **criticité** | un nombre qui classe les risques entre eux, pour savoir par où commencer |
+
+### 1. Le principe : chercher les pannes avant qu'elles arrivent
+
+L'analyse fonctionnelle dit ce que le produit **doit faire**. L'AMDEC pose la question inverse,
+systématiquement : **et si ça ne le faisait pas ?**
+
+> On ne cherche pas à imaginer toutes les catastrophes possibles : on **passe en revue chaque
+> fonction**, et pour chacune on se demande comment elle peut ne plus être remplie.
+
+*C'est ce qui distingue l'AMDEC d'une simple discussion sur les risques : elle est **exhaustive
+par construction**, parce qu'elle part de la liste des fonctions déjà établie (fiche 1.2).*
+
+### 2. Distinguer mode, cause et effet
+
+C'est la difficulté principale, et la source de la plupart des AMDEC mal faites.
+
+| | Question | Exemple sur un palier |
+|---|---|---|
+| **mode** | comment la fonction cesse d'être remplie ? | le palier **grippe** |
+| **cause** | pourquoi ? | défaut de lubrification |
+| **effet** | que constate l'utilisateur ? | la machine s'arrête |
+
+**Le test qui les sépare :** le **mode** se constate sur la **pièce**, l'**effet** se constate
+sur le **système**, la **cause** est ce qu'on devra corriger.
+
+*Une même cause peut produire plusieurs modes, et un même mode plusieurs effets — d'où
+l'importance de les séparer proprement dans le tableau.*
+
+### 3. La criticité : C = G × O × D
+
+[[FIG:grille_amdec]]
+
+Trois notes, généralement de 1 à 10 :
+
+| Note | Question | 1 signifie | 10 signifie |
 |---|---|---|---|
-| Portée de roulement Ø35 k6 | Reçoit la bague intérieure serrée | **0,8** | Un état grossier écraserait les aspérités au montage → perte de serrage → bague tournante. |
-| Portée de joint à lèvre Ø30 | Étanchéité dynamique | **0,4** (sans stries hélicoïdales) | Une rugosité trop forte use la lèvre ; trop faible, elle empêche le film d'huile. Zone rectifiée en plongée, jamais en tournage hélicoïdal. |
-| Rainure de clavette | Transmission de couple | **3,2** | Contact statique par flancs : la rugosité n'a aucun rôle. Exiger mieux serait du gaspillage. |
-| Épaulement d'appui | Butée axiale de la bague | **1,6** + perpendicularité | Un appui rugueux se tasse et laisse l'arbre prendre du jeu axial. |
-| Corps entre portées | Aucune | **6,3** ou brut | Zone non fonctionnelle : on laisse le tournage d'ébauche. |
+| **G** — Gravité | quelles conséquences pour l'utilisateur ? | sans effet perceptible | danger pour les personnes |
+| **O** — Occurrence | à quelle fréquence ? | quasi impossible | permanent |
+| **D** — Détection | la verra-t-on venir ? | évident immédiatement | **invisible avant la panne** |
 
-**Chiffrage de la décision :** passer toutes les surfaces en Ra 0,4 « par sécurité » aurait multiplié
-le temps de rectification par 3 et le coût pièce de 28 € à environ 70 €, pour aucun gain fonctionnel.
+> **C = G × O × D**
+
+**Le point contre-intuitif, et le plus important de la fiche :** pour D, **une note élevée est
+mauvaise**. Une défaillance qu'on ne peut pas détecter est bien plus dangereuse qu'une
+défaillance visible, même grave — parce qu'on ne peut rien faire avant qu'elle survienne.
+
+**Au-delà d'un seuil fixé à l'avance** (souvent 40 à 100 selon les entreprises), une **action
+corrective est obligatoire**.
+
+### 4. Agir sur le bon facteur
+
+C'est là que l'AMDEC devient utile, et pas seulement descriptive. Pour faire baisser C, on peut
+agir sur les trois facteurs — mais pas avec la même efficacité :
+
+| Agir sur | Comment | Remarque |
+|---|---|---|
+| **O** (occurrence) | redimensionner, changer de matériau, fiabiliser | **le plus efficace** : on supprime la cause |
+| **D** (détection) | ajouter un capteur, un contrôle, une inspection | on ne supprime pas la panne, on la voit venir |
+| **G** (gravité) | prévoir une sécurité, un mode dégradé | souvent le plus difficile |
+
+**Application immédiate.** Une clavette sous-dimensionnée : G = 5, O = 3, D = 4 → C = **60**,
+au-dessus du seuil. En recalculant la clavette (ou en passant à des cannelures), on réduit
+l'occurrence à O = 1 : C tombe à **20**. En ajoutant seulement un capteur de vitesse, on aurait
+réduit D à 2, soit C = 30 — mieux, mais la panne serait toujours là.
+
+### 5. Les trois types d'AMDEC
+
+- **AMDEC produit** : les défaillances du produit lui-même, en conception ;
+- **AMDEC processus** : les défaillances de la fabrication (une cote non tenue, un montage
+  inversé) ;
+- **AMDEC moyen** : les pannes de la machine de production elle-même.
+
+*En BTS CPI, c'est l'AMDEC **produit** qui est attendue le plus souvent, en fin de conception.*
+
+### 6. Les erreurs classiques
+
+1. **Confondre mode, cause et effet** — l'erreur la plus fréquente, qui rend le tableau
+   inexploitable.
+2. **Noter D à l'envers** : croire qu'une détection facile mérite une note élevée.
+3. **Faire une AMDEC sans partir des fonctions** : on oublie alors des pans entiers.
+4. **Calculer les criticités sans jamais définir de seuil** : aucune action n'en découle.
+5. **Agir uniquement sur la détection**, ce qui laisse la défaillance en place.
+
+### 7. À retenir
+
+- L'AMDEC part des **fonctions** et demande, pour chacune : *et si elle n'était plus remplie ?*
+- **Mode** = comment (sur la pièce) · **cause** = pourquoi · **effet** = ce que voit
+  l'utilisateur.
+- **C = G × O × D**, et pour **D une note élevée est mauvaise** : la panne est invisible.
+- Au-delà du **seuil**, une action est obligatoire.
+- Agir sur **O** supprime la cause ; agir sur **D** ne fait que la rendre visible.
+""",
+            "formules": """
+**Criticité** — **C = G × O × D**
+
+**G — Gravité** — conséquences pour l'utilisateur (1 = sans effet · 10 = danger)
+**O — Occurrence** — fréquence (1 = quasi impossible · 10 = permanent)
+**D — Détection** — **1 = on le voit tout de suite · 10 = invisible avant la panne**
+(attention : note élevée = mauvais)
+
+**Seuil d'action** — fixé à l'avance, souvent 40 à 100 : au-delà, action corrective obligatoire
+
+**Efficacité des actions** — agir sur **O** supprime la cause (le plus efficace) ·
+agir sur **D** rend la panne visible sans la supprimer · agir sur **G** limite les conséquences
+
+**Colonnes du tableau** — fonction · mode · cause · effet · G · O · D · C · action · responsable
+""",
+            "exemple": """
+### Cas industriel — La panne invisible qui coûtait le plus cher
+
+**Le contexte.** Une AMDEC est menée sur un réducteur avant industrialisation. Deux défaillances
+ressortent :
+
+| Défaillance | G | O | D | C |
+|---|---|---|---|---|
+| Rupture d'un arbre de sortie | **8** | 2 | 2 | **32** |
+| Perte progressive de lubrifiant par un joint | 4 | 4 | **7** | **112** |
+
+**Le résultat qui surprend l'équipe.** La rupture d'arbre est bien plus **grave** (G = 8 contre
+4), et c'est spontanément ce qui inquiétait tout le monde. Pourtant sa criticité est **trois fois
+plus faible**.
+
+**Pourquoi.** La rupture d'arbre est rare (O = 2) et immédiatement visible (D = 2). La fuite de
+lubrifiant, elle, est plus fréquente et surtout **presque indétectable** (D = 7) : le niveau
+baisse lentement, personne ne s'en aperçoit, et le réducteur finit par gripper — entraînant à
+terme les mêmes dégâts, mais sans aucun signe avant-coureur.
+
+**L'action retenue.** Un **hublot de niveau** sur le carter, visible depuis l'allée de
+circulation. D passe de 7 à 2, et la criticité tombe à **32**.
+
+**Ce que le cas apprend.** L'intuition classe les risques par **gravité**. L'AMDEC les classe par
+**criticité** — et c'est souvent la panne discrète, pas la spectaculaire, qui mérite l'action.
+C'est exactement ce que le facteur D sert à révéler.
 """,
             "exercice": """
-**Exercice type examen — Cotation d'une entretoise et cumul de tolérances**
+### Exercice — Mener une AMDEC produit
 
-Une entretoise cylindrique doit positionner axialement une bague entre deux épaulements. Le
-dessinateur a coté **à la chaîne** trois longueurs successives : $L_1 = 20 \\pm 0,1$,
-$L_2 = 35 \\pm 0,15$, $L_3 = 15 \\pm 0,1$ (en mm).
+Un support d'écran d'atelier assure deux fonctions : **FP1** maintenir l'écran à hauteur de
+lecture · **FC2** se fixer sur la structure existante.
 
-Le cahier des charges impose que la **longueur totale** soit comprise entre **69,8 et 70,2 mm**.
+Deux défaillances sont envisagées :
 
-**Questions :**
-1. Calculer la longueur totale nominale.
-2. Calculer l'intervalle de tolérance résultant sur la longueur totale.
-3. La condition du cahier des charges est-elle respectée ? Conclure.
-4. Proposer une correction en modifiant le **mode de cotation**, sans resserrer les tolérances
-   d'usinage. Calculer le nouveau résultat.
-5. La surface d'appui de l'entretoise doit assurer une portée plane sans matage. Choisir un Ra et
-   le procédé associé, en justifiant. Que se passerait-il avec Ra 12,5 ?
+- **A** — desserrage progressif des vis de fixation (G = 6, O = 4, D = 6)
+- **B** — rupture brutale du bras support (G = 8, O = 1, D = 2)
+
+Le seuil d'action est fixé à **60**.
+
+**1.** Pour la défaillance A, identifiez le **mode**, une **cause** plausible et l'**effet**
+constaté par l'utilisateur.
+
+**2.** Calculez la criticité de A et de B.
+
+**3.** Laquelle exige une action ? Le résultat correspond-il à votre intuition ? Commentez.
+
+**4.** Proposez une action agissant sur **O**, puis une action agissant sur **D**. Recalculez la
+criticité dans chaque cas.
+
+**5.** Laquelle des deux actions retenez-vous, et pourquoi ?
 """,
             "corrige": """
-**1. Longueur totale nominale**
+### Corrigé, en six temps
 
-$$ L_{tot} = L_1 + L_2 + L_3 = 20 + 35 + 15 = \\mathbf{70\\ mm} $$
+#### 1. Ce que dit l'énoncé
 
-**2. Intervalle de tolérance résultant**
+Deux défaillances aux profils **opposés** : l'une peu grave mais fréquente et discrète, l'autre
+très grave mais rare et visible. C'est exactement la configuration où l'intuition et le calcul
+divergent.
 
-En cotation **à la chaîne**, les tolérances **s'additionnent** (cas le plus défavorable) :
+#### 2. Quelle règle, et pourquoi
 
-$$ IT_{tot} = IT_1 + IT_2 + IT_3 = 0,2 + 0,3 + 0,2 = \\mathbf{0,7\\ mm} $$
+> **C = G × O × D**, et au-delà du seuil, une action est obligatoire.
 
-Soit une longueur totale comprise entre :
+Le point qui fait tout : **D élevé est mauvais**. Une défaillance invisible ne laisse aucune
+chance d'intervenir avant qu'elle ne survienne, ce qui la rend plus critique qu'une défaillance
+annoncée.
 
-$$ L_{min} = 19,9 + 34,85 + 14,9 = 69,65\\ mm $$
-$$ L_{max} = 20,1 + 35,15 + 15,1 = 70,35\\ mm $$
+#### 3. Les conversions
 
-Résultat : $ L_{tot} = 70 \\pm 0,35 $ mm.
+Aucune conversion d'unité — les trois notes sont sans dimension, et leur produit aussi. **La
+criticité n'a pas d'unité : c'est un classement, pas une mesure physique.**
 
-**3. Conformité**
+#### 4. Le remplacement
 
-Le cahier des charges demande $70 \\pm 0,2$ mm, soit un IT de **0,4 mm**.
-On obtient **0,7 mm**.
+C(A) = 6 × 4 × 6
+C(B) = 8 × 1 × 2
 
-$$ 0,7 > 0,4 \\;\\Rightarrow\\; \\textbf{condition NON respectée} $$
+action sur O : O passe de 4 à 1 → C = 6 × 1 × 6
+action sur D : D passe de 6 à 2 → C = 6 × 4 × 2
 
-Concrètement, une pièce peut sortir à 69,65 mm : la bague aurait alors **0,15 mm de jeu axial**
-non prévu, ce qui génère du bruit, des chocs et une usure accélérée. **La cotation est à refaire.**
+#### 5. Le calcul
 
-**4. Correction par changement de mode de cotation**
+**1.** Pour la défaillance A :
+- **mode** : les vis se **desserrent** (constaté sur la pièce) ;
+- **cause** : absence de freinage et vibrations de l'atelier, ou couple de serrage non contrôlé
+  (fiche 6.9) ;
+- **effet** : l'écran **descend progressivement** puis tombe — c'est ce que constate
+  l'utilisateur.
 
-On passe en **cotation en parallèle** (depuis une origine commune) : on cote directement la
-longueur totale **et** deux positions intermédiaires depuis la même face de référence.
+**2.** C(A) = 6 × 4 × 6 = **144** · C(B) = 8 × 1 × 2 = **16**
 
-Nouvelle cotation proposée :
-- Cote **directe** de la longueur totale : $ 70 \\pm 0,2 $ *(cote fonctionnelle, celle du CdC)*
-- Position 1 depuis la référence : $ 20 \\pm 0,1 $
-- Position 2 depuis la référence : $ 55 \\pm 0,15 $
-- La cote $L_3$ devient **auxiliaire**, écrite entre parenthèses : **(15)** — informative, non contrôlée.
+**3.** **A exige une action** (144 > 60), **B non** (16 < 60). Le résultat est
+contre-intuitif : B est bien plus **grave** (G = 8 contre 6), et c'est spontanément elle qui
+inquiète. Mais elle est rare et immédiatement visible, alors que A est fréquente et **discrète**
+— le desserrage est progressif, personne ne le remarque avant la chute.
 
-Résultat :
+**4.** Deux actions possibles sur A :
+- **agir sur O** : frein filet ou rondelles élastiques + serrage au couple contrôlé → O passe de
+  4 à 1 → C = 6 × 1 × 6 = **36** ;
+- **agir sur D** : repère visuel de desserrage sur chaque vis, ou inspection périodique
+  planifiée → D passe de 6 à 2 → C = 6 × 4 × 2 = **48**.
 
-$$ IT_{tot} = \\mathbf{0,2\\ mm \\; (\\pm 0,2)} \\;\\le\\; 0,4\\ mm \\;\\Rightarrow\\; \\textbf{condition respectée} $$
+**5.** L'action sur **O** (C = 36, contre 48). Deux raisons, et la seconde compte plus que le
+chiffre :
+- elle donne la criticité la plus basse ;
+- surtout, elle **supprime la cause** au lieu de rendre la panne visible. Agir sur D laisserait
+  les vis se desserrer, en comptant sur quelqu'un pour le remarquer à temps.
 
-**Le point clé à retenir :** on n'a **pas** resserré les tolérances d'usinage (donc **pas augmenté
-le coût**). On a simplement **coté la dimension qui compte fonctionnellement**, au lieu de la
-laisser résulter d'une chaîne. C'est le principe de la **cotation fonctionnelle** : *on cote la
-condition, pas le chemin.*
+#### 6. La vérification
 
-**5. État de surface de la portée d'appui**
+**Contrôle du seuil** : les deux actions ramènent A sous 60. Si aucune n'y parvenait, il faudrait
+les **combiner** — frein filet **et** repère visuel — jusqu'à passer sous le seuil.
 
-**Choix : Ra 1,6 µm, obtenu par tournage de finition** (ou dressage de finition en une passe fine).
-
-*Justification :* la portée transmet un **effort de serrage axial** sur une petite surface annulaire.
-Un Ra 1,6 garantit un contact réparti sur une proportion suffisante de la surface apparente.
-Descendre à Ra 0,8 (rectification) n'apporterait rien : le contact est **statique**, il n'y a ni
-glissement, ni étanchéité, ni frottement à maîtriser. Ce serait un surcoût injustifié.
-
-*Conséquence de Ra 12,5 :* les aspérités du profil ont une hauteur de l'ordre de
-$R_z \\approx 5 \\times R_a = 62\\ \\mu m$. Le contact réel ne se ferait que sur les **sommets des
-aspérités**, soit une fraction de la surface prévue. Sous l'effort de serrage, la pression locale
-dépasserait la limite élastique du matériau : les sommets **s'écraseraient (matage)**. L'entretoise
-se raccourcirait de plusieurs centièmes après quelques cycles, le serrage se relâcherait, et le
-jeu axial réapparaîtrait — exactement le défaut que la question 4 cherchait à supprimer.
+**Contrôle de cohérence des notes** : G ne change jamais avec ces actions, et c'est normal — la
+gravité de la chute d'un écran reste la même, qu'on la détecte ou non. **Si votre correction fait
+varier G, c'est que vous avez changé de défaillance**, pas traité celle-ci.
 """,
         },
     ],
 }
-
 
 BLOC_2 = {
     "id": "bloc2",
@@ -14793,442 +15752,13 @@ FICHES = {}
 # FICHE 1.1 — ANALYSE DU BESOIN ET CAHIER DES CHARGES FONCTIONNEL
 # ===========================================================================
 
-FICHES["1.1"] = {"cours": """
-### 1. Une histoire vraie, pour commencer
-
-Un client téléphone à un bureau d'études et dit :
-
-> « J'ai besoin d'une équerre en inox de 100 × 60, avec deux trous taraudés M6. »
-
-Le dessinateur débutant ouvre SolidWorks et dessine l'équerre. Trois semaines plus tard,
-la pièce est fabriquée, livrée… et le client rappelle : **ça ne marche pas.**
-
-Que s'est-il passé ? Le client n'avait pas besoin d'une équerre. Il avait besoin de
-**tenir un capteur en face des bouteilles qui défilent sur sa ligne d'embouteillage**.
-L'équerre, c'était *sa* solution à lui — une idée qu'il avait eue, pas un besoin.
-Et sa solution était mauvaise : à cet endroit, la ligne vibre, et l'équerre a bougé.
-
-Si le dessinateur avait posé une seule question — « pour faire quoi ? » — il aurait
-proposé un support avec un réglage et un contre-écrou, et le problème aurait été réglé.
-
-**Toute la première partie de l'année de BTS CPI sert à ne plus jamais faire cette erreur.**
-
-### 2. La distinction qui commande tout le reste
-
-Il faut apprendre à séparer deux choses que tout le monde confond :
-
-| On exprime… | Exemple | Comment ça s'appelle |
-|---|---|---|
-| ce que le produit doit **faire** | « maintenir la pièce pendant l'usinage » | une **fonction** — le *quoi* |
-| **comment** il le fait | « avec un vérin pneumatique Ø32 » | une **solution technique** — le *comment* |
-
-Une fonction s'écrit toujours de la même façon : **un verbe à l'infinitif + un complément**.
-Aucun nom de composant, aucune marque, aucun matériau.
-
-- Correct : « transmettre un couple de 12 N·m entre le moteur et le réducteur »
-- Incorrect : « utiliser une clavette parallèle 8 × 7 » — ça, c'est déjà une solution
-
-**Pourquoi c'est si important ?** Parce qu'en écrivant la solution dans le cahier des charges,
-on s'interdit d'en trouver une meilleure. « Transmettre un couple » laisse la porte ouverte à
-la clavette, aux cannelures, au frettage, à la goupille. « Utiliser une clavette » ferme
-la porte avant même d'avoir cherché.
-
-On dit qu'un cahier des charges bien écrit est **neutre technologiquement**.
-
-### 3. La bête à cornes : cadrer le besoin en trois questions
-
-C'est le premier outil, et le plus simple. Trois questions, dans cet ordre :
-
-[[FIG:bete_a_cornes]]
-
-La réponse à la troisième question — le but — s'appelle la **fonction globale** du produit.
-C'est la phrase qu'on écrira tout en haut du cahier des charges.
-
-Attention à un piège classique : **le service est rendu à celui qui a le problème**, pas
-forcément à celui qui subit l'action. Pour un distributeur de croquettes, le produit rend
-service **au propriétaire** (c'est lui qui part en week-end et qui achète l'appareil), pas
-au chat. Le chat, lui, n'est même pas au courant.
-
-**Valider le besoin — trois questions à connaître par cœur pour l'examen :**
-
-1. *Pourquoi ce besoin existe-t-il ?* → sa cause
-2. *Qu'est-ce qui pourrait le faire disparaître ?* → sa fin de vie
-3. *Ce risque est-il probable ?* → sa robustesse
-
-Exemple : le besoin d'un support de tablette dans un atelier disparaîtrait si l'entreprise
-passait au plan papier ou aux lunettes connectées. Est-ce probable à court terme ? Non.
-Le besoin est donc robuste, le projet a un sens.
-
-### 4. Le diagramme pieuvre : trouver TOUTES les fonctions
-
-La bête à cornes donne une seule fonction, la principale. Or un produit doit satisfaire bien
-d'autres exigences : tenir dans un espace donné, résister à l'huile, respecter un budget,
-être conforme à une norme…
-
-On dessine donc le produit au centre, et tout ce qui l'entoure autour. Ces éléments
-s'appellent les **éléments du milieu extérieur**, ou EME.
-
-[[FIG:diagramme_pieuvre]]
-
-Deux types de liaisons, et la différence tombe à tous les contrôles :
-
-- **Fonction principale (FP)** : elle relie **deux** EME **en traversant** le produit.
-  C'est la raison d'être du produit. *« Permettre à l'opérateur de serrer la pièce »* relie
-  l'opérateur et la pièce : sans le produit, le lien n'existe pas.
-- **Fonction contrainte (FC)** : elle relie le produit à **un seul** EME. C'est une obligation
-  que le produit subit. *« Résister aux copeaux et au liquide de coupe »*, *« se fixer sur la
-  table de la machine »*, *« ne pas dépasser 80 € »*.
-
-Un produit a en général **une ou deux FP**, et **beaucoup de FC** — cinq, dix, parfois plus.
-Si vous trouvez six FP, c'est presque sûrement que vous avez mal identifié les EME.
-
-**Comment ne rien oublier ?** Passez en revue une liste type, toujours la même :
-l'utilisateur, la matière d'œuvre, l'énergie, le support ou le bâti, l'ambiance
-(température, humidité, poussière, produits chimiques), la maintenance, les normes et
-la sécurité, le budget, l'esthétique, le recyclage en fin de vie.
-
-### 5. Caractériser une fonction : critère, niveau, flexibilité
-
-Une fonction non chiffrée ne sert à rien. « Le carter doit être solide » n'est ni vérifiable,
-ni contestable, ni utile à un fournisseur. Chaque fonction reçoit donc trois éléments :
-
-| Élément | Ce que c'est | Exemple |
-|---|---|---|
-| **critère** | la grandeur qu'on va observer | l'effort de serrage |
-| **niveau** | la valeur à atteindre | 5 000 N |
-| **flexibilité** | la tolérance acceptée sur ce niveau | ± 10 % |
-
-À quoi s'ajoute une **classe de flexibilité**, qui dit à quel point c'est négociable :
-
-- **F0** — impératif, aucune négociation possible (une exigence de sécurité, par exemple)
-- **F1** — peu négociable
-- **F2** — négociable
-- **F3** — simple souhait
-
-Reprenons l'exigence floue du début, et rendons-la exploitable :
-
-> ❌ « le carter doit être solide et facile à nettoyer »
-
-> ✅ **FC1 — résister aux chocs** : critère = énergie de choc, niveau = 5 J sans déformation
-> permanente, flexibilité = F0.
-> **FC2 — permettre le nettoyage** : critère = temps de nettoyage complet, niveau = moins de
-> 10 minutes, aucun angle rentrant inférieur à 90°, flexibilité = F1.
-
-Ce tableau n'est pas de la paperasse : **c'est lui qui servira à valider le produit à la fin**.
-En fin de projet, on reprend le cahier des charges ligne par ligne, on mesure, et on coche.
-
-### 6. Le FAST : passer enfin aux solutions
-
-Une fois les fonctions écrites et chiffrées, on a le droit de chercher des solutions. Le
-diagramme FAST sert à faire ce passage proprement, sans sauter d'étape.
-
-[[FIG:diagramme_fast]]
-
-On le lit de gauche à droite en se posant trois questions :
-
-- **Pourquoi ?** — on remonte vers la gauche, vers le besoin
-- **Comment ?** — on descend vers la droite, vers la solution
-- **Quand ?** — les fonctions qui doivent être assurées en même temps, en branches verticales
-
-Le nom d'un composant réel n'apparaît **qu'à l'extrémité droite**. Si vous écrivez
-« roulement à billes » dans la première colonne, le FAST est faux.
-
-### 7. Ce que contient le cahier des charges fonctionnel (CdCF)
-
-C'est le document qui rassemble tout, et il est **contractuel** : c'est sur lui que le client
-jugera le produit, et sur lui qu'on comparera les offres des fournisseurs.
-
-1. Le contexte et le besoin (issus de la bête à cornes)
-2. La liste des FP et FC (issues de la pieuvre)
-3. Pour chacune : critère, niveau, flexibilité
-4. Les contraintes de délai, de coût, de norme
-5. Les conditions de recette : qui vérifie, comment, avec quel moyen de mesure
-
-### 8. Les quatre erreurs classiques
-
-1. **Écrire une solution à la place d'une fonction.** Dès qu'un nom de composant apparaît,
-   c'est perdu.
-2. **Oublier de chiffrer.** « Léger », « silencieux », « robuste » ne veulent rien dire.
-   Combien de kilos ? Combien de décibels, mesurés à quelle distance ?
-3. **Confondre FP et FC.** Une fonction qui ne relie le produit qu'à un seul élément
-   extérieur est forcément une contrainte, jamais une fonction principale.
-4. **Se tromper d'utilisateur.** Le service est rendu à celui qui a le problème et qui paie.
-
-### 9. À retenir en cinq lignes
-
-- On écrit ce que le produit doit **faire**, jamais **comment** il le fera.
-- Une fonction = un verbe à l'infinitif + un complément.
-- Bête à cornes : à qui, sur quoi, dans quel but.
-- Pieuvre : FP relie deux EME à travers le produit, FC en relie un seul.
-- Chaque fonction : un critère, un niveau chiffré, une flexibilité.
-"""}
-
-
 # ===========================================================================
 # FICHE 1.2 — LECTURE DE PLAN : PROJECTIONS, COUPES ET SECTIONS
 # ===========================================================================
 
-FICHES["1.2"] = {"cours": """
-### 1. À quoi sert un plan, exactement ?
-
-Imaginez : vous avez une pièce dans les mains et vous devez la faire fabriquer par un atelier
-à 800 km, sans jamais lui parler. Comment décrire précisément un objet en trois dimensions
-sur une feuille plate ?
-
-C'est tout le problème du dessin technique. Et la réponse tient en une idée : **on ne dessine
-pas la pièce en perspective, on la regarde depuis plusieurs côtés et on note ce qu'on voit.**
-
-Un plan n'est pas une illustration : c'est un **contrat**. Ce qui y est écrit sera fabriqué.
-Ce qui n'y est pas écrit ne le sera pas. D'où des règles internationales très strictes : un
-atelier à Alger, à Lyon ou à Shanghai doit comprendre exactement la même chose.
-
-### 2. Le cube de verre : d'où viennent les vues
-
-Imaginez la pièce enfermée dans un cube de verre. Depuis chaque face du cube, vous regardez
-la pièce bien en face, et vous dessinez son contour sur le verre. Puis vous dépliez le cube
-à plat sur la table. Vous obtenez jusqu'à six dessins : les **vues**.
-
-[[FIG:projection_europeenne]]
-
-Il y a deux façons de déplier ce cube, et il faut savoir laquelle on a sous les yeux :
-
-- **Méthode européenne** (celle de la France, et celle de vos cours) : la vue se dessine
-  **de l'autre côté**. Ce que vous voyez en regardant depuis la gauche se dessine **à droite**.
-- **Méthode américaine** : exactement l'inverse. On la rencontre sur beaucoup de documents
-  américains et asiatiques.
-
-Comment savoir ? Un petit symbole en forme de cône tronqué figure dans le cartouche. Lire un
-plan américain comme un plan européen, c'est fabriquer la pièce **en miroir** : erreur classique,
-et coûteuse.
-
-### 3. Choisir la vue de face, et le nombre de vues
-
-La vue de face n'est pas « la vue de devant ». C'est **celle qui montre le plus de choses**,
-la pièce étant dans sa position d'utilisation ou de fabrication. Un arbre se dessine
-horizontal, comme il sera sur le tour.
-
-Ensuite, règle d'économie : **on dessine le minimum de vues nécessaires**. Souvent deux,
-parfois trois. Une pièce de révolution (un axe, une bague) se décrit entièrement avec une
-seule vue plus le symbole Ø. Ajouter des vues inutiles alourdit le plan et multiplie les
-risques de contradiction entre elles.
-
-### 4. Les traits : quatre familles, pas une de plus
-
-[[FIG:types_de_traits]]
-
-Deux réflexes à prendre tout de suite :
-
-- **tout trou rond et tout arbre possèdent un axe**, tracé en trait mixte fin qui dépasse
-  légèrement le contour de part et d'autre. L'oublier est l'erreur la plus fréquente en devoir ;
-- **quand deux traits se superposent**, on garde le plus important : le trait fort masque le
-  trait fin.
-
-### 5. Le problème des traits cachés — et sa solution
-
-Prenez une pièce percée de plusieurs trous, avec des chambrages et des taraudages. Vue de
-l'extérieur, elle devient un buisson de pointillés que plus personne ne sait lire.
-
-La solution est brutale et efficace : **on scie la pièce en deux, et on jette la moitié qui
-est entre l'œil et le plan de coupe.**
-
-[[FIG:pourquoi_couper]]
-
-Ce qui était caché devient visible, donc dessiné en trait fort. Les pointillés disparaissent.
-
-**Les hachures.** Les surfaces réellement traversées par la scie reçoivent des hachures à 45°,
-en trait continu fin, régulièrement espacées. Le vide, lui, reste blanc — on ne hachure jamais
-un trou. Sur un dessin d'ensemble, deux pièces voisines portent des hachures d'inclinaison ou
-d'espacement différents ; une même pièce garde partout les mêmes hachures. C'est comme ça
-qu'on distingue les pièces les unes des autres.
-
-**Comment on l'indique.** Sur une autre vue, on trace le plan de coupe en trait mixte renforcé
-aux extrémités, avec deux flèches indiquant le sens du regard et deux lettres identiques.
-La vue obtenue s'appelle alors **COUPE A-A**.
-
-### 6. Les variantes utiles
-
-- **Demi-coupe** : réservée aux pièces symétriques. Une moitié en vue extérieure, l'autre en
-  coupe, séparées par l'axe. Deux informations pour le prix d'une seule vue.
-- **Coupe locale** : on n'ouvre qu'une petite zone, limitée par un trait fin ondulé. Parfaite
-  pour montrer un seul taraudage sans mutiler tout le dessin.
-- **Coupe brisée** : le plan de coupe fait un ou plusieurs coudes pour traverser plusieurs
-  détails intéressants qui ne sont pas alignés.
-- **Section** : on ne dessine **que** la tranche, sans ce qu'il y a derrière. Idéale pour
-  montrer la forme d'un profil ou d'une clavette. Sortie (à côté de la vue, contour fort) ou
-  rabattue (sur la vue, contour fin).
-
-### 7. Ce qu'on ne coupe JAMAIS dans le sens de la longueur
-
-Par convention internationale, on ne hachure jamais, coupés en long :
-
-> **vis, écrous, rondelles, goupilles, clavettes, arbres pleins, billes et rouleaux de
-> roulement, nervures, bras de poulie.**
-
-Pourquoi ? Parce que les hachurer n'apprendrait rien sur leur intérieur — ils sont pleins —
-et brouillerait la lecture. Une vis dans l'axe du plan de coupe se dessine donc **entière et
-non hachurée**, alors que la pièce percée autour d'elle est hachurée normalement.
-
-En revanche, une coupe **transversale** de ces mêmes éléments est autorisée et fréquente.
-
-### 8. Le cartouche : à lire en premier, toujours
-
-En bas à droite de chaque plan : le titre, l'échelle, le symbole de projection, le format,
-l'indice de révision, la matière, le nom, la date. Deux points qui piègent les débutants :
-
-- **l'échelle** s'écrit dessin : réel. 1:2 réduit de moitié, 2:1 agrandit du double. Mais
-  attention : **les cotes inscrites sont toujours les cotes réelles**. On lit une cote, on ne
-  la mesure jamais à la règle sur la feuille.
-- **l'indice de révision** : si vous travaillez avec l'indice B alors que l'atelier a reçu
-  l'indice C, vous ne parlez pas de la même pièce.
-
-### 9. Méthode : lire un plan inconnu en six étapes
-
-1. Lire le **cartouche** : titre, échelle, matière, méthode de projection.
-2. Repérer la **vue de face** et les vues qui l'accompagnent.
-3. Repérer les **coupes** et où passent leurs plans.
-4. Suivre **une forme à la fois** d'une vue à l'autre (un trou à la fois, un épaulement à la fois).
-5. Lire les **cotes fonctionnelles** : celles qui portent des tolérances serrées sont les
-   surfaces qui travaillent.
-6. Lire les **états de surface** et les tolérances géométriques : ils disent où est la précision.
-
-### 10. Les erreurs classiques
-
-1. Oublier les axes des trous et des arbres.
-2. Mal aligner les vues : une vue de dessus décalée de 3 mm et le plan devient faux.
-3. Hachurer un vide, ou hachurer une nervure coupée en long.
-4. Mesurer une cote à la règle sur la feuille au lieu de la lire.
-5. Ne pas vérifier le symbole de projection sur un plan venu de l'étranger.
-"""}
-
-
 # ===========================================================================
 # FICHE 1.3 — COTATION DIMENSIONNELLE ET ÉTATS DE SURFACE
 # ===========================================================================
-
-FICHES["1.3"] = {"cours": """
-### 1. Coter, c'est donner des ordres à l'atelier
-
-Un dessin sans cotes est un joli croquis : personne ne peut fabriquer avec. Coter, c'est
-écrire les dimensions que l'ouvrier devra **obtenir puis contrôler**.
-
-Et attention à l'état d'esprit : on ne cote pas « ce qu'on voit », on cote **ce qui doit être
-garanti**. Ce n'est pas la même chose, et c'est ce qui sépare un débutant d'un technicien.
-
-### 2. De quoi une cote est faite
-
-[[FIG:elements_cotation]]
-
-Quelques conventions d'écriture à connaître :
-
-| Écriture | Signification |
-|---|---|
-| **Ø40** | un diamètre de 40 (surface cylindrique) |
-| **R8** | un rayon de 8 (congé ou arrondi) |
-| **2 × 45°** | un chanfrein de 2 mm à 45° |
-| **M8** | un filetage métrique de diamètre 8 |
-| **4 × Ø6** | quatre trous identiques de diamètre 6 |
-| **□20** | une section carrée de 20 |
-
-### 3. Les règles qui évitent 90 % des erreurs
-
-1. **Une dimension n'est cotée qu'une seule fois** sur l'ensemble du plan. Deux cotes qui se
-   contredisent, et l'atelier téléphone — ou pire, choisit tout seul.
-2. **On ne cote jamais une dimension qui se déduit des autres.** Si vous cotez 30, 40 et le
-   total 70, la troisième cote est en trop : c'est une **surabondance**, et elle sera fausse
-   dès qu'une tolérance sera appliquée.
-3. **Les cotes se lisent du bas ou de la droite de la feuille**, jamais à l'envers.
-4. **On ne cote pas sur les traits cachés.** Si une dimension n'est visible qu'en pointillés,
-   c'est le signe qu'il faut faire une coupe.
-5. **On groupe les cotes d'une même fonction** au même endroit, plutôt que de les éparpiller.
-
-### 4. Choisir ses surfaces de référence
-
-Sur une pièce, certaines surfaces travaillent (elles appuient, elles guident, elles portent)
-et d'autres non. On appelle **surface de référence** celle qui positionne la pièce dans le
-mécanisme, et c'est **à partir d'elle** qu'on cote.
-
-Prenons une plaque avec quatre trous de fixation. Deux façons de coter :
-
-- **En chaîne** : 20, puis 30, puis 30, puis 20 à partir du trou précédent. Les erreurs
-  s'additionnent : le dernier trou peut être décalé de la somme de toutes les tolérances.
-- **À partir d'une référence unique** : 20, 50, 80, 100, tous mesurés depuis le même bord.
-  Les erreurs ne s'accumulent plus.
-
-**En cotation de fixation, on part toujours d'une référence unique.** La cotation en chaîne
-n'est acceptable que pour des dimensions sans exigence, ou quand c'est justement l'écart entre
-deux éléments voisins qui compte.
-
-### 5. Toutes les cotes ne se valent pas
-
-[[FIG:pourquoi_tolerance]]
-
-Sur une pièce réelle, **environ 80 % des cotes n'ont aucune exigence particulière**. Elles
-sont couvertes par une mention en cartouche, du type **ISO 2768-m** (tolérances générales,
-classe moyenne) : par exemple ± 0,3 mm pour une cote entre 30 et 120 mm. Ce n'est donc pas
-une cote « libre » : c'est une tolérance implicite, qui s'applique automatiquement.
-
-Les 20 % restants sont les **cotes fonctionnelles** : celles qui garantissent que le mécanisme
-marche. Elles seules reçoivent une tolérance chiffrée, et c'est là que passe l'argent.
-
-Trois façons de l'écrire :
-
-- **40 ± 0,1** — écriture symétrique, la plus lisible
-- **40 +0,05 / −0,02** — écarts dissymétriques
-- **40 H7** — écriture normalisée ISO, détaillée dans le bloc 2
-
-### 6. L'état de surface : la finition n'est pas un détail
-
-Deux pièces peuvent avoir exactement les mêmes cotes et l'une fuir, l'autre pas. La différence
-se joue sur la rugosité de la surface.
-
-[[FIG:rugosite_ra]]
-
-Le symbole se pose sur la surface concernée, avec la valeur Ra en micromètres. Une barre
-horizontale ajoutée au symbole signifie « enlèvement de matière obligatoire » ; un cercle
-signifie au contraire « enlèvement de matière interdit » — la surface reste brute.
-
-Quelques valeurs à retenir pour l'année :
-
-| Où | Ra typique | Pourquoi |
-|---|---|---|
-| face non fonctionnelle | brut | personne ne la touche |
-| face d'appui boulonnée | 3,2 | il suffit qu'elle porte à plat |
-| surface qui frotte | 1,6 | limiter l'usure |
-| portée de roulement, de joint | 0,8 | sinon la levée du joint s'use et ça fuit |
-| glace optique, calibre | 0,1 | rodage, polissage |
-
-**Demander Ra 0,8 partout, c'est tripler le prix de la pièce sans aucun gain.**
-
-### 7. Méthode : coter une pièce en cinq étapes
-
-1. **Identifier les surfaces fonctionnelles** : celles qui touchent une autre pièce.
-2. **Choisir les références** : la face d'appui principale, puis un axe ou un bord.
-3. **Coter les dimensions fonctionnelles** depuis ces références, avec leurs tolérances.
-4. **Coter le reste** sans tolérance, en s'appuyant sur ISO 2768 au cartouche.
-5. **Vérifier** : chaque dimension apparaît-elle une fois et une seule ? Peut-on fabriquer et
-   contrôler la pièce avec ce plan, sans jamais téléphoner au bureau d'études ?
-
-Ce test final — *l'atelier peut-il travailler sans me poser de question ?* — est le meilleur
-critère de qualité d'un plan.
-
-### 8. Les erreurs classiques
-
-1. **Surabondance** : coter les trois dimensions d'une chaîne alors que deux suffisent.
-2. **Coter en chaîne** des trous de fixation, et se retrouver avec un décalage cumulé.
-3. **Serrer des tolérances sans raison** : chaque zéro après la virgule coûte cher.
-4. **Oublier l'état de surface** sur une portée de roulement ou de joint.
-5. **Coter depuis une surface brute de fonderie** : la référence doit être une surface usinée,
-   sinon la précision demandée n'a aucun sens.
-
-### 9. À retenir
-
-- On cote ce qui doit être **garanti**, pas ce qu'on voit.
-- Une dimension, une seule cote. Jamais de surabondance.
-- Cotation fonctionnelle depuis une **référence unique**, pas en chaîne.
-- 80 % des cotes relèvent des tolérances générales du cartouche.
-- Ra 3,2 partout, Ra 0,8 seulement où ça porte, ça frotte ou ça étanche.
-"""}
-
 
 # ===========================================================================
 # FICHE 2.1 — TOLÉRANCES DIMENSIONNELLES ET SYSTÈME ISO 286
@@ -16410,219 +16940,6 @@ Moyen mnémotechnique : la majuscule est **grande**, comme le trou qui doit accu
 # Ajoutés AVANT l'exercice de niveau examen, qui reste en place.
 # ===========================================================================
 
-FICHES["1.1"]["exercice_avant"] = """
-### Exercice d'échauffement — Un support de vélo dans un couloir d'immeuble
-
-*Celui-ci se traite en dix minutes, avec le cours sous les yeux. Il sert à prendre le geste
-avant l'exercice de niveau examen qui suit.*
-
-Un habitant en a assez de laisser son vélo dans l'entrée, où il gêne le passage. Il veut le
-suspendre au mur du couloir, à un endroit où passent aussi ses voisins.
-
-**1.** Écris la bête à cornes : à qui le produit rend-il service ? Sur quoi agit-il ? Dans quel but ?
-
-**2.** Parmi ces trois phrases, une seule est une fonction correctement écrite. Laquelle, et
-pourquoi les deux autres sont-elles fausses ?
-   - a) « Utiliser deux crochets en acier galvanisé »
-   - b) « Maintenir le vélo en hauteur contre le mur »
-   - c) « Le support doit être solide »
-
-**3.** Cite **trois** éléments du milieu extérieur autres que l'utilisateur et le vélo.
-
-**4.** La phrase « ne pas gêner le passage des voisins » est-elle une FP ou une FC ? Justifie en
-une ligne.
-
-**5.** Rends cette exigence exploitable : « le support doit être facile à utiliser ». Donne un
-critère, un niveau chiffré et une flexibilité.
-"""
-
-FICHES["1.1"]["corrige_avant"] = """
-### Corrigé de l'exercice d'échauffement
-
-**1. Bête à cornes**
-
-- **À qui rend-il service ?** À l'habitant (celui qui a le problème et qui achète).
-- **Sur quoi agit-il ?** Le vélo — c'est la matière d'œuvre.
-- **Dans quel but ?** Ranger le vélo en hauteur pour libérer le passage dans le couloir.
-
-*Le piège habituel serait de répondre « sur le mur ». Le mur n'est pas ce qu'on veut déplacer :
-c'est un élément du milieu extérieur, pas la matière d'œuvre.*
-
-**2. La bonne réponse est la b)**
-
-- a) est une **solution technique** : elle nomme des composants et un matériau. En l'écrivant
-  dans le cahier des charges, on s'interdit de proposer une sangle, un rail ou une potence.
-- b) est correcte : **verbe à l'infinitif + complément**, aucune technologie imposée.
-- c) n'est **pas chiffrée** : solide comment ? Combien de kilos, pendant combien d'années ?
-  Ce n'est ni vérifiable, ni contestable.
-
-**3. Trois éléments du milieu extérieur** (parmi d'autres possibles)
-
-Le mur (nature, résistance de la fixation) — les voisins et le passage — le sol et la peinture
-(traces, rayures) — l'humidité du couloir — le budget — le règlement de copropriété.
-
-**4. C'est une fonction contrainte (FC)**
-
-Elle relie le produit à **un seul** élément du milieu extérieur : les voisins. Une FP traverse
-le produit et relie deux éléments — ici, ce serait « permettre à l'habitant de ranger son vélo »,
-qui relie l'habitant et le vélo.
-
-**5. Exigence rendue exploitable**
-
-> **FC — Permettre l'accrochage sans effort excessif.**
-> Critère : effort de levage à exercer par l'utilisateur.
-> Niveau : ≤ 12 kg soulevés à moins de 1,60 m de hauteur.
-> Flexibilité : F1 (peu négociable).
-
-On pourrait ajouter un second critère : temps d'accrochage inférieur à 10 secondes, sans outil.
-Deux exigences chiffrées valent mieux qu'une phrase vague.
-"""
-
-FICHES["1.2"]["exercice_avant"] = """
-### Exercice d'échauffement — Lire une pièce simple
-
-*À faire avec le cours ouvert. Une feuille de brouillon et un crayon suffisent.*
-
-Une pièce en L : une semelle de **80 × 50**, épaisseur **12**, et un dos vertical de **50** de
-haut sur toute la largeur, épaisseur **12**. La semelle est percée d'un trou débouchant **Ø10**,
-situé à 20 mm du bord droit et centré en largeur. Le dos porte un trou borgne **Ø8**, profond
-de 8 mm, au centre.
-
-**1.** Combien de vues sont nécessaires pour définir complètement cette pièce ? Laquelle choisis-tu
-comme vue de face, et pourquoi ?
-
-**2.** Sur la vue de dessus, avec quel type de trait apparaissent : le contour de la semelle ?
-Le trou Ø10 ? Le trou borgne Ø8 du dos ?
-
-**3.** Où se place la vue de dessus par rapport à la vue de face, et pourquoi ?
-
-**4.** On veut montrer clairement le trou borgne du dos sans couvrir le dessin de pointillés.
-Que proposes-tu ?
-
-**5.** Le plan est à l'échelle 1:2. Sur la feuille, tu mesures 40 mm entre deux arêtes. Quelle
-cote est inscrite sur le plan ?
-"""
-
-FICHES["1.2"]["corrige_avant"] = """
-### Corrigé de l'exercice d'échauffement
-
-**1. Deux vues suffisent**
-
-Une vue de face (la pièce vue de côté, qui montre le L) et une vue de dessus. On choisit comme
-vue de face **celle qui montre le plus de détails significatifs** : ici, le profil en L, qui
-donne d'un coup les deux épaisseurs et la hauteur du dos.
-
-*Ajouter une troisième vue ne serait pas faux, mais inutile : chaque vue en trop est une occasion
-de contradiction entre les vues.*
-
-**2. Les traits sur la vue de dessus**
-
-- Contour de la semelle (80 × 50) : **trait continu fort** — c'est vu.
-- Trou Ø10 : il traverse la semelle de haut en bas, donc on le voit réellement d'en haut :
-  **trait continu fort**, plus ses **deux axes en trait mixte fin**.
-- Trou borgne Ø8 du dos : il est percé horizontalement dans le dos ; vu de dessus, il est
-  **caché** dans la matière → **traits interrompus fins**, avec son axe en trait mixte fin.
-
-**3. La vue de dessus se place EN DESSOUS de la vue de face**
-
-Parce qu'on travaille en **méthode européenne** : l'observateur regarde d'en haut et la vue se
-projette derrière la pièce. Les largeurs restent rigoureusement alignées avec celles de la vue
-de face — jamais de décalage.
-
-**4. Une coupe locale**
-
-Le trou borgne est un détail isolé : une **coupe locale** (ou partielle), limitée par un trait
-continu fin ondulé, ouvre juste la zone du trou. On y voit alors le perçage en trait fort, avec
-sa profondeur et le fond conique laissé par le foret.
-
-Une coupe complète serait exagérée : elle supprimerait de la matière sur tout le dessin pour un
-seul détail.
-
-**5. La cote inscrite est 80**
-
-À l'échelle 1:2, la pièce est dessinée **deux fois plus petite** : 40 mm sur la feuille
-correspondent à 80 mm en réalité. Et sur le plan, on inscrit **toujours la cote réelle**.
-
-*Retenir : une cote se lit, elle ne se mesure jamais à la règle sur la feuille.*
-"""
-
-FICHES["1.3"]["exercice_avant"] = """
-### Exercice d'échauffement — Coter une plaque de fixation
-
-*Objectif : distinguer ce qui doit être coté précisément de ce qui ne le mérite pas.*
-
-Une plaque rectangulaire **120 × 60**, épaisseur 8, en S235. Elle est percée de :
-- **4 trous Ø6,5** pour la fixer par des vis M6 sur un carter existant, dont les taraudages sont
-  espacés de 100 mm en longueur et 40 mm en largeur ;
-- **1 alésage central Ø25 H7** qui reçoit une bague de guidage montée serrée.
-
-La plaque appuie sur le carter par sa grande face. Les bords extérieurs ne touchent rien.
-
-**1.** Quelles sont les surfaces **fonctionnelles** de cette pièce ? Quelles sont celles qui ne
-le sont pas ?
-
-**2.** Pour positionner les 4 trous, vaut-il mieux coter en chaîne (de trou à trou) ou depuis une
-référence unique ? Pourquoi ?
-
-**3.** Quelle rugosité Ra demandes-tu sur : la face d'appui ? L'alésage Ø25 H7 ? Les chants
-extérieurs ?
-
-**4.** Les cotes 120 et 60 doivent-elles porter une tolérance chiffrée ? Justifie.
-
-**5.** Un collègue a coté : 20 — 100 — 20 en longueur, **et** la cote totale 120. Qu'en penses-tu ?
-"""
-
-FICHES["1.3"]["corrige_avant"] = """
-### Corrigé de l'exercice d'échauffement
-
-**1. Les surfaces fonctionnelles**
-
-Fonctionnelles (elles touchent une autre pièce ou assurent une fonction) :
-- la **grande face d'appui** sur le carter ;
-- l'**alésage Ø25 H7**, qui reçoit la bague ;
-- la **position des 4 trous**, qui doit correspondre aux taraudages existants.
-
-Non fonctionnelles : les chants extérieurs, la face opposée, l'épaisseur exacte de la plaque.
-Elles ne touchent rien : elles resteront en tolérances générales.
-
-**2. Depuis une référence unique**
-
-En cotation en chaîne, chaque tolérance s'ajoute à la précédente : le dernier trou peut se
-retrouver décalé de la somme des dispersions, et les vis ne tombent plus en face des taraudages.
-
-En partant d'un même bord (ou mieux, de l'axe de symétrie de la plaque), les erreurs **ne
-s'accumulent plus** : chaque trou est positionné indépendamment.
-
-*C'est la règle générale pour tout ce qui doit s'assembler avec l'existant.*
-
-**3. Les états de surface**
-
-| Surface | Ra | Pourquoi |
-|---|---|---|
-| face d'appui | **3,2** | elle doit porter à plat, un fraisage de finition suffit |
-| alésage Ø25 H7 | **0,8** | portée d'une bague montée serrée : il faut une surface fine |
-| chants extérieurs | **brut** | ils ne touchent rien |
-
-Demander Ra 0,8 partout imposerait une rectification générale : le prix de la pièce serait
-multiplié sans aucun gain.
-
-**4. Non, pas de tolérance chiffrée sur 120 et 60**
-
-Ces dimensions ne conditionnent aucun assemblage. Elles relèvent des **tolérances générales**
-mentionnées au cartouche (ISO 2768-m), soit environ ± 0,3 mm ici. Ce n'est pas une cote « libre » :
-c'est une tolérance implicite, contractuelle elle aussi.
-
-**5. C'est une surabondance : il faut supprimer une cote**
-
-20 + 100 + 20 = 120. La quatrième cote se déduit des trois autres. Elle est donc **en trop**, et
-surtout **contradictoire** dès qu'on applique les tolérances : si chaque cote a ± 0,2, la somme
-peut donner 119,4 comme 120,6, alors que la cote totale impose 120 ± 0,2.
-
-L'atelier ne saurait plus laquelle respecter. On garde les cotes fonctionnelles (l'entraxe des
-trous) et on supprime la cote qui se déduit.
-"""
-
-
 # ===========================================================================
 # EXERCICES D'ÉCHAUFFEMENT — BLOC 2
 # ===========================================================================
@@ -17233,70 +17550,6 @@ elle ne coûte qu'un support, pas de la matière.*
 # Objectif : planter le décor et décoder le vocabulaire technique du cas,
 # pour qu'un débutant puisse le lire sans buter sur les sigles.
 # ===========================================================================
-
-FICHES["1.1"]["exemple_avant"] = """
-### Avant de lire le cas : de quoi parle-t-on ?
-
-**La situation.** Une usine embouteille des jus de fruits. Sur la ligne, un petit capteur doit
-« voir » passer chaque bouteille pour les compter et détecter les manquantes. Ce capteur doit
-être tenu en place, toujours à la même distance des bouteilles. C'est ce support qu'il faut
-concevoir.
-
-**Le vocabulaire du cas, en clair :**
-
-| Terme | Ce que ça veut dire |
-|---|---|
-| **répétabilité** | si on démonte puis on remonte, retrouve-t-on la même position ? |
-| **IP69K** | un indice d'étanchéité : résiste au nettoyage au jet haute pression et chaud |
-| **X2CrNiMo17-12-2** | un inox au molybdène, celui qui tient face aux produits chlorés |
-| **profilé 40×40 rainure 8** | les barres d'aluminium standard des lignes de production |
-
-**Ce qu'il faut observer en lisant.** Le client arrive avec **sa** solution (« une équerre inox
-avec deux trous M6 »). Regardez comment le concepteur la met de côté pour écrire d'abord ce que
-le support doit **faire** — et ce que ça change au résultat final.
-"""
-
-FICHES["1.2"]["exemple_avant"] = """
-### Avant de lire le cas : de quoi parle-t-on ?
-
-**La situation.** Un corps de palier, c'est le bloc de fonte dans lequel on loge un roulement
-pour qu'un arbre puisse tourner. On en trouve sur toutes les machines : convoyeurs, pompes,
-ventilateurs.
-
-**Le vocabulaire du cas, en clair :**
-
-| Terme | Ce que ça veut dire |
-|---|---|
-| **alésage Ø50 H7** | le trou qui reçoit le roulement, avec une tolérance serrée |
-| **lamage Ø18 prof. 8** | un élargissement du trou en surface, pour noyer la tête de vis |
-| **rainure de graissage** | une gorge par laquelle la graisse arrive au roulement |
-| **EN-GJL-250** | fonte grise : elle amortit les vibrations et s'usine bien |
-
-**Ce qu'il faut observer en lisant.** Le bureau d'études n'a dessiné que **deux vues** alors que
-la pièce est complexe. Cherchez la justification de chaque choix : pourquoi la coupe, pourquoi
-la vue de gauche est absente. C'est exactement le raisonnement qu'on vous demandera de tenir.
-"""
-
-FICHES["1.3"]["exemple_avant"] = """
-### Avant de lire le cas : de quoi parle-t-on ?
-
-**La situation.** Une même pièce peut coûter du simple au triple selon la façon dont elle est
-cotée. Le cas qui suit compare deux versions d'un même plan : une version « par précaution », où
-tout est serré, et une version réfléchie, où seules les cotes qui ont une fonction sont serrées.
-
-**Le vocabulaire du cas, en clair :**
-
-| Terme | Ce que ça veut dire |
-|---|---|
-| **cote fonctionnelle** | une cote dont dépend le bon fonctionnement du mécanisme |
-| **ISO 2768-m** | les tolérances qui s'appliquent d'office aux cotes sans indication |
-| **surface de référence** | la surface qui positionne la pièce, et depuis laquelle on cote |
-| **Ra** | la rugosité : la hauteur moyenne des aspérités, en micromètres |
-
-**Ce qu'il faut observer en lisant.** Repérez, pour chaque cote, la question posée : *« qu'est-ce
-qui se passerait si cette cote était fausse de 0,3 mm ? »*. Si la réponse est « rien », la cote
-n'a pas besoin d'être serrée.
-"""
 
 FICHES["2.1"]["exemple_avant"] = """
 ### Avant de lire le cas : de quoi parle-t-on ?
@@ -19025,745 +19278,6 @@ Ja maxi = A maxi − B mini − C mini · Ja mini = A mini − B maxi − C maxi
 
 
 # --- Version approfondie de la fiche 6.1 (reprise du 23/08) ---
-FICHES["1.1"]["cours"] = """
-### 1. Une histoire vraie, pour commencer
-
-Un client téléphone à un bureau d'études et dit :
-
-> « J'ai besoin d'une équerre en inox de 100 × 60, avec deux trous taraudés M6. »
-
-Le dessinateur ouvre SolidWorks et dessine l'équerre. Trois semaines plus tard, la pièce est
-fabriquée, livrée… et le client rappelle : **ça ne marche pas.**
-
-Que s'est-il passé ? Le client n'avait pas besoin d'une équerre. Il avait besoin de **tenir un
-capteur en face des bouteilles qui défilent sur sa ligne d'embouteillage**. L'équerre, c'était
-**sa** solution à lui — une idée qu'il avait eue, pas un besoin. Et sa solution était mauvaise : à
-cet endroit, la ligne vibre, et l'équerre a bougé.
-
-Si le dessinateur avait posé une seule question — « pour faire quoi ? » — il aurait proposé un
-support avec un réglage et un contre-écrou, et le problème aurait été réglé.
-
-**Toute cette fiche sert à ne plus jamais faire cette erreur.** Et elle vaut bien au-delà du BTS :
-c'est la différence entre exécuter une commande et rendre un service.
-
-### 2. La distinction qui commande tout le reste
-
-Il faut apprendre à séparer deux choses que tout le monde confond :
-
-| On exprime… | Exemple | Comment ça s'appelle |
-|---|---|---|
-| ce que le produit doit **faire** | « maintenir la pièce pendant l'usinage » | une **fonction** — le *quoi* |
-| **comment** il le fait | « avec un vérin pneumatique Ø32 » | une **solution technique** — le *comment* |
-
-Une fonction s'écrit toujours de la même façon : **un verbe à l'infinitif + un complément**. Aucun
-nom de composant, aucune marque, aucun matériau, aucune dimension imposée.
-
-- ✅ « transmettre un couple de 12 N·m entre le moteur et le réducteur »
-- ❌ « utiliser une clavette parallèle 8 × 7 » — c'est déjà une solution
-
-**Pourquoi c'est si important.** En écrivant la solution dans le cahier des charges, on s'interdit
-d'en trouver une meilleure. « Transmettre un couple » laisse ouvertes la clavette, les cannelures,
-le frettage, la goupille, l'emmanchement serré (fiche 6.3). « Utiliser une clavette » ferme la
-porte avant même d'avoir cherché.
-
-On dit qu'un cahier des charges bien écrit est **neutre technologiquement**.
-
-*Et il y a un enjeu commercial : un cahier des charges neutre permet de comparer des offres de
-fournisseurs qui proposent des solutions différentes. Un cahier des charges qui impose une
-solution ne permet de comparer que des prix.*
-
-### 3. La bête à cornes : cadrer le besoin
-
-C'est le premier outil, et le plus simple. Trois questions, dans cet ordre :
-
-[[FIG:bete_a_cornes]]
-
-La réponse à la troisième question — le but — s'appelle la **fonction globale** du produit. C'est
-la phrase qu'on écrira tout en haut du cahier des charges.
-
-**Attention au piège le plus fréquent : le service est rendu à celui qui a le problème**, pas
-forcément à celui qui subit l'action.
-
-*Pour un distributeur de croquettes, le produit rend service **au propriétaire** — c'est lui qui
-part en week-end et qui achète l'appareil. Le chat, lui, est la matière d'œuvre : l'élément sur
-lequel le produit agit. Il n'est même pas au courant.*
-
-**Valider le besoin — trois questions à connaître par cœur :**
-
-1. **Pourquoi ce besoin existe-t-il ?** → sa cause
-2. **Qu'est-ce qui pourrait le faire disparaître ?** → sa fin de vie
-3. **Ce risque est-il probable ?** → sa robustesse
-
-*Exemple : le besoin d'un support de tablette dans un atelier disparaîtrait si l'entreprise
-passait au tout-papier ou aux lunettes connectées. Est-ce probable à court terme ? Non. Le besoin
-est robuste, le projet a un sens.*
-
-### 4. Le diagramme pieuvre : trouver TOUTES les fonctions
-
-La bête à cornes donne une seule fonction, la principale. Or un produit doit satisfaire bien
-d'autres exigences : tenir dans un espace donné, résister à l'huile, respecter un budget, être
-conforme à une norme, se démonter pour la maintenance…
-
-On dessine donc le produit au centre, et tout ce qui l'entoure autour. Ces éléments s'appellent
-les **éléments du milieu extérieur** (EME).
-
-[[FIG:diagramme_pieuvre]]
-
-**Deux types de fonctions, et la différence tombe à tous les contrôles :**
-
-| Type | Combien d'EME | Ce que c'est |
-|---|---|---|
-| **Fonction principale (FP)** | relie **deux** EME **en traversant** le produit | la raison d'être |
-| **Fonction contrainte (FC)** | relie le produit à **un seul** EME | une obligation subie |
-
-*« Permettre à l'opérateur de serrer la pièce » relie l'opérateur et la pièce : sans le produit, le
-lien n'existe pas. C'est une FP. « Résister aux copeaux » ne relie le produit qu'à un seul élément :
-c'est une FC.*
-
-**Un produit a en général une ou deux FP, et beaucoup de FC** — cinq, dix, parfois plus. Si vous
-trouvez six FP, c'est presque sûrement que vous avez mal identifié les EME.
-
-**Comment ne rien oublier ?** Passez en revue une liste type, toujours la même : l'utilisateur, la
-matière d'œuvre, l'énergie, le support ou le bâti, l'ambiance (température, humidité, poussière,
-produits chimiques), la maintenance, les normes et la sécurité, le budget, l'esthétique, le
-recyclage en fin de vie.
-
-### 5. Caractériser une fonction : critère, niveau, flexibilité
-
-Une fonction non chiffrée ne sert à rien. « Le carter doit être solide » n'est ni vérifiable, ni
-contestable, ni utile à un fournisseur.
-
-[[FIG:caracteriser_fonction]]
-
-**La classe de flexibilité** dit à quel point l'exigence est négociable :
-
-- **F0** — impératif, aucune négociation (sécurité, interface avec l'existant, norme légale)
-- **F1** — peu négociable
-- **F2** — négociable
-- **F3** — simple souhait
-
-*À quoi ça sert concrètement : quand le projet dérape en coût ou en délai, on sait immédiatement
-sur quoi on peut céder. Sans classe de flexibilité, toute négociation devient un rapport de force.*
-
-**Reprenons l'exigence floue du début, et rendons-la exploitable :**
-
-> ❌ « le carter doit être solide et facile à nettoyer »
-
-> ✅ **FC1 — résister aux chocs** : critère = énergie de choc · niveau = 5 J sans déformation
-> permanente · flexibilité = **F0**.
-> ✅ **FC2 — permettre le nettoyage** : critère = temps de nettoyage complet et absence de zones de
-> rétention · niveau = moins de 10 minutes, aucun angle rentrant inférieur à 90° · flexibilité =
-> **F1**.
-
-**Ce tableau n'est pas de la paperasse : c'est lui qui servira à valider le produit à la fin.** On
-reprend chaque ligne, on mesure, on coche. C'est exactement le tableau de validation d'une
-soutenance (fiche 9.3).
-
-### 6. Le FAST : passer enfin aux solutions
-
-Une fois les fonctions écrites et chiffrées, on a le droit de chercher des solutions. Le diagramme
-FAST sert à faire ce passage **sans sauter d'étape**.
-
-[[FIG:diagramme_fast]]
-
-On le lit de gauche à droite avec trois questions :
-
-- **POURQUOI ?** — on remonte vers la gauche, vers le besoin
-- **COMMENT ?** — on descend vers la droite, vers la solution
-- **QUAND ?** — les fonctions à assurer en même temps, en branches verticales
-
-**Le nom d'un composant réel n'apparaît qu'à l'extrémité droite.** Si vous écrivez « roulement à
-billes » dans la première colonne, le FAST est faux — et surtout, vous avez sauté l'étape où l'on
-aurait pu trouver mieux.
-
-*L'intérêt du FAST n'est pas de produire un joli diagramme : c'est de rendre visible **où** vous
-avez fait un choix, et donc de pouvoir le discuter. C'est ce que cherche un jury.*
-
-### 7. Le cahier des charges fonctionnel
-
-Le CdCF rassemble tout, et il est **contractuel** :
-
-| Partie | Contenu |
-|---|---|
-| contexte et besoin | issus de la bête à cornes |
-| liste des FP et FC | issues de la pieuvre |
-| pour chaque fonction | critère, niveau, flexibilité |
-| contraintes générales | délai, coût objectif, normes |
-| conditions de recette | qui vérifie, comment, avec quel moyen |
-
-**La dernière ligne est celle qu'on oublie le plus.** Une exigence sans **méthode de mesure** est
-une source de litige : « moins de 65 dB » — mesurés à quelle distance, à quelle vitesse, avec quel
-appareil ?
-
-### 8. Exemple entièrement déroulé : un support de tablette d'atelier
-
-**L'énoncé.** Un atelier veut fixer une tablette de consultation de plans près des machines.
-
-**Étape 1 — La bête à cornes**
-
-- **À qui rend-il service ?** À l'opérateur.
-- **Sur quoi agit-il ?** La tablette numérique.
-- **Dans quel but ?** Consulter les plans sans quitter son poste, et sans poser la tablette dans
-  les copeaux.
-
-**Étape 2 — Validation du besoin**
-
-Pourquoi existe-t-il ? Parce que les plans sont dématérialisés. Qu'est-ce qui le ferait
-disparaître ? Un retour au papier, ou des lunettes connectées. Probable à court terme ? Non.
-**Le besoin est robuste.**
-
-**Étape 3 — Les éléments du milieu extérieur**
-
-Opérateur · tablette · établi · huile et copeaux · énergie électrique · budget · maintenance.
-
-**Étape 4 — Les fonctions**
-
-| Repère | Fonction | Critère | Niveau | Flex. |
-|---|---|---|---|---|
-| **FP1** | permettre à l'opérateur de consulter la tablette | hauteur de l'écran | 900 à 1500 mm réglable | F1 |
-| FC1 | résister à l'ambiance huileuse | matériau et traitement | inox ou époxy | **F0** |
-| FC2 | se fixer sur l'établi existant | épaisseur de serrage | 20 à 60 mm | **F0** |
-| FC3 | libérer la tablette rapidement | temps de retrait | < 5 s sans outil | F1 |
-| FC4 | respecter le budget | coût unitaire | ≤ 80 € | F2 |
-
-**Étape 5 — Le FAST de FP1**
-
-FP1 « consulter à hauteur de regard » → comment ? → **tenir la tablette** + **orienter** +
-**régler en hauteur** → comment orienter ? → par une rotule → solution : **rotule à serrage par
-levier**.
-
-**Étape 6 — Le contrôle de bon sens**
-
-Une seule FP, quatre FC, toutes chiffrées : c'est le bon ordre de grandeur pour un produit simple.
-Et surtout, **aucune ligne du tableau ne nomme un composant** — sauf la dernière colonne du FAST,
-là où c'est permis.
-
-### 9. Les erreurs classiques
-
-1. **Écrire une solution à la place d'une fonction.** Dès qu'un nom de composant apparaît dans le
-   cahier des charges, c'est perdu.
-2. **Oublier de chiffrer.** « Léger », « silencieux », « robuste » ne veulent rien dire.
-3. **Confondre FP et FC** : une fonction qui ne relie le produit qu'à un seul EME est forcément
-   une contrainte.
-4. **Se tromper d'utilisateur** : le service est rendu à celui qui a le problème et qui paie.
-5. **Oublier la méthode de mesure** : l'exigence devient invérifiable, donc source de litige.
-6. **Sauter la phase d'analyse** pour ouvrir la CAO : c'est l'erreur du cas de la fiche 9.1, qui
-   coûte cinq semaines de projet.
-7. **Ne pas classer les flexibilités** : impossible de négocier quand le projet dérape.
-
-### 10. À retenir
-
-- On écrit ce que le produit doit **faire**, jamais **comment** il le fera.
-- Une fonction = **verbe à l'infinitif + complément**, sans aucun composant.
-- **Bête à cornes** : à qui, sur quoi, dans quel but. Le service va à celui qui a le problème.
-- **Pieuvre** : FP relie **deux** EME à travers le produit, FC en relie **un seul**.
-- Chaque fonction : **critère, niveau chiffré, flexibilité F0 à F3**.
-- **FAST** : pourquoi à gauche, comment à droite — le composant n'apparaît qu'à la fin.
-- Le CdCF est **contractuel**, et c'est lui qui servira à valider le produit.
-"""
-FICHES["1.1"]["formules"] = """
-**Écriture d'une fonction** — verbe à l'infinitif + complément · aucun composant, aucune marque
-
-**Bête à cornes** — à qui rend-il service ? · sur quoi agit-il ? · dans quel but ?
-Validation : pourquoi ce besoin ? · qu'est-ce qui le ferait disparaître ? · est-ce probable ?
-
-**Pieuvre** — FP : relie **2 EME** en traversant le produit · FC : relie le produit à **1 EME**
-Liste type des EME : utilisateur · matière d'œuvre · énergie · support · ambiance · maintenance ·
-normes · budget · esthétique · fin de vie
-
-**Caractériser une fonction** — critère (la grandeur) · niveau (la valeur) · flexibilité
-F0 impératif · F1 peu négociable · F2 négociable · F3 souhait
-
-**FAST** — POURQUOI vers la gauche · COMMENT vers la droite · QUAND en vertical
-le composant réel n'apparaît qu'à la dernière colonne
-
-**CdCF** — contexte · FP et FC · critères et niveaux · délai, coût, normes · conditions de recette
-"""
-
-
-# --- Version approfondie de la fiche 1.2 (reprise du 23/08) ---
-FICHES["1.2"]["cours"] = """
-### 1. À quoi sert un plan, exactement
-
-Vous avez une pièce dans les mains et vous devez la faire fabriquer par un atelier à 800 km, sans
-jamais lui parler. Comment décrire précisément un objet en trois dimensions sur une feuille plate ?
-
-C'est tout le problème du dessin technique. Et la réponse tient en une idée : **on ne dessine pas
-la pièce en perspective, on la regarde depuis plusieurs côtés et on note ce qu'on voit.**
-
-**Un plan n'est pas une illustration : c'est un contrat.** Ce qui y est écrit sera fabriqué ; ce
-qui n'y est pas écrit ne le sera pas. D'où des règles internationales strictes — un atelier à
-Alger, à Lyon ou à Shanghai doit comprendre exactement la même chose.
-
-*Corollaire souvent oublié : si une exigence n'apparaît pas sur le plan, elle n'existe pas
-juridiquement. Un fournisseur qui livre une pièce conforme au plan a rempli son contrat, même si
-la pièce ne fonctionne pas.*
-
-### 2. Le cube de verre : d'où viennent les vues
-
-Imaginez la pièce enfermée dans un cube de verre. Depuis chaque face du cube, vous regardez la
-pièce bien en face, et vous dessinez son contour sur le verre. Puis vous **dépliez le cube à
-plat**. Vous obtenez jusqu'à six dessins : les **vues**.
-
-[[FIG:projection_europeenne]]
-
-**Deux façons de déplier ce cube**, et il faut savoir laquelle on a sous les yeux :
-
-| Méthode | Où se place la vue | Où on la rencontre |
-|---|---|---|
-| **européenne** (1er dièdre) | de l'autre côté : la vue de gauche se dessine **à droite** | France, Europe, votre BTS |
-| **américaine** (3e dièdre) | du même côté : la vue de gauche se dessine **à gauche** | États-Unis, beaucoup de docs asiatiques |
-
-**Comment le savoir en trois secondes :** un petit symbole en forme de **cône tronqué** figure dans
-le cartouche. En méthode européenne, le petit cercle du cône est du côté opposé à la vue de face ;
-en américaine, du même côté.
-
-**Ce qui arrive si on se trompe : on fabrique la pièce EN MIROIR.** Tous les perçages, tous les
-épaulements sont inversés. La pièce est parfaitement usinée, parfaitement inutilisable.
-
-*C'est pour cela que la lecture du symbole de projection est l'étape 1 de la méthode, avant même
-de regarder les formes.*
-
-### 3. Choisir la vue de face, et combien de vues
-
-**La vue de face n'est pas « la vue de devant ».** C'est celle qui **montre le plus de détails
-significatifs**, la pièce étant dans sa position d'utilisation ou de fabrication.
-
-Un arbre se dessine horizontal, comme il sera sur le tour. Une pièce de tôlerie se dessine dans le
-sens du pliage. Une pièce moulée, dans sa position de moulage.
-
-**Ensuite, règle d'économie : on dessine le minimum de vues nécessaires.** Souvent deux, parfois
-trois.
-
-*Une pièce de révolution — axe, bague, poulie — se décrit entièrement avec **une seule vue** plus
-le symbole Ø. Ajouter une vue de face circulaire n'apporte rien et alourdit le plan.*
-
-**Pourquoi limiter le nombre de vues ?** Parce que chaque vue supplémentaire est une occasion de
-contradiction entre les vues, et un travail de mise à jour de plus à chaque révision.
-
-### 4. Les traits : quatre familles, pas une de plus
-
-[[FIG:types_de_traits]]
-
-**Deux réflexes à prendre immédiatement :**
-
-**Tout trou rond et tout arbre possèdent un axe**, tracé en trait mixte fin qui **dépasse
-légèrement le contour** de part et d'autre. L'oublier est l'erreur la plus fréquente en devoir —
-et sur un plan réel, cela empêche de coter correctement, puisque les cotes de position se prennent
-sur les axes.
-
-**Quand deux traits se superposent, on garde le plus important.** L'ordre de priorité :
-continu fort > interrompu fin > mixte fin. Un trait vu masque un trait caché, qui masque un axe.
-
-### 5. Le problème des traits cachés — et sa solution
-
-Prenez une pièce percée de plusieurs trous, avec des chambrages et des taraudages. Vue de
-l'extérieur, elle devient un buisson de pointillés que plus personne ne sait lire.
-
-La solution est brutale et efficace : **on scie la pièce par la pensée, et on jette la moitié
-située entre l'œil et le plan de coupe.**
-
-[[FIG:pourquoi_couper]]
-
-> **Couper sert à SUPPRIMER des traits cachés, pas à en ajouter.** Ce qui était en pointillés
-> devient un trait fort. Les pointillés restant derrière le plan de coupe sont en général
-> supprimés.
-
-**Les hachures.** Les surfaces **réellement traversées** par la scie reçoivent des hachures à 45°,
-en trait continu fin, régulièrement espacées. Le vide reste blanc — **on ne hachure jamais un
-trou**.
-
-Sur un dessin d'ensemble, deux pièces voisines portent des hachures d'**inclinaison ou
-d'espacement différents** ; une même pièce garde partout les mêmes hachures. C'est ainsi qu'on
-distingue les pièces les unes des autres, sans aucune légende.
-
-**Comment on l'indique.** Sur une autre vue, le plan de coupe se trace en trait mixte renforcé aux
-extrémités, avec deux flèches donnant le sens du regard et deux lettres majuscules identiques. La
-vue obtenue s'appelle **COUPE A-A**.
-
-### 6. Les variantes, et quand les utiliser
-
-| Type | Principe | Quand |
-|---|---|---|
-| **coupe simple** | un seul plan traversant | le cas général |
-| **demi-coupe** | moitié vue, moitié coupée, séparées par l'axe | **pièce symétrique** : deux informations pour une vue |
-| **coupe locale** | on ouvre une petite zone, limitée par un trait fin ondulé | **un détail isolé** : un taraudage, un perçage |
-| **coupe brisée** | le plan fait des coudes pour traverser plusieurs détails | détails non alignés |
-| **section** | on dessine **seulement** la tranche, sans l'arrière-plan | forme d'un profil, d'une clavette, d'un bras |
-
-**La différence coupe / section**, souvent mal comprise : la coupe montre la tranche **et tout ce
-qui se trouve derrière**. La section ne montre **que la tranche**. Une section sortie se dessine à
-côté de la vue avec un contour fort ; une section rabattue se dessine sur la vue, avec un contour
-**fin**.
-
-### 7. Ce qu'on ne coupe JAMAIS dans le sens de la longueur
-
-Par convention internationale, on ne hachure jamais, coupés en long :
-
-> **vis, écrous, rondelles, goupilles, clavettes, arbres pleins, billes et rouleaux de roulement,
-> nervures, bras de poulie.**
-
-**Pourquoi ?** Parce que les hachurer n'apprendrait rien sur leur intérieur — ils sont pleins — et
-brouillerait la lecture. Une vis dans l'axe du plan de coupe se dessine donc **entière et non
-hachurée**, alors que la pièce percée autour d'elle est hachurée normalement.
-
-**Le cas de la nervure mérite une explication**, parce qu'il surprend. Une nervure coupée en long
-et hachurée apparaîtrait comme un bloc massif : on croirait à une pièce beaucoup plus lourde et
-plus rigide qu'elle n'est. En la laissant non hachurée, on montre qu'il s'agit d'une simple cloison.
-
-En revanche, une **coupe transversale** de tous ces éléments est autorisée et fréquente.
-
-### 8. Le cartouche : à lire en premier, toujours
-
-En bas à droite : titre, échelle, symbole de projection, format, indice de révision, matière, nom,
-date, tolérances générales.
-
-**Deux points qui piègent les débutants :**
-
-**L'échelle** s'écrit dessin : réel. 1:2 réduit de moitié, 2:1 agrandit du double. Mais **les cotes
-inscrites sont toujours les cotes réelles**. On lit une cote, on ne la mesure jamais à la règle sur
-la feuille.
-
-**L'indice de révision.** Si vous travaillez avec l'indice B alors que l'atelier a reçu l'indice C,
-vous ne parlez pas de la même pièce. C'est une cause classique de litige — et la raison pour
-laquelle tout plan diffusé porte un indice et une date.
-
-### 9. Méthode : lire un plan inconnu en six étapes
-
-[[FIG:lire_plan_methode]]
-
-**Pourquoi cet ordre.** Les étapes 1 à 3 servent à comprendre **comment le plan est construit**
-avant de regarder ce qu'il représente. Les étapes 5 et 6 disent **où est la précision** — c'est-à-
-dire quelles surfaces travaillent réellement, ce qui vous renseigne sur la fonction de la pièce
-mieux que n'importe quelle légende.
-
-*Un technicien expérimenté lit d'abord les cotes tolérancées : elles lui disent en trente secondes
-à quoi sert la pièce.*
-
-### 10. Exemple entièrement déroulé
-
-**L'énoncé.** Une pièce en L : semelle 80 × 50 × 12, dos vertical de 50 de haut × 12 d'épaisseur
-sur toute la largeur, un trou débouchant Ø10 dans la semelle à 20 du bord droit, un trou borgne
-Ø8 profond de 8 dans le dos, au centre.
-
-**Étape 1 — Combien de vues, et laquelle en face ?**
-
-**Deux vues suffisent.** La vue de face est celle qui montre le **profil en L** : elle donne d'un
-coup les deux épaisseurs et la hauteur du dos. La vue de dessus complète en donnant la largeur et
-la position des trous.
-
-**Étape 2 — Que voit-on sur la vue de dessus ?**
-
-| Élément | Trait | Pourquoi |
-|---|---|---|
-| contour de la semelle 80 × 50 | continu fort | il est vu |
-| arête semelle / dos | continu fort | elle est vue |
-| trou Ø10 | continu fort + **2 axes mixtes fins** | il traverse verticalement : on le voit d'en haut |
-| trou borgne Ø8 du dos | **interrompu fin** + axe | il est percé horizontalement : caché dans la matière |
-
-**Étape 3 — Où se place la vue de dessus ?**
-
-**En dessous** de la vue de face — méthode européenne. Les largeurs restent rigoureusement
-alignées : jamais de décalage.
-
-**Étape 4 — Comment montrer proprement le trou borgne ?**
-
-Une **coupe locale**, limitée par un trait continu fin ondulé autour de la zone du trou. On y voit
-le perçage en trait fort, sa profondeur, et le fond conique laissé par le foret (angle de pointe
-118°).
-
-*Une coupe complète serait exagérée : elle supprimerait de la matière sur tout le dessin pour un
-seul détail.*
-
-**Étape 5 — Le contrôle de bon sens**
-
-Chaque forme de la pièce apparaît-elle sur au moins une vue, avec le bon trait ? Y a-t-il un axe
-sur chaque trou ? Les vues sont-elles alignées ? Si oui, le plan est lisible.
-
-### 11. Les erreurs classiques
-
-1. **Ne pas vérifier le symbole de projection** sur un plan venu de l'étranger : pièce en miroir.
-2. **Oublier les axes** des trous et des arbres.
-3. **Mal aligner les vues** : une vue de dessus décalée de 3 mm et le plan devient faux.
-4. **Hachurer un vide**, ou hachurer une nervure coupée en long.
-5. **Multiplier les vues** au lieu de choisir les deux qui suffisent.
-6. **Mesurer une cote à la règle** sur la feuille au lieu de la lire.
-7. **Utiliser un plan sans regarder son indice.**
-8. **Faire une coupe complète** pour montrer un seul détail : une coupe locale suffit.
-
-### 12. À retenir
-
-- Un plan est un **contrat** : ce qui n'y est pas écrit n'existe pas.
-- **Européenne** : vue de gauche à droite, vue de dessus en dessous. Le symbole du cartouche fait
-  foi.
-- Vue de face = **maximum d'informations**, en position d'utilisation ou de fabrication.
-- Traits : **fort = vu · tirets = caché · mixte fin = axe · fin = cote et hachure**.
-- **Couper supprime les pointillés.** On hachure la matière traversée, jamais le vide.
-- Jamais coupés en long : vis, écrous, rondelles, goupilles, clavettes, arbres, billes, nervures.
-- Une cote **se lit**, elle ne se mesure jamais sur la feuille.
-- Lecture d'un plan inconnu : cartouche d'abord, cotes tolérancées ensuite.
-"""
-FICHES["1.2"]["formules"] = """
-**Méthodes de projection** — européenne (1er dièdre) : la vue se place de l'AUTRE côté ·
-américaine (3e dièdre) : du MÊME côté · symbole du cône tronqué dans le cartouche
-
-**Les quatre traits** — continu fort = vu · interrompu fin = caché · mixte fin = axe ·
-continu fin = cote, attache, hachure
-Priorité si superposition : fort > tirets > mixte fin
-
-**Coupes** — simple · demi-coupe (pièce symétrique) · locale (détail isolé, trait ondulé) ·
-brisée · section (tranche seule : sortie contour fort, rabattue contour fin)
-
-**Jamais coupés en long** — vis, écrous, rondelles, goupilles, clavettes, arbres pleins,
-billes et rouleaux, nervures, bras
-
-**Hachures** — trait continu fin à 45° · même pièce = mêmes hachures · jamais dans un vide
-
-**Échelle** — dessin : réel · 1:2 réduit · 2:1 agrandit · **la cote inscrite est la cote réelle**
-
-**Formats** — A4 210×297 · A3 297×420 · A2 420×594 · A1 594×841 · A0 841×1189
-"""
-
-
-# --- Version approfondie de la fiche 1.3 (reprise du 23/08) ---
-FICHES["1.3"]["cours"] = """
-### 1. Coter, c'est donner des ordres à l'atelier
-
-Un dessin sans cotes est un joli croquis : personne ne peut fabriquer avec. Coter, c'est écrire
-les dimensions que l'ouvrier devra **obtenir puis contrôler**.
-
-Et attention à l'état d'esprit, parce que c'est là que se joue la différence entre un débutant et
-un technicien :
-
-> **On ne cote pas ce qu'on voit. On cote ce qui doit être garanti.**
-
-Ce n'est pas la même chose. Une pièce peut avoir vingt arêtes visibles et seulement quatre
-dimensions qui comptent vraiment. Coter les vingt, c'est produire un plan illisible, plus cher, et
-souvent contradictoire.
-
-### 2. De quoi une cote est faite
-
-[[FIG:elements_cotation]]
-
-**Les conventions d'écriture à connaître :**
-
-| Écriture | Signification |
-|---|---|
-| **Ø40** | un diamètre de 40 — surface cylindrique |
-| **R8** | un rayon de 8 — congé ou arrondi |
-| **2 × 45°** | un chanfrein de 2 mm à 45° |
-| **M8** | un filetage métrique de diamètre nominal 8 |
-| **M8 × 1,25** | idem, avec le pas précisé |
-| **4 × Ø6** | quatre trous identiques de diamètre 6 |
-| **□20** | une section carrée de 20 |
-| **SR15** | un rayon sphérique de 15 |
-
-*Le Ø n'est pas décoratif : il indique que la cote se rapporte à une **surface de révolution**.
-Sans lui, la même valeur désignerait une largeur entre deux plans — ce qui n'est pas contrôlé de
-la même façon.*
-
-### 3. Les règles qui évitent 90 % des erreurs
-
-**Règle 1 — Une dimension n'est cotée qu'une seule fois** sur l'ensemble du plan. Deux cotes qui
-se contredisent, et l'atelier téléphone — ou pire, choisit tout seul.
-
-**Règle 2 — On ne cote jamais une dimension qui se déduit des autres.** Si vous cotez 30, 40 et le
-total 70, la troisième est en trop : c'est une **surabondance**.
-
-*Pourquoi c'est grave, et pas seulement inélégant : dès qu'on applique les tolérances, les trois
-cotes deviennent incompatibles. Avec ± 0,2 sur chacune, la somme des deux premières peut donner
-69,6 comme 70,4, alors que la cote totale impose 70 ± 0,2. L'atelier ne saura pas laquelle
-respecter — et c'est exactement le raisonnement des chaînes de cotes de la fiche 2.3.*
-
-**Règle 3 — Les cotes se lisent du bas ou de la droite** de la feuille, jamais à l'envers.
-
-**Règle 4 — On ne cote pas sur les traits cachés.** Si une dimension n'est visible qu'en
-pointillés, c'est le signe qu'il faut faire une coupe.
-
-**Règle 5 — On groupe les cotes d'une même fonction** au même endroit, plutôt que de les
-éparpiller sur trois vues.
-
-### 4. Choisir ses surfaces de référence
-
-Sur une pièce, certaines surfaces travaillent — elles appuient, elles guident, elles portent — et
-d'autres non. On appelle **surface de référence** celle qui **positionne la pièce dans le
-mécanisme**, et c'est **à partir d'elle** qu'on cote.
-
-[[FIG:cotation_reference]]
-
-**Le calcul qui rend la règle évidente.** Quatre trous cotés en chaîne, avec ± 0,2 sur chaque
-intervalle : la position du quatrième trou par rapport au bord peut dériver de **± 0,8 mm**. Cotés
-depuis un même bord, chaque trou reste à **± 0,2** — quatre fois mieux, sans rien changer à
-l'usinage.
-
-> **Pour tout ce qui doit s'assembler avec l'existant, on cote depuis une référence unique.**
-
-La cotation en chaîne n'est acceptable que dans un cas : quand c'est justement **l'écart entre
-deux éléments voisins** qui compte, et non leur position absolue.
-
-**Le lien avec le reste du programme :** la surface de référence du plan est la même que la
-référence A du cadre GPS (fiche 2.3), et la même que la face principale de la règle 3-2-1
-(fiche 6.1). Plan, contrôle et montage d'usinage parlent alors le même langage.
-
-### 5. Toutes les cotes ne se valent pas
-
-[[FIG:pourquoi_tolerance]]
-
-Sur une pièce réelle, **environ 80 % des cotes n'ont aucune exigence particulière**. Elles sont
-couvertes par la mention **ISO 2768-m** du cartouche : par exemple ± 0,3 mm pour une cote entre
-30 et 120 mm.
-
-**Ce n'est pas une cote « libre »** : c'est une tolérance implicite, contractuelle, que l'atelier
-doit respecter et que le contrôle peut refuser.
-
-Les 20 % restants sont les **cotes fonctionnelles** : celles qui garantissent que le mécanisme
-marche. Elles seules reçoivent une tolérance chiffrée — et c'est là que passe l'argent (fiche 2.1).
-
-**Trois façons d'écrire une tolérance :**
-
-| Écriture | Quand l'utiliser |
-|---|---|
-| **40 ± 0,1** | symétrique, la plus lisible |
-| **40 +0,05 / −0,02** | dissymétrique, quand la fonction l'impose |
-| **40 H7** | normalisée ISO, pour tout ce qui s'ajuste (fiche 2.2) |
-
-### 6. L'état de surface : la finition n'est pas un détail
-
-Deux pièces peuvent avoir exactement les mêmes cotes et l'une fuir, l'autre pas. La différence se
-joue sur la **rugosité**.
-
-[[FIG:rugosite_ra]]
-
-**Ra** est l'écart moyen arithmétique du profil, en micromètres. C'est la valeur qu'on inscrit sur
-un plan.
-
-[[FIG:etats_surface_cout]]
-
-**Le symbole** se pose sur la ligne de la surface concernée. Une **barre horizontale** ajoutée
-signifie « enlèvement de matière obligatoire » ; un **cercle** signifie au contraire « enlèvement
-de matière interdit » — la surface doit rester brute.
-
-**Deux erreurs symétriques, et la seconde surprend :**
-
-- **trop rugueux** : le joint fuit, la portée use la lèvre, le frottement s'emballe ;
-- **trop lisse** : sous Ra 0,1, le lubrifiant ne se maintient plus sur la surface — il n'y a plus
-  d'aspérités pour le retenir. C'est la tribologie de la fiche 13.4.
-
-### 7. Méthode : coter une pièce en cinq étapes
-
-1. **Identifier les surfaces fonctionnelles** : celles qui touchent une autre pièce, ou qui
-   assurent une fonction.
-2. **Choisir les références** : la face d'appui principale, puis un bord ou un axe.
-3. **Coter les dimensions fonctionnelles** depuis ces références, avec leurs tolérances.
-4. **Coter le reste** sans tolérance, en s'appuyant sur ISO 2768 au cartouche.
-5. **Vérifier** : chaque dimension apparaît-elle une fois et une seule ? Y a-t-il une
-   surabondance ?
-
-**Et le test final, qui vaut tous les autres :**
-
-> **L'atelier peut-il fabriquer et contrôler la pièce avec ce plan, sans jamais me téléphoner ?**
-
-Si la réponse est non, le plan n'est pas fini.
-
-### 8. Exemple entièrement déroulé
-
-**L'énoncé.** Une plaque de fixation 120 × 60 × 8 en S235. Elle est percée de quatre trous Ø6,5
-pour la fixer par des vis M6 sur un carter existant dont les taraudages sont espacés de 100 mm en
-longueur et 40 mm en largeur. Un alésage central Ø25 H7 reçoit une bague montée serrée. La plaque
-appuie sur le carter par sa grande face.
-
-**Étape 1 — Les surfaces fonctionnelles**
-
-| Surface | Fonctionnelle ? | Pourquoi |
-|---|---|---|
-| grande face d'appui | **oui** | elle porte sur le carter |
-| alésage Ø25 H7 | **oui** | il reçoit la bague |
-| position des 4 trous | **oui** | ils doivent tomber en face des taraudages |
-| chants extérieurs, face opposée | non | ils ne touchent rien |
-| épaisseur 8 | non | aucune fonction n'en dépend |
-
-**Étape 2 — Les références**
-
-La **grande face d'appui** devient la référence A : c'est elle qui positionne la plaque. Puis un
-bord ou, mieux, **l'axe de symétrie** de la plaque comme référence B pour les trous.
-
-**Étape 3 — Les cotes fonctionnelles**
-
-- alésage : **Ø25 H7**, avec **Ra 0,8** ;
-- entraxe des trous : **100 ± 0,1** et **40 ± 0,1**, cotés **depuis l'axe de symétrie**, jamais de
-  trou à trou ;
-- planéité de la face d'appui : **0,05** (fiche 2.3).
-
-**Étape 4 — Le reste**
-
-Les cotes 120, 60 et 8 ne conditionnent aucun assemblage : **pas de tolérance chiffrée**, elles
-relèvent d'ISO 2768-m, soit environ ± 0,3 mm.
-
-**Étape 5 — Les états de surface**
-
-| Surface | Ra | Pourquoi |
-|---|---|---|
-| alésage Ø25 H7 | **0,8** | portée d'une bague serrée |
-| face d'appui | **3,2** | elle doit porter à plat, un fraisage suffit |
-| chants extérieurs | **brut** | ils ne touchent rien |
-
-**Étape 6 — La vérification de surabondance**
-
-Si l'on avait coté 20 — 100 — 20 en longueur **et** la cote totale 120, il y aurait surabondance :
-20 + 100 + 20 = 120. Une des quatre cotes doit disparaître, et c'est la cote totale — parce que
-c'est **l'entraxe des trous** qui est fonctionnel, pas la longueur de la plaque.
-
-**Étape 7 — Le contrôle de bon sens**
-
-Trois cotes tolérancées sur une quinzaine au total : le ratio est cohérent avec les 20 % attendus.
-Si les deux tiers des cotes portaient des tolérances, il faudrait se demander lesquelles ont
-vraiment une fonction.
-
-### 9. Les erreurs classiques
-
-1. **Surabondance** : coter les trois dimensions d'une chaîne alors que deux suffisent.
-2. **Coter en chaîne** des trous de fixation : les erreurs se cumulent.
-3. **Serrer des tolérances sans raison** : chaque zéro après la virgule coûte cher.
-4. **Oublier l'état de surface** sur une portée de roulement ou de joint.
-5. **Demander Ra 0,8 partout** : c'est imposer une rectification générale.
-6. **Coter depuis une surface brute** de fonderie : la référence doit être usinée.
-7. **Coter sur des traits cachés** au lieu de faire une coupe.
-8. **Oublier le symbole Ø** sur une cote de révolution.
-
-### 10. À retenir
-
-- On cote **ce qui doit être garanti**, pas ce qu'on voit.
-- Une dimension, **une seule cote**. Jamais de surabondance.
-- Cotation fonctionnelle **depuis une référence unique** — jamais en chaîne pour des trous de
-  fixation.
-- **80 % des cotes** relèvent des tolérances générales du cartouche (ISO 2768).
-- La référence du plan = la référence A du GPS = la face principale du 3-2-1.
-- **Ra 3,2** sur un appui · **Ra 0,8** seulement où ça porte, ça frotte ou ça étanche.
-- Trop lisse est aussi un défaut : sous Ra 0,1, le lubrifiant ne tient plus.
-- Test final : l'atelier peut-il travailler sans me téléphoner ?
-"""
-FICHES["1.3"]["formules"] = """
-**Écritures normalisées** — Ø diamètre · R rayon · SR rayon sphérique · □ carré ·
-M filetage métrique · 4 × Ø6 (répétition) · 2 × 45° (chanfrein)
-
-**Les cinq règles** — une dimension = une seule cote · jamais de cote déductible (surabondance) ·
-lecture du bas ou de la droite · pas de cote sur trait caché · grouper les cotes d'une fonction
-
-**Cotation en chaîne vs référence** — en chaîne : les tolérances se cumulent (4 × ±0,2 → ±0,8)
-depuis une référence unique : chaque cote reste à ±0,2
-
-**Tolérances générales** — ISO 2768-m : ± 0,3 mm pour une cote de 30 à 120 mm
-elles couvrent environ 80 % des cotes d'une pièce
-
-**États de surface** — brut 12,5-25 · ébauche 6,3 · appui boulonné **3,2** · frottement 1,6 ·
-portée de roulement ou de joint **0,8** · guidage de précision 0,4 · poli 0,1
-
-**Méthode** — surfaces fonctionnelles → références → cotes fonctionnelles → reste en ISO 2768 →
-vérification de surabondance
-"""
-
-
-# --- Version approfondie de la fiche 3.1 (reprise du 23/08) ---
 FICHES["3.1"]["cours"] = """
 ### 1. Le vrai problème du concepteur
 
@@ -32909,6 +32423,38 @@ _SIX_TEMPS = [
 ]
 
 
+
+# ===========================================================================
+# VIDÉOS — recherches YouTube ciblées par fiche
+# ===========================================================================
+
+_MOTS_VIDEO = {
+    "1": "analyse fonctionnelle", "2": "tolérancement ISO", "3": "matériaux mécanique",
+    "4": "résistance des matériaux", "5": "lecture de plan CAO", "6": "liaisons mécaniques",
+    "7": "mathématiques BTS", "8": "physique appliquée", "9": "SolidWorks",
+    "10": "anglais technique mécanique", "11": "BTS CPI", "12": "statique mécanique",
+    "13": "plasturgie soudage", "14": "étude de cas mécanique", "15": "méthode BTS",
+    "16": "culture générale BTS",
+}
+
+
+def _requetes_video(fiche, bloc_id):
+    """Construit 3 recherches YouTube : la fiche, sa notion clé, et une version débutant."""
+    titre = re.sub(r"[^\w\s'àâäéèêëîïôöùûüç-]", " ", fiche.get("titre", ""))
+    titre = re.sub(r"\s+", " ", titre).strip()
+    domaine = _MOTS_VIDEO.get(str(bloc_id).replace("bloc", ""), "mécanique")
+    return [
+        (f"{titre} — cours", f"{titre} {domaine} cours"),
+        (f"{titre} — expliqué simplement", f"{titre} expliqué simplement"),
+        (f"{domaine} — BTS CPI", f"{domaine} BTS CPI cours"),
+    ]
+
+
+def _lien_youtube(requete):
+    from urllib.parse import quote_plus
+    return "https://www.youtube.com/results?search_query=" + quote_plus(requete)
+
+
 def _rendre_atelier(_at, _prefixe):
     """Atelier pas à pas : l'élève entre CHAQUE valeur intermédiaire et
     n'accède à l'étape suivante qu'après l'avoir trouvée. Chaque mauvaise
@@ -33518,8 +33064,9 @@ elif PAGE == PAGE_COURS:
                     st.session_state["_saut"] = (_bs["titre"], _fs["id"])
                     st.rerun()
 
-    t1, t2, t3, t4, t5 = st.tabs(
-        ["📖 Cours", "📐 Formules", "🏭 Cas industriel", "✍️ Exercice", "✅ Corrigé"])
+    t1, t2, t3, t4, t5, t6 = st.tabs(
+        ["📖 Cours", "📐 Formules", "🏭 Cas industriel", "✍️ Exercice", "✅ Corrigé",
+         "🎬 Vidéos"])
 
     with t1:
         afficher_contenu(fiche.get("cours", ""))
@@ -33534,6 +33081,23 @@ elif PAGE == PAGE_COURS:
                     'comprendre.</div>', unsafe_allow_html=True)
     with t5:
         afficher_contenu(fiche.get("corrige", ""))
+    with t6:
+        st.markdown(
+            '<div class="info-box">Trois recherches YouTube préparées pour cette fiche. '
+            'Elles s\'ouvrent dans un nouvel onglet — l\'application ne choisit aucune vidéo '
+            'à votre place : <b>vérifiez toujours que la vidéo correspond au programme du '
+            'BTS CPI</b>, les contenus en ligne sont de qualité très inégale.</div>',
+            unsafe_allow_html=True)
+        st.write("")
+        for _lib, _req in _requetes_video(fiche, bloc.get("id", "")):
+            st.markdown(f'- [{_lib}]({_lien_youtube(_req)})')
+        st.write("")
+        _perso = st.text_input("Chercher autre chose sur cette notion",
+                               key=f"vid_{cle}", placeholder="ex : ajustement H7 g6 exercice")
+        if _perso.strip():
+            st.markdown(f"[🔎 Rechercher « {_perso.strip()} » sur YouTube]"
+                        f"({_lien_youtube(_perso.strip())})")
+        st.caption("Astuce : sur mobile, ces liens ouvrent directement l'application YouTube.")
 
     st.divider()
     note = st.text_area("Mes notes personnelles sur cette fiche",
