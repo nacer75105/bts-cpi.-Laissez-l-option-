@@ -3470,6 +3470,16 @@ FIGURES = {
 }
 
 
+def html_dyn(svg, legende=""):
+    """Encapsule un SVG DÉJÀ généré (figure interactive) pour st.markdown."""
+    b64 = base64.b64encode(svg.encode("utf-8")).decode("ascii")
+    cap = (f"<figcaption style='font-size:0.85em;color:#64748b;margin-top:6px'>{legende}"
+           f"</figcaption>") if legende else ""
+    return (f"<figure style='margin:14px 0'>"
+            f"<img src='data:image/svg+xml;base64,{b64}' style='width:100%;max-width:760px;'/>"
+            f"{cap}</figure>")
+
+
 def html(cle):
     """Renvoie la figure prête à être insérée dans st.markdown(..., unsafe_allow_html=True).
 
@@ -3484,6 +3494,231 @@ def html(cle):
             f"<img src='data:image/svg+xml;base64,{b64}' style='width:100%;max-width:760px;'/>"
             f"<figcaption style='font-size:0.85em;color:#64748b;margin-top:6px'>{titre}</figcaption>"
             f"</figure>")
+
+
+# ===========================================================================
+# FIGURES INTERACTIVES — redessinées à chaque mouvement de curseur
+# ===========================================================================
+
+def dyn_ajustement(dim, lettre_arbre, grade_arbre, grade_alesage, resultat):
+    """Zones de tolérance alésage/arbre, à l'échelle, autour de la ligne zéro.
+
+    `resultat` est le dictionnaire renvoyé par iso286.calcul_ajustement() : la figure
+    ne fait que dessiner, elle ne recalcule rien (et n'importe donc aucun module)."""
+    r = resultat
+    ES, EI, es, ei = r["ES"], r["EI"], r["es"], r["ei"]
+
+    W, H = 700, 330
+    cx0, cx1 = 150, 620
+    y0 = 170                      # ligne zero
+    borne = max(abs(ES), abs(EI), abs(es), abs(ei), 10)
+    ech = 105.0 / borne           # px par micrometre
+
+    p = []
+    p.append(_txt(W/2, 26, f"Ø{dim} H{grade_alesage}/{lettre_arbre}{grade_arbre}", 15, TRAIT, "middle", True))
+
+    # ligne zero
+    p.append(f"<line x1='{cx0-60}' y1='{y0}' x2='{cx1+20}' y2='{y0}' stroke='{TRAIT}' stroke-width='1.6'/>")
+    p.append(_txt(cx0-66, y0+4, "ligne zéro", 10, FIN, "end"))
+    p.append(_txt(cx0-66, y0+18, f"Ø{dim}", 10, FIN, "end", True))
+
+    # zone alesage (bleu) a gauche
+    ya, yb = y0 - ES*ech, y0 - EI*ech
+    p.append(f"<rect x='{cx0}' y='{min(ya,yb)}' width='190' height='{max(abs(yb-ya),2)}' "
+             f"fill='#bfdbfe' stroke='{ALESAGE}' stroke-width='1.8'/>")
+    p.append(_txt(cx0+95, min(ya,yb)-8, f"ALÉSAGE H{grade_alesage}", 11, ALESAGE, "middle", True))
+    p.append(_txt(cx0+95, max(ya,yb)+16, f"ES {ES:+.0f} / EI {EI:+.0f} µm", 10, ALESAGE, "middle"))
+
+    # zone arbre (orange) a droite
+    yc, yd = y0 - es*ech, y0 - ei*ech
+    p.append(f"<rect x='{cx0+250}' y='{min(yc,yd)}' width='190' height='{max(abs(yd-yc),2)}' "
+             f"fill='#fed7aa' stroke='{ARBRE}' stroke-width='1.8'/>")
+    p.append(_txt(cx0+345, min(yc,yd)-8, f"ARBRE {lettre_arbre}{grade_arbre}", 11, ARBRE, "middle", True))
+    p.append(_txt(cx0+345, max(yc,yd)+16, f"es {es:+.0f} / ei {ei:+.0f} µm", 10, ARBRE, "middle"))
+
+    # verdict
+    jmax, jmin = r["jeu_maxi"], r["jeu_mini"]
+    if jmin > 0:
+        coul, mot = OK, "JEU garanti"
+    elif jmax < 0:
+        coul, mot = ALERTE, "SERRAGE garanti"
+    else:
+        coul, mot = ARBRE, "INCERTAIN"
+    p.append(f"<rect x='{cx0-60}' y='{H-70}' width='{cx1+80-cx0}' height='46' rx='6' "
+             f"fill='{FOND}' stroke='{coul}' stroke-width='2'/>")
+    p.append(_txt(W/2, H-42, mot, 13, coul, "middle", True))
+    p.append(_txt(W/2, H-26, f"Jmax {jmax:+.0f} µm   ·   Jmin {jmin:+.0f} µm", 11, TRAIT, "middle"))
+    return _svg("".join(p), W, H)
+
+
+def dyn_flexion(b, h, L, F):
+    """Poutre rectangulaire sur deux appuis, charge centrale : la section réagit en h³."""
+    I = b * h**3 / 12.0
+    Mf = F * L / 4.0
+    sigma = Mf * (h/2.0) / I
+
+    W, H = 700, 320
+    p = []
+    p.append(_txt(W/2, 24, "Flexion — poutre sur deux appuis, charge au centre", 13, TRAIT, "middle", True))
+
+    # poutre vue de cote
+    px0, px1, py = 90, 610, 128
+    ep = max(6, min(46, h * 1.1))
+    p.append(f"<rect x='{px0}' y='{py-ep/2}' width='{px1-px0}' height='{ep}' "
+             f"fill='#e2e8f0' stroke='{TRAIT}' stroke-width='2'/>")
+    # appuis
+    for x in (px0, px1):
+        p.append(f"<path d='M{x},{py+ep/2} l-12,22 l24,0 z' fill='none' stroke='{TRAIT}' stroke-width='1.8'/>")
+    # charge
+    p.append(f"<line x1='{(px0+px1)/2}' y1='{py-ep/2-46}' x2='{(px0+px1)/2}' y2='{py-ep/2-4}' "
+             f"stroke='{ALERTE}' stroke-width='2.6' marker-end='url(#fd)'/>")
+    p.append(_txt((px0+px1)/2, py-ep/2-52, f"F = {F} N", 11, ALERTE, "middle", True))
+    p.append(_txt(px0-8, py+4, "L", 11, FIN, "end", True))
+    p.append(_txt((px0+px1)/2, py+ep/2+40, f"L = {L} mm", 10, FIN, "middle"))
+
+    # section, a droite, a l'echelle
+    sx, sy = 470, 215
+    sw, sh = max(8, b*1.4), max(8, h*1.4)
+    p.append(f"<rect x='{sx}' y='{sy-sh/2}' width='{sw}' height='{sh}' fill='#dbeafe' "
+             f"stroke='{ALESAGE}' stroke-width='1.8'/>")
+    p.append(_txt(sx+sw/2, sy-sh/2-8, f"b = {b}", 10, ALESAGE, "middle"))
+    p.append(f"<text x='{sx-10}' y='{sy}' {_POLICE} font-size='10' fill='{ALESAGE}' "
+             f"text-anchor='middle' transform='rotate(-90 {sx-10},{sy})'>h = {h}</text>")
+    p.append(_txt(sx+sw/2, sy+sh/2+18, "la section", 10, FIN, "middle"))
+
+    # resultats
+    p.append(f"<rect x='60' y='{H-108}' width='340' height='88' rx='6' fill='{FOND}' "
+             f"stroke='{FIN}' stroke-width='1'/>")
+    p.append(_txt(76, H-84, f"I = b·h³/12 = {I:,.0f} mm⁴".replace(",", " "), 12, TRAIT, "start", True))
+    p.append(_txt(76, H-62, f"Mf = F·L/4 = {Mf:,.0f} N·mm".replace(",", " "), 12, TRAIT, "start", True))
+    p.append(_txt(76, H-36, f"σ = Mf·v/I = {sigma:.1f} MPa", 14, ALERTE, "start", True))
+
+    defs = ("<defs><marker id='fd' viewBox='0 0 10 10' refX='9' refY='5' markerWidth='6' "
+            f"markerHeight='6' orient='auto'><path d='M0,0 L10,5 L0,10 z' fill='{ALERTE}'/></marker></defs>")
+    return _svg(defs + "".join(p), W, H)
+
+
+def dyn_tolerance_it(dim, grade, it):
+    """Largeur de la zone IT, à l'échelle. `it` est fourni par l'appelant (en µm)."""
+    W, H = 700, 260
+    p = []
+    p.append(_txt(W/2, 26, f"Ø{dim} — IT{grade} = {it} µm = {it/1000:.3f} mm", 14, TRAIT, "middle", True))
+
+    y0 = 130
+    ech = 300.0 / max(it, 6)
+    demi = min(240, it * ech / 2)
+    p.append(f"<line x1='60' y1='{y0}' x2='640' y2='{y0}' stroke='{FIN}' stroke-width='1' stroke-dasharray='5 4'/>")
+    p.append(f"<rect x='{350-demi}' y='{y0-34}' width='{2*demi}' height='68' fill='#bbf7d0' "
+             f"stroke='{OK}' stroke-width='2'/>")
+    p.append(_txt(350, y0-46, "zone acceptée", 11, OK, "middle", True))
+    p.append(_txt(350, y0+6, f"{it} µm", 13, TRAIT, "middle", True))
+    p.append(_txt(350-demi-10, y0+4, "mini", 10, FIN, "end"))
+    p.append(_txt(350+demi+10, y0+4, "maxi", 10, FIN, "start"))
+
+    # repere : cheveu humain 70 um
+    p.append(f"<rect x='60' y='{H-72}' width='580' height='50' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    cheveu = it / 70.0
+    p.append(_txt(76, H-46, f"Pour comparaison, un cheveu humain fait environ 70 µm d'épaisseur.",
+                  11, TRAIT, "start"))
+    p.append(_txt(76, H-28, f"Cette tolérance vaut {cheveu:.2f} fois l'épaisseur d'un cheveu.",
+                  11, ALESAGE, "start", True))
+    return _svg("".join(p), W, H)
+
+
+def dyn_regle_charges(arbre_tourne, charge_tourne):
+    """Quelle bague serrer : la bague qui voit la charge tourner autour d'elle."""
+    W, H = 700, 330
+    p = []
+    p.append(_txt(W/2, 26, "La règle des charges : quelle bague faut-il serrer ?", 13, TRAIT, "middle", True))
+
+    cx, cy, R = 250, 182, 88
+    # bague exterieure
+    p.append(f"<circle cx='{cx}' cy='{cy}' r='{R}' fill='none' stroke='{TRAIT}' stroke-width='14'/>")
+    # bague interieure
+    p.append(f"<circle cx='{cx}' cy='{cy}' r='{R-42}' fill='none' stroke='{TRAIT}' stroke-width='14'/>")
+    # billes
+    import math as _m
+    for k in range(8):
+        a = k * _m.pi / 4
+        p.append(f"<circle cx='{cx + (R-21)*_m.cos(a):.1f}' cy='{cy + (R-21)*_m.sin(a):.1f}' "
+                 f"r='10' fill='#e2e8f0' stroke='{FIN}' stroke-width='1.2'/>")
+    # arbre
+    p.append(f"<circle cx='{cx}' cy='{cy}' r='{R-56}' fill='#fed7aa' stroke='{ARBRE}' stroke-width='2'/>")
+    p.append(_txt(cx, cy+5, "arbre", 11, ARBRE, "middle", True))
+
+    # charge
+    p.append(f"<line x1='{cx}' y1='{cy-R-38}' x2='{cx}' y2='{cy-R-8}' stroke='{ALERTE}' "
+             f"stroke-width='3' marker-end='url(#fc)'/>")
+    p.append(_txt(cx, cy-R-44, "charge", 11, ALERTE, "middle", True))
+
+    # verdict : la bague qui voit la charge tourner autour d'elle
+    # si l'arbre tourne et la charge est fixe -> bague INTERIEURE en charge tournante
+    interieure = (arbre_tourne != charge_tourne)
+    if interieure:
+        bague, ajust, autre, aj2 = "INTÉRIEURE", "k6 (serrée sur l'arbre)", "extérieure", "H7 (glissante)"
+        p.append(f"<circle cx='{cx}' cy='{cy}' r='{R-42}' fill='none' stroke='{ALERTE}' stroke-width='15' opacity='0.55'/>")
+    else:
+        bague, ajust, autre, aj2 = "EXTÉRIEURE", "M7 (serrée dans le logement)", "intérieure", "h6 (glissante)"
+        p.append(f"<circle cx='{cx}' cy='{cy}' r='{R}' fill='none' stroke='{ALERTE}' stroke-width='15' opacity='0.55'/>")
+
+    bx = 420
+    p.append(f"<rect x='{bx}' y='90' width='240' height='150' rx='8' fill='{FOND}' stroke='{ALERTE}' stroke-width='2'/>")
+    p.append(_txt(bx+120, 118, "Bague à SERRER", 12, FIN, "middle", True))
+    p.append(_txt(bx+120, 146, bague, 17, ALERTE, "middle", True))
+    p.append(_txt(bx+120, 172, ajust, 11, TRAIT, "middle", True))
+    p.append(_txt(bx+120, 202, f"bague {autre} :", 10, FIN, "middle"))
+    p.append(_txt(bx+120, 220, aj2, 11, TRAIT, "middle", True))
+
+    etat = ("arbre tournant" if arbre_tourne else "arbre fixe") + " · " + \
+           ("charge tournante" if charge_tourne else "charge fixe en direction")
+    p.append(_txt(W/2, H-22, etat, 12, TRAIT, "middle", True))
+
+    defs = ("<defs><marker id='fc' viewBox='0 0 10 10' refX='9' refY='5' markerWidth='6' "
+            f"markerHeight='6' orient='auto'><path d='M0,0 L10,5 L0,10 z' fill='{ALERTE}'/></marker></defs>")
+    return _svg(defs + "".join(p), W, H)
+
+
+def dyn_engrenage(module, z1, z2):
+    """Deux roues dentées : diamètres primitifs, entraxe et rapport."""
+    import math as _m
+    d1, d2 = module*z1, module*z2
+    a = (d1 + d2) / 2.0
+    rapport = z1 / float(z2)
+
+    W, H = 700, 380
+    p = []
+    p.append(_txt(W/2, 24, f"Engrenage — module {module} mm", 13, TRAIT, "middle", True))
+
+    ech = min(4.0, 400.0 / max(d1 + d2, 1), 176.0 / max(d1, d2, 1))
+    r1, r2 = d1*ech/2, d2*ech/2
+    cy = 160
+    largeur = 2*r1 + 2*r2
+    cx1 = (W - largeur) / 2 + r1
+    cx2 = cx1 + (r1 + r2)
+
+    for cx, r, z, d, coul, fond in ((cx1, r1, z1, d1, ALESAGE, "#dbeafe"),
+                                    (cx2, r2, z2, d2, ARBRE, "#fed7aa")):
+        p.append(f"<circle cx='{cx:.1f}' cy='{cy}' r='{r:.1f}' fill='{fond}' stroke='{coul}' stroke-width='2'/>")
+        # quelques dents symboliques
+        n = min(z, 40)
+        for k in range(n):
+            ang = 2*_m.pi*k/n
+            x1 = cx + r*_m.cos(ang); y1 = cy + r*_m.sin(ang)
+            x2 = cx + (r+5)*_m.cos(ang); y2 = cy + (r+5)*_m.sin(ang)
+            p.append(f"<line x1='{x1:.1f}' y1='{y1:.1f}' x2='{x2:.1f}' y2='{y2:.1f}' stroke='{coul}' stroke-width='1.6'/>")
+        p.append(f"<circle cx='{cx:.1f}' cy='{cy}' r='4' fill='{coul}'/>")
+        p.append(_txt(cx, cy+r+24, f"Z = {z}", 11, coul, "middle", True))
+        p.append(_txt(cx, cy+r+40, f"d = {d:.0f} mm", 10, FIN, "middle"))
+
+    # entraxe
+    p.append(f"<line x1='{cx1:.1f}' y1='{cy}' x2='{cx2:.1f}' y2='{cy}' stroke='{FIN}' stroke-width='1.2' stroke-dasharray='5 3'/>")
+    p.append(_txt((cx1+cx2)/2, cy - max(r1, r2) - 14, f"entraxe {a:.0f} mm", 11, TRAIT, "middle", True))
+
+    p.append(f"<rect x='60' y='{H-74}' width='580' height='56' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p.append(_txt(76, H-50, f"d = m × Z  ·  entraxe = (d1 + d2)/2 = {a:.1f} mm", 12, TRAIT, "start", True))
+    sens = "réduction" if rapport < 1 else ("multiplication" if rapport > 1 else "prise directe")
+    p.append(_txt(76, H-30, f"rapport r = Z1/Z2 = {rapport:.3f}  →  {sens}", 12, ALESAGE, "start", True))
+    return _svg("".join(p), W, H)
 
 # ==========================================================================
 # CONTENU DE iso286.py
@@ -32767,6 +33002,7 @@ _OPTIONS_NAV = ["🏠 Tableau de bord",
                 "🎯 Quiz interactif",
                 "🧪 Exercices guidés",
                 "🏗️ Ateliers guidés",
+                "🎛️ Schémas interactifs",
                 "🤖 Importer un cours (IA)",
                 "📐 Calculateur d'ajustements ISO",
                 "🔧 Calculateurs RDM",
@@ -33056,9 +33292,8 @@ elif PAGE == PAGE_COURS:
                     st.session_state["_saut"] = (_bs["titre"], _fs["id"])
                     st.rerun()
 
-    t1, t2, t3, t4, t5, t6 = st.tabs(
-        ["📖 Cours", "📐 Formules", "🏭 Cas industriel", "✍️ Exercice", "✅ Corrigé",
-         "🎬 Vidéos"])
+    t1, t2, t3, t4, t5 = st.tabs(
+        ["📖 Cours", "📐 Formules", "🏭 Cas industriel", "✍️ Exercice", "✅ Corrigé"])
 
     with t1:
         afficher_contenu(fiche.get("cours", ""))
@@ -33073,7 +33308,8 @@ elif PAGE == PAGE_COURS:
                     'comprendre.</div>', unsafe_allow_html=True)
     with t5:
         afficher_contenu(fiche.get("corrige", ""))
-    with t6:
+    st.write("")
+    with st.expander("🎬 Vidéos sur cette notion", expanded=False):
         st.markdown(
             '<div class="info-box">Trois recherches YouTube préparées pour cette fiche. '
             'Elles s\'ouvrent dans un nouvel onglet — l\'application ne choisit aucune vidéo '
@@ -33332,6 +33568,197 @@ elif PAGE == "🏗️ Ateliers guidés":
         if _at["id"] not in _ats:
             _ats.append(_at["id"])
             sauver_progression(P)
+
+
+elif PAGE == "🎛️ Schémas interactifs":
+    st.title("Schémas interactifs")
+    st.markdown(
+        '<div class="info-box">Déplacez les curseurs : <b>le schéma est redessiné à chaque '
+        'mouvement</b>, et les valeurs sont recalculées en dessous. Ce sont les cinq notions '
+        'où voir bouger change vraiment la compréhension.</div>', unsafe_allow_html=True)
+    st.write("")
+
+    _SCHEMAS_INTERACTIFS = [
+        "Ajustements ISO — jeu ou serrage",
+        "Flexion — l'effet de la hauteur",
+        "Tolérances ISO — la largeur d'un IT",
+        "Roulements — la règle des charges",
+        "Engrenages — module et nombre de dents",
+    ]
+    _choix_si = st.selectbox("Choisissez un schéma", _SCHEMAS_INTERACTIFS, key="choix_schema_inter")
+    st.divider()
+
+    # ---------------------------------------------------------------- 1
+    if _choix_si == _SCHEMAS_INTERACTIFS[0]:
+        c1, c2, c3 = st.columns(3)
+        with c1:
+            _dim = st.select_slider("Cote nominale Ø (mm)",
+                                    options=[6, 10, 18, 30, 50, 80, 120, 180],
+                                    value=30, key="aj_dim")
+        with c2:
+            _lettre = st.select_slider("Lettre de l'arbre",
+                                       options=["d", "e", "f", "g", "h", "js", "k", "m", "n",
+                                                "p", "r", "s"],
+                                       value="g", key="aj_lettre")
+        with c3:
+            _gr = st.select_slider("Qualité de l'arbre (IT)", options=[5, 6, 7, 8, 9],
+                                   value=6, key="aj_gr")
+        _gal = st.select_slider("Qualité de l'alésage H (IT)", options=[6, 7, 8, 9],
+                                value=7, key="aj_gal")
+
+        _r = calcul_ajustement(_dim, "H", _gal, _lettre, _gr)
+        st.markdown(html_dyn(dyn_ajustement(_dim, _lettre, _gr, _gal, _r)),
+                    unsafe_allow_html=True)
+        m1, m2, m3 = st.columns(3)
+        m1.metric("Jeu maxi", f"{_r['jeu_maxi']:+.0f} µm")
+        m2.metric("Jeu mini", f"{_r['jeu_mini']:+.0f} µm")
+        m3.metric("Nature", _r["nature"].replace("Ajustement ", ""))
+
+        if _r["jeu_mini"] > 0:
+            _phrase = (f"**Ce qu'il faut remarquer :** les deux zones ne se touchent jamais — "
+                       f"l'arbre est **toujours** plus petit que l'alésage. Il reste entre "
+                       f"{_r['jeu_mini']:.0f} et {_r['jeu_maxi']:.0f} µm de jeu, quelles que "
+                       f"soient les pièces prises dans le lot. **Montez la lettre vers p ou s : "
+                       f"vous verrez la zone orange passer au-dessus de la bleue, et le jeu "
+                       f"changer de signe.**")
+        elif _r["jeu_maxi"] < 0:
+            _phrase = (f"**Ce qu'il faut remarquer :** la zone de l'arbre est entièrement "
+                       f"**au-dessus** de celle de l'alésage : l'arbre est toujours plus gros "
+                       f"que le trou. Le serrage va de {abs(_r['jeu_maxi']):.0f} à "
+                       f"{abs(_r['jeu_mini']):.0f} µm — montage à la presse ou à chaud. "
+                       f"**Redescendez vers g : le jeu réapparaît.**")
+        else:
+            _phrase = (f"**Ce qu'il faut remarquer :** les deux zones **se chevauchent**. Selon "
+                       f"les pièces réellement tirées du lot, on obtient du jeu (jusqu'à "
+                       f"{_r['jeu_maxi']:.0f} µm) **ou** du serrage (jusqu'à "
+                       f"{abs(_r['jeu_mini']):.0f} µm) : c'est un ajustement **incertain**, "
+                       f"utilisé pour centrer précisément une pièce démontable.")
+        st.markdown(_phrase)
+        st.caption("Remarquez aussi qu'en augmentant le Ø, les deux zones s'élargissent : "
+                   "à qualité égale, l'IT grandit avec la dimension.")
+
+    # ---------------------------------------------------------------- 2
+    elif _choix_si == _SCHEMAS_INTERACTIFS[1]:
+        c1, c2 = st.columns(2)
+        with c1:
+            _h = st.slider("Hauteur h de la section (mm)", 10, 60, 20, step=2, key="fl_h")
+            _b = st.slider("Largeur b (mm)", 10, 40, 20, step=2, key="fl_b")
+        with c2:
+            _L = st.slider("Portée L (mm)", 200, 1200, 800, step=50, key="fl_L")
+            _F = st.slider("Charge F (N)", 200, 4000, 1200, step=100, key="fl_F")
+
+        st.markdown(html_dyn(dyn_flexion(_b, _h, _L, _F)), unsafe_allow_html=True)
+
+        _I = _b * _h**3 / 12.0
+        _Mf = _F * _L / 4.0
+        _sig = _Mf * (_h/2.0) / _I
+        _sig_ref = _Mf * (20/2.0) / (_b * 20**3 / 12.0)
+
+        m1, m2, m3 = st.columns(3)
+        m1.metric("Moment quadratique I", f"{_I:,.0f} mm⁴".replace(",", " "))
+        m2.metric("Moment fléchissant", f"{_Mf:,.0f} N·mm".replace(",", " "))
+        m3.metric("Contrainte σ", f"{_sig:.1f} MPa")
+
+        _rap = 20.0 / _h
+        st.markdown(
+            f"**Ce qu'il faut remarquer :** la hauteur intervient **au cube** dans I, mais "
+            f"**au carré** dans la contrainte. À h = {_h} mm, σ vaut **{_sig:.1f} MPa** ; "
+            f"à h = 20 mm avec la même charge, elle vaudrait **{_sig_ref:.1f} MPa** — un rapport "
+            f"de **{_sig_ref/_sig if _sig else 0:.2f}** pour un rapport de hauteur de "
+            f"{_rap:.2f}. **Doublez h : la contrainte est divisée par 4, pas par 2.**")
+        st.caption("Comparez maintenant avec la largeur b : la doubler ne divise la contrainte "
+                   "que par 2. C'est pourquoi on met la matière en hauteur, pas en largeur.")
+
+    # ---------------------------------------------------------------- 3
+    elif _choix_si == _SCHEMAS_INTERACTIFS[2]:
+        c1, c2 = st.columns(2)
+        with c1:
+            _dim2 = st.select_slider("Cote nominale Ø (mm)",
+                                     options=[3, 6, 10, 18, 30, 50, 80, 120, 180, 250, 315],
+                                     value=30, key="it_dim")
+        with c2:
+            _g2 = st.slider("Qualité IT", 4, 13, 7, key="it_grade")
+
+        _it = valeur_it(_dim2, _g2)
+        st.markdown(html_dyn(dyn_tolerance_it(_dim2, _g2, _it)),
+                    unsafe_allow_html=True)
+        _it7 = valeur_it(_dim2, 7)
+        m1, m2, m3 = st.columns(3)
+        m1.metric(f"IT{_g2}", f"{_it} µm")
+        m2.metric("En millimètres", f"{_it/1000:.3f} mm")
+        m3.metric("Rapport à IT7", f"× {_it/_it7:.2f}" if _it7 else "—")
+
+        st.markdown(
+            f"**Ce qu'il faut remarquer :** sur Ø{_dim2}, un IT{_g2} vaut **{_it} µm**, soit "
+            f"**{_it/1000:.3f} mm**. **Faites glisser la qualité de 4 à 13 sans changer le "
+            f"diamètre :** la zone s'élargit énormément, et chaque cran change le moyen de "
+            f"production — donc le prix.")
+        st.caption("Puis fixez la qualité et faites varier le Ø : à qualité égale, l'IT grandit "
+                   "avec la dimension. Tenir 20 µm sur Ø300 est bien plus difficile que sur Ø10.")
+
+    # ---------------------------------------------------------------- 4
+    elif _choix_si == _SCHEMAS_INTERACTIFS[3]:
+        c1, c2 = st.columns(2)
+        with c1:
+            _qui = st.select_slider("Qu'est-ce qui tourne ?",
+                                    options=["l'arbre tourne", "le moyeu tourne"],
+                                    value="l'arbre tourne", key="rc_qui")
+        with c2:
+            _ch = st.select_slider("La charge est…",
+                                   options=["fixe en direction", "tournante"],
+                                   value="fixe en direction", key="rc_ch")
+        _arbre_t = (_qui == "l'arbre tourne")
+        _charge_t = (_ch == "tournante")
+
+        st.markdown(html_dyn(dyn_regle_charges(_arbre_t, _charge_t)),
+                    unsafe_allow_html=True)
+
+        _interieure = (_arbre_t != _charge_t)
+        m1, m2 = st.columns(2)
+        m1.metric("Bague à SERRER", "intérieure" if _interieure else "extérieure")
+        m2.metric("Ajustement", "k6 sur l'arbre" if _interieure else "M7 dans le logement")
+
+        st.markdown(
+            f"**Ce qu'il faut remarquer :** la bague à serrer est **toujours celle qui voit la "
+            f"charge tourner autour d'elle**. Ici, "
+            f"{'l’arbre tourne et la charge est fixe' if _arbre_t and not _charge_t else _qui + ' et la charge est ' + _ch}"
+            f" : c'est donc la bague **{'intérieure' if _interieure else 'extérieure'}**. "
+            f"**Changez un seul des deux curseurs : la bague à serrer bascule.**")
+        st.caption("Si les deux tournent ensemble, ou si aucun ne tourne, la charge redevient "
+                   "fixe par rapport à la même bague — c'est pourquoi les deux curseurs "
+                   "comptent, pas seulement le premier.")
+
+    # ---------------------------------------------------------------- 5
+    else:
+        c1, c2, c3 = st.columns(3)
+        with c1:
+            _mod = st.select_slider("Module m (mm)",
+                                    options=[0.5, 1, 1.25, 1.5, 2, 2.5, 3, 4, 5, 6],
+                                    value=2, key="eng_m")
+        with c2:
+            _z1 = st.slider("Z1 (roue menante)", 10, 60, 20, key="eng_z1")
+        with c3:
+            _z2 = st.slider("Z2 (roue menée)", 10, 90, 40, key="eng_z2")
+
+        st.markdown(html_dyn(dyn_engrenage(_mod, _z1, _z2)), unsafe_allow_html=True)
+
+        _d1, _d2 = _mod*_z1, _mod*_z2
+        _a = (_d1 + _d2)/2.0
+        _r = _z1/float(_z2)
+        m1, m2, m3 = st.columns(3)
+        m1.metric("Ø primitif menant", f"{_d1:.1f} mm")
+        m2.metric("Ø primitif mené", f"{_d2:.1f} mm")
+        m3.metric("Entraxe", f"{_a:.1f} mm")
+
+        _sens = "réduction" if _r < 1 else ("multiplication" if _r > 1 else "prise directe")
+        st.markdown(
+            f"**Ce qu'il faut remarquer :** le rapport vaut **{_r:.3f}** — une **{_sens}**. "
+            f"Il ne dépend **que du nombre de dents**, jamais du module. "
+            f"**Changez le module sans toucher aux Z : les roues grossissent, l'entraxe passe "
+            f"à {_a:.0f} mm, mais le rapport ne bouge pas d'un millième.**")
+        st.caption("Le module fixe la TAILLE des dents (donc le couple transmissible et "
+                   "l'encombrement) ; le nombre de dents fixe le RAPPORT. Deux décisions "
+                   "indépendantes.")
 
 
 elif PAGE == "🤖 Importer un cours (IA)":
