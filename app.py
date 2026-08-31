@@ -9372,1240 +9372,3135 @@ for _b in [BLOC_3, BLOC_4]:
 
 BLOC_5 = {
     "id": "bloc5",
-    "titre": "Bloc 5 — CAO et modélisation 3D",
-    "resume": "Construire un modèle 3D robuste, l'assembler, le mettre en plan et l'exporter.",
+    "titre": "Bloc 5 — CAO, lecture de plan et modélisation 3D",
+    "resume": "Lire un plan, coter, tolérancer, puis construire un modèle 3D robuste, l'assembler et le mettre en plan.",
     "fiches": [
         {
-            "id": "5.1",
-            "titre": "Esquisse, contraintes et degrés de liberté",
-            "duree": "12 h",
+            "id": '5.1',
+            "titre": 'Lire un dessin de définition',
+            "duree": '6 h',
             "cours": """
-### 1. L'esquisse : la fondation de tout le modèle
+### Le vocabulaire, en français courant
 
-En CAO paramétrique (SolidWorks, CATIA, Inventor, Fusion), **tout part d'une esquisse 2D**
-que l'on transforme ensuite en volume. Une esquisse mal construite produit un modèle qui
-**casse à la première modification**. C'est le point qui distingue un débutant d'un modeleur
-professionnel.
-
-**Règle absolue :** une esquisse doit être **entièrement contrainte** avant de quitter le mode
-esquisse. SolidWorks l'indique par la mention *« Entièrement contraint »* et par des entités
-qui passent du **bleu** (sous-contraint) au **noir** (contraint).
-
-### 2. Degrés de liberté d'une entité 2D
-
-| Entité | Degrés de liberté |
+| Terme | Ce que ça veut dire |
 |---|---|
-| Point | 2 (x, y) |
-| Ligne | 4 (2 extrémités × 2) |
-| Cercle | 3 (centre x, y + rayon) |
-| Arc | 5 (centre x, y + rayon + 2 angles) |
+| **dessin de définition** | le plan d'UNE pièce, avec tout ce qu'il faut pour la fabriquer |
+| **vue de face** | la vue principale, celle qui montre le plus de détails — pas forcément « vue de devant » |
+| **coupe** | on scie la pièce par la pensée pour montrer l'intérieur |
+| **hachures** | les traits obliques : la matière réellement traversée par la scie |
+| **cartouche** | le tableau en bas à droite : titre, matière, échelle, tolérances, indice |
+| **ISO 2768-m** | les tolérances qui s'appliquent aux cotes SANS tolérance écrite |
 
-**Contraindre = supprimer tous les degrés de liberté.** Chaque contrainte géométrique ou
-dimensionnelle en supprime un ou plusieurs.
+### 1. Un plan est un contrat, pas une illustration
 
-### 3. Les deux types de contraintes
+Vous devez faire fabriquer une pièce par un atelier à 800 km, sans jamais lui parler. Tout ce
+qui est écrit sur le plan sera fabriqué ; **tout ce qui n'y est pas écrit ne le sera pas**.
 
-**a) Contraintes GÉOMÉTRIQUES** (relations, sans valeur numérique)
+*Corollaire souvent oublié : un fournisseur qui livre une pièce conforme au plan a rempli son
+contrat, même si la pièce ne fonctionne pas. L'erreur est alors du côté du bureau d'études.*
 
-| Contrainte | Effet | Degrés supprimés |
-|---|---|---|
-| Coïncidence | Deux points confondus | 2 |
-| Horizontale / Verticale | Fixe la direction | 1 |
-| Parallèle / Perpendiculaire | Lie deux directions | 1 |
-| Tangence | Raccordement continu | 1 |
-| Concentrique | Mêmes centres | 2 |
-| Égalité | Mêmes longueurs / rayons | 1 |
-| Symétrie | Par rapport à un axe | 2 |
-| Fixe | Bloque totalement | tous |
+### 2. La méthode de lecture, en 6 gestes numérotés
 
-**b) Contraintes DIMENSIONNELLES** (les cotes : longueur, rayon, angle)
+[[FIG:lire_plan_methode]]
 
-**Principe de conception à appliquer systématiquement :** *privilégier les contraintes
-géométriques aux cotes.* Une symétrie vaut mieux que deux cotes égales — elle **reste vraie**
-quand on modifie la pièce, alors que deux cotes doivent être modifiées à la main.
+**Geste 1 — Lire le cartouche AVANT les formes.** Titre, matière, échelle, tolérances
+générales, indice, et surtout le **symbole de projection**.
 
-### 4. Les erreurs à éviter absolument
+**Geste 2 — Vérifier la méthode de projection.** En **européenne** (France), la vue de dessus
+se dessine **en dessous** de la vue de face, la vue de gauche **à droite**. En américaine,
+c'est l'inverse.
 
-| Erreur | Conséquence |
+*Se tromper ici fait fabriquer la pièce **en miroir** : parfaitement usinée, parfaitement
+inutilisable.*
+
+**Geste 3 — Identifier la vue de face et les vues qui l'accompagnent.**
+
+**Geste 4 — Repérer les coupes** : où passe le plan de coupe, dans quel sens on regarde.
+
+**Geste 5 — Suivre une forme à la fois** d'une vue à l'autre (un trou, un épaulement).
+
+**Geste 6 — Lire les cotes tolérancées en dernier** : elles désignent les surfaces qui
+travaillent, et vous disent à quoi sert la pièce mieux qu'une légende.
+
+**Application immédiate.** Sur un plan indiquant « Échelle 1:2 » et une cote de 120 : la pièce
+réelle mesure **120 mm**. Une cote inscrite est **toujours** la cote réelle — on ne la
+recalcule jamais avec l'échelle. À la règle sur le papier, on mesurerait 60 mm, mais on ne
+mesure jamais un plan.
+
+### 3. Les quatre traits
+
+[[FIG:types_de_traits]]
+
+| Trait | Signification |
 |---|---|
-| Esquisse sous-contrainte | La géométrie « glisse » à la première modification |
-| Esquisse **surcontrainte** | Message d'erreur, contraintes en conflit — il faut en supprimer une |
-| Utiliser « Fixe » pour forcer | Masque le problème, l'esquisse devient non paramétrable |
-| Esquisse trop complexe (50 entités) | Impossible à déboguer. **Préférer plusieurs esquisses simples.** |
-| Ne pas partir de l'origine | La pièce flotte dans l'espace, les assemblages deviennent pénibles |
+| continu **fort** | arête **vue** |
+| interrompu fin (tirets) | arête **cachée** par la matière |
+| mixte fin (trait-point) | **axe** de symétrie ou de révolution |
+| continu **fin** | cotes, attaches, hachures |
 
-**Règle d'or : ancrer la première entité sur l'ORIGINE du repère.** C'est le seul point
-absolument fixe du modèle.
+**Priorité si deux traits se superposent :** fort > tirets > mixte fin.
 
-### 5. Arbre de création et intention de conception
+**Deux réflexes.** Tout trou rond et tout arbre possèdent un **axe**, qui dépasse légèrement le
+contour. Et les vues doivent rester **rigoureusement alignées** : un décalage de 3 mm rend le
+plan faux.
 
-L'**arbre de création** (*feature tree*) enregistre l'ordre des opérations. Chaque fonction
-dépend des précédentes. C'est ce qu'on appelle l'**intention de conception**
-(*design intent*) : le modèle doit se modifier **de la façon dont le produit évoluerait réellement**.
+### 4. Les coupes : supprimer les pointillés
 
-> *Exemple :* si un trou doit **toujours** rester centré sur une face, on le contraint par
-> symétrie sur les bords de la face — pas par une cote « 25 mm depuis le bord gauche ».
-> Quand la face passera de 50 à 80 mm de large, le trou restera centré tout seul.
+[[FIG:pourquoi_couper]]
 
-### 6. Le paramétrage par équations
+Une pièce percée de plusieurs trous devient, vue de l'extérieur, un buisson de pointillés
+illisible. On scie donc la pièce par la pensée et on jette la moitié située entre l'œil et le
+plan de coupe.
 
-Les logiciels permettent d'écrire des **relations entre cotes** :
+> **Couper sert à SUPPRIMER des traits cachés, pas à en ajouter.** Ce qui était en pointillés
+> devient un trait fort.
 
-```
-"Épaisseur" = "Diamètre" / 8
-"Entraxe"   = "Longueur" * 0.75
-"NbTrous"   = int("Longueur" / 100) + 1
-```
+**Les hachures** marquent la matière **réellement traversée**, à 45°, en trait continu fin.
+**On ne hachure jamais un vide** : un trou reste blanc.
 
-C'est ce qui permet de créer une **famille de pièces** (table de configurations) : une seule
-maquette pilote 20 références du catalogue.
+**Jamais coupés en long** — par convention internationale : vis, écrous, rondelles, goupilles,
+clavettes, arbres pleins, billes et rouleaux, **nervures**, bras de poulie.
+
+*Pourquoi la nervure : hachurée, elle apparaîtrait comme un bloc massif, et l'on croirait à une
+pièce bien plus lourde et rigide qu'elle n'est.*
+
+### 5. Le cartouche, ligne par ligne
+
+**L'échelle** s'écrit dessin:réel. 1:2 réduit de moitié, 2:1 agrandit. **Les cotes inscrites
+restent les cotes réelles.**
+
+**L'indice de révision.** Travailler avec l'indice B quand l'atelier a reçu l'indice C, c'est
+parler de deux pièces différentes — cause classique de litige.
+
+**Les tolérances générales (ISO 2768-m).** Ce n'est **pas** « aucune tolérance » : c'est une
+tolérance implicite et **contractuelle**, par exemple ± 0,3 mm pour une cote de 30 à 120 mm.
+
+### 6. Les erreurs classiques
+
+1. **Ne pas vérifier le symbole de projection** sur un plan étranger : pièce en miroir.
+2. **Recalculer une cote avec l'échelle** au lieu de la lire.
+3. **Oublier les axes** des trous et des arbres.
+4. **Hachurer un vide**, ou hachurer une nervure coupée en long.
+5. **Croire qu'une cote sans tolérance est libre** : le cartouche impose ISO 2768.
+6. **Utiliser un plan sans regarder son indice.**
+
+### 7. À retenir
+
+- Un plan est un **contrat** : ce qui n'y figure pas n'existe pas.
+- **Cartouche d'abord**, symbole de projection compris — avant toute forme.
+- Fort = vu · tirets = caché · mixte fin = axe · fin = cote et hachure.
+- **Couper supprime les pointillés.** On hachure la matière, jamais le vide.
+- Une cote **se lit**, ne se recalcule jamais avec l'échelle.
 """,
             "formules": """
-**Calcul du degré de liberté résiduel d'une esquisse**
+**Projection européenne** — vue de dessus EN DESSOUS · vue de gauche À DROITE
+symbole du cône tronqué dans le cartouche
 
-$$ DDL_{résiduel} = \\sum DDL_{entités} - \\sum DDL_{supprimés\\ par\\ contraintes} $$
+**Les quatre traits** — continu fort = vu · interrompu fin = caché · mixte fin = axe ·
+continu fin = cote et hachure · priorité : fort > tirets > mixte
 
-L'esquisse est entièrement contrainte quand $DDL_{résiduel} = 0$.
+**Coupes** — on hachure la matière traversée, à 45°, jamais le vide
+jamais coupés en long : vis, écrous, rondelles, goupilles, clavettes, arbres, billes, nervures
 
-**Nombre minimal de cotes pour un contour polygonal fermé de $n$ côtés**
+**Échelle** — dessin:réel · 1:2 réduit · 2:1 agrandit · **la cote inscrite est la cote réelle**
 
-Un polygone fermé de $n$ segments possède $n$ sommets, soit $2n$ degrés de liberté.
-Les $n$ coïncidences des extrémités en suppriment $2n - 2n = 0$… en pratique, on retient :
+**ISO 2768-m** — tolérance implicite et contractuelle · ± 0,3 mm pour une cote de 30 à 120 mm
 
-$$ \\text{cotes nécessaires} \\approx 2n - (\\text{contraintes géométriques appliquées}) $$
-
-**Cas courant — rectangle :**
-- 4 lignes = 16 DDL
-- 4 coïncidences aux coins = −8 → reste 8
-- 2 horizontales + 2 verticales = −4 → reste 4
-- coïncidence d'un coin sur l'origine = −2 → reste 2
-- **2 cotes (longueur + largeur) → 0** ✔️
-
-**Volume d'une extrusion**
-
-$$ V = A_{esquisse} \\times L_{extrusion} $$
-
-**Volume d'une révolution (théorème de Guldin)**
-
-$$ V = 2\\pi \\, d_G \\, A $$
-
-où $A$ est l'aire de l'esquisse et $d_G$ la distance de son centre de gravité à l'axe.
-
-**Surface engendrée par révolution (Guldin)**
-
-$$ S = 2\\pi \\, d_G \\, L $$
-
-où $L$ est la longueur du profil générateur.
-
-**Masse d'une pièce depuis la CAO**
-
-$$ m = \\rho \\times V $$
-
-⚠️ Toujours vérifier que le **matériau est bien affecté** dans le modèle : par défaut le
-logiciel applique souvent une masse volumique de 1 000 kg/m³ (eau), ce qui fausse tout.
+**Formats** — A4 210×297 · A3 297×420 · A2 420×594 · A1 594×841 · A0 841×1189
 """,
             "exemple": """
-**Cas industriel — Modéliser une équerre paramétrique réutilisable**
+### Cas industriel — Le plan lu en miroir
 
-Un bureau d'études conçoit une équerre de fixation qui existera en **6 tailles**.
-Deux approches sont possibles :
+**Le symptôme.** Un sous-traitant asiatique livre 200 supports. Les quatre perçages de fixation
+sont **du mauvais côté** : la pièce est inutilisable, alors qu'elle est parfaitement usinée et
+que toutes les cotes sont respectées au contrôle.
 
-**❌ Approche naïve : 6 fichiers indépendants**
-Chaque modification (ajout d'un chanfrein, changement de perçage) doit être répétée 6 fois.
-Risque d'oubli, incohérences dans la famille, temps perdu.
+**L'analyse.** Le plan avait été transmis sans que le symbole de projection soit vérifié. Le
+bureau d'études travaillait en **européenne**, l'atelier a interprété le plan en **américaine**
+— il a donc placé la vue de dessus comme une vue du dessous.
 
-**✅ Approche professionnelle : 1 modèle paramétrique + table de configurations**
+**Le coût.** 200 pièces rebutées, six semaines de délai perdues, et une discussion juridique
+sans issue : le fournisseur a fabriqué exactement ce que le plan disait **dans sa convention**.
 
-| Paramètre piloté | Valeur | Relation |
-|---|---|---|
-| `L` (longueur aile) | 40 / 60 / 80 / 100 / 120 / 150 | *variable maîtresse* |
-| `H` (hauteur aile) | — | `= L` (équerre carrée) |
-| `E` (épaisseur) | — | `= L / 10` arrondi |
-| `D` (Ø perçage) | — | `= E * 1.2` |
-| `Entraxe` | — | `= L - 2 * (D + 4)` |
-| `R` (congé) | — | `= E` |
+**La correction.** Ajout systématique du symbole de projection dans le cartouche de tous les
+plans diffusés, et mention explicite « First angle projection (ISO-E) » sur les plans destinés à
+l'export.
 
-**Construction de l'esquisse principale :**
-1. Ancrer le coin intérieur sur **l'origine**.
-2. Tracer le L avec contraintes **horizontale/verticale** (pas de cotes d'angle).
-3. Coter uniquement `L` et `E` — le reste découle des équations.
-4. Vérifier la mention *« Entièrement contraint »*.
-
-**Placement des perçages — le point clé :**
-Les trous sont contraints par **symétrie** par rapport au plan médian de l'aile, et cotés
-depuis l'extrémité par `D + 4`. Résultat : en passant de L=40 à L=150, **les trous se
-repositionnent correctement tout seuls** et restent à distance constante du bord.
-
-**Gain mesuré en bureau d'études :** création initiale 45 min (contre 20 min pour un modèle
-figé), mais les 6 déclinaisons sont générées en **3 minutes** au lieu de 2 heures, et toute
-évolution ultérieure est propagée automatiquement à la famille entière.
-
-**Le piège que cette méthode évite :** dans l'approche naïve, si un client demande un
-chanfrein de dégagement, il faut rouvrir 6 fichiers. Sur un catalogue de 200 références,
-c'est ce qui fait la différence entre un BE qui tient ses délais et un qui ne les tient pas.
+**Ce que le cas apprend.** Le geste 2 de la méthode de lecture n'est pas une formalité
+scolaire : c'est celui qui, sauté une seule fois, coûte le plus cher de toute la chaîne.
 """,
             "exercice": """
-**Exercice type examen — Contrainte d'esquisse et paramétrage**
+### Exercice — Lire un dessin de définition
 
-**Partie A.** On esquisse le profil suivant : un rectangle de base surmonté d'un demi-cercle
-(forme dite « en oblong vertical »), soit **3 segments de droite + 1 arc de demi-cercle**.
+Utilisez le dessin ci-dessous pour répondre. *(Ce même dessin est exploité en atelier
+interactif dans la page « Ateliers guidés » — vous pouvez y entrer vos réponses une par une et
+recevoir un diagnostic sur chaque erreur.)*
 
-1. Calculer le nombre total de degrés de liberté avant contrainte.
-2. Lister les contraintes géométriques à appliquer pour rendre le profil cohérent
-   (coïncidences, tangences, horizontales/verticales, symétrie).
-3. En déduire le nombre de **cotes** strictement nécessaires. Lesquelles choisir ?
-4. Le profil doit rester symétrique par rapport à l'axe vertical quelle que soit la largeur.
-   Quelle contrainte garantit cela, et pourquoi est-elle préférable à deux cotes ?
+[[FIG:dessin_definition_atelier]]
 
-**Partie B.** On extrude ce profil sur 15 mm. Dimensions : largeur 40 mm, hauteur totale
-70 mm (dont le demi-cercle en partie haute).
+**1.** Ce plan est-il en projection européenne ou américaine ? Sur quels **deux** indices vous
+appuyez-vous ?
 
-5. Calculer l'aire de l'esquisse puis le volume de la pièce.
-6. La pièce est en **EN AW-6060 T6** ($\\rho = 2\\,700$ kg/m³). Calculer sa masse.
-7. On perce un trou Ø18 concentrique au demi-cercle, débouchant. Recalculer la masse.
-8. Écrire les **équations de paramétrage** permettant que le trou reste toujours concentrique
-   au demi-cercle et que son diamètre vaille 45 % de la largeur du profil.
+**2.** La longueur cotée 120 est lue sur un plan à l'échelle 1:2. Quelle est la longueur
+**réelle** de la pièce ?
+
+**3.** Sur la vue de dessus, le trou Ø14 apparaît en traits interrompus. Pourquoi ?
+
+**4.** Dans la coupe A-A, le trou n'est pas hachuré. Pourquoi ?
+
+**5.** Le cartouche indique ISO 2768-m (± 0,3 mm pour cette plage). Donnez les cotes **maxi et
+mini** acceptables pour le 120.
 """,
             "corrige": """
-**PARTIE A**
+### Corrigé, en six temps
 
-**1. Degrés de liberté avant contrainte**
+#### 1. Ce que dit l'énoncé
 
-| Entité | Nombre | DDL unitaire | Total |
-|---|---|---|---|
-| Segments de droite | 3 | 4 | 12 |
-| Arc (demi-cercle) | 1 | 5 | 5 |
-| | | **TOTAL** | **17 DDL** |
+Un dessin de définition, deux vues (face et dessus), une coupe A-A, un cartouche complet.
+Toutes les informations demandées sont **sur le document** : aucune n'est à deviner.
 
-**2. Contraintes géométriques à appliquer**
+#### 2. Quelle règle, et pourquoi
 
-| Contrainte | Nombre | DDL supprimés |
-|---|---|---|
-| **Coïncidences** aux 4 jonctions du contour fermé | 4 | 4 × 2 = **8** |
-| **Horizontale** sur le segment de base | 1 | **1** |
-| **Verticales** sur les deux montants | 2 | **2** |
-| **Tangences** arc / montants (aux 2 raccords) | 2 | **2** |
-| **Coïncidence** du milieu de la base sur l'origine | 1 | **2** |
-| | | **Total : 15** |
+**On lit le cartouche avant les formes.** Il donne la projection, l'échelle, la matière et les
+tolérances générales. Ensuite : fort = vu, tirets = caché, mixte fin = axe. Et pour la coupe :
+on hachure la matière traversée, jamais le vide.
 
-$$ DDL_{résiduel} = 17 - 15 = \\mathbf{2} $$
+#### 3. Les conversions
 
-**3. Nombre de cotes nécessaires : 2**
+**Une seule, et c'est un faux piège : l'échelle.** 1:2 signifie que le dessin imprimé est deux
+fois plus petit que la pièce. Mais les **cotes inscrites sont déjà les cotes réelles**.
+L'échelle ne sert qu'à savoir ce qu'on mesurerait à la règle (60 mm) — opération qu'on ne fait
+jamais.
 
-Choix retenu :
-- **Largeur = 40 mm** (cote sur le segment de base)
-- **Hauteur totale = 70 mm** (de la base au sommet de l'arc)
+#### 4. Le remplacement
 
-*Le rayon de l'arc n'a pas à être coté :* les tangences aux deux montants verticaux, combinées
-à la largeur, **imposent** $R = 40/2 = 20$ mm. Le coter créerait une **surcontrainte**.
+ISO 2768-m, plage 30 à 120 mm → **± 0,3 mm**
 
-*C'est exactement le type de piège testé en examen : un demi-cercle tangent à deux verticales
-parallèles a son rayon entièrement déterminé par leur écartement.*
+cote maxi = nominale + écart supérieur = **120 + 0,3**
+cote mini = nominale + écart inférieur = **120 − 0,3**
 
-**4. Contrainte garantissant la symétrie**
+#### 5. Le calcul
 
-$$ \\boxed{\\textbf{La contrainte de SYMÉTRIE des deux montants verticaux par rapport à l'axe Y}} $$
+**1.** Projection **européenne**, sur deux indices : le symbole du cône tronqué dans le
+cartouche, et la vue de dessus placée **en dessous** de la vue de face.
 
-**Pourquoi elle est préférable à deux cotes de 20 mm :**
+**2.** Longueur réelle = **120 mm**. *(Répondre 60 mm, c'est avoir divisé par 2 à cause de
+l'échelle — le raisonnement inverse : c'est le dessin qui est réduit, pas la cote.)*
 
-| | Symétrie | Deux cotes de 20 mm |
-|---|---|---|
-| Modification de la largeur | ✅ Automatique, la symétrie est **conservée par construction** | ❌ Il faut modifier **les deux cotes** manuellement |
-| Risque d'erreur | Nul | Élevé (oubli d'une des deux → profil dissymétrique) |
-| Nombre de cotes | 1 (largeur totale) | 2 |
-| Lisibilité de l'intention | La symétrie est **explicite** dans le modèle | L'intention est implicite, invisible |
+**3.** Le trou est **caché** : il est percé horizontalement dans le dos vertical, donc invisible
+quand on regarde la pièce d'en haut. Le trait interrompu fin signale toujours une arête masquée
+par la matière.
 
-**Principe général à retenir :** *une contrainte géométrique exprime une **intention** qui reste
-vraie après modification ; une cote n'exprime qu'un **état** à un instant donné.* En CAO
-paramétrique, on privilégie toujours l'intention.
+**4.** Parce que **les hachures marquent la matière, et un trou est du vide**. Ni la taille ni
+la forme n'entrent en jeu : un arbre plein coupé transversalement, lui, serait hachuré.
 
----
+**5.** cote maxi = **120,3 mm** · cote mini = **119,7 mm**
 
-**PARTIE B**
+#### 6. La vérification
 
-**5. Aire de l'esquisse et volume**
+**Ordre de grandeur** : ± 0,3 mm sur 120 mm représente 0,25 % — cohérent avec de l'usinage
+courant, ni absurde ni excessivement serré.
 
-L'oblong se décompose en un rectangle surmonté d'un demi-disque de rayon $R = 20$ mm.
+**Cohérence entre vues** : le trou Ø14 apparaît en cercle sur la vue de face, en pointillés sur
+la vue de dessus, en trait fort dans la coupe. Les trois représentations racontent la même
+chose — si ce n'était pas le cas, le plan comporterait une erreur.
 
-*Hauteur de la partie rectangulaire :*
-$$ h_{rect} = H_{totale} - R = 70 - 20 = 50\\ \\mathrm{mm} $$
-
-*Aire du rectangle :*
-$$ A_1 = 40 \\times 50 = 2\\,000\\ \\mathrm{mm^2} $$
-
-*Aire du demi-disque :*
-$$ A_2 = \\frac{\\pi R^2}{2} = \\frac{\\pi \\times 20^2}{2} = \\frac{\\pi \\times 400}{2} = 628,3\\ \\mathrm{mm^2} $$
-
-*Aire totale :*
-$$ A = A_1 + A_2 = 2\\,000 + 628,3 = \\mathbf{2\\,628,3\\ \\mathrm{mm^2}} $$
-
-*Volume extrudé :*
-$$ V = A \\times L_{extrusion} = 2\\,628,3 \\times 15 = \\mathbf{39\\,425\\ \\mathrm{mm^3}} $$
-
----
-
-**6. Masse de la pièce pleine**
-
-Conversion : $39\\,425\\ \\mathrm{mm^3} = 39\\,425 \\times 10^{-9}\\ \\mathrm{m^3} = 3,9425\\times10^{-5}\\ \\mathrm{m^3}$
-
-$$ m = \\rho \\times V = 2\\,700 \\times 3,9425\\times10^{-5} = \\mathbf{0,1064\\ kg} = \\mathbf{106,4\\ g} $$
-
----
-
-**7. Masse après perçage Ø18**
-
-*Volume du trou (cylindre débouchant sur toute l'épaisseur) :*
-$$ V_{trou} = \\frac{\\pi d^2}{4} \\times e = \\frac{\\pi \\times 18^2}{4} \\times 15 = 254,47 \\times 15 = 3\\,817\\ \\mathrm{mm^3} $$
-
-*Volume restant :*
-$$ V' = 39\\,425 - 3\\,817 = \\mathbf{35\\,608\\ \\mathrm{mm^3}} $$
-
-*Masse :*
-$$ m' = 2\\,700 \\times 35\\,608\\times10^{-9} = \\mathbf{0,0961\\ kg} = \\mathbf{96,1\\ g} $$
-
-**Allègement obtenu :**
-$$ \\frac{106,4 - 96,1}{106,4} \\times 100 = \\mathbf{9,7\\ \\%} $$
-
----
-
-**8. Équations de paramétrage**
-
-On définit une **variable maîtresse** unique, la largeur, et on en déduit tout le reste.
-
-```
-' --- Variable maîtresse ---
-"Largeur" = 40
-
-' --- Géométrie du profil ---
-"Rayon_arc"     = "Largeur" / 2
-"Hauteur_totale" = 70
-"Epaisseur"      = 15
-
-' --- Perçage ---
-"Diametre_trou" = "Largeur" * 0.45
-```
-
-**Contraintes d'esquisse à poser pour la concentricité (et NON une cote) :**
-
-| Contrainte | Rôle |
-|---|---|
-| **Concentricité** entre le cercle du trou et l'arc du demi-cercle | Garantit que le trou suit l'arc quelle que soit la largeur ET la hauteur |
-| **Symétrie** des montants par rapport à l'axe Y | Maintient le profil symétrique |
-| **Tangences** arc / montants | Impose automatiquement `Rayon_arc = Largeur / 2` |
-
-**Vérification du paramétrage avec la valeur de l'énoncé :**
-$$ \\text{Diametre\\_trou} = 40 \\times 0,45 = \\mathbf{18\\ mm} \\quad ✔️ $$
-
-**Test de robustesse — ce qu'un correcteur attend :**
-
-Si l'on passe `Largeur` de 40 à **60 mm**, le modèle doit se régénérer ainsi, **sans aucune
-intervention manuelle** :
-
-| Paramètre | Avant (L=40) | Après (L=60) |
-|---|---|---|
-| Rayon de l'arc | 20 mm | **30 mm** (par tangence) |
-| Ø du trou | 18 mm | **27 mm** (par équation) |
-| Position du trou | Centre de l'arc | **Centre de l'arc** (par concentricité) |
-| Symétrie du profil | ✔️ | ✔️ (par contrainte de symétrie) |
-
-⚠️ **Point de vigilance à mentionner :** `Rayon_arc` ne doit **pas** être écrit comme une
-équation *et* imposé par tangence — ce serait une **surcontrainte**. On choisit l'un ou
-l'autre. La bonne pratique est de laisser la **tangence géométrique** faire le travail et de
-supprimer l'équation `"Rayon_arc" = "Largeur" / 2`, qui n'est qu'une commodité de lecture.
-
-De même, il faut vérifier que `Diametre_trou < 2 × Rayon_arc` sous peine de percer hors matière.
-Une **règle de contrôle** peut être ajoutée : `"Diametre_trou" <= "Largeur" * 0.8`.
+**Le piège à retenir** : ISO 2768 n'est pas « aucune tolérance ». Une pièce mesurant 120,5 mm
+serait **rebutée**, alors qu'aucune tolérance n'est écrite à côté de la cote.
 """,
         },
         {
-            "id": "5.2",
-            "titre": "Fonctions volumiques et surfaciques",
-            "duree": "14 h",
+            "id": '5.2',
+            "titre": 'Coter une pièce',
+            "duree": '6 h',
             "cours": """
-### 1. Les quatre fonctions volumiques fondamentales
+### Le vocabulaire, en français courant
 
-Toute pièce mécanique, aussi complexe soit-elle, se construit avec quatre opérations de base,
-en **ajout de matière** (bossage) ou en **retrait** (enlèvement) :
-
-| Fonction | Principe | Exemple typique |
-|---|---|---|
-| **Extrusion** | Translation d'un profil selon une direction | Plaque, nervure, semelle |
-| **Révolution** | Rotation d'un profil autour d'un axe | Arbre, poulie, bride, vase |
-| **Balayage** (*sweep*) | Profil suivi le long d'une trajectoire | Tube cintré, joint torique, poignée |
-| **Lissage** (*loft*) | Transition entre plusieurs profils différents | Carter de transition, pale, coque |
-
-**Options d'extrusion à maîtriser :**
-- *Borgne* (profondeur donnée), *Jusqu'au suivant*, *Jusqu'à la surface*, *À travers tout*
-- **Symétrique par rapport au plan** — indispensable pour les pièces symétriques
-- **Dépouille** (angle) — obligatoire pour les pièces moulées ou injectées
-
-### 2. Les fonctions d'habillage
-
-Elles s'appliquent **après** la construction du volume brut :
-
-| Fonction | Emploi | Point de vigilance |
-|---|---|---|
-| **Congé** (rayon) | Supprimer les angles vifs, répartir les contraintes | Ordre d'application crucial : un congé placé trop tôt casse les fonctions suivantes |
-| **Chanfrein** | Faciliter le montage, ébavurer | Normaliser : 1×45°, 2×45° |
-| **Coque** (*shell*) | Évider une pièce en conservant une épaisseur constante | Pièces plastiques injectées |
-| **Nervure** | Rigidifier sans ajouter de masse | Épaisseur ≈ 60 % de la paroi principale |
-| **Perçage assisté** | Trous normalisés (taraudés, lamés, fraisés) | Utilise les normes ISO intégrées |
-| **Dépouille** | Angle de démoulage | 0,5° à 3° selon le procédé |
-
-### 3. Les fonctions de duplication
-
-**Répétition linéaire**, **circulaire**, **par symétrie**, **pilotée par esquisse** ou
-**par table**. Elles évitent de recréer 12 fois le même trou — et surtout, elles permettent de
-modifier le nombre d'occurrences d'un seul paramètre.
-
-**Règle :** dupliquer la **fonction**, pas la géométrie. Une répétition de fonction reste
-paramétrable ; un copier-coller de faces ne l'est pas.
-
-### 4. Modélisation surfacique
-
-Quand utiliser le surfacique plutôt que le volumique ?
-
-| Situation | Approche |
+| Terme | Ce que ça veut dire |
 |---|---|
-| Pièce mécanique prismatique | **Volumique** |
-| Carrosserie, coque, forme galbée (style) | **Surfacique** |
-| Tôlerie complexe dépliable | **Tôlerie** (module dédié) |
-| Réparation d'un import STEP défectueux | **Surfacique** (bouchage de trous) |
+| **cote** | une dimension écrite sur le plan, que l'atelier devra obtenir et contrôler |
+| **cote fonctionnelle** | une cote dont dépend le bon fonctionnement du mécanisme |
+| **surface de référence** | la surface qui positionne la pièce dans le mécanisme |
+| **surabondance** | coter une dimension qui se déduit déjà des autres |
 
-**Fonctions surfaciques clés :** surface extrudée / révolutionnée / balayée / lissée,
-**surface limite** (*boundary*), **surface remplie**, **couture**, **découpe avec surface**,
-**épaississement**, **décalage de surface**.
+### 1. On cote ce qui doit être garanti, pas ce qu'on voit
 
-**Continuité des raccords** — vocabulaire de style à connaître :
-- **G0** : les surfaces se touchent (arête visible)
-- **G1** : tangence (pas de cassure, mais reflet discontinu)
-- **G2** : continuité de courbure (**reflet parfaitement fluide** — exigé en carrosserie)
+Une pièce peut avoir vingt arêtes visibles et **quatre dimensions qui comptent vraiment**.
+Coter les vingt produit un plan illisible, plus cher, et souvent contradictoire.
 
-### 5. La stratégie de modélisation — l'ordre compte
+### 2. De quoi une cote est faite
 
-**Séquence recommandée, à respecter :**
+[[FIG:elements_cotation]]
 
-```
-1. Volume brut principal (la forme englobante)
-2. Formes secondaires (bossages, nervures)
-3. Enlèvements (poches, perçages)
-4. Répétitions
-5. Habillage : congés, chanfreins, dépouilles   ← TOUJOURS EN DERNIER
-6. Coque (si pièce plastique)
-```
+| Écriture | Signification |
+|---|---|
+| **Ø40** | diamètre — surface de révolution |
+| **R8** | rayon — congé ou arrondi |
+| **2 × 45°** | chanfrein de 2 mm à 45° |
+| **M8 × 1,25** | filetage métrique, avec son pas |
+| **4 × Ø6** | quatre trous identiques |
+| **□20** | section carrée · **SR15** rayon sphérique |
 
-**Pourquoi les congés en dernier ?** Un congé crée des faces courbes. Si une fonction ultérieure
-s'y appuie, la moindre modification de rayon **casse tout l'arbre de création** (erreurs de
-régénération en cascade). En les plaçant à la fin, on isole le risque.
+*Le Ø n'est pas décoratif : sans lui, la même valeur désignerait une largeur entre deux plans,
+qui ne se contrôle pas de la même façon.*
 
-### 6. Robustesse d'un modèle
+### 3. Les cinq règles, en gestes numérotés
 
-Un modèle robuste est un modèle qui **se régénère sans erreur après modification**.
+**Règle 1 — Une dimension n'est cotée qu'UNE fois** sur tout le plan.
 
-**Bonnes pratiques :**
-- Esquisser sur les **plans de référence** (Face, Dessus, Droite) plutôt que sur des faces du modèle
-- Éviter les références à des **arêtes créées par des congés**
-- Nommer les fonctions de façon explicite (`Percage_fixation_M8` au lieu de `Enlèvement-extrusion7`)
-- Limiter la profondeur de l'arbre : **une pièce de plus de 60 fonctions doit être repensée**
-- Utiliser des **plans de construction** pour les géométries complexes
+**Règle 2 — Jamais de cote déductible des autres (surabondance).**
+
+*Pourquoi c'est grave, et pas seulement inélégant : coter 30, 40 **et** le total 70, c'est créer
+trois cotes incompatibles dès qu'on applique les tolérances. Avec ± 0,2 sur chacune, la somme
+des deux premières peut donner 69,6 comme 70,4, alors que la cote totale impose 70 ± 0,2.
+L'atelier ne saura pas laquelle respecter.*
+
+**Règle 3 — Les cotes se lisent du bas ou de la droite**, jamais à l'envers.
+
+**Règle 4 — On ne cote pas sur un trait caché.** Si une dimension n'est visible qu'en
+pointillés, il faut faire une coupe.
+
+**Règle 5 — On groupe les cotes d'une même fonction** au même endroit.
+
+### 4. Coter depuis une référence, jamais en chaîne
+
+[[FIG:cotation_reference]]
+
+**Le calcul qui rend la règle évidente.** Quatre trous cotés en chaîne, ± 0,2 sur chaque
+intervalle : le quatrième trou peut dériver de **± 0,8 mm**. Cotés depuis un même bord, chacun
+reste à **± 0,2** — quatre fois mieux, sans rien changer à l'usinage.
+
+> **Pour tout ce qui doit s'assembler avec l'existant, on cote depuis une référence unique.**
+
+La cotation en chaîne n'est acceptable que si c'est **l'écart entre deux éléments voisins** qui
+compte, et non leur position absolue.
+
+**Le lien avec le reste :** la surface de référence du plan est la même que la **référence A**
+d'un cadre GPS (fiche 5.6) et que la face principale de la règle **3-2-1** (fiche 5.11).
+
+### 5. Toutes les cotes ne se valent pas
+
+Sur une pièce réelle, **environ 80 % des cotes** n'ont aucune exigence particulière : elles
+relèvent d'ISO 2768 au cartouche. Les 20 % restants sont les **cotes fonctionnelles**, et c'est
+là seulement qu'on met de la précision — et de l'argent.
+
+[[FIG:cout_precision]]
+
+**Trois façons d'écrire une tolérance :** 40 ± 0,1 (symétrique, la plus lisible) · 40 +0,05/−0,02
+(dissymétrique) · 40 H7 (normalisée ISO, fiche 5.4).
+
+### 6. Méthode de cotation, en 5 gestes
+
+1. **Identifier les surfaces fonctionnelles** : celles qui touchent une autre pièce.
+2. **Choisir les références** : la face d'appui principale, puis un bord ou un axe.
+3. **Coter les dimensions fonctionnelles** depuis ces références, avec tolérances.
+4. **Coter le reste** sans tolérance (ISO 2768 au cartouche).
+5. **Vérifier** : chaque dimension une seule fois ? aucune surabondance ?
+
+**Le test final :** *l'atelier peut-il fabriquer et contrôler la pièce avec ce plan, sans jamais
+me téléphoner ?* Si non, le plan n'est pas fini.
+
+### 7. Les erreurs classiques
+
+1. **Surabondance** : coter les trois dimensions d'une chaîne alors que deux suffisent.
+2. **Coter en chaîne** des trous de fixation : les erreurs se cumulent.
+3. **Serrer des tolérances sans raison fonctionnelle.**
+4. **Coter depuis une surface brute** de fonderie : la référence doit être usinée.
+5. **Coter sur des traits cachés** au lieu de faire une coupe.
+6. **Oublier le symbole Ø** sur une cote de révolution.
+
+### 8. À retenir
+
+- On cote **ce qui doit être garanti**, pas ce qu'on voit.
+- Une dimension, **une seule cote** — jamais de surabondance.
+- **Depuis une référence unique**, jamais en chaîne pour des trous de fixation.
+- **80 % des cotes** relèvent d'ISO 2768 · 20 % sont fonctionnelles.
+- Référence du plan = référence A du GPS = face principale du 3-2-1.
 """,
             "formules": """
-**VOLUMES DES FORMES DE BASE**
+**Écritures normalisées** — Ø diamètre · R rayon · SR rayon sphérique · □ carré ·
+M filetage · 4 × Ø6 répétition · 2 × 45° chanfrein
 
-| Forme | Volume |
-|---|---|
-| Prisme / extrusion | $V = A \\times L$ |
-| Cylindre | $V = \\dfrac{\\pi d^2}{4} \\times h$ |
-| Cône | $V = \\dfrac{\\pi d^2 h}{12}$ |
-| Sphère | $V = \\dfrac{\\pi d^3}{6}$ |
-| Tore (Ø méridien $d$, Ø moyen $D$) | $V = \\dfrac{\\pi^2 d^2 D}{4}$ |
-| Tronc de cône | $V = \\dfrac{\\pi h}{12}(D^2 + Dd + d^2)$ |
+**Les cinq règles** — une dimension = une cote · jamais de cote déductible (surabondance) ·
+lecture du bas ou de la droite · pas de cote sur trait caché · grouper les cotes d'une fonction
 
-**THÉORÈMES DE GULDIN (révolution)**
+**Chaîne vs référence** — en chaîne : les tolérances se cumulent (4 × ±0,2 → ±0,8)
+depuis une référence unique : chaque cote reste à ±0,2
 
-Volume engendré par la rotation d'une surface $A$ autour d'un axe :
-$$ \\boxed{V = 2\\pi \\, d_G \\, A} $$
+**Tolérances générales** — ISO 2768-m : ± 0,3 mm pour une cote de 30 à 120 mm (≈ 80 % des cotes)
 
-Aire engendrée par la rotation d'une ligne de longueur $L$ :
-$$ \\boxed{S = 2\\pi \\, d_G \\, L} $$
-
-$d_G$ = distance du centre de gravité du générateur à l'axe de révolution.
-
-**VOLUME D'UNE COQUE (pièce évidée d'épaisseur $e$)**
-
-$$ V_{coque} \\approx S_{intérieure} \\times e $$
-
-Approximation valable si $e \\ll$ dimensions ; sinon soustraire les volumes exacts.
-
-**MASSE ET CENTRE DE GRAVITÉ D'UNE PIÈCE COMPOSÉE**
-
-$$ m = \\sum m_i = \\rho \\sum V_i $$
-
-$$ x_G = \\frac{\\sum m_i x_i}{\\sum m_i} \\qquad y_G = \\frac{\\sum m_i y_i}{\\sum m_i} \\qquad z_G = \\frac{\\sum m_i z_i}{\\sum m_i} $$
-
-⚠️ Pour un **enlèvement de matière**, compter le volume en **négatif** dans les sommes.
-
-**DÉPOUILLE DE DÉMOULAGE**
-
-Surépaisseur induite par un angle de dépouille $\\alpha$ sur une hauteur $h$ :
-$$ \\Delta e = h \\times \\tan\\alpha $$
-
-| Procédé | Dépouille usuelle |
-|---|---|
-| Injection plastique (surface lisse) | 0,5° à 1° |
-| Injection plastique (surface grainée) | 1,5° à 3° |
-| Moulage sable (fonderie) | 1° à 3° |
-| Moulage coquille | 0,5° à 2° |
-
-**RETRAIT AU MOULAGE** (à intégrer dans les cotes de l'empreinte)
-
-$$ L_{empreinte} = L_{pièce} \\times (1 + r) $$
-
-| Matière | Retrait $r$ |
-|---|---|
-| Fonte | 1,0 % |
-| Acier moulé | 2,0 % |
-| Aluminium | 1,2 % |
-| ABS | 0,5 % |
-| PA6-6 | 1,5 % |
-| POM | 2,0 % |
+**Méthode** — surfaces fonctionnelles → références → cotes fonctionnelles → reste en ISO 2768 →
+vérification de surabondance
 """,
             "exemple": """
-**Cas industriel — Modélisation d'un carter de pompe en aluminium moulé**
+### Cas industriel — Les quatre trous qui ne tombent jamais en face
 
-Le carter comporte : un corps cylindrique Ø120, une bride de fixation carrée 160×160,
-une volute (canal courbe), 4 pattes de fixation, des nervures de rigidité, et un
-alésage Ø52 H7 pour le roulement.
+**Le symptôme.** Une plaque de fixation est percée de quatre trous Ø6,5 pour être vissée sur un
+carter existant. À l'assemblage, **une vis sur quatre ne rentre pas** — jamais la même selon les
+pièces.
 
-**Arbre de création réel construit par le BE, dans l'ordre :**
+**L'analyse du plan.** Les trous étaient cotés **en chaîne** : 20 depuis le bord, puis 100
+jusqu'au deuxième, puis 100 jusqu'au troisième, chacun à ± 0,2 mm.
 
-| N° | Fonction | Type | Justification de la position dans l'arbre |
-|---|---|---|---|
-| 1 | Corps cylindrique | Révolution | Volume principal, ancré sur l'origine |
-| 2 | Bride carrée | Extrusion symétrique | Deuxième volume, s'appuie sur le plan de référence |
-| 3 | Volute | **Balayage** le long d'une spirale | Impossible en extrusion : la section suit une trajectoire courbe |
-| 4 | 1 patte de fixation | Extrusion + dépouille 2° | On n'en modélise **qu'une seule** |
-| 5 | Répétition circulaire ×4 | Duplication | Le nombre de pattes devient un paramètre modifiable |
-| 6 | Nervures | Fonction Nervure, ép. 5 mm | Paroi principale 8 mm → nervure ≈ 60 % = 5 mm |
-| 7 | Alésage Ø52 | Enlèvement de révolution | **Après** les volumes, jamais avant |
-| 8 | Perçages de bride | Perçage assisté M10 | Utilise la norme intégrée |
-| 9 | Répétition linéaire ×4 | Duplication | |
-| 10 | **Dépouilles 2°** sur faces verticales | Habillage | Obligatoire pour le démoulage |
-| 11 | **Congés R3 et R5** | Habillage | **EN DERNIER** — 47 arêtes traitées en 3 opérations |
+Le calcul du cumul :
+position du 4e trou = 20 ± 0,2 + 100 ± 0,2 + 100 ± 0,2 → **± 0,6 mm** de dispersion possible.
 
-**Ce que cet ordre évite concrètement :**
+Or les taraudages du carter, eux, sont à des positions fixes. Un écart de 0,6 mm sur un trou de
+Ø6,5 recevant une vis M6 (Ø6 nominal) ne laisse plus assez de jeu : la vis coince.
 
-Un stagiaire avait initialement placé les congés en position 4. Résultat : lorsqu'il a voulu
-faire passer la bride de 160 à 180 mm, **11 fonctions se sont mises en erreur** car les
-perçages étaient référencés sur des arêtes créées par les congés (arêtes qui avaient disparu
-ou changé d'identifiant). Il a fallu 2 h de reprise. Avec l'ordre correct, la modification
-prend **8 secondes**.
+**La correction.** Recoter les quatre trous **depuis l'axe de symétrie de la plaque**, chacun à
+± 0,2 mm indépendamment. La dispersion tombe de ± 0,6 à ± 0,2 mm, sans changer un seul réglage
+d'usinage — seulement la façon de coter.
 
-**Vérification de masse par le calcul (contrôle du modèle CAO) :**
-
-Le logiciel annonce $V = 1\\,247\\,000\\ \\mathrm{mm^3}$ pour un alliage **EN AC-46000**
-($\\rho = 2\\,700$ kg/m³) :
-
-$$ m = 2\\,700 \\times 1\\,247\\,000 \\times 10^{-9} = \\mathbf{3,37\\ kg} $$
-
-**Contrôle de cohérence par estimation manuelle :** le carter tient approximativement dans un
-parallélépipède de 160×160×140 mm, soit $3,58\\times10^6\\ \\mathrm{mm^3}$. Le rapport
-$1{,}247/3{,}58 = 35\\ \\%$ de remplissage est **plausible** pour une pièce creuse nervurée
-(fourchette habituelle : 25 à 45 %).
-
-> **Réflexe professionnel à acquérir : toujours vérifier l'ordre de grandeur de la masse
-> annoncée par le logiciel.** Une masse aberrante trahit soit un matériau mal affecté, soit
-> un volume non fermé (fuite dans le modèle surfacique), soit une unité erronée.
+**Ce que le cas apprend.** La cotation n'est pas une mise en forme du plan : **c'est une
+décision technique qui a des conséquences physiques mesurables**. La même pièce, usinée sur la
+même machine, devient bonne ou mauvaise selon la façon dont on l'a cotée.
 """,
             "exercice": """
-**Exercice type examen — Poulie moulée et stratégie de modélisation**
+### Exercice — Coter une plaque de fixation
 
-Une poulie de renvoi doit être modélisée puis moulée en **EN-GJS-500-7**
-($\\rho = 7\\,100$ kg/m³, retrait 1,0 %).
+Une plaque **120 × 60 × 8** en S235 doit être fixée par **quatre trous Ø6,5** sur un carter
+existant dont les taraudages sont espacés de **100 mm** en longueur et **40 mm** en largeur. Un
+**alésage central Ø25 H7** reçoit une bague montée serrée. La plaque appuie sur le carter par sa
+grande face.
 
-**Géométrie :**
-- Jante extérieure : Ø200, largeur 40, épaisseur 12 mm
-- Moyeu central : Ø70 extérieur, alésage Ø35 H7, largeur 40 mm
-- Liaison jante/moyeu : **voile plein** d'épaisseur 10 mm
-- 6 trous d'allègement Ø30, répartis sur un cercle de Ø135
-- Congés R4 à tous les raccords
-- Dépouille 2° sur les faces du voile
+**1.** Listez les surfaces **fonctionnelles** et justifiez chacune en une ligne.
 
-**Questions :**
+**2.** Quelle surface choisissez-vous comme **référence principale** ? Pourquoi ?
 
-1. Proposer l'arbre de création complet (ordre des fonctions), en justifiant la position
-   des congés et de la dépouille.
-2. Calculer le volume de la jante (couronne creuse).
-3. Calculer le volume du moyeu (couronne creuse).
-4. Calculer le volume du voile plein, puis déduire le volume des 6 trous d'allègement.
-5. En déduire le volume total et la masse de la poulie (négliger congés et dépouille).
-6. Calculer les dimensions de l'empreinte du moule pour le Ø200 et le Ø35, compte tenu du
-   retrait de 1,0 %.
-7. L'alésage Ø35 doit être en H7. Peut-on l'obtenir directement de fonderie ?
-   Que doit prévoir le concepteur ?
-8. Quelle serait la masse si les 6 trous d'allègement étaient supprimés ?
-   Le gain justifie-t-il leur usinage ? Discuter.
+**3.** Comment cotez-vous la position des quatre trous : en chaîne ou depuis une référence ?
+Chiffrez la dispersion dans les deux cas, avec ± 0,1 mm par cote.
+
+**4.** Les cotes 120, 60 et 8 doivent-elles porter une tolérance chiffrée ? Justifiez.
+
+**5.** Si l'on cotait 20 — 100 — 20 en longueur **et** la cote totale 120, quel serait le
+problème ? Quelle cote faut-il supprimer, et pourquoi celle-là ?
 """,
             "corrige": """
-**1. Arbre de création proposé**
+### Corrigé, en six temps
 
-| N° | Fonction | Type | Justification |
-|---|---|---|---|
-| 1 | Profil complet de la poulie (demi-section) | **Révolution** | Une seule révolution génère jante + voile + moyeu d'un coup. C'est la fonction reine des pièces axisymétriques. |
-| 2 | Alésage Ø35 | Enlèvement de révolution (ou inclus dans le profil n°1) | Peut être intégré directement au profil esquissé |
-| 3 | 1 trou d'allègement Ø30 | Enlèvement-extrusion | On n'en modélise **qu'un seul** |
-| 4 | **Répétition circulaire ×6** | Duplication | Le nombre de trous devient un paramètre |
-| 5 | **Dépouille 2°** sur les faces du voile | Habillage | Appliquée **avant** les congés : elle modifie l'orientation des faces, donc la géométrie sur laquelle les congés s'appuieront |
-| 6 | **Congés R4** | Habillage | **EN DERNIER**, systématiquement |
-| 7 | Rainure de clavette (si requise) | Enlèvement-extrusion | Après les congés, car localisée dans l'alésage |
+#### 1. Ce que dit l'énoncé
 
-**Justification de l'ordre dépouille → congés :**
-La dépouille **incline les faces** ; si les congés étaient posés avant, ils seraient recalculés
-sur des faces réorientées et pourraient générer des erreurs de régénération ou des rayons
-variables non voulus. La règle est constante : **géométrie fonctionnelle d'abord, habillage
-ensuite, congés en tout dernier.**
+Une plaque à fixer sur un carter **existant** — c'est le mot clé : les positions des taraudages
+sont **imposées**, on ne peut pas les négocier. Un alésage central reçoit une bague **serrée**,
+donc précis. La plaque **appuie** par sa grande face.
 
----
+#### 2. Quelle règle, et pourquoi
 
-**2. Volume de la jante**
+**Trois règles s'appliquent ici :**
 
-La jante est une **couronne creuse** de Ø extérieur 200, d'épaisseur radiale 12 mm, sur une
-largeur de 40 mm.
+- on cote **ce qui doit être garanti** : ce qui touche une autre pièce ;
+- **depuis une référence unique** dès qu'il faut s'assembler avec l'existant ;
+- **jamais de surabondance** : une dimension déductible des autres ne se cote pas.
 
-Diamètre intérieur de la jante :
-$$ D_{int} = 200 - 2 \\times 12 = 176\\ \\mathrm{mm} $$
+#### 3. Les conversions
 
-$$ V_{jante} = \\frac{\\pi(D_{ext}^2 - D_{int}^2)}{4} \\times \\ell = \\frac{\\pi(200^2 - 176^2)}{4} \\times 40 $$
+Aucune conversion d'unité dans cet exercice — tout est en millimètres. **Le seul calcul est un
+cumul de tolérances**, qui s'additionnent en valeur absolue quel que soit le sens.
 
-$$ V_{jante} = \\frac{\\pi(40\\,000 - 30\\,976)}{4} \\times 40 = \\frac{\\pi \\times 9\\,024}{4} \\times 40 = 7\\,088,2 \\times 40 $$
+#### 4. Le remplacement
 
-$$ \\boxed{V_{jante} = 283\\,529\\ \\mathrm{mm^3}} $$
+**Cotation en chaîne**, quatre cotes successives à ± 0,1 :
+dispersion du dernier trou = 0,1 + 0,1 + 0,1 + 0,1
 
----
+**Cotation depuis une référence unique**, chaque trou coté indépendamment depuis l'axe :
+dispersion de chaque trou = 0,1
 
-**3. Volume du moyeu**
+#### 5. Le calcul
 
-Couronne creuse : Ø extérieur 70, alésage Ø35, largeur 40 mm.
+**1. Surfaces fonctionnelles**
 
-$$ V_{moyeu} = \\frac{\\pi(70^2 - 35^2)}{4} \\times 40 = \\frac{\\pi(4\\,900 - 1\\,225)}{4} \\times 40 $$
-
-$$ V_{moyeu} = \\frac{\\pi \\times 3\\,675}{4} \\times 40 = 2\\,886,0 \\times 40 $$
-
-$$ \\boxed{V_{moyeu} = 115\\,440\\ \\mathrm{mm^3}} $$
-
----
-
-**4. Volume du voile et des trous d'allègement**
-
-**Voile plein** : couronne de Ø extérieur 176 (intérieur de la jante) à Ø intérieur 70
-(extérieur du moyeu), d'épaisseur 10 mm.
-
-$$ V_{voile} = \\frac{\\pi(176^2 - 70^2)}{4} \\times 10 = \\frac{\\pi(30\\,976 - 4\\,900)}{4} \\times 10 $$
-
-$$ V_{voile} = \\frac{\\pi \\times 26\\,076}{4} \\times 10 = 20\\,481,6 \\times 10 = \\mathbf{204\\,816\\ \\mathrm{mm^3}} $$
-
-**Trous d'allègement** : 6 cylindres Ø30, traversant le voile d'épaisseur 10 mm.
-
-$$ V_{1\\ trou} = \\frac{\\pi \\times 30^2}{4} \\times 10 = 706,86 \\times 10 = 7\\,068,6\\ \\mathrm{mm^3} $$
-
-$$ V_{6\\ trous} = 6 \\times 7\\,068,6 = \\mathbf{42\\,412\\ \\mathrm{mm^3}} $$
-
-*Vérification de faisabilité géométrique :* les trous sont sur un cercle de Ø135, soit à un
-rayon de 67,5 mm. Le voile s'étend du rayon 35 (moyeu) au rayon 88 (jante). Un trou Ø30
-occupe de $67,5 - 15 = 52,5$ à $67,5 + 15 = 82,5$ mm. Ces valeurs sont bien comprises entre
-35 et 88 → **les trous sont entièrement dans le voile** ✔️
-
-*Entraxe angulaire :* $360°/6 = 60°$. Distance entre deux centres :
-$2 \\times 67,5 \\times \\sin(30°) = 67,5$ mm $> 30$ mm → **pas de recouvrement** ✔️
-
----
-
-**5. Volume total et masse**
-
-$$ V_{total} = V_{jante} + V_{moyeu} + V_{voile} - V_{6\\ trous} $$
-
-$$ V_{total} = 283\\,529 + 115\\,440 + 204\\,816 - 42\\,412 $$
-
-$$ \\boxed{V_{total} = 561\\,373\\ \\mathrm{mm^3}} $$
-
-**Masse :**
-$$ m = \\rho \\times V = 7\\,100 \\times 561\\,373 \\times 10^{-9} $$
-
-$$ \\boxed{m = 3,986\\ \\mathrm{kg} \\approx \\mathbf{3,99\\ kg}} $$
-
----
-
-**6. Dimensions de l'empreinte du moule (retrait 1,0 %)**
-
-La pièce **se contracte** en refroidissant : l'empreinte doit donc être **plus grande** que
-la pièce finie.
-
-$$ L_{empreinte} = L_{pièce} \\times (1 + r) = L_{pièce} \\times 1,01 $$
-
-| Cote pièce | Calcul | Cote empreinte |
+| Surface | Fonctionnelle ? | Pourquoi |
 |---|---|---|
-| Ø200 (jante) | $200 \\times 1,01$ | **Ø202,0 mm** |
-| Ø35 (alésage) | $35 \\times 1,01$ | **Ø35,35 mm** |
-| Largeur 40 | $40 \\times 1,01$ | **40,4 mm** |
-| Ø135 (cercle des trous) | $135 \\times 1,01$ | **Ø136,35 mm** |
+| grande face d'appui | **oui** | elle porte sur le carter |
+| alésage Ø25 H7 | **oui** | il reçoit la bague serrée |
+| position des 4 trous | **oui** | ils doivent tomber en face des taraudages |
+| chants extérieurs, face opposée | non | ils ne touchent rien |
+| épaisseur 8 | non | aucune fonction n'en dépend |
 
-⚠️ **Point souvent mal compris :** le retrait s'applique **aussi aux alésages**, dans le même
-sens. Le noyau qui forme l'alésage Ø35 doit mesurer Ø35,35 — car en se contractant, la fonte
-**se resserre sur le noyau**. (C'est d'ailleurs pourquoi les noyaux de fonderie doivent être
-destructibles ou en sable : sinon la pièce les emprisonne.)
+**2. Référence principale** : la **grande face d'appui** — c'est elle qui positionne la plaque
+dans le mécanisme. Puis l'**axe de symétrie** comme référence pour les trous.
 
----
+**3. Dispersion** : en chaîne, **± 0,4 mm** sur le dernier trou. Depuis une référence unique,
+**± 0,1 mm** pour chacun — **quatre fois mieux**, sans rien changer à l'usinage. On cote donc
+depuis l'axe de symétrie.
 
-**7. Obtention de l'alésage Ø35 H7**
+**4. Les cotes 120, 60 et 8** ne conditionnent aucun assemblage : **pas de tolérance chiffrée**,
+elles relèvent d'ISO 2768-m (≈ ± 0,3 mm).
 
-**Non, c'est impossible directement de fonderie.**
+**5. La surabondance.** 20 + 100 + 20 = 120 : la cote totale est **déductible** des trois
+autres. Il faut **supprimer la cote totale 120**, parce que c'est **l'entraxe des trous** qui est
+fonctionnel, pas la longueur de la plaque. Garder les quatre créerait des exigences
+contradictoires dès l'application des tolérances.
 
-*Précision de la fonderie :* le moulage sable donne au mieux une tolérance **IT13 à IT15**,
-soit pour Ø35 (tranche 30-50) : IT13 = 390 µm, IT15 = 1 000 µm.
-*Précision requise :* Ø35 **H7** → IT7 = **25 µm**.
+#### 6. La vérification
 
-$$ \\frac{390}{25} = 15,6 \\quad \\Rightarrow \\quad \\textbf{la fonderie est 16 fois trop imprécise} $$
+**Comptez les cotes tolérancées** : trois (l'alésage H7, et les deux entraxes 100 et 40) sur une
+quinzaine au total. **Le ratio est cohérent avec les 20 % attendus** — si les deux tiers des
+cotes portaient des tolérances, il faudrait se demander lesquelles ont vraiment une fonction.
 
-Sans compter l'état de surface : Ra 12,5 à 25 en brut de fonderie, contre Ra 1,6 exigé pour
-une portée H7.
-
-**Ce que le concepteur doit prévoir :**
-
-1. **Une surépaisseur d'usinage** sur l'alésage : couler un trou brut de **Ø32** (soit 1,5 mm
-   de surépaisseur au rayon), puis **aléser à Ø35 H7**.
-2. **Des surfaces de mise en position** (appuis usinés ou zones brutes de référence) pour
-   reprendre la pièce en machine.
-3. **Une surépaisseur sur les faces latérales du moyeu** (0,5 à 1 mm) si elles servent d'appui.
-4. Une **gamme d'usinage** : tournage de reprise en 2 phases avec référence sur la jante.
-5. Indiquer sur le plan les **surfaces brutes de fonderie** (symbole d'état de surface avec
-   cercle = enlèvement de matière interdit) et les **surfaces usinées**.
-
-> **Règle générale à retenir : la fonderie donne la FORME, l'usinage donne la PRÉCISION.**
-> Toute surface fonctionnelle (portée, appui, alésage ajusté) doit être reprise en usinage,
-> et donc recevoir une surépaisseur au stade de la conception du modèle.
-
----
-
-**8. Masse sans les trous d'allègement — analyse coût/bénéfice**
-
-$$ V_{sans\\ trous} = 283\\,529 + 115\\,440 + 204\\,816 = 603\\,785\\ \\mathrm{mm^3} $$
-
-$$ m_{sans\\ trous} = 7\\,100 \\times 603\\,785 \\times 10^{-9} = \\mathbf{4,287\\ kg} $$
-
-**Gain de masse apporté par les trous :**
-$$ \\Delta m = 4,287 - 3,986 = \\mathbf{0,301\\ kg} \\qquad \\text{soit } \\frac{0,301}{4,287} \\times 100 = \\mathbf{7,0\\ \\%} $$
-
-**Discussion — les arguments à peser :**
-
-| ✅ En faveur des trous | ❌ Contre les trous |
-|---|---|
-| **Réduction de l'inertie** : les trous sont à R = 67,5 mm, donc leur suppression de matière réduit $J$ de façon significative → **accélération/décélération plus rapides** | **Coût d'usinage** : 6 perçages Ø30 = 6 opérations, soit ~4 à 6 min machine + outillage |
-| Économie de matière : 0,3 kg de fonte par pièce | Sur une **pièce moulée**, les trous peuvent être **venus de fonderie** (noyaux) → coût quasi nul, mais moule plus complexe |
-| Meilleur refroidissement de la fonte (épaisseurs plus homogènes → moins de retassures) | Concentration de contrainte autour des trous ($K_t \\approx 2,2$) |
-| Facilite la manutention (prises de main) | Si la poulie tourne vite, les trous génèrent du **bruit aérodynamique** |
-
-**Calcul complémentaire décisif — le moment d'inertie :**
-
-Le vrai bénéfice n'est pas la masse mais l'**inertie de rotation** $J = \\sum m_i r_i^2$.
-Les trous retirent 0,301 kg à un rayon moyen de 67,5 mm :
-
-$$ \\Delta J \\approx 0,301 \\times 0,0675^2 = 1,37\\times10^{-3}\\ \\mathrm{kg\\cdot m^2} $$
-
-Inertie totale approximative de la poulie : $J \\approx 0,020\\ \\mathrm{kg\\cdot m^2}$
-→ **réduction d'environ 7 %** de l'inertie également.
-
-**Conclusion argumentée :**
-
-- **Si la poulie est en rotation permanente à vitesse constante** (renvoi de courroie
-  classique) : les trous sont **peu justifiés**. 7 % de masse pour 6 opérations d'usinage,
-  le retour sur investissement est faible. **On les supprime**, sauf s'ils sont venus de fonderie.
-
-- **Si la poulie subit des démarrages/arrêts fréquents** (axe asservi, machine à cycles
-  rapides) : les trous sont **pleinement justifiés**. L'inertie pénalise directement les temps
-  de cycle et la consommation du moteur.
-
-- **Si la pièce est produite en grande série moulée** : les trous **venus de fonderie**
-  (par noyaux) ne coûtent presque rien et apportent en prime une meilleure santé métallurgique
-  (épaisseurs plus régulières → moins de retassures). **On les garde.**
-
-> **La leçon de conception :** un allègement ne se juge jamais en pourcentage de masse seul.
-> Il se juge sur **ce que la masse coûte réellement dans l'usage** — inertie, énergie,
-> manutention — mis en regard du **surcoût de fabrication**.
+**Le test final** : l'atelier peut-il fabriquer et contrôler avec ce plan sans téléphoner ? Oui
+— chaque surface fonctionnelle a sa cote, sa référence et sa tolérance ; le reste est couvert par
+le cartouche.
 """,
         },
         {
-            "id": "5.3",
-            "titre": "Assemblages, mise en plan et formats d'échange",
-            "duree": "14 h",
+            "id": '5.3',
+            "titre": 'Tolérances dimensionnelles et lecture de table ISO',
+            "duree": '6 h',
             "cours": """
-### 1. Assemblage : la logique des contraintes
+### Le vocabulaire, en français courant
 
-Un assemblage positionne des pièces les unes par rapport aux autres. Chaque pièce libre dans
-l'espace possède **6 degrés de liberté** (3 translations + 3 rotations). Les contraintes
-d'assemblage les suppriment progressivement.
+| Terme | Ce que ça veut dire |
+|---|---|
+| **cote nominale** | la valeur de référence lue sur le plan (le « 30 » de Ø30 H7) |
+| **écart supérieur** | ce qu'on ajoute au nominal pour obtenir le maximum |
+| **écart inférieur** | ce qu'on ajoute pour obtenir le minimum |
+| **IT** | l'**intervalle de tolérance** : la largeur de la zone acceptée |
+| **alésage** | toute surface contenante (un trou, une rainure) |
+| **arbre** | toute surface contenue (un axe, une languette) |
 
-| Contrainte | DDL supprimés | Usage |
+### 1. « 20 mm » n'existe pas
+
+Demandez dix pièces de 20 mm à un tourneur : vous obtiendrez 19,98 · 20,01 · 19,99 · 20,03…
+Ce n'est pas un mauvais ouvrier — **aucune machine au monde ne sort deux pièces identiques**.
+L'outil s'use, la matière chauffe, l'atelier n'a pas la même température le matin.
+
+[[FIG:pourquoi_tolerance]]
+
+Le concepteur doit donc dire : **entre quelles valeurs la pièce reste bonne**.
+
+### 2. Le vocabulaire, sur un exemple
+
+Pour une cote écrite **20 +0,05 / −0,02** :
+
+| Terme | Valeur |
+|---|---|
+| cote nominale | 20 |
+| écart supérieur (es/ES) | +0,05 |
+| écart inférieur (ei/EI) | −0,02 |
+| cote **maxi** | 20,05 |
+| cote **mini** | 19,98 |
+| **IT** | 0,07 |
+
+**Trois précisions qui évitent des erreurs :**
+
+- **l'IT est toujours positif** : c'est une largeur (maxi − mini), jamais l'inverse ;
+- les deux écarts peuvent être **tous deux positifs ou négatifs** — le nominal n'est pas
+  forcément au milieu ;
+- **le nominal n'est pas toujours atteignable** : pour un arbre g6, une pièce mesurant
+  exactement 30,000 serait **rebutée**.
+
+**La convention majuscules/minuscules, qui commande toute la norme :**
+
+> **MAJUSCULES = alésage** (ES, EI) · **minuscules = arbre** (es, ei)
+
+*Astuce : la majuscule est **grande**, comme le trou qui accueille l'autre pièce.*
+
+### 3. Le code ISO : une lettre et un chiffre
+
+[[FIG:lettres_et_grades]]
+
+**La LETTRE fixe la POSITION** de la zone par rapport au nominal — c'est elle qui crée le jeu ou
+le serrage. Deux lettres ont un statut particulier : **H** (alésage, EI = 0) et **h** (arbre,
+es = 0).
+
+**Le CHIFFRE (grade IT) fixe la LARGEUR.** IT6 est plus serré qu'IT7, lui-même plus serré
+qu'IT11.
+
+**Le point qui surprend :** pour un même grade, **l'IT grandit avec le diamètre**. IT7 vaut
+21 µm sur Ø30, mais 35 µm sur Ø100 — il est plus difficile de tenir la même précision absolue
+sur une grosse pièce.
+
+### 4. Lire une table ISO 286, en 4 gestes numérotés
+
+[[FIG:lire_table_iso]]
+
+**Geste 1 — Trouver la LIGNE du diamètre.** Les tables sont découpées en plages
+(« au-dessus de 18, jusqu'à 30 »). Une lecture dans la mauvaise ligne fausse tout.
+
+**Geste 2 — Lire l'IT dans la colonne du grade.** Pour Ø30 IT7 : **21 µm**.
+
+**Geste 3 — Lire l'écart de la LETTRE**, en faisant attention au sens :
+
+| Lettres | La table donne | On calcule |
 |---|---|---|
-| **Coïncidence** (face/face) | 3 (1 T + 2 R) | Mise à plat |
-| **Coaxialité** (cylindre/cylindre) | 4 (2 T + 2 R) | Axe dans alésage |
-| **Distance** | 1 | Réglage d'un jeu |
-| **Angle** | 1 | Orientation |
-| **Parallélisme / Perpendicularité** | 2 | Orientation de faces |
-| **Tangence** | 1 | Came, galet |
+| **a à h** | l'écart **supérieur** es (≤ 0) | ei = es − IT |
+| **k à z** | l'écart **inférieur** ei (≥ 0) | es = ei + IT |
 
-**La première pièce insérée est FIXE par défaut** (ancrée sur l'origine de l'assemblage) :
-c'est le bâti. Toutes les autres se positionnent par rapport à elle.
+*C'est logique : les premières lettres placent l'arbre **sous** le nominal (du jeu), les
+dernières **au-dessus** (du serrage).*
 
-**Erreur classique :** sur-contraindre l'assemblage. Un axe dans un alésage a besoin d'une
-**coaxialité** (4 DDL) + une **coïncidence de butée** (1 DDL) = 5 DDL supprimés. Il reste
-**1 DDL : la rotation** — c'est exactement ce qu'on veut pour une liaison pivot. Ajouter une
-contrainte de plus figerait la simulation de mouvement.
+**Geste 4 — Convertir en millimètres.** La table donne des **micromètres**, le plan attend des
+**millimètres** : **21 µm = 0,021 mm**, jamais 0,21.
 
-### 2. Assemblage descendant / ascendant
+**Application immédiate — Ø30 g6 :** IT6 = 13 µm, g : es = −7 µm.
+es = −0,007 · ei = −0,007 − 0,013 = −0,020
+→ l'arbre est bon entre **29,980 et 29,993 mm**.
 
-| Méthode | Principe | Quand l'utiliser |
+### 5. Le coût de chaque zéro après la virgule
+
+Chaque cran de précision ne change pas seulement le temps d'usinage : il change **le moyen de
+production**, donc la machine, l'opérateur, le moyen de contrôle et le taux de rebut.
+
+**D'où la règle qui vous suivra toute votre carrière :** *on ne serre une tolérance que si une
+fonction l'exige.*
+
+### 6. Valeurs à connaître par cœur (Ø30)
+
+| Grade | IT | Se fabrique par |
 |---|---|---|
-| **Ascendant** (*bottom-up*) | On modélise les pièces séparément puis on les assemble | Composants standards, pièces indépendantes |
-| **Descendant** (*top-down*) | On esquisse l'assemblage, puis on crée les pièces dedans | Pièces dont les formes dépendent les unes des autres (capot épousant un châssis) |
+| IT6 | 13 µm | rectification, alésage fin |
+| **IT7** | **21 µm** | **le grade le plus courant en mécanique** |
+| IT8 | 33 µm | usinage normal |
+| IT11 | 130 µm | tolérance large |
 
-Le **squelette** (esquisse d'assemblage pilote) est l'outil du descendant : une esquisse
-maîtresse définit les entraxes et les encombrements, et toutes les pièces s'y réfèrent.
+Retenez au minimum **IT7 ≈ 21 µm sur Ø30** : c'est votre repère pour juger si une tolérance
+imposée est réaliste.
 
-### 3. Simulation de mouvement et détection d'interférences
+### 7. Les erreurs classiques
 
-Trois vérifications obligatoires avant validation d'un assemblage :
+1. **Confondre micromètres et millimètres** — l'erreur la plus fréquente et la plus grave.
+2. **Confondre la lettre et le chiffre** : la lettre place la zone, le chiffre en donne la
+   largeur.
+3. **Prendre l'écart d'un arbre pour celui d'un alésage** (majuscule/minuscule).
+4. **Se tromper de sens** entre les lettres a-h et k-z.
+5. **Oublier que l'IT dépend du diamètre.**
+6. **Serrer par précaution** : du H7 partout double la facture sans rien améliorer.
 
-1. **Détection d'interférences** : deux volumes qui se pénètrent → erreur de conception.
-   ⚠️ Attention : un ajustement serré (H7/p6) apparaît comme une interférence — c'est normal.
-2. **Analyse des jeux** (*clearance*) : distance minimale entre pièces mobiles.
-3. **Étude de mouvement** : parcours complet de la course, recherche de collision en position
-   intermédiaire (souvent le point critique n'est ni au début ni à la fin).
+### 8. À retenir
 
-### 4. Mise en plan à partir du modèle 3D
-
-La mise en plan est **associative** : toute modification du 3D se répercute automatiquement.
-
-**Éléments obligatoires d'un plan de définition :**
-- **Cartouche** : titre, indice, échelle, format, auteur, date, projection, matériau, masse
-- **Vues** nécessaires et suffisantes (voir fiche 1.2)
-- **Cotation complète et fonctionnelle** (fiches 1.3 et 2.1)
-- **Tolérances géométriques** (fiche 2.3)
-- **États de surface**
-- **Tolérances générales** : mention `ISO 2768-mK` (m = moyen, K = classe géométrique)
-- **Traitement** et **matériau**
-
-Pour un **plan d'ensemble** s'ajoutent : les **repères** (bulles), la **nomenclature**
-(repère / nombre / désignation / matière / observations), et les **cotes d'encombrement**.
-
-### 5. Formats d'échange — le point critique de l'interopérabilité
-
-| Format | Type | Ce qu'il conserve | Usage |
-|---|---|---|---|
-| **.SLDPRT / .CATPart** | Natif | **Tout** : arbre, paramètres, historique | Travail interne |
-| **STEP** (.stp, AP214/AP242) | Neutre **volumique** | Géométrie exacte (BREP), topologie, parfois couleurs. **Perd l'historique** | ✅ **Le standard des échanges industriels** |
-| **IGES** (.igs) | Neutre **surfacique** | Surfaces, souvent non cousues | Ancien, à éviter sauf nécessité |
-| **Parasolid** (.x_t) | Noyau géométrique | Géométrie exacte | Échange entre logiciels partageant le noyau |
-| **STL** | Maillage **triangulaire** | **Approximation** par facettes. Pas de courbes exactes | ✅ **Impression 3D** |
-| **3MF** | Maillage enrichi | Maillage + couleurs + matériaux + unités | Impression 3D moderne |
-| **PDF 3D / eDrawings** | Visualisation | Vue seule, pas de géométrie exploitable | Revue de projet, client |
-
-**Règle professionnelle :**
-> **STEP AP214 pour envoyer une pièce à un usineur. STL (ou 3MF) pour l'impression 3D.
-> Jamais l'inverse.**
-
-Envoyer un STL à un usineur est une faute : il ne peut pas en extraire un Ø20 H7, seulement
-un polyèdre approché à 0,05 mm près.
-
-### 6. Préparation à l'impression 3D
-
-Paramètres à maîtriser lors de l'export STL :
-- **Tolérance de corde** (écart max entre facette et surface réelle) : 0,01 à 0,05 mm
-- **Écart angulaire** : 5 à 15°
-- Plus le maillage est fin, plus le fichier est lourd (un STL de 200 Mo est ingérable)
-
-Contraintes de conception spécifiques à l'impression FDM :
-- **Anisotropie** : la pièce est **30 à 50 % moins résistante** dans l'axe Z (entre couches)
-  → orienter la pièce pour que les efforts soient **dans le plan des couches**
-- **Porte-à-faux** : au-delà de **45°**, des supports sont nécessaires
-- **Trous** : imprimés systématiquement **sous-dimensionnés** (retrait + effet d'escalier)
-  → prévoir 0,2 à 0,4 mm de jeu, ou percer après impression
-- **Première couche** : prévoir un chanfrein ou un congé de pied pour l'adhérence
+- **IT = cote maxi − cote mini**, toujours positif.
+- **MAJUSCULE = alésage · minuscule = arbre.**
+- **Lettre = position** (le jeu) · **chiffre = largeur** (la précision).
+- **H : EI = 0** · **h : es = 0** · l'IT **grandit avec le diamètre**.
+- Table en **micromètres**, plan en **millimètres** : 21 µm = 0,021 mm.
+- Repère : **IT7 ≈ 21 µm sur Ø30**.
 """,
             "formules": """
-**DEGRÉS DE LIBERTÉ D'UN ASSEMBLAGE**
+**Vocabulaire** — cote maxi = nominale + écart sup · cote mini = nominale + écart inf
+**IT = maxi − mini** (toujours positif)
 
-Un solide libre dans l'espace : **6 DDL** (3 translations + 3 rotations)
+**Convention** — MAJUSCULES (ES, EI) = alésage · minuscules (es, ei) = arbre
 
-$$ DDL_{restants} = 6 - \\sum DDL_{supprimés\\ par\\ contraintes} $$
+**Alésage H** — EI = 0 · ES = IT → de nominal à nominal + IT
+**Arbre h** — es = 0 · ei = −IT
 
-| Liaison à obtenir | DDL restants | Contraintes CAO typiques |
-|---|---|---|
-| Encastrement | 0 | Coïncidence + coaxialité + coïncidence plane |
-| **Pivot** | 1 (rotation) | Coaxialité + coïncidence de butée |
-| **Glissière** | 1 (translation) | 2 coïncidences planes |
-| **Pivot glissant** | 2 | Coaxialité seule |
-| Rotule | 3 | Coïncidence de points |
+**Lecture de table** — lettres **a à h** : la table donne **es**, puis ei = es − IT
+lettres **k à z** : la table donne **ei**, puis es = ei + IT
 
-**Mobilité d'un mécanisme (formule de Grübler-Kutzbach, plan)**
+**Valeurs Ø30** — IT6 = 13 µm · **IT7 = 21 µm** · IT8 = 33 · IT9 = 52 · IT11 = 130
 
-$$ m = 3(n - 1) - 2 j_1 - j_2 $$
-
-où $n$ = nombre de pièces (bâti compris), $j_1$ = liaisons à 1 DDL (pivot, glissière),
-$j_2$ = liaisons à 2 DDL.
-
-*Exemple — mécanisme bielle-manivelle :* $n = 4$, $j_1 = 4$ (3 pivots + 1 glissière), $j_2 = 0$
-$$ m = 3(4-1) - 2\\times4 = 9 - 8 = \\mathbf{1} \\quad \\text{✔️ un seul moteur suffit} $$
-
-**TOLÉRANCES GÉNÉRALES ISO 2768-m** (à connaître, elles s'appliquent à toute cote non tolérancée)
-
-| Domaine (mm) | Écart admissible |
-|---|---|
-| 0,5 à 3 | ± 0,1 |
-| 3 à 6 | ± 0,1 |
-| 6 à 30 | ± 0,2 |
-| 30 à 120 | ± 0,3 |
-| 120 à 400 | ± 0,5 |
-| 400 à 1000 | ± 0,8 |
-
-**QUALITÉ D'UN MAILLAGE STL**
-
-Erreur de corde maximale pour un cylindre de rayon $R$ maillé avec un angle $\\theta$ par facette :
-
-$$ e = R\\left(1 - \\cos\\frac{\\theta}{2}\\right) $$
-
-*Exemple : $R = 25$ mm, $\\theta = 10°$ → $e = 25(1 - \\cos 5°) = 25 \\times 0,0038 = 0,095$ mm.*
-Pour descendre sous 0,01 mm, il faut $\\theta \\approx 3°$, ce qui multiplie le nombre de
-facettes par 11.
-
-**ANISOTROPIE EN IMPRESSION FDM**
-
-$$ R_{m,Z} \\approx k \\times R_{m,XY} \\qquad \\text{avec } k = 0,5 \\text{ à } 0,7 $$
-
-**TEMPS D'IMPRESSION (estimation)**
-
-$$ t \\approx \\frac{V_{pièce} \\times (\\text{taux de remplissage}) + V_{supports}}{\\text{débit d'extrusion}} $$
-
-**RETRAIT ET JEU D'ASSEMBLAGE EN FDM**
-
-| Type d'ajustement | Jeu à prévoir au modèle |
-|---|---|
-| Glissant (pièces mobiles) | 0,3 à 0,5 mm au diamètre |
-| Ajusté (montage à la main) | 0,15 à 0,25 mm |
-| Serré (montage forcé) | 0 à 0,1 mm |
+**Unités** — table en µm, plan en mm · 1 µm = 0,001 mm
 """,
             "exemple": """
-**Cas industriel — Chaîne complète : de la CAO à la pièce imprimée puis usinée**
+### Cas industriel — Le facteur 10 qui passe inaperçu
 
-Un BE conçoit un **support de capteur** pour une ligne de production. Le projet suit deux
-chemins parallèles : un prototype imprimé pour valider l'implantation, une série usinée.
+**Le symptôme.** Un lot de 80 axes Ø30 g6 est refusé au contrôle client : les pièces mesurent
+entre 29,79 et 29,93 mm, alors que la fiche de contrôle interne les avait toutes déclarées
+bonnes.
 
-**PHASE 1 — Modélisation et assemblage numérique**
+**L'analyse.** Le technicien méthodes avait décodé le g6 ainsi :
 
-| Étape | Action | Contrôle effectué |
-|---|---|---|
-| 1 | Import du **profilé 40×40 STEP** fourni par le fournisseur | Vérification des unités (mm) et de l'orientation |
-| 2 | Modélisation du support en **descendant**, esquissé sur la face du profilé | Le support épouse la rainure automatiquement |
-| 3 | Insertion du **capteur STEP** (fichier constructeur) | |
-| 4 | Contraintes : coaxialité vis/trou + coïncidence face/face | DDL restants vérifiés = 0 (encastrement) |
-| 5 | **Détection d'interférences** | 1 interférence détectée : la tête de vis touche le capteur → décalage de 3 mm |
-| 6 | **Analyse de jeu** avec les bouteilles en mouvement | Jeu minimal 12 mm ✔️ (mini requis 8 mm) |
+> es = −7 µm → **−0,7 mm** · ei = −20 µm → **−0,20 mm**
+> soit une zone annoncée de **29,30 à 29,93 mm**
 
-**PHASE 2 — Prototype imprimé (validation d'implantation)**
+Il avait divisé par 10 au lieu de 1 000 : **7 µm valent 0,007 mm, pas 0,7 mm**. La zone réelle
+est **29,980 à 29,993 mm** — cent fois plus étroite que ce qu'il avait calculé.
 
-Export **STL**, tolérance de corde 0,02 mm, écart angulaire 8° → fichier de 4,2 Mo.
+**Pourquoi personne ne l'a vu.** Les valeurs annoncées « ressemblaient » à des cotes plausibles.
+Rien dans le nombre 29,30 ne signale qu'il est faux — c'est ce qui rend cette erreur si
+dangereuse.
 
-Décisions d'impression :
+**Le contrôle qui l'aurait évitée.** Un IT6 sur Ø30 vaut **13 µm, soit 0,013 mm**. Une zone de
+tolérance annoncée à 0,63 mm de large aurait dû alerter immédiatement : c'est 48 fois l'IT6.
 
-| Paramètre | Choix | Justification |
-|---|---|---|
-| **Orientation** | Face d'appui à plat sur le plateau | Les efforts de serrage sont **dans le plan des couches** → on évite l'axe Z faible |
-| Remplissage | 40 % gyroïde | Compromis rigidité/temps |
-| Matière | PETG | Meilleure tenue thermique que le PLA (atelier à 35 °C l'été) |
-| Trous Ø8,5 | Modélisés à **Ø8,9** | Compensation du retrait FDM (+0,4 mm) |
-| Supports | Aucun | La pièce a été orientée pour que tous les porte-à-faux soient < 45° |
-
-Résultat : prototype en 2 h 40, monté sur ligne le lendemain. **Deux défauts détectés que la
-CAO n'avait pas révélés** : le câble du capteur frottait sur une arête (ajout d'un congé R5),
-et le support gênait l'accès à la vis de réglage voisine (échancrure ajoutée).
-
-**PHASE 3 — Série usinée**
-
-Export **STEP AP214** vers l'usineur, accompagné du **plan de définition 2D** portant :
-- Ø8,5 **H9** sur les trous de fixation
-- ⊥ 0,1 A sur la face d'appui du capteur
-- Ra 3,2 sur les faces usinées, Ra 6,3 ailleurs
-- `ISO 2768-mK` pour les cotes générales
-- Matière : **EN AW-6082 T6**, anodisation naturelle 15 µm
-
-**Ce que l'usineur n'aurait PAS pu faire avec le STL :** lire le H9, lire la perpendicularité,
-lire le Ra. Le STL ne contient que des triangles — aucune sémantique.
-
-> **La leçon centrale : STL = forme approchée pour prototypage. STEP + plan 2D = définition
-> contractuelle de la pièce.** Les deux ne sont pas interchangeables.
+**Ce que le cas apprend.** Retenez un repère chiffré — **IT7 ≈ 0,021 mm sur Ø30** — et
+comparez-y systématiquement vos résultats. Un ordre de grandeur mémorisé vaut mieux qu'une
+relecture de calcul.
 """,
             "exercice": """
-**Exercice type examen — Assemblage, mobilité et préparation de fabrication**
+### Exercice — Décoder deux cotes tolérancées
 
-Un mécanisme de serrage rapide comporte : un **bâti** (1), un **levier** (2) articulé sur le
-bâti, une **biellette** (3), et un **poussoir** (4) coulissant dans le bâti.
-Liaisons : pivot 1-2, pivot 2-3, pivot 3-4, glissière 4-1.
+Données de table pour la plage **30 à 50 mm** : IT7 = 25 µm, IT8 = 39 µm, écart de **f** :
+es = −25 µm.
 
-**PARTIE A — Assemblage numérique**
+**1.** Décodez **Ø45 f7** : donnez les deux écarts en millimètres, puis les cotes maxi et mini.
 
-1. Calculer la mobilité du mécanisme par la formule de Grübler. Combien d'actionneurs faut-il ?
-2. Dans le logiciel de CAO, quelles contraintes poser pour réaliser le **pivot 1-2** ?
-   Combien de DDL restent supprimés, combien restent libres ?
-3. Un stagiaire ajoute une contrainte de parallélisme entre le levier et le bâti.
-   Que se passe-t-il ? Expliquer.
-4. Citer les **trois vérifications** à effectuer avant de valider un assemblage, et indiquer
-   pour chacune une erreur typique qu'elle permet de détecter.
+**2.** Décodez **Ø45 H8** : mêmes questions.
 
-**PARTIE B — Formats d'échange**
+**3.** Pour chacune, indiquez si la cote nominale 45,000 est **atteignable** par une pièce
+bonne.
 
-Le poussoir (4) est un cylindre Ø20 h7, longueur 90, avec une gorge de circlips et un
-chanfrein 1,5×45°.
+**4.** Un technicien annonce que l'arbre f7 est bon entre 44,50 et 44,75 mm. Quelle erreur a-t-il
+commise, et par quel contrôle simple aurait-il pu s'en apercevoir ?
 
-5. On veut le faire fabriquer par un sous-traitant. Quel(s) fichier(s) lui envoyer ? Justifier.
-6. On veut en imprimer un prototype. Quel format ? Quels paramètres d'export ?
-7. Le poussoir est maillé en STL avec un écart angulaire de 12°. Calculer l'erreur de corde
-   sur le Ø20. Est-ce acceptable pour un prototype d'implantation ? Pour un contrôle
-   dimensionnel ?
-8. Le prototype imprimé doit coulisser dans un alésage Ø20 également imprimé.
-   Quelle cote modéliser pour le poussoir ? Justifier.
-9. Le sous-traitant renvoie un STEP dont l'alésage mesure Ø19,987. Est-ce conforme au h7 ?
-   *(Donnée : tranche 18-30, IT7 = 21 µm.)* Attention au piège de l'énoncé.
+**5.** Quelle est la valeur de l'IT dans chaque cas, et laquelle des deux pièces est la plus
+précise à fabriquer ?
 """,
             "corrige": """
-**PARTIE A — ASSEMBLAGE NUMÉRIQUE**
+### Corrigé, en six temps
 
-**1. Mobilité du mécanisme**
+#### 1. Ce que dit l'énoncé
 
-Inventaire :
-- **Pièces** : bâti (1), levier (2), biellette (3), poussoir (4) → $n = 4$
-- **Liaisons à 1 DDL** : pivot 1-2, pivot 2-3, pivot 3-4, glissière 4-1 → $j_1 = 4$
-- **Liaisons à 2 DDL** : aucune → $j_2 = 0$
+Deux cotes ISO à décoder sur la **même plage de diamètre** (30 à 50 mm). Une lettre minuscule
+(**f**) donc un **arbre**, une majuscule (**H**) donc un **alésage**. Les données de table sont
+fournies : rien à chercher ailleurs.
 
-$$ m = 3(n-1) - 2j_1 - j_2 = 3(4-1) - 2\\times4 - 0 = 9 - 8 = \\mathbf{1} $$
+#### 2. Quelle règle, et pourquoi
 
-$$ \\boxed{\\textbf{Mobilité } m = 1 \\;\\Rightarrow\\; \\textbf{UN SEUL actionneur suffit}} $$
+**MAJUSCULE = alésage, minuscule = arbre.** Ensuite, le sens de lecture dépend de la lettre :
+**f** est dans la plage a-h, donc la table donne l'écart **supérieur** ; **H** impose **EI = 0**
+par définition.
 
-**Interprétation physique :** en imposant une seule grandeur d'entrée — ici l'**angle du levier**,
-actionné à la main — toutes les autres positions sont **entièrement déterminées**. C'est
-précisément ce qu'on attend d'un mécanisme de serrage : un geste, une position de sortie.
+#### 3. Les conversions
 
-*C'est le mécanisme bielle-manivelle classique, celui du moteur à explosion et de la presse
-à genouillère.*
+**La seule, et la plus piégeuse : µm → mm.**
 
----
+25 µm = **0,025 mm** · 39 µm = **0,039 mm**
 
-**2. Contraintes CAO pour le pivot 1-2**
+*Écrire 0,25 au lieu de 0,025 est l'erreur qui fait accepter des pièces dix fois hors
+tolérance.*
 
-| Contrainte | DDL supprimés |
+#### 4. Le remplacement
+
+**Arbre Ø45 f7** (lettre a-h → la table donne es) :
+es = **−0,025** · ei = es − IT7 = −0,025 − 0,025
+
+**Alésage Ø45 H8** (H → EI = 0) :
+EI = **0** · ES = EI + IT8 = 0 + 0,039
+
+#### 5. Le calcul
+
+**1.** Arbre f7 : es = **−0,025 mm**, ei = **−0,050 mm** → bon entre **44,950 et 44,975 mm**
+
+**2.** Alésage H8 : EI = **0**, ES = **+0,039 mm** → bon entre **45,000 et 45,039 mm**
+
+**3.** Pour l'**arbre f7** : la zone est entièrement **sous** le nominal — une pièce à 45,000
+serait **rebutée**. Pour l'**alésage H8** : 45,000 est la **borne inférieure**, donc une pièce à
+exactement 45,000 est **acceptée** (tout juste).
+
+**4.** Le technicien a annoncé une zone de **0,25 mm de large** au lieu de **0,025 mm** : il a
+divisé les micromètres par 100 au lieu de 1 000. **Le contrôle qui l'aurait sauvé** : un IT7 sur
+cette plage vaut 25 µm, soit 0,025 mm — annoncer 0,25 mm, c'est annoncer dix fois l'IT, ce qui
+est impossible par construction.
+
+**5.** IT7 = **0,025 mm** (arbre) · IT8 = **0,039 mm** (alésage). **L'arbre f7 est le plus
+précis** à fabriquer : sa zone est plus étroite.
+
+#### 6. La vérification
+
+**Ordre de grandeur** : des IT de 25 et 39 µm sur un Ø45 sont cohérents avec le repère à
+connaître (IT7 ≈ 21 µm sur Ø30, un peu plus sur un diamètre supérieur). Si l'on avait trouvé
+250 µm ou 2 µm, il y aurait une erreur d'unité.
+
+**Cohérence des deux zones** : l'alésage est toujours au-dessus de 45, l'arbre toujours en
+dessous de 44,975 — **il y aura donc toujours du jeu** entre les deux, ce que confirmera le
+calcul d'ajustement de la fiche 5.4.
+""",
+        },
+        {
+            "id": '5.4',
+            "titre": 'Les ajustements',
+            "duree": '5 h',
+            "cours": """
+### Le vocabulaire, en français courant
+
+| Terme | Ce que ça veut dire |
 |---|---|
-| **Coaxialité** entre l'axe du levier et l'alésage du bâti | **4** (2 translations + 2 rotations) |
-| **Coïncidence** de la face d'appui du levier sur le bâti (butée axiale) | **1** (la translation restante le long de l'axe) |
-| | **Total : 5** |
+| **ajustement** | l'association d'un alésage et d'un arbre de **même cote nominale** |
+| **jeu** | il reste du vide entre les deux : ça tourne ou ça coulisse |
+| **serrage** | l'arbre est plus gros que le trou : il faut une presse pour monter |
+| **incertain** | selon les pièces réelles, on obtient du jeu ou un léger serrage |
 
-$$ DDL_{restants} = 6 - 5 = \\mathbf{1} \\;\\Rightarrow\\; \\textbf{la ROTATION autour de l'axe} $$
+### 1. Le problème, avant tout vocabulaire
 
-C'est bien la définition d'une **liaison pivot** : 1 degré de liberté en rotation. ✔️
+Vous devez faire tourner un axe de 30 mm dans un trou de 30 mm. **Est-ce que ça tourne ?**
 
-*Remarque : la coïncidence de face supprime en théorie 3 DDL (1 T + 2 R), mais 2 des rotations
-sont déjà supprimées par la coaxialité. Le logiciel ne compte que le DDL **effectivement**
-nouvellement supprimé, soit 1. C'est pourquoi il faut raisonner en DDL restants, pas en
-addition brute.*
+Non. Si les deux font exactement 30, l'axe entre en force ou n'entre pas. Pour que ça tourne,
+il faut **du vide entre les deux** — et comme aucune machine ne sort du 30,000 exact (fiche
+5.3), il faut écrire **deux fourchettes** qui garantissent le fonctionnement quelles que soient
+les pièces prises dans le lot.
 
----
+### 2. Trois situations, pas une de plus
 
-**3. Conséquence de la contrainte de parallélisme ajoutée**
+[[FIG:trois_ajustements]]
 
-$$ \\boxed{\\textbf{L'assemblage devient SURCONTRAINT}} $$
+| Nature | Ce qui se passe | Écriture type | Emploi |
+|---|---|---|---|
+| **JEU** | il reste toujours du vide | H7/g6, H8/f7 | ça tourne, ça coulisse |
+| **INCERTAIN** | jeu ou serrage selon les pièces | H7/js6, H7/k6 | centrage précis démontable |
+| **SERRAGE** | l'arbre est toujours plus gros | H7/p6, H7/s6 | liaison à demeure |
 
-**Ce qui se passe concrètement :**
+*L'incertain n'est pas un défaut de conception : c'est un **choix**, quand il faut centrer
+précisément une pièce qu'on devra pourtant démonter.*
 
-Le pivot 1-2 ne laissait qu'**un seul DDL** : la rotation du levier. Ajouter un parallélisme
-entre le levier et le bâti **fige cette rotation** — le seul degré de liberté restant.
+### 3. Comment ça s'écrit
 
-Deux cas selon le logiciel :
+[[FIG:lire_h7g6]]
 
-| Cas | Réaction du logiciel |
+**Pourquoi ce code existe.** Sans lui, il faudrait écrire quatre valeurs sur chaque plan et les
+recopier à chaque révision. Avec lui, deux caractères suffisent — et le fournisseur, le
+sous-traitant et le contrôleur parlent le **même langage**, dans n'importe quel pays.
+
+### 4. Alésage normal (H) : pourquoi dans 90 % des cas
+
+**Système ALÉSAGE NORMAL** : l'alésage garde toujours **H**, on fait varier la lettre de l'arbre
+(H7/g6, H7/k6, H7/p6…).
+
+**La raison est purement économique.** Un alésage se réalise avec un **outil de la dimension du
+trou** (alésoir, broche) — ces outils sont normalisés et vendus en H7. Un arbre, lui, se tourne
+à n'importe quelle cote avec le même outil : il suffit de régler la machine.
+
+> Il est bien moins cher de **varier la cote de l'arbre**, réglable, que celle de l'alésage,
+> qui dépend d'un outil.
+
+### 5. Le seul calcul à savoir faire
+
+[[FIG:calcul_ajustement_etapes]]
+
+> **Jeu maxi = Alésage maxi − arbre mini**
+> **Jeu mini = Alésage mini − arbre maxi**
+
+**Comment retenir sans confondre :** pour le jeu **maximal**, on prend le plus grand trou et le
+plus petit axe — le cas le plus favorable au vide.
+
+**Et si le résultat est négatif ?** Ce n'est pas une erreur : c'est un **serrage**. On lit la
+valeur absolue.
+
+> jeu mini **positif** → jeu garanti · jeu maxi **négatif** → serrage garanti
+> jeu maxi positif **et** jeu mini négatif → **incertain**
+
+### 6. Choisir un ajustement
+
+| Besoin fonctionnel | Ajustement | Montage |
+|---|---|---|
+| ça tourne vite, lubrifié | **H8/f7** | à la main, jeu franc |
+| ça tourne ou coulisse précisément | **H7/g6** | à la main, jeu faible |
+| centrage précis, démonté souvent | **H7/js6** | à la main ou maillet léger |
+| bague de roulement sur arbre tournant | **H7/k6** | au maillet et douille |
+| liaison à demeure, couple sans clavette | **H7/p6** | à la presse ou à chaud |
+
+**La logique à retenir plutôt que la liste :** plus la lettre de l'arbre avance dans l'alphabet,
+plus l'arbre est gros, donc **plus on serre**. La frontière est autour de **h** et **j-k**.
+
+### 7. Le montage à chaud
+
+Pour les serrages importants, on **dilate** la pièce femelle au lieu de forcer.
+
+ΔD = D × α × ΔT = 30 × 12·10⁻⁶ × 100 = **0,036 mm** pour une bague Ø30 chauffée de 100 °C.
+
+C'est plus que le serrage maximal d'un H7/p6 : la bague se pose **sans effort** et se bloque en
+refroidissant. C'est la méthode normale pour les bagues de roulement et les frettes.
+
+### 8. Les erreurs classiques
+
+1. **Inverser majuscule et minuscule** : H7/g6 devient g6/H7, et le montage prévu pour tourner
+   devient serré.
+2. **Croiser mal les cotes** dans le calcul de Jmax/Jmin.
+3. **Croire qu'un résultat négatif est une erreur** : c'est un serrage.
+4. **Choisir un serrage sans prévoir le moyen de montage** (presse, four, extracteur).
+5. **Utiliser un ajustement avec jeu pour une bague de roulement** : elle fluera et matera sa
+   portée.
+
+### 9. À retenir
+
+- Trois natures : **jeu, incertain, serrage**.
+- **Jmaxi = Amaxi − amini** · **Jmini = Amini − amaxi** · négatif = serrage.
+- **Système alésage normal (H)** dans plus de 90 % des cas, pour une raison d'outillage.
+- **H7/g6 glisse · H7/k6 centre · H7/p6 bloque.**
+- Un serrage se monte à la presse ou **à chaud**, et se démonte à l'extracteur.
+""",
+            "formules": """
+**Les deux formules** — **Jeu maxi = Alésage maxi − arbre mini**
+**Jeu mini = Alésage mini − arbre maxi** · résultat négatif = serrage
+
+**Diagnostic** — Jmini ≥ 0 : jeu · Jmaxi ≤ 0 : serrage · sinon : incertain
+
+**Ajustements courants** — H8/f7 jeu franc · H7/g6 jeu faible · H7/js6 incertain ·
+H7/k6 incertain serrant · H7/m6 serrage léger · H7/p6 serrage
+
+**Valeurs Ø30** — IT6 = 13 µm · IT7 = 21 µm · g : es = −7 µm · p : ei = +22 µm
+Ø30 H7/g6 → jeu 0,007 à 0,041 mm · Ø30 H7/p6 → serrage 0,001 à 0,035 mm
+
+**Montage à chaud** — ΔD = D × α × ΔT · acier α = 12·10⁻⁶/°C
+Ø30 chauffé de 100 °C → +0,036 mm
+""",
+            "exemple": """
+### Cas industriel — La bague qui détruit sa portée en trois semaines
+
+**Le symptôme.** Sur un convoyeur, la bague intérieure d'un roulement prend du jeu au bout de
+trois semaines. Remplacée à l'identique, le problème revient. Au démontage, la portée de l'arbre
+est **ovalisée et polie** sur toute sa circonférence.
+
+**L'analyse.** Le plan indiquait **Ø30 H7/h6** pour le montage de la bague sur l'arbre.
+
+Calcul de l'ajustement (h6 : es = 0, ei = −0,013) :
+Jmaxi = 30,021 − 29,987 = **+0,034 mm** · Jmini = 30,000 − 30,000 = **0,000 mm**
+
+Il y a donc **du jeu, ou au mieux un contact sans serrage**. Or l'arbre tourne et la charge est
+fixe en direction : c'est la **bague intérieure** qui voit la charge tourner autour d'elle.
+
+**Le mécanisme physique.** Sans serrage, la bague roule lentement sur sa portée — elle avance de
+quelques micromètres à chaque tour. En trois semaines à 1 400 tr/min, cela représente des
+millions de micro-glissements : la portée est matée, du jeu apparaît, le montage se détruit.
+
+**La correction.** Passer en **Ø30 H7/k6** (ei = +0,002, es = +0,015) :
+Jmaxi = 30,021 − 30,002 = +0,019 · Jmini = 30,000 − 30,015 = **−0,015 mm**
+
+L'ajustement devient **incertain à tendance serrante** : la bague est retenue, mais reste
+démontable à l'extracteur. Aucune défaillance en 18 mois après modification.
+
+**Ce que le cas apprend.** Changer **une seule lettre** sur le plan — h6 en k6 — a suffi. Le
+coût d'usinage est identique ; c'est la décision de conception qui était fausse, pas la
+fabrication.
+""",
+            "exercice": """
+### Exercice — Deux ajustements sur le même alésage
+
+Données de table, plage 18 à 30 mm : **IT7 = 21 µm**, **IT6 = 13 µm**, écart de **g** :
+es = −7 µm, écart de **p** : ei = +22 µm.
+
+**1.** Calculez les cotes limites de l'alésage **Ø30 H7**.
+
+**2.** Calculez les cotes limites de l'arbre **Ø30 g6**, puis le **jeu maxi** et le **jeu mini**
+de l'ajustement H7/g6. Concluez sur sa nature.
+
+**3.** Calculez les cotes limites de l'arbre **Ø30 p6**, puis les mêmes grandeurs pour H7/p6.
+Concluez.
+
+**4.** Que remarquez-vous concernant l'alésage entre les deux montages ? Quel avantage
+industriel cela représente-t-il ?
+
+**5.** Pour le montage H7/p6, une bague Ø30 est chauffée de 100 °C (α = 12·10⁻⁶ /°C). La
+dilatation suffit-elle à annuler le serrage maximal ?
+""",
+            "corrige": """
+### Corrigé, en six temps
+
+#### 1. Ce que dit l'énoncé
+
+Un **même alésage H7** associé à **deux arbres différents** (g6 puis p6). Toutes les données de
+table sont fournies. La question 4 oriente vers la conclusion : c'est un exercice sur le
+**système alésage normal**, pas seulement un calcul.
+
+#### 2. Quelle règle, et pourquoi
+
+**H impose EI = 0** : l'alésage part du nominal et ne va que vers le haut.
+
+Pour les arbres, le sens de lecture dépend de la lettre : **g** est dans la plage a-h (la table
+donne **es**), **p** est dans la plage k-z (la table donne **ei**).
+
+Puis, toujours les deux mêmes formules : **Jmaxi = Amaxi − amini**, **Jmini = Amini − amaxi**.
+
+#### 3. Les conversions
+
+21 µm = **0,021 mm** · 13 µm = **0,013 mm** · 7 µm = **0,007 mm** · 22 µm = **0,022 mm**
+
+#### 4. Le remplacement
+
+**Alésage H7** : EI = 0 · ES = +0,021
+
+**Arbre g6** (a-h → es donné) : es = −0,007 · ei = −0,007 − 0,013
+
+**Arbre p6** (k-z → ei donné) : ei = +0,022 · es = +0,022 + 0,013
+
+#### 5. Le calcul
+
+**1. Alésage Ø30 H7** → **30,000 à 30,021 mm**
+
+**2. Arbre Ø30 g6** : es = −0,007 · ei = −0,020 → **29,980 à 29,993 mm**
+
+Jmaxi = 30,021 − 29,980 = **+0,041 mm**
+Jmini = 30,000 − 29,993 = **+0,007 mm**
+
+Les deux sont positifs : **il y a TOUJOURS du jeu**, entre 7 et 41 µm. Rotation garantie sur
+toute la série.
+
+**3. Arbre Ø30 p6** : ei = +0,022 · es = +0,035 → **30,022 à 30,035 mm**
+
+Jmaxi = 30,021 − 30,022 = **−0,001 mm**
+Jmini = 30,000 − 30,035 = **−0,035 mm**
+
+Les deux sont négatifs : **il y a TOUJOURS serrage**, de 1 à 35 µm. Montage à la presse ou à
+chaud.
+
+**4.** **L'alésage H7 est rigoureusement le même dans les deux cas** — seule la lettre de l'arbre
+a changé. C'est exactement ce que promet le système alésage normal : **un seul outil d'alésage
+(un alésoir H7), deux fonctions radicalement différentes**. L'atelier n'achète qu'un outil.
+
+**5.** ΔD = 30 × 12·10⁻⁶ × 100 = **0,036 mm**
+
+0,036 > 0,035 (serrage maxi) : **oui, la dilatation suffit**, tout juste. La bague chauffée se
+pose sans effort et se bloque en refroidissant.
+
+#### 6. La vérification
+
+**Contrôle de cohérence** : g6 donne du jeu, p6 du serrage — conforme à la règle générale (plus
+la lettre avance dans l'alphabet, plus on serre). Si le calcul avait donné du serrage pour g6, il
+y aurait une erreur de signe.
+
+**Ordre de grandeur** : des jeux et serrages de quelques dizaines de micromètres sur un Ø30 —
+cohérent avec un IT7 de 21 µm. Des valeurs en dixièmes de millimètre auraient signalé une erreur
+de conversion.
+
+**Le contrôle sur la question 5** : la marge est de 1 µm seulement (0,036 contre 0,035). En
+pratique, on chaufferait un peu plus (120 à 150 °C) pour travailler confortablement — un calcul
+juste ne dispense pas du bon sens industriel.
+""",
+        },
+        {
+            "id": '5.5',
+            "titre": 'Tolérancement géométrique (GPS)',
+            "duree": '6 h',
+            "cours": """
+### Le vocabulaire, en français courant
+
+| Terme | Ce que ça veut dire |
 |---|---|
-| La position actuelle **satisfait** le parallélisme | La contrainte est acceptée, mais **le levier ne peut plus tourner**. L'étude de mouvement devient impossible, la mobilité tombe à $m = 0$ : le mécanisme est **bloqué**. |
-| La position actuelle **ne satisfait pas** le parallélisme | **Message d'erreur** : « Contraintes en conflit » ou « Impossible de résoudre ». La contrainte apparaît en rouge dans l'arbre. |
+| **GPS** | spécification géométrique des produits : le langage de la FORME et de la POSITION |
+| **zone de tolérance** | un espace dans lequel la surface réelle doit tenir entièrement |
+| **référence** | la surface à partir de laquelle on juge (notée A, B, C) |
+| **battement** | ce que lit un comparateur quand la pièce fait un tour complet |
 
-**Diagnostic à formuler :** le stagiaire a confondu **positionner** et **contraindre**. S'il
-voulait simplement placer le levier dans une position particulière pour une capture d'écran,
-il fallait utiliser une contrainte **d'angle avec option « supprimer »**, ou déplacer
-librement la pièce — pas ajouter une contrainte permanente.
+### 1. Une pièce aux bonnes cotes… qui ne marche pas
 
-**Règle générale :** *dans un assemblage destiné à la simulation, on ne contraint jamais les
-DDL qui correspondent aux mouvements réels du mécanisme.*
+Un tourneur livre un arbre. Vous le mesurez au micromètre : 30 mm ici, 30 mm là, 30 mm partout.
+La cote est bonne. Vous l'essayez dans son palier : **il n'entre pas.**
 
----
+[[FIG:defaut_geometrique]]
 
-**4. Les trois vérifications avant validation**
+L'arbre est légèrement **cintré**. Chaque mesure isolée donne bien 30, mais l'ensemble n'est pas
+un cylindre droit.
 
-| Vérification | Ce qu'elle détecte | Erreur typique révélée |
+> **La cotation dimensionnelle dit COMBIEN ça mesure. Elle ne dit rien sur la FORME ni sur la
+> POSITION.**
+
+### 2. Ce qu'est vraiment une tolérance géométrique
+
+Une tolérance dimensionnelle définit deux valeurs entre lesquelles une **mesure** doit tomber.
+
+Une tolérance géométrique définit une **ZONE DE L'ESPACE** dans laquelle la surface réelle — ou
+son axe — doit se trouver **entièrement** : entre deux plans parallèles, entre deux cylindres
+coaxiaux, ou à l'intérieur d'un cylindre de diamètre t.
+
+*Différence pratique : une cote se vérifie par des mesures ponctuelles ; une tolérance
+géométrique se vérifie sur **toute la surface**, ce qui demande une machine tridimensionnelle.*
+
+### 3. Les quatre familles
+
+[[FIG:familles_gps]]
+
+**Une seule question permet de les distinguer :** *ce défaut se juge-t-il tout seul, ou par
+rapport à quelque chose ?*
+
+| Famille | Ce qu'elle contrôle | Exemples | Référence ? |
+|---|---|---|---|
+| **Forme** | la surface toute seule | rectitude, planéité, circularité, cylindricité | **non** |
+| **Orientation** | l'angle par rapport à une autre surface | parallélisme, perpendicularité | oui |
+| **Position** | l'emplacement | localisation, coaxialité, symétrie | oui |
+| **Battement** | ce que voit un comparateur | radial, axial, total | oui |
+
+**La règle qui tombe à tous les contrôles :** seules les tolérances de **forme** se passent de
+référence. Être plan est une propriété de la surface ; être perpendiculaire, c'est forcément
+perpendiculaire **à quelque chose**.
+
+*Un mot sur le battement : ce n'est pas un défaut « pur », c'est un **cumul** de forme et de
+coaxialité. Son avantage : il se mesure au comparateur en atelier, sans machine
+tridimensionnelle.*
+
+### 4. Lire un cadre de tolérance, en 3 gestes
+
+[[FIG:cadre_tolerance]]
+
+**Geste 1 — Le symbole** : quelle famille, quel défaut.
+
+**Geste 2 — La valeur, et le signe Ø devant.** Sans Ø, la zone est comprise entre deux plans —
+le défaut n'est contrôlé que dans une direction. **Avec Ø, la zone devient un cylindre**, et le
+défaut est contrôlé dans toutes les directions. Indispensable pour l'axe d'un perçage.
+
+**Geste 3 — La ou les références, dans l'ORDRE.** Quand plusieurs lettres apparaissent (A puis B
+puis C), **l'ordre compte** : A est posée en premier sur le marbre, B bloque ensuite, C oriente.
+C'est exactement la règle **3-2-1** (fiche 5.11). Inverser A et B, c'est mesurer autre chose.
+
+**Le choix de la référence :** on prend **la surface qui positionne réellement la pièce dans le
+mécanisme** — presque toujours la face d'appui principale, **jamais une surface brute de
+fonderie**.
+
+### 5. Choisir la bonne exigence : trois cas concrets
+
+**Cas 1 — un alésage de roulement dans un carter.** Si l'axe du trou n'est pas perpendiculaire à
+la face d'appui, l'arbre entre de travers et le roulement se détruit en quelques semaines.
+→ **perpendicularité Ø0,03 par rapport à A**
+
+**Cas 2 — une face d'appui de bride.** Gondolée, elle bascule au serrage et désaligne tout.
+→ **planéité 0,05** (sans référence : c'est de la forme)
+
+**Cas 3 — quatre trous de fixation.** Chacun légèrement décalé, les vis ne tombent pas en face.
+→ **localisation Ø0,2 par rapport à A et B**
+
+*Dans les trois cas, **aucune tolérance dimensionnelle n'aurait détecté le problème**. C'est
+exactement pour cela que le GPS existe.*
+
+### 6. Les erreurs classiques
+
+1. **Mettre une référence sur une tolérance de forme** : « planéité 0,05 A » n'a pas de sens.
+2. **Oublier le signe Ø** quand la zone doit être cylindrique.
+3. **Choisir une surface brute comme référence.**
+4. **Inverser l'ordre des références** A et B : on mesure autre chose.
+5. **Coter géométriquement tout ce qu'on peut**, au lieu de ce que la fonction exige.
+
+### 7. À retenir
+
+- Dimension = combien. **Géométrie = quelle forme, à quelle place.**
+- Une tolérance géométrique définit une **zone de l'espace**, pas deux valeurs.
+- **Forme : sans référence.** Orientation, position, battement : **avec référence**.
+- Cadre = symbole | valeur | référence(s) · **Ø = zone cylindrique** · **l'ordre des références
+  compte**.
+- La référence se prend sur la surface qui **positionne la pièce**, jamais sur du brut.
+""",
+            "formules": """
+**Les quatre familles** — forme (SANS référence) · orientation · position · battement (AVEC
+référence)
+
+**Cadre de tolérance** — symbole | valeur | référence(s)
+**Ø devant la valeur** → zone cylindrique · sans Ø → entre deux plans
+l'ordre A, B, C correspond à la mise en position 3-2-1
+
+**Exemples usuels** — planéité 0,05 (forme, sans réf.) · perpendicularité Ø0,03 / A ·
+localisation Ø0,2 / A B · battement radial 0,05 / A-B
+
+**Choix de la référence** — la surface qui positionne la pièce dans le mécanisme,
+jamais une surface brute de fonderie
+""",
+            "exemple": """
+### Cas industriel — Le carter aux cotes justes et au roulement détruit
+
+**Le symptôme.** Sur une pompe, le roulement côté accouplement chauffe et grippe au bout de
+200 heures. Trois carters successifs, tous contrôlés bons au pied à coulisse, donnent le même
+résultat.
+
+**Le contrôle qui a tout révélé.** Passage du carter sur machine tridimensionnelle :
+
+| Grandeur | Spécifié | Mesuré | Verdict |
+|---|---|---|---|
+| alésage Ø62 | H7 (62,000 à 62,030) | 62,018 | ✅ |
+| perpendicularité de l'axe / face d'appui | **rien sur le plan** | **0,21 mm** | — |
+
+L'alésage était parfaitement à la cote. Mais son **axe était incliné de 0,21 mm** par rapport à
+la face d'appui du carter : le roulement était donc monté **de travers**, ses billes travaillant
+en coin.
+
+**Pourquoi le contrôle atelier n'a rien vu.** Un pied à coulisse mesure un **diamètre**, jamais
+une **orientation**. Aucune mesure dimensionnelle, si précise soit-elle, ne pouvait détecter ce
+défaut.
+
+**La correction.** Ajout sur le plan d'une **perpendicularité Ø0,03 par rapport à A** (la face
+d'appui), et contrôle sur MMT en réception. Le taux de défaillance est tombé à zéro.
+
+**Ce que le cas apprend.** La spécification manquante ne coûtait rien à écrire. Son absence a
+coûté trois carters, 200 heures d'essais et un client mécontent — parce que **ce qui n'est pas
+spécifié n'est pas contrôlé, donc pas garanti**.
+""",
+            "exercice": """
+### Exercice — Spécifier et décoder
+
+Un carter comporte : une **face d'appui** qui porte sur le bâti, un **alésage Ø52 H7** recevant
+un roulement, et **quatre trous de fixation** qui doivent tomber en face des taraudages du bâti.
+
+**1.** Pour chacun de ces trois éléments, proposez une spécification géométrique pertinente
+(symbole, valeur, référence éventuelle) et justifiez-la en une ligne.
+
+**2.** Laquelle de vos trois spécifications se passe de référence ? Pourquoi ?
+
+**3.** Un plan porte « **⊥ Ø0,05 A** » sur l'axe de l'alésage. Traduisez-le en français courant.
+
+**4.** Que change le signe **Ø** devant la valeur ? Donnez la forme exacte de la zone dans les
+deux cas.
+
+**5.** Un dessinateur écrit « **planéité 0,05 A** ». Quelle est l'erreur ?
+""",
+            "corrige": """
+### Corrigé, en six temps
+
+#### 1. Ce que dit l'énoncé
+
+Trois éléments d'un même carter, avec **trois fonctions différentes** : une surface qui **porte**
+(l'appui), un alésage qui **reçoit** un roulement, et des trous qui doivent **coïncider** avec
+l'existant. À chaque fonction correspond une famille de spécification différente.
+
+#### 2. Quelle règle, et pourquoi
+
+**La question qui trie :** ce défaut se juge-t-il tout seul, ou par rapport à quelque chose ?
+
+- une surface qui doit être plane **se juge seule** → famille **forme**, sans référence ;
+- un axe qui doit être droit **par rapport à** une face → famille **orientation**, avec
+  référence ;
+- des trous qui doivent être **à un endroit précis** → famille **position**, avec références.
+
+#### 3. Les conversions
+
+Aucune conversion d'unité : les valeurs GPS sont directement en millimètres. **Le seul point de
+vigilance est le signe Ø**, qui ne change pas la valeur mais **la forme de la zone**.
+
+#### 4. Le remplacement
+
+| Élément | Famille | Spécification |
 |---|---|---|
-| **1. Détection d'interférences** (*interference detection*) | Deux volumes qui s'interpénètrent | Une vis trop longue qui traverse et ressort ; une nervure qui percute un capot. ⚠️ **Un ajustement serré H7/p6 apparaît comme interférence — c'est normal, il faut savoir l'écarter du diagnostic.** |
-| **2. Analyse des jeux** (*clearance verification*) | Distance minimale entre pièces mobiles | Un câble ou un flexible qui frotte ; un jeu de 0,2 mm là où il en faut 5 pour la dilatation thermique |
-| **3. Étude de mouvement** (*motion study*) sur la course complète | Collision en **position intermédiaire** | **Le cas le plus vicieux** : les positions extrêmes sont libres, mais le mécanisme percute à mi-course. Une vérification statique en position initiale ne le voit pas. |
+| face d'appui | forme | planéité **0,05** |
+| axe de l'alésage | orientation | perpendicularité **Ø0,03 / A** |
+| quatre trous | position | localisation **Ø0,2 / A B** |
 
-*Une quatrième vérification, souvent oubliée mais attendue en examen :* le contrôle de la
-**masse et du centre de gravité** de l'assemblage, qui révèle immédiatement un matériau mal
-affecté ou un volume non fermé.
+#### 5. Le calcul
 
----
+**1.** *(voir tableau ci-dessus)* — Justifications :
 
-**PARTIE B — FORMATS D'ÉCHANGE**
+- **planéité 0,05** sur la face d'appui : gondolée, elle ferait basculer le carter au serrage et
+  désalignerait tout le reste ;
+- **perpendicularité Ø0,03 / A** sur l'axe de l'alésage : incliné, l'arbre entre de travers et le
+  roulement travaille en coin — c'est le cas industriel de cette fiche ;
+- **localisation Ø0,2 / A B** sur les quatre trous : décalés, les vis ne tombent pas en face des
+  taraudages du bâti.
 
-**5. Fichiers à envoyer au sous-traitant**
+**2.** La **planéité** se passe de référence : être plan est une propriété de la surface
+elle-même. Les deux autres se jugent **par rapport à** une autre surface, donc exigent une
+référence.
 
-$$ \\boxed{\\textbf{STEP AP214 (.stp) + PLAN DE DÉFINITION 2D (PDF)}} $$
+**3.** « ⊥ Ø0,05 A » se traduit : *l'axe de l'alésage doit rester à l'intérieur d'un **cylindre
+de 0,05 mm de diamètre**, lui-même **perpendiculaire** à la surface de référence A.*
 
-**Justification détaillée :**
+**4.** **Sans Ø** : la zone est comprise **entre deux plans parallèles** distants de la valeur —
+le défaut n'est contrôlé que dans **une seule direction**. **Avec Ø** : la zone est un
+**cylindre** — le défaut est contrôlé dans **toutes les directions**. Pour l'axe d'un perçage, le
+Ø est indispensable.
 
-| Fichier | Rôle | Pourquoi indispensable |
+**5.** « Planéité 0,05 **A** » est incorrect : la planéité est une tolérance de **forme**, qui
+**ne prend jamais de référence**. Il faut écrire simplement « planéité 0,05 ».
+
+#### 6. La vérification
+
+**Contrôle de cohérence des valeurs.** La perpendicularité (Ø0,03) est plus serrée que la
+localisation des trous (Ø0,2) : c'est logique, un roulement mal orienté se détruit, alors qu'un
+trou de fixation décalé de deux dixièmes passe encore grâce au jeu des vis.
+
+**Contrôle de la référence.** A est la **face d'appui** — celle qui positionne réellement le
+carter sur le bâti. Prendre l'alésage comme référence A aurait été une erreur : ce n'est pas lui
+qui pose la pièce.
+
+**Le test final** : chaque spécification correspond-elle à une **défaillance réelle** qu'elle
+empêche ? Si l'on ne peut pas nommer la panne évitée, la spécification est probablement inutile
+— et elle coûte cher au contrôle.
+""",
+        },
+        {
+            "id": '5.6',
+            "titre": 'États de surface',
+            "duree": '4 h',
+            "cours": """
+### Le vocabulaire, en français courant
+
+| Terme | Ce que ça veut dire |
+|---|---|
+| **rugosité** | l'irrégularité microscopique d'une surface — sa « peau » |
+| **Ra** | l'écart moyen du profil, en micromètres : la valeur qu'on écrit sur un plan |
+| **portée** | une surface qui reçoit une autre pièce (un roulement, un joint) |
+
+### 1. Deux pièces aux mêmes cotes, une seule qui fonctionne
+
+Deux arbres ont exactement le même diamètre, contrôlé au micromètre. Monté avec un joint à
+lèvres, le premier tient l'étanchéité ; le second fuit au bout de deux heures.
+
+La différence ne se voit pas au pied à coulisse : elle est dans **l'état de surface**.
+
+[[FIG:rugosite_ra]]
+
+### 2. Ce que Ra mesure
+
+**Ra** est l'écart moyen arithmétique du profil par rapport à sa ligne moyenne, exprimé en
+**micromètres (µm)**. Plus Ra est petit, plus la surface est lisse.
+
+*Ce n'est pas la profondeur du plus gros défaut, mais une moyenne — deux surfaces de même Ra
+peuvent avoir des allures différentes. Pour la conception courante, Ra suffit.*
+
+### 3. À chaque fonction sa rugosité — et son prix
+
+[[FIG:etats_surface_cout]]
+
+| Ra | Obtenu par | Fonction typique |
 |---|---|---|
-| **STEP AP214** | Géométrie **exacte** (BREP) | Permet la programmation FAO directement sur le modèle. Format neutre lisible par tous les logiciels (contrairement au natif .SLDPRT). Conserve les courbes analytiques exactes — un cylindre reste un cylindre. |
-| **Plan 2D (PDF)** | **Définition contractuelle** | Porte le **Ø20 h7**, la géométrie de la gorge, les **états de surface**, les tolérances générales `ISO 2768-mK`, la **matière** et le **traitement**. Ces informations n'existent **nulle part** dans le STEP. |
+| brut (12,5 à 25) | fonderie, sciage | personne ne la touche |
+| **6,3** | ébauche | surface non fonctionnelle |
+| **3,2** | fraisage de finition | face d'appui boulonnée |
+| **1,6** | finition soignée | surface qui frotte |
+| **0,8** | rectification | **portée de roulement, de joint** |
+| **0,4** | rectification fine | guidage de précision |
+| **0,1** | rodage, polissage | glace optique, calibre |
 
-**Pourquoi PAS de STL :** un STL ne contient que des triangles. Il est impossible d'en extraire
-un h7 (21 µm de tolérance) puisque le maillage lui-même introduit une erreur bien supérieure.
-L'usineur ne saurait même pas quelle surface est fonctionnelle.
+**Chaque cran change le moyen de production**, donc la machine, le temps et le contrôle.
+Demander Ra 0,8 sur une face simplement boulonnée impose une **rectification** : une opération,
+une machine et un contrôle de plus, pour aucun gain fonctionnel.
 
-**Pourquoi PAS le format natif seul :** le sous-traitant peut travailler sous CATIA, Mastercam
-ou TopSolid. Le natif SolidWorks serait illisible chez lui.
+### 4. Le symbole sur un plan
 
-*Bon usage complémentaire :* joindre aussi un **PDF 3D ou eDrawings** pour que l'atelier puisse
-visualiser la pièce sans licence CAO.
+Le symbole se pose **sur la ligne de la surface concernée**, avec la valeur de Ra.
 
----
+- une **barre horizontale** ajoutée = « enlèvement de matière **obligatoire** » ;
+- un **cercle** = « enlèvement de matière **interdit** » : la surface doit rester brute.
 
-**6. Format et paramètres pour l'impression 3D**
+### 5. Les deux erreurs symétriques
 
-$$ \\boxed{\\textbf{STL binaire (ou 3MF)}} $$
+**Trop rugueux** : le joint fuit, la portée use la lèvre, le frottement s'emballe.
 
-**Paramètres d'export recommandés :**
+**Trop lisse** — et celle-ci surprend : **sous Ra 0,1, le lubrifiant ne se maintient plus**. Il
+n'y a plus assez d'aspérités pour le retenir, le film se rompt, et le frottement augmente au lieu
+de diminuer.
 
-| Paramètre | Valeur | Justification |
+*C'est la tribologie appliquée : une surface a besoin d'une micro-rugosité pour retenir l'huile.
+Polir « au maximum » n'est pas une amélioration, c'est un défaut.*
+
+### 6. Les erreurs classiques
+
+1. **Oublier l'état de surface** sur une portée de roulement ou de joint.
+2. **Demander Ra 0,8 partout** : c'est imposer une rectification générale.
+3. **Croire que plus lisse est toujours mieux.**
+4. **Confondre Ra et tolérance dimensionnelle** : ce sont deux exigences indépendantes.
+5. **Laisser une portée de joint brute de tournage** (Ra 3,2) : la lèvre est abrasée en quelques
+   heures.
+
+### 7. À retenir
+
+- **Ra 3,2** sur un appui · **Ra 0,8** seulement où ça porte, ça frotte ou ça étanche.
+- Chaque cran de Ra **change le moyen de production**, donc le prix.
+- **Trop lisse est aussi un défaut** : sous Ra 0,1, le lubrifiant ne tient plus.
+- Symbole : barre = enlèvement obligatoire · cercle = enlèvement interdit.
+- Une portée de joint à lèvres exige **Ra 0,8 et un chanfrein d'introduction**.
+""",
+            "formules": """
+**Ra** — écart moyen du profil, en micromètres · plus Ra est petit, plus c'est lisse
+
+**Valeurs usuelles** — brut 12,5-25 · ébauche 6,3 · appui boulonné **3,2** · frottement 1,6 ·
+**portée de roulement ou de joint 0,8** · guidage de précision 0,4 · poli 0,1
+
+**Symbole** — barre horizontale = enlèvement de matière obligatoire
+cercle = enlèvement de matière interdit (surface brute)
+
+**Les deux erreurs symétriques** — trop rugueux : fuite, usure, frottement
+trop lisse (< Ra 0,1) : le lubrifiant ne se maintient plus
+""",
+            "exemple": """
+### Cas industriel — Le joint qui fuit en deux heures
+
+**Le symptôme.** Sur un réducteur, le joint à lèvres de sortie fuit après deux heures de
+fonctionnement. Le joint est remplacé : même résultat. Trois joints y passent avant qu'on
+regarde ailleurs.
+
+**L'analyse.** Le plan de l'arbre indiquait la cote **Ø35 k6** — parfaitement respectée — mais
+**aucun état de surface** sur la portée du joint. L'atelier avait donc livré la surface telle
+qu'elle sortait du tournage : **Ra 3,2**.
+
+Au microscope, la lèvre du joint neuf présentait déjà, après deux heures, une **entaille
+circulaire** : les stries hélicoïdales du tournage avaient agi comme une lime.
+
+**La correction, en trois points :**
+
+| Ajout au plan | Pourquoi |
+|---|---|
+| **Ra 0,8**, rectifié | la lèvre ne peut pas s'user sur une surface lisse |
+| **sans stries hélicoïdales** | des stries orientées pompent l'huile vers l'extérieur |
+| **chanfrein d'introduction** 15° | sans lui, la lèvre est coupée au montage |
+
+**Ce que le cas apprend.** Le plan était **dimensionnellement parfait** : Ø35 k6 est exactement
+ce qu'il fallait. Ce qui manquait ne coûtait rien à écrire — une ligne d'état de surface. Une
+exigence non écrite n'est pas une exigence.
+""",
+            "exercice": """
+### Exercice — Choisir les états de surface d'un arbre
+
+Un arbre de réducteur comporte quatre zones distinctes :
+
+- **A** — deux portées de roulement Ø30 k6
+- **B** — une portée de joint à lèvres en sortie de carter
+- **C** — une portée de moyeu de poulie, ajustement H7/js6
+- **D** — les parties courantes, qui ne touchent rien
+
+**1.** Attribuez un Ra à chacune des quatre zones, et justifiez chaque choix en une ligne.
+
+**2.** Quelle zone exige, en plus du Ra, une précision de **forme** de la surface ? Laquelle
+exige un **détail de mise en œuvre** particulier ?
+
+**3.** Un dessinateur propose Ra 0,4 partout « pour être tranquille ». Chiffrez ce que cela
+implique, et dites pourquoi c'est une mauvaise décision.
+
+**4.** Sur une pièce de guidage lubrifiée, un technicien propose de polir à **Ra 0,05** pour
+réduire le frottement. Que lui répondez-vous ?
+""",
+            "corrige": """
+### Corrigé, en six temps
+
+#### 1. Ce que dit l'énoncé
+
+Quatre zones sur **une seule pièce**, avec **quatre fonctions différentes** : porter un
+roulement, étancher, centrer un moyeu, ne rien toucher. La question 4 est un piège volontaire
+sur le « plus lisse = mieux ».
+
+#### 2. Quelle règle, et pourquoi
+
+**On choisit le Ra selon la FONCTION de la surface, pas selon son importance apparente.** Trois
+niveaux suffisent dans la grande majorité des cas :
+
+- **Ra 3,2** : ça pose, ça appuie ;
+- **Ra 1,6** : ça frotte ;
+- **Ra 0,8** : ça porte un roulement, ça étanche.
+
+Et deux limites : **trop rugueux** use et fuit · **trop lisse** (< 0,1) ne retient plus le
+lubrifiant.
+
+#### 3. Les conversions
+
+Aucune : Ra s'exprime directement en micromètres sur le plan. **Attention à ne pas confondre**
+avec les micromètres des tolérances ISO (fiche 5.3) — ce sont deux grandeurs différentes qui
+partagent la même unité.
+
+#### 4. Le remplacement
+
+| Zone | Fonction | Ra retenu |
 |---|---|---|
-| **Tolérance de corde** | 0,02 mm | Bien inférieure à la précision de l'imprimante FDM (~0,1 mm) : le maillage n'est pas le facteur limitant |
-| **Écart angulaire** | 5 à 8° | Compromis qualité/poids de fichier sur les surfaces cylindriques |
-| **Format** | **Binaire** | 5 à 6 fois plus léger que l'ASCII, pour une information identique |
-| **Unités** | **millimètres** | Erreur classique : un export en pouces donne une pièce 25,4 fois trop petite |
+| A — portées de roulement | porter, ajustement serré k6 | **0,8** |
+| B — portée de joint | étancher contre une lèvre souple | **0,8** |
+| C — portée de moyeu | centrer, montage/démontage | **1,6** |
+| D — parties courantes | rien | **6,3** ou brut |
 
-**Le 3MF est préférable quand c'est possible** : il embarque les unités, les couleurs, le
-matériau et les métadonnées, ce qui supprime toute ambiguïté d'échelle.
+#### 5. Le calcul
 
----
+**1.** *(voir tableau)* — Justifications :
 
-**7. Erreur de corde pour un écart angulaire de 12°**
+- **A, Ra 0,8** : une bague de roulement montée serrée sur une surface rugueuse écrase les
+  aspérités au montage — le serrage calculé disparaît ;
+- **B, Ra 0,8** : la lèvre du joint est abrasée par des stries trop marquées (cas industriel
+  ci-dessus) ;
+- **C, Ra 1,6** : le moyeu doit coulisser au montage sans gripper, mais l'exigence est moins
+  sévère qu'un roulement ;
+- **D, Ra 6,3** : aucune fonction, donc aucun surcoût justifié.
 
-$$ e = R\\left(1 - \\cos\\frac{\\theta}{2}\\right) $$
+**2.** La zone **B** exige en plus un **chanfrein d'introduction** et l'absence de stries
+hélicoïdales — c'est un détail de mise en œuvre, pas une valeur de Ra. Les zones **A** exigent
+aussi une bonne **cylindricité** (fiche 5.5) : un Ra parfait sur une portée ovalisée ne sert à
+rien.
 
-Avec $R = 10$ mm (rayon du Ø20) et $\\theta = 12°$ :
+**3.** Ra 0,4 partout impose une **rectification de toutes les surfaces**, y compris celles qui
+ne touchent rien. Sur les quatre zones, une seule (D) représente souvent la plus grande longueur
+de l'arbre. C'est une opération supplémentaire, une machine de plus, un contrôle de plus — pour
+**zéro gain fonctionnel** sur les zones concernées.
 
-$$ \\frac{\\theta}{2} = 6° \\qquad \\cos 6° = 0,99452 $$
+**4.** **Non.** Sous Ra 0,1, la surface devient trop lisse pour **retenir le lubrifiant** : le
+film d'huile ne se maintient plus, le contact devient métal sur métal et le frottement
+**augmente** au lieu de diminuer. Ra 0,4 est déjà un excellent état pour un guidage lubrifié.
 
-$$ e = 10 \\times (1 - 0,99452) = 10 \\times 0,005478 $$
+#### 6. La vérification
 
-$$ \\boxed{e = 0,0548\\ \\mathrm{mm} \\approx 55\\ \\mu m} $$
+**Contrôle de cohérence** : les Ra retenus décroissent avec l'exigence fonctionnelle (6,3 → 1,6
+→ 0,8), sans jamais descendre sous 0,4 — cohérent avec la règle des deux limites.
 
-**Interprétation selon l'usage :**
+**Le test économique** : combien de surfaces exigent une rectification ? Ici trois (les deux
+portées A et la portée B), sur une pièce qui en compte une dizaine. **Si toutes les surfaces
+d'un plan portent Ra 0,8, il faut se demander lesquelles ont vraiment une fonction** — c'est le
+même raisonnement que les 20 % de cotes fonctionnelles de la fiche 5.2.
+""",
+        },
+        {
+            "id": '5.7',
+            "titre": 'Filetages et éléments normalisés',
+            "duree": '4 h',
+            "cours": """
+### Le vocabulaire, en français courant
 
-| Usage | Verdict | Analyse |
+| Terme | Ce que ça veut dire |
+|---|---|
+| **filetage** | l'hélice creusée à l'extérieur d'une tige (une vis) |
+| **taraudage** | la même hélice, mais à l'intérieur d'un trou (un écrou) |
+| **pas** | la distance parcourue en un tour complet |
+| **classe de qualité** | la résistance d'une vis, gravée sur sa tête (8.8, 10.9…) |
+
+### 1. Pourquoi une vis n'est jamais dessinée en vrai
+
+Dessiner l'hélice réelle d'un filetage prendrait un temps considérable et rendrait le plan
+illisible. La norme impose donc une **représentation conventionnelle** : deux traits, et le reste
+se lit dans la désignation.
+
+> **La désignation porte l'information, pas le dessin.**
+
+### 2. Décoder une désignation
+
+**M8 × 1,25 — 6H**
+
+| Élément | Signification |
+|---|---|
+| **M** | filetage métrique ISO, profil triangulaire à 60° |
+| **8** | diamètre **nominal** (le diamètre extérieur de la vis) |
+| **1,25** | le **pas** : la vis avance de 1,25 mm par tour |
+| **6H** | la classe de tolérance (majuscule = taraudage, minuscule = filetage) |
+
+*On retrouve la convention de la fiche 5.3 : **majuscule pour le contenant**, minuscule pour le
+contenu.*
+
+**Le pas est souvent omis** quand il s'agit du pas gros, le plus courant : « M8 » seul signifie
+M8 × 1,25.
+
+### 3. Les valeurs à connaître par cœur
+
+| Vis | Pas gros | Perçage avant taraudage |
 |---|---|---|
-| **Prototype d'implantation** | ✅ **ACCEPTABLE** | 55 µm est très inférieur à la précision réelle d'une imprimante FDM (100 à 200 µm). L'erreur de maillage est **noyée dans l'erreur du procédé** : elle ne se verra pas. |
-| **Contrôle dimensionnel** | ❌ **INACCEPTABLE** | Le Ø20 **h7** a un IT de **21 µm**. L'erreur de maillage seule (55 µm) est **2,6 fois plus grande que la tolérance totale**. Le STL est structurellement incapable de porter cette information. |
+| M4 | 0,7 | Ø3,3 |
+| M5 | 0,8 | Ø4,2 |
+| **M6** | **1,0** | **Ø5,0** |
+| **M8** | **1,25** | **Ø6,8** |
+| **M10** | **1,5** | **Ø8,5** |
+| M12 | 1,75 | Ø10,2 |
 
-$$ \\frac{55}{21} = 2,6 \\quad \\Rightarrow \\quad \\textbf{le maillage à lui seul consomme 260 \\% de l'IT} $$
+**La règle qui évite d'apprendre la colonne de droite :**
 
-**Conclusion à formuler :** *un fichier STL n'est jamais un document de contrôle dimensionnel,
-quelle que soit la finesse du maillage.* Même à 3° d'écart angulaire ($e = 3,4$ µm), le format
-resterait inadapté car il ne porte **aucune tolérance, aucune référence, aucun état de surface**.
-Le contrôle se fait sur le **plan 2D** et le modèle **STEP**.
+> **Diamètre de perçage ≈ diamètre nominal − pas**
 
----
+M8 : 8 − 1,25 = 6,75 → **Ø6,8** en pratique. M10 : 10 − 1,5 = 8,5. La règle tombe juste.
 
-**8. Cote à modéliser pour le poussoir imprimé**
+**Le trou de passage, lui, est plus grand que la vis** : Ø9 pour une M8, afin de laisser du jeu
+au montage.
 
-Les **deux pièces** (poussoir et alésage) sont imprimées en FDM, où les trous sortent
-systématiquement **sous-dimensionnés** et les cylindres extérieurs **sur-dimensionnés**
-(sur-extrusion, effet de coin, dilatation du fil).
+### 4. Pas gros ou pas fin
 
-**Jeu à prévoir pour un ajustement glissant en FDM : 0,3 à 0,5 mm au diamètre** (voir formulaire).
-
-$$ \\boxed{\\text{Modéliser le poussoir à } \\mathbf{Ø19,6\\ mm} \\text{ pour un alésage modélisé à Ø20}} $$
-
-soit un jeu nominal de **0,4 mm au diamètre** (0,2 mm au rayon).
-
-**Justification détaillée :**
-
-| Effet | Conséquence | Compensation |
+| | Pas gros | Pas fin |
 |---|---|---|
-| Sur-extrusion sur le contour extérieur | Le poussoir sort **plus gros** de +0,1 à 0,2 mm | Réduire la cote modélisée |
-| Effet de « coin arrondi » sur les trous | L'alésage sort **plus petit** de −0,1 à 0,3 mm | Idem |
-| Retrait thermique différentiel | Variable selon la matière (PLA ≈ 0,3 %, ABS ≈ 0,7 %) | Marge de sécurité |
-| Rugosité des couches (strates) | Frottement accru | Jeu supplémentaire |
+| exemple | M8 × 1,25 | M8 × 1 |
+| montage | plus rapide | plus lent |
+| desserrage sous vibration | plus sensible | **plus résistant** |
+| emploi | cas général | réglage fin, faible épaisseur, vibrations |
 
-⚠️ **Ne PAS modéliser Ø20 h7 comme sur le plan de la pièce usinée.** C'est l'erreur la plus
-fréquente : on exporte le modèle « propre » et les deux pièces sont **impossibles à assembler**
-(ou au contraire flottantes). La compensation est **spécifique au procédé** et doit être
-appliquée sur une **copie** du modèle destinée à l'impression, jamais sur le modèle maître.
+*Un pas fin ne « serre pas plus fort » : il permet un réglage plus précis et résiste mieux au
+desserrage, parce que l'hélice est moins inclinée.*
 
-*Bonne pratique en BE :* créer une **configuration « prototype FDM »** dans le fichier pièce,
-avec les cotes compensées, distincte de la configuration « série usinée ».
+### 5. La classe de qualité : le chiffre gravé sur la tête
 
----
+Une vis **8.8** n'est pas une référence commerciale : c'est sa résistance.
 
-**9. Contrôle du Ø19,987 — le piège de l'énoncé**
+- le **premier chiffre × 100** donne Rm : 8 → **800 MPa**
+- le **produit des deux × 10** donne Re : 8 × 8 × 10 = **640 MPa**
 
-**Décodage du Ø20 h7 :**
-- Tranche de dimension : $18 < 20 \\le 30$ → **tranche 18 à 30 mm**
-- IT7 = **21 µm = 0,021 mm**
-- Lettre **h** (arbre) → par définition $es = 0$
-$$ ei = es - IT = 0 - 21 = -21\\ \\mu m $$
+| Classe | Rm | Re | Emploi |
+|---|---|---|---|
+| 4.6 | 400 | 240 | vis courante, non critique |
+| **8.8** | **800** | **640** | **le standard en mécanique** |
+| 10.9 | 1000 | 900 | assemblage fortement chargé |
+| 12.9 | 1200 | 1080 | outillage, très haute résistance |
 
-$$ \\boxed{Ø20\\ h7 \\;\\Rightarrow\\; 19,979 \\le d \\le 20,000\\ \\mathrm{mm}} $$
+**Le piège :** monter une vis 4.6 là où le calcul supposait une 8.8 divise la résistance par
+2,7. Rien ne se voit à l'œil — seul le marquage sur la tête permet de vérifier.
 
-**Vérification de la mesure :**
-$$ 19,979 \\;\\le\\; 19,987 \\;\\le\\; 20,000 \\quad ✔️ $$
+### 6. Le serrage
 
-$$ \\boxed{\\textbf{La cote 19,987 est CONFORME au Ø20 h7}} $$
+Une vis serrée est une vis **tendue** : c'est cette tension (la précharge) qui empêche
+l'assemblage de bouger, pas le frottement de la tête.
 
-**⚠️ LE PIÈGE DE L'ÉNONCÉ — c'est le point noté :**
+**Ordre de grandeur pour une M8 en 8.8 :** couple de serrage ≈ **25 N·m**, précharge obtenue
+≈ **15 000 N**.
 
-L'énoncé dit *« le sous-traitant renvoie un STEP dont **l'alésage** mesure Ø19,987 »*.
+*Une vis correctement précontrainte ne « travaille » presque pas sous charge : c'est ce qui la
+rend endurante en fatigue. Une vis mal serrée, elle, encaisse toute la variation de charge et
+casse.*
 
-Or **le poussoir est un ARBRE, pas un alésage.** La désignation **h7** est en **minuscule**,
-donc elle s'applique **obligatoirement à un arbre** (convention absolue vue en fiche 2.1 :
-majuscules = alésages, minuscules = arbres).
+### 7. Les erreurs classiques
 
-**Il y a donc une incohérence dans l'énoncé, qu'il faut relever :**
+1. **Confondre diamètre de perçage et diamètre de passage** : Ø6,8 pour tarauder une M8, Ø9 pour
+   la laisser passer.
+2. **Oublier le pas** dans une désignation où il n'est pas le pas gros.
+3. **Confondre 6H et 6h** : majuscule = taraudage, minuscule = filetage.
+4. **Ignorer la classe de qualité** au remontage : une 4.6 à la place d'une 8.8 est invisible.
+5. **Serrer « au ressenti »** une vis dont la précharge est calculée.
 
-- Si l'on contrôle bien **le poussoir Ø20 h7** (arbre), la valeur 19,987 est **conforme** ✔️
-- Si l'on contrôle réellement **un alésage**, la désignation h7 est **impossible** : il faudrait
-  écrire **H7** (Ø20 +0,021/0 → 20,000 à 20,021), et 19,987 serait alors **REBUTÉE**
-  (trop petit de 13 µm).
+### 8. À retenir
 
-**Réponse attendue en copie :**
+- **M8 × 1,25 — 6H** : métrique, Ø nominal 8, pas 1,25, taraudage (majuscule).
+- **Perçage ≈ Ø nominal − pas** · le trou de **passage** est plus grand (Ø9 pour M8).
+- Pas fin : réglage précis et **meilleure tenue aux vibrations**.
+- **Classe 8.8** : Rm = 800 MPa, Re = 640 MPa — le standard.
+- Une vis serrée est une vis **tendue** : c'est la précharge qui tient l'assemblage.
+""",
+            "formules": """
+**Désignation** — M8 × 1,25 — 6H : M métrique · 8 Ø nominal · 1,25 pas ·
+6H taraudage (MAJUSCULE) / 6h filetage (minuscule)
 
-> *« La cote 19,987 est conforme au Ø20 h7 **si elle concerne le poussoir (arbre)**, ce qui est
-> le cas d'après la Partie B. L'énoncé emploie improprement le terme « alésage » : le h7 étant
-> en minuscule, il s'applique nécessairement à un arbre. Si la mesure portait effectivement sur
-> un alésage, la spécification devrait être H7 et la pièce serait non conforme. »*
+**Perçage et passage** — perçage avant taraudage ≈ **Ø nominal − pas**
+M6 → Ø5,0 · M8 → Ø6,8 · M10 → Ø8,5 · M12 → Ø10,2
+trou de passage : M8 → Ø9
 
-**Second point de vigilance à mentionner :** une cote **mesurée sur un fichier STEP** n'est pas
-une **cote de contrôle**. Le STEP reproduit le modèle nominal du sous-traitant, **pas la pièce
-réellement usinée**. Le contrôle de conformité se fait sur la **pièce physique**, avec un
-micromètre ou une MMT, jamais sur un fichier. Un sous-traitant qui envoie un STEP « conforme »
-n'a rien prouvé sur sa production.
+**Pas gros** — M4 : 0,7 · M5 : 0,8 · M6 : 1,0 · M8 : 1,25 · M10 : 1,5 · M12 : 1,75
+
+**Classe de qualité** — 1er chiffre × 100 = Rm · produit des deux × 10 = Re
+4.6 → 400/240 · **8.8 → 800/640** · 10.9 → 1000/900 · 12.9 → 1200/1080
+
+**Repère de serrage** — M8 en 8.8 : couple ≈ 25 N·m, précharge ≈ 15 000 N
+""",
+            "exemple": """
+### Cas industriel — Les vis remplacées par des vis « identiques »
+
+**Le symptôme.** Sur une machine d'emballage, les quatre vis M10 fixant un bras oscillant cassent
+au bout de trois semaines. À l'origine, l'assemblage avait tenu **quatre ans** sans incident.
+
+**L'analyse.** Une opération de maintenance avait remplacé les vis d'origine. Les nouvelles
+étaient bien des M10 × 1,5, de la bonne longueur, achetées en quincaillerie — mais marquées
+**4.6** au lieu de **10.9**.
+
+Comparaison des caractéristiques :
+
+| | Vis d'origine 10.9 | Vis de remplacement 4.6 | Rapport |
+|---|---|---|---|
+| Rm | 1 000 MPa | 400 MPa | 2,5 |
+| Re | 900 MPa | 240 MPa | **3,75** |
+
+**La conséquence directe.** Le couple de serrage appliqué (celui de la gamme d'origine, calculé
+pour une 10.9) dépassait la limite élastique des vis 4.6 : elles se sont **allongées
+plastiquement dès le serrage**. La précharge a chuté, l'assemblage s'est mis à travailler sous
+charge alternée, et les vis ont rompu en fatigue.
+
+**La correction.** Ajout de la classe de qualité **sur le plan ET sur la nomenclature**, et
+mention explicite dans la gamme de maintenance : « vis M10 × 1,5 classe 10.9 — **ne pas
+substituer** ».
+
+**Ce que le cas apprend.** Deux vis de mêmes dimensions peuvent différer d'un facteur près de 4
+en résistance, et **rien ne le montre à l'œil** — seul le marquage sur la tête le dit. Une
+nomenclature qui n'indique pas la classe est une nomenclature incomplète.
+""",
+            "exercice": """
+### Exercice — Décoder et dimensionner
+
+**1.** Décodez complètement la désignation **M10 × 1,5 — 6H**. Précisez ce que désigne chaque
+élément, et s'il s'agit d'une vis ou d'un écrou.
+
+**2.** Quel diamètre de perçage faut-il avant de tarauder ce M10 ? Utilisez la règle, puis
+comparez à la valeur du tableau.
+
+**3.** Quel diamètre de **passage** prévoir dans la pièce à fixer ? Pourquoi n'est-il pas égal au
+diamètre de perçage ?
+
+**4.** Une vis est marquée **8.8**. Calculez Rm et Re. Si on la remplace par une **4.6**, par
+quel facteur la limite élastique est-elle divisée ?
+
+**5.** Sur un assemblage soumis à de fortes vibrations et de faible épaisseur, choisiriez-vous un
+pas gros ou un pas fin ? Justifiez par deux arguments.
+""",
+            "corrige": """
+### Corrigé, en six temps
+
+#### 1. Ce que dit l'énoncé
+
+Une désignation complète à décoder, puis deux diamètres à distinguer (**perçage** et
+**passage**), et enfin un choix de conception. Les questions 4 et 5 portent sur la **résistance**
+et la **tenue aux vibrations**, deux critères indépendants des dimensions.
+
+#### 2. Quelle règle, et pourquoi
+
+**Trois règles s'appliquent :**
+
+- **majuscule = taraudage** (le contenant), minuscule = filetage — même convention qu'en fiche
+  5.3 ;
+- **perçage ≈ Ø nominal − pas**, parce qu'il faut laisser la matière dans laquelle l'outil va
+  creuser l'hélice ;
+- **classe X.Y** : Rm = X × 100, Re = X × Y × 10.
+
+#### 3. Les conversions
+
+Aucune conversion d'unité — tout est déjà en millimètres et en mégapascals. **Le seul risque de
+confusion est entre les deux diamètres** : perçage (plus petit que la vis) et passage (plus grand
+que la vis).
+
+#### 4. Le remplacement
+
+**Perçage** : 10 − 1,5
+
+**Classe 8.8** : Rm = 8 × 100 · Re = 8 × 8 × 10
+**Classe 4.6** : Rm = 4 × 100 · Re = 4 × 6 × 10
+
+#### 5. Le calcul
+
+**1.** **M10 × 1,5 — 6H** : filetage **métrique** ISO, diamètre nominal **10 mm**, pas de
+**1,5 mm** par tour, classe de tolérance **6H**. La **majuscule H** indique un **taraudage** :
+c'est donc un **écrou** ou un trou taraudé, pas une vis.
+
+**2.** Perçage = 10 − 1,5 = **8,5 mm**. La valeur du tableau est **Ø8,5** : la règle tombe
+exactement juste.
+
+**3.** Passage = **Ø11** environ (toujours **plus grand** que la vis). Il n'est pas égal au
+perçage parce qu'il ne sert pas à la même chose : le perçage reçoit la matière **où l'on va
+creuser le taraudage**, alors que le passage doit **laisser traverser la vis avec du jeu**, pour
+absorber les écarts de position entre pièces.
+
+**4.** **8.8** : Rm = **800 MPa**, Re = **640 MPa**. **4.6** : Rm = **400 MPa**, Re = **240 MPa**.
+
+Facteur sur la limite élastique : 640 / 240 = **2,67** — la résistance est divisée par près de 3.
+
+**5.** **Pas fin**, pour deux raisons :
+
+- son hélice est **moins inclinée**, donc il **résiste mieux au desserrage sous vibrations** ;
+- sur une **faible épaisseur**, il offre **plus de filets engagés** pour la même longueur
+  taraudée, ce qui répartit mieux l'effort.
+
+#### 6. La vérification
+
+**Contrôle de la règle du perçage** sur un autre cas : M6, pas 1,0 → 6 − 1 = 5 mm, et le tableau
+donne bien Ø5,0. La règle est fiable.
+
+**Contrôle de cohérence des trois diamètres** pour une M10 : perçage **8,5** < vis **10** <
+passage **11**. Si l'ordre n'était pas respecté, il y aurait une confusion — c'est le contrôle
+le plus rapide à faire.
+
+**Contrôle sur la classe** : Re doit toujours être **inférieur** à Rm (640 < 800, 240 < 400). Si
+le calcul donnait l'inverse, la formule aurait été mal appliquée.
+""",
+        },
+        {
+            "id": '5.8',
+            "titre": 'Esquisse et contraintes',
+            "duree": '6 h',
+            "cours": """
+### Le vocabulaire, en français courant
+
+| Terme | Ce que ça veut dire |
+|---|---|
+| **esquisse** | un dessin 2D, tracé sur un plan, qui deviendra ensuite un volume |
+| **contrainte** | une règle qui interdit à un élément de bouger tout seul |
+| **degré de liberté** | un mouvement encore possible dans l'esquisse |
+| **totalement contrainte** | plus aucun mouvement libre — l'esquisse s'affiche en noir |
+
+### 1. Un logiciel de CAO ne dessine pas : il construit un historique
+
+Chaque forme s'appuie sur ce qui précède. Modifiez une cote au début, et tout doit se recalculer
+jusqu'au bout — **si le modèle a été construit dans le bon ordre**.
+
+> Deux modèles peuvent donner **exactement la même pièce à l'écran** : l'un survivra à toutes
+> les modifications, l'autre s'effondrera à la première cote changée.
+
+Un jury, ou un collègue qui reprend votre fichier, verra la différence en essayant de modifier
+une seule cote.
+
+### 2. Contraindre, ce n'est pas coter
+
+[[FIG:contraintes_esquisse]]
+
+Deux façons de bloquer un élément :
+
+- une **contrainte géométrique** : parallèle, perpendiculaire, tangent, concentrique, symétrique,
+  égal ;
+- une **cote** : une valeur numérique.
+
+**La règle de priorité, qui change tout :**
+
+> **Contraintes géométriques d'abord, cotes ensuite.**
+
+*Pourquoi : une symétrie reste vraie quelle que soit la taille de la pièce ; deux cotes
+« 30 et 30 » pour dire la même chose devront être modifiées **toutes les deux** à chaque
+changement — et le jour où l'on n'en change qu'une, la symétrie est perdue sans que rien ne
+signale l'erreur.*
+
+### 3. Les couleurs : le logiciel vous parle
+
+| Couleur | Signification | Ce qu'il faut faire |
+|---|---|---|
+| **bleu** | sous-contraint : des éléments peuvent encore bouger | ajouter contraintes ou cotes |
+| **noir** | totalement contraint | c'est l'état à atteindre |
+| **rouge / jaune** | sur-contraint ou contradictoire | supprimer la contrainte en trop |
+
+**Test infaillible pour savoir si une esquisse est vraiment contrainte :** attrapez un élément à
+la souris et tirez. **S'il bouge, l'esquisse n'est pas finie** — quelle que soit sa couleur
+apparente.
+
+*Une esquisse laissée en bleu se déformera un jour toute seule, lors d'une modification faite
+plusieurs semaines plus tard, et personne ne comprendra pourquoi.*
+
+### 4. L'intention de conception
+
+[[FIG:intention_conception]]
+
+C'est la question à se poser **avant** de tracer : *si cette pièce change, qu'est-ce qui doit
+suivre automatiquement ?*
+
+**Exemple concret.** Une plaque percée de deux trous, à contraindre de deux façons :
+
+| Méthode | Conséquence si la plaque s'allonge |
+|---|---|
+| deux cotes depuis le bord gauche | les trous restent à gauche, décentrés |
+| **symétrie par rapport à l'axe + un entraxe** | les trous **restent centrés** automatiquement |
+
+Les deux méthodes produisent le même dessin aujourd'hui. **Une seule survit à la modification de
+demain.**
+
+### 5. Les six gestes d'une esquisse propre
+
+1. **Choisir un plan de référence** (Face, Dessus, Droite) — jamais une face de la pièce si on
+   peut l'éviter.
+2. **Tracer approximativement**, sans chercher les valeurs exactes.
+3. **Poser les contraintes géométriques** : symétrie, coïncidence, tangence, égalité.
+4. **Coter** ce qui reste libre.
+5. **Vérifier que l'esquisse est noire**, et tirer dessus pour en être sûr.
+6. **Renommer la fonction** dans l'arbre.
+
+**Pourquoi le plan de référence plutôt qu'une face :** une face peut disparaître si la fonction
+qui l'a créée change — un congé la remplace par une surface courbe, et l'esquisse perd sa
+référence. Un plan de référence, lui, existe toujours.
+
+### 6. Les erreurs classiques
+
+1. **Coter au lieu de contraindre** : deux cotes égales au lieu d'une symétrie.
+2. **Laisser une esquisse en bleu** et passer à la suite.
+3. **Esquisser sur une face** au lieu d'un plan de référence.
+4. **Chercher les cotes exactes en traçant** : on trace approximativement, on contraint, puis on
+   cote.
+5. **Ne pas renommer** : un arbre en « Esquisse7 » est illisible deux semaines plus tard.
+
+### 7. À retenir
+
+- Un modèle est un **historique de fonctions**, pas un dessin.
+- **Contraintes géométriques d'abord, cotes ensuite.**
+- **Bleu = pas fini · noir = bon** — et le vrai test, c'est de tirer sur l'élément.
+- L'**intention de conception** se décide avant de tracer : qu'est-ce qui doit suivre ?
+- Esquisser sur un **plan de référence**, jamais sur une face si on peut l'éviter.
+""",
+            "formules": """
+**Ordre de travail** — plan de référence → tracé approximatif → contraintes géométriques →
+cotes → vérifier « noire » → renommer
+
+**Contraintes géométriques** — coïncidence · parallèle · perpendiculaire · tangent ·
+concentrique · **symétrique** · égal · horizontal/vertical
+
+**Couleurs** — bleu = sous-contraint (à finir) · noir = totalement contraint (bon) ·
+rouge/jaune = sur-contraint (supprimer une contrainte)
+
+**Le test qui ne trompe pas** — tirer sur un élément à la souris : s'il bouge, ce n'est pas fini
+
+**Priorité** — une contrainte géométrique survit à toutes les modifications ;
+deux cotes égales devront être changées deux fois
+""",
+            "exemple": """
+### Cas industriel — Le modèle qui s'effondre à la première modification
+
+**Le symptôme.** Un client demande de passer la largeur d'une platine de 80 à 95 mm. La
+modification, annoncée comme « cinq minutes », prend **une demi-journée** : le modèle tombe en
+erreur en cascade, et les quatre trous de fixation se retrouvent décentrés.
+
+**L'analyse de l'arbre.** L'esquisse de base comportait :
+
+- le contour de la platine, coté **80** en largeur ;
+- les quatre trous, positionnés par **quatre cotes indépendantes depuis le bord gauche**
+  (12, 32, 52, 72) ;
+- aucune contrainte de symétrie.
+
+En changeant 80 en 95, le contour s'est allongé — mais les quatre cotes des trous, elles,
+n'avaient **aucune raison de bouger** : les trous sont restés collés à gauche, laissant 23 mm de
+matière vide à droite.
+
+**La reconstruction, selon l'intention de conception :**
+
+| Élément | Ancienne méthode | Nouvelle méthode |
+|---|---|---|
+| position des trous | 4 cotes depuis le bord | **symétrie par rapport à l'axe vertical** |
+| écartement | inclus dans les 4 cotes | **un entraxe de 60, coté une seule fois** |
+| nombre de cotes | 5 | **2** |
+
+Après reconstruction, passer de 80 à 95 prend **cinq secondes** : les trous restent centrés
+automatiquement, parce que la symétrie est une **règle**, pas une valeur.
+
+**Ce que le cas apprend.** Les deux modèles produisaient un dessin identique à l'écran. La
+différence ne s'est vue qu'au moment de la modification — c'est-à-dire **exactement au moment
+où elle coûte de l'argent**.
+""",
+            "exercice": """
+### Exercice — Contraindre une esquisse
+
+Une platine rectangulaire **L × 60** (L variable) doit recevoir **deux trous Ø8**, alignés
+horizontalement, **centrés sur la platine** et **écartés de 60 mm** entre eux. La platine devra
+pouvoir être allongée sans que les trous cessent d'être centrés.
+
+**1.** Listez les contraintes **géométriques** que vous posez, avant toute cote.
+
+**2.** Combien de **cotes** restent nécessaires ensuite ? Lesquelles ?
+
+**3.** Un camarade propose de coter les deux trous depuis le bord gauche (par exemple 30 et 90).
+Le dessin obtenu est-il identique ? Que se passe-t-il quand on porte L de 120 à 150 ?
+
+**4.** L'esquisse est affichée en **bleu**. Que signifie cette couleur, et quel test permet de
+vérifier l'état réel de l'esquisse ?
+
+**5.** Pourquoi est-il déconseillé de poser cette esquisse **sur une face de la pièce** plutôt
+que sur un plan de référence ?
+""",
+            "corrige": """
+### Corrigé, en six temps
+
+#### 1. Ce que dit l'énoncé
+
+Une platine dont **une dimension est volontairement variable** (L). L'énoncé impose une exigence
+explicite : les trous doivent **rester centrés** si on allonge la pièce. C'est donc un exercice
+d'**intention de conception**, pas de tracé.
+
+#### 2. Quelle règle, et pourquoi
+
+**Contraintes géométriques d'abord, cotes ensuite.** Une contrainte de symétrie reste vraie
+quelle que soit la valeur de L ; une cote depuis un bord, non.
+
+**Corollaire :** chaque fois qu'une exigence s'exprime par un mot (« centré », « aligné »,
+« tangent »), c'est le signe qu'il faut une **contrainte**, pas une cote.
+
+#### 3. Les conversions
+
+Aucune conversion numérique. **La « conversion » à faire ici est de traduire l'énoncé en
+contraintes** : « centrés » → contrainte de symétrie · « alignés horizontalement » → contrainte
+d'horizontalité · « écartés de 60 » → une cote.
+
+#### 4. Le remplacement
+
+**Contraintes géométriques :**
+- les deux centres **alignés horizontalement**
+- les deux centres **symétriques** par rapport à l'axe vertical de la platine
+- les deux cercles **égaux**
+
+**Cotes restantes :** l'entraxe (60) et le diamètre (Ø8)
+
+#### 5. Le calcul
+
+**1.** Trois contraintes géométriques : **horizontalité** des deux centres, **symétrie** par
+rapport à l'axe vertical, **égalité** des deux diamètres.
+
+**2.** Deux cotes seulement : l'**entraxe de 60 mm** et le **diamètre Ø8** (une seule fois, grâce
+à la contrainte d'égalité).
+
+**3.** Le dessin obtenu est **identique aujourd'hui**. Mais en portant L de 120 à 150, les cotes
+30 et 90 n'ont aucune raison de changer : les trous **restent collés à gauche**, avec 30 mm de
+matière vide à droite. Ils ne sont plus centrés — et rien dans le logiciel ne le signale, puisque
+l'esquisse reste valide.
+
+**4.** **Bleu = sous-contraint** : des éléments peuvent encore bouger librement. Le test
+infaillible est de **tirer sur un élément à la souris** : s'il se déplace, l'esquisse n'est pas
+finie, quelle que soit son apparence.
+
+**5.** Parce qu'une **face peut disparaître**. Si l'on ajoute plus tard un congé sur cette arête,
+la face plane est remplacée par une surface courbe : l'esquisse perd sa référence, et **toutes
+les fonctions qui en dépendent tombent en erreur**. Un plan de référence, lui, existe toujours.
+
+#### 6. La vérification
+
+**Le test de robustesse, à faire systématiquement :** changez L de 120 à 150, puis à 90.
+L'esquisse doit rester **noire** et les trous rester centrés, sans aucune erreur dans l'arbre.
+
+**Le comptage des cotes** est un bon indicateur : **deux cotes** avec la bonne méthode contre
+**cinq** avec la mauvaise. Moins il y a de cotes pour une même géométrie, plus le modèle est
+robuste — parce que chaque cote est une valeur à maintenir à jour, alors qu'une contrainte
+géométrique se maintient toute seule.
+""",
+        },
+        {
+            "id": '5.9',
+            "titre": 'Extrusion, révolution, enlèvement de matière',
+            "duree": '6 h',
+            "cours": """
+### Le vocabulaire, en français courant
+
+| Terme | Ce que ça veut dire |
+|---|---|
+| **extrusion** | on tire une esquisse en ligne droite pour créer un volume |
+| **révolution** | on fait tourner une esquisse autour d'un axe |
+| **balayage** | on promène une section le long d'un chemin |
+| **fonction volumique** | une opération qui ajoute ou enlève de la matière |
+
+### 1. La bonne fonction, c'est celle qui décrit la pièce
+
+Une même pièce peut souvent se construire de plusieurs façons. Mais **une seule correspond à la
+façon dont la pièce existe réellement**, et c'est celle-là qui donnera un modèle robuste.
+
+> **Question à se poser avant de cliquer :** cette forme est-elle constante en ligne droite,
+> tournée autour d'un axe, ou variable le long d'un chemin ?
+
+### 2. Les trois fonctions de base, en gestes numérotés
+
+**1 — EXTRUSION** : la section est **constante en ligne droite**.
+
+*Exemples : une plaque, une équerre, un profilé, une nervure.*
+Options utiles : borgne (une profondeur donnée), débouchant, **plan milieu** (symétrique de part
+et d'autre de l'esquisse).
+
+**2 — RÉVOLUTION** : la forme est **axisymétrique**.
+
+*Exemples : un arbre, une poulie, une bague, un galet.*
+**La règle qui fait toute la différence : tout ce qui est axisymétrique se dessine dans le MÊME
+profil** — le corps, la gorge, l'alésage, les épaulements. Une seule fonction, et la pièce
+entière apparaît.
+
+**3 — BALAYAGE** : la section **change de direction** en suivant un chemin.
+
+*Exemples : un tube cintré, un joint torique, un canal de refroidissement, une volute de pompe.*
+Il faut deux esquisses : le **profil** et la **trajectoire**.
+
+**Application immédiate.** Une poulie à gorge Ø80 : révolution unique, avec le disque, la gorge
+en V et le moyeu **tous dans le même profil**. Créer la gorge par une révolution coupée après
+coup fonctionne aussi, mais ajoute une fonction et casse si l'on change la largeur du corps.
+
+### 3. Enlever de la matière
+
+Chaque fonction existe en version **coupée** : extrusion coupée, révolution coupée, balayage
+coupé.
+
+**Pour les perçages, on utilise l'assistant de perçage**, jamais un cercle extrudé. La raison
+n'est pas le confort :
+
+| Cercle extrudé | Assistant de perçage |
+|---|---|
+| un simple trou cylindrique | porte la **norme** (Ø de perçage pour un taraudage, fond conique à 118°) |
+| aucune information | alimente **automatiquement la mise en plan** |
+| à recoter à la main | la tolérance se renseigne dans l'assistant |
+
+### 4. L'ordre canonique de l'arbre
+
+> **volume général → enlèvements → perçages → répétitions → nervures et coques → congés,
+> chanfreins, dépouilles**
+
+**Pourquoi les congés en dernier** (fiche 5.10) : un congé remplace une arête vive par une
+surface courbe. Toute fonction qui s'appuyait sur cette arête perd sa référence.
+
+### 5. Choisir : trois cas concrets
+
+| La pièce | La fonction | Pourquoi pas une autre |
+|---|---|---|
+| une équerre de fixation | **extrusion** plan milieu | section constante, symétrie automatique |
+| un arbre étagé avec gorge | **révolution** unique | tout est axisymétrique : un seul profil |
+| un carter avec volute | extrusion **+ balayage coupé** | le canal change de section ET de direction |
+
+### 6. Le test de robustesse
+
+**Après chaque pièce, changez une cote majeure et vérifiez que rien ne casse.**
+
+*Ce test n'est pas une formalité : c'est le seul moyen de savoir si votre modèle est réellement
+paramétrique ou seulement joli à l'écran. Un modèle qui ne survit pas à ce test devra être
+reconstruit à la première demande de modification du client.*
+
+### 7. Les erreurs classiques
+
+1. **Extruder un cercle** au lieu d'utiliser l'assistant de perçage.
+2. **Découper une pièce axisymétrique en plusieurs fonctions** au lieu d'un seul profil de
+   révolution.
+3. **Utiliser une extrusion borgne** là où « plan milieu » garderait la pièce centrée.
+4. **Placer les congés trop tôt** dans l'arbre.
+5. **Ne jamais tester** en modifiant une cote.
+
+### 8. À retenir
+
+- **Extrusion** : section constante en ligne droite · **révolution** : axisymétrique ·
+  **balayage** : la section suit un chemin.
+- Pour une révolution, **tout l'axisymétrique tient dans un seul profil**.
+- **Assistant de perçage**, jamais un cercle extrudé : il porte la norme et la mise en plan.
+- Ordre canonique : volume → enlèvements → perçages → répétitions → **congés en dernier**.
+- Le **test de robustesse** est le seul juge d'un modèle paramétrique.
+""",
+            "formules": """
+**Choisir la fonction** — section constante en ligne droite → **extrusion**
+forme axisymétrique → **révolution** (tout dans le même profil)
+section qui suit un chemin → **balayage** (profil + trajectoire)
+
+**Options d'extrusion** — borgne (profondeur donnée) · débouchant · **plan milieu** (symétrique)
+
+**Enlèvement de matière** — chaque fonction existe en version coupée
+perçages : **assistant de perçage**, jamais un cercle extrudé
+
+**Ordre canonique de l'arbre** — volume général → enlèvements → perçages → répétitions →
+nervures et coques → congés, chanfreins, dépouilles
+
+**Test de robustesse** — changer une cote majeure : aucune erreur ne doit apparaître
+""",
+            "exemple": """
+### Cas industriel — Deux fonctions au lieu de six
+
+**Le symptôme.** Un bureau d'études reçoit d'un sous-traitant le modèle 3D d'un galet tendeur.
+Le client demande de passer le diamètre extérieur de Ø60 à Ø65 : le modèle **tombe en erreur en
+cascade** et personne n'arrive à le réparer.
+
+**L'analyse de l'arbre reçu :**
+
+| Fonction | Nom dans l'arbre | Ce qu'elle fait |
+|---|---|---|
+| 1 | Révolution1 | le corps conique seulement |
+| 2 | Extrusion-Coupée1 | l'alésage Ø15, **esquissé sur une face du cône** |
+| 3 | Extrusion-Coupée2 | un moyeu débordant |
+| 4 | Congé1 | **placé au milieu de l'arbre** |
+| 5 | Extrusion-Coupée3 | le second moyeu |
+| 6 | Congé2 | |
+
+Rien n'est renommé. Surtout, l'alésage est esquissé **sur une face** qui se déplace dès qu'on
+change le diamètre : l'esquisse perd sa référence, et les trois fonctions suivantes tombent avec
+elle.
+
+**La reconstruction.** Le galet est **entièrement axisymétrique** : corps conique, alésage,
+moyeux débordants. Tout tient donc dans **un seul profil de révolution**, suivi d'une **unique
+fonction de congés** en fin d'arbre.
+
+**Résultat : deux fonctions au lieu de six.** Le changement de diamètre prend cinq secondes, sans
+aucune erreur.
+
+**Ce que le cas apprend.** Le modèle d'origine « avait l'air » correct à l'écran — la pièce était
+juste. Mais un modèle 3D n'est pas seulement une forme : c'est un **outil de travail** que
+d'autres devront modifier. Sa robustesse est une exigence de conception, pas une préférence
+esthétique.
+""",
+            "exercice": """
+### Exercice — Choisir la stratégie avant de modéliser
+
+Un **galet tendeur de courroie** : corps cylindrique **Ø60** en forme de double tronc de cône
+(pour centrer la courroie), **alésage central Ø15 H7** pour un roulement, **moyeu débordant de
+3 mm** de chaque côté, **congés R1,5** partout.
+
+**1.** Quelle **fonction de base** utilisez-vous pour la forme générale ? Justifiez.
+
+**2.** L'alésage central et les deux moyeux débordants : combien de fonctions au **minimum** ?
+Expliquez.
+
+**3.** À quel moment placez-vous les congés dans l'arbre, et pourquoi ?
+
+**4.** Sur quel **plan** posez-vous l'esquisse de la révolution ? Pourquoi pas sur une face de la
+pièce ?
+
+**5.** Quel **test de robustesse** feriez-vous, et sur quelle cote en priorité ?
+""",
+            "corrige": """
+### Corrigé, en six temps
+
+#### 1. Ce que dit l'énoncé
+
+Un galet dont **toutes les formes tournent autour du même axe** : le double cône, l'alésage, les
+moyeux débordants. L'énoncé décrit une pièce **entièrement axisymétrique** — c'est l'information
+décisive, avant tout calcul.
+
+#### 2. Quelle règle, et pourquoi
+
+**La question de tri :** cette forme est-elle constante en ligne droite, tournée autour d'un axe,
+ou variable le long d'un chemin ?
+
+Ici, tout est **tourné autour d'un axe** → révolution. Et la règle qui suit : **tout ce qui est
+axisymétrique se dessine dans le même profil**, en une seule fonction.
+
+Puis l'ordre canonique, dont la partie qui compte ici : **les congés en dernier**.
+
+#### 3. Les conversions
+
+Aucune conversion numérique dans cet exercice. **Le travail de « conversion » est de traduire une
+description en stratégie de construction** — c'est exactement ce qu'on attend d'un concepteur
+avant qu'il ne touche la souris.
+
+#### 4. Le remplacement
+
+**Profil de révolution** = demi-section contenant : le double cône extérieur + l'alésage Ø15 +
+les deux moyeux débordants, le tout contraint par **symétrie sur l'axe**.
+
+**Fonctions** = 1 révolution + 1 congé
+
+#### 5. Le calcul
+
+**1.** Une **révolution**. Le galet est entièrement axisymétrique : une seule fonction suffit, et
+elle décrit la pièce telle qu'elle existe réellement (elle est d'ailleurs probablement tournée en
+fabrication).
+
+**2.** **Une seule fonction au minimum** — la révolution elle-même. L'alésage et les moyeux étant
+axisymétriques, ils font partie du **même profil**. *L'erreur classique serait de faire une
+révolution pour le corps, une extrusion coupée pour l'alésage, puis deux extrusions pour les
+moyeux : quatre fonctions au lieu d'une, pour strictement le même résultat, mais un modèle
+quatre fois plus fragile.*
+
+**3.** **En tout dernier**, après la révolution. Un congé remplace une arête vive par une surface
+courbe : toute fonction qui s'appuierait sur cette arête perdrait sa référence. C'est la règle la
+plus constante de tout l'arbre de construction.
+
+**4.** Sur un **plan de référence** (le plan de Droite, par exemple), jamais sur une face de la
+pièce — pour la même raison qu'à la question 3 : **une face peut disparaître** quand une fonction
+change, un plan de référence non.
+
+**5.** Changer le **diamètre de l'alésage**, de Ø15 à Ø17 : c'est la modification la plus
+probable en vraie vie, si le fournisseur de roulement change de référence. Le double cône et les
+moyeux doivent suivre sans aucune erreur, puisqu'ils dépendent des mêmes contraintes d'esquisse.
+
+#### 6. La vérification
+
+**Le comptage des fonctions est le meilleur indicateur** : deux fonctions (révolution + congés)
+contre six dans le cas industriel de cette fiche. À géométrie identique, **moins de fonctions =
+modèle plus robuste**.
+
+**Le test de robustesse tranche définitivement.** Un modèle qui encaisse un changement de Ø15 à
+Ø17 sans erreur est paramétrique ; un modèle qui tombe en cascade ne l'était qu'en apparence —
+et cela ne se voyait pas à l'écran.
+""",
+        },
+        {
+            "id": '5.10',
+            "titre": 'Congés, chanfreins et répétitions',
+            "duree": '4 h',
+            "cours": """
+### Le vocabulaire, en français courant
+
+| Terme | Ce que ça veut dire |
+|---|---|
+| **congé** | un arrondi qui adoucit une arête (noté R) |
+| **chanfrein** | une arête coupée en biais (noté 2 × 45°) |
+| **répétition** | on demande au logiciel de recopier une forme selon une règle |
+| **fonction de fin d'arbre** | une fonction qui ne doit servir de support à aucune autre |
+
+### 1. Un congé n'est pas une décoration
+
+Trois raisons, dans cet ordre d'importance :
+
+**1 — La résistance.** Une arête vive est un **concentrateur de contraintes** : la contrainte
+réelle y est bien supérieure à la contrainte calculée. Un congé la répartit. C'est la raison
+principale, et elle est mécanique, pas esthétique.
+
+**2 — La fabrication.** Un outil de fraisage est rond : il **ne peut pas** créer un angle
+intérieur vif. Exiger un angle vif intérieur, c'est exiger une opération supplémentaire coûteuse.
+
+**3 — La sécurité et le montage.** Un chanfrein guide l'entrée d'une pièce et supprime les
+arêtes coupantes.
+
+### 2. Congé ou chanfrein : la règle de choix
+
+| | Congé (R) | Chanfrein (× 45°) |
+|---|---|---|
+| angle **intérieur** | **oui** — reprend l'effort | difficile à usiner |
+| angle **extérieur** | possible | **oui** — plus simple, moins cher |
+| guidage au montage | non | **oui** |
+| tenue en fatigue | **oui, l'essentiel** | limité |
+
+**Application immédiate.** Un arbre épaulé qui tourne sous flexion : **congé** dans l'angle
+rentrant (c'est là que la fissure de fatigue démarre), **chanfrein** en bout d'arbre (pour
+guider la bague au montage).
+
+### 3. Pourquoi en fin d'arbre, toujours
+
+> **Un congé remplace une arête vive par une surface courbe.**
+
+Toute esquisse ou fonction qui s'appuyait sur cette arête **perd sa référence** dès que le congé
+est créé. C'est le mécanisme exact de la plupart des « erreurs en cascade » dans un modèle.
+
+*Il existe des exceptions (un congé nécessaire à une fonction suivante), mais elles doivent être
+volontaires et rares. La règle par défaut ne change pas : congés, chanfreins et dépouilles en
+dernier.*
+
+### 4. Les répétitions : jamais deux fois la même forme à la main
+
+[[FIG:arbre_de_creation]]
+
+| Type | Quand l'utiliser |
+|---|---|
+| **linéaire** | trous alignés, rainures régulières |
+| **circulaire** | trous répartis sur un cercle, dentures, pales |
+| **symétrie** | la pièce a un plan de symétrie |
+| **pilotée par esquisse** | positions irrégulières mais définies |
+
+**Le gain n'est pas le temps de dessin, mais la modification.** Six trous créés par répétition :
+passer à huit se fait en changeant **un seul nombre**. Six trous créés à la main : il faut en
+dessiner deux de plus, les contraindre, les coter — et le jour où l'on modifie le diamètre, il
+faut le faire six fois, avec le risque d'en oublier un.
+
+**La symétrie mérite une mention à part** : elle garantit que les deux côtés **restent
+identiques**, y compris après modification. Dessiner le second côté à la main, c'est accepter
+qu'ils divergent un jour.
+
+### 5. Les erreurs classiques
+
+1. **Placer les congés trop tôt** : erreurs en cascade.
+2. **Créer chaque trou à la main** au lieu d'une répétition.
+3. **Mettre un chanfrein dans un angle intérieur** soumis à la fatigue : c'est le congé qui
+   reprend l'effort.
+4. **Un congé trop grand**, qui « mange » une surface d'appui voisine.
+5. **Oublier les chanfreins d'entrée** sur une portée de joint ou une entrée d'alésage.
+
+### 6. À retenir
+
+- Un congé sert d'abord à **répartir les contraintes**, pas à faire joli.
+- **Congé dans les angles intérieurs** (fatigue) · **chanfrein sur les arêtes extérieures**
+  (montage, sécurité).
+- **Congés, chanfreins et dépouilles en fin d'arbre**, toujours.
+- **Répétition plutôt que copie manuelle** : le gain est à la modification, pas au dessin.
+- La **symétrie** garantit que les deux côtés resteront identiques.
+""",
+            "formules": """
+**Congé ou chanfrein** — angle intérieur soumis à la fatigue → **congé (R)**
+arête extérieure, guidage au montage → **chanfrein (2 × 45°)**
+
+**Position dans l'arbre** — congés, chanfreins et dépouilles **TOUJOURS en dernier**
+raison : un congé remplace une arête vive par une surface courbe → les fonctions qui s'y
+appuyaient perdent leur référence
+
+**Répétitions** — linéaire · circulaire · symétrie · pilotée par esquisse
+gain réel : la **modification** (changer 6 en 8 = un seul nombre)
+
+**Écritures** — congé : R3 · chanfrein : 2 × 45° · dépouille : 1° à 3° pour le démoulage
+""",
+            "exemple": """
+### Cas industriel — La fissure qui part toujours du même angle
+
+**Le symptôme.** Un levier de commande casse en service après quelques mois. Trois exemplaires
+successifs cassent **exactement au même endroit** : dans l'angle rentrant entre le bras et le
+moyeu.
+
+**L'analyse.** Le calcul de RDM d'origine donnait une contrainte de **95 MPa** pour un acier à
+Rpe = 160 MPa — soit 59 % de l'admissible, une marge apparemment confortable.
+
+Mais l'angle était dessiné **vif**, sans congé. Or une arête vive est un **concentrateur de
+contraintes** : le coefficient Kt y atteint facilement **2,5 à 3**.
+
+Contrainte réelle en fond d'angle : 95 × 2,5 ≈ **238 MPa** — bien au-dessus de la limite
+élastique. En sollicitation alternée, la fissure démarre à cet endroit précis, exactement comme
+observé.
+
+**La correction.** Ajout d'un **congé R4** dans l'angle rentrant. Le coefficient Kt tombe autour
+de **1,5**, la contrainte réelle à environ 143 MPa — sous l'admissible. Aucune rupture depuis.
+
+**Le coût de la correction :** une ligne sur le plan, aucun surcoût d'usinage (la fraise passe
+de toute façon).
+
+**Ce que le cas apprend.** Le calcul de RDM n'était pas faux : il était **incomplet**. Il donnait
+la contrainte nominale, sans tenir compte de la géométrie locale. C'est précisément là que la
+conception 3D et la RDM se rejoignent — et pourquoi un congé n'est jamais un détail esthétique.
+""",
+            "exercice": """
+### Exercice — Congés, chanfreins et répétitions
+
+Un **plateau circulaire Ø200 × 15** comporte : **huit trous Ø9** répartis régulièrement sur un
+cercle de Ø160, un **moyeu central** en relief avec un **alésage Ø40 H7**, et un **angle rentrant**
+entre le moyeu et le plateau.
+
+**1.** Comment créez-vous les huit trous ? Quelle est la conséquence si vous les dessinez un par
+un ?
+
+**2.** Dans l'angle rentrant moyeu/plateau : congé ou chanfrein ? Justifiez par la fonction.
+
+**3.** Sur l'entrée de l'alésage Ø40 H7 : congé ou chanfrein ? Pourquoi ?
+
+**4.** À quelle position de l'arbre placez-vous ces deux fonctions ? Que se passerait-il si vous
+les placiez avant les perçages ?
+
+**5.** Le client demande de passer de 8 à 12 trous. Combien d'actions cela représente-t-il selon
+chacune des deux méthodes de la question 1 ?
+""",
+            "corrige": """
+### Corrigé, en six temps
+
+#### 1. Ce que dit l'énoncé
+
+Un plateau avec **une répartition régulière** (huit trous sur un cercle), **un angle rentrant**
+(donc une question de fatigue) et **une entrée d'alésage précis** (donc une question de montage).
+Chaque élément appelle une réponse différente.
+
+#### 2. Quelle règle, et pourquoi
+
+**Trois règles :**
+
+- **répétition plutôt que copie manuelle**, parce que le gain est à la modification ;
+- **congé dans les angles intérieurs** (il reprend l'effort), **chanfrein sur les arêtes
+  extérieures** (il guide) ;
+- **congés et chanfreins en fin d'arbre**, parce qu'ils suppriment les arêtes sur lesquelles les
+  autres fonctions s'appuient.
+
+#### 3. Les conversions
+
+Aucune conversion d'unité. **Le calcul de la question 5 est un simple comptage d'actions** — mais
+c'est lui qui rend la règle tangible.
+
+#### 4. Le remplacement
+
+**Méthode répétition** : 1 perçage + 1 répétition circulaire (paramètre : 8 occurrences)
+
+**Méthode manuelle** : 8 esquisses de cercle + 8 contraintes de position + 8 extrusions coupées
+
+#### 5. Le calcul
+
+**1.** Un **seul perçage** (par l'assistant), puis une **répétition circulaire** de 8 occurrences
+sur le cercle Ø160. Dessinés un par un, les huit trous deviennent huit fonctions indépendantes :
+il faudra les modifier **huit fois** à chaque changement, avec le risque d'en oublier un — et
+rien dans le logiciel ne signalera l'oubli.
+
+**2.** Un **congé**. C'est un angle **rentrant**, donc un concentrateur de contraintes : c'est là
+que démarre une fissure de fatigue, comme dans le cas industriel de cette fiche. Un chanfrein n'y
+répartirait pas les contraintes de la même façon.
+
+**3.** Un **chanfrein** (par exemple 1 × 45°). Sa fonction est le **guidage au montage** : il
+permet d'engager la pièce dans l'alésage sans risquer de rayer la portée H7, et supprime l'arête
+coupante.
+
+**4.** **En fin d'arbre**, après les perçages et la répétition. Placés avant, le congé et le
+chanfrein remplaceraient les arêtes vives par des surfaces courbes : les esquisses des perçages
+qui s'appuieraient sur ces arêtes **perdraient leur référence**, provoquant une erreur en cascade.
+
+**5.** Passer de 8 à 12 trous :
+
+| Méthode | Actions nécessaires |
+|---|---|
+| **répétition** | **1** — changer le nombre d'occurrences |
+| manuelle | 4 esquisses + 4 contraintes + 4 extrusions = **12 actions**, plus la vérification de la répartition angulaire |
+
+#### 6. La vérification
+
+**Le test de robustesse** : après modification à 12 trous, la répartition doit rester
+**parfaitement régulière** sans intervention. Avec la méthode manuelle, il faut recalculer les
+angles (360/12 = 30° au lieu de 45°) et repositionner chaque trou — une source d'erreur à chaque
+fois.
+
+**Le contrôle sur l'ordre de l'arbre** : déplacez mentalement le congé avant les perçages. Si
+vous ne pouvez pas garantir que rien ne casse, c'est qu'il doit rester en fin d'arbre — ce qui
+est le cas par défaut.
+""",
+        },
+        {
+            "id": '5.11',
+            "titre": "Arbre de construction et reprise d'une pièce",
+            "duree": '5 h',
+            "cours": """
+### Le vocabulaire, en français courant
+
+| Terme | Ce que ça veut dire |
+|---|---|
+| **arbre de construction** | la liste ordonnée de toutes les fonctions qui ont créé la pièce |
+| **référence externe** | une esquisse qui s'appuie sur une face plutôt que sur un plan |
+| **erreur en cascade** | une fonction tombe, et toutes celles qui en dépendaient tombent aussi |
+| **reprise** | modifier un modèle fait par quelqu'un d'autre |
+
+### 1. Un modèle 3D est un document de travail, pas une image
+
+Vous ne serez pas seul à ouvrir vos fichiers. Un collègue, un sous-traitant, ou vous-même dans
+six mois devrez les **modifier**. C'est à ce moment-là, et seulement à ce moment-là, qu'on voit
+si un modèle était bien construit.
+
+[[FIG:arbre_de_creation]]
+
+### 2. Lire un arbre reçu, en 4 gestes
+
+**Geste 1 — Compter les fonctions.** Une pièce simple qui en compte quinze est probablement mal
+construite.
+
+**Geste 2 — Regarder les noms.** « Extrusion3, Congé1, Extrusion-Coupée2 » ne veut rien dire.
+Des noms comme *Corps_révolution*, *Alésage_Ø52H7*, *Congés_R3* racontent la pièce.
+
+**Geste 3 — Repérer les esquisses posées sur des FACES** plutôt que sur des plans de référence :
+ce sont les futures erreurs en cascade.
+
+**Geste 4 — Vérifier la position des congés** : s'ils sont au milieu de l'arbre, il y aura des
+problèmes.
+
+### 3. Diagnostiquer une erreur en cascade
+
+**Le mécanisme, toujours le même :**
+
+> une esquisse s'appuie sur une **face** → cette face est modifiée ou supprimée → l'esquisse perd
+> sa référence → **toutes les fonctions qui en dépendaient tombent**
+
+**Méthode de réparation, en 3 gestes :**
+
+1. **Remonter à la PREMIÈRE fonction en erreur** — les suivantes ne sont que des conséquences.
+2. **Identifier ce qu'elle référençait** et pourquoi ça a disparu.
+3. **Rebâtir cette esquisse sur un plan de référence**, jamais sur une nouvelle face.
+
+*Réparer les fonctions une par une en partant du bas est la façon la plus sûre de perdre une
+heure : on répare des symptômes.*
+
+### 4. Quand reconstruire plutôt que réparer
+
+**La règle pratique :**
+
+> Si la réparation prend plus de temps que la reconstruction, **on reconstruit** — et le nouveau
+> modèle sera robuste, alors que le modèle réparé restera fragile.
+
+Un modèle de six fonctions mal ordonnées se reconstruit souvent en deux fonctions propres
+(fiche 5.9).
+
+### 5. La mise en position : la règle 3-2-1
+
+C'est le principe qui relie la CAO, la cotation et l'usinage.
+
+> **3 points** définissent la face principale (appui plan) · **2 points** une face secondaire
+> (orientation) · **1 point** bloque le dernier degré de liberté
+
+**C'est la même logique partout :**
+
+| Domaine | Ce que c'est |
+|---|---|
+| CAO | le plan de référence de la première esquisse |
+| cotation | la surface de référence des cotes (fiche 5.2) |
+| GPS | la référence **A** du cadre de tolérance (fiche 5.5) |
+| usinage | la mise en position sur le montage d'usinage |
+
+*Choisir la même surface dans les quatre cas n'est pas une coïncidence : c'est ce qui garantit
+que ce qui est conçu, coté, contrôlé et usiné parle de la même chose.*
+
+### 6. Les erreurs classiques
+
+1. **Ne renommer aucune fonction.**
+2. **Esquisser systématiquement sur des faces.**
+3. **Réparer en partant de la dernière erreur** au lieu de la première.
+4. **Congés au milieu de l'arbre.**
+5. **Changer de surface de référence** entre la CAO, la cotation et l'usinage.
+
+### 7. À retenir
+
+- Un modèle est un **document de travail** : sa qualité se voit à la modification.
+- Lire un arbre : **nombre de fonctions, noms, esquisses sur faces, position des congés**.
+- Une erreur en cascade vient presque toujours d'une **esquisse posée sur une face**.
+- On répare **en partant de la première erreur**, jamais de la dernière.
+- **3-2-1** : la même surface sert de référence en CAO, en cotation, en GPS et en usinage.
+""",
+            "formules": """
+**Lire un arbre reçu** — compter les fonctions · lire les noms · repérer les esquisses sur
+FACES · vérifier que les congés sont en fin d'arbre
+
+**Erreur en cascade** — esquisse sur une face → la face change → référence perdue →
+toutes les fonctions dépendantes tombent
+
+**Réparation** — 1. remonter à la PREMIÈRE erreur · 2. identifier la référence perdue ·
+3. rebâtir sur un **plan de référence**
+
+**Reconstruire plutôt que réparer** — si la réparation est plus longue que la reconstruction
+
+**Règle 3-2-1** — 3 points : face principale · 2 points : orientation · 1 point : blocage
+même surface de référence en CAO, cotation, GPS (référence A) et usinage
+""",
+            "exemple": """
+### Cas industriel — Une demi-journée pour changer une cote
+
+**Le symptôme.** Un client demande de porter la hauteur d'axe d'un support de palier de 90 à
+120 mm. Le devis annonce « modification mineure ». La modification prend **une demi-journée**.
+
+**L'analyse de l'arbre :**
+
+| # | Fonction | Problème |
+|---|---|---|
+| 1 | Extrusion1 (semelle) | — |
+| 2 | Extrusion2 (corps vertical) | esquissée **sur la face supérieure** de la semelle |
+| 3 | Congé1 | placé **avant** les perçages |
+| 4 | Extrusion-Coupée1 (alésage) | esquissée **sur la face avant** du corps |
+| 5 | Extrusion-Coupée2, 3, 4, 5 | quatre trous de semelle créés **un par un** |
+| 6 | Congé2, Congé3 | |
+
+En changeant la hauteur, la face avant du corps s'est déplacée : l'esquisse de l'alésage a perdu
+sa référence (fonction 4), et tout ce qui suivait est tombé.
+
+**La reconstruction, selon les règles des fiches 5.9 à 5.11 :**
+
+| Ancienne méthode | Nouvelle méthode |
+|---|---|
+| 2 extrusions successives sur faces | **1 extrusion** du profil complet, sur le plan de Face |
+| alésage esquissé sur une face | **assistant de perçage**, référencé sur un plan |
+| 4 trous créés un par un | **1 perçage + 1 répétition** |
+| congés dispersés dans l'arbre | **1 fonction de congés**, en fin d'arbre |
+| **10 fonctions** | **4 fonctions** |
+
+Après reconstruction, passer de 90 à 120 mm prend **quelques secondes**.
+
+**Ce que le cas apprend.** Le temps perdu ne vient pas de la difficulté de la pièce — elle est
+simple. Il vient de **décisions de construction prises des mois plus tôt**, par quelqu'un qui ne
+pensait pas que le modèle serait modifié. C'est presque toujours faux : un modèle industriel est
+modifié.
+""",
+            "exercice": """
+### Exercice — Diagnostiquer et reprendre un modèle
+
+Vous recevez le modèle d'une équerre percée. L'arbre contient :
+
+```
+1. Extrusion1
+2. Extrusion2          (esquisse posée sur la face supérieure de 1)
+3. Congé1              (R5, sur l'arête entre 1 et 2)
+4. Extrusion-Coupée1   (esquisse posée sur la face avant de 2)
+5. Extrusion-Coupée2   (un trou)
+6. Extrusion-Coupée3   (un trou identique au précédent)
+7. Chanfrein1
+```
+
+Le client demande d'augmenter la hauteur du dos vertical. Le modèle tombe en erreur.
+
+**1.** Quelle est, selon vous, la **première** fonction en erreur ? Pourquoi elle et pas une
+autre ?
+
+**2.** Citez **trois** défauts de construction visibles dans cet arbre, indépendamment de
+l'erreur actuelle.
+
+**3.** Décidez : réparer ou reconstruire ? Justifiez avec un critère explicite.
+
+**4.** Proposez un arbre reconstruit, fonction par fonction, en indiquant sur quoi chaque
+esquisse s'appuie.
+
+**5.** Quel test faites-vous à la fin pour valider votre reconstruction ?
+""",
+            "corrige": """
+### Corrigé, en six temps
+
+#### 1. Ce que dit l'énoncé
+
+Un arbre de **sept fonctions** pour une pièce simple, avec deux esquisses posées **sur des faces**
+(fonctions 2 et 4), un **congé au milieu** (fonction 3) et **deux trous identiques créés
+séparément** (fonctions 5 et 6). L'énoncé donne les symptômes ; le diagnostic est à faire.
+
+#### 2. Quelle règle, et pourquoi
+
+**La règle de diagnostic :** une erreur en cascade vient d'une **esquisse posée sur une face**
+qui a été modifiée. On remonte donc à la **première** fonction en erreur, jamais à la dernière.
+
+**La règle de décision :** si réparer prend plus longtemps que reconstruire, on reconstruit.
+
+#### 3. Les conversions
+
+Aucune conversion numérique. **Le travail consiste à traduire une liste de fonctions en
+diagnostic** — c'est exactement ce qu'on demande à un technicien qui reprend le fichier d'un
+autre.
+
+#### 4. Le remplacement
+
+**Ce qui se passe quand la hauteur du dos change :**
+
+la face avant de l'Extrusion2 se déplace → l'esquisse de l'Extrusion-Coupée1 (fonction 4) perd sa
+référence → les fonctions 5, 6 et 7, qui en dépendent, tombent à leur tour.
+
+#### 5. Le calcul
+
+**1.** La première fonction en erreur est l'**Extrusion-Coupée1 (fonction 4)** : son esquisse est
+posée sur la **face avant de l'Extrusion2**, qui se déplace quand la hauteur change. Les
+fonctions 5, 6 et 7 ne sont que des **conséquences** — les réparer d'abord serait perdre du
+temps sur des symptômes.
+
+**2.** Trois défauts, indépendamment de l'erreur actuelle :
+
+- **deux esquisses posées sur des faces** (fonctions 2 et 4) au lieu de plans de référence ;
+- un **congé placé au milieu de l'arbre** (fonction 3), avant les perçages ;
+- **deux trous identiques créés séparément** (fonctions 5 et 6) au lieu d'une répétition ou d'une
+  symétrie ;
+- *(on peut ajouter : aucune fonction renommée)*.
+
+**3.** **Reconstruire.** Le critère est explicite : l'arbre cumule quatre défauts structurels, et
+réparer la fonction 4 laisserait intactes les trois autres faiblesses — le modèle retomberait en
+erreur à la modification suivante. Une reconstruction de quatre fonctions est plus rapide et
+donne un modèle robuste.
+
+**4.** Arbre reconstruit :
+
+| # | Fonction | Appuyée sur |
+|---|---|---|
+| 1 | **Extrusion** du profil complet en L, plan milieu | **plan de Face** (plan de référence) |
+| 2 | **Assistant de perçage** pour l'alésage | plan de référence, cote depuis l'origine |
+| 3 | **Perçage + symétrie** pour les deux trous | plan de symétrie de la pièce |
+| 4 | **Congés et chanfreins**, une seule fonction multi-arêtes | en fin d'arbre |
+
+*Le profil en L est extrudé en une fois : il n'y a plus deux extrusions successives, donc plus de
+face intermédiaire servant de référence.*
+
+**5.** Le **test de robustesse** : changer la hauteur du dos de 60 à 90 mm, puis à 45 mm.
+L'alésage et les trous doivent suivre sans aucune erreur, et les congés se recalculer seuls.
+
+#### 6. La vérification
+
+**Le comptage** : **4 fonctions au lieu de 7**, pour la même pièce. À géométrie identique, moins
+de fonctions signifie moins de références à casser.
+
+**Le contrôle des références** : aucune esquisse ne s'appuie sur une face de la pièce. C'est ce
+seul point qui garantit qu'aucune erreur en cascade ne peut plus se produire.
+
+**Le test final, celui du collègue** : quelqu'un qui ouvre ce fichier dans six mois comprend-il
+la pièce en lisant l'arbre ? Avec des fonctions renommées et quatre étapes lisibles, oui.
+""",
+        },
+        {
+            "id": '5.12',
+            "titre": 'Assemblages et contraintes de position',
+            "duree": '5 h',
+            "cours": """
+### Le vocabulaire, en français courant
+
+| Terme | Ce que ça veut dire |
+|---|---|
+| **assemblage** | un fichier qui contient plusieurs pièces positionnées les unes par rapport aux autres |
+| **contrainte d'assemblage** | une règle qui fixe la position relative de deux pièces |
+| **degré de liberté** | un mouvement encore possible (3 translations + 3 rotations au départ) |
+| **sur-contraint** | on a imposé deux fois la même chose : le logiciel proteste |
+
+### 1. Assembler, c'est supprimer des mouvements
+
+Une pièce libre dans l'espace possède **six degrés de liberté** : trois translations (x, y, z) et
+trois rotations. Assembler consiste à en **supprimer** jusqu'à ce qu'il ne reste que le mouvement
+voulu.
+
+> **La question à se poser avant chaque contrainte : quel mouvement je veux SUPPRIMER, et lequel
+> je veux GARDER ?**
+
+*C'est exactement le raisonnement du schéma cinématique (fiche 6.1) : un pivot laisse une
+rotation, une glissière laisse une translation.*
+
+### 2. La première pièce s'ancre
+
+**On commence toujours par ancrer (fixer) une pièce** — le bâti, le carter, la pièce la plus
+massive. Sans cela, tout l'assemblage flotte dans l'espace, et la moindre contrainte fait bouger
+l'ensemble au lieu de positionner la pièce voulue.
+
+### 3. Les contraintes de base et ce qu'elles suppriment
+
+| Contrainte | Ce qu'elle supprime | Il reste |
+|---|---|---|
+| **coïncidence d'axes** (concentricité) | 2 translations + 2 rotations = **4 ddl** | rotation autour de l'axe + translation le long |
+| **coïncidence de faces** | 1 translation + 2 rotations | glissement dans le plan |
+| **distance** | 1 translation | le reste |
+| **angle** | 1 rotation | le reste |
+
+**Application immédiate — monter une poulie sur un arbre :**
+
+1. **ancrer l'arbre** ;
+2. **coïncidence des axes** poulie/arbre : supprime 4 ddl ;
+3. **coïncidence de face** (contre l'épaulement) : supprime la translation restante.
+
+**Il doit rester exactement une rotation** : la poulie tourne librement autour de l'arbre. C'est
+le contrôle final.
+
+### 4. Le contrôle qui ne trompe pas
+
+Après avoir posé vos contraintes, **essayez de bouger la pièce à la souris** :
+
+| Ce que vous observez | Diagnostic |
+|---|---|
+| elle tourne seulement | ✅ conforme à une liaison pivot |
+| elle coulisse **aussi** | une contrainte **manque** |
+| elle ne bouge plus du tout | une contrainte **de trop** — l'assemblage est bloqué |
+
+*Comparer ce résultat au **schéma cinématique attendu** est le meilleur moyen de vérifier qu'un
+assemblage est juste : les degrés de liberté restants doivent correspondre exactement à la
+liaison prévue.*
+
+### 5. Le sur-contraint
+
+Un assemblage sur-contraint « fonctionne » souvent quand même à l'écran, mais :
+
+- il devient **impossible à modifier** sans conflit ;
+- il masque des erreurs de conception réelles ;
+- il empêche toute simulation cinématique correcte.
+
+**La cause la plus fréquente :** imposer deux fois la même chose, par exemple une coïncidence
+d'axes **et** deux coïncidences de faces latérales — la seconde est redondante avec la première.
+
+*C'est l'équivalent, en assemblage, de la surabondance de cotes de la fiche 5.2 : dire deux fois
+la même chose crée un conflit dès qu'une valeur change.*
+
+### 6. Ce qui positionne n'est pas ce qui transmet
+
+Un point que les débutants inversent souvent :
+
+| Élément | Rôle |
+|---|---|
+| l'**ajustement** (H7/k6) | **centre** la pièce |
+| la **clavette** | **transmet le couple** |
+| l'**épaulement / anneau élastique** | **tient axialement** |
+
+**Une clavette ne centre pas et ne tient pas axialement.** Dans un assemblage CAO, on ne pose
+donc pas la clavette comme contrainte de position : elle vient après, une fois la pièce déjà
+positionnée par l'ajustement.
+
+### 7. Les erreurs classiques
+
+1. **Ne pas ancrer la première pièce.**
+2. **Empiler les contraintes jusqu'à ce que « ça ne bouge plus »** au lieu de raisonner en ddl.
+3. **Sur-contraindre** en imposant deux fois la même chose.
+4. **Utiliser la clavette comme contrainte de centrage.**
+5. **Ne pas vérifier les ddl restants** contre le schéma cinématique attendu.
+
+### 8. À retenir
+
+- Une pièce libre a **6 degrés de liberté** ; assembler, c'est en supprimer.
+- **Ancrer la première pièce**, toujours.
+- **Coïncidence d'axes : −4 ddl** · coïncidence de face : −1 translation restante.
+- Le contrôle : **tirer sur la pièce** et comparer au schéma cinématique attendu.
+- L'ajustement **centre**, la clavette **transmet**, l'épaulement **tient axialement**.
+""",
+            "formules": """
+**Degrés de liberté** — une pièce libre : 3 translations + 3 rotations = **6 ddl**
+
+**Ce que suppriment les contraintes** — coïncidence d'axes : **4 ddl** (2T + 2R) ·
+coïncidence de faces : 1T + 2R · distance : 1T · angle : 1R
+
+**Montage type poulie/arbre** — 1. ancrer l'arbre · 2. coïncidence d'axes (−4) ·
+3. coïncidence de face (−1) → **il reste 1 rotation** = liaison pivot
+
+**Contrôle** — tirer sur la pièce : tourne seulement = bon · coulisse aussi = contrainte
+manquante · ne bouge plus = contrainte de trop (sur-contraint)
+
+**Répartition des rôles** — ajustement = centre · clavette = transmet le couple ·
+épaulement/anneau = tient axialement
+""",
+            "exemple": """
+### Cas industriel — L'assemblage qui refuse toute modification
+
+**Le symptôme.** Un bureau d'études doit changer la longueur d'un arbre dans un assemblage de
+douze pièces. À chaque tentative, le logiciel affiche des conflits de contraintes et plusieurs
+pièces se déplacent de façon incohérente.
+
+**L'analyse.** L'assemblage comptait **34 contraintes** pour douze pièces — soit près du triple
+de ce qui était nécessaire. En les examinant :
+
+| Pièce | Contraintes posées | Nécessaires |
+|---|---|---|
+| poulie sur arbre | coïncidence d'axes + 2 coïncidences de faces latérales + 1 distance | coïncidence d'axes + 1 coïncidence de face |
+| flasque | 3 coïncidences de faces + 2 coïncidences d'axes | 1 coïncidence d'axes + 1 de face |
+| clavette | contrainte de centrage sur l'arbre | aucune (elle suit le montage) |
+
+Le concepteur avait posé des contraintes **jusqu'à ce que plus rien ne bouge**, sans jamais
+compter les degrés de liberté supprimés. Résultat : chaque pièce était bloquée plusieurs fois de
+la même façon.
+
+**La conséquence pratique.** Changer la longueur de l'arbre revient à modifier une distance ; mais
+comme trois contraintes différentes imposaient déjà cette distance de manière redondante, le
+logiciel ne pouvait satisfaire les trois à la fois.
+
+**La correction.** Reprise complète en raisonnant **en degrés de liberté** : 34 contraintes
+ramenées à **14**. La modification de l'arbre prend ensuite quelques secondes, et la simulation
+cinématique redevient possible — elle ne fonctionnait pas du tout auparavant.
+
+**Ce que le cas apprend.** « Ça ne bouge plus » n'est pas un critère de réussite. Le bon critère
+est : **les degrés de liberté restants correspondent-ils à la liaison voulue ?** C'est la même
+rigueur que pour le schéma cinématique.
+""",
+            "exercice": """
+### Exercice — Assembler une poulie sur un arbre
+
+Vous devez assembler une **poulie** (alésage Ø25 H7, avec rainure de clavette) sur un **arbre**
+Ø25 k6 comportant un **épaulement** et une rainure de clavette correspondante. Une **clavette**
+8 × 7 transmet le couple.
+
+**1.** Par quelle pièce commencez-vous, et que faites-vous d'abord ?
+
+**2.** Quelles contraintes posez-vous, dans quel ordre ? Indiquez pour chacune le nombre de
+degrés de liberté supprimés.
+
+**3.** Combien de degrés de liberté doit-il rester à la fin ? À quelle liaison cela
+correspond-il ?
+
+**4.** Faut-il poser une contrainte sur la **clavette** pour positionner la poulie ? Justifiez
+par la répartition des rôles.
+
+**5.** Après vos contraintes, la poulie ne bouge plus du tout à la souris. Est-ce bon signe ? Que
+faites-vous ?
+""",
+            "corrige": """
+### Corrigé, en six temps
+
+#### 1. Ce que dit l'énoncé
+
+Trois pièces : un arbre, une poulie et une clavette. Un **ajustement H7/k6** (donc incertain,
+centrage précis) et une **clavette** pour le couple. L'énoncé contient déjà la réponse à la
+question 4 : les rôles sont **séparés**.
+
+#### 2. Quelle règle, et pourquoi
+
+**On raisonne en degrés de liberté supprimés, pas en « ça ne bouge plus ».**
+
+Une pièce libre a 6 ddl. La coïncidence d'axes en supprime 4, une coïncidence de face en supprime
+la translation restante. Le contrôle final se fait **contre le schéma cinématique attendu**.
+
+Et la règle de répartition : **l'ajustement centre, la clavette transmet, l'épaulement tient
+axialement**.
+
+#### 3. Les conversions
+
+Aucune conversion numérique. **La « conversion » est celle d'une intention en degrés de
+liberté** : « la poulie doit tourner » signifie « il doit rester exactement 1 rotation ».
+
+#### 4. Le remplacement
+
+Départ : **6 ddl** (3 translations + 3 rotations)
+
+− coïncidence d'axes poulie/arbre : **−4 ddl** → il reste 2 (1 rotation + 1 translation)
+− coïncidence de face contre l'épaulement : **−1 ddl** → il reste **1**
+
+#### 5. Le calcul
+
+**1.** On commence par l'**arbre**, qu'on **ancre** (fixe). Sans pièce ancrée, tout l'assemblage
+flotte et les contraintes déplacent l'ensemble au lieu de positionner la poulie.
+
+**2.** Deux contraintes suffisent :
+
+| Ordre | Contrainte | ddl supprimés |
+|---|---|---|
+| 1 | coïncidence des **axes** poulie/arbre | **4** (2 translations + 2 rotations) |
+| 2 | coïncidence de **face** poulie contre l'épaulement | **1** (la translation le long de l'axe) |
+
+**3.** Il doit rester **1 degré de liberté** : la **rotation** autour de l'axe. Cela correspond à
+une **liaison pivot** — exactement ce qu'on attend d'une poulie montée sur un arbre.
+
+**4.** **Non.** La clavette **transmet le couple**, elle ne centre pas et ne tient pas
+axialement. C'est l'**ajustement H7/k6** qui centre, et l'**épaulement** qui tient axialement.
+Poser la clavette comme contrainte de centrage reviendrait à lui faire jouer un rôle qu'elle n'a
+pas — et créerait un sur-contraint dès que l'ajustement positionne déjà la pièce.
+
+**5.** **Non, ce n'est pas bon signe.** Si la poulie ne tourne plus, il y a **une contrainte de
+trop** : l'assemblage est sur-contraint. Il faut **retirer la contrainte redondante** — souvent
+une seconde coïncidence de face, ou une distance qui refait ce que la coïncidence d'axes faisait
+déjà.
+
+#### 6. La vérification
+
+**Le test de la souris** : la poulie doit **tourner** librement autour de l'arbre, et **ne pas
+coulisser**. Si elle coulisse, la contrainte de face manque ; si elle est figée, il y a une
+contrainte en trop.
+
+**La comparaison au schéma cinématique** : la liaison prévue est un **pivot** (1 rotation). Le
+modèle 3D doit reproduire exactement ce comportement — c'est le pont entre la fiche 6.1 et la
+CAO.
+
+**Le comptage** : **2 contraintes** pour cette liaison. Si vous en avez posé cinq ou six, la
+question à se poser n'est pas « est-ce que ça tient ? » mais « lesquelles disent deux fois la
+même chose ? ».
+""",
+        },
+        {
+            "id": '5.13',
+            "titre": 'Mise en plan complète',
+            "duree": '6 h',
+            "cours": """
+### Le vocabulaire, en français courant
+
+| Terme | Ce que ça veut dire |
+|---|---|
+| **mise en plan** | le document 2D produit à partir du modèle 3D, destiné à l'atelier |
+| **vue projetée** | une vue générée automatiquement depuis le modèle |
+| **vue de détail** | un agrandissement local d'une zone trop petite pour être cotée |
+| **nomenclature** | la liste des pièces d'un assemblage, avec repères et quantités |
+
+### 1. Le modèle 3D ne se fabrique pas : le plan, si
+
+Un fichier 3D est un outil de conception. **Le document qui engage l'entreprise, qui part chez le
+fournisseur et qui sert au litige, c'est le plan** — daté, indicé, signé.
+
+*C'est pourquoi la mise en plan n'est pas une corvée de fin de projet : c'est la traduction de
+tout le travail précédent en un langage contractuel.*
+
+### 2. Choisir les vues : le minimum qui suffit
+
+> **La bonne réponse est le nombre MINIMAL de vues qui décrit la pièce sans ambiguïté.**
+
+| Type de pièce | Vues nécessaires |
+|---|---|
+| pièce de révolution | **une seule** vue + les cotes Ø (le Ø dit que c'est rond) |
+| pièce prismatique simple | deux vues |
+| pièce complexe | trois vues + coupes |
+
+*Ajouter une vue inutile n'est pas neutre : c'est une vue de plus à maintenir à jour à chaque
+révision, et une source supplémentaire de contradiction.*
+
+**Le choix de la vue de face** : celle qui montre **le plus de détails** et qui correspond, si
+possible, à la position d'usinage.
+
+### 3. Coupes, sections, vues de détail
+
+| Outil | Quand l'utiliser |
+|---|---|
+| **coupe** | supprimer des pointillés : la pièce a des formes intérieures |
+| **section** | montrer seulement la forme coupée (une rainure de clavette, un profil) |
+| **vue de détail** | agrandir une zone trop petite pour être cotée lisiblement |
+| **vue partielle** | ne montrer qu'une portion, pour éviter une grande vue presque vide |
+
+**Rappel de la fiche 5.1** : on hachure la matière traversée, jamais le vide. Et **on ne coupe
+jamais en long** vis, écrous, arbres pleins, clavettes ou nervures.
+
+### 4. Coter une mise en plan, en 5 gestes
+
+1. **Reporter d'abord les cotes fonctionnelles**, avec leurs tolérances (fiche 5.3, 5.4).
+2. **Ajouter les spécifications géométriques** (fiche 5.5) et les états de surface (fiche 5.6).
+3. **Coter le reste** sans tolérance : ISO 2768 au cartouche s'en charge.
+4. **Vérifier l'absence de surabondance** (fiche 5.2).
+5. **Remplir le cartouche** : matière, échelle, indice, tolérances générales, projection.
+
+**Les cotes générées automatiquement depuis le 3D sont un point de départ, pas un résultat.**
+Elles reprennent les cotes de construction du modèle, qui ne sont presque jamais les cotes
+fonctionnelles — c'est au concepteur de choisir ce qui doit être garanti.
+
+### 5. La mise en plan d'un assemblage
+
+Elle ne sert pas à la fabrication mais **au montage** :
+
+- une vue d'ensemble, souvent **en coupe** pour montrer les liaisons internes ;
+- des **repères** (bulles numérotées) reliés à chaque pièce ;
+- une **nomenclature** : repère, désignation, quantité, matière ou référence normalisée ;
+- les **cotes d'encombrement** et les cotes de réglage, jamais les cotes de fabrication.
+
+### 6. Ce qu'un plan doit permettre, le test final
+
+> *Un atelier qui ne me connaît pas peut-il fabriquer, contrôler et livrer cette pièce sans
+> m'appeler ?*
+
+Si la réponse est non, le plan n'est pas terminé — quelle que soit la qualité du modèle 3D
+derrière.
+
+### 7. Les erreurs classiques
+
+1. **Multiplier les vues** au lieu de chercher le minimum suffisant.
+2. **Garder les cotes automatiques** du 3D sans les retravailler.
+3. **Oublier les états de surface** sur les portées fonctionnelles.
+4. **Coter sur des traits cachés** au lieu de faire une coupe.
+5. **Cartouche incomplet** : sans indice ni tolérances générales, le plan n'est pas contractuel.
+6. **Confondre plan de pièce et plan d'assemblage** : coter la fabrication sur un plan de
+   montage.
+
+### 8. À retenir
+
+- Le **plan est le document contractuel**, pas le modèle 3D.
+- **Le minimum de vues** qui décrit la pièce sans ambiguïté — une seule suffit pour une pièce de
+  révolution.
+- Coupe pour **supprimer les pointillés** · vue de détail pour **agrandir**.
+- Les cotes automatiques du 3D sont **à retravailler** : elles ne sont pas fonctionnelles.
+- Le test final : **l'atelier peut-il fabriquer sans m'appeler ?**
+""",
+            "formules": """
+**Choisir les vues** — le **minimum** qui décrit la pièce sans ambiguïté
+pièce de révolution : 1 vue + cotes Ø · prismatique simple : 2 vues · complexe : 3 vues + coupes
+
+**Outils** — coupe (supprimer les pointillés) · section (montrer seulement la forme coupée) ·
+vue de détail (agrandir) · vue partielle
+
+**Ordre de cotation** — cotes fonctionnelles + tolérances → GPS et états de surface →
+reste en ISO 2768 → vérifier la surabondance → cartouche
+
+**Plan d'assemblage** — vue d'ensemble souvent en coupe · repères en bulles · nomenclature
+(repère, désignation, quantité, matière) · cotes d'encombrement, **jamais** de fabrication
+
+**Test final** — un atelier inconnu peut-il fabriquer, contrôler et livrer sans appeler ?
+""",
+            "exemple": """
+### Cas industriel — Le plan parfait que l'atelier ne peut pas fabriquer
+
+**Le symptôme.** Un plan est envoyé à un sous-traitant. Il revient **avec quatre questions** avant
+même le devis, ce qui retarde la consultation de deux semaines.
+
+**Les quatre questions posées :**
+
+| Question de l'atelier | Ce qui manquait sur le plan |
+|---|---|
+| « quelle rugosité sur la portée de roulement ? » | **aucun état de surface** (fiche 5.6) |
+| « la cote 45 est-elle depuis la face A ou le bord ? » | cotation **en chaîne**, référence ambiguë (fiche 5.2) |
+| « quelle tolérance sur l'entraxe des trous ? » | tolérance **absente**, ISO 2768 insuffisant pour cette fonction |
+| « quel indice fait foi ? » | **cartouche sans indice** |
+
+**Ce qui rend le cas instructif.** Le modèle 3D était irréprochable : robuste, bien construit,
+paramétrique. La pièce était juste. **C'est la traduction en document contractuel qui était
+incomplète.**
+
+**Le coût réel.** Deux semaines de retard sur la consultation, plus le temps de deux allers-retours
+— pour quatre informations qui prenaient dix minutes à ajouter.
+
+**La correction adoptée.** Une **liste de vérification avant diffusion**, appliquée à tous les
+plans :
+
+1. cotes fonctionnelles tolérancées, depuis une référence explicite ;
+2. spécifications géométriques sur les surfaces qui le justifient ;
+3. états de surface sur toutes les portées ;
+4. cartouche complet : matière, échelle, **indice**, tolérances générales, projection ;
+5. relecture par une personne qui n'a pas fait le plan.
+
+**Ce que le cas apprend.** Le test final de cette fiche n'est pas rhétorique : *l'atelier
+peut-il fabriquer sans m'appeler ?* Ici la réponse était non, quatre fois — et chaque « non »
+coûtait plusieurs jours.
+""",
+            "exercice": """
+### Exercice — Établir une mise en plan
+
+Vous devez mettre en plan un **arbre de transmission** : Ø30 k6 sur **deux portées de
+roulement**, un Ø40 central, une **rainure de clavette** 8 × 4 sur une portée Ø25 k6 recevant une
+poulie, un **chanfrein** 2 × 45° à chaque extrémité, longueur totale 240 mm.
+
+**1.** Combien de vues prévoyez-vous, et lesquelles ? Justifiez.
+
+**2.** Quel outil utilisez-vous pour montrer la rainure de clavette, et pourquoi celui-là ?
+
+**3.** Listez les cotes qui doivent porter une **tolérance chiffrée**, et celles qui relèvent
+d'ISO 2768.
+
+**4.** Quels **états de surface** indiquez-vous, et à quels endroits ?
+
+**5.** Que doit contenir le cartouche pour que le plan soit **contractuel** ?
+""",
+            "corrige": """
+### Corrigé, en six temps
+
+#### 1. Ce que dit l'énoncé
+
+Un **arbre**, donc une pièce **de révolution** — c'est l'information qui commande le nombre de
+vues. Il comporte **trois portées ajustées** (deux roulements, une poulie), une **rainure de
+clavette** et des chanfreins. Chaque élément appelle une décision de mise en plan différente.
+
+#### 2. Quelle règle, et pourquoi
+
+**Le minimum de vues qui décrit la pièce sans ambiguïté.** Pour une pièce de révolution, une
+seule vue suffit : **le symbole Ø dit que c'est rond**, une seconde vue n'apporterait rien.
+
+Puis l'ordre de cotation : **fonctionnel d'abord** (avec tolérances), le reste en ISO 2768.
+
+#### 3. Les conversions
+
+Aucune conversion. **Le travail est de trier** : quelles cotes sont fonctionnelles (elles
+touchent une autre pièce) et quelles cotes ne le sont pas.
+
+#### 4. Le remplacement
+
+**Surfaces fonctionnelles** = les deux portées Ø30 k6 + la portée Ø25 k6 + la rainure de clavette
++ les épaulements axiaux
+
+**Surfaces non fonctionnelles** = le Ø40 central, la longueur totale, les chanfreins
+
+#### 5. Le calcul
+
+**1.** **Une seule vue de face**, l'arbre couché horizontalement (sa position d'usinage au tour).
+Le symbole Ø sur chaque diamètre suffit à indiquer que la pièce est de révolution : une vue de
+gauche n'apporterait aucune information et serait une vue de plus à maintenir.
+
+**2.** Une **section sortie** au droit de la rainure de clavette. C'est l'outil adapté : la
+section montre **uniquement la forme coupée** (le rectangle de la rainure dans le cercle de
+l'arbre), sans dessiner tout ce qui est derrière — plus lisible qu'une coupe complète pour ce
+détail.
+
+**3.** Cotes tolérancées :
+
+| Cote | Tolérance | Pourquoi |
+|---|---|---|
+| deux portées **Ø30 k6** | k6 | ajustement des bagues de roulement |
+| portée **Ø25 k6** | k6 | ajustement du moyeu de poulie |
+| rainure **8 × 4** | tolérance de largeur | la clavette doit être ajustée sur les flancs |
+| positions axiales des épaulements | ± chiffré | elles positionnent les roulements |
+
+Relèvent d'**ISO 2768** : le Ø40 central (il ne touche rien), la longueur totale 240, les
+chanfreins.
+
+**4.** États de surface :
+
+- **Ra 0,8** sur les trois portées ajustées (Ø30 × 2 et Ø25) : une bague montée serrée sur une
+  surface rugueuse écrase les aspérités, et le serrage calculé disparaît ;
+- **Ra 1,6** sur les flancs de la rainure de clavette ;
+- **Ra 6,3** ou brut de tournage partout ailleurs.
+
+*Si une portée de joint à lèvres existait, elle exigerait Ra 0,8 **et** un chanfrein
+d'introduction (fiche 5.6).*
+
+**5.** Cartouche contractuel : **titre**, **matière**, **échelle**, **tolérances générales**
+(ISO 2768-m), **symbole de projection**, **indice de révision** et date. Sans indice, personne ne
+peut savoir quelle version fait foi — c'est l'une des quatre questions du cas industriel de cette
+fiche.
+
+#### 6. La vérification
+
+**Le test final** : un atelier inconnu peut-il fabriquer, contrôler et livrer sans appeler ?
+Passez chaque surface en revue — a-t-elle sa cote, sa tolérance si elle est fonctionnelle, son
+état de surface si elle porte ? Si oui pour toutes, le plan est complet.
+
+**Le contrôle de proportion** : quatre à cinq cotes tolérancées sur une quinzaine au total. **Ce
+ratio d'environ 20 %** est le même que celui de la fiche 5.2 — si les deux tiers des cotes
+portaient des tolérances, il faudrait se demander lesquelles ont réellement une fonction.
+
+**Le contrôle de cohérence avec le 3D** : les cotes reportées sont-elles les **cotes
+fonctionnelles**, ou les cotes de construction héritées du modèle ? C'est l'erreur la plus
+fréquente de la mise en plan automatique.
 """,
         },
     ],
 }
-
 
 BLOC_6 = {
     "id": "bloc6",
@@ -13705,318 +15600,13 @@ contrainte équivalente comparée à Rpe. C'est au programme de deuxième année
 # FICHE 5.1 — ESQUISSE, CONTRAINTES ET DEGRÉS DE LIBERTÉ
 # ===========================================================================
 
-FICHES["5.1"] = {"cours": """
-### 1. Ce que « paramétrique » veut vraiment dire
-
-Dans un logiciel de dessin classique, vous tracez des traits : ce que vous dessinez est ce que
-vous obtenez, et pour modifier, vous effacez et vous recommencez.
-
-Dans un logiciel de CAO paramétrique — SolidWorks, CATIA, Inventor — vous ne dessinez pas des
-traits : vous construisez un **historique de fonctions**. Chaque fonction s'appuie sur les
-précédentes. Changez une cote au début, et tout se recalcule automatiquement jusqu'au bout.
-
-C'est une puissance énorme… et un piège. Car un modèle mal construit **casse** à la première
-modification : les fonctions tombent en erreur, l'arbre se remplit de points d'exclamation, et
-il faut souvent tout refaire.
-
-> **La qualité d'un modèle ne se juge pas à son apparence, mais à sa capacité à être modifié
-> sans casser.** C'est le seul critère qui compte, en BTS comme en entreprise.
-
-### 2. L'esquisse : la fondation
-
-Tout part d'une esquisse : un dessin 2D, tracé sur un plan, qui sera ensuite extrudé, tourné ou
-balayé pour créer du volume. Si l'esquisse est bancale, tout ce qui suit l'est aussi.
-
-**Premier réflexe : choisir un plan de référence** (Face, Dessus, Droite) plutôt qu'une face de
-la pièce. Une esquisse posée sur une face disparaît si la face disparaît — et une face disparaît
-dès qu'on modifie la fonction qui l'a créée.
-
-**Deuxième réflexe : centrer la pièce sur l'origine.** Cela facilite ensuite les symétries, les
-répétitions, et surtout l'assemblage.
-
-### 3. Contraindre : le point le plus important de la fiche
-
-Une entité 2D possède des degrés de liberté : un point peut se déplacer en X et en Y, une ligne
-peut en plus tourner et changer de longueur. **Contraindre, c'est supprimer ces libertés** une à
-une, jusqu'à ce que la géométrie ne puisse plus bouger toute seule.
-
-[[FIG:esquisse_contraintes]]
-
-Le logiciel vous le dit par la couleur : bleu = il reste des libertés, noir = c'est verrouillé.
-
-Deux familles de contraintes, et l'ordre compte :
-
-1. **Les contraintes géométriques d'abord** : coïncidence, horizontalité, verticalité, tangence,
-   parallélisme, perpendicularité, symétrie, égalité, concentricité. Elles ne coûtent rien, elles
-   sont robustes, et elles portent l'intention de conception.
-2. **Les cotes ensuite**, et seulement pour ce que la géométrie ne dit pas déjà.
-
-L'erreur classique du débutant : tout coter, sans aucune contrainte géométrique. Le résultat
-« marche » mais devient ingérable — quinze cotes là où une symétrie et deux cotes suffisaient.
-
-### 4. Un exemple qui parle
-
-Une plaque rectangulaire percée d'un trou au centre.
-
-- **Mauvaise méthode** : quatre cotes pour les côtés, deux cotes pour positionner le trou depuis
-  deux bords. Si on change la largeur, le trou n'est plus au centre : il faut corriger à la main.
-- **Bonne méthode** : contrainte de symétrie du trou par rapport aux deux axes, puis deux cotes
-  pour la plaque. Changez la largeur : le trou **reste au centre tout seul**, parce que c'est ça,
-  votre intention.
-
-C'est ce qu'on appelle **l'intention de conception** : le modèle doit se comporter, lors des
-modifications, comme la pièce réelle devrait se comporter.
-
-### 5. Les erreurs à éviter absolument
-
-1. **Laisser une esquisse bleue.** Même si la forme est correcte aujourd'hui.
-2. **Faire une esquisse géante** qui contient toute la pièce. Une esquisse simple par fonction :
-   plus lisible, plus robuste, plus facile à corriger.
-3. **S'appuyer sur des arêtes de fonctions tardives** (un congé, un chanfrein). Elles peuvent
-   disparaître.
-4. **Sur-contraindre** : ajouter une cote redondante avec une contrainte géométrique déjà posée.
-   Le logiciel refuse, à juste titre.
-5. **Ne pas nommer les fonctions.** Un arbre avec « Bossage-Extrusion12 » n'est repris par
-   personne, pas même par vous dans trois mois.
-
-### 6. Le paramétrage par équations
-
-On peut aller plus loin et lier des cotes entre elles par des formules :
-`"largeur" = "longueur" / 2`, ou `"nb_trous" = "longueur" / 50`.
-
-C'est ce qui permet de créer une **famille de pièces** : une seule maquette qui décline vingt
-tailles, pilotée par une table de paramètres. Très utilisé en entreprise pour les catalogues
-(vérins, brides, supports) — et très apprécié en projet de BTS.
-
-### 7. Méthode : construire une esquisse propre en cinq étapes
-
-1. Choisir un **plan de référence**.
-2. Tracer la forme **approximativement** — sans chercher les bonnes dimensions tout de suite.
-3. Poser les **contraintes géométriques** (symétries, tangences, alignements).
-4. Ajouter les **cotes** manquantes, en partant des dimensions fonctionnelles.
-5. Vérifier que l'esquisse est **entièrement contrainte**, puis la nommer.
-
-### 8. À retenir
-
-- Un modèle paramétrique est un historique, pas un dessin.
-- Une bonne esquisse est **totalement contrainte** : géométrie d'abord, cotes ensuite.
-- Une esquisse simple par fonction, sur un plan de référence, centrée sur l'origine.
-- L'intention de conception : le modèle doit réagir aux modifications comme la pièce réelle.
-"""}
-
-
 # ===========================================================================
 # FICHE 5.2 — FONCTIONS VOLUMIQUES ET STRATÉGIE DE MODÉLISATION
 # ===========================================================================
 
-FICHES["5.2"] = {"cours": """
-### 1. Quatre fonctions suffisent pour 90 % des pièces
-
-Toutes les formes que vous aurez à modéliser en première année se construisent avec quatre
-fonctions de base. Chacune répond à une question simple : **comment la matière est-elle créée ?**
-
-| Fonction | Principe | Pièces typiques |
-|---|---|---|
-| **Extrusion** | l'esquisse avance en ligne droite | plaques, brides, entretoises, profilés |
-| **Révolution** | l'esquisse tourne autour d'un axe | arbres, bagues, poulies, tout ce qui est tourné |
-| **Balayage** | l'esquisse suit un chemin | tubes cintrés, joints, poignées |
-| **Lissage** | on relie plusieurs esquisses différentes | transitions, conduits, formes ergonomiques |
-
-Chacune a son inverse en **enlèvement de matière** : extrusion coupée (les perçages, les poches),
-révolution coupée (les gorges), etc.
-
-**Le bon réflexe : choisir la fonction qui correspond au procédé réel.** Une pièce tournée se
-modélise par révolution, pas par vingt extrusions successives. Le modèle devient plus simple,
-plus robuste, et plus facile à modifier.
-
-### 2. Les fonctions d'habillage
-
-Elles ne créent pas la forme : elles la finissent.
-
-- **Congé** : arrondi entre deux faces. Indispensable — un angle intérieur vif n'existe pas en
-  usinage (la fraise laisse toujours son rayon) et concentre les contraintes.
-- **Chanfrein** : cassure d'arête, pour ne pas se couper et pour faciliter le montage.
-- **Dépouille** : légère inclinaison des parois, obligatoire en moulage et en injection.
-- **Coque** : évide la pièce en laissant une épaisseur constante. Une fonction, et un carter plein
-  devient un carter creux.
-
-### 3. Les fonctions de duplication : ne jamais copier à la main
-
-- **Symétrie** : la moitié de la pièce, puis on la reflète.
-- **Répétition linéaire ou circulaire** : une fois le trou fait, on le répète.
-
-Douze trous répétés, c'est **une** fonction à modifier — pas douze. Copier-coller manuellement
-douze perçages, c'est se condamner à douze corrections à chaque changement.
-
-### 4. L'ordre des fonctions : la vraie compétence
-
-[[FIG:arbre_de_creation]]
-
-Les congés et chanfreins **doivent venir en fin d'arbre**. Placés trop tôt, ils font disparaître
-les arêtes vives sur lesquelles s'appuient les fonctions suivantes, et le modèle s'effondre à la
-première modification.
-
-L'ordre type d'un modèle propre :
-
-1. la forme générale (extrusion ou révolution) ;
-2. les enlèvements de matière importants (poches, épaulements) ;
-3. les perçages, faits avec **l'assistant de perçage** ;
-4. les répétitions et symétries ;
-5. les congés, chanfreins et dépouilles ;
-6. la coque, si nécessaire.
-
-**Pourquoi l'assistant de perçage plutôt qu'un cercle extrudé ?** Parce qu'il connaît les normes :
-il crée un vrai taraudage M8, avec son lamage, sa profondeur de filetage et son fond de foret à
-118°. Et surtout, cette information se retrouve automatiquement dans la mise en plan et la
-nomenclature. Un cercle extrudé, lui, n'est qu'un trou anonyme.
-
-### 5. Un mot sur la modélisation surfacique
-
-L'approche volumique (« solide ») convient à toute la mécanique classique. Pour les formes
-complexes — carrosserie, coques de produits, pièces de style — on travaille en **surfacique** :
-on construit des peaux, on les raccorde, puis on les coud pour obtenir un volume fermé.
-
-En première année, on en reste à la culture générale : savoir que ça existe, et que c'est le
-domaine de CATIA dans l'automobile et l'aéronautique.
-
-### 6. Le test de robustesse
-
-Comment savoir si votre modèle est bon ? Faites ce test, il prend une minute :
-
-> **Changez deux cotes majeures — la longueur, la hauteur, un diamètre — et regardez l'arbre.**
-> Aucune erreur ? Le modèle est robuste. Des points d'exclamation ? Corrigez maintenant, pas
-> dans six mois.
-
-Ensuite, remettez les valeurs d'origine. Ce test coûte une minute et sauve des heures.
-
-### 7. Les erreurs classiques
-
-1. **Congés en début d'arbre.**
-2. **Perçages faits au cercle extrudé** au lieu de l'assistant.
-3. **Copies manuelles** au lieu de répétitions.
-4. **Esquisses appuyées sur des faces** créées par des fonctions tardives.
-5. **Un modèle en soixante fonctions** là où douze suffiraient : chaque fonction inutile est un
-   point de rupture supplémentaire.
-6. **Aucune fonction renommée.**
-
-### 8. À retenir
-
-- Quatre fonctions de base : extrusion, révolution, balayage, lissage.
-- On modélise comme la pièce est fabriquée.
-- Répétitions et symétries plutôt que copies manuelles.
-- Congés, chanfreins, dépouilles **en fin d'arbre**, toujours.
-- Test de robustesse : je change deux cotes, rien ne casse.
-"""}
-
-
 # ===========================================================================
 # FICHE 5.3 — ASSEMBLAGES, MISE EN PLAN ET FORMATS D'ÉCHANGE
 # ===========================================================================
-
-FICHES["5.3"] = {"cours": """
-### 1. Assembler, c'est reproduire les liaisons réelles
-
-Un assemblage n'est pas un empilement de pièces posées côte à côte : c'est un **mécanisme**. Les
-contraintes d'assemblage (coïncidence, concentricité, distance, angle) doivent reproduire les
-liaisons réelles du mécanisme.
-
-Le contrôle qui ne trompe pas :
-
-> **Les degrés de liberté qui restent dans l'assemblage doivent être exactement ceux du schéma
-> cinématique.**
-
-Un arbre monté dans deux paliers doit pouvoir tourner et rien d'autre. Si vous pouvez encore le
-faire coulisser à la souris, votre assemblage est incomplet — ou votre conception est fausse.
-Dans les deux cas, il faut le savoir maintenant.
-
-**Le premier composant est fixe** (ancré) : c'est le bâti. Tous les autres se positionnent par
-rapport à lui.
-
-### 2. Ascendant ou descendant
-
-- **Ascendant (bottom-up)** : on modélise les pièces séparément, puis on les insère et on les
-  contraint. C'est l'approche la plus courante, la plus stable, et celle qu'on attend de vous en
-  première année.
-- **Descendant (top-down)** : on crée les pièces directement dans le contexte de l'assemblage, en
-  s'appuyant sur la géométrie des voisines. Très puissant pour qu'un carter épouse exactement son
-  contenu, mais **fragile** : chaque référence externe est un lien qui peut casser. Si on modifie
-  la pièce A, la pièce B tombe en erreur.
-
-Le compromis professionnel : piloter l'ensemble par une **esquisse de layout** ou un squelette,
-et par une table de paramètres, plutôt que par des références croisées entre pièces.
-
-### 3. Ce que l'assemblage permet de vérifier avant de fabriquer
-
-C'est tout l'intérêt de la maquette numérique :
-
-- **détection d'interférences** : deux pièces qui occupent le même espace ;
-- **simulation de mouvement** : on anime le mécanisme et on regarde s'il fonctionne sur toute la
-  course, sans collision ;
-- **accessibilité au montage** : peut-on réellement passer une clé ? Une vis inaccessible sur
-  écran sera inaccessible en atelier ;
-- **masse et centre de gravité**, calculés automatiquement.
-
-Une heure de vérification sur maquette évite des semaines de reprise à l'atelier.
-
-### 4. La mise en plan : le document qui engage
-
-La mise en plan est générée **depuis** le modèle 3D : vues, coupes, sections, détails, vues
-éclatées, tout est associatif — modifiez la pièce, le plan suit.
-
-Mais la 3D ne contient pas tout. C'est vous qui ajoutez :
-
-- la **cotation fonctionnelle** et les tolérances ;
-- les **tolérances géométriques** et les états de surface ;
-- la **matière**, les traitements, l'indice de révision ;
-- la **nomenclature** avec ses bulles, sur un dessin d'ensemble.
-
-> **La 3D montre, le plan coté engage.** En cas de litige avec un fournisseur, c'est le plan qui
-> fait foi, pas le fichier 3D.
-
-### 5. Les formats d'échange : le point qui piège tout le monde
-
-[[FIG:formats_echange]]
-
-Trois règles pratiques :
-
-1. **On envoie du STEP** à un autre bureau d'études. Il contient la géométrie exacte et s'ouvre
-   dans tous les logiciels.
-2. **On envoie du STL** à une imprimante 3D — et uniquement là. Un STL est une peau de triangles :
-   la géométrie n'est plus qu'approchée, et on ne remodélise jamais dessus. Si un fournisseur vous
-   envoie un STL alors que vous devez modifier la pièce, **redemandez un STEP**.
-3. **On envoie du DXF** au découpeur laser, accompagné du PDF du plan (rayons de pliage, sens des
-   plis, matière, épaisseur).
-
-### 6. Préparer une pièce pour l'impression 3D
-
-Puisque c'est au programme et que votre fils en fera : quelques règles qui évitent l'échec.
-
-- **Orienter la pièce** : une impression FDM est anisotrope, elle se sépare entre les couches.
-  Les efforts doivent travailler **dans le plan des couches**, jamais perpendiculairement.
-- **Limiter les porte-à-faux** au-delà de 45° : au-delà, il faut des supports, qui laissent des
-  traces et se retirent mal.
-- **Prévoir du jeu** : 0,2 à 0,4 mm entre deux pièces qui doivent s'emboîter. Une cote nominale
-  exacte donnera un montage impossible.
-- **Épaissir** : un mur de moins de 1,2 mm est fragile.
-
-### 7. Les erreurs classiques
-
-1. **Un assemblage sur-contraint** ou, pire, qui laisse des mouvements impossibles dans la réalité.
-2. **Ne pas ancrer le premier composant.**
-3. **Abuser du top-down** : la moindre modification propage des erreurs partout.
-4. **Envoyer un STL à un bureau d'études** au lieu d'un STEP.
-5. **Livrer seulement le 3D**, sans plan coté : rien n'est contractuel.
-6. **Oublier de vérifier les interférences** avant de lancer la fabrication.
-
-### 8. À retenir
-
-- Les degrés de liberté restants = ceux du schéma cinématique.
-- Premier composant ancré, ascendant par défaut, top-down avec prudence.
-- Vérifier interférences, mouvement et accessibilité **avant** de fabriquer.
-- STEP = échange exact · STL = impression · DXF = tôle à plat · PDF = diffusion.
-- Le plan coté fait foi, pas le modèle 3D.
-"""}
-
 
 # ===========================================================================
 # FICHE 6.1 — LIAISONS MÉCANIQUES ET SCHÉMA CINÉMATIQUE
@@ -15256,198 +16846,6 @@ elle ne coûte qu'un support, pas de la matière.*
 # EXERCICES D'ÉCHAUFFEMENT — BLOC 5 (CAO)
 # ===========================================================================
 
-FICHES["5.1"]["exercice_avant"] = """
-### Exercice d'échauffement — Diagnostiquer une esquisse
-
-*Ces questions se répondent sans logiciel, mais elles décrivent exactement ce qui se passe devant
-l'écran.*
-
-**1.** Ton esquisse est encore **bleue** alors que la forme paraît correcte. Que se passera-t-il
-dans trois mois, quand quelqu'un modifiera une cote en amont ?
-
-**2.** Tu dois dessiner une plaque avec un trou **au centre**. Deux méthodes : coter le trou
-depuis deux bords, ou poser une contrainte de symétrie. Laquelle choisis-tu et pourquoi ?
-
-**3.** Une esquisse a été tracée **sur une face** de la pièce, créée par une extrusion. Cette
-extrusion est ensuite supprimée. Que devient l'esquisse ?
-
-**4.** Le logiciel refuse une cote en indiquant « sur-contrainte ». Qu'est-ce que ça signifie, et
-que fais-tu ?
-
-**5.** Dans quel ordre poses-tu les contraintes : cotes d'abord ou contraintes géométriques
-d'abord ? Justifie en une phrase.
-"""
-
-FICHES["5.1"]["corrige_avant"] = """
-### Corrigé de l'exercice d'échauffement
-
-**1. L'esquisse peut dériver silencieusement**
-
-Une entité sous-contrainte garde des degrés de liberté : lors d'une modification en amont, elle
-peut **se déplacer toute seule**. La géométrie change sans que personne ne le remarque, et le
-plan coté qui en découle devient faux.
-
-*C'est le pire type d'erreur : elle ne provoque aucun message, elle produit une pièce fausse.*
-
-**2. La contrainte de symétrie**
-
-Avec deux cotes depuis les bords, si on change la largeur de la plaque, **le trou n'est plus au
-centre** : il faut corriger à la main, et on oubliera.
-
-Avec une symétrie par rapport aux axes, le trou **reste au centre automatiquement**. Le modèle
-se comporte comme la pièce réelle devrait se comporter : c'est ce qu'on appelle l'**intention de
-conception**.
-
-**3. L'esquisse tombe en erreur**
-
-Elle perd son plan support, et toutes les fonctions qui en dépendent s'effondrent en cascade.
-
-*D'où la règle : on part d'un **plan de référence** (Face, Dessus, Droite) chaque fois que c'est
-possible. Un plan de référence, lui, ne disparaît jamais.*
-
-**4. La cote est redondante**
-
-« Sur-contrainte » signifie que l'information est **déjà donnée** par une autre contrainte ou une
-autre cote. Exemple : deux lignes sont déjà contraintes égales, et on cote les deux longueurs.
-
-On supprime alors soit la cote en trop, soit la contrainte géométrique — mais on garde de
-préférence la contrainte géométrique, qui porte mieux l'intention.
-
-**5. Les contraintes géométriques d'abord**
-
-Elles ne coûtent rien, elles sont robustes, et elles décrivent l'intention (symétrie, tangence,
-alignement). Les cotes ne viennent qu'ensuite, **pour ce que la géométrie ne dit pas déjà**.
-
-*Un débutant cote tout et n'utilise aucune contrainte : il se retrouve avec quinze cotes là où
-une symétrie et deux cotes suffisaient.*
-"""
-
-FICHES["5.2"]["exercice_avant"] = """
-### Exercice d'échauffement — Construire proprement
-
-**1.** Une bague cylindrique avec un épaulement et une gorge. Quelle **fonction de base** utilises-tu
-pour la créer, et pourquoi celle-là ?
-
-**2.** Une pièce comporte **12 trous identiques** répartis sur un cercle. Combien de fonctions
-crées-tu ? Que se passe-t-il si tu les fais un par un ?
-
-**3.** Tu places les congés R2 juste après l'extrusion du corps, puis tu perces. Quel problème
-risques-tu ?
-
-**4.** Pourquoi utiliser l'**assistant de perçage** plutôt qu'un cercle extrudé pour un taraudage M8 ?
-
-**5.** Ton modèle est terminé. Quel test fais-tu, en une minute, pour savoir s'il est robuste ?
-"""
-
-FICHES["5.2"]["corrige_avant"] = """
-### Corrigé de l'exercice d'échauffement
-
-**1. La révolution**
-
-La bague est une pièce **de révolution** : une seule esquisse de son profil, tournée autour de
-l'axe, crée d'un coup le cylindre, l'épaulement et la gorge.
-
-*Principe général : on modélise **comme la pièce est fabriquée**. Une pièce tournée se fait par
-révolution, pas par cinq extrusions successives. Le modèle est plus simple, plus lisible et plus
-facile à modifier.*
-
-**2. Deux fonctions : un perçage + une répétition circulaire**
-
-Si tu les crées un par un, tu auras **12 fonctions** dans l'arbre. Le jour où le diamètre change,
-il faudra faire **12 modifications** — et il suffit d'en oublier une.
-
-Avec une répétition, tu modifies **une seule fonction**, et les 12 trous suivent. Tu peux même
-changer leur nombre en tapant un chiffre.
-
-**3. Les congés font disparaître les arêtes**
-
-Les fonctions suivantes s'appuient souvent sur des arêtes ou des faces. Un congé placé trop tôt
-les remplace par des surfaces courbes : les esquisses suivantes perdent leurs références, et le
-modèle tombe en erreur à la première modification.
-
-*Règle : congés, chanfreins et dépouilles **en fin d'arbre**, toujours.*
-
-**4. L'assistant connaît les normes**
-
-Il crée un vrai taraudage M8 : diamètre de perçage correct, profondeur de filetage, lamage,
-fond de foret à 118°. Et surtout, **cette information se retrouve automatiquement dans la mise en
-plan et la nomenclature**.
-
-Un cercle extrudé n'est qu'un trou anonyme : il faudra tout réécrire à la main sur le plan, et
-personne ne saura qu'il devait être taraudé.
-
-**5. Le test de robustesse**
-
-> Je change **deux cotes majeures** — la longueur, la hauteur, un diamètre — et je regarde l'arbre.
-
-Aucune erreur ? Le modèle est bon. Des points d'exclamation ? Je corrige **maintenant**, pendant
-que je sais encore comment le modèle est construit. Puis je remets les valeurs d'origine.
-
-*Une minute de test évite des heures de reprise.*
-"""
-
-FICHES["5.3"]["exercice_avant"] = """
-### Exercice d'échauffement — Assemblage et échange de fichiers
-
-**1.** Tu assembles un arbre dans deux paliers. Une fois contraint, tu peux encore le faire
-**coulisser** à la souris. Est-ce normal ? Comment le sais-tu ?
-
-**2.** Le premier composant que tu insères dans un assemblage doit-il être fixe ou mobile ?
-Pourquoi ?
-
-**3.** Un fournisseur t'envoie un fichier **.stl** et tu dois modifier un perçage. Que fais-tu ?
-
-**4.** Tu dois faire découper une pièce en tôle pliée chez un sous-traitant laser. Quels fichiers
-lui envoies-tu, et pourquoi deux ?
-
-**5.** Vrai ou faux : « puisque le modèle 3D contient tout, le plan coté n'est plus nécessaire ».
-"""
-
-FICHES["5.3"]["corrige_avant"] = """
-### Corrigé de l'exercice d'échauffement
-
-**1. Non, ce n'est pas normal**
-
-Un arbre monté sur deux paliers réalise une liaison **pivot** : il ne doit rester qu'**une
-rotation**. S'il coulisse encore, c'est que l'arrêt axial manque — dans le modèle, et peut-être
-aussi dans la conception réelle.
-
-*Le contrôle qui ne trompe pas : **les degrés de liberté restants doivent être exactement ceux du
-schéma cinématique**. C'est l'un des grands intérêts de la maquette numérique.*
-
-**2. Fixe (ancré)**
-
-Le premier composant sert de **bâti** : tous les autres se positionnent par rapport à lui. S'il
-est laissé libre, tout l'assemblage flotte dans l'espace et les contraintes se comportent de
-façon imprévisible.
-
-**3. Redemander un fichier STEP**
-
-Un **.stl** n'est qu'un **maillage de triangles** : plus d'historique, plus de fonctions, plus de
-surfaces exactes. La géométrie n'est même qu'approchée. Modifier proprement un perçage dessus est
-pratiquement impossible.
-
-Le format d'échange correct entre bureaux d'études est le **.step**, qui conserve la géométrie
-exacte.
-
-**4. Le DXF du développé, plus le PDF du plan**
-
-- le **DXF à plat** alimente directement la machine de découpe ;
-- le **PDF du plan** de la pièce **pliée** donne ce que le DXF ne contient pas : les rayons de
-  pliage, le sens des plis, la matière, l'épaisseur, les tolérances.
-
-*Envoyer seulement le DXF, c'est laisser le sous-traitant deviner comment plier.*
-
-**5. FAUX**
-
-Le modèle 3D ne contient ni les tolérances, ni les états de surface, ni les tolérances
-géométriques, ni la matière, ni l'indice de révision. Et surtout : **c'est le plan coté qui fait
-foi contractuellement**. En cas de litige avec un fournisseur, c'est lui qu'on ressort.
-
-*Formule à retenir : la 3D montre, le plan coté engage.*
-"""
-
-
 # ===========================================================================
 # EXERCICES D'ÉCHAUFFEMENT — BLOC 6 (CONCEPTION)
 # ===========================================================================
@@ -15925,70 +17323,6 @@ ne serait-ce que d'un demi-millimètre, l'image se décale et le contrôle devie
 résisterait largement. C'est la **flèche** imposée par le cahier des charges. C'est très souvent
 le cas en conception de précision, et c'est ce qui explique des sections apparemment
 surdimensionnées.
-"""
-
-FICHES["5.1"]["exemple_avant"] = """
-### Avant de lire le cas : de quoi parle-t-on ?
-
-**La situation.** Une même équerre de fixation doit exister en six tailles. Deux façons de s'y
-prendre : dessiner six fichiers séparés, ou construire **un seul modèle piloté par des
-paramètres**. Le cas compare les deux, notamment le jour où le client demande une modification.
-
-**Le vocabulaire du cas, en clair :**
-
-| Terme | Ce que ça veut dire |
-|---|---|
-| **paramètre** | une valeur nommée (« longueur », « épaisseur ») qu'on peut piloter |
-| **équation** | une cote calculée à partir d'une autre : largeur = longueur / 2 |
-| **table de paramètres** | un tableau qui décline les tailles, comme un catalogue |
-| **famille de pièces** | l'ensemble des variantes issues d'un même modèle |
-
-**Ce qu'il faut observer en lisant.** Comptez le nombre de modifications à faire dans chaque
-approche quand le client change d'avis. C'est là que tout se joue — pas dans le temps de
-modélisation initial.
-"""
-
-FICHES["5.2"]["exemple_avant"] = """
-### Avant de lire le cas : de quoi parle-t-on ?
-
-**La situation.** Un carter de pompe en aluminium moulé : une pièce complexe, avec un corps
-cylindrique, une bride, un canal courbe pour le liquide, des pattes et des nervures. C'est
-typiquement la pièce qui décourage un débutant — parce qu'il ne sait pas par quel bout commencer.
-
-**Le vocabulaire du cas, en clair :**
-
-| Terme | Ce que ça veut dire |
-|---|---|
-| **volute** | le canal en spirale dans lequel le liquide est accéléré |
-| **nervure** | une cloison mince ajoutée pour rigidifier sans alourdir |
-| **patte de fixation** | l'oreille percée qui sert à boulonner le carter |
-| **alésage Ø52 H7** | le logement du roulement, la seule cote vraiment précise |
-
-**Ce qu'il faut observer en lisant.** L'ordre de l'arbre de création. La règle générale : le
-**volume principal d'abord**, les détails ensuite, les **congés et dépouilles en dernier**.
-Regardez aussi comment les fonctions sont nommées : un collègue doit pouvoir reprendre le modèle.
-"""
-
-FICHES["5.3"]["exemple_avant"] = """
-### Avant de lire le cas : de quoi parle-t-on ?
-
-**La situation.** Un support de capteur suit deux chemins en parallèle : un **prototype imprimé
-en 3D** pour vérifier tout de suite qu'il se monte bien sur la machine, et une **série usinée**
-pour la production définitive. Le cas suit la chaîne complète, de la maquette au fichier envoyé
-au sous-traitant.
-
-**Le vocabulaire du cas, en clair :**
-
-| Terme | Ce que ça veut dire |
-|---|---|
-| **BE** | bureau d'études — l'équipe qui conçoit |
-| **implantation** | la vérification que la pièce se place bien dans son environnement |
-| **prototype** | une pièce d'essai, pas destinée à la production |
-| **STEP / STL / DXF** | les trois formats d'échange, chacun pour un usage précis |
-
-**Ce qu'il faut observer en lisant.** À chaque étape, demandez-vous **quel fichier part, et à
-qui**. C'est exactement ce qu'on attendra de votre fils en stage : envoyer le bon format à la
-bonne personne, accompagné du plan coté.
 """
 
 FICHES["6.1"]["exemple_avant"] = """
@@ -19682,407 +21016,6 @@ le nombre est **Rm**, pas Re
 
 
 # --- Version approfondie de la fiche 5.1 (reprise du 23/08) ---
-FICHES["5.1"]["cours"] = """
-### 1. Ce que « paramétrique » veut vraiment dire
-
-Dans un logiciel de dessin classique, vous tracez des traits : ce que vous dessinez est ce que vous
-obtenez, et pour modifier, vous effacez et vous recommencez.
-
-Dans un logiciel de CAO **paramétrique** — SolidWorks, CATIA, Inventor — vous ne dessinez pas des
-traits : vous construisez un **historique de fonctions**. Chaque fonction s'appuie sur les
-précédentes. Changez une cote au début, et tout se recalcule automatiquement jusqu'au bout.
-
-C'est une puissance énorme… et un piège. Car un modèle mal construit **casse** à la première
-modification : les fonctions tombent en erreur, l'arbre se remplit de points d'exclamation, et il
-faut souvent tout refaire.
-
-> **La qualité d'un modèle ne se juge pas à son apparence, mais à sa capacité à être modifié sans
-> casser.** C'est le seul critère qui compte, en BTS comme en entreprise.
-
-**Et il y a une raison économique.** En bureau d'études, une pièce est modifiée en moyenne cinq à
-dix fois entre la première esquisse et la production : évolution du besoin, contrainte de
-fabrication, correction après essais. Un modèle robuste absorbe ces modifications en quelques
-minutes ; un modèle fragile coûte une journée à chaque fois.
-
-### 2. L'esquisse : la fondation de tout
-
-Tout part d'une esquisse : un dessin 2D, tracé sur un plan, qui sera ensuite extrudé, tourné ou
-balayé pour créer du volume. **Si l'esquisse est bancale, tout ce qui suit l'est aussi.**
-
-**Premier réflexe : choisir un plan de référence** (Face, Dessus, Droite) plutôt qu'une face de la
-pièce.
-
-*Pourquoi c'est capital : une esquisse posée sur une face **disparaît si la face disparaît**. Or
-une face disparaît dès qu'on modifie la fonction qui l'a créée, ou qu'un congé la remplace par une
-surface courbe. Un plan de référence, lui, existe depuis le début du fichier et ne disparaîtra
-jamais.*
-
-**Deuxième réflexe : centrer la pièce sur l'origine.** Cela facilite ensuite les symétries, les
-répétitions, et surtout l'assemblage — une pièce centrée se contraint en deux clics par
-coïncidence de plans.
-
-### 3. Contraindre : le point le plus important de la fiche
-
-Une entité 2D possède des **degrés de liberté** : un point peut se déplacer en X et en Y, une
-ligne peut en plus tourner et changer de longueur. **Contraindre, c'est supprimer ces libertés**
-une à une, jusqu'à ce que la géométrie ne puisse plus bouger toute seule.
-
-*C'est exactement la même logique que les liaisons mécaniques de la fiche 6.1 : on compte les
-mouvements possibles, et on les supprime. Une esquisse totalement contrainte est l'équivalent 2D
-d'un encastrement.*
-
-[[FIG:esquisse_contraintes]]
-
-Le logiciel vous le dit par la couleur : **bleu** = il reste des libertés, **noir** = c'est
-verrouillé.
-
-**Deux familles de contraintes, et l'ordre compte :**
-
-[[FIG:contraintes_esquisse]]
-
-**Les contraintes géométriques d'abord.** Elles ne coûtent rien, elles sont robustes, et surtout
-elles portent **l'intention de conception**.
-
-**Les cotes ensuite**, et seulement pour ce que la géométrie ne dit pas déjà.
-
-**L'erreur classique du débutant :** tout coter, sans aucune contrainte géométrique. Le résultat
-« marche » mais devient ingérable — quinze cotes là où une symétrie et deux cotes suffisaient, et
-un modèle qui se déforme de travers à chaque modification.
-
-### 4. L'intention de conception : l'exemple qui fait comprendre
-
-Une plaque rectangulaire percée d'un trou **au centre**.
-
-| Méthode | Ce qui se passe si on change la largeur |
-|---|---|
-| deux cotes depuis deux bords | **le trou n'est plus au centre** : il faut corriger à la main |
-| contrainte de **symétrie** par rapport aux deux axes | **le trou reste au centre tout seul** |
-
-C'est ça, l'**intention de conception** : le modèle doit se comporter, lors des modifications,
-**comme la pièce réelle devrait se comporter**.
-
-*Autre exemple courant : quatre trous sur un cercle. Si vous les cotez chacun en X et Y, changer le
-diamètre du cercle demande huit corrections. Avec une répétition circulaire contrainte sur un
-cercle de construction, une seule cote suffit.*
-
-### 5. Les cinq erreurs à éviter absolument
-
-1. **Laisser une esquisse bleue.** Même si la forme est correcte aujourd'hui : une entité
-   sous-contrainte peut se déplacer silencieusement à la prochaine modification, et le plan qui en
-   découle devient faux **sans aucun message d'erreur**. C'est le pire type de défaut.
-2. **Faire une esquisse géante** qui contient toute la pièce. Une esquisse simple par fonction :
-   plus lisible, plus robuste, plus facile à corriger.
-3. **S'appuyer sur des arêtes de fonctions tardives** — un congé, un chanfrein. Elles peuvent
-   disparaître à la moindre modification.
-4. **Sur-contraindre** : ajouter une cote redondante avec une contrainte déjà posée. Le logiciel
-   refuse, à juste titre — c'est la surabondance de la fiche 1.3, transposée en 2D.
-5. **Ne pas nommer les fonctions.** Un arbre rempli de « Bossage-Extrusion12 » n'est repris par
-   personne, pas même par vous dans trois mois.
-
-### 6. Le paramétrage par équations
-
-On peut aller plus loin et **lier des cotes entre elles** par des formules :
-
-> `"largeur" = "longueur" / 2` · `"épaisseur" = "diamètre" × 0,15` · `"nb_trous" = "longueur" / 50`
-
-C'est ce qui permet de créer une **famille de pièces** : une seule maquette qui décline vingt
-tailles, pilotée par une table de paramètres.
-
-*Très utilisé en entreprise pour les catalogues — vérins, brides, supports, motoréducteurs — et
-très apprécié en projet de BTS, parce que cela montre qu'on a compris ce qu'apporte le
-paramétrique. C'est aussi le sujet du cas industriel de la fiche 5.1.*
-
-### 7. Méthode : construire une esquisse propre en six gestes
-
-1. Choisir un **plan de référence**.
-2. Tracer la forme **approximativement** — sans chercher les bonnes dimensions.
-3. Poser les **contraintes géométriques** : symétries, tangences, alignements.
-4. Ajouter les **cotes** manquantes, en partant des dimensions fonctionnelles.
-5. Vérifier que l'esquisse est **entièrement contrainte** (noire).
-6. **Renommer** la fonction dans l'arbre.
-
-*Ces six gestes, répétés à chaque fonction, séparent un modèle professionnel d'un modèle
-d'amateur. Ils prennent trente secondes de plus et font gagner des heures.*
-
-### 8. Exemple entièrement déroulé : une plaque à quatre trous
-
-**L'énoncé.** Plaque 200 × 120 × 10, quatre trous Ø9 répartis symétriquement, entraxes 160 et 80,
-un alésage central Ø40 H7. Le client changera probablement les dimensions extérieures.
-
-**Étape 1 — Le plan**
-
-Plan de **Dessus** (plan de référence), pas une face — il n'y a d'ailleurs pas encore de pièce.
-
-**Étape 2 — Le tracé approximatif**
-
-On trace un rectangle « à peu près », sans se soucier des dimensions.
-
-**Étape 3 — Les contraintes géométriques**
-
-- **symétrie** du rectangle par rapport aux deux axes de l'origine → la plaque est centrée ;
-- horizontalité et verticalité des côtés (souvent automatiques).
-
-**Étape 4 — Les cotes**
-
-Deux cotes suffisent : **200** et **120**. Toutes les autres positions découlent de la symétrie.
-
-**Étape 5 — Les trous**
-
-On esquisse **un seul** trou, contraint par ses cotes 80 et 40 depuis l'origine (moitié des
-entraxes), puis on applique une **symétrie double**. Les quatre trous suivront toute modification.
-
-**Étape 6 — Le test de robustesse**
-
-On change 200 → 260 et 120 → 150.
-
-| Élément | Comportement attendu |
-|---|---|
-| plaque | s'agrandit, **reste centrée** sur l'origine |
-| quatre trous | **conservent leurs entraxes** de 160 et 80 |
-| alésage central | **reste au centre** |
-| arbre de création | aucune erreur |
-
-*Si l'entraxe des trous devait suivre la taille de la plaque, on écrirait une équation
-`entraxe_x = longueur − 40`. C'est un choix de conception à faire explicitement — pas à subir.*
-
-### 9. Les erreurs classiques
-
-1. **Esquisse laissée bleue.**
-2. **Esquisse posée sur une face** au lieu d'un plan de référence.
-3. **Pièce non centrée sur l'origine** : symétries et assemblage compliqués.
-4. **Tout coter sans contrainte géométrique.**
-5. **Esquisse unique contenant toute la pièce.**
-6. **Aucune fonction renommée.**
-7. **Ne jamais tester** : la robustesse ne se voit qu'en modifiant.
-
-### 10. À retenir
-
-- Un modèle paramétrique est un **historique**, pas un dessin.
-- **Un bon modèle se modifie sans casser** — c'est le seul critère.
-- Une esquisse doit être **totalement contrainte** : géométrie d'abord, cotes ensuite.
-- Une esquisse **simple par fonction**, sur un **plan de référence**, **centrée sur l'origine**.
-- **L'intention de conception** : le modèle doit réagir aux modifications comme la pièce réelle.
-- Les équations permettent les familles de pièces.
-- Six gestes à chaque esquisse — dont le dernier : renommer.
-"""
-FICHES["5.1"]["formules"] = """
-**Le critère de qualité** — un modèle se juge à sa capacité à être modifié sans casser
-
-**Les six gestes de chaque esquisse** — plan de référence · tracé approximatif ·
-contraintes géométriques · cotes · vérifier « totalement contrainte » (noire) · renommer
-
-**Contraintes géométriques** — coïncidence · horizontale / verticale · parallèle /
-perpendiculaire · tangence · **symétrie** · égalité · concentricité · fixe
-
-**Ordre** — géométrie d'abord (gratuite, robuste, porte l'intention), cotes ensuite
-
-**Codes couleur** — bleu = sous-contrainte (danger) · noir = totalement contrainte (bon)
-
-**Équations** — "largeur" = "longueur" / 2 · permettent les familles de pièces et les tables
-de paramètres
-
-**Test de robustesse** — changer deux cotes majeures : aucune erreur ne doit apparaître
-"""
-
-
-# --- Version approfondie de la fiche 5.2 (reprise du 23/08) ---
-FICHES["5.2"]["cours"] = """
-### 1. Quatre fonctions suffisent pour 90 % des pièces
-
-Toutes les formes que vous aurez à modéliser en première année se construisent avec quatre
-fonctions de base. Chacune répond à une question simple : **comment la matière est-elle créée ?**
-
-| Fonction | Principe | Pièces typiques |
-|---|---|---|
-| **Extrusion** | l'esquisse avance en ligne droite | plaques, brides, entretoises, profilés |
-| **Révolution** | l'esquisse tourne autour d'un axe | arbres, bagues, poulies, tout ce qui est tourné |
-| **Balayage** | l'esquisse suit un chemin | tubes cintrés, joints, poignées |
-| **Lissage** | on relie plusieurs esquisses différentes | transitions, conduits, formes ergonomiques |
-
-Chacune a son inverse en **enlèvement de matière** : extrusion coupée (perçages, poches), révolution
-coupée (gorges), etc.
-
-**Le bon réflexe, qui gouverne tout le reste : choisir la fonction qui correspond au procédé
-réel.**
-
-Une pièce tournée se modélise par **révolution**, pas par vingt extrusions successives. Une pièce
-de tôlerie se modélise avec les fonctions de tôlerie, pas comme un solide plié à la main.
-
-*Pourquoi c'est important au-delà de l'élégance : un modèle qui suit le procédé est plus simple
-(donc plus robuste), il se modifie comme la pièce réelle, et il alimente correctement la FAO et le
-développé de tôlerie. Un modèle qui « imite » la forme sans suivre le procédé donne un développé
-faux ou une gamme aberrante.*
-
-### 2. Les fonctions d'habillage
-
-Elles ne créent pas la forme : elles la finissent.
-
-| Fonction | Ce qu'elle fait | Pourquoi c'est indispensable |
-|---|---|---|
-| **congé** | arrondi entre deux faces | un angle intérieur vif n'existe pas en usinage (fiche 12.4) et concentre les contraintes (fiche 4.1) |
-| **chanfrein** | cassure d'arête | sécurité, et surtout guidage au montage |
-| **dépouille** | inclinaison des parois | obligatoire en moulage et en injection (fiches 12.3 et 13.1) |
-| **coque** | évide en laissant une épaisseur constante | un carter plein devient creux en une fonction |
-
-*Notez que chacune de ces fonctions a une justification qui vient d'une autre fiche du programme.
-Ce ne sont pas des options esthétiques du logiciel : ce sont des exigences de fabrication.*
-
-### 3. Les fonctions de duplication : ne jamais copier à la main
-
-- **Symétrie** : on modélise la moitié de la pièce, puis on la reflète.
-- **Répétition linéaire ou circulaire** : une fois le trou fait, on le répète.
-
-**Douze trous répétés, c'est UNE fonction à modifier — pas douze.** Et le jour où le nombre passe
-à seize, on change un chiffre au lieu d'en créer quatre de plus.
-
-*C'est exactement la même logique que la cotation depuis une référence unique (fiche 1.3) : on
-crée une seule source de vérité, et tout en découle.*
-
-### 4. L'ordre des fonctions : la vraie compétence
-
-[[FIG:arbre_de_creation]]
-
-**Les congés et chanfreins doivent venir en fin d'arbre.** Placés trop tôt, ils font disparaître
-les arêtes vives sur lesquelles s'appuient les fonctions suivantes, et le modèle s'effondre à la
-première modification.
-
-**L'ordre type d'un modèle propre :**
-
-1. la **forme générale** (extrusion ou révolution) ;
-2. les **enlèvements de matière importants** (poches, épaulements) ;
-3. les **perçages**, faits avec l'assistant ;
-4. les **répétitions et symétries** ;
-5. les **congés, chanfreins et dépouilles** ;
-6. la **coque**, si nécessaire.
-
-**Pourquoi l'assistant de perçage plutôt qu'un cercle extrudé ?**
-
-Parce qu'il connaît les normes : il crée un vrai taraudage M8, avec son lamage, sa profondeur de
-filetage et son fond de foret à 118°. Et surtout, **cette information se retrouve automatiquement
-dans la mise en plan et dans la nomenclature**.
-
-*Un cercle extrudé n'est qu'un trou anonyme : il faudra tout réécrire à la main sur le plan, et
-personne ne saura qu'il devait être taraudé. C'est une perte de temps différée — le pire type de
-perte de temps.*
-
-### 5. Un mot sur la modélisation surfacique
-
-L'approche **volumique** (« solide ») convient à toute la mécanique classique : on ajoute et on
-enlève de la matière.
-
-Pour les formes complexes — carrosserie, coques de produits, pièces de style — on travaille en
-**surfacique** : on construit des peaux, on les raccorde, puis on les **coud** pour obtenir un
-volume fermé.
-
-En première année, on en reste à la culture générale : savoir que ça existe, que c'est le domaine
-de CATIA dans l'automobile et l'aéronautique, et que cela demande une rigueur de raccordement
-(continuité en tangence, en courbure) qui n'a pas d'équivalent en volumique.
-
-### 6. Le test de robustesse
-
-Comment savoir si votre modèle est bon ? Faites ce test, il prend une minute :
-
-> **Changez deux cotes majeures — la longueur, la hauteur, un diamètre — et regardez l'arbre.**
-
-- **Aucune erreur ?** Le modèle est robuste.
-- **Des points d'exclamation ?** Corrigez **maintenant**, pendant que vous savez encore comment le
-  modèle est construit — pas dans six mois.
-
-Ensuite, remettez les valeurs d'origine.
-
-**Et s'il y a plusieurs erreurs en cascade :** on corrige **la première dans l'arbre**, en partant
-du haut. Les erreurs se propagent : une fonction en erreur casse toutes celles qui s'appuient
-dessus. Très souvent, corriger la première fait disparaître les autres.
-
-### 7. Exemple entièrement déroulé : une chape d'articulation
-
-**L'énoncé.** Chape en U : semelle 80 × 60 × 10 percée de deux trous M8, deux joues de 10 mm
-d'épaisseur et 50 de haut, un alésage Ø16 H8 traversant les deux joues, congés de 3 mm.
-
-**Étape 1 — Choisir la stratégie**
-
-C'est une pièce **prismatique** : sa section est constante dans une direction. Donc **une esquisse
-du profil en U + une extrusion**, et non un empilement de blocs.
-
-**Étape 2 — La forme générale**
-
-Plan de Face, esquisse du profil en U, **symétrique par rapport à l'origine**, contrainte à 100 %.
-Extrusion **symétrique** (plan milieu) de 60 : la pièce est centrée.
-
-*Extrusion « plan milieu » et non « borgne » : la pièce reste centrée sur l'origine, ce qui
-simplifie tout le reste.*
-
-**Étape 3 — L'alésage**
-
-**Assistant de perçage**, Ø16 H8, débouchant dans les deux joues. **Une seule fonction** traverse
-les deux joues — pas deux perçages séparés, qui pourraient se désaligner à la modification.
-
-**Étape 4 — Les trous de fixation**
-
-Assistant de perçage M8 sur la face inférieure, positionné par cotes depuis l'origine, puis
-**symétrie** — jamais deux perçages indépendants.
-
-**Étape 5 — Les congés**
-
-R3, **en fin d'arbre**, en une seule fonction multi-arêtes tant que possible.
-
-**Étape 6 — Renommer**
-
-*Profil en U · Alésage Ø16 H8 · Fixations M8 · Congés R3.* Un collègue doit pouvoir reprendre le
-modèle sans vous appeler.
-
-**Étape 7 — Le test**
-
-On passe la hauteur des joues de 50 à 70 et la largeur de 60 à 80.
-
-Résultat attendu : les joues grandissent, l'alésage reste à sa hauteur relative, les trous suivent,
-les congés se recalculent, **aucune erreur dans l'arbre**.
-
-*Si l'alésage devait rester à 35 mm du dessus quelle que soit la hauteur, il faudrait le coter
-depuis la face supérieure — ou écrire une équation. C'est une décision de conception à prendre
-explicitement.*
-
-### 8. Les erreurs classiques
-
-1. **Congés en début d'arbre.**
-2. **Perçages faits au cercle extrudé** au lieu de l'assistant.
-3. **Copies manuelles** au lieu de répétitions.
-4. **Esquisses appuyées sur des faces** créées par des fonctions tardives.
-5. **Extrusion borgne** au lieu de plan milieu : la pièce se décentre.
-6. **Un modèle en soixante fonctions** là où douze suffiraient : chaque fonction inutile est un
-   point de rupture supplémentaire.
-7. **Aucune fonction renommée.**
-8. **Corriger la dernière erreur** au lieu de remonter à la première.
-
-### 9. À retenir
-
-- Quatre fonctions de base : **extrusion, révolution, balayage, lissage**.
-- **On modélise comme la pièce est fabriquée** : le modèle en devient plus simple et plus robuste.
-- **Répétitions et symétries** plutôt que copies manuelles : une seule source de vérité.
-- **Congés, chanfreins, dépouilles en fin d'arbre**, toujours.
-- **Assistant de perçage** systématiquement : il porte l'information jusqu'au plan.
-- Test de robustesse : je change deux cotes, rien ne casse.
-- En cas d'erreurs multiples, on corrige **la première dans l'arbre**.
-"""
-FICHES["5.2"]["formules"] = """
-**Les quatre fonctions de base** — extrusion (avance droite) · révolution (autour d'un axe) ·
-balayage (le long d'un chemin) · lissage (entre plusieurs profils)
-
-**L'ordre canonique de l'arbre**
-1. forme générale · 2. enlèvements importants · 3. perçages (assistant) ·
-4. répétitions et symétries · 5. **congés, chanfreins, dépouilles** · 6. coque
-
-**Règles d'or** — modéliser comme la pièce est fabriquée · une esquisse simple par fonction ·
-répétition plutôt que copie · assistant de perçage plutôt que cercle extrudé ·
-extrusion « plan milieu » pour rester centré
-
-**Test de robustesse** — changer deux cotes majeures → aucune erreur dans l'arbre
-
-**En cas d'erreurs en cascade** — corriger la PREMIÈRE erreur de l'arbre, en partant du haut
-"""
-
-
-# --- Version approfondie de la fiche 3.2 (reprise du 23/08) ---
 FICHES["3.2"]["cours"] = """
 ### 1. Pourquoi ces codes bizarres
 
@@ -20300,826 +21233,6 @@ séries : 1000 pur · 2000 cuivre · 5000 magnésium · **6000 profilés** · 70
 
 
 # --- Version approfondie de la fiche 5.1 (reprise du 23/08) ---
-FICHES["5.1"]["cours"] = """
-### 1. Ce que « paramétrique » veut vraiment dire
-
-Dans un logiciel de dessin classique, vous tracez des traits : ce que vous dessinez est ce que vous
-obtenez, et pour modifier, vous effacez et vous recommencez.
-
-Dans un logiciel de CAO **paramétrique** — SolidWorks, CATIA, Inventor — vous ne dessinez pas des
-traits : vous construisez un **historique de fonctions**. Chaque fonction s'appuie sur les
-précédentes. Changez une cote au début, et tout se recalcule automatiquement jusqu'au bout.
-
-C'est une puissance énorme… et un piège. Car un modèle mal construit **casse** à la première
-modification : les fonctions tombent en erreur, l'arbre se remplit de points d'exclamation, et il
-faut souvent tout refaire.
-
-> **La qualité d'un modèle ne se juge pas à son apparence, mais à sa capacité à être modifié sans
-> casser.** C'est le seul critère qui compte, en BTS comme en entreprise.
-
-*Et ce n'est pas une exigence théorique : sur un projet réel, une pièce est modifiée cinq à dix
-fois entre le premier croquis et la mise en fabrication. Un modèle fragile, c'est cinq à dix
-occasions de tout recommencer.*
-
-### 2. L'esquisse : la fondation
-
-Tout part d'une esquisse : un dessin 2D, tracé sur un plan, qui sera ensuite extrudé, tourné ou
-balayé pour créer du volume. Si l'esquisse est bancale, tout ce qui suit l'est aussi.
-
-**Premier réflexe : choisir un plan de référence** (Face, Dessus, Droite) plutôt qu'une face de la
-pièce.
-
-*Pourquoi. Une esquisse posée sur une face **disparaît si la face disparaît** — et une face
-disparaît dès qu'on modifie la fonction qui l'a créée, ou dès qu'un congé la remplace par une
-surface courbe. Un plan de référence, lui, ne disparaît jamais.*
-
-**Deuxième réflexe : centrer la pièce sur l'origine.** Cela facilite ensuite les symétries, les
-répétitions, et surtout l'assemblage — une pièce centrée se contraint en trois clics.
-
-### 3. Contraindre : le point le plus important de la fiche
-
-Une entité 2D possède des **degrés de liberté**, exactement comme une pièce dans un mécanisme
-(fiche 6.1) : un point peut se déplacer en X et en Y ; une ligne peut en plus tourner et changer
-de longueur.
-
-**Contraindre, c'est supprimer ces libertés** une à une, jusqu'à ce que la géométrie ne puisse
-plus bouger toute seule.
-
-[[FIG:esquisse_contraintes]]
-
-Le logiciel vous le dit par la couleur : **bleu = il reste des libertés, noir = c'est verrouillé.**
-
-[[FIG:contraintes_esquisse]]
-
-**Deux familles de contraintes, et l'ordre compte :**
-
-1. **Les contraintes géométriques d'abord** : coïncidence, horizontalité, verticalité, tangence,
-   parallélisme, perpendicularité, symétrie, égalité, concentricité. Elles ne coûtent rien, elles
-   sont robustes, et elles **portent l'intention de conception**.
-2. **Les cotes ensuite**, et seulement pour ce que la géométrie ne dit pas déjà.
-
-**L'erreur classique du débutant :** tout coter, sans aucune contrainte géométrique. Le résultat
-« marche » mais devient ingérable — quinze cotes là où une symétrie et deux cotes suffisaient.
-
-### 4. L'intention de conception
-
-C'est la notion qui sépare un modèle qui sert d'un modèle qui gêne.
-
-[[FIG:intention_conception]]
-
-> **Le modèle doit se comporter, lors des modifications, comme la pièce réelle devrait se
-> comporter.**
-
-Une contrainte géométrique **porte une intention** : « ce trou est au centre ». Une cote ne porte
-qu'un chiffre : « ce trou est à 60 du bord ». Tant que la plaque fait 120, les deux donnent le
-même résultat. Le jour où elle passe à 180, seule la première reste juste.
-
-*Ce n'est pas une subtilité d'esthète : c'est ce qui décide si votre modèle survivra à la
-troisième demande de modification du client.*
-
-### 5. Sur-contrainte et sous-contrainte
-
-**Sous-contrainte (esquisse bleue).** Il reste des degrés de liberté. La forme peut **dériver
-silencieusement** lors d'une modification ultérieure, ou quand un collègue reprend le fichier. La
-géométrie change sans message d'erreur, et le plan qui en découle devient faux.
-
-*C'est le pire type d'erreur : elle ne prévient pas.*
-
-**Sur-contrainte.** Le logiciel refuse une cote parce que l'information est **déjà donnée** par
-une autre contrainte. C'est l'équivalent exact de la **surabondance** en cotation (fiche 1.3) : on
-dit deux fois la même chose, et les deux peuvent se contredire.
-
-**Que supprimer ?** De préférence la cote, et garder la contrainte géométrique — parce que c'est
-elle qui porte l'intention.
-
-### 6. Le paramétrage par équations
-
-On peut aller plus loin et **lier des cotes entre elles** par des formules :
-
-> `"largeur" = "longueur" / 2` · `"nb_trous" = int("longueur" / 50)` ·
-> `"épaisseur_nervure" = 0,6 * "épaisseur_paroi"`
-
-*Ce dernier exemple est intéressant : il inscrit dans le modèle une règle de conception —
-celle de la plasturgie (fiche 13.1). Le modèle devient alors incapable de produire une nervure qui
-créerait une retassure.*
-
-C'est aussi ce qui permet de créer une **famille de pièces** : une seule maquette qui décline vingt
-tailles, pilotée par une table de paramètres. Très utilisé en entreprise pour les catalogues —
-vérins, brides, supports — et très apprécié en projet de BTS.
-
-### 7. Méthode : construire une esquisse propre en cinq étapes
-
-1. Choisir un **plan de référence**.
-2. Tracer la forme **approximativement** — sans chercher les bonnes dimensions tout de suite.
-3. Poser les **contraintes géométriques** : symétries, tangences, alignements.
-4. Ajouter les **cotes** manquantes, en partant des dimensions fonctionnelles.
-5. Vérifier que l'esquisse est **entièrement contrainte** (noire), puis la **nommer**.
-
-*L'étape 2 surprend les débutants, qui veulent dessiner juste du premier coup. Tracer
-approximativement puis contraindre est plus rapide, et surtout plus robuste : on décrit d'abord
-la logique, les valeurs viennent après.*
-
-### 8. Exemple entièrement déroulé
-
-**L'énoncé.** Une plaque rectangulaire 120 × 80, percée de quatre trous Ø8 aux quatre coins, à
-15 mm de chaque bord, et d'un alésage central Ø30.
-
-**Méthode du débutant** — 4 cotes pour la plaque, 8 cotes pour positionner les trous (deux par
-trou), 2 cotes pour l'alésage : **14 cotes**, aucune contrainte géométrique.
-
-Que se passe-t-il si la plaque passe à 160 × 100 ? Les quatre trous restent où ils étaient : ils
-ne sont plus à 15 mm des bords. Il faut corriger **huit cotes** à la main.
-
-**Méthode correcte :**
-
-| Étape | Action | Effet |
-|---|---|---|
-| 1 | rectangle **centré sur l'origine** (symétrie par rapport aux deux axes) | 2 cotes suffisent : 120 et 80 |
-| 2 | un seul trou coté à 15 des deux bords | 2 cotes |
-| 3 | **symétrie** des trous par rapport aux deux axes | 0 cote |
-| 4 | cercle central **concentrique à l'origine** | 1 cote : Ø30 |
-
-**Total : 5 cotes au lieu de 14.**
-
-Et si la plaque passe à 160 × 100 : les trous restent à 15 mm des bords, l'alésage reste au
-centre. **Aucune correction manuelle.**
-
-**Le contrôle de bon sens.** Comptez vos cotes. Si vous en avez trois fois plus que de dimensions
-réellement fonctionnelles, c'est que les contraintes géométriques manquent.
-
-### 9. Les erreurs classiques
-
-1. **Laisser une esquisse bleue**, même si la forme est correcte aujourd'hui.
-2. **Faire une esquisse géante** qui contient toute la pièce : une esquisse simple par fonction.
-3. **S'appuyer sur des arêtes de fonctions tardives** (un congé, un chanfrein) : elles peuvent
-   disparaître.
-4. **Tout coter** sans contrainte géométrique.
-5. **Supprimer la contrainte géométrique** au lieu de la cote redondante en cas de sur-contrainte.
-6. **Ne pas centrer la pièce** sur l'origine : l'assemblage devient pénible.
-7. **Ne pas nommer les fonctions** : un arbre avec « Bossage-Extrusion12 » n'est repris par
-   personne — pas même par vous dans trois mois.
-
-### 10. À retenir
-
-- Un modèle paramétrique est un **historique**, pas un dessin. Il se juge à sa **robustesse**.
-- Esquisse sur un **plan de référence**, pièce **centrée sur l'origine**.
-- **Contraintes géométriques d'abord, cotes ensuite** — et seulement pour ce qui reste.
-- Bleu = sous-contrainte, la forme peut dériver **sans prévenir**. Noir = verrouillé.
-- **Sur-contrainte = surabondance** : on supprime la cote, on garde la contrainte.
-- **L'intention de conception** : le modèle doit réagir comme la pièce réelle devrait le faire.
-- Les équations permettent d'inscrire une **règle métier** dans le modèle.
-"""
-FICHES["5.1"]["formules"] = """
-**Degrés de liberté en esquisse** — un point : 2 (X, Y) · une ligne : 4 (position, angle, longueur)
-Contraindre = supprimer ces libertés · esquisse **noire** = totalement contrainte
-
-**Contraintes géométriques** — coïncidence · horizontale / verticale · parallèle ·
-perpendiculaire · tangence · **symétrie** · égalité · concentricité · fixe
-
-**Ordre de travail** — plan de référence → tracé approximatif → contraintes géométriques →
-cotes → vérifier « totalement contrainte » → nommer
-
-**Diagnostic** — bleu = sous-contrainte (la forme peut dériver) ·
-sur-contrainte = information donnée deux fois → supprimer la COTE, garder la contrainte
-
-**Équations** — "largeur" = "longueur" / 2 · "nervure" = 0,6 * "paroi"
-permettent de créer une famille de pièces pilotée par table de paramètres
-
-**Test de robustesse** — changer deux cotes majeures : l'arbre ne doit signaler aucune erreur
-"""
-
-
-# --- Version approfondie de la fiche 5.2 (reprise du 23/08) ---
-FICHES["5.2"]["cours"] = """
-### 1. Quatre fonctions suffisent pour 90 % des pièces
-
-Toutes les formes que vous aurez à modéliser en première année se construisent avec quatre
-fonctions de base. Chacune répond à une question simple : **comment la matière est-elle créée ?**
-
-| Fonction | Principe | Pièces typiques |
-|---|---|---|
-| **Extrusion** | l'esquisse avance en ligne droite | plaques, brides, entretoises, profilés |
-| **Révolution** | l'esquisse tourne autour d'un axe | arbres, bagues, poulies — tout ce qui est tourné |
-| **Balayage** | l'esquisse suit un chemin | tubes cintrés, joints, poignées |
-| **Lissage** | on relie plusieurs esquisses différentes | transitions, conduits, formes ergonomiques |
-
-Chacune a son inverse en **enlèvement de matière** : extrusion coupée (perçages, poches),
-révolution coupée (gorges), balayage coupé (rainures courbes).
-
-**Le bon réflexe : choisir la fonction qui correspond au procédé réel.**
-
-*Une pièce tournée se modélise par **révolution**, pas par vingt extrusions successives. Une pièce
-en tôle pliée se modélise avec les fonctions de **tôlerie**, qui calculent le développé
-automatiquement (fiche 12.3). Le modèle devient plus simple, plus robuste, et plus facile à
-modifier — et il produit les bons documents en aval.*
-
-### 2. Les fonctions d'habillage
-
-Elles ne créent pas la forme : elles la finissent.
-
-- **Congé** — arrondi entre deux faces. Indispensable : un angle intérieur vif n'existe pas en
-  usinage (la fraise laisse toujours son rayon, fiche 12.4) et concentre les contraintes
-  (fiche 4.1).
-- **Chanfrein** — cassure d'arête, pour ne pas se couper et faciliter le montage.
-- **Dépouille** — légère inclinaison des parois, obligatoire en moulage et en injection
-  (fiches 12.3 et 13.1).
-- **Coque** — évide la pièce en laissant une épaisseur constante. Une fonction, et un carter plein
-  devient un carter creux respectant la règle de l'épaisseur constante.
-
-### 3. Les fonctions de duplication : ne jamais copier à la main
-
-- **Symétrie** — on modélise la moitié de la pièce, puis on la reflète.
-- **Répétition linéaire ou circulaire** — une fois le trou fait, on le répète.
-
-**Douze trous répétés, c'est UNE fonction à modifier — pas douze.** Copier-coller manuellement
-douze perçages, c'est se condamner à douze corrections à chaque changement, avec la certitude d'en
-oublier une.
-
-*Et la répétition porte une information que la copie perd : elle dit que les trous sont
-**identiques et régulièrement espacés**. Le jour où l'on passe de 12 à 16 trous, on change un
-chiffre.*
-
-### 4. L'ordre des fonctions : la vraie compétence
-
-[[FIG:arbre_de_creation]]
-
-**Les congés et chanfreins doivent venir en fin d'arbre.** Placés trop tôt, ils font disparaître
-les arêtes vives sur lesquelles s'appuient les fonctions suivantes, et le modèle s'effondre à la
-première modification.
-
-**L'ordre canonique d'un modèle propre :**
-
-1. la **forme générale** (extrusion ou révolution) ;
-2. les **enlèvements de matière importants** (poches, épaulements) ;
-3. les **perçages**, faits avec l'assistant ;
-4. les **répétitions et symétries** ;
-5. les **congés, chanfreins et dépouilles** ;
-6. la **coque**, si nécessaire.
-
-**Pourquoi l'assistant de perçage plutôt qu'un cercle extrudé ?**
-
-Parce qu'il **connaît les normes** : il crée un vrai taraudage M8, avec son diamètre de perçage
-correct, son lamage, sa profondeur de filetage et son fond de foret à 118°. Et surtout, cette
-information se retrouve **automatiquement dans la mise en plan et dans la nomenclature**.
-
-*Un cercle extrudé n'est qu'un trou anonyme. Il faudra tout réécrire à la main sur le plan, et
-personne ne saura qu'il devait être taraudé — ni le contrôleur, ni le sous-traitant.*
-
-### 5. Un mot sur la modélisation surfacique
-
-L'approche **volumique** (« solide ») convient à toute la mécanique classique : on empile des
-volumes, on en retire.
-
-Pour les formes complexes — carrosserie, coques de produits, pièces de style — on travaille en
-**surfacique** : on construit des peaux, on les raccorde, puis on les **coud** pour obtenir un
-volume fermé.
-
-En première année, on en reste à la culture générale : savoir que ça existe, que c'est le domaine
-de CATIA dans l'automobile et l'aéronautique, et que la difficulté y est la **qualité des
-raccordements** entre surfaces.
-
-### 6. Le test de robustesse
-
-Comment savoir si votre modèle est bon ? Faites ce test, il prend une minute :
-
-> **Changez deux cotes majeures** — la longueur, la hauteur, un diamètre — **et regardez l'arbre.**
-
-- Aucune erreur ? Le modèle est robuste.
-- Des points d'exclamation ? Corrigez **maintenant**, pendant que vous savez encore comment le
-  modèle est construit — pas dans six mois.
-
-Ensuite, remettez les valeurs d'origine.
-
-*Ce test coûte une minute et sauve des heures. Il est aussi le meilleur moyen de savoir si un
-modèle reçu d'un collègue est utilisable.*
-
-### 7. Corriger un arbre en erreur : la méthode
-
-Quand plusieurs fonctions passent en erreur après une modification, on ne corrige pas au hasard.
-
-> **On remonte toujours à la PREMIÈRE erreur de l'arbre, en partant du haut.**
-
-Les erreurs se propagent en cascade : une fonction en erreur casse toutes celles qui s'appuient
-dessus. Très souvent, corriger la première fait disparaître les suivantes.
-
-**Les trois causes les plus fréquentes :**
-
-1. une **esquisse qui a perdu sa référence** (la face sur laquelle elle était posée a disparu) ;
-2. un **congé qui ne peut plus se construire** parce que la géométrie a changé ;
-3. une **cote devenue impossible** : un perçage plus grand que la matière disponible.
-
-### 8. Exemple entièrement déroulé : une chape d'articulation
-
-**L'énoncé.** Chape en U : semelle 80 × 60 × 10 percée de deux trous M8, deux joues de 10 mm
-d'épaisseur et 50 mm de haut, alésage Ø16 H8 traversant les deux joues, congés de 3 mm.
-
-**Étape 1 — Choisir la stratégie avant de cliquer**
-
-La pièce est un **profil constant** en U : c'est donc une **extrusion**, pas un assemblage de trois
-blocs. Une seule esquisse pour toute la forme générale.
-
-**Étape 2 — L'esquisse du profil**
-
-Plan de **Face**, profil en U, **symétrique par rapport à l'origine**, contrainte à 100 %.
-Extrusion **symétrique** (plan milieu) de 60 : la pièce est centrée sur l'origine.
-
-*Pourquoi symétrique et non « borgne » : la pièce reste centrée si l'épaisseur change, et
-l'assemblage sera trivial.*
-
-**Étape 3 — L'alésage Ø16 H8**
-
-**Assistant de perçage**, débouchant, positionné par cotes depuis l'origine. **Une seule fonction**
-traverse les deux joues — pas deux perçages séparés, qui pourraient se désaligner.
-
-La tolérance H8 est renseignée **dans l'assistant** : elle apparaîtra automatiquement sur le plan.
-
-**Étape 4 — Les trous M8**
-
-Assistant de perçage sur la face inférieure, puis **symétrie** — jamais deux perçages indépendants.
-
-**Étape 5 — Les congés R3**
-
-**En fin d'arbre**, en une seule fonction multi-arêtes tant que possible.
-
-**Étape 6 — Nommer les fonctions**
-
-*Profil en U · Alésage axe 16H8 · Fixations M8 · Congés 3.* Un collègue doit pouvoir reprendre le
-modèle sans vous appeler.
-
-**Étape 7 — Le test de robustesse**
-
-On change la hauteur des joues de 50 à 70, et la largeur de 60 à 80.
-
-- Si l'arbre ne signale aucune erreur : le modèle est bon.
-- S'il casse, la cause est presque toujours une esquisse posée sur une face, ou un congé placé
-  trop tôt.
-
-On remet ensuite les valeurs d'origine.
-
-**Étape 8 — Le contrôle de bon sens**
-
-Cinq fonctions pour cette pièce. Si l'arbre en comptait trente, c'est que la stratégie était
-mauvaise — probablement une pièce construite bloc par bloc au lieu d'un profil extrudé.
-
-### 9. Les erreurs classiques
-
-1. **Congés en début d'arbre** : ils font disparaître les arêtes dont les fonctions suivantes ont
-   besoin.
-2. **Perçages faits au cercle extrudé** au lieu de l'assistant : l'information est perdue pour le
-   plan.
-3. **Copies manuelles** au lieu de répétitions.
-4. **Esquisses appuyées sur des faces** créées par des fonctions tardives.
-5. **Extrusion borgne** au lieu de « plan milieu » : la pièce se décentre à chaque modification.
-6. **Un modèle en soixante fonctions** là où douze suffiraient : chaque fonction inutile est un
-   point de rupture supplémentaire.
-7. **Aucune fonction renommée.**
-8. **Corriger la dernière erreur** de l'arbre au lieu de remonter à la première.
-
-### 10. À retenir
-
-- Quatre fonctions de base : **extrusion, révolution, balayage, lissage**.
-- **On modélise comme la pièce est fabriquée** : une pièce tournée se fait par révolution.
-- **Répétitions et symétries** plutôt que copies manuelles : une fonction à modifier, pas douze.
-- **Congés, chanfreins, dépouilles en fin d'arbre**, toujours.
-- **Assistant de perçage** : il connaît les normes, et l'information passe dans le plan.
-- **Test de robustesse** : je change deux cotes, rien ne casse.
-- En cas d'erreur, on remonte à **la première** de l'arbre.
-"""
-FICHES["5.2"]["formules"] = """
-**Les quatre fonctions de base** — extrusion (droite) · révolution (autour d'un axe) ·
-balayage (le long d'un chemin) · lissage (entre plusieurs esquisses)
-chacune existe aussi en enlèvement de matière
-
-**Habillage** — congé · chanfrein · dépouille · coque (épaisseur constante)
-
-**Duplication** — symétrie · répétition linéaire · répétition circulaire
-12 trous répétés = 1 fonction à modifier
-
-**L'ordre canonique de l'arbre**
-1. forme générale · 2. enlèvements importants · 3. perçages (assistant) ·
-4. répétitions et symétries · 5. **congés, chanfreins, dépouilles** · 6. coque
-
-**Test de robustesse** — changer deux cotes majeures : aucune erreur dans l'arbre
-
-**Correction d'erreurs** — remonter à la PREMIÈRE erreur en partant du haut de l'arbre
-causes fréquentes : esquisse sur une face disparue · congé impossible · cote irréalisable
-"""
-
-
-# --- Version approfondie de la fiche 5.2 (reprise du 23/08) ---
-FICHES["5.2"]["cours"] = """
-### 1. Quatre fonctions suffisent pour 90 % des pièces
-
-Toutes les formes que vous aurez à modéliser en première année se construisent avec quatre
-fonctions de base. Chacune répond à une question simple : **comment la matière est-elle créée ?**
-
-| Fonction | Principe | Pièces typiques |
-|---|---|---|
-| **Extrusion** | l'esquisse avance en ligne droite | plaques, brides, entretoises, profilés |
-| **Révolution** | l'esquisse tourne autour d'un axe | arbres, bagues, poulies, tout ce qui est tourné |
-| **Balayage** | l'esquisse suit un chemin | tubes cintrés, joints, poignées |
-| **Lissage** | on relie plusieurs esquisses différentes | transitions, conduits, formes ergonomiques |
-
-Chacune a son inverse en **enlèvement de matière** : extrusion coupée (perçages, poches),
-révolution coupée (gorges), balayage coupé (rainures suivant un contour).
-
-**Le bon réflexe : choisir la fonction qui correspond au procédé réel.**
-
-*Une pièce tournée se modélise par **révolution**, pas par vingt extrusions successives. Le modèle
-devient plus simple, plus robuste, et plus facile à modifier — et surtout, il « raconte » comment
-la pièce sera fabriquée, ce qui aide celui qui reprendra le fichier.*
-
-**Une conséquence pratique importante :** dans une révolution, **tout ce qui est axisymétrique se
-dessine dans le profil**. Les gorges, les épaulements, les chanfreins tournés en font partie. Les
-créer après coup par des fonctions séparées alourdit l'arbre pour rien.
-
-### 2. Les fonctions d'habillage
-
-Elles ne créent pas la forme : elles la finissent.
-
-- **Congé** : arrondi entre deux faces. Indispensable — un angle intérieur vif n'existe pas en
-  usinage (la fraise laisse toujours son rayon, fiche 12.4) et concentre les contraintes
-  (fiche 4.1).
-- **Chanfrein** : cassure d'arête, pour ne pas se couper et pour faciliter le montage — c'est le
-  chanfrein d'introduction des fiches 6.2 et 6.3.
-- **Dépouille** : légère inclinaison des parois, obligatoire en moulage et en injection
-  (fiches 12.3 et 13.1).
-- **Coque** : évide la pièce en laissant une épaisseur constante. Une fonction, et un carter plein
-  devient un carter creux — c'est exactement la règle d'épaisseur constante de la plasturgie.
-
-### 3. Les fonctions de duplication : ne jamais copier à la main
-
-- **Symétrie** : on modélise la moitié de la pièce, puis on la reflète.
-- **Répétition linéaire ou circulaire** : une fois le perçage fait, on le répète.
-
-**Douze trous répétés, c'est UNE fonction à modifier — pas douze.** Copier-coller manuellement
-douze perçages, c'est se condamner à douze corrections à chaque changement, et à en oublier une.
-
-*Et le jour où le client demande seize trous au lieu de douze : on tape un chiffre, au lieu d'en
-créer quatre de plus et de recalculer les positions.*
-
-### 4. L'ordre des fonctions : la vraie compétence
-
-[[FIG:arbre_de_creation]]
-
-**Les congés et chanfreins doivent venir en fin d'arbre.** Placés trop tôt, ils font disparaître
-les arêtes vives sur lesquelles s'appuient les fonctions suivantes, et le modèle s'effondre à la
-première modification.
-
-**L'ordre type d'un modèle propre :**
-
-| Rang | Fonctions | Pourquoi ici |
-|---|---|---|
-| 1 | forme générale (extrusion ou révolution) | c'est le volume de base |
-| 2 | enlèvements importants (poches, épaulements) | ils définissent encore la forme |
-| 3 | perçages, par **l'assistant** | ils s'appuient sur des faces stables |
-| 4 | répétitions et symétries | elles copient des fonctions déjà propres |
-| 5 | nervures, coque | elles s'appuient sur le volume complet |
-| 6 | **congés, chanfreins, dépouilles** | en dernier, toujours |
-
-**Pourquoi l'assistant de perçage plutôt qu'un cercle extrudé ?**
-
-Parce qu'il **connaît les normes** : il crée un vrai taraudage M8, avec son diamètre de perçage
-correct, sa profondeur de filetage, son lamage et son fond de foret à 118°. Et surtout, cette
-information se retrouve **automatiquement dans la mise en plan et la nomenclature**.
-
-Un cercle extrudé, lui, n'est qu'un trou anonyme : il faudra tout réécrire à la main sur le plan,
-et personne ne saura qu'il devait être taraudé.
-
-### 5. Nommer et organiser l'arbre
-
-Un arbre avec « Bossage-Extrusion7 », « Enlèvement-Extrusion12 » et « Congé23 » est illisible —
-y compris pour vous, dans trois mois.
-
-**Renommer chaque fonction** au moment où on la crée : *Corps révolution*, *Alésage 52 H7*,
-*Fixations M8*, *Congés R3*. Cela prend cinq secondes et transforme un modèle opaque en document
-lisible.
-
-*C'est exactement le même raisonnement que la nomenclature d'un plan : un dessin sans repères
-n'est pas exploitable, même s'il est juste.*
-
-### 6. Un mot sur la modélisation surfacique
-
-L'approche **volumique** (« solide ») convient à toute la mécanique classique : on empile des
-volumes, on en retire.
-
-Pour les formes complexes — carrosserie, coques de produits, pièces de style — on travaille en
-**surfacique** : on construit des peaux, on les raccorde, puis on les **coud** pour obtenir un
-volume fermé.
-
-En première année, on en reste à la culture générale : savoir que ça existe, que c'est le domaine
-de CATIA dans l'automobile et l'aéronautique, et que le raccordement des surfaces (la continuité
-en tangence ou en courbure) y est le vrai sujet.
-
-### 7. Le test de robustesse
-
-Comment savoir si votre modèle est bon ? Faites ce test, il prend une minute :
-
-> **Changez deux cotes majeures — la longueur, la hauteur, un diamètre — et regardez l'arbre.**
-> Aucune erreur ? Le modèle est robuste. Des points d'exclamation ? Corrigez **maintenant**,
-> pendant que vous savez encore comment il est construit.
-
-Puis remettez les valeurs d'origine.
-
-**Et si des erreurs apparaissent : on corrige toujours la PREMIÈRE erreur de l'arbre**, en partant
-du haut. Les erreurs se propagent en cascade — très souvent, corriger la source fait disparaître
-les suivantes.
-
-### 8. Exemple entièrement déroulé : un support de palier
-
-**L'énoncé.** Semelle 140 × 80 × 15 avec 4 trous oblongs Ø11, corps vertical avec alésage Ø52 H7
-à 90 mm du sol, nervure triangulaire de renfort, congés R3.
-
-**Étape 1 — Choisir la stratégie, avant de toucher au clavier**
-
-La pièce est essentiellement un **profil extrudé** : la semelle et le corps se dessinent d'un seul
-tenant, vus de face. La nervure et les perçages viendront après. On évite ainsi d'empiler cinq
-extrusions.
-
-**Étape 2 — La forme générale**
-
-Plan de **Face**, esquisse du profil semelle + corps, **symétrique par rapport à l'origine**,
-totalement contrainte. **Extrusion symétrique** (« plan milieu ») de 80 : la pièce reste centrée,
-ce qui simplifiera l'assemblage.
-
-**Étape 3 — L'alésage Ø52 H7**
-
-**Assistant de perçage**, traversant, avec la **tolérance H7 renseignée dans l'assistant**. Elle se
-retrouvera automatiquement sur la mise en plan.
-
-**Étape 4 — La nervure**
-
-Esquisse du triangle sur le **plan de Droite** — pas sur une face de la pièce — puis fonction
-**Nervure** (et non une extrusion), épaisseur 8, plan milieu.
-
-*La fonction Nervure gère seule le raccordement à la paroi et à la semelle. Une extrusion
-demanderait de dessiner exactement le contour, qui changerait à chaque modification de hauteur.*
-
-**Étape 5 — Les trous oblongs**
-
-**Assistant de perçage** pour le premier, puis **symétrie** par rapport aux deux plans.
-
-*Pourquoi des oblongs et non des trous lisses : ils permettent le réglage au montage, et absorbent
-les écarts de position des ancrages — c'est la cale de réglage de la fiche 2.3, appliquée à une
-fixation.*
-
-**Étape 6 — Les congés R3**
-
-**En une seule fonction multi-arêtes**, en fin d'arbre.
-
-**Étape 7 — Nommer**
-
-*Profil semelle-corps* · *Alésage 52 H7* · *Nervure 8* · *Trous oblongs* · *Congés R3*.
-
-**Étape 8 — Le test de robustesse**
-
-On fait passer la **hauteur d'axe de 90 à 120 mm** — c'est la modification la plus probable en
-vraie vie, puisqu'elle dépend de l'arbre à supporter.
-
-Si l'arbre ne signale aucune erreur, le modèle est bon. Sinon, on corrige la première erreur, et
-on recommence le test.
-
-### 9. Les erreurs classiques
-
-1. **Congés en début d'arbre** : ils font disparaître les arêtes dont les fonctions suivantes ont
-   besoin.
-2. **Perçages faits au cercle extrudé** au lieu de l'assistant : plus de norme, plus de
-   nomenclature automatique.
-3. **Copies manuelles** au lieu de répétitions et de symétries.
-4. **Esquisses appuyées sur des faces** créées par des fonctions tardives.
-5. **Un modèle en soixante fonctions** là où douze suffiraient : chaque fonction inutile est un
-   point de rupture supplémentaire.
-6. **Modéliser autrement que la pièce est fabriquée** : vingt extrusions pour une pièce tournée.
-7. **Aucune fonction renommée.**
-8. **Ne jamais tester** : la robustesse ne se voit qu'en modifiant.
-
-### 10. À retenir
-
-- Quatre fonctions de base : **extrusion, révolution, balayage, lissage** — et leurs inverses.
-- On modélise **comme la pièce est fabriquée**. Dans une révolution, tout l'axisymétrique est dans
-  le profil.
-- **Répétitions et symétries** plutôt que copies manuelles : une fonction à modifier, pas douze.
-- **Congés, chanfreins, dépouilles en fin d'arbre**, toujours.
-- **Assistant de perçage** : il porte la norme et alimente la mise en plan.
-- **Renommer** chaque fonction : un arbre lisible est un modèle réutilisable.
-- **Test de robustesse** : je change deux cotes majeures, rien ne casse. Et on corrige toujours la
-  première erreur de l'arbre.
-"""
-FICHES["5.2"]["formules"] = """
-**Les quatre fonctions de volume** — extrusion (translation) · révolution (rotation) ·
-balayage (le long d'un chemin) · lissage (entre plusieurs esquisses)
-chacune existe en **enlèvement de matière**
-
-**Fonctions d'habillage** — congé · chanfrein · dépouille · coque — **toujours en fin d'arbre**
-
-**Fonctions de duplication** — symétrie · répétition linéaire · répétition circulaire
-12 trous répétés = 1 fonction à modifier
-
-**Ordre canonique de l'arbre**
-1. forme générale · 2. enlèvements importants · 3. perçages (assistant) ·
-4. répétitions et symétries · 5. nervures, coque · 6. **congés, chanfreins, dépouilles**
-
-**Assistant de perçage** — porte la norme (Ø de perçage, filetage, lamage, fond à 118°)
-et alimente automatiquement la mise en plan et la nomenclature
-
-**Test de robustesse** — changer 2 cotes majeures → aucune erreur dans l'arbre
-en cas d'erreurs : corriger la PREMIÈRE en partant du haut
-"""
-
-
-# --- Version approfondie de la fiche 5.3 (reprise du 23/08) ---
-FICHES["5.3"]["cours"] = """
-### 1. Assembler, c'est reproduire les liaisons réelles
-
-Un assemblage n'est pas un empilement de pièces posées côte à côte : c'est un **mécanisme**. Les
-contraintes d'assemblage — coïncidence, concentricité, distance, angle — doivent reproduire les
-**liaisons réelles** du mécanisme, celles de la fiche 6.1.
-
-**Le contrôle qui ne trompe pas :**
-
-> **Les degrés de liberté qui restent dans l'assemblage doivent être exactement ceux du schéma
-> cinématique.**
-
-Un arbre monté dans deux paliers doit pouvoir tourner **et rien d'autre**. Si vous pouvez encore le
-faire coulisser à la souris, deux hypothèses : soit votre assemblage est incomplet, soit **votre
-conception a oublié un arrêt axial**. Dans les deux cas, il vaut mieux le savoir maintenant que
-sur la machine.
-
-*C'est là que la CAO cesse d'être un outil de dessin pour devenir un outil de vérification.*
-
-**Le premier composant est fixe** (ancré) : c'est le bâti. Tous les autres se positionnent par
-rapport à lui. Sans ancrage, tout l'assemblage flotte dans l'espace et les contraintes se
-comportent de façon imprévisible.
-
-### 2. Ascendant ou descendant
-
-**Ascendant (bottom-up).** On modélise les pièces séparément, puis on les insère et on les
-contraint. C'est l'approche la plus courante, la plus stable, et celle qu'on attend de vous en
-première année.
-
-**Descendant (top-down).** On crée les pièces **dans le contexte** de l'assemblage, en s'appuyant
-sur la géométrie des voisines : un carter qui épouse exactement son contenu, une tôle qui suit le
-profil d'une autre.
-
-Très puissant — et **fragile** : chaque référence externe est un lien qui peut casser. Si l'on
-modifie la pièce A, la pièce B tombe en erreur, parfois sans qu'on comprenne pourquoi.
-
-**Le compromis professionnel :** piloter l'ensemble par une **esquisse de layout** (un squelette
-qui porte les dimensions principales) et par une **table de paramètres**, plutôt que par des
-références croisées entre pièces. Les pièces dépendent alors toutes du squelette, et non les unes
-des autres.
-
-### 3. Ce que l'assemblage permet de vérifier avant de fabriquer
-
-C'est tout l'intérêt de la maquette numérique, et ce qu'on attend d'un technicien :
-
-| Vérification | Ce qu'elle évite |
-|---|---|
-| **détection d'interférences** | deux pièces qui occupent le même espace — la panne la plus bête |
-| **simulation de mouvement** | une collision sur une partie de la course seulement |
-| **accessibilité au montage** | une vis qu'on ne peut pas atteindre avec une clé |
-| **masse et centre de gravité** | un bras trop lourd pour son moteur (fiche 13.3) |
-| **degrés de liberté restants** | un arrêt axial oublié |
-
-*L'accessibilité mérite une insistance : une vis inaccessible à l'écran sera inaccessible en
-atelier. Et c'est encore pire en maintenance — la fiche 12.8 rappelle que c'est la phase où l'on
-se blesse le plus.*
-
-**Une heure de vérification sur maquette évite des semaines de reprise à l'atelier.**
-
-### 4. La mise en plan : le document qui engage
-
-La mise en plan est générée **depuis** le modèle 3D : vues, coupes, sections, détails, vues
-éclatées. Tout est **associatif** — modifiez la pièce, le plan suit.
-
-Mais **la 3D ne contient pas tout**. C'est vous qui ajoutez :
-
-- la **cotation fonctionnelle** et les tolérances (fiches 1.3 et 2.1) ;
-- les **tolérances géométriques** et les états de surface (fiche 2.3) ;
-- la **matière**, les traitements avec leurs valeurs, l'indice de révision (fiches 3.2 et 3.3) ;
-- la **nomenclature** avec ses bulles, sur un dessin d'ensemble.
-
-> **La 3D montre, le plan coté engage.**
-
-En cas de litige avec un fournisseur, **c'est le plan qui fait foi**, pas le fichier 3D. Un modèle
-sans plan coté ne définit rien juridiquement : il ne porte aucune tolérance, aucun état de
-surface, aucune matière.
-
-### 5. Les formats d'échange : à qui envoyer quoi
-
-[[FIG:formats_echange]]
-
-[[FIG:chaine_numerique]]
-
-**Trois règles pratiques :**
-
-1. **On envoie du STEP** à un autre bureau d'études. Il contient la **géométrie exacte** et s'ouvre
-   dans tous les logiciels.
-2. **On envoie du STL** à une imprimante 3D — et uniquement là. Un STL est une **peau de
-   triangles** : la géométrie n'est qu'approchée, et on ne remodélise jamais dessus. Si un
-   fournisseur vous envoie un STL alors que vous devez modifier la pièce, **redemandez un STEP**.
-3. **On envoie du DXF** au découpeur laser, **accompagné du PDF du plan** de la pièce pliée :
-   rayons de pliage, sens des plis, matière, épaisseur (fiche 13.2).
-
-*Le format natif — .sldprt, .catpart — ne s'échange qu'entre utilisateurs du même logiciel, et
-souvent de la même version. C'est le seul qui conserve l'historique des fonctions.*
-
-### 6. Préparer une pièce pour l'impression 3D
-
-Puisque c'est au programme et que votre fils en fera, quelques règles qui évitent l'échec.
-
-**Orienter la pièce.** Une impression FDM est **anisotrope** : elle se sépare entre les couches,
-comme un mille-feuille. Les efforts doivent travailler **dans le plan des couches**, jamais
-perpendiculairement.
-
-*C'est exactement la même logique que les fibres d'un composite (fiche 13.1) ou d'une pièce
-forgée : la matière n'a pas les mêmes propriétés dans toutes les directions.*
-
-**Limiter les porte-à-faux** au-delà de 45° : au-delà, il faut des supports, qui laissent des
-traces et se retirent mal.
-
-**Prévoir du jeu** : 0,2 à 0,4 mm entre deux pièces qui doivent s'emboîter. Une cote nominale
-exacte donnera un montage impossible.
-
-**Épaissir** : un mur de moins de 1,2 mm est fragile — c'est en dessous de trois passages de buse.
-
-### 7. Exemple entièrement déroulé : du modèle au fournisseur
-
-**L'énoncé.** Un support de capteur doit être prototypé en impression 3D pour valider
-l'implantation, puis produit en série de 200 pièces en tôle pliée.
-
-**Étape 1 — Vérifier l'assemblage**
-
-On insère le support dans l'assemblage de la machine : détection d'interférences, vérification de
-l'accessibilité de la vis de réglage, et contrôle que les degrés de liberté restants correspondent
-au réglage prévu.
-
-**Étape 2 — Le prototype imprimé**
-
-- **orientation** : les couches perpendiculaires à l'effort principal seraient une faute ; on
-  couche la pièce ;
-- **jeu de 0,3 mm** sur l'emboîtement avec le capteur ;
-- export **STL**, envoi à l'imprimante.
-
-*Le prototype ne sert pas à valider la résistance — l'ABS imprimé n'a rien à voir avec la tôle
-d'acier — mais à valider **l'implantation** : est-ce que ça se monte, est-ce que la main passe.*
-
-**Étape 3 — La série en tôle**
-
-- développé calculé par la fonction tôlerie, avec le coefficient K (fiches 7.1 et 12.3) ;
-- **DXF à plat** pour la découpe laser ;
-- **PDF du plan** de la pièce pliée : rayons, sens des plis, matière S235, épaisseur 2 mm,
-  tolérances générales ISO 2768-m ;
-- **STEP** en accompagnement, pour lever toute ambiguïté de forme.
-
-**Étape 4 — Le contrôle de bon sens**
-
-Trois fichiers partent, chacun à un destinataire précis, et chacun contient exactement ce dont ce
-destinataire a besoin. **Si un seul fichier suffisait, c'est qu'on aurait oublié quelqu'un.**
-
-### 8. Les erreurs classiques
-
-1. **Ne pas ancrer le premier composant** : tout l'assemblage flotte.
-2. **Un assemblage qui laisse des mouvements impossibles** dans la réalité, ou qui en bloque de
-   nécessaires.
-3. **Abuser du top-down** : la moindre modification propage des erreurs partout.
-4. **Envoyer un STL à un bureau d'études** au lieu d'un STEP.
-5. **Livrer seulement le 3D**, sans plan coté : rien n'est contractuel.
-6. **Oublier de vérifier les interférences** avant de lancer la fabrication.
-7. **Oublier l'accessibilité** : une vis inaccessible à l'écran l'est aussi en atelier.
-8. **Imprimer une pièce mal orientée** : elle casse entre les couches.
-
-### 9. À retenir
-
-- Les **degrés de liberté restants** = ceux du schéma cinématique. C'est le test de l'assemblage.
-- **Premier composant ancré** · ascendant par défaut · top-down avec prudence, ou par squelette.
-- Vérifier **interférences, mouvement, accessibilité et masse** avant de fabriquer.
-- **STEP** = échange exact · **STL** = impression seulement · **DXF** = tôle à plat · **PDF** =
-  diffusion.
-- **La 3D montre, le plan coté engage** : c'est lui qui porte tolérances, matière et indice.
-- Impression 3D : orienter selon les couches, 45° de porte-à-faux, jeu de 0,2 à 0,4 mm.
-"""
-FICHES["5.3"]["formules"] = """
-**Contrôle d'un assemblage** — les ddl restants doivent être exactement ceux du schéma
-cinématique · premier composant **ancré**
-
-**Approches** — ascendant (bottom-up) : pièces puis contraintes, stable ·
-descendant (top-down) : dans le contexte, puissant mais fragile ·
-compromis : esquisse de layout + table de paramètres
-
-**Vérifications avant fabrication** — interférences · simulation de mouvement · accessibilité
-au montage et à la maintenance · masse et centre de gravité
-
-**Formats d'échange**
-**STEP** géométrie exacte → autre bureau d'études · **STL** maillage → impression 3D seulement
-**DXF** contours à plat → découpe laser · **PDF** plan coté → atelier, archivage, litige
-natif (.sldprt, .catpart) → même logiciel, conserve l'historique
-
-**Impression 3D (FDM)** — anisotrope : effort dans le plan des couches ·
-porte-à-faux ≤ 45° · jeu d'emboîtement 0,2 à 0,4 mm · épaisseur de mur ≥ 1,2 mm
-"""
-
-
 def appliquer(blocs):
     """Remplace ou complète le contenu des fiches réécrites.
 
