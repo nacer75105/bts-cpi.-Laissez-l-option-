@@ -6452,6 +6452,10 @@ Pa.
 **4.** 0,065 mm × 1 000 = 65 µm. Comme 65 µm < 80 µm, la pièce est **conforme**.
 
 **5.** 1 N/mm² = 1 MPa, donc 150 N/mm² = **150 MPa** = **150 000 000 Pa** (150 × 10⁶ Pa).
+
+**Pour s'entraîner en mode vérifié** : la page **🏗️ Ateliers guidés** propose l'atelier
+« Conversions mm, µm et vérification de conformité », qui vérifie chacune de vos valeurs une
+par une avec un diagnostic en cas d'erreur.
 """,
         },
         {
@@ -7308,6 +7312,10 @@ deux valeurs sont négatives ou nulles au mieux : c'est un ajustement **avec ser
 **5.** Parce qu'un alésage est plus coûteux et plus difficile à retoucher (outil interne,
 accès réduit) qu'un arbre, qui se réusine facilement en extérieur : fixer systématiquement
 l'alésage en H limite le nombre d'outils différents nécessaires en production.
+
+**Pour s'entraîner en mode vérifié** : la page **🏗️ Ateliers guidés** propose l'atelier
+« Calculer un ajustement » (Ø30 H7/g6), qui vérifie chacune de vos valeurs une par une avec
+un diagnostic en cas d'erreur.
 """,
         },
     ],
@@ -7764,6 +7772,10 @@ faible.
 **4.** Non, pas nécessairement : si la pièce est longue et fine et fortement comprimée, il faut
 aussi vérifier le **flambement** (fiche 4.1), qui peut ruiner la pièce par instabilité bien
 avant que la contrainte simple n'atteigne son seuil.
+
+**Pour s'entraîner en mode vérifié** : la page **🏗️ Ateliers guidés** propose l'atelier
+« Contrainte et coefficient de sécurité », qui vérifie chacune de vos valeurs une par une avec
+un diagnostic en cas d'erreur.
 """,
         },
     ],
@@ -8464,6 +8476,10 @@ signature d'une ligne de nomenclature, toujours associée à un plan d'ensemble.
 faire le produit ? » (cahier des charges), « de quoi est-il composé ? » (nomenclature), « quelle
 est la forme exacte d'une pièce ? » (plan de définition), ou « dans quel ordre la fabrique-t-on
 ? » (gamme). Une seule question à la fois, un seul document par question.
+
+**Pour aller plus loin** : la page **🏗️ Ateliers guidés** propose l'atelier « Lire un dessin
+de définition », qui fait lire un vrai plan coté, question par question, avec un diagnostic
+en cas d'erreur.
 """,
         },
     ],
@@ -9076,6 +9092,10 @@ finition → contrôle intermédiaire → contrôle final.
 **4.** Non, ce n'est **pas correct** : placé après la finition, le traitement thermique
 déformerait les cotes précises déjà obtenues, et le contrôle final constaterait des pièces hors
 tolérance. Le traitement thermique doit se placer avant la finition, jamais après.
+
+**Pour s'entraîner en mode vérifié** : la page **🏗️ Ateliers guidés** propose l'atelier
+« Remettre une gamme de fabrication dans l'ordre », qui vérifie chaque étape une par une avec
+un diagnostic en cas d'erreur.
 """,
         },
     ],
@@ -37619,6 +37639,304 @@ ATELIERS = [
         },
         "a_retenir": 'À retenir : **Ra 3,2** sur un appui · **Ra 0,8** seulement où ça porte, ça frotte ou ça étanche. Chaque cran change le moyen de production, donc le prix. Et **trop lisse est aussi un défaut** : sous Ra 0,1, le lubrifiant ne tient plus.',
     },
+    {
+        "id": "at6",
+        "chapitre": "Module 6",
+        "titre": "Contrainte et coefficient de sécurité",
+        "theme": "RDM",
+        "fiche": "0.10.2",
+        "figure": "quatre_sollicitations",
+        "vocabulaire": [
+            ("Sollicitation", "le type d'effort subi par la pièce : traction, compression, "
+             "cisaillement, flexion, torsion."),
+            ("Contrainte (σ)", "une force ramenée à la surface sur laquelle elle s'applique, "
+             "en MPa."),
+            ("Résistance du matériau (Re)", "une caractéristique du matériau, mesurée en "
+             "laboratoire, indépendante de la forme de la pièce."),
+            ("Coefficient de sécurité (s)", "le nombre par lequel on divise Re pour obtenir la "
+             "contrainte admissible."),
+            ("Contrainte admissible", "le seuil que σ ne doit jamais dépasser en service."),
+        ],
+        "enonce": "Une barre de section 40 mm² est tirée dans son axe par une force de 2000 N. "
+                  "Elle est en acier de résistance Re = 300 MPa, avec un coefficient de "
+                  "sécurité s = 3.",
+        "etapes": [
+            {
+                "type": "qcm",
+                "label": "Identifier la sollicitation",
+                "consigne": "La barre est tirée dans son axe.",
+                "question": "Quelle sollicitation subit-elle ?",
+                "options": ["Traction", "Cisaillement", "Torsion"],
+                "bonne": 0,
+                "indice": "Tirer dans l'axe, c'est étirer la pièce.",
+                "diagnostics": {
+                    1: "Le cisaillement fait glisser deux parties l'une sur l'autre — ce n'est "
+                       "pas le cas ici, l'effort est dans l'axe de la barre.",
+                    2: "La torsion vrille la pièce autour de son axe — ici l'effort est dans "
+                       "l'axe, pas autour.",
+                },
+            },
+            {
+                "type": "numerique",
+                "label": "Contrainte σ",
+                "unite": "MPa",
+                "attendu": 50,
+                "tol": 0.02,
+                "consigne": "σ = F / S, avec F = 2000 N et S = 40 mm².",
+                "indice": "σ = F / S",
+                "pieges": [
+                    (80000, "Vous avez multiplié F par S au lieu de diviser F par S."),
+                    (20, "Vérifiez le sens de la division : σ = F / S = 2000 / 40, pas S / F."),
+                ],
+            },
+            {
+                "type": "numerique",
+                "label": "Contrainte admissible",
+                "unite": "MPa",
+                "attendu": 100,
+                "tol": 0.02,
+                "consigne": "Contrainte admissible = Re / s, avec Re = 300 MPa et s = 3.",
+                "indice": "Contrainte admissible = Re / s",
+                "pieges": [
+                    (900, "Vous avez multiplié Re par s au lieu de diviser."),
+                    (297, "Vous avez soustrait s à Re au lieu de diviser Re par s."),
+                ],
+            },
+            {
+                "type": "qcm",
+                "label": "Conclusion",
+                "consigne": "Comparez σ et la contrainte admissible.",
+                "question": "La barre tient-elle ?",
+                "options": ["Oui, σ ≤ contrainte admissible", "Non, σ > contrainte admissible"],
+                "bonne": 0,
+                "indice": "50 MPa comparé à 100 MPa.",
+                "diagnostics": {
+                    1: "Comparez bien les deux valeurs : σ = 50 MPa est inférieure à la "
+                       "contrainte admissible de 100 MPa, donc la pièce tient, avec une marge "
+                       "confortable.",
+                },
+            },
+        ],
+        "corrige": {
+            "enonce": "Barre de section **40 mm²**, tirée dans l'axe par **2000 N**, en acier "
+                      "**Re = 300 MPa**, coefficient de sécurité **s = 3**.",
+            "regle": "**La sollicitation** : un effort dans l'axe qui étire la pièce, c'est de "
+                     "la **traction**.\\n\\n**La contrainte** ramène toujours une force à la "
+                     "surface sur laquelle elle s'applique : σ = F / S.\\n\\n**La contrainte "
+                     "admissible** n'est jamais Re directement : c'est Re réduite par un "
+                     "coefficient de sécurité, pour couvrir les incertitudes.",
+            "conversions": "Aucune conversion d'unité ici : F est déjà en newtons, S déjà en "
+                           "mm², ce qui donne directement σ en MPa (1 MPa = 1 N/mm²).",
+            "remplacement": "σ = F / S = 2000 / 40\\n\\nContrainte admissible = Re / s = 300 / 3",
+            "calcul": "σ = 2000 / 40 = **50 MPa**\\n\\nContrainte admissible = 300 / 3 = "
+                      "**100 MPa**",
+            "verification": "**Trois contrôles :**\\n\\n1. **L'ordre de grandeur** : 50 MPa "
+                            "pour une petite section d'acier sous 2000 N est cohérent, ni "
+                            "absurdement faible ni proche de la rupture.\\n\\n2. **La "
+                            "comparaison finale** : σ = 50 MPa ≤ contrainte admissible = "
+                            "100 MPa → la pièce **tient**, avec une marge de 50 MPa.\\n\\n3. "
+                            "**Le sens physique** : diviser Re par un coefficient de sécurité "
+                            "DIMINUE toujours le seuil admissible — si votre contrainte "
+                            "admissible dépasse Re, il y a une erreur de sens.",
+        },
+        "a_retenir": "À retenir : **σ = F / S** ramène toujours une force à une surface. La "
+                     "**contrainte admissible = Re / s** est toujours inférieure à Re. Une "
+                     "pièce tient si **σ ≤ contrainte admissible**.",
+    },
+    {
+        "id": "at7",
+        "chapitre": "Module 11",
+        "titre": "Remettre une gamme de fabrication dans l'ordre",
+        "theme": "Gamme de fabrication",
+        "fiche": "0.15.2",
+        "figure": "gamme_usinage",
+        "vocabulaire": [
+            ("Ébauche", "enlèvement rapide de la matière en excès, sans viser la précision "
+             "finale."),
+            ("Traitement thermique", "opération qui durcit la pièce, mais la déforme "
+             "légèrement."),
+            ("Finition", "opérations qui atteignent les cotes et l'état de surface exigés par "
+             "le plan."),
+            ("Contrôle intermédiaire", "vérification en cours de gamme, entre deux opérations."),
+            ("Contrôle final", "vérification de la pièce complète avant expédition."),
+        ],
+        "enonce": "Une pièce en acier doit subir un traitement thermique avant d'être livrée. "
+                  "Remettez les six étapes de sa gamme dans le bon ordre : contrôle final, "
+                  "débit du brut, usinage d'ébauche, traitement thermique, usinage de "
+                  "finition, contrôle intermédiaire.",
+        "etapes": [
+            {
+                "type": "qcm",
+                "label": "1ère étape",
+                "question": "Quelle étape vient en premier ?",
+                "options": ["Débit du brut", "Usinage d'ébauche", "Traitement thermique"],
+                "bonne": 0,
+                "indice": "On ne peut usiner que ce qu'on a d'abord découpé.",
+                "diagnostics": {
+                    1: "On ne peut pas ébaucher une pièce qui n'a pas encore été découpée à "
+                       "une dimension proche de la pièce finale : le débit du brut vient "
+                       "avant.",
+                    2: "Le traitement thermique déforme la pièce : il n'a aucun sens de le "
+                       "faire avant même d'avoir dégrossi sa forme.",
+                },
+            },
+            {
+                "type": "qcm",
+                "label": "Après le débit et l'ébauche",
+                "question": "Une fois le brut débité et l'ébauche réalisée, quelle étape vient "
+                            "ensuite ?",
+                "options": ["Traitement thermique", "Usinage de finition", "Contrôle final"],
+                "bonne": 0,
+                "indice": "Le traitement thermique se place entre l'ébauche et la finition.",
+                "diagnostics": {
+                    1: "Usiner en finition avant le traitement thermique serait inutile : les "
+                       "déformations du traitement thermique gâcheraient les cotes précises "
+                       "tout juste obtenues.",
+                    2: "Le contrôle final vérifie la pièce complète : bien trop tôt, la pièce "
+                       "n'est même pas encore finie.",
+                },
+            },
+            {
+                "type": "qcm",
+                "label": "Après le traitement thermique",
+                "question": "Quelle étape vient juste après le traitement thermique ?",
+                "options": ["Usinage de finition", "Contrôle intermédiaire", "Contrôle final"],
+                "bonne": 0,
+                "indice": "C'est cette étape qui rattrape les déformations du traitement "
+                          "thermique.",
+                "diagnostics": {
+                    1: "Un contrôle intermédiaire ici ne servirait qu'à confirmer que la pièce "
+                       "s'est déformée — ce qui est déjà su. C'est l'usinage de finition qui "
+                       "doit suivre pour rattraper les cotes.",
+                    2: "Le contrôle final n'intervient qu'à la toute fin, une fois la pièce "
+                       "complètement terminée.",
+                },
+            },
+            {
+                "type": "qcm",
+                "label": "Toute dernière étape",
+                "question": "Quelle est la toute dernière étape de la gamme ?",
+                "options": ["Contrôle intermédiaire", "Contrôle final", "Usinage de finition"],
+                "bonne": 1,
+                "indice": "Une seule étape vérifie la pièce complète avant expédition.",
+                "diagnostics": {
+                    0: "Le contrôle intermédiaire se place en cours de gamme, pas à la toute "
+                       "fin : c'est le contrôle final qui clôt la gamme, juste avant "
+                       "expédition.",
+                    2: "L'usinage de finition doit être suivi d'un contrôle intermédiaire puis "
+                       "d'un contrôle final, pas s'arrêter là.",
+                },
+            },
+        ],
+        "corrige": {
+            "enonce": "Six étapes à ordonner : **débit du brut, usinage d'ébauche, traitement "
+                      "thermique, usinage de finition, contrôle intermédiaire, contrôle "
+                      "final**.",
+            "regle": "**La règle qui gouverne l'ordre** : le traitement thermique déforme "
+                     "légèrement la pièce. Le placer avant l'ébauche n'aurait pas de sens (on "
+                     "durcirait une pièce encore loin de sa forme finale) ; après la finition "
+                     "serait une erreur (les déformations gâcheraient les cotes précises tout "
+                     "juste obtenues). D'où : **ébauche → traitement thermique → finition**.",
+            "conversions": "Aucune conversion ici : c'est un ordonnancement d'opérations, pas "
+                           "un calcul.",
+            "remplacement": "Débit du brut → usinage d'ébauche → traitement thermique → "
+                            "usinage de finition → contrôle intermédiaire → contrôle final.",
+            "calcul": "L'ordre complet : **1. débit du brut · 2. usinage d'ébauche · 3. "
+                      "traitement thermique · 4. usinage de finition · 5. contrôle "
+                      "intermédiaire · 6. contrôle final.**",
+            "verification": "**Deux contrôles de bon sens :**\\n\\n1. **Le traitement "
+                            "thermique n'est ni au tout début ni à la toute fin** : il est "
+                            "encadré par l'ébauche et la finition.\\n\\n2. **Le contrôle final "
+                            "ferme toujours la gamme** : c'est la dernière vérification avant "
+                            "que la pièce ne quitte l'atelier.",
+        },
+        "a_retenir": "À retenir : **débit du brut → ébauche → traitement thermique → finition "
+                     "→ contrôle intermédiaire → contrôle final.** Le traitement thermique se "
+                     "place toujours entre l'ébauche et la finition, jamais après.",
+    },
+    {
+        "id": "at8",
+        "chapitre": "Module 0.5",
+        "titre": "Conversions mm, µm et vérification de conformité",
+        "theme": "Unités et conversions",
+        "fiche": "0.5.1",
+        "figure": None,
+        "vocabulaire": [
+            ("mm", "millimètre, l'unité de référence du dessin technique."),
+            ("µm", "micromètre, 1 mm = 1 000 µm — c'est l'unité des tolérances."),
+            ("Conforme", "une pièce dont le défaut mesuré reste dans la tolérance autorisée par "
+             "le plan."),
+        ],
+        "enonce": "Un plan tolère un défaut de forme de 80 µm au maximum. Le contrôle mesure "
+                  "0,065 mm sur la pièce.",
+        "etapes": [
+            {
+                "type": "numerique",
+                "label": "0,025 mm en micromètres",
+                "unite": "µm",
+                "attendu": 25,
+                "tol": 0.02,
+                "consigne": "Pour passer de mm à µm, on multiplie par 1 000.",
+                "indice": "0,025 × 1 000",
+                "pieges": [
+                    (0.25, "Vous avez oublié un facteur 10 : 0,025 mm vaut 25 µm, pas 0,25 µm "
+                           "— c'est l'erreur la plus fréquente sur cette conversion."),
+                    (2.5, "Erreur d'un facteur 10 dans le sens inverse."),
+                ],
+            },
+            {
+                "type": "numerique",
+                "label": "La mesure du contrôle, en micromètres",
+                "unite": "µm",
+                "attendu": 65,
+                "tol": 0.02,
+                "consigne": "Le contrôle a mesuré 0,065 mm. Convertissez en micromètres pour la "
+                            "comparer à la tolérance de 80 µm.",
+                "indice": "0,065 × 1 000",
+                "pieges": [
+                    (0.65, "Vous avez oublié de multiplier par 1 000 : 0,065 mm vaut 65 µm."),
+                    (6.5, "Erreur d'un facteur 10 dans la conversion."),
+                ],
+            },
+            {
+                "type": "qcm",
+                "label": "Conclusion",
+                "consigne": "Comparez la mesure convertie (65 µm) à la tolérance du plan "
+                            "(80 µm).",
+                "question": "La pièce est-elle conforme ?",
+                "options": ["Oui, 65 µm < 80 µm", "Non, 65 µm > 80 µm"],
+                "bonne": 0,
+                "indice": "65 est bien inférieur à 80.",
+                "diagnostics": {
+                    1: "Comparez à nouveau les deux valeurs converties dans la même unité : "
+                       "65 µm est inférieur à 80 µm, donc la pièce est conforme.",
+                },
+            },
+        ],
+        "corrige": {
+            "enonce": "Tolérance de forme du plan : **80 µm**. Mesure du contrôle : **0,065 "
+                      "mm**.",
+            "regle": "**La règle qui gouverne toute comparaison de cotes** : on ne compare "
+                     "jamais deux valeurs sans vérifier d'abord qu'elles sont dans la même "
+                     "unité. Ici, le plan tolère en µm, le contrôle mesure en mm : il faut "
+                     "convertir avant toute comparaison.",
+            "conversions": "**Le sens de la conversion** : pour passer d'une unité plus grande "
+                           "à une unité plus petite (mm → µm), on **multiplie** par 1 000. "
+                           "0,025 mm = 25 µm · 0,065 mm = 65 µm.",
+            "remplacement": "Mesure en µm = 0,065 × 1 000\\n\\nComparaison : mesure en µm face "
+                            "à la tolérance de 80 µm.",
+            "calcul": "0,065 × 1 000 = **65 µm**\\n\\n65 µm < 80 µm.",
+            "verification": "**Deux contrôles :**\\n\\n1. **Le sens de la conversion** : "
+                            "multiplier par 1 000 doit donner un nombre PLUS GRAND (65 > "
+                            "0,065) — si le résultat est plus petit, le sens est inversé.\\n\\n"
+                            "2. **La marge** : 65 µm contre une tolérance de 80 µm laisse "
+                            "15 µm de marge — la pièce n'est pas juste conforme, elle l'est "
+                            "avec une marge confortable.",
+        },
+        "a_retenir": "À retenir : **mm → µm, on multiplie par 1 000** (et inversement, on "
+                     "divise). On ne compare jamais deux cotes sans les avoir converties dans "
+                     "la même unité au préalable.",
+    },
 ]
 
 
@@ -38121,6 +38439,10 @@ if PAGE == "🏠 Tableau de bord":
     c2.metric("Fiches détaillées", nb_fiches)
     c3.metric("Questions de quiz", s["total"])
     c4.metric("Matériaux référencés", len(MATERIAUX))
+
+    st.caption(
+        "💾 Pensez à télécharger votre progression avant de fermer l'application (page "
+        "« Ma progression » → Sauvegarde) : elle n'est pas conservée automatiquement en ligne.")
 
     # --- Paliers de progression ---
     st.write("")
@@ -39802,6 +40124,51 @@ elif PAGE == "📊 Ma progression":
                     st.write(texte_note)
     else:
         st.info("Aucune note personnelle enregistrée.")
+
+    st.divider()
+    st.subheader("Sauvegarde de la progression")
+    st.caption(
+        "L'application ne conserve pas la progression automatiquement en ligne : le site "
+        "peut être redémarré et tout effacer. Téléchargez votre progression régulièrement, "
+        "et réimportez-la à chaque visite pour la retrouver.")
+
+    _c_dl_p, _c_up_p = st.columns(2)
+    with _c_dl_p:
+        st.download_button(
+            "📥 Télécharger ma progression",
+            data=json.dumps(P, ensure_ascii=False, indent=2).encode("utf-8"),
+            file_name=f"bts-cpi-progression-{datetime.now().strftime('%Y-%m-%d')}.json",
+            mime="application/json")
+
+    with _c_up_p:
+        _fichier_import_p = st.file_uploader(
+            "Importer une sauvegarde (.json)", type=["json"], key="import_progression")
+        if _fichier_import_p is not None:
+            try:
+                _donnees_import_p = json.load(_fichier_import_p)
+            except (json.JSONDecodeError, UnicodeDecodeError):
+                st.error("Fichier illisible : ce n'est pas un JSON valide.")
+            else:
+                _cles_attendues_p = {"fiches_lues": list, "resultats_quiz": list,
+                                      "notes": dict, "erreurs": dict}
+                if not isinstance(_donnees_import_p, dict):
+                    st.error("Ce fichier ne ressemble pas à une sauvegarde de progression valide.")
+                else:
+                    _pbs_p = [f"« {c} » manquante ou de mauvais type (attendu {t.__name__})"
+                              for c, t in _cles_attendues_p.items()
+                              if not isinstance(_donnees_import_p.get(c), t)]
+                    if _pbs_p:
+                        st.error("Fichier invalide : " + ", ".join(_pbs_p) + ".")
+                    else:
+                        _nouvelle_p = {"fiches_lues": [], "resultats_quiz": [], "notes": {},
+                                       "erreurs": {}, "exercices_guides_termines": [], "srs": {}}
+                        _nouvelle_p.update(_donnees_import_p)
+                        st.session_state.progression = _nouvelle_p
+                        sauver_progression(_nouvelle_p)
+                        st.success(
+                            "Progression importée avec succès. Rechargez la page pour la voir "
+                            "partout.")
+                        st.rerun()
 
 
 # ===========================================================================
