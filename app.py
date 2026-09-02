@@ -1897,6 +1897,43 @@ def grafcet_principe():
 
 
 # ===========================================================================
+# 52B. LA MÉTHODE DE RÉSOLUTION D'UN EXERCICE (9 ÉTAPES)
+# ===========================================================================
+
+def methode_resolution():
+    etapes = [
+        ("1", "Lire l'énoncé en entier", ALESAGE),
+        ("2", "Relever les données", ALESAGE),
+        ("3", "Identifier la grandeur cherchée", ALESAGE),
+        ("4", "Choisir la formule", AXE),
+        ("5", "Convertir les unités", ALERTE),
+        ("6", "Poser le calcul", AXE),
+        ("7", "Vérifier l'unité du résultat", OK),
+        ("8", "Comparer à la valeur admissible", OK),
+        ("9", "Conclure en une phrase", OK),
+    ]
+    p = [_txt(30, 26, "Neuf étapes fixes, toujours dans le même ordre :", 13, TRAIT, "start", True)]
+    x, y0, pas, r = 70, 60, 38, 15
+    p.append(f"<line x1='{x}' y1='{y0}' x2='{x}' y2='{y0 + pas * (len(etapes) - 1)}' "
+             f"stroke='{FIN}' stroke-width='2'/>")
+    for i, (num, texte, couleur) in enumerate(etapes):
+        y = y0 + i * pas
+        p.append(f"<circle cx='{x}' cy='{y}' r='{r}' fill='#ffffff' stroke='{couleur}' "
+                  f"stroke-width='2.2'/>")
+        p.append(_txt(x, y + 5, num, 13, couleur, "middle", True))
+        p.append(_txt(x + 32, y + 5, texte, 13, TRAIT, "start", (i in (4, 8))))
+        if i == 4:
+            p.append(_txt(x + 32, y + 20, "→ avant le calcul, jamais après", 10, ALERTE, "start"))
+        if i == 8:
+            p.append(_txt(x + 32, y + 20, "→ jamais laisser un chiffre nu, sans réponse",
+                          10, OK, "start"))
+    p.append(_txt(x, y0 + pas * (len(etapes) - 1) + 46,
+                  "Sauter une étape est la cause la plus fréquente d'erreur — même sur un "
+                  "calcul simple.", 11, FIN, "middle"))
+    return _svg("".join(p), 500, y0 + pas * (len(etapes) - 1) + 70)
+
+
+# ===========================================================================
 # 53. LE CYCLE DE VIE D'UN PRODUIT
 # ===========================================================================
 
@@ -3430,6 +3467,7 @@ FIGURES = {
     "instruments_mesure": ("À chaque tolérance son instrument", instruments_mesure),
     "grafcet_principe": ("Le GRAFCET : étapes et transitions", grafcet_principe),
     "cycle_de_vie": ("Le cycle de vie d'un produit", cycle_de_vie),
+    "methode_resolution": ("La méthode de résolution en 9 étapes", methode_resolution),
     "regles_injection": ("Les cinq règles de la pièce injectée", regles_injection),
     "composite_stratifie": ("Le stratifié : orienter les fibres", composite_stratifie),
     "symbole_soudure": ("Lire un symbole de soudure", symbole_soudure),
@@ -5815,6 +5853,26 @@ QUIZ["Module 0 — Découverte du BTS CPI"] = [
       "l'ordre, chaque opération (débit, usinage, traitement thermique, contrôle...) et sur "
       "quel poste elle se fait. Elle répond à la question « comment fabrique-t-on, et dans "
       "quel ordre ? », pas « que doit faire le produit ? ».", "Intermédiaire"),
+
+    q("Dans la méthode de résolution en neuf étapes, à quel moment faut-il convertir les "
+      "unités ?",
+      ["Après avoir posé le calcul, en corrigeant le résultat obtenu",
+       "Avant de poser le calcul, une fois les données relevées",
+       "Seulement si le résultat final paraît bizarre",
+       "Ce n'est jamais nécessaire si on garde les unités de l'énoncé"], 1,
+      "Convertir après avoir calculé oblige à repérer l'erreur dans un résultat déjà obtenu — "
+      "beaucoup plus difficile que de convertir avant. La conversion se fait juste après avoir "
+      "relevé les données, avant de poser le calcul.", "Base"),
+
+    q("Pourquoi l'étape « conclure en une phrase » n'est-elle pas facultative dans un exercice "
+      "technique ?",
+      ["Parce que c'est demandé par le barème, sans autre raison",
+       "Parce qu'un résultat chiffré seul ne répond pas à la question posée par l'énoncé",
+       "Parce qu'il faut toujours écrire au moins dix lignes",
+       "Parce que la conclusion remplace le calcul"], 1,
+      "Un exercice technique demande presque toujours une décision (la pièce résiste-t-elle ? "
+      "l'ajustement a-t-il du jeu ?) — un chiffre seul, sans comparaison ni conclusion, est un "
+      "calcul inachevé, pas une réponse à la question posée.", "Intermédiaire"),
 ]
 CATEGORIES = list(QUIZ.keys())
 
@@ -5855,6 +5913,30 @@ QUIZ["Module 0.5 — Grandeurs, unités et conversions"] = [
       "longueur s'élève au carré pour une surface, et au cube pour un volume (1 m³ = "
       "1 000 000 000 mm³). Appliquer le même facteur ×1 000 qu'à une longueur est l'erreur la "
       "plus fréquente sur ce point.", "Piège"),
+
+    q("Un couple de 180 N·m doit être utilisé dans un calcul de torsion où toutes les autres "
+      "grandeurs sont en N et en mm. Que faut-il faire avant de calculer ?",
+      ["Rien, N·m peut être utilisé directement", "Multiplier 180 par 1 000, pour obtenir "
+       "180 000 N·mm", "Diviser 180 par 1 000", "Multiplier 180 par 1 000 000"], 1,
+      "1 N·m = 1 000 N·mm. Un couple donné en N·m doit être multiplié par 1 000 avant tout "
+      "calcul mené en N et en mm — l'oublier fait apparaître un résultat 1 000 fois trop "
+      "faible.", "Piège"),
+
+    q("Un résultat de calcul de contrainte donne 2 000 000 MPa sur une pièce en acier. Que "
+      "faut-il en conclure ?",
+      ["C'est plausible, l'acier peut supporter cette contrainte",
+       "Il y a presque certainement une erreur d'unité, à vérifier avant toute autre chose",
+       "C'est une contrainte normale en cisaillement uniquement",
+       "Le résultat est correct si le coefficient de sécurité est élevé"], 1,
+      "Les aciers courants ont une limite d'élasticité de l'ordre de 200 à 1 000 MPa. Un "
+      "résultat des millions de fois plus grand signale presque toujours une confusion "
+      "d'unité (souvent m²/mm² ou N·m/N·mm), à corriger avant de continuer.", "Piège"),
+
+    q("Quelle affirmation sur le MPa (mégapascal) est exacte ?",
+      ["1 MPa = 1 000 Pa", "1 MPa = 1 N/mm²", "1 MPa = 1 N/m²", "1 MPa = 1 000 N/mm²"], 1,
+      "1 MPa = 1 000 000 Pa = 1 N/mm². C'est cette équivalence qui permet de calculer une "
+      "contrainte directement en MPa à partir d'une force en N et d'une section en mm², sans "
+      "conversion supplémentaire.", "Base"),
 ]
 
 QUIZ["Module 2 — Lecture d'un plan de définition"] = [
@@ -6567,6 +6649,121 @@ MPa (attention aux unités avant de calculer).
 longueurs en mm avant de multiplier évite l'erreur classique de conversion de surface.)
 
 **5.** 0,0002 m² = 0,0002 × 1 000 000 = 200 mm². Contrainte = 6 000 / 200 = **30 N/mm² = 30 MPa**.
+""",
+        },
+        {
+            "id": "0.5.3",
+            "titre": "Contrôle des unités : les erreurs qui coûtent cher",
+            "duree": "45 min",
+            "cours": """### 1. La première cause d'erreur du programme
+
+**Objectif de cette fiche :** reconnaître et éviter les quatre confusions d'unités les plus
+fréquentes en BTS CPI, avant qu'elles ne faussent un calcul entier.
+
+**Prérequis :** fiche 0.5.1 (unités de longueur, de force et de pression).
+
+Un calcul juste avec une unité fausse donne un résultat faux — et contrairement à une erreur de
+formule, une erreur d'unité ne se voit pas toujours dans le nombre obtenu. C'est pour ça
+qu'elle est la cause d'erreur la plus fréquente du programme, tous modules confondus.
+
+### 2. Les quatre confusions à connaître par cœur
+
+| Confusion | Exemple du piège | Comment l'éviter |
+|---|---|---|
+| **N et Nmm** (force et moment) | écrire un moment « = 180 N » au lieu de « = 180 000 N·mm » | un moment a toujours deux dimensions : une force **et** une distance |
+| **mm et µm** | écrire un écart de « 0,25 µm » au lieu de « 25 µm » pour 0,025 mm | 1 mm = 1 000 µm : multiplier par 1000, pas par 10 |
+| **MPa et Pa** | utiliser 340 Pa au lieu de 340 MPa pour une limite d'élasticité | 1 MPa = 1 000 000 Pa = 1 N/mm² : les contraintes RDM se travaillent en MPa, jamais en Pa |
+| **Nm et Nmm** (couple) | garder un couple donné « en Nm » directement dans une formule en mm | 1 N·m = 1 000 N·mm : un couple donné en N·m se multiplie par 1000 avant tout calcul en mm |
+
+**Le repère qui aide à retenir MPa = N/mm² :** une contrainte, c'est une force divisée par une
+surface. Si la force est en N et la surface en mm², le résultat est en N/mm² — qui est
+exactement la définition du MPa. C'est pour ça que tout le programme de RDM travaille en
+N, mm et MPa ensemble : ces trois unités sont déjà cohérentes entre elles, sans conversion.
+
+### 3. La vérification systématique
+
+Avant de rendre un résultat, trois questions suffisent la plupart du temps :
+
+1. **Toutes mes données sont-elles dans le même système (N, mm, MPa) ?** Sinon, convertir
+   avant de calculer (fiche 0.3, étape 5).
+2. **Le résultat a-t-il l'unité attendue ?** Une contrainte doit sortir en MPa, un moment en
+   N·mm, un écart en µm — pas autre chose.
+3. **L'ordre de grandeur est-il plausible ?** Une contrainte de 47 750 MPa sur une pièce en
+   acier (qui rompt vers 400-800 MPa) signale presque toujours un facteur 1000 oublié quelque
+   part.
+
+### 4. À retenir
+
+- Les quatre pièges : **N/Nmm**, **mm/µm**, **MPa/Pa**, **Nm/Nmm** — chacun est un facteur
+  1000 (ou 1 000 000 pour Pa/MPa) oublié ou ajouté en trop.
+- **MPa = N/mm²** : c'est pour ça que le programme travaille en N, mm et MPa ensemble.
+- Un résultat dont l'ordre de grandeur paraît absurde cache presque toujours une erreur
+  d'unité, pas une erreur de méthode.
+""",
+            "formules": """
+**Vocabulaire essentiel de cette fiche** —
+
+- **Force** : en newtons (N).
+- **Moment / couple** : en newtons-millimètres (N·mm) dans les calculs de RDM ; souvent donné
+  en N·m dans un énoncé — à convertir (× 1000) avant tout calcul.
+- **Contrainte** : en mégapascals (MPa), équivalent à N/mm².
+- **Écart dimensionnel / tolérance** : en micromètres (µm) sur les tableaux ISO, à convertir
+  en mm (÷ 1000) pour l'exprimer sur une cote.
+
+**Les facteurs à retenir** : 1 mm = 1 000 µm · 1 MPa = 1 000 000 Pa = 1 N/mm² ·
+1 N·m = 1 000 N·mm.
+""",
+            "exemple": """
+### Cas guidé — Un couple mal converti
+
+**Énoncé :** un arbre transmet un couple de 180 N·m. On veut calculer la contrainte de torsion
+avec un module de torsion I₀/v = 3 068 mm³.
+
+**Erreur fréquente :** calculer directement τ = 180 / 3 068 = 0,059 MPa — un résultat absurde
+pour une pièce en acier (une contrainte quasi nulle, alors que la pièce transmet un vrai
+effort).
+
+**Ce qui a été oublié :** le couple était donné en N·m, pas en N·mm. Avant de calculer, il
+fallait convertir : 180 N·m × 1000 = 180 000 N·mm.
+
+**Calcul correct :** τ = 180 000 / 3 068 = **58,67 MPa** — un ordre de grandeur cohérent avec
+un acier de construction.
+
+**Ce qu'il faut remarquer :** les deux calculs utilisent exactement la même formule et la même
+calculatrice ; seule la conversion d'unité, faite ou non, change le résultat d'un facteur 1000.
+""",
+            "exercice": """
+### Exercice autonome — Repérer l'erreur
+
+Un(e) élève calcule la contrainte d'une pièce en traction : effort F = 12 000 N, section
+S = 0,006 m². Il/elle pose : σ = 12 000 / 0,006 = 2 000 000 MPa, et conclut que la pièce casse
+forcément.
+
+**Question 1.** Quelle confusion d'unité a été commise ?
+
+**Question 2.** Recalculez σ correctement, en MPa.
+
+**Question 3.** L'ordre de grandeur de 2 000 000 MPa aurait-il dû alerter l'élève avant même de
+vérifier le calcul ? Pourquoi ?
+""",
+            "corrige": """
+### Corrigé
+
+**Question 1.** La section a été utilisée en m² alors que la formule σ = F/S, pour donner un
+résultat en MPa (= N/mm²), a besoin d'une section en **mm²**. C'est la confusion mm/µm de
+cette fiche appliquée aux surfaces : 1 m² = 1 000 000 mm², pas 1 000.
+
+**Question 2.** S = 0,006 m² = 0,006 × 1 000 000 = 6 000 mm². σ = 12 000 / 6 000 =
+**2 MPa** — un résultat qui montre que la pièce est très largement dans ses limites, à
+l'opposé de la conclusion erronée de l'énoncé.
+
+**Question 3.** Oui : aucun acier ni alliage courant n'a une limite d'élasticité proche de
+2 000 000 MPa (les aciers se situent entre 200 et 1 000 MPa environ). Un résultat aussi
+éloigné des ordres de grandeur usuels doit systématiquement déclencher une relecture des
+unités, avant même de vérifier la formule (fiche 0.3, étape 8 : comparer avant de conclure).
+
+**Pour aller plus loin** : le module de RDM (bloc 4) et le module de tolérances (fiche 0.8.2)
+utilisent ce même contrôle des unités à chaque exercice.
 """,
         },
     ],
@@ -8480,6 +8677,125 @@ est la forme exacte d'une pièce ? » (plan de définition), ou « dans quel ord
 **Pour aller plus loin** : la page **🏗️ Ateliers guidés** propose l'atelier « Lire un dessin
 de définition », qui fait lire un vrai plan coté, question par question, avec un diagnostic
 en cas d'erreur.
+""",
+        },
+        {
+            "id": "0.3",
+            "titre": "Comment résoudre un exercice technique",
+            "duree": "1 h",
+            "cours": """### 1. Le vrai blocage d'un débutant
+
+**Objectif de cette fiche :** avoir une méthode fixe, applicable à n'importe quel exercice du
+programme (RDM, cotation, ajustements, statique...), pour ne plus jamais rester bloqué devant
+un énoncé.
+
+**Prérequis :** aucun.
+
+Devant un exercice chiffré, le blocage le plus fréquent n'est presque jamais un manque de
+formule : c'est de ne pas savoir **par quoi commencer**. La méthode ci-dessous fonctionne pour
+toutes les fiches du programme — elle sera rappelée par un renvoi chaque fois qu'un exercice la
+mobilise.
+
+### 2. La méthode en neuf étapes
+
+| # | Étape | Ce qu'on fait concrètement |
+|---|---|---|
+| 1 | **Lire l'énoncé en entier** | avant d'écrire quoi que ce soit — un chiffre donné à la fin change parfois toute l'approche |
+| 2 | **Relever les données** | chaque valeur, avec son unité, sur une même ligne (ex. F = 15 000 N) |
+| 3 | **Identifier ce qu'on cherche** | une seule grandeur à la fois, avec son unité attendue |
+| 4 | **Choisir la formule** | celle qui relie la grandeur cherchée aux données déjà relevées — jamais l'inverse |
+| 5 | **Convertir les unités** | tout dans le même système, **avant** de calculer, jamais après |
+| 6 | **Poser le calcul** | avec les nombres convertis, pas les nombres de l'énoncé |
+| 7 | **Vérifier l'unité du résultat** | un résultat sans unité vérifiée n'est pas un résultat |
+| 8 | **Comparer** | à la valeur admissible, à une table, à un seuil |
+| 9 | **Conclure en une phrase** | « la pièce résiste » / « l'ajustement est avec jeu » — jamais laisser un chiffre nu |
+
+[[FIG:methode_resolution]]
+
+### 3. Pourquoi cet ordre précis, et pas un autre
+
+**Étapes 2 et 3 avant l'étape 4.** Choisir une formule avant d'avoir identifié la grandeur
+cherchée est la cause la plus fréquente d'erreur : on prend la première formule qui contient
+les bonnes lettres, sans vérifier qu'elle isole bien l'inconnue.
+
+**Étape 5 avant l'étape 6, jamais après.** Convertir après avoir calculé oblige à repérer où,
+dans un résultat déjà obtenu, se cache l'erreur d'unité — c'est beaucoup plus dur que de
+convertir avant. Une force en N, une longueur en mm, une contrainte en MPa (= N/mm²) : ce sont
+les unités de travail standard en RDM — mélanger m et mm au milieu d'un calcul est l'erreur la
+plus commune du programme (fiche 0.5.3, « Contrôle des unités »).
+
+**Étape 9 n'est pas facultative.** Un exercice technique n'est jamais terminé sur un chiffre :
+une pièce qui « fait 47,75 MPa » ne veut rien dire tant qu'on n'a pas dit si c'est acceptable.
+C'est cette phrase de conclusion que vérifient les corrigés de ce programme.
+
+### 4. À retenir
+
+- Neuf étapes fixes, toujours dans le même ordre : lire, relever, chercher, choisir, convertir,
+  calculer, vérifier l'unité, comparer, conclure.
+- Convertir les unités se fait **avant** le calcul, jamais en réparation après coup.
+- Un résultat sans comparaison ni conclusion est un calcul inachevé, pas un exercice résolu.
+""",
+            "formules": """
+**Vocabulaire essentiel de cette fiche** —
+
+- **Donnée** : valeur fournie par l'énoncé, toujours accompagnée de son unité.
+- **Grandeur cherchée (inconnue)** : ce que l'exercice demande de calculer — une seule à la
+  fois.
+- **Valeur admissible** : seuil de référence (contrainte admissible, jeu maximal, tolérance...)
+  auquel on compare le résultat pour conclure.
+- **Conclusion** : phrase qui traduit le résultat chiffré en réponse à la question posée.
+""",
+            "exemple": """
+### Cas guidé — Une tige en traction
+
+**Énoncé :** une tige circulaire de diamètre 20 mm est tendue par un effort de 15 000 N.
+La limite d'élasticité du matériau est Re = 340 MPa, coefficient de sécurité s = 3. La tige
+résiste-t-elle ?
+
+| Étape | Application |
+|---|---|
+| 1. Lire | énoncé de traction simple, une seule grandeur à vérifier : la contrainte |
+| 2. Relever | F = 15 000 N · d = 20 mm · Re = 340 MPa · s = 3 |
+| 3. Chercher | la contrainte σ, pour la comparer à une contrainte admissible |
+| 4. Choisir | σ = F / S (traction) et Rpe = Re / s (contrainte admissible) |
+| 5. Convertir | rien à convertir ici : N, mm et MPa (= N/mm²) sont déjà cohérents entre eux |
+| 6. Calculer | S = π×20²/4 = 314,16 mm² → σ = 15 000 / 314,16 = 47,75 MPa |
+| 7. Vérifier l'unité | σ est bien en MPa, comme Re |
+| 8. Comparer | Rpe = 340 / 3 = 113,33 MPa ; σ = 47,75 MPa ≤ Rpe |
+| 9. Conclure | **la tige résiste largement à l'effort demandé** |
+
+**Ce qu'il faut remarquer :** aucune étape n'a été sautée, même quand le calcul est simple —
+c'est cette discipline qui évite l'erreur sur un exercice plus long.
+""",
+            "exercice": """
+### Exercice autonome — Un axe en cisaillement
+
+Un axe de diamètre 12 mm est cisaillé par un effort tranchant de 9 000 N (une seule section
+cisaillée). La contrainte de cisaillement admissible du matériau est Rpg = 90 MPa.
+
+Appliquez les neuf étapes de la méthode pour répondre : l'axe résiste-t-il ?
+
+*(formule de cisaillement simple : τ = T / S, avec S l'aire de la section cisaillée)*
+""",
+            "corrige": """
+### Corrigé — Neuf étapes appliquées
+
+1. **Lire** : cisaillement simple, une seule grandeur à vérifier : τ.
+2. **Relever** : T = 9 000 N · d = 12 mm · Rpg = 90 MPa.
+3. **Chercher** : la contrainte de cisaillement τ.
+4. **Choisir** : τ = T / S, avec S = π×d²/4.
+5. **Convertir** : rien à convertir, N et mm² sont déjà cohérents (τ sortira en MPa).
+6. **Calculer** : S = π×12²/4 = 113,10 mm² → τ = 9 000 / 113,10 = 79,58 MPa.
+7. **Vérifier l'unité** : τ est bien en MPa, comme Rpg.
+8. **Comparer** : τ = 79,58 MPa ≤ Rpg = 90 MPa.
+9. **Conclure** : **l'axe résiste**, avec une marge faible — un effort un peu plus grand
+   dépasserait le seuil admissible.
+
+**Erreur fréquente à éviter ici** : oublier l'étape 8 et s'arrêter sur « τ = 79,58 MPa » sans
+comparer à Rpg — un nombre seul ne répond jamais à la question posée à l'étape 3.
+
+**Pour aller plus loin** : cette méthode est rappelée dans les fiches de RDM (bloc 4) et de
+statique (fiche 0.9) chaque fois qu'un exercice s'y prête.
 """,
         },
     ],
@@ -37936,6 +38252,221 @@ ATELIERS = [
         "a_retenir": "À retenir : **mm → µm, on multiplie par 1 000** (et inversement, on "
                      "divise). On ne compare jamais deux cotes sans les avoir converties dans "
                      "la même unité au préalable.",
+    },
+    {
+        "id": "at10",
+        "chapitre": "Module 0",
+        "titre": "Remettre dans l'ordre les documents d'un projet de conception",
+        "theme": "Documents techniques",
+        "fiche": "0.2",
+        "figure": "cycle_de_vie",
+        "vocabulaire": [
+            ("Cahier des charges", "décrit ce que le produit doit FAIRE, jamais comment."),
+            ("Croquis", "dessin rapide, à main levée, pour comparer plusieurs pistes."),
+            ("Modèle 3D", "géométrie complète et modifiable d'une pièce ou d'un assemblage."),
+            ("Plan de définition", "document 2D qui fige la géométrie d'UNE pièce."),
+            ("Gamme de fabrication", "ordre des opérations pour fabriquer une pièce."),
+        ],
+        "enonce": "Un projet de conception produit, dans l'ordre, cinq documents : le cahier "
+                  "des charges, le croquis, le modèle 3D, le plan de définition et la gamme de "
+                  "fabrication. Remettez-les dans l'ordre où ils apparaissent réellement dans "
+                  "un projet.",
+        "etapes": [
+            {
+                "type": "qcm",
+                "label": "1er document",
+                "question": "Quel document est produit en tout premier ?",
+                "options": ["Le cahier des charges", "Le croquis", "Le modèle 3D"],
+                "bonne": 0,
+                "indice": "Avant de dessiner quoi que ce soit, il faut savoir ce que le produit "
+                          "doit faire.",
+                "diagnostics": {
+                    1: "On ne peut pas esquisser une solution avant de savoir ce qu'elle doit "
+                       "accomplir : le cahier des charges vient toujours en premier.",
+                    2: "Modéliser en 3D sans cahier des charges reviendrait à figer une "
+                       "géométrie avant même de savoir quelles fonctions elle doit remplir.",
+                },
+            },
+            {
+                "type": "qcm",
+                "label": "Après le cahier des charges",
+                "question": "Une fois le besoin exprimé dans le cahier des charges, quel est "
+                            "le document suivant ?",
+                "options": ["Le croquis", "Le plan de définition", "La gamme de fabrication"],
+                "bonne": 0,
+                "indice": "On explore plusieurs pistes rapidement avant de figer une solution.",
+                "diagnostics": {
+                    1: "Le plan de définition fige une géométrie précise — bien trop tôt tant "
+                       "qu'aucune solution n'a été esquissée ni comparée.",
+                    2: "La gamme de fabrication décrit comment fabriquer une pièce qui, à ce "
+                       "stade, n'a même pas encore de forme définie.",
+                },
+            },
+            {
+                "type": "qcm",
+                "label": "Après le croquis",
+                "question": "Une solution a été choisie sur croquis. Quel document vient "
+                            "ensuite ?",
+                "options": ["Le modèle 3D", "Le plan de définition", "La gamme de fabrication"],
+                "bonne": 0,
+                "indice": "On modélise la solution retenue avant de figer ses cotes définitives.",
+                "diagnostics": {
+                    1: "Le plan de définition fige des cotes précises : il se construit à "
+                       "partir du modèle 3D, jamais avant lui.",
+                    2: "La gamme de fabrication suppose une pièce déjà définie géométriquement "
+                       "— ce que le modèle 3D n'a pas encore validé à ce stade.",
+                },
+            },
+            {
+                "type": "qcm",
+                "label": "Dernier document",
+                "question": "Quel est le tout dernier document de cette liste à être produit ?",
+                "options": ["Le plan de définition", "La gamme de fabrication",
+                            "Le modèle 3D"],
+                "bonne": 1,
+                "indice": "Un document répond à la question « comment fabrique-t-on cette "
+                          "pièce, dans quel ordre ? ».",
+                "diagnostics": {
+                    0: "Le plan de définition fige la géométrie, mais c'est seulement une fois "
+                       "cette géométrie figée que le bureau des méthodes peut écrire la gamme "
+                       "de fabrication.",
+                    2: "Le modèle 3D vient bien avant : il sert justement à produire ensuite le "
+                       "plan de définition et la gamme.",
+                },
+            },
+        ],
+        "corrige": {
+            "enonce": "Cinq documents à ordonner : **cahier des charges, croquis, modèle 3D, "
+                      "plan de définition, gamme de fabrication**.",
+            "regle": "**Le principe qui gouverne l'ordre** : on ne peut fabriquer que ce qui "
+                     "est coté, on ne peut coter que ce qui est modélisé, on ne peut modéliser "
+                     "qu'une solution déjà choisie, et on ne choisit une solution qu'après "
+                     "avoir su ce qu'elle doit accomplir.",
+            "conversions": "Pas de conversion numérique dans cet atelier : c'est un "
+                           "enchaînement logique de documents, pas un calcul.",
+            "remplacement": "Cahier des charges (quoi) → Croquis (pistes) → Modèle 3D "
+                            "(solution modélisée) → Plan de définition (géométrie figée) → "
+                            "Gamme de fabrication (comment produire).",
+            "calcul": "L'ordre correct est : **1. Cahier des charges · 2. Croquis · "
+                      "3. Modèle 3D · 4. Plan de définition · 5. Gamme de fabrication.**",
+            "verification": "**Le contrôle qui valide l'ordre** : chaque document ne peut "
+                            "exister qu'une fois le précédent disponible. Essayez d'imaginer "
+                            "produire la gamme de fabrication sans plan de définition — "
+                            "impossible, on ne sait pas encore quoi fabriquer précisément.",
+        },
+        "a_retenir": "À retenir : **cahier des charges → croquis → modèle 3D → plan de "
+                     "définition → gamme de fabrication**. Chaque document dépend du "
+                     "précédent — en changer l'ordre revient à fabriquer avant de savoir quoi "
+                     "fabriquer.",
+    },
+    {
+        "id": "at11",
+        "chapitre": "Module 0",
+        "titre": "Remettre dans l'ordre la méthode de résolution d'un exercice",
+        "theme": "Méthode de résolution",
+        "fiche": "0.3",
+        "vocabulaire": [
+            ("Donnée", "valeur fournie par l'énoncé, toujours avec son unité."),
+            ("Grandeur cherchée", "ce que l'exercice demande de calculer — une seule à la fois."),
+            ("Valeur admissible", "seuil de référence auquel on compare le résultat."),
+        ],
+        "enonce": "Face à un exercice technique, neuf actions sont nécessaires mais dans le "
+                  "désordre ci-dessous : convertir les unités, conclure, comparer à la valeur "
+                  "admissible, poser le calcul, choisir la formule, relever les données, lire "
+                  "l'énoncé, vérifier l'unité du résultat, identifier la grandeur cherchée. "
+                  "Remettez-les dans l'ordre.",
+        "etapes": [
+            {
+                "type": "qcm",
+                "label": "1ère action",
+                "question": "Quelle est la toute première chose à faire ?",
+                "options": ["Lire l'énoncé en entier", "Relever les données",
+                            "Choisir la formule"],
+                "bonne": 0,
+                "indice": "On ne peut rien relever d'un texte qu'on n'a pas encore lu en "
+                          "entier.",
+                "diagnostics": {
+                    1: "Relever des données suppose d'avoir déjà repéré, en lisant tout "
+                       "l'énoncé, lesquelles sont utiles — y compris celles données à la fin.",
+                    2: "Choisir une formule avant même d'avoir lu l'énoncé entier revient à "
+                       "deviner : un chiffre donné plus loin peut changer l'approche.",
+                },
+            },
+            {
+                "type": "qcm",
+                "label": "Après la lecture et le relevé des données",
+                "question": "Une fois l'énoncé lu et les données relevées, que fait-on "
+                            "ensuite ?",
+                "options": ["Identifier la grandeur cherchée", "Poser le calcul",
+                            "Convertir les unités"],
+                "bonne": 0,
+                "indice": "Il faut savoir CE QU'ON CHERCHE avant de choisir une formule.",
+                "diagnostics": {
+                    1: "Poser un calcul sans savoir précisément quelle grandeur on cherche "
+                       "mène presque toujours à la mauvaise formule.",
+                    2: "Convertir des unités n'a de sens qu'une fois la formule choisie, pour "
+                       "savoir dans quel système travailler.",
+                },
+            },
+            {
+                "type": "qcm",
+                "label": "Juste avant de calculer",
+                "question": "Après avoir choisi la formule, que faut-il faire juste avant de "
+                            "poser le calcul ?",
+                "options": ["Convertir les unités", "Comparer à la valeur admissible",
+                            "Conclure"],
+                "bonne": 0,
+                "indice": "Convertir après le calcul oblige à corriger un résultat déjà "
+                          "obtenu — bien plus difficile.",
+                "diagnostics": {
+                    1: "Comparer suppose déjà d'avoir un résultat chiffré, obtenu APRÈS le "
+                       "calcul — impossible avant.",
+                    2: "Conclure est la toute dernière étape, une fois le résultat vérifié et "
+                       "comparé.",
+                },
+            },
+            {
+                "type": "qcm",
+                "label": "Toute dernière action",
+                "question": "Quelle est la toute dernière étape ?",
+                "options": ["Vérifier l'unité du résultat", "Comparer à la valeur admissible",
+                            "Conclure en une phrase"],
+                "bonne": 2,
+                "indice": "Un résultat chiffré, même comparé, ne répond pas encore à la "
+                          "question posée.",
+                "diagnostics": {
+                    0: "Vérifier l'unité se fait juste après le calcul, avant même de "
+                       "comparer — pas en toute dernière étape.",
+                    1: "Comparer précède la conclusion : c'est la conclusion qui traduit cette "
+                       "comparaison en réponse à la question posée.",
+                },
+            },
+        ],
+        "corrige": {
+            "enonce": "Neuf actions à ordonner, résumées dans la fiche 0.3 : **lire, relever, "
+                      "chercher, choisir, convertir, calculer, vérifier l'unité, comparer, "
+                      "conclure**.",
+            "regle": "**Le principe qui gouverne l'ordre** : chaque étape a besoin du résultat "
+                     "de la précédente. Convertir avant de calculer évite d'avoir à corriger "
+                     "un résultat déjà obtenu ; conclure en dernier parce qu'une comparaison "
+                     "seule ne répond pas à la question posée par l'énoncé.",
+            "conversions": "Pas de conversion numérique ici : c'est l'ordre de la méthode "
+                           "elle-même qui est testé, pas un calcul.",
+            "remplacement": "Lire → Relever → Chercher → Choisir → Convertir → Calculer → "
+                            "Vérifier l'unité → Comparer → Conclure.",
+            "calcul": "L'ordre correct est : **1. Lire l'énoncé · 2. Relever les données · "
+                      "3. Identifier la grandeur cherchée · 4. Choisir la formule · "
+                      "5. Convertir les unités · 6. Poser le calcul · 7. Vérifier l'unité du "
+                      "résultat · 8. Comparer à la valeur admissible · 9. Conclure.**",
+            "verification": "**Le contrôle qui valide l'ordre** : essayez d'inverser deux "
+                            "étapes consécutives et demandez-vous si l'action a encore un "
+                            "sens. Convertir après avoir calculé, par exemple, ne serait "
+                            "possible qu'en refaisant le calcul — ce n'est pas convertir, "
+                            "c'est recommencer.",
+        },
+        "a_retenir": "À retenir : **lire, relever, chercher, choisir, convertir, calculer, "
+                     "vérifier l'unité, comparer, conclure** — neuf étapes fixes, dans cet "
+                     "ordre, pour tout exercice technique du programme (fiche 0.3).",
     },
 ]
 
