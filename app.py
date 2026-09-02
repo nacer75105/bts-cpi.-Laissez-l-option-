@@ -35437,9 +35437,9 @@ _mth("11.1", "Organiser ses révisions sur l'année", [
 
 for _bl in BLOCS:
     for _fi in _bl.get("fiches", []):
-        _txt = METHODES.get(_fi.get("id"))
-        if _txt:
-            _fi["methode"] = _txt
+        _methode_fi = METHODES.get(_fi.get("id"))
+        if _methode_fi:
+            _fi["methode"] = _methode_fi
 
 # ===========================================================================
 # PALIERS DE PROGRESSION (ajouté le 2026-09-01, plan pédagogique Perplexity)
@@ -40110,11 +40110,11 @@ elif PAGE == "📊 Ma progression":
 
     _notes_utiles = {k: v for k, v in P["notes"].items() if v.strip()}
     if _notes_utiles:
-        _txt = ["MES NOTES — BTS CPI", "=" * 60, ""]
+        _notes_txt = ["MES NOTES — BTS CPI", "=" * 60, ""]
         for _k, _v in _notes_utiles.items():
-            _txt += [f"--- {_k} ---", _v.strip(), ""]
+            _notes_txt += [f"--- {_k} ---", _v.strip(), ""]
         st.download_button("📥 Télécharger toutes mes notes (.txt)",
-                           data="\n".join(_txt).encode("utf-8"),
+                           data="\n".join(_notes_txt).encode("utf-8"),
                            file_name="mes_notes_bts_cpi.txt", mime="text/plain")
 
     if P["notes"]:
