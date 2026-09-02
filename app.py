@@ -40088,6 +40088,561 @@ ATELIERS = [
                      "**L'ordre des deux opérations change le résultat** — ce n'est pas "
                      "commutatif.",
     },
+    {
+        "id": "at14",
+        "chapitre": "Bloc 7",
+        "titre": "Décomposer une force inclinée (trigonométrie)",
+        "theme": "Trigonométrie",
+        "fiche": "7.1",
+        "vocabulaire": [
+            ("composante", "la projection d'une force sur un axe : ce qu'elle vaut "
+             "réellement dans cette direction précise."),
+            ("SOH-CAH-TOA", "sinus = opposé/hypoténuse, cosinus = adjacent/hypoténuse, "
+             "tangente = opposé/adjacent."),
+        ],
+        "enonce": "Un câble tire avec une force de 800 N, inclinée de 35° par rapport à "
+                  "l'horizontale.",
+        "etapes": [
+            {"type": "numerique", "label": "Composante horizontale Fx, en N", "unite": "N",
+             "attendu": 655.32, "tol": 0.5,
+             "consigne": "Fx = F × cos(35°). Calculatrice en mode DEGRÉS.",
+             "indice": "800 × cos(35°).",
+             "pieges": [(458.86, "Vous avez calculé Fy (sinus), pas Fx (cosinus)."),
+                        (800, "Vous n'avez pas décomposé la force — c'est sa valeur totale.")]},
+            {"type": "numerique", "label": "Composante verticale Fy, en N", "unite": "N",
+             "attendu": 458.86, "tol": 0.5,
+             "consigne": "Fy = F × sin(35°).",
+             "indice": "800 × sin(35°).",
+             "pieges": [(655.32, "Vous avez calculé Fx (cosinus), pas Fy (sinus).")]},
+            {"type": "qcm", "label": "Contrôle de bon sens",
+             "question": "Fx doit-il être plus grand que Fy ici ?",
+             "options": ["Oui — l'angle (35°) est plus proche de l'horizontale que de la "
+                         "verticale, donc la composante horizontale domine",
+                         "Non, les deux composantes sont toujours égales",
+                         "Impossible à savoir sans refaire le calcul"],
+             "bonne": 0,
+             "diagnostics": {1: "Elles ne sont égales que pour un angle de 45° — ici l'angle "
+                                "est plus petit, donc asymétrique.",
+                              2: "Le sens de la comparaison se déduit de l'angle, sans "
+                                 "recalculer : plus l'angle est petit, plus Fx domine."}},
+        ],
+        "corrige": {
+            "enonce": "Force de 800 N inclinée de 35° par rapport à l'horizontale.",
+            "regle": "**La composante adjacente à l'angle utilise le cosinus, la composante "
+                     "opposée utilise le sinus** — ici l'horizontale est adjacente à l'angle "
+                     "mesuré depuis l'horizontale.",
+            "conversions": "Aucune : l'angle est déjà en degrés, cohérent avec le mode DEG "
+                           "de la calculatrice.",
+            "remplacement": "Fx = 800 × cos(35°)\\n\\nFy = 800 × sin(35°)",
+            "calcul": "Fx = **655,32 N**\\n\\nFy = **458,86 N**",
+            "verification": "**Contrôle par Pythagore** : Fx² + Fy² = 655,32² + 458,86² "
+                            "≈ 429 400 + 210 600 = 640 000 ≈ 800², la force totale. Les deux "
+                            "composantes recomposent bien la force de départ.",
+        },
+        "a_retenir": "À retenir : composante adjacente = F × cos(angle), composante opposée "
+                     "= F × sin(angle) — toujours en mode DEGRÉS pour un angle en mécanique.",
+    },
+    {
+        "id": "at15",
+        "chapitre": "Bloc 7",
+        "titre": "Trouver l'extremum d'un coût de production (dérivée)",
+        "theme": "Fonctions et dérivées",
+        "fiche": "7.2",
+        "vocabulaire": [
+            ("extremum", "un maximum ou un minimum d'une fonction."),
+            ("dérivée s'annule", "la condition nécessaire pour qu'une fonction dérivable "
+             "atteigne un extremum en un point intérieur."),
+        ],
+        "enonce": "Le coût de fabrication d'une série de x pièces (en centaines d'euros) "
+                  "suit C(x) = x² − 8x + 20, pour x entre 0 et 10 (en centaines de pièces).",
+        "etapes": [
+            {"type": "numerique", "label": "Valeur de x qui annule C'(x)", "unite": "",
+             "attendu": 4, "tol": 0.01,
+             "consigne": "C'(x) = 2x − 8. Résous C'(x) = 0.",
+             "indice": "2x = 8.",
+             "pieges": [(8, "Vous avez résolu 2x − 8 = 8 au lieu de 2x − 8 = 0."),
+                        (2, "Vérifiez : C'(x) = 2x − 8, pas x − 8.")]},
+            {"type": "numerique", "label": "Coût minimal C(4), en centaines d'euros",
+             "unite": "", "attendu": 4, "tol": 0.01,
+             "consigne": "Remplace x par 4 dans C(x) = x² − 8x + 20.",
+             "indice": "16 − 32 + 20.",
+             "pieges": [(20, "C'est C(0), la valeur de départ, pas le minimum."),
+                        (0, "Vérifiez le calcul : 16 − 32 + 20 n'est pas nul.")]},
+            {"type": "qcm", "label": "Nature de l'extremum",
+             "question": "Comment sait-on que x = 4 donne un MINIMUM et pas un maximum ?",
+             "options": ["La dérivée seconde de C(x) vaut 2, positive — la courbe est "
+                         "tournée vers le haut, donc c'est un minimum",
+                         "On ne peut pas savoir sans tracer la courbe",
+                         "C'est toujours un minimum quand la dérivée s'annule"],
+             "bonne": 0,
+             "diagnostics": {1: "Le signe de la dérivée seconde donne directement la réponse, "
+                                "sans avoir besoin de tracer.",
+                              2: "La dérivée qui s'annule peut aussi donner un maximum — le "
+                                 "signe de la dérivée seconde tranche."}},
+        ],
+        "corrige": {
+            "enonce": "C(x) = x² − 8x + 20, coût en centaines d'euros pour x centaines de "
+                      "pièces.",
+            "regle": "**Un extremum se trouve là où la dérivée s'annule.** Ici C'(x) = 2x − 8.",
+            "conversions": "Aucune : x et C(x) restent dans les unités données par l'énoncé "
+                           "(centaines de pièces, centaines d'euros).",
+            "remplacement": "2x − 8 = 0, puis C(4) = 4² − 8×4 + 20",
+            "calcul": "x = **4** (soit 400 pièces)\\n\\nC(4) = 16 − 32 + 20 = **4** (soit "
+                      "400 €)",
+            "verification": "**Contrôle par le signe de C'** : C'(3) = −2 (négatif, le coût "
+                            "descend encore avant x=4), C'(5) = 2 (positif, le coût remonte "
+                            "après) — la fonction change bien de sens en x=4, confirmant un "
+                            "minimum.",
+        },
+        "a_retenir": "À retenir : extremum → dérivée nulle ; le signe de la dérivée seconde "
+                     "(ou le changement de signe de la dérivée) dit si c'est un minimum ou "
+                     "un maximum.",
+    },
+    {
+        "id": "at16",
+        "chapitre": "Bloc 7",
+        "titre": "Évaluer un procédé avec le Cp et le Cpk",
+        "theme": "Statistiques qualité",
+        "fiche": "7.3",
+        "vocabulaire": [
+            ("Cp", "compare la dispersion tolérée à la dispersion réelle du procédé, sans "
+             "tenir compte du centrage."),
+            ("Cpk", "comme le Cp, mais pénalise en plus un procédé mal centré."),
+        ],
+        "enonce": "Une cote a une tolérance totale IT = 0,30 mm. Le procédé produit un "
+                  "écart-type σ = 0,04 mm, avec une moyenne décalée de 0,03 mm par rapport "
+                  "au centre de la tolérance.",
+        "etapes": [
+            {"type": "numerique", "label": "Cp", "unite": "",
+             "attendu": 1.25, "tol": 0.02,
+             "consigne": "Cp = IT / (6 × σ).",
+             "indice": "0,30 / (6 × 0,04).",
+             "pieges": [(0.3, "Vous avez oublié de diviser par 6σ — c'est l'IT seule."),
+                        (7.5, "Vous avez divisé σ par IT au lieu de l'inverse.")]},
+            {"type": "numerique", "label": "Cpk", "unite": "",
+             "attendu": 1.0, "tol": 0.02,
+             "consigne": "Cpk = Cp − |décalage| / (3 × σ).",
+             "indice": "1,25 − 0,03 / (3 × 0,04).",
+             "pieges": [(1.25, "Vous avez donné le Cp, sans tenir compte du décalage."),
+                        (1.5, "Le décalage se SOUSTRAIT au Cp, il ne s'y ajoute pas.")]},
+            {"type": "qcm", "label": "Diagnostic",
+             "question": "Que faut-il faire, sachant que Cp = 1,25 mais Cpk = 1,0 ?",
+             "options": ["Recentrer le procédé — sa dispersion est correcte, mais il est "
+                         "mal réglé",
+                         "Rien, un Cpk de 1,0 est déjà excellent",
+                         "Changer complètement de machine — le procédé est trop dispersé"],
+             "bonne": 0,
+             "diagnostics": {1: "Un Cpk de 1,0 est le strict minimum acceptable, pas un bon "
+                                "résultat — et l'écart avec le Cp montre un problème de "
+                                "centrage, pas de dispersion.",
+                              2: "Le Cp (dispersion) est bon — 1,25. C'est le centrage qu'il "
+                                 "faut corriger, pas la machine elle-même."}},
+        ],
+        "corrige": {
+            "enonce": "IT = 0,30 mm, σ = 0,04 mm, décalage de la moyenne = 0,03 mm.",
+            "regle": "**Cp mesure la capacité brute, Cpk pénalise le décentrage.** Cp = "
+                     "IT/(6σ) ; Cpk = Cp − |décalage|/(3σ).",
+            "conversions": "Toutes les grandeurs sont déjà en mm, aucune conversion "
+                           "nécessaire.",
+            "remplacement": "Cp = 0,30 / (6 × 0,04)\\n\\nCpk = Cp − 0,03 / (3 × 0,04)",
+            "calcul": "Cp = 0,30 / 0,24 = **1,25**\\n\\nCpk = 1,25 − 0,25 = **1,00**",
+            "verification": "**Contrôle de cohérence** : Cpk est toujours ≤ Cp, jamais "
+                            "l'inverse — ici 1,00 ≤ 1,25, cohérent. Un écart important entre "
+                            "les deux (0,25 ici) signale un problème de réglage plutôt que "
+                            "de précision machine.",
+        },
+        "a_retenir": "À retenir : Cp = IT/(6σ) juge la dispersion, Cpk = Cp − |décalage|/(3σ) "
+                     "juge en plus le centrage. Cpk est toujours inférieur ou égal à Cp.",
+    },
+    {
+        "id": "at17",
+        "chapitre": "Bloc 17",
+        "titre": "Étudier une fonction homographique (asymptotes et dérivée)",
+        "theme": "Fonctions d'une variable réelle",
+        "fiche": "17.1",
+        "vocabulaire": [
+            ("asymptote verticale", "une droite x = a que la courbe approche sans jamais "
+             "la toucher, là où la fonction n'est pas définie."),
+            ("asymptote horizontale", "la valeur vers laquelle f(x) tend quand x devient "
+             "très grand."),
+        ],
+        "enonce": "On étudie f(x) = (2x − 1) / (x + 3), avec f'(x) = 7 / (x + 3)².",
+        "etapes": [
+            {"type": "numerique", "label": "Abscisse de l'asymptote verticale", "unite": "",
+             "attendu": -3, "tol": 0.01,
+             "consigne": "L'asymptote verticale est là où le dénominateur s'annule.",
+             "indice": "x + 3 = 0.",
+             "pieges": [(3, "Vérifiez le signe : x + 3 = 0 donne x = −3, pas +3.")]},
+            {"type": "numerique", "label": "Ordonnée de l'asymptote horizontale", "unite": "",
+             "attendu": 2, "tol": 0.01,
+             "consigne": "Pour une fonction homographique (ax+b)/(cx+d), l'asymptote "
+                         "horizontale vaut a/c.",
+             "indice": "Le rapport des coefficients de x au numérateur et au dénominateur : "
+                       "2/1.",
+             "pieges": [(-1, "C'est le rapport des constantes (−1/3 ≈ −0,33 arrondi), pas "
+                             "des coefficients de x.")]},
+            {"type": "numerique", "label": "f'(2)", "unite": "",
+             "attendu": 0.28, "tol": 0.01,
+             "consigne": "f'(x) = 7/(x+3)². Remplace x par 2.",
+             "indice": "7 / 5².",
+             "pieges": [(1.4, "Vous avez oublié d'élever (x+3) au carré au dénominateur.")]},
+            {"type": "qcm", "label": "Sens de variation",
+             "question": "Puisque f'(x) = 7/(x+3)² est toujours positive (sauf en x=−3), "
+                         "que peut-on dire de f ?",
+             "options": ["f est strictement croissante sur chacun des deux intervalles où "
+                         "elle est définie",
+                         "f est décroissante partout",
+                         "f change de sens de variation plusieurs fois"],
+             "bonne": 0,
+             "diagnostics": {1: "Une dérivée toujours positive signifie une fonction "
+                                "toujours croissante, jamais décroissante.",
+                              2: "Le signe de f' ne change qu'en x=−3, où f n'est de toute "
+                                 "façon pas définie — pas ailleurs."}},
+        ],
+        "corrige": {
+            "enonce": "f(x) = (2x−1)/(x+3), f'(x) = 7/(x+3)².",
+            "regle": "**L'asymptote verticale annule le dénominateur ; l'asymptote "
+                     "horizontale d'une fonction homographique vaut le rapport des "
+                     "coefficients de x.**",
+            "conversions": "Aucune : calcul purement algébrique.",
+            "remplacement": "x + 3 = 0 ; limite en +∞ de (2x−1)/(x+3) → 2x/x = 2 ; "
+                            "f'(2) = 7/(2+3)²",
+            "calcul": "Asymptote verticale : **x = −3**\\n\\nAsymptote horizontale : **y = 2**"
+                      "\\n\\nf'(2) = 7/25 = **0,28**",
+            "verification": "**Contrôle de cohérence** : f'(x) = 7/(x+3)² est un carré au "
+                            "dénominateur, donc toujours positif — cohérent avec une fonction "
+                            "strictement croissante sur chaque intervalle, sans extremum "
+                            "local, ce qui est le comportement typique d'une homographique.",
+        },
+        "a_retenir": "À retenir : asymptote verticale = valeur qui annule le dénominateur ; "
+                     "asymptote horizontale (fonction homographique) = rapport des "
+                     "coefficients de x. Le signe de f' donne le sens de variation.",
+    },
+    {
+        "id": "at18",
+        "chapitre": "Bloc 17",
+        "titre": "Calculer une aire par intégrale définie",
+        "theme": "Calcul intégral",
+        "fiche": "17.2",
+        "vocabulaire": [
+            ("primitive", "une fonction dont la dérivée redonne la fonction de départ."),
+            ("intégrale définie", "la primitive évaluée entre deux bornes, F(b) − F(a) — "
+             "elle donne une aire quand f est positive sur l'intervalle."),
+        ],
+        "enonce": "Calcule l'aire sous la courbe de f(x) = 3x² − 2x + 1 entre x = 0 et x = 2.",
+        "etapes": [
+            {"type": "numerique", "label": "Primitive F(x), coefficient du terme en x³",
+             "unite": "", "attendu": 1, "tol": 0.01,
+             "consigne": "La primitive de 3x² est x³ (car la dérivée de x³ est 3x²).",
+             "indice": "Diviser 3 par l'exposant+1 = 3, donc 3/3 = 1.",
+             "pieges": [(3, "Vous avez recopié le coefficient de f(x) sans diviser par "
+                            "l'exposant augmenté de 1.")]},
+            {"type": "numerique", "label": "F(2)", "unite": "",
+             "attendu": 6, "tol": 0.01,
+             "consigne": "F(x) = x³ − x² + x. Remplace x par 2.",
+             "indice": "8 − 4 + 2.",
+             "pieges": [(10, "Vérifiez le signe du terme en x² : c'est −x², pas +x².")]},
+            {"type": "numerique", "label": "F(0)", "unite": "",
+             "attendu": 0, "tol": 0.01,
+             "consigne": "F(x) = x³ − x² + x, en x = 0.",
+             "indice": "0³ − 0² + 0.",
+             "pieges": []},
+            {"type": "numerique", "label": "Aire = F(2) − F(0)", "unite": "",
+             "attendu": 6, "tol": 0.01,
+             "consigne": "Soustrais les deux valeurs trouvées.",
+             "indice": "6 − 0.",
+             "pieges": [(0, "Vous avez soustrait dans le mauvais sens ou recopié F(0).")]},
+        ],
+        "corrige": {
+            "enonce": "f(x) = 3x² − 2x + 1, aire entre x=0 et x=2.",
+            "regle": "**L'aire sous une courbe positive vaut F(b) − F(a)**, où F est une "
+                     "primitive de f.",
+            "conversions": "Aucune : calcul purement algébrique, résultat sans unité "
+                           "physique précisée.",
+            "remplacement": "F(x) = x³ − x² + x ; F(2) − F(0)",
+            "calcul": "F(2) = 8 − 4 + 2 = **6**\\n\\nF(0) = **0**\\n\\nAire = 6 − 0 = **6**",
+            "verification": "**Contrôle par encadrement** : f(0)=1 et f(2)=9, donc l'aire "
+                            "d'un rectangle de hauteur moyenne (1+9)/2=5 sur une largeur de 2 "
+                            "donnerait environ 10 — notre 6 est plausible car f n'est pas "
+                            "linéaire, la vraie moyenne est plus basse que la moyenne des "
+                            "extrémités pour une parabole qui se creuse vers le bas au milieu.",
+        },
+        "a_retenir": "À retenir : primitive de xⁿ = xⁿ⁺¹/(n+1) ; aire sous une courbe entre "
+                     "a et b = F(b) − F(a).",
+    },
+    {
+        "id": "at19",
+        "chapitre": "Bloc 17",
+        "titre": "Calculer médiane et quartiles d'une série de mesures",
+        "theme": "Statistique descriptive",
+        "fiche": "17.3",
+        "vocabulaire": [
+            ("médiane", "la valeur qui partage une série triée en deux moitiés égales."),
+            ("écart interquartile (EIQ)", "Q3 − Q1 : la largeur de l'intervalle qui contient "
+             "la moitié centrale des valeurs, insensible aux valeurs extrêmes."),
+        ],
+        "enonce": "Dix mesures d'une même cote, triées : 12,0 ; 12,1 ; 12,1 ; 12,2 ; 12,2 ; "
+                  "12,3 ; 12,3 ; 12,4 ; 12,5 ; 12,6 (mm).",
+        "etapes": [
+            {"type": "numerique", "label": "Médiane", "unite": "mm",
+             "attendu": 12.25, "tol": 0.01,
+             "consigne": "Avec 10 valeurs (nombre pair), la médiane est la moyenne des deux "
+                         "valeurs centrales (5ᵉ et 6ᵉ).",
+             "indice": "(12,2 + 12,3) / 2.",
+             "pieges": [(12.2, "Vous avez pris seulement la 5ᵉ valeur, sans faire la "
+                               "moyenne avec la 6ᵉ."),
+                        (12.3, "Vous avez pris seulement la 6ᵉ valeur.")]},
+            {"type": "numerique", "label": "Q1 (premier quartile)", "unite": "mm",
+             "attendu": 12.1, "tol": 0.01,
+             "consigne": "Q1 est la médiane de la première moitié (les 5 premières valeurs).",
+             "indice": "Médiane de 12,0 ; 12,1 ; 12,1 ; 12,2 ; 12,2 — la valeur du milieu.",
+             "pieges": [(12.0, "C'est le minimum, pas la médiane de la première moitié.")]},
+            {"type": "numerique", "label": "Q3 (troisième quartile)", "unite": "mm",
+             "attendu": 12.4, "tol": 0.01,
+             "consigne": "Q3 est la médiane de la seconde moitié (les 5 dernières valeurs).",
+             "indice": "Médiane de 12,3 ; 12,3 ; 12,4 ; 12,5 ; 12,6.",
+             "pieges": [(12.6, "C'est le maximum, pas la médiane de la seconde moitié.")]},
+            {"type": "numerique", "label": "Écart interquartile EIQ", "unite": "mm",
+             "attendu": 0.3, "tol": 0.01,
+             "consigne": "EIQ = Q3 − Q1.",
+             "indice": "12,4 − 12,1.",
+             "pieges": [(0.6, "C'est l'étendue totale (max−min), pas l'écart "
+                              "interquartile.")]},
+        ],
+        "corrige": {
+            "enonce": "Série triée de 10 mesures, de 12,0 à 12,6 mm.",
+            "regle": "**Avec n valeurs triées, la médiane sépare la série en deux, et Q1/Q3 "
+                     "sont les médianes de chaque moitié.**",
+            "conversions": "Aucune : toutes les valeurs sont déjà en mm.",
+            "remplacement": "Médiane = (5ᵉ + 6ᵉ)/2 ; Q1 = médiane des 5 premières ; Q3 = "
+                            "médiane des 5 dernières",
+            "calcul": "Médiane = (12,2+12,3)/2 = **12,25 mm**\\n\\nQ1 = **12,1 mm**\\n\\n"
+                      "Q3 = **12,4 mm**\\n\\nEIQ = 12,4 − 12,1 = **0,3 mm**",
+            "verification": "**Contrôle d'encadrement** : Q1 ≤ médiane ≤ Q3 doit toujours "
+                            "être vrai — ici 12,1 ≤ 12,25 ≤ 12,4, cohérent.",
+        },
+        "a_retenir": "À retenir : médiane = milieu de la série triée ; Q1 et Q3 = médianes "
+                     "de chaque moitié ; EIQ = Q3 − Q1, une mesure de dispersion qui ignore "
+                     "les valeurs extrêmes.",
+    },
+    {
+        "id": "at20",
+        "chapitre": "Bloc 18",
+        "titre": "Combiner deux événements (union et intersection)",
+        "theme": "Probabilités",
+        "fiche": "18.1",
+        "vocabulaire": [
+            ("P(A∪B)", "la probabilité que A OU B se réalise (au moins l'un des deux)."),
+            ("P(A∩B)", "la probabilité que A ET B se réalisent en même temps."),
+        ],
+        "enonce": "Sur un lot de pièces, P(défaut d'aspect) = 0,30, P(défaut dimensionnel) "
+                  "= 0,20, et P(les deux défauts en même temps) = 0,08.",
+        "etapes": [
+            {"type": "numerique",
+             "label": "P(au moins un des deux défauts), en %", "unite": "%",
+             "attendu": 42, "tol": 0.5,
+             "consigne": "P(A∪B) = P(A) + P(B) − P(A∩B). Convertis en pourcentage.",
+             "indice": "0,30 + 0,20 − 0,08 = 0,42.",
+             "pieges": [(50, "Vous avez additionné P(A) et P(B) sans soustraire "
+                             "l'intersection — vous comptez les deux défauts en double."),
+                        (8, "C'est P(A∩B), la probabilité des DEUX défauts ensemble, pas "
+                            "d'au moins un.")]},
+            {"type": "qcm", "label": "Pourquoi soustraire l'intersection ?",
+             "question": "Pourquoi ne peut-on pas juste additionner P(A) et P(B) ?",
+             "options": ["Parce que les pièces qui ont les deux défauts seraient comptées "
+                         "deux fois dans la somme",
+                         "Parce que la formule l'exige sans raison particulière",
+                         "Parce que A et B sont forcément indépendants"],
+             "bonne": 0,
+             "diagnostics": {1: "Il y a une vraie raison logique : sans soustraction, une "
+                                "pièce avec les deux défauts serait comptée dans P(A) ET "
+                                "dans P(B).",
+                              2: "Rien n'indique ici que les événements sont indépendants — "
+                                 "d'ailleurs P(A∩B)=0,08 alors que P(A)×P(B)=0,06 : ils ne "
+                                 "le sont pas tout à fait."}},
+        ],
+        "corrige": {
+            "enonce": "P(A) = 0,30, P(B) = 0,20, P(A∩B) = 0,08.",
+            "regle": "**P(A∪B) = P(A) + P(B) − P(A∩B)** — on retire l'intersection comptée "
+                     "deux fois.",
+            "conversions": "Les probabilités sont converties en pourcentage pour la "
+                           "lisibilité (× 100).",
+            "remplacement": "0,30 + 0,20 − 0,08",
+            "calcul": "P(A∪B) = **0,42**, soit **42 %**",
+            "verification": "**Contrôle par les bornes** : une probabilité doit toujours "
+                            "rester entre 0 et 1 (ou 0 % et 100 %) — 42 % est cohérent, et "
+                            "logiquement supérieur à chacune des probabilités prises seules "
+                            "(30 % et 20 %), ce qui est normal pour une union.",
+        },
+        "a_retenir": "À retenir : P(A∪B) = P(A) + P(B) − P(A∩B) — l'intersection compte "
+                     "deux fois dans la simple addition, il faut la retirer une fois.",
+    },
+    {
+        "id": "at21",
+        "chapitre": "Bloc 18",
+        "titre": "Construire un intervalle de confiance à 95 %",
+        "theme": "Statistique inférentielle",
+        "fiche": "18.3",
+        "vocabulaire": [
+            ("intervalle de confiance", "une fourchette qui a de bonnes chances de "
+             "contenir la vraie moyenne de la population, calculée à partir d'un "
+             "échantillon."),
+            ("marge d'erreur", "la demi-largeur de l'intervalle, qui rétrécit quand "
+             "l'échantillon grandit."),
+        ],
+        "enonce": "Sur un échantillon de n = 36 pièces, la moyenne mesurée est 25,4 mm, "
+                  "avec un écart-type s = 0,6 mm. On veut l'intervalle de confiance à 95 % "
+                  "(coefficient 1,96).",
+        "etapes": [
+            {"type": "numerique", "label": "Marge d'erreur, en mm", "unite": "mm",
+             "attendu": 0.196, "tol": 0.005,
+             "consigne": "marge = 1,96 × s / √n.",
+             "indice": "1,96 × 0,6 / √36 = 1,96 × 0,6 / 6.",
+             "pieges": [(0.033, "Vous avez oublié de multiplier par 1,96, ou divisé par n "
+                                 "au lieu de √n."),
+                        (1.176, "Vous avez oublié de diviser par √n = 6.")]},
+            {"type": "numerique", "label": "Borne inférieure de l'intervalle, en mm",
+             "unite": "mm", "attendu": 25.204, "tol": 0.01,
+             "consigne": "borne basse = moyenne − marge.",
+             "indice": "25,4 − 0,196.",
+             "pieges": [(25.596, "C'est la borne SUPÉRIEURE, pas inférieure.")]},
+            {"type": "numerique", "label": "Borne supérieure de l'intervalle, en mm",
+             "unite": "mm", "attendu": 25.596, "tol": 0.01,
+             "consigne": "borne haute = moyenne + marge.",
+             "indice": "25,4 + 0,196.",
+             "pieges": [(25.204, "C'est la borne INFÉRIEURE, pas supérieure.")]},
+        ],
+        "corrige": {
+            "enonce": "n = 36, moyenne = 25,4 mm, s = 0,6 mm, coefficient 1,96 (95 %).",
+            "regle": "**L'intervalle de confiance à 95 % s'écrit moyenne ± 1,96 × s/√n.**",
+            "conversions": "Aucune : toutes les grandeurs sont déjà en mm.",
+            "remplacement": "1,96 × 0,6 / √36 ; puis 25,4 ± ce résultat",
+            "calcul": "marge = 1,96 × 0,6 / 6 = **0,196 mm**\\n\\nIntervalle : "
+                      "[**25,204** ; **25,596**] mm",
+            "verification": "**Contrôle par la taille de l'échantillon** : un échantillon "
+                            "plus grand (n plus élevé) réduirait la marge, car √n augmente "
+                            "au dénominateur — c'est cohérent avec l'idée qu'on est plus "
+                            "sûr de la moyenne avec plus de mesures.",
+        },
+        "a_retenir": "À retenir : intervalle de confiance à 95 % = moyenne ± 1,96 × s/√n. "
+                     "Plus l'échantillon est grand, plus l'intervalle est étroit.",
+    },
+    {
+        "id": "at22",
+        "chapitre": "Bloc 18",
+        "titre": "Modéliser un refroidissement (équation différentielle)",
+        "theme": "Équations différentielles",
+        "fiche": "18.4",
+        "vocabulaire": [
+            ("constante de temps τ", "le temps caractéristique de l'évolution — au bout "
+             "de 3τ, le phénomène est presque terminé."),
+            ("régime permanent", "la valeur finale vers laquelle le système tend, ici la "
+             "température ambiante."),
+        ],
+        "enonce": "Une pièce sort d'un traitement thermique à T0 = 850 °C et refroidit dans "
+                  "un atelier à Tenv = 20 °C, avec une constante de temps τ = 40 min. "
+                  "T(t) = Tenv + (T0 − Tenv) × e^(−t/τ).",
+        "etapes": [
+            {"type": "numerique", "label": "T0 − Tenv, en °C", "unite": "°C",
+             "attendu": 830, "tol": 1,
+             "consigne": "L'écart initial entre la pièce et l'ambiance.",
+             "indice": "850 − 20.",
+             "pieges": []},
+            {"type": "numerique", "label": "Température T(60), après 60 minutes, en °C",
+             "unite": "°C", "attendu": 205.2, "tol": 2,
+             "consigne": "T(60) = 20 + 830 × e^(−60/40).",
+             "indice": "e^(−1,5) ≈ 0,223.",
+             "pieges": [(850, "Vous avez oublié que la température diminue avec le temps."),
+                        (20, "C'est la température finale (t→∞), pas à t=60 min.")]},
+            {"type": "qcm", "label": "Interprétation de τ",
+             "question": "Après combien de constantes de temps (environ) la pièce est-elle "
+                         "quasiment revenue à la température ambiante ?",
+             "options": ["Environ 3τ, soit 120 minutes ici",
+                         "Exactement 1τ, soit 40 minutes",
+                         "Il n'y a jamais de moment où c'est terminé"],
+             "bonne": 0,
+             "diagnostics": {1: "À t=τ, il ne reste que 37 % de l'écart initial — le "
+                                "refroidissement n'est pas encore terminé, loin de là.",
+                              2: "Mathématiquement l'exponentielle ne s'annule jamais tout "
+                                 "à fait, mais en pratique 3τ suffit pour considérer le "
+                                 "régime permanent atteint."}},
+        ],
+        "corrige": {
+            "enonce": "T0 = 850 °C, Tenv = 20 °C, τ = 40 min, T(t) = Tenv + (T0−Tenv)×e^(−t/τ).",
+            "regle": "**Une équation différentielle du premier ordre y' = −k·y + b décrit "
+                     "une évolution qui se rapproche exponentiellement d'un régime "
+                     "permanent**, ici la température ambiante.",
+            "conversions": "Le temps reste en minutes, cohérent avec τ donné en minutes.",
+            "remplacement": "T(60) = 20 + 830 × e^(−60/40)",
+            "calcul": "e^(−1,5) ≈ 0,2231\\n\\nT(60) = 20 + 830 × 0,2231 ≈ **205,2 °C**",
+            "verification": "**Contrôle par les bornes** : T(60) = 205,2 °C est bien compris "
+                            "entre Tenv=20 °C (la limite finale) et T0=850 °C (le départ) — "
+                            "un résultat en dehors de cette fourchette serait forcément faux.",
+        },
+        "a_retenir": "À retenir : T(t) = Tenv + (T0−Tenv)×e^(−t/τ) — la pièce se rapproche "
+                     "de la température ambiante de façon exponentielle, jamais brutale, "
+                     "avec l'essentiel de l'évolution fait au bout de 3τ.",
+    },
+    {
+        "id": "at23",
+        "chapitre": "Bloc 19",
+        "titre": "Calculer un point sur une courbe de Bézier",
+        "theme": "Modélisation géométrique",
+        "fiche": "19.2",
+        "vocabulaire": [
+            ("point de contrôle", "un point qui influence la forme de la courbe sans, en "
+             "général, être dessus."),
+            ("paramètre t", "avance le long de la courbe, de t=0 (premier point de "
+             "contrôle) à t=1 (dernier point de contrôle)."),
+        ],
+        "enonce": "Une courbe de Bézier quadratique a pour points de contrôle P0=(1, 1), "
+                  "P1=(3, 6), P2=(6, 1). On cherche le point B(0,25).",
+        "etapes": [
+            {"type": "numerique", "label": "Abscisse du point B(0,25)", "unite": "",
+             "attendu": 2.0625, "tol": 0.02,
+             "consigne": "x(t) = (1−t)² × x0 + 2(1−t)t × x1 + t² × x2, avec t = 0,25.",
+             "indice": "0,75² × 1 + 2×0,75×0,25 × 3 + 0,25² × 6.",
+             "pieges": [(3.5, "C'est la moyenne simple des trois abscisses, pas la formule "
+                              "de Bézier — les points de contrôle ne pèsent pas également "
+                              "à t=0,25.")]},
+            {"type": "numerique", "label": "Ordonnée du point B(0,25)", "unite": "",
+             "attendu": 2.875, "tol": 0.02,
+             "consigne": "y(t) = (1−t)² × y0 + 2(1−t)t × y1 + t² × y2.",
+             "indice": "0,75² × 1 + 2×0,75×0,25 × 6 + 0,25² × 1.",
+             "pieges": [(2.67, "Vérifiez le poids du point P1 (6) : c'est 2(1−t)t, pas "
+                               "(1−t)t.")]},
+            {"type": "qcm", "label": "Position du point de contrôle P1",
+             "question": "Le point B(0,25) calculé passe-t-il par P1=(3,6) ?",
+             "options": ["Non — B(0,25)=(2,06 ; 2,88) est loin de P1, la courbe s'approche "
+                         "de P1 sans jamais le toucher (sauf cas particulier)",
+                         "Oui, à t=0,25 la courbe touche toujours le premier point "
+                         "intermédiaire",
+                         "Impossible à dire sans tracer"],
+             "bonne": 0,
+             "diagnostics": {1: "C'est exactement le piège classique de la fiche : les "
+                                "points de contrôle intermédiaires attirent la courbe sans "
+                                "jamais être dessus.",
+                              2: "Le calcul donne une réponse précise et vérifiable, pas "
+                                 "besoin de tracer pour trancher."}},
+        ],
+        "corrige": {
+            "enonce": "P0=(1,1), P1=(3,6), P2=(6,1), t=0,25.",
+            "regle": "**Une courbe de Bézier quadratique s'obtient par B(t) = (1−t)²P0 + "
+                     "2(1−t)t·P1 + t²P2**, un mélange pondéré des trois points de contrôle.",
+            "conversions": "Aucune : coordonnées sans unité physique précisée.",
+            "remplacement": "x(0,25) = 0,75²×1 + 2×0,75×0,25×3 + 0,25²×6\\n\\ny(0,25) = "
+                            "0,75²×1 + 2×0,75×0,25×6 + 0,25²×1",
+            "calcul": "x(0,25) = 0,5625 + 1,125 + 0,375 = **2,0625**\\n\\ny(0,25) = 0,5625 + "
+                      "2,25 + 0,0625 = **2,875**",
+            "verification": "**Contrôle par les poids** : les trois coefficients (1−t)², "
+                            "2(1−t)t, t² valent ici 0,5625 + 0,375 + 0,0625 = 1 — ils "
+                            "doivent toujours sommer à 1, sinon une erreur s'est glissée "
+                            "dans le calcul.",
+        },
+        "a_retenir": "À retenir : B(t) = (1−t)²P0 + 2(1−t)t·P1 + t²P2, avec des poids qui "
+                     "somment toujours à 1. La courbe passe par P0 et P2, jamais par P1 "
+                     "(sauf cas dégénéré).",
+    },
 ]
 
 
@@ -40489,8 +41044,11 @@ def _rendre_exercice_interactif(_ex, _prefixe):
 NB_FICHES = sum(len(b.get("fiches", [])) for b in BLOCS)
 PAGE_COURS = f"📚 Cours ({NB_FICHES} fiches)"
 
+PAGE_MATHS = "🧮 Mathématiques"
+
 _OPTIONS_NAV = ["🏠 Tableau de bord",
                 PAGE_COURS,
+                PAGE_MATHS,
                 "🎯 Quiz interactif",
                 "🧪 Exercices guidés",
                 "🏗️ Ateliers guidés",
@@ -40535,6 +41093,114 @@ def _premiere_fiche_utile(bloc):
             return _f.get("id")
     _fiches = bloc.get("fiches", [])
     return _fiches[0].get("id") if _fiches else None
+
+
+def _afficher_fiche(bloc, fiche, fiche_id):
+    """Affiche une fiche complète (en-tête, navigation, onglets, notes).
+
+    Partagée entre la page Cours (tous les blocs) et la page Mathématiques
+    (uniquement les blocs 7/17/18/19) pour que l'id de fiche, la progression
+    et le rendu restent identiques quel que soit le point d'entrée.
+    """
+    cle = f"{bloc['id']}#{fiche_id}"
+    deja = cle in P["fiches_lues"]
+
+    col_t, col_c = st.columns([4, 1])
+    with col_t:
+        st.header(f"{fiche_id} — {fiche.get('titre', '')}")
+        _etat = ('<span class="chip chip-lue">✓ fiche lue</span>' if deja
+                 else '<span class="chip chip-nonlue">à lire</span>')
+        st.markdown(
+            f'<div class="fiche-bandeau">'
+            f'<span class="chip chip-bloc">Bloc {str(fiche_id).split(".")[0]}</span>'
+            f'<span class="chip chip-duree">⏱ {fiche.get("duree", "N/A")}</span>'
+            f'{_etat}</div>', unsafe_allow_html=True)
+    with col_c:
+        if st.checkbox("Fiche lue", value=deja, key=f"lu_{cle}") != deja:
+            if deja:
+                P["fiches_lues"].remove(cle)
+            else:
+                P["fiches_lues"].append(cle)
+            sauver_progression(P)
+            st.rerun()
+
+    # --- Navigation d'une fiche à l'autre, sans repasser par les menus ---
+    _toutes = [(b, f) for b in BLOCS for f in b.get("fiches", [])]
+    _pos = next((k for k, (b, f) in enumerate(_toutes)
+                 if b["id"] == bloc["id"] and f.get("id") == fiche_id), None)
+    if _pos is not None:
+        _nav_g, _nav_m, _nav_d = st.columns([1, 2, 1])
+        with _nav_g:
+            if _pos > 0:
+                _bp, _fp = _toutes[_pos - 1]
+                if st.button(f"← {_fp['id']}", key="nav_prec", width="stretch",
+                             help=_fp.get("titre", "")):
+                    st.session_state["_saut"] = (_bp["titre"], _fp["id"])
+                    st.rerun()
+        with _nav_m:
+            st.markdown(
+                f"<div style='text-align:center;color:#64748b;font-size:.85em;padding-top:6px'>"
+                f"fiche {_pos + 1} sur {len(_toutes)}</div>", unsafe_allow_html=True)
+        with _nav_d:
+            if _pos < len(_toutes) - 1:
+                _bs, _fs = _toutes[_pos + 1]
+                if st.button(f"{_fs['id']} →", key="nav_suiv", width="stretch",
+                             help=_fs.get("titre", "")):
+                    st.session_state["_saut"] = (_bs["titre"], _fs["id"])
+                    st.rerun()
+
+    _a_methode = bool(fiche.get("methode"))
+    _labels_onglets = ["📖 Cours", "📐 Formules", "🏭 Cas industriel", "✍️ Exercice", "✅ Corrigé"]
+    if _a_methode:
+        _labels_onglets.append("🧭 Méthode")
+    _onglets = st.tabs(_labels_onglets)
+    t1, t2, t3, t4, t5 = _onglets[:5]
+
+    with t1:
+        afficher_contenu(fiche.get("cours", ""))
+    with t2:
+        afficher_contenu(fiche.get("formules", ""))
+    with t3:
+        afficher_contenu(fiche.get("exemple", ""))
+    with t4:
+        afficher_contenu(fiche.get("exercice", ""))
+        st.markdown('<div class="warn-box">Cherchez l\'exercice complètement avant '
+                    'd\'ouvrir le corrigé. Un corrigé lu trop tôt donne l\'illusion de '
+                    'comprendre.</div>', unsafe_allow_html=True)
+    with t5:
+        corrige_progressif(fiche.get("corrige", ""), cle, afficher_contenu)
+    if _a_methode:
+        with _onglets[5]:
+            afficher_contenu(fiche.get("methode", ""))
+    st.write("")
+    with st.expander("🎬 Vidéos sur cette notion", expanded=False):
+        st.markdown(
+            '<div class="info-box">Trois recherches YouTube préparées pour cette fiche. '
+            'Elles s\'ouvrent dans un nouvel onglet — l\'application ne choisit aucune vidéo '
+            'à votre place : <b>vérifiez toujours que la vidéo correspond au programme du '
+            'BTS CPI</b>, les contenus en ligne sont de qualité très inégale.</div>',
+            unsafe_allow_html=True)
+        st.write("")
+        for _lib, _req in _requetes_video(fiche, bloc.get("id", "")):
+            st.markdown(f'- [{_lib}]({_lien_youtube(_req)})')
+        st.write("")
+        _perso = st.text_input("Chercher autre chose sur cette notion",
+                               key=f"vid_{cle}", placeholder="ex : ajustement H7 g6 exercice")
+        if _perso.strip():
+            st.markdown(f"[🔎 Rechercher « {_perso.strip()} » sur YouTube]"
+                        f"({_lien_youtube(_perso.strip())})")
+        st.caption("Astuce : sur mobile, ces liens ouvrent directement l'application YouTube.")
+
+    st.divider()
+    note = st.text_area("Mes notes personnelles sur cette fiche",
+                        value=P["notes"].get(cle, ""), height=120, key=f"note_{cle}")
+    if st.button("Enregistrer la note", key=f"btn_note_{cle}"):
+        P["notes"][cle] = note
+        sauver_progression(P)
+        st.success("Note enregistrée.")
+
+
+BLOCS_MATHS = [b for b in BLOCS if b.get("id") in (7, 17, 18, 19)]
 
 st.sidebar.divider()
 nb_fiches = NB_FICHES
@@ -40780,102 +41446,45 @@ elif PAGE == PAGE_COURS:
         fiche = fiches_list[noms_fiches.index(choix_fiche)]
         fiche_id = fiche['id']
 
-    cle = f"{bloc['id']}#{fiche_id}"
-    deja = cle in P["fiches_lues"]
+    _afficher_fiche(bloc, fiche, fiche_id)
 
-    col_t, col_c = st.columns([4, 1])
-    with col_t:
-        st.header(f"{fiche_id} — {fiche.get('titre', '')}")
-        _etat = ('<span class="chip chip-lue">✓ fiche lue</span>' if deja
-                 else '<span class="chip chip-nonlue">à lire</span>')
-        st.markdown(
-            f'<div class="fiche-bandeau">'
-            f'<span class="chip chip-bloc">Bloc {str(fiche_id).split(".")[0]}</span>'
-            f'<span class="chip chip-duree">⏱ {fiche.get("duree", "N/A")}</span>'
-            f'{_etat}</div>', unsafe_allow_html=True)
-    with col_c:
-        if st.checkbox("Fiche lue", value=deja, key=f"lu_{cle}") != deja:
-            if deja:
-                P["fiches_lues"].remove(cle)
-            else:
-                P["fiches_lues"].append(cle)
-            sauver_progression(P)
-            st.rerun()
 
-    # --- Navigation d'une fiche à l'autre, sans repasser par les menus ---
-    _toutes = [(b, f) for b in BLOCS for f in b.get("fiches", [])]
-    _pos = next((k for k, (b, f) in enumerate(_toutes)
-                 if b["id"] == bloc["id"] and f.get("id") == fiche_id), None)
-    if _pos is not None:
-        _nav_g, _nav_m, _nav_d = st.columns([1, 2, 1])
-        with _nav_g:
-            if _pos > 0:
-                _bp, _fp = _toutes[_pos - 1]
-                if st.button(f"← {_fp['id']}", key="nav_prec", width="stretch",
-                             help=_fp.get("titre", "")):
-                    st.session_state["_saut"] = (_bp["titre"], _fp["id"])
-                    st.rerun()
-        with _nav_m:
-            st.markdown(
-                f"<div style='text-align:center;color:#64748b;font-size:.85em;padding-top:6px'>"
-                f"fiche {_pos + 1} sur {len(_toutes)}</div>", unsafe_allow_html=True)
-        with _nav_d:
-            if _pos < len(_toutes) - 1:
-                _bs, _fs = _toutes[_pos + 1]
-                if st.button(f"{_fs['id']} →", key="nav_suiv", width="stretch",
-                             help=_fs.get("titre", "")):
-                    st.session_state["_saut"] = (_bs["titre"], _fs["id"])
-                    st.rerun()
+# ===========================================================================
+# PAGE : MATHÉMATIQUES (raccourci sur les blocs 7/17/18/19, mêmes fiches
+# que dans Cours — même id, même progression, même rendu)
+# ===========================================================================
 
-    _a_methode = bool(fiche.get("methode"))
-    _labels_onglets = ["📖 Cours", "📐 Formules", "🏭 Cas industriel", "✍️ Exercice", "✅ Corrigé"]
-    if _a_methode:
-        _labels_onglets.append("🧭 Méthode")
-    _onglets = st.tabs(_labels_onglets)
-    t1, t2, t3, t4, t5 = _onglets[:5]
-
-    with t1:
-        afficher_contenu(fiche.get("cours", ""))
-    with t2:
-        afficher_contenu(fiche.get("formules", ""))
-    with t3:
-        afficher_contenu(fiche.get("exemple", ""))
-    with t4:
-        afficher_contenu(fiche.get("exercice", ""))
-        st.markdown('<div class="warn-box">Cherchez l\'exercice complètement avant '
-                    'd\'ouvrir le corrigé. Un corrigé lu trop tôt donne l\'illusion de '
-                    'comprendre.</div>', unsafe_allow_html=True)
-    with t5:
-        corrige_progressif(fiche.get("corrige", ""), cle, afficher_contenu)
-    if _a_methode:
-        with _onglets[5]:
-            afficher_contenu(fiche.get("methode", ""))
+elif PAGE == PAGE_MATHS:
+    st.title("Mathématiques")
+    st.markdown(
+        '<div class="info-box">Les 11 modules du programme officiel de mathématiques du '
+        'BTS CPI (groupement C1) : fonctions, calcul intégral, équations différentielles, '
+        'statistiques, probabilités, calcul vectoriel et matriciel, configurations et '
+        'modélisation géométriques. Ce sont les mêmes fiches que dans « Cours », réunies ici '
+        'pour ne pas les chercher au milieu des chapitres techniques.</div>',
+        unsafe_allow_html=True)
     st.write("")
-    with st.expander("🎬 Vidéos sur cette notion", expanded=False):
-        st.markdown(
-            '<div class="info-box">Trois recherches YouTube préparées pour cette fiche. '
-            'Elles s\'ouvrent dans un nouvel onglet — l\'application ne choisit aucune vidéo '
-            'à votre place : <b>vérifiez toujours que la vidéo correspond au programme du '
-            'BTS CPI</b>, les contenus en ligne sont de qualité très inégale.</div>',
-            unsafe_allow_html=True)
-        st.write("")
-        for _lib, _req in _requetes_video(fiche, bloc.get("id", "")):
-            st.markdown(f'- [{_lib}]({_lien_youtube(_req)})')
-        st.write("")
-        _perso = st.text_input("Chercher autre chose sur cette notion",
-                               key=f"vid_{cle}", placeholder="ex : ajustement H7 g6 exercice")
-        if _perso.strip():
-            st.markdown(f"[🔎 Rechercher « {_perso.strip()} » sur YouTube]"
-                        f"({_lien_youtube(_perso.strip())})")
-        st.caption("Astuce : sur mobile, ces liens ouvrent directement l'application YouTube.")
 
-    st.divider()
-    note = st.text_area("Mes notes personnelles sur cette fiche",
-                        value=P["notes"].get(cle, ""), height=120, key=f"note_{cle}")
-    if st.button("Enregistrer la note", key=f"btn_note_{cle}"):
-        P["notes"][cle] = note
-        sauver_progression(P)
-        st.success("Note enregistrée.")
+    _saut_m = st.session_state.pop("_saut", None)
+    noms_blocs_m = [b["titre"] for b in BLOCS_MATHS]
+    _idx_bloc_m = noms_blocs_m.index(_saut_m[0]) if _saut_m and _saut_m[0] in noms_blocs_m else 0
+    choix_bloc_m = st.selectbox("Bloc", noms_blocs_m, index=_idx_bloc_m, key="_bloc_maths")
+    bloc_m = BLOCS_MATHS[noms_blocs_m.index(choix_bloc_m)]
+
+    st.markdown(f'<div class="bloc-titre"><b>{bloc_m["titre"]}</b><br>'
+                f'<span style="font-size:0.9em">{bloc_m["resume"]}</span></div>',
+                unsafe_allow_html=True)
+
+    fiches_list_m = bloc_m.get("fiches", [])
+    noms_fiches_m = [f"Fiche {f['id']} — {f['titre']}" for f in fiches_list_m]
+    _idx_fiche_m = 0
+    if _saut_m and _saut_m[0] == bloc_m["titre"]:
+        _idx_fiche_m = next((k for k, f in enumerate(fiches_list_m)
+                             if f.get("id") == _saut_m[1]), 0)
+    choix_fiche_m = st.selectbox("Fiche", noms_fiches_m, index=_idx_fiche_m, key="_fiche_maths")
+    fiche_m = fiches_list_m[noms_fiches_m.index(choix_fiche_m)]
+
+    _afficher_fiche(bloc_m, fiche_m, fiche_m["id"])
 
 
 # ===========================================================================
