@@ -6437,6 +6437,66 @@ QUIZ["Mathématiques BTS CPI (examen)"] = [
        "médiane seule"], 2,
       "EIQ = Q3 − Q1. Il ignore volontairement le quart le plus bas et le quart le plus haut de "
       "la série, ce qui le rend peu sensible à une valeur aberrante isolée.", "Base"),
+
+    q("Pour f(x) = x³ − 3x² + 2, f'(x) = 3x² − 6x. Que signale le changement de signe de f' en "
+      "x = 0 (de + à −) ?",
+      ["Un minimum local", "Un maximum local", "Une asymptote", "Rien de particulier"], 1,
+      "f' passe de positive à négative : la fonction cesse de croître pour décroître, c'est "
+      "exactement la définition d'un maximum local.", "Intermédiaire"),
+
+    q("Une fonction polynomiale de degré 3, contrairement à une fonction homographique, est "
+      "définie :",
+      ["Seulement pour x positif", "Sur ℝ tout entier, sans exclusion", "Sauf en un point qui "
+       "annule un dénominateur", "Seulement si son discriminant est positif"], 1,
+      "Un polynôme n'a pas de dénominateur : aucune valeur de x ne pose de problème, il est "
+      "défini partout.", "Base"),
+
+    q("La valeur moyenne d'une fonction f sur [a ; b] se calcule par :",
+      ["f(a) + f(b)", "(f(a) + f(b)) / 2 dans tous les cas", "(1/(b−a)) × l'intégrale de f sur "
+       "[a ; b]", "L'intégrale de f sur [a ; b], sans rien diviser"], 2,
+      "La valeur moyenne est l'intégrale (l'aire) divisée par la largeur de l'intervalle — "
+      "(f(a)+f(b))/2 n'est juste que si f est une droite.", "Intermédiaire"),
+
+    q("Une température part de 20 °C, monte à 38 °C au milieu d'un cycle, puis redescend à "
+      "20 °C. Sa valeur moyenne sur le cycle est :",
+      ["Exactement 20 °C", "Exactement 29 °C, la moyenne des deux extrêmes", "Supérieure à "
+       "20 °C, calculée par intégrale", "Impossible à calculer sans plus d'informations"], 2,
+      "Puisque la température reste au-dessus de 20 °C presque tout le cycle avant de "
+      "redescendre, la vraie moyenne (par intégrale) est supérieure à 20 °C — la formule "
+      "(début+fin)/2 sous-estimerait fortement ce cas.", "Difficile"),
+
+    q("Le coefficient de variation (CV) sert surtout à :",
+      ["Remplacer l'écart-type dans tous les calculs", "Comparer la dispersion de deux séries "
+       "qui n'ont pas la même moyenne", "Calculer une moyenne", "Détecter uniquement les "
+       "valeurs négatives"], 1,
+      "Deux écarts-types bruts ne se comparent honnêtement que si les moyennes sont proches ; "
+      "le CV, en %, corrige cet effet de taille en rapportant l'écart-type à la moyenne.",
+      "Intermédiaire"),
+
+    q("Une série a une variance de 0,0004 mm². Son écart-type vaut :",
+      ["0,0004 mm", "0,04 mm", "0,02 mm", "0,00016 mm"], 2,
+      "L'écart-type est la racine carrée de la variance : √0,0004 = 0,02.", "Base"),
+
+    q("Le cercle de centre Ω(2 ; 1) et de rayon 5 a pour équation (x−2)²+(y−1)²=25. Le "
+      "point M(5 ; 5) appartient-il à ce cercle ?",
+      ["Oui : 3²+4²=25", "Non : 3²+4²=7", "Impossible à savoir sans tracer le dessin",
+       "Oui, mais seulement approximativement"], 0,
+      "(5−2)²+(5−1)² = 3²+4² = 9+16 = 25 = R² : l'égalité est exacte, M appartient "
+      "au cercle.", "Base"),
+
+    q("Trois pièces d'un assemblage : A(0;0) de 2 kg, B(6;0) de 3 kg, C(3;6) de 1 kg. "
+      "Le barycentre G est-il plus proche de A ou de B ?",
+      ["De B, la pièce la plus lourde", "De A, quelle que soit la masse", "À égale "
+       "distance des deux", "De C"], 0,
+      "Gx = (2×0+3×6+1×3)/6 = 3,5, plus proche de Bx=6 (le point le plus lourd, 3 kg) "
+      "que de la moyenne simple non pondérée (0+6+3)/3 = 3.", "Intermédiaire"),
+
+    q("Pour calculer un barycentre de points pondérés, on divise la somme des "
+      "coordonnées pondérées par :",
+      ["Le nombre de points", "La masse totale", "La masse du point le plus lourd "
+       "seulement", "Rien, il ne faut pas diviser"], 1,
+      "Gx = (Σmᵢxᵢ)/(Σmᵢ) : on divise toujours par la masse TOTALE, jamais par le "
+      "nombre de points — sauf si toutes les masses valent 1.", "Base"),
 ]
 
 QUIZ["Mathématiques BTS CPI — probabilités et équations différentielles"] = [
@@ -6491,6 +6551,66 @@ QUIZ["Mathématiques BTS CPI — probabilités et équations différentielles"] 
        "de l'écart parcouru", "Toujours à la température de départ"], 2,
       "3τ correspond à e^(−3) ≈ 0,05 : il ne reste plus qu'environ 5 % de l'écart initial — le "
       "régime est considéré comme quasi stabilisé.", "Base"),
+
+    q("Fournisseur A : 70 % du volume, 2 % de défaut. Fournisseur B : 30 % du volume, 8 % de "
+      "défaut. Que vaut P(A ∩ défaut) ?",
+      ["0,02", "0,014", "0,70", "0,024"], 1,
+      "P(A ∩ défaut) = P(A) × P(défaut|A) = 0,70 × 0,02 = 0,014 — il faut combiner le volume "
+      "ET le taux de défaut, pas garder l'un des deux seul.", "Base"),
+
+    q("Avec les mêmes données (P(A∩défaut)=0,014, P(B∩défaut)=0,024), sachant qu'une pièce est "
+      "défectueuse, quelle est la probabilité qu'elle vienne du fournisseur B ?",
+      ["30 %", "8 %", "environ 63 %", "environ 37 %"], 2,
+      "P(B|défaut) = P(B∩défaut)/P(défaut) = 0,024/0,038 ≈ 0,63. Bien que B ne fournisse que "
+      "30 % du volume, il est responsable de la majorité des défauts trouvés.", "Intermédiaire"),
+
+    q("Pour X ∼ B(150 ; 0,04), la plage usuelle E(X) ± 2σ(X) vaut [1,2 ; 10,8]. Un lot compte "
+      "14 pièces défectueuses. Que faut-il en conclure ?",
+      ["Rien, c'est une variation normale du hasard", "Ce résultat dépasse la plage usuelle, "
+       "un contrôle est justifié", "C'est impossible à interpréter"], 1,
+      "14 dépasse la borne haute (10,8) : ce n'est plus une simple fluctuation d'échantillonnage, "
+      "un dérèglement de la ligne est probable.", "Intermédiaire"),
+
+    q("Deux fournisseurs ont la même espérance E(X) mais des écarts-types σ(X) différents. Que "
+      "peut-on en conclure ?",
+      ["Ils sont strictement équivalents", "Celui avec le plus petit σ(X) est plus régulier, "
+       "à qualité moyenne égale", "Celui avec le plus grand σ(X) est forcément meilleur",
+       "σ(X) n'a pas d'importance si E(X) est identique"], 1,
+      "À moyenne égale, un écart-type plus faible signifie des résultats plus prévisibles, moins "
+      "sujets à de mauvaises surprises ponctuelles — souvent le critère qui départage deux "
+      "fournisseurs à coût de non-qualité moyen identique.", "Avancé"),
+
+    q("La formule n = (1,96 × s / marge visée)² donne un résultat non entier, par exemple "
+      "n = 61,47. Comment arrondir ?",
+      ["Au plus proche : 61", "Toujours vers le haut : 62", "Vers le bas, par sécurité : 61",
+       "Peu importe, la différence est négligeable"], 1,
+      "n est un nombre de pièces à contrôler : arrondir vers le bas ne garantirait plus tout à "
+      "fait la marge d'erreur visée. On arrondit toujours au nombre entier SUPÉRIEUR.",
+      "Base"),
+
+    q("Si l'on divise par 2 la marge d'erreur visée sur un intervalle de confiance, sans "
+      "changer l'écart-type s, la taille d'échantillon n nécessaire est multipliée par :",
+      ["2", "1,41 (racine de 2)", "4", "0,5"], 2,
+      "n dépend du carré de (1/marge) : diviser la marge par 2 multiplie n par 2² = 4 — la "
+      "précision coûte cher en volume de contrôle.", "Intermédiaire"),
+
+    q("Un vérin se met en pression selon P(t) = P_max × (1 − e^(−t/τ)), en partant de 0. Que "
+      "représente le terme (1 − e^(−t/τ)) par rapport au cas d'un refroidissement e^(−t/τ) "
+      "(fiche 18.4) ?",
+      ["Une formule totalement différente, sans lien", "Le même modèle, mais adapté à une "
+       "grandeur qui MONTE vers son équilibre plutôt que descend", "Une erreur : il faudrait "
+       "garder e^(−t/τ) seul", "Cela ne s'applique qu'aux phénomènes électriques"], 1,
+      "C'est rigoureusement la même équation différentielle y'=−k(y−y_eq) — seul le signe de "
+      "l'écart de départ (y₀−y_eq) change, ce qui fait monter ou descendre la grandeur vers "
+      "son équilibre.", "Intermédiaire"),
+
+    q("Un système part de P0=8 bar vers 0 bar avec τ=4 s. Après 12 s (soit 3τ), la pression "
+      "est d'environ 0,4 bar. Que représente ce résultat ?",
+      ["Le système est presque revenu à sa valeur initiale", "Environ 95 % de la baisse totale "
+       "est déjà faite, régime quasi stabilisé", "Une erreur de calcul, la valeur devrait être "
+       "plus proche de 4 bar", "Le système est resté bloqué à mi-parcours"], 1,
+      "0,4 / 8 = 5 % de la valeur de départ, donc 95 % de la baisse est faite — exactement la "
+      "règle du 3τ, qu'il s'agisse d'une montée ou d'une descente.", "Base"),
 ]
 
 QUIZ["Mathématiques BTS CPI — calcul matriciel et modélisation géométrique"] = [
@@ -6543,6 +6663,27 @@ QUIZ["Mathématiques BTS CPI — calcul matriciel et modélisation géométrique
       ["(8, 0)", "(5, 3)", "(3, 5)", "(0, 8)"], 1,
       "(0, 3) + (5, 0) = (5, 3). Inverser l'ordre (translation puis rotation) aurait donné un "
       "résultat différent : c'est la non-commutativité des transformations.", "Avancé"),
+
+    q("Pour résoudre le système AX = B avec A une matrice 2×2, on calcule X par :",
+      ["X = A + B", "X = A⁻¹ × B", "X = B⁻¹ × A", "X = A × B, sans inversion"], 1,
+      "A⁻¹ « défait » la transformation de A : X = A⁻¹B redonne les inconnues d'origine, "
+      "à condition que det A soit non nul.", "Base"),
+
+    q("Une courbe de Bézier cubique a 4 points de contrôle P₀, P₁, P₂, P₃. La somme des "
+      "quatre coefficients (1−t)³, 3(1−t)²t, 3(1−t)t², t³ pour un t donné vaut toujours :",
+      ["0", "1", "t", "Cela dépend de t"], 1,
+      "C'est une propriété générale des courbes de Bézier : les coefficients somment "
+      "toujours à 1, quel que soit t — c'est ce qui garantit que B(t) reste une moyenne "
+      "pondérée cohérente des points de contrôle.", "Intermédiaire"),
+
+    q("Par rapport à une Bézier quadratique (3 points), l'intérêt principal d'une "
+      "Bézier cubique (4 points) est :",
+      ["Elle est plus rapide à calculer", "Elle permet de régler indépendamment la "
+       "tangente de début et de fin de la courbe", "Elle ne nécessite aucun point de "
+       "contrôle intermédiaire", "Elle ne peut définir que des droites"], 1,
+      "Avec 2 points de contrôle intermédiaires au lieu d'1, on peut imposer la "
+      "direction de départ ET d'arrivée indépendamment — un raccordement précis avec "
+      "une surface voisine.", "Intermédiaire"),
 ]
 
 CATEGORIES = list(QUIZ.keys())
@@ -24987,6 +25128,187 @@ pas deux mondes séparés. Un concepteur qui ignore ce que ses ateliers savent t
 plans irréalisables — ou fait payer une rectification inutile.
 """,
         },
+        {
+            "id": "7.4",
+            "titre": "Configurations géométriques : équation d'un cercle et d'une droite",
+            "duree": "5 h",
+            "cours": """
+
+### 1. Pourquoi une équation pour une forme aussi simple
+
+Un cercle ou une droite se dessinent d'un geste, mais un plan coté ne se lit pas comme un
+dessin libre : il faut pouvoir vérifier **par le calcul** qu'un point donné (un perçage,
+un sommet de contour) appartient bien à une forme imposée, sans mesurer sur l'écran.
+C'est ce que permet l'équation.
+
+### 2. L'équation d'un cercle
+
+Pour un cercle de centre Ω(a ; b) et de rayon R :
+
+> **(x − a)² + (y − b)² = R²**
+
+Un point M(x ; y) appartient au cercle si, en remplaçant ses coordonnées, l'égalité est
+vérifiée exactement.
+
+**Exemple entièrement vérifié.** Le cercle de centre Ω(2 ; 1) et de rayon 5 a pour
+équation (x − 2)² + (y − 1)² = 25. Le point M(5 ; 5) appartient-il à ce cercle ?
+
+(5 − 2)² + (5 − 1)² = 3² + 4² = 9 + 16 = **25** = R² — le point est bien sur le cercle.
+
+*Contrôle de bon sens : (3, 4, 5) est un triplet pythagoricien classique, ce qui rend le
+résultat facile à anticiper une fois les écarts (3 et 4) repérés.*
+
+### 3. L'équation d'une droite
+
+Sous forme cartésienne : **ax + by + c = 0**. Un point appartient à la droite si le
+remplacement de ses coordonnées annule exactement cette expression — même principe de
+vérification que pour le cercle.
+
+### 4. Intersection d'une droite et d'un cercle : trois cas
+
+Une droite et un cercle peuvent :
+
+- ne se croiser en **aucun point** (la droite passe à côté),
+- être **tangents** (un seul point de contact),
+- se croiser en **deux points**.
+
+Le nombre de points d'intersection se détermine en substituant l'expression de la droite
+dans l'équation du cercle, ce qui donne une équation du second degré (fiche 2) — son
+discriminant tranche entre les trois cas, exactement comme pour compter les racines d'un
+trinôme.
+
+### 5. À retenir
+
+- Cercle de centre Ω(a ; b), rayon R : (x − a)² + (y − b)² = R².
+- Un point appartient à une forme si ses coordonnées vérifient exactement l'équation.
+- Droite-cercle : 0, 1 (tangente) ou 2 points d'intersection, tranché par un
+  discriminant.
+            """,
+            "formules": """
+
+**Équation d'un cercle** — de centre Ω(a ; b), rayon R : (x − a)² + (y − b)² = R²
+
+**Équation d'une droite** — forme cartésienne : ax + by + c = 0
+""",
+            "exercice": """
+On reprend le cercle de centre Ω(2 ; 1) et de rayon 5.
+
+**1.** Le point N(6 ; 4) appartient-il à ce cercle ?
+
+**2.** Le point P(2 ; 6) appartient-il à ce cercle ?
+""",
+            "corrige": """
+**1.** (6 − 2)² + (4 − 1)² = 4² + 3² = 16 + 9 = **25** = R² — N appartient au cercle.
+
+**2.** (2 − 2)² + (6 − 1)² = 0² + 5² = **25** = R² — P appartient aussi au cercle
+(c'est le point directement au-dessus du centre, à distance R).
+""",
+            "exemple": """
+**Cas industriel — Vérifier un perçage sur un cercle primitif**
+
+Un plan de bride impose 6 perçages également répartis sur un cercle primitif de centre
+Ω(0 ; 0) et de diamètre 100 mm (rayon 50 mm). Le contrôle qualité mesure un perçage aux
+coordonnées M(43,3 ; 25) sur la pièce fabriquée.
+
+**Vérification.** 43,3² + 25² = 1875,89 + 625 = 2500,89 ≈ 2500 = 50².
+
+**Conclusion.** L'écart (0,89 sur 2500, soit un rayon mesuré à environ 50,009 mm au lieu
+de 50 mm exactement) est négligeable devant les tolérances usuelles de perçage — la
+pièce est conforme.
+
+**Ce que ça montre.** Le contrôle par équation évite d'avoir à mesurer un angle ou une
+distance au rapporteur sur le plan : deux coordonnées et un calcul suffisent à trancher,
+et l'écart obtenu donne directement une mesure numérique de la conformité, pas juste un
+oui/non visuel.
+""",
+        },
+        {
+            "id": "7.5",
+            "titre": "Calcul vectoriel : le barycentre",
+            "duree": "4 h",
+            "cours": """
+
+### 1. Ce que le barycentre représente
+
+Le barycentre d'un ensemble de points pondérés est le **point d'équilibre** du système —
+exactement le centre de gravité d'un assemblage de pièces simples, chacune représentée
+par un point (son propre centre de gravité) et une masse.
+
+### 2. La formule
+
+Pour des points P₁, P₂, ..., Pₙ de masses m₁, m₂, ..., mₙ, le barycentre G a pour
+coordonnées :
+
+> **Gx = (Σ mᵢxᵢ) / (Σ mᵢ)** · **Gy = (Σ mᵢyᵢ) / (Σ mᵢ)**
+
+*Chaque coordonnée du barycentre est une moyenne des coordonnées des points, **pondérée
+par leur masse** — un point deux fois plus lourd « attire » deux fois plus le barycentre
+vers lui.*
+
+### 3. Exemple entièrement calculé et vérifié
+
+Trois pièces simples d'un assemblage, chacune réduite à son centre de gravité et sa
+masse : A(0 ; 0) de 2 kg, B(6 ; 0) de 3 kg, C(3 ; 6) de 1 kg. Masse totale : 6 kg.
+
+Gx = (2×0 + 3×6 + 1×3) / 6 = (0 + 18 + 3) / 6 = 21 / 6 = **3,5**
+
+Gy = (2×0 + 3×0 + 1×6) / 6 = (0 + 0 + 6) / 6 = 6 / 6 = **1**
+
+**G = (3,5 ; 1).**
+
+*Contrôle de bon sens : G doit être plus proche de B (la pièce la plus lourde, 3 kg) que
+des deux autres réunies — Gx = 3,5 est effectivement plus proche de Bx = 6 que de la
+moyenne simple non pondérée (0+6+3)/3 = 3, qui aurait ignoré les masses.*
+
+### 4. À retenir
+
+- Gx et Gy sont des moyennes des coordonnées, **pondérées par la masse** de chaque point.
+- Un point plus lourd déplace le barycentre vers lui, proportionnellement à sa masse.
+- Toujours diviser par la masse **totale**, pas par le nombre de points.
+            """,
+            "formules": """
+
+**Barycentre de points pondérés** — Gx = (Σ mᵢxᵢ) / (Σ mᵢ) · Gy = (Σ mᵢyᵢ) / (Σ mᵢ)
+""",
+            "exercice": """
+Un assemblage comprend trois pièces : A(0 ; 0) de 4 kg, B(4 ; 0) de 1 kg, C(2 ; 3) de
+3 kg.
+
+**1.** Calcule la masse totale.
+
+**2.** Calcule les coordonnées du barycentre G de l'assemblage.
+""",
+            "corrige": """
+**1.** Masse totale = 4 + 1 + 3 = **8 kg**.
+
+**2.** Gx = (4×0 + 1×4 + 3×2) / 8 = (0 + 4 + 6) / 8 = 10/8 = **1,25**.
+
+Gy = (4×0 + 1×0 + 3×3) / 8 = (0 + 0 + 9) / 8 = 9/8 = **1,125**.
+
+**G = (1,25 ; 1,125).** Le point est tiré vers A (la pièce la plus lourde, 4 kg), donc
+proche de x = 0 — cohérent.
+""",
+            "exemple": """
+**Cas industriel — Centre de gravité pour le choix des points de levage**
+
+Un support soudé se compose de trois plaques : une base rectangulaire de 12 kg centrée
+en (0 ; 0), un renfort vertical de 5 kg centré en (0 ; 8), et une platine de fixation de
+3 kg centrée en (10 ; 2).
+
+**Calcul.** Masse totale = 12 + 5 + 3 = 20 kg.
+
+Gx = (12×0 + 5×0 + 3×10) / 20 = 30/20 = **1,5**
+
+Gy = (12×0 + 5×8 + 3×2) / 20 = (0 + 40 + 6)/20 = 46/20 = **2,3**
+
+**G = (1,5 ; 2,3).**
+
+**Ce que ça montre.** Pour lever cette pièce sans qu'elle bascule, l'élingue doit passer
+par un point situé à l'aplomb du barycentre — pas du centre géométrique de la pièce, qui
+donnerait un résultat différent et ferait pencher l'ensemble du côté de la masse la plus
+lourde (ici, la base).
+""",
+        },
     ],
 }
 
@@ -35944,6 +36266,446 @@ régulier**, donc préférable en production même si aucune des deux moyennes n
 seule, hors tolérance.
 """,
         },
+        {
+            "id": "17.4",
+            "titre": "Étudier une fonction polynomiale : extremums locaux",
+            "duree": "5 h",
+            "cours": """
+
+### 1. Ce que cette fiche ajoute
+
+La fiche 17.1 a étudié une fonction **homographique**, toujours monotone sur chaque branche.
+Une fonction **polynomiale** de degré 3 se comporte différemment : sa dérivée peut changer de
+signe **deux fois**, ce qui crée un maximum local puis un minimum local (ou l'inverse). C'est le
+cas le plus fréquent d'étude de fonction à l'examen.
+
+### 2. Le principe : chercher où f'(x) change de signe
+
+Contrairement à la fiche 17.1, il n'y a ici ni dénominateur ni domaine restreint : une fonction
+polynomiale est définie sur ℝ tout entier. Toute la difficulté se déplace donc vers l'étude du
+signe de la dérivée.
+
+**Exemple entièrement déroulé.** Soit f(x) = x³ − 3x² + 2.
+
+**Étape 1 — Dériver.** f'(x) = 3x² − 6x.
+
+**Étape 2 — Factoriser pour trouver le signe facilement.** f'(x) = 3x(x − 2).
+
+*Un produit de facteurs se lit beaucoup plus facilement qu'un trinôme brut : c'est nul quand
+l'un des deux facteurs est nul, soit x = 0 ou x = 2.*
+
+**Étape 3 — Tableau de signes de f'(x).** Un produit 3x(x − 2) : le signe de chaque facteur,
+puis le produit.
+
+| x | −∞ | | 0 | | 2 | | +∞ |
+|---|---|---|---|---|---|---|---|
+| 3x | | − | 0 | + | | + | |
+| x − 2 | | − | | − | 0 | + | |
+| f'(x) | | + | 0 | − | 0 | + | |
+
+*Contrôle rapide : en x = 1 (entre 0 et 2), f'(1) = 3 − 6 = −3, bien négatif — cohérent avec la
+ligne du tableau.*
+
+**Étape 4 — Valeurs de f aux points où f' s'annule.**
+
+f(0) = 0 − 0 + 2 = **2** · f(2) = 8 − 12 + 2 = **−2**
+
+**Étape 5 — Tableau de variations.**
+
+| x | −∞ | | 0 | | 2 | | +∞ |
+|---|---|---|---|---|---|---|---|
+| f'(x) | | + | 0 | − | 0 | + | |
+| f(x) | −∞ | ↗ | 2 | ↘ | −2 | ↗ | +∞ |
+
+### 3. Lire un maximum et un minimum locaux sur le tableau
+
+> **f' passe de + à − en x = 0** : f atteint un **maximum local**, qui vaut f(0) = 2.
+> **f' passe de − à + en x = 2** : f atteint un **minimum local**, qui vaut f(2) = −2.
+
+*Ce ne sont que des extremums **locaux** — au-delà de ces deux points, f continue vers −∞ et
++∞. Rien à voir avec un maximum ou un minimum sur l'ensemble de ℝ, qui n'existe pas ici.*
+
+### 4. Les erreurs classiques
+
+1. **Confondre les racines de f et les racines de f'.** Ce sont deux tableaux différents : les
+   racines de f' donnent les extremums, celles de f donnent où la courbe croise l'axe des x.
+2. **Oublier de factoriser f'(x)** avant d'en étudier le signe — un trinôme non factorisé est
+   beaucoup plus risqué à signer qu'un produit de facteurs simples.
+3. **Inverser le sens du changement de signe** : + vers − donne un maximum, − vers + donne un
+   minimum — pas l'inverse.
+
+### 5. À retenir
+
+- Une fonction polynomiale de degré 3 n'a **ni dénominateur ni domaine restreint** : elle est
+  définie sur ℝ tout entier.
+- **Factoriser f'(x)** avant de dresser le tableau de signes, chaque fois que c'est possible.
+- **f' : + puis −** ⇒ maximum local. **f' : − puis +** ⇒ minimum local.
+
+            """,
+            "formules": """
+
+**Dérivée d'un polynôme** — terme par terme : (x^n)' = n × x^(n−1)
+
+**Extremum local** — f'(x) change de signe ⇒ extremum ; + vers − : maximum · − vers + : minimum
+
+**Valeur de l'extremum** — toujours calculer f (pas f') au point où f'(x) = 0
+
+        """,
+            "exercice": """
+Soit g(x) = x³ − 3x + 1.
+
+**1.** Calcule g'(x).
+
+**2.** Factorise g'(x) et trouve les valeurs où elle s'annule.
+
+**3.** Dresse le tableau de signes de g'(x).
+
+**4.** Calcule g aux deux valeurs trouvées, et précise s'il s'agit d'un maximum ou d'un minimum
+local pour chacune.
+
+**5.** Dresse le tableau de variations complet de g.
+""",
+            "corrige": """
+**1.** g'(x) = 3x² − 3.
+
+**2.** g'(x) = 3(x² − 1) = 3(x − 1)(x + 1). Elle s'annule pour **x = −1** et **x = 1**.
+
+**3.**
+
+| x | −∞ | | −1 | | 1 | | +∞ |
+|---|---|---|---|---|---|---|---|
+| g'(x) | | + | 0 | − | 0 | + | |
+
+*Contrôle en x = 0 (entre −1 et 1) : g'(0) = −3, négatif — cohérent.*
+
+**4.** g(−1) = −1 + 3 + 1 = **3**. g' passe de + à − en x = −1 : c'est un **maximum local**.
+g(1) = 1 − 3 + 1 = **−1**. g' passe de − à + en x = 1 : c'est un **minimum local**.
+
+**5.**
+
+| x | −∞ | | −1 | | 1 | | +∞ |
+|---|---|---|---|---|---|---|---|
+| g'(x) | | + | 0 | − | 0 | + | |
+| g(x) | −∞ | ↗ | 3 | ↘ | −1 | ↗ | +∞ |
+""",
+            "exemple": """
+**Cas industriel — Trajectoire d'un axe de perçage**
+
+La position verticale d'une pointe de perçage, en mm par rapport à la surface, suit la loi
+h(t) = t³ − 6t² + 9t, où t est le temps en secondes (0 ⩽ t ⩽ 4). L'outil perce vers le bas puis
+remonte : à quel instant descend-il le plus bas avant de remonter une première fois ?
+
+**Étape 1 — Dériver.**
+
+h'(t) = 3t² − 12t + 9
+
+**Étape 2 — Factoriser.**
+
+h'(t) = 3(t² − 4t + 3) = 3(t − 1)(t − 3)
+
+**Étape 3 — Signe de h'(t).**
+
+| t | 0 | | 1 | | 3 | | 4 |
+|---|---|---|---|---|---|---|---|
+| h'(t) | | + | 0 | − | 0 | + | |
+
+**Étape 4 — Valeurs remarquables.**
+
+h(1) = 1 − 6 + 9 = **4 mm** (maximum local — l'outil marque une pause en remontant légèrement)
+h(3) = 27 − 54 + 27 = **0 mm** (minimum local)
+
+**Ce que le calcul apprend.** L'axe descend de 0 à 4 mm entre t = 0 et t = 1 (h croissante), puis
+remonte à peine en oscillant — en réalité ici h redescend ensuite, puisque h' redevient négative
+juste après t = 1 : le tableau montre que h décroît entre t = 1 et t = 3, où elle touche 0 mm
+(la surface), avant de remonter. Un régleur qui lit ce tableau sait, sans tracer la courbe,
+qu'il n'y a qu'un seul passage au point le plus bas (t = 3, h = 0) — utile pour synchroniser un
+autre axe avec ce moment précis du cycle.
+""",
+        },
+        {
+            "id": "17.5",
+            "titre": "Valeur moyenne d'une fonction sur un intervalle",
+            "duree": "4 h",
+            "cours": """
+
+### 1. Ce que cette fiche ajoute
+
+Les fiches 17.2 et 7.1 ont utilisé l'intégrale pour calculer une **aire**, puis un volume et une
+masse. Il existe une autre application, très demandée en BTS industriel : calculer la **valeur
+moyenne** d'une grandeur qui varie en continu — une température pendant un cycle, une force
+pendant un mouvement, une vitesse pendant un trajet.
+
+### 2. Pourquoi on ne peut pas juste faire (début + fin) / 2
+
+Si une grandeur varie de façon linéaire, la moyenne de ses valeurs de départ et de fin suffit.
+Mais si elle **monte puis redescend** (ou l'inverse) entre ces deux instants, cette méthode
+ignore tout ce qui se passe au milieu — et peut donner un résultat complètement faux.
+
+> **Valeur moyenne de f sur [a ; b]** : m = (1 / (b − a)) × ∫ de a à b de f(x) dx
+
+*C'est exactement l'aire sous la courbe, "aplatie" en un rectangle de même largeur (b − a) et de
+même aire : la hauteur de ce rectangle est la valeur moyenne cherchée.*
+
+[[FIG:profil_trapezoidal]]
+
+### 3. Exemple entièrement déroulé — cycle de température d'un traitement thermique
+
+La température d'un four, en degrés Celsius, suit la loi T(t) = −2t² + 12t + 20 pendant les
+6 premières minutes d'un cycle (0 ⩽ t ⩽ 6), t en minutes.
+
+**Étape 1 — Une primitive de T(t).**
+
+F(t) = −2t³/3 + 6t² + 20t
+
+*Vérification : F'(t) = −6t²/3 + 12t + 20 = −2t² + 12t + 20 = T(t). ✓*
+
+**Étape 2 — F(6) et F(0).**
+
+F(6) = −2×216/3 + 6×36 + 120 = −144 + 216 + 120 = **192**
+F(0) = **0**
+
+**Étape 3 — L'intégrale.**
+
+∫ de 0 à 6 de T(t) dt = F(6) − F(0) = **192**
+
+**Étape 4 — Diviser par la largeur de l'intervalle.**
+
+m = 192 / (6 − 0) = **32 °C**
+
+**Ce que le calcul apprend.** T(0) = 20 °C et T(6) = 20 °C — les deux extrémités sont
+identiques, et une lecture rapide pourrait faire croire à une moyenne de 20 °C. Mais la
+température monte jusqu'à un pic de T(3) = −18 + 36 + 20 = 38 °C au milieu du cycle : la valeur
+moyenne réelle, 32 °C, est bien plus proche du pic que des extrémités. **(début + fin) / 2 aurait
+donné 20 °C — une erreur de 12 degrés.**
+
+### 4. Les erreurs classiques
+
+1. **Oublier de diviser par (b − a)** après avoir calculé l'intégrale : ∫ seule donne une aire,
+   pas une moyenne.
+2. **Utiliser (f(a) + f(b)) / 2** par réflexe, comme pour une droite — cette formule n'est juste
+   que si f est linéaire sur l'intervalle.
+3. **Se tromper sur la largeur de l'intervalle** quand a n'est pas nul : c'est toujours (b − a),
+   jamais b seul.
+
+### 5. À retenir
+
+- **Valeur moyenne de f sur [a ; b]** = (1 / (b−a)) × ∫ de a à b de f(x) dx.
+- Elle correspond à la **hauteur du rectangle de même aire** que la courbe, sur le même
+  intervalle.
+- Ne jamais remplacer ce calcul par (f(a) + f(b)) / 2 sauf si f est une droite.
+
+            """,
+            "formules": """
+
+**Valeur moyenne de f sur [a ; b]** — m = (1 / (b − a)) × ∫ de a à b de f(x) dx
+
+**Cas particulier** — si f est linéaire (une droite), m = (f(a) + f(b)) / 2 seulement dans ce cas
+
+        """,
+            "exercice": """
+La pression exercée par une presse, en bars, suit la loi P(t) = −t² + 4t + 5 pendant un cycle de
+4 secondes (0 ⩽ t ⩽ 4), t en secondes.
+
+**1.** Donne une primitive de P(t).
+
+**2.** Calcule ∫ de 0 à 4 de P(t) dt.
+
+**3.** En déduis la valeur moyenne de la pression sur ce cycle.
+
+**4.** Calcule P(0) et P(4). Que vaut (P(0) + P(4)) / 2 ? Pourquoi ce nombre est-il différent de
+la vraie valeur moyenne trouvée à la question 3 ?
+""",
+            "corrige": """
+**1.** F(t) = −t³/3 + 2t² + 5t.
+*Vérification : F'(t) = −3t²/3 + 4t + 5 = −t² + 4t + 5 = P(t). ✓*
+
+**2.** F(4) = −64/3 + 32 + 20 = −64/3 + 52 = (156 − 64)/3 = **92/3 ≈ 30,67**.
+F(0) = 0. ∫ = **92/3 ≈ 30,67**.
+
+**3.** m = (92/3) / (4 − 0) = **23/3 ≈ 7,67 bars**.
+
+**4.** P(0) = 5 bars, P(4) = 5 bars. (P(0) + P(4)) / 2 = **5 bars**.
+*Ce nombre est bien inférieur à la vraie valeur moyenne (7,67 bars), parce que la pression monte
+jusqu'à un pic de P(2) = −4 + 8 + 5 = 9 bars au milieu du cycle — un pic que la formule (début +
+fin) / 2 ignore complètement, exactement comme dans l'exemple du cours.*
+""",
+            "exemple": """
+**Cas industriel — Effort moyen sur un vérin pendant une course**
+
+Un vérin exerce un effort, en newtons, qui suit la loi F(x) = 200 + 30x − 3x², où x est la
+position en cm le long de sa course (0 ⩽ x ⩽ 8). Quel est l'effort moyen sur toute la course,
+grandeur utile pour choisir un vérin qui tiendra dans la durée sans surdimensionner inutilement
+sa consommation d'énergie ?
+
+**Étape 1 — Une primitive.**
+
+G(x) = 200x + 15x² − x³
+
+**Étape 2 — G(8) et G(0).**
+
+G(8) = 1600 + 960 − 512 = **2048**
+G(0) = **0**
+
+**Étape 3 — L'effort moyen.**
+
+m = 2048 / (8 − 0) = **256 N**
+
+**Ce que le calcul apprend.** L'effort de départ, F(0) = 200 N, et l'effort de fin,
+F(8) = 200 + 240 − 192 = 248 N, sont tous deux inférieurs à la moyenne réelle de 256 N — la
+loi n'est pas linéaire, l'effort atteint un pic quelque part au milieu de la course. Choisir un
+vérin en ne regardant que les valeurs de début et de fin sous-estimerait l'effort réellement
+exigé pendant une bonne partie du cycle.
+""",
+        },
+        {
+            "id": "17.6",
+            "titre": "Dispersion complète : variance, écart-type, coefficient de variation",
+            "duree": "4 h",
+            "cours": """
+
+### 1. Ce que cette fiche ajoute
+
+La fiche 7.3 a introduit l'écart-type au service de la capabilité (Cp). La fiche 17.3 a ajouté
+les quartiles, plus robustes face à une valeur extrême. Il manque encore un outil : le
+**coefficient de variation**, qui permet de comparer la dispersion de deux séries qui n'ont pas
+la même moyenne — ce que l'écart-type seul ne permet pas de faire correctement.
+
+### 2. Rappel : variance et écart-type
+
+> **Variance** : V = (1/n) × Σ (xᵢ − moyenne)²
+> **Écart-type** : σ = √V
+
+*La variance est la moyenne des carrés des écarts à la moyenne. On passe au carré pour que les
+écarts positifs et négatifs ne s'annulent pas entre eux ; la racine carrée, à la fin, ramène le
+résultat dans la même unité que les mesures d'origine (des mm, pas des mm²).*
+
+**Exemple entièrement déroulé.** Six mesures d'un diamètre (mm) : 19,98 — 20,00 — 20,01 — 19,99 —
+20,02 — 20,00.
+
+**Étape 1 — La moyenne.**
+
+moyenne = (19,98 + 20,00 + 20,01 + 19,99 + 20,02 + 20,00) / 6 = 120,00 / 6 = **20,00 mm**
+
+**Étape 2 — Les écarts à la moyenne, au carré.**
+
+(−0,02)² = 0,0004 · 0² = 0 · (0,01)² = 0,0001 · (−0,01)² = 0,0001 · (0,02)² = 0,0004 · 0² = 0
+
+**Étape 3 — La variance.**
+
+V = (0,0004 + 0 + 0,0001 + 0,0001 + 0,0004 + 0) / 6 = 0,0010 / 6 ≈ **0,0001667 mm²**
+
+**Étape 4 — L'écart-type.**
+
+σ = √0,0001667 ≈ **0,0129 mm**
+
+### 3. Le problème que l'écart-type seul ne résout pas
+
+Un écart-type de 0,0129 mm sur des pièces de 20 mm est-il bon ou mauvais ? La question n'a pas de
+sens tant qu'on ne le compare pas à la taille de la pièce : 0,0129 mm de dispersion serait
+excellent sur une pièce de 200 mm, mais plus discutable sur une pièce de 2 mm. C'est exactement
+le rôle du coefficient de variation.
+
+> **Coefficient de variation** : CV = (σ / moyenne) × 100, exprimé en %
+
+**Sur l'exemple précédent :** CV = (0,0129 / 20,00) × 100 ≈ **0,065 %**.
+
+### 4. Comparer deux réglages de tailles différentes
+
+**Réglage C**, pièces de 20 mm : écart-type mesuré σ = 0,0129 mm.
+**Réglage D**, pièces de 100 mm : écart-type mesuré σ = 0,050 mm.
+
+*Vu seulement l'écart-type, le réglage D semble bien pire (0,050 contre 0,0129 mm). Mais ses
+pièces sont cinq fois plus grandes.*
+
+CV(C) = 0,0129 / 20 × 100 = **0,065 %** · CV(D) = 0,050 / 100 × 100 = **0,050 %**
+
+**Ce que ça révèle.** En proportion de la taille des pièces, le réglage D est en réalité
+**légèrement plus précis** que le réglage C — l'inverse de ce que suggérait l'écart-type brut.
+Comparer des écarts-types absolus entre deux séries de tailles très différentes est un piège
+classique.
+
+### 5. Les erreurs classiques
+
+1. **Comparer deux écarts-types bruts sans regarder les moyennes** — valable seulement si les
+   deux séries ont des ordres de grandeur proches.
+2. **Oublier le ×100** dans le calcul du coefficient de variation — c'est un pourcentage, pas
+   une fraction.
+3. **Confondre variance et écart-type** dans une formule : la variance est en unité², l'écart-type
+   dans l'unité d'origine — toujours revenir à l'écart-type pour interpréter une dispersion en
+   mm.
+
+### 6. À retenir
+
+- **Variance** = moyenne des carrés des écarts. **Écart-type** = racine carrée de la variance.
+- **Coefficient de variation** = (écart-type / moyenne) × 100, en %.
+- Le CV permet de **comparer la dispersion de deux séries de moyennes différentes** — l'écart-type
+  seul ne le permet pas.
+
+            """,
+            "formules": """
+
+**Variance** — V = (1/n) × Σ (xᵢ − moyenne)²
+
+**Écart-type** — σ = √V
+
+**Coefficient de variation** — CV = (σ / moyenne) × 100, en %
+
+        """,
+            "exercice": """
+Un contrôle sur 5 pièces donne les longueurs suivantes (mm) : 49,90 — 50,00 — 50,05 —
+50,00 — 50,05.
+
+**1.** Calcule la moyenne de cette série.
+
+**2.** Calcule la variance.
+
+**3.** Calcule l'écart-type.
+
+**4.** Calcule le coefficient de variation.
+
+**5.** Un autre réglage, sur des pièces de 10 mm, a un écart-type de 0,010 mm. Lequel des deux
+réglages est le plus précis en proportion de la taille des pièces ?
+""",
+            "corrige": """
+**1.** Moyenne = (49,90 + 50,00 + 50,05 + 50,00 + 50,05) / 5 = 250,00 / 5 = **50,00 mm**.
+
+**2.** Écarts au carré : (−0,10)² = 0,0100 · 0² = 0 · (0,05)² = 0,0025 · 0² = 0 · (0,05)² = 0,0025.
+Somme = 0,0150. V = 0,0150 / 5 = **0,0030 mm²**.
+
+**3.** σ = √0,0030 ≈ **0,0548 mm**.
+
+**4.** CV = (0,0548 / 50,00) × 100 ≈ **0,110 %**.
+
+**5.** L'autre réglage : CV = (0,010 / 10) × 100 = **0,10 %**. Les deux coefficients sont proches
+(0,110 % contre 0,10 %) : **l'autre réglage (pièces de 10 mm) est très légèrement plus précis**
+en proportion, alors que son écart-type brut (0,010 mm) est presque cinq fois plus petit que
+celui du premier réglage (0,0548 mm) — un écart brut qui, seul, aurait été trompeur puisque les
+pièces ne font pas la même taille.
+""",
+            "exemple": """
+**Cas industriel — Auditer deux lignes de production**
+
+Une usine fabrique deux références sur deux lignes différentes. La ligne 1 produit des axes de
+15 mm, écart-type mesuré 0,015 mm. La ligne 2 produit des plaques de 300 mm de long,
+écart-type mesuré 0,15 mm. Le responsable qualité doit dire, lors d'un audit, laquelle des deux
+lignes est la mieux réglée.
+
+**Étape 1 — Comparaison brute (piège).**
+
+0,15 mm (ligne 2) semble dix fois pire que 0,015 mm (ligne 1).
+
+**Étape 2 — Coefficient de variation de chaque ligne.**
+
+CV(ligne 1) = (0,015 / 15) × 100 = **0,10 %**
+CV(ligne 2) = (0,15 / 300) × 100 = **0,05 %**
+
+**Ce que le calcul apprend.** En proportion de la taille des pièces produites, la ligne 2 est en
+réalité **deux fois plus précise** que la ligne 1, alors que son écart-type brut donnait
+l'impression inverse. Un rapport d'audit qui comparerait les écarts-types sans les rapporter à la
+taille des pièces tirerait une conclusion fausse — c'est exactement pour éviter ce piège que le
+coefficient de variation existe.
+""",
+        },
     ],
 }
 
@@ -36464,6 +37226,499 @@ de temps doit rester sous environ 13,8 minutes pour tenir le planning — un cri
 directement issu du calcul, plutôt qu'une estimation à l'œil.
 """,
         },
+        {
+            "id": "18.5",
+            "titre": "Probabilités conditionnelles et arbre pondéré",
+            "duree": "5 h",
+            "cours": """
+
+### 1. Une question que la fiche 18.1 ne sait pas encore poser
+
+La fiche 18.1 combine deux événements indépendants. Mais souvent, en atelier, les événements
+**ne sont pas indépendants** : une pièce vient d'une machine ou d'une autre, et le taux de
+défaut n'est pas le même selon la source. La probabilité conditionnelle répond à cette
+question : sachant qu'on est dans telle situation, quelle est la probabilité de l'autre
+événement ?
+
+### 2. Notation et définition
+
+> **P(B | A)** se lit « probabilité de B sachant A » : la probabilité de B, une fois qu'on sait
+> déjà que A s'est produit.
+>
+> **P(A ∩ B) = P(A) × P(B | A)**
+
+*C'est la même formule que P(A ∩ B) = P(A) × P(B) de la fiche 18.1, mais sans l'hypothèse
+d'indépendance : P(B | A) remplace P(B) dès que B dépend de A.*
+
+### 3. L'arbre pondéré : la méthode qui évite toute erreur
+
+Un arbre à deux niveaux représente la situation : chaque branche du premier niveau porte une
+probabilité (P(A), P(Ā)), chaque branche du second niveau porte une probabilité conditionnelle
+(P(B|A), P(B|Ā)). **La probabilité d'un chemin complet est le produit des probabilités
+rencontrées le long du chemin.**
+
+> **Règle des nœuds** : sur un même point de départ, les probabilités des branches qui en
+> partent totalisent toujours 1.
+
+### 4. La probabilité totale : recombiner les chemins
+
+Si B peut arriver par deux chemins différents (via A ou via Ā), sa probabilité totale est la
+somme des deux chemins :
+
+> **P(B) = P(A) × P(B|A) + P(Ā) × P(B|Ā)**
+
+### 5. Exemple entièrement déroulé — deux machines, un même contrôle
+
+Une référence est produite par deux machines : la machine M1 fournit **60 %** de la production,
+la machine M2 fournit les **40 %** restants. Le taux de défaut est de **3 %** sur M1 et **6 %**
+sur M2 (machine plus ancienne).
+
+**Étape 1 — Probabilité qu'une pièce vienne de M1 et soit défectueuse.**
+
+P(M1 ∩ défaut) = P(M1) × P(défaut | M1) = 0,60 × 0,03 = **0,018**
+
+**Étape 2 — Probabilité qu'une pièce vienne de M2 et soit défectueuse.**
+
+P(M2 ∩ défaut) = P(M2) × P(défaut | M2) = 0,40 × 0,06 = **0,024**
+
+**Étape 3 — Probabilité totale qu'une pièce soit défectueuse, toutes machines confondues.**
+
+P(défaut) = 0,018 + 0,024 = **0,042**, soit **4,2 %**
+
+**Étape 4 — Sachant qu'une pièce est défectueuse, quelle est la probabilité qu'elle vienne de
+M1 ?** *(on retourne l'arbre : c'est le chemin M1-défaut, rapporté à tous les chemins qui
+mènent à « défaut »)*
+
+P(M1 | défaut) = P(M1 ∩ défaut) / P(défaut) = 0,018 / 0,042 = **0,4286**, soit environ **43 %**
+
+**Ce que le calcul apprend.** M1 fournit 60 % de la production, mais seulement **43 % des
+pièces défectueuses viennent d'elle** — parce que M2, bien que minoritaire, a un taux de défaut
+deux fois plus élevé. En cas de défaut trouvé, il est donc légèrement **plus probable qu'il
+vienne de M2** (57 %) que de M1, malgré son plus faible volume — une conclusion qui n'est pas
+intuitive sans le calcul.
+
+### 6. Les erreurs classiques
+
+1. **Confondre P(B|A) et P(A|B)** — ce ne sont pas les mêmes nombres, sauf cas particulier.
+   Ici, P(défaut|M1) = 3 % est très différent de P(M1|défaut) = 43 %.
+2. **Oublier de repasser par P(A ∩ B)** pour calculer P(A|B) — on ne peut pas lire P(A|B)
+   directement sur l'arbre construit dans l'autre sens.
+3. **Ne pas vérifier que les probabilités d'un même nœud totalisent 1** (erreur de recopie de
+   données).
+
+### 7. À retenir
+
+- **P(A ∩ B) = P(A) × P(B|A)**, toujours vraie — pas besoin d'indépendance.
+- **Arbre pondéré** : produit le long d'un chemin, somme des chemins qui mènent au même résultat.
+- **P(A|B) se calcule en repartant de P(A ∩ B) / P(B)**, jamais en lisant directement l'arbre
+  construit dans l'autre sens.
+            """,
+            "formules": """
+
+**Probabilité conditionnelle** — P(A ∩ B) = P(A) × P(B|A)
+
+**Probabilité totale** — P(B) = P(A) × P(B|A) + P(Ā) × P(B|Ā)
+
+**Formule de retournement** — P(A|B) = P(A ∩ B) / P(B)
+""",
+            "exercice": """
+Une référence est produite par deux fournisseurs : le fournisseur A livre **70 %** des pièces,
+le fournisseur B livre les **30 %** restants. Le taux de défaut est de **2 %** chez A et de
+**8 %** chez B.
+
+**1.** Calcule P(A ∩ défaut) et P(B ∩ défaut).
+
+**2.** En déduire P(défaut), la probabilité totale qu'une pièce soit défectueuse.
+
+**3.** Sachant qu'une pièce est défectueuse, calcule la probabilité qu'elle vienne du
+fournisseur B.
+""",
+            "corrige": """
+**1.** P(A ∩ défaut) = 0,70 × 0,02 = **0,014**. P(B ∩ défaut) = 0,30 × 0,08 = **0,024**.
+
+**2.** P(défaut) = 0,014 + 0,024 = **0,038**, soit **3,8 %**.
+
+**3.** P(B | défaut) = 0,024 / 0,038 = **0,6316**, soit environ **63 %** — le fournisseur B,
+minoritaire en volume, est pourtant à l'origine de la majorité des défauts détectés.
+""",
+            "exemple": """
+**Cas industriel — Où concentrer l'effort qualité ?**
+
+Avec les résultats de l'exercice, le service qualité doit choisir où porter un audit fournisseur
+en priorité, avec un budget limité à un seul audit cette année.
+
+**Lecture des résultats.** Le fournisseur A représente 70 % du volume mais seulement 37 % des
+défauts trouvés (1 − 63 %). Le fournisseur B représente 30 % du volume mais **63 % des
+défauts**.
+
+**Ce que le calcul apprend.** Le critère de décision n'est **ni le volume seul, ni le taux de
+défaut seul** : c'est la contribution réelle au nombre de pièces défectueuses, qui combine les
+deux. Ici, malgré son faible volume, le fournisseur B est la source majoritaire de non-qualité —
+c'est lui que l'audit doit viser en priorité, une conclusion que seul le calcul de probabilité
+conditionnelle rend visible.
+""",
+        },
+        {
+            "id": "18.6",
+            "titre": "Espérance et écart-type d'une loi binomiale : lire la dispersion",
+            "duree": "4 h",
+            "cours": """
+
+### 1. Ce que la fiche 18.2 a laissé de côté
+
+La fiche 18.2 a calculé des probabilités exactes P(X = k) pour de petits échantillons. Sur un
+grand échantillon, calculer chaque P(X = k) un par un devient lourd — **l'espérance et
+l'écart-type suffisent** à décrire l'essentiel de la situation sans ce détail.
+
+### 2. Les deux formules, déjà vues mais à interpréter cette fois
+
+> **E(X) = n × p** — le nombre moyen de succès attendu, sur un grand nombre d'échantillons
+> répétés.
+> **σ(X) = √(n × p × (1 − p))** — la dispersion autour de cette moyenne : à quel point le
+> résultat d'un échantillon particulier peut s'écarter de la moyenne.
+
+### 3. Une plage réaliste, sans calculer chaque probabilité
+
+Comme pour une mesure continue (fiche 7.3), on peut délimiter une plage où le résultat tombera
+la plupart du temps :
+
+> **Plage usuelle** : E(X) ± 2 × σ(X) couvre la grande majorité des cas observés en pratique.
+
+*Ce n'est pas une règle aussi précise que les 95 % exacts d'une loi normale — la loi binomiale
+n'est symétrique que si p est proche de 0,5 — mais elle donne un ordre de grandeur immédiatement
+utilisable sans calculatrice avancée.*
+
+### 4. Exemple entièrement déroulé — surveiller une ligne de production
+
+Une ligne produit des lots de **n = 200** pièces, avec un taux de défaut habituel de
+**p = 0,02** (2 %).
+
+**Étape 1 — Nombre moyen de pièces défectueuses par lot.**
+
+E(X) = 200 × 0,02 = **4 pièces**
+
+**Étape 2 — Écart-type.**
+
+σ(X) = √(200 × 0,02 × 0,98) = √3,92 ≈ **1,98 pièces**
+
+**Étape 3 — Plage usuelle attendue.**
+
+E(X) − 2σ(X) ≈ 4 − 3,96 ≈ **0** ; E(X) + 2σ(X) ≈ 4 + 3,96 ≈ **8**
+
+Un lot **normal** contient donc entre 0 et 8 pièces défectueuses environ — un lot avec, par
+exemple, 15 défectueuses sortirait largement de cette plage et signalerait un problème sur la
+ligne, pas seulement une variation naturelle du hasard.
+
+**Ce que le calcul apprend.** Sans cette plage de référence, un responsable qualité verrait
+« 6 pièces défectueuses ce lot-ci, 2 le lot précédent » comme un signal alarmant. En réalité,
+avec un écart-type d'environ 2 pièces, **cette variation est parfaitement normale** — c'est
+justement à ça que sert l'écart-type : distinguer le bruit habituel d'un vrai dérèglement.
+
+### 5. Les erreurs classiques
+
+1. **Oublier le facteur (1 − p) dans la variance** et calculer seulement √(n × p).
+2. **Interpréter un léger dépassement de la plage comme automatiquement anormal** — la plage
+   E(X) ± 2σ(X) est indicative, pas une frontière stricte comme un intervalle de confiance à
+   95 % exact.
+3. **Confondre E(X), le nombre attendu, avec p, le taux** — E(X) dépend de n, p ne dépend que du
+   procédé.
+
+### 6. À retenir
+
+- **E(X) = np**, **σ(X) = √(np(1−p))** : les deux résument l'essentiel sans calculer chaque
+  P(X=k).
+- **Plage usuelle : E(X) ± 2σ(X)**, un repère pratique pour repérer un lot anormal sans calcul
+  complexe.
+- Plus n est grand, plus σ(X)/E(X) diminue en proportion : **un grand échantillon donne un
+  résultat plus stable**, relativement à sa moyenne.
+            """,
+            "formules": """
+
+**Espérance** — E(X) = n × p
+
+**Écart-type** — σ(X) = √(n × p × (1 − p))
+
+**Plage usuelle (repère pratique)** — [E(X) − 2σ(X) ; E(X) + 2σ(X)]
+""",
+            "exercice": """
+Une ligne produit des lots de **n = 150** pièces, avec un taux de défaut habituel de
+**p = 0,04** (4 %).
+
+**1.** Calcule E(X), le nombre moyen de pièces défectueuses par lot.
+
+**2.** Calcule σ(X), l'écart-type.
+
+**3.** Donne la plage usuelle E(X) ± 2σ(X).
+
+**4.** Un lot contient 14 pièces défectueuses. Ce résultat sort-il de la plage usuelle ?
+""",
+            "corrige": """
+**1.** E(X) = 150 × 0,04 = **6 pièces**.
+
+**2.** σ(X) = √(150 × 0,04 × 0,96) = √5,76 = **2,4 pièces**.
+
+**3.** Plage = [6 − 4,8 ; 6 + 4,8] = **[1,2 ; 10,8]**, soit en pratique entre 1 et 11 pièces.
+
+**4.** 14 défectueuses **dépasse la borne haute** (10,8) : ce lot sort de la plage usuelle, un
+contrôle de la ligne est justifié.
+""",
+            "exemple": """
+**Cas industriel — Comparer deux procédés avant de choisir**
+
+Deux fournisseurs proposent la même pièce, pour un lot de n = 100 :
+
+**Fournisseur X** : p = 0,05. E(X) = 5, σ(X) = √(100×0,05×0,95) ≈ **2,18**. Plage ≈ [0,6 ; 9,4].
+
+**Fournisseur Y** : p = 0,05 également, mais un procédé plus régulier ramène l'incertitude
+pratique observée à σ(X) ≈ **1,0** (mesuré sur l'historique, hors du modèle binomial pur).
+
+**Ce que le calcul apprend.** Les deux fournisseurs ont **la même moyenne attendue** (5
+défectueuses), donc le même coût de non-qualité en moyenne. Mais le fournisseur X, plus
+dispersé, expose à des lots occasionnels bien pires que la moyenne (jusqu'à 9-10 défectueuses),
+alors que le fournisseur Y reste plus prévisible. **À moyenne égale, la régularité (l'écart-type
+le plus faible) est souvent le critère qui départage deux fournisseurs** — un point que la seule
+lecture de p ne révèle jamais.
+""",
+        },
+        {
+            "id": "18.7",
+            "titre": "Quelle taille d'échantillon pour une précision donnée ?",
+            "duree": "4 h",
+            "cours": """
+
+### 1. La question que la fiche 18.3 posait à l'envers
+
+La fiche 18.3 calcule la marge d'erreur **à partir de** n. Cette fiche répond à la question
+inverse, très fréquente en pratique avant même de commencer à mesurer : **combien de pièces
+faut-il contrôler** pour obtenir une marge d'erreur donnée ?
+
+### 2. Isoler n dans la formule de la marge
+
+En partant de marge = 1,96 × s / √n, on isole n par un calcul algébrique simple :
+
+> **n = (1,96 × s / marge visée)²**
+
+*s est en général estimé à partir d'une étude préliminaire, ou repris d'un historique de
+mesures sur un procédé similaire — on ne connaît jamais s avant d'avoir mesuré quelque chose.*
+
+### 3. La règle à ne jamais oublier : arrondir vers le haut
+
+Le résultat du calcul n'est presque jamais un nombre entier. Comme n est un **nombre de
+pièces**, on arrondit toujours **au nombre entier supérieur** (fonction plafond) — arrondir vers
+le bas donnerait un échantillon légèrement trop petit, qui ne garantirait plus tout à fait la
+précision visée.
+
+### 4. Exemple entièrement déroulé
+
+Un procédé a un écart-type connu (mesuré sur un historique) de **s = 0,15 mm**. Le service
+qualité veut un intervalle de confiance à 95 % dont la marge d'erreur ne dépasse pas
+**0,03 mm**.
+
+**Étape 1 — Appliquer la formule.**
+
+n = (1,96 × 0,15 / 0,03)² = (0,294 / 0,03)² = 9,8² = **96,04**
+
+**Étape 2 — Arrondir au nombre entier supérieur.**
+
+n = **97 pièces**
+
+**Étape 3 — Vérification : cette taille garantit-elle bien la marge visée ?**
+
+marge avec n = 97 : 1,96 × 0,15 / √97 = 1,96 × 0,15 / 9,849 ≈ **0,0299 mm** — bien sous
+0,03 mm, confirmé. *(Avec n = 96 au lieu de 97, arrondi vers le bas, la marge dépasserait
+très légèrement 0,03 mm — d'où l'obligation d'arrondir vers le haut.)*
+
+**Ce que le calcul apprend.** Le lien entre précision et effort de mesure n'est **pas
+linéaire** : diviser la marge visée par 2 (donc doubler l'exigence de précision) multiplie n
+par 4, pas par 2 — un budget de contrôle qualité doit intégrer ce coût croissant très
+rapidement avec l'exigence.
+
+### 5. Les erreurs classiques
+
+1. **Arrondir au nombre entier le plus proche au lieu du plafond** — arrondir 96,04 à 96 au
+   lieu de 97 semble anodin mais ne garantit plus tout à fait la marge visée.
+2. **Oublier d'élever au carré** et s'arrêter à n = 1,96 × s / marge.
+3. **Utiliser un écart-type optimiste** (sous-estimé) — la formule donne un résultat correct
+   seulement si s reflète bien la vraie variabilité du procédé.
+
+### 6. À retenir
+
+- **n = (1,96 × s / marge visée)²**, toujours arrondi **au nombre entier supérieur**.
+- Diviser la marge visée par k multiplie n par **k²** — la précision coûte cher en volume de
+  contrôle.
+- Il faut une estimation préalable de s (étude pilote ou historique) avant de pouvoir calculer n.
+            """,
+            "formules": """
+
+**Taille d'échantillon nécessaire** — n = (1,96 × s / marge visée)², arrondi au plafond
+
+**Conséquence** — diviser la marge par k multiplie n par k²
+""",
+            "exercice": """
+Un procédé a un écart-type connu **s = 0,08 mm**. Le service qualité veut une marge d'erreur à
+95 % ne dépassant pas **0,02 mm**.
+
+**1.** Calcule n par la formule, sans arrondir.
+
+**2.** Arrondis n au nombre entier de pièces à contrôler.
+
+**3.** Le service qualité envisage de resserrer l'exigence à 0,01 mm. Sans refaire le calcul
+complet, combien de fois plus de pièces faudra-t-il contrôler par rapport à la question 2 ?
+""",
+            "corrige": """
+**1.** n = (1,96 × 0,08 / 0,02)² = (0,1568 / 0,02)² = 7,84² = **61,47**.
+
+**2.** Arrondi au plafond : **62 pièces**.
+
+**3.** La marge est divisée par 2 (de 0,02 à 0,01) : n est multiplié par **2² = 4** — il faudra
+environ **248 pièces** (4 × 62), sans avoir besoin de refaire le calcul en détail.
+""",
+            "exemple": """
+**Cas industriel — Le coût caché d'une exigence de précision**
+
+Un client final impose une marge d'erreur de 0,01 mm sur une cote critique, contre 0,04 mm
+habituellement utilisés en interne, pour un procédé d'écart-type s = 0,12 mm.
+
+**Taille habituelle (marge 0,04 mm).** n = (1,96 × 0,12 / 0,04)² = 5,88² ≈ **35 pièces**.
+
+**Taille exigée par le client (marge 0,01 mm).** Le rapport des marges est 4 (0,04 / 0,01) ;
+n est donc multiplié par 4² = 16 : n ≈ 35 × 16 = **560 pièces**.
+
+**Ce que le calcul apprend.** Une exigence de précision qui semble « quatre fois plus stricte »
+au premier regard entraîne en réalité un contrôle **seize fois plus lourd** en nombre de
+pièces à mesurer. C'est exactement ce genre de calcul qui doit accompagner une négociation
+commerciale sur une tolérance serrée — la précision demandée a un coût qui grandit bien plus
+vite qu'elle n'y paraît.
+""",
+        },
+        {
+            "id": "18.8",
+            "titre": "Équations différentielles : un deuxième cas, la mise en régime",
+            "duree": "5 h",
+            "cours": """
+
+### 1. Le même modèle, dans l'autre sens
+
+La fiche 18.4 a modélisé un phénomène qui **descend** vers son équilibre (un refroidissement).
+Le même type d'équation décrit tout aussi bien un phénomène qui **monte** vers son équilibre —
+une pression qui se met en régime, une vitesse qui atteint son palier, une charge qui se
+constitue. C'est exactement la même équation, avec un point de départ différent.
+
+### 2. La solution, relue pour une montée
+
+> **Équation** : y'(t) = −k × (y(t) − y_eq), toujours la même forme.
+> **Solution** : y(t) = y_eq + (y₀ − y_eq) × e^(−t/τ), avec τ = 1/k.
+
+Si **y₀ < y_eq** (on part en dessous de l'équilibre), le terme (y₀ − y_eq) est **négatif** : la
+courbe part de y₀ et **monte** progressivement vers y_eq, au lieu de descendre. La formule est
+rigoureusement la même que celle de la fiche 18.4 — c'est simplement le signe de l'écart de
+départ qui change le sens du phénomène.
+
+### 3. Les mêmes repères de constante de temps
+
+> Après **τ**, l'écart avec l'équilibre a diminué d'environ **63 %** — donc, dans une montée, la
+> grandeur a déjà parcouru 63 % de la distance qui la sépare de sa valeur finale.
+> Après **3τ**, environ **95 %** du chemin est fait : le régime est considéré comme quasi
+> stabilisé, exactement comme pour un refroidissement.
+
+### 4. Exemple entièrement déroulé — mise en pression d'un vérin pneumatique
+
+Un vérin pneumatique se met en pression depuis **P₀ = 0 bar** vers une pression d'alimentation
+**P_max = 6 bar**, avec une constante de temps mesurée **τ = 2 s**.
+
+**Étape 1 — Écrire la loi.**
+
+P(t) = 6 + (0 − 6) × e^(−t/2) = **6 − 6 × e^(−t/2)** = 6 × (1 − e^(−t/2))
+
+**Étape 2 — Pression après 2 s (t = τ).**
+
+P(2) = 6 × (1 − e^(−1)) = 6 × (1 − 0,368) = 6 × 0,632 = **3,79 bar**
+
+*On retrouve la règle : 63 % de la montée est faite (3,79 / 6 ≈ 63 %).*
+
+**Étape 3 — Pression après 6 s (t = 3τ).**
+
+P(6) = 6 × (1 − e^(−3)) = 6 × (1 − 0,0498) = 6 × 0,9502 = **5,70 bar**
+
+**Étape 4 — À quel instant la pression atteint-elle 5,5 bar ?**
+
+5,5 = 6 × (1 − e^(−t/2)) → 1 − e^(−t/2) = 0,9167 → e^(−t/2) = 0,0833
+
+−t/2 = ln(0,0833) = −2,485 → t = 2 × 2,485 ≈ **4,97 s**, soit environ **5 secondes**
+
+**Ce que le calcul apprend.** Un automaticien qui programme le cycle de la machine sait
+maintenant qu'il faut attendre **environ 5 secondes** avant de considérer le vérin comme
+opérationnel à pleine pression utile — une donnée directement exploitable pour cadencer le
+cycle automatique, plutôt que d'ajouter une marge de sécurité arbitraire.
+
+### 5. Les erreurs classiques
+
+1. **Garder le signe « moins » de la fiche 18.4** alors que le phénomène monte — c'est
+   automatique si on applique correctement (y₀ − y_eq), qui devient négatif tout seul quand
+   y₀ < y_eq.
+2. **Oublier que P_max n'est jamais atteint exactement** (seulement approché) — au bout d'un
+   temps « infini » en théorie, on considère 3τ suffisant en pratique.
+3. **Confondre la constante de temps d'une montée avec celle d'une descente** sur un même
+   système — rien ne garantit qu'elles soient identiques dans la réalité, même si le modèle
+   mathématique est symétrique.
+
+### 6. À retenir
+
+- **Même équation, même solution** que la fiche 18.4 — seul le signe de (y₀ − y_eq) décide si
+  le phénomène monte ou descend.
+- **τ et 3τ** restent les mêmes repères pratiques (63 % puis 95 % du chemin parcouru).
+- Utile pour tout phénomène de **mise en régime** : pression, vitesse, température de
+  fonctionnement, charge électrique.
+            """,
+            "formules": """
+
+**Solution générale (montée ou descente)** — y(t) = y_eq + (y₀ − y_eq) × e^(−t/τ)
+
+**Cas d'une montée (y₀ < y_eq)** — y(t) = y_eq × (1 − e^(−t/τ)) si y₀ = 0
+
+**Repères inchangés** — après τ : 63 % du chemin fait · après 3τ : régime quasi stabilisé (95%)
+""",
+            "exercice": """
+Un réservoir hydraulique se vidange depuis **P₀ = 8 bar** vers une pression finale
+**P_eq = 0 bar**, avec une constante de temps **τ = 4 s**.
+
+**1.** Écris la loi P(t) pour cette vidange.
+
+**2.** Calcule la pression après 4 s (t = τ).
+
+**3.** Calcule la pression après 12 s (t = 3τ).
+
+**4.** À quel instant la pression atteint-elle 1 bar ? (utilise ln, comme dans l'exemple du
+cours)
+""",
+            "corrige": """
+**1.** P(t) = 0 + (8 − 0) × e^(−t/4) = **8 × e^(−t/4)**.
+
+**2.** P(4) = 8 × e^(−1) = 8 × 0,368 = **2,94 bar**.
+
+**3.** P(12) = 8 × e^(−3) = 8 × 0,0498 = **0,398 bar**, soit environ **0,4 bar**.
+
+**4.** 1 = 8 × e^(−t/4) → e^(−t/4) = 0,125 → t = −4 × ln(0,125) = −4 × (−2,079) ≈
+**8,32 s**.
+""",
+            "exemple": """
+**Cas industriel — Deux constantes de temps sur le même système**
+
+Le vérin de l'exemple du cours met τ_montée = 2 s à se mettre en pression, mais sa vidange (vers
+0 bar) a une constante de temps différente, τ_vidange = 1 s, mesurée séparément — la
+tuyauterie d'échappement est plus large que celle d'alimentation.
+
+**Temps pour atteindre le régime stabilisé (3τ) dans chaque sens :**
+
+Montée : 3 × 2 = **6 s**. Vidange : 3 × 1 = **3 s**.
+
+**Ce que le calcul apprend.** Rien n'oblige les deux constantes de temps d'un même système à
+être égales — ici, le vérin se vide deux fois plus vite qu'il ne se remplit. Pour cadencer un
+cycle automatique complet (montée puis vidange), il faut mesurer **les deux constantes de
+temps séparément**, jamais supposer qu'elles sont identiques par symétrie du modèle
+mathématique.
+""",
+        },
     ],
 }
 
@@ -36686,6 +37941,209 @@ segment à l'autre : c'est le critère qui fait préférer cet outil de modélis
 forme doit être à la fois précise et agréable au contact, ce qui est exactement le cas d'une
 poignée. C'est pour cette raison que les logiciels de CAO proposent la B-spline comme outil
 par défaut pour les surfaces de ce type, plutôt qu'un assemblage d'arcs.
+""",
+        },
+        {
+            "id": "19.3",
+            "titre": "Calcul matriciel : matrice inverse et système linéaire",
+            "duree": "5 h",
+            "cours": """
+
+### 1. Pourquoi inverser une matrice
+
+Résoudre un système de deux équations à deux inconnues revient à « défaire » une
+transformation matricielle : si AX = B décrit comment X se transforme en B, alors
+X = A⁻¹B revient en arrière. C'est la méthode systématique qui remplace la substitution
+manuelle dès que le système vient d'un contexte physique avec plusieurs inconnues liées
+(deux réactions d'appui, deux efforts inconnus dans un assemblage).
+
+### 2. La formule, pour une matrice 2×2
+
+Pour A = [[a, b], [c, d]] avec det A = ad − bc ≠ 0 :
+
+> **A⁻¹ = (1 / det A) × [[d, −b], [−c, a]]**
+
+*Le piège classique : oublier de diviser par le déterminant, ou inverser le signe d'un
+seul des deux termes hors diagonale — les deux erreurs les plus fréquentes en calcul
+manuel.*
+
+### 3. Résoudre AX = B
+
+Une fois A⁻¹ connue, X = A⁻¹ × B se calcule comme un produit matrice-vecteur ordinaire
+(fiche 19.1).
+
+**Exemple entièrement vérifié.** Résoudre le système :
+
+> 2x + 3y = 8
+> x + 4y = 9
+
+Sous forme matricielle, A = [[2, 3], [1, 4]], B = (8, 9).
+
+det A = 2×4 − 3×1 = 8 − 3 = **5**.
+
+A⁻¹ = (1/5) × [[4, −3], [−1, 2]].
+
+X = A⁻¹ × B = (1/5) × (4×8 − 3×9 ; −1×8 + 2×9) = (1/5) × (32 − 27 ; −8 + 18)
+= (1/5) × (5 ; 10) = **(1 ; 2)**.
+
+*Vérification en réinjectant : 2×1 + 3×2 = 2 + 6 = 8 ✓ · 1 + 4×2 = 1 + 8 = 9 ✓.*
+
+### 4. Un système sans solution unique
+
+Si det A = 0, la matrice n'a pas d'inverse : le système n'a soit aucune solution, soit
+une infinité. Toujours calculer le déterminant en premier, avant de se lancer dans les
+autres calculs — un déterminant nul rend toute la suite inutile.
+
+### 5. À retenir
+
+- A⁻¹ = (1/det A) × [[d, −b], [−c, a]] pour A = [[a, b], [c, d]].
+- X = A⁻¹B résout AX = B.
+- det A = 0 ⇒ pas d'inverse, pas de solution unique — à vérifier en premier.
+            """,
+            "formules": """
+
+**Matrice inverse 2×2** — pour A = [[a, b], [c, d]], A⁻¹ = (1/det A) × [[d, −b], [−c, a]]
+
+**Résolution d'un système** — AX = B ⇒ X = A⁻¹B
+""",
+            "exercice": """
+Résous le système suivant en passant par la matrice inverse :
+
+> 3x − y = 7
+> x + 2y = 7
+
+**1.** Écris la matrice A et le vecteur B correspondants.
+
+**2.** Calcule det A, puis A⁻¹.
+
+**3.** Calcule X = A⁻¹B et vérifie ta solution.
+""",
+            "corrige": """
+**1.** A = [[3, −1], [1, 2]], B = (7 ; 7).
+
+**2.** det A = 3×2 − (−1)×1 = 6 + 1 = **7**. A⁻¹ = (1/7) × [[2, 1], [−1, 3]].
+
+**3.** X = (1/7) × (2×7 + 1×7 ; −1×7 + 3×7) = (1/7) × (21 ; 14) = **(3 ; 2)**.
+
+Vérification : 3×3 − 2 = 9 − 2 = 7 ✓ · 3 + 2×2 = 3 + 4 = 7 ✓.
+""",
+            "exemple": """
+**Cas industriel — Deux réactions d'appui liées par deux équations**
+
+Une poutre horizontale repose sur deux appuis A et B. L'équilibre des forces et des
+moments donne le système (en newtons, coefficients issus de la géométrie de la poutre) :
+
+> RA + RB = 900 (somme des réactions = charge totale)
+> 2×RA − 1×RB = 300 (équation des moments, simplifiée)
+
+**Mise en forme matricielle.** A = [[1, 1], [2, −1]], B = (900 ; 300).
+
+det A = 1×(−1) − 1×2 = −1 − 2 = −3.
+
+A⁻¹ = (1/−3) × [[−1, −1], [−2, 1]].
+
+X = (1/−3) × (−1×900 − 1×300 ; −2×900 + 1×300) = (1/−3) × (−1200 ; −1500)
+= **(400 ; 500)**.
+
+**Résultat.** RA = 400 N, RB = 500 N. Vérification : 400 + 500 = 900 ✓ ·
+2×400 − 500 = 800 − 500 = 300 ✓.
+
+**Ce que ça montre.** Sitôt qu'un bilan d'efforts fait apparaître deux inconnues liées par
+deux équations, la mise en forme matricielle donne une méthode systématique — la même
+suite d'étapes, quel que soit le contexte physique (poutre, treillis, mécanisme).
+""",
+        },
+        {
+            "id": "19.4",
+            "titre": "Modélisation géométrique : courbe de Bézier cubique",
+            "duree": "4 h",
+            "cours": """
+
+### 1. Pourquoi une quatrième dimension de contrôle
+
+La fiche 19.2 a montré la courbe de Bézier à 3 points de contrôle (quadratique). En
+pratique, les logiciels de CAO utilisent presque toujours la version à **4 points**
+(cubique) : elle permet de contrôler indépendamment la tangente en début et en fin de
+courbe, ce qu'une quadratique ne permet pas — c'est la version réellement employée pour
+des profils de carrosserie ou des surfaces de style.
+
+### 2. La formule à 4 points
+
+Pour P₀, P₁, P₂, P₃, un point de la courbe au paramètre t (entre 0 et 1) :
+
+> **B(t) = (1−t)³P₀ + 3(1−t)²t P₁ + 3(1−t)t² P₂ + t³P₃**
+
+*Même principe que pour la quadratique : la courbe passe exactement par P₀ (t=0) et P₃
+(t=1), jamais par P₁ ni P₂, qui l'influencent chacun sans la toucher.*
+
+### 3. Exemple entièrement calculé et vérifié
+
+Avec P₀ = (0, 0), P₁ = (1, 3), P₂ = (3, 3), P₃ = (4, 0) — un profil en dôme symétrique :
+
+| t | B(t) |
+|---|---|
+| 0 | (0, 0) — exactement P₀ |
+| 0,25 | (0,906 ; 1,688) |
+| 0,5 | **(2, 2,25)** |
+| 0,75 | (3,094 ; 1,688) |
+| 1 | (4, 0) — exactement P₃ |
+
+**Ce que ça montre.** La courbe reste bien au-dessus de la droite reliant P₀ à P₃ sur tout
+son parcours, avec un sommet à t = 0,5 — cohérent avec la symétrie des points de contrôle
+(P₁ et P₂ sont à la même hauteur, symétriques par rapport au milieu).
+
+### 4. À retenir
+
+- Bézier cubique : 4 points de contrôle, la courbe passe par le premier et le dernier.
+- B(t) = (1−t)³P₀ + 3(1−t)²t P₁ + 3(1−t)t² P₂ + t³P₃.
+- Le contrôle indépendant des deux tangentes d'extrémité est ce qui la rend plus utile
+  qu'une quadratique pour un style de surface complexe.
+            """,
+            "formules": """
+
+**Courbe de Bézier cubique (4 points de contrôle)** —
+B(t) = (1−t)³P₀ + 3(1−t)²t P₁ + 3(1−t)t² P₂ + t³P₃, avec t entre 0 et 1
+""",
+            "exercice": """
+Une courbe de Bézier cubique a pour points de contrôle P₀ = (0, 0), P₁ = (0, 4),
+P₂ = (4, 4), P₃ = (4, 0) — un profil en quart de tour.
+
+**1.** Sans calculer, donne les coordonnées du début et de la fin de la courbe.
+
+**2.** Calcule B(0,5).
+
+**3.** Ce point est-il sur la droite reliant P₀ à P₃ ? Que peut-on en conclure sur la
+forme de la courbe ?
+""",
+            "corrige": """
+**1.** Début = P₀ = **(0, 0)**. Fin = P₃ = **(4, 0)**.
+
+**2.** B(0,5) = 0,125×(0,0) + 0,375×(0,4) + 0,375×(4,4) + 0,125×(4,0)
+= (0,0) + (0 ; 1,5) + (1,5 ; 1,5) + (0,5 ; 0) = **(2 ; 3)**.
+
+**3.** La droite P₀-P₃ est l'axe horizontal (y = 0) ; le point (2, 3) est nettement
+au-dessus. La courbe s'arrondit largement vers le haut, tirée par P₁ et P₂ qui sont
+tous deux à y = 4 — c'est cohérent avec un profil qui doit « faire le tour » plutôt que
+suivre une ligne directe entre ses extrémités.
+""",
+            "exemple": """
+**Cas industriel — Régler la tangente d'un raccordement**
+
+Un designer doit raccorder deux surfaces planes par une transition lisse (par exemple,
+le dessus et le côté d'une coque de boîtier). La contrainte impose que la courbe parte
+**horizontalement** de P₀ et arrive **verticalement** en P₃ — deux tangentes différentes
+que la fiche 19.2 (Bézier quadratique) ne peut pas imposer indépendamment.
+
+**La solution.** Avec une cubique, on place P₁ directement à droite de P₀ (même hauteur
+y) pour forcer un départ horizontal, et P₂ directement au-dessus de P₃ (même abscisse x)
+pour forcer une arrivée verticale. Chaque tangente d'extrémité se règle uniquement par
+la position du point de contrôle qui la précède ou la suit — sans toucher à l'autre
+extrémité.
+
+**Ce que ça montre.** C'est exactement pour ce type de contrainte de raccordement (une
+tangence imposée) qu'un logiciel de CAO propose la cubique par défaut plutôt que la
+quadratique — la fiche 19.2 suffit pour comprendre le principe, mais la cubique est
+l'outil réellement utilisé dès qu'un raccordement précis est demandé.
 """,
         },
     ],
@@ -40426,6 +41884,168 @@ ATELIERS = [
                      "les valeurs extrêmes.",
     },
     {
+        "id": "at24",
+        "chapitre": "Bloc 17",
+        "titre": "Trouver les extremums locaux d'une fonction polynomiale",
+        "theme": "Fonctions d'une variable réelle",
+        "fiche": "17.4",
+        "vocabulaire": [
+            ("extremum local", "un maximum ou un minimum atteint là où f'(x) change de "
+             "signe — pas forcément le plus grand ou le plus petit sur tout ℝ."),
+            ("factoriser", "réécrire une expression en produit de facteurs, pour en lire le "
+             "signe facilement."),
+        ],
+        "enonce": "On étudie h(x) = x³ − 12x, avec h'(x) = 3x² − 12.",
+        "etapes": [
+            {"type": "numerique", "label": "Facteur constant mis à part, h'(x) se factorise "
+                     "en 3(x−a)(x+a) : que vaut a ?", "unite": "",
+             "attendu": 2, "tol": 0.01,
+             "consigne": "3x² − 12 = 3(x² − 4). Cherchez a tel que x² − 4 = (x−a)(x+a).",
+             "indice": "4 = a², donc a = 2.",
+             "pieges": [(4, "C'est x² lui-même qu'il vaut 4, pas a — a est la racine "
+                            "carrée de 4.")]},
+            {"type": "numerique", "label": "h(−2)", "unite": "",
+             "attendu": 16, "tol": 0.01,
+             "consigne": "h(x) = x³ − 12x. Remplace x par −2.",
+             "indice": "(−2)³ − 12×(−2) = −8 + 24.",
+             "pieges": [(-16, "Vérifiez le signe de (−2)³ : c'est −8, et −12×(−2) = +24 — "
+                              "le résultat final est positif.")]},
+            {"type": "numerique", "label": "h(2)", "unite": "",
+             "attendu": -16, "tol": 0.01,
+             "consigne": "h(x) = x³ − 12x. Remplace x par 2.",
+             "indice": "8 − 24.",
+             "pieges": [(16, "C'est la valeur en x=−2, pas en x=2.")]},
+            {"type": "qcm", "label": "Nature de l'extremum en x = −2",
+             "question": "h'(x) = 3(x−2)(x+2). Juste avant x=−2, h'(−3) = 15 (positif) ; "
+                         "juste après, h'(0) = −12 (négatif). Que se passe-t-il en x = −2 ?",
+             "options": ["Un maximum local", "Un minimum local", "Ni l'un ni l'autre"],
+             "bonne": 0,
+             "diagnostics": {1: "+ vers − signale un maximum, pas un minimum — c'est "
+                                "l'inverse.",
+                              2: "Un changement de signe de h' signale toujours un "
+                                 "extremum, jamais une absence d'extremum."}},
+        ],
+        "corrige": {
+            "enonce": "h(x) = x³ − 12x, h'(x) = 3x² − 12.",
+            "regle": "**Factoriser h'(x), trouver où elle s'annule, puis évaluer h (pas h') "
+                     "à ces valeurs pour connaître la hauteur de chaque extremum.**",
+            "conversions": "Aucune : calcul purement algébrique.",
+            "remplacement": "3x² − 12 = 3(x−2)(x+2) ; h(−2) = (−2)³−12(−2) ; "
+                            "h(2) = 2³−12×2",
+            "calcul": "Racines de h' : **x = −2 et x = 2**\\n\\nh(−2) = −8+24 = "
+                      "**16**\\n\\nh(2) = 8−24 = **−16**",
+            "verification": "**Contrôle de cohérence** : h'(−3)=15>0, h'(0)=−12<0, "
+                            "h'(3)=15>0 — le signe passe bien de + à − en x=−2 (maximum) "
+                            "puis de − à + en x=2 (minimum), exactement ce que confirment "
+                            "les valeurs 16 puis −16.",
+        },
+        "a_retenir": "À retenir : factoriser f'(x) pour lire son signe ; f' passe de + à − "
+                     "⇒ maximum local, de − à + ⇒ minimum local ; toujours évaluer f (pas "
+                     "f') pour connaître la valeur de l'extremum.",
+    },
+    {
+        "id": "at25",
+        "chapitre": "Bloc 17",
+        "titre": "Calculer la valeur moyenne d'une grandeur qui varie",
+        "theme": "Calcul intégral",
+        "fiche": "17.5",
+        "vocabulaire": [
+            ("valeur moyenne", "la hauteur du rectangle de même largeur et de même aire que "
+             "la courbe sur l'intervalle étudié."),
+        ],
+        "enonce": "La vitesse d'un chariot, en m/s, suit v(t) = −t² + 6t pendant 6 secondes "
+                  "(0 ⩽ t ⩽ 6).",
+        "etapes": [
+            {"type": "numerique", "label": "Primitive F(t), coefficient du terme en t²",
+             "unite": "", "attendu": 3, "tol": 0.01,
+             "consigne": "La primitive de 6t est 3t² (car la dérivée de 3t² est 6t).",
+             "indice": "6 divisé par l'exposant+1 = 2, donc 6/2 = 3.",
+             "pieges": [(6, "Vous avez recopié le coefficient de v(t) sans diviser par "
+                            "l'exposant augmenté de 1.")]},
+            {"type": "numerique", "label": "F(6)", "unite": "",
+             "attendu": 36, "tol": 0.01,
+             "consigne": "F(t) = −t³/3 + 3t². Remplace t par 6.",
+             "indice": "−216/3 + 3×36 = −72 + 108.",
+             "pieges": [(0, "Vérifiez chaque terme séparément avant de les additionner.")]},
+            {"type": "numerique", "label": "Valeur moyenne de v sur [0 ; 6]", "unite": "m/s",
+             "attendu": 6, "tol": 0.05,
+             "consigne": "moyenne = (F(6) − F(0)) / (6 − 0). F(0) = 0.",
+             "indice": "36 / 6.",
+             "pieges": [(36, "C'est l'intégrale (l'aire), pas encore divisée par la largeur "
+                             "de l'intervalle.")]},
+        ],
+        "corrige": {
+            "enonce": "v(t) = −t² + 6t sur [0 ; 6].",
+            "regle": "**Valeur moyenne = (1 / largeur de l'intervalle) × intégrale sur cet "
+                     "intervalle.**",
+            "conversions": "Aucune : les unités (m/s) restent celles de v(t).",
+            "remplacement": "F(t) = −t³/3 + 3t² ; moyenne = (F(6) − F(0)) / (6 − 0)",
+            "calcul": "F(6) = **36**\\n\\nF(0) = **0**\\n\\nMoyenne = 36 / 6 = **6 m/s**",
+            "verification": "**Contrôle de cohérence** : v(0) = 0 et v(6) = 0, mais la "
+                            "vitesse atteint un pic de v(3) = 9 m/s au milieu — la moyenne "
+                            "de 6 m/s, plus proche du pic que des extrémités, est cohérente "
+                            "avec ce profil qui monte puis redescend.",
+        },
+        "a_retenir": "À retenir : valeur moyenne de f sur [a;b] = (1/(b−a)) × ∫ de a à b de "
+                     "f(x) dx — ne jamais remplacer ce calcul par (f(a)+f(b))/2 sauf si f "
+                     "est une droite.",
+    },
+    {
+        "id": "at26",
+        "chapitre": "Bloc 17",
+        "titre": "Comparer deux séries avec le coefficient de variation",
+        "theme": "Statistique descriptive",
+        "fiche": "17.6",
+        "vocabulaire": [
+            ("coefficient de variation", "l'écart-type rapporté à la moyenne, en % — permet "
+             "de comparer la dispersion de séries de tailles différentes."),
+        ],
+        "enonce": "Quatre mesures d'une cote (mm) : 15,02 ; 15,00 ; 14,99 ; 14,99.",
+        "etapes": [
+            {"type": "numerique", "label": "Moyenne", "unite": "mm",
+             "attendu": 15.00, "tol": 0.005,
+             "consigne": "Additionne les 4 valeurs, divise par 4.",
+             "indice": "(15,02+15,00+14,99+14,99) / 4.",
+             "pieges": []},
+            {"type": "numerique", "label": "Variance", "unite": "mm²",
+             "attendu": 0.00015, "tol": 0.00002,
+             "consigne": "Moyenne des carrés des écarts à la moyenne (15,00).",
+             "indice": "Écarts : +0,02 ; 0 ; −0,01 ; −0,01. Carrés : 0,0004 ; 0 ; 0,0001 ; "
+                       "0,0001. Somme divisée par 4.",
+             "pieges": [(0.0006, "Vous avez oublié de diviser la somme des carrés par le "
+                                  "nombre de valeurs (4).")]},
+            {"type": "numerique", "label": "Écart-type", "unite": "mm",
+             "attendu": 0.01225, "tol": 0.0002,
+             "consigne": "Racine carrée de la variance.",
+             "indice": "√0,00015.",
+             "pieges": []},
+            {"type": "numerique", "label": "Coefficient de variation", "unite": "%",
+             "attendu": 0.0816, "tol": 0.002,
+             "consigne": "CV = (écart-type / moyenne) × 100.",
+             "indice": "(0,01225 / 15,00) × 100.",
+             "pieges": [(0.0008, "Vous avez oublié le ×100 : c'est un pourcentage, pas une "
+                                  "fraction.")]},
+        ],
+        "corrige": {
+            "enonce": "Série de 4 mesures autour de 15,00 mm.",
+            "regle": "**Variance = moyenne des carrés des écarts ; écart-type = racine "
+                     "carrée de la variance ; CV = (écart-type / moyenne) × 100.**",
+            "conversions": "Aucune conversion d'unité : tout reste en mm, sauf le CV, un "
+                           "pourcentage sans dimension.",
+            "remplacement": "moyenne = 60,00/4 ; variance = 0,0006/4 ; écart-type = √variance "
+                            "; CV = écart-type/moyenne × 100",
+            "calcul": "Moyenne = **15,00 mm**\\n\\nVariance = **0,00015 mm²**\\n\\n"
+                      "Écart-type = **0,01225 mm**\\n\\nCV ≈ **0,082 %**",
+            "verification": "**Contrôle d'ordre de grandeur** : un CV inférieur à 1 % "
+                            "signale une série très homogène par rapport à sa moyenne — "
+                            "cohérent avec des écarts de quelques centièmes de mm sur une "
+                            "cote de 15 mm.",
+        },
+        "a_retenir": "À retenir : variance → écart-type → coefficient de variation, dans cet "
+                     "ordre ; le CV, en %, est le seul des trois qui permette de comparer "
+                     "des séries de moyennes différentes.",
+    },
+    {
         "id": "at20",
         "chapitre": "Bloc 18",
         "titre": "Combiner deux événements (union et intersection)",
@@ -40642,6 +42262,428 @@ ATELIERS = [
         "a_retenir": "À retenir : B(t) = (1−t)²P0 + 2(1−t)t·P1 + t²P2, avec des poids qui "
                      "somment toujours à 1. La courbe passe par P0 et P2, jamais par P1 "
                      "(sauf cas dégénéré).",
+    },
+    {
+        "id": "at27",
+        "chapitre": "Bloc 18",
+        "titre": "Retrouver la source la plus probable d'un défaut",
+        "theme": "Probabilités conditionnelles",
+        "fiche": "18.5",
+        "vocabulaire": [
+            ("P(B|A)", "probabilité de B sachant que A s'est déjà produit."),
+            ("arbre pondéré", "schéma où la probabilité d'un chemin complet est le produit "
+             "des probabilités le long du chemin."),
+        ],
+        "enonce": "Fournisseur A : 70% du volume, 2% de défaut. Fournisseur B : 30% du "
+                  "volume, 8% de défaut.",
+        "etapes": [
+            {"type": "numerique", "label": "P(A ∩ défaut), en %", "unite": "%",
+             "attendu": 1.4, "tol": 0.05,
+             "consigne": "P(A ∩ défaut) = P(A) × P(défaut|A) = 0,70 × 0,02.",
+             "indice": "0,70 × 0,02 = 0,014, soit 1,4%.",
+             "pieges": [(2, "C'est le taux de défaut de A seul (2%), pas encore combiné à "
+                            "son volume (70%).")]},
+            {"type": "numerique", "label": "P(B ∩ défaut), en %", "unite": "%",
+             "attendu": 2.4, "tol": 0.05,
+             "consigne": "P(B ∩ défaut) = P(B) × P(défaut|B) = 0,30 × 0,08.",
+             "indice": "0,30 × 0,08 = 0,024, soit 2,4%.",
+             "pieges": [(8, "C'est le taux de défaut de B seul (8%), pas encore combiné à "
+                            "son volume (30%).")]},
+            {"type": "numerique", "label": "P(défaut) totale, en %", "unite": "%",
+             "attendu": 3.8, "tol": 0.05,
+             "consigne": "Additionne les deux probabilités trouvées : P(A∩défaut) + "
+                         "P(B∩défaut).",
+             "indice": "1,4% + 2,4%.",
+             "pieges": [(10, "Vous avez additionné les taux de défaut bruts (2%+8%) sans "
+                             "les pondérer par les volumes.")]},
+            {"type": "qcm",
+             "label": "Sachant qu'une pièce est défectueuse, quel fournisseur est le plus "
+                      "probablement en cause ?",
+             "question": "P(A|défaut) = 1,4/3,8 ≈ 37%. P(B|défaut) = 2,4/3,8 ≈ 63%. Lequel "
+                         "des deux fournisseurs domine parmi les défauts trouvés ?",
+             "options": ["Le fournisseur A", "Le fournisseur B",
+                         "Impossible à dire sans plus d'information"],
+             "bonne": 1,
+             "diagnostics": {0: "A fournit plus de volume (70%), mais c'est B qui domine "
+                                "parmi les pièces défectueuses (63% contre 37%) — le volume "
+                                "seul ne suffit pas à conclure.",
+                              2: "Le calcul de P(B|défaut) ≈ 63% tranche sans ambiguïté."}},
+        ],
+        "corrige": {
+            "enonce": "Fournisseur A : 70%, 2% défaut. Fournisseur B : 30%, 8% défaut.",
+            "regle": "**P(fournisseur ∩ défaut) = P(fournisseur) × P(défaut|fournisseur), "
+                     "puis on additionne les chemins pour la probabilité totale.**",
+            "conversions": "Pourcentages convertis en probabilités décimales pour le calcul "
+                           "(70% → 0,70), reconvertis en % pour la réponse.",
+            "remplacement": "P(A∩défaut)=0,70×0,02 ; P(B∩défaut)=0,30×0,08 ; "
+                            "P(défaut)=somme des deux",
+            "calcul": "P(A∩défaut) = **1,4%**\\n\\nP(B∩défaut) = **2,4%**\\n\\n"
+                      "P(défaut) = **3,8%**\\n\\nP(B|défaut) = 2,4/3,8 ≈ **63%**",
+            "verification": "**Contrôle de cohérence** : P(A|défaut) + P(B|défaut) doit "
+                            "toujours valoir 100% — ici 37% + 63% = 100%, confirmé.",
+        },
+        "a_retenir": "À retenir : arbre pondéré, produit le long d'un chemin, somme des "
+                     "chemins qui mènent au même résultat. La part d'un fournisseur dans "
+                     "les défauts trouvés n'est pas sa part de volume.",
+    },
+    {
+        "id": "at28",
+        "chapitre": "Bloc 18",
+        "titre": "Repérer un lot anormal avec l'espérance et l'écart-type",
+        "theme": "Loi binomiale — espérance et écart-type",
+        "fiche": "18.6",
+        "vocabulaire": [
+            ("plage usuelle", "E(X) ± 2σ(X), un repère pratique pour juger si un résultat "
+             "est normal ou anormal."),
+        ],
+        "enonce": "Lots de n=150 pièces, taux de défaut habituel p=0,04 (4%).",
+        "etapes": [
+            {"type": "numerique", "label": "E(X), nombre moyen de défectueuses", "unite": "",
+             "attendu": 6, "tol": 0.1,
+             "consigne": "E(X) = n × p.",
+             "indice": "150 × 0,04.",
+             "pieges": [(0.04, "C'est p seul, il manque le facteur n.")]},
+            {"type": "numerique", "label": "σ(X), écart-type", "unite": "",
+             "attendu": 2.4, "tol": 0.05,
+             "consigne": "σ(X) = √(n × p × (1−p)).",
+             "indice": "√(150 × 0,04 × 0,96) = √5,76.",
+             "pieges": [(5.76, "C'est la variance, avant la racine carrée.")]},
+            {"type": "numerique", "label": "Borne haute de la plage usuelle E(X)+2σ(X)",
+             "unite": "", "attendu": 10.8, "tol": 0.1,
+             "consigne": "Ajoute deux fois l'écart-type à l'espérance.",
+             "indice": "6 + 2×2,4.",
+             "pieges": [(8.4, "Vous n'avez ajouté qu'une seule fois σ(X), il en faut deux "
+                              "pour la plage usuelle E(X)±2σ(X).")]},
+            {"type": "qcm",
+             "label": "Un lot contient 14 pièces défectueuses. Que peut-on en conclure ?",
+             "question": "La plage usuelle calculée est [1,2 ; 10,8]. Que dire d'un lot à "
+                         "14 défectueuses ?",
+             "options": ["Rien d'anormal, la variation naturelle du hasard suffit à "
+                         "l'expliquer", "Ce résultat dépasse la plage usuelle, un contrôle "
+                         "de la ligne est justifié", "Impossible de conclure sans refaire "
+                         "tout le calcul"],
+             "bonne": 1,
+             "diagnostics": {0: "14 est au-delà de la borne haute (10,8) : ce n'est pas une "
+                                "simple variation normale.",
+                              2: "La plage usuelle sert justement à trancher rapidement, "
+                                 "sans recalcul : 14 > 10,8, donc anormal."}},
+        ],
+        "corrige": {
+            "enonce": "n=150, p=0,04.",
+            "regle": "**E(X) = np ; σ(X) = √(np(1−p)) ; plage usuelle = E(X) ± 2σ(X).**",
+            "conversions": "Aucune : n est un effectif, p une proportion sans unité.",
+            "remplacement": "E(X)=150×0,04 ; σ(X)=√(150×0,04×0,96) ; plage=6±2×2,4",
+            "calcul": "E(X) = **6**\\n\\nσ(X) = **2,4**\\n\\nPlage = **[1,2 ; 10,8]**",
+            "verification": "**Contrôle de cohérence** : 14 defectueuses est nettement "
+                            "au-dessus de 10,8 — le lot sort clairement de la plage, pas "
+                            "un cas limite douteux.",
+        },
+        "a_retenir": "À retenir : E(X)=np, σ(X)=√(np(1−p)), plage usuelle E(X)±2σ(X) — un "
+                     "repère rapide pour distinguer bruit normal et dérive réelle.",
+    },
+    {
+        "id": "at29",
+        "chapitre": "Bloc 18",
+        "titre": "Calculer la taille d'échantillon nécessaire",
+        "theme": "Taille d'échantillon",
+        "fiche": "18.7",
+        "vocabulaire": [
+            ("marge visée", "l'écart maximal accepté entre l'estimation et la vraie "
+             "moyenne, fixé avant de calculer n."),
+        ],
+        "enonce": "Écart-type connu s=0,08 mm. Marge d'erreur visée à 95% : 0,02 mm.",
+        "etapes": [
+            {"type": "numerique", "label": "n brut, sans arrondir", "unite": "",
+             "attendu": 61.47, "tol": 0.5,
+             "consigne": "n = (1,96 × s / marge)².",
+             "indice": "(1,96 × 0,08 / 0,02)² = 7,84².",
+             "pieges": [(7.84, "C'est la valeur avant élévation au carré.")]},
+            {"type": "numerique", "label": "n arrondi, nombre de pièces à contrôler",
+             "unite": "pièces", "attendu": 62, "tol": 0.4,
+             "consigne": "Arrondis n TOUJOURS au nombre entier SUPÉRIEUR.",
+             "indice": "61,47 arrondi vers le haut.",
+             "pieges": [(61, "Arrondi au plus proche au lieu du plafond : 61 pièces ne "
+                             "garantirait plus tout à fait la marge visée.")]},
+            {"type": "qcm",
+             "label": "Si la marge visée est divisée par 2, n est multiplié par…",
+             "question": "La formule est n = (1,96 × s / marge)². Si on divise la marge "
+                         "par 2, que devient n ?",
+             "options": ["2", "4", "1,41 (racine de 2)"],
+             "bonne": 1,
+             "diagnostics": {0: "n dépend du CARRÉ de (1/marge), pas de 1/marge seul.",
+                              2: "C'est l'inverse : la racine intervient si on cherchait à "
+                                 "réduire la MARGE en connaissant n, pas ici."}},
+        ],
+        "corrige": {
+            "enonce": "s=0,08 mm, marge visée=0,02 mm.",
+            "regle": "**n = (1,96 × s / marge visée)², toujours arrondi au nombre entier "
+                     "supérieur.**",
+            "conversions": "Aucune : s et la marge sont déjà dans la même unité (mm).",
+            "remplacement": "n = (1,96 × 0,08 / 0,02)²",
+            "calcul": "n brut = **61,47**\\n\\nn arrondi = **62 pièces**",
+            "verification": "**Contrôle** : avec n=62, marge = 1,96×0,08/√62 ≈ 0,0199 mm, "
+                            "bien sous 0,02 mm visé — confirmé.",
+        },
+        "a_retenir": "À retenir : n = (1,96 × s / marge)², arrondi au plafond. Diviser la "
+                     "marge visée par k multiplie n par k².",
+    },
+    {
+        "id": "at30",
+        "chapitre": "Bloc 18",
+        "titre": "Suivre une vidange progressive dans le temps",
+        "theme": "Équations différentielles — mise en régime",
+        "fiche": "18.8",
+        "vocabulaire": [
+            ("constante de temps τ", "durée caractéristique : après τ, environ 63% de "
+             "l'écart avec l'équilibre est parcouru."),
+        ],
+        "enonce": "Vidange d'un réservoir : P0=8 bar, P_eq=0 bar, τ=4 s. "
+                  "P(t) = 8 × e^(−t/4).",
+        "etapes": [
+            {"type": "numerique", "label": "P(t=4s), en bar", "unite": "bar",
+             "attendu": 2.94, "tol": 0.05,
+             "consigne": "P(4) = 8 × e^(−4/4) = 8 × e^(−1).",
+             "indice": "8 × 0,368.",
+             "pieges": [(5.06, "C'est 8 − 2,94, une soustraction qui n'a pas de sens ici : "
+                                "P(t) se calcule directement par la formule, pas par "
+                                "différence.")]},
+            {"type": "numerique", "label": "P(t=12s), en bar", "unite": "bar",
+             "attendu": 0.398, "tol": 0.02,
+             "consigne": "12 s = 3τ. P(12) = 8 × e^(−3).",
+             "indice": "8 × 0,0498.",
+             "pieges": [(0.4, None)]},
+            {"type": "numerique", "label": "Instant où P atteint 1 bar (en s)", "unite": "s",
+             "attendu": 8.32, "tol": 0.1,
+             "consigne": "1 = 8 × e^(−t/4). Isole t avec ln.",
+             "indice": "e^(−t/4) = 1/8 = 0,125 ; t = −4 × ln(0,125).",
+             "pieges": [(4, "C'est τ lui-même, pas l'instant recherché — il faut résoudre "
+                            "l'équation, pas recopier τ.")]},
+            {"type": "qcm",
+             "label": "Après 12 s (3τ), quelle proportion de la vidange est faite ?",
+             "question": "P(12) ≈ 0,4 bar, partant de 8 bar. Quel pourcentage de la baisse "
+                         "totale est déjà réalisé ?",
+             "options": ["50%", "environ 95%", "100% exactement"],
+             "bonne": 1,
+             "diagnostics": {0: "50% correspondrait à τ, pas à 3τ.",
+                              2: "L'équilibre n'est jamais atteint exactement en temps "
+                                 "fini avec ce modèle — seulement approché de très près."}},
+        ],
+        "corrige": {
+            "enonce": "P0=8 bar, τ=4 s, P(t)=8×e^(−t/4).",
+            "regle": "**Même équation que pour un refroidissement : y(t) = y_eq + "
+                     "(y₀−y_eq)×e^(−t/τ)**, ici y_eq=0 donc P(t) = P0 × e^(−t/τ).",
+            "conversions": "Aucune : tout reste en bar et en secondes.",
+            "remplacement": "P(4)=8×e^(−1) ; P(12)=8×e^(−3) ; 1=8×e^(−t/4)",
+            "calcul": "P(4) = **2,94 bar**\\n\\nP(12) = **0,398 bar**\\n\\n"
+                      "t(1 bar) ≈ **8,32 s**",
+            "verification": "**Contrôle de cohérence** : P(4)/P0 ≈ 0,368 (soit 1/e), "
+                            "exactement la règle du τ — 63% de la baisse totale (8 bar) est "
+                            "faite après 4 s.",
+        },
+        "a_retenir": "À retenir : la même équation décrit montée ET descente — seul le "
+                     "signe de (y₀−y_eq) change le sens. τ et 3τ restent les repères clés "
+                     "dans les deux cas.",
+    },
+    {
+        "id": "at31",
+        "chapitre": "Bloc 19",
+        "titre": "Résoudre un système par matrice inverse",
+        "theme": "Calcul matriciel — matrice inverse",
+        "fiche": "19.3",
+        "vocabulaire": [
+            ("matrice inverse", "la matrice A⁻¹ telle que A × A⁻¹ redonne la matrice "
+             "identité — elle « défait » la transformation de A."),
+        ],
+        "enonce": "Système : 2x + y = 7 ; x + 3y = 11. A = [[2, 1], [1, 3]], B = (7 ; 11).",
+        "etapes": [
+            {"type": "numerique", "label": "Déterminant de A", "unite": "",
+             "attendu": 5, "tol": 0.01,
+             "consigne": "det A = 2×3 − 1×1.",
+             "indice": "6 − 1.",
+             "pieges": [(7, "Vous avez additionné 2×3 et 1×1 au lieu de soustraire.")]},
+            {"type": "numerique", "label": "x", "unite": "",
+             "attendu": 2, "tol": 0.05,
+             "consigne": "X = A⁻¹B = (1/5) × (3×7 − 1×11 ; −1×7 + 2×11).",
+             "indice": "(1/5) × (21 − 11).",
+             "pieges": [(6.4, "C'est (1/5)×32, la formule appliquée sans respecter le "
+                               "signe − devant le terme 1×11.")]},
+            {"type": "numerique", "label": "y", "unite": "",
+             "attendu": 3, "tol": 0.05,
+             "consigne": "(1/5) × (−7 + 22).",
+             "indice": "(1/5) × 15.",
+             "pieges": [(3.6, "Vérifiez le signe : c'est −1×7 + 2×11, pas −1×7 − 2×11.")]},
+            {"type": "qcm", "label": "Contrôle",
+             "question": "En réinjectant x=2 et y=3 dans la première équation "
+                         "2x+y=7, obtient-on bien 7 ?",
+             "options": ["Oui : 2×2+3 = 7, ça colle",
+                         "Non, 2×2+3 = 9", "La vérification n'est pas utile ici"],
+             "bonne": 0,
+             "diagnostics": {1: "2×2 = 4, et 4+3 = 7, pas 9 — revérifiez l'addition.",
+                              2: "La vérification par réinjection est justement ce qui "
+                                 "permet de repérer une erreur de signe avant de rendre "
+                                 "une copie."}},
+        ],
+        "corrige": {
+            "enonce": "2x+y=7 ; x+3y=11, soit A=[[2,1],[1,3]], B=(7;11).",
+            "regle": "**A⁻¹ = (1/det A) × [[d, −b], [−c, a]]** pour A=[[a,b],[c,d]], puis "
+                     "X = A⁻¹B.",
+            "conversions": "Aucune : système déjà sous forme numérique directe.",
+            "remplacement": "det A = 2×3−1×1 = 5\\n\\nA⁻¹ = (1/5)×[[3,−1],[−1,2]]",
+            "calcul": "x = (1/5)×(3×7−1×11) = (1/5)×10 = **2**\\n\\n"
+                      "y = (1/5)×(−1×7+2×11) = (1/5)×15 = **3**",
+            "verification": "**Réinjection dans les deux équations** : 2×2+3 = 7 ✓ · "
+                            "2+3×3 = 2+9 = 11 ✓ — les deux équations de départ sont "
+                            "bien vérifiées par x=2, y=3.",
+        },
+        "a_retenir": "À retenir : det A en premier, puis A⁻¹ = (1/det A)×[[d,−b],[−c,a]], "
+                     "puis X = A⁻¹B — et toujours vérifier en réinjectant.",
+    },
+    {
+        "id": "at32",
+        "chapitre": "Bloc 19",
+        "titre": "Calculer un point sur une courbe de Bézier cubique",
+        "theme": "Modélisation géométrique — Bézier cubique",
+        "fiche": "19.4",
+        "vocabulaire": [
+            ("point de contrôle", "un point qui influence la forme de la courbe sans "
+             "être dessus, sauf le premier et le dernier."),
+        ],
+        "enonce": "P₀=(0,0), P₁=(1,3), P₂=(3,3), P₃=(4,0). B(t)=(1−t)³P₀+3(1−t)²tP₁"
+                  "+3(1−t)t²P₂+t³P₃.",
+        "etapes": [
+            {"type": "numerique", "label": "Abscisse de B(0,5)", "unite": "",
+             "attendu": 2.0, "tol": 0.05,
+             "consigne": "Calcule chaque coefficient : (1−t)³=0,125 ; 3(1−t)²t=0,375 ; "
+                         "3(1−t)t²=0,375 ; t³=0,125, puis combine avec les abscisses.",
+             "indice": "0,125×0 + 0,375×1 + 0,375×3 + 0,125×4.",
+             "pieges": [(1, "C'est seulement 3×(1-t)²t×P1x — il manque les trois autres "
+                            "termes de la somme.")]},
+            {"type": "numerique", "label": "Ordonnée de B(0,5)", "unite": "",
+             "attendu": 2.25, "tol": 0.05,
+             "consigne": "0,125×0 + 0,375×3 + 0,375×3 + 0,125×0.",
+             "indice": "0,375×3 + 0,375×3 = 2,25, les deux autres termes sont nuls.",
+             "pieges": [(3, "C'est la hauteur de P1 et P2, pas celle du point de la "
+                            "courbe — la courbe ne les atteint pas.")]},
+            {"type": "qcm", "label": "Interprétation",
+             "question": "Le point calculé (2 ; 2,25) est-il un des points de contrôle "
+                         "P₀, P₁, P₂ ou P₃ ?",
+             "options": ["Non, c'est un point de la courbe, différent des 4 points de "
+                        "contrôle", "Oui, c'est P₁", "Oui, c'est le milieu exact du "
+                        "segment P₁P₂"],
+             "bonne": 0,
+             "diagnostics": {1: "P₁ = (1, 3), pas (2, 2.25) — le point de contrôle "
+                                "attire la courbe sans qu'elle le touche.",
+                              2: "Le milieu de P₁P₂ serait (2, 3), pas (2, 2.25) : la "
+                                 "courbe passe légèrement en dessous de ce milieu."}},
+        ],
+        "corrige": {
+            "enonce": "P₀=(0,0), P₁=(1,3), P₂=(3,3), P₃=(4,0), t=0,5.",
+            "regle": "**B(t) = (1−t)³P₀ + 3(1−t)²t P₁ + 3(1−t)t² P₂ + t³P₃**.",
+            "conversions": "Aucune.",
+            "remplacement": "Coefficients à t=0,5 : 0,125 ; 0,375 ; 0,375 ; 0,125",
+            "calcul": "x = 0,125×0+0,375×1+0,375×3+0,125×4 = 0+0,375+1,125+0,5 = **2**"
+                      "\\n\\ny = 0,125×0+0,375×3+0,375×3+0,125×0 = 1,125+1,125 = **2,25**",
+            "verification": "**Somme des coefficients** : 0,125+0,375+0,375+0,125 = 1 — "
+                            "toujours vrai quel que soit t, c'est ce qui garantit que le "
+                            "point calculé reste une moyenne pondérée cohérente des 4 "
+                            "points de contrôle.",
+        },
+        "a_retenir": "À retenir : les 4 coefficients d'une Bézier cubique somment "
+                     "toujours à 1 — un bon moyen de vérifier un calcul avant de "
+                     "l'accepter.",
+    },
+    {
+        "id": "at33",
+        "chapitre": "Bloc 7",
+        "titre": "Vérifier qu'un point appartient à un cercle",
+        "theme": "Configurations géométriques — équation du cercle",
+        "fiche": "7.4",
+        "vocabulaire": [
+            ("rayon", "la distance constante entre le centre du cercle et chacun de ses "
+             "points."),
+        ],
+        "enonce": "Cercle de centre Ω(3 ; 2), rayon 5. Point M(7 ; 5).",
+        "etapes": [
+            {"type": "numerique", "label": "(x−a)², en unités²", "unite": "",
+             "attendu": 16, "tol": 0.01,
+             "consigne": "(7 − 3)².",
+             "indice": "4².",
+             "pieges": [(4, "C'est l'écart (x−a) lui-même, pas son carré.")]},
+            {"type": "numerique", "label": "(y−b)², en unités²", "unite": "",
+             "attendu": 9, "tol": 0.01,
+             "consigne": "(5 − 2)².",
+             "indice": "3².",
+             "pieges": [(3, "C'est l'écart (y−b) lui-même, pas son carré.")]},
+            {"type": "qcm", "label": "Conclusion",
+             "question": "16 + 9 = 25 = R². Le point M appartient-il au cercle ?",
+             "options": ["Oui, l'égalité est exacte", "Non, il faudrait recalculer",
+                         "On ne peut pas conclure sans tracer le dessin"],
+             "bonne": 0,
+             "diagnostics": {1: "16+9=25 et R²=5²=25 : l'égalité est bien vérifiée "
+                                "exactement, aucun recalcul supplémentaire n'est requis.",
+                              2: "Le calcul algébrique suffit à trancher — c'est tout "
+                                 "l'intérêt de l'équation, pas besoin de dessin précis."}},
+        ],
+        "corrige": {
+            "enonce": "Ω(3;2), R=5, M(7;5).",
+            "regle": "**(x−a)²+(y−b)²=R²** définit le cercle ; on vérifie en substituant "
+                     "les coordonnées de M.",
+            "conversions": "Aucune.",
+            "remplacement": "(7−3)²+(5−2)²",
+            "calcul": "= 16 + 9 = **25**",
+            "verification": "**R² = 5² = 25** — égal au résultat trouvé : M appartient "
+                            "exactement au cercle.",
+        },
+        "a_retenir": "À retenir : substituer les coordonnées du point dans l'équation du "
+                     "cercle et comparer au carré du rayon — une égalité exacte confirme "
+                     "l'appartenance.",
+    },
+    {
+        "id": "at34",
+        "chapitre": "Bloc 7",
+        "titre": "Calculer un barycentre de trois pièces",
+        "theme": "Calcul vectoriel — barycentre",
+        "fiche": "7.5",
+        "vocabulaire": [
+            ("barycentre", "le point d'équilibre d'un système de points pondérés — le "
+             "centre de gravité d'un assemblage."),
+        ],
+        "enonce": "Trois pièces : A(0;0) 5 kg, B(8;0) 2 kg, C(2;6) 3 kg.",
+        "etapes": [
+            {"type": "numerique", "label": "Masse totale, en kg", "unite": "kg",
+             "attendu": 10, "tol": 0.01,
+             "consigne": "5 + 2 + 3.",
+             "indice": None,
+             "pieges": []},
+            {"type": "numerique", "label": "Gx", "unite": "",
+             "attendu": 2.2, "tol": 0.05,
+             "consigne": "(5×0 + 2×8 + 3×2) / 10.",
+             "indice": "(0 + 16 + 6) / 10.",
+             "pieges": [(3.33, "C'est la moyenne simple (0+8+2)/3, sans tenir compte "
+                                "des masses différentes.")]},
+            {"type": "numerique", "label": "Gy", "unite": "",
+             "attendu": 1.8, "tol": 0.05,
+             "consigne": "(5×0 + 2×0 + 3×6) / 10.",
+             "indice": "18 / 10.",
+             "pieges": [(2, "C'est la moyenne simple (0+0+6)/3, pas la moyenne "
+                            "pondérée par les masses.")]},
+        ],
+        "corrige": {
+            "enonce": "A(0;0) 5kg, B(8;0) 2kg, C(2;6) 3kg.",
+            "regle": "**Gx = (Σmᵢxᵢ)/(Σmᵢ)**, **Gy = (Σmᵢyᵢ)/(Σmᵢ)** — moyennes "
+                     "pondérées par la masse de chaque point.",
+            "conversions": "Aucune.",
+            "remplacement": "Masse totale = 5+2+3 = 10 kg",
+            "calcul": "Gx = (5×0+2×8+3×2)/10 = 22/10 = **2,2**\\n\\n"
+                      "Gy = (5×0+2×0+3×6)/10 = 18/10 = **1,8**",
+            "verification": "**Contrôle de position** : G(2,2 ; 1,8) est plus proche de "
+                            "A (5 kg, la pièce la plus lourde) que de la moyenne "
+                            "géométrique simple (3,33 ; 2) — cohérent avec le poids "
+                            "dominant de A.",
+        },
+        "a_retenir": "À retenir : diviser toujours par la masse totale, jamais par le "
+                     "nombre de points — un point plus lourd déplace le barycentre "
+                     "vers lui proportionnellement à sa masse.",
     },
 ]
 
