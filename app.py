@@ -6390,6 +6390,161 @@ QUIZ["Module 11 — Gamme de fabrication et contrôle"] = [
       "indispensable en cas de non-conformité détectée après coup.", "Base"),
 ]
 
+QUIZ["Mathématiques BTS CPI (examen)"] = [
+    q("Quel est l'ensemble de définition de f(x) = (x + 1) / (x − 4) ?",
+      ["ℝ tout entier", "ℝ privé de −1", "ℝ privé de 4", "ℝ privé de −4 et 4"], 2,
+      "Le dénominateur x − 4 s'annule pour x = 4. Cette valeur, et elle seule, doit être "
+      "exclue : le numérateur, lui, ne pose aucun problème.", "Base"),
+
+    q("Une fonction f a pour limite 3 quand x tend vers +∞. Que peut-on en déduire ?",
+      ["f(x) vaut exactement 3 pour x très grand", "La droite y = 3 est une asymptote "
+       "horizontale", "f admet un maximum en x = 3", "f n'est pas définie en x = 3"], 1,
+      "La courbe se rapproche de la droite y = 3 sans jamais forcément l'atteindre : c'est la "
+      "définition même d'une asymptote horizontale.", "Base"),
+
+    q("Pour une fonction homographique f(x) = (ax+b)/(cx+d), le signe de f'(x) est donné par :",
+      ["Le signe de a", "Le signe de (ad − bc)", "Toujours positif", "Toujours négatif"], 1,
+      "En dérivant avec la formule du quotient, le dénominateur (cx+d)² est toujours positif : "
+      "c'est le numérateur ad − bc qui fixe le signe de f'(x) sur tout le domaine, donc le sens "
+      "de variation.", "Intermédiaire"),
+
+    q("Quelle est une primitive de f(x) = 5x⁴ ?",
+      ["5x⁵", "x⁵", "x⁵/5", "20x³"], 1,
+      "Primitive de x^n : x^(n+1)/(n+1). Ici, x⁵/5, multiplié par le coefficient 5 devant x⁴, "
+      "donne 5 × x⁵/5 = x⁵ — les deux 5 se simplifient.", "Base"),
+
+    q("∫ de 2 à 5 de 1 dx vaut :",
+      ["1", "3", "5", "7"], 1,
+      "Une primitive de la fonction constante 1 est x. F(5) − F(2) = 5 − 2 = 3 : c'est "
+      "simplement l'aire du rectangle de largeur (5−2) et de hauteur 1.", "Base"),
+
+    q("Sur une série de 12 valeurs triées, à quel rang se trouve Q3 ?",
+      ["Rang 3", "Rang 8", "Rang 9", "Rang 12"], 2,
+      "Rang de Q3 = 0,75 × 12 = 9, déjà entier — pas d'arrondi nécessaire. C'est donc la 9ᵉ "
+      "valeur de la série triée.", "Base"),
+
+    q("Une série a une moyenne de 30,02 mm et une médiane de 30,00 mm, nettement différentes. "
+      "Que peut-on suspecter ?",
+      ["Une erreur de calcul obligatoire", "La présence d'une ou plusieurs valeurs "
+       "extrêmes qui tirent la moyenne", "Que la série est fausse", "Rien, c'est normal pour "
+       "toute série"], 1,
+      "La médiane résiste aux valeurs extrêmes, la moyenne non. Un écart net entre les deux est "
+      "le signal classique d'une série asymétrique ou d'une pièce mal mesurée qui décale la "
+      "moyenne sans déplacer la médiane.", "Intermédiaire"),
+
+    q("L'écart interquartile d'une série est calculé à partir de :",
+      ["Le minimum et le maximum", "La moyenne et l'écart-type", "Q1 et Q3 uniquement", "La "
+       "médiane seule"], 2,
+      "EIQ = Q3 − Q1. Il ignore volontairement le quart le plus bas et le quart le plus haut de "
+      "la série, ce qui le rend peu sensible à une valeur aberrante isolée.", "Base"),
+]
+
+QUIZ["Mathématiques BTS CPI — probabilités et équations différentielles"] = [
+    q("Deux événements A et B ont P(A) = 0,10 et P(B) = 0,20. Que vaut P(A ∪ B) si l'on sait "
+      "seulement que P(A ∩ B) = 0,02 ?",
+      ["0,30", "0,28", "0,02", "0,32"], 1,
+      "P(A ∪ B) = P(A) + P(B) − P(A ∩ B) = 0,10 + 0,20 − 0,02 = 0,28. Il faut toujours "
+      "retrancher l'intersection, sinon on la compte deux fois.", "Base"),
+
+    q("Deux défauts indépendants ont pour probabilités 0,05 et 0,04. Quelle est la probabilité "
+      "qu'une pièce présente les deux défauts en même temps ?",
+      ["0,09", "0,002", "0,0020", "0,20"], 2,
+      "Événements indépendants : P(A ∩ B) = P(A) × P(B) = 0,05 × 0,04 = 0,0020 — bien plus "
+      "faible que chaque défaut pris seul.", "Base"),
+
+    q("Dans la formule de la loi binomiale P(X=k) = C(n,k) × p^k × (1−p)^(n−k), à quoi sert le "
+      "coefficient C(n,k) ?",
+      ["À normaliser la probabilité entre 0 et 1", "À compter le nombre de façons de placer les "
+       "k succès parmi les n épreuves", "À corriger un biais d'échantillonnage", "Il n'a pas de "
+       "rôle, on peut l'omettre"], 1,
+      "C(n,k) compte toutes les positions possibles des k succès parmi les n épreuves — l'oublier "
+      "revient à ne compter qu'un seul arrangement possible sur plusieurs.", "Intermédiaire"),
+
+    q("Pour X ∼ B(20 ; 0,05), que vaut l'espérance E(X) ?",
+      ["0,05", "1", "20", "0,95"], 1,
+      "E(X) = n × p = 20 × 0,05 = 1 : on attend en moyenne 1 pièce défectueuse par échantillon "
+      "de 20.", "Base"),
+
+    q("Un intervalle de confiance à 95 % de la moyenne, IC95% = x̄ ± 1,96×s/√n, porte sur :",
+      ["La proportion de pièces individuelles dans cet intervalle", "La moyenne réelle de toute "
+       "la production, estimée à partir de l'échantillon", "L'écart-type de l'échantillon", "Le "
+       "nombre de pièces défectueuses attendues"], 1,
+      "L'intervalle de confiance encadre la moyenne de la POPULATION entière, pas les pièces "
+      "individuelles — c'est la confusion la plus fréquente sur ce point du programme.", "Intermédiaire"),
+
+    q("Pour réduire de moitié la marge d'erreur d'un intervalle de confiance, sans changer s, "
+      "il faut multiplier la taille de l'échantillon n par :",
+      ["2", "4", "0,5", "10"], 1,
+      "La marge varie en 1/√n : pour la diviser par 2, il faut multiplier n par 2² = 4, pas "
+      "seulement par 2.", "Avancé"),
+
+    q("Dans T(t) = T_amb + (T₀ − T_amb) × e^(−t/τ), que représente τ ?",
+      ["La température finale", "La température de départ", "Une durée caractéristique : le "
+       "temps pour parcourir environ 63 % de l'écart restant", "Le nombre total de degrés "
+       "perdus"], 2,
+      "τ est une durée, pas une température. Après un temps τ, l'écart à l'équilibre a diminué "
+      "d'environ 63 % (il en reste 1/e ≈ 37 %).", "Intermédiaire"),
+
+    q("Après une durée de 3τ, où en est un phénomène de refroidissement modélisé par "
+      "T(t) = T_amb + (T₀ − T_amb)×e^(−t/τ) ?",
+      ["À peine commencé", "À la moitié de l'écart initial", "Quasiment stabilisé, environ 95 % "
+       "de l'écart parcouru", "Toujours à la température de départ"], 2,
+      "3τ correspond à e^(−3) ≈ 0,05 : il ne reste plus qu'environ 5 % de l'écart initial — le "
+      "régime est considéré comme quasi stabilisé.", "Base"),
+]
+
+QUIZ["Mathématiques BTS CPI — calcul matriciel et modélisation géométrique"] = [
+    q("Avec M₁ = [[1, 2], [3, 4]] et M₂ = [[2, 0], [1, 2]], que vaut le terme en haut à "
+      "gauche de M₁ × M₂ ?",
+      ["2", "4", "3", "6"], 1,
+      "On combine la ligne 1 de M₁ avec la colonne 1 de M₂ : 1×2 + 2×1 = 4.", "Base"),
+
+    q("M₁ × M₂ est-il en général égal à M₂ × M₁ ?",
+      ["Oui, toujours", "Non, la multiplication de matrices n'est pas commutative",
+       "Seulement pour les matrices carrées", "Seulement si le déterminant est nul"], 1,
+      "La multiplication de matrices n'est pas commutative : l'ordre dans lequel on enchaîne "
+      "deux transformations change le résultat.", "Base"),
+
+    q("Quel est le déterminant de A = [[2, 3], [1, 4]] ?",
+      ["5", "11", "1", "8"], 0,
+      "det A = a×d − b×c = 2×4 − 3×1 = 8 − 3 = 5.", "Base"),
+
+    q("On fait tourner le point (3, 0) de 90° autour de l'origine avec la matrice "
+      "R(90°) = [[0, −1], [1, 0]]. Quelles sont ses nouvelles coordonnées ?",
+      ["(3, 0)", "(0, 3)", "(−3, 0)", "(0, −3)"], 1,
+      "R(90°) × (3,0) = (0×3 + (−1)×0 ; 1×3 + 0×0) = (0, 3). Un point sur l'axe horizontal "
+      "tourné d'un quart de tour se retrouve sur l'axe vertical.", "Intermédiaire"),
+
+    q("Une courbe de Bézier a pour points de contrôle P₀, P₁, P₂. Par lesquels passe-t-elle "
+      "réellement ?",
+      ["Les trois", "Seulement P₀ et P₂", "Seulement P₁", "Aucun des trois"], 1,
+      "Une courbe de Bézier passe toujours par son premier et son dernier point de contrôle ; "
+      "les points intermédiaires l'influencent sans qu'elle les touche.", "Base"),
+
+    q("Avec P₀ = (0, 0), P₁ = (2, 4), P₂ = (4, 0), que vaut B(0,5) sur la courbe de Bézier "
+      "quadratique B(t) = (1−t)²P₀ + 2(1−t)t P₁ + t²P₂ ?",
+      ["(2, 4)", "(2, 2)", "(2, 0)", "(4, 4)"], 1,
+      "B(0,5) = 0,25×(0,0) + 0,5×(2,4) + 0,25×(4,0) = (0,0)+(1,2)+(1,0) = (2, 2) — pas (2, 4), "
+      "qui est P₁ : la courbe ne passe pas par ce point.", "Intermédiaire"),
+
+    q("Pourquoi une B-spline est-elle préférée à une seule grande courbe de Bézier pour une "
+      "forme industrielle complexe ?",
+      ["Elle est toujours plus rapide à calculer",
+       "Déplacer un point de contrôle ne modifie la courbe que localement, pas sur toute sa "
+       "longueur",
+       "Elle ne nécessite aucun point de contrôle",
+       "Elle donne toujours une ligne droite"], 1,
+      "Une B-spline enchaîne plusieurs Bézier bout à bout : modifier un point de contrôle ne "
+      "change la forme qu'autour de ce point, ce qui la rend praticable pour des formes "
+      "complexes.", "Intermédiaire"),
+
+    q("Un opérateur fait d'abord tourner un perçage de 90° (de (3,0) à (0,3)), puis le "
+      "translate de (5, 0). Quelles sont les coordonnées finales ?",
+      ["(8, 0)", "(5, 3)", "(3, 5)", "(0, 8)"], 1,
+      "(0, 3) + (5, 0) = (5, 3). Inverser l'ordre (translation puis rotation) aurait donné un "
+      "résultat différent : c'est la non-commutativité des transformations.", "Avancé"),
+]
+
 CATEGORIES = list(QUIZ.keys())
 
 # ==========================================================================
@@ -35265,7 +35420,1279 @@ quelle autre étape de la rédaction.
 }
 
 
-BLOCS_COMPLEMENTAIRES = [BLOC_7, BLOC_8, BLOC_9, BLOC_10, BLOC_11, BLOC_12, BLOC_13, BLOC_14, BLOC_15, BLOC_16]
+BLOC_17 = {
+    "id": 17,
+    "titre": "Bloc 17 — Mathématiques BTS CPI : programme d'examen",
+    "resume": "Ce qui manque au Bloc 7 pour couvrir vraiment l'épreuve de mathématiques (groupement C1) : l'étude formelle d'une fonction, le calcul intégral par primitives, et la statistique descriptive complète.",
+    "fiches": [
+        {
+            "id": "17.1",
+            "titre": "Étudier une fonction : domaine, limites, tableau de variations",
+            "duree": "6 h",
+            "cours": """
+
+### 1. Ce que cette fiche ajoute au Bloc 7
+
+La fiche 7.2 vous a montré la dérivée **comme outil**, au service de la cinématique et de la
+RDM. C'est exactement ce que l'examen attend en application — mais avant d'y arriver, l'épreuve
+demande de savoir **étudier une fonction dans son ensemble** : où elle existe, ce qu'elle
+devient aux bornes de son domaine, comment elle varie. C'est ce triptyque — domaine, limites,
+variations — qui manque encore.
+
+### 2. L'ensemble de définition : où la fonction a-t-elle un sens ?
+
+Une fonction n'est pas toujours calculable partout. Deux pièges reviennent sans cesse :
+
+> **Une division par zéro est interdite.** Si f(x) contient un dénominateur, il faut exclure
+> les valeurs de x qui l'annulent.
+> **Une racine carrée exige un contenu positif ou nul.**
+
+**Exemple entièrement déroulé.** Soit f(x) = (2x − 1) / (x + 3).
+
+Le dénominateur s'annule pour x + 3 = 0, soit **x = −3**. Cette valeur est donc exclue.
+
+**Df = ℝ \\ {−3}**, c'est-à-dire tous les réels sauf −3.
+
+### 3. Les limites : que devient f(x) aux bornes du domaine ?
+
+On regarde deux choses : le comportement **à l'infini**, et le comportement **près d'une valeur
+interdite**.
+
+**Limite en l'infini, sur le même exemple.** Quand x devient très grand, seuls les termes de
+plus haut degré comptent :
+
+f(x) = (2x − 1)/(x + 3) ≈ 2x / x = **2** quand x → +∞ ou x → −∞
+
+La droite **y = 2** est une **asymptote horizontale** : la courbe s'en approche sans jamais la
+toucher.
+
+**Limite près de la valeur interdite (x = −3).** Le numérateur ne s'annule pas en x = −3
+(il vaut 2×(−3) − 1 = −7), mais le dénominateur, lui, tend vers 0. Le quotient explose :
+
+> quand x → −3 par valeurs supérieures (x + 3 → 0⁺) : f(x) → **−∞** (car −7 / petit positif)
+> quand x → −3 par valeurs inférieures (x + 3 → 0⁻) : f(x) → **+∞** (car −7 / petit négatif)
+
+La droite **x = −3** est une **asymptote verticale**.
+
+*Le réflexe qui évite l'erreur de signe : injectez une valeur numérique proche, par exemple
+x = −2,99 (donc x + 3 = 0,01, un petit nombre positif) et vérifiez que le signe du résultat
+correspond à ce que vous venez d'annoncer.*
+
+### 4. Le tableau de variations : la dérivée fait le travail
+
+C'est ici que la fiche 7.2 devient directement utile — la règle **« la dérivée s'annule ou
+change de signe » → variation** s'applique exactement de la même façon.
+
+**Sur le même exemple, dérivons f(x) = (2x − 1)/(x + 3)** avec la règle du quotient,
+(u/v)' = (u'v − uv') / v² :
+
+u = 2x − 1, u' = 2 · v = x + 3, v' = 1
+
+f'(x) = [2(x + 3) − (2x − 1)(1)] / (x + 3)² = [2x + 6 − 2x + 1] / (x + 3)² = **7 / (x + 3)²**
+
+*Un carré au dénominateur est toujours positif (sauf en x = −3, où il est nul et f' n'existe
+pas). Le numérateur, 7, est une constante positive. Donc f'(x) est **strictement positive sur
+tout le domaine**.*
+
+**Conséquence : f est strictement croissante sur chacun des deux intervalles ]−∞ ; −3[ et
+]−3 ; +∞[.**
+
+**Tableau de variations complet :**
+
+| x | −∞ | | −3 | | +∞ |
+|---|---|---|---|---|---|
+| f'(x) | | + | ∥ | + | |
+| f(x) | 2 | ↗ | −∞ ∥ +∞ | ↗ | 2 |
+
+*Lecture du tableau : sur la première branche, f part de 2 (asymptote) et grimpe jusqu'à +∞ ;
+sur la deuxième branche, f repart de −∞ et remonte jusqu'à 2. La double barre en x = −3 marque
+que la fonction n'y est pas définie — jamais de flèche continue à travers une valeur interdite.*
+
+### 5. Les erreurs classiques
+
+1. **Oublier d'exclure la valeur interdite du domaine**, puis calculer f(−3) par erreur.
+2. **Confondre le signe de f'(x) et le signe de f(x)** : c'est le signe de la dérivée qui donne
+   le sens de variation, pas le signe de la fonction elle-même.
+3. **Tracer une flèche continue à travers une asymptote verticale** — le tableau doit toujours
+   montrer une coupure (double barre) à cet endroit.
+4. **Oublier l'asymptote horizontale** en ne donnant que les limites en ±∞ sous forme de nombre,
+   sans la nommer.
+
+### 6. À retenir
+
+- **Domaine** : exclure ce qui annule un dénominateur, ou rend une racine carrée négative.
+- **Limite en l'infini** finie → asymptote horizontale. **Limite infinie** en une valeur finie →
+  asymptote verticale, avec un changement de signe à surveiller de chaque côté.
+- Le **signe de f'(x)** donne le sens de variation — la même règle que dans la fiche 7.2.
+- Un tableau de variations se lit toujours **de gauche à droite**, avec une double barre à
+  chaque valeur interdite.
+
+            """,
+            "formules": """
+
+**Domaine de définition** — exclure : dénominateur nul, racine carrée d'un nombre négatif
+
+**Fonction homographique** f(x) = (ax+b)/(cx+d) — asymptote horizontale y = a/c (limite en ±∞)
+asymptote verticale x = −d/c
+
+**Dérivée d'un quotient** — (u/v)' = (u'v − uv') / v²
+
+**Lien signe de f' → variations** — f'(x) > 0 sur un intervalle ⇒ f croissante sur cet intervalle
+f'(x) < 0 ⇒ f décroissante
+
+        """,
+            "exercice": """
+**1.** Quel est l'ensemble de définition de g(x) = (3x + 2) / (x − 5) ?
+
+**2.** Quelle est la limite de g(x) quand x → +∞ ? Quelle droite cela donne-t-il ?
+
+**3.** Quelle est l'allure de g(x) quand x → 5, de chaque côté ?
+
+**4.** Calcule g'(x) avec la formule du quotient.
+
+**5.** Dresse le tableau de variations complet de g.
+""",
+            "corrige": """
+**1.** Le dénominateur s'annule pour x = 5. **Dg = ℝ \\ {5}**.
+
+**2.** g(x) = (3x + 2)/(x − 5) ≈ 3x/x = **3** quand x → +∞. La droite **y = 3** est une
+asymptote horizontale.
+*La même limite vaut aussi en −∞ : une fonction homographique a la même asymptote horizontale
+des deux côtés.*
+
+**3.** Le numérateur en x = 5 vaut 3×5 + 2 = 17 (positif), le dénominateur tend vers 0.
+Pour x → 5⁺ (x − 5 → 0⁺) : g(x) → **+∞**.
+Pour x → 5⁻ (x − 5 → 0⁻) : g(x) → **−∞**.
+La droite **x = 5** est une asymptote verticale.
+
+**4.** u = 3x + 2, u' = 3 · v = x − 5, v' = 1.
+g'(x) = [3(x − 5) − (3x + 2)(1)] / (x − 5)² = [3x − 15 − 3x − 2] / (x − 5)² = **−17 / (x − 5)²**.
+*Le numérateur est négatif cette fois : g' est donc strictement négative sur tout le domaine —
+à l'inverse de l'exemple du cours.*
+
+**5.**
+
+| x | −∞ | | 5 | | +∞ |
+|---|---|---|---|---|---|
+| g'(x) | | − | ∥ | − | |
+| g(x) | 3 | ↘ | +∞ ∥ −∞ | ↘ | 3 |
+
+*g est strictement décroissante sur chacune de ses deux branches — cohérent avec g'(x) < 0
+trouvée à la question précédente.*
+""",
+            "exemple": """
+**Cas industriel — Coût unitaire selon la série produite**
+
+Le coût unitaire de fabrication d'une pièce, en euros, selon la taille de série x (en centaines
+de pièces), est modélisé par C(x) = (400 + 15x) / x, pour x > 0.
+
+**Étape 1 — Réécrire pour dériver plus facilement**
+
+C(x) = 400/x + 15, soit C(x) = 400 x⁻¹ + 15.
+
+**Étape 2 — Dériver**
+
+C'(x) = −400 x⁻² = **−400 / x²**
+
+*Toujours négative pour x > 0 : le coût unitaire est strictement décroissant. C'est cohérent
+avec l'intuition industrielle : plus la série est grande, plus les frais fixes (400 €, le coût
+de réglage machine) se répartissent sur un grand nombre de pièces.*
+
+**Étape 3 — Limite quand x devient grand**
+
+Quand x → +∞, 400/x → 0, donc C(x) → **15**. Le coût unitaire ne descend jamais sous 15 € :
+c'est le coût matière et main-d'œuvre incompressible, une fois les frais fixes complètement
+amortis.
+
+**Ce que le calcul apprend.** Produire 100 pièces (x = 1) coûte C(1) = 415 € pièce. Produire
+1 000 pièces (x = 10) coûte C(10) = 40 + 15 = 55 € pièce. Produire 10 000 pièces (x = 100)
+coûte C(100) = 4 + 15 = 19 € pièce — on se rapproche du plancher de 15 €, mais on ne l'atteint
+jamais tout à fait, exactement comme le prédit l'asymptote horizontale.
+""",
+        },
+        {
+            "id": "17.2",
+            "titre": "Calcul intégral : primitives et calcul d'une aire",
+            "duree": "6 h",
+            "cours": """
+
+### 1. Ce que cette fiche ajoute au Bloc 7
+
+La fiche 7.2 a introduit l'intégrale de façon conceptuelle : « l'aire sous la courbe donne une
+distance ». C'est vrai, mais l'épreuve demande aussi de savoir **calculer** cette aire par le
+calcul, avec une primitive — pas seulement la lire sur un graphique fait de triangles et de
+rectangles.
+
+### 2. La primitive : l'opération inverse de la dérivée
+
+> **F est une primitive de f si F'(x) = f(x).**
+
+Trouver une primitive, c'est donc « remonter » depuis la dérivée. Le tableau se lit à l'envers
+de celui des dérivées usuelles (fiche 7.2) :
+
+| Fonction f(x) | Une primitive F(x) |
+|---|---|
+| k (constante) | k × x |
+| x^n (n ≠ −1) | x^(n+1) / (n+1) |
+| cos(x) | sin(x) |
+| sin(x) | −cos(x) |
+
+**Vérification systématique : dérivez la primitive trouvée, vous devez retomber sur f(x).**
+Exemple : la primitive de x² est x³/3. Sa dérivée : (x³/3)' = 3x²/3 = x². ✓
+
+### 3. Calculer une intégrale définie : la valeur exacte d'une aire
+
+> **∫ de a à b de f(x) dx = F(b) − F(a)**, où F est n'importe quelle primitive de f.
+
+**Exemple entièrement déroulé.** Calculons ∫ de 0 à 3 de (x² − 2x + 3) dx.
+
+**Étape 1 — Une primitive.** F(x) = x³/3 − x² + 3x.
+*Vérification : F'(x) = 3x²/3 − 2x + 3 = x² − 2x + 3. ✓ On retombe bien sur f(x).*
+
+**Étape 2 — F(3).** F(3) = 27/3 − 9 + 9 = 9 − 9 + 9 = **9**.
+
+**Étape 3 — F(0).** F(0) = 0 − 0 + 0 = **0**.
+
+**Étape 4 — La différence.** ∫ = F(3) − F(0) = 9 − 0 = **9**.
+
+### 4. Application directe au métier : l'aire d'un profil
+
+[[FIG:profil_trapezoidal]]
+
+Un profil de came, de section, ou de gorge est souvent modélisé par une courbe. L'aire sous
+cette courbe donne directement une **surface** — utile pour un calcul de masse (surface ×
+épaisseur × masse volumique) ou de volume de matière à enlever en usinage.
+
+**Exemple entièrement déroulé — profil parabolique d'une came.** Le profil d'une came suit la
+loi h(x) = 6x − x², où x est la position (mm) entre 0 et 6, et h(x) la hauteur (mm). Quelle est
+l'aire de la section, entre x = 0 et x = 6 ?
+
+**Étape 1 — Une primitive de h(x) = 6x − x².**
+
+H(x) = 6x²/2 − x³/3 = 3x² − x³/3
+
+*Vérification : H'(x) = 6x − 3x²/3 = 6x − x² = h(x). ✓*
+
+**Étape 2 — H(6).**
+
+H(6) = 3 × 36 − 216/3 = 108 − 72 = **36**
+
+**Étape 3 — H(0).**
+
+H(0) = 0
+
+**Étape 4 — L'aire.**
+
+Aire = H(6) − H(0) = **36 mm²**
+
+*Contrôle de bon sens : le profil est une « bosse » de largeur 6 mm et de hauteur maximale
+h(3) = 18 − 9 = 9 mm (au sommet, x = 3, milieu de l'intervalle par symétrie). Un rectangle
+englobant ferait 6 × 9 = 54 mm² ; la parabole occupe les deux tiers de ce rectangle
+(36/54 = 0,667), une proportion cohérente avec la forme arrondie d'une parabole.*
+
+### 5. Les erreurs classiques
+
+1. **Oublier de vérifier la primitive** en la redérivant — c'est la seule façon fiable de
+   détecter une erreur de calcul avant de continuer.
+2. **Se tromper dans l'ordre de la soustraction** : c'est toujours F(borne du haut) moins
+   F(borne du bas), jamais l'inverse.
+3. **Confondre x^(n+1)/(n+1) et x^(n-1)/(n-1)** en primitivant x^n — c'est n **+** 1 au numérateur
+   et au dénominateur, pas n − 1.
+4. **Oublier qu'une primitive de x^n ne s'applique pas pour n = −1** (ce cas, la primitive de
+   1/x, n'est pas au programme du CPI).
+
+### 6. À retenir
+
+- **F est une primitive de f** si F'(x) = f(x) — l'opération inverse de la dérivée.
+- **Primitive de x^n** : x^(n+1) / (n+1).
+- **Intégrale définie** : ∫ de a à b de f(x) dx = F(b) − F(a).
+- **Vérifiez toujours** en redérivant la primitive trouvée.
+- Une aire sous une courbe se traduit directement en **surface de section**, donc en masse ou
+  en volume de matière une fois multipliée par une épaisseur.
+
+            """,
+            "formules": """
+
+**Primitives usuelles** — k → kx · x^n → x^(n+1)/(n+1) (n≠−1) · cos(x) → sin(x) · sin(x) → −cos(x)
+
+**Intégrale définie** — ∫ de a à b de f(x) dx = F(b) − F(a)
+
+**Vérification** — toujours redériver F(x) et retrouver f(x)
+
+        """,
+            "exercice": """
+**1.** Donne une primitive de f(x) = 4x³.
+
+**2.** Donne une primitive de g(x) = 3x² − 4x + 1.
+
+**3.** Vérifie ta réponse à la question 2 en redérivant.
+
+**4.** Calcule ∫ de 1 à 3 de (2x) dx.
+
+**5.** Une pièce a un profil h(x) = 4x − x², entre x = 0 et x = 4 (mm). Calcule l'aire de sa
+section.
+""",
+            "corrige": """
+**1.** F(x) = 4 × x⁴/4 = **x⁴**.
+*Vérification : F'(x) = 4x³ = f(x). ✓*
+
+**2.** G(x) = 3 × x³/3 − 4 × x²/2 + 1 × x = **x³ − 2x² + x**.
+
+**3.** G'(x) = 3x² − 4x + 1 = g(x). ✓ La primitive est confirmée.
+
+**4.** Une primitive de 2x est x². F(3) − F(1) = 9 − 1 = **8**.
+
+**5.** Primitive de h(x) = 4x − x² : H(x) = 2x² − x³/3.
+H(4) = 2×16 − 64/3 = 32 − 21,33 = 10,67
+H(0) = 0
+Aire = **10,67 mm²** (soit 32/3 mm² exactement).
+*Contrôle : hauteur maximale en x = 2 (milieu) : h(2) = 8 − 4 = 4 mm. Rectangle englobant :
+4 × 4 = 16 mm². 10,67/16 = 0,667, la même proportion des deux tiers que dans l'exemple du
+cours — cohérent, car c'est encore une parabole.*
+""",
+            "exemple": """
+**Cas industriel — Volume de matière d'une nervure de renfort**
+
+Une nervure de renfort, vue de profil, suit la loi h(x) = 10x − x², x en mm entre 0 et 10,
+h(x) la hauteur en mm. La pièce est extrudée sur une épaisseur constante de 5 mm. Quel volume
+de matière représente cette nervure ?
+
+**Étape 1 — Une primitive.**
+
+H(x) = 10x²/2 − x³/3 = 5x² − x³/3
+
+**Étape 2 — Aire de la section (H(10) − H(0)).**
+
+H(10) = 5 × 100 − 1000/3 = 500 − 333,3 = **166,7 mm²**
+H(0) = 0
+Aire = **166,7 mm²**
+
+**Étape 3 — Volume (aire × épaisseur).**
+
+V = 166,7 × 5 = **833,3 mm³**, soit 0,833 cm³.
+
+**Étape 4 — Masse (si la pièce est en ABS, ρ = 1,05 g/cm³).**
+
+m = 0,833 × 1,05 = **0,875 g**
+
+**Ce que le calcul apprend.** Une aire calculée par primitive se transforme directement, étape
+par étape, en volume puis en masse — exactement la même logique que le calcul de masse par
+multiplication simple (fiche 7.1, question 3), sauf que la section n'est plus un rectangle
+mais une forme courbe, ce qui impose l'intégrale.
+""",
+        },
+        {
+            "id": "17.3",
+            "titre": "Statistique descriptive : médiane, quartiles et dispersion",
+            "duree": "5 h",
+            "cours": """
+
+### 1. Ce que cette fiche ajoute au Bloc 7
+
+La fiche 7.3 vous a donné la moyenne et l'écart-type, au service du calcul de capabilité (Cp).
+Ce sont deux résumés utiles, mais l'épreuve de mathématiques attend aussi le vocabulaire complet
+d'une série statistique : **médiane**, **quartiles**, et leur lecture sur un **diagramme en
+boîte** — des repères qui ne supposent pas que la série suive une loi normale, contrairement à
+la moyenne et l'écart-type.
+
+### 2. La médiane : la valeur du milieu
+
+> **La médiane partage une série triée en deux moitiés de même effectif.**
+
+Pour la trouver : on **trie** la série par ordre croissant, puis on prend la valeur du milieu
+(si l'effectif est impair) ou la moyenne des deux valeurs centrales (s'il est pair).
+
+**Différence essentielle avec la moyenne :** la médiane n'est presque pas affectée par une
+valeur extrême (une pièce très mal usinée par erreur), alors que la moyenne, elle, en est
+directement décalée. C'est pourquoi on utilise souvent les deux ensemble : si elles sont très
+différentes, c'est le signe d'une série irrégulière ou d'une valeur aberrante.
+
+### 3. Les quartiles : découper en quatre
+
+> **Q1 (premier quartile)** : 25 % de la série lui est inférieure ou égale.
+> **Q3 (troisième quartile)** : 75 % de la série lui est inférieure ou égale.
+
+**Méthode des rangs, celle utilisée en BTS.** Pour une série de n valeurs triées :
+
+> rang de Q1 = 0,25 × n, **arrondi à l'entier supérieur** si ce n'est pas un entier
+> rang de Q3 = 0,75 × n, **arrondi à l'entier supérieur** si ce n'est pas un entier
+
+**Exemple entièrement déroulé.** Neuf diamètres mesurés sur un lot (mm), déjà triés :
+29,97 — 29,98 — 29,99 — 30,00 — 30,01 — 30,02 — 30,03 — 30,04 — 30,05
+
+**Médiane.** n = 9 (impair), rang du milieu = (9+1)/2 = 5. La 5ᵉ valeur est **30,01 mm**.
+
+**Q1.** Rang = 0,25 × 9 = 2,25 → arrondi à **3**. La 3ᵉ valeur est **29,99 mm**.
+
+**Q3.** Rang = 0,75 × 9 = 6,75 → arrondi à **7**. La 7ᵉ valeur est **30,03 mm**.
+
+**Écart interquartile.** EIQ = Q3 − Q1 = 30,03 − 29,99 = **0,04 mm**.
+
+*L'écart interquartile résume, en un seul nombre, la dispersion des 50 % de valeurs centrales
+de la série — en ignorant volontairement le quart le plus bas et le quart le plus haut, donc peu
+sensible à une valeur extrême isolée.*
+
+### 4. Le diagramme en boîte : voir la dispersion d'un coup d'œil
+
+[[FIG:courbe_capabilite]]
+
+Un diagramme en boîte (« boîte à moustaches ») place, sur un même axe :
+
+> le minimum · Q1 · la médiane · Q3 · le maximum
+
+La **boîte** va de Q1 à Q3 (elle contient donc 50 % de la série), avec un trait au niveau de la
+médiane. Les **moustaches** s'étendent jusqu'au minimum et au maximum.
+
+**Sur l'exemple précédent :** minimum = 29,97, Q1 = 29,99, médiane = 30,01, Q3 = 30,03,
+maximum = 30,05. La boîte est étroite (0,04 mm de large) et centrée : un lot homogène, sans
+valeur qui s'écarte franchement des autres.
+
+### 5. Les erreurs classiques
+
+1. **Oublier de trier la série** avant de chercher la médiane ou les quartiles — l'ordre brut
+   des mesures (l'ordre de fabrication, par exemple) n'a rien à voir avec l'ordre statistique.
+2. **Confondre médiane et moyenne** : elles coïncident seulement si la série est parfaitement
+   symétrique.
+3. **Arrondir le rang d'un quartile vers le bas au lieu du dessus** — la règle est toujours
+   l'arrondi à l'entier **supérieur**.
+4. **Oublier que l'écart interquartile ne dépend que de Q1 et Q3**, jamais du minimum ni du
+   maximum.
+
+### 6. À retenir
+
+- **Médiane** : la valeur du milieu d'une série triée — peu sensible aux valeurs extrêmes.
+- **Q1, Q3** : rang = 0,25×n ou 0,75×n, **arrondi à l'entier supérieur**.
+- **Écart interquartile** = Q3 − Q1, une mesure de dispersion complémentaire de l'écart-type
+  (fiche 7.3), plus robuste face à une valeur aberrante.
+- **Diagramme en boîte** : minimum, Q1, médiane, Q3, maximum sur un seul axe.
+
+            """,
+            "formules": """
+
+**Médiane** — n impair : valeur de rang (n+1)/2 · n pair : moyenne des deux valeurs centrales
+
+**Quartiles** — rang de Q1 = 0,25 n (arrondi au-dessus) · rang de Q3 = 0,75 n (arrondi au-dessus)
+
+**Écart interquartile** — EIQ = Q3 − Q1
+
+**Diagramme en boîte** — minimum, Q1, médiane, Q3, maximum
+
+        """,
+            "exercice": """
+Un contrôle mesure l'épaisseur de 8 plaques (mm), triées : 4,98 — 4,99 — 5,00 — 5,00 — 5,01 —
+5,01 — 5,02 — 5,04.
+
+**1.** Calcule la médiane (attention, l'effectif est pair).
+
+**2.** Calcule le rang puis la valeur de Q1.
+
+**3.** Calcule le rang puis la valeur de Q3.
+
+**4.** Calcule l'écart interquartile.
+
+**5.** La dernière valeur (5,04) semble un peu isolée des autres. Quel indicateur, de la
+moyenne ou de la médiane, serait le plus décalé par cette valeur ?
+""",
+            "corrige": """
+**1.** n = 8 (pair). Les deux valeurs centrales sont les 4ᵉ et 5ᵉ : 5,00 et 5,01.
+Médiane = (5,00 + 5,01) / 2 = **5,005 mm**.
+
+**2.** Rang de Q1 = 0,25 × 8 = 2 (déjà entier, pas d'arrondi). Q1 = 2ᵉ valeur = **4,99 mm**.
+
+**3.** Rang de Q3 = 0,75 × 8 = 6 (déjà entier). Q3 = 6ᵉ valeur = **5,01 mm**.
+
+**4.** EIQ = 5,01 − 4,99 = **0,02 mm**.
+
+**5.** **La moyenne** serait la plus décalée : elle intègre directement chaque valeur dans son
+calcul, donc une valeur isolée la tire vers elle. La médiane, elle, ne dépend que du rang de
+cette valeur dans la série triée, pas de son écart réel aux autres — elle resterait presque
+identique même si 5,04 devenait 5,10.
+""",
+            "exemple": """
+**Cas industriel — Comparer deux réglages de machine**
+
+Un régleur teste deux réglages sur une série de 10 pièces chacun, en mesurant un diamètre (mm).
+
+**Réglage A**, trié : 29,95 — 29,97 — 29,98 — 29,99 — 30,00 — 30,00 — 30,01 — 30,02 — 30,03 —
+30,05
+
+**Réglage B**, trié : 29,90 — 29,94 — 29,97 — 29,99 — 30,00 — 30,00 — 30,01 — 30,03 — 30,06 —
+30,10
+
+**Étape 1 — Médiane de chaque réglage.**
+
+n = 10 (pair), médiane = moyenne des 5ᵉ et 6ᵉ valeurs.
+
+Réglage A : (30,00 + 30,00) / 2 = **30,00 mm**
+Réglage B : (30,00 + 30,00) / 2 = **30,00 mm**
+
+*Les deux médianes sont identiques : sur ce seul critère, les deux réglages semblent
+équivalents.*
+
+**Étape 2 — Quartiles et écart interquartile de chaque réglage.**
+
+Rang de Q1 = 0,25 × 10 = 2,5 → arrondi à 3. Rang de Q3 = 0,75 × 10 = 7,5 → arrondi à 8.
+
+Réglage A : Q1 = 3ᵉ valeur = 29,98 · Q3 = 8ᵉ valeur = 30,02 · EIQ = **0,04 mm**
+Réglage B : Q1 = 3ᵉ valeur = 29,97 · Q3 = 8ᵉ valeur = 30,03 · EIQ = **0,06 mm**
+
+**Ce que le calcul apprend.** Malgré une médiane identique, le réglage B disperse davantage les
+pièces autour du centre (EIQ de 0,06 contre 0,04 mm) — et ses valeurs extrêmes (29,90 et 30,10)
+s'écartent bien plus que celles du réglage A (29,95 et 30,05). La médiane seule aurait fait
+croire à deux réglages équivalents ; l'écart interquartile révèle que **le réglage A est plus
+régulier**, donc préférable en production même si aucune des deux moyennes ne serait, à elle
+seule, hors tolérance.
+""",
+        },
+    ],
+}
+
+
+BLOC_18 = {
+    "id": 18,
+    "titre": "Bloc 18 — Mathématiques BTS CPI : probabilités et équations différentielles",
+    "resume": "Les cinq modules du programme d'examen qui manquaient encore : probabilités 1 et 2, statistique inférentielle, et équations différentielles.",
+    "fiches": [
+        {
+            "id": "18.1",
+            "titre": "Probabilités 1 : événements, union, intersection",
+            "duree": "5 h",
+            "cours": """
+
+### 1. Pourquoi les probabilités, dans un BTS mécanique
+
+La fiche 7.3 vous a montré la statistique **descriptive** : décrire un lot de pièces déjà
+mesurées. Les probabilités font l'inverse — elles servent à **anticiper** ce qui va se passer
+sur les pièces pas encore produites, à partir d'une fréquence de défaut déjà connue.
+
+### 2. Vocabulaire de base
+
+> **Événement** : un résultat possible d'un contrôle — « la pièce est défectueuse », par
+> exemple.
+> **P(A)** : la probabilité de l'événement A, un nombre entre 0 (impossible) et 1 (certain).
+> **Événement contraire, noté Ā** : « A ne se produit pas ». Toujours **P(Ā) = 1 − P(A)**.
+
+**En contrôle qualité, P(A) s'estime le plus souvent par une fréquence observée** sur un grand
+nombre de pièces déjà contrôlées : si 15 pièces sur 500 sont défectueuses, on estime
+P(défectueuse) = 15/500 = **0,03**.
+
+### 3. Combiner deux événements : union et intersection
+
+Deux événements A et B peuvent se combiner de deux façons :
+
+> **A ∩ B** (« A et B ») : les deux se produisent en même temps.
+> **A ∪ B** (« A ou B ») : au moins un des deux se produit.
+
+**Formule du OU** — elle compte deux fois ce qui est commun aux deux, il faut donc le retrancher
+une fois :
+
+> **P(A ∪ B) = P(A) + P(B) − P(A ∩ B)**
+
+### 4. Événements indépendants
+
+Deux événements sont **indépendants** si l'un ne change rien à la probabilité de l'autre — un
+défaut de diamètre et un défaut d'état de surface, causés par deux opérations différentes de la
+gamme, sont un exemple typique. Dans ce cas, et dans ce cas seulement :
+
+> **P(A ∩ B) = P(A) × P(B)** (indépendance uniquement)
+
+*Le piège classique : appliquer cette formule de multiplication à des événements qui ne sont PAS
+indépendants. Rien ne le suppose par défaut — l'énoncé doit le préciser, ou la situation doit le
+justifier physiquement (deux causes de défaut sans lien entre elles).*
+
+### 5. Exemple entièrement déroulé
+
+Sur une pièce, un défaut de diamètre (événement A) a une probabilité P(A) = 0,02 ; un défaut
+d'état de surface (événement B), causé par une opération différente et indépendante, a une
+probabilité P(B) = 0,05.
+
+**P(les deux défauts en même temps)** — indépendance, donc on multiplie :
+
+P(A ∩ B) = 0,02 × 0,05 = **0,001**
+
+**P(au moins un défaut)** — formule du OU :
+
+P(A ∪ B) = 0,02 + 0,05 − 0,001 = **0,069**
+
+**P(aucun défaut)** — événement contraire de « au moins un » :
+
+P(aucun) = 1 − 0,069 = **0,931**
+
+*Vérifiez toujours par le sens : une pièce a près de 93 % de chances d'être bonne des deux
+côtés — cohérent avec deux défauts individuellement rares.*
+
+### 6. Les erreurs classiques
+
+1. **Additionner P(A) et P(B) sans retrancher P(A ∩ B)** — sauf si A et B sont incompatibles
+   (ne peuvent jamais se produire ensemble), auquel cas P(A ∩ B) = 0.
+2. **Multiplier P(A) et P(B) sans avoir vérifié l'indépendance.**
+3. **Confondre P(A ∪ B) et P(A ∩ B)** : le OU est presque toujours la valeur la plus grande.
+
+### 7. À retenir
+
+- **P(Ā) = 1 − P(A)** : l'événement contraire complète toujours à 1.
+- **P(A ∪ B) = P(A) + P(B) − P(A ∩ B)**, toujours vraie.
+- **P(A ∩ B) = P(A) × P(B)** seulement si A et B sont indépendants.
+            """,
+            "formules": """
+
+**Événement contraire** — P(Ā) = 1 − P(A)
+
+**Union (OU)** — P(A ∪ B) = P(A) + P(B) − P(A ∩ B)
+
+**Intersection, si indépendants (ET)** — P(A ∩ B) = P(A) × P(B)
+
+**Fréquence estimée** — P(A) ≈ nombre de cas favorables / nombre total de pièces contrôlées
+""",
+            "exercice": """
+Sur une ligne de production, un défaut d'usinage (événement U) a une probabilité P(U) = 0,04 ;
+un défaut de peinture (événement P), dû à un poste différent et indépendant, a une probabilité
+P(P) = 0,03.
+
+**1.** Calcule P(U ∩ P), la probabilité des deux défauts en même temps.
+
+**2.** Calcule P(U ∪ P), la probabilité d'au moins un défaut.
+
+**3.** Calcule la probabilité qu'une pièce sorte sans aucun défaut.
+""",
+            "corrige": """
+**1.** Indépendance, donc P(U ∩ P) = 0,04 × 0,03 = **0,0012**.
+
+**2.** P(U ∪ P) = 0,04 + 0,03 − 0,0012 = **0,0688**.
+
+**3.** P(aucun défaut) = 1 − 0,0688 = **0,9312**, soit environ **93,1 %**.
+""",
+            "exemple": """
+**Cas industriel — Deux contrôles en série**
+
+Une pièce passe par deux postes de contrôle indépendants. Le premier détecte un défaut avec une
+probabilité de 0,90 s'il est présent ; s'il le rate, le second le détecte avec une probabilité
+de 0,80. On admet que 5 % des pièces produites ont un défaut.
+
+**Étape 1 — Probabilité que le défaut échappe au premier contrôle.**
+
+1 − 0,90 = **0,10**
+
+**Étape 2 — Probabilité qu'il échappe aussi au second (indépendance des deux postes).**
+
+0,10 × (1 − 0,80) = 0,10 × 0,20 = **0,02**
+
+**Étape 3 — Probabilité qu'une pièce défectueuse échappe complètement au contrôle.**
+
+P(pièce défectueuse) × P(échappe aux deux) = 0,05 × 0,02 = **0,001**, soit **1 pièce sur 1000**.
+
+**Ce que le calcul apprend.** Aucun contrôle n'est parfait, mais **enchaîner deux contrôles
+indépendants multiplie leurs taux d'échec** plutôt que de les additionner — c'est pour cette
+raison qu'un double contrôle, même chacun imparfait, réduit très fortement le risque de laisser
+passer une pièce défectueuse.
+""",
+        },
+        {
+            "id": "18.2",
+            "titre": "Probabilités 2 : la loi binomiale et l'échantillonnage",
+            "duree": "5 h",
+            "cours": """
+
+### 1. Le lien avec la fiche 18.1
+
+La fiche 7.3 a introduit la **loi normale**, qui décrit une mesure continue (un diamètre, une
+longueur). La loi binomiale, elle, décrit autre chose : **compter combien de pièces défectueuses
+on trouve dans un échantillon**, un nombre entier, pas une mesure continue.
+
+### 2. Le schéma de Bernoulli : une épreuve à deux issues
+
+> Une **épreuve de Bernoulli** n'a que deux issues : succès (probabilité p) ou échec
+> (probabilité 1 − p). En contrôle qualité, « succès » désigne conventionnellement l'événement
+> qu'on compte — souvent « la pièce est défectueuse ».
+
+Si on répète cette épreuve **n fois de façon indépendante**, avec la même probabilité p à chaque
+fois (c'est exactement le prélèvement d'un échantillon de n pièces dans une grande production),
+le nombre X de succès obtenus suit une **loi binomiale**, notée **X ∼ B(n ; p)**.
+
+### 3. La formule de la loi binomiale
+
+> **P(X = k) = C(n,k) × p^k × (1 − p)^(n−k)**
+
+où **C(n,k)**, le coefficient binomial (« n choisir k »), compte le nombre de façons de placer
+les k succès parmi les n épreuves — votre calculatrice le donne directement (touche nCr).
+
+### 4. Espérance et écart-type
+
+> **E(X) = n × p** — le nombre moyen de succès attendu.
+> **σ(X) = √(n × p × (1 − p))** — la dispersion autour de cette moyenne.
+
+### 5. Exemple entièrement déroulé — un plan d'échantillonnage
+
+Un lot de production a un taux de défaut p = 0,05 (5 %). On prélève un échantillon de n = 10
+pièces. Le lot est **accepté** si l'échantillon contient **au plus 1 pièce défectueuse**.
+
+**Étape 1 — P(X = 0), aucune défectueuse dans l'échantillon.**
+
+P(X = 0) = C(10,0) × 0,05⁰ × 0,95¹⁰ = 1 × 1 × 0,95¹⁰ = **0,5987**, soit **59,87 %**.
+
+**Étape 2 — P(X = 1), exactement une défectueuse.**
+
+P(X = 1) = C(10,1) × 0,05¹ × 0,95⁹ = 10 × 0,05 × 0,6302 = **0,3151**, soit **31,51 %**.
+
+**Étape 3 — Probabilité d'accepter le lot.**
+
+P(X ≤ 1) = P(X = 0) + P(X = 1) = 0,5987 + 0,3151 = **0,9139**, soit **91,4 %**.
+
+**Étape 4 — Espérance et écart-type.**
+
+E(X) = 10 × 0,05 = **0,5** pièce défectueuse en moyenne par échantillon.
+σ(X) = √(10 × 0,05 × 0,95) = √0,475 ≈ **0,689**.
+
+**Ce que le calcul apprend.** Même avec un lot qui respecte sa limite de 5 % de défauts, il y a
+encore **8,6 % de chances** (100 % − 91,4 %) de refuser un lot en réalité conforme, uniquement à
+cause du hasard de l'échantillonnage. C'est le compromis inévitable de tout contrôle par
+sondage : il ne garantit jamais un résultat à 100 %, seulement une probabilité connue.
+
+### 6. Les erreurs classiques
+
+1. **Oublier le coefficient C(n,k)** et ne calculer que p^k × (1−p)^(n−k).
+2. **Confondre P(X = k) et P(X ≤ k)** — la seconde est une somme de plusieurs termes.
+3. **Utiliser p = probabilité de bonne pièce** au lieu de probabilité de défaut, sans le
+   préciser — le choix doit être cohérent du début à la fin du calcul.
+
+### 7. À retenir
+
+- **Loi binomiale B(n ; p)** : compte un nombre de succès sur n épreuves indépendantes.
+- **P(X = k) = C(n,k) p^k (1−p)^(n−k)**.
+- **E(X) = np**, **σ(X) = √(np(1−p))**.
+- Utile en contrôle qualité pour évaluer un **plan d'échantillonnage** : quelle est la chance
+  d'accepter, ou de refuser à tort, un lot selon son vrai taux de défaut.
+            """,
+            "formules": """
+
+**Loi binomiale B(n ; p)** — P(X = k) = C(n,k) × p^k × (1−p)^(n−k)
+
+**Espérance** — E(X) = n × p
+
+**Écart-type** — σ(X) = √(n × p × (1−p))
+""",
+            "exercice": """
+Un taux de défaut p = 0,10 est admis sur une référence. On prélève un échantillon de n = 5
+pièces.
+
+**1.** Calcule P(X = 0), aucune pièce défectueuse dans l'échantillon.
+
+**2.** Calcule P(X = 1), exactement une pièce défectueuse (C(5,1) = 5).
+
+**3.** En déduire P(X ≤ 1), la probabilité d'accepter le lot si le critère est « au plus 1
+défectueuse ».
+
+**4.** Calcule E(X), le nombre moyen de pièces défectueuses attendu par échantillon.
+""",
+            "corrige": """
+**1.** P(X = 0) = 0,90⁵ = **0,5905**, soit **59,05 %**.
+
+**2.** P(X = 1) = 5 × 0,10 × 0,90⁴ = 5 × 0,10 × 0,6561 = **0,3281**, soit **32,81 %**.
+
+**3.** P(X ≤ 1) = 0,5905 + 0,3281 = **0,9186**, soit **91,86 %**.
+
+**4.** E(X) = 5 × 0,10 = **0,5** pièce défectueuse en moyenne.
+""",
+            "exemple": """
+**Cas industriel — Choisir la taille d'un échantillon**
+
+Un service qualité compare deux plans de contrôle pour un taux de défaut p = 0,08, avec pour
+critère d'acceptation « 0 défectueuse dans l'échantillon » :
+
+**Plan A**, n = 5 : P(accepter) = 0,92⁵ = **0,6591**, soit **65,9 %**.
+
+**Plan B**, n = 20 : P(accepter) = 0,92²⁰ ≈ **0,1887**, soit **18,9 %**.
+
+**Ce que le calcul apprend.** Le même taux de défaut réel donne des probabilités d'acceptation
+très différentes selon la taille de l'échantillon : un petit échantillon (Plan A) est **plus
+indulgent**, un grand échantillon (Plan B) **détecte le problème presque systématiquement**. Ce
+n'est pas un hasard si les plans d'échantillonnage normalisés (comme la norme NF ISO 2859)
+imposent une taille minimale selon les enjeux — un contrôle trop léger peut laisser passer un
+lot réellement défaillant avec une probabilité confortable pour lui, pas pour le client.
+""",
+        },
+        {
+            "id": "18.3",
+            "titre": "Statistique inférentielle : estimer avec un intervalle de confiance",
+            "duree": "5 h",
+            "cours": """
+
+### 1. Ce que la fiche 7.3 supposait déjà connu
+
+La fiche 7.3 a calculé Cp et Cpk à partir d'une moyenne x̄ et d'un écart-type σ, **comme s'ils
+étaient parfaitement connus**. En réalité, on ne les connaît jamais pour toute la production —
+seulement sur l'**échantillon** qu'on a mesuré. La statistique inférentielle répond à la
+question qui en découle : à quel point peut-on faire confiance à cette estimation ?
+
+### 2. Population et échantillon
+
+> **Population** : l'ensemble de toutes les pièces produites (en pratique, infini ou trop
+> nombreux pour être tout mesuré).
+> **Échantillon** : les n pièces effectivement mesurées, utilisées pour **estimer** la
+> population.
+
+La moyenne de l'échantillon (x̄) est une **estimation ponctuelle** de la moyenne réelle de la
+population — mais un nombre unique ne dit rien sur la marge d'erreur de cette estimation.
+
+### 3. L'intervalle de confiance à 95 %
+
+Plutôt qu'un seul nombre, on donne une **fourchette** qui a de fortes chances de contenir la
+vraie moyenne :
+
+> **IC95% = [x̄ − 1,96 × s/√n ; x̄ + 1,96 × s/√n]**
+
+où **s** est l'écart-type mesuré sur l'échantillon, et **n** sa taille. Le nombre **1,96** vient
+de la loi normale (fiche 7.3) — c'est la valeur qui laisse 95 % de la surface sous la courbe en
+cloche entre −1,96σ et +1,96σ.
+
+*Deux leviers pour réduire la marge d'erreur : diminuer la dispersion s (améliorer le procédé),
+ou augmenter n (mesurer plus de pièces) — mais n est sous une racine carrée : **quadrupler
+l'échantillon ne divise la marge que par 2**, pas par 4.*
+
+### 4. Exemple entièrement déroulé
+
+Sur un échantillon de **n = 36** pièces, la moyenne mesurée d'un diamètre est **x̄ = 50,02 mm**,
+avec un écart-type **s = 0,15 mm**.
+
+**Étape 1 — Calculer la marge d'erreur.**
+
+marge = 1,96 × s/√n = 1,96 × 0,15/√36 = 1,96 × 0,15/6 = 1,96 × 0,025 = **0,049 mm**
+
+**Étape 2 — Construire l'intervalle.**
+
+IC95% = [50,02 − 0,049 ; 50,02 + 0,049] = **[49,971 ; 50,069] mm**
+
+**Interprétation, à formuler avec précision** : on a 95 % de confiance que la moyenne réelle de
+toute la production se situe entre 49,971 et 50,069 mm — **pas** que 95 % des pièces sont dans
+cet intervalle (c'est le rôle de la fiche 7.3 et de la règle des 3σ, une question différente).
+
+### 5. Les erreurs classiques
+
+1. **Confondre l'intervalle de confiance de la moyenne avec l'intervalle de dispersion des
+   pièces individuelles** (règle des 3σ, fiche 7.3) — ce sont deux calculs différents, pour deux
+   questions différentes.
+2. **Oublier la racine carrée sur n** et diviser directement par n.
+3. **Interpréter l'IC comme « 95 % des pièces sont dedans »** au lieu de « on est confiant à 95 %
+   que la vraie moyenne y est ».
+
+### 6. À retenir
+
+- **IC95% = x̄ ± 1,96 × s/√n.**
+- Un échantillon plus grand réduit la marge, mais **seulement en racine carrée**.
+- L'intervalle de confiance porte sur la **moyenne de la population**, pas sur les pièces
+  individuelles — à ne pas confondre avec le Cp/Cpk de la fiche 7.3.
+            """,
+            "formules": """
+
+**Intervalle de confiance à 95% de la moyenne** — IC95% = x̄ ± 1,96 × s/√n
+
+**Marge d'erreur** — diminue en 1/√n : quadrupler n divise la marge par 2 seulement
+""",
+            "exercice": """
+Sur un échantillon de **n = 25** pièces, la moyenne mesurée est **x̄ = 12,50 mm**, avec un
+écart-type **s = 0,10 mm**.
+
+**1.** Calcule la marge d'erreur à 95 %.
+
+**2.** Donne l'intervalle de confiance à 95 % de la moyenne.
+
+**3.** Le cahier des charges impose une moyenne de production comprise entre 12,46 et 12,54 mm.
+Cet échantillon permet-il de conclure que le procédé respecte cette exigence ?
+""",
+            "corrige": """
+**1.** marge = 1,96 × 0,10/√25 = 1,96 × 0,10/5 = 1,96 × 0,02 = **0,0392 mm**.
+
+**2.** IC95% = [12,50 − 0,0392 ; 12,50 + 0,0392] = **[12,4608 ; 12,5392] mm**.
+
+**3.** L'intervalle [12,4608 ; 12,5392] est entièrement compris dans l'exigence [12,46 ; 12,54] :
+on peut conclure, avec 95 % de confiance, que **le procédé respecte l'exigence**.
+""",
+            "exemple": """
+**Cas industriel — Une marge trop large pour conclure**
+
+Un contrôle rapide, sur seulement **n = 4** pièces, donne x̄ = 30,00 mm, s = 0,12 mm.
+
+**Étape 1 — Marge d'erreur.**
+
+marge = 1,96 × 0,12/√4 = 1,96 × 0,12/2 = 1,96 × 0,06 = **0,1176 mm**
+
+**Étape 2 — Intervalle.**
+
+IC95% = [29,882 ; 30,118] mm
+
+**Ce que le calcul apprend.** Si le cahier des charges exige une moyenne entre 29,95 et
+30,05 mm, cet intervalle **déborde largement des deux côtés** — l'échantillon est trop petit
+pour conclure quoi que ce soit avec confiance, dans un sens comme dans l'autre. Ce n'est pas que
+le procédé soit mauvais : c'est que **4 pièces ne suffisent pas** à trancher. La solution est
+d'agrandir l'échantillon, pas de réinterpréter ce résultat non concluant comme une conformité.
+""",
+        },
+        {
+            "id": "18.4",
+            "titre": "Équations différentielles : modéliser une évolution",
+            "duree": "6 h",
+            "cours": """
+
+### 1. Ce qu'une équation différentielle représente
+
+Une équation différentielle relie une grandeur à **sa propre vitesse de variation** — c'est-à-
+dire à sa dérivée. Résoudre l'équation, c'est retrouver la fonction complète à partir de cette
+seule relation.
+
+### 2. Le cas du programme : y' = −k·y + b (premier ordre, coefficients constants)
+
+La forme la plus utile en contexte industriel décrit un phénomène qui **tend vers un équilibre**
+à une vitesse proportionnelle à l'écart qui reste — un refroidissement, une charge électrique,
+une pression qui se stabilise.
+
+> **Équation** : T'(t) = −k × (T(t) − T_amb)
+> **Solution** : T(t) = T_amb + (T₀ − T_amb) × e^(−t/τ), avec τ = 1/k
+
+où **T_amb** est la valeur d'équilibre finale, **T₀** la valeur de départ, et **τ** (tau) la
+**constante de temps** : le temps que met l'écart à se réduire d'un facteur e ≈ 2,718.
+
+*Vérification par dérivation : dérivez T(t) et vous devez retomber sur T'(t) = −(T(t) −
+T_amb)/τ — c'est exactement ce que garantit l'exponentielle décroissante.*
+
+### 3. Lire la constante de temps τ
+
+> **Après une durée τ**, l'écart initial a diminué d'environ **63 %** (il en reste 37 %, soit
+> 1/e).
+> **Après 3τ**, il n'en reste plus que 5 % environ — on considère en pratique le régime stabilisé
+> atteint.
+
+### 4. Exemple entièrement déroulé — refroidissement après traitement thermique
+
+Une pièce sort d'un four de traitement thermique (fiche 8, gamme de fabrication) à
+**T₀ = 180 °C**, dans un atelier à **T_amb = 20 °C**. La constante de temps mesurée du
+refroidissement est **τ = 15 min**.
+
+**Étape 1 — Écrire la loi.**
+
+T(t) = 20 + (180 − 20) × e^(−t/15) = 20 + 160 × e^(−t/15)
+
+**Étape 2 — Calculer la température après 15 min (t = τ).**
+
+T(15) = 20 + 160 × e^(−1) = 20 + 160 × 0,368 = 20 + 58,86 = **78,86 °C**
+
+*On retrouve la règle : l'écart initial de 160 °C a bien diminué d'environ 63 % (il en reste
+58,86 °C, soit 37 % de 160).*
+
+**Étape 3 — Calculer après 45 min (t = 3τ).**
+
+T(45) = 20 + 160 × e^(−3) = 20 + 160 × 0,0498 = 20 + 7,97 = **27,97 °C**
+
+*Cohérent avec la règle des 3τ : la pièce est quasiment revenue à température ambiante.*
+
+**Étape 4 — Quand peut-on manipuler la pièce sans risque (T ≤ 25 °C) ?**
+
+25 = 20 + 160 × e^(−t/15) → 5 = 160 × e^(−t/15) → e^(−t/15) = 5/160 = 0,03125
+
+−t/15 = ln(0,03125) → t = −15 × ln(0,03125) = −15 × (−3,466) ≈ **52 min**
+
+**Ce que le calcul apprend.** La constante de temps permet de **planifier** — ici, savoir qu'il
+faut attendre environ 52 minutes avant de manipuler la pièce, sans avoir à mesurer sa
+température en continu.
+
+### 5. Les erreurs classiques
+
+1. **Oublier T_amb** et écrire T(t) = T₀ × e^(−t/τ), valable seulement si l'équilibre final est
+   zéro — faux pour un refroidissement vers la température ambiante.
+2. **Confondre τ et le temps total de refroidissement** : τ n'est qu'une durée caractéristique,
+   pas la durée jusqu'à l'équilibre.
+3. **Se tromper de signe dans l'exponentielle** — le phénomène doit tendre vers T_amb quand t
+   augmente, donc l'exposant est forcément négatif.
+
+### 6. À retenir
+
+- **T(t) = T_amb + (T₀ − T_amb) × e^(−t/τ)** : la forme à connaître par cœur.
+- **τ** : le temps pour parcourir 63 % de l'écart restant. **3τ** : régime quasi stabilisé
+  (95 %).
+- Pour trouver un instant précis, on isole l'exponentielle puis on applique **ln** des deux
+  côtés.
+            """,
+            "formules": """
+
+**Équation** — y'(t) = −k × (y(t) − y_eq), avec τ = 1/k
+
+**Solution** — y(t) = y_eq + (y₀ − y_eq) × e^(−t/τ)
+
+**Repères** — après τ : 63% de l'écart parcouru · après 3τ : régime quasi stabilisé (95%)
+
+**Isoler t** — e^(−t/τ) = X ⟹ t = −τ × ln(X)
+""",
+            "exercice": """
+Une pièce sort d'un bain de trempe à **T₀ = 90 °C**, dans un atelier à **T_amb = 18 °C**, avec
+une constante de temps **τ = 10 min**.
+
+**1.** Écris la loi T(t) pour cette situation.
+
+**2.** Calcule la température après 10 minutes (t = τ).
+
+**3.** Calcule la température après 30 minutes (t = 3τ).
+
+**4.** À quel instant la pièce atteint-elle 25 °C ? (utilise ln, comme dans l'exemple du cours)
+""",
+            "corrige": """
+**1.** T(t) = 18 + (90 − 18) × e^(−t/10) = **18 + 72 × e^(−t/10)**.
+
+**2.** T(10) = 18 + 72 × e^(−1) = 18 + 72 × 0,368 = 18 + 26,5 = **44,5 °C**.
+
+**3.** T(30) = 18 + 72 × e^(−3) = 18 + 72 × 0,0498 = 18 + 3,59 = **21,6 °C**.
+
+**4.** 25 = 18 + 72 × e^(−t/10) → 7 = 72 × e^(−t/10) → e^(−t/10) = 7/72 = 0,0972.
+t = −10 × ln(0,0972) = −10 × (−2,331) ≈ **23,3 min**.
+""",
+            "exemple": """
+**Cas industriel — Choisir la bonne constante de temps pour un cahier des charges**
+
+Un atelier doit garantir qu'une pièce sortie de trempe à 200 °C (ambiante 20 °C) soit manipulable
+à moins de 30 °C **avant la fin du poste, dans 40 minutes**. Quelle constante de temps τ maximale
+le procédé de refroidissement doit-il respecter ?
+
+**Étape 1 — Poser l'équation à résoudre.**
+
+30 = 20 + 180 × e^(−40/τ) → 10 = 180 × e^(−40/τ) → e^(−40/τ) = 10/180 = 0,0556
+
+**Étape 2 — Isoler τ.**
+
+−40/τ = ln(0,0556) = −2,890 → τ = 40 / 2,890 ≈ **13,8 min**
+
+**Ce que le calcul apprend.** Le bureau des méthodes peut maintenant **spécifier une exigence
+mesurable** sur le poste de refroidissement (ventilation, position des pièces...) : sa constante
+de temps doit rester sous environ 13,8 minutes pour tenir le planning — un critère concret,
+directement issu du calcul, plutôt qu'une estimation à l'œil.
+""",
+        },
+    ],
+}
+
+
+BLOC_19 = {
+    "id": 19,
+    "titre": "Bloc 19 — Mathématiques BTS CPI : calcul matriciel et modélisation géométrique",
+    "resume": "Les deux derniers modules du programme d'examen : le calcul matriciel et la modélisation géométrique par courbes de Bézier — exactement ce qui se cache derrière un logiciel de CAO.",
+    "fiches": [
+        {
+            "id": "19.1",
+            "titre": "Calcul matriciel : opérations et déterminant",
+            "duree": "6 h",
+            "cours": """
+
+### 1. Pourquoi les matrices, dans un BTS de conception
+
+Une matrice est un tableau de nombres qui sert à **transformer des coordonnées** : faire
+tourner un profil, le translater, le mettre à l'échelle. C'est exactement ce que fait un
+logiciel de CAO à chaque fois que vous déplacez ou faites pivoter une pièce à l'écran — et
+c'est le lien direct avec la fiche 19.2 sur les courbes de Bézier, elles aussi définies par des
+points dont les coordonnées se combinent matriciellement.
+
+### 2. Addition et multiplication de matrices
+
+**Addition** : terme à terme, uniquement entre matrices de même taille.
+
+**Multiplication** : la matrice produit se calcule ligne par colonne — pour l'obtenir en
+position (i, j), on combine la ligne i de la première matrice avec la colonne j de la seconde.
+
+> Avec M₁ = [[1, 2], [3, 4]] et M₂ = [[2, 0], [1, 2]] :
+> M₁ × M₂ = [[1×2 + 2×1, 1×0 + 2×2], [3×2 + 4×1, 3×0 + 4×2]] = [[4, 4], [10, 8]]
+
+*Le piège classique : la multiplication de matrices n'est pas commutative — M₁ × M₂ est en
+général différent de M₂ × M₁. L'ordre dans lequel on enchaîne deux transformations (d'abord
+tourner, puis translater, ou l'inverse) change donc le résultat final.*
+
+### 3. Le déterminant
+
+Le déterminant est un nombre unique associé à une matrice carrée, qui mesure comment une
+transformation change les aires (en 2D) ou les volumes (en 3D).
+
+**Matrice 2×2** — pour [[a, b], [c, d]] :
+
+> **det = a×d − b×c**
+
+**Matrice 3×3** — méthode de développement par rapport à la première colonne, pour
+[[a, b, c], [d, e, f], [g, h, i]] :
+
+> **det = a×(e×i − f×h) − d×(b×i − c×h) + g×(b×f − c×e)**
+
+### 4. Les matrices de rotation, le lien vers la CAO
+
+Pour faire tourner un point (x, y) d'un angle θ autour de l'origine, on le multiplie par la
+matrice de rotation :
+
+> **R(θ) = [[cos θ, −sin θ], [sin θ, cos θ]]**
+
+**Exemple vérifié** — faire tourner le point (3, 0) de 90° :
+
+R(90°) = [[cos 90°, −sin 90°], [sin 90°, cos 90°]] = [[0, −1], [1, 0]]
+
+R(90°) × (3, 0) = (0×3 + (−1)×0, 1×3 + 0×0) = **(0, 3)**
+
+*Vérification par le sens : un point situé à 3 unités sur l'axe horizontal, tourné d'un quart
+de tour, se retrouve à 3 unités sur l'axe vertical — cohérent.*
+
+### 5. À retenir
+
+- Multiplication de matrices : ligne × colonne, **pas commutative**.
+- Déterminant 2×2 : a×d − b×c. C'est le facteur par lequel la transformation multiplie les aires.
+- Une rotation d'angle θ se code par la matrice [[cos θ, −sin θ], [sin θ, cos θ]].
+            """,
+            "formules": """
+
+**Déterminant 2×2** — det [[a, b], [c, d]] = a×d − b×c
+
+**Déterminant 3×3** — développement par la première colonne (voir cours)
+
+**Matrice de rotation d'angle θ** — R(θ) = [[cos θ, −sin θ], [sin θ, cos θ]]
+""",
+            "exercice": """
+**1.** Calcule le produit M₁ × M₂ avec M₁ = [[2, 1], [0, 3]] et M₂ = [[1, 4], [2, 1]].
+
+**2.** Calcule le déterminant de la matrice A = [[2, 3], [1, 4]].
+
+**3.** Un point de contour se trouve en (4, 0). Calcule ses nouvelles coordonnées après une
+rotation de 30° autour de l'origine, sachant que cos 30° ≈ 0,866 et sin 30° ≈ 0,5.
+""",
+            "corrige": """
+**1.** M₁ × M₂ = [[2×1 + 1×2, 2×4 + 1×1], [0×1 + 3×2, 0×4 + 3×1]] = **[[4, 9], [6, 3]]**.
+
+**2.** det A = 2×4 − 3×1 = 8 − 3 = **5**.
+
+**3.** R(30°) × (4, 0) = (4×0,866 − 0×0,5 ; 4×0,5 + 0×0,866) = **(3,464 ; 2)**.
+""",
+            "exemple": """
+**Cas industriel — Enchaîner deux transformations dans un logiciel de CAO**
+
+Un opérateur doit dupliquer un perçage sur une pièce en le faisant tourner de 90°, puis en le
+décalant de 5 mm vers la droite. Le perçage d'origine est au point (3, 0).
+
+**Étape 1 — Appliquer la rotation.**
+
+R(90°) × (3, 0) = (0, 3), comme vu dans le cours.
+
+**Étape 2 — Appliquer la translation.**
+
+(0, 3) + (5, 0) = **(5, 3)**.
+
+**Ce que ça montre.** Si l'opérateur avait inversé l'ordre — translation puis rotation — le
+résultat aurait été différent : (3, 0) + (5, 0) = (8, 0), puis R(90°) × (8, 0) = (0, 8). Deux
+points d'arrivée différents, pour les deux mêmes transformations prises dans un ordre
+différent : c'est exactement le piège de non-commutativité signalé au cours. Un logiciel de
+CAO applique toujours les transformations dans un ordre précis, affiché dans l'arbre de
+construction (fiche 9, module CAO) — c'est pour ça que l'ordre des opérations y est aussi
+important qu'ici.
+""",
+        },
+        {
+            "id": "19.2",
+            "titre": "Modélisation géométrique : courbes de Bézier et B-splines",
+            "duree": "5 h",
+            "cours": """
+
+### 1. Pourquoi ce module ferme le programme de mathématiques
+
+Ce dernier module explique **comment un logiciel de CAO dessine réellement une courbe
+arrondie** — un capot de carrosserie, une poignée ergonomique, le profil d'une pale. La fiche
+9 (« CAO paramétrique ») vous a montré comment construire une pièce avec des esquisses
+contraintes et des extrusions ; ce module donne la théorie mathématique derrière l'outil
+« courbe spline » ou « courbe de Bézier » que ces logiciels proposent pour les formes qui ne
+sont ni des droites ni des cercles.
+
+### 2. Le principe d'une courbe de Bézier
+
+Une courbe de Bézier est définie par des **points de contrôle** : le premier et le dernier
+sont **sur** la courbe, les points intermédiaires **attirent** la courbe vers eux sans qu'elle
+les touche.
+
+Pour une courbe à 3 points de contrôle P₀, P₁, P₂ (dite « quadratique »), un point de la
+courbe au paramètre t (compris entre 0 et 1) se calcule par :
+
+> **B(t) = (1−t)² × P₀ + 2(1−t)t × P₁ + t² × P₂**
+
+*t joue le rôle d'une progression : t = 0 donne le tout début de la courbe, t = 1 la toute
+fin, t = 0,5 son milieu au sens du paramétrage.*
+
+### 3. Exemple entièrement calculé et vérifié
+
+Avec P₀ = (0, 0), P₁ = (2, 4), P₂ = (4, 0) :
+
+| t | B(t) |
+|---|---|
+| 0 | (0, 0) — exactement P₀ |
+| 0,25 | (1 ; 1,5) |
+| 0,5 | **(2, 2)** |
+| 0,75 | (3 ; 1,5) |
+| 1 | (4, 0) — exactement P₂ |
+
+**Ce que le tableau montre.** La courbe part bien de P₀ et arrive bien à P₂ — mais à t = 0,5,
+elle passe par (2, 2), pas par P₁ = (2, 4) : le point de contrôle **attire** la courbe vers le
+haut sans qu'elle l'atteigne. C'est la propriété centrale à retenir.
+
+### 4. Des courbes de Bézier aux B-splines
+
+Une seule courbe de Bézier devient vite difficile à maîtriser dès qu'on veut une forme
+complexe (beaucoup de points de contrôle rendent la courbe instable, un point déplacé loin de
+la zone qu'on veut modifier change toute la forme). Une **B-spline** répond à ce problème en
+enchaînant plusieurs courbes de Bézier bout à bout, chacune influencée seulement par ses
+points de contrôle voisins :
+
+> **Déplacer un point de contrôle d'une B-spline ne modifie la courbe que localement**, autour
+> de ce point — pas sur toute sa longueur. C'est cette propriété qui rend les B-splines
+> praticables pour des formes industrielles complexes, et c'est pour cette raison qu'elles sont
+> la représentation par défaut des surfaces « libres » dans les logiciels de CAO.
+
+### 5. À retenir
+
+- Une courbe de Bézier passe par son premier et son dernier point de contrôle, jamais par les
+  points intermédiaires — qui l'influencent sans la toucher.
+- B(t) = (1−t)²P₀ + 2(1−t)t P₁ + t²P₂ pour 3 points de contrôle, t allant de 0 à 1.
+- Une B-spline enchaîne plusieurs Bézier pour permettre des modifications locales — c'est
+  l'outil derrière les surfaces complexes en CAO.
+            """,
+            "formules": """
+
+**Courbe de Bézier quadratique (3 points de contrôle)** —
+B(t) = (1−t)² P₀ + 2(1−t)t P₁ + t² P₂, avec t entre 0 et 1
+
+**Propriété clé** — la courbe passe par P₀ (t=0) et P₂ (t=1), jamais par P₁
+""",
+            "exercice": """
+Une courbe de Bézier quadratique a pour points de contrôle P₀ = (0, 0), P₁ = (3, 6), P₂ = (6, 0).
+
+**1.** Sans calculer, donne les coordonnées du début et de la fin de la courbe.
+
+**2.** Calcule les coordonnées du point de la courbe pour t = 0,5.
+
+**3.** Ce point est-il égal à P₁ ? Explique pourquoi c'est normal.
+""",
+            "corrige": """
+**1.** Début (t=0) = P₀ = **(0, 0)**. Fin (t=1) = P₂ = **(6, 0)** — une courbe de Bézier passe
+toujours par son premier et son dernier point de contrôle.
+
+**2.** B(0,5) = 0,25×(0,0) + 0,5×(3,6) + 0,25×(6,0) = (0,0) + (1,5 ; 3) + (1,5 ; 0) =
+**(3, 3)**.
+
+**3.** Non : P₁ = (3, 6), le point calculé est (3, 3). C'est normal — P₁ est un point de
+contrôle, il attire la courbe vers lui sans qu'elle passe par lui.
+""",
+            "exemple": """
+**Cas industriel — Pourquoi une B-spline plutôt qu'une suite d'arcs de cercle**
+
+Le profil d'une poignée ergonomique doit passer par plusieurs points imposés par une étude
+d'usage, avec une courbure qui varie en douceur (pas de changement brusque perceptible à la
+main). Une suite d'arcs de cercle recollés créerait des ruptures de courbure aux jonctions —
+sensibles au toucher. Une B-spline, elle, se construit justement pour rester **lisse** d'un
+segment à l'autre : c'est le critère qui fait préférer cet outil de modélisation dès qu'une
+forme doit être à la fois précise et agréable au contact, ce qui est exactement le cas d'une
+poignée. C'est pour cette raison que les logiciels de CAO proposent la B-spline comme outil
+par défaut pour les surfaces de ce type, plutôt qu'un assemblage d'arcs.
+""",
+        },
+    ],
+}
+
+
+BLOCS_COMPLEMENTAIRES = [BLOC_7, BLOC_8, BLOC_9, BLOC_10, BLOC_11, BLOC_12, BLOC_13, BLOC_14, BLOC_15, BLOC_16, BLOC_17, BLOC_18, BLOC_19]
 
 # ==========================================================================
 # L'APPLICATION STREAMLIT
@@ -38467,6 +39894,199 @@ ATELIERS = [
         "a_retenir": "À retenir : **lire, relever, chercher, choisir, convertir, calculer, "
                      "vérifier l'unité, comparer, conclure** — neuf étapes fixes, dans cet "
                      "ordre, pour tout exercice technique du programme (fiche 0.3).",
+    },
+    {
+        "id": "at12",
+        "chapitre": "Bloc 18",
+        "titre": "Vérifier un plan d'échantillonnage (loi binomiale)",
+        "theme": "Probabilités",
+        "fiche": "18.2",
+        "vocabulaire": [
+            ("loi binomiale B(n ; p)", "le nombre de succès obtenus sur n épreuves "
+             "indépendantes, chacune avec une probabilité p."),
+            ("C(n,k)", "le nombre de façons de placer k succès parmi n épreuves — la touche "
+             "nCr de la calculatrice."),
+            ("P(X ≤ 1)", "la probabilité d'avoir 0 OU 1 succès : on additionne les deux cas."),
+        ],
+        "enonce": "Un lot a un taux de défaut p = 0,05. On prélève un échantillon de n = 8 "
+                  "pièces. Le lot est accepté si l'échantillon contient au plus 1 pièce "
+                  "défectueuse.",
+        "etapes": [
+            {
+                "type": "numerique",
+                "label": "P(X = 0), en %",
+                "unite": "%",
+                "attendu": 66.34,
+                "tol": 0.05,
+                "consigne": "P(X=0) = C(8,0) × 0,05⁰ × 0,95⁸. Donnez le résultat en pourcentage.",
+                "indice": "0,95 puissance 8, sur la calculatrice.",
+                "pieges": [(5, "Vous avez calculé 0,05⁸, l'inverse de ce qui est demandé."),
+                           (60, "Vérifiez l'exposant : c'est bien 0,95 puissance 8, pas 7.")],
+            },
+            {
+                "type": "numerique",
+                "label": "P(X = 1), en %",
+                "unite": "%",
+                "attendu": 27.93,
+                "tol": 0.05,
+                "consigne": "P(X=1) = C(8,1) × 0,05¹ × 0,95⁷. C(8,1) = 8.",
+                "indice": "8 × 0,05 × 0,95⁷.",
+                "pieges": [(3.49, "Vous avez oublié le coefficient C(8,1) = 8 devant le produit."),
+                           (66.34, "C'est la valeur de P(X=0), pas P(X=1).")],
+            },
+            {
+                "type": "numerique",
+                "label": "P(accepter le lot), en %",
+                "unite": "%",
+                "attendu": 94.28,
+                "tol": 0.05,
+                "consigne": "Le lot est accepté si X ≤ 1. Additionnez P(X=0) et P(X=1).",
+                "indice": "P(X≤1) = P(X=0) + P(X=1).",
+                "pieges": [(66.34, "Vous n'avez gardé que P(X=0). Le critère « au plus 1 » "
+                                   "inclut aussi le cas X=1."),
+                           (5.72, "C'est la probabilité de REFUSER le lot (100 − 94,28), pas de "
+                                  "l'accepter.")],
+            },
+            {
+                "type": "qcm",
+                "label": "Interprétation",
+                "question": "Que signifie ce résultat de 94,28 % ?",
+                "options": ["Même un lot conforme (5 % de défauts) a 5,72 % de chances d'être "
+                            "refusé, uniquement à cause du hasard de l'échantillonnage",
+                            "94,28 % des pièces du lot sont bonnes",
+                            "Le lot contient forcément au plus 1 pièce défectueuse"],
+                "bonne": 0,
+                "diagnostics": {
+                    1: "Ce chiffre ne décrit pas directement les pièces du lot — c'est une "
+                       "probabilité sur le résultat du CONTRÔLE, pas une proportion de pièces "
+                       "bonnes.",
+                    2: "C'est l'inverse d'une certitude : le contrôle par sondage ne garantit "
+                       "jamais un résultat à 100 %, seulement une probabilité connue.",
+                },
+            },
+        ],
+        "corrige": {
+            "enonce": "Taux de défaut p = 0,05, échantillon n = 8, acceptation si X ≤ 1 "
+                      "défectueuse.",
+            "regle": "**La loi binomiale compte un nombre de succès sur des épreuves "
+                     "indépendantes** : P(X=k) = C(n,k) × p^k × (1−p)^(n−k). Ici, chaque pièce "
+                     "prélevée est une épreuve, et « succès » désigne conventionnellement "
+                     "« pièce défectueuse ».",
+            "conversions": "Aucune conversion d'unité : p est déjà un nombre sans dimension, "
+                           "les résultats se lisent directement en probabilité, convertie en "
+                           "pourcentage pour la lisibilité.",
+            "remplacement": "P(X=0) = C(8,0) × 0,05⁰ × 0,95⁸\\n\\nP(X=1) = C(8,1) × 0,05¹ × "
+                            "0,95⁷",
+            "calcul": "P(X=0) = 1 × 1 × 0,95⁸ = **66,34 %**\\n\\nP(X=1) = 8 × 0,05 × 0,95⁷ = "
+                      "**27,93 %**\\n\\nP(X≤1) = 66,34 + 27,93 = **94,28 %**",
+            "verification": "**Contrôle par l'espérance** : E(X) = n×p = 8 × 0,05 = 0,4 pièce "
+                            "défectueuse en moyenne par échantillon — un nombre inférieur à 1, "
+                            "cohérent avec une probabilité d'acceptation élevée (94,28 %). Si "
+                            "E(X) avait été proche de 2 ou 3, une probabilité d'acceptation "
+                            "aussi haute aurait dû alerter sur une erreur de calcul.",
+        },
+        "a_retenir": "À retenir : **P(X=k) = C(n,k) × p^k × (1−p)^(n−k)**, et pour « au plus k », "
+                     "on additionne P(X=0) jusqu'à P(X=k). Un contrôle par sondage ne garantit "
+                     "jamais un résultat à 100 % — seulement une probabilité connue.",
+    },
+    {
+        "id": "at13",
+        "chapitre": "Bloc 19",
+        "titre": "Enchaîner rotation et translation d'un perçage (calcul matriciel)",
+        "theme": "Calcul matriciel",
+        "fiche": "19.1",
+        "vocabulaire": [
+            ("matrice de rotation R(θ)", "le tableau [[cos θ, −sin θ], [sin θ, cos θ]] qui "
+             "fait tourner un point d'un angle θ autour de l'origine."),
+            ("non commutatif", "l'ordre des opérations change le résultat : rotation puis "
+             "translation ne donne pas le même point que translation puis rotation."),
+        ],
+        "enonce": "Un perçage situé au point (3, 0) doit être dupliqué : d'abord une rotation "
+                  "de 90° autour de l'origine, puis une translation de (5, 0).",
+        "etapes": [
+            {
+                "type": "numerique",
+                "label": "Abscisse du point après la rotation de 90°",
+                "unite": "",
+                "attendu": 0,
+                "tol": 0.01,
+                "consigne": "R(90°) = [[0, −1], [1, 0]]. Applique-la à (3, 0) : "
+                            "x' = 0×3 + (−1)×0.",
+                "indice": "Le premier terme de la matrice multiplie x, le second multiplie y.",
+                "pieges": [(3, "Vous avez recopié l'abscisse de départ sans appliquer la "
+                               "rotation.")],
+            },
+            {
+                "type": "numerique",
+                "label": "Ordonnée du point après la rotation de 90°",
+                "unite": "",
+                "attendu": 3,
+                "tol": 0.01,
+                "consigne": "y' = 1×3 + 0×0.",
+                "indice": "C'est la ligne du bas de la matrice de rotation.",
+                "pieges": [(0, "Vous avez recopié l'ordonnée de départ (0), pas le résultat de "
+                               "la rotation.")],
+            },
+            {
+                "type": "numerique",
+                "label": "Abscisse finale, après la translation de (5, 0)",
+                "unite": "",
+                "attendu": 5,
+                "tol": 0.01,
+                "consigne": "On ajoute (5, 0) au point tourné (0, 3).",
+                "indice": "0 + 5.",
+                "pieges": [(0, "Vous avez oublié d'ajouter la translation.")],
+            },
+            {
+                "type": "numerique",
+                "label": "Ordonnée finale",
+                "unite": "",
+                "attendu": 3,
+                "tol": 0.01,
+                "consigne": "3 + 0.",
+                "indice": "La translation ne bouge que l'abscisse ici.",
+                "pieges": [],
+            },
+            {
+                "type": "qcm",
+                "label": "Interprétation",
+                "question": "Si l'opérateur avait translaté d'abord, puis fait tourner "
+                             "ensuite, aurait-il obtenu le même point d'arrivée ?",
+                "options": ["Non — (3,0) translaté donne (8,0), puis tourné de 90° donne "
+                            "(0,8) : un point différent",
+                            "Oui, l'ordre des opérations ne change jamais le résultat",
+                            "Oui, mais seulement si l'angle est de 90°"],
+                "bonne": 0,
+                "diagnostics": {
+                    1: "C'est justement le piège signalé au cours : la multiplication de "
+                       "matrices, donc l'enchaînement de transformations, n'est pas "
+                       "commutative.",
+                    2: "La non-commutativité ne dépend pas de la valeur de l'angle — elle est "
+                       "vraie pour n'importe quelle rotation suivie d'une translation.",
+                },
+            },
+        ],
+        "corrige": {
+            "enonce": "Point de départ (3, 0). Rotation de 90° autour de l'origine, puis "
+                      "translation de (5, 0).",
+            "regle": "**Une rotation se code par une matrice, une translation s'ajoute "
+                     "ensuite** : on applique d'abord R(θ) au point, puis on additionne le "
+                     "vecteur de translation aux coordonnées obtenues.",
+            "conversions": "Aucune conversion d'unité : coordonnées et translation sont déjà "
+                           "dans la même unité (mm, ou sans unité si le repère est abstrait).",
+            "remplacement": "R(90°) × (3, 0) = (0×3 + (−1)×0 ; 1×3 + 0×0)\\n\\nPuis "
+                            "(résultat) + (5, 0)",
+            "calcul": "R(90°) × (3, 0) = **(0, 3)**\\n\\n(0, 3) + (5, 0) = **(5, 3)**",
+            "verification": "**Contrôle par l'ordre inverse** : translater d'abord (3,0)+(5,0) "
+                            "= (8,0), puis tourner R(90°)×(8,0) = (0,8) — un résultat différent "
+                            "de (5,3). Ça confirme que l'ordre compte, exactement comme un "
+                            "logiciel de CAO applique les transformations dans l'ordre précis "
+                            "de son arbre de construction (fiche 9).",
+        },
+        "a_retenir": "À retenir : une rotation se code par une matrice, appliquée par produit "
+                     "matriciel ; une translation s'ajoute ensuite par addition de coordonnées. "
+                     "**L'ordre des deux opérations change le résultat** — ce n'est pas "
+                     "commutatif.",
     },
 ]
 
