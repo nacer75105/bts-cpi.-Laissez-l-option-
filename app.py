@@ -50303,11 +50303,15 @@ PAGE_COURS = f"📚 Cours ({NB_FICHES} fiches)"
 
 PAGE_MATHS = "🧮 Mathématiques"
 PAGE_PHYSCHIM = "⚗️ Physique-Chimie"
+PAGE_ANGLAIS = "🇬🇧 Anglais technique"
+PAGE_CULTGEN = "📖 Culture générale"
 
 _OPTIONS_NAV = ["🏠 Tableau de bord",
                 PAGE_COURS,
                 PAGE_MATHS,
                 PAGE_PHYSCHIM,
+                PAGE_ANGLAIS,
+                PAGE_CULTGEN,
                 "🎯 Quiz interactif",
                 "🧪 Exercices guidés",
                 "🏗️ Ateliers guidés",
@@ -50461,6 +50465,8 @@ def _afficher_fiche(bloc, fiche, fiche_id):
 
 BLOCS_MATHS = [b for b in BLOCS if b.get("id") in (7, 17, 18, 19)]
 BLOCS_PHYSCHIM = [b for b in BLOCS if b.get("id") == 8]
+BLOCS_ANGLAIS = [b for b in BLOCS if b.get("id") == 10]
+BLOCS_CULTGEN = [b for b in BLOCS if b.get("id") == 16]
 
 st.sidebar.divider()
 nb_fiches = NB_FICHES
@@ -50803,6 +50809,78 @@ elif PAGE == PAGE_PHYSCHIM:
     fiche_pc = fiches_list_pc[noms_fiches_pc.index(choix_fiche_pc)]
 
     _afficher_fiche(bloc_pc, fiche_pc, fiche_pc["id"])
+
+
+# ===========================================================================
+# PAGE : ANGLAIS TECHNIQUE
+# ===========================================================================
+
+elif PAGE == PAGE_ANGLAIS:
+    st.title("Anglais technique")
+    st.markdown(
+        '<div class="info-box">Le module d\'anglais technique du BTS CPI (épreuve E2, '
+        'coefficient 2, format oral en CCF) : vocabulaire de la RDM, des tolérances, de la '
+        'fabrication et de la CAO, lecture de documentation technique, préparation à l\'oral. '
+        'Ce sont les mêmes fiches que dans « Cours », réunies ici pour ne pas les chercher au '
+        'milieu des chapitres techniques.</div>',
+        unsafe_allow_html=True)
+    st.write("")
+
+    _saut_an = st.session_state.pop("_saut", None)
+    noms_blocs_an = [b["titre"] for b in BLOCS_ANGLAIS]
+    _idx_bloc_an = noms_blocs_an.index(_saut_an[0]) if _saut_an and _saut_an[0] in noms_blocs_an else 0
+    bloc_an = BLOCS_ANGLAIS[_idx_bloc_an]
+
+    st.markdown(f'<div class="bloc-titre"><b>{bloc_an["titre"]}</b><br>'
+                f'<span style="font-size:0.9em">{bloc_an["resume"]}</span></div>',
+                unsafe_allow_html=True)
+
+    fiches_list_an = bloc_an.get("fiches", [])
+    noms_fiches_an = [f"Fiche {f['id']} — {f['titre']}" for f in fiches_list_an]
+    _idx_fiche_an = 0
+    if _saut_an and _saut_an[0] == bloc_an["titre"]:
+        _idx_fiche_an = next((k for k, f in enumerate(fiches_list_an)
+                              if f.get("id") == _saut_an[1]), 0)
+    choix_fiche_an = st.selectbox("Fiche", noms_fiches_an, index=_idx_fiche_an, key="_fiche_anglais")
+    fiche_an = fiches_list_an[noms_fiches_an.index(choix_fiche_an)]
+
+    _afficher_fiche(bloc_an, fiche_an, fiche_an["id"])
+
+
+# ===========================================================================
+# PAGE : CULTURE GÉNÉRALE ET EXPRESSION
+# ===========================================================================
+
+elif PAGE == PAGE_CULTGEN:
+    st.title("Culture générale et expression")
+    st.markdown(
+        '<div class="info-box">Le module de culture générale et expression du BTS CPI '
+        '(épreuve E1, coefficient 3 — le plus gros coefficient des matières générales) : '
+        'méthode de la synthèse de documents, de l\'écriture personnelle, pièges et erreurs '
+        'classiques, grammaire et expression. Ce sont les mêmes fiches que dans « Cours », '
+        'réunies ici pour ne pas les chercher au milieu des chapitres techniques.</div>',
+        unsafe_allow_html=True)
+    st.write("")
+
+    _saut_cg = st.session_state.pop("_saut", None)
+    noms_blocs_cg = [b["titre"] for b in BLOCS_CULTGEN]
+    _idx_bloc_cg = noms_blocs_cg.index(_saut_cg[0]) if _saut_cg and _saut_cg[0] in noms_blocs_cg else 0
+    bloc_cg = BLOCS_CULTGEN[_idx_bloc_cg]
+
+    st.markdown(f'<div class="bloc-titre"><b>{bloc_cg["titre"]}</b><br>'
+                f'<span style="font-size:0.9em">{bloc_cg["resume"]}</span></div>',
+                unsafe_allow_html=True)
+
+    fiches_list_cg = bloc_cg.get("fiches", [])
+    noms_fiches_cg = [f"Fiche {f['id']} — {f['titre']}" for f in fiches_list_cg]
+    _idx_fiche_cg = 0
+    if _saut_cg and _saut_cg[0] == bloc_cg["titre"]:
+        _idx_fiche_cg = next((k for k, f in enumerate(fiches_list_cg)
+                              if f.get("id") == _saut_cg[1]), 0)
+    choix_fiche_cg = st.selectbox("Fiche", noms_fiches_cg, index=_idx_fiche_cg, key="_fiche_cultgen")
+    fiche_cg = fiches_list_cg[noms_fiches_cg.index(choix_fiche_cg)]
+
+    _afficher_fiche(bloc_cg, fiche_cg, fiche_cg["id"])
 
 
 # ===========================================================================
