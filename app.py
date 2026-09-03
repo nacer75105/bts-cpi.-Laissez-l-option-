@@ -7561,7 +7561,7 @@ QUIZ["Mathématiques BTS CPI (examen)"] = [
        "20 °C, calculée par intégrale", "Impossible à calculer sans plus d'informations"], 2,
       "Puisque la température reste au-dessus de 20 °C presque tout le cycle avant de "
       "redescendre, la vraie moyenne (par intégrale) est supérieure à 20 °C — la formule "
-      "(début+fin)/2 sous-estimerait fortement ce cas.", "Difficile"),
+      "(début+fin)/2 sous-estimerait fortement ce cas.", "Piège"),
 
     q("Le coefficient de variation (CV) sert surtout à :",
       ["Remplacer l'écart-type dans tous les calculs", "Comparer la dispersion de deux séries "
@@ -10261,6 +10261,177 @@ comparer à Rpg — un nombre seul ne répond jamais à la question posée à l'
 statique (fiche 0.9) chaque fois qu'un exercice s'y prête.
 """,
         },
+        {
+            "id": "0.4",
+            "titre": "Lire un schéma, un tableau, un diagramme : la méthode",
+            "duree": "1 h30",
+            "cours": """### 1. Pourquoi cette fiche existe
+
+**Objectif de cette fiche :** avoir une méthode fixe pour lire correctement un schéma
+technique, un tableau de valeurs ou un diagramme (graphique à deux axes) — les trois formes
+sous lesquelles l'information technique se présente **partout** dans ce programme : plans,
+tables ISO, courbes de puissance, graphiques économiques, diagrammes de statique...
+
+**Prérequis :** fiche 0.3 (la méthode de résolution d'un exercice) — cette fiche traite l'étape
+qui la précède souvent : bien lire le support **avant** de commencer à relever des données.
+
+Une erreur qui revient sans cesse chez un débutant n'est pas une erreur de calcul : c'est une
+**mauvaise lecture du support**. On confond une ligne et une colonne dans un tableau, on lit
+un point sur la mauvaise courbe, on ignore une légende qui changeait le sens d'un schéma. Le
+calcul qui suit est alors juste... sur une donnée fausse. **Un support mal lu produit un
+résultat faux avec une confiance totale**, ce qui le rend plus dangereux qu'un calcul raté :
+personne ne le soupçonne.
+
+### 2. Lire un schéma technique : la méthode en 5 points
+
+| # | Étape | Ce qu'on fait concrètement |
+|---|---|---|
+| 1 | **Lire le titre et la légende AVANT les détails** | savoir ce que représente le schéma dans son ensemble, avant de regarder une seule ligne |
+| 2 | **Repérer le code couleur et les symboles** | une légende explique toujours ce que signifie chaque couleur, chaque trait, chaque flèche — jamais de couleur "décorative" dans ce cours |
+| 3 | **Identifier les échelles et les unités affichées** | un schéma qui donne des cotes ou des valeurs les affiche avec leur unité : la repérer avant de la copier |
+| 4 | **Suivre les flèches et repères dans l'ordre logique du schéma** | un schéma raconte souvent une histoire (avant/après, entrée/sortie, cause/conséquence) — la suivre dans le bon sens évite les contresens |
+| 5 | **Relier le schéma au texte qui l'accompagne** | un schéma de ce cours n'est jamais isolé : il illustre un paragraphe précis, à lire dans les deux sens (texte → schéma, puis schéma → texte) |
+
+[[FIG:effort_verin]]
+
+**Application immédiate sur ce schéma.** Regardez le schéma ci-dessus avec la méthode :
+1. Le titre indique la comparaison entre deux situations (sortie/rentrée) : il faut donc
+s'attendre à deux blocs, pas un seul. 2. Le vert (OK) et l'orange (ARBRE) codent les deux
+situations — sans confondre l'un avec l'autre. 3. Les formules affichées portent des unités
+(N, cm²) : un chiffre sans elles ne veut rien dire. 4. Les flèches "»" et "«" indiquent le sens
+de la pression, cohérent avec poussée/traction. 5. Le texte de la fiche où il apparaît explique
+pourquoi la rentrée développe moins d'effort — le schéma ne fait que le montrer visuellement.
+
+### 3. Lire un tableau de valeurs : la méthode en 5 points
+
+| # | Étape | Ce qu'on fait concrètement |
+|---|---|---|
+| 1 | **Lire l'en-tête de chaque colonne avant les valeurs** | comprendre la grandeur ET son unité — un tableau sans cette étape se lit "à l'aveugle" |
+| 2 | **Repérer comment les lignes sont organisées** | croissant, par catégorie, par plage de valeurs (c'est le cas des tables ISO 286, organisées par intervalle de dimension) |
+| 3 | **Trouver la ligne ET la colonne qui correspondent à sa situation** | un tableau à double entrée (comme une table ISO) se lit au **croisement** d'une ligne et d'une colonne, jamais l'une sans l'autre |
+| 4 | **Vérifier l'unité de la valeur trouvée**, qui n'est pas toujours répétée à chaque ligne | souvent indiquée une seule fois dans l'en-tête ou en note du tableau |
+| 5 | **Ne jamais estimer "à l'œil" entre deux lignes** | si la valeur exacte n'est pas dans le tableau, on prend la ligne immédiatement supérieure (jamais une moyenne inventée) — la règle déjà vue pour choisir un alésage de vérin normalisé (fiche 8.2) |
+
+**Application immédiate — lire une table ISO 286.** Pour un arbre Ø30 en tolérance **g6**, la
+table s'organise par **plage de dimension** en ligne (18-30, 30-50...) et par **qualité IT**
+en colonne. Étape 3 : on descend jusqu'à la ligne "18-30" (30 mm appartient à cette plage, pas
+à "30-50" : la borne supérieure d'une plage ISO 286 lui appartient), puis on va à la colonne
+IT6. **La valeur lue est au croisement des deux, jamais sur une ligne seule.** C'est exactement
+la méthode détaillée dans le calculateur d'ajustements ISO de cette application.
+
+### 4. Lire un diagramme (un graphique à deux axes) : la méthode en 5 points
+
+| # | Étape | Ce qu'on fait concrètement |
+|---|---|---|
+| 1 | **Lire les DEUX axes avant toute courbe** | quelle grandeur, quelle unité, l'échelle commence-t-elle à zéro ou non |
+| 2 | **Repérer les courbes ou les zones, et leur légende** | à quoi correspond chaque couleur, chaque trait — jamais deviné |
+| 3 | **Placer sa situation sur l'axe pertinent**, puis lire perpendiculairement | une valeur connue en abscisse se lit en ordonnée en remontant/descendant à la verticale jusqu'à la courbe, puis à l'horizontale jusqu'à l'axe |
+| 4 | **Repérer les points remarquables** | une intersection, un maximum, un seuil — c'est presque toujours là que se trouve l'information utile, pas au milieu d'une courbe |
+| 5 | **Traduire ce qu'on lit en phrase**, comme pour un calcul (fiche 0.3, étape 9) | un point lu sur un graphique n'est utile que traduit en conclusion |
+
+[[FIG:seuil_rentabilite_graphe]]
+
+**Application immédiate sur ce graphique.** 1. Axe horizontal : quantité de pièces (sans
+unité de coût) ; axe vertical : coût total en euros. 2. Deux droites, une par procédé,
+identifiées par leur légende. 3. Pour une quantité donnée, on lit à la verticale jusqu'à
+chaque droite, puis à l'horizontale pour comparer les deux coûts. 4. **Le point remarquable
+est l'intersection** : c'est le seuil de rentabilité, la seule information que ce graphique
+sert vraiment à donner. 5. Traduction : "en dessous de ce nombre de pièces, le procédé A est
+moins cher ; au-dessus, c'est le procédé B" — une phrase, pas juste un point sur un dessin.
+
+### 5. Le piège commun aux trois : lire trop vite le titre et les axes
+
+**L'erreur la plus fréquente** dans les trois cas est la même : sauter l'étape 1 pour aller
+directement aux valeurs, parce qu'elles semblent plus "utiles" que le titre ou les en-têtes.
+C'est l'inverse : le titre et les en-têtes donnent le **contexte** sans lequel une valeur
+correcte peut être appliquée au mauvais endroit. Une cote de 30 mm lue sur la bonne colonne
+d'une mauvaise ligne donne un résultat plausible — et faux.
+
+### 6. À retenir
+
+- **Schéma** : titre → légende/couleurs → unités → sens des flèches → lien avec le texte.
+- **Tableau** : en-têtes → organisation des lignes → croisement ligne/colonne → unité → jamais
+  d'estimation à l'œil entre deux lignes.
+- **Diagramme** : les deux axes d'abord → légende des courbes → lecture perpendiculaire →
+  points remarquables → traduction en phrase.
+- Dans les trois cas, la première étape (titre, en-tête, axes) n'est jamais du temps perdu :
+  c'est elle qui évite d'appliquer une bonne valeur au mauvais endroit.
+""",
+            "formules": """
+**Méthode de lecture — schéma** — titre/légende → couleurs et symboles → unités affichées →
+sens des flèches → lien avec le texte
+
+**Méthode de lecture — tableau** — en-têtes de colonnes → organisation des lignes → croisement
+ligne × colonne → unité de la valeur → jamais d'estimation entre deux lignes (prendre la
+ligne immédiatement supérieure)
+
+**Méthode de lecture — diagramme** — les deux axes (grandeur, unité, échelle) → légende des
+courbes → lecture perpendiculaire (abscisse → courbe → ordonnée) → points remarquables →
+traduction en phrase
+""",
+            "exemple": """
+### Cas guidé — Choisir un jeu dans un tableau à double entrée, puis le lire sur un schéma
+
+**Énoncé.** On doit vérifier l'ajustement d'un arbre Ø25 h6 dans un alésage H7. La table ISO
+286 du calculateur donne, pour la plage 18-30 mm : IT6 = 13 µm, IT7 = 21 µm.
+
+**Étape 1 — Lire le tableau (méthode en 5 points).**
+1. En-têtes : plage de dimension en ligne, qualité IT en colonne, valeurs en micromètres (µm).
+2. Organisation : les lignes sont des plages croissantes de diamètre.
+3. Croisement : Ø25 appartient à la plage "18-30" → on descend à cette ligne, colonne IT6 pour
+   l'arbre (13 µm), colonne IT7 pour l'alésage (21 µm).
+4. Unité : µm, rappelée dans l'en-tête du tableau — pas mm, l'erreur la plus fréquente ici.
+5. Ø25 tombe bien dans la plage, aucune estimation nécessaire.
+
+**Étape 2 — Traduire en écarts, puis en jeu** (méthode de calcul, fiche 0.3) :
+pour un arbre h6, es = 0 et ei = −13 µm ; pour un alésage H7, ES = +21 µm et EI = 0.
+Jeu maxi = ES − ei = 21 − (−13) = **34 µm**. Jeu mini = EI − es = 0 − 0 = **0 µm**.
+
+**Étape 3 — Lire le résultat sur un schéma (méthode en 5 points).** Sur le schéma dynamique du
+calculateur d'ajustements ISO de cette application, les deux zones de tolérance (arbre et
+alésage) sont dessinées l'une par rapport à l'autre : 1. le titre indique qu'il s'agit d'un
+ajustement avec jeu ; 2. les couleurs distinguent l'arbre de l'alésage ; 3. l'échelle est en
+µm ; 4. les flèches montrent l'écart entre les deux zones ; 5. le texte associé confirme :
+« ajustement avec jeu, de 0 à 34 µm » — exactement la valeur calculée à l'étape 2.
+
+**Ce qu'il faut remarquer :** le tableau donne les données brutes, le calcul les transforme en
+jeu, et le schéma vérifie visuellement que le résultat a un sens — les trois lectures se
+recoupent, elles ne se contredisent jamais si chacune a été bien menée.
+""",
+            "exercice": """
+### Exercice autonome — Un tableau, puis un diagramme
+
+**Partie A — Tableau.** La table des coefficients de dilatation (fiche 8.7) donne : acier
+12×10⁻⁶/°C, aluminium 23×10⁻⁶/°C, laiton 19×10⁻⁶/°C. Un technicien doit choisir le
+coefficient d'une pièce en laiton. En appliquant la méthode en 5 points, quelle est la valeur
+à relever, et quelle erreur de lecture serait la plus probable si le tableau n'était pas
+correctement organisé par matériau ?
+
+**Partie B — Diagramme.** Sur le graphique du seuil de rentabilité entre usinage et fonderie
+(fiche 10.2), pour une quantité de pièces **inférieure** au point d'intersection, quelle droite
+faut-il lire pour connaître le procédé le moins cher ? Justifiez avec la méthode en 5 points
+(sans refaire le calcul).
+""",
+            "corrige": """
+### Corrigé
+
+**Partie A.** La valeur à relever est **19×10⁻⁶/°C** (ligne "laiton"). L'erreur la plus
+probable serait de lire la ligne voisine par inattention (12 pour l'acier ou 23 pour
+l'aluminium) — exactement l'étape 3 de la méthode ("trouver la ligne qui correspond à sa
+situation") : un tableau à une seule colonne de valeurs semble simple, mais reste aussi
+vulnérable à une erreur de ligne qu'un tableau à double entrée.
+
+**Partie B.** Il faut lire la droite qui est **la plus basse avant l'intersection** — d'après
+la méthode : 1. les axes sont quantité (horizontal) et coût total en euros (vertical) ; 2. les
+deux droites sont légendées par procédé ; 3. pour une quantité donnée avant le croisement, on
+lit à la verticale puis à l'horizontale sur chacune des deux droites ; 4. le point remarquable
+(l'intersection) sépare les deux zones où chaque procédé domine ; avant ce point, c'est
+**l'usinage** qui est en dessous (moins cher, pas d'outillage à amortir) ; après, c'est la
+**fonderie**. 5. Traduction : « en dessous du seuil, on usine ; au-dessus, on moule » —
+exactement la conclusion déjà vue en fiche 10.2, retrouvée ici uniquement par lecture du
+graphique, sans recalculer.
+""",
+        },
     ],
 }
 
@@ -12390,6 +12561,8 @@ La règle économique fondamentale du métier :
 > Passer de IT11 à IT7 multiplie typiquement le coût d'usinage par 3 à 5.
 > On ne resserre donc **jamais** « par sécurité » : on resserre **parce que la fonction l'exige**.
 
+[[FIG:pourquoi_tolerance]]
+
 ### 2. Vocabulaire normalisé (à maîtriser absolument)
 
 Soit une cote **Ø20 +0,021 / 0** :
@@ -12433,6 +12606,8 @@ Une cote tolérancée ISO s'écrit **Ø20 H7** ou **Ø20 g6** :
 - **js / JS** : tolérance **symétrique**, $\\pm IT/2$.
 - De **a vers h**, l'arbre grossit ; de **k vers z**, il grossit encore et dépasse le nominal.
 
+[[FIG:lettres_et_grades]]
+
 ### 4. Les grades IT
 
 Le grade fixe la précision. La valeur de l'IT dépend **aussi de la dimension** : à grade égal, une
@@ -12449,6 +12624,8 @@ précisément une grande pièce).
 **Grades à mémoriser pour le BTS : IT6 et IT7 (précis), IT8/IT9 (courant), IT11 (grossier).**
 
 ### 5. Lire une table ISO
+
+[[FIG:lire_table_iso]]
 
 Exemple : **Ø20 H7**.
 1. Dimension 20 mm → tranche **18 à 30 mm**.
@@ -12670,6 +12847,8 @@ usinées, on obtient du jeu **ou** du serrage. Utilisé pour un positionnement p
 au maillet.
 > Exemples : H7/k6, H7/m6, H7/js6
 
+[[FIG:trois_ajustements]]
+
 ### 3. Système de l'alésage normal (H) — celui qu'on utilise à 95 %
 
 On fixe l'alésage en **H** (donc $EI = 0$) et on fait varier la lettre de l'arbre pour obtenir
@@ -12701,6 +12880,8 @@ retouchable : barre calibrée, tige de vérin chromée, axe normalisé. On écri
 | **H7/u6** | Serrage très fort | Transmission de couple par **adhérence seule**, sans clavette |
 
 ### 5. Méthode de résolution en 5 étapes (à appliquer systématiquement)
+
+[[FIG:calcul_ajustement_etapes]]
 
 1. **Repérer** la tranche de dimension et lire les deux IT dans la table.
 2. **Placer** l'alésage : lettre H → $EI = 0$, $ES = +IT$.
@@ -12948,6 +13129,8 @@ Le **tolérancement géométrique** (normes GPS — *Geometrical Product Specifi
 complète la cote en imposant des contraintes sur la **forme**, l'**orientation**, la **position**
 et le **battement**.
 
+[[FIG:defaut_geometrique]]
+
 ### 2. Les quatre familles de tolérances
 
 **a) Tolérances de FORME** (aucune référence nécessaire)
@@ -12982,6 +13165,8 @@ et le **battement**.
 | ↗ | Battement simple (radial ou axial) |
 | ⌰ | Battement total |
 
+[[FIG:familles_gps]]
+
 ### 3. Le cadre de tolérance
 
 Il se lit de gauche à droite, en trois cases :
@@ -13000,6 +13185,8 @@ Il se lit de gauche à droite, en trois cases :
 
 Se lit : *« l'axe de cet élément doit être contenu dans un cylindre de Ø0,05 mm perpendiculaire à
 la surface de référence A ».*
+
+[[FIG:cadre_tolerance]]
 
 ### 4. Les références (datums)
 
@@ -14414,6 +14601,8 @@ changements brusques de section** — ce sont précisément les zones de concent
 
 ### 3. Le torseur de cohésion
 
+[[FIG:isoler_et_couper]]
+
 On coupe la poutre par un plan fictif en un point G. Les efforts que la partie droite exerce sur
 la partie gauche se réduisent à un **torseur** en G, comportant 6 composantes :
 
@@ -14428,6 +14617,8 @@ $$ \\{\\mathcal{T}_{coh}\\}_G = \\begin{Bmatrix} N & M_t \\\\ T_y & M_{fy} \\\\ 
 
 **Les sollicitations simples** correspondent au cas où une seule composante est non nulle.
 Dans la réalité elles se combinent (flexion + torsion sur un arbre, par exemple).
+
+[[FIG:quatre_sollicitations]]
 
 ### 4. Traction / compression simple
 
@@ -14458,6 +14649,8 @@ matériau, les approximations du modèle, les défauts de fabrication et la grav
 Un perçage, une gorge, un épaulement **perturbent localement** la répartition des contraintes :
 
 $$ \\sigma_{max} = K_t \\times \\sigma_{nominale} $$
+
+[[FIG:concentration_contrainte]]
 
 $K_t$ vaut typiquement **2 à 3** pour un trou circulaire, et peut dépasser **5** pour une gorge à
 angle vif. **En statique sur un matériau ductile, on peut souvent négliger $K_t$** (la plastification
@@ -14754,6 +14947,8 @@ CISAILLEMENT SIMPLE (1 section)      CISAILLEMENT DOUBLE (2 sections)
    τ = T/S                               τ = T/(2S)
    (assemblage à recouvrement)           (chape, axe entre 2 flasques)
 ```
+
+[[FIG:simple_double_cisaillement]]
 
 ### 2. Loi de Hooke en cisaillement
 
@@ -15186,6 +15381,8 @@ $$ \\frac{dM_f}{dx} = T(x) \\qquad \\frac{dT}{dx} = -q(x) $$
 - Sous charge répartie, $T$ est linéaire et $M_f$ parabolique.
 - Sous charge ponctuelle, $T$ est constant par morceaux et $M_f$ linéaire par morceaux.
 
+[[FIG:diagrammes_efforts]]
+
 ### 3. Répartition de la contrainte : la clé de tout
 
 $$ \\sigma(y) = \\frac{M_f \\cdot y}{I_{Gz}} $$
@@ -15204,6 +15401,8 @@ La contrainte varie **linéairement** dans la hauteur de la section :
 
 **La fibre neutre passe par le centre de gravité de la section, et n'y subit AUCUNE contrainte.**
 
+[[FIG:fibres_flexion]]
+
 **Les deux conséquences de conception qui découlent de cette figure :**
 
 1. **La matière proche de la fibre neutre ne sert à rien** → on la retire.
@@ -15211,6 +15410,8 @@ La contrainte varie **linéairement** dans la hauteur de la section :
 2. **Il faut éloigner la matière de la fibre neutre** → l'inertie croît en $h^3$.
    → **doubler la hauteur d'une poutre rectangulaire multiplie sa résistance par 4 et sa
    rigidité par 8.**
+
+[[FIG:flexion_hauteur]]
 
 **Corollaire immédiat, à ne jamais oublier :** une poutre rectangulaire posée **sur chant** est
 bien plus performante que la même posée **à plat**. Pour une section 40×80 :
@@ -15719,6 +15920,8 @@ c'est l'inverse.
 
 *Se tromper ici fait fabriquer la pièce **en miroir** : parfaitement usinée, parfaitement
 inutilisable.*
+
+[[FIG:projection_europeenne]]
 
 **Geste 3 — Identifier la vue de face et les vues qui l'accompagnent.**
 
@@ -17151,6 +17354,8 @@ se lit dans la désignation.
 *On retrouve la convention de la fiche 5.3 : **majuscule pour le contenant**, minuscule pour le
 contenu.*
 
+[[FIG:decoder_designation]]
+
 **Le pas est souvent omis** quand il s'agit du pas gros, le plus courant : « M8 » seul signifie
 M8 × 1,25.
 
@@ -17207,6 +17412,8 @@ Une vis **8.8** n'est pas une référence commerciale : c'est sa résistance.
 
 Une vis serrée est une vis **tendue** : c'est cette tension (la précharge) qui empêche
 l'assemblage de bouger, pas le frottement de la tête.
+
+[[FIG:precharge_vissage]]
 
 **Ordre de grandeur pour une M8 en 8.8 :** couple de serrage ≈ **25 N·m**, précharge obtenue
 ≈ **15 000 N**.
@@ -17668,6 +17875,8 @@ n'est pas le confort :
 > **volume général → enlèvements → perçages → répétitions → nervures et coques → congés,
 > chanfreins, dépouilles**
 
+[[FIG:arbre_de_creation]]
+
 **Pourquoi les congés en dernier** (fiche 5.10) : un congé remplace une arête vive par une
 surface courbe. Toute fonction qui s'appuyait sur cette arête perd sa référence.
 
@@ -17686,6 +17895,8 @@ surface courbe. Toute fonction qui s'appuyait sur cette arête perd sa référen
 *Ce test n'est pas une formalité : c'est le seul moyen de savoir si votre modèle est réellement
 paramétrique ou seulement joli à l'écran. Un modèle qui ne survit pas à ce test devra être
 reconstruit à la première demande de modification du client.*
+
+[[FIG:intention_conception]]
 
 ### 7. Les erreurs classiques
 
@@ -18339,6 +18550,8 @@ voulu.
 *C'est exactement le raisonnement du schéma cinématique (fiche 6.1) : un pivot laisse une
 rotation, une glissière laisse une translation.*
 
+[[FIG:liaisons_de_base]]
+
 ### 2. La première pièce s'ancre
 
 **On commence toujours par ancrer (fixer) une pièce** — le bâti, le carter, la pièce la plus
@@ -18404,6 +18617,8 @@ Un point que les débutants inversent souvent :
 **Une clavette ne centre pas et ne tient pas axialement.** Dans un assemblage CAO, on ne pose
 donc pas la clavette comme contrainte de position : elle vient après, une fois la pièce déjà
 positionnée par l'ajustement.
+
+[[FIG:liaison_arbre_moyeu]]
 
 ### 7. Les erreurs classiques
 
@@ -18598,6 +18813,8 @@ révision, et une source supplémentaire de contradiction.*
 **Le choix de la vue de face** : celle qui montre **le plus de détails** et qui correspond, si
 possible, à la position d'usinage.
 
+[[FIG:projection_europeenne]]
+
 ### 3. Coupes, sections, vues de détail
 
 | Outil | Quand l'utiliser |
@@ -18621,6 +18838,8 @@ jamais en long** vis, écrous, arbres pleins, clavettes ou nervures.
 **Les cotes générées automatiquement depuis le 3D sont un point de départ, pas un résultat.**
 Elles reprennent les cotes de construction du modèle, qui ne sont presque jamais les cotes
 fonctionnelles — c'est au concepteur de choisir ce qui doit être garanti.
+
+[[FIG:cotation_reference]]
 
 ### 5. La mise en plan d'un assemblage
 
@@ -19407,6 +19626,8 @@ de charge axiale.
 **un seul sens** : seuls, ils se déchargent et se démontent. Il faut donc un second roulement
 opposé, monté en **X** ou en **O** — le montage en O donnant un meilleur appui pour un porte-à-faux.
 
+[[FIG:regle_des_charges]]
+
 ### 3. Les erreurs classiques
 
 1. **Inverser la règle des charges** : la bague tournante montée glissante flue et détruit sa
@@ -19419,6 +19640,7 @@ opposé, monté en **X** ou en **O** — le montage en O donnant un meilleur app
 7. **Congé d'épaulement trop grand** : la bague porte sur l'arrondi.
 8. **Oublier la place pour l'extracteur** : le démontage détruit la pièce.
 
+[[FIG:isostatique_hyperstatique]]
 
 ### 4. À retenir
 
@@ -19958,6 +20180,8 @@ l'huile), déflecteur, chicane, ou roulement **2RS** pour les cas simples et san
 
 *Une portée brute de tournage à Ra 6,3 abrase la lèvre en quelques heures : le joint fuit et la
 panne semble inexplicable.*
+
+[[FIG:tribologie]]
 
 ### 2. L'étanchéité
 
@@ -20926,6 +21150,8 @@ accès d'extracteur et les prises d'outil.
 **Application immédiate.** Sur un arbre portant deux roulements et une poulie : on emmanche les
 roulements **avant** de poser la poulie si celle-ci est en bout d'arbre — sinon la poulie
 interdit l'accès de la douille de montage à la bague intérieure.
+
+[[FIG:montage_arbre_complet]]
 
 ### 4. Les règles de montage qui reviennent toujours
 
@@ -24626,7 +24852,7 @@ Ja maxi = A maxi − B mini − C mini · Ja mini = A mini − B maxi − C maxi
 """
 
 
-# --- Version approfondie de la fiche 6.1 (reprise du 23/08) ---
+# --- Version approfondie de la fiche 3.1 (reprise du 23/08) ---
 FICHES["3.1"]["cours"] = """
 ### 1. Le vrai problème du concepteur
 
@@ -25317,7 +25543,6 @@ le nombre est **Rm**, pas Re
 """
 
 
-# --- Version approfondie de la fiche 5.1 (reprise du 23/08) ---
 FICHES["3.2"]["cours"] = """
 ### 1. Pourquoi ces codes bizarres
 
@@ -25534,7 +25759,6 @@ séries : 1000 pur · 2000 cuivre · 5000 magnésium · **6000 profilés** · 70
 """
 
 
-# --- Version approfondie de la fiche 5.1 (reprise du 23/08) ---
 def appliquer(blocs):
     """Remplace ou complète le contenu des fiches réécrites.
 
@@ -26891,6 +27115,12 @@ vérin :
 *C'est le calcul déjà vu dans l'étude de cas du bloc 14 : la pression du réseau (souvent 6
 bars) multipliée par la section du piston donne l'effort disponible.*
 
+[[FIG:effort_verin]]
+
+*Attention au piège classique : en **poussée** (le vérin sort), toute la surface du piston
+pousse le fluide. En **traction** (le vérin rentre), la tige occupe une partie de cette
+surface — l'effort disponible est donc plus faible dans ce sens, pour la même pression.*
+
 ### 6. Exemple de synthèse
 
 **L'énoncé.** Un moteur de 5,5 kW alimente une pompe hydraulique (rendement 0,85) qui fournit
@@ -27090,6 +27320,11 @@ protégera pas le câble.*
 *Le schéma montre le circuit le plus simple possible : une source U qui pousse un courant I
 à travers une résistance R. Un moteur triphasé fonctionne sur le même principe, avec des
 formules plus riches, mais la logique — U pousse, R freine, I circule — reste identique.*
+
+[[FIG:plaque_moteur]]
+
+*Toutes ces informations sont lisibles sur la plaque vissée au moteur, sans rien démonter :
+c'est le premier réflexe avant de remplacer ou de dimensionner un moteur.*
 
 ### 4. L'effet Joule : pourquoi un câble chauffe
 
@@ -27570,6 +27805,19 @@ donnée qui compte pour le dimensionnement du refroidissement.
 - Rendements en chaîne : **on multiplie**, jamais on n'additionne.
 - **ω (rad/s) = 2πN/60** avec N en tr/min — indispensable pour relier puissance et couple.
 """,
+            "formules": """
+
+**Rendement** — η = P sortie / P entrée (toujours < 1, souvent en %)
+
+**Chaîne de composants** — η global = η₁ × η₂ × η₃ × … · **on MULTIPLIE, jamais on additionne**
+
+**Vitesse angulaire** — ω (rad/s) = 2π × N / 60, avec N en tr/min
+
+**Couple à partir de la puissance** — C = P / ω (P en watts, ω en rad/s, C en N·m)
+
+**Remonter une chaîne depuis un besoin en sortie** — P nécessaire en entrée d'un maillon
+= P utile en sortie de ce maillon / η du maillon
+""",
             "exercice": """
 Une pompe hydraulique a un rendement de 0,80. Elle est entraînée par un moteur électrique de
 rendement 0,88, lui-même alimenté par un variateur de fréquence de rendement 0,95. Le moteur
@@ -27682,6 +27930,18 @@ soupçonner l'instrument, l'opérateur, ou une variation réelle du diamètre le
 - Un petit écart-type traduit une mesure reproductible, pas forcément une pièce parfaite.
 - Comparez toujours la **moyenne** d'une série à la tolérance, pas une mesure isolée.
 """,
+            "formules": """
+
+**Moyenne d'une série de n mesures** — x̄ = (Σ xᵢ) / n
+
+**Écart-type** — s = √( Σ(xᵢ − x̄)² / (n − 1) )
+attention au **(n − 1)** au dénominateur, pas n
+
+**Étendue** — E = valeur max − valeur min (ne dépend que des deux valeurs extrêmes)
+
+**Décision de conformité** — la pièce est conforme si x̄ (et chaque mesure) reste dans
+l'intervalle [cote nominale + EI ; cote nominale + ES] donné par la tolérance (fiche 2.2)
+""",
             "exercice": """
 Un alésage coté Ø30 H7 (plage 18-30, IT7 = 21 µm, EI = 0) est mesuré quatre fois :
 
@@ -27697,6 +27957,29 @@ Un alésage coté Ø30 H7 (plage 18-30, IT7 = 21 µm, EI = 0) est mesuré quatre
 **2.** La tolérance H7 pour un alésage Ø30 impose une cote entre **30,000 mm et 30,021 mm**. La
 moyenne (30,009 mm) et les quatre mesures individuelles sont toutes dans cette plage : l'alésage
 est **conforme**.
+""",
+            "exemple": """
+**Cas industriel — Suivre une production en série avec une carte de contrôle**
+
+Un atelier usine 200 arbres Ø25 h8 par jour. Le contrôleur ne mesure pas les 200 pièces : il
+prélève un **échantillon de 5 pièces toutes les heures** et reporte la moyenne x̄ de chaque
+échantillon sur un graphique (une carte de contrôle).
+
+**Ce que le graphique révèle.** Tant que les points x̄ restent proches de la valeur cible et
+dispersés au hasard, le procédé est **sous contrôle** : les écarts observés viennent seulement
+de la variabilité normale de la machine. Si plusieurs points de suite dérivent dans le même
+sens, ce n'est **plus du hasard** : un outil s'use, un mors de mandrin se desserre, ou la
+température de l'atelier a changé.
+
+**Pourquoi échantillonner plutôt que tout mesurer.** Mesurer 200 pièces par jour coûterait plus
+cher que de les fabriquer. L'échantillonnage régulier détecte une dérive **avant** qu'elle ne
+sorte des pièces hors tolérance, ce qui permet de régler la machine à temps — c'est tout
+l'intérêt d'utiliser la moyenne et l'écart-type d'un petit échantillon plutôt que d'attendre le
+contrôle final.
+
+**Ce que le cas apprend.** La moyenne et l'écart-type ne servent pas qu'à valider une pièce
+isolée : suivis dans le temps sur des échantillons successifs, ils permettent de **surveiller
+un procédé de fabrication** et d'intervenir avant l'apparition de pièces non conformes.
 """,
         },
         {
@@ -27778,6 +28061,15 @@ ici l'aluminium (α=23) dilate presque deux fois plus vite que l'acier (α=12), 
 - Un jeu qui augmente avec la température n'est pas anormal : c'est le matériau au plus grand α
   qui "gagne".
 """,
+            "formules": """
+
+**Dilatation linéique** — ΔL = L × α × ΔT (L en mm, α en /°C, ΔT en °C ou K, ΔL en mm)
+
+**Coefficients usuels (×10⁻⁶ /°C)** — acier 12 · aluminium 23 · laiton 19 · PA6 80
+
+**Évolution d'un jeu diamétral entre deux pièces de matériaux différents** —
+Δ(jeu) = ΔD_alésage − ΔD_arbre (positif = le jeu s'ouvre, négatif = il se referme)
+""",
             "exercice": """
 Une bride en laiton (α = 19×10⁻⁶ /°C) de longueur 300 mm à 20 °C est chauffée à 90 °C
 (ΔT = 70 °C).
@@ -27793,6 +28085,33 @@ même ΔT ? Justifie sans recalculer.
 **2.** Non : l'acier a un α plus petit (12×10⁻⁶ contre 19×10⁻⁶ pour le laiton), donc pour la même
 longueur et le même ΔT, l'acier s'allongerait moins — environ 300 × 12×10⁻⁶ × 70 = 0,252 mm,
 contre 0,399 mm pour le laiton. Le laiton dilate environ 1,6 fois plus que l'acier.
+""",
+            "exemple": """
+**Cas industriel — Prévoir le jeu de montage d'un roulement dans un carter aluminium**
+
+Un motoréducteur monte un roulement à bille (bague extérieure acier, Ø62 mm) dans un carter en
+**aluminium**. À 20 °C, l'ajustement choisi donne un léger serrage de 0,008 mm entre la bague et
+le logement. En fonctionnement continu, le carter atteint **70 °C** (ΔT = 50 °C).
+
+**ÉTAPE 1 — Dilatation du logement en aluminium**
+
+ΔD_carter = 62 × 23×10⁻⁶ × 50 = **0,071 mm**
+
+**ÉTAPE 2 — Dilatation de la bague extérieure en acier**
+
+ΔD_bague = 62 × 12×10⁻⁶ × 50 = **0,037 mm**
+
+**ÉTAPE 3 — Évolution du serrage**
+
+Le logement (aluminium) grandit plus vite que la bague (acier) : l'écart entre les deux
+augmente de 0,071 − 0,037 = **0,034 mm**. Le serrage initial de 0,008 mm disparaît, et
+l'ajustement devient un **jeu** d'environ 0,026 mm à 70 °C.
+
+**Ce que le cas apprend.** Un ajustement calculé « à froid » sans tenir compte de la dilatation
+différentielle peut changer de nature avec la température — ici un serrage devient un jeu. C'est
+pour cette raison que les carters aluminium recevant un roulement en acier sont souvent
+dimensionnés avec un serrage plus important qu'un carter en acier, pour compenser cette
+dilatation prévisible et garder un serrage suffisant à chaud.
 """,
         },
         {
@@ -27872,6 +28191,15 @@ si cher : il faut souvent reprendre l'outillage.
 - Le taux de retrait dépend du polymère choisi, pas d'une règle générale.
 - Un changement de matériau tardif impose de recalculer (et souvent de reprendre) l'outillage.
 """,
+            "formules": """
+
+**Cote du moule** — Cote moule = Cote pièce finie × (1 + taux de retrait)
+on majore toujours la cote du **moule**, jamais celle de la pièce
+
+**Retraits typiques** — ABS 0,4-0,7 % · PA6 1,0-1,5 % · PP 1,5-2,5 % · PC 0,5-0,7 %
+
+**Rappel de conversion** — un taux en % se reconvertit en décimal avant calcul : 1,2 % = 0,012
+""",
             "exercice": """
 Une pièce en ABS (retrait 0,5 %) doit mesurer **80,00 mm** une fois refroidie.
 
@@ -27887,6 +28215,28 @@ la cote du moule doit-elle être recalculée ? Justifie.
 l'ABS). Cote moule PP = 80,00 × 1,020 = **81,60 mm** — soit 1,20 mm de plus que pour l'ABS. Garder
 la cote calculée pour l'ABS produirait des pièces en PP sous-dimensionnées de plus d'un
 millimètre.
+""",
+            "exemple": """
+**Cas industriel — Un outillage livré avec le mauvais retrait**
+
+Un fabricant de boîtiers électroniques fait usiner un moule pour un capot en **ABS**, coté
+150,00 mm une fois refroidi. L'outilleur applique un retrait de 0,5 % et livre un moule à
+150,75 mm. Premières pièces moulées : **elles mesurent bien 150,00 mm, conformes**.
+
+Six mois plus tard, le service achats change de fournisseur de matière pour réduire les coûts,
+et bascule sur un **PP** chargé — sans en informer le bureau d'études, pensant qu'« un plastique
+vaut un plastique ». Les nouvelles pièces sortent à **148,50 mm**, hors tolérance.
+
+**Analyse de la dérive.** Le PP a un retrait bien plus élevé (environ 2,0 % contre 0,5 % pour
+l'ABS). Le moule, dimensionné pour un retrait de 0,5 %, ne compense plus assez le retrait réel
+du PP : la pièce rétrécit davantage que prévu par l'outillage, d'où une cote plus petite que la
+cible.
+
+**Ce que le cas apprend.** Le retrait est une propriété du **couple matériau-outillage**, pas
+seulement de la géométrie de la pièce. Tout changement de matériau — même perçu comme mineur par
+un service achats — doit être validé par le bureau d'études, qui vérifiera si l'outillage
+existant reste compatible ou doit être repris. C'est une des raisons pour lesquelles la matière
+figure toujours au cartouche du plan (fiche 5.1) : elle fait partie du contrat.
 """,
         },
     ],
@@ -29636,6 +29986,29 @@ que "fifteen" porte l'accent sur la 2ᵉ syllabe, contrairement à "fifty" (acce
 radial load to the frame."* — deux phrases courtes valent mieux qu'une phrase longue où l'on
 se perd.
 """,
+            "exemple": """
+**Cas industriel — Un oral qui tourne mal, puis se rattrape**
+
+Une candidate présente un bras de levier en aluminium. Elle a appris son texte par cœur.
+Au bout de vingt secondes, le jury l'interrompt : *"Why did you choose aluminium instead of
+steel?"* — une question qui n'était pas dans le texte appris. Elle bafouille, cherche ses mots,
+perd le fil de toute sa présentation.
+
+**Ce qui s'est réellement passé.** La candidate avait mémorisé des phrases, pas une structure.
+Dès qu'une question est sortie de l'ordre prévu, elle n'avait plus rien à quoi s'accrocher.
+
+**Comment un candidat formé au plan en 5 points aurait réagi.** La question porte sur le point
+2 du plan (*what it's made of*) — un point qu'il maîtrise indépendamment de l'ordre où il est
+posé. Il pourrait répondre : *"We chose aluminium because it's lighter than steel, which
+matters here since the part moves fast. Steel would resist more force, but the load in this
+application doesn't require it."* Deux phrases, construites sur le moment, qui répondent
+exactement à la question — sans avoir jamais été écrites à l'avance dans cet ordre précis.
+
+**Ce que le cas apprend.** Le jury ne teste pas la mémoire, il teste la **compréhension** :
+poser une question hors de l'ordre attendu est même volontaire, pour vérifier que le candidat
+maîtrise le fond et pas seulement un texte récité. C'est exactement pourquoi la méthode de
+cette fiche insiste sur un **plan réutilisable**, pas un texte à apprendre par cœur.
+""",
         },
         {
             "id": "10.4",
@@ -29760,6 +30133,27 @@ contrainte en trop — le logiciel surligne généralement les éléments en con
 linéaire selon le contexte) — « pattern » désigne ici une opération de répétition, pas un
 motif décoratif.
 """,
+            "exemple": """
+**Cas industriel — Un tutoriel anglais qui débloque une pièce**
+
+Un élève bloque sur une esquisse : SolidWorks refuse l'extrusion et affiche *« This sketch
+contains self-intersecting geometry. »* Aucun tutoriel en français ne traite ce message précis.
+
+**La recherche.** L'élève tape le message d'erreur tel quel dans un moteur de recherche. Les
+résultats utiles sont presque tous en anglais : des forums où d'autres utilisateurs ont eu le
+même message.
+
+**Ce que la traduction change.** *"Self-intersecting geometry"* = une géométrie qui se croise
+elle-même — deux segments de l'esquisse se coupent à un endroit où ils ne devraient pas,
+souvent invisible à l'œil sur un contour complexe. Un contributeur du forum répond : *"Zoom in
+near the fillet, there's probably an overlapping line."* (« Zoomez près du congé, il y a
+probablement une ligne qui se superpose. »)
+
+**Ce que le cas apprend.** La très grande majorité de la documentation technique et des
+communautés d'entraide en CAO fonctionne en anglais. Reconnaître le vocabulaire de cette fiche
+(sketch, fillet, geometry) permet de comprendre une solution en quelques secondes, là où
+attendre une traduction française aurait fait perdre une bonne partie de la séance.
+""",
         },
         {
             "id": "10.5",
@@ -29867,6 +30261,29 @@ dans la rédaction d'une consigne.
 accidentally while someone is working on it. Without it, a technician could be seriously
 injured. »*
 """,
+            "exemple": """
+**Cas industriel — Une notice non traduite, un accident évité**
+
+Un centre d'usinage neuf arrive d'un fournisseur allemand avec sa notice de sécurité en
+anglais uniquement ; la version française n'arrivera que dans six semaines. Le responsable
+maintenance de l'atelier doit former les opérateurs **avant** cette traduction.
+
+**Le passage critique de la notice :**
+
+> *"WARNING: This machine has a residual pinch point behind the tool changer, even when the
+> spindle is stopped. Lock out power before reaching into this area."*
+
+**Ce que l'atelier a compris — et failli manquer.** Un opérateur, pensant qu'il suffisait
+d'arrêter la broche pour intervenir sans risque, a failli passer la main derrière le
+changeur d'outil sans consigner l'alimentation. Le mot **"residual"** (résiduel) est la clé :
+il signale un danger qui **persiste même machine arrêtée** — ici un ressort resté sous tension
+dans le mécanisme du changeur.
+
+**Ce que le cas apprend.** Une notice de sécurité en anglais non traduite n'est pas un détail
+administratif à contourner : un mot mal compris (« residual ») peut transformer une consigne de
+prudence en incident réel. C'est exactement pour cela que cette fiche insiste sur une lecture
+mot à mot, et non une lecture en diagonale.
+""",
         },
         {
             "id": "10.6",
@@ -29961,6 +30378,30 @@ cost, which is acceptable at this production volume."*
 
 **3.** *« The trade-off is a slightly higher manufacturing cost, but the part meets the
 maximum mass requirement. »*
+""",
+            "exemple": """
+**Cas industriel — Une soutenance de BTS, question surprise du jury**
+
+Pendant l'épreuve E6, un candidat présente un support de fixation redessiné pour réduire son
+coût. Un membre du jury, ingénieur invité, demande directement en anglais : *"Did you consider
+3D printing instead of machining for this low-volume part?"*
+
+**La mauvaise réaction (à éviter).** Paniquer parce que la question n'était pas prévue, et
+répondre en français en espérant que le jury reformule.
+
+**La réponse construite avec le vocabulaire de cette fiche.** Le candidat applique le plan
+« reconnaître → expliquer → compromis assumé » :
+
+> *« That's a good point — we did consider 3D printing. The main advantage would have been no
+> tooling cost for this small batch. The trade-off is a lower surface quality and a higher
+> cost per part beyond fifty units. Since our production volume is two hundred parts, machining
+> meets the requirement of a lower total cost at this quantity. »*
+
+**Ce que le cas apprend.** La question n'attendait pas une réponse parfaite préparée à
+l'avance, mais la preuve que le choix technique avait été **réellement comparé** à une
+alternative. La structure "that's a good point" + comparaison + lien au volume de production
+transforme une question déstabilisante en démonstration de maîtrise — exactement l'objectif de
+cette fiche.
 """,
         },
         {
@@ -30057,6 +30498,30 @@ pas un engagement ferme ? Comment la reformuler pour en demander un ?
 **3.** *"I'll try"* n'engage à rien — c'est une intention, pas un **firm commitment**. Reformuler :
 *"Can you confirm a firm delivery date, not just an estimate?"*
 """,
+            "exemple": """
+**Cas industriel — Un email mal rédigé fait perdre trois semaines**
+
+Un stagiaire reçoit un lot non conforme et écrit au fournisseur allemand : *"The parts don't
+work, please fix it."* Le fournisseur répond une semaine plus tard, demandant quelles pièces,
+quel défaut, quelle cote — il n'a aucune information exploitable.
+
+**Ce qui a été perdu.** Une semaine entière, pour un email qui ne contenait ni le numéro de
+lot, ni la cote mesurée, ni l'écart par rapport à la spécification — exactement les trois
+éléments enseignés dans cette fiche.
+
+**L'email qui aurait dû être envoyé dès le départ**, suivant la structure fait → écart chiffré
+→ demande précise :
+
+> *« We received batch #7734 on March 3rd. 8 parts out of 40 are out of tolerance on the
+> Ø12 shaft diameter (measured 11.91–11.93 mm, spec is 12 h7, i.e. 11.98–12.00 mm). Please
+> investigate the root cause and confirm the corrective action before the next shipment,
+> due April 2nd. »*
+
+**Ce que le cas apprend.** En relation fournisseur, une réclamation vague ne déclenche presque
+jamais d'action rapide : le fournisseur doit d'abord reformuler ses propres questions avant de
+pouvoir agir. Un email complet dès le premier envoi — avec le lot, la cote, l'écart et
+l'échéance — peut faire gagner plusieurs semaines sur un dossier de non-conformité.
+""",
         },
         {
             "id": "10.8",
@@ -30150,6 +30615,29 @@ serait à revoir.
 
 *Pourquoi c'est une bonne réponse : le coefficient de sécurité de 2,8 est cité pour montrer que
 le choix technique était déjà validé avant l'arbitrage économique — jamais l'inverse.*
+""",
+            "exemple": """
+**Cas industriel — Une soutenance E6 où deux réponses au même chiffre ne se valent pas**
+
+Deux candidats présentent le même projet de binôme : le remplacement d'une pièce en fonderie
+par de l'impression 3D pour une pré-série de 30 exemplaires. Les deux ont calculé le même
+résultat : l'impression 3D coûte 45 € la pièce, la fonderie 210 € la pièce à ce faible volume
+(outillage non amorti).
+
+**Candidat 1 répond :** *« On a pris l'impression 3D, c'est moins cher. »* Le jury relance
+aussitôt : « Moins cher de combien ? Et pour combien de temps, si la série augmente ? » Le
+candidat n'a pas la réponse en tête, cherche dans son dossier, perd le fil de la soutenance.
+
+**Candidat 2 répond avec la structure en quatre temps :** *« Le critère qui a tranché est le
+coût sur cette pré-série de 30 pièces [critère]. L'impression 3D revient à 45 € la pièce, contre
+210 € en fonderie tant que l'outillage n'est pas amorti [chiffre + comparaison]. La limite : ce
+choix n'est valable que pour cette pré-série — si le client confirme une série de 2 000 pièces,
+la fonderie redevient moins chère et il faudra revoir l'arbitrage [limite assumée]. »*
+
+**Ce que le cas apprend.** Les deux candidats avaient fait le même calcul, avec le même bon
+résultat. Seul le second a obtenu les points liés à l'argumentation économique, parce que sa
+réponse anticipait les questions du jury au lieu de les subir — exactement ce que cette fiche
+enseigne à préparer à l'avance.
 """,
         },
     ],
@@ -31864,6 +32352,20 @@ tour conventionnel reste plus rapide pour usiner un axe unique.
 **La FAO** (fabrication assistée par ordinateur) génère le programme depuis le modèle 3D. C'est
 là que la boucle se referme avec le bloc 5 : un modèle CAO propre et paramétré alimente
 directement la FAO. Un modèle mal construit se paie donc **deux fois**.
+
+[[FIG:chaine_numerique]]
+
+**Ce que la FAO a besoin de recevoir.** Pour transmettre un modèle du bureau d'études vers la
+FAO, on n'envoie jamais un simple fichier natif du logiciel de CAO (chacun a le sien, souvent
+incompatible d'un poste à l'autre) : on passe par un **format d'échange neutre**.
+
+[[FIG:formats_echange]]
+
+**STEP** conserve la géométrie exacte (surfaces et volumes, dite BREP) : c'est le format à
+utiliser dès qu'un fichier doit être **remodélisé ou usiné**. **STL** n'est qu'un maillage de
+triangles, sans aucune tolérance ni cote : il convient à l'impression 3D, jamais à la FAO d'une
+pièce tolérancée. Envoyer un STL à un usineur, c'est lui envoyer une forme sans lui dire quelles
+cotes respecter.
 
 ### 7. La cotation de fabrication : quand le plan ne suffit pas
 
@@ -38295,6 +38797,44 @@ la disqualifie. La version correcte reformulerait le même constat sans marque d
 un tel bouleversement suppose, selon un représentant syndical, un accompagnement que tous les
 salariés ne recevront pas de la même façon. »* — même idée, aucune trace d'opinion.
 """,
+    "formules": """
+
+**Avant d'écrire** — repérer ce que disent les documents ENTRE EUX : accord, nuance, opposition,
+complémentarité — presque toujours un accord-avec-nuance, rarement une opposition franche
+
+**Construire le plan** — autant de parties que de relations logiques dégagées (2 ou 3),
+jamais un plan forcé à 3 parties si le corpus n'en contient que 2
+
+**Rédiger** — chaque paragraphe mobilise plusieurs documents, aucun document isolé dans un
+paragraphe qui lui serait uniquement consacré
+
+**Interdiction absolue** — aucune marque de jugement personnel (« je pense que », « il faudrait »)
+""",
+    "exemple": """
+**Cas industriel — Un plan qui se construit en salle d'examen, pas avant**
+
+Une candidate arrive à l'épreuve avec un plan-type appris par cœur (« les avantages, puis les
+limites »), pensant qu'il s'appliquera à n'importe quel corpus. Le sujet du jour porte sur le
+télétravail, avec trois documents : un témoignage de salarié satisfait, une étude chiffrée
+montrant une baisse de la cohésion d'équipe, et un article sur les outils numériques de
+collaboration.
+
+**Ce qui se passe si elle applique son plan appris par cœur.** Elle range de force le
+témoignage et l'article dans « avantages », l'étude chiffrée dans « limites » — un plan qui
+tient sur le papier, mais qui ignore que l'article sur les outils numériques répond en fait
+directement à la baisse de cohésion évoquée par l'étude : ce n'est pas un troisième avantage
+séparé, c'est une réponse à la limite précédente.
+
+**Le plan qui aurait dû émerger du corpus lui-même**, comme dans l'exemple entièrement déroulé
+ci-dessus : 1) le télétravail apporte une satisfaction individuelle réelle mais fragilise le
+collectif (témoignage + étude chiffrée, mis en tension) ; 2) des outils et des pratiques
+émergent pour compenser cette fragilisation (article).
+
+**Ce que le cas apprend.** Un plan mémorisé à l'avance ignore toujours les relations propres au
+corpus du jour. La méthode de cette fiche — confronter d'abord les documents, laisser le plan
+émerger ensuite — demande plus de temps en apparence, mais évite de forcer des documents dans
+des cases qui ne leur correspondent pas.
+""",
         },
         {
     "id": "16.5",
@@ -38350,6 +38890,38 @@ restantes se répartissent en environ 15 minutes de lecture du sujet et de reche
 — largement suffisant. Le vrai risque serait de continuer à peaufiner la synthèse « parce qu'elle
 n'est pas encore parfaite » : ça grignoterait le temps de l'écriture personnelle, qui compte
 quand même pour un tiers de la note et qui n'a pas encore été commencée.
+""",
+    "formules": """
+
+**Repères de temps sur 3 heures** — lecture + repérage ≈ 25 min · confrontation + plan ≈ 25 min ·
+synthèse ≈ 50 min · lecture sujet + exemples ≈ 15 min · écriture personnelle ≈ 45 min ·
+relecture des deux parties ≈ 20 min
+
+**Le seul repère non négociable** — ne jamais commencer l'écriture personnelle avec moins
+d'une heure devant soi
+
+**En cas de débordement** — couper court à la synthèse, jamais à l'écriture personnelle
+""",
+    "exemple": """
+**Cas industriel — Deux élèves, même niveau, deux notes différentes**
+
+Deux élèves d'un même groupe passent le même sujet blanc, avec un niveau de méthode équivalent
+en entraînement.
+
+**Élève A** ne se chronomètre jamais chez lui, pensant que « le jour J, je gérerai ». Le jour de
+l'épreuve, il découvre que la lecture du corpus lui prend 40 minutes au lieu des 25 imaginées —
+il ne l'avait jamais mesuré. Pris par le temps, il commence son écriture personnelle avec 35
+minutes restantes, la bâcle, et perd l'équivalent de plusieurs points sur un tiers de la note.
+
+**Élève B** s'est chronométré à trois reprises en conditions réelles avant l'épreuve. Il sait,
+par expérience, que sa lecture prend environ 30 minutes (pas 25) et ajuste son planning en
+conséquence : synthèse un peu plus courte, mais écriture personnelle démarrée avec 1h05 devant
+lui, comme prévu.
+
+**Ce que le cas apprend.** Les deux élèves maîtrisaient la même méthode de fond. Ce qui a fait
+la différence de note n'est pas la compétence, mais le fait d'avoir déjà mesuré son propre
+rythme avant l'épreuve — c'est précisément ce que cette fiche demande de faire à l'entraînement,
+et jamais pour la première fois le jour de l'examen.
 """,
         },
         {
@@ -38453,6 +39025,32 @@ collectif. »*
 
 *On garde le constat (avantages réels, question du collectif) sans jamais dire « je pense » ni
 trancher soi-même le débat.*
+""",
+            "exemple": """
+**Cas industriel — Une copie qui perd deux points sur la seule conclusion**
+
+Deux copies traitent le même corpus sur l'intelligence artificielle en entreprise. Leurs
+synthèses développent des idées presque identiques, avec les mêmes documents correctement
+mobilisés. Seule leur conclusion diffère.
+
+**Copie A conclut ainsi :** *« L'intelligence artificielle transforme donc profondément
+l'organisation du travail, en automatisant certaines tâches tout en créant de nouveaux besoins
+en compétences. »*
+
+**Copie B conclut ainsi :** *« L'intelligence artificielle transforme donc profondément
+l'organisation du travail. Je trouve que c'est une bonne chose si elle est bien encadrée, car
+cela permettrait aux salariés de se concentrer sur des tâches plus intéressantes. »*
+
+**Ce que le correcteur voit.** La première phrase des deux copies est identique et correcte :
+un résumé neutre du mouvement d'ensemble. Mais la copie B ajoute une opinion (« je trouve »,
+« cela permettrait ») que rien dans le corpus ne vient étayer — ce n'est plus une synthèse, mais
+une prise de position déguisée en conclusion.
+
+**Ce que le cas apprend.** Une conclusion peut développer la même idée générale dans les deux
+copies et pourtant recevoir des notes différentes : la neutralité n'est pas un détail de forme,
+c'est un critère de notation à part entière de l'épreuve de synthèse. L'avis personnel de la
+copie B, aussi raisonnable soit-il, aurait eu toute sa place dans l'écriture personnelle — pas
+ici.
 """,
         },
     ],
@@ -41569,6 +42167,1499 @@ _mth("11.1", "Organiser ses révisions sur l'année", [
    "séance de deux heures la veille — et c'est exactement ce que la révision espacée "
    "organise à votre place.")
 
+_mth("12.1", "Résoudre un problème de statique plane", [
+    "**Isoler le solide étudié** : le redessiner seul, détaché de tout ce qui l'entoure.",
+    "**Faire le bilan des actions extérieures et compter les inconnues** : appui simple "
+    "= 1, articulation = 2, encastrement = 3. Au-delà de 3 inconnues au total, le "
+    "système est hyperstatique et sort du programme de première année.",
+    "**Écrire ΣFx = 0** : souvent la plus rapide à traiter, parfois nulle d'emblée.",
+    "**Choisir le point de calcul des moments** là où passent les inconnues qu'on veut "
+    "éliminer (leur bras de levier y est nul), puis écrire ΣM = 0.",
+    "**Écrire ΣFy = 0** et résoudre les inconnues restantes.",
+], "Poutre de 3 m, articulation en A, appui simple en B, charge de 1 200 N à 1 m de A : "
+   "les moments pris EN A éliminent Ax et Ay d'un coup et donnent directement "
+   "By = 400 N, puis ΣFy = 0 donne Ay = 800 N.")
+
+_mth("12.2", "Vérifier un arbre en flexion-torsion combinées", [
+    "**Convertir tous les moments en N·mm** avant tout calcul — oublier ce facteur "
+    "1 000 est l'erreur numéro un de cet exercice.",
+    "**Calculer les modules de la section** : I/v = πd³/32 pour la flexion, "
+    "I₀/v = πd³/16 pour la torsion — le second vaut toujours le double du premier pour "
+    "un rond plein, un bon moyen de vérifier qu'on ne les a pas inversés.",
+    "**Calculer σ et τ séparément** : σ = Mf/(I/v), τ = Mt/(I₀/v).",
+    "**Combiner par un critère équivalent**, jamais en additionnant σ et τ directement : "
+    "σ éq = √(σ² + 3τ²) (Von Mises).",
+    "**Comparer σ éq à Rpe = Re/s** et conclure.",
+], "Arbre Ø30 mm en C45 (Re = 340 MPa), Mt = 80 N·m, Mf = 120 N·m, s = 3 : "
+   "σ = 45,3 MPa, τ = 15,1 MPa, σ éq = 52,3 MPa — nettement inférieur à Rpe = 113 MPa, "
+   "alors que l'addition naïve (60,4 MPa) aurait surestimé le risque de 15 %.")
+
+_mth("12.5", "Dimensionner le module d'un engrenage à partir d'une puissance", [
+    "**Calculer le rapport de transmission demandé** : r = N sortie / N entrée.",
+    "**Choisir Z1 au-dessus de 17 dents** (seuil d'interférence), en déduire "
+    "Z2 = Z1 / r et vérifier que le rapport réel obtenu reste proche de la demande.",
+    "**Calculer le couple sur le pignon** : ω = 2πN/60, puis Mt = P/ω, à convertir en "
+    "N·mm.",
+    "**Calculer le module minimal** : m ≥ ∛(2Mt / (k × Z × Y × Rpe)).",
+    "**Arrondir au module normalisé immédiatement SUPÉRIEUR**, jamais au plus proche "
+    "s'il est inférieur.",
+], "Moteur 5,5 kW à 1 450 tr/min, sortie visée 360 tr/min, Z1 = 20 : le calcul donne "
+   "m ≥ 1,45 mm, on retient donc le module normalisé m = 1,5 mm.")
+
+_mth("13.2", "Calculer et vérifier un cordon de soudure d'angle", [
+    "**Choisir la gorge a** ≈ 0,7 × épaisseur de la tôle la plus fine des deux "
+    "assemblées.",
+    "**Calculer la longueur utile** de chaque cordon : L − 2a (on retranche les "
+    "amorçages et arrêts, souvent défectueux).",
+    "**Calculer la section résistante totale** : S = a × longueur utile totale de tous "
+    "les cordons.",
+    "**Calculer τ = F / S** et la comparer à Rpg ≈ 0,5 × (Re/s) du métal le plus "
+    "faible des deux tôles assemblées.",
+    "**Conclure**, en gardant en tête qu'un cordon plus gros que 0,7 × e n'apporte "
+    "rien : au-delà, c'est la tôle qui cède avant le cordon.",
+], "Console soudée par 2 cordons de 120 mm, F = 18 000 N, tôles S235 de 8 mm, s = 3 : "
+   "a = 5 mm, S = 1 100 mm², τ = 16,4 MPa, largement sous Rpg = 39,2 MPa.")
+
+_mth("13.3", "Choisir un moteur à partir d'un cycle de démarrage", [
+    "**Calculer la vitesse et l'accélération angulaires de la charge** : "
+    "ω = 2πN/60, α = Δω/Δt.",
+    "**Calculer le couple d'accélération** : C acc = J × α — c'est souvent la "
+    "contribution dominante au démarrage, ne jamais l'oublier.",
+    "**Additionner tous les couples côté charge** : accélération + frottements + "
+    "charge utile.",
+    "**Ramener ce couple au moteur** en divisant par (rapport de réduction × "
+    "rendement).",
+    "**Vérifier le rapport d'inertie** J ramenée / J moteur ≤ 5, calculer la "
+    "puissance P = C × ω, puis choisir le moteur normalisé immédiatement supérieur.",
+], "Plateau J = 2,5 kg·m², 0 à 60 tr/min en 0,8 s, réducteur 1/8, rendement 0,9 : le "
+   "couple d'accélération (19,6 N·m) domine largement le frottement seul (3 N·m) — "
+   "dimensionner sur le seul régime établi aurait choisi un moteur sept fois trop "
+   "petit.")
+
+_mth("13.4", "Diagnostiquer un mode d'usure à partir de son aspect", [
+    "**Observer la surface avant toute hypothèse** : rayures, cratères et transferts "
+    "de matière ne racontent jamais la même histoire.",
+    "**Rayures parallèles au mouvement** → usure abrasive (une particule dure a "
+    "laboré la surface) → filtrer, protéger par des joints, durcir.",
+    "**Transferts de matière d'une pièce sur l'autre** → usure adhésive (grippage) → "
+    "lubrifier, ne jamais associer deux pièces du même métal.",
+    "**Cratères sous pression répétée** → fatigue de contact (pitting) → réduire la "
+    "pression de contact, durcir la surface.",
+    "**Vérifier le régime de lubrification en cause** : la plupart des grippages ont "
+    "lieu au démarrage ou à l'arrêt (régime limite), rarement en régime établi "
+    "(hydrodynamique).",
+], "Un guidage qui chauffe et grippe, avec des transferts de matière visibles entre "
+   "les deux pièces : c'est une usure adhésive, à traiter par la lubrification et le "
+   "choix de deux matériaux différents.")
+
+_mth("13.5", "Vérifier qu'une structure ne va pas entrer en résonance", [
+    "**Calculer toutes les fréquences d'excitation** de la machine : rotation "
+    "(N/60), engrènement (Z × f rotation), et leurs harmoniques.",
+    "**Estimer la fréquence propre de la structure** : f = (1/2π) × √(k/m).",
+    "**Comparer chaque fréquence d'excitation à la fréquence propre**, une par une — "
+    "ne vérifier que la rotation ne suffit jamais.",
+    "**Appliquer la règle des ±20 %** : f propre doit rester ≥ 1,3 × ou ≤ 0,7 × "
+    "chaque fréquence d'excitation.",
+    "**Si le risque existe**, agir sur k ou m pour décaler la fréquence propre, ou "
+    "ajouter de l'amortissement plutôt que de viser un décalage exact et fragile.",
+], "Arbre à 1 450 tr/min portant un pignon de 20 dents : f rotation = 24,2 Hz, "
+   "f engrènement = 483 Hz — il faut vérifier qu'aucune fréquence propre de la "
+   "structure ne tombe près de l'une ou l'autre de ces deux valeurs.")
+
+_mth("6.5", "Choisir le sens de serrage d'un roulement selon la charge", [
+    "**Identifier, pour chaque bague, si la charge est tournante ou fixe** par "
+    "rapport à elle.",
+    "**Bague tournante → ajustement SERRÉ** (k6, m6...).",
+    "**Bague fixe → ajustement à léger JEU** (H7), pour faciliter le démontage et "
+    "laisser passer la dilatation.",
+    "**Vérifier avec le test physique** : une bague tournante montée glissante finit "
+    "toujours par « ramper » et détruire sa portée.",
+], "Arbre tournant, charge fixe en direction : la bague intérieure (tournante) reçoit "
+   "un k6, la bague extérieure (fixe dans le carter) reçoit un H7 — jamais "
+   "l'inverse.")
+
+_mth("6.6", "Choisir quel palier rendre fixe, lequel rendre libre", [
+    "**Calculer la dilatation attendue de l'arbre** : ΔL = L × α × ΔT.",
+    "**Ne jamais bloquer axialement les deux paliers à la fois** — ce serait "
+    "hyperstatique.",
+    "**Choisir un palier fixe** (bloque radial ET axial) **et un palier libre** "
+    "(radial seul, coulisse axialement).",
+    "**Vérifier que le jeu axial du palier libre dépasse la dilatation calculée**, "
+    "sinon l'arbre se retrouve comprimé en fonctionnement.",
+], "Arbre de 500 mm en acier, ΔT = 40 °C : ΔL ≈ 0,24 mm — c'est cette valeur que le "
+   "jeu du palier libre doit pouvoir absorber sans coincer.")
+
+_mth("6.7", "Choisir la lubrification et l'étanchéité adaptées", [
+    "**Identifier si l'étanchéité est statique** (rien ne bouge : joint plat, joint "
+    "torique) **ou dynamique** (une pièce tourne ou coulisse : joint à lèvres, "
+    "déflecteur, chicane).",
+    "**Choisir graisse ou huile** : graisse pour une vitesse modérée et une "
+    "étanchéité simple, huile quand il faut évacuer la chaleur à haute vitesse.",
+    "**Remplir un roulement au tiers du volume libre**, jamais plus — trop de "
+    "graisse chauffe autant qu'un manque de graisse.",
+    "**Soigner la portée sous un joint à lèvres** : Ra 0,8 rectifié, lèvre orientée "
+    "vers l'intérieur pour retenir le lubrifiant.",
+], "Réducteur avec arbre de sortie traversant, en atelier poussiéreux : étanchéité "
+   "dynamique par joint à lèvres, sur une portée rectifiée Ra 0,8.")
+
+_mth("6.8", "Diagnostiquer un risque d'arc-boutement", [
+    "**Repérer la longueur de guidage** et **le porte-à-faux** (la distance jusqu'au "
+    "point où l'effort est appliqué).",
+    "**Calculer le rapport guidage / porte-à-faux**.",
+    "**Un rapport trop faible** (guidage court, porte-à-faux long) **signe un risque "
+    "de blocage géométrique**, indépendant de tout jeu de fabrication.",
+    "**Corriger en allongeant le guidage**, ou en rapprochant le point d'application "
+    "de l'effort de la zone guidée.",
+], "Coulisseau guidé sur 80 mm, effort appliqué à 120 mm de porte-à-faux : rapport "
+   "0,67, en dessous du repère minimum recommandé — le coulisseau coincera dès qu'on "
+   "pousse un peu fort.")
+
+_mth("6.9", "Vérifier la tenue d'un assemblage vissé", [
+    "**Identifier la classe de qualité de la vis** (ex. 8.8), et en déduire Re et "
+    "Rm : 1ᵉʳ chiffre × 100 = Rm, produit des deux chiffres × 10 = Re.",
+    "**Comprendre que c'est la précharge (la tension), pas le frottement de la "
+    "tête, qui empêche l'assemblage de bouger.**",
+    "**Vérifier ou appliquer le couple de serrage prescrit** pour obtenir cette "
+    "précharge.",
+    "**Ne jamais remonter une vis d'une classe inférieure** à celle prévue au "
+    "calcul — rien ne le signale à l'œil.",
+], "Vis M8 classe 8.8 : Re = 640 MPa, couple de serrage ≈ 25 N·m, précharge obtenue "
+   "≈ 15 000 N — c'est cette tension qui tient l'assemblage, pas le frottement.")
+
+_mth("6.10", "Choisir la bonne combinaison ajustement / clavette / butée axiale", [
+    "**Séparer les trois rôles à ne jamais confondre** : centrer (l'ajustement), "
+    "transmettre le couple (clavette ou cannelures), tenir axialement (épaulement, "
+    "anneau élastique).",
+    "**Choisir l'ajustement qui centre correctement** le moyeu sur l'arbre (souvent "
+    "H7/k6 ou H7/h6 selon le jeu voulu).",
+    "**Ne jamais utiliser la clavette comme référence de centrage** : elle "
+    "transmet le couple, elle ne positionne rien.",
+    "**Vérifier que l'élément de tenue axiale est indépendant** de la clavette et "
+    "de l'ajustement.",
+], "Une poulie qui prend du jeu, clavette matée retrouvée au démontage : le vrai "
+   "défaut est souvent un ajustement de centrage trop lâche, pas une clavette "
+   "sous-dimensionnée — c'est le mouvement radial parasite qui a matée la clavette.")
+
+_mth("6.12", "Construire une gamme de montage", [
+    "**Identifier les sous-ensembles** montables à part, plus simples et plus "
+    "contrôlables.",
+    "**Repérer la pièce de base**, celle qui ne bouge plus ensuite — c'est sur elle "
+    "qu'on empile le reste.",
+    "**Ordonner les opérations par accessibilité** : à chaque étape, se demander ce "
+    "qui vient d'être posé n'empêche-t-il pas d'atteindre ce qui vient après.",
+    "**Placer les points de contrôle juste avant chaque opération irréversible** "
+    "(emmanchement à la presse, frein filet, rivetage).",
+    "**Vérifier le démontage** : prévoir les accès d'extracteur avant de figer la "
+    "gamme.",
+], "Arbre portant deux roulements et une poulie en bout : on emmanche les "
+   "roulements AVANT de poser la poulie, sinon celle-ci interdit l'accès de la "
+   "douille de montage à la bague intérieure.")
+
+_mth("8.4", "Diagnostiquer et éviter un couple galvanique", [
+    "**Repérer les deux métaux en contact** et leur potentiel standard E°.",
+    "**Plus l'écart de potentiel entre les deux métaux est grand, plus la "
+    "corrosion galvanique est rapide.**",
+    "**Le métal le moins noble (E° le plus négatif) se corrode**, en protégeant "
+    "l'autre au passage.",
+    "**Éviter le contact direct** (isoler électriquement avec une rondelle) ou "
+    "**choisir des métaux proches en potentiel**.",
+], "Vis en inox sur une tôle en aluminium, en présence d'humidité : l'aluminium, "
+   "moins noble que l'inox, se corrode au contact — l'inox, lui, reste intact.")
+
+_mth("8.5", "Calculer la puissance ou le couple disponible dans une chaîne motoréducteur", [
+    "**Identifier chaque maillon de la chaîne et son rendement propre.**",
+    "**Multiplier les rendements entre eux** pour obtenir le rendement global — "
+    "jamais les additionner ni les moyenner.",
+    "**Calculer la puissance (ou le couple) utile en sortie** à partir de la "
+    "puissance d'entrée et du rendement global.",
+    "**Pour remonter d'un besoin en sortie vers l'entrée**, faire la démarche "
+    "inverse : diviser par chaque rendement, maillon après maillon.",
+], "Moteur 750 W, η moteur = 0,85, η réducteur = 0,92 : η global = 0,782, puissance "
+   "utile en sortie = 586,5 W.")
+
+_mth("8.6", "Exploiter une série de mesures face à une tolérance", [
+    "**Calculer la moyenne de la série de mesures.**",
+    "**Calculer l'écart-type**, en divisant par (n − 1), jamais par n.",
+    "**Comparer la MOYENNE — pas une mesure isolée — à la tolérance.**",
+    "**Un écart-type anormalement grand doit faire suspecter l'instrument ou le "
+    "geste de mesure**, pas systématiquement la pièce elle-même.",
+], "Cinq mesures d'un Ø20 h7 : moyenne 19,988 mm, écart-type 2,2 µm — bien dans la "
+   "tolérance, avec une marge confortable par rapport aux limites.")
+
+_mth("8.7", "Prévoir l'évolution d'un jeu ou d'un serrage avec la température", [
+    "**Identifier les matériaux en présence et leurs coefficients de dilatation "
+    "α.**",
+    "**Calculer ΔL (ou ΔD) pour CHAQUE pièce séparément** : ΔL = L × α × ΔT.",
+    "**Comparer les deux dilatations** : c'est le matériau au plus grand α qui "
+    "« gagne ».",
+    "**En déduire si le jeu s'ouvre ou se referme**, et l'ajouter ou le retrancher "
+    "au jeu initial à froid.",
+], "Arbre acier dans un alésage aluminium, jeu initial 0,010 mm à 20 °C : à 80 °C, "
+   "l'aluminium ayant dilaté plus vite, le jeu atteint 0,043 mm — il s'est ouvert, "
+   "pas refermé.")
+
+_mth("8.8", "Coter un moule pour compenser le retrait", [
+    "**Identifier le polymère et son taux de retrait typique.**",
+    "**Appliquer : Cote moule = Cote pièce finie × (1 + taux de retrait)** — on "
+    "majore TOUJOURS la cote du moule, jamais celle de la pièce.",
+    "**Ne jamais changer de matériau sans recalculer la cote du moule** : chaque "
+    "polymère a son propre taux de retrait.",
+], "Pièce en PA6 devant mesurer 120,00 mm, retrait 1,2 % : cote du moule = "
+   "120,00 × 1,012 = 121,44 mm.")
+
+_mth("5.2", "Vérifier une cotation avant de la valider", [
+    "**Repérer toute cote qui se déduit déjà d'autres cotes présentes sur le plan** "
+    "— c'est une surabondance.",
+    "**Supprimer la cote redondante** : ne jamais dire deux fois la même "
+    "information, sous peine de contradiction dès qu'une tolérance s'applique.",
+    "**Pour une chaîne de cotes, additionner les tolérances individuelles** afin "
+    "d'obtenir la dispersion totale de la chaîne.",
+    "**Vérifier qu'une cote fonctionnelle n'est jamais obtenue en sommant une "
+    "longue chaîne de cotes moins précises** — coter directement depuis une "
+    "référence commune si la précision l'exige.",
+], "Une plaque cotée par trois intervalles successifs (20, 100, 20) ET une cote "
+   "totale de 120 ajoutée en plus : la cote totale est redondante — à supprimer, "
+   "car les tolérances des trois intervalles peuvent la contredire légèrement.")
+
+_mth("5.7", "Décoder et exploiter une désignation de filetage", [
+    "**Identifier le diamètre nominal et le pas** : M8 × 1,25 (le pas gros est "
+    "souvent omis quand c'est lui qui s'applique).",
+    "**Distinguer majuscule et minuscule** : majuscule = taraudage (le trou), "
+    "minuscule = filetage (la vis) — la même convention qu'en tolérancement.",
+    "**Calculer le diamètre de perçage avant taraudage** : ≈ diamètre nominal − "
+    "pas.",
+    "**Vérifier la classe de qualité de la vis** (8.8 est le standard en mécanique) "
+    "et ne jamais la sous-estimer au remontage — rien ne le signale à l'œil.",
+], "Vis M8, pas gros 1,25 mm : diamètre de perçage ≈ 8 − 1,25 = 6,75, arrondi à "
+   "Ø6,8 en pratique — le trou de passage, lui, sera plus grand (Ø9) pour laisser "
+   "du jeu au montage.")
+
+_mth("5.9", "Choisir la bonne fonction volumique en CAO", [
+    "**Se poser la question avant de cliquer** : cette forme est-elle constante en "
+    "ligne droite, tournée autour d'un axe, ou variable le long d'un chemin ?",
+    "**Extrusion** pour une section constante · **révolution** pour une forme "
+    "axisymétrique, TOUT dans un seul profil · **balayage** pour une section qui "
+    "change de direction.",
+    "**Utiliser l'assistant de perçage pour un trou taraudé**, jamais un simple "
+    "cercle extrudé — il porte la norme et alimente la mise en plan.",
+    "**Respecter l'ordre canonique** : volume général → enlèvements → perçages → "
+    "répétitions → congés et chanfreins en tout dernier.",
+], "Une poulie à gorge trapézoïdale : révolution UNIQUE, avec le corps, la gorge "
+   "et le moyeu tous dans le même profil — construire la gorge par une révolution "
+   "coupée séparée fonctionnerait, mais fragiliserait le modèle.")
+
+_mth("5.12", "Assembler une pièce en comptant les degrés de liberté", [
+    "**Ancrer la première pièce** (le bâti) avant toute autre contrainte.",
+    "**Se poser la question avant chaque contrainte** : quel mouvement je veux "
+    "SUPPRIMER, lequel je veux GARDER ?",
+    "**Poser les contraintes de base et compter ce qu'elles suppriment** : "
+    "coïncidence d'axes (4 ddl), coïncidence de face (3 ddl), distance (1 ddl), "
+    "angle (1 ddl).",
+    "**Contrôler en tirant la pièce à la souris** : ce qu'il reste possible doit "
+    "correspondre exactement à la liaison prévue par le schéma cinématique.",
+], "Monter une poulie sur un arbre déjà ancré : coïncidence des axes (supprime 4 "
+   "ddl) puis coïncidence de face contre l'épaulement (supprime le dernier) → il "
+   "ne reste qu'une rotation, exactement une liaison pivot.")
+
+_mth("6.1", "Compter les degrés de liberté d'une liaison", [
+    "**Partir des 6 ddl d'une pièce libre** : 3 translations + 3 rotations.",
+    "**Identifier ce que le contact autorise ENCORE**, pas ce qu'il empêche — "
+    "c'est plus fiable de compter ce qui reste possible.",
+    "**Nommer la liaison à partir de ce compte**, jamais l'inverse.",
+    "**Attention aux liaisons composées** (hélicoïdale) : deux mouvements présents "
+    "mais LIÉS entre eux (par le pas de vis) ne comptent que pour UN seul "
+    "mouvement réellement commandable.",
+], "Un tiroir de meuble guidé en translation pure par ses rails : 1 ddl restant → "
+   "liaison glissière.")
+
+_mth("6.3", "Diagnostiquer un montage isostatique ou hyperstatique", [
+    "**Compter les ddl supprimés par chaque liaison du montage.**",
+    "**Comparer ce total au nombre de ddl réellement à bloquer** — généralement 6 "
+    "pour une pièce isolée dans l'espace.",
+    "**Isostatique si les deux nombres coïncident exactement** ; **hyperstatique "
+    "si des liaisons se \"disputent\" un même mouvement.**",
+    "**Un montage hyperstatique n'est pas toujours une erreur**, mais il devient "
+    "sensible aux défauts de fabrication et à la dilatation thermique — à savoir "
+    "avant de le choisir, pas après coup.",
+], "Deux roulements à billes à gorge profonde, tous deux serrés axialement des "
+   "deux côtés : chaque roulement supprime 5 ddl, soit 10 au total pour 6 à "
+   "bloquer — le montage est hyperstatique.")
+
+_mth("10.3", "Structurer une présentation orale technique en anglais", [
+    "**Suivre un plan fixe en cinq points** : what it is → what it's made of → how "
+    "it's made → the key technical point → conclusion.",
+    "**Répéter à voix haute**, jamais seulement relire silencieusement.",
+    "**Préparer des phrases de secours** pour une question mal comprise : "
+    "\"Could you repeat the question, please?\"",
+    "**Ne jamais réciter un texte appris par cœur** — connaître le plan, "
+    "improviser chaque phrase en temps réel.",
+], "Présenter un support de palier en fonderie en suivant le plan en 5 points, en "
+   "moins de deux minutes, sans jamais réciter un paragraphe mémorisé.")
+
+_mth("10.4", "Décoder un message d'erreur ou une note de plan en anglais", [
+    "**Repérer les mots-clés du vocabulaire CAO** : sketch, feature, fillet, "
+    "chamfer, draft angle, pattern.",
+    "**Distinguer fillet (congé arrondi) de chamfer (chanfrein droit)** — un "
+    "message qui demande l'un ne se corrige jamais avec l'autre.",
+    "**Traiter tout message \"under-defined\" comme un signal à corriger**, pas à "
+    "ignorer.",
+    "**Chercher un message d'erreur exact dans un moteur de recherche** : la "
+    "grande majorité de l'aide en ligne pour la CAO est en anglais.",
+], "\"Sketch1 is over-defined\" → l'esquisse est surcontrainte : il faut "
+   "identifier et supprimer la contrainte en trop, souvent surlignée en rouge par "
+   "le logiciel.")
+
+_mth("10.5", "Lire une consigne de sécurité machine en anglais", [
+    "**Distinguer warning (danger grave) de caution (risque moindre)** — l'ordre "
+    "des mots signale l'ordre du risque.",
+    "**Repérer lockout/tagout (consignation)** : couper ET verrouiller, jamais "
+    "éteindre seulement.",
+    "**Chercher les mots signalant un danger résiduel** (\"residual\") : un "
+    "danger qui persiste même machine arrêtée.",
+    "**Traduire une consigne de sécurité mot à mot**, jamais en diagonale.",
+], "\"Disconnect power AND lock out the main switch before removing any guard\" "
+   "— les deux actions sont exigées, pas l'une ou l'autre.")
+
+_mth("10.6", "Défendre un choix de conception en anglais devant un jury", [
+    "**Annoncer le choix comparé** : \"We considered two options: A and B.\"",
+    "**Justifier** : \"We chose X because...\"",
+    "**Assumer un compromis** : \"The trade-off is...\" — ne jamais prétendre "
+    "qu'un choix n'a aucun inconvénient.",
+    "**Face à une objection, reconnaître puis expliquer** : \"That's a good "
+    "point, but...\" — jamais nier en bloc.",
+    "**Relier la réponse au cahier des charges** : \"This meets the requirement "
+    "of...\"",
+], "\"We chose aluminum because it reduces weight by 60%. The trade-off is a "
+   "lower yield strength, so we increased wall thickness slightly to "
+   "compensate.\"")
+
+_mth("10.7", "Rédiger une réclamation technique en anglais", [
+    "**Donner le fait constaté avec un chiffre** : numéro de lot, nombre de "
+    "pièces reçues, nombre de non-conformes.",
+    "**Donner l'écart chiffré par rapport à la spécification** — jamais "
+    "\"it's wrong\" seul.",
+    "**Demander précisément** : root cause (cause première) et corrective action "
+    "(action corrective).",
+    "**Vérifier qu'un \"I'll try\" du fournisseur n'est pas un firm commitment** "
+    "— en redemander un explicitement si besoin.",
+], "\"We received batch #4521, 12 parts out of 50 are out of tolerance on the "
+   "Ø25 bore (measured 25.08–25.12 mm, spec is 25 H7). Please investigate the "
+   "root cause and confirm the corrective action.\"")
+
+_mth("10.8", "Argumenter un choix économique devant un jury", [
+    "**Annoncer le critère qui a tranché** : coût, délai, résistance...",
+    "**Donner le chiffre calculé, avec son unité.**",
+    "**Comparer à l'alternative** pour donner du sens au chiffre — un chiffre "
+    "seul ne convainc jamais.",
+    "**Assumer une limite du choix** — un jury se méfie d'une réponse qui ne "
+    "présente que des avantages.",
+], "« Le critère est le coût sur la série de 800 pièces. La fonderie revient à "
+   "21 € en moyenne contre 38 € en usinage. La limite : l'outillage de 6 000 € "
+   "n'est amorti que si la série de 800 est vraiment confirmée par le client. »")
+
+_mth("16.1", "Confronter les documents avant de rédiger une synthèse", [
+    "**Lire une première fois sans annoter** : repérer thème, thèse, nature et "
+    "date de chaque document.",
+    "**Confronter les documents entre eux** : qui dit la même chose, qui "
+    "nuance, qui contredit, qui illustre concrètement une idée abstraite.",
+    "**Construire un plan thématique** (2 à 3 axes), jamais document par "
+    "document.",
+    "**Rédiger avec ses propres mots**, jamais en recopiant une phrase d'un "
+    "document.",
+    "**Conclure sans jamais donner son avis personnel.**",
+], "Sur l'IA au travail, quatre documents (gains de productivité, risques de "
+   "dépendance, témoignage de perte d'autonomie, caricature) : les confronter "
+   "d'abord révèle un plan en deux axes — les gains annoncés, puis les limites "
+   "vécues — qui croise les quatre documents plutôt que de les résumer un par "
+   "un.")
+
+_mth("16.2", "Construire un argument qui convainc en écriture personnelle", [
+    "**Analyser chaque mot du sujet** avant de répondre — un mot comme "
+    "\"toujours\" ou \"selon vous\" change radicalement ce qu'on attend.",
+    "**Construire chaque argument en trois temps** : l'idée → le mécanisme "
+    "(pourquoi/comment) → l'exemple précis, daté et chiffré.",
+    "**Prévoir une deuxième partie qui nuance réellement la première**, pas un "
+    "« cependant » de façade.",
+    "**Conclure en répondant clairement à la question posée**, sans répéter "
+    "l'introduction.",
+], "« Le progrès technique a des conséquences négatives sur l'emploi » (vague) "
+   "→ « L'automatisation des lignes automobiles a réduit certains postes "
+   "ouvriers, tout en créant de nouveaux emplois qualifiés en maintenance » "
+   "(idée + mécanisme + exemple précis).")
+
+_mth("16.3", "Relire efficacement une copie", [
+    "**Un premier passage pour le sens** : la copie répond-elle vraiment au "
+    "sujet, l'enchaînement des idées est-il logique ?",
+    "**Un deuxième passage dédié aux accords** : participe passé avec avoir, "
+    "\"tout\", verbes pronominaux.",
+    "**Un troisième passage dédié aux homophones** : a/à, on/ont, ce/se, "
+    "ces/ses.",
+    "**Tester chaque homophone douteux par substitution** : remplacer par "
+    "\"avait\", par \"il\", pour voir si la phrase reste correcte.",
+], "« Les documents que j'ai lu(s) » : le COD \"que\" (= les documents) est "
+   "placé avant le verbe → accord obligatoire → « que j'ai lus ».")
+
+_mth("16.5", "Répartir son temps sur les 3 heures d'épreuve", [
+    "**Se chronométrer en conditions réelles à l'entraînement** pour connaître "
+    "son propre rythme de lecture — il diffère souvent de l'estimation "
+    "théorique.",
+    "**Ne jamais commencer l'écriture personnelle avec moins d'une heure devant "
+    "soi.**",
+    "**En cas de débordement, couper court à la relecture de la synthèse**, "
+    "jamais à l'écriture personnelle.",
+    "**Ajuster la répartition indicative à son propre rythme mesuré**, pas à "
+    "une règle rigide identique pour tout le monde.",
+], "Un élève a passé 1h20 sur sa synthèse, il lui reste 1h40 : il passe "
+   "directement à l'écriture personnelle sans plus retoucher la synthèse — "
+   "1h40 suffit largement pour la terminer et relire les deux parties.")
+
+_mth("16.6", "Réussir l'introduction et la conclusion d'une synthèse", [
+    "**Introduction en trois phrases** : amener le thème, présenter le corpus "
+    "(nature et date de chaque document), annoncer le plan.",
+    "**Conclusion de synthèse : résumer le mouvement d'ensemble**, sans avis "
+    "personnel et sans idée nouvelle.",
+    "**Pour l'écriture personnelle** : introduction qui pose la question, "
+    "conclusion qui y répond clairement, sans se contenter de résumer.",
+    "**Ne jamais glisser un « je pense que » dans la conclusion de synthèse** — "
+    "la faute la plus lourdement sanctionnée de l'épreuve.",
+], "« L'automatisation apparaît ainsi comme un facteur de productivité "
+   "incontesté, dont les effets sur l'emploi restent débattus » — un constat "
+   "neutre qui résume, sans trancher ni juger.")
+
+_mth("5.4", "Calculer un ajustement et choisir sa nature", [
+    "**Repérer le système utilisé** : alésage normal (H fixe, l'arbre varie) dans "
+    "plus de 90 % des cas, pour une raison purement économique d'outillage.",
+    "**Calculer Jeu maxi = Alésage maxi − arbre mini**, et **Jeu mini = Alésage "
+    "mini − arbre maxi**.",
+    "**Lire le signe** : un résultat négatif n'est pas une erreur, c'est un "
+    "serrage — on en lit alors la valeur absolue.",
+    "**Pour un serrage important, prévoir un montage à chaud** : ΔD = D × α × "
+    "ΔT, la pièce femelle dilatée se pose sans effort puis bloque en "
+    "refroidissant.",
+], "Ø30 H7/g6 : jeu de 0,007 à 0,041 mm. Pour un Ø30 H7/p6 destiné à un montage "
+   "à chaud, chauffer de 100 °C donne ΔD = 30 × 12·10⁻⁶ × 100 = 0,036 mm, "
+   "supérieur au serrage maximal — la bague se pose sans effort.")
+
+_mth("5.5", "Choisir et lire une tolérance géométrique (GPS)", [
+    "**Se demander si le défaut se juge tout seul ou par rapport à quelque "
+    "chose** : forme → sans référence · orientation, position, battement → "
+    "avec référence.",
+    "**Lire le cadre en 3 gestes** : le symbole (quelle famille) → la valeur, "
+    "avec ou sans Ø (zone plane ou cylindrique) → la ou les références, dans "
+    "l'ORDRE où elles posent la pièce.",
+    "**Choisir la référence sur la surface qui positionne réellement la pièce "
+    "dans le mécanisme**, jamais sur du brut de fonderie.",
+    "**Ne coter géométriquement que ce que la fonction exige**, jamais tout ce "
+    "qu'on peut coter.",
+], "Un alésage de roulement dans un carter : si son axe n'est pas perpendiculaire "
+   "à la face d'appui, l'arbre entre de travers et le roulement se détruit en "
+   "quelques semaines → perpendicularité Ø0,03 par rapport à la face d'appui "
+   "(référence A).")
+
+_mth("5.6", "Choisir un état de surface adapté à la fonction", [
+    "**Identifier ce que fait réellement la surface** : appui simple, portée "
+    "qui frotte, portée de joint ou d'étanchéité, guidage de précision.",
+    "**Choisir le Ra dans la table**, sans descendre plus bas que nécessaire : "
+    "chaque cran change la machine, le temps et le coût.",
+    "**Ne jamais oublier l'état de surface sur une portée de roulement ou de "
+    "joint** — c'est l'erreur la plus coûteuse en fonctionnement.",
+    "**Se méfier du \"trop lisse\"** : sous Ra 0,1, le lubrifiant ne se "
+    "maintient plus, le frottement augmente au lieu de diminuer.",
+], "Deux arbres au même diamètre contrôlé au micromètre : monté avec un joint à "
+   "lèvres, celui rectifié Ra 0,8 tient l'étanchéité, celui resté brut de "
+   "tournage (Ra 3,2) abrase la lèvre et fuit en deux heures.")
+
+_mth("5.10", "Placer congés, chanfreins et répétitions au bon endroit", [
+    "**Choisir congé ou chanfrein selon la fonction** : congé dans un angle "
+    "INTÉRIEUR soumis à la fatigue (il reprend l'effort), chanfrein en bout de "
+    "pièce pour guider un montage.",
+    "**Toujours les placer en TOUT DERNIER** dans l'arbre de création : un "
+    "congé remplace une arête vive, et toute fonction qui s'appuyait sur cette "
+    "arête perd sa référence s'il est posé trop tôt.",
+    "**Remplacer toute forme répétée par une fonction de répétition** (linéaire, "
+    "circulaire, symétrie) — jamais dessinée deux fois à la main.",
+    "**Vérifier qu'une modification (nombre de trous, diamètre) se fait en "
+    "changeant un seul paramètre**, pas en reprenant chaque occurrence une par "
+    "une.",
+], "Un arbre épaulé qui tourne sous flexion : congé dans l'angle rentrant, là où "
+   "la fissure de fatigue démarre, et chanfrein en bout d'arbre pour guider le "
+   "montage d'une bague — deux fonctions différentes, deux rôles différents.")
+
+_mth("9.4", "Modéliser une pièce axisymétrique complexe (poulie à gorge)", [
+    "**Dessiner TOUT le profil axisymétrique en une seule esquisse** : le "
+    "corps, la gorge et le moyeu ensemble — la gorge fait partie du profil, "
+    "pas une fonction séparée.",
+    "**Contraindre totalement l'esquisse** (symétrie par rapport à l'axe, "
+    "tangences) avant de la refermer.",
+    "**Révolution 360°** : corps, gorge et moyeu sortent d'un coup.",
+    "**Ajouter perçages et rainures avec l'assistant de perçage et des "
+    "répétitions**, jamais des fonctions dessinées une par une.",
+    "**Terminer par les congés**, en dernier, comme toujours.",
+], "Poulie à gorge Ø80 : révolution unique donnant le corps et la gorge en une "
+   "fonction. Le piège classique — créer la gorge par une révolution coupée "
+   "après coup — fonctionne à l'écran mais casse dès qu'on change la largeur du "
+   "corps, contrairement au profil unique.")
+
+_mth("0.1", "Situer une décision entre bureau d'études, méthodes et atelier", [
+    "**Se demander de quelle nature est la décision** : une question de FORME "
+    "(→ bureau d'études), de PROCÉDÉ (→ bureau des méthodes), ou de RÉGLAGE "
+    "machine (→ atelier).",
+    "**Vérifier que le bureau des méthodes ne modifie jamais la géométrie "
+    "fixée par le bureau d'études** — il choisit seulement comment l'obtenir, "
+    "et remonte l'information si un procédé s'avère impossible à tenir.",
+    "**Classer un objet en pièce, sous-ensemble ou système** : indivisible "
+    "(pièce) → assemblage remplissant une fonction (sous-ensemble) → "
+    "assemblage remplissant LA fonction attendue par l'utilisateur final "
+    "(système).",
+], "Fixer le diamètre et la tolérance d'un alésage → bureau d'études (géométrie). "
+   "Choisir de l'usiner en une ou deux passes → bureau des méthodes (procédé, "
+   "mêmes cotes finales dans les deux cas).")
+
+_mth("0.2", "Identifier le bon document à chaque étape d'un projet", [
+    "**Se demander à quel moment du cycle de vie on se trouve** : besoin, "
+    "conception, industrialisation, production, utilisation, fin de vie.",
+    "**Ne jamais confondre le cahier des charges (le POURQUOI/QUOI) et le plan "
+    "de définition (le COMBIEN précisément)** — un cahier des charges ne "
+    "comporte jamais de cote précise sur une pièce.",
+    "**Relier chaque document à la décision qu'il trace** : croquis "
+    "(recherche de solutions), modèle 3D (géométrie modifiable), plan de "
+    "définition (géométrie figée d'UNE pièce), nomenclature (composition d'un "
+    "assemblage), gamme de fabrication (ordre des opérations).",
+], "Un tableau sur un plan d'ensemble indique « Repère 4 — Circlips Ø20 — "
+   "Qté : 2 » : c'est une nomenclature, pas un plan de définition — elle "
+   "liste la composition d'un assemblage, elle ne cote aucune pièce.")
+
+_mth("0.3", "Résoudre n'importe quel exercice technique", [
+    "**Lire l'énoncé en entier** avant d'écrire quoi que ce soit — un chiffre "
+    "donné à la fin change parfois toute l'approche.",
+    "**Relever les données**, chaque valeur avec son unité, sur une même "
+    "ligne.",
+    "**Identifier ce qu'on cherche** : une seule grandeur à la fois, avec son "
+    "unité attendue.",
+    "**Choisir la formule** qui relie la grandeur cherchée aux données déjà "
+    "relevées — jamais l'inverse.",
+    "**Convertir les unités avant de calculer**, jamais après.",
+    "**Poser le calcul, vérifier l'unité du résultat, comparer à une valeur "
+    "admissible, puis conclure en une phrase** — un résultat sans conclusion "
+    "n'est pas un exercice résolu.",
+], "Tige Ø20 mm tendue par 15 000 N, Re = 340 MPa, s = 3 : S = π×20²/4 = "
+   "314,16 mm² → σ = 15000/314,16 = 47,75 MPa → Rpe = 340/3 = 113,33 MPa → "
+   "47,75 ≤ 113,33 → la tige résiste largement.")
+
+_mth("0.4", "Lire un schéma, un tableau ou un diagramme sans se tromper", [
+    "**Schéma** : titre et légende AVANT les détails → couleurs et symboles → "
+    "unités affichées → sens des flèches → lien avec le texte qui "
+    "l'accompagne.",
+    "**Tableau** : en-têtes de colonnes → organisation des lignes → "
+    "croisement ligne × colonne (jamais l'un sans l'autre) → unité de la "
+    "valeur → jamais d'estimation à l'œil entre deux lignes.",
+    "**Diagramme (deux axes)** : les deux axes d'abord (grandeur, unité, "
+    "échelle) → légende des courbes → lecture perpendiculaire (abscisse → "
+    "courbe → ordonnée) → points remarquables → traduction en phrase.",
+    "**Dans les trois cas** : la première étape (titre, en-tête, axes) n'est "
+    "jamais du temps perdu — c'est elle qui évite d'appliquer une bonne "
+    "valeur au mauvais endroit.",
+], "Sur le graphique du seuil de rentabilité, le point remarquable est "
+   "l'intersection des deux droites : avant lui, un procédé est moins cher ; "
+   "après, c'est l'autre — c'est la seule information que ce graphique sert "
+   "vraiment à donner.")
+
+_mth("0.5.1", "Convertir sans erreur longueur, force et pression", [
+    "**Longueur** : pour aller vers une unité plus petite (m → mm → µm), on "
+    "MULTIPLIE par 1 000 à chaque cran ; pour l'inverse, on DIVISE.",
+    "**Force** : ne jamais confondre une masse (kg) et une force (N) — "
+    "P = m × g, avec g ≈ 9,81 m/s². 1 kgf ≈ 9,81 N.",
+    "**Pression/contrainte** : 1 MPa = 1 N/mm² = 1 000 000 Pa — c'est cette "
+    "coïncidence qui permet de calculer une contrainte directement en MPa à "
+    "partir d'une force en N et d'une section en mm².",
+    "**Avant de comparer deux valeurs, vérifier qu'elles sont dans la même "
+    "unité.**",
+], "Tolérance de position ± 50 µm sur le plan, écart mesuré 0,03 mm au "
+   "comparateur : 0,03 × 1 000 = 30 µm < 50 µm → pièce conforme, une fois les "
+   "deux valeurs ramenées à la même unité.")
+
+_mth("0.5.2", "Convertir une surface ou un volume sans se tromper de facteur", [
+    "**Ne jamais convertir une surface ou un volume comme une simple "
+    "longueur** : le facteur s'élève au CARRÉ pour une surface, au CUBE pour "
+    "un volume.",
+    "**Surface** : 1 m² = (1 000 mm)² = 1 000 000 mm² (× 10⁶, pas × 1 000).",
+    "**Volume** : 1 m³ = (1 000 mm)³ = 1 000 000 000 mm³ (× 10⁹).",
+    "**Avant tout calcul avec une formule** (ex. σ = F/S), vérifier que "
+    "chaque donnée est dans l'unité que la formule attend — F en N et S en "
+    "mm² donnent directement un résultat en MPa.",
+], "Une plaque de 0,3 m × 0,2 m : convertir d'abord chaque longueur en mm "
+   "(300 × 200), PUIS multiplier → 60 000 mm² — convertir l'aire directement "
+   "par × 1 000 000 sur une valeur déjà en m² fonctionne aussi, mais "
+   "convertir les longueurs d'abord évite toute confusion.")
+
+_mth("0.5.3", "Repérer une erreur d'unité avant de rendre un résultat", [
+    "**Vérifier que toutes les données sont dans le même système** (N, mm, "
+    "MPa) avant de calculer quoi que ce soit.",
+    "**Connaître les quatre pièges par cœur** : N/N·mm (un moment a toujours "
+    "une force ET une distance), mm/µm (facteur 1 000), MPa/Pa (facteur "
+    "1 000 000), N·m/N·mm (facteur 1 000).",
+    "**Vérifier que le résultat a l'unité attendue** par la formule utilisée.",
+    "**Juger l'ordre de grandeur** : un résultat absurde pour le contexte "
+    "(une contrainte de 47 750 MPa sur de l'acier) signale presque toujours "
+    "un facteur 1 000 oublié, pas une erreur de méthode.",
+], "Couple de 180 N·m utilisé tel quel dans τ = Mt/(I₀/v) donne 0,059 MPa — "
+   "absurde pour de l'acier. Converti en N·mm (180 000), le calcul donne "
+   "58,67 MPa, un ordre de grandeur cohérent.")
+
+_mth("0.6.1", "Lire les zones et les traits d'un plan de définition", [
+    "**Consulter le cartouche en premier** (toujours en bas à droite) : nom "
+    "de la pièce, échelle, matière, indice de mise à jour.",
+    "**Vérifier l'indice de mise à jour avant de fabriquer quoi que ce soit** "
+    "— un plan périmé produit une pièce non conforme, même parfaitement "
+    "usinée.",
+    "**Identifier l'échelle** pour situer le rapport entre le dessin et la "
+    "pièce réelle — jamais pour recalculer une cote inscrite.",
+    "**Reconnaître les quatre traits** : fort continu (contour vu), fin "
+    "continu (cote), interrompu fin (contour caché), mixte fin (axe) — ne "
+    "jamais confondre interrompu et mixte fin.",
+], "Deux plans de la même pièce, indices A puis B : une cote a été corrigée "
+   "entre les deux. Sans lire le cartouche, l'atelier aurait pu usiner sur la "
+   "base du plan obsolète.")
+
+_mth("0.6.2", "Exploiter coupes, repères, nomenclature et tolérances générales", [
+    "**Repérer les coupes** pour voir l'intérieur d'une pièce sans se fier à "
+    "des traits interrompus illisibles — la matière traversée est hachurée.",
+    "**Sur un plan d'ensemble, suivre chaque repère jusqu'à sa ligne de "
+    "nomenclature** pour connaître désignation, matière et quantité.",
+    "**Vérifier si une cote a une tolérance individuelle** ; sinon, c'est la "
+    "tolérance générale du cartouche (ISO 2768) qui s'applique.",
+    "**Ne jamais confondre un symbole d'état de surface (Ra) avec une "
+    "tolérance dimensionnelle** — les deux exigences coexistent "
+    "indépendamment au même endroit.",
+], "Sur le plan d'ensemble d'un réducteur, le repère 7 pointe vers un "
+   "engrenage ; en nomenclature, la ligne 7 indique « Pignon arbre "
+   "secondaire — acier 42CrMo4 — Qté : 1 » — c'est ce lien qui relie le "
+   "dessin à la réalité de l'atelier.")
+
+_mth("0.7.1", "Coter les éléments de base d'une pièce", [
+    "**Distinguer Ø (diamètre, surface de révolution) et R (rayon, arrondi "
+    "ou congé)** — ne jamais confondre les deux symboles.",
+    "**Coter séparément dimension et profondeur** : un trou borgne exige les "
+    "deux, un trou débouchant seulement le diamètre.",
+    "**Regrouper les trous identiques en une seule cote** : 4 × Ø6, jamais "
+    "quatre cotes répétées.",
+    "**Coter la position d'un élément séparément de sa dimension** — ce sont "
+    "deux informations distinctes (fiche 0.7.2).",
+], "« Ø8 » sans profondeur sur un plan : l'opérateur perce de part en part "
+   "alors qu'un trou borgne de 15 mm était voulu — une cote incomplète peut "
+   "rendre une pièce entièrement inutilisable.")
+
+_mth("0.7.2", "Choisir une référence de cotation et calculer une chaîne de cotes", [
+    "**Se demander si les éléments doivent s'assembler avec une pièce "
+    "existante** — si oui, coter depuis une RÉFÉRENCE COMMUNE, jamais en "
+    "chaîne.",
+    "**En chaîne, additionner les tolérances de tous les intervalles "
+    "intermédiaires** pour connaître la dérive totale du dernier élément.",
+    "**Depuis une référence commune, chaque élément garde la tolérance d'une "
+    "seule cote**, quelle que soit sa position sur la pièce.",
+    "**Repérer et supprimer toute cote surabondante** : une dimension qui se "
+    "déduit déjà des autres ne doit jamais être ajoutée.",
+], "Plaque à quatre trous, ± 0,2 mm par cote : cotée en chaîne, le 4ᵉ trou "
+   "peut dériver de ± 0,6 mm (somme de 3 intervalles) ; coté depuis une "
+   "référence commune, chaque trou reste à ± 0,2 mm — trois fois mieux, sans "
+   "changer le procédé de fabrication.")
+
+_mth("0.8.1", "Comprendre une zone de tolérance", [
+    "**Se rappeler qu'aucune pièce fabriquée n'est jamais exactement à sa "
+    "cote nominale** — c'est pour cela qu'on tolère un écart.",
+    "**Identifier le rôle, pas la forme** : alésage = pièce creuse, arbre = "
+    "pièce pleine, même quand aucun des deux n'est un vrai cylindre.",
+    "**Repérer la ligne zéro** (la cote nominale) et la **zone de tolérance** "
+    "(l'écart accepté autour d'elle) — sa largeur est l'IT.",
+    "**Ne jamais juger une pièce isolément** : c'est la combinaison des deux "
+    "zones de tolérance (alésage ET arbre) qui décide si l'assemblage "
+    "fonctionne.",
+], "Alésage Ø20 (19,98 à 20,02) et arbre Ø20 (20,00 à 20,03) : chaque pièce "
+   "est conforme à son propre plan, mais si l'alésage sort à 19,99 et l'arbre "
+   "à 20,03, l'assemblage est impossible.")
+
+_mth("0.8.2", "Lire un ajustement et calculer son jeu", [
+    "**Calculer Jmin = cote mini alésage − cote maxi arbre**, et **Jmax = "
+    "cote maxi alésage − cote mini arbre**.",
+    "**Lire le résultat** : Jmin et Jmax tous deux positifs → jeu · tous deux "
+    "négatifs → serrage · un de chaque signe → incertain.",
+    "**Repérer le système de l'alésage** : l'alésage reste presque toujours "
+    "en H (écart inférieur nul), seule la lettre de l'arbre varie pour "
+    "choisir jeu, incertitude ou serrage.",
+    "**Retenir que le chiffre fixe la largeur de la zone (l'IT)**, et que la "
+    "lettre fixe sa position par rapport à la ligne zéro.",
+], "Alésage 30,000-30,021 mm, arbre 29,980-29,993 mm : Jmin = 30,000 − 29,993 "
+   "= 0,007 mm, Jmax = 30,021 − 29,980 = 0,041 mm — les deux positifs → "
+   "ajustement avec jeu garanti.")
+
+_mth("0.9.1", "Définir une force et reconnaître un type d'appui", [
+    "**Vérifier qu'une force est définie par ses quatre caractéristiques** : "
+    "point d'application, direction, sens, intensité — il en manque une, "
+    "elle n'est pas complètement définie.",
+    "**Retenir que le moment dépend de la force ET de son bras de levier** "
+    "par rapport au point considéré — pas de la force seule.",
+    "**Identifier le type d'appui** : appui simple (1 réaction), "
+    "articulation (2 réactions, aucun moment), encastrement (2 réactions + 1 "
+    "moment).",
+    "**Tracer le diagramme des forces** (la pièce isolée avec toutes les "
+    "forces et réactions) avant tout calcul.",
+], "Une console encastrée dans un mur à une seule extrémité : 3 inconnues à "
+   "l'encastrement — une réaction horizontale, une verticale, et un moment — "
+   "contre seulement 2 pour une simple articulation.")
+
+_mth("0.9.2", "Calculer les réactions d'appui d'une poutre", [
+    "**Repérer une symétrie évidente** : une charge centrée sur deux appuis "
+    "symétriques se répartit à parts égales, sans calcul de moment "
+    "nécessaire.",
+    "**Sinon, isoler la poutre** et écrire les deux conditions d'équilibre : "
+    "somme des forces nulle, somme des moments (calculés en un même point) "
+    "nulle.",
+    "**Choisir le point de calcul des moments sur un appui**, pour éliminer "
+    "sa réaction inconnue de l'équation.",
+    "**Vérifier** : la somme des réactions calculées doit toujours retomber "
+    "sur la charge totale appliquée.",
+], "Poutre avec une charge de 600 N exactement au milieu, deux appuis "
+   "symétriques : RA = RB = 600/2 = 300 N — vérifié par RA + RB = 600 N, la "
+   "charge appliquée.")
+
+_mth("0.10.1", "Nommer une sollicitation et calculer une contrainte simple", [
+    "**Reconnaître la sollicitation** : traction/compression (effort dans "
+    "l'axe), cisaillement (glissement entre deux parties), flexion (effort "
+    "perpendiculaire qui plie), torsion (vrille autour de l'axe).",
+    "**Ne jamais juger un effort par sa seule intensité** : c'est la force "
+    "RAPPORTÉE à la section — la contrainte σ = F/S — qui dit si la matière "
+    "est fortement ou faiblement sollicitée.",
+    "**Vérifier que la déformation reste élastique** (réversible) : c'est le "
+    "domaine où les calculs de contrainte simple s'appliquent.",
+    "**Se rappeler qu'une pièce réelle combine souvent plusieurs "
+    "sollicitations** (un arbre subit torsion ET flexion) — cette fiche ne "
+    "traite que le cas où une seule domine.",
+], "Deux tiges reçoivent la même force de 4 000 N ; sections 80 mm² et "
+   "8 mm² : la première tient (σ = 50 MPa), la seconde (dix fois plus "
+   "sollicitée, σ = 500 MPa) se rompt — la force seule ne dit rien, seule la "
+   "contrainte compte.")
+
+_mth("0.10.2", "Vérifier qu'une pièce tient à l'aide du coefficient de sécurité", [
+    "**Ne jamais confondre les trois grandeurs** : Re (propriété du "
+    "matériau, en catalogue) · σ (ce que CETTE pièce subit réellement, "
+    "calculé) · contrainte admissible (Re divisée par un coefficient de "
+    "sécurité s).",
+    "**Calculer σ = F / S** pour la pièce et l'effort réels.",
+    "**Calculer la contrainte admissible = Re / s.**",
+    "**Comparer** : la pièce tient si σ ≤ contrainte admissible.",
+    "**Pour une pièce longue et fine comprimée**, vérifier en plus le "
+    "flambement (fiche 4.1), qui peut ruiner la pièce bien avant que σ "
+    "n'atteigne la contrainte admissible en compression simple.",
+], "Barre soumise à 4 000 N, section 80 mm² : σ = 4000/80 = 50 MPa. Si la "
+   "contrainte admissible (déjà calculée avec son coefficient de sécurité) "
+   "vaut 120 MPa, 50 < 120 → la pièce est acceptable.")
+
+_mth("0.11.1", "Passer en revue les critères avant d'ouvrir une base de matériaux", [
+    "**Passer les neuf critères en revue** : fonction, température, charge, "
+    "corrosion, masse, coût, procédé de fabrication, conductivité, "
+    "recyclabilité.",
+    "**Accepter qu'aucun matériau ne gagne sur tous les critères à la fois** "
+    "— choisir un matériau, c'est accepter un compromis.",
+    "**Identifier les 2 ou 3 critères qui comptent vraiment pour CETTE pièce "
+    "précise**, avant de comparer des chiffres.",
+    "**Se rappeler que la même fonction peut aboutir à des matériaux "
+    "opposés** selon les critères dominants du contexte.",
+], "« Protéger un circuit » pour le grand public → plastique (léger, "
+   "isolant, économique en série). Même fonction pour un moteur d'avion → "
+   "alliage métallique (température, vibrations, sécurité) — même fonction, "
+   "critères dominants différents, matériaux opposés.")
+
+_mth("0.11.2", "Comparer plusieurs matériaux sur un cahier des charges précis", [
+    "**Lister les critères imposés par le cahier des charges** (ex. léger, "
+    "isolant, grande série).",
+    "**Éliminer les familles de matériaux incompatibles avec chaque "
+    "critère** : léger élimine les matériaux denses, isolant élimine les "
+    "métaux.",
+    "**Classer les candidats restants**, en gardant en tête que ce "
+    "classement ne vaut QUE pour ce cahier des charges précis.",
+    "**Retester le classement dès qu'un critère change** (ex. une exigence "
+    "de température) : l'ordre peut totalement s'inverser.",
+], "Pièce légère + isolante + grande série : ABS en tête (injectable, "
+   "isolant, économique en série), puis PA6-6 (plus résistant, plus cher), "
+   "puis aluminium (repli si la tenue thermique l'exige, au prix de la masse "
+   "et de l'isolation perdue).")
+
+_mth("0.12.1", "Situer un procédé dans sa famille", [
+    "**Se demander ce que le procédé fait à la matière** : il l'ENLÈVE "
+    "(sciage, perçage, tournage, fraisage, usinage CNC), il la MET EN FORME "
+    "directement (injection, impression 3D, pliage), il ASSEMBLE (soudage), "
+    "ou il la TRANSFORME sans changer sa forme (traitement thermique, "
+    "finition).",
+    "**Retenir la famille avant le nom précis du procédé** — elle dit déjà "
+    "beaucoup de son coût, sa précision et sa vitesse.",
+    "**Se rappeler qu'un traitement thermique ne vient jamais seul** : il "
+    "complète toujours un procédé de mise en forme, il n'en crée jamais.",
+], "Un support en L : fraisage dans un bloc plein (aucun outillage, temps "
+   "machine long, adapté à quelques pièces) OU découpe laser puis pliage "
+   "d'une tôle (série plus longue, temps de fabrication très court) — le "
+   "choix dépend de la quantité, pas de la seule forme.")
+
+_mth("0.12.2", "Choisir un procédé selon la quantité, la matière et la précision", [
+    "**Croiser cinq questions** : quelle quantité ? quelle matière ? quelle "
+    "précision/état de surface ? quelle complexité de forme ? quel coût "
+    "acceptable ?",
+    "**Un procédé À OUTILLAGE** (injection, emboutissage) a un coût fixe "
+    "élevé et un coût variable faible : il ne se justifie qu'à partir d'une "
+    "série suffisante.",
+    "**Un procédé SANS outillage** (usinage, impression 3D) a un coût fixe "
+    "nul mais un coût variable plus élevé : il reste compétitif à l'unité, "
+    "perdant en grande série.",
+    "**Repérer le point de bascule** entre les deux, où les deux coûts "
+    "totaux s'égalisent.",
+], "3 prototypes plastiques → impression 3D (aucun outillage). La même "
+   "pièce en série de 50 000 → moulage par injection, le coût du moule "
+   "s'amortissant largement et le cycle étant bien plus rapide — même "
+   "besoin, procédé opposé selon la seule quantité.")
+
+_mth("0.13.1", "Construire une pièce, de l'esquisse à l'extrusion", [
+    "**Créer un document pièce**, un fichier par pièce, jamais deux dans le "
+    "même document.",
+    "**Choisir un plan, puis tracer l'esquisse** (contour 2D) dessus.",
+    "**Ajouter les relations géométriques** (horizontal, tangent, "
+    "symétrique) AVANT ou EN MÊME TEMPS que les cotes — les deux travaillent "
+    "ensemble.",
+    "**Vérifier que l'esquisse est totalement contrainte** (plus aucun trait "
+    "bleu, rien ne bouge à la souris) avant d'extruder — sauter cette "
+    "vérification est l'erreur numéro un d'un débutant.",
+], "Plaque 80×50 mm : document → plan de face → esquisse (rectangle) → "
+   "relations (côtés parallèles) → cotes (80, 50) → esquisse totalement "
+   "contrainte → extrusion de 5 mm — dans cet ordre, jamais un autre.")
+
+_mth("0.13.2", "Poursuivre une pièce jusqu'à la mise en plan", [
+    "**Construire un perçage comme une esquisse cotée, puis une extrusion en "
+    "enlèvement de matière.**",
+    "**Répéter un élément identique plutôt que de le redessiner** : une "
+    "répétition linéaire ou circulaire à partir d'UN SEUL trou construit.",
+    "**Ajouter les congés en tout dernier** dans l'arbre de construction — "
+    "posés trop tôt, ils empêchent une opération suivante de retrouver "
+    "l'arête vive dont elle a besoin.",
+    "**Créer l'assemblage seulement une fois les pièces terminées**, puis "
+    "générer la mise en plan — c'est ELLE qui part à l'atelier, jamais le "
+    "fichier 3D.",
+], "Plaque à quatre trous de fixation aux coins : un trou construit puis "
+   "répété trois fois (motif linéaire), congés 2 mm en tout dernier, "
+   "assemblage avec un support existant, puis mise en plan générée pour "
+   "l'atelier.")
+
+_mth("0.14.1", "Compter les degrés de liberté et nommer une liaison", [
+    "**Partir des 6 degrés de liberté d'une pièce libre** : 3 translations + "
+    "3 rotations.",
+    "**Identifier ce que le contact laisse ENCORE bouger**, pas ce qu'il "
+    "empêche.",
+    "**Nommer la liaison à partir de ce qui reste possible** : pivot (1 "
+    "rotation), glissière (1 translation), rotule (3 rotations), "
+    "hélicoïdale (rotation et translation couplées), encastrement (rien).",
+], "Une roue de vélo sur son axe : elle tourne (1 rotation autorisée), mais "
+   "ne peut ni glisser le long de l'axe ni s'écarter latéralement (5 "
+   "mouvements supprimés) → liaison pivot.")
+
+_mth("0.14.2", "Analyser un arbre sur deux paliers : palier fixe ou libre", [
+    "**Considérer les deux paliers ensemble** : ils forment UNE seule "
+    "liaison pivot pour l'arbre.",
+    "**Ne jamais bloquer axialement les deux paliers à la fois** — le "
+    "montage deviendrait hyperstatique face à la dilatation thermique.",
+    "**Choisir un palier FIXE** (bloque radial + axial) **et un palier "
+    "LIBRE** (radial seul, coulisse axialement).",
+    "**Reconnaître que le jeu laissé côté palier libre est un jeu "
+    "FONCTIONNEL voulu**, pas un défaut de montage.",
+], "Arbre de réducteur de 300 mm entre paliers : +40 °C allonge l'acier "
+   "d'environ 0,14 mm — sans jeu fonctionnel côté palier libre, cet "
+   "allongement mettrait progressivement les roulements en compression.")
+
+_mth("0.15.1", "Passer du plan au choix du brut", [
+    "**Lire attentivement le plan de définition en premier** : cotes "
+    "fonctionnelles, tolérances serrées, état de surface demandé — c'est lui "
+    "qui guide chaque décision de la gamme.",
+    "**Choisir le brut en fonction de la forme finale, de la quantité et du "
+    "matériau imposé** — jamais l'inverse.",
+    "**Définir la mise en position sur la machine** avant la première "
+    "opération : une mise en position mal choisie décale les cotes, même "
+    "avec une machine parfaitement réglée.",
+], "5 000 petits carters en aluminium : un brut MOULÉ proche de la forme "
+   "finale l'emporte sur une barre usinée pièce par pièce, car réduire la "
+   "matière à enlever fait gagner du temps sur chaque pièce de la série.")
+
+_mth("0.15.2", "Ordonner les grandes étapes d'une gamme de fabrication", [
+    "**Suivre l'ordre de référence** : débit du brut → ébauche → traitement "
+    "thermique → finition → contrôle intermédiaire → contrôle final.",
+    "**Ne jamais placer le traitement thermique avant l'ébauche** (on "
+    "durcirait une matière encore loin de sa forme finale) **ni après la "
+    "finition** (ses déformations gâcheraient des cotes déjà précises).",
+    "**Placer un contrôle intermédiaire juste après une opération à risque** "
+    "(comme un traitement thermique), avant de continuer à usiner une pièce "
+    "peut-être déjà défectueuse.",
+], "Un pignon acier : ébauché proche de sa forme finale, trempé (durcit les "
+   "dents), puis rectifié en finition pour retrouver les cotes exactes "
+   "malgré la déformation de la trempe — jamais l'inverse.")
+
+_mth("1.1", "Distinguer un besoin d'une solution, et cadrer avec la bête à cornes", [
+    "**Écrire ce que le produit doit FAIRE**, jamais COMMENT il le fait : une "
+    "fonction est un verbe à l'infinitif + un complément, sans aucun nom de "
+    "composant.",
+    "**Poser la bête à cornes** : à qui le produit rend-il service (celui qui "
+    "a le problème, pas forcément celui qui subit l'action) ? Sur quoi "
+    "agit-il ? Dans quel but (la fonction globale) ?",
+    "**Vérifier la robustesse du besoin** : pourquoi il existe, ce qui "
+    "pourrait le faire disparaître, si ce risque est probable.",
+    "**Bannir tout composant de l'énoncé du besoin** — dès qu'un nom de "
+    "pièce apparaît, c'est déjà une solution, pas un besoin.",
+], "« Une équerre en inox avec deux trous taraudés » (solution imposée par "
+   "le client) au lieu de « maintenir un capteur face aux bouteilles malgré "
+   "les vibrations de la ligne » (le vrai besoin) — l'équerre a bougé parce "
+   "qu'elle ne répondait pas à ce besoin réel.")
+
+_mth("1.2", "Construire un diagramme pieuvre et distinguer FP de FC", [
+    "**Placer le produit au centre**, et lister tous les EME (éléments du "
+    "milieu extérieur) qui l'entourent.",
+    "**Pour chaque fonction candidate, compter les EME reliés à travers le "
+    "produit.**",
+    "**Deux EME reliés → fonction principale (FP)** : la raison d'être du "
+    "produit.",
+    "**Un seul EME relié → fonction contrainte (FC)** : une contrainte à "
+    "respecter, jamais la raison d'être du produit.",
+], "Étau d'établi : « permettre à l'opérateur de serrer la pièce » relie "
+   "deux EME (opérateur + pièce) → FP. « Résister aux copeaux projetés » ne "
+   "relie qu'un seul EME (l'environnement) → FC.")
+
+_mth("1.3", "Caractériser une fonction par critère, niveau et flexibilité", [
+    "**Identifier le critère** : la grandeur qui permet de vérifier que la "
+    "fonction est remplie.",
+    "**Fixer un niveau CHIFFRÉ, avec son unité** — jamais un adjectif "
+    "(« robuste », « léger »), invérifiable en recette.",
+    "**Préciser la flexibilité** : la marge tolérée autour de ce niveau (F0 "
+    "à F3).",
+    "**Vérifier que le niveau est mesurable en recette** — sinon la fonction "
+    "reste une intention, pas une exigence.",
+], "« Résister aux chocs » (vague) → critère = énergie de choc absorbée, "
+   "niveau = 5 J sans déformation permanente, flexibilité définie — une "
+   "exigence vérifiable, pas un adjectif.")
+
+_mth("1.4", "Construire un diagramme FAST", [
+    "**Partir de la fonction de service, à gauche du diagramme.**",
+    "**Se demander « comment ? » pour aller vers la droite** (les solutions "
+    "techniques), **« pourquoi ? » pour remonter vers la gauche** (vérifier "
+    "qu'on répond toujours à la fonction de départ).",
+    "**Ne faire apparaître un composant qu'en bout de chaîne**, jamais avant "
+    "d'avoir passé par les fonctions intermédiaires.",
+    "**Vérifier chaque maillon dans les deux sens** : pourquoi cette "
+    "solution, comment cette fonction se réalise.",
+], "« Transmettre un couple entre deux arbres » → (comment ?) → "
+   "« accouplement élastique ». En repartant du composant vers la gauche "
+   "(pourquoi ?), on retrouve bien la fonction de départ — le test qui "
+   "valide le diagramme.")
+
+_mth("1.5", "Modéliser une activité avec un actigramme SADT", [
+    "**Dessiner une boîte représentant l'activité.**",
+    "**Placer en ENTRÉE (à gauche) ce qui est TRANSFORMÉ**, en SORTIE (à "
+    "droite) ce qui en ressort transformé.",
+    "**Placer en CONTRÔLE W (au-dessus) ce qui PILOTE sans être "
+    "transformé**, en RESSOURCE R (en dessous) ce qui PERMET l'activité "
+    "sans la piloter ni être transformé.",
+    "**Pour chaque élément réel du système, se poser la question : est-il "
+    "transformé, pilote-t-il, ou permet-il seulement ?**",
+], "Une perceuse : pièce brute (entrée) → pièce percée (sortie) ; ordre de "
+   "marche de l'opérateur (contrôle W) ; alimentation électrique et foret "
+   "(ressources R, ni transformés ni pilotes).")
+
+_mth("1.7", "Calculer et comparer une criticité AMDEC", [
+    "**Pour chaque défaillance potentielle, évaluer trois notes** : gravité "
+    "(G), occurrence (O), détection (D).",
+    "**Calculer la criticité C = G × O × D** — un PRODUIT, jamais une "
+    "somme.",
+    "**Comparer les criticités entre elles** pour prioriser les actions "
+    "correctives.",
+    "**Agir en premier sur la criticité la plus élevée**, pas sur la "
+    "gravité la plus élevée seule.",
+], "Rupture d'un arbre (G=8, O=2, D=2) → C=32. Fuite progressive de "
+   "lubrifiant (G=4, O=4, D=7) → C=112 — malgré une gravité plus faible, la "
+   "fuite est prioritaire car bien plus fréquente et difficile à détecter.")
+
+_mth("7.4", "Vérifier qu'un point appartient à un cercle ou une droite par le calcul", [
+    "**Identifier le centre Ω(a ; b) et le rayon R** du cercle, ou les "
+    "coefficients a, b, c de la droite (ax + by + c = 0).",
+    "**Remplacer les coordonnées du point testé dans l'équation.**",
+    "**Vérifier l'égalité exacte** : (x−a)² + (y−b)² = R² pour un cercle, "
+    "l'expression nulle pour une droite.",
+    "**Pour une intersection droite-cercle**, substituer l'équation de la "
+    "droite dans celle du cercle : le discriminant obtenu tranche entre 0, 1 "
+    "ou 2 points de contact.",
+], "Cercle Ω(2 ; 1), R = 5. Point M(5 ; 5) : (5−2)² + (5−1)² = 9 + 16 = 25 = "
+   "R² → le point appartient bien au cercle, sans avoir eu besoin de le "
+   "mesurer sur le plan.")
+
+_mth("7.5", "Calculer le barycentre d'un ensemble de points pondérés", [
+    "**Réduire chaque pièce à un point (son centre de gravité) et une "
+    "masse.**",
+    "**Calculer Gx = (Σ mᵢxᵢ) / (Σ mᵢ)** et **Gy = (Σ mᵢyᵢ) / (Σ mᵢ)** — "
+    "toujours diviser par la masse TOTALE, jamais par le nombre de points.",
+    "**Vérifier par le bon sens** : le barycentre doit être plus proche de "
+    "la pièce la plus lourde que ne le serait une moyenne simple non "
+    "pondérée.",
+], "A(0;0) 2 kg, B(6;0) 3 kg, C(3;6) 1 kg, masse totale 6 kg : "
+   "Gx = (0+18+3)/6 = 3,5 — plus proche de B (le plus lourd, x=6) que la "
+   "moyenne simple non pondérée (3), cohérent avec sa masse dominante.")
+
+_mth("12.3", "Choisir un procédé d'obtention de brut et compenser son retrait", [
+    "**Choisir la famille selon la pièce** : fonderie (formes complexes, "
+    "creux, mais fibres coupées) · forgeage (excellente tenue mécanique, "
+    "mais formes simples et outillage cher) · tôlerie (léger, grandes "
+    "surfaces, épaisseur constante) · soudage (pièces uniques ou très "
+    "grandes, déformations à maîtriser).",
+    "**En fonderie, appliquer les quatre règles** : dépouille 1 à 3°, "
+    "épaisseurs constantes (éviter les retassures), congés partout, "
+    "surépaisseur d'usinage de 2 à 3 mm sur les portées fonctionnelles.",
+    "**Compenser le retrait au refroidissement** : cote du modèle = cote "
+    "pièce × (1 + taux de retrait) — environ 1 % pour la fonte, 2 % pour "
+    "l'acier, 1,2 % pour l'aluminium.",
+    "**En tôlerie, calculer la longueur développée** avant découpe — la "
+    "matière s'étire à l'extérieur du pli, la somme naïve des cotes est "
+    "toujours fausse.",
+], "Pièce en fonte de 300 mm (retrait 1 %) : le modèle doit faire "
+   "300 × 1,01 = 303 mm, jamais 300 mm.")
+
+_mth("12.4", "Calculer les paramètres de coupe et le temps d'usinage", [
+    "**Choisir Vc dans une table**, selon le couple outil-matière (jamais "
+    "au hasard).",
+    "**Calculer N = 1000 × Vc / (π × D)** — D est le diamètre de la PIÈCE en "
+    "tournage, de l'OUTIL en fraisage : la confusion la plus fréquente.",
+    "**Choisir l'avance f** selon ébauche (0,2 à 0,5 mm/tr) ou finition "
+    "(0,05 à 0,15 mm/tr), puis calculer Vf = f × N.",
+    "**Calculer le temps de coupe t = L / Vf**, et vérifier sa plausibilité "
+    "par un contrôle de bon sens.",
+], "Chariotage d'un arbre C45 de Ø60 à Ø56 sur 200 mm, outil carbure "
+   "(Vc = 140 m/min) : N = 743 tr/min, f = 0,2 mm/tr → Vf = 150 mm/min → "
+   "t = 200/150 = 1,33 min, soit 80 s — plausible pour cette longueur.")
+
+_mth("12.6", "Contrôler une pièce avec la méthode complète", [
+    "**Lire le plan et lister ce qui est réellement spécifié** — on ne "
+    "contrôle que les cotes tolérancées, jamais tout ce qu'on peut mesurer.",
+    "**Choisir l'instrument avec la règle des 10 %** : son incertitude doit "
+    "rester sous le dixième de l'IT à contrôler.",
+    "**Reprendre la pièce selon les MÊMES références que le plan** (règle "
+    "3-2-1) — contrôler depuis une autre face revient à mesurer autre "
+    "chose.",
+    "**Mesurer dans de bonnes conditions** (température stabilisée, faces "
+    "propres, pression constante), puis **décider et tracer** : instrument "
+    "utilisé, valeur relevée, incertitude.",
+], "Contrôler un Ø30 H7 (IT = 21 µm) : le dixième de l'IT vaut 2,1 µm. Un "
+   "pied à coulisse (≈ 30 µm d'incertitude) est quinze fois trop imprécis — "
+   "il faut un micromètre ou un comparateur sur marbre.")
+
+_mth("12.7", "Dimensionner un circuit pneumatique et lire un GRAFCET", [
+    "**Suivre la chaîne d'action** : automate → préactionneur (distributeur) "
+    "→ actionneur (vérin) → effecteur → pièce — l'automate ne commande "
+    "jamais directement un vérin.",
+    "**Choisir le distributeur adapté** : 5/2 pour un vérin double effet (le "
+    "cas courant), monostable ou bistable selon si la position doit être "
+    "conservée en cas de coupure.",
+    "**Régler la vitesse par un limiteur de débit à l'ÉCHAPPEMENT**, jamais "
+    "à l'admission ni en jouant sur la pression, qui donne l'effort.",
+    "**Lire un GRAFCET** : une transition ne se franchit QUE SI l'étape "
+    "au-dessus est active ET sa réceptivité vraie — jamais l'une sans "
+    "l'autre.",
+], "Un vérin double effet piloté par un distributeur 5/2, réglé en vitesse "
+   "par un limiteur de débit à l'échappement, confirmé en position par un "
+   "capteur ILS — exactement la chaîne qu'un concepteur mécanique doit "
+   "prévoir.")
+
+_mth("12.8", "Appliquer la hiérarchie de sécurité et les repères ergonomiques", [
+    "**Suivre la démarche en 3 temps, DANS CET ORDRE** : prévention "
+    "intrinsèque (supprimer le danger) → protection (l'isoler) → "
+    "information (en dernier recours, le niveau le plus faible).",
+    "**Ne jamais commencer par l'information** (« on mettra une étiquette ») "
+    "sans avoir d'abord posé la question de la suppression du danger.",
+    "**Respecter les repères ergonomiques chiffrés** : hauteur de travail "
+    "100-110 cm (précision) ou 75-90 cm (effort), effort de commande ≤ 30 N, "
+    "charge régulière ≤ 15/25 kg.",
+    "**Pour l'impact environnemental, identifier la phase dominante du "
+    "cycle de vie** (souvent l'utilisation pour une machine) avant de "
+    "choisir un levier d'éco-conception.",
+], "Un levier actionné à 60 N pour un geste répété 250 fois par jour "
+   "dépasse largement le seuil recommandé de 30 N — un défaut de "
+   "conception à corriger, pas une question de force de l'opérateur.")
+
+_mth("13.1", "Appliquer les cinq règles de forme d'une pièce injectée", [
+    "**Épaisseur constante, 2 à 3 mm** — la règle mère, dont découlent "
+    "presque toutes les autres.",
+    "**Nervure = 0,5 à 0,6 × l'épaisseur de la paroi**, jamais plus — sous "
+    "peine de retassure visible sur la face opposée.",
+    "**Dépouille 1 à 2° partout** — sans elle, la pièce raye ou casse à "
+    "l'éjection.",
+    "**Congés partout, rayon ≥ 0,5 × épaisseur.**",
+    "**Réfléchir à la position du seuil d'injection avant de figer la "
+    "forme** — il décide de l'orientation des molécules et de la position "
+    "des lignes de soudure, où la résistance chute de 30 à 50 %.",
+], "Pièce en POM de 100 mm, retrait 2 % : l'empreinte du moule doit faire "
+   "100 × 1,02 = 102 mm, jamais 100 mm.")
+
+_mth("14.1", "Traiter une étude de cas complète type examen", [
+    "**Lire tout le sujet avant de répondre à quoi que ce soit** — les "
+    "questions se répondent souvent les unes les autres.",
+    "**Traiter les parties dans l'ordre** : chacune fournit un résultat "
+    "utilisé par la suivante (analyse fonctionnelle → schéma cinématique → "
+    "statique → dimensionnement → RDM → ajustements → coût).",
+    "**Si un calcul bloque, prendre une valeur plausible et continuer** — "
+    "une partie non traitée vaut zéro, une partie traitée avec une valeur "
+    "reprise du sujet vaut presque tous les points.",
+    "**Contrôler chaque ordre de grandeur** avant de passer à la suite.",
+], "Poste de bridage : effort de serrage 900 N, bras de levier 40/65 mm, "
+   "réseau à 6 bars — chaque partie (statique du levier, puis "
+   "dimensionnement du vérin, puis RDM de l'axe) réutilise le résultat de "
+   "la précédente, dans cet ordre.")
+
+_mth("14.2", "Traiter un sujet calculatoire en gardant les mêmes unités", [
+    "**Travailler en newtons et en millimètres du début à la fin** : "
+    "convertir les couples donnés en N·m UNE SEULE FOIS, au tout début, et "
+    "ne plus y revenir.",
+    "**Repérer que chaque partie fournit une donnée à la suivante** : le "
+    "couple de sortie sert à dimensionner l'arbre, qui détermine le choix "
+    "des roulements.",
+    "**Encadrer chaque résultat intermédiaire** pour pouvoir le relire "
+    "rapidement dans les parties suivantes.",
+    "**Vérifier l'ordre de grandeur à chaque étape** — la moitié des "
+    "erreurs sur ce type de sujet vient d'un facteur 1 000 oublié.",
+], "Motoréducteur 4 kW à 1 450 tr/min, sortie visée 290 tr/min, "
+   "Mf = 350 N·m sur l'arbre de sortie : Méq (Tresca) = √(Mf² + Mt²) — le "
+   "couple Mt calculé en partie A est réutilisé tel quel en partie B, "
+   "converti une fois pour toutes en N·mm.")
+
+_mth("15.1", "Suivre la check-list complète d'un exercice de RDM", [
+    "**Avant de calculer** : isoler la pièce, identifier LA sollicitation "
+    "(effort perpendiculaire à la section = traction/flexion, effort dans "
+    "le plan = cisaillement/torsion), convertir toutes les unités en N·mm "
+    "MAINTENANT, repérer où l'effort intérieur est maximal.",
+    "**Pendant le calcul** : compter les sections qui travaillent "
+    "(une chape à deux joues double la section résistante), vérifier si une "
+    "seconde vérification s'impose (matage après un cisaillement, flèche "
+    "après une flexion, élancement avant une compression, contrainte "
+    "équivalente si flexion + torsion).",
+    "**Comparer à Rpe = Re/s** — jamais à Re seul, jamais à Rm.",
+    "**Après le résultat** : contrôler l'ordre de grandeur, conclure par un "
+    "pourcentage de l'admissible, se demander si une deuxième pièce de la "
+    "chaîne d'efforts n'a pas été oubliée.",
+], "Une copie calcule σ = 47,8 MPa pour une tige Ø20 tirée à 15 000 N, puis "
+   "compare à Re = 340 MPa au lieu de Rpe = Re/s = 113,3 MPa : le calcul "
+   "est juste, mais la comparaison au mauvais seuil est l'erreur de "
+   "méthode.")
+
+_mth("15.2", "Suivre la check-list d'un ajustement ou d'une chaîne de cotes", [
+    "**Identifier alésage (MAJUSCULE) et arbre (minuscule)**, repérer la "
+    "plage de la table ISO à utiliser.",
+    "**Lire la table selon la lettre** : a à h donnent l'écart supérieur es "
+    "(en déduire ei = es − IT) ; k à z donnent l'écart inférieur ei (en "
+    "déduire es = ei + IT).",
+    "**Convertir immédiatement µm en mm** : 21 µm = 0,021 mm, jamais 0,21 — "
+    "l'erreur la plus fréquente du bloc 2.",
+    "**Appliquer toujours la même paire** : Jmax = Alésage maxi − arbre "
+    "mini, Jmin = Alésage mini − arbre maxi.",
+    "**Pour une chaîne de cotes, tracer le vecteur avant l'équation**, et "
+    "vérifier la condition aux DEUX extrêmes, pas seulement au nominal.",
+], "Ø30 H7/g6 : une copie calcule juste l'alésage (30,000-30,021) et "
+   "l'arbre (29,980-29,993), mais écrit Jmax = 30,21 − 29,980 = 0,23 mm — "
+   "l'erreur est d'avoir oublié la conversion 21 µm = 0,021 mm, pas "
+   "0,21 mm.")
+
+_mth("15.3", "Poser un problème de statique, de schéma cinématique ou de matériau avant de calculer", [
+    "**Statique** : isoler le solide et dessiner TOUTES les actions "
+    "extérieures, compter les inconnues avant de commencer (appui simple 1, "
+    "articulation 2, encastrement 3), choisir le point de calcul des "
+    "moments là où passent les inconnues à éliminer.",
+    "**Schéma cinématique** : regrouper en classes d'équivalence ce qui n'a "
+    "AUCUN mouvement relatif, nommer chaque liaison par ce qui RESTE "
+    "possible, vérifier à la fin que les ddl restants correspondent au "
+    "mouvement réel du mécanisme.",
+    "**Choix de matériau** : se demander d'abord si la pièce doit résister "
+    "(nuance, Re) ou ne pas plier (forme, E) — deux mondes différents — "
+    "puis éliminer par les contraintes (soudable ? trempable ? corrosion ?) "
+    "AVANT de regarder le budget.",
+], "Poutre articulée en A, appui simple en B, charge au milieu : prendre "
+   "les moments EN B (au lieu de A) ne fait disparaître AUCUNE inconnue "
+   "utile — B est un appui simple, son moment y est déjà nul par nature. "
+   "Le bon choix, en A, élimine directement Ax et Ay.")
+
+_mth("16.4", "Rédiger une synthèse à partir d'un corpus complet", [
+    "**Confronter les documents avant d'écrire** : cherchez d'abord une "
+    "relation d'accord-avec-nuance — c'est la plus fréquente, bien avant "
+    "une opposition franche à forcer artificiellement.",
+    "**Construire un plan aussi court que le corpus l'impose** : un corpus "
+    "de 3 documents donne souvent un plan en 2 parties — ne jamais forcer "
+    "un troisième axe pour respecter un nombre attendu.",
+    "**Mobiliser plusieurs documents dans chaque paragraphe**, jamais un "
+    "document isolé dans un paragraphe qui lui serait uniquement consacré.",
+    "**Rédiger sans aucune marque de jugement personnel** — pas de « je "
+    "pense que », même sur une idée déjà présente en creux dans le "
+    "corpus.",
+], "Corpus de 3 documents sur l'automatisation (gain de productivité, "
+   "nuance syndicale, chiffres) : les documents 1 et 3 racontent la même "
+   "chose sous deux formes, le document 2 les nuance — d'où un plan en 2 "
+   "parties, chacune croisant plusieurs documents, jamais traités un par "
+   "un.")
+
+_mth("17.0", "Lire un tableau de variations, un tableau de signes, un graphique", [
+    "**Tableau de variations** : lire d'abord la ligne du signe de f'(x) "
+    "(+ monte, − descend), puis suivre les flèches comme un trajet, de "
+    "gauche à droite — une double barre ‖ est un mur, jamais une route "
+    "continue.",
+    "**Tableau de signes** : étudier chaque facteur LIGNE par ligne, puis "
+    "faire le produit des signes ligne par ligne — jamais colonne par "
+    "colonne, l'erreur la plus fréquente.",
+    "**Graphique** : repérer ce que représente chaque axe et son échelle "
+    "(que vaut un carreau) AVANT de lire une seule valeur.",
+    "**Diagramme en bâtons de probabilité** : vérifier que la somme des "
+    "hauteurs vaut 1 — un contrôle systématique après tout calcul de loi de "
+    "probabilité.",
+], "Tableau de signes de (x−1)(3−x) : chaque facteur (x−1) puis (3−x) "
+   "étudié séparément sur sa propre ligne, puis la dernière ligne (le "
+   "produit) se lit en croisant les deux signes ligne par ligne à chaque "
+   "colonne — jamais en multipliant les colonnes entre elles.")
+
+_mth("17.1", "Étudier une fonction : domaine, limites, tableau de variations", [
+    "**Trouver le domaine** : exclure ce qui annule un dénominateur, ou "
+    "rend une racine carrée négative.",
+    "**Calculer les limites en l'infini** (ne garder que les termes de plus "
+    "haut degré) → une limite finie donne une asymptote HORIZONTALE.",
+    "**Calculer les limites près d'une valeur interdite** → asymptote "
+    "VERTICALE ; tester le signe avec une valeur numérique proche pour ne "
+    "pas se tromper de côté.",
+    "**Dériver, puis lire le signe de f'(x)** — jamais le signe de f(x) — "
+    "pour en déduire le sens de variation.",
+    "**Construire le tableau** avec une double barre (jamais de flèche "
+    "continue) à chaque valeur interdite.",
+], "f(x) = (2x−1)/(x+3) : Df = ℝ\\{−3}, asymptote horizontale y = 2, "
+   "asymptote verticale x = −3, f'(x) = 7/(x+3)² toujours positive → f "
+   "strictement croissante sur chacune de ses deux branches.")
+
+_mth("17.2", "Calculer une aire par primitive et intégrale définie", [
+    "**Trouver une primitive F de f**, en utilisant le tableau des "
+    "primitives usuelles (lu à l'envers de celui des dérivées).",
+    "**Vérifier systématiquement** : dériver la primitive trouvée, on doit "
+    "retomber exactement sur f(x).",
+    "**Calculer ∫ de a à b = F(b) − F(a)**, avec N'IMPORTE QUELLE primitive "
+    "de f (le résultat ne dépend pas du choix).",
+    "**Relier au métier** : l'aire sous une courbe de section donne "
+    "directement une surface, utile pour une masse (surface × épaisseur × "
+    "masse volumique) ou un volume de matière à enlever.",
+], "∫ de 0 à 3 de (x²−2x+3) dx : F(x) = x³/3 − x² + 3x, vérifiée par "
+   "F'(x) = x²−2x+3 = f(x). F(3) − F(0) = 9 − 0 = 9.")
+
+_mth("17.3", "Calculer médiane, quartiles et écart interquartile", [
+    "**Trier la série par ordre croissant AVANT tout calcul** — l'ordre "
+    "brut des mesures n'a rien à voir avec l'ordre statistique.",
+    "**Médiane** : valeur du milieu si n impair (rang (n+1)/2), moyenne des "
+    "deux valeurs centrales si n pair.",
+    "**Quartiles** : rang de Q1 = 0,25×n, rang de Q3 = 0,75×n — ARRONDIS À "
+    "L'ENTIER SUPÉRIEUR si ce n'est pas déjà un entier.",
+    "**Écart interquartile EIQ = Q3 − Q1** — ne dépend que de Q1 et Q3, "
+    "jamais du minimum ni du maximum, donc peu sensible à une valeur "
+    "aberrante isolée.",
+], "9 diamètres triés, du 29,97 au 30,05 mm : médiane = 5ᵉ valeur = "
+   "30,01 mm · Q1 (rang 2,25→3) = 29,99 mm · Q3 (rang 6,75→7) = 30,03 mm · "
+   "EIQ = 0,04 mm.")
+
+_mth("17.4", "Trouver les extremums locaux d'une fonction polynomiale", [
+    "**Dériver f(x).**",
+    "**Factoriser f'(x)** avant d'en étudier le signe — un produit de "
+    "facteurs se lit bien plus facilement qu'un trinôme brut.",
+    "**Dresser le tableau de signes de f'(x)**, facteur par facteur, puis "
+    "le produit.",
+    "**Calculer f (jamais f') aux points où f' s'annule** — c'est la valeur "
+    "de l'extremum.",
+    "**Lire le sens du changement de signe** : + vers − donne un maximum "
+    "local, − vers + donne un minimum local — jamais l'inverse.",
+], "f(x) = x³ − 3x² + 2 : f'(x) = 3x(x−2), s'annule en x=0 et x=2. f' passe "
+   "de + à − en x=0 → maximum local f(0)=2 ; f' passe de − à + en x=2 → "
+   "minimum local f(2)=−2.")
+
+_mth("17.5", "Calculer la valeur moyenne d'une fonction sur un intervalle", [
+    "**Ne jamais utiliser (f(a) + f(b)) / 2** sauf si f est une droite — "
+    "cette formule ignore tout ce qui se passe entre a et b.",
+    "**Trouver une primitive F de f**, et la vérifier en la dérivant.",
+    "**Calculer l'intégrale ∫ de a à b = F(b) − F(a).**",
+    "**Diviser par la largeur de l'intervalle (b − a)** — c'est cette "
+    "division qui transforme une aire en une moyenne.",
+], "T(t) = −2t²+12t+20 sur [0;6] : T(0)=T(6)=20°C, ce qui suggère à tort "
+   "une moyenne de 20°C. Le vrai calcul (∫=192, divisé par 6) donne "
+   "32°C — la température monte à 38°C au milieu du cycle, ce que "
+   "(début+fin)/2 ignore complètement.")
+
+_mth("17.6", "Comparer la dispersion de deux séries avec le coefficient de variation", [
+    "**Calculer la moyenne**, puis la **variance** V = moyenne des carrés "
+    "des écarts à la moyenne, puis l'**écart-type** σ = √V.",
+    "**Ne jamais comparer deux écarts-types bruts entre séries de moyennes "
+    "très différentes** — un écart-type de 0,05 mm peut être excellent sur "
+    "une grande pièce et médiocre sur une petite.",
+    "**Calculer le coefficient de variation CV = (σ / moyenne) × 100**, en "
+    "% — sans oublier le ×100.",
+    "**Comparer les CV, pas les écarts-types**, pour juger équitablement "
+    "deux séries de tailles différentes.",
+], "Réglage C (pièces 20 mm, σ=0,0129) semble meilleur que D (pièces "
+   "100 mm, σ=0,050) sur l'écart-type brut. Mais CV(C)=0,065% et "
+   "CV(D)=0,050% : proportionnellement, D est en réalité plus précis.")
+
+_mth("18.1", "Combiner deux événements avec union et intersection", [
+    "**Vérifier l'indépendance avant de multiplier** : P(A∩B) = P(A)×P(B) "
+    "seulement si A et B sont indépendants — rien ne le suppose par "
+    "défaut.",
+    "**Appliquer la formule du OU** : P(A∪B) = P(A) + P(B) − P(A∩B) — on "
+    "retranche l'intersection pour ne pas la compter deux fois.",
+    "**Utiliser l'événement contraire** pour une question du type « au "
+    "moins un » ou « aucun » : P(Ā) = 1 − P(A).",
+    "**Vérifier par le sens** : le OU est presque toujours la valeur la "
+    "plus grande, le résultat final doit rester plausible.",
+], "Défaut diamètre P(A)=0,02, défaut surface P(B)=0,05, indépendants : "
+   "P(A∩B)=0,001, P(A∪B)=0,069, P(aucun défaut)=1−0,069=0,931 — environ "
+   "93% de pièces bonnes des deux côtés, cohérent avec deux défauts rares.")
+
+_mth("18.2", "Calculer une probabilité avec la loi binomiale", [
+    "**Identifier n (le nombre d'épreuves) et p (la probabilité de "
+    "succès)** — définir clairement ce qu'est un « succès » et s'y tenir "
+    "du début à la fin.",
+    "**Appliquer P(X=k) = C(n,k) × p^k × (1−p)^(n−k)** — ne jamais oublier "
+    "le coefficient binomial C(n,k).",
+    "**Pour « au plus k » ou « au moins k », additionner plusieurs "
+    "P(X=k)** — ne pas confondre P(X=k) et P(X≤k).",
+    "**Calculer E(X) = n×p et σ(X) = √(np(1−p))** pour caractériser la "
+    "dispersion du nombre de défauts attendu.",
+], "Lot à 5% de défaut, échantillon de 10, lot accepté si ≤1 défectueuse : "
+   "P(X=0)=59,87%, P(X=1)=31,51%, P(X≤1)=91,4% — même un lot conforme a "
+   "8,6% de chances d'être refusé à tort, le compromis inévitable d'un "
+   "contrôle par sondage.")
+
+_mth("18.3", "Construire un intervalle de confiance à 95 %", [
+    "**Calculer la marge d'erreur = 1,96 × s/√n**, avec s l'écart-type de "
+    "l'ÉCHANTILLON et n sa taille.",
+    "**Construire l'intervalle x̄ ± cette marge.**",
+    "**Ne jamais oublier la racine carrée sur n** : quadrupler "
+    "l'échantillon ne divise la marge que par 2, pas par 4.",
+    "**Interpréter correctement** : l'intervalle porte sur la MOYENNE de "
+    "la population, pas sur la dispersion des pièces individuelles (à ne "
+    "pas confondre avec le Cp/Cpk).",
+], "n=36, x̄=50,02 mm, s=0,15 mm : marge = 1,96×0,15/6 = 0,049 mm → "
+   "IC95% = [49,971 ; 50,069] mm — on est confiant à 95% que la vraie "
+   "moyenne de la production s'y trouve, pas que 95% des pièces y sont.")
+
+_mth("18.4", "Résoudre une équation différentielle du premier ordre", [
+    "**Reconnaître la forme** T'(t) = −k×(T(t) − T_eq) : un phénomène qui "
+    "tend vers un équilibre à une vitesse proportionnelle à l'écart "
+    "restant.",
+    "**Écrire directement la solution** T(t) = T_eq + (T₀ − T_eq) × "
+    "e^(−t/τ), avec τ = 1/k — ne jamais oublier T_eq si l'équilibre n'est "
+    "pas zéro.",
+    "**Retenir les deux repères de τ** : après τ, 63% de l'écart est "
+    "parcouru ; après 3τ, le régime est quasi stabilisé (95%).",
+    "**Pour trouver un instant précis, isoler l'exponentielle puis "
+    "appliquer ln** des deux côtés.",
+], "Pièce à 180°C, ambiante 20°C, τ=15 min : T(15)=78,86°C (63% de "
+   "l'écart parcouru, vérifié) · T(45)=27,97°C (3τ, quasi stabilisé) · "
+   "atteint 25°C après environ 52 min, calculé par ln.")
+
+_mth("18.5", "Construire et exploiter un arbre pondéré", [
+    "**Dessiner l'arbre à deux niveaux** : chaque nœud de départ porte les "
+    "probabilités P(A), P(Ā) qui totalisent 1 ; chaque second niveau porte "
+    "les probabilités conditionnelles P(B|A), P(B|Ā).",
+    "**Multiplier le long d'un chemin** pour obtenir P(A∩B) = P(A)×P(B|A).",
+    "**Additionner les chemins qui mènent au même résultat** pour la "
+    "probabilité totale : P(B) = P(A)P(B|A) + P(Ā)P(B|Ā).",
+    "**Pour retourner l'arbre** (calculer P(A|B) connaissant B), repartir "
+    "de P(A∩B) / P(B) — jamais lire directement l'arbre construit dans "
+    "l'autre sens.",
+], "Machine M1 (60% du volume, 3% défaut), M2 (40%, 6% défaut) : "
+   "P(défaut)=4,2%, mais P(M1|défaut)=0,018/0,042=43% seulement — M2, "
+   "minoritaire, fournit en réalité 57% des pièces défectueuses trouvées.")
+
+_mth("18.6", "Utiliser espérance et écart-type pour repérer un lot anormal", [
+    "**Calculer E(X) = n×p** (le nombre moyen de défauts attendu par lot) "
+    "et **σ(X) = √(np(1−p))**.",
+    "**Construire la plage usuelle E(X) ± 2σ(X)** — un repère pratique, pas "
+    "une frontière stricte comme un IC95% exact.",
+    "**Comparer un résultat observé à cette plage** avant de conclure à un "
+    "dérèglement — une variation à l'intérieur de la plage est le bruit "
+    "normal du procédé.",
+], "Lots de 200 pièces, p=2% : E(X)=4, σ(X)≈1,98, plage usuelle ≈[0;8]. Un "
+   "lot à 6 défectueuses reste dans la plage (normal), un lot à 15 en sort "
+   "largement (signal à investiguer).")
+
+_mth("18.7", "Calculer la taille d'échantillon nécessaire pour une précision donnée", [
+    "**Isoler n dans la formule de la marge** : n = (1,96 × s / marge "
+    "visée)².",
+    "**Toujours arrondir n au nombre ENTIER SUPÉRIEUR** (plafond) — "
+    "arrondir au plus proche risquerait de ne pas garantir la précision "
+    "visée.",
+    "**Retenir que n varie en carré de la précision demandée** : diviser la "
+    "marge visée par k multiplie n par k².",
+    "**Vérifier après coup** que la marge obtenue avec le n arrondi reste "
+    "bien sous la marge visée.",
+], "s=0,15 mm, marge visée 0,03 mm : n=(1,96×0,15/0,03)²=96,04 → arrondi à "
+   "97 pièces. Diviser la marge visée par 4 (à 0,0075 mm) multiplierait n "
+   "par 16, pas par 4.")
+
+_mth("18.8", "Modéliser une mise en régime (montée vers un équilibre)", [
+    "**Utiliser la même solution que pour une décroissance** : y(t) = y_eq "
+    "+ (y₀ − y_eq) × e^(−t/τ) — le signe de (y₀ − y_eq) décide seul si le "
+    "phénomène monte ou descend.",
+    "**Si y₀ < y_eq, le terme (y₀ − y_eq) est négatif** : la courbe part de "
+    "y₀ et MONTE progressivement vers y_eq.",
+    "**Les mêmes repères s'appliquent** : après τ, 63% du chemin vers "
+    "l'équilibre est fait ; après 3τ, le régime est quasi stabilisé (95%).",
+    "**Pour un instant précis, isoler l'exponentielle puis appliquer ln.**",
+], "Vérin de 0 à 6 bar, τ=2s : P(2)=3,79 bar (63% de la montée, vérifié) · "
+   "P(6)=5,70 bar (3τ) · atteint 5,5 bar après environ 5 s — donnée "
+   "directement exploitable pour cadencer un cycle automatique.")
+
+_mth("19.1", "Multiplier des matrices et calculer un déterminant", [
+    "**Multiplier ligne × colonne** : le terme (i,j) du produit combine la "
+    "ligne i de la première matrice avec la colonne j de la seconde.",
+    "**Ne jamais supposer que M1×M2 = M2×M1** — la multiplication de "
+    "matrices n'est PAS commutative, l'ordre des transformations change le "
+    "résultat.",
+    "**Déterminant 2×2** : det[[a,b],[c,d]] = a×d − b×c.",
+    "**Pour une rotation d'angle θ**, multiplier le point par "
+    "R(θ) = [[cos θ, −sin θ], [sin θ, cos θ]].",
+], "Rotation 90° puis translation (5,0) sur le point (3,0) : (3,0)→(0,3)→"
+   "(5,3). Dans l'autre ordre (translation puis rotation) : (3,0)→(8,0)→"
+   "(0,8) — un résultat différent, la preuve concrète de la "
+   "non-commutativité.")
+
+_mth("19.2", "Calculer un point sur une courbe de Bézier quadratique", [
+    "**Repérer les 3 points de contrôle** P₀, P₁, P₂ — la courbe passe "
+    "exactement par P₀ (t=0) et P₂ (t=1), JAMAIS par P₁.",
+    "**Appliquer B(t) = (1−t)²P₀ + 2(1−t)t P₁ + t²P₂** pour un t entre 0 "
+    "et 1.",
+    "**Comprendre le rôle de P₁** : il attire la courbe vers lui sans "
+    "qu'elle le touche — c'est la propriété centrale à retenir.",
+    "**Pour une forme complexe, penser B-spline** : elle enchaîne "
+    "plusieurs Bézier et ne se déforme que LOCALEMENT quand on déplace un "
+    "point de contrôle.",
+], "P₀=(0,0), P₁=(2,4), P₂=(4,0) : B(0,5)=(2,2), pas (2,4) — la courbe "
+   "passe près de P₁ sans jamais l'atteindre, exactement à mi-chemin en "
+   "hauteur entre la droite P₀P₂ et P₁.")
+
+_mth("19.3", "Résoudre un système linéaire par la matrice inverse", [
+    "**Écrire le système sous forme AX = B.**",
+    "**Calculer det A EN PREMIER** — s'il est nul, pas d'inverse, pas de "
+    "solution unique : inutile d'aller plus loin.",
+    "**Calculer A⁻¹ = (1/det A) × [[d,−b],[−c,a]]** pour A = [[a,b],[c,d]].",
+    "**Calculer X = A⁻¹ × B**, puis vérifier en réinjectant X dans les "
+    "équations d'origine.",
+], "2x+3y=8, x+4y=9 : det A=5, A⁻¹=(1/5)[[4,−3],[−1,2]], "
+   "X=(1;2) — vérifié : 2×1+3×2=8 ✓, 1+4×2=9 ✓.")
+
+_mth("19.4", "Calculer un point sur une courbe de Bézier cubique", [
+    "**Repérer les 4 points de contrôle** P₀, P₁, P₂, P₃ — la courbe passe "
+    "par P₀ (t=0) et P₃ (t=1), jamais par P₁ ni P₂.",
+    "**Appliquer B(t) = (1−t)³P₀ + 3(1−t)²t P₁ + 3(1−t)t² P₂ + t³P₃.**",
+    "**Retenir pourquoi la cubique domine en CAO** : elle contrôle "
+    "indépendamment la tangente en début ET en fin de courbe, ce qu'une "
+    "quadratique (3 points) ne permet pas.",
+], "P₀=(0,0), P₁=(1,3), P₂=(3,3), P₃=(4,0), profil en dôme symétrique : "
+   "B(0,5)=(2 ; 2,25), le sommet de la courbe — cohérent avec la symétrie "
+   "de P₁ et P₂ à la même hauteur.")
+
 for _bl in BLOCS:
     for _fi in _bl.get("fiches", []):
         _methode_fi = METHODES.get(_fi.get("id"))
@@ -41724,7 +43815,9 @@ def charger_progression():
                 return json.load(f)
         except (json.JSONDecodeError, OSError):
             pass
-    return {"fiches_lues": [], "resultats_quiz": [], "notes": {}, "erreurs": {}}
+    return {"fiches_lues": [], "resultats_quiz": [], "notes": {}, "erreurs": {},
+            "exercices_guides_termines": [], "srs": {}, "ateliers_termines": [],
+            "controles": []}
 
 
 def sauver_progression(p):
@@ -44500,6 +46593,7 @@ ATELIERS = [
         "titre": "Vérifier un plan d'échantillonnage (loi binomiale)",
         "theme": "Probabilités",
         "fiche": "18.2",
+        "figure": "loi_binomiale_histo",
         "vocabulaire": [
             ("loi binomiale B(n ; p)", "le nombre de succès obtenus sur n épreuves "
              "indépendantes, chacune avec une probabilité p."),
@@ -44594,6 +46688,7 @@ ATELIERS = [
         "titre": "Enchaîner rotation et translation d'un perçage (calcul matriciel)",
         "theme": "Calcul matriciel",
         "fiche": "19.1",
+        "figure": "rotation_matricielle",
         "vocabulaire": [
             ("matrice de rotation R(θ)", "le tableau [[cos θ, −sin θ], [sin θ, cos θ]] qui "
              "fait tourner un point d'un angle θ autour de l'origine."),
@@ -44693,6 +46788,7 @@ ATELIERS = [
         "titre": "Décomposer une force inclinée (trigonométrie)",
         "theme": "Trigonométrie",
         "fiche": "7.1",
+        "figure": "decomposer_force",
         "vocabulaire": [
             ("composante", "la projection d'une force sur un axe : ce qu'elle vaut "
              "réellement dans cette direction précise."),
@@ -44747,6 +46843,7 @@ ATELIERS = [
         "titre": "Trouver l'extremum d'un coût de production (dérivée)",
         "theme": "Fonctions et dérivées",
         "fiche": "7.2",
+        "figure": "extremums_polynome",
         "vocabulaire": [
             ("extremum", "un maximum ou un minimum d'une fonction."),
             ("dérivée s'annule", "la condition nécessaire pour qu'une fonction dérivable "
@@ -44803,6 +46900,7 @@ ATELIERS = [
         "titre": "Évaluer un procédé avec le Cp et le Cpk",
         "theme": "Statistiques qualité",
         "fiche": "7.3",
+        "figure": "courbe_capabilite",
         "vocabulaire": [
             ("Cp", "compare la dispersion tolérée à la dispersion réelle du procédé, sans "
              "tenir compte du centrage."),
@@ -44859,6 +46957,7 @@ ATELIERS = [
         "titre": "Étudier une fonction homographique (asymptotes et dérivée)",
         "theme": "Fonctions d'une variable réelle",
         "fiche": "17.1",
+        "figure": "fonction_homographique_asymptotes",
         "vocabulaire": [
             ("asymptote verticale", "une droite x = a que la courbe approche sans jamais "
              "la toucher, là où la fonction n'est pas définie."),
@@ -45030,6 +47129,7 @@ ATELIERS = [
         "titre": "Trouver les extremums locaux d'une fonction polynomiale",
         "theme": "Fonctions d'une variable réelle",
         "fiche": "17.4",
+        "figure": "extremums_polynome",
         "vocabulaire": [
             ("extremum local", "un maximum ou un minimum atteint là où f'(x) change de "
              "signe — pas forcément le plus grand ou le plus petit sur tout ℝ."),
@@ -45137,6 +47237,7 @@ ATELIERS = [
         "titre": "Comparer deux séries avec le coefficient de variation",
         "theme": "Statistique descriptive",
         "fiche": "17.6",
+        "figure": "dispersion_deux_reglages",
         "vocabulaire": [
             ("coefficient de variation", "l'écart-type rapporté à la moyenne, en % — permet "
              "de comparer la dispersion de séries de tailles différentes."),
@@ -45192,6 +47293,7 @@ ATELIERS = [
         "titre": "Combiner deux événements (union et intersection)",
         "theme": "Probabilités",
         "fiche": "18.1",
+        "figure": "venn_deux_evenements",
         "vocabulaire": [
             ("P(A∪B)", "la probabilité que A OU B se réalise (au moins l'un des deux)."),
             ("P(A∩B)", "la probabilité que A ET B se réalisent en même temps."),
@@ -45244,6 +47346,7 @@ ATELIERS = [
         "titre": "Construire un intervalle de confiance à 95 %",
         "theme": "Statistique inférentielle",
         "fiche": "18.3",
+        "figure": "intervalle_confiance",
         "vocabulaire": [
             ("intervalle de confiance", "une fourchette qui a de bonnes chances de "
              "contenir la vraie moyenne de la population, calculée à partir d'un "
@@ -45294,6 +47397,7 @@ ATELIERS = [
         "titre": "Modéliser un refroidissement (équation différentielle)",
         "theme": "Équations différentielles",
         "fiche": "18.4",
+        "figure": "decroissance_exponentielle",
         "vocabulaire": [
             ("constante de temps τ", "le temps caractéristique de l'évolution — au bout "
              "de 3τ, le phénomène est presque terminé."),
@@ -45350,6 +47454,7 @@ ATELIERS = [
         "titre": "Calculer un point sur une courbe de Bézier",
         "theme": "Modélisation géométrique",
         "fiche": "19.2",
+        "figure": "courbe_bezier",
         "vocabulaire": [
             ("point de contrôle", "un point qui influence la forme de la courbe sans, en "
              "général, être dessus."),
@@ -45410,6 +47515,7 @@ ATELIERS = [
         "titre": "Retrouver la source la plus probable d'un défaut",
         "theme": "Probabilités conditionnelles",
         "fiche": "18.5",
+        "figure": "probabilite_arbre",
         "vocabulaire": [
             ("P(B|A)", "probabilité de B sachant que A s'est déjà produit."),
             ("arbre pondéré", "schéma où la probabilité d'un chemin complet est le produit "
@@ -45473,6 +47579,7 @@ ATELIERS = [
         "titre": "Repérer un lot anormal avec l'espérance et l'écart-type",
         "theme": "Loi binomiale — espérance et écart-type",
         "fiche": "18.6",
+        "figure": "loi_binomiale_histo",
         "vocabulaire": [
             ("plage usuelle", "E(X) ± 2σ(X), un repère pratique pour juger si un résultat "
              "est normal ou anormal."),
@@ -45574,6 +47681,7 @@ ATELIERS = [
         "titre": "Suivre une vidange progressive dans le temps",
         "theme": "Équations différentielles — mise en régime",
         "fiche": "18.8",
+        "figure": "decroissance_exponentielle",
         "vocabulaire": [
             ("constante de temps τ", "durée caractéristique : après τ, environ 63% de "
              "l'écart avec l'équilibre est parcouru."),
@@ -45631,6 +47739,7 @@ ATELIERS = [
         "titre": "Résoudre un système par matrice inverse",
         "theme": "Calcul matriciel — matrice inverse",
         "fiche": "19.3",
+        "figure": "systeme_lineaire_geometrique",
         "vocabulaire": [
             ("matrice inverse", "la matrice A⁻¹ telle que A × A⁻¹ redonne la matrice "
              "identité — elle « défait » la transformation de A."),
@@ -45685,6 +47794,7 @@ ATELIERS = [
         "titre": "Calculer un point sur une courbe de Bézier cubique",
         "theme": "Modélisation géométrique — Bézier cubique",
         "fiche": "19.4",
+        "figure": "courbe_bezier",
         "vocabulaire": [
             ("point de contrôle", "un point qui influence la forme de la courbe sans "
              "être dessus, sauf le premier et le dernier."),
@@ -45739,6 +47849,7 @@ ATELIERS = [
         "titre": "Vérifier qu'un point appartient à un cercle",
         "theme": "Configurations géométriques — équation du cercle",
         "fiche": "7.4",
+        "figure": "cercle_et_droite",
         "vocabulaire": [
             ("rayon", "la distance constante entre le centre du cercle et chacun de ses "
              "points."),
@@ -45785,6 +47896,7 @@ ATELIERS = [
         "titre": "Calculer un barycentre de trois pièces",
         "theme": "Calcul vectoriel — barycentre",
         "fiche": "7.5",
+        "figure": "barycentre_points",
         "vocabulaire": [
             ("barycentre", "le point d'équilibre d'un système de points pondérés — le "
              "centre de gravité d'un assemblage."),
@@ -45899,6 +48011,7 @@ ATELIERS = [
         "titre": "Décoder les messages d'un logiciel de CAO en anglais",
         "theme": "Anglais technique — vocabulaire de la CAO",
         "fiche": "10.4",
+        "figure": "esquisse_contraintes",
         "vocabulaire": [
             ("under-defined", "l'esquisse n'est pas encore totalement contrainte : il "
              "manque une cote ou une relation géométrique."),
@@ -45968,6 +48081,7 @@ ATELIERS = [
         "titre": "Qui se corrode : lire un couple galvanique",
         "theme": "Physique-Chimie — corrosion et potentiels standards",
         "fiche": "8.4",
+        "figure": "couple_galvanique",
         "vocabulaire": [
             ("potentiel standard E°", "mesure la facilité d'un métal à céder ses électrons — "
              "plus il est négatif, plus le métal s'oxyde facilement."),
@@ -46026,6 +48140,7 @@ ATELIERS = [
         "titre": "Suivre le rendement d'une chaîne à trois maillons",
         "theme": "Physique-Chimie — puissance et rendement",
         "fiche": "8.5",
+        "figure": "flux_puissance_chaine",
         "vocabulaire": [
             ("rendement en chaîne", "les rendements de plusieurs composants successifs se "
              "multiplient entre eux, ils ne s'additionnent jamais."),
@@ -46078,6 +48193,7 @@ ATELIERS = [
         "titre": "Exploiter une série de mesures face à une tolérance",
         "theme": "Physique-Chimie — mesures et incertitudes",
         "fiche": "8.6",
+        "figure": "distribution_mesures",
         "vocabulaire": [
             ("écart-type", "mesure la dispersion des valeurs autour de la moyenne — se "
              "calcule en divisant par (n−1), pas par n."),
@@ -46302,6 +48418,7 @@ ATELIERS = [
         "titre": "Repérer et corriger une conclusion qui donne un avis",
         "theme": "Culture générale — introduction et conclusion",
         "fiche": "16.6",
+        "figure": "plan_argumentation",
         "vocabulaire": [
             ("conclusion neutre", "résume le mouvement d'ensemble du corpus, sans avis "
              "personnel ni idée nouvelle."),
@@ -46368,6 +48485,7 @@ ATELIERS = [
         "titre": "Reconnaître une reformulation neutre dans une synthèse",
         "theme": "Culture générale — méthode de la synthèse",
         "fiche": "16.4",
+        "figure": "methode_synthese",
         "vocabulaire": [
             ("reformulation neutre", "reprendre l'idée d'un document avec ses propres mots, "
              "sans donner son avis ni recopier le texte source."),
@@ -46484,6 +48602,7 @@ ATELIERS = [
         "titre": "Un jeu qui s'ouvre avec la chaleur : arbre acier, alésage alu",
         "theme": "Physique-Chimie — dilatation thermique",
         "fiche": "8.7",
+        "figure": "dilatation_differentielle",
         "vocabulaire": [
             ("coefficient de dilatation α", "propre à chaque matériau — plus il est grand, "
              "plus la pièce s'allonge pour un même écart de température."),
@@ -46534,6 +48653,7 @@ ATELIERS = [
         "titre": "Coter un moule pour compenser le retrait",
         "theme": "Physique-Chimie — polymères et retrait au moulage",
         "fiche": "8.8",
+        "figure": "retrait_moulage",
         "vocabulaire": [
             ("taux de retrait", "le pourcentage dont une pièce plastique rétrécit en "
              "refroidissant après moulage — propre à chaque polymère."),
@@ -46586,6 +48706,7 @@ ATELIERS = [
         "titre": "Lire un tableau de signes sans se tromper de sens",
         "theme": "Mathématiques — méthode de lecture",
         "fiche": "17.0",
+        "figure": "lire_tableau_variations",
         "vocabulaire": [
             ("tableau de signes", "un tableau qui indique, ligne par ligne, où une "
              "expression est positive, négative ou nulle."),
@@ -47213,6 +49334,15 @@ ATELIERS = [
         "theme": "RDM — bases",
         "fiche": "0.10.1",
         "figure": "quatre_sollicitations",
+        "vocabulaire": [
+            ("sollicitation", "la façon dont un effort agit sur une pièce : traction, "
+             "compression, cisaillement, torsion, flexion — chacune déforme la matière "
+             "différemment."),
+            ("cisaillement", "deux sections voisines de la pièce sont poussées à glisser "
+             "l'une sur l'autre le long d'un même plan, sans être étirées ni vrillées."),
+            ("contrainte τ", "l'effort tranchant rapporté à la section cisaillée : "
+             "τ = T / S, en mégapascals (MPa) si T est en newtons et S en mm²."),
+        ],
         "enonce": "Un axe de diamètre 10 mm est cisaillé par un effort tranchant de 6000 N, "
                   "dans une seule section.",
         "etapes": [
@@ -47263,6 +49393,17 @@ ATELIERS = [
         "theme": "Matériaux — bases",
         "fiche": "0.11.1",
         "figure": "criteres_choix_materiau",
+        "vocabulaire": [
+            ("critère de choix", "une caractéristique qui permet de comparer des matériaux "
+             "entre eux (résistance, masse volumique, corrosion, coût, recyclabilité...) — "
+             "aucun matériau n'est \"le meilleur\" dans l'absolu, seulement le mieux adapté "
+             "aux critères qui comptent pour LA pièce étudiée."),
+            ("corrosion", "la dégradation d'un matériau au contact d'un environnement "
+             "agressif (eau, air salin, produits chimiques)."),
+            ("priorisation", "trier les critères par ordre d'importance pour le cas "
+             "précis, avant de comparer des nuances — un critère peut être décisif dans un "
+             "contexte et sans importance dans un autre."),
+        ],
         "enonce": "Une pièce de coque de bateau doit rester légère et résister durablement à "
                   "l'eau de mer.",
         "etapes": [
@@ -47321,6 +49462,15 @@ ATELIERS = [
         "theme": "Matériaux — bases",
         "fiche": "0.11.2",
         "figure": "classement_trois_materiaux",
+        "vocabulaire": [
+            ("classement de matériaux", "un ordre de préférence établi pour UN cahier des "
+             "charges précis — ce classement n'est jamais universel, il change dès qu'un "
+             "critère (ici, la température) est ajouté ou modifié."),
+            ("tenue en température", "la capacité d'un matériau à garder ses propriétés "
+             "(rigidité, résistance) sans se déformer ni se dégrader au-delà d'une "
+             "certaine température — un critère qui élimine souvent les plastiques "
+             "courants les premiers."),
+        ],
         "enonce": "Reprenez le cas de la fiche (support léger, isolant, grande série, "
                   "classement ABS puis PA6-6 puis aluminium). Le support doit maintenant "
                   "résister à 150 °C en continu.",
@@ -47368,6 +49518,14 @@ ATELIERS = [
         "theme": "Procédés — bases",
         "fiche": "0.12.1",
         "figure": "panorama_procedes",
+        "vocabulaire": [
+            ("procédé de fabrication", "la méthode utilisée pour obtenir la forme finale "
+             "d'une pièce à partir d'une matière première (usinage, moulage, soudage...)."),
+            ("les quatre familles", "**enlèvement de matière** (on retire, ex. fraisage) · "
+             "**mise en forme directe** (on donne la forme sans enlever, ex. injection, "
+             "fonderie) · **assemblage** (on relie plusieurs pièces, ex. soudage, vissage) · "
+             "**traitement** (on modifie les propriétés sans changer la forme, ex. trempe)."),
+        ],
         "enonce": "Reprenez le panorama des douze procédés et leurs quatre familles "
                   "(enlèvement de matière, mise en forme directe, assemblage, traitement).",
         "etapes": [
@@ -47430,6 +49588,16 @@ ATELIERS = [
         "theme": "Procédés — bases",
         "fiche": "0.12.2",
         "figure": "cout_outillage_croisement",
+        "vocabulaire": [
+            ("outillage", "un moule, une matrice ou un montage spécifique à une pièce, "
+             "payé une seule fois (coût fixe) puis réutilisé à chaque exemplaire produit."),
+            ("amortir un outillage", "répartir son coût fixe sur le nombre de pièces "
+             "produites — plus la série est grande, moins l'outillage pèse sur le prix "
+             "unitaire."),
+            ("seuil de rentabilité entre deux procédés", "la quantité de pièces à partir "
+             "de laquelle un procédé avec outillage devient moins cher qu'un procédé sans "
+             "outillage (fiche 10.2)."),
+        ],
         "enonce": "Une entreprise doit produire 8 supports en acier avec un alésage Ø25 H7.",
         "etapes": [
             {"type": "qcm", "label": "Outillage ou pas",
@@ -47478,6 +49646,24 @@ ATELIERS = [
         "theme": "CAO — bases",
         "fiche": "0.13.1",
         "figure": "esquisse_contraintes",
+        "vocabulaire": [
+            ("Esquisse",
+             "le dessin 2D de départ, tracé sur un plan, à partir duquel une fonction "
+             "(extrusion, révolution...) va créer un volume."),
+            ("Cote",
+             "une valeur numérique qui fixe une dimension de l'esquisse (une longueur, un "
+             "diamètre, un angle)."),
+            ("Contrainte géométrique (ou relation)",
+             "une règle qui fixe une POSITION ou une FORME sans donner de chiffre : "
+             "parallélisme, symétrie, coïncidence, tangence... Elle travaille avec les cotes, "
+             "pas à leur place."),
+            ("Esquisse sous-contrainte",
+             "il reste au moins un élément libre de bouger : le logiciel l'affiche en BLEU "
+             "(ou une autre couleur d'alerte selon le logiciel)."),
+            ("Esquisse totalement contrainte",
+             "plus aucun élément ne peut bouger sans casser une cote ou une relation : le "
+             "logiciel l'affiche en NOIR. C'est l'état à atteindre avant d'extruder."),
+        ],
         "enonce": "Un débutant a créé un document pièce, choisi un plan, tracé un rectangle, "
                   "posé les cotes 80 et 50, puis a directement cliqué sur « Extruder ». "
                   "L'esquisse comporte encore des traits bleus.",
@@ -47530,6 +49716,25 @@ ATELIERS = [
         "theme": "CAO — bases",
         "fiche": "0.13.2",
         "figure": "arbre_de_creation",
+        "vocabulaire": [
+            ("Arbre de création",
+             "la liste, dans l'ordre, de toutes les fonctions qui ont construit la pièce. "
+             "Chaque ligne peut être modifiée, supprimée ou déplacée — mais l'ordre compte : "
+             "une fonction s'appuie souvent sur celle qui la précède."),
+            ("Fonction (feature)",
+             "une opération qui ajoute ou enlève de la matière : extrusion, perçage, congé, "
+             "répétition..."),
+            ("Répétition (pattern)",
+             "une fonction qui duplique un élément déjà créé (un trou, par exemple) selon une "
+             "règle : en cercle, en ligne, sur une grille."),
+            ("Congé",
+             "un arrondi qui remplace une arête vive. Il s'appuie sur les arêtes existantes : "
+             "s'il est posé trop tôt, il peut empêcher une fonction suivante de retrouver "
+             "l'arête dont elle a besoin."),
+            ("Robustesse d'un modèle",
+             "la capacité d'une pièce CAO à supporter une modification (une cote changée, une "
+             "fonction ajoutée) sans que l'arbre de création ne se casse en cascade."),
+        ],
         "enonce": "Une pièce vient d'être extrudée. Il reste à ajouter quatre trous "
                   "identiques en cercle, arrondir les arêtes, l'assembler à un support, et "
                   "produire son plan.",
@@ -47583,6 +49788,22 @@ ATELIERS = [
         "theme": "Liaisons — bases",
         "fiche": "0.14.1",
         "figure": "liaisons_de_base",
+        "vocabulaire": [
+            ("Degré de liberté (ddl)",
+             "un mouvement élémentaire possible : il y en a 6 au total pour une pièce "
+             "totalement libre (3 translations x/y/z + 3 rotations autour de x/y/z)."),
+            ("Liaison",
+             "le contact entre deux pièces, qui supprime une partie de ces 6 mouvements. "
+             "Nommer une liaison, c'est dire précisément ce qu'il reste de possible."),
+            ("Liaison glissière",
+             "1 translation possible, tout le reste bloqué — un tiroir, une queue d'aronde, "
+             "une colonne de vérin."),
+            ("Liaison pivot",
+             "1 rotation possible, tout le reste bloqué — un arbre dans deux roulements."),
+            ("Liaison rotule",
+             "3 rotations possibles, aucune translation — une rotule de suspension, un "
+             "joint à rotule."),
+        ],
         "enonce": "Un tiroir de meuble ne peut que coulisser en ligne droite le long de ses "
                   "rails, sans tourner ni s'écarter latéralement.",
         "etapes": [
@@ -47623,6 +49844,23 @@ ATELIERS = [
         "theme": "Liaisons — bases",
         "fiche": "0.14.2",
         "figure": "isostatique_hyperstatique",
+        "vocabulaire": [
+            ("Palier",
+             "l'élément (roulement, coussinet) qui guide un arbre en rotation dans un carter."),
+            ("Palier fixe",
+             "bloque l'arbre à la fois radialement (il ne peut pas s'écarter) ET axialement "
+             "(il ne peut pas coulisser le long de son axe)."),
+            ("Palier libre",
+             "bloque l'arbre radialement, mais le laisse coulisser légèrement dans le sens "
+             "axial — indispensable pour absorber la dilatation."),
+            ("Dilatation thermique",
+             "l'allongement d'une pièce quand elle chauffe (fiche 8.7) : un arbre de 300 mm "
+             "peut s'allonger de plusieurs dixièmes de millimètre en fonctionnement."),
+            ("Montage hyperstatique",
+             "un montage qui bloque un mouvement plusieurs fois à la fois (ici, l'axial bloqué "
+             "par les DEUX paliers) : l'arbre se retrouve comprimé sans échappatoire dès qu'il "
+             "chauffe."),
+        ],
         "enonce": "Un arbre de réducteur tourne dans deux paliers à roulement, A et B. Les "
                   "concepteurs choisissent A comme palier fixe et B comme palier libre.",
         "etapes": [
@@ -47674,6 +49912,17 @@ ATELIERS = [
         "theme": "Gamme de fabrication — bases",
         "fiche": "0.15.1",
         "figure": "plan_brut_mise_en_position",
+        "vocabulaire": [
+            ("technicien méthodes", "prépare la fabrication d'une pièce dont le bureau "
+             "d'études a figé la forme et les cotes : choix du brut, gamme, montage — "
+             "jamais la géométrie elle-même."),
+            ("brut", "la matière de départ avant tout usinage : barre, plaque, pièce "
+             "moulée ou forgée — sa forme doit se rapprocher de la pièce finie sans coûter "
+             "trop d'usinage."),
+            ("mise en position", "la façon dont la pièce est tenue et référencée sur la "
+             "machine pour être usinée — elle s'appuie toujours sur des surfaces définies "
+             "dès le choix du brut."),
+        ],
         "enonce": "Un technicien méthodes reçoit le plan de définition d'un axe cylindrique "
                   "et doit préparer sa fabrication.",
         "etapes": [
@@ -47728,6 +49977,17 @@ ATELIERS = [
         "theme": "Matériaux",
         "fiche": "3.1",
         "figure": "resistance_vs_rigidite",
+        "vocabulaire": [
+            ("résistance (Re)", "la limite élastique : la contrainte à partir de laquelle "
+             "le matériau se déforme définitivement. Elle dit CE QU'IL SUPPORTE avant de "
+             "casser ou de se déformer plastiquement."),
+            ("rigidité (E)", "le module d'Young : dit à quel point le matériau se déforme "
+             "ÉLASTIQUEMENT (flèche, allongement) sous une charge donnée — sans lien avec "
+             "sa résistance."),
+            ("le piège à connaître", "presque tous les aciers ont le MÊME module E "
+             "(≈ 210 GPa), quelle que soit leur nuance ou leur traitement thermique : "
+             "changer de nuance d'acier améliore la résistance, jamais la rigidité."),
+        ],
         "enonce": "Une poutre en S235 (Re = 235 MPa, E = 210 GPa) fléchit de 2 mm sous une "
                   "charge donnée. On la remplace, à géométrie et charge identiques, par la "
                   "même poutre en 42CrMo4 trempé revenu (Re = 750 MPa, E = 210 GPa).",
@@ -47786,6 +50046,16 @@ ATELIERS = [
         "theme": "Matériaux",
         "fiche": "3.2",
         "figure": "decoder_designation",
+        "vocabulaire": [
+            ("désignation normalisée", "un code qui décrit sans ambiguïté un matériau "
+             "(sa famille, ses propriétés) — chaque famille (S, C, X...) a sa propre "
+             "règle de lecture."),
+            ("acier de construction (préfixe S)", "le nombre qui suit donne directement "
+             "**Re en MPa** — S355 a une limite élastique de 355 MPa."),
+            ("acier non allié spécial (préfixe C)", "le nombre donne le **pourcentage de "
+             "carbone × 100** — C45 contient 0,45 % de carbone, ce qui fixe sa trempabilité, "
+             "pas directement sa résistance."),
+        ],
         "enonce": "Un plan mentionne un acier « S355JR » pour une poutre de charpente, et un "
                   "acier « C45 » pour un axe de transmission.",
         "etapes": [
@@ -47836,6 +50106,18 @@ ATELIERS = [
         "theme": "Matériaux",
         "fiche": "3.3",
         "figure": "peau_dure_coeur_tenace",
+        "vocabulaire": [
+            ("traitement thermochimique", "modifie la composition chimique de la surface "
+             "d'une pièce (en y ajoutant du carbone ou de l'azote) avant de la durcir — "
+             "contrairement à une trempe classique qui ne fait que chauffer/refroidir sans "
+             "changer la composition."),
+            ("cémentation", "enrichit la surface en carbone puis trempe : donne une peau "
+             "dure sur un cœur resté tenace — adaptée aux aciers à bas carbone comme le "
+             "20MnCr5."),
+            ("ténacité", "la capacité d'une pièce à résister aux chocs sans se fissurer — "
+             "un cœur trop durci partout perd cette qualité, d'où l'intérêt de ne durcir "
+             "QUE la peau."),
+        ],
         "enonce": "Un pignon de transmission de puissance en 20MnCr5 doit avoir une peau "
                   "très dure (résistance à l'usure) et un cœur resté tenace (résistance aux "
                   "chocs).",
@@ -47886,6 +50168,15 @@ ATELIERS = [
         "theme": "Analyse fonctionnelle",
         "fiche": "1.1",
         "figure": "bete_a_cornes",
+        "vocabulaire": [
+            ("bête à cornes", "un outil d'analyse du besoin qui répond à trois questions : "
+             "à qui le produit rend-il service ? sur quoi agit-il ? dans quel but ?"),
+            ("besoin", "le service réellement attendu par l'utilisateur — pas la solution "
+             "technique qu'il imagine déjà (« un support réglable » décrit une solution, "
+             "pas le besoin qu'elle satisfait)."),
+            ("fonction de service", "le service rendu par le produit, exprimé sans "
+             "présumer de la solution technique qui le réalisera."),
+        ],
         "enonce": "Un client demande « un support réglable en hauteur pour tenir un capteur "
                   "en face de bouteilles qui défilent sur une ligne d'embouteillage qui "
                   "vibre ».",
@@ -47938,7 +50229,15 @@ ATELIERS = [
         "titre": "Caractériser une fonction et choisir sa flexibilité",
         "theme": "Analyse fonctionnelle",
         "fiche": "1.3",
-        "figure": None,
+        "figure": "caracteriser_fonction",
+        "vocabulaire": [
+            ("critère", "la grandeur qui permet de vérifier qu'une fonction est bien "
+             "remplie (ici, l'énergie de choc absorbée)."),
+            ("niveau", "la valeur chiffrée attendue pour ce critère, avec son unité — "
+             "jamais un adjectif comme « robuste » ou « normal », qui ne se mesure pas."),
+            ("flexibilité", "la marge tolérée autour du niveau, précisée pour éviter un "
+             "rejet en recette pour un écart négligeable."),
+        ],
         "enonce": "Une fonction contrainte impose : « résister aux chocs » pour un boîtier "
                   "destiné à un usage grand public sans risque pour l'utilisateur.",
         "etapes": [
@@ -47990,6 +50289,16 @@ ATELIERS = [
         "theme": "Analyse fonctionnelle",
         "fiche": "1.4",
         "figure": "diagramme_fast",
+        "vocabulaire": [
+            ("diagramme FAST", "*Function Analysis System Technique* : relie une fonction "
+             "à ses solutions techniques, en répondant à « pourquoi » vers la gauche et "
+             "« comment » vers la droite."),
+            ("fonction", "ce que le produit doit faire, indépendamment de la façon dont "
+             "c'est réalisé."),
+            ("solution technique", "le composant ou mécanisme concret qui réalise une "
+             "fonction — un accouplement élastique répond à « comment transmettre un "
+             "couple », pas l'inverse."),
+        ],
         "enonce": "Sur un FAST, la fonction « transmettre un couple entre deux arbres » "
                   "mène à la solution technique « accouplement élastique ».",
         "etapes": [
@@ -48044,6 +50353,17 @@ ATELIERS = [
         "theme": "Analyse fonctionnelle",
         "fiche": "1.5",
         "figure": "sadt_actigramme",
+        "vocabulaire": [
+            ("actigramme SADT", "un schéma qui représente une activité par une boîte, "
+             "avec des flèches sur ses quatre côtés : entrée (à gauche), sortie (à "
+             "droite), contrôle W (au-dessus), ressource R (en dessous)."),
+            ("entrée", "ce qui est TRANSFORMÉ par l'activité — la matière ou l'information "
+             "qui ressort changée en sortie."),
+            ("contrôle (W)", "ce qui PILOTE ou AUTORISE l'activité sans être transformé — "
+             "un ordre de marche, un programme, une consigne."),
+            ("ressource (R)", "ce qui PERMET l'activité sans être transformé ni la "
+             "piloter — l'énergie, l'outil, l'opérateur."),
+        ],
         "enonce": "On modélise une perceuse par un actigramme : pièce brute → pièce percée, "
                   "avec l'alimentation électrique, le foret choisi et l'ordre de marche "
                   "donné par l'opérateur.",
@@ -48094,6 +50414,17 @@ ATELIERS = [
         "theme": "Analyse fonctionnelle",
         "fiche": "1.6",
         "figure": "structure_cdcf",
+        "vocabulaire": [
+            ("CDCF", "cahier des charges fonctionnel : exprime un besoin en fonctions et "
+             "en niveaux à atteindre, sans imposer la solution technique qui les "
+             "réalisera."),
+            ("solution déguisée", "une ligne de cahier des charges qui, en nommant un "
+             "composant précis, ferme la porte à d'autres solutions tout aussi valables — "
+             "ce n'est plus une exigence fonctionnelle."),
+            ("le test de la ligne", "vérifier qu'une exigence laisse au moins deux "
+             "solutions techniques différentes possibles — sinon, ce n'est pas une "
+             "fonction mais une solution imposée."),
+        ],
         "enonce": "Un cahier des charges impose : « Le système comportera un vérin "
                   "pneumatique double effet de diamètre 63 mm. » Un fournisseur souhaite "
                   "proposer une genouillère mécanique à la place.",
@@ -48149,7 +50480,20 @@ ATELIERS = [
         "titre": "AMDEC : calculer et comparer deux criticités",
         "theme": "Analyse fonctionnelle",
         "fiche": "1.7",
-        "figure": None,
+        "figure": "grille_amdec",
+        "vocabulaire": [
+            ("AMDEC", "Analyse des Modes de Défaillance, de leurs Effets et de leur "
+             "Criticité : une méthode pour prioriser les défauts potentiels d'un "
+             "système."),
+            ("gravité (G)", "l'importance des conséquences si la défaillance survient — "
+             "de mineure à catastrophique."),
+            ("occurrence (O)", "la fréquence à laquelle la défaillance risque de se "
+             "produire."),
+            ("détection (D)", "la facilité à repérer la défaillance AVANT qu'elle ne "
+             "cause son effet — plus D est grand, moins elle est détectable."),
+            ("criticité (C)", "C = G × O × D — un PRODUIT, jamais une somme : les "
+             "défaillances à criticité la plus élevée sont traitées en priorité."),
+        ],
         "enonce": "Sur un réducteur, deux défaillances sont étudiées. Rupture d'un arbre de "
                   "sortie : G=8, O=2, D=2. Perte progressive de lubrifiant par un joint : "
                   "G=4, O=4, D=7.",
@@ -48207,7 +50551,16 @@ ATELIERS = [
         "titre": "Décoder Ø20 H7 et son intervalle de tolérance",
         "theme": "Tolérancement ISO",
         "fiche": "2.1",
-        "figure": None,
+        "figure": "lire_h7g6",
+        "vocabulaire": [
+            ("écart supérieur (ES) / inférieur (EI)", "les bornes de la zone de "
+             "tolérance d'un alésage, mesurées depuis la cote nominale (ligne zéro)."),
+            ("alésage H", "par définition, EI = 0 : la zone de tolérance part "
+             "exactement de la ligne zéro et s'étend uniquement vers le plus, sur toute "
+             "la largeur de l'IT."),
+            ("intervalle de tolérance (IT)", "la largeur de la zone de tolérance : "
+             "IT = ES − EI — pour un alésage H, ES = IT puisque EI = 0."),
+        ],
         "enonce": "Un plan porte la cote Ø20 H7, avec IT7 = 21 µm pour cette plage de "
                   "dimension.",
         "etapes": [
@@ -48254,6 +50607,24 @@ ATELIERS = [
         "theme": "Liaisons et guidages",
         "fiche": "6.1",
         "figure": "liaisons_de_base",
+        "vocabulaire": [
+            ("Degré de liberté (ddl)",
+             "un mouvement élémentaire indépendant : 6 au total pour une pièce libre "
+             "(3 translations + 3 rotations)."),
+            ("Liaison hélicoïdale",
+             "rotation et translation existent toutes les deux, mais elles sont LIÉES entre "
+             "elles par le pas de la vis : tourner d'un tour fait avancer d'un pas, on ne peut "
+             "pas choisir l'un sans l'autre. C'est donc UN SEUL mouvement commandable, pas deux."),
+            ("Liaison pivot glissant",
+             "rotation et translation existent aussi toutes les deux, mais cette fois "
+             "INDÉPENDANTES l'une de l'autre : on peut tourner sans avancer, et avancer sans "
+             "tourner. Ce sont bien DEUX mouvements distincts."),
+            ("Le piège à connaître",
+             "deux liaisons peuvent sembler identiques au premier coup d'œil (rotation + "
+             "translation présentes toutes les deux) et pourtant compter un nombre de "
+             "mouvements commandables très différent — tout dépend s'ils sont liés ou libres "
+             "l'un de l'autre."),
+        ],
         "enonce": "Une pièce libre possède 6 ddl. On lui ajoute une liaison hélicoïdale "
                   "(vis-écrou), puis on compare à une liaison pivot glissant.",
         "etapes": [
@@ -48317,6 +50688,20 @@ ATELIERS = [
         "theme": "Liaisons et guidages",
         "fiche": "6.2",
         "figure": "methode_schema",
+        "vocabulaire": [
+            ("Classe d'équivalence",
+             "un groupe de pièces qui n'ont AUCUN mouvement relatif entre elles — elles "
+             "bougent comme un seul bloc rigide, même si ce sont plusieurs pièces distinctes "
+             "sur le plan (vissées, collées, soudées entre elles)."),
+            ("Schéma cinématique",
+             "un dessin simplifié qui ne montre que les classes d'équivalence et les "
+             "liaisons entre elles — on efface volontairement les détails de fixation pour "
+             "ne garder que ce qui bouge et ce qui ne bouge pas."),
+            ("Pourquoi simplifier",
+             "un mécanisme réel a souvent des dizaines de pièces (vis, goupilles, joints), "
+             "mais très peu de mouvements distincts. Le schéma cinématique révèle le "
+             "fonctionnement réel, noyé dans les détails du plan."),
+        ],
         "enonce": "Un étau comprend : le corps, le mors fixe vissé sur le corps, trois vis "
                   "de fixation, la vis de manœuvre avec sa poignée et sa goupille, l'écrou "
                   "solidaire du mors mobile, et le mors mobile guidé dans une rainure du "
@@ -48371,6 +50756,21 @@ ATELIERS = [
         "theme": "Liaisons et guidages",
         "fiche": "6.3",
         "figure": "isostatique_hyperstatique",
+        "vocabulaire": [
+            ("Isostatique",
+             "un montage où le nombre de ddl supprimés correspond exactement au nombre de "
+             "ddl à bloquer — ni plus, ni moins. Aucune liaison ne se \"dispute\" un même "
+             "mouvement avec une autre."),
+            ("Hyperstatique",
+             "un montage où un même mouvement est bloqué PLUSIEURS fois par des liaisons "
+             "différentes. Le mécanisme fonctionne souvent quand même, mais devient sensible "
+             "aux défauts de fabrication et à la dilatation : les liaisons \"se battent\"."),
+            ("Pourquoi ça compte en conception",
+             "un montage hyperstatique n'est pas toujours une erreur (il peut rigidifier une "
+             "structure), mais sur un arbre de rotation, il empêche presque toujours la "
+             "dilatation thermique de s'absorber normalement — d'où la règle du palier "
+             "fixe/libre (fiche 6.6)."),
+        ],
         "enonce": "Un arbre est monté sur deux roulements à billes à gorge profonde, tous "
                   "deux serrés axialement entre un épaulement et un anneau élastique.",
         "etapes": [
@@ -48425,7 +50825,22 @@ ATELIERS = [
         "titre": "Choisir un roulement selon la direction de la charge",
         "theme": "Liaisons et guidages",
         "fiche": "6.4",
-        "figure": None,
+        "figure": "regle_des_charges",
+        "vocabulaire": [
+            ("Charge radiale",
+             "un effort perpendiculaire à l'axe de rotation — le poids d'un arbre horizontal, "
+             "l'effort d'un engrenage."),
+            ("Charge axiale",
+             "un effort dans le sens de l'axe de rotation — le poids d'un rotor vertical, la "
+             "poussée d'une vis sans fin."),
+            ("Roulement à billes à gorge profonde",
+             "le roulement \"par défaut\", économique et disponible partout, qui accepte une "
+             "charge axiale MODÉRÉE en plus du radial — mais ce n'est pas sa fonction "
+             "principale."),
+            ("Roulement à contact oblique",
+             "conçu spécifiquement pour reprendre une forte charge axiale, dans un seul sens "
+             "— d'où son montage par paire quand les deux sens sont possibles."),
+        ],
         "enonce": "Un ventilateur à arbre vertical porte un rotor de 80 kg : toute la "
                   "charge est purement axiale. Le montage initial utilise deux roulements "
                   "à billes à gorge profonde, remplacés tous les quatre mois.",
@@ -48487,6 +50902,19 @@ ATELIERS = [
         "theme": "Liaisons et guidages",
         "fiche": "6.5",
         "figure": "regle_des_charges",
+        "vocabulaire": [
+            ("Bague tournante",
+             "la bague du roulement qui voit la charge tourner autour d'elle (même si la "
+             "bague elle-même ne \"sait pas\" qu'elle tourne physiquement — c'est la position "
+             "relative de la charge qui compte)."),
+            ("Bague fixe",
+             "la bague qui voit la charge rester dans la même zone en permanence."),
+            ("La règle des charges",
+             "la bague tournante se monte SERRÉE (ajustement avec serrage) sur son support, "
+             "la bague fixe se monte GLISSANTE (ajustement avec léger jeu). Une bague "
+             "tournante montée glissante finit par fluer (matage progressif du support) et "
+             "détruit sa portée."),
+        ],
         "enonce": "Un arbre de réducteur Ø30 tourne à 1450 tr/min. Il subit une charge "
                   "radiale fixe en direction (due à une courroie) : c'est l'arbre qui "
                   "tourne, la direction de la charge reste fixe dans l'espace.",
@@ -48551,6 +50979,18 @@ ATELIERS = [
         "theme": "Liaisons et guidages",
         "fiche": "6.6",
         "figure": "montage_arbre_complet",
+        "vocabulaire": [
+            ("Dilatation thermique",
+             "l'allongement d'une pièce sous l'effet de la chaleur : ΔL = L × α × ΔT "
+             "(fiche 8.7)."),
+            ("ΔT",
+             "un écart de température (une DIFFÉRENCE entre deux valeurs), jamais une "
+             "température absolue — c'est l'erreur la plus fréquente de ce calcul."),
+            ("Palier fixe / palier libre",
+             "un seul palier bloque l'arbre axialement (fixe) ; l'autre le laisse coulisser "
+             "légèrement (libre), pour laisser cet allongement se produire sans rien "
+             "comprimer."),
+        ],
         "enonce": "Un arbre de 500 mm entre paliers, en acier (α = 12·10⁻⁶ /°C), fonctionne "
                   "dans une machine dont la température passe de 20 à 60 °C.",
         "etapes": [
@@ -48611,7 +51051,22 @@ ATELIERS = [
         "titre": "Étanchéité statique ou dynamique, et le piège du regraissage",
         "theme": "Liaisons et guidages",
         "fiche": "6.7",
-        "figure": None,
+        "figure": "tribologie",
+        "vocabulaire": [
+            ("Étanchéité statique",
+             "entre deux pièces qui ne bougent jamais l'une par rapport à l'autre : joint "
+             "plat, joint torique, pâte à joint."),
+            ("Étanchéité dynamique",
+             "entre une pièce fixe et une pièce qui bouge (souvent qui tourne) : joint à "
+             "lèvres, chicane, joint à labyrinthe."),
+            ("Volume libre d'un roulement",
+             "l'espace interne non occupé par les billes et les bagues, à remplir de graisse "
+             "à hauteur d'un tiers environ — jamais plus."),
+            ("Le piège du regraissage",
+             "\"plus de graisse\" n'est pas \"mieux lubrifié\" : un roulement trop plein "
+             "brasse en permanence sa graisse, ce qui produit de la chaleur, dégrade la "
+             "graisse, et augmente encore le frottement — un cercle vicieux progressif."),
+        ],
         "enonce": "Un réducteur a un carter fermé par un couvercle vissé (immobile) et un "
                   "arbre de sortie qui le traverse en tournant. Un technicien regraisse "
                   "chaque mois « généreusement » les roulements, qui chauffent et finissent "
@@ -48675,6 +51130,19 @@ ATELIERS = [
         "theme": "Liaisons et guidages",
         "fiche": "6.8",
         "figure": "arc_boutement",
+        "vocabulaire": [
+            ("Arc-boutement",
+             "un blocage par déséquilibre géométrique : la pièce guidée coince dans son "
+             "logement, non pas parce qu'elle est trop serrée, mais parce que l'effort est "
+             "appliqué trop loin de la zone de guidage."),
+            ("Porte-à-faux",
+             "la distance entre la zone de guidage et le point où l'effort est appliqué. Plus "
+             "elle est grande, plus le risque d'arc-boutement augmente."),
+            ("Rapport guidage / porte-à-faux",
+             "le repère qui prédit le risque : longueur de guidage divisée par le "
+             "porte-à-faux. Un rapport trop faible (guidage court, porte-à-faux long) coince "
+             "presque à coup sûr."),
+        ],
         "enonce": "Un coulisseau est guidé sur une glissière de longueur L = 80 mm. "
                   "L'effort de manœuvre est appliqué à 120 mm de l'axe de la glissière "
                   "(porte-à-faux). Il se bloque dès qu'on pousse un peu fort.",
@@ -48735,6 +51203,21 @@ ATELIERS = [
         "theme": "Liaisons et guidages",
         "fiche": "6.9",
         "figure": "precharge_vissage",
+        "vocabulaire": [
+            ("Précharge",
+             "la tension interne créée dans une vis serrée. C'est cette tension — pas le "
+             "frottement de la tête — qui empêche l'assemblage de bouger sous charge."),
+            ("Classe de qualité (ex. 8.8)",
+             "gravée sur la tête de la vis : le premier chiffre × 100 donne Rm, le produit "
+             "des deux chiffres × 10 donne Re. Une vis 4.6 a une Re de 240 MPa contre 640 MPa "
+             "pour une 8.8 — 2,7 fois moins résistante."),
+            ("Rm et Re",
+             "Rm = résistance maximale avant rupture · Re = limite d'élasticité, le seuil à "
+             "ne pas dépasser en service (fiche 3.1)."),
+            ("Le piège de cette fiche",
+             "rien ne se voit à l'œil entre une vis 4.6 et une vis 8.8 de même dimension — "
+             "seul le marquage sur la tête permet de vérifier qu'on remonte la bonne classe."),
+        ],
         "enonce": "Un assemblage vibrant est calculé avec des vis M8 classe 8.8. Un "
                   "opérateur les remplace par erreur par des vis classe 4.6, de mêmes "
                   "dimensions.",
@@ -48797,6 +51280,22 @@ ATELIERS = [
         "theme": "Liaisons et guidages",
         "fiche": "6.10",
         "figure": "liaison_arbre_moyeu",
+        "vocabulaire": [
+            ("Moyeu",
+             "la partie centrale d'une pièce (poulie, engrenage) qui reçoit l'arbre."),
+            ("Trois rôles à ne pas confondre",
+             "**centrer** (l'ajustement s'en charge) · **transmettre le couple** (la "
+             "clavette, ou une autre solution comme les cannelures) · **tenir axialement** "
+             "(un épaulement, un anneau élastique)."),
+            ("Ajustement H7/h6",
+             "un ajustement à jeu quasi nul (fiche 2.2) : il centre la pièce, mais un jeu "
+             "même minime laisse le moyeu \"battre\" légèrement sous un couple alterné."),
+            ("Pourquoi la clavette matée n'est pas forcément sous-dimensionnée",
+             "si c'est l'ajustement (pas la clavette) qui doit centrer, un ajustement trop "
+             "lâche laisse le moyeu bouger radialement, et c'est ce mouvement parasite qui "
+             "fatigue et mate la clavette — le vrai défaut est alors dans le choix de "
+             "l'ajustement, pas dans la taille de la clavette."),
+        ],
         "enonce": "Une poulie prend du jeu sur son arbre. Au démontage, la clavette est "
                   "matée et la rainure ovalisée. L'atelier conclut : « clavette "
                   "sous-dimensionnée ». Le montage utilisait un ajustement H7/h6.",
@@ -48862,6 +51361,22 @@ ATELIERS = [
         "theme": "Liaisons et guidages",
         "fiche": "6.11",
         "figure": "engrenage_module",
+        "vocabulaire": [
+            ("Vitesse angulaire ω",
+             "la vitesse de rotation exprimée en radians par seconde (rad/s), indispensable "
+             "pour relier puissance et couple : ω = 2πN/60, avec N en tr/min."),
+            ("Rapport de transmission",
+             "le rapport entre la vitesse de sortie et la vitesse d'entrée — ici "
+             "580/1450, imposé par le rapport des diamètres de poulies."),
+            ("Rendement d'une courroie",
+             "la puissance perdue en glissement et en frottement dans la transmission "
+             "(typiquement 0,90 à 0,97) : la puissance en sortie est toujours inférieure à "
+             "celle fournie par le moteur."),
+            ("Couple",
+             "à puissance égale, le couple augmente quand la vitesse diminue (C = P/ω) — "
+             "c'est pourquoi l'arbre récepteur, plus lent, reçoit un couple plus élevé que "
+             "l'arbre moteur."),
+        ],
         "enonce": "Un moteur tourne à 1450 tr/min et fournit 4000 W. Il entraîne, par une "
                   "courroie de rendement 0,95, un arbre récepteur qui tourne à 580 tr/min.",
         "etapes": [
@@ -48927,7 +51442,20 @@ ATELIERS = [
         "titre": "Gamme de montage : sur quelle bague pousser ?",
         "theme": "Liaisons et guidages",
         "fiche": "6.12",
-        "figure": None,
+        "figure": "montage_arbre_complet",
+        "vocabulaire": [
+            ("Gamme de montage",
+             "la liste ordonnée des opérations d'assemblage, avec l'outillage et les points "
+             "de contrôle — elle se pense à la conception, pas improvisée à l'atelier "
+             "(fiche 6.12)."),
+            ("Brinelling",
+             "une empreinte permanente laissée par une bille sur sa piste, causée par un "
+             "effort qui a traversé les billes au lieu de la bague concernée — souvent "
+             "irréversible, même si le roulement tourne encore au montage."),
+            ("La règle de l'emmanchement",
+             "l'effort de montage doit toujours passer PAR LA BAGUE CONCERNÉE (via une "
+             "douille adaptée), jamais à travers les éléments roulants (billes, rouleaux)."),
+        ],
         "enonce": "Sur une présérie, des réducteurs neufs sont bruyants dès le premier "
                   "démarrage. Les roulements montrent des marques régulièrement espacées "
                   "sur les pistes — l'empreinte des billes. La gamme indiquait seulement "
@@ -48999,6 +51527,17 @@ ATELIERS = [
         "theme": "Analyse fonctionnelle",
         "fiche": "1.2",
         "figure": "diagramme_pieuvre",
+        "vocabulaire": [
+            ("diagramme pieuvre", "place le produit au centre et les Éléments du Milieu "
+             "Extérieur (EME) autour, reliés par des fonctions."),
+            ("EME (élément du milieu extérieur)", "tout ce qui entoure le produit et "
+             "interagit avec lui : l'utilisateur, l'énergie, l'environnement, une autre "
+             "pièce du système."),
+            ("fonction principale (FP)", "relie DEUX EME à travers le produit — c'est "
+             "elle qui justifie l'existence du produit."),
+            ("fonction contrainte (FC)", "relie le produit à UN SEUL EME — une contrainte "
+             "que le produit doit respecter, sans être sa raison d'être."),
+        ],
         "enonce": "Sur un étau d'établi, on identifie deux fonctions candidates : "
                   "« permettre à l'opérateur de serrer la pièce » et « résister aux "
                   "copeaux projetés lors de l'usinage ».",
@@ -49059,6 +51598,17 @@ ATELIERS = [
         "theme": "Cotation",
         "fiche": "5.2",
         "figure": "cotation_reference",
+        "vocabulaire": [
+            ("surabondance de cotes", "indiquer plus de cotes que nécessaire pour "
+             "définir une longueur — par exemple des intervalles ET une cote totale qui "
+             "s'en déduit déjà mathématiquement."),
+            ("chaîne de cotes", "une suite de cotes qui s'accumulent bout à bout — chaque "
+             "tolérance individuelle s'ajoute à la dispersion totale de la chaîne."),
+            ("le vrai risque de la surabondance", "sur le dessin, les valeurs concordent "
+             "exactement. Mais une fois les tolérances appliquées, la cote totale mesurée "
+             "et la somme des intervalles mesurés peuvent légèrement diverger — le plan "
+             "devient alors contradictoire."),
+        ],
         "enonce": "Une plaque est cotée en longueur par trois intervalles successifs (20, "
                   "100, 20 mm) ET par une cote totale de 120 mm ajoutée en plus, "
                   "chaque cote à ± 0,1 mm.",
@@ -49123,6 +51673,15 @@ ATELIERS = [
         "theme": "Filetages",
         "fiche": "5.7",
         "figure": None,
+        "vocabulaire": [
+            ("filetage / taraudage", "la même hélice, filetage à l'extérieur d'une tige "
+             "(la vis), taraudage à l'intérieur d'un trou (l'écrou)."),
+            ("diamètre de perçage avant taraudage", "le trou à percer AVANT de tarauder — "
+             "plus petit que le diamètre nominal, pour laisser la matière du filet : "
+             "≈ diamètre nominal − pas."),
+            ("diamètre de passage", "le trou, plus grand que la vis, qui la laisse "
+             "passer librement dans la pièce qu'elle traverse sans la tarauder."),
+        ],
         "enonce": "Un plan indique un taraudage M10 dans une pièce, et un trou de passage "
                   "pour la vis M10 correspondante dans la pièce voisine.",
         "etapes": [
@@ -49185,6 +51744,20 @@ ATELIERS = [
         "theme": "CAO paramétrique",
         "fiche": "5.8",
         "figure": "contraintes_esquisse",
+        "vocabulaire": [
+            ("Contrainte géométrique",
+             "une relation (symétrie, parallélisme, coïncidence...) qui fixe une position "
+             "ou une forme sans passer par un chiffre — elle reste vraie quelle que soit la "
+             "taille de la pièce."),
+            ("Intention de conception",
+             "la question à se poser avant de coter : « si cette pièce change plus tard, "
+             "qu'est-ce qui doit suivre automatiquement, et qu'est-ce qui doit rester fixe ? » "
+             "C'est cette intention qui doit guider le choix entre une cote et une contrainte."),
+            ("Le test fiable",
+             "attraper un élément à la souris et tirer dessus : s'il bouge, l'esquisse n'est "
+             "pas totalement contrainte — plus fiable que de se fier seulement à la couleur "
+             "affichée."),
+        ],
         "enonce": "Une plaque percée de deux trous doit rester centrée si la plaque "
                   "s'allonge un jour. Deux méthodes produisent le même dessin "
                   "aujourd'hui : deux cotes identiques depuis le bord gauche, ou une "
@@ -49253,7 +51826,22 @@ ATELIERS = [
         "titre": "Choisir la bonne fonction volumique",
         "theme": "CAO paramétrique",
         "fiche": "5.9",
-        "figure": None,
+        "figure": "arbre_de_creation",
+        "vocabulaire": [
+            ("Extrusion",
+             "on tire une esquisse en ligne droite pour créer un volume — pour toute forme à "
+             "section CONSTANTE (plaque, équerre, profilé)."),
+            ("Révolution",
+             "on fait tourner une esquisse autour d'un axe — pour toute forme AXISYMÉTRIQUE "
+             "(arbre, poulie, bague), dans un seul et même profil."),
+            ("Balayage",
+             "on promène une section le long d'un chemin qui change de direction — pour une "
+             "forme dont la section VARIE en suivant une trajectoire (tube cintré, volute)."),
+            ("La question à se poser avant de cliquer",
+             "cette forme est-elle constante en ligne droite, tournée autour d'un axe, ou "
+             "variable le long d'un chemin ? La réponse donne directement la fonction à "
+             "utiliser."),
+        ],
         "enonce": "Trois pièces à modéliser : une équerre de fixation à section constante, "
                   "un arbre étagé avec une gorge (axisymétrique), et un carter avec une "
                   "volute dont le canal change à la fois de section et de direction.",
@@ -49321,7 +51909,20 @@ ATELIERS = [
         "titre": "Le congé qui évite la rupture en fatigue",
         "theme": "CAO paramétrique",
         "fiche": "5.10",
-        "figure": "arbre_de_creation",
+        "figure": "concentration_contrainte",
+        "vocabulaire": [
+            ("Concentration de contrainte",
+             "un angle vif, un perçage, une gorge perturbent localement la répartition des "
+             "contraintes — la contrainte réelle y dépasse largement la contrainte nominale "
+             "calculée sur la section pleine."),
+            ("Kt (coefficient de concentration de contrainte)",
+             "le facteur multiplicateur : σ_réelle = σ_nominale × Kt. Il vaut typiquement "
+             "2 à 3 pour un trou, et peut dépasser 5 pour une gorge à angle vif."),
+            ("Congé",
+             "un arrondi qui remplace un angle vif — le geste de conception le plus simple "
+             "et le plus efficace pour réduire Kt, et donc éviter l'amorçage de fissure en "
+             "fatigue."),
+        ],
         "enonce": "Un levier casse toujours dans un angle rentrant dessiné vif (sans "
                   "congé). Contrainte nominale calculée : 95 MPa. Limite élastique de "
                   "l'acier : Rpe = 160 MPa. Sans congé, le coefficient de concentration "
@@ -49380,6 +51981,20 @@ ATELIERS = [
         "theme": "CAO paramétrique",
         "fiche": "5.11",
         "figure": "arbre_de_creation",
+        "vocabulaire": [
+            ("Erreur en cascade",
+             "une seule modification en amont (une cote changée) peut faire échouer "
+             "plusieurs fonctions d'un coup, si elles s'appuient — directement ou "
+             "indirectement — sur ce qui a changé."),
+            ("Erreur en amont / en aval",
+             "dans l'arbre de création, « amont » désigne les fonctions créées AVANT (plus "
+             "haut dans la liste), « aval » celles créées APRÈS. Une fonction en aval peut "
+             "dépendre d'une fonction en amont, jamais l'inverse."),
+            ("Réflexe de réparation",
+             "toujours corriger la PREMIÈRE fonction en erreur (la plus en amont) en "
+             "premier : les erreurs suivantes en découlent souvent directement et "
+             "disparaissent d'elles-mêmes une fois la cause corrigée."),
+        ],
         "enonce": "Un arbre de construction reçu comporte quinze fonctions. Après "
                   "modification d'une cote, cinq fonctions consécutives (de la 6e à la "
                   "10e) affichent une erreur.",
@@ -49449,7 +52064,24 @@ ATELIERS = [
         "titre": "Assembler une poulie sur un arbre : compter les ddl",
         "theme": "CAO paramétrique",
         "fiche": "5.12",
-        "figure": None,
+        "figure": "liaisons_de_base",
+        "vocabulaire": [
+            ("Ancrer une pièce",
+             "fixer la toute première pièce d'un assemblage (le bâti, le carter) — sans "
+             "cela, tout l'assemblage flotte dans l'espace et la moindre contrainte fait "
+             "bouger l'ensemble au lieu de positionner la pièce voulue."),
+            ("Coïncidence d'axes (concentricité)",
+             "une contrainte d'assemblage qui aligne deux axes : elle supprime 4 degrés de "
+             "liberté (2 translations + 2 rotations), en laissant la rotation autour de "
+             "l'axe et la translation le long de cet axe."),
+            ("Coïncidence de faces",
+             "une contrainte qui plaque deux faces l'une contre l'autre : elle supprime "
+             "1 translation + 2 rotations."),
+            ("Contrôle final",
+             "après avoir posé les contraintes, tenter de bouger la pièce à la souris : ce "
+             "qui reste possible doit correspondre exactement à la liaison prévue par le "
+             "schéma cinématique."),
+        ],
         "enonce": "On assemble une poulie sur un arbre déjà ancré : coïncidence des axes "
                   "poulie/arbre, puis coïncidence de la face de la poulie contre "
                   "l'épaulement de l'arbre.",
@@ -49511,7 +52143,23 @@ ATELIERS = [
         "titre": "Mise en plan : choisir le minimum de vues",
         "theme": "CAO paramétrique",
         "fiche": "5.13",
-        "figure": None,
+        "figure": "projection_europeenne",
+        "vocabulaire": [
+            ("Mise en plan",
+             "le document 2D produit à partir du modèle 3D, destiné à l'atelier — c'est lui, "
+             "et non le fichier 3D, qui est contractuel."),
+            ("Le principe du minimum de vues",
+             "la bonne réponse est toujours le nombre MINIMAL de vues qui décrit la pièce "
+             "sans ambiguïté — chaque vue en trop est une vue de plus à maintenir à jour à "
+             "chaque révision."),
+            ("Pièce de révolution",
+             "une seule vue suffit, car le symbole Ø indique déjà que la section est ronde : "
+             "pas besoin d'une deuxième vue pour le prouver."),
+            ("Coupe",
+             "utilisée quand une pièce a des formes intérieures à montrer — elle transforme "
+             "des pointillés (caché) en traits pleins (visible), ce qu'aucune vue extérieure "
+             "supplémentaire ne peut faire."),
+        ],
         "enonce": "Trois pièces à mettre en plan : un axe cylindrique simple (pièce de "
                   "révolution), une équerre prismatique simple, et un carter complexe "
                   "avec des perçages intérieurs non visibles depuis l'extérieur.",
@@ -49578,6 +52226,15 @@ ATELIERS = [
         "theme": "Méthodologie de projet",
         "fiche": "9.1",
         "figure": "planning_projet",
+        "vocabulaire": [
+            ("chemin critique", "la suite de tâches dont la durée totale est la plus "
+             "longue — c'est elle qui fixe la durée minimale du projet entier."),
+            ("marge", "le retard qu'une tâche peut prendre sans retarder le projet — nulle "
+             "sur le chemin critique, positive ailleurs."),
+            ("pourquoi le chemin critique compte", "tout retard pris sur une tâche du "
+             "chemin critique retarde le projet entier, jour pour jour — un retard sur "
+             "une tâche hors chemin critique peut être absorbé par sa marge."),
+        ],
         "enonce": "Un projet comporte quatre tâches : A (2 jours, démarre en premier), "
                   "B (3 jours, dépend de A), C (4 jours, dépend de A), D (2 jours, "
                   "dépend de B ET de C).",
@@ -49639,7 +52296,21 @@ ATELIERS = [
         "titre": "Ordonner les fonctions d'un arbre de création",
         "theme": "CAO paramétrique",
         "fiche": "9.2",
-        "figure": None,
+        "figure": "arbre_de_creation",
+        "vocabulaire": [
+            ("L'ordre canonique",
+             "volume général → enlèvements → perçages → répétitions → nervures et coques → "
+             "congés, chanfreins, dépouilles. Un ordre à respecter par défaut, sauf raison "
+             "précise d'y déroger."),
+            ("Pourquoi les congés en dernier",
+             "un congé remplace une arête vive par une surface courbe. Toute fonction créée "
+             "après lui, qui s'appuierait sur cette arête pour se positionner, perdrait sa "
+             "référence et échouerait."),
+            ("Assistant de perçage",
+             "toujours préféré à un simple cercle extrudé pour un trou taraudé : il porte la "
+             "norme (diamètre de perçage, fond conique) et alimente automatiquement la mise "
+             "en plan."),
+        ],
         "enonce": "Pour modéliser l'équerre percée (semelle, dos vertical, 2 trous M8, "
                   "un alésage Ø20 H8, des congés R5), quatre fonctions doivent être "
                   "créées dans le bon ordre.",
@@ -49711,7 +52382,15 @@ ATELIERS = [
         "titre": "Répondre à une question difficile du jury",
         "theme": "Méthodologie de projet",
         "fiche": "9.3",
-        "figure": None,
+        "figure": "trois_temps_methode",
+        "vocabulaire": [
+            ("les trois temps d'une réponse à une objection", "**reconnaître** la limite "
+             "sans se dévaloriser · **expliquer** ce qui a été fait et pourquoi · "
+             "**projeter** ce qui serait fait pour aller plus loin."),
+            ("limite assumée", "un point non traité, présenté honnêtement plutôt que "
+             "caché — un jury valorise la rigueur de reconnaître une limite bien plus "
+             "qu'une réponse évasive."),
+        ],
         "enonce": "Le jury demande, pour une pièce en acier S235 soumise à des cycles "
                   "répétés : « Avez-vous vérifié la fatigue de cette pièce ? »",
         "etapes": [
@@ -49777,7 +52456,21 @@ ATELIERS = [
         "titre": "Modéliser une gorge de poulie sans piège",
         "theme": "CAO paramétrique",
         "fiche": "9.4",
-        "figure": None,
+        "figure": "arbre_de_creation",
+        "vocabulaire": [
+            ("Révolution",
+             "on fait tourner une esquisse autour d'un axe pour créer un volume "
+             "axisymétrique — la fonction adaptée à toute pièce de type arbre, poulie, "
+             "bague."),
+            ("La règle qui fait la différence",
+             "tout ce qui est axisymétrique se dessine dans le MÊME profil : le corps, la "
+             "gorge, l'alésage, les épaulements. Une seule fonction, et la pièce entière "
+             "apparaît."),
+            ("Pourquoi éviter la révolution coupée après coup",
+             "cette méthode fonctionne à l'écran mais ajoute une fonction inutile, et casse "
+             "dès qu'on modifie une cote qui touche la géométrie déjà construite — un modèle "
+             "moins robuste au test de la fiche 5.9."),
+        ],
         "enonce": "Une poulie à gorge trapézoïdale (corps Ø80, moyeu alésé, gorge pour "
                   "courroie) doit être modélisée par révolution.",
         "etapes": [
@@ -49843,7 +52536,15 @@ ATELIERS = [
         "titre": "Calculer la cote d'un modèle de fonderie",
         "theme": "Procédés et fabrication",
         "fiche": "12.3",
-        "figure": None,
+        "figure": "retrait_moulage",
+        "vocabulaire": [
+            ("retrait de fonderie", "le pourcentage dont une pièce métallique rétrécit "
+             "en se solidifiant puis en refroidissant — propre à chaque alliage."),
+            ("modèle", "la forme en bois ou en résine, plus grande que la pièce finale, "
+             "utilisée pour créer l'empreinte dans le moule de fonderie."),
+            ("cote du modèle", "toujours majorée par rapport à la cote de la pièce finie : "
+             "Cote modèle = Cote pièce × (1 + taux de retrait)."),
+        ],
         "enonce": "Un carter en fonte EN-GJL-250 doit mesurer 420 mm une fois "
                   "refroidi. Le retrait de la fonte est de 1 %.",
         "etapes": [
@@ -49889,7 +52590,17 @@ ATELIERS = [
         "titre": "Calculer une fréquence de rotation en tournage",
         "theme": "Procédés et fabrication",
         "fiche": "12.4",
-        "figure": None,
+        "figure": "tournage_fraisage",
+        "vocabulaire": [
+            ("vitesse de coupe Vc", "la vitesse relative entre l'arête de l'outil et la "
+             "matière, en m/min — donnée par le fabricant d'outils selon le couple "
+             "outil-matière."),
+            ("fréquence de rotation N", "ce qu'on affiche sur la machine, en tr/min : "
+             "N = 1000 × Vc / (π × D)."),
+            ("le piège du diamètre", "D est le diamètre de la PIÈCE en tournage (c'est "
+             "elle qui tourne), mais le diamètre de l'OUTIL en fraisage (c'est lui qui "
+             "tourne) — c'est la confusion la plus fréquente."),
+        ],
         "enonce": "On chariote un arbre en S235 de Ø80 avec un outil carbure, "
                   "Vc = 180 m/min.",
         "etapes": [
@@ -49931,7 +52642,15 @@ ATELIERS = [
         "titre": "Choisir un moyen de mesure adapté à une tolérance",
         "theme": "Procédés et fabrication",
         "fiche": "12.6",
-        "figure": None,
+        "figure": "instruments_mesure",
+        "vocabulaire": [
+            ("règle IT/10", "l'incertitude d'un moyen de mesure doit rester au maximum "
+             "au dixième de l'intervalle de tolérance à contrôler — sinon l'instrument "
+             "lui-même peut faire accepter une pièce non conforme ou rejeter une pièce "
+             "bonne."),
+            ("incertitude de mesure", "l'erreur possible propre à l'instrument utilisé, "
+             "à ne jamais confondre avec la tolérance de la pièce elle-même."),
+        ],
         "enonce": "Une portée est spécifiée Ø25 H7 (IT = 0,021 mm). On dispose d'un "
                   "pied à coulisse au 1/50 (incertitude 0,03 mm).",
         "etapes": [
@@ -49975,7 +52694,14 @@ ATELIERS = [
         "titre": "Dimensionner un vérin de bridage",
         "theme": "Procédés et fabrication",
         "fiche": "12.7",
-        "figure": None,
+        "figure": "effort_verin",
+        "vocabulaire": [
+            ("section nécessaire", "S = F / p, la surface de piston minimale pour "
+             "obtenir l'effort demandé à la pression disponible."),
+            ("alésage normalisé", "les diamètres de vérin réellement fabriqués (12, 16, "
+             "20, 25, 32, 40, 50, 63, 80 mm...) — on ne choisit jamais un diamètre exact, "
+             "on prend la taille immédiatement SUPÉRIEURE, jamais inférieure."),
+        ],
         "enonce": "Un vérin de bridage doit exercer 900 N. Le réseau pneumatique "
                   "est à 6 bars. Série normalisée d'alésages : 12, 16, 20, 25, 32, "
                   "40, 50, 63, 80 mm.",
@@ -50032,6 +52758,14 @@ ATELIERS = [
         "theme": "Procédés et fabrication",
         "fiche": "12.8",
         "figure": None,
+        "vocabulaire": [
+            ("ergonomie de poste", "concevoir un poste de travail pour qu'un geste "
+             "répété ne dépasse pas un seuil d'effort raisonnable — un effort ponctuel "
+             "tolérable devient un risque à force d'être répété."),
+            ("effort répétitif", "un geste refait de nombreuses fois par jour : c'est "
+             "la répétition, bien plus que l'intensité isolée, qui use les articulations "
+             "à long terme."),
+        ],
         "enonce": "Une petite presse manuelle est actionnée par un levier qui "
                   "demande 60 N. Le seuil recommandé pour un geste répétitif est "
                   "de 30 N.",
@@ -50083,7 +52817,16 @@ ATELIERS = [
         "titre": "Corriger une pièce plastique injectée",
         "theme": "Procédés et fabrication",
         "fiche": "13.1",
-        "figure": None,
+        "figure": "regles_injection",
+        "vocabulaire": [
+            ("retrait au moulage", "le pourcentage dont une pièce plastique rétrécit en "
+             "refroidissant après injection — propre à chaque polymère (fiche 8.8)."),
+            ("empreinte du moule", "la cavité qui donne sa forme à la pièce injectée — "
+             "toujours plus grande que la pièce finale pour compenser le retrait."),
+            ("nervure", "un renfort mince ajouté pour rigidifier une paroi sans "
+             "l'épaissir — une nervure trop épaisse par rapport à la paroi crée un "
+             "défaut d'aspect (retassure) au refroidissement."),
+        ],
         "enonce": "Un boîtier en PP (retrait 1,5 %) a une cote de référence de "
                   "240 mm sur la pièce finie, et des parois de 3 mm avec une "
                   "nervure de même épaisseur.",
@@ -50137,6 +52880,18 @@ ATELIERS = [
         "titre": "Étude de cas 1 — dimensionner le vérin de bridage",
         "theme": "Étude de cas",
         "fiche": "14.1",
+        "figure": "schema_bridage_etude_cas",
+        "vocabulaire": [
+            ("équilibre d'un levier", "somme des moments nuls autour de l'axe de "
+             "rotation : F_vérin × bras_vérin = F_pièce × bras_pièce."),
+            ("bras de levier", "la distance entre l'axe de rotation et le point "
+             "d'application d'une force — un bras plus court exige une force plus "
+             "grande pour produire le même moment."),
+            ("le piège de ce cas", "le vérin agit sur le bras le PLUS COURT (40 mm) "
+             "pour obtenir l'effort sur le bras le plus long (65 mm) côté pièce : il "
+             "doit donc développer un effort supérieur aux 900 N finalement obtenus, "
+             "pas inférieur."),
+        ],
         "enonce": "Reprenez le poste de bridage pneumatique : bras de levier côté vérin 40 mm, "
                   "bras côté pièce 65 mm, effort de serrage exigé sur la pièce 900 N, pression "
                   "réseau 6 bars.",
@@ -50198,6 +52953,19 @@ ATELIERS = [
         "titre": "Étude de cas 2 — l'arbre en flexion-torsion",
         "theme": "Étude de cas",
         "fiche": "14.2",
+        "figure": "schema_reducteur_etude_cas",
+        "vocabulaire": [
+            ("sollicitation composée", "un arbre soumis à plusieurs sollicitations à la "
+             "fois (ici flexion ET torsion) — on ne dimensionne jamais sur l'une en "
+             "ignorant l'autre."),
+            ("moment équivalent (critère de Tresca)", "Méq = √(Mf² + Mt²) — combine les "
+             "effets de la flexion et de la torsion en une seule grandeur comparable à "
+             "un moment de flexion pure."),
+            ("pourquoi on ne les additionne pas", "flexion et torsion ne s'additionnent "
+             "jamais directement : elles ne créent pas le même type de contrainte au "
+             "même endroit de la section — d'où le passage obligé par la racine "
+             "carrée."),
+        ],
         "enonce": "Reprenez l'arbre de sortie du réducteur : moment fléchissant Mf = 350 N·m, "
                   "couple de sortie Mt = 127,8 N·m, acier 42CrMo4 (Re = 750 MPa), coefficient "
                   "de sécurité s = 4.",
@@ -50259,6 +53027,16 @@ ATELIERS = [
         "titre": "Méthode RDM — repérer l'erreur sur une nouvelle copie",
         "theme": "Méthode",
         "fiche": "15.1",
+        "figure": "flexion_hauteur",
+        "vocabulaire": [
+            ("module de flexion I/v", "la grandeur géométrique qui relie le moment "
+             "fléchissant à la contrainte : σ = Mf / (I/v)."),
+            ("section rectangulaire fléchie selon h", "I/v = b × h² / 6 — c'est h, la "
+             "hauteur DANS LE SENS DE LA FLEXION, qui compte au carré, pas b."),
+            ("le piège du sens de montage", "inverser b et h dans la formule revient à "
+             "monter la poutre \"à plat\" au lieu de \"sur chant\" — cela change "
+             "fortement la résistance réelle, pour la même quantité de matière."),
+        ],
         "enonce": "Une poutre de section rectangulaire b = 20 mm, h = 40 mm est fléchie selon sa "
                   "hauteur h (montée « sur chant », la position efficace). Elle subit un moment "
                   "Mf = 150 000 N·mm.",
@@ -50320,6 +53098,15 @@ ATELIERS = [
         "titre": "Méthode ajustements — la conversion µm → mm",
         "theme": "Méthode",
         "fiche": "15.2",
+        "figure": "echelle_mm_um",
+        "vocabulaire": [
+            ("micromètre (µm)", "1 µm = 0,001 mm — l'unité des tables ISO 286 pour les "
+             "écarts et les IT, jamais le mm directement."),
+            ("le piège de conversion", "les tables donnent des écarts en µm, mais la "
+             "cote finale s'écrit en mm : oublier cette conversion produit une cote 1000 "
+             "fois trop grande ou trop petite, une erreur d'ordre de grandeur qui doit "
+             "sauter aux yeux."),
+        ],
         "enonce": "Ajustement Ø40 H8/f7, plage 30-50 mm : IT8 = 39 µm, IT7 = 25 µm, écart "
                   "fondamental de l'arbre f : es = −25 µm.",
         "etapes": [
@@ -50381,6 +53168,17 @@ ATELIERS = [
         "titre": "Méthode statique et matériau — poser le problème avant de calculer",
         "theme": "Méthode",
         "fiche": "15.3",
+        "figure": "types_appuis",
+        "vocabulaire": [
+            ("articulation", "un appui qui bloque les deux translations mais laisse la "
+             "rotation libre — deux inconnues (Ax, Ay)."),
+            ("appui simple", "un appui qui ne bloque qu'une seule translation — une "
+             "seule inconnue."),
+            ("choix du point de calcul des moments", "prendre les moments AU POINT où "
+             "une inconnue s'applique l'élimine automatiquement du calcul (son bras de "
+             "levier devient nul) — le réflexe qui simplifie presque tous les problèmes "
+             "de statique."),
+        ],
         "enonce": "Deux mini-cas à trancher avant tout calcul.",
         "etapes": [
             {
@@ -50457,6 +53255,16 @@ ATELIERS = [
         "theme": "Économie-gestion",
         "fiche": "10.2",
         "figure": "seuil_rentabilite_graphe",
+        "vocabulaire": [
+            ("coût de revient", "matière + coût machine (temps × taux horaire) + coût "
+             "d'outillage réparti sur la série."),
+            ("outillage réparti", "le coût fixe d'un moule ou d'une matrice, divisé par "
+             "le nombre de pièces de la série — plus la série est grande, moins il pèse "
+             "par pièce."),
+            ("seuil de rentabilité", "la quantité de pièces à partir de laquelle une "
+             "solution avec investissement devient moins chère qu'une solution sans "
+             "investissement."),
+        ],
         "enonce": "Une pièce nécessite 6,50 € de matière et 12 minutes d'usinage à un taux "
                   "horaire de 45 €/h. Un outillage de 6 000 € est amorti sur une série de "
                   "400 pièces. Une solution alternative, sans investissement, revient à "
@@ -50524,6 +53332,13 @@ ATELIERS = [
         "theme": "Économie-gestion",
         "fiche": "10.8",
         "figure": None,
+        "vocabulaire": [
+            ("structure en quatre temps", "critère retenu → chiffre calculé, avec unité "
+             "→ comparaison à l'alternative → limite assumée du choix."),
+            ("limite assumée", "reconnaître ce que le choix sacrifie ou n'a pas encore "
+             "vérifié — un jury se méfie d'une réponse qui ne présente que des "
+             "avantages, sans aucune contrepartie."),
+        ],
         "enonce": "Un jury demande : « Pourquoi avoir choisi l'impression 3D pour ce "
                   "prototype plutôt que l'usinage ? » Réponse proposée par un candidat : "
                   "« Parce que c'est moins cher et plus rapide, et il n'y a aucun "
@@ -50577,6 +53392,1421 @@ ATELIERS = [
         "a_retenir": "À retenir : une réponse économique sans chiffre ni limite assumée "
                      "sonne comme une opinion, pas comme une analyse — c'est ce qui pousse "
                      "un jury à creuser jusqu'à trouver la faille.",
+    },
+    {
+        "id": "at118",
+        "chapitre": "Bloc 8",
+        "titre": "Un disque qui accélère : de la vitesse à l'énergie",
+        "theme": "Physique-Chimie — cinématique et dynamique",
+        "fiche": "8.1",
+        "figure": "vitesse_disque_meulage",
+        "vocabulaire": [
+            ("vitesse angulaire ω", "la vitesse de rotation en radians par seconde : "
+             "ω = 2πN/60, avec N en tr/min."),
+            ("vitesse linéaire v", "la vitesse réelle (en m/s) d'un point situé à la "
+             "distance R de l'axe : v = ω × R — plus R est grand, plus v est grand, même "
+             "à ω constant."),
+            ("énergie cinétique Ec", "l'énergie du mouvement, Ec = ½mv² en translation — "
+             "la vitesse compte AU CARRÉ."),
+            ("moment d'inertie I", "l'équivalent de la masse pour un mouvement de "
+             "rotation : I = ½mR² pour un disque plein."),
+        ],
+        "enonce": "Un disque de meulage plein, de masse 3 kg et de rayon 100 mm, tourne à "
+                  "3 000 tr/min.",
+        "etapes": [
+            {"type": "numerique", "label": "Vitesse angulaire ω",
+             "unite": "rad/s", "attendu": 314.16, "tol": 1,
+             "consigne": "Calcule ω = 2πN/60.",
+             "indice": "N doit être en tr/min dans cette formule ; le résultat sort "
+                       "directement en rad/s.",
+             "pieges": [(3000, "3 000 est la vitesse en tr/min — ce n'est pas une vitesse "
+                               "angulaire en rad/s tant que la conversion 2π/60 n'a pas "
+                               "été appliquée.")]},
+            {"type": "numerique", "label": "Vitesse d'un point sur le bord",
+             "unite": "m/s", "attendu": 31.42, "tol": 0.5,
+             "consigne": "Calcule v = ω × R, avec R en MÈTRES.",
+             "indice": "R = 100 mm = 0,1 m — pas 100.",
+             "pieges": [(31416, "R a été laissé en millimètres (100) au lieu d'être "
+                                "converti en mètres (0,1) avant la multiplication.")]},
+            {"type": "qcm", "label": "Si la vitesse de rotation double",
+             "question": "Si N passe de 3 000 à 6 000 tr/min, l'énergie cinétique de "
+                        "rotation Ec = ½Iω² est-elle multipliée par 2 ou par 4 ?",
+             "options": ["Par 4 — ω apparaît au carré dans la formule",
+                        "Par 2 — l'énergie est proportionnelle à la vitesse",
+                        "Elle ne change pas, seul I compte"],
+             "bonne": 0,
+             "indice": "Exactement le même principe qu'en translation (Ec = ½mv²) : la "
+                       "vitesse compte au carré, pas au premier degré.",
+             "diagnostics": {1: "C'est le piège classique de cette fiche : doubler une "
+                                 "vitesse (linéaire ou angulaire) ne double jamais "
+                                 "l'énergie cinétique, il la multiplie par 4 (2² = 4).",
+                              2: "I ne change pas si la pièce reste la même, mais ω "
+                                 "double bien — et c'est justement lui qui est au carré "
+                                 "dans la formule, donc l'énergie change fortement."}},
+        ],
+        "corrige": {
+            "enonce": "Disque plein, 3 kg, rayon 100 mm, tournant à 3 000 tr/min.",
+            "regle": "**ω = 2πN/60 (rad/s) puis v = ω × R (m/s, R en mètres)** — deux "
+                    "conversions à ne jamais sauter : tr/min → rad/s, et mm → m.",
+            "conversions": "N = 3 000 tr/min → utilisé tel quel dans la formule de ω. "
+                           "R = 100 mm = 0,1 m.",
+            "remplacement": "ω = 2π × 3000 / 60 · v = ω × 0,1",
+            "calcul": "ω = **314,16 rad/s** · v = 314,16 × 0,1 = **31,42 m/s**.",
+            "verification": "31,42 m/s ≈ 113 km/h : cohérent avec un disque de meulage, "
+                            "et cela explique pourquoi un éclat de meule qui casse en "
+                            "rotation est aussi dangereux qu'un projectile.",
+        },
+        "a_retenir": "À retenir : ne jamais utiliser N (tr/min) ou R (mm) directement "
+                     "dans une formule physique sans les avoir convertis — et se souvenir "
+                     "que toute grandeur \"au carré\" (v² dans Ec, ω² dans Ec de rotation) "
+                     "amplifie fortement l'effet d'un doublement.",
+    },
+    {
+        "id": "at119",
+        "chapitre": "Bloc 8",
+        "titre": "Dimensionner un vérin pneumatique : pression, section, effort",
+        "theme": "Physique-Chimie — mécanique des fluides",
+        "fiche": "8.2",
+        "figure": "effort_verin",
+        "vocabulaire": [
+            ("pression p", "une force répartie sur une surface : p = F/S. "
+             "1 bar = 10⁵ Pa."),
+            ("section utile S", "l'aire du piston réellement soumise à la pression — "
+             "S = π × D²/4, avec D en mètres si p est en pascals."),
+            ("poussée / traction", "en POUSSÉE (le vérin sort), toute la surface du "
+             "piston pousse. En TRACTION (il rentre), la tige occupe une partie de cette "
+             "surface : l'effort disponible y est donc plus faible."),
+            ("débit Q", "le volume de fluide qui traverse une section chaque seconde, "
+             "Q = S × v."),
+        ],
+        "enonce": "Un vérin pneumatique de piston Ø40 mm et de tige Ø16 mm est alimenté "
+                  "sous une pression de 6 bars.",
+        "etapes": [
+            {"type": "numerique", "label": "Effort en sortie (poussée)",
+             "unite": "N", "attendu": 754, "tol": 10,
+             "consigne": "Calcule F = p × S, avec S la section du piston (Ø40 mm).",
+             "indice": "S = π × D²/4. Convertis D en mètres, et p = 6 bars = 6×10⁵ Pa, "
+                       "pour obtenir F directement en newtons.",
+             "pieges": [(75.4, "Ce résultat correspond à p(bar) × S(cm²), qui donne "
+                               "l'effort en DÉCA-newtons (daN), pas en newtons — il "
+                               "manque le facteur ×10 pour obtenir 754 N.")]},
+            {"type": "numerique", "label": "Effort en rentrée (traction)",
+             "unite": "N", "attendu": 633, "tol": 10,
+             "consigne": "Calcule l'effort disponible en rentrée : la section utile est "
+                        "la section du piston MOINS la section de la tige (Ø16 mm).",
+             "indice": "S_utile = S_piston − S_tige, puis F = p × S_utile.",
+             "pieges": [(754, "754 N est l'effort EN SORTIE (poussée), qui utilise toute "
+                              "la section du piston — en rentrée, la tige réduit la "
+                              "section utile, donc l'effort disponible est forcément plus "
+                              "faible.")]},
+            {"type": "qcm", "label": "Le réflexe de conception",
+             "question": "Pour un poste de bridage, dans quel sens faut-il orienter le "
+                        "vérin pour obtenir le serrage le plus fort possible ?",
+             "options": ["En poussée — toute la section du piston travaille",
+                        "En traction — la tige renforce l'effort",
+                        "Cela ne change rien, la pression est la même"],
+             "bonne": 0,
+             "indice": "Compare les deux résultats numériques que tu viens de calculer.",
+             "diagnostics": {1: "C'est l'inverse : la tige RÉDUIT la section utile en "
+                                 "traction, elle ne la renforce jamais.",
+                              2: "La pression est identique, mais la surface sur laquelle "
+                                 "elle s'applique change entre les deux sens — c'est donc "
+                                 "bien l'effort qui change."}},
+        ],
+        "corrige": {
+            "enonce": "Vérin Ø40 mm, tige Ø16 mm, alimenté à 6 bars.",
+            "regle": "**F = p × S en poussée · F = p × (S_piston − S_tige) en traction.** "
+                    "Toujours convertir les bars en pascals (×10⁵) et les diamètres en "
+                    "mètres avant de calculer.",
+            "conversions": "6 bars = 6 × 10⁵ Pa = 600 000 Pa. Ø40 mm → S = π×0,02² "
+                           "= 0,001257 m². Ø16 mm → S = π×0,008² = 0,000201 m².",
+            "remplacement": "Poussée : F = 600 000 × 0,001257. "
+                            "Traction : F = 600 000 × (0,001257 − 0,000201).",
+            "calcul": "Poussée = **754 N** · Traction = **633 N**, soit environ 16 % de "
+                     "moins.",
+            "verification": "754 N représente environ 77 kg de poussée — cohérent avec un "
+                            "petit vérin pneumatique industriel à 6 bars.",
+        },
+        "a_retenir": "À retenir : un vérin ne pousse pas aussi fort qu'il ne tire — on "
+                     "oriente donc toujours un bridage pour que le serrage se fasse EN "
+                     "POUSSANT, jamais en tirant.",
+    },
+    {
+        "id": "at120",
+        "chapitre": "Bloc 8",
+        "titre": "Lire une plaque signalétique et calculer l'intensité absorbée",
+        "theme": "Physique-Chimie — électricité",
+        "fiche": "8.3",
+        "figure": "plaque_moteur",
+        "vocabulaire": [
+            ("loi d'Ohm", "U = R × I — la relation la plus fondamentale entre tension, "
+             "résistance et intensité."),
+            ("puissance triphasée", "P = √3 × U × I × cos φ × η — plus riche que la "
+             "simple loi d'Ohm, car un moteur triphasé n'est pas un circuit résistif "
+             "pur."),
+            ("cos φ (facteur de puissance)", "traduit un déphasage entre tension et "
+             "courant, propre aux moteurs — typiquement entre 0,8 et 0,9."),
+            ("rendement η", "l'énergie électrique absorbée n'est jamais intégralement "
+             "convertie en énergie mécanique utile."),
+        ],
+        "enonce": "La plaque d'un moteur triphasé indique : 5,5 kW, 400 V, cos φ 0,86, "
+                  "rendement 0,90.",
+        "etapes": [
+            {"type": "numerique", "label": "Intensité absorbée",
+             "unite": "A", "attendu": 10.26, "tol": 0.3,
+             "consigne": "Isole I dans P = √3 × U × I × cos φ × η, puis calcule.",
+             "indice": "I = P / (√3 × U × cos φ × η), avec P en watts (5 500, pas 5,5).",
+             "pieges": [(9.23, "Ce résultat correspond à un calcul SANS le rendement η — "
+                               "or la puissance de 5,5 kW indiquée est la puissance "
+                               "MÉCANIQUE utile, il faut donc bien diviser par η pour "
+                               "remonter à la puissance électrique absorbée, plus "
+                               "élevée.")]},
+            {"type": "qcm", "label": "Conséquence pour la protection électrique",
+             "question": "Un technicien oublie le rendement η et calcule une intensité "
+                        "plus faible que la réalité. Quel est le risque s'il choisit le "
+                        "disjoncteur sur cette base ?",
+             "options": ["Un disjoncteur sous-dimensionné, qui déclenchera "
+                        "intempestivement ou ne protégera pas le câble",
+                        "Aucun risque, un disjoncteur trop petit protège toujours mieux",
+                        "Le moteur tournera simplement un peu moins vite"],
+             "bonne": 0,
+             "indice": "Le disjoncteur doit être choisi sur l'intensité RÉELLEMENT "
+                       "absorbée sur le réseau, pas sur une valeur sous-estimée.",
+             "diagnostics": {1: "C'est l'inverse : un disjoncteur choisi pour une "
+                                 "intensité trop faible déclenchera à chaque démarrage, ou "
+                                 "pire, ne protégera pas correctement le câble en cas de "
+                                 "surcharge réelle.",
+                              2: "Le moteur absorbe l'intensité dont il a besoin quoi qu'il "
+                                 "arrive — c'est la protection choisie qui devient "
+                                 "inadaptée, pas le fonctionnement du moteur."}},
+        ],
+        "corrige": {
+            "enonce": "Moteur triphasé 5,5 kW, 400 V, cos φ 0,86, rendement 0,90.",
+            "regle": "**I = P / (√3 × U × cos φ × η)** — la puissance indiquée sur une "
+                    "plaque signalétique est la puissance MÉCANIQUE utile, jamais la "
+                    "puissance électrique absorbée : il faut diviser par η pour remonter "
+                    "à l'intensité réelle.",
+            "conversions": "P = 5,5 kW = 5 500 W.",
+            "remplacement": "I = 5500 / (1,732 × 400 × 0,86 × 0,90)",
+            "calcul": "Dénominateur = 1,732 × 400 × 0,86 × 0,90 = 536,1 → "
+                     "I = 5500 / 536,1 = **10,26 A**.",
+            "verification": "Un ordre de grandeur cohérent pour un moteur de 5,5 kW en "
+                            "400 V triphasé (souvent entre 8 et 12 A pour cette gamme de "
+                            "puissance).",
+        },
+        "a_retenir": "À retenir : la puissance sur une plaque signalétique est TOUJOURS "
+                     "la puissance mécanique en sortie d'arbre, jamais la puissance "
+                     "électrique absorbée — oublier le rendement η sous-estime "
+                     "systématiquement l'intensité réelle.",
+    },
+    {
+        "id": "at121",
+        "chapitre": "Bloc 2",
+        "titre": "Roulement sur arbre de pompe : quel ajustement pour quelle bague ?",
+        "theme": "Ajustements",
+        "fiche": "2.2",
+        "figure": "regle_des_charges",
+        "vocabulaire": [
+            ("charge tournante", "la bague qui voit la charge tourner autour d'elle — "
+             "sur un arbre tournant à charge fixe en direction, c'est la bague "
+             "INTÉRIEURE (fiche 6.5)."),
+            ("charge fixe", "la bague qui voit toujours la même zone chargée — ici la "
+             "bague EXTÉRIEURE, dans le carter fixe."),
+            ("la règle des charges", "bague tournante → ajustement SERRÉ (k6, m6...) · "
+             "bague fixe → ajustement à JEU LÉGER (H7) — jamais l'inverse."),
+        ],
+        "enonce": "Un roulement 6205 (alésage Ø25, extérieur Ø52) équipe une pompe "
+                  "centrifuge. L'arbre tourne, le carter est fixe ; la charge est fixe "
+                  "en direction. Côté carter, l'alésage est en Ø52 H7 (IT7 = 30 µm), "
+                  "et la bague extérieure du roulement mesure de 51,987 à 52,000 mm.",
+        "etapes": [
+            {"type": "qcm", "label": "Quelle bague reçoit l'ajustement serré",
+             "question": "Sur cet arbre tournant à charge fixe, quelle bague doit "
+                        "recevoir l'ajustement serré ?",
+             "options": ["La bague intérieure, montée sur l'arbre tournant",
+                        "La bague extérieure, montée dans le carter fixe",
+                        "Les deux bagues, pour plus de sécurité"],
+             "bonne": 0,
+             "indice": "C'est la bague qui voit la charge TOURNER autour d'elle qui doit "
+                       "être serrée, pour ne pas fluer dans son logement.",
+             "diagnostics": {1: "La bague extérieure voit une charge FIXE en direction : "
+                                 "elle ne \"rampe\" pas et peut donc rester montée avec un "
+                                 "léger jeu, ce qui facilite aussi le démontage.",
+                              2: "Serrer les deux bagues empêcherait toute dilatation "
+                                 "thermique de s'absorber, et rendrait le roulement "
+                                 "impossible à démonter sans le détruire."}},
+            {"type": "numerique", "label": "Jeu maximal côté carter (Ø52 H7)",
+             "unite": "µm", "attendu": 43, "tol": 1,
+             "consigne": "Alésage carter : 52,000 à 52,030 mm. Bague extérieure : "
+                        "51,987 à 52,000 mm. Calcule J_max = D_max(alésage) − "
+                        "d_min(bague), en µm.",
+             "indice": "52,030 − 51,987 = 0,043 mm.",
+             "pieges": [(30, "30 µm est l'IT7 de l'alésage seul (0,030 mm) — pas le jeu "
+                             "maximal, qui dépend aussi des cotes de la bague du "
+                             "roulement.")]},
+            {"type": "qcm", "label": "Nature de l'ajustement côté carter",
+             "question": "Avec J_min = 0 et J_max = 43 µm, quelle est la nature de cet "
+                        "ajustement ?",
+             "options": ["Jeu (garanti dans tous les cas, J_min ≥ 0)",
+                        "Incertain (jeu ou serrage selon les pièces)",
+                        "Serrage (garanti dans tous les cas)"],
+             "bonne": 0,
+             "indice": "Rappel de la fiche : J_min ≥ 0 signe un ajustement AVEC JEU, "
+                       "garanti quelles que soient les pièces réellement usinées.",
+             "diagnostics": {1: "Incertain suppose que J_min soit négatif — ici J_min = 0, "
+                                 "il n'y a jamais de serrage possible sur ce montage.",
+                              2: "Serrage supposerait J_max ≤ 0 — ici J_max est largement "
+                                 "positif (43 µm), donc jamais de serrage."}},
+        ],
+        "corrige": {
+            "enonce": "Roulement 6205 sur arbre de pompe, charge fixe en direction, "
+                      "alésage carter Ø52 H7.",
+            "regle": "**Bague tournante → serrage (fiche 6.5) · bague fixe → léger jeu.** "
+                    "Un jeu se calcule toujours J_max = D_max(alésage) − d_min(arbre ou "
+                    "bague), J_min = D_min − d_max.",
+            "conversions": "Cotes déjà en mm dans l'énoncé ; réponse demandée en µm "
+                           "(1 µm = 0,001 mm).",
+            "remplacement": "J_max = 52,030 − 51,987 · J_min = 52,000 − 52,000",
+            "calcul": "J_max = **43 µm** · J_min = **0 µm** → ajustement **avec jeu**, "
+                     "garanti.",
+            "verification": "Cohérent avec le rôle attendu : la bague extérieure doit "
+                            "pouvoir coulisser très légèrement pour absorber la dilatation "
+                            "de l'arbre en fonctionnement — c'est le palier libre du "
+                            "montage.",
+        },
+        "a_retenir": "À retenir : le type de charge (tournante ou fixe) décide du sens de "
+                     "l'ajustement, pas le diamètre ni le \"principe de précaution\" — "
+                     "serrer une bague à charge fixe rendrait le montage impossible à "
+                     "démonter et bloquerait la dilatation thermique.",
+    },
+    {
+        "id": "at122",
+        "chapitre": "Bloc 2",
+        "titre": "Le bonus de tolérance au maximum de matière Ⓜ",
+        "theme": "Tolérancement géométrique (GPS)",
+        "fiche": "2.3",
+        "figure": "cadre_tolerance",
+        "vocabulaire": [
+            ("cadre de tolérance", "se lit en trois cases : symbole de la caractéristique "
+             "· valeur de la tolérance · lettre(s) de référence."),
+            ("maximum de matière (Ⓜ)", "pour un alésage, l'état où le trou est à son "
+             "diamètre MINIMAL — c'est l'état le plus défavorable pour l'assemblage, donc "
+             "celui qui fixe la tolérance de base."),
+            ("bonus de tolérance", "dès que le trou réel est plus grand que son minimum, "
+             "la tolérance de position peut être augmentée d'autant, sans aucun risque "
+             "pour l'assemblage — un gain de fabrication légitime, pas une tolérance "
+             "cachée."),
+        ],
+        "enonce": "Une bride porte 4 trous de fixation Ø11, tolérancés ⌖ Ø0,4 Ⓜ A B. La "
+                  "tolérance dimensionnelle du trou (IT13) autorise un diamètre allant "
+                  "jusqu'à Ø11,43.",
+        "etapes": [
+            {"type": "numerique", "label": "Bonus de tolérance au diamètre maximal",
+             "unite": "mm", "attendu": 0.43, "tol": 0.01,
+             "consigne": "Calcule le bonus = diamètre réel maximal − diamètre minimal "
+                        "(11,00).",
+             "indice": "11,43 − 11,00.",
+             "pieges": [(11.43, "11,43 est le diamètre maximal du trou lui-même, pas le "
+                                "bonus de tolérance — le bonus est la DIFFÉRENCE avec le "
+                                "diamètre minimal.")]},
+            {"type": "numerique", "label": "Tolérance de position réellement disponible",
+             "unite": "mm", "attendu": 0.83, "tol": 0.01,
+             "consigne": "Ajoute ce bonus à la tolérance de position spécifiée (Ø0,4).",
+             "indice": "0,4 + le bonus calculé à l'étape précédente.",
+             "aide": "0,4 + 0,43 = 0,83 mm, soit plus du double de la tolérance affichée "
+                    "sur le plan."},
+            {"type": "qcm", "label": "Pourquoi ce bonus ne crée aucun risque",
+             "question": "Pourquoi ce doublement de la tolérance de position n'introduit-il "
+                        "aucun risque de non-assemblage ?",
+             "options": ["Parce qu'un trou plus grand laisse plus de marge à la vis pour "
+                        "être décalée sans pour autant l'empêcher de passer",
+                        "Parce que Ⓜ supprime purement et simplement le contrôle de "
+                        "position",
+                        "Parce que le bonus ne s'applique qu'en fin de série, jamais sur "
+                        "les premières pièces"],
+             "bonne": 0,
+             "indice": "Le principe physique derrière Ⓜ : plus le trou est grand, plus il "
+                       "\"pardonne\" un défaut de position, mécaniquement.",
+             "diagnostics": {1: "Le contrôle de position reste bien exigé — Ⓜ ne le "
+                                 "supprime pas, il l'assouplit seulement en fonction du "
+                                 "diamètre réel du trou.",
+                              2: "Le bonus s'applique pièce par pièce, selon le diamètre "
+                                 "réellement obtenu sur CHAQUE trou, pas selon un rang dans "
+                                 "la série."}},
+        ],
+        "corrige": {
+            "enonce": "4 trous Ø11, tolérance de position Ø0,4 Ⓜ A B, IT13 jusqu'à "
+                      "Ø11,43.",
+            "regle": "**Bonus = D_réel − D_min (pour un alésage) · tolérance disponible "
+                    "= tolérance spécifiée + bonus.**",
+            "conversions": "Sans objet, toutes les cotes sont déjà en mm.",
+            "remplacement": "Bonus = 11,43 − 11,00 · Tolérance dispo = 0,4 + bonus",
+            "calcul": "Bonus = **0,43 mm** · Tolérance disponible = **0,83 mm**.",
+            "verification": "Une tolérance de position qui plus que double par rapport à "
+                            "la valeur affichée sur le plan est cohérent avec l'esprit de "
+                            "Ⓜ : un gain de fabrication réel, sans jamais compromettre "
+                            "l'assemblage.",
+        },
+        "a_retenir": "À retenir : Ⓜ n'est pas une case optionnelle du cadre de tolérance — "
+                     "c'est un outil qui transforme un IT dimensionnel déjà toléré en "
+                     "marge de position supplémentaire, gratuite et sans risque, "
+                     "particulièrement rentable sur des trous de passage.",
+    },
+    {
+        "id": "at123",
+        "chapitre": "Bloc 4",
+        "titre": "Une plaque percée : contrainte nominale contre contrainte réelle",
+        "theme": "RDM — traction et concentration de contrainte",
+        "fiche": "4.1",
+        "figure": "concentration_contrainte",
+        "vocabulaire": [
+            ("section nette", "la section réellement résistante, une fois retiré ce que "
+             "le perçage a enlevé — jamais la section pleine d'origine."),
+            ("contrainte nominale", "σ = F / S_nette, calculée en supposant la "
+             "contrainte uniformément répartie sur la section — une approximation qui "
+             "ignore l'effet local du trou."),
+            ("contrainte réelle", "σ_réelle = Kt × σ_nominale — la valeur qui compte "
+             "vraiment près du bord du trou, où la matière est localement bien plus "
+             "sollicitée."),
+        ],
+        "enonce": "Une plaque en acier, large de 60 mm et épaisse de 10 mm, percée en son "
+                  "centre d'un trou Ø15 mm, est tendue par un effort de 45 000 N. Pour ce "
+                  "rapport trou/largeur, Kt = 2,5.",
+        "etapes": [
+            {"type": "numerique", "label": "Section nette (au droit du trou)",
+             "unite": "mm²", "attendu": 450, "tol": 5,
+             "consigne": "Calcule la section réellement résistante : largeur moins le "
+                        "trou, fois l'épaisseur.",
+             "indice": "S_nette = (60 − 15) × 10.",
+             "pieges": [(600, "600 mm² est la section PLEINE (60 × 10), sans tenir "
+                              "compte du trou — c'est justement l'erreur qui masque le "
+                              "vrai niveau de contrainte.")]},
+            {"type": "numerique", "label": "Contrainte nominale σ",
+             "unite": "MPa", "attendu": 100, "tol": 2,
+             "consigne": "σ = F / S_nette.",
+             "indice": "45 000 / 450.",
+             "aide": "45 000 / 450 = 100 MPa."},
+            {"type": "numerique", "label": "Contrainte réelle au bord du trou",
+             "unite": "MPa", "attendu": 250, "tol": 5,
+             "consigne": "σ_réelle = Kt × σ_nominale, avec Kt = 2,5.",
+             "indice": "100 × 2,5.",
+             "pieges": [(100, "100 MPa est la contrainte NOMINALE, calculée en ignorant "
+                              "l'effet local du trou — la contrainte réelle au bord du "
+                              "perçage est 2,5 fois plus élevée.")]},
+        ],
+        "corrige": {
+            "enonce": "Plaque 60×10 mm, trou Ø15 mm centré, F = 45 000 N, Kt = 2,5.",
+            "regle": "**S_nette = (largeur − Ø trou) × épaisseur · σ_nominale = F / "
+                    "S_nette · σ_réelle = Kt × σ_nominale.**",
+            "conversions": "Sans objet.",
+            "remplacement": "S_nette = (60−15)×10 · σ_nom = 45000/450 · σ_réelle = "
+                            "100×2,5",
+            "calcul": "S_nette = **450 mm²** · σ_nominale = **100 MPa** · σ_réelle = "
+                     "**250 MPa**.",
+            "verification": "Si la limite élastique de l'acier est par exemple Re = 235 "
+                            "MPa, la contrainte NOMINALE (100 MPa) semblerait largement "
+                            "acceptable, alors que la contrainte RÉELLE (250 MPa) dépasse "
+                            "déjà Re localement — c'est exactement ce qu'une lecture "
+                            "purement nominale masquerait.",
+        },
+        "a_retenir": "À retenir : un calcul de contrainte qui ignore un perçage ou un "
+                     "changement de section donne une valeur rassurante mais fausse — en "
+                     "statique sur un matériau ductile on peut parfois négliger Kt, mais "
+                     "jamais en fatigue : c'est là que les fissures s'amorcent.",
+    },
+    {
+        "id": "at124",
+        "chapitre": "Bloc 4",
+        "titre": "Simple ou double cisaillement : calculer la bonne contrainte",
+        "theme": "RDM — cisaillement",
+        "fiche": "4.2",
+        "figure": "simple_double_cisaillement",
+        "vocabulaire": [
+            ("cisaillement simple", "un seul plan de coupe cisaillé — τ = T/S."),
+            ("cisaillement double", "deux plans de coupe cisaillés simultanément, comme "
+             "une goupille entre les deux joues d'une chape — τ = T/(2S), l'effort se "
+             "répartit sur DEUX sections."),
+            ("le repère à ne jamais oublier", "compter le nombre de plans de coupe AVANT "
+             "de choisir la formule — c'est l'erreur n°1 des étudiants sur cette notion."),
+        ],
+        "enonce": "Une goupille de diamètre 8 mm assemble une chape à deux joues : elle "
+                  "est cisaillée sur DEUX sections. L'effort total appliqué est de "
+                  "5 000 N.",
+        "etapes": [
+            {"type": "qcm", "label": "Simple ou double cisaillement",
+             "question": "Une goupille montée entre les deux joues d'une chape est-elle "
+                        "en cisaillement simple ou double ?",
+             "options": ["Double — deux plans de coupe travaillent en parallèle",
+                        "Simple — un seul plan de coupe suffit à la définir",
+                        "Cela dépend uniquement du diamètre de la goupille"],
+             "bonne": 0,
+             "indice": "Compte les plans où la matière est effectivement sectionnée entre "
+                       "les deux joues et la pièce centrale.",
+             "diagnostics": {1: "Une chape à deux joues cisaille TOUJOURS la goupille sur "
+                                 "deux plans distincts — c'est la définition même du "
+                                 "montage en chape.",
+                              2: "Le diamètre change la SECTION cisaillée, pas le nombre de "
+                                 "plans de coupe, qui dépend uniquement de la géométrie du "
+                                 "montage."}},
+            {"type": "numerique", "label": "Section de la goupille",
+             "unite": "mm²", "attendu": 50.27, "tol": 0.5,
+             "consigne": "Calcule l'aire de la section circulaire Ø8 mm.",
+             "indice": "S = π × d² / 4.",
+             "aide": "π × 8² / 4 = 50,27 mm²."},
+            {"type": "numerique", "label": "Contrainte de cisaillement τ",
+             "unite": "MPa", "attendu": 49.7, "tol": 1,
+             "consigne": "τ = T / (2 × S), puisque le cisaillement est double.",
+             "indice": "5000 / (2 × 50,27).",
+             "pieges": [(99.5, "99,5 MPa correspond à τ = T/S, comme en cisaillement "
+                               "SIMPLE — mais ici il y a deux sections qui travaillent, "
+                               "l'effort se répartit donc sur le double de section.")]},
+        ],
+        "corrige": {
+            "enonce": "Goupille Ø8 mm en chape à deux joues, effort total 5 000 N.",
+            "regle": "**Cisaillement double : τ = T / (2S)** — jamais T/S, qui "
+                    "surestimerait la contrainte réelle de moitié... ou plutôt, "
+                    "l'erreur inverse ici : oublier le facteur 2 SOUS-estimerait la "
+                    "section réellement disponible.",
+            "conversions": "Sans objet.",
+            "remplacement": "S = π×8²/4 · τ = 5000 / (2×50,27)",
+            "calcul": "S = **50,27 mm²** · τ = **49,74 MPa**.",
+            "verification": "49,74 MPa est bien la moitié de ce qu'on obtiendrait avec un "
+                            "cisaillement simple (99,5 MPa) sur la même goupille — cohérent "
+                            "avec le fait que deux sections se partagent l'effort au lieu "
+                            "d'une seule.",
+        },
+        "a_retenir": "À retenir : avant tout calcul de cisaillement, comptez le nombre de "
+                     "plans de coupe réellement sectionnés — une chape à deux joues cisaille "
+                     "toujours en double, un assemblage à recouvrement simple cisaille en "
+                     "simple.",
+    },
+    {
+        "id": "at125",
+        "chapitre": "Bloc 4",
+        "titre": "Poser une poutre sur chant ou à plat : le facteur 4",
+        "theme": "RDM — flexion",
+        "fiche": "4.3",
+        "figure": "flexion_hauteur",
+        "vocabulaire": [
+            ("moment quadratique I", "la grandeur géométrique qui traduit la résistance "
+             "d'une section à la flexion — pour un rectangle, I = base × hauteur³ / 12, "
+             "hauteur étant la dimension DANS LE SENS de la flexion."),
+            ("poser sur chant", "orienter une poutre rectangulaire pour que sa plus "
+             "grande dimension travaille dans le sens de la flexion."),
+            ("poser à plat", "orienter la même poutre avec sa plus petite dimension dans "
+             "le sens de la flexion — bien moins résistant, pour exactement la même "
+             "quantité de matière."),
+        ],
+        "enonce": "Une poutre rectangulaire de section 40 × 80 mm doit être posée soit "
+                  "\"sur chant\" (h = 80 mm dans le sens de la flexion), soit \"à plat\" "
+                  "(h = 40 mm dans le sens de la flexion).",
+        "etapes": [
+            {"type": "numerique", "label": "Moment quadratique I sur chant (h = 80)",
+             "unite": "mm⁴", "attendu": 1706667, "tol": 5000,
+             "consigne": "Calcule I = b × h³ / 12, avec b = 40 mm et h = 80 mm.",
+             "indice": "40 × 80³ / 12.",
+             "pieges": [(426667, "426 667 est la valeur obtenue \"à plat\" (b et h "
+                                 "inversés) — pas \"sur chant\".")]},
+            {"type": "numerique", "label": "Moment quadratique I à plat (h = 40)",
+             "unite": "mm⁴", "attendu": 426667, "tol": 2000,
+             "consigne": "Calcule I = b × h³ / 12, avec b = 80 mm et h = 40 mm cette "
+                        "fois.",
+             "indice": "80 × 40³ / 12.",
+             "pieges": [(1706667, "C'est la valeur \"sur chant\" — ici b et h ont changé "
+                                  "de rôle : la petite dimension (40) est maintenant dans "
+                                  "le sens de la flexion.")]},
+            {"type": "qcm", "label": "Le rapport de rigidité",
+             "question": "Quel est le rapport de rigidité en flexion entre les deux "
+                        "orientations, pour EXACTEMENT la même quantité de matière ?",
+             "options": ["Un facteur 4 — poser sur chant est 4 fois plus rigide",
+                        "Un facteur 2 — poser sur chant est 2 fois plus rigide",
+                        "Aucune différence, la section a la même aire dans les deux cas"],
+             "bonne": 0,
+             "indice": "Compare directement les deux valeurs de I calculées ci-dessus.",
+             "diagnostics": {1: "Le rapport réel est plus grand qu'un simple facteur 2 : "
+                                 "1 706 667 / 426 667 vaut exactement 4, pas 2 — l'effet du "
+                                 "cube de la hauteur est plus fort qu'il n'y paraît.",
+                              2: "L'aire de la section (40×80 = 3200 mm²) est bien identique "
+                                 "dans les deux orientations — c'est justement ce qui rend "
+                                 "le résultat frappant : même matière, rigidité très "
+                                 "différente selon l'orientation."}},
+        ],
+        "corrige": {
+            "enonce": "Section rectangulaire 40×80 mm, posée sur chant puis à plat.",
+            "regle": "**I = b × h³ / 12**, avec h TOUJOURS la dimension dans le sens de "
+                    "la flexion — inverser b et h change complètement le résultat.",
+            "conversions": "Sans objet.",
+            "remplacement": "Sur chant : I = 40×80³/12 · À plat : I = 80×40³/12",
+            "calcul": "Sur chant = **1 706 667 mm⁴** · À plat = **426 667 mm⁴** · "
+                     "rapport = **4**.",
+            "verification": "1 706 667 / 426 667 = 4,00 exactement — cohérent avec la "
+                            "règle du cours : doubler la hauteur utile multiplie la "
+                            "rigidité par 2³ = 8, donc passer de h=40 à h=80 (facteur 2) "
+                            "multiplie bien I par 4... et la flèche, inversement "
+                            "proportionnelle à I, est divisée par 4.",
+        },
+        "a_retenir": "À retenir : à quantité de matière strictement égale, l'orientation "
+                     "d'une section rectangulaire change radicalement sa résistance en "
+                     "flexion — poser une poutre \"sur chant\" au lieu de \"à plat\" est "
+                     "un geste de conception gratuit, jamais un détail.",
+    },
+    {
+        "id": "at126",
+        "chapitre": "Module 0",
+        "titre": "Lire un tableau ISO puis vérifier sur un graphique",
+        "theme": "Méthode de lecture",
+        "fiche": "0.4",
+        "figure": "lire_table_iso",
+        "vocabulaire": [
+            ("croisement ligne × colonne", "un tableau ISO 286 se lit toujours au "
+             "croisement d'une plage de dimension (en ligne) et d'une qualité IT (en "
+             "colonne) — jamais l'un sans l'autre."),
+            ("point remarquable d'un graphique", "sur un diagramme, l'information utile "
+             "se trouve presque toujours à une intersection, un seuil ou un extremum — "
+             "pas au milieu d'une courbe."),
+        ],
+        "enonce": "Table ISO 286, plage 18-30 mm : IT6 = 13 µm, IT7 = 21 µm. Un arbre "
+                  "Ø25 h6 (es = 0) doit être monté dans un alésage Ø25 H7 (EI = 0).",
+        "etapes": [
+            {"type": "numerique", "label": "Écart inférieur de l'arbre h6",
+             "unite": "µm", "attendu": -13, "tol": 0.5,
+             "consigne": "Pour un arbre h, es = 0. Avec IT6 = 13 µm, quel est ei ?",
+             "indice": "ei = es − IT = 0 − 13.",
+             "pieges": [(13, "13 µm serait positif — mais un arbre h a toujours son "
+                             "écart inférieur négatif ou nul, jamais au-dessus de la "
+                             "cote nominale.")]},
+            {"type": "numerique", "label": "Jeu maximal de l'ajustement H7/h6",
+             "unite": "µm", "attendu": 34, "tol": 1,
+             "consigne": "J_max = ES(alésage) − ei(arbre). ES = EI + IT7 = 0 + 21.",
+             "indice": "21 − (−13).",
+             "aide": "21 − (−13) = 34 µm."},
+            {"type": "qcm", "label": "Vérifier sur le schéma dynamique",
+             "question": "Sur le schéma du calculateur d'ajustements ISO de cette "
+                        "application, à quoi reconnaît-on que ce jeu de 34 µm est "
+                        "cohérent avec un ajustement \"avec jeu\" ?",
+             "options": ["La zone de tolérance de l'arbre est entièrement EN DESSOUS de "
+                        "celle de l'alésage, sans jamais se chevaucher",
+                        "Les deux zones se chevauchent partiellement",
+                        "La zone de l'arbre est entièrement AU-DESSUS de celle de "
+                        "l'alésage"],
+             "bonne": 0,
+             "indice": "Un jeu minimal de 0 µm (h6 touche pile la cote nominale) et un "
+                       "jeu maximal positif : les deux zones ne se touchent jamais.",
+             "diagnostics": {1: "Un chevauchement signerait un ajustement INCERTAIN — ici "
+                                 "J_min = 0, jamais négatif, donc pas de chevauchement "
+                                 "possible.",
+                              2: "Zone de l'arbre au-dessus de celle de l'alésage "
+                                 "signerait un SERRAGE garanti — c'est l'inverse de ce "
+                                 "montage."}},
+        ],
+        "corrige": {
+            "enonce": "Ajustement Ø25 H7/h6, tranche 18-30 mm, IT6 = 13 µm, IT7 = 21 µm.",
+            "regle": "**Lire d'abord le tableau au bon croisement (ligne × colonne), puis "
+                    "vérifier le résultat sur le schéma** — les deux lectures doivent "
+                    "toujours se recouper.",
+            "conversions": "Toutes les valeurs déjà en µm dans l'énoncé.",
+            "remplacement": "ei(h6) = 0 − 13 · J_max = 21 − (−13)",
+            "calcul": "ei = **−13 µm** · J_max = **34 µm**.",
+            "verification": "J_min = EI − es = 0 − 0 = 0 µm : le jeu varie donc de 0 à "
+                            "34 µm — un ajustement avec jeu, jamais de serrage possible, "
+                            "cohérent avec un montage H/h destiné au centrage précis "
+                            "démontable.",
+        },
+        "a_retenir": "À retenir : un tableau donne des chiffres, un calcul les transforme "
+                     "en jeu, un schéma vérifie que le résultat a un sens — les trois "
+                     "lectures se recoupent toujours si chacune est bien menée (fiche "
+                     "0.4).",
+    },
+    {
+        "id": "at127",
+        "chapitre": "Bloc 10",
+        "titre": "Lire une fiche technique anglaise de roulement",
+        "theme": "Anglais technique — documentation",
+        "fiche": "10.1",
+        "figure": "regle_des_charges",
+        "vocabulaire": [
+            ("yield strength", "limite élastique (Re) — pas \"rendement\", le faux-ami le "
+             "plus coûteux du vocabulaire RDM en anglais."),
+            ("tensile strength", "résistance à la rupture (Rm)."),
+            ("bore / shaft / housing bore", "alésage du roulement / arbre / alésage du "
+             "logement dans le carter — trois éléments différents à ne pas confondre."),
+        ],
+        "enonce": "Une fiche technique indique : « Bore: 25 mm, recommended shaft "
+                  "tolerance: k6, recommended housing bore tolerance: H7. Material: "
+                  "yield strength 250 MPa, tensile strength 400 MPa. »",
+        "etapes": [
+            {"type": "qcm", "label": "Sur quoi dimensionner en résistance",
+             "question": "Pour vérifier qu'une pièce ne se déforme pas définitivement "
+                        "sous charge, quelle valeur utiliser ?",
+             "options": ["250 MPa (yield strength = Re)",
+                        "400 MPa (tensile strength = Rm)",
+                        "La moyenne des deux, 325 MPa"],
+             "bonne": 0,
+             "indice": "Le dimensionnement classique en RDM (fiche 4.1) compare la "
+                       "contrainte à Re, pas à Rm.",
+             "diagnostics": {1: "400 MPa est la résistance à la RUPTURE : l'utiliser pour "
+                                 "un dimensionnement normal laisserait la pièce se "
+                                 "déformer plastiquement bien avant la rupture.",
+                              2: "Aucune formule de RDM n'utilise une moyenne entre Re et "
+                                 "Rm — ce sont deux seuils physiquement différents, "
+                                 "jamais mélangés."}},
+            {"type": "qcm", "label": "Où va le k6",
+             "question": "\"Recommended shaft tolerance: k6\" concerne quel élément ?",
+             "options": ["L'arbre sur lequel on monte le roulement",
+                        "L'alésage intérieur du roulement lui-même",
+                        "Le logement dans le carter"],
+             "bonne": 0,
+             "indice": "\"Shaft\" se traduit directement par \"arbre\".",
+             "diagnostics": {1: "L'alésage du roulement (bore) est une cote fixe donnée "
+                                 "par le fabricant, pas une tolérance à appliquer par le "
+                                 "concepteur.",
+                              2: "Le logement dans le carter reçoit la tolérance "
+                                 "\"housing bore\" (H7 ici), pas le shaft tolerance."}},
+        ],
+        "corrige": {
+            "enonce": "Fiche roulement : bore 25 mm, shaft k6, housing bore H7, yield "
+                      "250 MPa, tensile 400 MPa.",
+            "regle": "**yield strength = Re (dimensionnement) · tensile strength = Rm "
+                    "(rupture) · shaft = arbre · housing bore = alésage du carter.**",
+            "conversions": "Sans objet.",
+            "remplacement": "Dimensionnement RDM classique : σ ≤ Re / s = 250 / s.",
+            "calcul": "Valeur à utiliser pour Re : **250 MPa** · l'arbre reçoit **k6**, "
+                     "le carter reçoit **H7**.",
+            "verification": "C'est exactement la règle des charges de la fiche 6.5 : "
+                            "arbre tournant en k6 (serré), alésage du carter en H7 (léger "
+                            "jeu) — donnée directement par le fabricant, en anglais.",
+        },
+        "a_retenir": "À retenir : yield/tensile et bore/shaft/housing sont les deux "
+                     "familles de faux-amis les plus coûteuses d'une fiche technique "
+                     "anglaise — les confondre revient à dimensionner ou monter la pièce "
+                     "sur la mauvaise donnée.",
+    },
+    {
+        "id": "at128",
+        "chapitre": "Bloc 11",
+        "titre": "Durée de vie d'un roulement : le calcul L10",
+        "theme": "Panorama 2e année",
+        "fiche": "11.1",
+        "figure": None,
+        "vocabulaire": [
+            ("charge dynamique de base C", "une donnée catalogue du roulement, en "
+             "newtons — sa capacité de charge de référence."),
+            ("L10 (en millions de tours)", "la durée de vie que 90 % d'un lot de "
+             "roulements identiques atteignent ou dépassent : L10 = (C/P)³ pour un "
+             "roulement à billes."),
+            ("L10h (en heures)", "la même durée convertie en heures de fonctionnement, en "
+             "tenant compte de la vitesse de rotation N."),
+        ],
+        "enonce": "Un roulement à billes a une charge dynamique de base C = 25 000 N. Il "
+                  "est soumis à une charge réelle P = 3 200 N, à une vitesse N = 1 450 "
+                  "tr/min.",
+        "etapes": [
+            {"type": "numerique", "label": "Durée de vie L10",
+             "unite": "millions de tours", "attendu": 477, "tol": 5,
+             "consigne": "Calcule L10 = (C/P)³.",
+             "indice": "(25000/3200)³.",
+             "pieges": [(7.8, "7,8 est le rapport C/P lui-même, avant de l'élever au "
+                              "cube — L10 exige bien la puissance 3, pas le rapport "
+                              "seul.")]},
+            {"type": "numerique", "label": "Durée de vie en heures",
+             "unite": "h", "attendu": 5481, "tol": 50,
+             "consigne": "L10h = L10 × 10⁶ / (60 × N).",
+             "indice": "477 000 000 / (60 × 1450).",
+             "aide": "≈ 5 481 heures."},
+            {"type": "qcm", "label": "Conclusion si 20 000 h sont exigées",
+             "question": "Le cahier des charges exige 20 000 heures. Ce roulement "
+                        "convient-il ?",
+             "options": ["Non, il n'atteint qu'environ 27 % de l'objectif",
+                        "Oui, 5 481 h dépasse largement l'objectif",
+                        "On ne peut pas conclure sans connaître le diamètre du "
+                        "roulement"],
+             "bonne": 0,
+             "indice": "Compare directement 5 481 h à 20 000 h.",
+             "diagnostics": {1: "5 481 h est très inférieur à 20 000 h — ce roulement est "
+                                 "au contraire largement insuffisant pour cet objectif.",
+                              2: "La durée de vie calculée dépend de C, P et N, tous "
+                                 "donnés dans l'énoncé — le diamètre n'entre pas "
+                                 "directement dans cette formule."}},
+        ],
+        "corrige": {
+            "enonce": "Roulement C = 25 000 N, P = 3 200 N, N = 1 450 tr/min.",
+            "regle": "**L10 = (C/P)³ (millions de tours) · L10h = L10 × 10⁶ / (60N) "
+                    "(heures).**",
+            "conversions": "Sans objet, toutes les grandeurs sont déjà cohérentes (N, "
+                           "tr/min).",
+            "remplacement": "L10 = (25000/3200)³ · L10h = 477×10⁶ / (60×1450)",
+            "calcul": "L10 = **477 millions de tours** · L10h = **5 481 h**.",
+            "verification": "5 481 h représente moins de 30 % des 20 000 h exigées : ce "
+                            "roulement est largement sous-dimensionné pour cet usage, il "
+                            "faudrait un modèle à C plus élevée ou revoir la charge "
+                            "appliquée.",
+        },
+        "a_retenir": "À retenir : un roulement ne se choisit jamais seulement pour qu'il "
+                     "\"tienne\", mais pour qu'il tienne un nombre d'heures donné — c'est "
+                     "le calcul qui distingue un choix intuitif d'une décision prouvée, "
+                     "abordé en détail en deuxième année.",
+    },
+    {
+        "id": "at129",
+        "chapitre": "Bloc 12",
+        "titre": "Une poutre sur deux appuis : compter puis résoudre",
+        "theme": "Statique",
+        "fiche": "12.1",
+        "figure": "types_appuis",
+        "vocabulaire": [
+            ("appui simple", "1 inconnue (perpendiculaire au contact)."),
+            ("articulation", "2 inconnues (deux composantes de force)."),
+            ("le réflexe qui simplifie tout", "prendre les moments au point où passe une "
+             "inconnue inutile l'élimine automatiquement de l'équation (son bras de "
+             "levier y est nul)."),
+        ],
+        "enonce": "Une poutre horizontale de 3 m repose sur une articulation en A (à "
+                  "gauche) et un appui simple en B (à droite). Une charge de 1 200 N est "
+                  "appliquée à 1 m de A.",
+        "etapes": [
+            {"type": "numerique", "label": "Nombre total d'inconnues",
+             "unite": "inconnues", "attendu": 3, "tol": 0.1,
+             "consigne": "Articulation (2 inconnues) + appui simple (1 inconnue).",
+             "indice": "2 + 1.",
+             "aide": "3 inconnues pour 3 équations disponibles : le problème est soluble "
+                    "(isostatique)."},
+            {"type": "numerique", "label": "Réaction verticale en B",
+             "unite": "N", "attendu": 400, "tol": 5,
+             "consigne": "Prends les moments en A pour éliminer Ax et Ay d'un coup : "
+                        "−1200 × 1 + By × 3 = 0.",
+             "indice": "By = 1200 × 1 / 3.",
+             "pieges": [(1200, "1200 N serait la charge elle-même, pas la réaction en B "
+                               "— la charge se répartit entre A et B selon sa position.")]},
+            {"type": "numerique", "label": "Réaction verticale en A",
+             "unite": "N", "attendu": 800, "tol": 5,
+             "consigne": "ΣFy = 0 : Ay + By − 1200 = 0.",
+             "indice": "Ay = 1200 − By.",
+             "aide": "1200 − 400 = 800 N."},
+        ],
+        "corrige": {
+            "enonce": "Poutre 3 m, articulation A, appui simple B, charge 1 200 N à 1 m "
+                      "de A.",
+            "regle": "**Prendre les moments au point où passent les inconnues qu'on veut "
+                    "éliminer** — ici en A, pour faire disparaître Ax et Ay de "
+                    "l'équation des moments.",
+            "conversions": "Sans objet.",
+            "remplacement": "ΣM(A) = 0 → −1200×1 + By×3 = 0 · ΣFy = 0 → Ay + By − 1200 = 0",
+            "calcul": "By = **400 N** · Ay = **800 N** (et Ax = 0, aucune force "
+                     "horizontale).",
+            "verification": "800 + 400 = 1200 N : la somme des réactions retombe bien "
+                            "sur la charge totale appliquée — un contrôle rapide et "
+                            "systématique.",
+        },
+        "a_retenir": "À retenir : compter les inconnues AVANT de calculer (3 équations, "
+                     "3 inconnues maximum en statique plane) et choisir le point de "
+                     "calcul des moments pour éliminer ce qu'on ne cherche pas — deux "
+                     "réflexes qui évitent la plupart des blocages.",
+    },
+    {
+        "id": "at130",
+        "chapitre": "Bloc 12",
+        "titre": "Un arbre en flexion-torsion : la contrainte équivalente",
+        "theme": "Sollicitations composées",
+        "fiche": "12.2",
+        "figure": "sollicitations_composees",
+        "vocabulaire": [
+            ("contrainte équivalente σ éq", "la contrainte de traction pure qui "
+             "produirait le même risque de ruine que l'état de contrainte réel — permet "
+             "de comparer un cas compliqué à Rpe comme en traction simple."),
+            ("critère de Von Mises", "σ éq = √(σ² + 3τ²) — le plus utilisé pour les "
+             "aciers ductiles."),
+            ("pourquoi on n'additionne jamais σ et τ", "ce sont deux grandeurs de "
+             "directions différentes — les additionner reviendrait à additionner une "
+             "force verticale et une force horizontale sans passer par Pythagore."),
+        ],
+        "enonce": "Un arbre plein Ø30 mm en C45 (Re = 340 MPa) transmet un couple "
+                  "Mt = 80 N·m et subit un moment fléchissant Mf = 120 N·m. Coefficient "
+                  "de sécurité s = 3.",
+        "etapes": [
+            {"type": "numerique", "label": "Contrainte de flexion σ",
+             "unite": "MPa", "attendu": 45.3, "tol": 1,
+             "consigne": "σ = Mf / (I/v), avec I/v = π d³/32 = π×27000/32 pour Ø30 mm, "
+                        "et Mf converti en N·mm.",
+             "indice": "Mf = 120 000 N·mm · I/v = 2 651 mm³ · σ = 120000/2651.",
+             "pieges": [(0.0453, "Le résultat en MPa doit être de l'ordre de la dizaine "
+                                 "de MPa — un facteur 1000 manque très probablement dans "
+                                 "la conversion N·m → N·mm.")]},
+            {"type": "numerique", "label": "Contrainte de torsion τ",
+             "unite": "MPa", "attendu": 15.1, "tol": 0.5,
+             "consigne": "τ = Mt / (I₀/v), avec I₀/v = π d³/16 (le double du module de "
+                        "flexion pour une section circulaire).",
+             "indice": "Mt = 80 000 N·mm · I₀/v = 5 301 mm³.",
+             "aide": "80000 / 5301 ≈ 15,1 MPa."},
+            {"type": "numerique", "label": "Contrainte équivalente de Von Mises",
+             "unite": "MPa", "attendu": 52.3, "tol": 1,
+             "consigne": "σ éq = √(σ² + 3τ²).",
+             "indice": "√(45,3² + 3×15,1²).",
+             "pieges": [(60.4, "60,4 MPa correspond à l'addition naïve σ + τ — c'est "
+                               "justement l'erreur physique que cette fiche corrige : "
+                               "cela surestime le risque réel de 15 %.")]},
+        ],
+        "corrige": {
+            "enonce": "Arbre Ø30 mm C45, Mt = 80 N·m, Mf = 120 N·m, Re = 340 MPa, s = 3.",
+            "regle": "**σ = Mf/(I/v) · τ = Mt/(I₀/v) · σ éq = √(σ² + 3τ²) (Von Mises) · "
+                    "condition : σ éq ≤ Re/s.**",
+            "conversions": "Mf = 120 N·m = 120 000 N·mm · Mt = 80 N·m = 80 000 N·mm — "
+                           "l'erreur numéro un de cet exercice est d'oublier ce facteur "
+                           "1000.",
+            "remplacement": "σ = 120000/2651 · τ = 80000/5301 · "
+                            "σéq = √(45,3² + 3×15,1²)",
+            "calcul": "σ = **45,3 MPa** · τ = **15,1 MPa** · σ éq = **52,3 MPa**.",
+            "verification": "Rpe = 340/3 = 113 MPa. 52,3 < 113 : la condition est "
+                            "vérifiée, l'arbre travaille à 46 % de l'admissible — avec "
+                            "une marge confortable, mais rappel : un arbre TOURNANT subit "
+                            "une flexion alternée, donc un vrai calcul exigerait aussi de "
+                            "vérifier la fatigue (2ᵉ année).",
+        },
+        "a_retenir": "À retenir : jamais σ + τ — toujours passer par la contrainte "
+                     "équivalente (Von Mises ou Tresca) avant de comparer à Rpe, et ne "
+                     "jamais oublier la conversion N·m → N·mm avant de calculer.",
+    },
+    {
+        "id": "at131",
+        "chapitre": "Bloc 12",
+        "titre": "Dimensionner un engrenage : de la puissance au module",
+        "theme": "Engrenages",
+        "fiche": "12.5",
+        "figure": "geometrie_engrenage",
+        "vocabulaire": [
+            ("diamètre primitif d", "le cercle théorique de référence, d = m × Z — ne "
+             "correspond à aucune surface visible sur la pièce."),
+            ("module m", "la grandeur qui fixe la taille des dents — se choisit dans une "
+             "série normalisée (1, 1,25, 1,5, 2, 2,5, 3...), toujours arrondie à la "
+             "valeur immédiatement SUPÉRIEURE au calcul."),
+            ("Z ≥ 17", "en dessous d'environ 17 dents, l'outil de taillage affaiblit le "
+             "pied de la dent (interférence) — un seuil à respecter sans déport de "
+             "denture en première année."),
+        ],
+        "enonce": "Un moteur de 5,5 kW tourne à 1 450 tr/min et entraîne un pignon "
+                  "Z1 = 20 dents. Matière 16MnCr5 cémenté (Rpe = 300 MPa), coefficients "
+                  "k = 10 et Y = 0,4.",
+        "etapes": [
+            {"type": "numerique", "label": "Couple sur le pignon",
+             "unite": "N·mm", "attendu": 36200, "tol": 500,
+             "consigne": "Calcule ω = 2πN/60, puis Mt = P/ω (résultat en N·m, à "
+                        "convertir en N·mm).",
+             "indice": "ω = 2π×1450/60 = 151,8 rad/s · Mt = 5500/151,8 = 36,2 N·m.",
+             "pieges": [(36.2, "36,2 est la valeur en N·mm ÷ 1000 (c'est-à-dire en "
+                               "N·m) — le résultat demandé ici est bien en N·mm.")]},
+            {"type": "numerique", "label": "Module minimal par le calcul",
+             "unite": "mm", "attendu": 1.45, "tol": 0.05,
+             "consigne": "m ≥ ∛( 2 × Mt / (k × Z1 × Y × Rpe) ).",
+             "indice": "m ≥ ∛(2×36200 / (10×20×0,4×300)) = ∛3,02.",
+             "aide": "∛3,02 ≈ 1,45 mm."},
+            {"type": "qcm", "label": "Le module à retenir",
+             "question": "Le calcul donne m ≥ 1,45 mm. Quel module normalisé "
+                        "choisir, parmi 1 · 1,25 · 1,5 · 2 · 2,5 ?",
+             "options": ["1,5 — la valeur normalisée immédiatement supérieure",
+                        "1,25 — la valeur la plus proche de 1,45",
+                        "1 — pour rester économique"],
+             "bonne": 0,
+             "indice": "Comme pour un alésage de vérin (fiche 8.2) ou un modèle de "
+                       "fonderie, on ne descend jamais en dessous du minimum calculé.",
+             "diagnostics": {1: "1,25 est plus PROCHE numériquement, mais reste "
+                                 "INFÉRIEUR au minimum requis de 1,45 : la dent casserait "
+                                 "en dessous de la résistance visée.",
+                              2: "1 mm est très inférieur au minimum calculé : la denture "
+                                 "serait dangereusement sous-dimensionnée."}},
+        ],
+        "corrige": {
+            "enonce": "Moteur 5,5 kW à 1 450 tr/min, pignon Z1 = 20, Rpe = 300 MPa, "
+                      "k = 10, Y = 0,4.",
+            "regle": "**Mt = P/ω · m ≥ ∛(2Mt / (k×Z×Y×Rpe)) · toujours arrondir au module "
+                    "normalisé immédiatement SUPÉRIEUR.**",
+            "conversions": "P en watts, ω en rad/s → Mt sort en N·m, à multiplier par "
+                           "1000 pour l'utiliser en N·mm dans la formule du module.",
+            "remplacement": "ω = 2π×1450/60 · Mt = 5500/ω · m ≥ ∛(2×36200/(10×20×0,4×300))",
+            "calcul": "Mt = **36 200 N·mm** · m ≥ **1,45 mm** → module retenu : **1,5 "
+                     "mm**.",
+            "verification": "Avec m = 1,5, d1 = m×Z1 = 30 mm : un pignon de 30 mm de "
+                            "diamètre primitif pour transmettre 36 N·m est un ordre de "
+                            "grandeur tout à fait plausible en mécanique générale.",
+        },
+        "a_retenir": "À retenir : le module ne \"tombe jamais du ciel\" — il se calcule "
+                     "à partir du couple réellement transmis, puis s'arrondit toujours "
+                     "vers le module normalisé supérieur, jamais vers le plus proche.",
+    },
+    {
+        "id": "at132",
+        "chapitre": "Bloc 13",
+        "titre": "Calculer un cordon de soudure d'angle",
+        "theme": "Chaudronnerie et soudage",
+        "fiche": "13.2",
+        "figure": "calcul_cordon",
+        "vocabulaire": [
+            ("gorge a", "la hauteur du triangle du cordon, mesurée depuis la racine — "
+             "c'est la plus petite épaisseur, donc celle qui casse en premier."),
+            ("longueur utile", "la longueur du cordon MOINS 2a à chaque extrémité, pour "
+             "tenir compte des amorçages et arrêts, souvent défectueux."),
+            ("section résistante", "S = a × L_utile — jamais la largeur apparente du "
+             "cordon (z), toujours la gorge (a)."),
+        ],
+        "enonce": "Une console est soudée sur un poteau par deux cordons d'angle "
+                  "verticaux de 120 mm de long chacun. Elle supporte 18 000 N. Tôles en "
+                  "S235 de 8 mm d'épaisseur, coefficient de sécurité s = 3.",
+        "etapes": [
+            {"type": "numerique", "label": "Gorge a retenue",
+             "unite": "mm", "attendu": 5, "tol": 0.3,
+             "consigne": "a ≈ 0,7 × épaisseur de la plus fine tôle.",
+             "indice": "0,7 × 8 = 5,6 → on retient une valeur usuelle proche.",
+             "aide": "a = 5 mm (valeur usuelle retenue, à vérifier ensuite)."},
+            {"type": "numerique", "label": "Section résistante totale",
+             "unite": "mm²", "attendu": 1100, "tol": 20,
+             "consigne": "Longueur utile par cordon = 120 − 2×a. Section = a × "
+                        "(longueur utile totale des deux cordons).",
+             "indice": "L utile = 120 − 10 = 110 mm par cordon, soit 220 mm au total. "
+                       "S = 5 × 220.",
+             "pieges": [(1200, "1200 mm² utiliserait la longueur brute (120×2) sans "
+                               "retrancher les 2a d'amorçage/arrêt à chaque extrémité — "
+                               "une marge de sécurité que le cours impose.")]},
+            {"type": "numerique", "label": "Contrainte de cisaillement dans le cordon",
+             "unite": "MPa", "attendu": 16.4, "tol": 0.5,
+             "consigne": "τ = F / S.",
+             "indice": "18000 / 1100.",
+             "aide": "18000 / 1100 ≈ 16,4 MPa."},
+        ],
+        "corrige": {
+            "enonce": "Console, 2 cordons de 120 mm, F = 18 000 N, tôle S235 de 8 mm, "
+                      "s = 3.",
+            "regle": "**a ≈ 0,7 × e · L_utile = L − 2a par cordon · S = a × "
+                    "L_utile_totale · τ = F/S, à comparer à Rpg ≈ 0,5×(Re/s).**",
+            "conversions": "Sans objet.",
+            "remplacement": "L_utile = 120−2×5 = 110 · S = 5×(2×110) · τ = 18000/1100",
+            "calcul": "L_utile = **110 mm/cordon** · S = **1 100 mm²** · τ = **16,4 "
+                     "MPa**.",
+            "verification": "Rpg ≈ 0,5 × (235/3) = 39,2 MPa. 16,4 < 39,2 : la condition "
+                            "est largement vérifiée (42 % de l'admissible) — plausible "
+                            "pour une console de charpente légère supportant 1,8 tonne.",
+        },
+        "a_retenir": "À retenir : c'est la gorge a, pas la largeur apparente z, qui "
+                     "définit la résistance d'un cordon — et un cordon plus gros que "
+                     "0,7×e n'apporte rien : c'est la tôle qui cède avant lui.",
+    },
+    {
+        "id": "at133",
+        "chapitre": "Bloc 13",
+        "titre": "L'inertie ramenée : pourquoi un réducteur change tout",
+        "theme": "Motorisation",
+        "fiche": "13.3",
+        "figure": "inertie_ramenee",
+        "vocabulaire": [
+            ("inertie ramenée", "l'inertie d'une charge, telle que \"vue\" par le moteur "
+             "à travers un réducteur : J ramenée = J charge × r², avec r le rapport de "
+             "réduction."),
+            ("couple d'accélération", "C acc = J × α — souvent la contribution "
+             "dominante au démarrage, oubliée par l'erreur classique de ne "
+             "dimensionner que sur le régime établi."),
+            ("rapport d'inertie", "J ramenée / J moteur — doit rester ≤ 5 pour un axe "
+             "précis, sous peine d'oscillations difficiles à asservir."),
+        ],
+        "enonce": "Un plateau tournant (J = 2,5 kg·m²) doit passer de 0 à 60 tr/min en "
+                  "0,8 s. Le frottement du palier demande 3 N·m. Réducteur 1/8, "
+                  "rendement 0,9.",
+        "etapes": [
+            {"type": "numerique", "label": "Couple d'accélération côté charge",
+             "unite": "N·m", "attendu": 19.6, "tol": 0.5,
+             "consigne": "ω = 2π×60/60 = 6,28 rad/s · α = ω/0,8 · C acc = J × α.",
+             "indice": "α = 6,28/0,8 = 7,85 rad/s² · C acc = 2,5×7,85.",
+             "aide": "2,5 × 7,85 ≈ 19,6 N·m."},
+            {"type": "numerique", "label": "Couple total côté charge",
+             "unite": "N·m", "attendu": 22.6, "tol": 0.5,
+             "consigne": "Additionne le couple d'accélération et le couple de "
+                        "frottement.",
+             "indice": "19,6 + 3.",
+             "pieges": [(3, "3 N·m est seulement le frottement — c'est justement "
+                            "l'erreur classique de ne dimensionner que sur le régime "
+                            "établi, en oubliant l'accélération qui domine ici.")]},
+            {"type": "numerique", "label": "Couple demandé au moteur",
+             "unite": "N·m", "attendu": 3.14, "tol": 0.1,
+             "consigne": "Le réducteur 1/8 multiplie le couple par 8 côté charge : vu du "
+                        "moteur, il faut diviser par 8, puis majorer par le rendement.",
+             "indice": "C moteur = 22,6 / (8 × 0,9).",
+             "aide": "22,6 / 7,2 ≈ 3,14 N·m."},
+        ],
+        "corrige": {
+            "enonce": "Plateau J = 2,5 kg·m², 0→60 tr/min en 0,8 s, frottement 3 N·m, "
+                      "réducteur 1/8, η = 0,9.",
+            "regle": "**C acc = J×α · C charge totale = C acc + C frottement · C moteur "
+                    "= C charge / (r × η).**",
+            "conversions": "Vitesse convertie en rad/s avant tout calcul d'accélération "
+                           "angulaire.",
+            "remplacement": "α = 6,28/0,8 · C acc = 2,5×7,85 · C total = 19,6+3 · "
+                            "C moteur = 22,6/(8×0,9)",
+            "calcul": "C acc = **19,6 N·m** · C total = **22,6 N·m** · C moteur = "
+                     "**3,14 N·m**.",
+            "verification": "Le couple d'accélération (19,6 N·m) représente 87 % du "
+                            "besoin total, contre 13 % pour le frottement seul — "
+                            "dimensionner uniquement sur le régime établi aurait choisi "
+                            "un moteur environ sept fois trop petit.",
+        },
+        "a_retenir": "À retenir : un moteur se choisit sur son pire moment, presque "
+                     "toujours le démarrage, pas sur le régime établi — et le réducteur "
+                     "divise l'inertie perçue par le CARRÉ de son rapport, ce qui rend "
+                     "une charge lourde bien plus facile à piloter.",
+    },
+    {
+        "id": "at134",
+        "chapitre": "Bloc 13",
+        "titre": "Diagnostiquer un mode d'usure à partir de la surface",
+        "theme": "Tribologie",
+        "fiche": "13.4",
+        "figure": "tribologie",
+        "vocabulaire": [
+            ("usure adhésive (grippage)", "les sommets se soudent sous pression puis "
+             "s'arrachent — on voit des TRANSFERTS de matière d'une pièce sur l'autre."),
+            ("usure abrasive", "une particule dure laboure la surface — on voit des "
+             "RAYURES parallèles au sens du mouvement."),
+            ("usure par fatigue de contact (pitting)", "des fissures naissent sous la "
+             "surface sous pressions répétées — on voit des CRATÈRES."),
+            ("régime hydrodynamique", "le lubrifiant sépare complètement les surfaces : "
+             "un palier bien lubrifié en régime établi ne s'use quasiment pas — il s'use "
+             "surtout aux démarrages et arrêts."),
+        ],
+        "enonce": "Un technicien inspecte un guidage qui a chauffé et grippé : il "
+                  "observe des zones où de la matière semble avoir été arrachée d'une "
+                  "pièce et transférée sur l'autre.",
+        "etapes": [
+            {"type": "qcm", "label": "Le mode d'usure observé",
+             "question": "Des transferts de matière d'une pièce sur l'autre signent "
+                        "quel mode d'usure ?",
+             "options": ["L'usure adhésive (grippage)",
+                        "L'usure abrasive",
+                        "L'usure corrosive"],
+             "bonne": 0,
+             "indice": "Ce sont exactement les sommets qui se soudent puis s'arrachent, "
+                       "caractéristiques du grippage.",
+             "diagnostics": {1: "L'usure abrasive laisse des rayures parallèles, causées "
+                                 "par une particule dure — pas de transfert de matière "
+                                 "entre les deux pièces.",
+                              2: "L'usure corrosive vient de l'oxydation emportée par le "
+                                 "frottement — elle ne produit pas de transfert de "
+                                 "matière d'une pièce vers l'autre."}},
+            {"type": "qcm", "label": "Le remède le plus direct",
+             "question": "Quelle mesure corrige le plus directement ce mode d'usure ?",
+             "options": ["Lubrifier et vérifier que les deux pièces ne sont pas dans le "
+                        "même métal (jamais acier contre acier de même nuance)",
+                        "Filtrer l'air ambiant pour retirer les poussières",
+                        "Ajouter des additifs anti-corrosion au lubrifiant"],
+             "bonne": 0,
+             "indice": "Le grippage se combat en évitant le contact direct sous "
+                       "pression entre matériaux identiques, et en séparant les surfaces "
+                       "par un film.",
+             "diagnostics": {1: "Filtrer les poussières est le remède de l'usure "
+                                 "ABRASIVE, pas de l'usure adhésive.",
+                              2: "Les additifs anti-corrosion ciblent l'usure "
+                                 "CORROSIVE, un phénomène différent du grippage."}},
+        ],
+        "corrige": {
+            "enonce": "Guidage grippé, transferts de matière observés entre les deux "
+                      "pièces.",
+            "regle": "**Chaque mode d'usure a une signature visuelle propre : "
+                    "transferts → adhésif · rayures parallèles → abrasif · cratères → "
+                    "fatigue de contact · surface piquée sans rayure → corrosif.**",
+            "conversions": "Sans objet.",
+            "remplacement": "Observation → mode d'usure → remède ciblé, jamais l'inverse.",
+            "calcul": "Mode diagnostiqué : **usure adhésive (grippage)**.",
+            "verification": "Le fait que ça \"chauffe\" avant de gripper est cohérent : "
+                            "les sommets soudés puis arrachés produisent localement une "
+                            "chaleur importante, qui aggrave encore le phénomène.",
+        },
+        "a_retenir": "À retenir : un diagnostic d'usure commence toujours par regarder "
+                     "la surface — rayures, transferts de matière ou cratères ne "
+                     "racontent jamais la même histoire, et n'appellent pas le même "
+                     "remède.",
+    },
+    {
+        "id": "at135",
+        "chapitre": "Bloc 13",
+        "titre": "Résonance : la fréquence d'excitation d'un arbre",
+        "theme": "Vibrations",
+        "fiche": "13.5",
+        "figure": "resonance",
+        "vocabulaire": [
+            ("fréquence propre", "le rythme naturel d'une structure : f = (1/2π)×√(k/m) "
+             "— plus c'est raide, plus elle est haute ; plus c'est lourd, plus elle est "
+             "basse."),
+            ("fréquence d'excitation", "la fréquence à laquelle une machine sollicite sa "
+             "structure — f (Hz) = N (tr/min) / 60 pour un balourd de rotation."),
+            ("règle des ±20 %", "la fréquence propre doit s'écarter d'au moins 20 % de "
+             "toute fréquence d'excitation : f propre ≥ 1,3×f excitation, ou ≤ 0,7×f "
+             "excitation."),
+        ],
+        "enonce": "Un arbre tourne à 1 450 tr/min et porte un pignon de 20 dents.",
+        "etapes": [
+            {"type": "numerique", "label": "Fréquence d'excitation de rotation",
+             "unite": "Hz", "attendu": 24.2, "tol": 0.3,
+             "consigne": "f = N / 60.",
+             "indice": "1450 / 60.",
+             "aide": "1450 / 60 ≈ 24,2 Hz."},
+            {"type": "numerique", "label": "Fréquence d'engrènement",
+             "unite": "Hz", "attendu": 483, "tol": 5,
+             "consigne": "Un engrenage de 20 dents excite aussi à 20 fois la fréquence "
+                        "de rotation.",
+             "indice": "20 × 24,2.",
+             "pieges": [(24.2, "24,2 Hz est la fréquence de ROTATION seule — "
+                               "l'engrènement crée une excitation supplémentaire, bien "
+                               "plus haute, qu'il faut vérifier séparément.")]},
+            {"type": "qcm", "label": "Structure raide ou souple ?",
+             "question": "Une structure a une fréquence propre de 35 Hz. Par rapport à "
+                        "l'excitation de rotation (24,2 Hz), respecte-t-elle la règle "
+                        "des ±20 % ?",
+             "options": ["Oui — 35 est bien supérieur à 1,3 × 24,2 ≈ 31,4 Hz",
+                        "Non — 35 est trop proche de 24,2 Hz",
+                        "Impossible à dire sans connaître la masse de la structure"],
+             "bonne": 0,
+             "indice": "Compare 35 Hz au seuil f propre ≥ 1,3 × f excitation.",
+             "diagnostics": {1: "35 Hz dépasse bien le seuil de 31,4 Hz calculé avec la "
+                                 "règle des 20 % — la structure est donc \"raide\" par "
+                                 "rapport à cette excitation, ce qui est sûr.",
+                              2: "La règle des ±20 % se vérifie directement à partir des "
+                                 "deux fréquences données, sans avoir besoin de la masse "
+                                 "séparément."}},
+        ],
+        "corrige": {
+            "enonce": "Arbre à 1 450 tr/min, pignon de 20 dents.",
+            "regle": "**f rotation = N/60 · f engrènement = Z × f rotation · sécurité si "
+                    "f propre ≥ 1,3×f excitation ou ≤ 0,7×f excitation.**",
+            "conversions": "N déjà en tr/min, conversion directe en Hz par /60.",
+            "remplacement": "f rotation = 1450/60 · f engrènement = 20×24,2",
+            "calcul": "f rotation = **24,2 Hz** · f engrènement = **483 Hz**.",
+            "verification": "Il faut vérifier qu'AUCUNE fréquence propre de la structure "
+                            "ne tombe près de 24,2 Hz NI de 483 Hz — deux risques de "
+                            "résonance bien distincts à examiner séparément.",
+        },
+        "a_retenir": "À retenir : une machine excite sa structure à plusieurs fréquences "
+                     "à la fois (rotation, engrènement, harmoniques) — vérifier "
+                     "seulement la fréquence de rotation ne suffit jamais.",
+    },
+    {
+        "id": "at136",
+        "chapitre": "Bloc 16",
+        "titre": "Confronter deux documents avant de les citer",
+        "theme": "Culture générale — méthode de la synthèse",
+        "fiche": "16.1",
+        "figure": "methode_synthese",
+        "vocabulaire": [
+            ("confrontation des documents", "l'étape la plus souvent sautée, et celle "
+             "qui fait la différence de note : repérer si deux documents disent la même "
+             "chose, se nuancent, se contredisent, ou si l'un illustre l'autre."),
+            ("plan thématique", "organisé par idées, PAS document par document — un "
+             "plan qui traite le document 1 puis 2 puis 3 est un résumé juxtaposé, "
+             "lourdement sanctionné."),
+        ],
+        "enonce": "Sur le télétravail : document 1 affirme qu'il améliore la "
+                  "productivité ; document 2 cite une étude montrant l'inverse au bout "
+                  "de plusieurs mois ; document 3 donne un témoignage individuel qui "
+                  "illustre cette baisse.",
+        "etapes": [
+            {"type": "qcm", "label": "La relation entre les documents 1 et 2",
+             "question": "Quelle relation logique unit les documents 1 et 2 ?",
+             "options": ["Le document 2 nuance le document 1 (accord initial puis "
+                        "limite dans le temps)",
+                        "Ils disent exactement la même chose",
+                        "Ils n'ont aucun rapport entre eux"],
+             "bonne": 0,
+             "indice": "Le document 2 ne contredit pas frontalement le document 1, il en "
+                       "précise une limite temporelle.",
+             "diagnostics": {1: "Ils ne disent pas la même chose : l'un est positif à "
+                                 "court terme, l'autre negatif à moyen terme — c'est une "
+                                 "nuance, pas une répétition.",
+                              2: "Les deux documents portent sur le même effet "
+                                 "(productivité du télétravail), à des échelles de temps "
+                                 "différentes — ils sont directement liés."}},
+            {"type": "qcm", "label": "Où placer le document 3 dans le plan",
+             "question": "Comment utiliser le témoignage individuel (document 3) dans "
+                        "une synthèse bien construite ?",
+             "options": ["L'enchaîner avec le document 2 pour aller du général "
+                        "(l'étude) au concret (le témoignage)",
+                        "Lui consacrer un paragraphe entier séparé des deux autres",
+                        "Ne pas le citer car un témoignage individuel n'est pas une "
+                        "preuve statistique"],
+             "bonne": 0,
+             "indice": "Un document qui illustre concrètement une idée générale se "
+                       "mobilise DANS le même paragraphe que cette idée.",
+             "diagnostics": {1: "Un paragraphe séparé par document reconstitue "
+                                 "exactement le \"résumé juxtaposé\" que la méthode "
+                                 "interdit — chaque paragraphe doit croiser plusieurs "
+                                 "documents.",
+                              2: "Un témoignage reste un document du corpus à exploiter : "
+                                 "il n'a pas besoin d'être une preuve statistique pour "
+                                 "illustrer une idée déjà appuyée par une étude."}},
+        ],
+        "corrige": {
+            "enonce": "Trois documents sur le télétravail : gain de productivité, étude "
+                      "nuançant ce gain, témoignage illustrant la nuance.",
+            "regle": "**Confronter avant d'écrire : accord, nuance, opposition ou "
+                    "illustration — puis construire un plan par idées, jamais document "
+                    "par document.**",
+            "conversions": "Sans objet.",
+            "remplacement": "Doc 1 (gain) + Doc 2 (nuance) + Doc 3 (illustration de la "
+                            "nuance) → un seul mouvement d'idée, pas trois paragraphes "
+                            "séparés.",
+            "calcul": "Relation 1↔2 : **nuance** · Rôle du document 3 : **illustration, "
+                     "à enchaîner avec le document 2**.",
+            "verification": "Une phrase comme « Si le télétravail semble d'abord gagner "
+                            "en efficacité, plusieurs études nuancent ce constat sur le "
+                            "moyen terme, comme en témoigne [document 3] » mobilise les "
+                            "trois documents en une seule idée — exactement l'objectif "
+                            "de la méthode.",
+        },
+        "a_retenir": "À retenir : la relation la plus fréquente entre documents d'un "
+                     "corpus est l'accord-avec-nuance, pas l'opposition franche — "
+                     "cherchez-la avant de forcer un désaccord qui n'existe pas.",
+    },
+    {
+        "id": "at137",
+        "chapitre": "Bloc 16",
+        "titre": "Un exemple vague ou un exemple qui prouve",
+        "theme": "Culture générale — écriture personnelle",
+        "fiche": "16.2",
+        "figure": "plan_argumentation",
+        "vocabulaire": [
+            ("idée → mécanisme → exemple", "la structure d'un argument qui convainc : "
+             "l'affirmation seule ne suffit jamais, il faut expliquer POURQUOI puis "
+             "prouver PAR UN FAIT précis."),
+            ("exemple précis", "un fait daté, chiffré, nommé — jamais \"on le voit "
+             "souvent\" ou \"beaucoup de gens pensent que\", qui ne prouvent rien."),
+        ],
+        "enonce": "Un candidat écrit : « Le progrès technique a souvent des "
+                  "conséquences négatives sur l'emploi. » Un autre écrit : "
+                  "« L'automatisation des lignes de production dans l'industrie "
+                  "automobile a réduit certains postes ouvriers, tout en créant de "
+                  "nouveaux emplois qualifiés en maintenance et programmation. »",
+        "etapes": [
+            {"type": "qcm", "label": "Lequel des deux prouve son affirmation",
+             "question": "Lequel des deux argument convainc réellement un correcteur ?",
+             "options": ["Le second — il donne un exemple daté et précis, dans un "
+                        "secteur nommé",
+                        "Le premier — il va droit au but sans détour inutile",
+                        "Les deux se valent, le fond est identique"],
+             "bonne": 0,
+             "indice": "Le premier énonce une généralité sans rien qui la prouve ; le "
+                       "second cite un secteur précis et un mécanisme concret "
+                       "(remplacement de postes, création d'autres postes).",
+             "diagnostics": {1: "Aller droit au but sans preuve n'est pas une qualité en "
+                                 "écriture personnelle : une thèse sans arguments "
+                                 "n'est qu'une opinion, un argument sans exemple n'est "
+                                 "qu'une affirmation.",
+                              2: "Le fond diffère radicalement : le premier reste une "
+                                 "généralité invérifiable, le second s'appuie sur un fait "
+                                 "précis et vérifiable."}},
+            {"type": "qcm", "label": "Ce qui manque le plus souvent dans une copie faible",
+             "question": "Dans une copie qui n'obtient pas de bons résultats en écriture "
+                        "personnelle, quel maillon de la chaîne « idée → mécanisme → "
+                        "exemple » manque le plus souvent ?",
+             "options": ["Le mécanisme et l'exemple : l'idée est juste énoncée, jamais "
+                        "expliquée ni prouvée",
+                        "L'idée elle-même, souvent absente de la copie",
+                        "L'orthographe, qui prime sur le fond de l'argumentation"],
+             "bonne": 0,
+             "indice": "Le cours insiste : un argument brut ne convainc jamais seul, "
+                       "c'est le mécanisme et l'exemple qui manquent le plus souvent.",
+             "diagnostics": {1: "Les idées sont rarement absentes — c'est leur "
+                                 "justification (mécanisme, exemple) qui fait le plus "
+                                 "souvent défaut.",
+                              2: "L'orthographe compte dans la note (fiche 16.3), mais "
+                                 "elle ne remplace jamais un raisonnement — les deux sont "
+                                 "évalués séparément."}},
+        ],
+        "corrige": {
+            "enonce": "Deux versions du même argument sur le progrès technique et "
+                      "l'emploi.",
+            "regle": "**Idée (l'affirmation) → mécanisme (pourquoi/comment) → exemple "
+                    "(un fait précis, daté, chiffré) — les trois maillons sont "
+                    "nécessaires, aucun ne suffit seul.**",
+            "conversions": "Sans objet.",
+            "remplacement": "\"Souvent négatif\" (vague) → \"réduit certains postes... "
+                            "tout en créant... en maintenance et programmation\" "
+                            "(mécanisme + exemple sectoriel précis)",
+            "calcul": "Argument qui convainc : **le second**, structuré en idée → "
+                     "mécanisme → exemple.",
+            "verification": "Le second argument survivrait à la question « pouvez-vous "
+                            "être plus précis ? », pas le premier — c'est un bon test "
+                            "pour juger la solidité d'un argument avant de le rédiger.",
+        },
+        "a_retenir": "À retenir : deux ou trois arguments construits (idée, mécanisme, "
+                     "exemple précis) valent mieux que six affirmations vagues — la "
+                     "précision de l'exemple est ce qui distingue une bonne copie d'une "
+                     "copie moyenne.",
+    },
+    {
+        "id": "at138",
+        "chapitre": "Bloc 16",
+        "titre": "Les accords et homophones qui coûtent le plus de points",
+        "theme": "Culture générale — grammaire",
+        "fiche": "16.3",
+        "figure": "relecture_trois_passages",
+        "vocabulaire": [
+            ("accord du participe passé avec avoir", "s'accorde avec le COD seulement "
+             "s'il est placé AVANT le verbe."),
+            ("a / à", "« a » se remplace par « avait » (verbe avoir) ; « à » ne se "
+             "remplace pas — le réflexe qui tranche presque toujours."),
+            ("on / ont", "« on » se remplace par « il » ; « ont » se remplace par "
+             "« avaient »."),
+        ],
+        "enonce": "Deux pièges parmi les plus fréquents en copie de synthèse ou "
+                  "d'écriture personnelle : l'accord du participe passé avec avoir, et "
+                  "la confusion entre a/à et on/ont.",
+        "etapes": [
+            {"type": "qcm", "label": "Accorder le participe passé",
+             "question": "Laquelle de ces deux phrases est correctement accordée : "
+                        "« Les documents que j'ai lu » ou « Les documents que j'ai "
+                        "lus » ?",
+             "options": ["« Les documents que j'ai lus » — le COD « que » (documents) "
+                        "est placé avant le verbe",
+                        "« Les documents que j'ai lu » — le participe passé avec avoir "
+                        "reste toujours invariable",
+                        "Les deux formes sont acceptées à l'écrit"],
+             "bonne": 0,
+             "indice": "Remplace « que » par ce qu'il représente : « les documents » — "
+                       "il précède bien le verbe « ai lu(s) ».",
+             "diagnostics": {1: "Le participe passé avec avoir S'ACCORDE avec le COD "
+                                 "quand celui-ci est placé avant le verbe — ce n'est pas "
+                                 "systématiquement invariable.",
+                              2: "Une seule des deux formes est correcte en français "
+                                 "standard, attendu dans une copie de synthèse ou "
+                                 "d'écriture personnelle."}},
+            {"type": "qcm", "label": "Trancher a/à et on/ont",
+             "question": "Dans « Les entreprises _ adopté ces outils, ce qui les _ "
+                        "conduit _ revoir leur organisation », quels mots choisir dans "
+                        "l'ordre ?",
+             "options": ["ont · a · à",
+                        "on · à · a",
+                        "ont · à · a"],
+             "bonne": 0,
+             "indice": "Teste chaque mot en le remplaçant : « avaient adopté » "
+                       "fonctionne, « avait conduit » fonctionne, mais « à revoir » ne "
+                       "se remplace jamais par « avait ».",
+             "diagnostics": {1: "« on » se remplacerait par « il » ici — « il adopté » "
+                                 "n'a aucun sens, donc ce n'est pas « on ».",
+                              2: "Le deuxième mot doit être « a » (remplaçable par "
+                                 "« avait conduit »), pas « à » qui ne se remplace "
+                                 "jamais ainsi."}},
+        ],
+        "corrige": {
+            "enonce": "Deux pièges classiques : accord du participe passé avec avoir, "
+                      "et confusion a/à, on/ont.",
+            "regle": "**Participe passé + avoir : accord seulement si le COD précède le "
+                    "verbe · a = avait (remplaçable) ≠ à (non remplaçable) · on = il "
+                    "(remplaçable) ≠ ont = avaient (remplaçable).**",
+            "conversions": "Sans objet.",
+            "remplacement": "« que j'ai lus » (COD avant) · « les entreprises ONT "
+                            "adopté » (=avaient) · « les A conduit » (=avait) · "
+                            "« À revoir » (non remplaçable)",
+            "calcul": "Réponses : **lus** (accord) · **ont, a, à** (dans cet ordre).",
+            "verification": "Le test de remplacement (« avait », « il ») fonctionne dans "
+                            "les deux cas et donne un résultat cohérent avec le sens de "
+                            "la phrase — c'est le réflexe le plus fiable en relecture.",
+        },
+        "a_retenir": "À retenir : une dizaine de pièges (accords, homophones) "
+                     "reviennent dans la quasi-totalité des copies — les connaître et "
+                     "les tester systématiquement à la relecture élimine la majorité "
+                     "des fautes, sans avoir besoin de refaire toute sa grammaire.",
     },
 ]
 
@@ -52960,6 +57190,19 @@ elif PAGE == "📊 Ma progression":
         st.info("Aucun résultat de quiz enregistré pour le moment.")
 
     st.divider()
+    st.subheader("Historique des contrôles")
+    _controles_p = P.get("controles", [])
+    if _controles_p:
+        _c_moy_p = sum(c["note"] for c in _controles_p) / len(_controles_p)
+        st.caption(f"{len(_controles_p)} contrôle(s) passé(s) · moyenne : {_c_moy_p:.1f} / 20")
+        df_controles = pd.DataFrame(_controles_p)
+        df_controles = df_controles.rename(columns={
+            "date": "Date", "note": "Note", "questions": "Questions", "bonnes": "Bonnes réponses"})
+        st.dataframe(df_controles, hide_index=True, width="stretch")
+    else:
+        st.info("Aucun contrôle passé pour le moment (page « Mode contrôle »).")
+
+    st.divider()
     st.subheader("Validation par thème")
     st.caption(
         "Règle du parcours : 70 % ou plus au dernier quiz sur un thème = notion validée ; "
@@ -53041,7 +57284,8 @@ elif PAGE == "📊 Ma progression":
                         st.error("Fichier invalide : " + ", ".join(_pbs_p) + ".")
                     else:
                         _nouvelle_p = {"fiches_lues": [], "resultats_quiz": [], "notes": {},
-                                       "erreurs": {}, "exercices_guides_termines": [], "srs": {}}
+                                       "erreurs": {}, "exercices_guides_termines": [], "srs": {},
+                                       "ateliers_termines": [], "controles": []}
                         _nouvelle_p.update(_donnees_import_p)
                         st.session_state.progression = _nouvelle_p
                         sauver_progression(_nouvelle_p)
