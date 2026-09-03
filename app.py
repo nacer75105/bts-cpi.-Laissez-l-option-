@@ -55209,6 +55209,7 @@ def _rendre_exercice_interactif(_ex, _prefixe):
 NB_FICHES = sum(len(b.get("fiches", [])) for b in BLOCS)
 PAGE_COURS = f"📚 Cours ({NB_FICHES} fiches)"
 
+PAGE_MECA = "⚙️ Mécanique et CAO"
 PAGE_MATHS = "🧮 Mathématiques"
 PAGE_PHYSCHIM = "⚗️ Physique-Chimie"
 PAGE_ANGLAIS = "🇬🇧 Anglais technique"
@@ -55217,6 +55218,7 @@ PAGE_GESTION = "💶 Économie-gestion"
 
 _OPTIONS_NAV = ["🏠 Tableau de bord",
                 PAGE_COURS,
+                PAGE_MECA,
                 PAGE_MATHS,
                 PAGE_PHYSCHIM,
                 PAGE_ANGLAIS,
@@ -55373,6 +55375,8 @@ def _afficher_fiche(bloc, fiche, fiche_id):
         st.success("Note enregistrée.")
 
 
+_IDS_HORS_MECA = (7, 8, 10, 11, 16, 17, 18, 19)
+BLOCS_MECA = [b for b in BLOCS if b.get("id") not in _IDS_HORS_MECA]
 BLOCS_MATHS = [b for b in BLOCS if b.get("id") in (7, 17, 18, 19)]
 BLOCS_PHYSCHIM = [b for b in BLOCS if b.get("id") == 8]
 BLOCS_ANGLAIS = [b for b in BLOCS if b.get("id") == 10]
@@ -55631,6 +55635,47 @@ elif PAGE == PAGE_COURS:
         fiche_id = fiche['id']
 
     _afficher_fiche(bloc, fiche, fiche_id)
+
+
+# ===========================================================================
+# PAGE : MÉCANIQUE ET CAO (raccourci — tous les blocs techniques hors
+# mathématiques/physique-chimie/langues/culture générale/économie-gestion,
+# mêmes fiches que dans « Cours », même id, même progression, même rendu)
+# ===========================================================================
+
+elif PAGE == PAGE_MECA:
+    st.title("Mécanique et CAO")
+    st.markdown(
+        '<div class="info-box">Le cœur technique du BTS CPI : analyse fonctionnelle, '
+        'tolérancement et ajustements, matériaux, résistance des matériaux (RDM), CAO et '
+        'lecture de plan, liaisons et guidages, procédés de fabrication, méthodologie de '
+        'projet, statique, plasturgie/soudage/motorisation/tribologie/vibrations, études de '
+        'cas complètes et fiches méthode — du module 0 débutant jusqu\'aux compléments. Ce '
+        'sont les mêmes fiches que dans « Cours », réunies ici pour ne pas les chercher au '
+        'milieu des chapitres de maths, physique-chimie ou langues.</div>',
+        unsafe_allow_html=True)
+    st.write("")
+
+    _saut_mc = st.session_state.pop("_saut", None)
+    noms_blocs_mc = [b["titre"] for b in BLOCS_MECA]
+    _idx_bloc_mc = noms_blocs_mc.index(_saut_mc[0]) if _saut_mc and _saut_mc[0] in noms_blocs_mc else 0
+    choix_bloc_mc = st.selectbox("Bloc", noms_blocs_mc, index=_idx_bloc_mc, key="_bloc_meca")
+    bloc_mc = BLOCS_MECA[noms_blocs_mc.index(choix_bloc_mc)]
+
+    st.markdown(f'<div class="bloc-titre"><b>{bloc_mc["titre"]}</b><br>'
+                f'<span style="font-size:0.9em">{bloc_mc["resume"]}</span></div>',
+                unsafe_allow_html=True)
+
+    fiches_list_mc = bloc_mc.get("fiches", [])
+    noms_fiches_mc = [f"Fiche {f['id']} — {f['titre']}" for f in fiches_list_mc]
+    _idx_fiche_mc = 0
+    if _saut_mc and _saut_mc[0] == bloc_mc["titre"]:
+        _idx_fiche_mc = next((k for k, f in enumerate(fiches_list_mc)
+                              if f.get("id") == _saut_mc[1]), 0)
+    choix_fiche_mc = st.selectbox("Fiche", noms_fiches_mc, index=_idx_fiche_mc, key="_fiche_meca")
+    fiche_mc = fiches_list_mc[noms_fiches_mc.index(choix_fiche_mc)]
+
+    _afficher_fiche(bloc_mc, fiche_mc, fiche_mc["id"])
 
 
 # ===========================================================================
