@@ -3661,6 +3661,32 @@ def couple_galvanique():
     return _svg("".join(p), 760, 370)
 
 
+def seuil_rentabilite_graphe():
+    p = [_txt(40, 24, "Deux droites de coût : où elles se croisent, les deux solutions coûtent pareil.",
+              12, TRAIT, "start", True)]
+    ox, oy = 70, 260
+    p.append(f"<line x1='{ox}' y1='{oy}' x2='700' y2='{oy}' stroke='{TRAIT}' stroke-width='2'/>")
+    p.append(f"<line x1='{ox}' y1='{oy}' x2='{ox}' y2='40' stroke='{TRAIT}' stroke-width='2'/>")
+    p.append(_txt(700, oy + 20, "nombre de pièces", 12, TRAIT, "end"))
+    p.append(_txt(ox - 10, 34, "coût total (€)", 12, TRAIT, "end"))
+    # usinage : 46 * n, pas d'outillage — droite depuis l'origine
+    p.append(f"<line x1='{ox}' y1='{oy}' x2='620' y2='60' stroke='{ALESAGE}' stroke-width='2.4'/>")
+    p.append(_txt(560, 78, "usinage : 46 €/pièce", 12, ALESAGE, "start", True))
+    # fonderie : 8500 + 7*n — ordonnée à l'origine élevée, pente faible
+    oy_fond = oy - 55
+    p.append(f"<line x1='{ox}' y1='{oy_fond}' x2='620' y2='{oy_fond - 90}' stroke='{OK}' stroke-width='2.4'/>")
+    p.append(_txt(560, oy_fond - 100, "fonderie : 8 500 € + 7 €/pièce", 12, OK, "start", True))
+    # point de croisement approx (218 pièces)
+    xc = ox + 218 / 1000 * (620 - ox)
+    yc = oy - 218 / 1000 * (oy - 60)
+    p.append(f"<circle cx='{xc:.0f}' cy='{yc:.0f}' r='5' fill='{ALERTE}'/>")
+    p.append(f"<line x1='{xc:.0f}' y1='{yc:.0f}' x2='{xc:.0f}' y2='{oy}' stroke='{ALERTE}' stroke-width='1.6' stroke-dasharray='4 3'/>")
+    p.append(_txt(xc, oy + 20, "≈ 218 pièces", 12, ALERTE, "middle", True))
+    p.append(f"<rect x='40' y='300' width='660' height='40' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p.append(_txt(56, 324, "Avant le croisement : l'usinage gagne. Après : la fonderie gagne — l'outillage est amorti.", 12, TRAIT, "start", True))
+    return _svg("".join(p), 760, 350)
+
+
 def flux_puissance():
     p = [_txt(40, 24, "La puissance se perd étape par étape : les rendements se multiplient, jamais ne s'additionnent.",
               12, TRAIT, "start", True)]
@@ -4154,6 +4180,7 @@ def structure_cdcf():
 
 FIGURES = {
     "structure_cdcf": ("Les 7 parties d'un cahier des charges fonctionnel", structure_cdcf),
+    "seuil_rentabilite_graphe": ("Où deux coûts se croisent : le seuil de rentabilité", seuil_rentabilite_graphe),
     "probabilite_arbre": ("Un arbre pondéré : multiplier puis additionner", probabilite_arbre),
     "loi_binomiale_histo": ("La loi binomiale en bâtons", loi_binomiale_histo),
     "intervalle_confiance": ("L'intervalle de confiance autour d'une moyenne", intervalle_confiance),
@@ -6582,6 +6609,78 @@ QUIZ["Anglais technique et coût"] = [
        "traduire « coût total »", "introduire une nouvelle option"], 1,
       "\"The trade-off is\" montre qu'un choix a été pesé et non subi : c'est le compromis "
       "accepté en échange de l'avantage recherché — très valorisé à l'oral d'un jury.", "Piège"),
+
+    q("« Root cause » dans un email de réclamation fournisseur désigne :",
+      ["le symptôme observé", "la cause première du défaut, pas seulement son symptôme",
+       "le coût de la non-conformité", "le nom du responsable qualité"], 1,
+      "Root cause = cause première : demander la root cause évite une action corrective qui "
+      "ne traite que le symptôme et laisse le défaut revenir.", "Intermédiaire"),
+
+    q("Un fournisseur répond « I'll try to deliver faster ». Ce n'est PAS :",
+      ["une intention", "poli", "un firm commitment (engagement ferme)", "en anglais"], 2,
+      "« I'll try » engage à rien de précis : ce n'est pas un firm commitment. Il faut redemander "
+      "une date confirmée, pas une intention.", "Piège"),
+
+    q("Une réclamation technique efficace en anglais doit toujours contenir :",
+      ["une excuse", "un fait, un chiffre par rapport à la spec, et une demande précise",
+       "une menace commerciale", "uniquement le numéro de commande"], 1,
+      "Structure : le fait constaté, l'écart chiffré par rapport à la tolérance, puis une "
+      "demande précise (cause, action) — jamais \"it's wrong\" sans données.", "Base"),
+]
+
+QUIZ["Économie-gestion"] = [
+    q("Le coût de revient d'une pièce additionne :",
+      ["matière + main-d'œuvre/machine + outillage réparti", "matière seule",
+       "prix de vente − marge", "temps de fabrication seul"], 0,
+      "Coût de revient = coût matière + (temps × taux horaire) + (coût outillage / série) — "
+      "trois postes, pas un seul.", "Base"),
+
+    q("Une pièce revient à 20 € et l'entreprise vise 40 % de marge sur le prix de vente. "
+      "Le prix de vente est :",
+      ["28 €", "33,33 €", "20 €", "48 €"], 1,
+      "Prix de vente = coût de revient / (1 − taux de marge) = 20 / 0,6 = 33,33 €. Jamais "
+      "coût × (1 + taux), qui donnerait une marge réelle inférieure au taux visé.", "Piège"),
+
+    q("Resserrer une tolérance sans justification fonctionnelle (par exemple IT11 → IT7) "
+      "a en général pour effet de :",
+      ["ne rien changer au coût", "multiplier le coût d'usinage par 3 à 5",
+       "réduire le coût de contrôle", "diminuer le taux de rebut"], 1,
+      "Une précision plus fine impose des machines plus précises, plus de contrôle et plus de "
+      "rebut — un facteur 3 à 5 est un ordre de grandeur courant.", "Intermédiaire"),
+
+    q("Le seuil de rentabilité entre deux solutions de fabrication se calcule par :",
+      ["coût fixe / (coût unitaire A − coût unitaire variable B)",
+       "coût fixe × nombre de pièces", "prix de vente − coût de revient",
+       "coût matière / coût machine"], 0,
+      "C'est le nombre de pièces à partir duquel l'investissement (coût fixe) est compensé "
+      "par l'écart de coût unitaire entre les deux solutions.", "Base"),
+
+    q("Sous le seuil de rentabilité calculé entre deux procédés, la solution la moins chère "
+      "est celle :",
+      ["avec l'investissement (coût fixe engagé)",
+       "sans investissement (coût unitaire seul)",
+       "cela dépend uniquement du délai"], 1,
+      "Sous le seuil, l'investissement n'est pas encore amorti : la solution sans coût fixe "
+      "reste la moins chère au total.", "Intermédiaire"),
+
+    q("Dans une réponse structurée face à un jury sur un choix de conception, l'élément le "
+      "plus souvent oublié par un candidat est :",
+      ["le chiffre calculé", "le nom du procédé", "la limite assumée du choix",
+       "le critère retenu"], 2,
+      "Une réponse qui ne présente que des avantages sans aucune limite assumée est le "
+      "signal qui pousse un jury à creuser jusqu'à trouver la faille lui-même.", "Piège"),
+
+    q("Sur une série de 500 pièces, un outillage de 8 500 € coûte, par pièce :",
+      ["17 €", "8,50 €", "85 €", "500 €"], 0,
+      "8 500 / 500 = 17 € par pièce — l'outillage se répartit sur toute la série produite.",
+      "Base"),
+
+    q("Le critère économique dans un choix de conception :",
+      ["remplace toujours le critère technique", "vient après le critère technique",
+       "n'intervient qu'en fin de projet", "n'a aucun rapport avec la conception"], 1,
+      "Une solution moins chère mais techniquement insuffisante n'est jamais retenue : on "
+      "vérifie d'abord la faisabilité technique, l'arbitrage économique vient ensuite.",
+      "Intermédiaire"),
 ]
 
 CATEGORIES = list(QUIZ.keys())
@@ -6779,6 +6878,24 @@ QUIZ["Culture générale et expression"] = [
        "cela n'a pas d'importance"], 2,
       "Une écriture personnelle bâclée en moins d'une heure perd davantage de points qu'une "
       "synthèse légèrement moins peaufinée — le repère à ne jamais franchir.", "Base"),
+
+    q("Une introduction de synthèse doit contenir, dans l'ordre :",
+      ["le plan, puis le thème, puis le corpus", "le thème, la présentation du corpus, puis le plan annoncé",
+       "uniquement le plan", "l'avis personnel puis le corpus"], 1,
+      "Trois temps précis : amener le thème en une phrase, présenter le corpus (nature et date "
+      "de chaque document), puis annoncer le plan — dans cet ordre, sans en sauter un.", "Base"),
+
+    q("« Je pense personnellement que... » dans une conclusion de synthèse est :",
+      ["accepté si l'avis est nuancé", "la faute la plus lourdement sanctionnée : un avis, même léger, "
+       "n'a pas sa place", "toléré uniquement en fin de conclusion", "obligatoire pour conclure"], 1,
+      "La conclusion de synthèse doit rester strictement neutre — glisser un avis personnel, même "
+      "prudent, y est la faute la plus pénalisée de toute l'épreuve.", "Piège"),
+
+    q("La conclusion de l'écriture personnelle doit surtout :",
+      ["résumer chaque paragraphe précédent", "répondre clairement à la question posée en introduction",
+       "annoncer une nouvelle idée", "rester ouverte et ne pas trancher"], 1,
+      "Contrairement à la synthèse, l'écriture personnelle attend une position assumée : la "
+      "conclusion doit répondre à la question posée, pas se contenter de résumer.", "Intermédiaire"),
 ]
 
 # ==========================================================================
@@ -29171,6 +29288,14 @@ Seuil = 8 500 / (46 − 7) = 8 500 / 39 = **217,9 pièces**, soit **218 pièces*
 cher. Au-delà, le moulage devient plus économique — chaque pièce supplémentaire coûte 39 €
 de moins qu'en usinage, ce qui finit par rembourser l'investissement initial.
 
+[[FIG:seuil_rentabilite_graphe]]
+
+*Le schéma montre les deux coûts comme deux droites : celle de l'usinage part de zéro mais
+monte vite (46 € par pièce), celle de la fonderie démarre haut (8 500 € d'outillage) mais monte
+lentement (7 € par pièce). Elles se croisent à 218 pièces — c'est exactement le calcul fait
+ci-dessus, mais on voit maintenant pourquoi une seule des deux solutions gagne selon la
+quantité produite.*
+
 *C'est exactement ce calcul qui a permis de trancher dans les études de cas du bloc 14 : jamais
 une décision « au jugé », toujours ce rapport entre économie par pièce et coût fixe à
 amortir.*
@@ -29836,6 +29961,195 @@ cost, which is acceptable at this production volume."*
 
 **3.** *« The trade-off is a slightly higher manufacturing cost, but the part meets the
 maximum mass requirement. »*
+""",
+        },
+        {
+            "id": "10.7",
+            "titre": "Anglais technique : la relation client/fournisseur",
+            "duree": "4 h",
+            "cours": """
+
+### 1. Pourquoi cette fiche
+
+Un bureau d'études échange constamment avec des fournisseurs et parfois des clients étrangers :
+confirmer une commande, réclamer une non-conformité, négocier un délai. Ce sont des échanges
+courts, à l'écrit (email) ou à l'oral — le vocabulaire compte plus que la grammaire parfaite.
+
+### 2. Confirmer et suivre une commande
+
+| Anglais | Français |
+|---|---|
+| **purchase order (PO)** | bon de commande |
+| **acknowledge / confirm** | accuser réception / confirmer |
+| **backorder** | rupture de stock, commande en attente |
+| **expedite** | accélérer un délai déjà engagé |
+| **invoice** | facture |
+
+**Exemple.** *« Could you confirm the PO and expedite delivery if possible? »* — Pouvez-vous
+confirmer la commande et accélérer la livraison si possible ?
+
+### 3. Réclamer une non-conformité
+
+| Anglais | Français |
+|---|---|
+| **non-conformity (NC)** | non-conformité |
+| **out of tolerance** | hors tolérance |
+| **claim** | réclamation |
+| **root cause** | cause première (pas juste le symptôme) |
+| **corrective action** | action corrective |
+
+**Exemple entièrement déroulé.** Un lot reçu présente un défaut. Email type :
+
+> *« We received batch #4521 today. 12 parts out of 50 are out of tolerance on the Ø25 bore
+> (measured 25.08–25.12 mm, spec is 25 H7). Please investigate the root cause and confirm the
+> corrective action before the next shipment. »*
+
+*Structure à retenir : fait constaté (quoi, combien) → écart chiffré par rapport à la spec →
+demande précise (cause, action). Jamais juste « it's wrong », toujours des chiffres.*
+
+### 4. Négocier un délai
+
+| Anglais | Français |
+|---|---|
+| **lead time** | délai (déjà vu en 10.1) |
+| **feasible** | réalisable |
+| **at the earliest** | au plus tôt |
+| **firm commitment** | engagement ferme |
+
+**Exemple.** *« Is a 3-week lead time feasible? We need a firm commitment, not an estimate. »*
+
+### 5. Les erreurs classiques
+
+1. **Réclamer sans chiffre** ("it doesn't fit" au lieu de la cote mesurée et la tolérance).
+2. **Confondre « claim » (réclamation) et « to claim » (prétendre)** — faux-ami fréquent.
+3. **Demander un délai sans dire depuis quand** il court (voir le piège de la fiche 10.1).
+
+### 6. À retenir
+
+- **NC = non-conformity · root cause ≠ symptôme · corrective action = ce qui empêche la récidive.**
+- Une réclamation efficace donne toujours : le fait, le chiffre, la demande.
+- **Firm commitment** ≠ estimate : un jury ou un fournisseur fait la différence.
+
+            """,
+            "formules": """
+
+**Commande** — PO = purchase order · backorder = rupture de stock · expedite = accélérer
+
+**Non-conformité** — NC = non-conformity · root cause = cause première · corrective action
+
+**Délai** — lead time = délai · feasible = réalisable · firm commitment ≠ estimate
+
+        """,
+            "exercice": """
+**1.** Traduis : « Nous avons reçu 50 pièces, 12 sont hors tolérance sur le diamètre. »
+
+**2.** Complète : *« Please investigate the _____ _____ before the next shipment. »*
+(la cause première)
+
+**3.** Un fournisseur répond *"I'll try to deliver faster."* Pourquoi cette réponse n'est-elle
+pas un engagement ferme ? Comment la reformuler pour en demander un ?
+""",
+            "corrige": """
+**1.** *« We received 50 parts, 12 are out of tolerance on the diameter. »*
+
+**2.** *« root cause »*
+
+**3.** *"I'll try"* n'engage à rien — c'est une intention, pas un **firm commitment**. Reformuler :
+*"Can you confirm a firm delivery date, not just an estimate?"*
+""",
+        },
+        {
+            "id": "10.8",
+            "titre": "Économie-gestion : argumenter un choix devant un jury",
+            "duree": "3 h",
+            "cours": """
+
+### 1. Une compétence différente du calcul
+
+La fiche 10.2 donne les calculs (coût de revient, seuil de rentabilité, marge). Cette fiche
+traite d'autre chose : **comment présenter ces calculs à l'oral** devant un jury (soutenances
+E4, E5, E6), de façon à ce qu'ils soient convaincants et pas seulement justes.
+
+Un candidat qui donne le bon chiffre sans structure perd des points ; un candidat qui structure
+sa réponse même avec un chiffre approximatif en gagne. La structure compte autant que le calcul.
+
+### 2. La structure en quatre temps
+
+Face à une question du type « pourquoi ce choix plutôt qu'un autre ? », répondre toujours dans
+cet ordre :
+
+1. **Le critère** — quelle grandeur a tranché (coût, délai, résistance, masse...).
+2. **Le chiffre** — la valeur calculée, avec son unité.
+3. **La comparaison** — ce que donnait l'alternative, pour montrer que le choix n'est pas
+   arbitraire.
+4. **La limite assumée** — ce que le choix sacrifie ou n'a pas encore vérifié (délai plus long,
+   hypothèse à confirmer...). Un jury se méfie d'une réponse qui ne présente que des avantages.
+
+**Exemple entièrement déroulé.** Question du jury : « Pourquoi avoir choisi la fonderie plutôt
+que l'usinage pour cette pièce ? »
+
+> *« Le critère qui a tranché est le coût sur la série prévue de 800 pièces. La fonderie coûte
+> 15 € la pièce plus 6 000 € d'outillage, soit 21 € en moyenne sur 800 pièces. L'usinage, sans
+> outillage, coûte 38 € la pièce quelle que soit la quantité — nettement plus cher ici. La
+> limite : l'outillage immobilise 6 000 € avant la première pièce vendue, ce qui n'est
+> défendable que si la série de 800 est vraiment confirmée par le client. »*
+
+*Remarquez la mécanique : critère (coût sur la série), chiffre (21 € contre 38 €), comparaison
+déjà intégrée, puis la limite assumée (le risque sur la série). C'est ce qui distingue une
+réponse de bureau d'études d'une réponse de manuel.*
+
+### 3. Les erreurs qui coûtent des points à l'oral
+
+1. **Donner un chiffre sans dire à quoi il sert.** « 21 € » seul ne répond à rien — il faut
+   dire « 21 € **contre** 38 € **pour 800 pièces** ».
+2. **Ne présenter aucune limite.** Un choix parfait sans aucun inconvénient sonne faux et
+   invite le jury à creuser jusqu'à en trouver une lui-même.
+3. **Répondre uniquement sur la technique en oubliant le critère économique demandé**, ou
+   l'inverse — la question porte sur un arbitrage, pas sur un seul aspect.
+4. **Improviser un chiffre non calculé** plutôt que dire honnêtement « ce calcul n'a pas été
+   approfondi, mais la méthode serait... » — un jury préfère une méthode juste à un chiffre
+   inventé.
+
+### 4. À retenir
+
+- Structure systématique : **critère → chiffre → comparaison → limite assumée**.
+- Un chiffre seul ne convainc pas ; c'est la comparaison qui donne son sens au chiffre.
+- Assumer une limite est un signe de rigueur, pas une faiblesse à cacher.
+
+            """,
+            "formules": """
+
+**Structure de réponse à l'oral** — 1) critère retenu · 2) chiffre calculé, avec unité ·
+3) comparaison à l'alternative · 4) limite assumée du choix
+
+            """,
+            "exercice": """
+Le jury demande : « Vous avez choisi l'acier S355 plutôt que le 42CrMo4 traité pour cet arbre.
+Pourquoi ? » Vous disposez de ces éléments : S355 à 1,10 €/kg convient largement à la contrainte
+calculée (coefficient de sécurité de 2,8) ; le 42CrMo4 traité coûte 3,60 €/kg et n'aurait permis
+qu'un gain de masse de 15 %, sans réduire les coûts d'usinage.
+
+Rédige une réponse en quatre temps (critère, chiffre, comparaison, limite).
+""",
+            "corrige": """
+**Réponse modèle.**
+
+*Critère* : le critère retenu est le coût matière, la résistance étant déjà largement suffisante
+avec les deux nuances.
+
+*Chiffre* : le S355 revient à 1,10 €/kg contre 3,60 €/kg pour le 42CrMo4 traité, soit plus de
+trois fois moins cher à la pièce.
+
+*Comparaison* : le 42CrMo4 aurait permis d'alléger la pièce d'environ 15 %, mais sans réduire le
+temps d'usinage ni la complexité de fabrication — le gain de masse ne compensait pas le
+surcoût matière.
+
+*Limite assumée* : ce choix suppose que la masse n'est pas un critère fonctionnel critique pour
+cette pièce ; s'il devait le devenir (allègement d'un ensemble mobile, par exemple), l'arbitrage
+serait à revoir.
+
+*Pourquoi c'est une bonne réponse : le coefficient de sécurité de 2,8 est cité pour montrer que
+le choix technique était déjà validé avant l'arbitrage économique — jamais l'inverse.*
 """,
         },
     ],
@@ -38038,6 +38352,109 @@ n'est pas encore parfaite » : ça grignoterait le temps de l'écriture personne
 quand même pour un tiers de la note et qui n'a pas encore été commencée.
 """,
         },
+        {
+            "id": "16.6",
+            "titre": "Réussir l'introduction et la conclusion",
+            "duree": "3 h",
+            "cours": """
+
+### 1. Pourquoi ces deux paragraphes pèsent plus que leur taille
+
+L'introduction et la conclusion représentent à peine 10 % du volume écrit, mais elles sont lues
+en premier et en dernier — c'est ce que le correcteur retient le mieux. Une introduction bâclée
+donne l'impression que le reste sera flou, même si la synthèse qui suit est bonne.
+
+### 2. L'introduction de la synthèse : trois phrases, pas plus
+
+Une bonne introduction de synthèse fait **trois choses, dans cet ordre** :
+
+1. **Amener le thème** en une phrase générale (le sujet de société abordé par le corpus).
+2. **Présenter le corpus** : nature et date de chaque document, en une ligne chacun.
+3. **Annoncer le plan** : les 2-3 axes qui structureront la synthèse.
+
+**Exemple entièrement déroulé.** Corpus sur l'automatisation industrielle (3 documents : un
+article de presse de 2024, un extrait d'ouvrage d'économie de 2021, un graphique statistique).
+
+> *« L'automatisation transforme en profondeur les métiers de production. Le corpus réunit un
+> article de presse de 2024 sur les usines connectées, un extrait d'un ouvrage d'économie de
+> 2021 sur l'emploi industriel, et un graphique statistique sur l'évolution des effectifs. Ces
+> documents interrogent à la fois les gains de productivité de l'automatisation et ses effets
+> sur l'emploi, avant d'envisager les compétences qu'elle exige désormais. »*
+
+*Trois phrases, trois fonctions. Rien de plus — une introduction plus longue empiète sur le
+temps de la synthèse elle-même.*
+
+### 3. La conclusion de la synthèse : ne jamais donner son avis
+
+**Le piège le plus fréquent et le plus pénalisé** : glisser une opinion personnelle dans la
+conclusion de la synthèse alors qu'elle doit rester strictement neutre — l'avis personnel a sa
+place uniquement dans l'écriture personnelle, une partie plus loin.
+
+Une conclusion de synthèse réussie **résume le mouvement d'ensemble** du corpus, sans ajouter
+d'idée nouvelle ni de jugement :
+
+> *« L'automatisation apparaît ainsi comme un facteur de productivité incontesté, dont les
+> effets sur l'emploi restent débattus, et qui redéfinit surtout la nature des compétences
+> attendues des opérateurs. »*
+
+*Pas de « je pense que », pas de « il faudrait », pas de solution proposée — uniquement le
+constat que les documents, mis ensemble, permettent de dresser.*
+
+### 4. L'introduction et la conclusion de l'écriture personnelle
+
+Même logique, mais avec une vraie prise de position cette fois : l'introduction pose la question
+et annonce le plan **de votre réponse** ; la conclusion répond clairement à la question posée,
+sans se contenter de résumer les paragraphes précédents.
+
+**Piège inverse à éviter ici** : une conclusion qui hésite encore («on pourrait dire que...»)
+alors que l'écriture personnelle attend une position assumée, appuyée sur des exemples précis.
+
+### 5. Les erreurs classiques
+
+1. **Donner son avis dans la conclusion de synthèse** — la faute la plus lourdement sanctionnée.
+2. **Une introduction de plus de 5-6 lignes** qui grignote le temps disponible.
+3. **Une conclusion d'écriture personnelle qui ne répond pas clairement** à la question posée.
+4. **Annoncer un plan dans l'introduction puis ne pas le suivre** dans le développement.
+
+### 6. À retenir
+
+- Synthèse : introduction en 3 temps (thème, corpus, plan) · conclusion neutre, sans avis.
+- Écriture personnelle : introduction qui pose la question · conclusion qui y répond clairement.
+- Dans les deux cas : **court et net**, jamais long et vague.
+
+            """,
+            "formules": """
+
+**Introduction de synthèse** — thème (1 phrase) → corpus (1 ligne par document) → plan annoncé
+
+**Conclusion de synthèse** — résumer le mouvement d'ensemble, **jamais d'avis personnel**
+
+**Écriture personnelle** — introduction pose la question · conclusion y répond clairement
+
+        """,
+            "exercice": """
+Voici une conclusion de synthèse rédigée par un élève sur un corpus consacré au télétravail :
+
+*« Le télétravail présente donc des avantages réels, mais je pense personnellement qu'il ne
+devrait pas devenir la norme car le contact humain reste essentiel au travail d'équipe. »*
+
+**1.** Identifie précisément ce qui pose problème dans cette conclusion.
+
+**2.** Réécris-la en respectant la neutralité attendue.
+""",
+            "corrige": """
+**1.** La phrase « je pense personnellement » introduit un avis, alors qu'une conclusion de
+synthèse doit rester strictement neutre — c'est exactement l'erreur la plus pénalisée de
+l'épreuve, même si le contenu de l'avis est raisonnable.
+
+**2.** *« Le télétravail apparaît ainsi porteur d'avantages réels pour les salariés et les
+entreprises, tout en soulevant la question de sa place face aux exigences du travail
+collectif. »*
+
+*On garde le constat (avantages réels, question du collectif) sans jamais dire « je pense » ni
+trancher soi-même le débat.*
+""",
+        },
     ],
 }
 
@@ -45410,6 +45827,73 @@ ATELIERS = [
                      "vers lui proportionnellement à sa masse.",
     },
     {
+        "id": "at114",
+        "chapitre": "Bloc 10",
+        "titre": "Rédiger une réclamation technique en anglais",
+        "theme": "Anglais technique — relation fournisseur",
+        "fiche": "10.7",
+        "vocabulaire": [
+            ("root cause", "la cause première d'un défaut — pas juste ce qu'on observe en surface."),
+            ("out of tolerance", "hors tolérance : toujours donner la valeur mesurée et la spec."),
+            ("firm commitment", "un engagement ferme, différent d'une simple intention (\"I'll try\")."),
+        ],
+        "enonce": "Un lot de 50 pièces reçu présente 12 pièces hors tolérance sur un Ø25 H7 "
+                  "(mesuré 25,08 à 25,12 mm).",
+        "etapes": [
+            {"type": "qcm",
+             "label": "Rédiger le début du message de réclamation",
+             "question": "Quelle phrase est la plus efficace ?",
+             "options": ["\"The parts are wrong, please fix this.\"",
+                         "\"12 out of 50 parts are out of tolerance on the Ø25 bore "
+                         "(measured 25.08–25.12 mm, spec is 25 H7).\"",
+                         "\"We are very disappointed by this delivery.\""],
+             "bonne": 1,
+             "diagnostics": {0: "Aucun chiffre, aucune référence à la spec — le fournisseur "
+                                "ne peut rien vérifier ni corriger précisément.",
+                             2: "C'est une expression de mécontentement, pas une donnée "
+                                "exploitable pour une action corrective."}},
+            {"type": "qcm",
+             "label": "Demander ce qui empêchera le défaut de se reproduire",
+             "question": "Quelle demande est la bonne ?",
+             "options": ["\"Please send new parts quickly.\"",
+                         "\"Please investigate the root cause and confirm the corrective action.\"",
+                         "\"Please give us a discount.\""],
+             "bonne": 1,
+             "diagnostics": {0: "Ça règle ce lot, mais pas le suivant — sans root cause, le "
+                                "défaut peut revenir.",
+                             2: "C'est une négociation commerciale, pas une demande technique "
+                                "de correction."}},
+            {"type": "qcm",
+             "label": "Le fournisseur répond « I'll try to be more careful next time. »",
+             "question": "Que faut-il répondre ?",
+             "options": ["Accepter, c'est suffisant", "Redemander un firm commitment (action "
+                         "corrective précise et vérifiable), pas une intention",
+                         "Ne rien répondre"],
+             "bonne": 1,
+             "diagnostics": {0: "\"I'll try\" n'engage à rien de vérifiable — ce n'est pas "
+                                "un firm commitment.",
+                             2: "Il faut insister : sans engagement précis, rien ne garantit "
+                                "que le défaut ne se reproduise pas."}},
+        ],
+        "corrige": {
+            "enonce": "Rédiger et faire aboutir une réclamation technique en anglais sur un "
+                      "lot non conforme.",
+            "regle": "**Structure** : fait constaté + chiffre par rapport à la spec + demande "
+                     "précise (root cause, corrective action, firm commitment).",
+            "conversions": "Aucune.",
+            "remplacement": "\"It's wrong\" → toujours remplacer par la mesure et la spec "
+                             "chiffrées.",
+            "calcul": "1. Décrire le défaut avec chiffres.\\n2. Demander la root cause.\\n"
+                      "3. Exiger un firm commitment, pas une intention.",
+            "verification": "**Contrôle de bon sens** : une réclamation sans chiffre, ou une "
+                            "réponse acceptée sans engagement précis, sont les deux erreurs "
+                            "les plus fréquentes.",
+        },
+        "a_retenir": "À retenir : une réclamation technique en anglais vaut ce que valent ses "
+                     "chiffres — et une réponse n'est utile que si elle est vérifiable, jamais "
+                     "une simple intention.",
+    },
+    {
         "id": "at35",
         "chapitre": "Bloc 10",
         "titre": "Décoder les messages d'un logiciel de CAO en anglais",
@@ -45811,6 +46295,72 @@ ATELIERS = [
         "a_retenir": "À retenir : \"That's a good point, but...\" pour reconnaître une "
                      "objection, \"The trade-off is...\" pour assumer un compromis — "
                      "jamais de déni en bloc face à un jury.",
+    },
+    {
+        "id": "at115",
+        "chapitre": "Bloc 16",
+        "titre": "Repérer et corriger une conclusion qui donne un avis",
+        "theme": "Culture générale — introduction et conclusion",
+        "fiche": "16.6",
+        "vocabulaire": [
+            ("conclusion neutre", "résume le mouvement d'ensemble du corpus, sans avis "
+             "personnel ni idée nouvelle."),
+        ],
+        "enonce": "Une conclusion de synthèse sur un corpus consacré au télétravail.",
+        "etapes": [
+            {"type": "qcm",
+             "label": "Conclusion proposée : « Le télétravail présente des avantages réels, "
+                      "mais je pense qu'il ne devrait pas devenir la norme. »",
+             "question": "Cette conclusion est-elle acceptable telle quelle ?",
+             "options": ["Oui, l'avis est nuancé donc c'est accepté",
+                         "Non : « je pense » introduit un avis personnel, interdit en synthèse",
+                         "Oui, en fin de conclusion l'avis est toléré"],
+             "bonne": 1,
+             "diagnostics": {0: "Nuancé ou non, un avis personnel n'a jamais sa place dans "
+                                "une conclusion de synthèse.",
+                             2: "Il n'existe aucune exception de position dans le devoir : "
+                                "l'avis est interdit partout dans la synthèse."}},
+            {"type": "qcm",
+             "label": "Reformulation neutre proposée",
+             "question": "Laquelle respecte vraiment la neutralité attendue ?",
+             "options": ["« Le télétravail présente des avantages réels, tout en soulevant "
+                         "la question de sa place face au travail collectif. »",
+                         "« Le télétravail est une bonne chose pour beaucoup de salariés. »",
+                         "« Il faudrait encadrer davantage le télétravail. »"],
+             "bonne": 0,
+             "diagnostics": {1: "« Est une bonne chose » reste un jugement de valeur, "
+                                "pas un constat neutre.",
+                             2: "« Il faudrait » est une recommandation personnelle, donc "
+                                "un avis déguisé."}},
+            {"type": "qcm",
+             "label": "Une introduction de synthèse trop longue (10 lignes)",
+             "question": "Quel est le principal problème ?",
+             "options": ["Aucun, plus c'est détaillé mieux c'est",
+                         "Elle grignote le temps disponible pour la synthèse elle-même",
+                         "Elle doit obligatoirement faire 10 lignes"],
+             "bonne": 1,
+             "diagnostics": {0: "Une introduction longue n'apporte rien de plus utile et "
+                                "coûte du temps ailleurs.",
+                             2: "Il n'existe pas de longueur imposée — 3 phrases suffisent "
+                                "en général."}},
+        ],
+        "corrige": {
+            "enonce": "Identifier et corriger une conclusion de synthèse qui glisse un avis "
+                      "personnel, et juger la longueur d'une introduction.",
+            "regle": "**Introduction** : thème → corpus → plan, en 3 phrases. **Conclusion** : "
+                     "résume le mouvement d'ensemble, jamais d'avis personnel.",
+            "conversions": "Aucune.",
+            "remplacement": "« Je pense que » → toujours à supprimer d'une conclusion de "
+                             "synthèse, quelle que soit la nuance de l'avis.",
+            "calcul": "1. Repérer tout marqueur d'avis (\"je pense\", \"il faudrait\").\\n"
+                      "2. Le remplacer par un constat neutre.\\n"
+                      "3. Vérifier que l'introduction reste courte (3 phrases).",
+            "verification": "**Contrôle de bon sens** : une conclusion qui reste correcte "
+                            "même en supprimant le \"je\" est une conclusion neutre.",
+        },
+        "a_retenir": "À retenir : dans une synthèse, aucune phrase ne doit rester vraie "
+                     "seulement parce que « c'est ce que je pense » — tout doit venir du "
+                     "corpus, jamais de l'auteur du devoir.",
     },
     {
         "id": "at42",
@@ -49900,6 +50450,134 @@ ATELIERS = [
                      "cherche pas, jamais ce qu'on cherche — et une flèche excessive se corrige "
                      "par la forme, jamais par un acier plus résistant.",
     },
+    {
+        "id": "at116",
+        "chapitre": "Bloc 10",
+        "titre": "Calculer un coût de revient et un seuil de rentabilité",
+        "theme": "Économie-gestion",
+        "fiche": "10.2",
+        "figure": "seuil_rentabilite_graphe",
+        "enonce": "Une pièce nécessite 6,50 € de matière et 12 minutes d'usinage à un taux "
+                  "horaire de 45 €/h. Un outillage de 6 000 € est amorti sur une série de "
+                  "400 pièces. Une solution alternative, sans investissement, revient à "
+                  "38 € la pièce quelle que soit la quantité.",
+        "etapes": [
+            {"type": "numerique", "label": "Coût machine",
+             "unite": "€", "attendu": 9.0, "tol": 0.05,
+             "consigne": "12 minutes d'usinage à 45 €/h. Quel est le coût machine par pièce ?",
+             "indice": "Convertis d'abord les minutes en heures : 12/60 h.",
+             "pieges": [(540, "540 = 12 × 45, sans convertir les minutes en heures — le taux "
+                              "horaire s'applique à des heures, pas à des minutes.")],
+             "aide": "12/60 = 0,2 h. 0,2 × 45 = 9 €."},
+            {"type": "numerique", "label": "Coût d'outillage réparti",
+             "unite": "€", "attendu": 15.0, "tol": 0.05,
+             "consigne": "L'outillage de 6 000 € est amorti sur 400 pièces. Coût réparti "
+                        "par pièce ?",
+             "indice": "Coût outillage / nombre de pièces de la série.",
+             "aide": "6 000 / 400 = 15 €."},
+            {"type": "numerique", "label": "Coût de revient total",
+             "unite": "€", "attendu": 30.5, "tol": 0.05,
+             "consigne": "Additionne matière, coût machine et outillage réparti.",
+             "indice": "6,50 + 9 + 15.",
+             "aide": "6,50 + 9 + 15 = 30,50 €."},
+            {"type": "numerique", "label": "Seuil de rentabilité",
+             "unite": "pièces", "attendu": 267, "tol": 1,
+             "consigne": "Face à la solution alternative à 38 € sans outillage, à partir de "
+                        "combien de pièces cette solution (outillage 6 000 €, puis matière+"
+                        "usinage 21,50 € par pièce) devient-elle plus rentable ? Arrondis "
+                        "au nombre entier de pièces supérieur.",
+             "indice": "Seuil = coût fixe / (coût unitaire alternative − coût unitaire "
+                       "variable de cette solution). Le coût variable ici est matière + "
+                       "machine, sans l'outillage déjà compté séparément : 6,50 + 9 = "
+                       "15,50 € — mais la formule du cours utilise le coût unitaire hors "
+                       "outillage, donc 6 000 / (38 − 15,50)... vérifie bien quel coût "
+                       "utiliser.",
+             "pieges": [(240, "Proche mais pas assez précis pour la tolérance — vérifie le "
+                              "coût unitaire variable utilisé dans le dénominateur.")],
+             "aide": "Coût variable (hors outillage) = 6,50 + 9 = 15,50 €. "
+                     "Seuil = 6 000 / (38 − 15,50) = 6 000 / 22,5 = 266,7, soit 267 pièces."},
+        ],
+        "corrige": {
+            "enonce": "Pièce à 6,50 € matière + 12 min à 45 €/h + outillage 6 000 € / 400 "
+                      "pièces, comparée à une alternative à 38 €/pièce sans investissement.",
+            "regle": "**Coût de revient = matière + (temps × taux horaire) + (outillage / "
+                    "série). Seuil de rentabilité = coût fixe / (coût unitaire A − coût "
+                    "unitaire variable B).**",
+            "conversions": "12 min = 0,2 h.",
+            "remplacement": "Coût machine = 0,2 × 45. Outillage réparti = 6 000 / 400. "
+                            "Seuil = 6 000 / (38 − 15,50).",
+            "calcul": "Coût machine : **9 €**. Outillage réparti : **15 €**. Coût de "
+                     "revient : **30,50 €**. Seuil de rentabilité : **267 pièces**.",
+            "verification": "Sous 267 pièces, la solution à 38 € reste la moins chère au "
+                            "total ; au-delà, l'outillage amorti fait basculer l'avantage — "
+                            "exactement le schéma [[FIG:seuil_rentabilite_graphe]] où les "
+                            "deux droites de coût se croisent.",
+        },
+        "a_retenir": "À retenir : le seuil de rentabilité compare toujours le coût variable "
+                     "(hors outillage déjà compté séparément) de la solution investie au "
+                     "coût unitaire complet de l'alternative sans investissement.",
+    },
+    {
+        "id": "at117",
+        "chapitre": "Bloc 10",
+        "titre": "Structurer une réponse économique face à un jury",
+        "theme": "Économie-gestion",
+        "fiche": "10.8",
+        "figure": None,
+        "enonce": "Un jury demande : « Pourquoi avoir choisi l'impression 3D pour ce "
+                  "prototype plutôt que l'usinage ? » Réponse proposée par un candidat : "
+                  "« Parce que c'est moins cher et plus rapide, et il n'y a aucun "
+                  "inconvénient. »",
+        "etapes": [
+            {"type": "qcm", "label": "Ce qui manque dans cette réponse",
+             "question": "Qu'est-ce qui manque le plus dans cette réponse, au sens de la "
+                        "méthode en quatre temps ?",
+             "options": ["Le chiffre précis et la limite assumée du choix",
+                        "Le nom du procédé concurrent",
+                        "Une formule de politesse"],
+             "bonne": 0,
+             "indice": "La méthode : critère → chiffre → comparaison → limite assumée. "
+                       "Ici il n'y a ni chiffre, ni limite.",
+             "diagnostics": {1: "Le procédé concurrent (usinage) est déjà nommé dans la "
+                                 "question du jury — ce n'est pas ce qui manque dans la "
+                                 "réponse elle-même.",
+                              2: "Ce n'est pas une question de forme mais de contenu : "
+                                 "aucun chiffre, et surtout aucune limite assumée, ce qui "
+                                 "rend la réponse peu crédible."}},
+            {"type": "qcm", "label": "Le signal qui inquiète un jury",
+             "question": "Pourquoi « il n'y a aucun inconvénient » affaiblit-elle la "
+                        "réponse plutôt que de la renforcer ?",
+             "options": ["Parce qu'un choix sans aucune limite assumée paraît non "
+                        "réfléchi et invite le jury à creuser",
+                        "Parce qu'il ne faut jamais dire du bien de son propre choix",
+                        "Parce que c'est trop long à dire à l'oral"],
+             "bonne": 0,
+             "diagnostics": {1: "Il faut au contraire assumer et défendre son choix — le "
+                                 "problème n'est pas de le valoriser, c'est de prétendre "
+                                 "qu'il n'a aucune contrepartie.",
+                              2: "La longueur n'est pas le sujet ; une réponse courte peut "
+                                 "très bien intégrer une limite en une phrase."}},
+        ],
+        "corrige": {
+            "enonce": "Réponse de candidat sans chiffre ni limite assumée, face à une "
+                      "question de jury sur un arbitrage économique.",
+            "regle": "**Toute réponse à une question d'arbitrage suit : critère → chiffre "
+                    "→ comparaison → limite assumée. L'absence de limite est le signal le "
+                    "plus repéré par un jury.**",
+            "conversions": "Sans objet.",
+            "remplacement": "« C'est moins cher » → « Le critère est le coût pour 1 "
+                            "exemplaire : X € en impression 3D contre Y € en usinage sans "
+                            "outillage, la limite étant que ce choix ne serait plus "
+                            "valable pour une série plus grande. »",
+            "calcul": "Ce qui manque : **un chiffre précis et une limite assumée**.",
+            "verification": "Une réponse reformulée avec ces deux éléments rassure "
+                            "immédiatement un jury sur la maîtrise du sujet, même si le "
+                            "chiffre exact n'est pas parfaitement mémorisé.",
+        },
+        "a_retenir": "À retenir : une réponse économique sans chiffre ni limite assumée "
+                     "sonne comme une opinion, pas comme une analyse — c'est ce qui pousse "
+                     "un jury à creuser jusqu'à trouver la faille.",
+    },
 ]
 
 
@@ -50305,6 +50983,7 @@ PAGE_MATHS = "🧮 Mathématiques"
 PAGE_PHYSCHIM = "⚗️ Physique-Chimie"
 PAGE_ANGLAIS = "🇬🇧 Anglais technique"
 PAGE_CULTGEN = "📖 Culture générale"
+PAGE_GESTION = "💶 Économie-gestion"
 
 _OPTIONS_NAV = ["🏠 Tableau de bord",
                 PAGE_COURS,
@@ -50312,6 +50991,7 @@ _OPTIONS_NAV = ["🏠 Tableau de bord",
                 PAGE_PHYSCHIM,
                 PAGE_ANGLAIS,
                 PAGE_CULTGEN,
+                PAGE_GESTION,
                 "🎯 Quiz interactif",
                 "🧪 Exercices guidés",
                 "🏗️ Ateliers guidés",
@@ -50467,6 +51147,14 @@ BLOCS_MATHS = [b for b in BLOCS if b.get("id") in (7, 17, 18, 19)]
 BLOCS_PHYSCHIM = [b for b in BLOCS if b.get("id") == 8]
 BLOCS_ANGLAIS = [b for b in BLOCS if b.get("id") == 10]
 BLOCS_CULTGEN = [b for b in BLOCS if b.get("id") == 16]
+_fiches_gestion = [f for f in next(b for b in BLOCS if b.get("id") == 10)["fiches"]
+                    if f.get("id") in ("10.2", "10.8")]
+BLOCS_GESTION = [{"id": 10,
+                   "titre": "Économie-gestion appliquée à la conception",
+                   "resume": "Coût de revient, seuil de rentabilité, marge, coût d'une tolérance, "
+                             "argumenter un choix devant un jury — évalué à travers les épreuves de "
+                             "conception (E4/E5/E6), pas une épreuve écrite à part.",
+                   "fiches": _fiches_gestion}]
 
 st.sidebar.divider()
 nb_fiches = NB_FICHES
@@ -50881,6 +51569,42 @@ elif PAGE == PAGE_CULTGEN:
     fiche_cg = fiches_list_cg[noms_fiches_cg.index(choix_fiche_cg)]
 
     _afficher_fiche(bloc_cg, fiche_cg, fiche_cg["id"])
+
+
+# ===========================================================================
+# PAGE : ÉCONOMIE-GESTION
+# ===========================================================================
+
+elif PAGE == PAGE_GESTION:
+    st.title("Économie-gestion")
+    st.markdown(
+        '<div class="info-box">L\'économie-gestion en BTS CPI n\'est pas une épreuve écrite à '
+        'part : elle est évaluée à travers les épreuves de conception (E4/E5) — chaque tolérance, '
+        'chaque choix de matière ou de procédé a un coût. Coût de revient, seuil de rentabilité, '
+        'marge, coût d\'une exigence de conception. Même fiche que dans « Cours », réunie ici pour '
+        'ne pas la chercher au milieu des chapitres techniques.</div>',
+        unsafe_allow_html=True)
+    st.write("")
+
+    _saut_ge = st.session_state.pop("_saut", None)
+    noms_blocs_ge = [b["titre"] for b in BLOCS_GESTION]
+    _idx_bloc_ge = noms_blocs_ge.index(_saut_ge[0]) if _saut_ge and _saut_ge[0] in noms_blocs_ge else 0
+    bloc_ge = BLOCS_GESTION[_idx_bloc_ge]
+
+    st.markdown(f'<div class="bloc-titre"><b>{bloc_ge["titre"]}</b><br>'
+                f'<span style="font-size:0.9em">{bloc_ge["resume"]}</span></div>',
+                unsafe_allow_html=True)
+
+    fiches_list_ge = bloc_ge.get("fiches", [])
+    noms_fiches_ge = [f"Fiche {f['id']} — {f['titre']}" for f in fiches_list_ge]
+    _idx_fiche_ge = 0
+    if _saut_ge and _saut_ge[0] == bloc_ge["titre"]:
+        _idx_fiche_ge = next((k for k, f in enumerate(fiches_list_ge)
+                              if f.get("id") == _saut_ge[1]), 0)
+    choix_fiche_ge = st.selectbox("Fiche", noms_fiches_ge, index=_idx_fiche_ge, key="_fiche_gestion")
+    fiche_ge = fiches_list_ge[noms_fiches_ge.index(choix_fiche_ge)]
+
+    _afficher_fiche(bloc_ge, fiche_ge, fiche_ge["id"])
 
 
 # ===========================================================================
