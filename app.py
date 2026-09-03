@@ -43817,7 +43817,7 @@ def charger_progression():
             pass
     return {"fiches_lues": [], "resultats_quiz": [], "notes": {}, "erreurs": {},
             "exercices_guides_termines": [], "srs": {}, "ateliers_termines": [],
-            "controles": []}
+            "controles": [], "reponses_exercices": {}}
 
 
 def sauver_progression(p):
@@ -46739,7 +46739,12 @@ ATELIERS = [
                 "tol": 0.01,
                 "consigne": "3 + 0.",
                 "indice": "La translation ne bouge que l'abscisse ici.",
-                "pieges": [],
+                "pieges": [(8, "Vous avez ajouté la composante x de la translation (5) à "
+                               "l'ordonnée par erreur — ici la translation (5, 0) ne "
+                               "modifie que l'abscisse.")],
+                "aide": "La translation vaut (5, 0) : elle ne modifie que l'abscisse, pas "
+                        "l'ordonnée. L'ordonnée finale reste donc celle obtenue après la "
+                        "rotation, soit 3 + 0 = 3.",
             },
             {
                 "type": "qcm",
@@ -47044,7 +47049,11 @@ ATELIERS = [
              "attendu": 0, "tol": 0.01,
              "consigne": "F(x) = x³ − x² + x, en x = 0.",
              "indice": "0³ − 0² + 0.",
-             "pieges": []},
+             "pieges": [(1, "Vous avez calculé f(0) (la fonction de départ, 3×0²−2×0+1=1) "
+                            "au lieu de F(0) (la primitive) — ici les deux ne coïncident "
+                            "pas.")],
+             "aide": "F(x) = x³ − x² + x. En remplaçant x par 0, chaque terme s'annule "
+                     "(0³=0, 0²=0, et 0), donc F(0) = 0."},
             {"type": "numerique", "label": "Aire = F(2) − F(0)", "unite": "",
              "attendu": 6, "tol": 0.01,
              "consigne": "Soustrais les deux valeurs trouvées.",
@@ -47248,7 +47257,8 @@ ATELIERS = [
              "attendu": 15.00, "tol": 0.005,
              "consigne": "Additionne les 4 valeurs, divise par 4.",
              "indice": "(15,02+15,00+14,99+14,99) / 4.",
-             "pieges": []},
+             "pieges": [],
+             "aide": "Moyenne = (15,02 + 15,00 + 14,99 + 14,99) / 4 = 60,00 / 4 = 15,00 mm."},
             {"type": "numerique", "label": "Variance", "unite": "mm²",
              "attendu": 0.00015, "tol": 0.00002,
              "consigne": "Moyenne des carrés des écarts à la moyenne (15,00).",
@@ -47260,7 +47270,9 @@ ATELIERS = [
              "attendu": 0.01225, "tol": 0.0002,
              "consigne": "Racine carrée de la variance.",
              "indice": "√0,00015.",
-             "pieges": []},
+             "pieges": [],
+             "aide": "L'écart-type est la racine carrée de la variance trouvée à l'étape "
+                     "précédente (0,00015 mm²) : √0,00015 ≈ 0,01225 mm."},
             {"type": "numerique", "label": "Coefficient de variation", "unite": "%",
              "attendu": 0.0816, "tol": 0.002,
              "consigne": "CV = (écart-type / moyenne) × 100.",
@@ -47412,7 +47424,9 @@ ATELIERS = [
              "attendu": 830, "tol": 1,
              "consigne": "L'écart initial entre la pièce et l'ambiance.",
              "indice": "850 − 20.",
-             "pieges": []},
+             "pieges": [],
+             "aide": "C'est une simple soustraction : température de départ (850 °C) "
+                     "moins température ambiante (20 °C) = 830 °C."},
             {"type": "numerique", "label": "Température T(60), après 60 minutes, en °C",
              "unite": "°C", "attendu": 205.2, "tol": 2,
              "consigne": "T(60) = 20 + 830 × e^(−60/40).",
@@ -47907,7 +47921,9 @@ ATELIERS = [
              "attendu": 10, "tol": 0.01,
              "consigne": "5 + 2 + 3.",
              "indice": None,
-             "pieges": []},
+             "pieges": [],
+             "aide": "Il suffit d'additionner les trois masses données dans l'énoncé : "
+                     "5 + 2 + 3 = 10 kg."},
             {"type": "numerique", "label": "Gx", "unite": "",
              "attendu": 2.2, "tol": 0.05,
              "consigne": "(5×0 + 2×8 + 3×2) / 10.",
@@ -48846,7 +48862,10 @@ ATELIERS = [
              "tol": 0.001,
              "consigne": "0,3 m converti en mm (facteur simple, une longueur).",
              "indice": "0,3 × 1 000",
-             "pieges": []},
+             "pieges": [],
+             "aide": "Pour une LONGUEUR, le facteur de conversion mètres → millimètres "
+                     "est ×1 000 (le ×1 000 000 vu à l'étape précédente est réservé aux "
+                     "surfaces) : 0,3 × 1 000 = 300 mm."},
             {"type": "numerique", "label": "L'aire de la plaque", "unite": "mm²",
              "attendu": 60000, "tol": 0.001,
              "consigne": "Convertissez d'abord les deux longueurs en mm (300 et 200), "
@@ -49156,7 +49175,10 @@ ATELIERS = [
              "consigne": "La ligne zéro est la valeur ronde autour de laquelle la tolérance "
                         "est définie.",
              "indice": "La partie entière de l'intervalle",
-             "pieges": []},
+             "pieges": [],
+             "aide": "La cote nominale (ligne zéro) est la valeur ronde autour de laquelle "
+                     "la tolérance est répartie : ici 25,000 à 25,021 mm encadre la valeur "
+                     "ronde 25 mm."},
             {"type": "numerique", "label": "L'intervalle de tolérance (IT)", "unite": "mm",
              "attendu": 0.021, "tol": 0.0005,
              "consigne": "IT = borne haute − borne basse.",
@@ -49205,7 +49227,9 @@ ATELIERS = [
              "tol": 0.0005,
              "consigne": "Jmax = cote maxi alésage − cote mini arbre.",
              "indice": "40,025 − 39,991",
-             "pieges": []},
+             "pieges": [],
+             "aide": "Jmax se calcule avec la cote la PLUS GRANDE de l'alésage et la cote "
+                     "la PLUS PETITE de l'arbre : 40,025 − 39,991 = 0,034 mm."},
             {"type": "qcm", "label": "Conclusion",
              "question": "Un résultat négatif et un résultat positif : quelle est la nature "
                          "de cet ajustement ?",
@@ -49304,7 +49328,9 @@ ATELIERS = [
              "tol": 0.01,
              "consigne": "Par symétrie, B reprend la même part que A.",
              "indice": "900 / 2",
-             "pieges": []},
+             "pieges": [],
+             "aide": "Par symétrie, l'appui B reprend exactement la même part de charge "
+                     "que l'appui A calculé à l'étape précédente : 900 / 2 = 450 N."},
             {"type": "qcm", "label": "Vérification",
              "question": "RA + RB doit être égal à :",
              "options": ["La charge totale appliquée (900 N)", "Le double de la charge",
@@ -54990,17 +55016,22 @@ def _rendre_atelier(_at, _prefixe):
                 else:
                     st.markdown(
                         f'<div class="ko-box"><b>Pas encore.</b> Vous avez entré '
-                        f'<b>{_val:g}</b>.</div>', unsafe_allow_html=True)
-                    # diagnostic sur valeur fausse PREVISIBLE
+                        f'<b>{_val:g}</b>, la valeur attendue est <b>{_att:g} '
+                        f'{_et.get("unite","")}</b>.</div>', unsafe_allow_html=True)
+                    # diagnostic sur valeur fausse PREVISIBLE, sinon heuristique
+                    # générique (facteur 2, conversion d'unité, signe...), sinon l'aide
+                    # de l'étape : jamais de "faux" sans explication.
                     _trouve = None
                     for _piege, _msg in _et.get("pieges", []):
                         if abs(_val - _piege) <= max(abs(_piege) * 0.02, 1e-9):
                             _trouve = _msg
                             break
+                    if not _trouve:
+                        _trouve = _diagnostic_erreur(_val, _att)
                     if _trouve:
                         st.markdown(f'<div class="warn-box">🔍 <b>Ce qui a dû se passer —</b> '
                                     f'{_trouve}</div>', unsafe_allow_html=True)
-                    elif _et.get("aide"):
+                    if _et.get("aide"):
                         st.info(_et["aide"])
                     if st.button("Voir la valeur et continuer",
                                  key=f"{_prefixe}_at_skip_{_idx}"):
@@ -55342,6 +55373,16 @@ def _afficher_fiche(bloc, fiche, fiche_id):
         st.markdown('<div class="warn-box">Cherchez l\'exercice complètement avant '
                     'd\'ouvrir le corrigé. Un corrigé lu trop tôt donne l\'illusion de '
                     'comprendre.</div>', unsafe_allow_html=True)
+        st.write("")
+        P.setdefault("reponses_exercices", {})
+        _rep_ex = st.text_area(
+            "Votre réponse — posez le calcul ici avant d'ouvrir le corrigé",
+            value=P["reponses_exercices"].get(cle, ""), height=160, key=f"rep_ex_{cle}",
+            placeholder="Écrivez ici votre démarche et votre résultat, comme sur une copie.")
+        if st.button("Enregistrer ma réponse", key=f"btn_rep_ex_{cle}"):
+            P["reponses_exercices"][cle] = _rep_ex
+            sauver_progression(P)
+            st.success("Réponse enregistrée — comparez-la maintenant à l'onglet Corrigé.")
     with t5:
         corrige_progressif(fiche.get("corrige", ""), cle, afficher_contenu)
     if _a_methode:
@@ -56000,6 +56041,7 @@ elif PAGE == "🎯 Quiz interactif":
                         "question": q["question"], "categorie": q["categorie"],
                         "juste": juste, "donnee": choix,
                         "attendue": q["options"][q["correct"]],
+                        "explication": q["explication"],
                     })
                     st.session_state.quiz_valide = True
                     st.rerun()
@@ -56043,6 +56085,7 @@ elif PAGE == "🎯 Quiz interactif":
                     with st.expander(f"❌ {e['question'][:80]}…"):
                         st.write(f"**Votre réponse :** {e['donnee']}")
                         st.write(f"**Réponse attendue :** {e['attendue']}")
+                        st.info(f"**Explication —** {e.get('explication', '')}")
                         st.caption(f"Thème : {e['categorie']}")
 
             if st.button("Enregistrer ce résultat"):
@@ -57330,7 +57373,8 @@ elif PAGE == "📊 Ma progression":
                     else:
                         _nouvelle_p = {"fiches_lues": [], "resultats_quiz": [], "notes": {},
                                        "erreurs": {}, "exercices_guides_termines": [], "srs": {},
-                                       "ateliers_termines": [], "controles": []}
+                                       "ateliers_termines": [], "controles": [],
+                                       "reponses_exercices": {}}
                         _nouvelle_p.update(_donnees_import_p)
                         st.session_state.progression = _nouvelle_p
                         sauver_progression(_nouvelle_p)
