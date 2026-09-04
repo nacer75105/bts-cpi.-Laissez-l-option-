@@ -4,21 +4,21 @@ Application Streamlit destinée à un étudiant de BTS Conception de Produits In
 Elle regroupe le cours du référentiel, des quiz, des exercices générés à la volée et les
 calculateurs utilisés en bureau d'études.
 
-**137 fiches de cours** réparties en 26 blocs (des modules débutants 0A-0L jusqu'au bloc 19) ·
-**359 questions de quiz** · **126 schémas dessinés par le code** · **33 nuances de matériaux** ·
-tables ISO 286 complètes (0 à 500 mm) · calculateurs RDM.
+**150 fiches de cours** réparties en 31 blocs (des modules débutants 0A-0L jusqu'au bloc 19) ·
+**363 questions de quiz** · **143 schémas dessinés par le code, tous animés** · **33 nuances de
+matériaux** · tables ISO 286 complètes (0 à 500 mm) · calculateurs RDM.
 
 Matières couvertes : conception mécanique et RDM, CAO et lecture de plan, matériaux, procédés
 de fabrication et automatismes, mathématiques, physique-chimie, anglais technique, culture
 générale et expression, économie-gestion.
 
 > `app.py` est un fichier unique et auto-suffisant (c'est volontaire, pour n'avoir qu'un seul
-> fichier à déployer) : il contient tout le code et tout le contenu. Les autres fichiers
-> `.py` du dépôt (`figures.py`, `quiz.py`, `cours_*.py`, `methodes.py`, `options.py`,
-> `materiaux.py`, `iso286.py`) sont d'anciennes versions modulaires, conservées comme archive
-> de référence mais **non chargées par l'application** : seul `app.py` est exécuté par
-> `streamlit run app.py`, et c'est le seul fichier à modifier pour changer le contenu ou le
-> comportement de l'application.
+> fichier à déployer) : il contient tout le code et tout le contenu. Les anciennes versions
+> modulaires (`figures.py`, `quiz.py`, `cours_*.py`, `methodes.py`, `options.py`,
+> `materiaux.py`, `iso286.py`) ont été retirées du dépôt le 2026-09-04 : elles n'étaient plus
+> chargées par l'application depuis la consolidation en fichier unique, et leur contenu avait
+> divergé de `app.py`. Seul `app.py` est exécuté par `streamlit run app.py`, et c'est le seul
+> fichier à modifier pour changer le contenu ou le comportement de l'application.
 
 ---
 
@@ -27,9 +27,9 @@ générale et expression, économie-gestion.
 | Page | Ce qu'on y fait |
 |---|---|
 | **Tableau de bord** | progression, blocs, réflexes méthodologiques |
-| **Cours** | les 137 fiches, par matière (voir plus bas) |
+| **Cours** | les 150 fiches, par matière (voir plus bas) |
 | **Mathématiques / Physique-Chimie / Anglais technique / Culture générale / Économie-gestion** | vue filtrée du cours par matière |
-| **Quiz interactif** | 359 questions, correction immédiate et explication |
+| **Quiz interactif** | 363 questions, correction immédiate et explication |
 | **Exercices guidés** | des exercices résolus pas à pas, avec auto-évaluation |
 | **Ateliers guidés** | des mises en situation pratiques, rattachées aux fiches |
 | **Schémas interactifs** | cinq schémas à curseurs (ajustements, flexion, IT, roulements, engrenages) |
@@ -131,27 +131,16 @@ bts-cpi/
 ├── app.py                  LE fichier exécuté par `streamlit run` : tout le code et
 │                            tout le contenu (cours, quiz, schémas, calculateurs, pages)
 ├── requirements.txt        dépendances minimales (streamlit, pandas)
-│
-└── fichiers historiques, non chargés par app.py (archive de référence uniquement) :
-    ├── options.py           vidéos, révision espacée, contrôle, entraînement, aide-mémoire
-    ├── methodes.py          une fiche « méthode, pas à pas » par fiche de cours
-    ├── figures.py           un sous-ensemble des schémas dessinés par le code
-    ├── materiaux.py         base matériaux et moteur de calcul RDM
-    ├── iso286.py             tables ISO 286-1 et 286-2
-    ├── quiz.py              un sous-ensemble des questions de quiz
-    ├── cours_debutant.py    les fiches réécrites, progressives
-    ├── cours_complements.py maths, physique, projet, anglais, éco-gestion, 2e année
-    ├── cours_bloc_1_2.py    fiches d'origine des blocs 1 et 2
-    ├── cours_bloc_3_4.py    fiches d'origine des blocs 3 et 4
-    └── cours_bloc_5_6.py    fiches d'origine des blocs 5 et 6
+└── README.md
 ```
 
-**Pour modifier l'application, c'est toujours `app.py` qu'il faut éditer.** Ces fichiers
-historiques ont été progressivement recopiés et enrichis directement dans `app.py` au fil des
-sessions de travail ; ils ne sont plus importés par le programme (`app.py` n'a que des imports
-de bibliothèques standards et de `streamlit`/`pandas`) et ont donc divergé de leur contenu
-d'origine. Ils restent dans le dépôt pour l'historique, mais les éditer n'a aucun effet sur
-l'application.
+**Pour modifier l'application, c'est toujours `app.py` qu'il faut éditer.** Les anciennes
+versions modulaires (`options.py`, `methodes.py`, `figures.py`, `materiaux.py`, `iso286.py`,
+`quiz.py`, `cours_debutant.py`, `cours_complements.py`, `cours_bloc_1_2.py`, `cours_bloc_3_4.py`,
+`cours_bloc_5_6.py`) ont été retirées du dépôt le 2026-09-04 : leur contenu avait été
+progressivement recopié et enrichi directement dans `app.py`, elles n'étaient plus importées par
+le programme depuis longtemps et avaient divergé de leur contenu d'origine. Elles restent
+consultables dans l'historique Git si besoin (`git log --diff-filter=D`).
 
 ## Enregistrement de la progression
 

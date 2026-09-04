@@ -5,21 +5,24 @@ BTS CPI — APPLICATION COMPLÈTE EN UN SEUL FICHIER
 Conception de Produits Industriels — 1re année
 ================================================================================
 
-Ce fichier regroupe TOUT : l'application, les 43 fiches de cours, les
-81 schémas, les 113 questions de quiz, les tables ISO 286 et la base de
-matériaux. Il n'y a donc qu'un seul fichier à envoyer sur GitHub.
+Ce fichier regroupe TOUT : l'application, les 150 fiches de cours, les
+143 schémas (tous animés en SMIL), les 363 questions de quiz, les tables
+ISO 286 et la base de matériaux. Il n'y a donc qu'un seul fichier à
+envoyer sur GitHub.
 
 Lancement :  streamlit run app.py
 
 Où trouver quoi dans ce fichier :
-  1. figures        — les 81 schémas dessinés par le code
+  1. FIGURES       — les 143 schémas animés dessinés par le code (dict clé -> fonction)
   2. iso286         — les tables de tolérances et le calcul d'ajustement
   3. materiaux      — la base de matériaux et les calculs de RDM
-  4. quiz           — les 113 questions
-  5. cours_bloc_*   — les fiches d'origine des blocs 1 à 6
-  6. cours_debutant — les versions approfondies des 18 fiches
-  7. cours_complements — les blocs 7 à 13 (25 fiches)
-  8. l'application Streamlit elle-même, tout en bas
+  4. QUIZ           — les 363 questions, réparties en 42 catégories
+  5. BLOC_0 à BLOC_6 — les fiches des blocs fondamentaux (analyse fonctionnelle,
+     tolérancement, matériaux, RDM, CAO, liaisons)
+  6. BLOC_7 à BLOC_19 — mathématiques, physique-chimie, méthodologie de projet,
+     anglais, compléments techniques, plasturgie, études de cas, mathématiques
+     BTS CPI (programme d'examen, probabilités, calcul matriciel et vectoriel)
+  7. l'application Streamlit elle-même, tout en bas
 ================================================================================
 """
 
@@ -592,6 +595,56 @@ def diagramme_fast():
 
 
 # ===========================================================================
+# 13B. LA MATRICE VALEUR : POIDS FONCTIONNEL CONTRE PART DU COÛT
+# ===========================================================================
+
+def matrice_valeur():
+    p = [_txt(40, 24, "Une poignée de porte industrielle : quatre fonctions, deux histogrammes à comparer.",
+              12.5, TRAIT, "start", True)]
+    x0, y0 = 90, 260
+    p.append(f"<line x1='{x0}' y1='{y0}' x2='680' y2='{y0}' stroke='{TRAIT}' stroke-width='1.6'/>")
+    p.append(f"<line x1='{x0}' y1='{y0}' x2='{x0}' y2='40' stroke='{TRAIT}' stroke-width='1.6'/>")
+    p.append(_txt(x0 - 8, 46, "%", 11, FIN, "end"))
+    for pct in (10, 20, 30, 40, 50):
+        yy = y0 - pct * 4.4
+        p.append(f"<line x1='{x0-4}' y1='{yy}' x2='{x0}' y2='{yy}' stroke='{FIN}' stroke-width='1'/>")
+        p.append(_txt(x0 - 8, yy + 4, str(pct), 9.5, FIN, "end"))
+    fonctions = [
+        ("FP1", "Permettre\nl'ouverture", 40, 25, 160, False),
+        ("FC1", "Résister à\nla corrosion", 25, 20, 320, False),
+        ("FC2", "S'intégrer\nesthétiquement", 15, 45, 480, True),
+        ("FC3", "Résister\naux chocs", 20, 10, 640, False),
+    ]
+    for nom, libelle, poids, cout, cx, alerte in fonctions:
+        xp, xc = cx - 40, cx + 6
+        hp, hc = poids * 4.4, cout * 4.4
+        p.append(f"<rect x='{xp}' y='{y0-hp}' width='34' height='{hp}' fill='{ALESAGE}' opacity='.85'/>")
+        coul_c = ALERTE if alerte else ARBRE
+        # la barre de coût de la fonction esthétique pulse : c'est ELLE qui coûte bien
+        # plus que ce que son importance justifie — la cible de l'analyse de la valeur.
+        _extra = (f"<animate attributeName='opacity' values='.85;.4;.85' dur='1.1s' "
+                  f"repeatCount='indefinite'/>") if alerte else ""
+        p.append(f"<rect x='{xc}' y='{y0-hc}' width='34' height='{hc}' fill='{coul_c}' opacity='.85'>{_extra}</rect>")
+        p.append(_txt(cx, y0 + 16, nom, 11, TRAIT, "middle", True))
+        for i, ligne in enumerate(libelle.split("\n")):
+            p.append(_txt(cx, y0 + 32 + i * 13, ligne, 9.5, FIN, "middle"))
+        if alerte:
+            p.append(f"<text x='{cx}' y='{y0-hc-10}' {_POLICE} font-size='13' fill='{ALERTE}' "
+                     f"text-anchor='middle' font-weight='700'>sur-qualité !"
+                     f"<animate attributeName='opacity' values='1;0.2;1' dur='1.1s' "
+                     f"repeatCount='indefinite'/></text>")
+    p.append(f"<rect x='500' y='40' width='14' height='14' fill='{ALESAGE}'/>")
+    p.append(_txt(520, 51, "poids fonctionnel (importance pour le client)", 10.5, TRAIT))
+    p.append(f"<rect x='500' y='58' width='14' height='14' fill='{ARBRE}'/>")
+    p.append(_txt(520, 69, "part du coût de revient", 10.5, TRAIT))
+    p.append(f"<rect x='40' y='285' width='680' height='58' fill='#fff7ed' stroke='{ARBRE}' rx='6'/>")
+    p.append(_txt(56, 306, "FC2 pèse 15 % dans la décision d'achat, mais absorbe 45 % du coût : c'est une",
+                  12, TRAIT, "start", True))
+    p.append(_txt(56, 326, "sur-qualité. On cherche une solution moins chère à service rendu identique — pas moins bonne.", 11.5, FIN))
+    return _svg("".join(p), 760, 355)
+
+
+# ===========================================================================
 # 14. LES ÉLÉMENTS D'UNE COTE
 # ===========================================================================
 
@@ -1160,6 +1213,43 @@ def esquisse_contraintes():
     p.append(_txt(56, 316, "et cassera la pièce dans six mois, quand quelqu'un modifiera une cote en amont.", 12, FIN))
     p.append(_txt(56, 336, "Réflexe : contraindre à 100 % — géométrie d'abord (symétrie, tangence), cotes ensuite.", 11, ALESAGE))
     return _svg("".join(p), 760, 360)
+
+
+# ===========================================================================
+# 27B. LE LISSAGE : RELIER DES SECTIONS DIFFÉRENTES
+# ===========================================================================
+
+def lissage_sections():
+    p = [_txt(40, 24, "Trois sections, trois formes différentes : le logiciel invente la surface entre elles.",
+              12.5, TRAIT, "start", True)]
+    haut = "M140,135 Q260,90 380,110 Q500,130 620,145"
+    bas = "M140,225 Q260,265 380,250 Q500,235 620,215"
+    # le corps lissé se construit une fois, au chargement : le contour se dessine puis
+    # se remplit, pour qu'on voie la surface naître entre les trois sections.
+    contour = (haut + " L620,215 Q500,235 380,250 Q260,265 140,225 Z")
+    _long = 620
+    p.append(f"<path d='{contour}' fill='{ALESAGE}' opacity='0' stroke='none'>"
+             f"<animate attributeName='opacity' from='0' to='.16' dur='1.2s' begin='1.4s' fill='freeze'/></path>")
+    for chemin in (haut, bas):
+        p.append(f"<path d='{chemin}' fill='none' stroke='{FIN}' stroke-width='1.4' stroke-dasharray='{_long}' "
+                 f"stroke-dashoffset='{_long}'>"
+                 f"<animate attributeName='stroke-dashoffset' from='{_long}' to='0' dur='1.4s' fill='freeze'/></path>")
+    # un point suit le profil supérieur : ce que le logiciel « invente » entre chaque
+    # paire de sections n'est pas arbitraire, c'est la courbe la plus régulière possible.
+    p.append(f"<circle r='6' fill='{OK}'>"
+             f"<animateMotion dur='2.4s' begin='2.8s' repeatCount='indefinite' path='{haut}'/></circle>")
+    p.append(f"<ellipse cx='140' cy='180' rx='45' ry='45' fill='none' stroke='{ARBRE}' stroke-width='2.2'/>")
+    p.append(f"<ellipse cx='380' cy='180' rx='30' ry='70' fill='none' stroke='{ARBRE}' stroke-width='2.2'/>")
+    p.append(f"<ellipse cx='620' cy='180' rx='70' ry='35' fill='none' stroke='{ARBRE}' stroke-width='2.2'/>")
+    for cx, lab in ((140, "section 1\npetite, ronde"), (380, "section 2\nallongée"), (620, "section 3\nlarge, aplatie")):
+        p.append(f"<line x1='{cx}' y1='260' x2='{cx}' y2='300' stroke='{FIN}' stroke-width='1' stroke-dasharray='4 3'/>")
+        for i, ligne in enumerate(lab.split("\n")):
+            p.append(_txt(cx, 315 + i * 14, ligne, 10.5, FIN, "middle", i == 0))
+    p.append(f"<rect x='40' y='345' width='680' height='60' fill='#f0fdf4' stroke='{OK}' rx='6'/>")
+    p.append(_txt(56, 367, "Le balayage (fiche 5.9) fait suivre UNE section le long d'un chemin — la forme ne change",
+                  11.5, TRAIT, "start", True))
+    p.append(_txt(56, 387, "pas. Le lissage relie plusieurs sections DIFFÉRENTES : c'est la forme elle-même qui évolue.", 11.5, FIN))
+    return _svg("".join(p), 760, 420)
 
 
 # ===========================================================================
@@ -4236,6 +4326,383 @@ def couple_galvanique():
     return _svg("".join(p), 760, 370)
 
 
+def galvanisation_protection():
+    p = [_txt(40, 24, "Le zinc se sacrifie à la place de l'acier : c'est voulu, pas subi.",
+              13, TRAIT, "start", True)]
+    p.append(f"<rect x='150' y='140' width='460' height='90' rx='4' fill='#cbd5e1' stroke='{TRAIT}' stroke-width='2.4'/>")
+    p.append(_txt(380, 190, "ACIER (E° = −0,44 V)", 12, TRAIT, "middle", True))
+    # la couche de zinc s'amincit lentement, en boucle : elle se consomme à la place de
+    # l'acier — c'est la preuve visuelle de la protection sacrificielle.
+    p.append(f"<rect x='150' y='120' width='460' height='20' fill='{ALESAGE}' opacity='.8'>"
+             f"<animate attributeName='height' values='20;6;20' dur='3.5s' repeatCount='indefinite'/>"
+             f"<animate attributeName='y' values='120;134;120' dur='3.5s' repeatCount='indefinite'/></rect>")
+    p.append(_txt(380, 108, "ZINC (E° = −0,76 V) — l'anode sacrificielle", 12, ALESAGE, "middle", True))
+    for cx in (230, 380, 530):
+        p.append(f"<path d='M{cx},128 q0,-30 40,-30' fill='none' stroke='{ALERTE}' stroke-width='2' "
+                 f"marker-end='url(#fge)' stroke-dasharray='5 4'>"
+                 f"<animate attributeName='stroke-dashoffset' values='0;-18' dur='1s' repeatCount='indefinite'/></path>")
+    p.append("<defs><marker id='fge' markerWidth='8' markerHeight='8' refX='6' refY='3' orient='auto'>"
+             f"<path d='M0,0 L6,3 L0,6 Z' fill='{ALERTE}'/></marker></defs>")
+    p.append(_txt(230, 90, "électrons cédés par le zinc", 11, ALERTE, "start", True))
+    p.append(f"<rect x='40' y='260' width='680' height='90' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p.append(_txt(56, 284, "Le zinc est plus réactif que l'acier (E° plus négatif) : il cède ses électrons en", 12, TRAIT, "start", True))
+    p.append(_txt(56, 306, "premier, et se dissout à la place de l'acier qu'il recouvre. Tant qu'il en reste,", 12, TRAIT, "start", True))
+    p.append(_txt(56, 328, "l'acier est protégé — même là où le revêtement est rayé.", 12, TRAIT, "start", True))
+    return _svg("".join(p), 760, 370)
+
+
+def bilan_thermique_paroi():
+    p = [_txt(40, 24, "La chaleur traverse la paroi du chaud vers le froid — la conduction ne s'arrête jamais.",
+              12.5, TRAIT, "start", True)]
+    x0, x1 = 320, 360
+    p.append(f"<defs><linearGradient id='gradT' x1='0' y1='0' x2='1' y2='0'>"
+             f"<stop offset='0%' stop-color='{ALERTE}'/><stop offset='100%' stop-color='{AXE}'/></linearGradient></defs>")
+    p.append(f"<rect x='{x0}' y='60' width='{x1-x0}' height='220' fill='url(#gradT)' opacity='.35' "
+             f"stroke='{TRAIT}' stroke-width='2'/>")
+    p.append(_txt((x0+x1)/2, 45, "paroi, épaisseur e", 11.5, TRAIT, "middle", True))
+    p.append(f"<rect x='100' y='60' width='{x0-100}' height='220' fill='{ALERTE}' opacity='.12'/>")
+    p.append(_txt(210, 190, "intérieur\nchaud", 13, ALERTE, "middle", True))
+    p.append(_txt(210, 40, "T_int", 12, ALERTE, "middle", True))
+    p.append(f"<rect x='{x1}' y='60' width='220' height='220' fill='{AXE}' opacity='.12'/>")
+    p.append(_txt(x1+110, 190, "extérieur\nfroid", 13, AXE, "middle", True))
+    p.append(_txt(x1+110, 40, "T_ext", 12, AXE, "middle", True))
+    # trois flèches de flux défilent de gauche à droite, à travers la paroi : le flux
+    # de chaleur ne s'arrête jamais tant qu'un écart de température subsiste.
+    for y in (110, 170, 230):
+        p.append(f"<line x1='150' y1='{y}' x2='620' y2='{y}' stroke='{TRAIT}' stroke-width='2' "
+                 f"marker-end='url(#fth)' stroke-dasharray='7 6' opacity='.7'>"
+                 f"<animate attributeName='stroke-dashoffset' values='0;-26' dur='1.1s' repeatCount='indefinite'/></line>")
+    p.append("<defs><marker id='fth' markerWidth='8' markerHeight='8' refX='6' refY='3' orient='auto'>"
+             f"<path d='M0,0 L6,3 L0,6 Z' fill='{TRAIT}'/></marker></defs>")
+    p.append(f"<rect x='40' y='305' width='680' height='90' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p.append(_txt(56, 328, "Loi de Fourier : P = λ × S × (T_int − T_ext) / e", 12.5, TRAIT, "start", True))
+    p.append(_txt(56, 350, "λ dépend du matériau (très grand pour un métal, très petit pour un isolant) —", 11.5, FIN))
+    p.append(_txt(56, 370, "c'est presque toujours l'air autour de la paroi, pas la paroi elle-même, qui freine le flux.", 11.5, FIN))
+    return _svg("".join(p), 760, 415)
+
+
+def circuit_hydraulique_pertes():
+    p = [_txt(40, 22, "La pression chute à chaque obstacle : le graphique et le circuit se lisent ensemble.",
+              12.5, TRAIT, "start", True)]
+    ox, oy = 80, 130
+    p.append(f"<line x1='{ox}' y1='{oy}' x2='700' y2='{oy}' stroke='{FIN}' stroke-width='1' stroke-dasharray='4 3'/>")
+    p.append(_txt(ox-8, oy+4, "P", 11, FIN, "end", True))
+    paliers = [(80, 250, 40, "coude 1"), (250, 420, 60, "vanne"), (420, 600, 40, "coude 2"), (600, 700, 0, "sortie")]
+    y = 40
+    prev_x = ox
+    for x0, x1, chute, nom in paliers:
+        p.append(f"<line x1='{x0}' y1='{y}' x2='{x1}' y2='{y}' stroke='{ALESAGE}' stroke-width='2.6'/>")
+        if chute:
+            p.append(f"<line x1='{x1}' y1='{y}' x2='{x1}' y2='{y+chute}' stroke='{ALESAGE}' stroke-width='2.6' stroke-dasharray='4 3'/>")
+            p.append(_txt(x1, y-6, nom, 10, ALERTE, "middle", True))
+        y += chute
+    # le point de fonctionnement défile le long du circuit ET du profil de pression en
+    # même temps : on VOIT la pression baisser exactement là où elle baisse.
+    p.append(f"<circle r='6' fill='{ALERTE}'>"
+             f"<animateMotion dur='3.2s' repeatCount='indefinite' path='M80,40 L250,40 L250,80 L420,80 "
+             f"L420,140 L600,140 L600,180 L700,180'/></circle>")
+    p.append(f"<line x1='60' y1='260' x2='700' y2='260' stroke='{TRAIT}' stroke-width='3'/>")
+    p.append(f"<line x1='60' y1='290' x2='700' y2='290' stroke='{TRAIT}' stroke-width='3'/>")
+    for x, nom in ((250, "coude"), (420, "vanne"), (600, "coude")):
+        p.append(f"<rect x='{x-14}' y='262' width='28' height='26' fill='{FOND}' stroke='{ARBRE}' stroke-width='2'/>")
+        p.append(_txt(x, 315, nom, 9.5, FIN, "middle"))
+    p.append(_txt(90, 250, "entrée", 10, FIN, "start"))
+    p.append(_txt(680, 250, "sortie", 10, FIN, "end"))
+    p.append(f"<rect x='40' y='330' width='680' height='68' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p.append(_txt(56, 352, "Pertes réparties (le long du tube) + pertes localisées (à chaque coude, chaque vanne)",
+                  12, TRAIT, "start", True))
+    p.append(_txt(56, 374, "s'additionnent : la pression totale disponible en sortie est toujours la plus petite des deux.", 11.5, FIN))
+    return _svg("".join(p), 760, 415)
+
+
+def reseau_triphase():
+    p = [_txt(40, 22, "Trois tensions identiques, décalées d'un tiers de tour l'une après l'autre.",
+              12.5, TRAIT, "start", True)]
+    import math as _m
+    ox, oy, amp = 90, 180, 90
+    p.append(f"<line x1='{ox}' y1='{oy}' x2='700' y2='{oy}' stroke='{TRAIT}' stroke-width='1.4'/>")
+    p.append(_txt(700, oy+18, "temps", 11, FIN, "end"))
+    phases = [("R", ALESAGE, 0), ("S", ARBRE, 120), ("T", OK, 240)]
+    for nom, coul, dephasage in phases:
+        pts = []
+        for i in range(0, 201):
+            t = i/200 * 720
+            yv = oy - amp * _m.sin(_m.radians(t - dephasage))
+            pts.append(f"{ox + i*3:.0f},{yv:.1f}")
+        p.append(f"<polyline points='{' '.join(pts)}' fill='none' stroke='{coul}' stroke-width='2.4'/>")
+    # un repère vertical défile de gauche à droite : à tout instant, les trois phases
+    # ont des valeurs différentes — c'est ce décalage qui fait tourner un moteur.
+    p.append(f"<line x1='{ox}' y1='{oy-amp-20}' x2='{ox}' y2='{oy+amp+20}' stroke='{TRAIT}' stroke-width='1.6' opacity='.7'>"
+             f"<animateTransform attributeName='transform' type='translate' values='0,0;600,0;0,0' "
+             f"dur='4s' repeatCount='indefinite'/></line>")
+    for i, (nom, coul, dephasage) in enumerate(phases):
+        p.append(_txt(650, oy - amp + 10 + i*22, "phase " + nom, 11.5, coul, "start", True))
+    p.append(f"<rect x='40' y='300' width='680' height='90' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p.append(_txt(56, 322, "Puissance active triphasée : P = √3 × U × I × cos(φ)", 12.5, TRAIT, "start", True))
+    p.append(_txt(56, 344, "U = tension entre deux phases (souvent 400 V) · I = courant de ligne · cos(φ) = facteur", 11.5, FIN))
+    p.append(_txt(56, 364, "de puissance. Un moteur triphasé démarre sans dispositif spécial : les trois champs", 11.5, FIN))
+    p.append(_txt(56, 384, "décalés créent d'eux-mêmes un champ tournant.", 11.5, FIN))
+    return _svg("".join(p), 760, 415)
+
+
+def ecoulement_laminaire_turbulent():
+    p = [_txt(40, 22, "Même tube, même fluide : le régime d'écoulement change tout.",
+              12.5, TRAIT, "start", True)]
+    import math as _m
+    # laminaire : filets parallèles, réguliers
+    p.append(f"<rect x='60' y='60' width='300' height='160' rx='8' fill='none' stroke='{TRAIT}' stroke-width='2.2'/>")
+    p.append(_txt(210, 48, "laminaire (Re &lt; 2000)", 12.5, OK, "middle", True))
+    for k in range(5):
+        y = 80 + k*28
+        p.append(f"<path d='M75,{y} L345,{y}' fill='none' stroke='{OK}' stroke-width='2' "
+                 f"stroke-dasharray='8 6'>"
+                 f"<animate attributeName='stroke-dashoffset' values='0;-28' dur='{0.8+k*0.05:.2f}s' "
+                 f"repeatCount='indefinite'/></path>")
+    p.append(_txt(210, 235, "les filets restent parallèles, jamais ils ne se croisent", 10.5, FIN, "middle"))
+    # turbulent : filets chaotiques
+    p.append(f"<rect x='400' y='60' width='300' height='160' rx='8' fill='none' stroke='{TRAIT}' stroke-width='2.2'/>")
+    p.append(_txt(550, 48, "turbulent (Re &gt; 4000)", 12.5, ALERTE, "middle", True))
+    for k in range(5):
+        y0 = 80 + k*28
+        d = f"M415,{y0} "
+        for i in range(1, 9):
+            xx = 415 + i*33.5
+            yy = y0 + 10*_m.sin(i*1.7+k)
+            d += f"L{xx:.0f},{yy:.0f} "
+        p.append(f"<path d='{d}' fill='none' stroke='{ALERTE}' stroke-width='2' stroke-dasharray='6 5'>"
+                 f"<animate attributeName='stroke-dashoffset' values='0;-22' dur='{0.5+k*0.04:.2f}s' "
+                 f"repeatCount='indefinite'/></path>")
+    p.append(_txt(550, 235, "les filets se mélangent, tourbillonnent, se croisent", 10.5, FIN, "middle"))
+    p.append(f"<rect x='40' y='260' width='660' height='90' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p.append(_txt(56, 282, "Nombre de Reynolds : Re = ρ v D / μ — sans dimension, il compare l'inertie du fluide",
+                  12, TRAIT, "start", True))
+    p.append(_txt(56, 304, "à sa viscosité. Un fluide visqueux (huile) reste laminaire ; l'eau, peu visqueuse,", 11.5, FIN))
+    p.append(_txt(56, 324, "devient turbulente dès qu'elle circule un peu vite — c'est le cas le plus fréquent.", 11.5, FIN))
+    p.append(_txt(56, 344, "Au-delà de Re = 4000, on prend un coefficient λ turbulent, plus élevé qu'en laminaire.", 11.5, FIN))
+    return _svg("".join(p), 760, 370)
+
+
+def isolation_couches():
+    p = [_txt(40, 22, "Un mur à trois couches : chaque matériau freine la chaleur à sa façon.",
+              12.5, TRAIT, "start", True)]
+    couches = [(90, 120, "brique", "#d97757", 0.84), (210, 80, "isolant", ALESAGE, 0.04), (290, 30, "plâtre", "#cbd5e1", 0.35)]
+    x = 90
+    for x0, larg, nom, coul, lam in couches:
+        p.append(f"<rect x='{x}' y='60' width='{larg}' height='200' fill='{coul}' opacity='.55' stroke='{TRAIT}' stroke-width='1.6'/>")
+        p.append(_txt(x + larg/2, 280, nom, 10.5, TRAIT, "middle", True))
+        p.append(_txt(x + larg/2, 296, f"λ={lam}", 9.5, FIN, "middle"))
+        x += larg
+    p.append(_txt(60, 60, "chaud", 12, ALERTE, "end", True))
+    p.append(_txt(x + 20, 60, "froid", 12, AXE, "start", True))
+    # trois flèches de flux défilent à travers les trois couches : le flux ne s'arrête
+    # jamais à une frontière entre matériaux, il ralentit seulement.
+    for y in (110, 160, 210):
+        p.append(f"<line x1='70' y1='{y}' x2='{x+15}' y2='{y}' stroke='{TRAIT}' stroke-width='2' "
+                 f"marker-end='url(#fic)' stroke-dasharray='7 6' opacity='.75'>"
+                 f"<animate attributeName='stroke-dashoffset' values='0;-26' dur='1.1s' repeatCount='indefinite'/></line>")
+    p.append("<defs><marker id='fic' markerWidth='8' markerHeight='8' refX='6' refY='3' orient='auto'>"
+             f"<path d='M0,0 L6,3 L0,6 Z' fill='{TRAIT}'/></marker></defs>")
+    p.append(f"<rect x='40' y='320' width='680' height='68' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p.append(_txt(56, 342, "Les résistances thermiques s'additionnent, couche après couche : R_total = Σ e/(λS)",
+                  12, TRAIT, "start", True))
+    p.append(_txt(56, 364, "— exactement comme des résistances électriques en série. La couche isolante, malgré", 11.5, FIN))
+    p.append(_txt(56, 382, "sa faible épaisseur, porte presque toute la résistance : c'est elle qui protège vraiment.", 11.5, FIN))
+    return _svg("".join(p), 760, 410)
+
+
+def couplage_etoile_triangle():
+    p = [_txt(40, 22, "Le même moteur, deux façons de brancher ses trois enroulements.",
+              12.5, TRAIT, "start", True)]
+    import math as _m
+    # etoile
+    cx1, cy1 = 190, 170
+    p.append(_txt(190, 60, "COUPLAGE ÉTOILE (Y)", 13, ALESAGE, "middle", True))
+    p.append(f"<circle cx='{cx1}' cy='{cy1}' r='6' fill='{TRAIT}'/>")
+    p.append(_txt(cx1, cy1+22, "point neutre", 9.5, FIN, "middle"))
+    for k, lettre in enumerate(("R","S","T")):
+        a = _m.radians(90 + k*120)
+        ex, ey = cx1 + 90*_m.cos(a), cy1 - 90*_m.sin(a)
+        p.append(f"<line x1='{cx1}' y1='{cy1}' x2='{ex:.0f}' y2='{ey:.0f}' stroke='{ALESAGE}' stroke-width='2.4'>"
+                 f"<animate attributeName='stroke-width' values='2.4;3.8;2.4' dur='1.2s' begin='{k*0.3}s' "
+                 f"repeatCount='indefinite'/></line>")
+        p.append(_txt(ex + 12*_m.cos(a), ey - 12*_m.sin(a), lettre, 12, ALESAGE, "middle", True))
+    p.append(_txt(cx1, 285, "tension par enroulement : U/√3", 11, ALESAGE, "middle", True))
+    p.append(_txt(cx1, 302, "≈ 230 V si U = 400 V", 10, FIN, "middle"))
+    # triangle
+    cx2, cy2 = 560, 170
+    pts_tri = []
+    for k in range(3):
+        a = _m.radians(90 + k*120)
+        pts_tri.append((cx2 + 90*_m.cos(a), cy2 - 90*_m.sin(a)))
+    p.append(_txt(560, 60, "COUPLAGE TRIANGLE (Δ)", 13, ARBRE, "middle", True))
+    for k in range(3):
+        x1s, y1s = pts_tri[k]
+        x2s, y2s = pts_tri[(k+1)%3]
+        p.append(f"<line x1='{x1s:.0f}' y1='{y1s:.0f}' x2='{x2s:.0f}' y2='{y2s:.0f}' stroke='{ARBRE}' stroke-width='2.4'>"
+                 f"<animate attributeName='stroke-width' values='2.4;3.8;2.4' dur='1.2s' begin='{k*0.3}s' "
+                 f"repeatCount='indefinite'/></line>")
+    for k, lettre in enumerate(("R","S","T")):
+        xs, ys = pts_tri[k]
+        a = _m.radians(90 + k*120)
+        p.append(_txt(xs + 14*_m.cos(a), ys - 14*_m.sin(a), lettre, 12, ARBRE, "middle", True))
+    p.append(_txt(cx2, 285, "tension par enroulement : U", 11, ARBRE, "middle", True))
+    p.append(_txt(cx2, 302, "= 400 V directement", 10, FIN, "middle"))
+    p.append(f"<rect x='40' y='325' width='680' height='75' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p.append(_txt(56, 347, "Un même moteur, câblé en étoile au démarrage puis basculé en triangle en régime établi,",
+                  12, TRAIT, "start", True))
+    p.append(_txt(56, 369, "démarre avec un courant d'appel divisé par 3 environ — c'est le principe du démarreur", 11.5, FIN))
+    p.append(_txt(56, 389, "étoile-triangle, une solution mécanique simple avant l'ère des variateurs.", 11.5, FIN))
+    return _svg("".join(p), 760, 415)
+
+
+def chronologie_traitement():
+    p = [_txt(40, 22, "Un traitement de surface n'est jamais une seule opération : c'est une chaîne.",
+              12.5, TRAIT, "start", True)]
+    etapes = ["Dégraissage", "Décapage", "Traitement\n(galva., anodisation…)", "Rinçage", "Séchage /\npassivation"]
+    xs = [80, 230, 380, 550, 680]
+    for i, (x, nom) in enumerate(zip(xs, etapes)):
+        # chaque étape s'éclaire à son tour : sauter l'une d'elles compromet toutes
+        # celles qui suivent, même si le traitement lui-même est parfait.
+        p.append(f"<rect x='{x-65}' y='90' width='130' height='70' rx='8' fill='{FOND}' stroke='{ALESAGE}' stroke-width='2'>"
+                 f"<animate attributeName='stroke-width' values='2;4;2;2;2;2;2;2' dur='5.6s' "
+                 f"begin='{i*0.8}s' repeatCount='indefinite'/></rect>")
+        for j, ligne in enumerate(nom.split("\n")):
+            p.append(_txt(x, 120 + j*17, ligne, 11, TRAIT, "middle", True))
+        if i < len(xs)-1:
+            p.append(f"<line x1='{x+65}' y1='125' x2='{xs[i+1]-65}' y2='125' stroke='{FIN}' stroke-width='2' marker-end='url(#fct)'/>")
+    p.append("<defs><marker id='fct' viewBox='0 0 10 10' refX='9' refY='5' markerWidth='6' markerHeight='6' orient='auto'>"
+             f"<path d='M0 0 L10 5 L0 10 Z' fill='{FIN}'/></marker></defs>")
+    p.append(f"<rect x='40' y='195' width='680' height='90' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p.append(_txt(56, 218, "Sauter le dégraissage : la couche adhère mal, elle se décolle. Sauter le rinçage :",
+                  12, TRAIT, "start", True))
+    p.append(_txt(56, 240, "des résidus de bain contaminent le traitement suivant. La qualité d'un traitement de", 11.5, FIN))
+    p.append(_txt(56, 260, "surface se joue autant dans les étapes « invisibles » (préparation, rinçage) que dans", 11.5, FIN))
+    p.append(_txt(56, 278, "l'opération elle-même — c'est elle qu'on contrôle le moins, et qu'on rate le plus.", 11.5, FIN))
+    return _svg("".join(p), 760, 310)
+
+
+def vecteurs_produit_scalaire_vectoriel():
+    import math as _m
+    p = [_txt(40, 22, "Deux vecteurs dans l'espace : deux produits, pour deux questions différentes.",
+              12.5, TRAIT, "start", True)]
+    ox, oy = 190, 300
+
+    def iso(x, y, z, echelle=0.55):
+        sx = ox + (x - y) * _m.cos(_m.radians(30)) * echelle
+        sy = oy - (x + y) * _m.sin(_m.radians(30)) * echelle - z * echelle
+        return sx, sy
+
+    # axes de repère
+    for (ex, ey, ez), nom in [((160, 0, 0), "x"), ((0, 160, 0), "y"), ((0, 0, 160), "z")]:
+        ax, ay = iso(ex, ey, ez)
+        p.append(f"<line x1='{ox}' y1='{oy}' x2='{ax:.1f}' y2='{ay:.1f}' stroke='{FIN}' stroke-width='1.3' "
+                 f"stroke-dasharray='3 3'/>")
+        p.append(_txt(ax + (6 if nom != "z" else 0), ay + (12 if nom == "z" else -4), nom, 11, FIN, "middle", True))
+
+    # vecteur u (dans le plan x,y) et v (vers y,z) — même proportions que l'exemple du cours
+    ux, uy = iso(150, 80, 0)
+    vx, vy = iso(0, 60, 90)
+    p.append(f"<line x1='{ox}' y1='{oy}' x2='{ux:.1f}' y2='{uy:.1f}' stroke='{ALESAGE}' stroke-width='3' "
+             f"marker-end='url(#fu)'><animate attributeName='stroke-width' values='3;4.5;3' dur='2.4s' "
+             f"repeatCount='indefinite'/></line>")
+    p.append(_txt(ux + 8, uy - 6, "u", 13, ALESAGE, "start", True))
+    p.append(f"<line x1='{ox}' y1='{oy}' x2='{vx:.1f}' y2='{vy:.1f}' stroke='{ARBRE}' stroke-width='3' "
+             f"marker-end='url(#fv)'><animate attributeName='stroke-width' values='3;4.5;3' dur='2.4s' "
+             f"begin='0.3s' repeatCount='indefinite'/></line>")
+    p.append(_txt(vx - 4, vy - 8, "v", 13, ARBRE, "start", True))
+
+    # arc d'angle animé entre u et v
+    p.append(f"<path d='M {ox+34},{oy} A 34,34 0 0,0 {ox + 34*_m.cos(_m.radians(52)):.1f},"
+             f"{oy - 34*_m.sin(_m.radians(52)):.1f}' fill='none' stroke='{OK}' stroke-width='2' "
+             f"stroke-dasharray='4 3'><animate attributeName='stroke-dashoffset' values='0;-14' dur='1.4s' "
+             f"repeatCount='indefinite'/></path>")
+    p.append(_txt(ox + 46, oy - 14, "θ", 12.5, OK, "middle", True))
+
+    # produit vectoriel : perpendiculaire aux deux, tracé séparément à droite pour rester lisible
+    p.append(_txt(560, 60, "u × v : perpendiculaire à u ET à v", 12, TRAIT, "middle", True))
+    cx2, cy2 = 560, 170
+    p.append(f"<line x1='{cx2}' y1='{cy2+70}' x2='{cx2-40}' y2='{cy2+40}' stroke='{ALESAGE}' stroke-width='2.6'/>")
+    p.append(_txt(cx2 - 46, cy2 + 36, "u", 11.5, ALESAGE, "end", True))
+    p.append(f"<line x1='{cx2}' y1='{cy2+70}' x2='{cx2+45}' y2='{cy2+40}' stroke='{ARBRE}' stroke-width='2.6'/>")
+    p.append(_txt(cx2 + 50, cy2 + 36, "v", 11.5, ARBRE, "start", True))
+    p.append(f"<line x1='{cx2}' y1='{cy2+70}' x2='{cx2}' y2='{cy2-15}' stroke='{OK}' stroke-width='3' "
+             f"marker-end='url(#fn)'><animate attributeName='y2' values='{cy2+30};{cy2-15};{cy2+30}' "
+             f"dur='2.6s' repeatCount='indefinite'/></line>")
+    p.append(_txt(cx2 + 10, cy2 - 18, "u × v", 12, OK, "start", True))
+
+    p.append("<defs>"
+             f"<marker id='fu' viewBox='0 0 10 10' refX='9' refY='5' markerWidth='7' markerHeight='7' orient='auto'><path d='M0 0 L10 5 L0 10 Z' fill='{ALESAGE}'/></marker>"
+             f"<marker id='fv' viewBox='0 0 10 10' refX='9' refY='5' markerWidth='7' markerHeight='7' orient='auto'><path d='M0 0 L10 5 L0 10 Z' fill='{ARBRE}'/></marker>"
+             f"<marker id='fn' viewBox='0 0 10 10' refX='9' refY='5' markerWidth='7' markerHeight='7' orient='auto'><path d='M0 0 L10 5 L0 10 Z' fill='{OK}'/></marker>"
+             "</defs>")
+
+    p.append(f"<rect x='40' y='330' width='680' height='42' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p.append(_txt(56, 348, "u·v = ‖u‖‖v‖cos θ (angle, perpendicularité)   —   ‖u×v‖ = ‖u‖‖v‖sin θ (aire, normale au plan)",
+                  11.5, TRAIT, "start", True))
+    p.append(_txt(56, 364, "Le produit scalaire renvoie un nombre. Le produit vectoriel renvoie un vecteur.", 11, FIN))
+    return _svg("".join(p), 760, 385)
+
+
+def geometrie_plan_droite_espace():
+    import math as _m
+    p = [_txt(40, 22, "Un plan (par son vecteur normal) et une droite, dans le même repère.",
+              12.5, TRAIT, "start", True)]
+    ox, oy = 170, 300
+
+    def iso(x, y, z, echelle=0.52):
+        sx = ox + (x - y) * _m.cos(_m.radians(30)) * echelle
+        sy = oy - (x + y) * _m.sin(_m.radians(30)) * echelle - z * echelle
+        return sx, sy
+
+    for (ex, ey, ez), nom in [((150, 0, 0), "x"), ((0, 150, 0), "y"), ((0, 0, 150), "z")]:
+        ax, ay = iso(ex, ey, ez)
+        p.append(f"<line x1='{ox}' y1='{oy}' x2='{ax:.1f}' y2='{ay:.1f}' stroke='{FIN}' stroke-width='1.3' "
+                 f"stroke-dasharray='3 3'/>")
+        p.append(_txt(ax + (6 if nom != "z" else 0), ay + (12 if nom == "z" else -4), nom, 11, FIN, "middle", True))
+
+    # le plan : parallélogramme reliant O, A(100,0,40), B(0,120,30) et A+B
+    O = (0, 0, 0)
+    A = (100, 0, 40)
+    B = (0, 120, 30)
+    Csom = (A[0] + B[0], A[1] + B[1], A[2] + B[2])
+    pts = [iso(*O), iso(*A), iso(*Csom), iso(*B)]
+    chemin = " ".join(f"{x:.1f},{y:.1f}" for x, y in pts)
+    p.append(f"<polygon points='{chemin}' fill='{ALESAGE}' opacity='.28' stroke='{ALESAGE}' stroke-width='2'>"
+             f"<animate attributeName='opacity' values='.28;.42;.28' dur='3s' repeatCount='indefinite'/></polygon>")
+    p.append(_txt(iso(30, 60, 25)[0], iso(30, 60, 25)[1], "plan (OAB)", 11.5, ALESAGE, "middle", True))
+
+    # vecteur normal n, perpendiculaire au plan, animé
+    centre = iso(30, 40, 23)
+    nx, ny = iso(30 + 24, 40 + 15, 23 + 60)
+    p.append(f"<line x1='{centre[0]:.1f}' y1='{centre[1]:.1f}' x2='{nx:.1f}' y2='{ny:.1f}' stroke='{OK}' "
+             f"stroke-width='3' marker-end='url(#fnn)'>"
+             f"<animate attributeName='stroke-width' values='3;5;3' dur='2s' repeatCount='indefinite'/></line>")
+    p.append(_txt(nx + 8, ny - 4, "n", 13, OK, "start", True))
+
+    # une droite qui perce le plan, avec le point d'intersection marqué
+    M0 = (20, 10, -40)
+    M1 = (20, 10, 60)
+    d0x, d0y = iso(*M0)
+    d1x, d1y = iso(*M1)
+    p.append(f"<line x1='{d0x:.1f}' y1='{d0y:.1f}' x2='{d1x:.1f}' y2='{d1y:.1f}' stroke='{ARBRE}' stroke-width='2.4' "
+             f"stroke-dasharray='6 5'><animate attributeName='stroke-dashoffset' values='0;-22' dur='1.3s' "
+             f"repeatCount='indefinite'/></line>")
+    ix, iy = iso(20, 10, 10.5)
+    p.append(f"<circle cx='{ix:.1f}' cy='{iy:.1f}' r='5' fill='{ALERTE}'>"
+             f"<animate attributeName='r' values='5;8;5' dur='1.6s' repeatCount='indefinite'/></circle>")
+    p.append(_txt(ix + 10, iy + 4, "point d'intersection", 10.5, ALERTE, "start", True))
+
+    p.append("<defs>"
+             f"<marker id='fnn' viewBox='0 0 10 10' refX='9' refY='5' markerWidth='7' markerHeight='7' orient='auto'><path d='M0 0 L10 5 L0 10 Z' fill='{OK}'/></marker>"
+             "</defs>")
+
+    p.append(f"<rect x='40' y='330' width='680' height='42' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p.append(_txt(56, 348, "Plan : ax+by+cz+d=0, normal n=(a,b,c)   —   distance d'un point : d=|ax₀+by₀+cz₀+d|/‖n‖",
+                  11.5, TRAIT, "start", True))
+    p.append(_txt(56, 364, "Droite ∥ plan ⇔ vecteur directeur · n = 0 — sinon elle perce le plan en un point unique.", 11, FIN))
+    return _svg("".join(p), 760, 385)
+
+
 def seuil_rentabilite_graphe():
     p = [_txt(40, 24, "Deux droites de coût : où elles se croisent, les deux solutions coûtent pareil.",
               12, TRAIT, "start", True)]
@@ -4381,6 +4848,175 @@ def retrait_moulage():
     p.append(_txt(56, 306, "Pour obtenir 118,56 mm sur la pièce, le moule doit être coté à 120,00 mm —", 12, TRAIT, "start", True))
     p.append(_txt(56, 328, "jamais l'inverse : on majore toujours la cote du moule, pas celle de la pièce.", 12, TRAIT, "start", True))
     return _svg("".join(p), 760, 370)
+
+
+def echelle_prototypes():
+    p = [_txt(40, 22, "Quatre niveaux de fidélité, un coût qui grimpe à chaque étape franchie sans le voir.",
+              12.5, TRAIT, "start", True)]
+    etapes = [
+        (60, 130, "Maquette\nd'encombrement", "valide : la forme,\nl'ergonomie", ALESAGE),
+        (250, 145, "Prototype\nfonctionnel", "valide : la cinématique,\nla résistance approchée", ARBRE),
+        (450, 160, "Prototype\nindustriel", "valide : le procédé,\nle matériau définitif", OK),
+        (650, 175, "Pré-série", "valide : la chaîne\ncomplète, la qualité", ALERTE),
+    ]
+    y0 = 260
+    for x, h, nom, valide, couleur in etapes:
+        p.append(f"<rect x='{x}' y='{y0-h}' width='90' height='{h}' rx='6' fill='{couleur}' opacity='.16' stroke='{couleur}' stroke-width='2.2'/>")
+        for i, ligne in enumerate(nom.split("\n")):
+            p.append(_txt(x + 45, y0 - h - 14 + i * 15, ligne, 11.5, couleur, "middle", True))
+        for i, ligne in enumerate(valide.split("\n")):
+            p.append(_txt(x + 45, y0 + 20 + i * 14, ligne, 9.5, FIN, "middle"))
+    for x1, x2 in ((150, 250), (340, 450), (540, 650)):
+        # les flèches défilent, de plus en plus lentement : chaque étape coûte plus de
+        # temps et d'argent que la précédente.
+        p.append(f"<line x1='{x1}' y1='120' x2='{x2}' y2='120' stroke='{FIN}' stroke-width='2' "
+                 f"marker-end='url(#fp1)' stroke-dasharray='7 5'>"
+                 f"<animate attributeName='stroke-dashoffset' values='0;-24' dur='{0.7 + (x1-150)/100:.1f}s' "
+                 f"repeatCount='indefinite'/></line>")
+    p.append("<defs><marker id='fp1' markerWidth='9' markerHeight='9' refX='8' refY='4.5' orient='auto'>"
+             f"<path d='M0,0 L9,4.5 L0,9 z' fill='{FIN}'/></marker></defs>")
+    # le retour en arrière pulse en rouge : un défaut trouvé tard oblige à reculer de
+    # plusieurs cases, et c'est ça qui coûte cher — pas le prototype lui-même.
+    p.append(f"<path d='M695,{y0+45} Q400,{y0+90} 105,{y0+45}' fill='none' stroke='{ALERTE}' stroke-width='2' "
+             f"stroke-dasharray='6 5' marker-end='url(#fp2)'>"
+             f"<animate attributeName='opacity' values='1;0.3;1' dur='1.4s' repeatCount='indefinite'/></path>")
+    p.append("<defs><marker id='fp2' markerWidth='9' markerHeight='9' refX='8' refY='4.5' orient='auto'>"
+             f"<path d='M0,0 L9,4.5 L0,9 z' fill='{ALERTE}'/></marker></defs>")
+    p.append(_txt(400, y0 + 100, "un défaut trouvé ici coûte bien plus cher qu'un défaut trouvé là", 11, ALERTE, "middle", True))
+    return _svg("".join(p), 760, 340)
+
+
+def train_epicycloidal():
+    p = [_txt(40, 22, "Trois éléments coaxiaux : le planétaire, les satellites, la couronne.",
+              12.5, TRAIT, "start", True)]
+    cx, cy = 380, 200
+    R_coupe, R_sat, R_plan = 150, 100, 45
+    p.append(f"<circle cx='{cx}' cy='{cy}' r='{R_coupe}' fill='none' stroke='{TRAIT}' stroke-width='3' stroke-dasharray='10 5'/>")
+    p.append(_txt(cx, cy - R_coupe - 14, "couronne (fixe)", 12, TRAIT, "middle", True))
+    p.append(f"<circle cx='{cx}' cy='{cy}' r='{R_plan}' fill='{ALESAGE}' opacity='.22' stroke='{ALESAGE}' stroke-width='2.4'/>")
+    p.append(_txt(cx, cy + 5, "planétaire", 10.5, ALESAGE, "middle", True))
+    # le porte-satellites tourne lentement, et CHAQUE satellite tourne vite sur
+    # lui-même en même temps : deux rotations combinées, c'est tout le principe.
+    p.append(f"<g><animateTransform attributeName='transform' type='rotate' "
+             f"values='0 {cx} {cy}; 360 {cx} {cy}' dur='6s' repeatCount='indefinite'/>")
+    import math as _m
+    for k in range(3):
+        a = _m.radians(k * 120)
+        sx, sy = cx + R_sat * _m.cos(a), cy + R_sat * _m.sin(a)
+        p.append(f"<line x1='{cx}' y1='{cy}' x2='{sx:.0f}' y2='{sy:.0f}' stroke='{FIN}' stroke-width='2'/>")
+        p.append(f"<g transform='translate({sx:.0f},{sy:.0f})'>"
+                 f"<animateTransform attributeName='transform' type='rotate' "
+                 f"values='0;360' dur='0.9s' repeatCount='indefinite' additive='sum'/>"
+                 f"<circle r='26' fill='{ARBRE}' opacity='.28' stroke='{ARBRE}' stroke-width='2.2'/>"
+                 f"<line x1='0' y1='0' x2='24' y2='0' stroke='{ARBRE}' stroke-width='2'/></g>")
+    p.append(f"</g>")
+    p.append(_txt(cx + R_sat + 40, cy - R_sat + 10, "satellites", 10.5, ARBRE, "start", True))
+    p.append(_txt(cx + R_sat + 40, cy - R_sat + 28, "(portés + tournant", 9.5, FIN, "start"))
+    p.append(_txt(cx + R_sat + 40, cy - R_sat + 44, "sur eux-mêmes)", 9.5, FIN, "start"))
+    p.append(f"<rect x='40' y='340' width='680' height='58' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p.append(_txt(56, 362, "Couronne fixe, planétaire menant : ω(sortie) = ω(entrée) ÷ (1 + Z(couronne)/Z(planétaire)).",
+                  11.5, TRAIT, "start", True))
+    p.append(_txt(56, 384, "Bloquer un élément différent change tout le rapport — sans changer un seul engrenage.", 11.5, FIN))
+    return _svg("".join(p), 760, 415)
+
+
+def fabrication_additive_metal():
+    p = [_txt(40, 22, "Le laser fond la poudre couche par couche : la pièce naît de bas en haut.",
+              12.5, TRAIT, "start", True)]
+    px, py, pw = 200, 300, 320
+    p.append(f"<rect x='{px}' y='{py}' width='{pw}' height='16' fill='#cbd5e1' stroke='{TRAIT}' stroke-width='2'/>")
+    p.append(_txt(px + pw/2, py + 34, "plateau + lit de poudre", 11, FIN, "middle"))
+    # les couches apparaissent une à une, de bas en haut : la pièce se construit
+    # réellement ainsi, jamais moulée ou usinée d'un bloc.
+    n_couches = 9
+    for i in range(n_couches):
+        y = py - (i+1) * 14
+        larg = pw * (0.4 + 0.3 * (1 - abs(i - 4) / 5))
+        x0 = px + (pw - larg) / 2
+        p.append(f"<rect x='{x0:.0f}' y='{y}' width='{larg:.0f}' height='12' fill='{ALESAGE}' opacity='0'>"
+                 f"<animate attributeName='opacity' values='0;.75;.75' dur='{n_couches*0.35}s' "
+                 f"begin='{i*0.35}s' fill='freeze' repeatCount='indefinite'/></rect>")
+    # support en treillis sous le porte-à-faux
+    p.append(f"<path d='M{px+40},{py} L{px+40},{py-40} L{px+70},{py-40} L{px+70},{py}' fill='none' "
+             f"stroke='{FIN}' stroke-width='1.2' stroke-dasharray='3 3'/>")
+    p.append(_txt(px+55, py+50, "support (à casser après)", 9.5, FIN, "middle"))
+    # le laser balaie la dernière couche, en boucle
+    p.append(f"<circle r='5' fill='{ARBRE}'>"
+             f"<animateMotion dur='1.2s' repeatCount='indefinite' "
+             f"path='M{px+30},{py-n_couches*14-4} L{px+pw-30},{py-n_couches*14-4}'/></circle>")
+    p.append(_txt(px + pw + 20, py - n_couches*14, "laser", 11, ARBRE, "start", True))
+    p.append(f"<rect x='40' y='330' width='680' height='68' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p.append(_txt(56, 352, "Chaque porte-à-faux non soutenu s'affaisse dans la poudre fondue : il faut prévoir",
+                  11.5, TRAIT, "start", True))
+    p.append(_txt(56, 372, "des supports, à retirer après coup — et l'orientation de la pièce sur le plateau", 11.5, FIN))
+    p.append(_txt(56, 392, "décide de leur nombre autant que de l'état de surface final.", 11.5, FIN))
+    return _svg("".join(p), 760, 415)
+
+
+def collage_sertissage():
+    p = [_txt(40, 22, "Deux façons d'assembler sans vis ni cordon de soudure.",
+              12.5, TRAIT, "start", True)]
+    # collage
+    p.append(_txt(190, 55, "COLLAGE", 13, ALESAGE, "middle", True))
+    p.append(f"<rect x='90' y='90' width='200' height='30' fill='#cbd5e1' stroke='{TRAIT}' stroke-width='2'/>")
+    p.append(f"<rect x='90' y='150' width='200' height='30' fill='#cbd5e1' stroke='{TRAIT}' stroke-width='2'/>")
+    # le film de colle pulse : c'est LUI qui reprend l'effort de cisaillement,
+    # répartie sur toute la surface — pas un point comme un rivet.
+    p.append(f"<rect x='90' y='120' width='200' height='30' fill='{OK}' opacity='.4'>"
+             f"<animate attributeName='opacity' values='.4;.7;.4' dur='1.3s' repeatCount='indefinite'/></rect>")
+    p.append(_txt(190, 138, "film de colle", 10.5, "#ffffff", "middle", True))
+    p.append(f"<line x1='75' y1='105' x2='40' y2='105' stroke='{ARBRE}' stroke-width='2.4' marker-end='url(#fc1)'/>")
+    p.append(f"<line x1='305' y1='165' x2='340' y2='165' stroke='{ARBRE}' stroke-width='2.4' marker-end='url(#fc1)'/>")
+    p.append("<defs><marker id='fc1' markerWidth='9' markerHeight='9' refX='8' refY='4.5' orient='auto'>"
+             f"<path d='M0,0 L9,4.5 L0,9 z' fill='{ARBRE}'/></marker></defs>")
+    p.append(_txt(190, 210, "effort réparti sur toute la surface collée", 10.5, FIN, "middle"))
+    # sertissage
+    p.append(_txt(570, 55, "SERTISSAGE", 13, ARBRE, "middle", True))
+    p.append(f"<rect x='470' y='150' width='200' height='24' fill='#cbd5e1' stroke='{TRAIT}' stroke-width='2'/>")
+    p.append(f"<rect x='470' y='100' width='200' height='16' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='2'/>")
+    # le repli sertisseur pivote une fois pour montrer le pliage qui verrouille
+    # mécaniquement les deux tôles, sans aucun apport de matière.
+    p.append(f"<g style='transform-origin:670px 116px'>"
+             f"<animateTransform attributeName='transform' type='rotate' values='90 670 116;0 670 116;0 670 116' "
+             f"dur='2.4s' repeatCount='indefinite'/>"
+             f"<rect x='650' y='100' width='20' height='55' fill='{ARBRE}' opacity='.5' stroke='{ARBRE}' stroke-width='2'/></g>")
+    p.append(_txt(570, 210, "pli mécanique : aucun apport de matière, aucune chaleur", 10.5, FIN, "middle"))
+    p.append(f"<rect x='40' y='250' width='680' height='68' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p.append(_txt(56, 272, "Collage : assemble des matériaux différents (métal/plastique), répartit l'effort,",
+                  11.5, TRAIT, "start", True))
+    p.append(_txt(56, 292, "isole électriquement — mais demande un temps de prise et une préparation de surface.", 11.5, FIN))
+    p.append(_txt(56, 312, "Sertissage : rapide, sans consommable ni chaleur — mais irréversible et peu esthétique.", 11.5, FIN))
+    return _svg("".join(p), 760, 335)
+
+
+def matrice_risques_projet():
+    p = [_txt(40, 22, "Chaque risque se place selon deux questions : est-il probable ? Serait-il grave ?",
+              12.5, TRAIT, "start", True)]
+    x0, y0, cote = 110, 300, 480
+    for i in range(3):
+        for j in range(3):
+            couleur = [OK, ARBRE, ALERTE][min(i+j, 2)]
+            p.append(f"<rect x='{x0+i*cote//3}' y='{y0-(j+1)*cote//3}' width='{cote//3}' height='{cote//3}' "
+                     f"fill='{couleur}' opacity='.14'/>")
+    p.append(f"<line x1='{x0}' y1='{y0}' x2='{x0+cote}' y2='{y0}' stroke='{TRAIT}' stroke-width='1.6'/>")
+    p.append(f"<line x1='{x0}' y1='{y0}' x2='{x0}' y2='{y0-cote}' stroke='{TRAIT}' stroke-width='1.6'/>")
+    p.append(_txt(x0+cote/2, y0+26, "probabilité →", 11.5, FIN, "middle", True))
+    p.append(f"<text x='{x0-30}' y='{y0-cote/2}' {_POLICE} font-size='11.5' fill='{FIN}' text-anchor='middle' "
+             f"font-weight='600' transform='rotate(-90 {x0-30} {y0-cote/2})'>impact →</text>")
+    risques = [
+        (x0+50, y0-50, "fournisseur\nen retard", FIN, False),
+        (x0+150, y0-140, "compétence\nmanquante", FIN, False),
+        (x0+380, y0-410, "pièce clé\nindisponible", ALERTE, True),
+        (x0+300, y0-200, "coût matière\nsous-estimé", FIN, False),
+    ]
+    for rx, ry, nom, coul, prio in risques:
+        _extra = (f"<animate attributeName='r' values='7;11;7' dur='1.1s' "
+                  f"repeatCount='indefinite'/>") if prio else ""
+        p.append(f"<circle cx='{rx}' cy='{ry}' r='7' fill='{coul if not prio else ALERTE}'>{_extra}</circle>")
+        for k, ligne in enumerate(nom.split("\n")):
+            p.append(_txt(rx + 12, ry - 6 + k*13, ligne, 9.5, TRAIT, "start", prio))
+    p.append(_txt(x0+cote-40, y0-cote+20, "priorité 1", 11, ALERTE, "end", True))
+    return _svg("".join(p), 760, 340)
 
 
 def vitesse_disque_meulage():
@@ -4893,6 +5529,16 @@ FIGURES = {
     "cercle_et_droite": ("Équation d'un cercle et intersection avec une droite", cercle_et_droite),
     "barycentre_points": ("Le barycentre : le point d'équilibre de masses", barycentre_points),
     "couple_galvanique": ("Le couple galvanique : qui se corrode à la place de qui", couple_galvanique),
+    "galvanisation_protection": ("La galvanisation : le zinc se sacrifie à la place de l'acier", galvanisation_protection),
+    "bilan_thermique_paroi": ("La conduction thermique à travers une paroi", bilan_thermique_paroi),
+    "circuit_hydraulique_pertes": ("Les pertes de charge dans un circuit hydraulique", circuit_hydraulique_pertes),
+    "reseau_triphase": ("Les trois tensions déphasées d'un réseau triphasé", reseau_triphase),
+    "ecoulement_laminaire_turbulent": ("Écoulement laminaire ou turbulent : deux régimes", ecoulement_laminaire_turbulent),
+    "isolation_couches": ("Un mur à trois couches : les résistances thermiques s'additionnent", isolation_couches),
+    "couplage_etoile_triangle": ("Couplage étoile ou triangle d'un moteur triphasé", couplage_etoile_triangle),
+    "chronologie_traitement": ("La chaîne complète d'un traitement de surface", chronologie_traitement),
+    "vecteurs_produit_scalaire_vectoriel": ("Produit scalaire et produit vectoriel dans l'espace", vecteurs_produit_scalaire_vectoriel),
+    "geometrie_plan_droite_espace": ("Un plan, sa normale, et une droite qui le perce", geometrie_plan_droite_espace),
     "flux_puissance": ("Le flux de puissance dans une chaîne motoréducteur", flux_puissance),
     "distribution_mesures": ("Cinq mesures comparées à une tolérance", distribution_mesures),
     "dilatation_differentielle": ("Deux métaux qui ne dilatent pas à la même vitesse", dilatation_differentielle),
@@ -4929,6 +5575,8 @@ FIGURES = {
     "bete_a_cornes": ("La bête à cornes : cadrer le besoin", bete_a_cornes),
     "diagramme_pieuvre": ("Le diagramme pieuvre : FP et FC", diagramme_pieuvre),
     "diagramme_fast": ("Le FAST : de la fonction au composant", diagramme_fast),
+    "matrice_valeur": ("La matrice valeur : poids fonctionnel contre part du coût", matrice_valeur),
+    "lissage_sections": ("Le lissage : relier des sections différentes", lissage_sections),
     "elements_cotation": ("Les éléments d'une cote", elements_cotation),
     "lettres_et_grades": ("Lettre = position, chiffre = largeur", lettres_et_grades),
     "defaut_geometrique": ("Bonnes cotes, pièce inutilisable", defaut_geometrique),
@@ -4948,6 +5596,11 @@ FIGURES = {
     "isostatique_hyperstatique": ("Palier fixe et palier libre", isostatique_hyperstatique),
     "regle_des_charges": ("Quelle bague monter serrée ?", regle_des_charges),
     "liaison_arbre_moyeu": ("Transmettre le couple : quatre solutions", liaison_arbre_moyeu),
+    "echelle_prototypes": ("Les quatre niveaux de fidélité d'un prototype", echelle_prototypes),
+    "train_epicycloidal": ("Un train épicycloïdal : planétaire, satellites, couronne", train_epicycloidal),
+    "fabrication_additive_metal": ("La fabrication additive métallique, couche par couche", fabrication_additive_metal),
+    "collage_sertissage": ("Collage et sertissage : deux assemblages sans vis", collage_sertissage),
+    "matrice_risques_projet": ("La matrice probabilité × impact d'un projet", matrice_risques_projet),
     "calcul_ajustement_etapes": ("Calculer un ajustement en quatre étapes", calcul_ajustement_etapes),
     "choisir_materiau": ("Choisir un matériau : l'ordre des questions", choisir_materiau),
     "decomposer_force": ("Décomposer une force en deux composantes", decomposer_force),
@@ -7157,6 +7810,41 @@ QUIZ["Physique appliquée"] = [
       "Chaque polymère ayant son propre taux de retrait, changer de matériau change la cote "
       "exacte que doit avoir le moule — d'où la nécessité de reprendre un outillage déjà taillé "
       "pour l'ancien matériau.", "Intermédiaire"),
+
+    q("De l'eau (ρ=1000 kg/m³, μ=0,001 Pa·s) s'écoule à 0,8 m/s dans un tube Ø25 mm. Le régime "
+      "est :",
+      ["laminaire (Re < 2000)", "transitoire", "turbulent (Re > 4000)",
+       "impossible à dire sans connaître la longueur du tube"], 2,
+      "Re = ρvD/μ = 1000 × 0,8 × 0,025 / 0,001 = 20 000, très au-dessus de 4000 : régime "
+      "turbulent, le cas le plus fréquent avec l'eau dans les circuits industriels.", "Calcul"),
+
+    q("Un mur empile un isolant (λ=0,04) et une couche de plâtre (λ=0,35), même épaisseur, même "
+      "surface. Quelle couche porte l'essentiel de la résistance thermique ?",
+      ["le plâtre, car il est en contact avec l'extérieur",
+       "l'isolant, car sa conductivité λ est la plus faible",
+       "les deux portent exactement la même résistance",
+       "aucune : seule l'épaisseur totale compte"], 1,
+      "R = e/(λS) : à épaisseur égale, plus λ est petit, plus R est grand. L'isolant (λ=0,04) a "
+      "une résistance presque 9 fois plus grande que le plâtre (λ=0,35) — c'est lui qui protège "
+      "vraiment, malgré une épaisseur parfois modeste.", "Intermédiaire"),
+
+    q("Un moteur triphasé sous 400 V est couplé en étoile plutôt qu'en triangle. Que reçoit "
+      "chaque enroulement ?",
+      ["400 V, comme en triangle", "400/√3 ≈ 231 V, une tension réduite",
+       "400×√3 ≈ 693 V, une tension augmentée", "0 V : l'étoile coupe l'alimentation"], 1,
+      "En étoile, chaque enroulement voit la tension simple U/√3 ≈ 231 V au lieu des 400 V entre "
+      "phases en triangle — c'est pourquoi le courant et le couple de démarrage sont réduits "
+      "d'environ un tiers.", "Calcul"),
+
+    q("Pourquoi un traitement de surface s'applique-t-il toujours après l'usinage définitif, "
+      "jamais avant ?",
+      ["par habitude, sans raison technique",
+       "l'outil de coupe retirerait la couche protectrice sur les surfaces réusinées",
+       "le traitement empêcherait physiquement l'usinage",
+       "cela n'a aucune importance, les deux ordres sont équivalents"], 1,
+      "Usiner après traitement retire localement la galvanisation, l'anodisation ou la "
+      "phosphatation sur les surfaces reprises, exposant le métal nu à cet endroit précis — "
+      "d'où l'ordre fixe : usinage définitif d'abord, traitement ensuite.", "Base"),
 ]
 
 QUIZ["Méthodologie de projet et communication"] = [
@@ -13238,6 +13926,212 @@ gravité de la chute d'un écran reste la même, qu'on la détecte ou non. **Si 
 varier G, c'est que vous avez changé de défaillance**, pas traité celle-ci.
 """,
         },
+        {
+            "id": '1.8',
+            "titre": "L'analyse de la valeur",
+            "duree": '3 h',
+            "cours": """### 1. Le problème que le cahier des charges ne résout pas
+
+Le cahier des charges (fiche 1.6) dit **ce que** le produit doit faire, et à quel niveau. Il ne
+dit rien de **combien chaque fonction doit coûter**. Or toutes les fonctions n'ont pas la même
+importance aux yeux du client — et dans un produit mal optimisé, il arrive qu'on dépense plus
+pour une fonction secondaire que pour la fonction principale.
+
+L'**analyse de la valeur** (AV) est une méthode née en 1947 chez General Electric (Lawrence
+Miles), qui compare, fonction par fonction, ce qu'elle **vaut** pour le client et ce qu'elle
+**coûte** à produire — pour repérer les écarts et les corriger.
+
+### 2. La formule de la valeur
+
+> **Valeur = ce que le produit apporte au client ÷ ce qu'il coûte à produire.**
+
+Augmenter la valeur n'est **pas toujours** baisser le coût : c'est améliorer le **rapport**. Trois
+leviers, dans cet ordre de fréquence :
+
+1. **Baisser le coût à fonctions égales** — le cas le plus fréquent, celui de cette fiche.
+2. **Augmenter les fonctions à coût égal** — utile quand un concurrent surenchérit.
+3. **Réduire légèrement une fonction sur-qualifiée** pour gagner beaucoup sur le coût — seulement
+   si le CdCF l'autorise (sa flexibilité, fiche 1.3).
+
+### 3. La méthode en quatre temps
+
+1. **Lister les fonctions** : on reprend le FAST ou la pieuvre déjà construits (fiches 1.2 et 1.4)
+   — l'AV ne repart jamais de zéro, elle s'appuie sur l'analyse fonctionnelle déjà faite.
+2. **Reprendre le poids fonctionnel** de chacune, déjà chiffré par la hiérarchisation (fiche 1.3).
+3. **Chiffrer le coût de chaque fonction** : décomposer le prix de revient du produit par
+   composant, puis affecter le coût de chaque composant à la ou aux fonctions qu'il sert. Un
+   composant qui sert deux fonctions voit son coût **réparti** entre les deux — jamais compté deux
+   fois entier.
+4. **Comparer poids et coût sur un même graphique** pour repérer les écarts.
+
+[[FIG:matrice_valeur]]
+
+### 4. Ce qu'on a le droit de changer : la solution, jamais le niveau
+
+L'erreur la plus fréquente est de confondre **réduire le coût d'une fonction** et **réduire la
+fonction elle-même** — c'est-à-dire baisser le niveau fixé au cahier des charges. L'analyse de la
+valeur ne touche **pas** au niveau demandé par le client : elle cherche une **solution technique
+moins chère pour atteindre exactement le même niveau**.
+
+*Pour la poignée de porte industrielle en exemple : la fonction « s'intégrer esthétiquement »
+reste à son niveau demandé — on ne la supprime pas, on ne la dégrade pas. On cherche seulement une
+solution moins coûteuse. Un laiton massif usiné coûte cher ; un profilé aluminium chromé peut
+donner un rendu perçu quasiment identique, à l'usage, pour une fraction du prix.*
+
+### 5. Où chercher les gisements
+
+| Symptôme repéré | Piste de solution |
+|---|---|
+| Une pièce usinée dans la masse alors qu'elle pourrait être obtenue autrement | Revoir le procédé (fonderie, tôlerie — voir le bloc procédés) |
+| Une tolérance plus serrée que ce que la fonction exige réellement | Revoir la cotation (fiche 5.3) |
+| Un matériau surdimensionné par rapport à l'effort réel | Revoir le dimensionnement (RDM) |
+| Un composant spécifique là où un standard suffirait | Repasser au standard — souvent moins cher, et en stock |
+
+### 6. Les erreurs classiques
+
+1. **Confondre baisse de coût et baisse de qualité.** L'AV garde le niveau fixé au CdCF ; elle
+   change la solution qui l'atteint.
+2. **Chiffrer le poids fonctionnel « au pif ».** Il doit venir d'une vraie hiérarchisation (fiche
+   1.3) : sans elle, la matrice ne prouve rien, elle illustre une opinion.
+3. **Oublier de répartir le coût d'un composant polyvalent** entre les fonctions qu'il sert : sinon
+   il paraît « gratuit » pour chacune d'elles, et aucune sur-qualité n'apparaît là où il y en a
+   pourtant une.
+4. **S'attaquer d'abord à la fonction principale (FP)**, parce qu'elle est la plus visible : c'est
+   presque toujours une FC oubliée qui coûte cher pour un poids faible.
+5. **Changer de solution sans revalider le cahier des charges.** L'AV ne dispense jamais de
+   repasser par la case validation (fiche 1.6) : la nouvelle solution doit encore satisfaire tous
+   les critères, niveaux et flexibilités déjà fixés.
+
+### 7. À retenir
+
+- **Valeur = fonctions rendues ÷ coût.** Améliorer la valeur n'est pas toujours baisser le coût.
+- On compare, fonction par fonction, le **poids** (importance pour le client) et le **coût** (part
+  du prix de revient) — jamais l'un sans l'autre.
+- Une **sur-qualité** : coût élevé, poids faible → cible prioritaire de l'analyse de la valeur.
+- On ne touche **jamais** au niveau d'une fonction — cela reste le CdCF (fiche 1.6). On change
+  la **solution technique** qui l'atteint.
+- Toute nouvelle solution doit être **revalidée** au regard du cahier des charges avant d'être
+  retenue.
+""",
+            "formules": """
+**La formule de la valeur** — Valeur = fonctions rendues (ce que ça vaut pour le client) ÷ coût
+des moyens mis en œuvre
+
+**Le test de la sur-qualité** — si la part du coût d'une fonction dépasse nettement son poids
+fonctionnel : sur-qualité, cible prioritaire de l'analyse de la valeur
+
+**La règle d'or** — on change la SOLUTION, jamais le NIVEAU d'exigence fixé au cahier des
+charges fonctionnel
+""",
+            "exemple": """
+### Cas industriel — Le bouton d'arrêt d'urgence n'était pas le problème
+
+**Le symptôme.** Un fabricant de machines-outils demande de réduire de 15 % le coût d'un panneau
+de commande. L'équipe se penche d'abord sur le bouton d'arrêt d'urgence — un composant
+réglementé, en plastique renforcé rouge, visiblement coûteux.
+
+**L'analyse aux chiffres.** La hiérarchisation donne à la fonction « permettre l'arrêt d'urgence »
+un poids fonctionnel très élevé : c'est une exigence de sécurité, non négociable (flexibilité F0,
+fiche 1.3). Son coût réel — un composant standard, acheté chez un fournisseur certifié — ne
+représente que 3 % du coût total du panneau. Poids élevé, coût cohérent : **ce n'est pas une
+sur-qualité**, quoi qu'en dise l'intuition.
+
+Le cache décoratif en aluminium brossé autour des voyants lumineux, en revanche, pèse un poids
+fonctionnel faible (une fonction de confort, F2) mais représente **22 % du coût du panneau** —
+usinage sur mesure, anodisation.
+
+**La reformulation.** On garde le niveau esthétique demandé au CdCF, mais on change de solution :
+un cache en tôle pliée peinte, moins coûteux, offrant le même rendu visuel perçu par l'opérateur à
+distance de travail.
+
+**Ce que le cas apprend.** L'instinct pousse à s'attaquer à ce qui « a l'air cher » — le bouton
+rouge, très visible. L'analyse de la valeur s'appuie sur des chiffres, poids réel contre coût
+réel, et déplace l'effort là où l'écart existe vraiment.
+""",
+            "exercice": """
+### Exercice — Construire la matrice valeur d'un support de smartphone
+
+Un fabricant vend un support de smartphone pour tableau de bord de voiture. La hiérarchisation
+(fiche 1.3) donne les poids fonctionnels suivants :
+
+- FP1 « Maintenir le téléphone visible et stable » : poids **45 %**
+- FC1 « Résister aux vibrations du véhicule » : poids **20 %**
+- FC2 « Se fixer sans outil sur la plupart des tableaux de bord » : poids **25 %**
+- FC3 « Présenter un aspect premium » : poids **10 %**
+
+La décomposition du prix de revient (par composant, répartie entre les fonctions qu'il sert)
+donne : FP1 = 30 % du coût · FC1 = 15 % · FC2 = 10 % · FC3 = 45 %.
+
+**1.** Construisez le tableau poids / coût pour les quatre fonctions.
+
+**2.** Laquelle est en sur-qualité ? Justifiez avec les chiffres.
+
+**3.** Laquelle semble au contraire porter un poids important pour un coût faible ?
+
+**4.** Proposez une piste d'action pour la fonction en sur-qualité, **sans** baisser son niveau
+demandé.
+
+**5.** Le CdCF indique que FC3 a une flexibilité F1 (négociable à la marge). Cela change-t-il
+votre réponse à la question 4 ?
+""",
+            "corrige": """
+### Corrigé, en six temps
+
+#### 1. Ce que dit l'énoncé
+
+Quatre fonctions, chacune avec un poids fonctionnel déjà hiérarchisé et une part de coût déjà
+décomposée. Rien à recalculer : tout est déjà chiffré, il reste à comparer.
+
+#### 2. Quelle règle, et pourquoi
+
+> Une fonction est en sur-qualité quand sa part de coût dépasse nettement son poids fonctionnel.
+
+On compare toujours les **deux** pourcentages ensemble, jamais un seul isolément : un coût élevé
+n'est un problème que rapporté à l'importance réelle de la fonction.
+
+#### 3. Les conversions
+
+Aucune conversion numérique ici. La seule « conversion » est de passer d'une liste de
+pourcentages, fonction par fonction, à un même repère visuel — poids et coût côte à côte.
+
+#### 4. Le remplacement — le tableau
+
+| Fonction | Poids | Coût | Écart |
+|---|---|---|---|
+| FP1 | 45 % | 30 % | coût < poids |
+| FC1 | 20 % | 15 % | à peu près équilibré |
+| FC2 | 25 % | 10 % | coût < poids |
+| FC3 | 10 % | 45 % | coût très supérieur au poids |
+
+#### 5. Le calcul
+
+**1.** Tableau ci-dessus.
+
+**2.** FC3 est en sur-qualité : 45 % du coût pour seulement 10 % de poids, un écart de 35 points —
+le plus grand de la matrice.
+
+**3.** FP1 et FC2 portent un poids important pour un coût faible : elles pèsent beaucoup dans la
+décision d'achat mais absorbent peu de budget. Ce n'est pas un problème en soi — c'est même
+souhaitable — mais si l'économie faite sur FC3 devait être réinvestie quelque part, c'est là
+qu'elle aurait le plus d'effet.
+
+**4.** Pour FC3, sans toucher au niveau demandé (« aspect premium ») : changer de solution
+technique, par exemple remplacer une pièce massive polie par un insert chromé sur un support
+standard — même rendu visuel perçu, coût nettement inférieur.
+
+**5.** Une flexibilité F1 (négociable à la marge) ouvre une **deuxième** piste, complémentaire :
+on peut aussi revoir très légèrement le niveau — accepter une nuance de finition proche mais pas
+strictement identique — ce qu'une flexibilité F0 aurait interdit. Mais l'analyse de la valeur
+commence toujours par chercher une solution moins chère **à niveau égal**, avant de toucher au
+niveau, même quand la flexibilité le permettrait.
+
+#### 6. La vérification
+
+**Contrôle des sommes** : les poids totalisent 100 % (45+20+25+10), les coûts aussi
+(30+15+10+45). Si l'une des deux sommes ne tombait pas sur 100 %, la matrice serait à refaire
+avant toute conclusion — une fonction oubliée ou un coût mal réparti fausserait toute la lecture.
+""",
+        },
     ],
 }
 
@@ -15252,6 +16146,252 @@ piquée.
   (défaut de revêtement).
 - Piqûres **alignées longitudinalement**, associées à des rayures, concentrées sur la zone de
   course → hypothèse B (abrasion). C'est le cas le plus fréquent et le plus facile à corriger.
+""",
+        },
+        {
+            "id": '3.4',
+            "titre": 'La chimie des traitements de surface',
+            "duree": '2 h',
+            "cours": """### 1. Le lien entre la théorie et l'atelier
+
+La fiche 8.4 explique pourquoi deux métaux assemblés forment une pile involontaire, et pourquoi le
+métal le plus réactif (au potentiel standard $E°$ le plus négatif) se corrode à la place de
+l'autre. Cette même chimie est utilisée **volontairement** dans plusieurs traitements de surface
+déjà cités côté application en fiche 3.3 — voici comment ils fonctionnent, chimiquement.
+
+### 2. La galvanisation : le zinc comme anode sacrificielle volontaire
+
+[[FIG:galvanisation_protection]]
+
+On dépose une couche de zinc ($E° = -0{,}76$ V) sur une pièce en acier ($E° = -0{,}44$ V), par
+immersion dans un bain de zinc fondu (galvanisation à chaud) ou par électrolyse (zingage). Le
+zinc, plus réactif, se corrode **préférentiellement** — même là où le revêtement est rayé et
+l'acier mis à nu, tant qu'il reste du zinc à proximité pour jouer ce rôle.
+
+### 3. L'anodisation : transformer l'aluminium en sa propre protection
+
+Contrairement à la galvanisation, qui ajoute un métal différent, l'anodisation fait réagir
+l'aluminium **avec lui-même** : la pièce est placée comme anode dans un bain électrolytique
+(souvent à l'acide sulfurique), et le courant force la formation d'une couche d'oxyde d'aluminium
+($Al_2O_3$, l'alumine) en surface — un oxyde bien plus dur et bien plus stable chimiquement que
+l'aluminium métallique lui-même. L'aluminium anodisé résiste ainsi à la fois à la corrosion et à
+l'usure, sans aucun ajout de matériau.
+
+### 4. La phosphatation : préparer, pas protéger seule
+
+La phosphatation dépose une fine couche cristalline de phosphates métalliques (souvent de zinc ou
+de manganèse) en surface d'une pièce en acier, par immersion dans un bain de sels de phosphate.
+Cette couche, microscopiquement poreuse, **n'est pas destinée à protéger seule** contre la
+corrosion : son rôle est d'accrocher mécaniquement la peinture ou l'huile appliquée ensuite, en
+offrant une surface bien plus rugueuse à l'échelle microscopique qu'une tôle nue. Sans elle, une
+peinture s'écaille beaucoup plus facilement.
+
+### 5. Comparer les trois traitements
+
+| Traitement | Principe chimique | Ce qu'il apporte | Sa limite |
+|---|---|---|---|
+| **Galvanisation** | Anode sacrificielle (métal différent, plus réactif) | Protège même si le revêtement est rayé | S'use avec le temps ; épaisseur limitée |
+| **Anodisation** | Oxydation contrôlée du métal lui-même | Dureté et résistance à la corrosion, sans ajout de matière | Ne s'applique qu'à l'aluminium et quelques alliages |
+| **Phosphatation** | Accroche mécanique pour un revêtement ultérieur | Meilleure tenue de la peinture ou de l'huile | N'assure aucune protection seule contre la corrosion |
+
+### 6. La chronologie complète d'un traitement de surface
+
+[[FIG:chronologie_traitement]]
+
+Quel que soit le traitement choisi, il suit toujours la même chronologie en atelier — sauter une
+étape compromet le résultat final, même si le bain de traitement lui-même est parfaitement réglé :
+
+1. **Dégraissage** : élimination des huiles de coupe et des traces de manutention, sans quoi
+   aucun traitement n'accroche uniformément.
+2. **Décapage** : élimination de l'oxyde superficiel déjà présent (rouille, calamine), souvent par
+   bain acide, pour exposer le métal réellement nu.
+3. **Traitement** : galvanisation, anodisation ou phosphatation proprement dite, selon le procédé
+   choisi.
+4. **Rinçage** : élimination des résidus de bain, indispensable pour ne pas contaminer le
+   traitement final ni les opérations suivantes.
+5. **Séchage / passivation** : stabilisation finale de la couche obtenue avant stockage ou
+   assemblage.
+
+### 7. Contrôle qualité : épaisseur et tenue au brouillard salin
+
+Un traitement de surface se contrôle, il ne se suppose pas. Deux mesures reviennent
+systématiquement en contrôle qualité d'atelier :
+
+| Traitement | Épaisseur typique | Tenue en essai brouillard salin (avant rouille rouge) |
+|---|---|---|
+| Galvanisation à chaud | $45$ à $85$ µm | souvent $> 1000$ h |
+| Zingage électrolytique | $5$ à $25$ µm | de l'ordre de $100$ à $200$ h |
+| Anodisation standard | $5$ à $25$ µm | typiquement $> 300$ h |
+| Phosphatation seule (sans revêtement) | $1$ à $10$ µm | quelques dizaines d'heures seulement |
+
+**Ce que ce tableau confirme chiffres à l'appui** : une phosphatation seule tient bien moins
+longtemps que les autres traitements — cohérent avec le fait qu'elle ne protège pas, mais prépare
+seulement une surface. Une épaisseur plus grande de zinc (galvanisation à chaud contre zingage
+électrolytique) va de pair avec une tenue nettement supérieure, car il y a plus de métal
+sacrificiel disponible avant que la protection s'épuise.
+
+### 8. Les erreurs classiques
+
+1. **Croire que la galvanisation protège indéfiniment.** Le zinc se consomme : une pièce très
+   rayée, en milieu très agressif, finit par exposer l'acier nu.
+2. **Utiliser la phosphatation seule** en pensant qu'elle protège contre la corrosion — elle
+   prépare seulement l'adhérence d'un revêtement ultérieur.
+3. **Vouloir anodiser une pièce en acier** en espérant le même résultat que sur l'aluminium :
+   l'anodisation exploite une réaction propre à l'aluminium, elle ne fonctionne pas de la même
+   façon sur un autre métal.
+4. **Négliger l'ordre des opérations en atelier** : un traitement de surface se fait toujours
+   **après** l'usinage définitif — sinon la couche protectrice ou de préparation est retirée par
+   l'outil de coupe sur les surfaces réusinées.
+5. **Sauter le dégraissage ou le rinçage** en pensant gagner du temps : un traitement appliqué sur
+   une surface encore grasse ou un bain contaminé par le traitement précédent n'accroche pas
+   uniformément, même si le procédé choisi est le bon.
+
+### 9. À retenir
+
+- **Galvanisation** : protection par anode sacrificielle, efficace même si le revêtement est
+  rayé, mais qui s'use avec le temps.
+- **Anodisation** : oxydation contrôlée de l'aluminium lui-même — dureté et résistance à la
+  corrosion, sans ajouter de matériau.
+- **Phosphatation** : accroche un revêtement ultérieur, ne protège jamais seule.
+- Chronologie fixe : dégraissage → décapage → traitement → rinçage → séchage/passivation.
+- Le contrôle qualité se fait par épaisseur mesurée et essai de brouillard salin, jamais à l'œil.
+- Toujours **après** l'usinage définitif, jamais avant.
+""",
+            "formules": """
+**Le principe commun aux trois** — exploiter une réaction chimique contrôlée pour créer, en
+surface, ce que le métal nu n'a pas naturellement
+
+**Le test de la galvanisation** — le métal déposé est-il plus réactif ($E°$ plus négatif) que la
+pièce à protéger ? Si oui, protection assurée même si le revêtement est rayé
+
+**La chronologie fixe** — dégraissage → décapage → traitement → rinçage → séchage/passivation,
+jamais dans un autre ordre
+
+**Le réflexe d'atelier** — traitement de surface toujours après l'usinage définitif, et contrôle
+qualité toujours par mesure (épaisseur, brouillard salin), jamais à l'œil
+""",
+            "exemple": """
+### Cas industriel — La pièce anodisée qui rouillait quand même
+
+**Le symptôme.** Un support en acier zingué est envoyé en sous-traitance pour anodisation, en
+pensant améliorer sa résistance à la corrosion. Le traitement échoue : aucune couche d'oxyde
+protectrice ne se forme correctement, et la pièce continue à rouiller normalement.
+
+**Le diagnostic.** L'anodisation exploite une réaction chimique propre à l'aluminium — la
+formation d'alumine ($Al_2O_3$) sous courant électrolytique. Un acier zingué n'est pas de
+l'aluminium : la réaction attendue ne se produit pas sur ce métal, quel que soit le réglage du
+bain. Le sous-traitant aurait dû refuser la pièce, ou le bureau d'études aurait dû vérifier la
+compatibilité du procédé avec le matériau avant l'envoi.
+
+**La correction.** Pour une pièce en acier, revenir à un traitement adapté : galvanisation
+renforcée, ou peinture après phosphatation.
+
+**Ce que le cas apprend.** Un traitement de surface n'est jamais interchangeable avec un autre :
+chacun repose sur une réaction chimique précise, qui ne fonctionne que sur certains matériaux.
+Le nommer sur un plan sans vérifier sa compatibilité avec la matière choisie est une erreur de
+conception, pas seulement de sous-traitance.
+""",
+            "exercice": """
+### Atelier guidé — Spécifier et contrôler un traitement de surface complet
+
+Pour chacune des situations suivantes, choisissez le traitement le mieux adapté parmi galvanisation,
+anodisation, phosphatation seule, ou phosphatation suivie de peinture — et justifiez en une phrase.
+
+**1.** Un châssis en tôle d'acier, destiné à recevoir une peinture décorative, doit avoir une bonne
+tenue de peinture dans le temps.
+
+**2.** Une glissière en aluminium doit résister à l'usure par frottement répété, sans ajouter de
+matériau qui changerait ses dimensions fonctionnelles.
+
+**3.** Une structure en acier destinée à rester en extérieur, sans peinture, doit résister
+plusieurs années à la corrosion même si elle est griffée accidentellement.
+
+**4.** Une pièce en acier phosphatée seule, sans peinture ni huile appliquée ensuite, est envoyée
+directement en extérieur humide. Quel problème faut-il anticiper ?
+
+**5.** Un opérateur reçoit un lot de pièces galvanisées à traiter, et propose de gagner du temps
+en sautant l'étape de rinçage entre le bain de traitement et le séchage. Que répondez-vous, en
+citant la chronologie complète du cours ?
+
+**6.** Le contrôle qualité doit trancher entre deux fournisseurs pour la structure extérieure de la
+question 3 : l'un propose un zingage électrolytique de $15$ µm, l'autre une galvanisation à chaud
+de $60$ µm. En vous appuyant sur le tableau du cours, lequel choisir pour une tenue maximale au
+brouillard salin, et pourquoi ?
+
+**7.** Cette même structure sera griffée lors du montage sur site (perçages, manutention). Le
+choix du traitement fait en question 3 reste-t-il valable une fois cette contrainte connue ?
+Justifiez avec le principe chimique du traitement retenu.
+""",
+            "corrige": """
+### Corrigé, en six temps
+
+#### 1. Ce que dit l'énoncé
+
+Sept situations : quatre choix de traitement à justifier, une question de chronologie d'atelier,
+une comparaison chiffrée de tenue au brouillard salin, et une vérification finale de cohérence.
+
+#### 2. Quelle règle, et pourquoi
+
+> Chaque traitement repose sur une réaction chimique précise : la galvanisation exige un métal
+> moins réactif que le zinc à protéger, l'anodisation n'agit que sur l'aluminium, la
+> phosphatation ne fait que préparer une surface pour un revêtement ultérieur. La chronologie
+> d'atelier (dégraissage → décapage → traitement → rinçage → séchage/passivation) est fixe, et le
+> contrôle qualité se juge par épaisseur mesurée et essai de brouillard salin.
+
+#### 3. Les conversions
+
+Sans objet : cet exercice évalue un raisonnement de choix et une lecture de tableau, pas un
+calcul numérique à convertir.
+
+#### 4. Le remplacement
+
+**1.** **Phosphatation suivie de peinture** : c'est exactement le rôle de la phosphatation —
+accrocher mécaniquement la peinture pour qu'elle ne s'écaille pas.
+
+**2.** **Anodisation** : elle s'applique à l'aluminium, apporte dureté et résistance à l'usure, et
+ne modifie quasiment pas les dimensions puisqu'elle transforme la surface existante plutôt que
+d'ajouter une couche épaisse.
+
+**3.** **Galvanisation** : seule solution des quatre qui continue à protéger **même si le
+revêtement est griffé**, grâce au principe de l'anode sacrificielle.
+
+**4.** Une phosphatation seule, sans revêtement appliqué ensuite, **ne protège pas** contre la
+corrosion : la pièce rouillera en milieu humide presque comme si elle n'avait reçu aucun
+traitement.
+
+**5.** Sauter le rinçage n'est **pas acceptable** : la chronologie du cours place le rinçage juste
+après le traitement pour éliminer les résidus de bain, faute de quoi ils contaminent le séchage
+et peuvent nuire à la tenue finale de la couche.
+
+**6.** Comparaison directe des deux lignes du tableau du cours pour le zingage électrolytique et
+la galvanisation à chaud.
+
+**7.** Réexamen du principe de l'anode sacrificielle appliqué au cas d'une griffure survenant
+après traitement.
+
+#### 5. Le calcul
+
+**5.** Voir justification ci-dessus — pas de calcul, mais une règle de chronologie non négociable.
+
+**6.** Le tableau du cours donne : zingage électrolytique $15$ µm → tenue $≈100$ à $200$ h ;
+galvanisation à chaud $60$ µm → tenue $> 1000$ h. La galvanisation à chaud, avec une épaisseur
+environ **4 fois plus grande**, tient plus de **5 fois plus longtemps** au brouillard salin —
+c'est le choix à retenir pour une tenue maximale, la fourchette d'épaisseur $60$ µm se plaçant
+bien dans la plage $45$–$85$ µm du tableau.
+
+**7.** Le choix galvanisation reste **valable, et même renforcé** par cette information : le
+principe de l'anode sacrificielle protège l'acier même là où le zinc est localement percé ou
+griffé, tant qu'il reste du zinc à proximité pour jouer ce rôle — exactement la situation prévue
+en question 3.
+
+#### 6. La vérification
+
+**Le test qui tranche à chaque fois** : « ce traitement agit-il seul, ou prépare-t-il un autre
+revêtement ? », « le matériau de la pièce est-il compatible avec la réaction chimique
+exploitée ? », et pour un choix entre deux fournisseurs, « que dit le tableau chiffré d'épaisseur
+et de tenue, plutôt qu'une impression ? ». Le facteur $4$ en épaisseur et $5$ en tenue (Q6)
+confirme, chiffres à l'appui, que l'épaisseur de dépôt n'est pas un détail commercial mais un
+paramètre de dimensionnement à part entière.
 """,
         },
     ],
@@ -19728,6 +20868,186 @@ fonctionnelles**, ou les cotes de construction héritées du modèle ? C'est l'e
 fréquente de la mise en plan automatique.
 """,
         },
+        {
+            "id": '5.14',
+            "titre": 'Le lissage : relier des sections différentes',
+            "duree": '4 h',
+            "cours": """### 1. Le problème que le balayage ne résout pas
+
+Le balayage (fiche 5.9) fait suivre **une** section fixe le long d'un chemin : la forme ne change
+jamais, seule sa direction change. Beaucoup de pièces réelles ont pourtant une forme qui **change
+progressivement** d'une extrémité à l'autre — une poignée ergonomique qui passe d'une section
+ronde à une section plate, un bec verseur, une pale de ventilateur. Aucune extrusion, aucune
+révolution, aucun balayage ne peut produire cette transition. Il faut le **lissage**.
+
+### 2. Le principe
+
+Le lissage (*loft* en anglais) demande **au moins deux sections**, dessinées sur des plans
+différents, et construit la surface la plus régulière possible qui passe par chacune d'elles.
+
+[[FIG:lissage_sections]]
+
+Contrairement au balayage, la fonction ne suit pas nécessairement un chemin explicite : les
+sections suffisent, le logiciel interpole entre elles. On peut néanmoins ajouter des **courbes
+guides** pour contrôler précisément la façon dont la surface se déforme entre deux sections — et
+éviter un pincement ou un renflement non voulu.
+
+### 3. Les ingrédients d'un lissage
+
+- **Au moins deux profils** (esquisses), chacun sur son propre plan.
+- **Des courbes guides**, en option — une par arête qu'on veut imposer, pour empêcher le logiciel
+  d'interpoler n'importe comment.
+- **Des conditions de tangence** aux extrémités, en option — pour un raccord sans cassure visible
+  avec une surface voisine.
+
+### 4. Quand choisir le lissage plutôt que le balayage ou la révolution
+
+| Question à se poser | Réponse |
+|---|---|
+| La section change-t-elle de **forme** (pas seulement de direction) ? | Oui → lissage. Non → balayage ou extrusion suffit. |
+| La pièce est-elle **axisymétrique** — un même profil qui tourne autour d'un axe ? | Oui → révolution (fiche 5.9), même si le rayon varie le long de l'axe. |
+| Ai-je besoin d'un contrôle fin de la déformation entre les sections ? | Oui → ajouter des courbes guides au lissage. |
+
+**Le piège à ne pas rater** : une pièce dont le **rayon** varie mais dont la section reste
+toujours **circulaire** — un bécher, une bouteille — n'a pas besoin de lissage. Son profil, tracé
+une seule fois dans le plan contenant l'axe, suffit à une **révolution**. Le lissage n'est
+nécessaire que si la **forme même** de la section change, pas seulement sa taille.
+
+### 5. Le piège classique : la surface qui ondule
+
+Trop de sections, mal positionnées, produisent une surface qui « vrille » ou « ondule » au lieu de
+rester régulière : le logiciel interpole de la façon la plus simple mathématiquement, pas
+forcément celle qu'on imaginait. La cause la plus fréquente : les sections n'ont **pas de point de
+départ aligné** — chaque esquisse fermée a un point où le contour « commence », et le lissage
+relie les points de départ entre eux. S'ils ne sont pas à la même position angulaire d'une section
+à l'autre, la surface se tord pour les rejoindre quand même.
+
+**La parade** : commencer avec le **minimum** de sections nécessaires — souvent deux ou trois —,
+aligner leurs points de départ, vérifier visuellement le rendu, puis ajouter des courbes guides
+seulement si le résultat ne convient pas. Jamais l'inverse.
+
+### 6. Les erreurs classiques
+
+1. **Vouloir tout faire en lissage « pour être sûr ».** Un balayage est plus simple, plus robuste
+   aux modifications, et suffit dès que la section ne change pas de forme.
+2. **Choisir la révolution alors qu'une seule dimension varie** — ou l'inverse, lisser une pièce
+   qui n'avait besoin que d'une révolution. Le test de la section 4 tranche toujours.
+3. **Ignorer l'alignement des points de départ** des sections, cause numéro un des surfaces
+   vrillées.
+4. **Ajouter des courbes guides « au cas où »**, alors que deux sections bien choisies
+   suffisaient : chaque guide ajoute une contrainte à maintenir lors des modifications futures.
+5. **Oublier une condition de tangence** à une extrémité qui doit se raccorder sans cassure
+   visible à une autre surface — le défaut se voit immédiatement à l'œil sur la pièce réelle.
+
+### 7. À retenir
+
+- Le **lissage** relie plusieurs sections de **formes différentes** ; le **balayage** fait suivre
+  **une** section le long d'un chemin, sans qu'elle change de forme.
+- Une pièce **axisymétrique** dont seul le rayon varie relève de la **révolution**, pas du lissage.
+- Minimum deux sections, sur des plans distincts ; guides et tangences en options.
+- Aligner les points de départ des sections : c'est la cause numéro un des surfaces qui vrillent.
+- Commencer simple, vérifier le rendu, puis enrichir seulement si nécessaire.
+""",
+            "formules": """
+**La règle de choix** — la section change de FORME → lissage · elle suit un CHEMIN sans changer
+de forme → balayage (fiche 5.9) · seul le RAYON varie, la section reste circulaire → révolution
+
+**Les ingrédients minimaux** — au moins 2 sections, sur des plans distincts · guides et
+tangences en options, pour contrôler la déformation
+
+**Le réflexe anti-vrille** — aligner les points de départ des sections avant de lancer le lissage
+""",
+            "exemple": """
+### Cas industriel — Le bec verseur qui refusait de se lisser
+
+**Le symptôme.** Un étudiant modélise un bec verseur : une section circulaire côté col de
+bouteille, une section aplatie ovale côté bec. Avec deux sections seulement, la surface obtenue se
+pince et se tord au lieu de passer proprement du cercle à l'ovale.
+
+**Le diagnostic.** Les deux esquisses avaient été tracées sans réfléchir à leur point de départ :
+le point où chaque contour fermé « commence » n'était pas à la même position angulaire sur les
+deux sections. Le logiciel relie ces points de départ entre eux en priorité — et il les a reliés
+en croisant, produisant la torsion observée.
+
+**La correction.** Un point de construction est ajouté sur chaque esquisse, à la même position
+angulaire relative — en haut du col pour l'une, au sommet de l'ovale pour l'autre — et redéfini
+comme point de départ du contour. Le lissage se relance : la surface passe maintenant du cercle à
+l'ovale sans torsion.
+
+**Ce que le cas apprend.** Le lissage n'échoue presque jamais par manque de sections : il échoue
+par manque de **repères communs** entre elles. Aligner un point de départ règle, à lui seul, la
+moitié des surfaces qui vrillent en atelier de CAO.
+""",
+            "exercice": """
+### Exercice — Choisir la bonne fonction pour quatre pièces
+
+Pour chacune des pièces suivantes, indiquez si une **extrusion**, une **révolution**, un
+**balayage** ou un **lissage** convient, et justifiez en une phrase.
+
+**1.** Un tube coudé à 90°, de diamètre constant sur toute sa longueur.
+
+**2.** Une poignée ergonomique qui part d'une section circulaire (côté fixation) et arrive à une
+section aplatie ovale (côté prise en main).
+
+**3.** Un axe cylindrique simple, de 40 mm de long.
+
+**4.** Un bécher de laboratoire, dont le profil reste circulaire à toute hauteur mais dont le rayon
+varie continûment du pied vers le bord.
+
+**5.** Pour la pièce 2, quel risque faut-il anticiper si les deux sections ne partagent pas de
+point de départ aligné ?
+""",
+            "corrige": """
+### Corrigé, en six temps
+
+#### 1. Ce que dit l'énoncé
+
+Quatre pièces à modéliser, décrites par la façon dont leur section évolue le long de la pièce, et
+une question sur un risque de mise en œuvre.
+
+#### 2. Quelle règle, et pourquoi
+
+> Section constante qui suit un chemin → balayage. Section constante en ligne droite → extrusion.
+> Profil qui tourne autour d'un axe, même à rayon variable → révolution. Section qui change de
+> **forme** → lissage.
+
+C'est la forme de la section, et seulement elle, qui décide — jamais sa taille ni la longueur de
+la pièce.
+
+#### 3. Les conversions
+
+Aucune conversion numérique : la seule chose à convertir est une description en français en un
+nom de fonction CAO.
+
+#### 4. Le remplacement — pièce par pièce
+
+**1.** Section circulaire constante qui suit un chemin coudé → **balayage** : une section, un
+chemin, rien ne change de forme.
+
+**2.** La section passe d'un cercle à un ovale : sa **forme** change → **lissage**.
+
+**3.** Section constante, chemin rectiligne → **extrusion**, la plus simple des quatre.
+
+**4.** La section reste **circulaire** à toute hauteur, seul son rayon varie : c'est un profil qui
+tourne autour d'un axe → **révolution**, pas un lissage. C'est le piège de l'exercice.
+
+**5.** Sans point de départ aligné, le logiciel relie les points de départ des deux sections tels
+quels : s'ils ne sont pas à la même position angulaire, la surface se **tord** pour les rejoindre
+quand même — exactement le défaut du cas industriel de cette fiche.
+
+#### 5. Le calcul
+
+Il n'y a pas de calcul ici : le raisonnement tient dans le tableau de la section 4 du cours,
+appliqué quatre fois. C'est la reconnaissance du bon critère qui est évaluée, pas une formule.
+
+#### 6. La vérification
+
+**Le test qui tranche à coup sûr** : si on peut décrire la pièce par « une section qui avance »,
+c'est un balayage ou une extrusion. Si on doit dire « une section qui **devient** une autre », il
+faut un lissage — sauf si cette transformation se limite à un rayon qui change sur un profil
+circulaire, auquel cas la révolution suffit et est bien plus simple à modifier ensuite.
+""",
+        },
     ],
 }
 
@@ -22012,6 +23332,366 @@ révèle les impossibilités avant le premier prototype.
 **Le contrôle du démontage** : votre gamme permet-elle de défaire l'ensemble en maintenance ? Les
 roulements serrés exigeront un **extracteur** : il faut donc qu'une surface de prise reste
 accessible, ce qui se décide **à la conception**, pas au démontage.
+""",
+        },
+        {
+            "id": '6.13',
+            "titre": 'Les trains épicycloïdaux',
+            "duree": '3 h',
+            "cours": """### 1. Pourquoi un train d'engrenages « ordinaire » ne suffit plus toujours
+
+Un engrenage simple relie deux arbres à axes **fixes** (fiche 12.5). Mais certains besoins
+demandent plus : combiner **deux entrées** en une seule sortie (un différentiel automobile
+reçoit le couple moteur et répartit deux vitesses de roues différentes en virage), ou obtenir un
+**très grand rapport de réduction** dans un volume compact (le réducteur d'un servomoteur). Le
+**train épicycloïdal** répond aux deux, avec trois éléments qui tournent tous autour du **même
+axe**.
+
+### 2. Les trois éléments coaxiaux
+
+[[FIG:train_epicycloidal]]
+
+- Le **planétaire** (ou soleil) : un pignon central, sur l'axe principal.
+- Les **satellites** : plusieurs petits pignons qui engrènent à la fois avec le planétaire et
+  avec la couronne, portés par un bras appelé **porte-satellites**.
+- La **couronne** : un anneau à denture **intérieure**, qui entoure tout le système.
+
+C'est cette coaxialité qui rend le train si compact, comparé à un train d'engrenages classique de
+rapport équivalent — et c'est aussi ce qui le rend difficile à visualiser au premier regard.
+
+### 3. Le cas le plus courant : la couronne bloquée
+
+Bloquer la couronne au carter donne la configuration la plus répandue en réduction compacte :
+planétaire = entrée, porte-satellites = sortie.
+
+**L'image qui évite l'algèbre.** La couronne étant fixe, chaque satellite s'y comporte comme une
+roue qui **roule sans glisser à l'intérieur d'un anneau immobile** — exactement comme une roue de
+voiture qui roule sur une route qui ne bouge pas. Le centre du satellite (donc le porte-satellites)
+avance alors à une vitesse intermédiaire entre celle du point de contact avec le planétaire et le
+zéro imposé par la couronne fixe.
+
+> **ω(sortie) = ω(entrée) ÷ [1 + Z(couronne) / Z(planétaire)]**
+
+### 4. Exemple entièrement déroulé
+
+Un réducteur de servomoteur : planétaire $Z = 20$ dents, couronne $Z = 80$ dents fixée au carter,
+planétaire entraîné par le moteur à $3000$ tr/min. Quelle est la vitesse de sortie sur le
+porte-satellites ?
+
+1. **Repérer la configuration** : couronne fixe, planétaire menant, porte-satellites mené — la
+   formule directe s'applique.
+2. **Calculer le rapport de dents** : $Z(couronne) / Z(planétaire) = 80/20 = 4$.
+3. **Appliquer la formule** : $ω(sortie) = 3000 / (1 + 4) = 3000/5 = 600$ tr/min.
+4. **Vérifier** : le réducteur divise bien la vitesse (600 < 3000), et le facteur $5$ est
+   cohérent — un peu plus que le simple rapport de dents ($4$), car le porte-satellites, lui
+   aussi en mouvement, absorbe une partie de l'entraînement.
+
+### 5. Bloquer un autre élément change tout le comportement
+
+| Élément bloqué | Ce qui se passe |
+|---|---|
+| **Couronne** bloquée | Réducteur classique : planétaire entrée, porte-satellites sortie — le cas de l'exemple. |
+| **Porte-satellites** bloqué | Le train redevient un engrenage planétaire/couronne ordinaire, à axes fixes. |
+| **Planétaire** bloqué | Réducteur avec la couronne comme entrée. |
+| **Aucun élément bloqué**, deux entrées | Sommateur ou différentiel — il combine deux mouvements en un troisième, sans les mélanger physiquement. |
+
+**Ce qui frappe** : changer de rapport ne demande de **changer aucun engrenage**, seulement
+l'élément qu'on choisit de bloquer. C'est ce qui rend le train épicycloïdal si utilisé dans les
+boîtes de vitesses automatiques.
+
+### 6. Les erreurs classiques
+
+1. **Croire que le porte-satellites est immobile.** C'est presque toujours **lui** qui bouge le
+   plus visiblement à l'œil — c'est la couronne, souvent invisible dans le carter, qui est fixe.
+2. **Confondre le rapport de dents et le rapport de réduction final.** Avec la couronne fixe, le
+   rapport vaut $1 + Z_c/Z_a$, jamais $Z_c/Z_a$ seul : le porte-satellites ajoute toujours un
+   « + 1 ».
+3. **Oublier qu'un seul satellite suffirait en théorie.** On en met plusieurs (souvent trois) par
+   symétrie, pour équilibrer les efforts — cela ne change rien au rapport, seulement à la
+   robustesse.
+4. **Vouloir résoudre un train épicycloïdal comme un train simple**, en ignorant le mouvement du
+   porte-satellites. L'image du satellite qui roule sur la couronne fixe est le raccourci le plus
+   sûr pour ne pas s'y perdre.
+
+### 7. À retenir
+
+- Trois éléments coaxiaux : **planétaire**, **satellites** (portés par le **porte-satellites**),
+  **couronne**.
+- Couronne fixe, planétaire entrée : $ω(sortie) = ω(entrée) ÷ (1 + Z_couronne/Z_planétaire)$.
+- Bloquer un élément différent change tout le rapport, sans changer un seul engrenage — c'est le
+  principe d'une boîte de vitesses automatique.
+- Sans aucun élément bloqué, le train combine deux entrées en une sortie : c'est un différentiel.
+""",
+            "formules": """
+**La configuration la plus courante** — couronne fixe, planétaire en entrée, porte-satellites en
+sortie : $ω(sortie) = ω(entrée) ÷ [1 + Z(couronne)/Z(planétaire)]$
+
+**Le réflexe de visualisation** — couronne fixe : chaque satellite roule sans glisser à
+l'intérieur d'un anneau immobile, comme une roue sur une route qui ne bouge pas
+
+**Ce qui change tout sans changer un engrenage** — l'élément qu'on choisit de bloquer parmi les
+trois (planétaire, porte-satellites, couronne)
+""",
+            "exemple": """
+### Cas industriel — Le réducteur qui semblait avoir le mauvais rapport
+
+**Le symptôme.** Un stagiaire mesure la vitesse de sortie d'un réducteur épicycloïdal de
+servomoteur et trouve un rapport de réduction de $5$, alors que le rapport de dents entre le
+planétaire ($Z=20$) et la couronne ($Z=80$) vaut $4$. Il conclut à une erreur de montage ou à un
+composant défectueux.
+
+**Le diagnostic.** Rien n'est défectueux. Le rapport de dents seul ($Z_c/Z_a = 4$) ne donne le
+rapport de réduction que pour un train d'engrenages **classique**, à axes fixes. Dans un train
+épicycloïdal avec couronne fixe, le porte-satellites lui-même est mobile et participe à la
+transmission : la formule correcte est $1 + Z_c/Z_a = 1 + 4 = 5$, exactement la valeur mesurée.
+
+**La vérification proposée.** En bloquant la couronne à la main et en tournant lentement le
+planétaire d'un tour complet, le porte-satellites avance d'un cinquième de tour — observable
+directement, sans instrument, et cohérent avec le calcul.
+
+**Ce que le cas apprend.** Un train épicycloïdal ne se réduit jamais à un simple rapport de
+dents : le porte-satellites, parce qu'il bouge lui aussi, ajoute systématiquement un terme à la
+formule. L'oublier fait chercher une panne qui n'existe pas.
+""",
+            "exercice": """
+### Exercice — Dimensionner un réducteur épicycloïdal de treuil
+
+Un treuil électrique utilise un train épicycloïdal pour réduire la vitesse du moteur. Le
+planétaire compte $Z_a = 15$ dents, la couronne $Z_c = 60$ dents. La couronne est fixée au
+carter ; le planétaire est entraîné par le moteur ; le porte-satellites entraîne le tambour du
+treuil.
+
+**1.** Calculez le rapport de réduction de ce train.
+
+**2.** Le moteur tourne à $2400$ tr/min. Quelle est la vitesse de rotation du tambour, en tr/min ?
+
+**3.** Un second modèle de treuil, plus puissant, utilise un planétaire $Z_a = 12$ et une
+couronne $Z_c = 72$. Sans refaire le calcul complet, ce second réducteur est-il plus ou moins
+réducteur que le premier ? Justifiez.
+
+**4.** Sur le premier treuil, un technicien propose de bloquer le **planétaire** au lieu de la
+couronne, pour obtenir un rapport encore plus grand. A-t-il raison de penser que cela réduit
+davantage ? Justifiez sans calculer.
+""",
+            "corrige": """
+### Corrigé, en six temps
+
+#### 1. Ce que dit l'énoncé
+
+Un train épicycloïdal de treuil, couronne fixe, planétaire en entrée motrice, porte-satellites en
+sortie vers le tambour. Deux jeux de dents à comparer, et une question sur le choix de l'élément
+bloqué.
+
+#### 2. Quelle règle, et pourquoi
+
+> Couronne fixe, planétaire en entrée : $ω(sortie) = ω(entrée) ÷ [1 + Z(couronne)/Z(planétaire)]$.
+
+Le porte-satellites étant mobile, le rapport n'est jamais le simple rapport de dents : il faut
+toujours ajouter $1$.
+
+#### 3. Les conversions
+
+Aucune conversion d'unité : les vitesses sont déjà en tr/min, les nombres de dents sont des
+grandeurs sans dimension.
+
+#### 4. Le remplacement
+
+**1.** $1 + Z_c/Z_a = 1 + 60/15 = 1 + 4 = 5$.
+
+**2.** $ω(tambour) = 2400 / 5 = 480$ tr/min.
+
+**3.** $Z_c/Z_a$ passe de $60/15 = 4$ à $72/12 = 6$ : le second réducteur est **plus** réducteur
+(rapport $1+6=7$ contre $5$), bien que la couronne compte davantage de dents — c'est le
+**rapport** des deux qui compte, pas le nombre de dents pris isolément.
+
+**4.** Non : bloquer le **planétaire** au lieu de la couronne change la configuration, mais ne
+garantit pas un rapport plus grand — cela dépend à nouveau du rapport des dents dans cette
+nouvelle configuration, à recalculer, pas à deviner par intuition.
+
+#### 5. Le calcul
+
+Voir question 1 et 2 ci-dessus : $5$, puis $480$ tr/min.
+
+#### 6. La vérification
+
+**Contrôle de cohérence** : $480 < 2400$, le train réduit bien la vitesse — un train épicycloïdal
+en configuration couronne fixe est toujours réducteur dans ce sens. **Contrôle par
+l'image physique** : en bloquant la couronne à la main et en tournant le planétaire d'un tour, le
+porte-satellites n'avance que d'un cinquième de tour — cohérent avec le rapport calculé.
+""",
+        },
+        {
+            "id": '6.14',
+            "titre": 'Assemblages non démontables : collage et sertissage',
+            "duree": '3 h',
+            "cours": """### 1. Ce que la visserie et le soudage ne couvrent pas toujours
+
+La visserie (fiche 6.9) se démonte ; le soudage (fiche 13.2) demande de la chaleur et ne
+fonctionne qu'entre métaux compatibles. Deux autres familles d'assemblage répondent à des besoins
+que ni l'une ni l'autre ne couvre bien : assembler des matériaux **différents** (métal et
+plastique, deux plastiques différents), ou assembler très **vite**, sans apport de matière ni
+chaleur.
+
+### 2. Le collage : répartir l'effort sur toute une surface
+
+[[FIG:collage_sertissage]]
+
+Contrairement à une vis ou un rivet, qui concentrent l'effort en quelques points, un joint collé
+**répartit l'effort de cisaillement sur toute la surface encollée** — c'est ce qui lui permet de
+tenir avec une épaisseur de colle de quelques dixièmes de millimètre seulement.
+
+**Ce que le collage permet, que rien d'autre ne permet aussi bien** :
+- Assembler des matériaux de nature différente (métal/plastique, plastique/verre).
+- Isoler électriquement deux pièces métalliques (éviter un couple galvanique, fiche 8.4).
+- Ne percer aucun trou : la pièce garde toute sa résistance, sans concentration de contrainte.
+
+**Ses limites** : un temps de prise (de quelques minutes à plusieurs heures), une préparation de
+surface souvent indispensable (dégraissage, ponçage léger), et une tenue qui se dégrade avec la
+température et l'humidité selon la colle choisie.
+
+### 3. Le sertissage : un pli qui verrouille mécaniquement
+
+Le sertissage replie le bord d'une tôle **par-dessus** le bord d'une autre, créant un
+verrouillage purement mécanique — aucun apport de matière, aucune chaleur. C'est le principe d'une
+boîte de conserve, ou de la fixation d'un capot de boîtier électronique en tôle mince.
+
+**Ce qu'il permet** : un assemblage très rapide (quelques secondes en production), sans
+consommable, sans zone affectée thermiquement contrairement au soudage.
+
+**Sa limite principale** : il est **irréversible** — défaire un sertissage abîme presque toujours
+la tôle — et il n'apporte, seul, aucune étanchéité fiable sans joint complémentaire.
+
+### 4. Choisir entre collage, sertissage, visserie et soudage
+
+| Besoin | Solution la mieux adaptée |
+|---|---|
+| Assembler deux matériaux différents, sans point de faiblesse localisé | **Collage** |
+| Fermer un boîtier en tôle mince, en grande série, sans démontage prévu | **Sertissage** |
+| Pouvoir démonter pour la maintenance | **Visserie** (fiche 6.9) |
+| Assembler deux métaux compatibles, pour un effort important et permanent | **Soudage** (fiche 13.2) |
+
+### 5. Les erreurs classiques
+
+1. **Coller sans préparer la surface.** Une graisse ou une couche d'oxyde invisible divise
+   souvent la tenue par dix — le dégraissage n'est jamais une option facultative.
+2. **Négliger le temps de prise** en manipulant la pièce trop tôt : la colle n'a pas encore
+   atteint sa résistance finale, même si elle semble déjà collée.
+3. **Sertir une tôle trop épaisse ou trop dure** pour le rayon de pliage prévu : elle se fissure
+   au lieu de plier proprement.
+4. **Choisir le collage pour un effort de traction pure important** : un joint collé résiste
+   très bien au cisaillement réparti, beaucoup moins à l'arrachement perpendiculaire (le
+   « pelage ») — il faut alors repenser la géométrie du joint, pas seulement changer de colle.
+5. **Oublier qu'un assemblage collé ou serti n'est pas contrôlable visuellement** de la même
+   façon qu'une soudure ou une vis serrée : la qualité se joue à la préparation, avant
+   l'assemblage, pas après.
+
+### 6. À retenir
+
+- Le collage répartit l'effort sur **toute la surface** ; il tient particulièrement bien en
+  cisaillement, beaucoup moins en arrachement perpendiculaire.
+- Le sertissage verrouille **mécaniquement**, sans matière ni chaleur ajoutée — rapide, mais
+  irréversible.
+- Les deux évitent de percer ou de chauffer la pièce — précieux pour des matériaux différents ou
+  fragiles.
+- Ni l'un ni l'autre ne se démonte proprement : réserver la visserie dès qu'une maintenance est
+  prévue.
+""",
+            "formules": """
+**Le test du collage** — l'effort principal est-il réparti (cisaillement) ou concentré en
+traction perpendiculaire (arrachement, « pelage ») ? Le collage excelle au premier, pas au second
+
+**Le test du sertissage** — l'assemblage sera-t-il un jour démonté ? Si oui, ce n'est pas le bon
+choix
+
+**La règle commune aux deux** — aucun apport de matière, aucune chaleur : précieux pour des
+matériaux fragiles ou incompatibles au soudage
+""",
+            "exemple": """
+### Cas industriel — Le capteur collé qui se décollait au bout de trois mois
+
+**Le symptôme.** Un capteur de proximité en boîtier plastique est collé sur un support en
+aluminium avec une colle époxy réputée très résistante. Les premiers exemplaires tiennent
+parfaitement aux essais. Après trois mois en usage réel, plusieurs capteurs se décollent.
+
+**Le diagnostic.** Le support en aluminium recevait un léger film d'huile de coupe résiduel après
+usinage, invisible à l'œil nu et non détecté par le contrôle visuel de réception. La colle
+adhérait alors à ce film d'huile plutôt qu'à l'aluminium lui-même — une tenue en apparence
+correcte au départ, qui se dégrade progressivement avec les vibrations de la machine.
+
+**La correction.** Ajout d'une étape de dégraissage systématique (solvant + chiffon non pelucheux)
+juste avant le collage, formalisée dans la gamme de montage, avec un contrôle par test de la
+goutte d'eau (l'eau doit s'étaler en film continu sur une surface propre, pas former des gouttes).
+
+**Ce que le cas apprend.** La résistance annoncée d'une colle est mesurée en laboratoire, sur une
+surface **parfaitement préparée**. En atelier, c'est presque toujours la préparation de surface,
+pas la colle elle-même, qui décide de la tenue réelle dans le temps.
+""",
+            "exercice": """
+### Exercice — Choisir la bonne solution d'assemblage
+
+Pour chacune des situations suivantes, choisissez entre collage, sertissage, visserie ou soudage,
+et justifiez en une phrase.
+
+**1.** Fixer une plaque signalétique en plastique sur un boîtier métallique, sans percer le
+boîtier ni laisser de trace visible de fixation.
+
+**2.** Fermer le fond d'une boîte de conserve métallique, en très grande série, à faible coût.
+
+**3.** Assembler le carter d'un réducteur, qu'il faudra ouvrir régulièrement pour la maintenance
+des engrenages.
+
+**4.** Assembler deux tôles d'acier pour former un châssis soumis à des efforts importants et
+permanents.
+
+**5.** Le fond de la boîte de conserve (question 2) doit-il, en plus d'être serti, être étanche ?
+Le sertissage seul suffit-il à garantir l'étanchéité ?
+""",
+            "corrige": """
+### Corrigé, en six temps
+
+#### 1. Ce que dit l'énoncé
+
+Cinq situations d'assemblage, aux contraintes différentes : démontabilité, série, matériaux,
+effort à transmettre.
+
+#### 2. Quelle règle, et pourquoi
+
+> Le choix se fait sur les contraintes réelles : démontage prévu ou non, matériaux compatibles ou
+> non au soudage, effort réparti ou concentré, cadence de production.
+
+#### 3. Les conversions
+
+Sans objet : aucune donnée numérique dans cet exercice, uniquement un raisonnement de choix.
+
+#### 4. Le remplacement
+
+**1.** **Collage** : matériaux différents (plastique/métal), pas de perçage, effort réparti sur
+la surface de la plaque.
+
+**2.** **Sertissage** : cadence très élevée, faible coût, aucune démontabilité requise — le cas
+d'école du sertissage.
+
+**3.** **Visserie** : la maintenance régulière impose un assemblage démontable, seule la visserie
+le permet proprement.
+
+**4.** **Soudage** : deux métaux compatibles, effort important et permanent, aucun besoin de
+démontage — le soudage transmet l'effort le plus élevé des quatre solutions.
+
+**5.** Non, le sertissage seul ne garantit pas l'étanchéité : c'est un verrouillage **mécanique**,
+pas une barrière contre les fluides. Une boîte de conserve sertie reçoit en plus un joint
+d'étanchéité (souvent intégré au bord replié) — le sertissage tient la pièce, le joint la rend
+étanche : ce sont deux fonctions différentes, assurées différemment.
+
+#### 5. Le calcul
+
+Sans objet : cet exercice évalue un raisonnement de choix, pas un calcul.
+
+#### 6. La vérification
+
+**Le test qui tranche à chaque fois** : redemander pour chaque réponse « cet assemblage devra-t-il
+être défait un jour ? » et « les deux pièces sont-elles du même matériau, soudable ? ». Ces deux
+questions, posées dans cet ordre, éliminent presque toujours trois des quatre solutions
+d'emblée.
 """,
         },
     ],
@@ -28941,6 +30621,713 @@ existant reste compatible ou doit être repris. C'est une des raisons pour lesqu
 figure toujours au cartouche du plan (fiche 5.1) : elle fait partie du contrat.
 """,
         },
+        {
+            "id": '8.9',
+            "titre": 'Mécanique des fluides : pertes de charge et dimensionnement',
+            "duree": '2 h',
+            "cours": """### 1. Ce que la fiche 8.2 ne dit pas encore
+
+La fiche 8.2 donne le débit ($Q = v × S$) et la pression comme force répartie sur une surface.
+Mais dans un circuit réel — hydraulique ou pneumatique —, la pression disponible en sortie n'est
+**jamais** celle d'entrée : le frottement du fluide contre les parois, et chaque coude, vanne ou
+raccord, « consomment » une partie de la pression. Ce sont les **pertes de charge**.
+
+### 2. Deux familles de pertes de charge
+
+[[FIG:circuit_hydraulique_pertes]]
+
+- **Pertes réparties** (ou linéaires) : dues au frottement du fluide le long du tube, proportionnelles
+  à la longueur $L$ et au **carré** de la vitesse.
+- **Pertes localisées** (ou singulières) : dues à chaque obstacle — coude, vanne, raccord,
+  rétrécissement.
+
+> $ΔP_{réparties} = λ × \\dfrac{L}{D} × \\dfrac{ρv^2}{2}$ &nbsp;&nbsp;·&nbsp;&nbsp;
+> $ΔP_{localisées} = ξ × \\dfrac{ρv^2}{2}$
+
+$λ$ (coefficient de frottement) et $ξ$ (coefficient propre à chaque obstacle) sont donnés par des
+tables ou des abaques — on ne les calcule jamais soi-même en BTS, on les **utilise**.
+
+### 3. Le régime d'écoulement : ce qui décide de la valeur de $λ$
+
+[[FIG:ecoulement_laminaire_turbulent]]
+
+Le fluide s'écoule de deux façons très différentes, et la table qui donne $λ$ n'est pas la même
+selon le cas :
+
+> $Re = \\dfrac{ρ v D}{μ}$
+
+$Re$, le **nombre de Reynolds**, est sans dimension — il compare l'inertie du fluide (qui pousse
+à tourbillonner) à sa viscosité $μ$ (qui pousse à rester ordonné).
+
+| Nombre de Reynolds | Régime | Ce que ça veut dire |
+|---|---|---|
+| $Re < 2000$ | **Laminaire** | Les filets de fluide restent parallèles, sans se mélanger |
+| $2000 < Re < 4000$ | Transitoire | Zone incertaine, à éviter en conception si possible |
+| $Re > 4000$ | **Turbulent** | Les filets se mélangent, tourbillonnent — le cas le plus fréquent avec l'eau |
+
+**Ce qu'il faut retenir sans calculer $λ$ soi-même** : un fluide peu visqueux (eau, air) devient
+turbulent dès qu'il circule à une vitesse normale d'atelier ; un fluide très visqueux (huile
+hydraulique épaisse, à faible vitesse) reste souvent laminaire. C'est ce régime qui indique, dans
+l'abaque, quelle colonne de $λ$ utiliser.
+
+### 4. Le calcul en pratique
+
+1. **Trouver la vitesse** : $v = Q/S$, avec $S$ la section du tube.
+2. **Identifier le régime** (Reynolds), pour savoir quel $λ$ lire dans la table.
+3. **Calculer chaque perte séparément**, réparties et localisées.
+4. **Les additionner** : $ΔP_{totale} = ΔP_{réparties} + ΣΔP_{localisées}$.
+5. **Vérifier** que la pression restante en sortie ($P_{entrée} - ΔP_{totale}$) reste suffisante
+   pour l'usage visé — actionner un vérin, par exemple.
+
+### 5. Exemple entièrement déroulé
+
+Circuit d'eau : $D = 32$ mm, $L = 15$ m, $Q = 1{,}5$ L/s, $ρ = 1000$ kg/m³, viscosité de l'eau
+$μ ≈ 1{,}0 × 10^{-3}$ Pa·s, $λ = 0{,}025$ (donné pour ce régime), 3 coudes ($ξ = 0{,}9$ chacun) et
+1 vanne ($ξ = 2$), tous deux donnés.
+
+1. $S = πD^2/4 ≈ 8{,}04 × 10^{-4}$ m².
+2. $v = Q/S ≈ 1{,}87$ m/s.
+3. $Re = ρvD/μ = 1000 × 1{,}87 × 0{,}032 / 0{,}001 ≈ 59\\,680$ : très largement turbulent
+   ($Re > 4000$), ce qui justifie le $λ$ donné.
+4. $ΔP_{réparties} = 0{,}025 × (15/0{,}032) × (1000 × 1{,}87^2/2) ≈ 20{,}4$ kPa.
+5. $ΔP_{localisées} = (3 × 0{,}9 + 2) × (1000 × 1{,}87^2/2) ≈ 8{,}2$ kPa.
+6. $ΔP_{totale} ≈ 28{,}6$ kPa, soit environ $0{,}29$ bar.
+
+### 6. Les erreurs classiques
+
+1. **Oublier les pertes localisées**, en ne comptant que les pertes réparties — sur un circuit
+   court avec beaucoup de coudes et de vannes, ce sont souvent elles qui dominent.
+2. **Confondre le débit $Q$ et la vitesse $v$** : $Q$ dépend de la section, deux tubes de
+   diamètres différents avec le même débit n'ont pas la même vitesse.
+3. **Oublier d'élever la vitesse au carré** dans les deux formules : doubler la vitesse
+   **quadruple** les pertes.
+4. **Réduire le diamètre d'un tube « pour économiser de la matière »** : à débit constant, cela
+   augmente la vitesse, donc les pertes au carré — presque toujours une mauvaise idée.
+5. **Utiliser un $λ$ de régime laminaire sur un écoulement turbulent** (ou l'inverse) sans avoir
+   vérifié le nombre de Reynolds : la table de référence n'est pas la même des deux côtés.
+
+### 7. À retenir
+
+- Deux familles : pertes réparties (le long du tube) et pertes localisées (à chaque obstacle) —
+  elles s'additionnent toujours.
+- Le nombre de Reynolds $Re = ρvD/μ$ indique le régime — laminaire sous $2000$, turbulent
+  au-dessus de $4000$ — et donc quel $λ$ utiliser.
+- $v = Q/S$ d'abord, systématiquement : c'est elle qui entre **au carré** dans les deux formules.
+- Réduire le diamètre d'un tube pour économiser de la matière augmente fortement les pertes.
+""",
+            "formules": """
+**Perte de charge répartie** — $ΔP = λ × \\dfrac{L}{D} × \\dfrac{ρv^2}{2}$
+
+**Perte de charge localisée** — $ΔP = ξ × \\dfrac{ρv^2}{2}$
+
+**Nombre de Reynolds** — $Re = ρvD/μ$ : laminaire sous $2000$, turbulent au-dessus de $4000$
+
+**La vitesse d'abord** — $v = Q/S$, avec $S$ la section du tube : c'est elle qui compte au carré
+dans les deux formules
+""",
+            "exemple": """
+### Cas industriel — Le vérin trop lent qu'on avait cru mal choisi
+
+**Le symptôme.** Un vérin hydraulique semble sous-alimenté : son mouvement est plus lent que
+prévu par le constructeur. L'équipe soupçonne d'abord la pompe.
+
+**Le diagnostic.** En reprenant le calcul de pertes de charge du circuit d'alimentation —
+tuyauterie longue, coudes ajoutés lors du montage pour contourner d'autres organes —, on trouve
+que la pression réellement disponible au vérin est inférieure de $15$ % à la pression de sortie de
+la pompe. Cet écart explique entièrement la lenteur observée.
+
+**La correction.** Suppression de deux coudes évitables, et légère augmentation du diamètre du
+tuyau sur la portion la plus longue du circuit.
+
+**Ce que le cas apprend.** Une pompe correctement dimensionnée peut donner une pression
+insuffisante à l'utilisation si le **circuit** lui-même n'a pas été calculé. Le dimensionnement
+d'un système hydraulique ne s'arrête jamais à la source.
+""",
+            "exercice": """
+### Atelier guidé — Dimensionner l'alimentation d'un vérin hydraulique
+
+Un circuit hydraulique alimente un vérin. Il véhicule de l'huile ($ρ = 850$ kg/m³, viscosité
+$μ = 0{,}03$ Pa·s) dans un tube de diamètre $D = 20$ mm, sur une longueur $L = 8$ m, avec un débit
+$Q = 0{,}6$ L/s. Le circuit comporte 2 coudes ($ξ = 0{,}75$ chacun) et 1 clapet anti-retour
+($ξ = 1{,}5$). La pompe fournit $210$ kPa en sortie, et le vérin a besoin d'au moins $180$ kPa
+pour fonctionner correctement.
+
+**1.** Calculez la vitesse de l'huile dans le tube, en m/s.
+
+**2.** Calculez le nombre de Reynolds de cet écoulement. Le régime est-il laminaire ou turbulent ?
+Le coefficient $λ = 0{,}03$, donné pour un régime laminaire, est-il donc bien choisi ?
+
+**3.** Calculez la perte de charge répartie, en Pa.
+
+**4.** Calculez la perte de charge localisée totale, en Pa.
+
+**5.** Quelle est la perte de charge totale du circuit, en kPa ?
+
+**6.** Le vérin recevra-t-il une pression suffisante pour fonctionner correctement ? Concluez avec
+la marge disponible.
+
+**7.** Si l'on remplaçait ce tube par un tube de diamètre $30$ mm, sans rien changer d'autre, les
+pertes de charge augmenteraient-elles ou diminueraient-elles ? Justifiez sans recalculer.
+""",
+            "corrige": """
+### Corrigé, en six temps
+
+#### 1. Ce que dit l'énoncé
+
+Un circuit hydraulique complet — dimensions, débit, coefficients de pertes, pression de la pompe
+et pression minimale requise par le vérin. La question finale porte sur la **viabilité** du
+circuit, pas seulement sur un calcul isolé.
+
+#### 2. Quelle règle, et pourquoi
+
+> La vitesse se calcule toujours en premier ($v = Q/S$), puis le régime d'écoulement (Reynolds),
+> puisque c'est lui qui justifie la valeur de $λ$ utilisée dans la suite du calcul.
+
+#### 3. Les conversions
+
+$Q = 0{,}6$ L/s $= 0{,}6 × 10^{-3}$ m³/s. $D = 20$ mm $= 0{,}020$ m.
+
+#### 4. Le remplacement
+
+**1.** $S = πD^2/4 ≈ 3{,}14 × 10^{-4}$ m². $v = Q/S ≈ 1{,}91$ m/s.
+
+**2.** $Re = ρvD/μ = 850 × 1{,}91 × 0{,}020 / 0{,}03 ≈ 1082$. Comme $Re < 2000$, l'écoulement est
+**laminaire** : le $λ = 0{,}03$ donné, propre à ce régime, est donc bien le bon choix.
+
+**3.** $ΔP_{réparties} = 0{,}03 × (8/0{,}020) × (850 × 1{,}91^2/2) ≈ 18{,}6$ kPa.
+
+**4.** $ξ_{total} = 2 × 0{,}75 + 1{,}5 = 3{,}0$. $ΔP_{localisées} = 3{,}0 × (850 × 1{,}91^2/2) ≈ 4{,}7$ kPa.
+
+**5.** $ΔP_{totale} ≈ 18{,}6 + 4{,}7 = 23{,}3$ kPa.
+
+**6.** Pression disponible au vérin $≈ 210 - 23{,}3 = 186{,}7$ kPa, à comparer aux $180$ kPa requis.
+Le vérin **fonctionnera**, mais avec une marge de seulement $6{,}7$ kPa — un seul coude
+supplémentaire ajouté plus tard suffirait à faire tomber le circuit sous le seuil.
+
+**7.** Un tube plus large **diminuerait** les pertes : à débit constant, une plus grande section
+donne une vitesse plus faible, et la vitesse intervient **au carré** dans les deux formules — un
+gain de diamètre réduit les pertes bien plus que proportionnellement.
+
+#### 5. Le calcul
+
+Voir le détail ci-dessus : $v ≈ 1{,}91$ m/s, $Re ≈ 1082$ (laminaire), $ΔP_{totale} ≈ 23{,}3$ kPa,
+marge finale $≈ 6{,}7$ kPa.
+
+#### 6. La vérification
+
+**Contrôle d'ordre de grandeur** : $23$ kPa reste très inférieur à la pression de service typique
+d'un circuit hydraulique (plusieurs dizaines de bars, soit plusieurs milliers de kPa) — cohérent
+avec des pertes qui doivent rester une fraction modeste de la pression disponible, pas l'écraser.
+**Contrôle de cohérence sur la marge** : une marge de $6{,}7$ kPa sur $180$ kPa requis représente
+moins de $4$ % — un circuit qui « fonctionne » sur le papier mais **sans aucune réserve** pour
+l'usure, un ajout de coude, ou un fluide légèrement plus visqueux en hiver. C'est exactement le
+genre de conclusion qu'un dimensionnement doit savoir formuler, au-delà du simple chiffre.
+""",
+        },
+        {
+            "id": '8.10',
+            "titre": 'Thermodynamique : bilan thermique et échanges de chaleur',
+            "duree": '2 h',
+            "cours": """### 1. Trois façons pour la chaleur de se propager
+
+- **Conduction** : à travers un matériau, par contact direct — à travers une paroi métallique.
+- **Convection** : par le mouvement d'un fluide (air ou liquide) qui emporte la chaleur.
+- **Rayonnement** : sans contact ni matière, par ondes électromagnétiques — la chaleur d'un
+  radiateur infrarouge, ou du Soleil.
+
+Dans une machine réelle, les trois agissent presque toujours ensemble.
+
+### 2. La conduction : la loi de Fourier
+
+[[FIG:bilan_thermique_paroi]]
+
+> $P = λ × S × \\dfrac{T_{int} - T_{ext}}{e}$
+
+$λ$ (la conductivité thermique) dépend du matériau : grande pour un métal (de l'ordre de $50$ à
+$400$ W/(m·K)), petite pour un isolant (de l'ordre de $0{,}03$ à $0{,}05$ W/(m·K)).
+
+| Matériau | $λ$ en W/(m·K) | Famille |
+|---|---|---|
+| Cuivre | $390$ | métal — très conducteur |
+| Aluminium | $230$ | métal — très conducteur |
+| Acier | $50$ | métal — conducteur |
+| Verre | $1{,}0$ | isolant moyen |
+| Brique | $0{,}84$ | isolant moyen |
+| Plâtre | $0{,}35$ | isolant moyen |
+| Laine de verre | $0{,}04$ | isolant performant |
+| Polystyrène expansé | $0{,}03$ | isolant performant |
+| Air immobile | $0{,}025$ | excellent isolant... s'il ne bouge pas |
+
+### 3. La convection : l'autre moitié du problème
+
+Un mur ou une paroi ne touche jamais directement une température d'air : entre le solide et le
+fluide qui l'entoure (air ambiant, eau de refroidissement), la chaleur passe par **convection**.
+
+[[FIG:isolation_couches]]
+
+> $P = h × S × ΔT$
+
+où $h$ est le **coefficient d'échange convectif**, en W/(m²·K) — il dépend du fluide et de son
+agitation (une pièce statique, un ventilateur, un écoulement forcé...).
+
+| Situation | $h$ typique en W/(m²·K) |
+|---|---|
+| Air calme (convection naturelle) | $5$ à $15$ |
+| Air en mouvement (ventilateur, vent) | $15$ à $80$ |
+| Eau calme | $200$ à $600$ |
+| Eau en circulation forcée (pompe) | $1\\,000$ à $10\\,000$ |
+
+**Le réflexe à avoir** : plus $h$ est grand, plus l'échange est efficace pour un même écart de
+température — c'est pourquoi un radiateur d'ordinateur porte un ventilateur (augmenter $h$ côté
+air) et pourquoi un moteur refroidi par eau évacue bien plus de puissance qu'un moteur refroidi
+par air, à surface d'échange égale.
+
+### 4. Isolation en couches : les résistances thermiques en série
+
+Un mur réel empile souvent plusieurs matériaux — brique, isolant, plâtre. Chaque couche oppose sa
+propre **résistance thermique** au passage de la chaleur, et ces résistances **s'additionnent**,
+exactement comme des résistances électriques en série :
+
+> $R = \\dfrac{e}{λ × S}$ pour une couche, puis $R_{total} = R_1 + R_2 + R_3 + …$
+
+et la puissance qui traverse l'ensemble : $P = \\dfrac{ΔT}{R_{total}}$.
+
+**Exemple entièrement déroulé.** Un mur de $S = 12$ m² empile trois couches : brique
+($e = 20$ cm, $λ = 0{,}84$), isolant ($e = 8$ cm, $λ = 0{,}04$), plâtre ($e = 1{,}5$ cm,
+$λ = 0{,}35$). Écart de température entre intérieur et extérieur : $ΔT = 22$ °C.
+
+$R_{brique} = 0{,}20 / (0{,}84 × 12) ≈ 0{,}0198$ K/W
+
+$R_{isolant} = 0{,}08 / (0{,}04 × 12) ≈ 0{,}1667$ K/W
+
+$R_{platre} = 0{,}015 / (0{,}35 × 12) ≈ 0{,}0036$ K/W
+
+$R_{total} ≈ 0{,}1901$ K/W, d'où $P = 22 / 0{,}1901 ≈ 115{,}7$ W.
+
+**Ce que ce calcul révèle** : la couche isolante, malgré une épaisseur modeste ($8$ cm sur
+$29{,}5$ cm au total), porte à elle seule $87\\,\\%$ de la résistance totale
+($0{,}1667 / 0{,}1901$). C'est elle, et presque elle seule, qui protège le mur — brique et plâtre
+comptent pour très peu dans le bilan.
+
+### 5. La calorimétrie : combien de chaleur pour changer une température
+
+> $Q = m × c × ΔT$
+
+$c$, la capacité thermique massique, est propre à chaque matériau — elle se lit dans une table de
+données.
+
+### 6. Exemple entièrement déroulé, en deux temps
+
+**a) Une pièce en aluminium** de $2{,}0$ kg refroidit de $85$ °C à $25$ °C après usinage
+($c_{alu} = 897$ J/(kg·K)). Chaleur évacuée : $Q = 2{,}0 × 897 × 60 = 107\\,640$ J, soit environ
+$107{,}6$ kJ.
+
+**b) Une paroi en acier** ($λ = 50$ W/(m·K)) de $5$ mm d'épaisseur, de surface $0{,}3$ m², avec un
+écart de $40$ °C entre ses deux faces. Puissance qui la traverse :
+$P = 50 × 0{,}3 × 40 / 0{,}005 = 120\\,000$ W, soit $120$ kW.
+
+### 7. Ce que le deuxième calcul apprend, et qui surprend toujours
+
+$120$ kW à travers une simple tôle semble énorme — et c'est bien le cas : un métal conduit si
+bien la chaleur qu'il n'est **presque jamais lui-même le facteur limitant**. En pratique, c'est la
+**convection** à chaque face — l'échange entre le métal et l'air ou le fluide qui le touche — qui
+freine réellement le transfert. C'est pourquoi ajouter des **ailettes de refroidissement**
+(augmenter la surface d'échange $S$, ou remplacer l'air par de l'eau pour augmenter $h$) est
+souvent bien plus efficace que changer de matériau.
+
+### 8. Les erreurs classiques
+
+1. **Confondre température et quantité de chaleur.** $ΔT$ seul ne dit rien sur l'énergie en jeu
+   sans connaître la masse et la capacité thermique.
+2. **Croire qu'un métal « isole » mal** parce qu'il est un mauvais isolant — c'est l'inverse :
+   sa grande conductivité en fait un excellent **conducteur**, ce qui pose le problème inverse.
+3. **Oublier un des trois modes de transfert**, le plus souvent la convection, dans un bilan
+   thermique complet.
+4. **Chercher à améliorer un échange thermique en changeant le matériau conducteur**, alors que
+   c'est presque toujours la surface d'échange ou la convection qui limite réellement.
+5. **Additionner des puissances au lieu des résistances** pour un mur multicouche — ce sont les
+   résistances $R = e/(λS)$ qui s'additionnent en série, jamais les puissances directement.
+
+### 9. À retenir
+
+- Trois modes : conduction (contact), convection (fluide en mouvement), rayonnement (sans
+  contact) — souvent les trois à la fois.
+- Loi de Fourier : $P = λS(T_{int}-T_{ext})/e$ — un métal, très conducteur, n'est presque jamais
+  le facteur limitant.
+- Convection : $P = hSΔT$ — c'est souvent $h$, pas $λ$, qui freine réellement un échange
+  thermique réel.
+- Mur multicouche : les résistances $R = e/(λS)$ s'additionnent en série — la couche la moins
+  conductrice porte presque toute la résistance.
+- Calorimétrie : $Q = mcΔT$ — la quantité de chaleur dépend de la masse **et** de la nature du
+  matériau, pas seulement de l'écart de température.
+""",
+            "formules": """
+**Conduction (loi de Fourier)** — $P = λ × S × (T_{int} - T_{ext}) / e$
+
+**Convection** — $P = h × S × ΔT$
+
+**Résistance thermique d'une couche** — $R = e / (λ × S)$, résistances en série : $R_{total} = ΣR_i$, puis $P = ΔT / R_{total}$
+
+**Calorimétrie (chaleur sensible)** — $Q = m × c × ΔT$
+
+**Le réflexe à avoir** — un métal très conducteur n'est presque jamais le facteur limitant d'un
+échange thermique ; c'est souvent la convection à sa surface, ou la couche la moins conductrice
+d'un mur multicouche
+""",
+            "exemple": """
+### Cas industriel — Le radiateur qui semblait mal dimensionné
+
+**Le symptôme.** Un radiateur de refroidissement en aluminium, matériau pourtant très conducteur,
+laisse un moteur électrique fonctionner à une température jugée trop élevée.
+
+**Le diagnostic.** Le calcul de conduction dans l'aluminium lui-même donne une puissance
+transférable très largement suffisante — la conduction n'est pas en cause. C'est la convection à
+la surface du radiateur, en contact avec l'air ambiant, qui limite réellement l'évacuation de la
+chaleur.
+
+**La correction.** Ajout d'ailettes sur le radiateur : la surface d'échange $S$ augmente
+fortement, sans changer ni le matériau ni son épaisseur. La température de fonctionnement baisse
+nettement.
+
+**Ce que le cas apprend.** Face à un problème d'échauffement, la première question n'est pas
+« quel matériau plus conducteur choisir ? », mais « où l'échange est-il réellement limité ? » —
+et c'est très souvent la surface de convection, pas la conduction dans la pièce elle-même.
+""",
+            "exercice": """
+### Atelier guidé — Isoler un local technique
+
+Un local technique doit être équipé d'un carter de protection et d'un mur isolé. Vous menez le
+bilan thermique complet, étape par étape.
+
+**1.** Une pièce en acier ($c = 460$ J/(kg·K)) de $1{,}5$ kg est trempée pendant la fabrication du
+carter : sa température passe de $950$ °C à $20$ °C. Quelle quantité de chaleur a-t-elle cédée,
+en kJ ?
+
+**2.** Une paroi isolante ($λ = 0{,}04$ W/(m·K)) de $8$ cm d'épaisseur, de surface $2{,}0$ m²,
+sépare deux ambiances avec un écart de $25$ °C. Quelle puissance thermique la traverse par
+conduction, en watts ?
+
+**3.** Comparez ce résultat de conduction avec celui de l'exemple guidé du cours (une paroi en
+acier de $5$ mm, $120$ kW). Que révèle cette comparaison sur le rôle du choix du matériau dans une
+paroi isolante ?
+
+**4.** Un flux d'air balaie une face de $S = 2{,}0$ m² du carter, avec un coefficient d'échange
+$h = 25$ W/(m²·K) et un écart de $30$ °C entre le carter et l'air. Quelle puissance est échangée
+par **convection**, en watts ?
+
+**5.** Le mur du local, de surface $S = 10$ m², empile deux couches : un isolant
+($e = 6$ cm, $λ = 0{,}032$) et un enduit plâtre ($e = 1{,}2$ cm, $λ = 0{,}35$). L'écart de
+température est de $18$ °C. Calculez la résistance thermique totale $R_{total}$, puis la
+puissance $P$ qui traverse ce mur.
+
+**6.** Le même mur, construit uniquement en béton plein ($e = 18$ cm, $λ = 1{,}75$), sans aucun
+isolant, sépare les deux mêmes ambiances ($ΔT = 18$ °C). Calculez sa résistance et la puissance
+perdue, puis comparez au résultat de la question 5 : par quel facteur l'isolation réduit-elle les
+pertes ?
+
+**7.** En vous appuyant sur les questions 4 et 5, expliquez pourquoi un bilan thermique de local
+industriel complet ne peut jamais se limiter à un seul mode de transfert.
+""",
+            "corrige": """
+### Corrigé, en six temps
+
+#### 1. Ce que dit l'énoncé
+
+Un bilan thermique complet de local technique : calorimétrie (trempe), conduction simple, puis
+convection, puis résistances thermiques en série pour un mur multicouche, avec une comparaison
+finale isolé / non isolé.
+
+#### 2. Quelle règle, et pourquoi
+
+> Une variation de température seule ne dit rien sur l'énergie échangée : il faut la masse et la
+> capacité thermique pour une calorimétrie, la conductivité/surface/épaisseur pour une
+> conduction, le coefficient $h$ pour une convection, et les résistances en série $R = e/(λS)$
+> pour un mur multicouche.
+
+#### 3. Les conversions
+
+Épaisseur de la paroi isolante (Q2) : $8$ cm $= 0{,}08$ m. Isolant du mur (Q5) : $6$ cm
+$= 0{,}06$ m ; plâtre : $1{,}2$ cm $= 0{,}012$ m. Béton (Q6) : $18$ cm $= 0{,}18$ m.
+
+#### 4. Le remplacement
+
+**1.** $Q = m × c × ΔT = 1{,}5 × 460 × (950-20) = 1{,}5 × 460 × 930$.
+
+**2.** $P = λ × S × ΔT / e = 0{,}04 × 2{,}0 × 25 / 0{,}08$.
+
+**4.** $P = h × S × ΔT = 25 × 2{,}0 × 30$.
+
+**5.** $R_{isolant} = 0{,}06/(0{,}032×10)$ ; $R_{platre} = 0{,}012/(0{,}35×10)$ ;
+$R_{total} = R_{isolant} + R_{platre}$ ; $P = 18 / R_{total}$.
+
+**6.** $R_{beton} = 0{,}18/(1{,}75×10)$ ; $P_{beton} = 18 / R_{beton}$.
+
+#### 5. Le calcul
+
+**1.** $Q = 641\\,700$ J, soit environ $641{,}7$ kJ.
+
+**2.** $P = 25$ W.
+
+**3.** L'écart est saisissant : $120\\,000$ W pour une tôle d'acier de $5$ mm, contre $25$ W pour
+un isolant de $8$ cm. Le matériau change tout, d'un facteur supérieur à $4000$ : un isolant vaut
+par sa très faible conductivité $λ$, pas par son épaisseur.
+
+**4.** $P = 1\\,500$ W.
+
+**5.** $R_{isolant} ≈ 0{,}1875$ K/W, $R_{platre} ≈ 0{,}0034$ K/W,
+$R_{total} ≈ 0{,}1909$ K/W, d'où $P ≈ 94{,}3$ W.
+
+**6.** $R_{beton} ≈ 0{,}0103$ K/W, d'où $P_{beton} = 1\\,750$ W. Rapport :
+$1\\,750 / 94{,}3 ≈ 18{,}6$ — le mur isolé perd environ **18,6 fois moins** de puissance que le
+mur en béton plein, pour la même surface et le même écart de température.
+
+#### 6. La vérification
+
+**Contrôle d'ordre de grandeur** : $641{,}7$ kJ pour tremper $1{,}5$ kg d'acier sur $930$ °C
+d'écart est cohérent avec un traitement thermique réel. Les $1\\,500$ W de convection (Q4) sont du
+même ordre de grandeur que les pertes par conduction d'un mur non isolé (Q6, $1\\,750$ W) — ce qui
+confirme la question 7 : **un bilan thermique de local complet doit toujours compter conduction
+ET convection**, jamais l'une sans l'autre, sous peine de sous-estimer largement les pertes
+réelles. Le facteur $18{,}6$ de la question 6 confirme, chiffres à l'appui, que l'épaisseur d'un
+isolant performant ($λ$ très faible) pèse infiniment plus dans le bilan que l'épaisseur d'un
+matériau structurel comme le béton.
+""",
+        },
+        {
+            "id": '8.11',
+            "titre": 'Électrotechnique industrielle : triphasé et variateurs de vitesse',
+            "duree": '2 h',
+            "cours": """### 1. Pourquoi l'industrie utilise le triphasé, pas le monophasé
+
+Pour une même puissance transportée, le triphasé demande moins de courant par fil — donc des
+câbles plus fins et moins de pertes par effet Joule. Surtout : un moteur triphasé **démarre tout
+seul**, sans dispositif auxiliaire, grâce au champ tournant créé par les trois phases décalées.
+Un moteur monophasé, lui, a besoin d'un condensateur ou d'un enroulement auxiliaire pour démarrer.
+
+### 2. Le champ tournant : trois tensions décalées
+
+[[FIG:reseau_triphase]]
+
+Trois tensions identiques en amplitude, décalées d'un tiers de période ($120°$) l'une par rapport
+à l'autre. À tout instant, les trois valeurs sont différentes — c'est ce décalage permanent qui
+crée, dans les bobinages du moteur, un champ magnétique qui **tourne** de lui-même.
+
+### 3. La puissance triphasée
+
+> $P = \\sqrt{3} × U × I × cos(φ)$
+
+$U$ est la tension entre deux phases (souvent $400$ V en triphasé industriel), $I$ le courant de
+ligne, $cos(φ)$ le facteur de puissance de la charge (souvent $0{,}8$ à $0{,}9$ pour un moteur).
+
+### 4. La vitesse d'un moteur asynchrone, et le variateur de fréquence
+
+> $N (tr/min) = \\dfrac{60 × f}{p}$
+
+$f$ est la fréquence du réseau ($50$ Hz en France), $p$ le nombre de **paires** de pôles du
+moteur — pas le nombre de pôles. Un **variateur de fréquence** fait varier $f$ électroniquement,
+donc fait varier la vitesse **sans changer ni le moteur ni la mécanique** : c'est devenu la
+méthode standard pour régler la vitesse d'un moteur asynchrone industriel.
+
+### 5. Couplage étoile ou triangle : deux façons de brancher les mêmes enroulements
+
+[[FIG:couplage_etoile_triangle]]
+
+Un moteur triphasé possède trois enroulements, que l'on peut relier de deux façons différentes
+sur le réseau, sans changer le moteur lui-même :
+
+> $U_{étoile} = \\dfrac{U}{\\sqrt{3}} \\qquad U_{triangle} = U$
+
+En **étoile**, chaque enroulement ne reçoit que la tension simple ($U/\\sqrt{3} ≈ 230$ V pour un
+réseau $400$ V) : moins de tension, donc moins de courant et moins de couple. En **triangle**,
+chaque enroulement reçoit la pleine tension entre phases ($400$ V) : c'est le couplage de
+fonctionnement normal en régime établi, pour un moteur prévu pour cette tension.
+
+### 6. Le courant de démarrage : le vrai défi du démarrage direct
+
+Au démarrage, un moteur asynchrone appelle un courant bien plus élevé qu'en régime établi — le
+temps que le rotor prenne de la vitesse.
+
+| Méthode de démarrage | Courant de démarrage | Couple de démarrage | Complexité |
+|---|---|---|---|
+| Démarrage direct | $5$ à $8 × I_n$ | Couple plein, immédiat | Simple, peu coûteux |
+| Étoile-triangle | $≈ 1/3$ du courant direct | $≈ 1/3$ du couple direct | Modérée |
+| Démarreur progressif (soft starter) | $2$ à $4 × I_n$, réglable | Progressif, réglable | Modérée à élevée |
+| Variateur de fréquence | $≈ 1$ à $1{,}5 × I_n$ | Contrôlé en continu | Élevée, coût le plus haut |
+
+**Le principe du démarrage étoile-triangle** : on démarre le moteur couplé en étoile (tension
+réduite, courant réduit, couple réduit) puis, une fois lancé, on bascule en triangle (tension
+pleine, régime normal) — un compromis économique très répandu quand le couple résistant au
+démarrage est faible (pompes, ventilateurs).
+
+### 7. Exemple entièrement déroulé
+
+**a)** Un moteur triphasé, plaque signalétique $U = 400$ V, $I = 8{,}5$ A, $cos(φ) = 0{,}85$.
+Puissance absorbée : $P = \\sqrt{3} × 400 × 8{,}5 × 0{,}85 ≈ 5006$ W, soit environ $5{,}0$ kW.
+
+**b)** Ce moteur a $2$ paires de pôles (donc $4$ pôles). À $50$ Hz : $N = 60 × 50/2 = 1500$
+tr/min. Un variateur réduit la fréquence à $25$ Hz : $N = 60 × 25/2 = 750$ tr/min — la vitesse a
+été divisée par deux, exactement comme la fréquence.
+
+**c)** Ce même moteur, en fonctionnement normal (triangle), absorbe un courant nominal
+$I_n = 8{,}5$ A. Démarré en direct, son appel de courant atteindrait $5$ à $8 × 8{,}5 ≈ 43$ à
+$68$ A — de quoi déclencher les protections d'une installation mal dimensionnée. Démarré en
+étoile-triangle, cet appel tombe autour de $14$ à $23$ A, un tiers de la valeur directe.
+
+### 8. Les erreurs classiques
+
+1. **Oublier le $\\sqrt{3}$** dans la formule de puissance triphasée — l'erreur la plus fréquente,
+   elle fausse le résultat d'un facteur $1{,}73$.
+2. **Confondre $U$ (tension entre deux phases) et la tension simple** (entre une phase et le
+   neutre, $U/\\sqrt{3} ≈ 230$ V en $400$ V triphasé) — deux valeurs différentes.
+3. **Croire qu'un variateur permet d'augmenter la vitesse indéfiniment.** Au-delà de la fréquence
+   nominale, le couple disponible chute, ce qui limite la plage utile en pratique.
+4. **Confondre $p$, le nombre de paires de pôles, avec le nombre de pôles** — diviser par deux au
+   lieu du bon nombre est une erreur de facteur 2 classique.
+5. **Croire que le couplage étoile-triangle ne change que le courant.** Il divise aussi le couple
+   par trois — inadapté si la charge exige un couple important dès le démarrage (convoyeur
+   chargé, compresseur).
+
+### 9. À retenir
+
+- Le triphasé permet le démarrage direct d'un moteur (champ tournant) et réduit les pertes en
+  ligne, à puissance égale.
+- $P = \\sqrt{3} × U × I × cos(φ)$ — ne jamais oublier le $\\sqrt{3}$.
+- $N = 60f/p$ ($p$ = paires de pôles) — un variateur fait varier $f$, donc directement $N$, sans
+  toucher au moteur.
+- Étoile ($U/\\sqrt{3}$ par enroulement) contre triangle ($U$ par enroulement) : l'étoile réduit
+  courant ET couple de démarrage dans les mêmes proportions (environ un tiers).
+- Le choix d'une méthode de démarrage est un compromis entre coût, courant appelé et couple
+  disponible — pas une simple question de préférence.
+""",
+            "formules": """
+**Puissance active triphasée** — $P = \\sqrt{3} × U × I × cos(φ)$
+
+**Vitesse de synchronisme** — $N$ (tr/min) $= 60 × f / p$, avec $p$ le nombre de PAIRES de pôles
+
+**Couplage étoile / triangle** — $U_{étoile} = U/\\sqrt{3}$ par enroulement ; $U_{triangle} = U$ par enroulement
+
+**Le réflexe variateur** — changer $f$ change directement $N$, dans les mêmes proportions
+
+**Le réflexe démarrage** — étoile-triangle divise courant et couple de démarrage par environ $3$ par rapport au direct
+""",
+            "exemple": """
+### Cas industriel — Le convoyeur qui devait changer de vitesse selon le produit
+
+**Le contexte.** Un convoyeur doit avancer plus vite pour de petites pièces légères, plus
+lentement pour des pièces lourdes et fragiles — deux vitesses fixes, obtenues jusque-là par un
+changement manuel de poulies, arrêt de ligne obligatoire à chaque changement de série.
+
+**La solution retenue.** Installation d'un variateur de fréquence entre le réseau triphasé et le
+moteur du convoyeur, réglable en continu entre $20$ et $50$ Hz. Le changement de vitesse se fait
+alors depuis le pupitre, en quelques secondes, sans aucune intervention mécanique.
+
+**Le gain.** Au-delà du confort, le variateur permet aussi une accélération et une décélération
+progressives, plutôt qu'un démarrage brutal à pleine vitesse — ce qui réduit l'usure de la
+mécanique et les à-coups sur les pièces transportées.
+
+**Ce que le cas apprend.** Le variateur de fréquence a largement remplacé les solutions
+mécaniques de changement de vitesse (poulies étagées, boîtes de vitesses) partout où un moteur
+asynchrone triphasé est déjà en place : il agit sur l'électrique, jamais sur la mécanique.
+""",
+            "exercice": """
+### Atelier guidé — Choisir et dimensionner le démarrage d'un moteur triphasé
+
+Un moteur triphasé porte la plaque signalétique suivante : $U = 400$ V, $I_n = 12{,}0$ A,
+$cos(φ) = 0{,}80$. Il possède $3$ paires de pôles.
+
+**1.** Calculez la puissance électrique absorbée par le moteur en régime nominal, en kW.
+
+**2.** Calculez sa vitesse de synchronisme sous $50$ Hz, en tr/min.
+
+**3.** Un variateur réduit la fréquence d'alimentation à $40$ Hz. Quelle est la nouvelle vitesse
+de synchronisme, en tr/min ?
+
+**4.** Un technicien affirme qu'en réduisant encore la fréquence à $5$ Hz, on pourrait faire
+tourner ce moteur extrêmement lentement tout en gardant son couple nominal. Qu'en pensez-vous ?
+
+**5.** Ce moteur est couplé en triangle sur le réseau $400$ V. Quelle tension reçoit chaque
+enroulement ? S'il était couplé en étoile à la place, quelle tension recevrait chaque
+enroulement ?
+
+**6.** Démarré en direct, ce moteur peut appeler entre $5$ et $8$ fois son courant nominal $I_n$.
+Calculez la plage de courant de démarrage en direct, en ampères. Puis estimez la plage de courant
+en démarrage étoile-triangle (environ un tiers du direct).
+
+**7.** La charge entraînée par ce moteur est un ventilateur de grande inertie, à couple résistant
+faible au démarrage, sur une installation dont le disjoncteur limite l'appel à $30$ A maximum.
+Quelle méthode de démarrage choisir, parmi celles du cours, et pourquoi ?
+""",
+            "corrige": """
+### Corrigé, en six temps
+
+#### 1. Ce que dit l'énoncé
+
+Un moteur triphasé avec sa plaque signalétique, son nombre de paires de pôles, ses courants de
+démarrage selon la méthode, et le choix d'une méthode de démarrage compatible avec une contrainte
+d'installation (limite du disjoncteur).
+
+#### 2. Quelle règle, et pourquoi
+
+> La puissance triphasée se calcule avec $\\sqrt{3} × U × I × cos(φ)$, la vitesse de synchronisme
+> avec $60f/p$, la tension par enroulement selon le couplage avec $U/\\sqrt{3}$ (étoile) ou $U$
+> (triangle), et le courant de démarrage étoile-triangle vaut environ le tiers du direct — quatre
+> formules indépendantes, à ne jamais mélanger.
+
+#### 3. Les conversions
+
+Aucune conversion nécessaire : toutes les données sont déjà dans les bonnes unités.
+
+#### 4. Le remplacement
+
+**1.** $P = \\sqrt{3} × 400 × 12{,}0 × 0{,}80$.
+
+**2.** $N = 60 × 50 / 3$.
+
+**3.** $N = 60 × 40 / 3$.
+
+**5.** $U_{triangle} = U = 400$ V par enroulement. $U_{étoile} = U/\\sqrt{3} = 400/\\sqrt{3}$.
+
+**6.** $I_{demarrage,direct} = 5$ à $8 × 12{,}0$. $I_{demarrage,étoile-triangle} ≈
+I_{demarrage,direct} / 3$.
+
+#### 5. Le calcul
+
+**1.** $P ≈ 6651$ W, soit environ $6{,}65$ kW.
+
+**2.** $N = 1000$ tr/min.
+
+**3.** $N = 800$ tr/min — cohérent : la fréquence a baissé de $20$ %, la vitesse aussi, exactement
+dans la même proportion.
+
+**4.** Le technicien a tort sur un point important : la formule $N = 60f/p$ reste valable, mais le
+**couple nominal** ne se maintient pas à très basse fréquence sans précaution particulière — la
+ventilation du moteur, elle-même entraînée par son propre axe, devient insuffisante à très basse
+vitesse, ce qui limite le couple utilisable sans surchauffe. C'est pourquoi les applications à
+très basse vitesse prolongée demandent un moteur à ventilation forcée indépendante, pas seulement
+un variateur ordinaire.
+
+**5.** $U_{triangle} = 400$ V par enroulement. $U_{étoile} ≈ 231$ V par enroulement — environ
+$58\\,\\%$ de la tension triangle.
+
+**6.** $I_{demarrage,direct} = 60$ à $96$ A. $I_{demarrage,étoile-triangle} ≈ 20$ à $32$ A.
+
+**7.** Avec un disjoncteur limité à $30$ A, le démarrage direct ($60$ à $96$ A) est **impossible**
+sans déclenchement. Le démarrage étoile-triangle ($20$ à $32$ A) reste à la limite haute mais
+généralement compatible ; comme la charge (ventilateur, grande inertie) a un couple résistant
+faible au démarrage, le tiers de couple disponible en étoile suffit largement à la lancer.
+**L'étoile-triangle est le choix adapté** : il respecte la contrainte de courant tout en restant
+une solution simple et peu coûteuse, sans recourir à un variateur plus onéreux.
+
+#### 6. La vérification
+
+**Contrôle d'ordre de grandeur** : $6{,}65$ kW pour un moteur de taille industrielle courante est
+plausible ; $1000$ tr/min pour $3$ paires de pôles à $50$ Hz est cohérent avec les vitesses de
+synchronisme usuelles (750, 1000, 1500, 3000 tr/min selon le nombre de paires de pôles). Le
+rapport entre courant direct et courant étoile-triangle (environ $3$) est cohérent avec le rapport
+attendu, et la conclusion (étoile-triangle plutôt que direct) est cohérente avec la contrainte de
+$30$ A du disjoncteur — un démarrage direct l'aurait dépassée d'un facteur $2$ à $3$.
+""",
+        },
     ],
 }
 
@@ -29975,6 +32362,333 @@ cote, en cinq secondes, sans aucune erreur.
 qui doit le modifier ensuite — client, collègue, ou vous-même dans six mois. La méthode enseignée
 dans cette fiche n'est pas une préférence esthétique : c'est ce qui évite de reconstruire une
 pièce à chaque demande de modification.
+""",
+        },
+        {
+            "id": '9.5',
+            "titre": 'Le prototypage : itérer avant de figer',
+            "duree": '2 h',
+            "cours": """### 1. Pourquoi prototyper coûte moins cher que ne pas prototyper
+
+Une règle largement admise en gestion de projet industriel : **corriger un défaut coûte environ
+dix fois plus cher à chaque étape franchie sans être détecté** — de la conception au prototype, du
+prototype à la série, de la série au client. Un prototype qui « fait perdre du temps » aux yeux
+d'un débutant est en réalité l'étape la moins chère pour attraper une erreur, bien avant qu'elle
+ne devienne coûteuse.
+
+### 2. Les quatre niveaux de fidélité
+
+[[FIG:echelle_prototypes]]
+
+Chaque niveau valide un sous-ensemble précis de questions — jamais toutes à la fois :
+
+| Niveau | Ce qu'il valide | Ce qu'il ne valide PAS |
+|---|---|---|
+| **Maquette d'encombrement** | Forme, ergonomie, encombrement | Résistance, procédé, coût réel |
+| **Prototype fonctionnel** | Cinématique, résistance approchée | Le matériau et le procédé définitifs |
+| **Prototype industriel** | Comportement avec le matériau et le procédé réels | La cadence et la qualité en série |
+| **Pré-série** | La chaîne complète : procédé, montage, contrôle qualité | — c'est le dernier filtre avant la série |
+
+### 3. Le piège du prototype rapide : il ne valide pas tout
+
+Une pièce imprimée en 3D (dépôt de filament) n'a **pas** les mêmes propriétés mécaniques que la
+même pièce injectée en série : structure en couches (anisotropie), porosité, contraintes internes
+différentes. Un prototype qui « tient » à l'impression 3D peut casser en série sous la même
+charge — ou l'inverse.
+
+> **Un prototype ne valide que ce qu'il PARTAGE réellement avec la série** : sa forme, si le
+> procédé de prototypage la respecte fidèlement — pas sa résistance, sauf si son matériau et son
+> procédé sont eux-mêmes représentatifs de la série.
+
+### 4. Le protocole d'un essai de prototype
+
+1. **Définir ce qu'on veut valider** — une seule question à la fois, si possible.
+2. **Fixer le critère de réussite AVANT l'essai**, jamais après : « la pièce doit tenir 500 cycles
+   sans fissure visible », pas « on verra bien si ça a l'air de tenir ».
+3. **Faire l'essai et noter l'écart précis** — pas seulement « ça marche » ou « ça ne marche pas ».
+4. **Décider** : valider tel quel, modifier et retester, ou abandonner la piste.
+
+### 5. Les erreurs classiques
+
+1. **Valider directement en série**, sans aucun prototype — le pari le plus cher qui existe.
+2. **Croire qu'un prototype rapide en plastique imprimé** donne des résultats de résistance
+   directement transposables à la série injectée.
+3. **Ne fixer aucun critère de réussite avant l'essai** — on « voit bien que ça a l'air de
+   marcher », ce qui n'est pas un résultat exploitable.
+4. **Sauter des niveaux de fidélité** en pensant gagner du temps, au risque de découvrir un
+   défaut de forme tard, sur une pièce déjà coûteuse à produire.
+5. **Refaire un prototype identique après un échec**, sans avoir isolé la vraie cause — retourner
+   à la méthode, pas seulement à la fabrication.
+
+### 6. À retenir
+
+- Un défaut non détecté coûte environ dix fois plus cher à corriger à chaque étape franchie.
+- Quatre niveaux de fidélité, chacun validant un sous-ensemble précis — jamais tout à la fois.
+- Un prototype rapide valide la forme ; il ne valide la résistance que si son matériau et son
+  procédé sont représentatifs de la série.
+- Le critère de réussite se fixe **avant** l'essai, jamais après coup.
+""",
+            "formules": """
+**La règle du facteur 10** — un défaut non détecté coûte environ dix fois plus cher à corriger à
+chaque étape franchie (conception → prototype → série → client)
+
+**Le test de représentativité** — un prototype ne valide que ce qu'il PARTAGE réellement avec la
+série : forme, matériau, procédé
+
+**Avant l'essai, toujours** — fixer le critère de réussite avant de lancer le test, jamais après
+""",
+            "exemple": """
+### Cas industriel — Le clip qui ne cassait qu'en série
+
+**Le symptôme.** Un clip d'encliquetage en plastique est validé par un essai de flexion répétée
+(100 cycles) sur un prototype imprimé en 3D (dépôt de filament, ABS) : l'essai passe sans
+problème. Une fois la série lancée par injection, une proportion notable des clips cassent dès
+les premiers cycles chez le client.
+
+**Le diagnostic.** L'ABS imprimé en dépôt de filament a une résistance très différente selon la
+direction de sollicitation par rapport aux couches (anisotropie), et un comportement en fatigue
+sans rapport avec celui de l'ABS injecté, structure homogène. Le prototype avait, par hasard, été
+orienté sur le plateau d'impression dans le sens le plus favorable — ce qui ne reproduisait pas
+du tout le comportement réel de la pièce injectée.
+
+**La correction.** L'essai de fatigue est refait sur un prototype usiné directement dans une
+plaque d'ABS extrudé (matériau homogène, sans couches), en attendant le premier tirage d'un moule
+prototype pour une validation définitive.
+
+**Ce que le cas apprend.** Un prototype rapide en plastique imprimé valide un encombrement et un
+montage, presque jamais une tenue en fatigue — il faut changer de niveau de fidélité pour
+répondre à cette question précise.
+""",
+            "exercice": """
+### Exercice — Choisir le bon niveau de fidélité
+
+Pour un support de capteur en aluminium usiné, indiquez le niveau de prototype minimal
+nécessaire pour répondre de façon fiable à chacune des questions suivantes, et justifiez.
+
+**1.** Le support rentre-t-il dans l'espace disponible sur la machine, entre les autres pièces ?
+
+**2.** Le support résiste-t-il à la vibration de la machine sur 500 heures de fonctionnement
+continu ?
+
+**3.** Le temps de montage du support par un opérateur, en série, est-il compatible avec la
+cadence visée ?
+
+**4.** Le perçage prévu pour la fixation est-il accessible avec l'outillage de l'atelier
+définitif ?
+
+**5.** Le bureau d'études propose de valider directement la tenue en vibration sur la pièce
+définitive usinée, sans étape intermédiaire. Est-ce raisonnable ici ? Justifiez.
+""",
+            "corrige": """
+### Corrigé, en six temps
+
+#### 1. Ce que dit l'énoncé
+
+Un support en aluminium usiné, quatre questions de validation et une question de méthode.
+
+#### 2. Quelle règle, et pourquoi
+
+> Chaque niveau de prototype valide un sous-ensemble précis de questions. Poser la bonne
+> question, c'est déjà choisir le bon niveau.
+
+#### 3. Les conversions
+
+Sans objet : ces questions se répondent par un raisonnement, pas par un calcul.
+
+#### 4. Le remplacement
+
+**1.** Une **maquette d'encombrement** suffit, même sommaire : seule la géométrie externe compte
+ici.
+
+**2.** Un **prototype industriel** est nécessaire : le comportement en vibration dépend du
+matériau réel et du procédé (état de surface, contraintes résiduelles de l'usinage), que rien de
+moins fidèle ne reproduit correctement.
+
+**3.** Un **prototype industriel**, voire une **pré-série** : le temps de montage dépend de la
+précision réelle des perçages, obtenue seulement avec le procédé définitif.
+
+**4.** Un **prototype industriel** (ou une vérification directe sur le modèle CAO avec le
+porte-outil réel) : c'est une question d'accessibilité liée au procédé réel.
+
+**5.** Non, ce n'est pas raisonnable seul : sauter les niveaux intermédiaires fait courir le
+risque de découvrir un défaut de forme ou de fixation tard, sur une pièce déjà coûteuse. Mieux
+vaut valider l'encombrement et le montage à moindre coût d'abord, la vibration en dernier lieu,
+une fois les défauts évidents déjà éliminés.
+
+#### 5. Le calcul
+
+Sans objet : cet exercice évalue un raisonnement de choix, pas un calcul numérique.
+
+#### 6. La vérification
+
+**Le test qui tranche à chaque fois** : « le niveau choisi partage-t-il avec la série ce qui est
+réellement testé — la forme seule, ou le matériau et le procédé aussi ? » C'est cette question,
+posée pour chaque réponse, qui confirme ou infirme le choix.
+""",
+        },
+        {
+            "id": '9.6',
+            "titre": "Gérer les risques d'un projet",
+            "duree": '2 h',
+            "cours": """### 1. Pourquoi un risque bien identifié fait gagner du temps
+
+Un projet technique ne dérape presque jamais à cause d'un imprévu totalement imprévisible : il
+dérape à cause d'un risque qu'on avait **deviné possible**, sans l'avoir écrit ni anticipé. La
+gestion des risques consiste à lister ces possibilités **à l'avance**, pour préparer une parade
+avant que le problème n'arrive — plutôt que de l'improviser dans l'urgence.
+
+**À ne pas confondre.** L'AMDEC (fiche 1.7) analyse les risques de **défaillance du produit**,
+une fois qu'il est conçu ou fabriqué. Ici, on analyse les risques qui menacent **le projet
+lui-même** — son planning, son budget, sa faisabilité — bien avant que le produit existe.
+
+### 2. Deux questions, pour chaque risque identifié
+
+[[FIG:matrice_risques_projet]]
+
+Pour chaque risque repéré : quelle est sa **probabilité** (peu probable, probable, très
+probable) ? Quel serait son **impact** s'il se produisait (mineur, gênant, bloquant) ? C'est le
+croisement des deux, jamais l'un seul, qui donne la priorité — un risque très probable mais sans
+conséquence n'est pas prioritaire ; un risque catastrophique mais extrêmement improbable non plus.
+
+### 3. La méthode en quatre temps
+
+1. **Lister les risques** en équipe, dès le lancement du projet — jamais seul, jamais après coup.
+2. **Positionner chacun** sur la matrice probabilité × impact.
+3. **Préparer une parade** pour les risques en zone rouge, **avant** qu'ils ne se réalisent.
+4. **Revoir la liste régulièrement** pendant le projet : un risque peut apparaître, un autre
+   disparaître.
+
+### 4. Trois types de parade
+
+- **Réduire la probabilité** : commander un composant critique en double source, pour limiter le
+  risque de rupture d'approvisionnement.
+- **Réduire l'impact** : prévoir une marge de temps autour d'une tâche incertaine du planning,
+  pour qu'un retard localisé ne se répercute pas sur tout le projet.
+- **Accepter le risque en connaissance de cause** : pour un risque mineur, préparer une parade
+  coûterait parfois plus cher que le risque lui-même.
+
+### 5. Les erreurs classiques
+
+1. **Confondre gestion des risques projet et AMDEC produit** : deux outils, deux objets
+   différents, qui répondent à deux questions différentes.
+2. **Lister les risques seul, en fin de projet, « pour la forme » du dossier** — la vraie valeur
+   vient d'un brainstorming en équipe, mené tôt.
+3. **Traiter tous les risques de la même façon**, sans les prioriser par la matrice : on épuise
+   l'énergie sur des risques mineurs pendant qu'un risque majeur reste sans parade.
+4. **Ne jamais revoir la liste** une fois le projet lancé — un risque bien identifié au démarrage
+   peut avoir disparu, un nouveau peut être apparu.
+5. **Croire qu'anticiper un risque, c'est être pessimiste** : c'est au contraire ce qui permet de
+   tenir un planning annoncé.
+
+### 6. À retenir
+
+- La gestion des risques **projet** est distincte de l'AMDEC (risque **produit**) — deux outils
+  différents, pour deux objets différents.
+- Chaque risque se juge sur **deux** critères : probabilité et impact, jamais un seul.
+- Les risques de priorité 1 (probables **et** graves) reçoivent une parade **avant** de se
+  réaliser.
+- Trois parades possibles : réduire la probabilité, réduire l'impact, ou accepter en connaissance
+  de cause.
+""",
+            "formules": """
+**La priorité d'un risque** — probabilité × impact, jamais l'un sans l'autre
+
+**Les trois parades** — réduire la probabilité · réduire l'impact · accepter en connaissance de
+cause
+
+**Le distinguo qui compte** — AMDEC : risque du PRODUIT une fois conçu · gestion des risques
+projet : risque du PROJET lui-même, avant que le produit existe
+""",
+            "exemple": """
+### Cas industriel — Le composant introuvable qu'on avait pourtant repéré
+
+**Le symptôme.** Six semaines avant la date limite d'un projet, une référence précise de
+roulement devient indisponible chez le fournisseur habituel, avec un délai annoncé de douze
+semaines — menaçant tout le calendrier restant.
+
+**L'analyse a posteriori.** Au lancement du projet, ce risque avait en réalité été évoqué
+oralement (« on espère que ça arrive à temps »), mais jamais écrit ni assorti d'une parade, parce
+qu'il semblait « probablement sans problème ».
+
+**Ce qui aurait dû être fait.** Positionner ce risque sur la matrice dès le lancement — référence
+d'un fournisseur unique, délai déjà connu comme incertain — l'aurait placé en zone préoccupante,
+déclenchant une parade simple : commander tôt avec une marge, ou identifier à l'avance une
+référence équivalente chez un second fournisseur.
+
+**Ce que le cas apprend.** Le risque n'était pas imprévisible — il avait même été évoqué. Ce qui a
+manqué n'est pas la clairvoyance, c'est la **décision** de préparer une parade au moment où le
+risque était encore gérable.
+""",
+            "exercice": """
+### Exercice — Construire la matrice risques d'un projet de conception
+
+Un groupe de BTS CPI conçoit un support de capteur pour un projet de 8 semaines. Voici quatre
+risques identifiés en réunion de lancement :
+
+- **R1.** Le logiciel de CAO de l'établissement plante régulièrement, faisant perdre du travail
+  non sauvegardé.
+- **R2.** Le professeur référent est en congé la semaine 6, pendant une période cruciale de
+  validation.
+- **R3.** Une pièce doit être usinée par l'atelier, dont le planning est très chargé en fin de
+  trimestre.
+- **R4.** Un membre du groupe pourrait tomber malade une journée.
+
+**1.** Pour chaque risque, estimez sa probabilité (faible/moyenne/élevée) et son impact
+(mineur/gênant/bloquant), en justifiant brièvement.
+
+**2.** Lequel est prioritaire ? Proposez une parade concrète pour lui.
+
+**3.** Pour R1, proposez une parade qui réduit la **probabilité**, et une autre qui réduit
+l'**impact** — pour montrer que les deux approches sont possibles pour un même risque.
+""",
+            "corrige": """
+### Corrigé, en six temps
+
+#### 1. Ce que dit l'énoncé
+
+Quatre risques identifiés pour un projet de conception de 8 semaines, à évaluer puis prioriser.
+
+#### 2. Quelle règle, et pourquoi
+
+> Chaque risque se juge sur deux critères indépendants — probabilité et impact — et seul leur
+> croisement donne la vraie priorité.
+
+#### 3. Les conversions
+
+Sans objet : cet exercice évalue un jugement qualitatif, pas un calcul numérique.
+
+#### 4. Le remplacement
+
+**R1** (logiciel instable) : probabilité **élevée** (connue, régulière), impact **gênant** — pas
+bloquant si les sauvegardes sont fréquentes.
+
+**R2** (professeur absent semaine 6) : probabilité **certaine** — ce n'est même plus vraiment un
+risque, c'est une contrainte déjà connue —, impact gênant à bloquant selon ce qui est prévu cette
+semaine-là.
+
+**R3** (atelier chargé) : probabilité **moyenne à élevée** (connu comme récurrent en fin de
+trimestre), impact potentiellement **bloquant** si aucune marge n'a été prise.
+
+**R4** (maladie d'un membre) : probabilité **moyenne** (aléatoire, ponctuel), impact **mineur** si
+le travail est documenté et partagé entre les membres du groupe.
+
+#### 5. Le calcul (la priorisation)
+
+**2.** **R3** est prioritaire : probabilité élevée **et** impact potentiellement bloquant, puisque
+toute la fin du projet dépend d'une pièce usinée. Parade : déposer la demande d'usinage dès que le
+plan est stabilisé, avec une large marge, et prévoir un procédé alternatif réalisable en interne
+en cas de retard de l'atelier.
+
+**3.** Pour R1 — réduire la **probabilité** : utiliser un poste informatique reconnu plus stable.
+Réduire l'**impact** : sauvegarder automatiquement toutes les cinq minutes, pour qu'un plantage ne
+fasse jamais perdre que quelques minutes de travail.
+
+#### 6. La vérification
+
+**Le test qui confirme une parade efficace** : une fois appliquée, la position du risque sur la
+matrice doit se déplacer vers le coin « probabilité faible / impact faible ». Si une parade
+proposée ne déplace le risque dans aucune direction, ce n'est pas une vraie parade — seulement une
+intention rassurante.
 """,
         },
     ],
@@ -37145,6 +39859,176 @@ Accélération mesurée après modification : **1,4 g** au lieu de 28. Aucune fi
    tester est la vibration**.
 """,
         },
+        {
+            "id": '13.6',
+            "titre": 'La fabrication additive métallique',
+            "duree": '3 h',
+            "cours": """### 1. Une troisième famille, à côté de l'enlèvement et de la mise en forme
+
+Le panorama des procédés (fiches 12.3 et 12.4) distingue l'**enlèvement de matière** (usinage) et
+la **mise en forme directe** (fonderie, injection). La fabrication additive métallique en est une
+troisième : on **ajoute** la matière, couche par couche, à partir d'une poudre métallique fondue
+localement par un laser — sans moule, sans outil de coupe.
+
+### 2. Le principe : fondre une poudre, couche après couche
+
+[[FIG:fabrication_additive_metal]]
+
+Le modèle CAO est **découpé en tranches fines** (0,02 à 0,1 mm typiquement). Pour chaque tranche :
+une fine couche de poudre métallique est étalée sur le plateau, un laser balaie exactement le
+contour de la pièce à cette hauteur et fait fondre localement la poudre, le plateau descend d'une
+épaisseur de couche, et le cycle recommence — jusqu'à ce que la pièce entière ait émergé de son
+lit de poudre.
+
+### 3. Ce que ça permet, que rien d'autre ne permet
+
+- Des **formes internes** impossibles à usiner ou à mouler : canaux de refroidissement qui
+  épousent la forme de la pièce, structures allégées en treillis.
+- Une pièce **unique ou en très petite série**, sans outillage à amortir — aucun moule à payer.
+- **Consolider plusieurs pièces assemblées en une seule** pièce imprimée : moins de jonctions,
+  donc moins de points faibles.
+
+### 4. Les contraintes de conception spécifiques
+
+- **Tout porte-à-faux au-delà d'un certain angle** (environ 45° par rapport au plateau) s'affaisse
+  dans la poudre non fondue : il faut prévoir des **supports**, à retirer après coup — ils
+  coûtent du temps, de la matière, et laissent une marque à reprendre.
+- **L'orientation de la pièce sur le plateau** décide à la fois du nombre de supports nécessaires
+  et de l'état de surface : les faces tournées vers le bas sont toujours plus rugueuses.
+- Les cycles de chauffe et de refroidissement rapides, répétés à chaque couche, créent des
+  **contraintes internes** : un traitement thermique de détente est presque toujours nécessaire
+  **avant même** de détacher la pièce du plateau.
+
+### 5. Où ce procédé a vraiment sa place
+
+| Bien adapté | Mal adapté |
+|---|---|
+| Pièce à géométrie interne complexe (canaux, treillis) | Forme simple, sans avantage géométrique à en tirer |
+| Série faible, sans outillage disponible ou rentable | Grande série, où le moulage ou l'usinage restent bien moins chers à la pièce |
+| Remplacement d'une pièce ancienne dont le moule n'existe plus | Pièce où le poids ou la complexité interne n'apportent aucun bénéfice fonctionnel |
+
+### 6. Les erreurs classiques
+
+1. **Croire que la fabrication additive dispense de toute règle de conception.** Elle en impose au
+   contraire de nouvelles — supports, orientation, épaisseurs minimales — différentes de celles de
+   l'usinage.
+2. **Concevoir une pièce « comme si elle allait être usinée »**, puis la faire fabriquer en
+   additif sans repenser sa forme : on perd l'intérêt du procédé (formes internes) sans en éviter
+   les contraintes (supports).
+3. **Oublier le traitement thermique de détente** après fabrication : les contraintes internes
+   peuvent déformer la pièce dès qu'on la détache du plateau.
+4. **Comparer le coût à la pièce à l'usinage ou au moulage** sans tenir compte du volume de série
+   visé — l'additif reste structurellement plus cher à la pièce dès que la série grandit.
+
+### 7. À retenir
+
+- Troisième famille de procédés : on **ajoute** la matière, couche par couche, sans moule ni outil
+  de coupe.
+- Permet des formes internes impossibles autrement, mais impose des supports sous tout
+  porte-à-faux marqué, et un traitement thermique de détente après fabrication.
+- Sa place : pièces à géométrie complexe, en faible série — jamais en concurrence directe avec le
+  moulage ou l'usinage en grande série.
+""",
+            "formules": """
+**Le test qui décide si l'additif métallique a sa place** — la pièce a-t-elle une forme interne
+complexe ET une série faible ? Si oui aux deux, l'additif se justifie ; sinon, usinage ou moulage
+restent moins chers.
+
+**La règle du porte-à-faux** — au-delà d'environ 45° d'inclinaison par rapport au plateau, prévoir
+un support.
+
+**Après fabrication, toujours** — un traitement thermique de détente, avant de détacher la pièce
+du plateau.
+""",
+            "exemple": """
+### Cas industriel — Six pièces vissées deviennent une seule pièce imprimée
+
+**Le contexte.** Un support de fixation aéronautique, initialement usiné en six pièces distinctes
+assemblées par vis, pèse plus que nécessaire à cause des découpes et des zones de fixation.
+
+**La reconception.** L'ensemble est redessiné comme **une seule pièce** imprimée en titane, avec
+des canaux internes de passage de câbles impossibles à obtenir par usinage. Gain de masse : 35 %.
+Gain supplémentaire : plus aucun point de jonction vissé, donc plus aucun risque de desserrage en
+vibration.
+
+**Le coût réel.** Le coût unitaire de la pièce imprimée dépasse celui des six pièces usinées
+additionnées. La décision se justifie uniquement parce que la série est de quelques dizaines de
+pièces par an, et que le gain de masse a une valeur économique directe — chaque kilogramme
+économisé réduit la consommation de carburant sur toute la durée de vie de l'appareil.
+
+**Ce que le cas apprend.** La fabrication additive ne se justifie presque jamais par un coût
+matière ou un temps de cycle plus faible : elle se justifie par ce qu'**elle seule permet de
+faire** — ici, une masse réduite et un assemblage supprimé, deux bénéfices qu'aucun autre procédé
+n'aurait offerts à la fois.
+""",
+            "exercice": """
+### Exercice — La fabrication additive a-t-elle sa place ?
+
+Pour chacune des pièces suivantes, indiquez si la fabrication additive métallique est un choix
+pertinent, et justifiez en une phrase.
+
+**1.** Un boîtier électronique simple, en forme de boîte, produit à 50 000 exemplaires par an.
+
+**2.** Un embout de buse de refroidissement, avec un canal interne en spirale, produit à 20
+exemplaires pour un prototype de moteur.
+
+**3.** Une bride de fixation cylindrique toute simple, sans forme interne particulière, produite
+à 200 exemplaires.
+
+**4.** Une pièce de rechange pour une machine de 1975 dont le moule d'origine n'existe plus, dont
+il ne faut fabriquer que 3 exemplaires.
+
+**5.** Pour la pièce 2, l'ingénieur oriente la pièce sur le plateau de façon à ce que le canal en
+spirale soit le plus horizontal possible. Est-ce a priori un bon choix d'orientation ? Pourquoi ?
+""",
+            "corrige": """
+### Corrigé, en six temps
+
+#### 1. Ce que dit l'énoncé
+
+Quatre pièces aux séries et géométries différentes, et une question sur un choix d'orientation.
+
+#### 2. Quelle règle, et pourquoi
+
+> L'additif métallique se justifie quand la pièce combine une géométrie interne complexe **et**
+> une série faible. L'un sans l'autre suffit rarement à le rendre pertinent économiquement.
+
+#### 3. Les conversions
+
+Sans objet : cet exercice évalue un raisonnement de choix, pas un calcul.
+
+#### 4. Le remplacement
+
+**1.** **Non pertinent** : forme simple, série de 50 000 — l'injection ou l'emboutissage sont bien
+moins chers à cette échelle.
+
+**2.** **Pertinent** : canal interne en spirale impossible à usiner directement, série faible (20
+pièces) — exactement le cas d'usage de l'additif.
+
+**3.** **Non pertinent** : aucune forme interne à exploiter, série de 200 — l'usinage ou le
+moulage restent préférables.
+
+**4.** **Pertinent** : aucun outillage disponible, très faible série (3 pièces) — refaire un moule
+pour trois pièces ne se justifierait jamais économiquement, contrairement à l'impression directe.
+
+**5.** Ce n'est **pas nécessairement** un bon choix sans vérification : un canal horizontal
+traverse des zones en porte-à-faux à l'intérieur même de la pièce, qui demanderaient des supports
+**internes**, très difficiles à retirer après coup. Une orientation qui rapproche le canal de la
+verticale limite souvent mieux les surplombs internes, même si elle allonge légèrement le temps
+de fabrication.
+
+#### 5. Le calcul
+
+Sans objet : cet exercice évalue un raisonnement de choix, pas un calcul numérique.
+
+#### 6. La vérification
+
+**Le test à deux critères, toujours dans cet ordre** : d'abord la géométrie (une forme interne
+complexe justifie-t-elle le procédé ?), ensuite la série (reste-t-elle faible ?). Une réponse
+positive aux deux confirme le choix ; une réponse négative à l'un des deux doit faire chercher un
+procédé plus classique.
+""",
+        },
     ],
 }
 
@@ -42379,6 +45263,476 @@ quadratique — la fiche 19.2 suffit pour comprendre le principe, mais la cubiqu
 l'outil réellement utilisé dès qu'un raccordement précis est demandé.
 """,
         },
+        {
+            "id": "19.5",
+            "titre": "Calcul vectoriel dans l'espace : produit scalaire et produit vectoriel",
+            "duree": "5 h",
+            "cours": """### 1. Pourquoi la 3D change tout
+
+La fiche 7.2 a défini le produit scalaire pour des vecteurs **plans**, à deux coordonnées
+$(x, y)$ — utile pour un dessin technique en projection. Dès qu'une pièce se pense en volume
+(CAO, fiche 5.x), il faut une troisième coordonnée $z$, et une nouvelle opération apparaît, **le
+produit vectoriel**, qui n'existe tout simplement pas en 2D : elle a besoin de la troisième
+dimension pour exister.
+
+### 2. Un vecteur dans l'espace : coordonnées et norme
+
+Un vecteur $\\vec{u}$ dans l'espace a trois coordonnées $(u_x, u_y, u_z)$, et sa norme (sa
+longueur) se calcule par une extension directe du théorème de Pythagore :
+
+> $\\|\\vec{u}\\| = \\sqrt{u_x^2 + u_y^2 + u_z^2}$
+
+### 3. Le produit scalaire dans l'espace : un nombre, pour un angle
+
+[[FIG:vecteurs_produit_scalaire_vectoriel]]
+
+> $\\vec{u} \\cdot \\vec{v} = u_x v_x + u_y v_y + u_z v_z = \\|\\vec{u}\\| \\times \\|\\vec{v}\\| \\times \\cos θ$
+
+Exactement la même définition qu'en 2D (fiche 7.2), avec un troisième terme. Deux usages
+industriels directs :
+
+- **Trouver l'angle** entre deux arêtes ou deux axes : $\\cos θ = \\dfrac{\\vec{u} \\cdot \\vec{v}}{\\|\\vec{u}\\| \\|\\vec{v}\\|}$.
+- **Vérifier une perpendicularité par le calcul**, pas à l'œil : $\\vec{u} \\perp \\vec{v} \\iff \\vec{u} \\cdot \\vec{v} = 0$, exactement.
+
+### 4. Le produit vectoriel : une opération propre à la 3D
+
+Le produit vectoriel $\\vec{u} \\times \\vec{v}$ renvoie, lui, un **nouveau vecteur** — pas un
+nombre — perpendiculaire à la fois à $\\vec{u}$ et à $\\vec{v}$ :
+
+> $\\vec{u} \\times \\vec{v} = (u_y v_z - u_z v_y,\\ u_z v_x - u_x v_z,\\ u_x v_y - u_y v_x)$
+
+> $\\|\\vec{u} \\times \\vec{v}\\| = \\|\\vec{u}\\| \\times \\|\\vec{v}\\| \\times \\sin θ$
+
+**Deux propriétés qui en font un outil, pas juste une formule à réciter :**
+
+1. Sa **direction** est perpendiculaire au plan formé par $\\vec{u}$ et $\\vec{v}$ — c'est
+   exactement ce qu'on appelle la **normale** à ce plan (fiche 19.6).
+2. Sa **norme** est l'aire du parallélogramme construit sur $\\vec{u}$ et $\\vec{v}$ — donc
+   l'aire d'un triangle $OAB$ vaut $\\|\\overrightarrow{OA} \\times \\overrightarrow{OB}\\| / 2$.
+
+### 5. Application directe : le moment d'une force
+
+Le produit vectoriel n'est pas qu'un outil de géométrie abstraite : c'est **exactement** le
+calcul du moment d'une force en statique (Bloc 4 et 12), écrit avec des coordonnées plutôt
+qu'avec un bras de levier scalaire :
+
+> $\\vec{M}_O(\\vec{F}) = \\overrightarrow{OA} \\times \\vec{F}$
+
+où $A$ est le point d'application de la force $\\vec{F}$, et $O$ le point où l'on calcule le
+moment (souvent un pivot ou un point d'ancrage). La norme de $\\vec{M}_O$ redonne la formule
+scalaire habituelle $M = F \\times d$, mais le calcul vectoriel donne **en plus** la direction de
+l'axe autour duquel la pièce tend à tourner — une information que la formule scalaire seule ne
+donne pas.
+
+### 6. Exemple entièrement déroulé, en deux temps
+
+**a) Angle et perpendicularité.** Deux arêtes d'un support, $\\vec{u} = (150, 80, 0)$ mm et
+$\\vec{v} = (0, 60, 90)$ mm.
+
+$\\|\\vec{u}\\| = \\sqrt{150^2 + 80^2} = \\sqrt{28\\,900} = 170$ mm.
+
+$\\|\\vec{v}\\| = \\sqrt{60^2 + 90^2} = \\sqrt{11\\,700} ≈ 108{,}17$ mm.
+
+$\\vec{u} \\cdot \\vec{v} = 150×0 + 80×60 + 0×90 = 4800$.
+
+$\\cos θ = 4800 / (170 × 108{,}17) ≈ 0{,}261$, donc $θ ≈ 74{,}9°$ — les deux arêtes ne sont **pas**
+perpendiculaires (il faudrait $\\vec{u} \\cdot \\vec{v} = 0$).
+
+**b) Produit vectoriel et moment.** $\\vec{u} \\times \\vec{v} = (80×90 - 0×60,\\ 0×0 - 150×90,\\
+150×60 - 80×0) = (7200, -13\\,500, 9000)$, de norme $≈ 17\\,750{,}8$ mm² — l'aire du
+parallélogramme construit sur $\\vec{u}$ et $\\vec{v}$.
+
+Pour le moment : un bras de levier $\\overrightarrow{OA} = (0{,}25 ; 0 ; 0)$ m, une force
+$\\vec{F} = (0 ; -80 ; 0)$ N. $\\vec{M} = \\overrightarrow{OA} \\times \\vec{F} = (0, 0, -20)$ N·m, de
+norme $20$ N·m — on retrouve exactement $M = F \\times d = 80 × 0{,}25 = 20$ N·m, la formule
+scalaire habituelle, mais avec en plus l'axe $(0,0,-1)$ autour duquel le moment agit.
+
+### 7. Ce que révèle une force appliquée différemment
+
+Avec la même force de $80$ N mais appliquée à $30°$ au lieu de perpendiculairement au bras
+$\\overrightarrow{OA}$ ($\\vec{F}_3 ≈ (0, -69{,}3, -40)$ N), le moment devient
+$\\vec{M}_3 ≈ (0, 10, -17{,}3)$ N·m — **sa norme reste $20$ N·m**, identique. Ce qui change n'est
+pas l'intensité du moment mais **sa direction** : seule la composante de la force
+perpendiculaire au bras de levier produit un effet de rotation, quelle que soit son
+orientation dans le plan perpendiculaire à ce bras.
+
+### 8. Les erreurs classiques
+
+1. **Croire qu'un angle « proche » de 90° veut dire perpendiculaire.** Seul $\\vec{u} \\cdot
+   \\vec{v} = 0$ **exactement** garantit la perpendicularité — $74{,}9°$ ou même $89°$ ne sont pas
+   $90°$.
+2. **Confondre le résultat des deux produits.** Le produit scalaire renvoie un **nombre**, le
+   produit vectoriel renvoie un **vecteur** — les mélanger dans un calcul n'a pas de sens
+   dimensionnellement.
+3. **Oublier l'ordre dans le produit vectoriel.** $\\vec{u} \\times \\vec{v} = -(\\vec{v} \\times
+   \\vec{u})$ : inverser l'ordre inverse le sens du vecteur résultat — important pour le sens
+   physique d'un moment (sens de rotation).
+4. **Mélanger les unités dans un moment.** Le bras de levier doit être en mètres pour obtenir un
+   moment en N·m si la force est en newtons — une erreur d'unité fréquente entre le dessin (en
+   mm) et le calcul physique (en m).
+
+### 9. À retenir
+
+- Norme d'un vecteur 3D : $\\|\\vec{u}\\| = \\sqrt{u_x^2+u_y^2+u_z^2}$.
+- Produit scalaire (un nombre) : $\\vec{u}\\cdot\\vec{v} = u_xv_x+u_yv_y+u_zv_z$ — sert à l'angle et
+  à la perpendicularité exacte ($=0$).
+- Produit vectoriel (un vecteur) : perpendiculaire aux deux, sa norme est l'aire du
+  parallélogramme — sert à la normale d'un plan et au moment d'une force.
+- Le moment d'une force est un produit vectoriel : $\\vec{M}_O(\\vec{F}) = \\overrightarrow{OA}
+  \\times \\vec{F}$.
+""",
+            "formules": """
+**Norme d'un vecteur 3D** — $\\|\\vec{u}\\| = \\sqrt{u_x^2+u_y^2+u_z^2}$
+
+**Produit scalaire** — $\\vec{u}\\cdot\\vec{v} = u_xv_x+u_yv_y+u_zv_z = \\|\\vec{u}\\|\\|\\vec{v}\\|\\cos θ$ ; perpendiculaire $\\iff$ produit nul
+
+**Produit vectoriel** — $\\vec{u}\\times\\vec{v} = (u_yv_z-u_zv_y,\\ u_zv_x-u_xv_z,\\ u_xv_y-u_yv_x)$, de norme $\\|\\vec{u}\\|\\|\\vec{v}\\|\\sin θ$ (aire du parallélogramme)
+
+**Moment d'une force** — $\\vec{M}_O(\\vec{F}) = \\overrightarrow{OA} \\times \\vec{F}$, bras de levier en mètres
+
+**Le réflexe à avoir** — scalaire = nombre (angle, perpendicularité) ; vectoriel = vecteur (aire, normale, moment)
+""",
+            "exemple": """
+### Cas industriel — Le carter « visiblement » perpendiculaire
+
+**Le symptôme.** Un contrôleur qualité valide au jugé deux arêtes usinées d'un carter comme
+« perpendiculaires », sans les mesurer, parce qu'elles le paraissent sur le plan à l'écran.
+
+**Le diagnostic.** Les coordonnées relevées par la machine à mesurer tridimensionnelle donnent
+$\\vec{u} = (150, 80, 0)$ mm et $\\vec{v} = (0, 60, 90)$ mm pour ces deux arêtes. Le produit
+scalaire $\\vec{u}\\cdot\\vec{v} = 4800$, très loin de zéro : l'angle réel est d'environ $74{,}9°$,
+pas $90°$ — l'œil, sur un écran en projection, ne permet pas de trancher un tel écart avec
+certitude.
+
+**La correction.** Le bureau d'études reprend le programme d'usinage avec la bonne orientation
+d'arête, puis revalide **systématiquement** par calcul du produit scalaire sur les coordonnées
+mesurées, plutôt que par lecture visuelle du plan.
+
+**Ce que le cas apprend.** Le produit scalaire est un test de perpendicularité **exact**, sans
+ambiguïté — contrairement à une inspection visuelle sur un plan en projection, où un écart de
+15° peut facilement passer inaperçu.
+""",
+            "exercice": """
+### Atelier guidé — Vérifier et exploiter la géométrie d'une équerre de support
+
+Une équerre de support est modélisée par trois points en CAO : $O = (0, 0, 0)$,
+$A = (100, 0, 40)$ et $B = (0, 120, 30)$, en millimètres. Le raidisseur triangulaire de la
+pièce est le triangle $OAB$.
+
+**1.** Calculez les coordonnées des vecteurs $\\overrightarrow{OA}$ et $\\overrightarrow{OB}$.
+
+**2.** Calculez les normes $\\|\\overrightarrow{OA}\\|$ et $\\|\\overrightarrow{OB}\\|$, en mm
+(arrondissez au centième).
+
+**3.** Calculez le produit scalaire $\\overrightarrow{OA}\\cdot\\overrightarrow{OB}$. Les deux
+arêtes $OA$ et $OB$ sont-elles exactement perpendiculaires ?
+
+**4.** Calculez l'angle entre $\\overrightarrow{OA}$ et $\\overrightarrow{OB}$, en degrés
+(arrondissez au dixième).
+
+**5.** Calculez le produit vectoriel $\\overrightarrow{OA}\\times\\overrightarrow{OB}$, puis
+déduisez-en l'aire du raidisseur triangulaire $OAB$, en mm².
+
+**6.** Une force $\\vec{F} = (0, -80, 60)$ N est appliquée au point $A$, le pivot de l'équerre
+étant en $O$. Calculez le moment $\\vec{M}_O(\\vec{F}) = \\overrightarrow{OA}\\times\\vec{F}$, en
+N·m (pensez à convertir $\\overrightarrow{OA}$ en mètres). Donnez sa norme.
+
+**7.** Un technicien affirme que, l'angle trouvé en question 4 étant proche de $90°$, on peut
+arrondir et considérer les arêtes $OA$ et $OB$ comme perpendiculaires pour la suite des calculs.
+A-t-il raison ? Justifiez précisément à l'aide du résultat de la question 3.
+""",
+            "corrige": """
+### Corrigé, en six temps
+
+#### 1. Ce que dit l'énoncé
+
+Une équerre définie par trois points en CAO, avec un raidisseur triangulaire à caractériser
+(normes, angle, aire) et une force appliquée dont il faut calculer le moment — plus une question
+de rigueur sur l'arrondi d'un angle.
+
+#### 2. Quelle règle, et pourquoi
+
+> Norme : $\\|\\vec{u}\\| = \\sqrt{u_x^2+u_y^2+u_z^2}$. Produit scalaire (angle, perpendicularité
+> exacte) : $\\vec{u}\\cdot\\vec{v} = u_xv_x+u_yv_y+u_zv_z$. Produit vectoriel (aire, moment) :
+> formule par composantes, résultat perpendiculaire aux deux vecteurs de départ.
+
+#### 3. Les conversions
+
+$\\overrightarrow{OA}$ pour le calcul du moment (Q6) : $100$ mm $= 0{,}100$ m, $40$ mm
+$= 0{,}040$ m — le moment en N·m exige un bras de levier en mètres, pas en millimètres.
+
+#### 4. Le remplacement
+
+**1.** $\\overrightarrow{OA} = A - O = (100, 0, 40)$. $\\overrightarrow{OB} = B - O = (0, 120,
+30)$.
+
+**2.** $\\|\\overrightarrow{OA}\\| = \\sqrt{100^2+40^2}$. $\\|\\overrightarrow{OB}\\| =
+\\sqrt{120^2+30^2}$.
+
+**3.** $\\overrightarrow{OA}\\cdot\\overrightarrow{OB} = 100×0 + 0×120 + 40×30$.
+
+**4.** $\\cos θ = (\\overrightarrow{OA}\\cdot\\overrightarrow{OB}) /
+(\\|\\overrightarrow{OA}\\|\\|\\overrightarrow{OB}\\|)$.
+
+**5.** $\\overrightarrow{OA}\\times\\overrightarrow{OB} = (0×30-40×120,\\ 40×0-100×30,\\
+100×120-0×0)$.
+
+**6.** $\\vec{M}_O = (0{,}100 ; 0 ; 0{,}040) \\times (0, -80, 60)$.
+
+#### 5. Le calcul
+
+**1.** $\\overrightarrow{OA} = (100, 0, 40)$ mm, $\\overrightarrow{OB} = (0, 120, 30)$ mm.
+
+**2.** $\\|\\overrightarrow{OA}\\| = \\sqrt{11\\,600} ≈ 107{,}70$ mm.
+$\\|\\overrightarrow{OB}\\| = \\sqrt{15\\,300} ≈ 123{,}69$ mm.
+
+**3.** $\\overrightarrow{OA}\\cdot\\overrightarrow{OB} = 0 + 0 + 1200 = 1200$ — **non nul**, donc
+les arêtes ne sont **pas** exactement perpendiculaires.
+
+**4.** $\\cos θ = 1200 / (107{,}70 × 123{,}69) ≈ 0{,}0900$, donc $θ ≈ 84{,}8°$.
+
+**5.** $\\overrightarrow{OA}\\times\\overrightarrow{OB} = (-4800, -3000, 12\\,000)$, de norme
+$≈ 13\\,268{,}0$ mm². Aire du triangle $OAB$ $≈ 13\\,268{,}0 / 2 ≈ 6634{,}0$ mm².
+
+**6.** $\\vec{M}_O = (0×60 - 0{,}040×(-80),\\ 0{,}040×0 - 0{,}100×60,\\ 0{,}100×(-80) - 0×0) =
+(3{,}2, -6{,}0, -8{,}0)$ N·m, de norme $≈ 10{,}50$ N·m.
+
+**7.** Non : $θ ≈ 84{,}8°$ est **proche** de $90°$ mais ne l'est pas exactement, et le produit
+scalaire de la question 3 le confirme sans ambiguïté : $1200 \\ne 0$. Arrondir « à l'œil » vers
+$90°$ ferait perdre une information réelle sur la géométrie de la pièce.
+
+#### 6. La vérification
+
+**Contrôle d'ordre de grandeur** : $θ ≈ 84{,}8°$ est cohérent avec un produit scalaire positif
+mais petit devant $\\|\\overrightarrow{OA}\\|\\|\\overrightarrow{OB}\\| ≈ 13\\,320$ — un angle
+proche de $90°$ sans l'être exactement. L'aire du triangle ($≈ 6634$ mm², soit environ $66$ cm²)
+est cohérente avec des arêtes de $108$ et $124$ mm formant un angle proche d'un angle droit
+(l'aire maximale, à $90°$ exactement, aurait été $107{,}70 × 123{,}69 / 2 ≈ 6661{,}1$ mm² — très
+proche de la valeur trouvée, ce qui confirme la cohérence de l'ensemble). Le moment
+($≈ 10{,}50$ N·m) reste inférieur au produit brut $\\|\\overrightarrow{OA}\\| × \\|\\vec{F}\\| ≈
+0{,}1077 × 100 ≈ 10{,}77$ N·m — cohérent, puisque la force n'est pas exactement perpendiculaire au
+bras de levier.
+""",
+        },
+        {
+            "id": "19.6",
+            "titre": "Géométrie dans l'espace : droites, plans et distances",
+            "duree": "5 h",
+            "cours": """### 1. Pourquoi cette fiche prolonge directement la précédente
+
+La fiche 19.5 a montré que le produit vectoriel donne un vecteur perpendiculaire à un plan — sa
+**normale**. Cette fiche exploite cette normale pour répondre aux questions qu'un bureau
+d'études se pose tous les jours en CAO 3D : où perce un axe de perçage dans une face inclinée ?
+à quelle distance un point reste-t-il d'un plan de référence ? une arête est-elle parallèle à une
+face donnée ?
+
+### 2. La droite dans l'espace : représentation paramétrique
+
+Une droite est définie par un point de passage $M_0(x_0, y_0, z_0)$ et un **vecteur directeur**
+$\\vec{v}(a, b, c)$ :
+
+> $(x, y, z) = (x_0 + at,\\ y_0 + bt,\\ z_0 + ct), \\quad t \\in \\mathbb{R}$
+
+Chaque valeur de $t$ donne un point différent de la droite ; $t = 0$ redonne $M_0$.
+
+### 3. Le plan dans l'espace : équation cartésienne et vecteur normal
+
+[[FIG:geometrie_plan_droite_espace]]
+
+> $ax + by + cz + d = 0$, où $\\vec{n}(a, b, c)$ est un **vecteur normal** au plan
+> (perpendiculaire à toute droite tracée dans ce plan).
+
+**Le lien avec la fiche 19.5** : si un plan est défini par trois points $O$, $A$, $B$, sa normale
+s'obtient directement par $\\vec{n} = \\overrightarrow{OA} \\times \\overrightarrow{OB}$, et $d$ se
+calcule en imposant qu'un point connu du plan (par exemple $O$) vérifie l'équation.
+
+### 4. Distance d'un point à un plan
+
+> $d(M, \\text{plan}) = \\dfrac{|ax_M + by_M + cz_M + d|}{\\sqrt{a^2+b^2+c^2}}$
+
+Le numérateur mesure un écart, le dénominateur (la norme de $\\vec{n}$) le ramène à une vraie
+distance, indépendamment de la façon dont l'équation du plan a été écrite (fiche 6, exemple b).
+
+### 5. Droite et plan : parallèle, sécante, ou incluse
+
+Trois cas, distingués par le produit scalaire entre le vecteur directeur $\\vec{v}$ de la droite
+et la normale $\\vec{n}$ du plan (fiche 19.5) :
+
+| Test | Cas | Ce qu'il faut faire ensuite |
+|---|---|---|
+| $\\vec{v}\\cdot\\vec{n} \\ne 0$ | **Sécante** : la droite perce le plan en un point unique | Résoudre l'équation du plan avec les coordonnées paramétrées de la droite pour trouver $t$ |
+| $\\vec{v}\\cdot\\vec{n} = 0$ et $M_0$ vérifie l'équation du plan | **Incluse** : toute la droite est dans le plan | Aucun point d'intersection unique — une infinité |
+| $\\vec{v}\\cdot\\vec{n} = 0$ et $M_0$ ne vérifie pas l'équation | **Parallèle**, sans intersection | Aucun point d'intersection |
+
+### 6. Exemple entièrement déroulé, en deux temps
+
+**a) Un plan simple, horizontal.** Le plan $z = 50$ (une surface de martyr à $50$ mm de hauteur)
+a pour équation $0x + 0y + 1z - 50 = 0$, de normale $\\vec{n} = (0, 0, 1)$.
+
+Une droite de perçage passe par $M_0 = (10, 20, 0)$ avec un vecteur directeur $\\vec{v} =
+(2, 1, 5)$ : $(x, y, z) = (10+2t,\\ 20+t,\\ 5t)$. Elle perce le plan quand $5t = 50$, soit
+$t = 10$ : point de perçage $(30, 30, 50)$.
+
+Distance d'un point $M = (80, 60, 90)$ à ce même plan : $d = |90 - 50| / 1 = 40$ mm — un cas
+particulier si simple qu'il se lit à l'œil, mais qui vérifie la formule générale.
+
+**b) Un plan incliné, celui de l'équerre de la fiche 19.5.** Le plan $(OAB)$ a pour normale
+$\\vec{n} = (8, 5, -20)$ (obtenue par produit vectoriel en fiche 19.5, à un facteur près) et pour
+équation $8x + 5y - 20z = 0$ (il passe par $O$, donc $d = 0$).
+
+Distance d'un point de fixation $M = (50, 50, 50)$ à ce plan :
+
+$d = \\dfrac{|8×50 + 5×50 - 20×50|}{\\sqrt{8^2+5^2+(-20)^2}} = \\dfrac{|400+250-1000|}{\\sqrt{489}} =
+\\dfrac{350}{22{,}11} ≈ 15{,}83$ mm.
+
+Un vecteur $\\vec{w} = (5, -8, 0)$ (une arête d'outillage) : $\\vec{w}\\cdot\\vec{n} = 5×8 +
+(-8)×5 + 0×(-20) = 0$ — cette arête est **parallèle** au plan $(OAB)$.
+
+### 7. Les erreurs classiques
+
+1. **Confondre le vecteur directeur d'une droite et le vecteur normal d'un plan.** Ce sont deux
+   objets différents : le premier est *dans* la droite, le second est *perpendiculaire* au plan.
+2. **Oublier la valeur absolue dans la distance.** Le numérateur $ax_M+by_M+cz_M+d$ peut être
+   négatif ; la distance, elle, est toujours positive.
+3. **Croire qu'un vecteur normal est unique.** N'importe quel multiple non nul de $\\vec{n}$
+   représente la même normale (même direction) — la distance calculée est identique, tant que
+   $d$ est mis à l'échelle en cohérence (exemple b, question 6 de l'atelier).
+4. **Tester le parallélisme droite/plan avec le mauvais produit.** C'est le produit **scalaire**
+   $\\vec{v}\\cdot\\vec{n}$ qu'il faut annuler (fiche 19.5), pas un produit vectoriel.
+
+### 8. À retenir
+
+- Droite : $(x,y,z) = (x_0+at,\\ y_0+bt,\\ z_0+ct)$, définie par un point et un vecteur directeur.
+- Plan : $ax+by+cz+d=0$, de normale $\\vec{n}(a,b,c)$ — souvent obtenue par un produit vectoriel
+  (fiche 19.5).
+- Distance point-plan : $d = |ax_M+by_M+cz_M+d| / \\|\\vec{n}\\|$.
+- Parallélisme droite/plan : $\\vec{v}\\cdot\\vec{n} = 0$ ; sécante sinon, avec un point
+  d'intersection unique trouvé en substituant la paramétrisation dans l'équation du plan.
+""",
+            "formules": """
+**Droite (paramétrique)** — $(x,y,z) = (x_0+at,\\ y_0+bt,\\ z_0+ct)$, $t \\in \\mathbb{R}$
+
+**Plan (cartésien)** — $ax+by+cz+d=0$, normale $\\vec{n}(a,b,c)$
+
+**Distance point-plan** — $d = |ax_M+by_M+cz_M+d| / \\sqrt{a^2+b^2+c^2}$
+
+**Test parallélisme droite/plan** — $\\vec{v}\\cdot\\vec{n} = 0$ (produit scalaire, fiche 19.5)
+
+**Le réflexe à avoir** — la normale d'un plan défini par 3 points s'obtient par un produit
+vectoriel (fiche 19.5) ; tout le reste de cette fiche l'exploite
+""",
+            "exemple": """
+### Cas industriel — La cote de sécurité qui manquait à l'assemblage
+
+**Le symptôme.** Lors du montage d'une équerre de support, un opérateur signale qu'une vis de
+fixation semble « trop proche » d'une face inclinée voisine, sans pouvoir dire de combien.
+
+**Le diagnostic.** Le bureau d'études relève les coordonnées du point de fixation dans le
+repère CAO et celles des trois points définissant la face inclinée. Le calcul de la normale par
+produit vectoriel (fiche 19.5), puis de la distance point-plan, donne une valeur précise :
+environ $15{,}8$ mm — largement au-dessus du seuil de sécurité de $12$ mm fixé au cahier des
+charges, mais visuellement proche à l'écran à cause de l'angle de vue en perspective.
+
+**La correction.** Aucune modification n'est nécessaire : la cote réelle respecte la contrainte,
+mais le bureau d'études ajoute désormais une cote de contrôle explicite sur le plan, pour éviter
+qu'une impression visuelle trompeuse ne déclenche une modification inutile.
+
+**Ce que le cas apprend.** Une perspective CAO déforme systématiquement les distances
+apparentes ; seul le calcul par la formule de distance point-plan donne une valeur fiable, dans
+un sens comme dans l'autre.
+""",
+            "exercice": """
+### Atelier guidé — Contrôler un perçage et une distance de sécurité sur l'équerre
+
+On reprend l'équerre de la fiche 19.5 : $O = (0,0,0)$, $A = (100,0,40)$, $B = (0,120,30)$ en mm,
+et le raidisseur triangulaire $(OAB)$ de normale $\\vec{n} = (8, 5, -20)$.
+
+**1.** Écrivez l'équation cartésienne du plan $(OAB)$, sachant qu'il passe par $O$.
+
+**2.** Un axe de perçage vertical part du point $M_0 = (20, 10, 0)$ mm avec un vecteur directeur
+$\\vec{v} = (0, 0, 1)$. Écrivez sa représentation paramétrique.
+
+**3.** Calculez le paramètre $t$ auquel cet axe perce le plan $(OAB)$, puis les coordonnées du
+point de perçage.
+
+**4.** Une arête de référence de l'outillage a pour vecteur directeur $\\vec{w} = (5, -8, 0)$.
+Cette arête est-elle parallèle au plan $(OAB)$ ? Justifiez par le calcul.
+
+**5.** Un point de fixation $M = (50, 50, 50)$ mm doit rester à une distance d'au moins $12$ mm
+du plan $(OAB)$ pour ne pas interférer lors de l'assemblage. Calculez cette distance et vérifiez
+si la contrainte est respectée.
+
+**6.** Si l'on avait pris, par erreur d'échelle, le vecteur normal $\\vec{n}' = (4 ;\\ 2{,}5 ;\\
+-10)$ (soit $\\vec{n}/2$) pour écrire l'équation du plan, la distance calculée en question 5
+aurait-elle changé ? Justifiez.
+
+**7.** En question 5, le point $M = (50,50,50)$ donne une valeur de $8x+5y-20z$ égale à $-350$
+(négative). Le point $M' = (10, 5, 0)$ est-il du même côté du plan $(OAB)$ que $M$, ou de l'autre
+côté ? Justifiez sans calculer de distance, seulement par le signe de l'expression.
+""",
+            "corrige": """
+### Corrigé, en six temps
+
+#### 1. Ce que dit l'énoncé
+
+Un plan défini par sa normale (héritée de la fiche 19.5), un axe de perçage à localiser, une
+arête à tester pour un parallélisme, une distance de sécurité à vérifier, et deux questions de
+compréhension sur l'invariance de la distance et le signe de l'équation du plan.
+
+#### 2. Quelle règle, et pourquoi
+
+> Un plan de normale $\\vec{n}(a,b,c)$ passant par un point connu a pour équation
+> $ax+by+cz+d=0$, $d$ fixé en imposant que ce point vérifie l'équation. Une droite perce ce plan
+> au $t$ qui annule l'équation une fois la paramétrisation substituée. Le parallélisme se teste
+> par $\\vec{v}\\cdot\\vec{n}=0$, la distance par $|ax_M+by_M+cz_M+d|/\\|\\vec{n}\\|$.
+
+#### 3. Les conversions
+
+Aucune conversion d'unité : toutes les coordonnées sont déjà en millimètres, cohérentes entre
+elles.
+
+#### 4. Le remplacement
+
+**1.** $8x+5y-20z+d=0$ avec $O=(0,0,0)$ sur le plan : $d = 0$.
+
+**3.** $8(20) + 5(10) - 20(t) = 0$.
+
+**4.** $\\vec{w}\\cdot\\vec{n} = 5×8 + (-8)×5 + 0×(-20)$.
+
+**5.** $d = |8×50+5×50-20×50| / \\sqrt{8^2+5^2+20^2}$.
+
+**6.** $d' = |4×50+2{,}5×50-10×50| / \\sqrt{4^2+2{,}5^2+10^2}$.
+
+#### 5. Le calcul
+
+**1.** $8x+5y-20z=0$.
+
+**2.** $(x,y,z) = (20,\\ 10,\\ t)$.
+
+**3.** $160+50-20t=0 \\Rightarrow t = 10{,}5$. Point de perçage : $(20, 10, 10{,}5)$ mm.
+
+**4.** $\\vec{w}\\cdot\\vec{n} = 40-40+0 = 0$ — l'arête est **parallèle** au plan $(OAB)$.
+
+**5.** $d = |400+250-1000| / \\sqrt{489} = 350/22{,}11 ≈ 15{,}83$ mm. C'est **supérieur** à
+$12$ mm : la contrainte de sécurité est **respectée**, avec une marge d'environ $3{,}8$ mm.
+
+**6.** $d' = |200+125-500| / \\sqrt{122{,}25} = 175/11{,}06 ≈ 15{,}83$ mm — **exactement la même
+distance**. Diviser $\\vec{n}$ par 2 divise le numérateur et le dénominateur par le même facteur,
+donc leur rapport, la distance, ne change pas.
+
+**7.** Valeur en $M'$ : $8×10+5×5-20×0 = 105$, **positive**. Valeur en $M$ (question 5) :
+$-350$, **négative**. Signes opposés : $M$ et $M'$ sont de **part et d'autre** du plan $(OAB)$.
+
+#### 6. La vérification
+
+**Contrôle d'ordre de grandeur** : le point de perçage $(20,10,10{,}5)$ a une cote $z=10{,}5$ mm,
+cohérente avec un plan qui, à $x=20$ et $y=10$, se situe nettement plus bas qu'au sommet $A$
+($z=40$) ou $B$ ($z=30$) — plausible pour un point proche de l'origine $O$ ($z=0$). La question 6
+confirme, chiffres à l'appui, que la distance point-plan ne dépend pas de l'échelle choisie pour
+écrire l'équation — une propriété qui rassure sur la robustesse de la méthode, quel que soit le
+facteur multiplicatif retenu pour $\\vec{n}$.
+""",
+        },
     ],
 }
 
@@ -42471,6 +45825,137 @@ _mth("5.1", "Lire un plan sans se tromper de vue", [
 ], "Un trou débouchant apparaît en deux traits interrompus parallèles sur la vue de face, "
    "et en un cercle continu sur la vue de dessus. Les deux se correspondent par les "
    "lignes de rappel : c'est ce recoupement qui confirme la lecture.")
+
+_mth("1.8", "Construire une matrice valeur", [
+    "**Reprendre les poids fonctionnels** déjà hiérarchisés (fiche 1.3) — ne jamais les "
+    "inventer pour l'occasion.",
+    "**Décomposer le coût de revient** par composant, puis répartir le coût de chaque "
+    "composant polyvalent entre les fonctions qu'il sert.",
+    "**Comparer poids et coût, fonction par fonction** : une part de coût qui dépasse "
+    "nettement le poids signale une sur-qualité.",
+    "**Chercher une solution moins chère au même niveau** pour la fonction en "
+    "sur-qualité — jamais baisser le niveau demandé.",
+    "**Revalider** la nouvelle solution au regard du cahier des charges avant de la "
+    "retenir.",
+], "Une fonction esthétique qui pèse 10 % dans la décision d'achat mais absorbe 45 % du "
+   "coût de revient est une sur-qualité : on change de solution technique, pas de "
+   "niveau d'exigence.")
+
+_mth("5.14", "Choisir entre extrusion, révolution, balayage et lissage", [
+    "**Regarder si la section change de forme** le long de la pièce. Si non, extrusion "
+    "(chemin droit) ou balayage (chemin courbe) suffisent.",
+    "**Vérifier si la pièce est axisymétrique** : un profil qui tourne autour d'un axe, "
+    "même à rayon variable, relève de la révolution — jamais du lissage.",
+    "**Si la section change vraiment de forme**, choisir le lissage avec au moins deux "
+    "sections, sur des plans distincts.",
+    "**Aligner les points de départ des sections** avant de lancer le lissage, pour "
+    "éviter toute torsion de la surface.",
+    "**N'ajouter des courbes guides** que si le rendu, une fois vérifié, ne correspond "
+    "pas à l'intention.",
+], "Un bécher dont le rayon varie mais dont la section reste circulaire se fait par "
+   "révolution ; une poignée qui passe d'une section ronde à une section ovale demande "
+   "un lissage.")
+
+_mth("6.13", "Résoudre un train épicycloïdal (couronne fixe)", [
+    "**Identifier les trois éléments** : planétaire, satellites portés par le "
+    "porte-satellites, couronne — et repérer lequel est bloqué au bâti.",
+    "**Cas le plus fréquent : couronne fixe.** Le satellite roule alors sans glisser à "
+    "l'intérieur d'un anneau immobile, comme une roue sur une route qui ne bouge pas.",
+    "**Calculer le rapport de dents** Z(couronne) / Z(planétaire).",
+    "**Appliquer la formule** : ω(sortie) = ω(entrée) ÷ [1 + Z(couronne)/Z(planétaire)].",
+    "**Vérifier** : le rapport de réduction est toujours supérieur au simple rapport de "
+    "dents, à cause du porte-satellites qui bouge lui aussi.",
+], "Planétaire 20 dents, couronne 80 dents fixe, moteur à 3000 tr/min : "
+   "ω(sortie) = 3000 ÷ (1 + 80/20) = 3000 ÷ 5 = 600 tr/min.")
+
+_mth("9.5", "Choisir le bon niveau de prototype", [
+    "**Se demander ce qu'on veut vraiment valider** : la forme, la cinématique, la "
+    "résistance, ou le procédé de série lui-même ?",
+    "**Choisir le niveau de fidélité correspondant** : maquette d'encombrement, "
+    "prototype fonctionnel, prototype industriel, ou pré-série.",
+    "**Vérifier que le matériau et le procédé du prototype sont représentatifs** dès "
+    "qu'il s'agit de valider une résistance — un prototype rapide ne suffit pas toujours.",
+    "**Fixer le critère de réussite avant l'essai**, jamais après coup.",
+    "**Noter l'écart précis obtenu**, pas seulement si « ça marche » ou non.",
+], "Un boîtier imprimé en 3D valide sa forme et son encombrement ; sa résistance aux "
+   "chocs, elle, ne sera fiable qu'avec un prototype dans le matériau et le procédé "
+   "définitifs.")
+
+_mth("9.6", "Construire une matrice des risques d'un projet", [
+    "**Lister les risques en équipe**, dès le lancement du projet — jamais seul, "
+    "jamais après coup.",
+    "**Noter chaque risque sur deux critères** : sa probabilité et son impact s'il se "
+    "produisait.",
+    "**Placer chaque risque sur la matrice** probabilité × impact : c'est leur "
+    "croisement, jamais l'un seul, qui donne la priorité.",
+    "**Préparer une parade pour les risques prioritaires**, avant qu'ils ne se "
+    "réalisent : réduire la probabilité, réduire l'impact, ou accepter en connaissance "
+    "de cause.",
+    "**Revoir la liste régulièrement** pendant le projet.",
+], "Un composant à fournisseur unique et délai incertain se traite AVANT la commande "
+   "finale — pas quand la rupture de stock est déjà annoncée.")
+
+_mth("13.6", "Juger si la fabrication additive métallique se justifie", [
+    "**Vérifier la géométrie** : la pièce a-t-elle une forme interne complexe — canal, "
+    "treillis — impossible à usiner ou mouler ?",
+    "**Vérifier la série** : reste-t-elle faible, sans outillage disponible ou "
+    "rentable ?",
+    "**Si les deux réponses sont oui**, l'additif se justifie ; sinon, l'usinage ou le "
+    "moulage restent moins chers.",
+    "**Repérer les porte-à-faux** au-delà d'environ 45° : ils demanderont des supports.",
+    "**Prévoir un traitement thermique de détente** après fabrication, avant de "
+    "détacher la pièce du plateau.",
+], "Un canal de refroidissement en spirale, impossible à usiner, sur une série de 20 "
+   "pièces : la fabrication additive se justifie. La même forme en série de 50 000 : non.")
+
+_mth("3.4", "Choisir un traitement de surface", [
+    "**Identifier le matériau de la pièce** : l'anodisation n'agit que sur "
+    "l'aluminium, la galvanisation vise surtout l'acier.",
+    "**Se demander si le traitement doit protéger seul, ou préparer un revêtement** : "
+    "la phosphatation ne protège jamais seule.",
+    "**Pour une protection qui doit tenir même rayée**, choisir un métal déposé plus "
+    "réactif que la pièce (E° plus négatif) : c'est le principe de l'anode "
+    "sacrificielle.",
+    "**Vérifier l'ordre des opérations** : le traitement de surface se fait toujours "
+    "après l'usinage définitif.",
+], "Une pièce en acier destinée à l'extérieur, résistante même si elle est griffée : "
+   "galvanisation. La même pièce, avant peinture : phosphatation, qui n'assure aucune "
+   "protection seule.")
+
+_mth("8.9", "Calculer les pertes de charge d'un circuit fluide", [
+    "**Calculer la vitesse** v = Q/S en premier : elle entre au carré dans toutes les "
+    "formules de perte.",
+    "**Calculer la perte répartie** : λ × (L/D) × (ρv²/2), avec λ donné.",
+    "**Calculer chaque perte localisée** : ξ × (ρv²/2) pour chaque coude, vanne ou "
+    "raccord, avec ξ donné.",
+    "**Additionner toutes les pertes** pour obtenir la perte de charge totale.",
+    "**Vérifier** que la pression restante en sortie reste suffisante pour l'usage "
+    "visé.",
+], "D = 32 mm, L = 15 m, Q = 1,5 L/s, eau : v ≈ 1,87 m/s, pertes réparties ≈ 20,4 kPa, "
+   "pertes localisées ≈ 8,2 kPa, total ≈ 28,6 kPa.")
+
+_mth("8.10", "Mener un bilan thermique", [
+    "**Distinguer les trois modes** : conduction (contact), convection (fluide en "
+    "mouvement), rayonnement (sans contact).",
+    "**Pour une conduction** : P = λ × S × ΔT / e, avec λ donné par le matériau.",
+    "**Pour un changement de température** : Q = m × c × ΔT, avec c donné par le "
+    "matériau.",
+    "**Se rappeler qu'un métal conduit très bien** : le facteur limitant réel est "
+    "presque toujours la convection à sa surface, pas la conduction dans la pièce.",
+], "Une paroi en acier de 5 mm laisse passer 120 kW ; un isolant de 8 cm ne laisse "
+   "passer que 25 W pour la même surface et un écart comparable — le matériau change "
+   "tout.")
+
+_mth("8.11", "Calculer une puissance triphasée et une vitesse de synchronisme", [
+    "**Repérer les données de la plaque signalétique** : U (entre phases), I (courant "
+    "de ligne), cos(φ).",
+    "**Appliquer P = √3 × U × I × cos(φ)**, sans jamais oublier le √3.",
+    "**Pour la vitesse** : N = 60f/p, avec p le nombre de PAIRES de pôles, jamais le "
+    "nombre de pôles.",
+    "**Un variateur fait varier f** : la vitesse varie dans les mêmes proportions, "
+    "sans changer le moteur.",
+], "U = 400 V, I = 8,5 A, cos(φ) = 0,85 : P ≈ 5,0 kW. Moteur à 2 paires de pôles à "
+   "50 Hz : 1500 tr/min ; à 25 Hz : 750 tr/min.")
 
 _mth("5.3", "Lire une cote et un état de surface", [
     "**Séparer la cote nominale des écarts** : dans 30 ±0,1, le 30 est la cote nominale, "
@@ -56454,9 +59939,10 @@ elif PAGE == PAGE_MATHS:
     st.markdown(
         '<div class="info-box">Les 11 modules du programme officiel de mathématiques du '
         'BTS CPI (groupement C1) : fonctions, calcul intégral, équations différentielles, '
-        'statistiques, probabilités, calcul vectoriel et matriciel, configurations et '
-        'modélisation géométriques. Ce sont les mêmes fiches que dans « Cours », réunies ici '
-        'pour ne pas les chercher au milieu des chapitres techniques.</div>',
+        'statistiques, probabilités, calcul vectoriel et matriciel, géométrie dans l\'espace, '
+        'configurations et modélisation géométriques. Ce sont les mêmes fiches que dans '
+        '« Cours », réunies ici pour ne pas les chercher au milieu des chapitres '
+        'techniques.</div>',
         unsafe_allow_html=True)
 
     with st.expander("👉 Avant de commencer — par où entrer, et comment avancer", expanded=True):
@@ -56467,13 +59953,17 @@ elif PAGE == PAGE_MATHS:
             "2. **7.1** (trigonométrie/vecteurs) et **17.1** (étudier une fonction)\n"
             "3. **18.1** (probabilités simples) puis **17.2** (calcul intégral)\n"
             "4. **7.4/7.5** (cercle, droite, barycentre) puis **18.2** (loi binomiale)\n"
-            "5. **17.3/17.6** (statistiques) puis **19.1** (matrices)\n"
-            "6. Le reste (18.3, 18.4, 19.2) — les notions les plus abstraites, à garder pour "
-            "la fin, une fois les bases solides.\n\n"
+            "5. **17.3/17.6** (statistiques) puis **19.1** (matrices : opérations, déterminant)\n"
+            "6. **19.5/19.6** (calcul vectoriel puis géométrie dans l'espace — la suite directe "
+            "de 7.5 et 19.1, avant d'attaquer l'inverse d'une matrice)\n"
+            "7. **19.3** (matrice inverse, système linéaire) puis **18.4/18.8** (équations "
+            "différentielles)\n"
+            "8. Le reste (18.3, 18.5, 18.6/18.7, 19.2/19.4 — courbes de Bézier) — les notions "
+            "les plus abstraites, à garder pour la fin, une fois les bases solides.\n\n"
             "**La méthode qui marche, une fiche à la fois :** ouvre une seule fiche, lis le "
             "cours, fais **seulement son atelier interactif** (pas besoin de refaire tous les "
             "exercices écrits en plus). S'il est réussi, la fiche est validée pour aujourd'hui — "
-            "passe à la suivante, ou arrête-toi là. Comprendre les 23 fiches d'un coup n'est "
+            "passe à la suivante, ou arrête-toi là. Comprendre les 26 fiches d'un coup n'est "
             "l'objectif de personne, même pas des élèves qui n'ont aucune difficulté : ce "
             "programme est fait pour être vu sur plusieurs mois, pas plusieurs soirées.\n\n"
             "*Bloqué sur une fiche ? Le **mode révision** (menu « À revoir ») ramène "
