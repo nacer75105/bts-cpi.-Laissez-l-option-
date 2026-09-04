@@ -353,6 +353,52 @@ def flexion_hauteur():
     return _svg("".join(p), 760, 315)
 
 
+def flexion_poutre():
+    p = [_txt(40, 24, "Poutre sur deux appuis : la flèche grandit exactement comme la charge.",
+              12.5, TRAIT, "start", True)]
+    ox, L, y0 = 100, 560, 150
+
+    # appuis : rotule à gauche, appui simple (rouleau) à droite — même convention que
+    # le schéma des diagrammes d'efforts, pour rester cohérent d'une fiche à l'autre.
+    p.append(f"<path d='M{ox},{y0+11} L{ox-14},{y0+33} L{ox+14},{y0+33} Z' fill='none' stroke='{TRAIT}' stroke-width='1.8'/>")
+    p.append(f"<circle cx='{ox+L}' cy='{y0+23}' r='10' fill='none' stroke='{TRAIT}' stroke-width='1.8'/>")
+    p.append(f"<line x1='{ox-30}' y1='{y0+33}' x2='{ox+L+30}' y2='{y0+33}' stroke='{FIN}' stroke-width='1.4'/>")
+
+    # ligne de référence (poutre non chargée), fixe et pointillée
+    p.append(f"<path d='M{ox},{y0} L{ox+L},{y0}' fill='none' stroke='{FIN}' stroke-width='1.2' stroke-dasharray='4 4'/>")
+
+    # la poutre elle-même : plate au repos, se creuse puis revient, en boucle —
+    # même technique que flexion_hauteur() (animation du 'd', structure Q identique).
+    xm = ox + L / 2
+    d_plate = f"M{ox},{y0} Q{xm},{y0} {ox+L},{y0}"
+    d_max = f"M{ox},{y0} Q{xm},{y0+46} {ox+L},{y0}"
+    p.append(f"<path d='{d_plate}' fill='none' stroke='{ALESAGE}' stroke-width='5' stroke-linecap='round'>"
+             f"<animate attributeName='d' dur='3.2s' repeatCount='indefinite' "
+             f"values='{d_plate};{d_max};{d_plate}' keyTimes='0;0.5;1'/></path>")
+
+    # la flèche mesurée : un trait vertical dont la longueur suit celle de la poutre —
+    # on VOIT littéralement f grandir en même temps que le creux.
+    p.append(f"<line x1='{xm}' y1='{y0}' x2='{xm}' y2='{y0}' stroke='{ALERTE}' stroke-width='1.6'>"
+             f"<animate attributeName='y2' dur='3.2s' repeatCount='indefinite' "
+             f"values='{y0};{y0+46};{y0}' keyTimes='0;0.5;1'/></line>")
+    p.append(_txt(xm + 8, y0 + 20, "f", 12.5, ALERTE, "start", True))
+
+    # la charge F : une flèche qui s'allonge en rythme avec le creux, pour que
+    # l'œil relie directement « charge qui grandit » et « flèche qui grandit ».
+    p.append(f"<line x1='{xm}' y1='{y0-14}' x2='{xm}' y2='{y0-8}' stroke='{ARBRE}' stroke-width='3' marker-end='url(#ffl)'>"
+             f"<animate attributeName='y1' dur='3.2s' repeatCount='indefinite' "
+             f"values='{y0-14};{y0-70};{y0-14}' keyTimes='0;0.5;1'/></line>")
+    p.append("<defs><marker id='ffl' viewBox='0 0 10 10' refX='9' refY='5' markerWidth='7' markerHeight='7' "
+             f"orient='auto'><path d='M0 0 L10 5 L0 10 Z' fill='{ARBRE}'/></marker></defs>")
+    p.append(_txt(xm + 14, y0 - 55, "F", 13, ARBRE, "start", True))
+
+    p.append(f"<rect x='40' y='230' width='680' height='60' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p.append(_txt(56, 252, "f = F L³ / (48 E I) — la flèche est PROPORTIONNELLE à F : doubler la charge double f,",
+                  12, TRAIT, "start", True))
+    p.append(_txt(56, 272, "exactement comme sur ce schéma, où la charge et le creux grandissent toujours ensemble.", 11.5, FIN))
+    return _svg("".join(p), 760, 305)
+
+
 # ===========================================================================
 # 8. RUGOSITÉ Ra : CE QU'ON TOUCHE AVEC L'ONGLE
 # ===========================================================================
@@ -4581,6 +4627,116 @@ def chronologie_traitement():
     return _svg("".join(p), 760, 310)
 
 
+def effet_venturi():
+    p = [_txt(40, 22, "Un rétrécissement de section : le fluide accélère, sa pression chute.",
+              12.5, TRAIT, "start", True)]
+    haut = "M60,120 L250,120 L350,160 L450,160 L550,120 L700,120"
+    bas = "M60,240 L250,240 L350,200 L450,200 L550,240 L700,240"
+    # remplissage du fluide entre les deux profils (une seule forme fermée)
+    p.append(f"<path d='M60,120 L250,120 L350,160 L450,160 L550,120 L700,120 L700,240 L550,240 "
+             f"L450,200 L350,200 L250,240 L60,240 Z' fill='{ALESAGE}' opacity='.16'/>")
+    p.append(f"<path d='{haut}' fill='none' stroke='{TRAIT}' stroke-width='2.4'/>")
+    p.append(f"<path d='{bas}' fill='none' stroke='{TRAIT}' stroke-width='2.4'/>")
+
+    # tubes piézométriques : la hauteur de fluide indique la pression
+    p.append(f"<rect x='185' y='40' width='16' height='80' fill='none' stroke='{FIN}' stroke-width='1.6'/>")
+    p.append(f"<rect x='185' y='62' width='16' height='58' fill='{AXE}' opacity='.55'/>")
+    p.append(_txt(193, 32, "P₁ (haute)", 10.5, TRAIT, "middle", True))
+    p.append(f"<rect x='392' y='72' width='16' height='48' fill='none' stroke='{FIN}' stroke-width='1.6'/>")
+    p.append(f"<rect x='392' y='104' width='16' height='16' fill='{ALERTE}' opacity='.55'/>")
+    p.append(_txt(400, 64, "P₂ (basse)", 10.5, ALERTE, "middle", True))
+
+    # particules animées : plus rapides dans la restriction (keyPoints/keyTimes non uniformes)
+    chemin = "M75,180 L250,180 L350,180 L450,180 L550,180 L700,180"
+    for i in range(5):
+        p.append(f"<circle r='4.5' fill='{AXE}'>"
+                 f"<animateMotion dur='3.6s' begin='{i * 0.72}s' repeatCount='indefinite' path='{chemin}' "
+                 f"keyPoints='0;0.36;0.64;1' keyTimes='0;0.42;0.58;1' calcMode='linear'/></circle>")
+
+    p.append(f"<line x1='150' y1='115' x2='150' y2='245' stroke='{ALESAGE}' stroke-width='1' stroke-dasharray='5 4'/>")
+    p.append(_txt(140, 180, "S₁", 12, ALESAGE, "end", True))
+    p.append(f"<line x1='400' y1='155' x2='400' y2='205' stroke='{ALERTE}' stroke-width='1' stroke-dasharray='5 4'/>")
+    p.append(_txt(390, 180, "S₂", 12, ALERTE, "end", True))
+
+    p.append(f"<rect x='40' y='260' width='680' height='50' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p.append(_txt(56, 280, "Continuité : Q = S₁v₁ = S₂v₂ — si S₂ &lt; S₁, alors v₂ &gt; v₁.", 12, TRAIT, "start", True))
+    p.append(_txt(56, 298, "Bernoulli : P₁ + ½ρv₁² = P₂ + ½ρv₂² — la vitesse augmente, la pression chute.", 11.5, FIN))
+    return _svg("".join(p), 760, 325)
+
+
+def pfd_plan_incline():
+    import math as _m
+    p = [_txt(40, 22, "PFD sur un plan incliné sans frottement : ΣF = m·a projeté sur la pente.",
+              12.5, TRAIT, "start", True)]
+    alpha = 20
+    bx, by = 100, 300
+    hx, hy = 640, 300 - 540 * _m.tan(_m.radians(alpha))
+    p.append(f"<path d='M{bx},{by} L{hx:.0f},{hy:.0f} L{hx:.0f},{by} Z' fill='{FOND}' stroke='{TRAIT}' stroke-width='2'/>")
+    p.append(_txt((bx + hx) / 2, by + 20, f"α = {alpha}°", 12, TRAIT, "middle", True))
+
+    # bloc qui glisse le long de la pente, orienté selon l'angle
+    p.append(f"<g><animateMotion dur='3.4s' repeatCount='indefinite' "
+             f"path='M{bx+70},{by-70*_m.tan(_m.radians(alpha))-14:.0f} L{bx+420},{by-420*_m.tan(_m.radians(alpha))-14:.0f}'/>"
+             f"<g transform='rotate(-{alpha})'>"
+             f"<rect x='-26' y='-24' width='52' height='24' rx='3' fill='{ALESAGE}' opacity='.85' stroke='{TRAIT}' stroke-width='2'/>"
+             f"<line x1='0' y1='-12' x2='0' y2='55' stroke='{ALERTE}' stroke-width='2.6' marker-end='url(#fpp)'/>"
+             f"<line x1='0' y1='-12' x2='0' y2='-70' stroke='{OK}' stroke-width='2.6' marker-end='url(#fpr)'/>"
+             f"</g>"
+             f"<text x='10' y='40' {_POLICE} font-size='11.5' fill='{ALERTE}' font-weight='600'>P = m·g</text>"
+             f"<text x='10' y='-60' {_POLICE} font-size='11.5' fill='{OK}' font-weight='600'>R</text>"
+             f"</g>")
+
+    p.append("<defs>"
+             f"<marker id='fpp' viewBox='0 0 10 10' refX='9' refY='5' markerWidth='7' markerHeight='7' orient='auto'><path d='M0 0 L10 5 L0 10 Z' fill='{ALERTE}'/></marker>"
+             f"<marker id='fpr' viewBox='0 0 10 10' refX='9' refY='5' markerWidth='7' markerHeight='7' orient='auto'><path d='M0 0 L10 5 L0 10 Z' fill='{OK}'/></marker>"
+             "</defs>")
+
+    p.append(f"<rect x='40' y='330' width='680' height='46' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p.append(_txt(56, 350, "Le poids P se décompose : une part « enfonce » le plan (annulée par R), l'autre",
+                  12, TRAIT, "start", True))
+    p.append(_txt(56, 368, "accélère le bloc le long de la pente : m·a = m·g·sin(α), d'où a = g·sin(α).", 11.5, FIN))
+    return _svg("".join(p), 760, 385)
+
+
+def addition_vectorielle_chasles():
+    p = [_txt(40, 22, "Relation de Chasles : mettre les vecteurs bout à bout donne leur résultante.",
+              12.5, TRAIT, "start", True)]
+    ox, oy = 100, 220
+    ax, ay = 300, 100
+    bx, by = 520, 190
+
+    p.append(f"<line x1='{ox}' y1='{oy}' x2='{ax}' y2='{ay}' stroke='{ALESAGE}' stroke-width='3' marker-end='url(#fcu)'>"
+             f"<animate attributeName='stroke-width' values='3;4.5;3' dur='2.2s' repeatCount='indefinite'/></line>")
+    p.append(_txt((ox + ax) / 2 - 10, (oy + ay) / 2, "u", 13, ALESAGE, "end", True))
+    p.append(f"<line x1='{ax}' y1='{ay}' x2='{bx}' y2='{by}' stroke='{ARBRE}' stroke-width='3' marker-end='url(#fcv)'>"
+             f"<animate attributeName='stroke-width' values='3;4.5;3' dur='2.2s' begin='0.4s' repeatCount='indefinite'/></line>")
+    p.append(_txt((ax + bx) / 2 + 10, (ay + by) / 2 - 6, "v", 13, ARBRE, "start", True))
+
+    longueur = ((bx - ox) ** 2 + (by - oy) ** 2) ** 0.5
+    p.append(f"<line x1='{ox}' y1='{oy}' x2='{bx}' y2='{by}' stroke='{OK}' stroke-width='3.5' marker-end='url(#fcw)' "
+             f"stroke-dasharray='{longueur:.0f}' stroke-dashoffset='{longueur:.0f}'>"
+             f"<animate attributeName='stroke-dashoffset' values='{longueur:.0f};0;0;{longueur:.0f}' "
+             f"keyTimes='0;0.4;0.85;1' dur='3.5s' repeatCount='indefinite'/></line>")
+    p.append(_txt((ox + bx) / 2, oy + 26, "w = u + v", 13.5, OK, "middle", True))
+
+    p.append(f"<circle cx='{ox}' cy='{oy}' r='4' fill='{TRAIT}'/>")
+    p.append(_txt(ox - 8, oy + 18, "O", 11, TRAIT, "end", True))
+    p.append(f"<circle cx='{bx}' cy='{by}' r='4' fill='{TRAIT}'/>")
+    p.append(_txt(bx + 10, by + 4, "B", 11, TRAIT, "start", True))
+
+    p.append("<defs>"
+             f"<marker id='fcu' viewBox='0 0 10 10' refX='9' refY='5' markerWidth='7' markerHeight='7' orient='auto'><path d='M0 0 L10 5 L0 10 Z' fill='{ALESAGE}'/></marker>"
+             f"<marker id='fcv' viewBox='0 0 10 10' refX='9' refY='5' markerWidth='7' markerHeight='7' orient='auto'><path d='M0 0 L10 5 L0 10 Z' fill='{ARBRE}'/></marker>"
+             f"<marker id='fcw' viewBox='0 0 10 10' refX='9' refY='5' markerWidth='7' markerHeight='7' orient='auto'><path d='M0 0 L10 5 L0 10 Z' fill='{OK}'/></marker>"
+             "</defs>")
+
+    p.append(f"<rect x='40' y='260' width='680' height='50' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p.append(_txt(56, 280, "Relation de Chasles : OA + AB = OB — valable pour deux vecteurs quelconques.",
+                  11.5, TRAIT, "start", True))
+    p.append(_txt(56, 298, "En statique : la résultante de plusieurs forces s'obtient en fermant le polygone vectoriel.", 11, FIN))
+    return _svg("".join(p), 760, 325)
+
+
 def vecteurs_produit_scalaire_vectoriel():
     import math as _m
     p = [_txt(40, 22, "Deux vecteurs dans l'espace : deux produits, pour deux questions différentes.",
@@ -4884,6 +5040,52 @@ def echelle_prototypes():
              f"<path d='M0,0 L9,4.5 L0,9 z' fill='{ALERTE}'/></marker></defs>")
     p.append(_txt(400, y0 + 100, "un défaut trouvé ici coûte bien plus cher qu'un défaut trouvé là", 11, ALERTE, "middle", True))
     return _svg("".join(p), 760, 340)
+
+
+def impression_3d_couches():
+    p = [_txt(40, 22, "Impression 3D (FDM) : la pièce se construit couche après couche.",
+              12.5, TRAIT, "start", True)]
+    bed_x, bed_w, layer_h, base_y, n = 140, 380, 24, 292, 6
+
+    p.append(f"<rect x='{bed_x-20}' y='{base_y}' width='{bed_w+40}' height='12' rx='3' fill='{FIN}'/>")
+    p.append(_txt(bed_x-20, base_y+30, "plateau d'impression", 10, FIN, "start"))
+
+    couleurs = [ALESAGE, ARBRE]
+    for i in range(n):
+        y_top = base_y - (i + 1) * layer_h
+        coul = couleurs[i % 2]
+        frac = i / n
+        p.append(f"<rect x='{bed_x}' y='{y_top}' width='{bed_w}' height='{layer_h-2}' fill='{coul}' "
+                 f"opacity='.12' stroke='{TRAIT}' stroke-width='1'>"
+                 f"<animate attributeName='opacity' values='.12;.12;.8;.8' "
+                 f"keyTimes='0;{frac:.3f};{frac:.3f};1' dur='{n}s' repeatCount='indefinite'/></rect>")
+        if i > 0:
+            y_interface = y_top + layer_h - 2
+            p.append(f"<line x1='{bed_x}' y1='{y_interface}' x2='{bed_x+bed_w}' y2='{y_interface}' "
+                     f"stroke='{ALERTE}' stroke-width='1' stroke-dasharray='3 3' opacity='.55'/>")
+
+    points = []
+    for i in range(n):
+        y_head = base_y - (i + 1) * layer_h - 6
+        if i % 2 == 0:
+            points += [(bed_x + 10, y_head), (bed_x + bed_w - 10, y_head)]
+        else:
+            points += [(bed_x + bed_w - 10, y_head), (bed_x + 10, y_head)]
+    chemin = "M " + " L ".join(f"{x},{y}" for x, y in points)
+    p.append(f"<g><animateMotion dur='{n}s' repeatCount='indefinite' path='{chemin}'/>"
+             f"<polygon points='-8,14 8,14 0,-6' fill='{OK}' stroke='{TRAIT}' stroke-width='1.4'/></g>")
+
+    p.append(_txt(bed_x + bed_w + 30, base_y - n * layer_h + 6, "tête", 10.5, OK, "start", True))
+    p.append(_txt(bed_x + bed_w + 30, base_y - n * layer_h + 20, "d'impression", 10.5, OK, "start", True))
+    p.append(_txt(bed_x + bed_w + 30, base_y - 92, "interface entre", 10, ALERTE, "start"))
+    p.append(_txt(bed_x + bed_w + 30, base_y - 78, "couches : zone", 10, ALERTE, "start"))
+    p.append(_txt(bed_x + bed_w + 30, base_y - 64, "de faiblesse", 10, ALERTE, "start"))
+
+    p.append(f"<rect x='40' y='{base_y+48}' width='680' height='60' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p.append(_txt(56, base_y+70, "Chaque couche adhère moins bien à la précédente que la matière n'adhère à elle-même :",
+                  12, TRAIT, "start", True))
+    p.append(_txt(56, base_y+90, "une pièce imprimée résiste différemment selon la direction — c'est l'anisotropie (fiche 9.5).", 11.5, FIN))
+    return _svg("".join(p), 760, base_y + 130)
 
 
 def train_epicycloidal():
@@ -5537,6 +5739,9 @@ FIGURES = {
     "isolation_couches": ("Un mur à trois couches : les résistances thermiques s'additionnent", isolation_couches),
     "couplage_etoile_triangle": ("Couplage étoile ou triangle d'un moteur triphasé", couplage_etoile_triangle),
     "chronologie_traitement": ("La chaîne complète d'un traitement de surface", chronologie_traitement),
+    "effet_venturi": ("L'effet Venturi : continuité et théorème de Bernoulli", effet_venturi),
+    "pfd_plan_incline": ("Le PFD sur un plan incliné sans frottement", pfd_plan_incline),
+    "addition_vectorielle_chasles": ("La relation de Chasles : additionner deux vecteurs", addition_vectorielle_chasles),
     "vecteurs_produit_scalaire_vectoriel": ("Produit scalaire et produit vectoriel dans l'espace", vecteurs_produit_scalaire_vectoriel),
     "geometrie_plan_droite_espace": ("Un plan, sa normale, et une droite qui le perce", geometrie_plan_droite_espace),
     "flux_puissance": ("Le flux de puissance dans une chaîne motoréducteur", flux_puissance),
@@ -5569,6 +5774,7 @@ FIGURES = {
     "trois_ajustements": ("Jeu, incertain, serrage", trois_ajustements),
     "lire_h7g6": ("Décoder l'écriture Ø30 H7/g6", lire_h7g6),
     "flexion_hauteur": ("En flexion, la hauteur compte au cube", flexion_hauteur),
+    "flexion_poutre": ("La flèche grandit avec la charge", flexion_poutre),
     "rugosite_ra": ("La rugosité Ra en images", rugosite_ra),
     "liaisons_de_base": ("Les liaisons : compter ce qui bouge", liaisons_de_base),
     "engrenage_module": ("Le module d'un engrenage", engrenage_module),
@@ -5597,6 +5803,7 @@ FIGURES = {
     "regle_des_charges": ("Quelle bague monter serrée ?", regle_des_charges),
     "liaison_arbre_moyeu": ("Transmettre le couple : quatre solutions", liaison_arbre_moyeu),
     "echelle_prototypes": ("Les quatre niveaux de fidélité d'un prototype", echelle_prototypes),
+    "impression_3d_couches": ("L'impression 3D FDM, couche après couche", impression_3d_couches),
     "train_epicycloidal": ("Un train épicycloïdal : planétaire, satellites, couronne", train_epicycloidal),
     "fabrication_additive_metal": ("La fabrication additive métallique, couche par couche", fabrication_additive_metal),
     "collage_sertissage": ("Collage et sertissage : deux assemblages sans vis", collage_sertissage),
@@ -6694,6 +6901,23 @@ QUIZ = {
           "Rapport 192/48 = 4. L'encastrement est un levier de rigidification très puissant "
           "et souvent négligé en conception.",
           "Calcul"),
+
+        q("Sur une poutre sur deux appuis chargée au milieu par une force F, doubler F "
+          "multiplie la flèche f par :",
+          ["2", "4", "8", "aucun changement"], 0,
+          "f = FL³/(48EI) : f est PROPORTIONNELLE à F (exposant 1), contrairement à la portée L "
+          "qui intervient au cube. Doubler F double f, ni plus ni moins — c'est exactement ce "
+          "que montre le schéma animé de la fiche 4.3 : la charge et le creux de la poutre "
+          "grandissent toujours dans les mêmes proportions.",
+          "Base"),
+
+        q("Le moment fléchissant maximal d'une poutre sur 2 appuis, sous une charge RÉPARTIE q "
+          "sur toute la portée L, vaut :",
+          ["qL²/4", "qL²/8", "qL²/2", "5qL⁴/384"], 1,
+          "Mf max = qL²/8 pour une charge répartie, à comparer avec FL/4 pour une charge "
+          "ponctuelle au milieu (question précédente). Ne pas confondre avec la flèche, qui "
+          "vaut 5qL⁴/(384EI) pour ce même cas — une formule différente, à ne jamais mélanger.",
+          "Intermédiaire"),
     ],
 
     # =====================================================================
@@ -17290,7 +17514,29 @@ $$ f = k \\cdot \\frac{F L^3}{E I} \\qquad \\text{ou} \\qquad f = k \\cdot \\fra
 | Arbre portant un engrenage | **0,01 × module** au droit de la denture |
 | Glissière de machine-outil | $L/5000$ |
 
-### 6. Flexion combinée à d'autres sollicitations
+### 6. Sous-module interactif : voir et calculer la flèche d'une poutre sur deux appuis
+
+[[FIG:flexion_poutre]]
+
+Le cas le plus fréquent de tous — une poutre posée sur deux appuis simples, chargée au
+milieu — mérite qu'on s'y arrête seul, indépendamment des cas plus complexes déjà vus :
+
+$$ M_{f,max} = \\frac{FL}{4} \\quad (\\text{au milieu}) \\qquad f_{max} = \\frac{F L^3}{48 E I} $$
+
+**Ce que le schéma animé montre, et qui ne saute pas toujours aux yeux sur une formule seule** :
+la flèche $f$ et la charge $F$ grandissent **exactement dans les mêmes proportions** — $f$ est
+**linéaire** en $F$. Doubler la charge double la flèche, ni plus ni moins ; passer à une charge
+dix fois plus grande donne une flèche dix fois plus grande. Ce n'est **pas** le cas de la portée
+$L$ (facteur au cube, section 4) : deux grandeurs qui apparaissent toutes deux dans la même
+formule ne pèsent jamais de la même façon.
+
+**Pour manipuler ce cas avec vos propres valeurs** — matériau, section, portée, charge — sans
+recalculer chaque fois à la main : page **🔧 Calculateurs RDM → onglet « Flexion »**, cas
+*« 2 appuis - charge F au milieu »*. Le calculateur donne $M_f$, $\\sigma$, la flèche et vérifie
+les deux conditions (résistance et rigidité) instantanément — un outil pour **contrôler** un
+calcul déjà posé à la main, jamais pour s'en dispenser (fiche méthode 15.1).
+
+### 7. Flexion combinée à d'autres sollicitations
 
 En réalité, un arbre subit **flexion + torsion** simultanément. On calcule alors un **moment
 idéal** (critère de Tresca ou de von Mises) :
@@ -17453,6 +17699,29 @@ L'effort radial du pignon sur l'arbre vaut **F = 4 800 N**. Coefficient **s = 4*
 8. Déterminer le diamètre minimal de l'arbre. Choisir un diamètre normalisé.
 9. Une rainure de clavette ($K_t = 2,0$) est usinée au droit du pignon. Reprendre le calcul et
    conclure sur le diamètre définitif.
+
+---
+
+### Atelier guidé, en six temps — PARTIE C : plancher provisoire sur deux appuis
+
+Un plancher provisoire de chantier est formé de poutres rectangulaires en acier **S235**
+($R_e = 235$ MPa, $E = 210\\,000$ MPa), de section **50 × 120 mm** ($b = 50$, $h = 120$),
+posées sur **deux appuis simples** espacés de **L = 2 000 mm**. Chaque poutre supporte une
+charge d'exploitation répartie **q = 8 N/mm**. Coefficient de sécurité **s = 3**. Flèche
+admissible : **L/300**.
+
+**1.** Calculez le moment quadratique $I_{Gz}$ et le module de flexion $I_{Gz}/v$ de la section.
+
+**2.** Calculez le moment fléchissant maximal $M_f$, en précisant où il se situe sur la poutre.
+
+**3.** Calculez la contrainte maximale $\\sigma_{max}$ et vérifiez la condition de résistance.
+
+**4.** Calculez la flèche maximale $f$ et vérifiez la condition de rigidité.
+
+**5.** Concluez sur la conformité de cette poutre pour l'usage prévu.
+
+**6.** Le chantier double la charge répartie ($q' = 16$ N/mm au lieu de 8). Sans recalculer,
+prévoyez comment évoluent $M_f$, $\\sigma$ et $f$ — puis vérifiez par le calcul.
 """,
             "corrige": """
 **PARTIE A — POUTRE DE PALAN**
@@ -17697,6 +17966,74 @@ $$ 125,2 \\le 187,5 \\quad ✔️ \\qquad s_{réel} = \\frac{750}{125,2} = \\mat
 2,0) permettrait de revenir à Ø35. Encore mieux : remplacer la clavette par un **frettage** ou un
 **moyeu conique**, qui supprime totalement l'entaille — c'est la solution retenue sur les
 transmissions à fort couple et haute fiabilité.
+
+---
+
+### PARTIE C — Corrigé, en six temps
+
+#### 1. Ce que dit l'énoncé
+
+Une poutre rectangulaire (50×120 mm, S235) sur deux appuis simples, portée 2 000 mm, charge
+répartie 8 N/mm — deux conditions à vérifier (résistance, rigidité), puis une question sur
+l'effet d'un doublement de charge.
+
+#### 2. Quelle règle, et pourquoi
+
+> Poutre sur deux appuis, charge répartie $q$ : $M_{f,max} = qL^2/8$, $f_{max} =
+> 5qL^4/(384EI)$ (formulaire de la fiche). La flèche est **linéaire** en $q$ — c'est exactement
+> ce que montre le schéma animé de la section 6 du cours.
+
+#### 3. Les conversions
+
+Toutes les données sont déjà en unités cohérentes (mm, N, MPa) — aucune conversion nécessaire.
+
+#### 4. Le remplacement
+
+**1.** $I_{Gz} = bh^3/12 = 50 \\times 120^3/12$. $v = h/2 = 60$ mm.
+
+**2.** $M_f = qL^2/8 = 8 \\times 2\\,000^2/8$.
+
+**3.** $\\sigma_{max} = M_f/(I_{Gz}/v)$ ; $R_{pe} = R_e/s = 235/3$.
+
+**4.** $f = 5qL^4/(384EI)$ ; $f_{adm} = L/300 = 2\\,000/300$.
+
+**6.** Les deux formules ($M_f = qL^2/8$ et $f = 5qL^4/384EI$) sont **linéaires** en $q$ : doubler
+$q$ double $M_f$, $\\sigma$ et $f$, sans rien changer d'autre.
+
+#### 5. Le calcul
+
+**1.** $I_{Gz} = 50 \\times 1\\,728\\,000/12 = \\mathbf{7\\,200\\,000\\ mm^4}$.
+$I_{Gz}/v = 7\\,200\\,000/60 = \\mathbf{120\\,000\\ mm^3}$.
+
+**2.** $M_f = 8 \\times 4\\,000\\,000/8 = \\mathbf{4\\,000\\,000\\ N \\cdot mm} = 4\\ \\mathrm{kN \\cdot m}$,
+**au milieu de la poutre** (là où l'effort tranchant s'annule).
+
+**3.** $\\sigma_{max} = 4\\,000\\,000/120\\,000 = \\mathbf{33{,}3\\ MPa}$. $R_{pe} = 235/3 =
+\\mathbf{78{,}3\\ MPa}$. $33{,}3 \\le 78{,}3$ ✔️ **RÉSISTANCE VÉRIFIÉE**, avec $s_{réel} =
+235/33{,}3 = \\mathbf{7{,}05}$ — largement au-dessus des 3 exigés.
+
+**4.** $f = 5 \\times 8 \\times 2\\,000^4/(384 \\times 210\\,000 \\times 7\\,200\\,000) =
+\\mathbf{1{,}10\\ mm}$. $f_{adm} = 2\\,000/300 = \\mathbf{6{,}67\\ mm}$. $1{,}10 \\le 6{,}67$ ✔️
+**RIGIDITÉ VÉRIFIÉE**, avec une très large marge.
+
+**5.** **Poutre conforme** sur les deux critères, avec une marge confortable ($s_{réel} = 7{,}05$
+en résistance, flèche à seulement $16\\,\\%$ de l'admissible) — contrairement à la poutre de
+palan de la partie A, qui échouait sur les deux plans.
+
+**6.** Avec $q' = 16$ N/mm : $M_f' = 8\\,000\\,000\\ \\mathrm{N \\cdot mm}$ (double),
+$\\sigma' = 66{,}7$ MPa (double, toujours $\\le 78{,}3$ ✔️), $f' = 2{,}20$ mm (double, toujours
+$\\le 6{,}67$ ✔️). La poutre reste conforme, mais la marge en résistance se resserre nettement
+($s_{réel}$ passe de $7{,}05$ à $3{,}52$).
+
+#### 6. La vérification
+
+**Contrôle de cohérence (Q6)** : $8\\,000\\,000/4\\,000\\,000 = 2$ et $66{,}7/33{,}3 = 2$ et
+$2{,}20/1{,}10 = 2$ — les trois grandeurs ont **exactement doublé** avec la charge, confirmant la
+linéarité annoncée en question 2 et illustrée par le schéma animé du cours : la charge et la
+flèche grandissent toujours dans les mêmes proportions. **Contrôle d'ordre de grandeur** : une
+flèche de 1,10 mm sur une portée de 2 m (soit $L/1818$) pour un plancher provisoire est un
+résultat plausible, cohérent avec le critère usuel de $L/300$ à $L/500$ pour ce type de
+structure (tableau, section 5 du cours).
 """,
         },
     ],
@@ -29042,33 +29379,132 @@ moyenne simple non pondérée (0+6+3)/3 = 3, qui aurait ignoré les masses.*
 
 [[FIG:barycentre_points]]
 
-### 4. À retenir
+### 4. Addition de deux vecteurs : la relation de Chasles
+
+[[FIG:addition_vectorielle_chasles]]
+
+Une autre opération de base sur les vecteurs, distincte du barycentre : **additionner** deux
+vecteurs pour trouver leur résultante — indispensable dès que plusieurs forces ou déplacements
+s'appliquent en même temps.
+
+> **Relation de Chasles** : $\\overrightarrow{OA} + \\overrightarrow{AB} = \\overrightarrow{OB}$
+
+**En pratique, graphiquement** : on place le deuxième vecteur bout à bout avec le premier
+(l'origine du second à la pointe du premier) — la résultante est alors le vecteur qui va du
+départ du premier à l'arrivée du second, sans repasser par le point intermédiaire.
+
+**En coordonnées**, c'est encore plus direct : si $\\vec{u}(u_x, u_y)$ et $\\vec{v}(v_x, v_y)$,
+alors $\\vec{w} = \\vec{u} + \\vec{v} = (u_x + v_x,\\ u_y + v_y)$.
+
+**Application directe en statique** (fiche 4, RDM) : la résultante de plusieurs forces
+appliquées en un même point s'obtient en les mettant bout à bout — un système de forces est en
+**équilibre** si et seulement si ce « polygone des forces » se referme exactement sur
+lui-même (résultante nulle).
+
+**Exemple entièrement calculé.** Deux câbles tirent une même pièce : $\\vec{u} = (150, 50)$ N et
+$\\vec{v} = (80, -30)$ N. Quelle est la force résultante ?
+
+$\\vec{w} = \\vec{u} + \\vec{v} = (150+80,\\ 50-30) = (230, 20)$ N.
+
+$\\|\\vec{w}\\| = \\sqrt{230^2+20^2} ≈ 230{,}9$ N.
+
+*Contrôle de bon sens : la résultante est proche de $\\vec{u}$ en direction, cohérent puisque
+$\\vec{u}$ (norme $≈158$ N) est bien plus « horizontal » et plus fort que $\\vec{v}$ (norme
+$≈85{,}4$ N) — la composante verticale de $\\vec{v}$ ($-30$) réduit légèrement celle de $\\vec u$
+($50$), d'où $20$ N seulement en $y$ pour la résultante.*
+
+### 5. À retenir
 
 - Gx et Gy sont des moyennes des coordonnées, **pondérées par la masse** de chaque point.
 - Un point plus lourd déplace le barycentre vers lui, proportionnellement à sa masse.
 - Toujours diviser par la masse **totale**, pas par le nombre de points.
+- Relation de Chasles : $\\overrightarrow{OA}+\\overrightarrow{AB}=\\overrightarrow{OB}$ — en
+  coordonnées, on additionne simplement les composantes une à une.
+- Un système de forces est en équilibre quand le polygone des forces se referme (résultante
+  nulle).
             """,
             "formules": """
 
 **Barycentre de points pondérés** — Gx = (Σ mᵢxᵢ) / (Σ mᵢ) · Gy = (Σ mᵢyᵢ) / (Σ mᵢ)
+
+**Relation de Chasles** — $\\overrightarrow{OA}+\\overrightarrow{AB}=\\overrightarrow{OB}$ ; en
+coordonnées, $\\vec{u}+\\vec{v} = (u_x+v_x,\\ u_y+v_y)$
+
+**Le réflexe équilibre** — plusieurs forces sont en équilibre si et seulement si leur résultante
+(somme vectorielle) est nulle
 """,
             "exercice": """
+### Atelier guidé — Barycentre d'un assemblage, puis résultante de deux câbles
+
 Un assemblage comprend trois pièces : A(0 ; 0) de 4 kg, B(4 ; 0) de 1 kg, C(2 ; 3) de
 3 kg.
 
 **1.** Calcule la masse totale.
 
 **2.** Calcule les coordonnées du barycentre G de l'assemblage.
+
+**3.** La pièce est ensuite soulevée par deux câbles, exerçant respectivement les forces
+$\\vec{u} = (60, 90)$ N et $\\vec{v} = (40, 20)$ N. Calculez la force résultante $\\vec{w} =
+\\vec{u}+\\vec{v}$, en newtons.
+
+**4.** Calculez la norme de cette résultante, en newtons.
+
+**5.** Un troisième câble est ajouté, exerçant $\\vec{t} = (-100, -110)$ N. L'ensemble des trois
+câbles est-il à présent en équilibre ? Justifiez par le calcul, sans mesurer d'angle.
 """,
             "corrige": """
-**1.** Masse totale = 4 + 1 + 3 = **8 kg**.
+### Corrigé, en six temps
 
-**2.** Gx = (4×0 + 1×4 + 3×2) / 8 = (0 + 4 + 6) / 8 = 10/8 = **1,25**.
+#### 1. Ce que dit l'énoncé
 
-Gy = (4×0 + 1×0 + 3×3) / 8 = (0 + 0 + 9) / 8 = 9/8 = **1,125**.
+Un barycentre à calculer (masses et coordonnées de trois pièces), puis une résultante de forces
+par addition vectorielle, et une question d'équilibre sur un système à trois câbles.
 
-**G = (1,25 ; 1,125).** Le point est tiré vers A (la pièce la plus lourde, 4 kg), donc
-proche de x = 0 — cohérent.
+#### 2. Quelle règle, et pourquoi
+
+> Le barycentre pondère chaque coordonnée par la masse, puis divise par la masse totale. La
+> résultante de plusieurs vecteurs s'obtient en additionnant leurs coordonnées une à une
+> (relation de Chasles) ; un système de forces est en équilibre si et seulement si cette
+> résultante est nulle.
+
+#### 3. Les conversions
+
+Aucune conversion nécessaire : toutes les données sont déjà dans les bonnes unités.
+
+#### 4. Le remplacement
+
+**1.** Masse totale $= 4+1+3$.
+
+**2.** $Gx = (4×0+1×4+3×2)/8$. $Gy = (4×0+1×0+3×3)/8$.
+
+**3.** $\\vec{w} = (60+40,\\ 90+20)$.
+
+**4.** $\\|\\vec{w}\\| = \\sqrt{w_x^2+w_y^2}$.
+
+**5.** $\\vec{u}+\\vec{v}+\\vec{t} = (60+40-100,\\ 90+20-110)$.
+
+#### 5. Le calcul
+
+**1.** Masse totale = **8 kg**.
+
+**2.** $Gx = 10/8 = 1{,}25$. $Gy = 9/8 = 1{,}125$. **G = (1,25 ; 1,125)** — tiré vers A (la pièce
+la plus lourde), cohérent.
+
+**3.** $\\vec{w} = (100, 110)$ N.
+
+**4.** $\\|\\vec{w}\\| = \\sqrt{100^2+110^2} = \\sqrt{22\\,100} ≈ 148{,}7$ N.
+
+**5.** $\\vec{u}+\\vec{v}+\\vec{t} = (0, 0)$ N — la résultante est **exactement nulle** : le
+système des trois câbles **est en équilibre**. Le troisième câble a été choisi précisément pour
+annuler la résultante des deux premiers ($\\vec{t} = -\\vec{w}$).
+
+#### 6. La vérification
+
+**Contrôle de cohérence (Q5)** : $\\vec t = (-100,-110)$ est exactement l'opposé de $\\vec w =
+(100,110)$ trouvé en question 3 — un vecteur et son opposé s'annulent toujours par addition,
+confirmant l'équilibre sans avoir besoin de mesurer un seul angle. **Contrôle sur le barycentre
+(Q2)** : $G=(1{,}25\\,;\\,1{,}125)$ reste proche de $A=(0,0)$, la pièce la plus lourde (4 kg sur
+8 kg de masse totale, soit la moitié) — cohérent avec l'intuition physique du centre de gravité.
 """,
             "exemple": """
 **Cas industriel — Centre de gravité pour le choix des points de levage**
@@ -29175,7 +29611,41 @@ F = m × a = 250 × 2,5 = **625 N**
 *Contrôle de bon sens : 625 N, c'est le poids d'environ 64 kg — tout à fait plausible pour
 déplacer un chariot de 250 kg rapidement.*
 
-### 4. L'énergie cinétique : l'énergie du mouvement
+### 4. Le PFD sur un plan incliné : quand le poids se décompose
+
+[[FIG:pfd_plan_incline]]
+
+Sur un plan horizontal, tout le poids P = m×g d'un objet est équilibré par la réaction du sol R
+(fiche 4, statique). Sur un plan **incliné** d'un angle α, ce n'est plus vrai : le poids se
+décompose en **deux** parts, perpendiculaire et parallèle à la pente.
+
+> **Perpendiculaire au plan** : $P_⊥ = m g \\cos α$, équilibrée par la réaction R (le plan « pousse
+> en retour », comme sur un plan horizontal)
+>
+> **Parallèle au plan** : $P_∥ = m g \\sin α$, qui n'est équilibrée par **rien** (sans frottement)
+> — c'est elle qui accélère l'objet le long de la pente
+
+Le PFD projeté sur la direction de la pente donne : $m × a = P_∥ = m g \\sin α$, donc la masse
+**se simplifie** et il reste :
+
+> **a = g × sin α**
+
+**Ce qui se vérifie immédiatement aux deux cas limites** : à α = 0° (plan horizontal), $a = 0$ —
+rien n'accélère, cohérent avec la fiche 4. À α = 90° (chute verticale), $a = g$ — on retrouve la
+chute libre, cohérent également.
+
+**Exemple entièrement déroulé.** Un bloc de **15 kg** glisse sans frottement sur un plan incliné
+à **25°**. Quelle est son accélération ?
+
+**Étape 1 — Appliquer directement a = g sin α**
+
+a = 9,81 × sin(25°) = 9,81 × 0,4226 = **4,15 m/s²**
+
+*Contrôle de bon sens : 4,15 m/s² reste bien inférieur à g = 9,81 m/s², cohérent puisque seule
+la composante $P_∥$ du poids accélère le bloc le long de la pente — jamais le poids en entier,
+sauf à la verticale.*
+
+### 5. L'énergie cinétique : l'énergie du mouvement
 
 Tout objet en mouvement stocke une forme d'énergie, appelée **énergie cinétique**. C'est cette
 énergie qui doit être dissipée pour arrêter l'objet — par un frein, un choc, un amortisseur.
@@ -29198,7 +29668,7 @@ Ec = 0,5 × 800 × 1,5² = 0,5 × 800 × 2,25 = **900 J**
 9 kg à 10 mètres de hauteur. C'est cette énergie que le système de freinage du chariot doit
 absorber pour l'arrêter.*
 
-### 5. Le moment d'inertie et le couple : la version « en rotation » de F = ma
+### 6. Le moment d'inertie et le couple : la version « en rotation » de F = ma
 
 Pour un objet qui tourne plutôt que d'avancer en ligne droite, chaque grandeur a son
 équivalent :
@@ -29237,7 +29707,7 @@ Mt = I × α = 0,135 × 300 = **40,5 N·m**
 *C'est exactement le même raisonnement que la fiche 13.3 sur l'inertie ramenée — sauf qu'ici,
 on calcule I directement pour la pièce, sans réducteur entre elle et le moteur.*
 
-### 6. Exemple de synthèse
+### 7. Exemple de synthèse
 
 **L'énoncé.** Un volant d'inertie (disque plein, 25 kg, rayon 180 mm) tourne à 800 tr/min. On
 veut connaître son énergie cinétique de rotation, et la vitesse d'un point sur son bord.
@@ -29263,7 +29733,7 @@ Ec = 0,5 × I × ω² = 0,5 × 0,405 × 83,78² = 0,5 × 0,405 × 7 019 = **1 42
 pendant les temps forts du cycle, et la restitue pendant les temps faibles, pour lisser la
 rotation.*
 
-### 7. Les erreurs classiques
+### 8. Les erreurs classiques
 
 1. **Confondre vitesse angulaire (rad/s) et vitesse linéaire (m/s)** : ce sont deux grandeurs
    différentes, reliées par v = ωR.
@@ -29273,11 +29743,15 @@ rotation.*
    à la rotation selon comment leur matière est répartie.
 4. **Convertir tr/min en rad/s en oubliant le facteur 2π/60.**
 5. **Utiliser F = ma pour un problème de rotation** au lieu de Mt = Iα.
+6. **Oublier de décomposer le poids sur un plan incliné** : c'est $P_∥ = mg\\sinα$ seule qui
+   accélère l'objet le long de la pente, jamais le poids $mg$ en entier — sauf à la verticale.
 
-### 8. À retenir
+### 9. À retenir
 
 - **ω = 2πN/60** (rad/s) · **v = ωR** (vitesse d'un point à distance R de l'axe).
 - **F = m × a** : la loi fondamentale de la dynamique.
+- Plan incliné sans frottement : **a = g × sin α** — le poids se décompose, seule sa composante
+  parallèle à la pente accélère l'objet.
 - **Ec = ½mv²** : l'énergie du mouvement — la vitesse compte AU CARRÉ.
 - Rotation : **I** remplace m, **α** remplace a, **Mt** remplace F.
 - Disque plein : **I = ½mR²**.
@@ -29289,6 +29763,8 @@ rotation.*
 
 **Dynamique** — F = m × a (newtons)
 
+**Plan incliné sans frottement** — a = g × sin α ; réaction normale équilibre m g cos α
+
 **Énergie cinétique** — Ec = ½ m v² (translation) · Ec = ½ I ω² (rotation)
 
 **Rotation (équivalents de F=ma)** — Mt = I × α
@@ -29298,6 +29774,8 @@ disque plein : I = ½ m R² · α = Δω / Δt
 
         """,
             "exercice": """
+### Atelier guidé — Un convoyeur incliné, du tambour au moteur
+
 **1.** Un tambour de convoyeur Ø400 tourne à 60 tr/min. Quelle est la vitesse linéaire de la
 bande, en m/s puis en m/min ?
 
@@ -29309,27 +29787,79 @@ bande, en m/s puis en m/min ?
 
 **5.** La transmission comporte un motoréducteur (η = 0,75) et une chaîne (η = 0,96). Quelle
 puissance le moteur doit-il absorber ?
+
+**6.** En amont du convoyeur, les pièces glissent sans frottement sur une glissière inclinée à
+$20°$ avant d'être prises en charge par la bande. Calculez l'accélération d'une pièce de $40$ kg
+le long de cette glissière, en m/s².
+
+**7.** Un opérateur veut immobiliser temporairement une pièce sur cette glissière, en poussant
+parallèlement à la pente. Quelle force minimale doit-il exercer, en newtons ?
 """,
             "corrige": """
-**1.** ω = 2π × 60 / 60 = **6,28 rad/s**
-v = ω × R = 6,28 × 0,20 = **1,26 m/s**, soit **75 m/min**.
-*Attention au rayon : Ø400 donne R = 0,2 m, pas 0,4.*
+### Corrigé, en six temps
 
-**2.** P = m g = 350 × 9,81 = **3 434 N**, soit environ 3,4 kN.
+#### 1. Ce que dit l'énoncé
 
-**3.** W = P × h = 3 434 × 3 = **10 302 J**, soit environ 10,3 kJ.
+Un convoyeur incliné complet : cinématique du tambour, poids de la charge, bilan énergétique et
+puissance, rendement de la chaîne de transmission — puis, en amont, une glissière inclinée
+séparée où s'applique le PFD projeté sur la pente.
 
-**4.** Puissance utile = W / t = 10 302 / 25 = **412 W**.
-*Autre méthode, qui donne le même résultat : P = F × v vertical. La charge monte de 3 m en 25 s,
-soit 0,12 m/s → 3 434 × 0,12 = 412 W.*
+#### 2. Quelle règle, et pourquoi
 
-**5.** Rendement global = 0,75 × 0,96 = **0,72**
-Puissance absorbée = 412 / 0,72 = **572 W**
+> $v = ω × R$ pour la vitesse d'un point tournant ; $W = P × h$ puis $P_{utile} = W/t$ pour un
+> bilan énergétique de levage ; le rendement global d'une chaîne est le **produit** des
+> rendements de chaque étage, jamais leur somme. Sur un plan incliné sans frottement, seule la
+> composante du poids parallèle à la pente accélère l'objet : $a = g \\sin α$.
 
-On choisira donc un moteur normalisé de **0,75 kW**, la taille au-dessus.
+#### 3. Les conversions
 
-*Ce que montre l'exercice : 28 % de la puissance part en pertes. Négliger les rendements, c'est
-choisir un moteur de 0,37 kW qui calera en charge.*
+$Ø400$ mm donne un rayon $R = 0{,}20$ m (pas $0{,}4$). Aucune autre conversion nécessaire, les
+autres données sont déjà dans les bonnes unités.
+
+#### 4. Le remplacement
+
+**1.** $ω = 2π × 60/60$, puis $v = ω × R$.
+
+**2.** $P = m × g = 350 × 9{,}81$.
+
+**3.** $W = P × h = 3\\,434 × 3$.
+
+**4.** $P_{utile} = W/t = 10\\,302/25$.
+
+**5.** $η_{global} = 0{,}75 × 0{,}96$, puis $P_{absorbée} = P_{utile}/η_{global}$.
+
+**6.** $a = g × \\sin(20°) = 9{,}81 × \\sin(20°)$.
+
+**7.** $F = m × a$, avec le $a$ trouvé en question 6.
+
+#### 5. Le calcul
+
+**1.** $ω = 6{,}28$ rad/s. $v = 6{,}28 × 0{,}20 = 1{,}26$ m/s, soit **75 m/min**.
+
+**2.** $P = 3\\,434$ N, soit environ $3{,}4$ kN.
+
+**3.** $W = 3\\,434 × 3 = 10\\,302$ J, soit environ $10{,}3$ kJ.
+
+**4.** $P_{utile} = 10\\,302/25 = 412$ W.
+
+**5.** $η_{global} = 0{,}72$. $P_{absorbée} = 412/0{,}72 ≈ 572$ W — on choisira un moteur
+normalisé de **0,75 kW**, la taille au-dessus.
+
+**6.** $a = 9{,}81 × 0{,}342 ≈ 3{,}36$ m/s².
+
+**7.** $F = 40 × 3{,}36 ≈ 134{,}2$ N. *C'est la même force, en intensité, que celle qui accélère
+la pièce quand rien ne la retient : maintenir un objet immobile sur une pente demande d'annuler
+exactement $P_∥$, pas le poids entier.*
+
+#### 6. La vérification
+
+**Contrôle de méthode alternatif (Q4)** : la charge monte de $3$ m en $25$ s, soit $0{,}12$ m/s
+vertical → $P_{utile} = 3\\,434 × 0{,}12 = 412$ W — même résultat que par le calcul d'énergie,
+ce qui confirme la question 4. **Contrôle d'ordre de grandeur (Q5)** : $28\\,\\%$ de la
+puissance part en pertes — négliger les rendements conduirait à choisir un moteur de
+$0{,}37$ kW, qui calerait en charge réelle. **Contrôle sur la glissière (Q6-Q7)** :
+$a ≈ 3{,}36$ m/s² reste bien inférieur à $g = 9{,}81$ m/s², cohérent puisque $20°$ est un angle
+modeste — à $90°$ on retrouverait $a = g$, la chute libre.
 """,
             "exemple": """
 **Cas industriel — Pourquoi le moteur cale au démarrage**
@@ -30693,7 +31223,34 @@ $μ ≈ 1{,}0 × 10^{-3}$ Pa·s, $λ = 0{,}025$ (donné pour ce régime), 3 coud
 5. $ΔP_{localisées} = (3 × 0{,}9 + 2) × (1000 × 1{,}87^2/2) ≈ 8{,}2$ kPa.
 6. $ΔP_{totale} ≈ 28{,}6$ kPa, soit environ $0{,}29$ bar.
 
-### 6. Les erreurs classiques
+### 6. Le théorème de Bernoulli : ce qui se passe dans une restriction
+
+[[FIG:effet_venturi]]
+
+Les pertes de charge (sections 1 à 5) sont **irréversibles** — la pression perdue ne revient
+jamais. Il existe un tout autre phénomène, **réversible** celui-là : quand un tube se rétrécit
+localement, le fluide y **accélère**, puis **retrouve sa vitesse d'origine** une fois le tube
+réélargi. Deux lois gouvernent ce phénomène :
+
+> **Continuité (conservation du débit)** : $Q = S_1 v_1 = S_2 v_2$
+
+> **Bernoulli (fluide parfait, écoulement horizontal)** : $P_1 + \\dfrac{1}{2}ρv_1^2 = P_2 +
+> \\dfrac{1}{2}ρv_2^2$
+
+Si la section $S_2$ est plus petite que $S_1$, la continuité impose $v_2 > v_1$ ; Bernoulli
+impose alors $P_2 < P_1$ : **la pression chute là où le fluide va le plus vite**. C'est l'**effet
+Venturi**, exploité par les débitmètres à section variable et les carburateurs.
+
+**Exemple entièrement déroulé.** Une conduite d'eau ($ρ = 1000$ kg/m³) passe d'une section
+$S_1 = 0{,}05$ m² à $S_2 = 0{,}02$ m², avec $v_1 = 2$ m/s.
+
+$v_2 = (S_1/S_2) × v_1 = (0{,}05/0{,}02) × 2 = 5$ m/s.
+
+$P_1 - P_2 = \\dfrac{1}{2}ρ(v_2^2 - v_1^2) = 0{,}5 × 1000 × (25 - 4) = 10\\,500$ Pa, soit
+$10{,}5$ kPa de chute de pression dans la restriction — **récupérée intégralement** dès que la
+section repasse à $S_1$, contrairement à une perte de charge.
+
+### 7. Les erreurs classiques
 
 1. **Oublier les pertes localisées**, en ne comptant que les pertes réparties — sur un circuit
    court avec beaucoup de coudes et de vannes, ce sont souvent elles qui dominent.
@@ -30705,15 +31262,20 @@ $μ ≈ 1{,}0 × 10^{-3}$ Pa·s, $λ = 0{,}025$ (donné pour ce régime), 3 coud
    augmente la vitesse, donc les pertes au carré — presque toujours une mauvaise idée.
 5. **Utiliser un $λ$ de régime laminaire sur un écoulement turbulent** (ou l'inverse) sans avoir
    vérifié le nombre de Reynolds : la table de référence n'est pas la même des deux côtés.
+6. **Confondre la chute de pression de Bernoulli dans une restriction avec une perte de charge.**
+   La première est **réversible** (récupérée en aval) ; la seconde est **définitive** — les deux
+   se calculent différemment et ne s'additionnent pas de la même façon dans un bilan.
 
-### 7. À retenir
+### 8. À retenir
 
-- Deux familles : pertes réparties (le long du tube) et pertes localisées (à chaque obstacle) —
-  elles s'additionnent toujours.
+- Deux familles de pertes de charge : réparties (le long du tube) et localisées (à chaque
+  obstacle) — elles s'additionnent toujours, et sont **irréversibles**.
 - Le nombre de Reynolds $Re = ρvD/μ$ indique le régime — laminaire sous $2000$, turbulent
   au-dessus de $4000$ — et donc quel $λ$ utiliser.
 - $v = Q/S$ d'abord, systématiquement : c'est elle qui entre **au carré** dans les deux formules.
 - Réduire le diamètre d'un tube pour économiser de la matière augmente fortement les pertes.
+- Effet Venturi : $Q=S_1v_1=S_2v_2$ puis Bernoulli $P_1+½ρv_1^2=P_2+½ρv_2^2$ — une chute de
+  pression **réversible** dans une restriction, à ne pas confondre avec une perte de charge.
 """,
             "formules": """
 **Perte de charge répartie** — $ΔP = λ × \\dfrac{L}{D} × \\dfrac{ρv^2}{2}$
@@ -30721,6 +31283,9 @@ $μ ≈ 1{,}0 × 10^{-3}$ Pa·s, $λ = 0{,}025$ (donné pour ce régime), 3 coud
 **Perte de charge localisée** — $ΔP = ξ × \\dfrac{ρv^2}{2}$
 
 **Nombre de Reynolds** — $Re = ρvD/μ$ : laminaire sous $2000$, turbulent au-dessus de $4000$
+
+**Continuité** — $Q = S_1v_1 = S_2v_2$ ; **Bernoulli** — $P_1+½ρv_1^2=P_2+½ρv_2^2$ (réversible,
+contrairement aux pertes de charge)
 
 **La vitesse d'abord** — $v = Q/S$, avec $S$ la section du tube : c'est elle qui compte au carré
 dans les deux formules
@@ -30768,6 +31333,14 @@ la marge disponible.
 
 **7.** Si l'on remplaçait ce tube par un tube de diamètre $30$ mm, sans rien changer d'autre, les
 pertes de charge augmenteraient-elles ou diminueraient-elles ? Justifiez sans recalculer.
+
+**8.** Juste avant le vérin, un débitmètre à effet Venturi réduit localement le diamètre du tube à
+$D_2 = 12$ mm sur une courte portion. Calculez la vitesse de l'huile dans cette restriction, en
+m/s.
+
+**9.** En admettant un écoulement idéal sur cette courte restriction (sans perte supplémentaire),
+calculez la chute de pression associée, en kPa, à l'aide du théorème de Bernoulli. Cette chute
+s'ajoute-t-elle à la perte de charge totale calculée en question 5 ?
 """,
             "corrige": """
 ### Corrigé, en six temps
@@ -30775,17 +31348,20 @@ pertes de charge augmenteraient-elles ou diminueraient-elles ? Justifiez sans re
 #### 1. Ce que dit l'énoncé
 
 Un circuit hydraulique complet — dimensions, débit, coefficients de pertes, pression de la pompe
-et pression minimale requise par le vérin. La question finale porte sur la **viabilité** du
-circuit, pas seulement sur un calcul isolé.
+et pression minimale requise par le vérin, puis une restriction locale (effet Venturi) à
+analyser séparément. La question finale porte sur la **viabilité** du circuit, pas seulement sur
+un calcul isolé.
 
 #### 2. Quelle règle, et pourquoi
 
 > La vitesse se calcule toujours en premier ($v = Q/S$), puis le régime d'écoulement (Reynolds),
-> puisque c'est lui qui justifie la valeur de $λ$ utilisée dans la suite du calcul.
+> puisque c'est lui qui justifie la valeur de $λ$ utilisée dans la suite du calcul. Dans la
+> restriction locale (Q8-Q9), c'est la continuité ($Q=S_1v_1=S_2v_2$) puis Bernoulli qui
+> s'appliquent — pas les formules de pertes de charge, sans rapport avec ce phénomène réversible.
 
 #### 3. Les conversions
 
-$Q = 0{,}6$ L/s $= 0{,}6 × 10^{-3}$ m³/s. $D = 20$ mm $= 0{,}020$ m.
+$Q = 0{,}6$ L/s $= 0{,}6 × 10^{-3}$ m³/s. $D = 20$ mm $= 0{,}020$ m. $D_2 = 12$ mm $= 0{,}012$ m.
 
 #### 4. Le remplacement
 
@@ -30808,10 +31384,20 @@ supplémentaire ajouté plus tard suffirait à faire tomber le circuit sous le s
 donne une vitesse plus faible, et la vitesse intervient **au carré** dans les deux formules — un
 gain de diamètre réduit les pertes bien plus que proportionnellement.
 
+**8.** $S_2 = πD_2^2/4 ≈ 1{,}13 × 10^{-4}$ m². Par continuité, $v_2 = Q/S_2 ≈ 5{,}31$ m/s (on
+retrouve le même résultat via $v_2 = v_1 × (D/D_2)^2 = 1{,}91 × (20/12)^2 ≈ 5{,}31$ m/s).
+
+**9.** $ΔP = \\dfrac{1}{2}ρ(v_2^2 - v_1^2) = 0{,}5 × 850 × (5{,}31^2 - 1{,}91^2) ≈ 10{,}4$ kPa.
+
 #### 5. Le calcul
 
 Voir le détail ci-dessus : $v ≈ 1{,}91$ m/s, $Re ≈ 1082$ (laminaire), $ΔP_{totale} ≈ 23{,}3$ kPa,
-marge finale $≈ 6{,}7$ kPa.
+marge finale $≈ 6{,}7$ kPa ; dans la restriction, $v_2 ≈ 5{,}31$ m/s et $ΔP ≈ 10{,}4$ kPa.
+
+**9. (suite)** Cette chute de $10{,}4$ kPa **ne s'ajoute pas** à la perte de charge totale de la
+question 5 : c'est un phénomène **réversible**, la pression remonte dès que le tube retrouve son
+diamètre de $20$ mm en sortie du débitmètre. Seules les pertes de charge (Q3-Q5), irréversibles,
+comptent dans le bilan de pression disponible au vérin.
 
 #### 6. La vérification
 
@@ -30820,8 +31406,10 @@ d'un circuit hydraulique (plusieurs dizaines de bars, soit plusieurs milliers de
 avec des pertes qui doivent rester une fraction modeste de la pression disponible, pas l'écraser.
 **Contrôle de cohérence sur la marge** : une marge de $6{,}7$ kPa sur $180$ kPa requis représente
 moins de $4$ % — un circuit qui « fonctionne » sur le papier mais **sans aucune réserve** pour
-l'usure, un ajout de coude, ou un fluide légèrement plus visqueux en hiver. C'est exactement le
-genre de conclusion qu'un dimensionnement doit savoir formuler, au-delà du simple chiffre.
+l'usure, un ajout de coude, ou un fluide légèrement plus visqueux en hiver. **Contrôle sur la
+restriction** : $v_2 ≈ 5{,}31$ m/s est cohérent avec le rapport des sections
+($(20/12)^2 ≈ 2{,}78$, proche du rapport $5{,}31/1{,}91 ≈ 2{,}78$ trouvé) — et comme cette chute
+est réversible, elle ne change rien à la conclusion de viabilité de la question 6.
 """,
         },
         {
@@ -32689,6 +33277,239 @@ fasse jamais perdre que quelques minutes de travail.
 matrice doit se déplacer vers le coin « probabilité faible / impact faible ». Si une parade
 proposée ne déplace le risque dans aucune direction, ce n'est pas une vraie parade — seulement une
 intention rassurante.
+""",
+        },
+        {
+            "id": '9.7',
+            "titre": 'Prototypage rapide : maquettage, impression 3D et essais de validation',
+            "duree": '2 h',
+            "cours": """### 1. Ce que cette fiche ajoute à la 9.5
+
+La fiche 9.5 explique **quand** changer de niveau de prototype, et pourquoi un prototype rapide
+ne valide jamais tout. Cette fiche répond à la question qui reste : **comment**, concrètement,
+fabriquer un prototype rapide, et comment organiser un essai qui donne un résultat exploitable —
+pas juste une impression que « ça a l'air de tenir ».
+
+### 2. Les quatre familles de prototypage rapide
+
+| Technique | Précision typique | Matériaux | Délai | Coût | Ce qu'elle valide bien |
+|---|---|---|---|---|---|
+| **Impression 3D FDM** (dépôt de filament) | ≈ ±0,2 mm (couches 0,1–0,3 mm) | ABS, PLA, PETG | Quelques heures | Faible | Forme, encombrement |
+| **Impression 3D SLA** (résine) | ≈ ±0,05 mm (couches 0,025–0,1 mm) | Résines photopolymères | Quelques heures | Moyen | Détails fins, esthétique |
+| **Usinage rapide** (CN) | ≈ ±0,05 mm | Métal ou plastique **réel** | 1 à 3 jours | Élevé | Forme **et** matériau réels |
+| **Maquette / découpe laser** | Souvent ±0,5 mm | Carton, mousse, contreplaqué | Quelques heures | Très faible | Encombrement, ergonomie |
+
+**Le réflexe de choix** : ne jamais choisir la technique la moins chère ou la plus rapide sans
+avoir d'abord répondu à la question de la fiche 9.5 — « qu'est-ce que je veux valider ? ». Une
+technique rapide et bon marché qui ne valide pas la bonne chose fait perdre du temps, pas en
+gagner.
+
+### 3. Pourquoi la structure en couches change tout : l'anisotropie expliquée simplement
+
+[[FIG:impression_3d_couches]]
+
+Une pièce imprimée en FDM se construit **couche après couche** : chaque nouvelle couche adhère à
+la précédente, mais **moins bien** que la matière n'adhère à elle-même à l'intérieur d'une même
+couche. Résultat : la pièce est **anisotrope** — sa résistance dépend de la direction dans
+laquelle on la sollicite par rapport au sens des couches.
+
+> **Effort dans le plan des couches** (les couches glissent les unes sur les autres, mais la
+> matière elle-même résiste) → résistance proche du matériau plein.
+>
+> **Effort perpendiculaire aux couches** (l'effort tend à séparer une couche de la suivante) →
+> résistance nettement plus faible, parfois de moitié.
+
+**Ce que ça veut dire concrètement** : deux prototypes de la **même** pièce, imprimés avec une
+orientation différente sur le plateau, peuvent donner deux résultats d'essai totalement
+différents — sans qu'aucun des deux ne soit « faux ». C'est pour cela qu'un essai de résistance
+sur un prototype FDM doit toujours préciser l'orientation d'impression, comme une cote sur un
+plan précise une référence.
+
+### 4. Organiser un essai de validation qui donne un vrai résultat
+
+La fiche 9.5 a déjà donné le protocole en quatre temps (définir la question, fixer le critère
+avant l'essai, essayer, décider). Trois précisions concrètes pour que l'essai soit exploitable :
+
+1. **Ne jamais tester une seule pièce.** Un prototype rapide a une variabilité propre au procédé
+   (orientation, remplissage, défauts d'impression) — au moins **trois exemplaires** avant de
+   conclure quoi que ce soit sur une résistance.
+2. **Tracer l'essai par écrit** : date, personne, pièce testée (avec son orientation
+   d'impression si c'est du FDM), critère visé, résultat précis, décision prise. Un essai
+   « ça avait l'air de tenir » ne se défend devant personne — ni un jury, ni un client.
+3. **Préciser la technique ET l'orientation** dans le compte-rendu, pas seulement « prototype
+   imprimé » : ces deux informations conditionnent totalement ce que le résultat représente.
+
+### 5. Choisir la bonne technique : un exemple raisonné
+
+**La situation.** Un carter de protection doit répondre à deux exigences : (a) s'emboîter
+correctement dans un espace contraint entre deux organes existants, (b) résister à un choc
+modéré accidentel (chute d'un outil) sans se fissurer.
+
+**Le raisonnement.**
+
+- Pour (a), l'encombrement : une **impression FDM** rapide et peu coûteuse suffit largement — un
+  écart de forme de quelques dixièmes de millimètre ne remet pas en cause un test d'emboîtement.
+- Pour (b), la résistance au choc : le FDM ne convient **pas** seul, car sa résistance dépend de
+  l'orientation d'impression (section 3) et le matériau réel prévu (un plastique injecté chargé
+  fibre de verre, par exemple) n'a pas du tout le même comportement au choc qu'un filament ABS
+  imprimé. Il faut un **usinage rapide** dans le matériau réel, ou un tirage sur un moule
+  prototype si le budget le permet.
+
+**La conclusion.** Une seule pièce prototype ne suffit pas ici : deux prototypes de nature
+différente, chacun dédié à une seule question, donnent une réponse fiable — exactement le
+principe de la fiche 9.5 appliqué à un cas concret.
+
+### 6. Les erreurs classiques
+
+1. **Tester une seule pièce et généraliser le résultat** — la variabilité d'un prototype rapide
+   (surtout en FDM) rend une seule mesure peu fiable.
+2. **Choisir la technique la moins chère ou la plus rapide** sans se demander ce qu'elle doit
+   réellement démontrer.
+3. **Ne pas tracer l'essai par écrit** — une décision non documentée ne se justifie ni devant un
+   jury, ni devant un client, des mois plus tard.
+4. **Oublier de préciser l'orientation d'impression** d'un prototype FDM testé en résistance —
+   sans elle, le résultat ne veut rien dire.
+5. **Vouloir sauter directement au procédé définitif** faute d'outillage disponible, alors qu'un
+   prototype rapide bien choisi permettrait de tester tôt, à moindre coût (fiche 9.5).
+
+### 7. À retenir
+
+- Quatre familles de prototypage rapide : FDM, SLA, usinage rapide, maquette/découpe laser —
+  chacune avec sa précision, son matériau, son délai propres.
+- Une pièce imprimée en FDM est **anisotrope** : sa résistance dépend de l'orientation
+  d'impression par rapport à l'effort appliqué.
+- Un essai de validation exige : au moins trois pièces, un critère écrit fixé avant l'essai, une
+  trace écrite du résultat et de la décision.
+- Le choix d'une technique se fait sur **ce qu'elle doit valider**, jamais sur son seul coût ou
+  délai.
+""",
+            "formules": """
+**Le choix de technique** — la précision requise ET le matériau à représenter déterminent la
+technique, pas le coût seul
+
+**Le repère anisotropie FDM** — la résistance change selon l'orientation d'impression par
+rapport à l'effort appliqué ; un effort perpendiculaire aux couches est le cas le plus défavorable
+
+**Le nombre d'échantillons** — un seul essai ne prouve rien ; au moins 3 pièces avant de conclure
+sur une résistance
+
+**Le critère avant l'essai** — toujours écrit, chiffré, daté, AVANT de lancer le test (fiche 9.5)
+""",
+            "exemple": """
+### Cas industriel — Le boîtier testé dans le mauvais sens
+
+**Le symptôme.** Un boîtier plastique avec des pattes d'encliquetage est imprimé en FDM pour un
+essai de résistance à l'ouverture répétée. Toutes les pattes cassent dès les premiers essais,
+alors que la même géométrie, calculée en RDM (fiche 4), devait largement tenir.
+
+**Le diagnostic.** En examinant les pièces cassées, le bureau d'études remarque que la cassure
+suit exactement les lignes de couches d'impression. Les pattes avaient été orientées sur le
+plateau de sorte que l'effort de flexion à l'ouverture s'exerce **perpendiculairement** aux
+couches — exactement le cas le plus défavorable pour une pièce FDM. Le calcul RDM, lui,
+supposait un matériau homogène, sans tenir compte de l'anisotropie du procédé de prototypage.
+
+**La correction.** Réimpression du boîtier avec les pattes orientées différemment sur le
+plateau, de façon à ce que l'effort d'ouverture s'exerce **dans le plan** des couches plutôt que
+perpendiculairement. Les pattes résistent alors sans casser, conformément au calcul initial.
+
+**Ce que le cas apprend.** Le calcul de RDM n'était pas en cause — c'est l'orientation
+d'impression, un paramètre du **procédé de prototypage**, qui avait transformé une pièce
+correctement dimensionnée en pièce fragile. Sur un prototype FDM destiné à un essai mécanique,
+l'orientation sur le plateau est une donnée de conception à part entière, pas un détail
+d'atelier.
+""",
+            "exercice": """
+### Atelier guidé — Choisir, tester et interpréter un prototype rapide
+
+**1.** Pour valider uniquement l'encombrement d'un carter dans son environnement, quelle
+technique du tableau du cours choisir ? Justifiez en une phrase.
+
+**2.** Cette même pièce doit ensuite être testée en résistance à un choc représentatif du
+service réel. La technique choisie en question 1 convient-elle pour cette deuxième validation ?
+Justifiez.
+
+**3.** Une équipe teste **une seule** pièce imprimée en FDM et conclut que « la pièce tient très
+bien ». Que répondez-vous à cette conclusion ?
+
+**4.** Cette même équipe a orienté sa pièce sur le plateau de sorte que l'effort de choc
+s'applique **perpendiculairement** aux couches. Le résultat de leur essai est-il représentatif
+d'une pièce imprimée dans l'autre sens ? Justifiez avec le concept d'anisotropie.
+
+**5.** Citez les quatre éléments qui doivent obligatoirement figurer dans la trace écrite d'un
+essai de validation.
+
+**6.** Le bureau d'études hésite entre FDM (délai : quelques heures, coût faible) et usinage
+rapide en aluminium (délai : 2 jours, coût élevé) pour valider la résistance en fatigue d'un
+support **définitif** en aluminium. Lequel choisir ? Pourquoi le critère de coût/délai ne
+doit-il pas être décisif ici ?
+
+**7.** En synthèse : pourquoi un prototype FDM qui « a l'air identique » à la pièce définitive
+peut-il donner un résultat de test de résistance totalement différent ?
+""",
+            "corrige": """
+### Corrigé, en six temps
+
+#### 1. Ce que dit l'énoncé
+
+Sept questions sur le choix d'une technique de prototypage rapide, l'interprétation d'un essai
+de résistance sur une pièce FDM, et la rigueur méthodologique d'une validation.
+
+#### 2. Quelle règle, et pourquoi
+
+> Le choix d'une technique de prototypage se fait sur ce qu'elle doit valider, jamais sur son
+> seul coût ou délai. Une pièce FDM est anisotrope : sa résistance dépend de l'orientation
+> d'impression par rapport à l'effort appliqué. Un essai de validation exige plusieurs
+> exemplaires et une trace écrite complète.
+
+#### 3. Les conversions
+
+Sans objet : cette fiche évalue un raisonnement méthodologique, pas un calcul numérique.
+
+#### 4. Le remplacement
+
+Sans objet pour les mêmes raisons — chaque réponse se construit par un raisonnement argumenté,
+pas par la substitution d'une formule.
+
+#### 5. Le calcul
+
+**1.** Une **impression FDM** (ou une maquette/découpe laser) suffit : seule la géométrie
+externe compte pour un contrôle d'encombrement, et le FDM est rapide et peu coûteux pour cela.
+
+**2.** **Non** : le FDM ne valide pas la résistance au choc de façon représentative, à cause de
+l'anisotropie (section 3 du cours) — il faudrait un usinage rapide dans le matériau réel, ou un
+tirage représentatif du procédé définitif.
+
+**3.** Une seule pièce ne prouve rien : la variabilité d'un prototype rapide (orientation,
+défauts d'impression) impose de tester **au moins trois exemplaires** avant de conclure quoi que
+ce soit sur une résistance.
+
+**4.** **Non** : l'effort perpendiculaire aux couches est le cas le plus défavorable pour une
+pièce FDM (la résistance vient alors de l'adhérence entre couches, plus faible que la matière
+elle-même). Une pièce imprimée dans l'autre sens, avec l'effort dans le plan des couches, aurait
+probablement un résultat bien meilleur — les deux essais ne sont pas comparables.
+
+**5.** Date, personne responsable de l'essai, description précise de la pièce testée (technique
+et orientation d'impression si FDM), critère de réussite fixé à l'avance, résultat précis
+obtenu, décision prise.
+
+**6.** L'**usinage rapide en aluminium** s'impose : la fatigue dépend fortement du matériau et
+de son état de surface réel, que rien de moins fidèle ne reproduit. Le coût et le délai plus
+élevés ne doivent pas être décisifs ici, car un résultat de fatigue obtenu sur un matériau non
+représentatif (FDM) ne dirait rien de fiable sur la pièce définitive — le coût d'un mauvais
+résultat FDM utilisé à tort dépasserait largement l'économie faite sur l'essai.
+
+**7.** Parce que la géométrie externe (ce qui « a l'air identique ») ne détermine pas la
+résistance : celle-ci dépend de la structure interne en couches et de leur orientation par
+rapport à l'effort — deux informations invisibles à l'œil nu, mais décisives pour tout essai
+mécanique.
+
+#### 6. La vérification
+
+**Le test qui tranche à chaque fois** : « ce que je m'apprête à conclure repose-t-il sur une
+seule pièce, ou sur plusieurs ? », et « la technique choisie partage-t-elle avec la pièce
+définitive ce qui est réellement testé — la forme seule, ou aussi le matériau et sa structure
+interne ? ». Ces deux questions, posées systématiquement, évitent la quasi-totalité des
+conclusions hâtives sur un prototype rapide.
 """,
         },
     ],
@@ -49035,6 +49856,7 @@ st.markdown("""
   .chip-duree { background: #f1f5f9; color: #475569; }
   .chip-lue  { background: #dcfce7; color: #166534; }
   .chip-nonlue { background: #fef3c7; color: #92400e; }
+  .chip-manquant { background: #fee2e2; color: #991b1b; }
 
   /* ---------- ONGLETS PLUS LISIBLES ---------- */
   .stTabs [data-baseweb="tab"] { font-size: 1rem; font-weight: 600; padding: 10px 6px; }
@@ -59641,6 +60463,112 @@ BLOCS_GESTION = [{"id": 10,
                              "conception (E4/E5/E6), pas une épreuve écrite à part.",
                    "fiches": _fiches_gestion}]
 
+# ===========================================================================
+# COUVERTURE OFFICIELLE DU PROGRAMME (Tableau de bord)
+# ---------------------------------------------------------------------------
+# Les 18 matières du référentiel, telles que nommées par l'utilisateur, mises
+# en regard des fiches réelles qui les couvrent. Résolu par id de bloc (pas
+# par titre, pour ne jamais dépendre d'un accent ou d'un tiret mal recopié) :
+# chaque entrée est (id_bloc, [id_fiche, ...]). "Complet" / "Incomplet (à
+# enrichir)" / "Manquant" — voir l'audit du 2026-09-04 pour la méthode.
+# ===========================================================================
+
+MATIERES_PROGRAMME = [
+    ("Enseignement Professionnel & Technologique", [
+        ("Analyse fonctionnelle", "Complet",
+         "Bête à cornes, pieuvre, FAST, SADT/actigramme, cahier des charges fonctionnel complet.",
+         [("bloc1", ["1.1", "1.2", "1.3", "1.4", "1.5", "1.6", "1.7", "1.8"])]),
+        ("Modélisation 3D (CAO)", "Complet",
+         "Esquisse, extrusion/révolution, congés, arbre de construction, assemblages, mise en "
+         "plan, lissage — plus deux parcours SolidWorks guidés pas à pas.",
+         [("bloc5", ["5.1", "5.2", "5.3", "5.4", "5.5", "5.6", "5.7", "5.8", "5.9", "5.10",
+                     "5.11", "5.12", "5.13", "5.14"]),
+          (9, ["9.2", "9.4"])]),
+        ("Cinématique et Statique", "Complet",
+         "Degrés de liberté, schéma cinématique, isostatisme, équilibre/appuis/frottement — "
+         "répartie sur cinq fiches distinctes plutôt qu'une seule.",
+         [("bloc6", ["6.1", "6.2", "6.3"]), (8, ["8.1"]), (12, ["12.1"]), (15, ["15.3"])]),
+        ("RDM & Dimensionnement", "Complet",
+         "Traction/compression (10 h), cisaillement/torsion (8 h), flexion (12 h) — 30 h de "
+         "cours cumulées, plus flambement, dimensionnement d'engrenage et 23 études de cas "
+         "chiffrées (page Exercices guidés).",
+         [("bloc4", ["4.1", "4.2", "4.3"]), (12, ["12.2", "12.5"]), (15, ["15.1"])]),
+        ("Dynamique et Énergétique", "Complet",
+         "F=ma, énergie cinétique, moment d'inertie — et depuis cette session, le PFD projeté "
+         "sur un plan incliné (a = g·sin α).",
+         [(8, ["8.1", "8.5"]), (13, ["13.3", "13.5"])]),
+        ("Choix des matériaux", "Complet",
+         "Familles, désignation normalisée, critères de choix comparés sur exemple chiffré.",
+         [("bloc3", ["3.1", "3.2"]), ("bloc0h", ["0.11.1", "0.11.2"])]),
+        ("Procédés de fabrication et contraintes", "Complet",
+         "Obtention des bruts, usinage, plasturgie, chaudronnerie/soudage, fabrication "
+         "additive métallique.",
+         [(12, ["12.3", "12.4"]), (13, ["13.1", "13.2", "13.6"]), ("bloc0i", ["0.12.1", "0.12.2"])]),
+        ("Assemblages", "Complet",
+         "Visserie, assemblages arbre-moyeu, collage et sertissage, contraintes de position en CAO.",
+         [("bloc6", ["6.9", "6.10", "6.14"]), ("bloc5", ["5.12"]), ("bloc0k", ["0.14.1", "0.14.2"])]),
+        ("Conduite de projet", "Complet",
+         "Les six étapes d'un projet, dossier technique et soutenance orale, gestion des risques.",
+         [(9, ["9.1", "9.3", "9.6"])]),
+        ("Prototypage", "Complet",
+         "Quand changer de niveau de prototype (9.5) et comment fabriquer/valider un "
+         "prototype rapide en pratique — familles de procédés, anisotropie FDM, protocole "
+         "d'essai tracé (9.7, ajoutée cette session).",
+         [(9, ["9.5", "9.7"])]),
+    ]),
+    ("Physique-Chimie", [
+        ("Mécanique des fluides", "Complet",
+         "Pertes de charge, nombre de Reynolds, continuité et théorème de Bernoulli (effet Venturi).",
+         [(8, ["8.2", "8.9"])]),
+        ("Thermodynamique", "Complet",
+         "Dilatation thermique, conduction (loi de Fourier), convection et résistances "
+         "thermiques en série pour un mur multicouche.",
+         [(8, ["8.2", "8.7", "8.10"])]),
+        ("Électricité et Électrotechnique", "Complet",
+         "Capteurs et actionneurs, puissance triphasée, variateurs, couplage étoile/triangle "
+         "et courant de démarrage.",
+         [(8, ["8.3", "8.11"])]),
+        ("Sciences des matériaux & Chimie", "Complet",
+         "Oxydoréduction et corrosion, retrait au moulage des polymères, chimie des "
+         "traitements de surface (galvanisation, anodisation, phosphatation).",
+         [(8, ["8.4", "8.8"]), ("bloc3", ["3.3", "3.4"])]),
+    ]),
+    ("Mathématiques", [
+        ("Calcul vectoriel et matriciel", "Complet",
+         "Vecteurs du plan, opérations et déterminant matriciels, matrice inverse, produit "
+         "scalaire ET vectoriel dans l'espace (3D).",
+         [(7, ["7.1", "7.5"]), (19, ["19.1", "19.3", "19.5"])]),
+        ("Analyse", "Complet",
+         "Fonctions, dérivées, calcul intégral, extremums locaux, équations différentielles "
+         "(deux cas traités).",
+         [(7, ["7.2"]), (17, ["17.1", "17.2", "17.4"]), (18, ["18.4", "18.8"])]),
+        ("Géométrie dans l'espace", "Complet",
+         "Coordonnées 3D, droites et plans, distance point-plan, test de parallélisme.",
+         [(19, ["19.5", "19.6"])]),
+        ("Statistiques et Probabilités", "Complet",
+         "Statistique descriptive et inférentielle, probabilités simples et conditionnelles, "
+         "loi binomiale, espérance/écart-type, taille d'échantillon.",
+         [(7, ["7.3"]), (17, ["17.3", "17.6"]), (18, ["18.1", "18.2", "18.3", "18.5", "18.6", "18.7"])]),
+    ]),
+]
+
+
+def _resoudre_fiches_matiere(refs):
+    """(id_bloc, [id_fiche,...]) -> [(bloc_titre, fiche_id, fiche_titre), ...], en ignorant
+    silencieusement une référence devenue invalide plutôt que de faire planter le tableau de bord."""
+    resolues = []
+    for bloc_id, fiche_ids in refs:
+        bloc = next((b for b in BLOCS if b.get("id") == bloc_id), None)
+        if not bloc:
+            continue
+        fiches_par_id = {f.get("id"): f for f in bloc.get("fiches", [])}
+        for fid in fiche_ids:
+            f = fiches_par_id.get(fid)
+            if f:
+                resolues.append((bloc["titre"], fid, f.get("titre", "")))
+    return resolues
+
+
 st.sidebar.divider()
 nb_fiches = NB_FICHES
 P.setdefault("erreurs", {})
@@ -59668,6 +60596,33 @@ if _jump_val and _jump_val.strip() != st.session_state.get("_dernier_saut_traite
     else:
         st.sidebar.caption(f"⚠️ Fiche « {_jump_val.strip()} » introuvable.")
 
+# --- Recherche globale par mots-clés, filtre instantané sur toutes les fiches ---
+_recherche_val = st.sidebar.text_input(
+    "🔎 Rechercher dans les fiches", placeholder="ex : reynolds, chasles, prototypage…",
+    key="sidebar_recherche_input")
+if _recherche_val and _recherche_val.strip():
+    _terme = _recherche_val.strip().lower()
+    _resultats_recherche = []
+    for _b in BLOCS:
+        for _f in _b.get("fiches", []):
+            _hay = " ".join(str(_f.get(_champ, "")) for _champ in
+                             ("id", "titre", "cours", "formules", "exemple", "exercice"))
+            if _terme in _hay.lower():
+                _resultats_recherche.append((_b, _f))
+    with st.sidebar.expander(
+            f"🔎 {len(_resultats_recherche)} résultat(s) pour « {_recherche_val.strip()} »",
+            expanded=True):
+        if not _resultats_recherche:
+            st.caption("Aucune fiche ne contient ce mot.")
+        for _b_res, _f_res in _resultats_recherche[:20]:
+            _titre_res = _f_res.get("titre", "")
+            _label = f"{_f_res.get('id')} — {_titre_res[:42]}{'…' if len(_titre_res) > 42 else ''}"
+            if st.button(_label, key=f"srch_{_b_res.get('id')}_{_f_res.get('id')}",
+                         width="stretch"):
+                _aller_a_fiche(_b_res["titre"], _f_res.get("id"))
+        if len(_resultats_recherche) > 20:
+            st.caption(f"… et {len(_resultats_recherche) - 20} autre(s) — affinez votre recherche.")
+
 with st.sidebar.expander("Détail par bloc", expanded=False):
     for _b in BLOCS:
         _tot = len(_b.get("fiches", []))
@@ -59689,106 +60644,154 @@ if PAGE == "🏠 Tableau de bord":
     st.title("Tableau de bord")
     st.markdown("Programme de 1re année de BTS CPI : cours, exercices corrigés et outils de calcul.")
 
-    s = stats()
-    c1, c2, c3, c4 = st.columns(4)
-    c1.metric("Blocs de cours", len(BLOCS))
-    c2.metric("Fiches détaillées", nb_fiches)
-    c3.metric("Questions de quiz", s["total"])
-    c4.metric("Matériaux référencés", len(MATERIAUX))
+    _tab_apercu, _tab_stats = st.tabs(["Vue d'ensemble", "📊 Statistiques"])
 
-    st.caption(
-        "💾 Pensez à télécharger votre progression avant de fermer l'application (page "
-        "« Ma progression » → Sauvegarde) : elle n'est pas conservée automatiquement en ligne.")
+    with _tab_apercu:
+        s = stats()
+        c1, c2, c3, c4 = st.columns(4)
+        c1.metric("Blocs de cours", len(BLOCS))
+        c2.metric("Fiches détaillées", nb_fiches)
+        c3.metric("Questions de quiz", s["total"])
+        c4.metric("Matériaux référencés", len(MATERIAUX))
 
-    # --- Paliers de progression ---
-    st.write("")
-    _palier_actuel, _pct_par_palier = palier_actuel_et_pourcentages()
+        st.caption(
+            "💾 Pensez à télécharger votre progression avant de fermer l'application (page "
+            "« Ma progression » → Sauvegarde) : elle n'est pas conservée automatiquement en ligne.")
 
-    st.caption(f"**Palier actuel : {PALIERS[_palier_actuel]['icone']} "
-               f"{_palier_actuel} — {PALIERS[_palier_actuel]['nom']}** — "
-               f"{PALIERS[_palier_actuel]['description']}")
-    _cols_paliers = st.columns(4)
-    for _n, _col in enumerate(_cols_paliers):
-        with _col:
-            st.progress(_pct_par_palier[_n] / 100)
-            _marque = "👉 " if _n == _palier_actuel else ""
-            st.caption(f"{_marque}{PALIERS[_n]['icone']} {_n} — {PALIERS[_n]['nom']} "
-                       f"({_pct_par_palier[_n]:.0f} %)")
-
-    # --- Reprendre où on s'est arrêté ---
-    _toutes_fiches_ord = [(b, f) for b in BLOCS for f in b.get("fiches", [])]
-    _prochaine = next((tf for tf in _toutes_fiches_ord
-                       if f"{tf[0]['id']}#{tf[1].get('id')}" not in P["fiches_lues"]), None)
-    st.write("")
-    if _prochaine:
-        _b_suiv, _f_suiv = _prochaine
-        _rang = _toutes_fiches_ord.index(_prochaine) + 1
-        st.markdown(
-            f'<div class="info-box" style="display:flex;justify-content:space-between;'
-            f'align-items:center;flex-wrap:wrap;gap:10px">'
-            f'<div><b>Reprendre où vous en étiez</b><br>'
-            f'<span style="color:#475569">Fiche {_rang}/{len(_toutes_fiches_ord)} — '
-            f'{_f_suiv["id"]} · {_f_suiv.get("titre", "")}</span></div></div>',
-            unsafe_allow_html=True)
+        # --- Paliers de progression ---
         st.write("")
-        if st.button(f"▶ Continuer — fiche {_f_suiv['id']}", type="primary", key="btn_reprendre"):
-            _aller_a_fiche(_b_suiv["titre"], _f_suiv["id"])
-    else:
-        st.success(f"🎉 Les {nb_fiches} fiches ont été lues au moins une fois. Bravo — direction "
-                  "le mode révision du quiz pour consolider.")
+        _palier_actuel, _pct_par_palier = palier_actuel_et_pourcentages()
 
-    st.divider()
-    st.subheader("Les blocs du programme")
+        st.caption(f"**Palier actuel : {PALIERS[_palier_actuel]['icone']} "
+                   f"{_palier_actuel} — {PALIERS[_palier_actuel]['nom']}** — "
+                   f"{PALIERS[_palier_actuel]['description']}")
+        _cols_paliers = st.columns(4)
+        for _n, _col in enumerate(_cols_paliers):
+            with _col:
+                st.progress(_pct_par_palier[_n] / 100)
+                _marque = "👉 " if _n == _palier_actuel else ""
+                st.caption(f"{_marque}{PALIERS[_n]['icone']} {_n} — {PALIERS[_n]['nom']} "
+                           f"({_pct_par_palier[_n]:.0f} %)")
 
-    for bloc in BLOCS:
-        fiches_data = bloc.get("fiches", {})
-        if isinstance(fiches_data, dict):
-            fiches_bloc = [f"{bloc.get('id', 'bloc')}#{k}" for k in fiches_data.keys()]
-            fiches_titles = [f"{k}" for k in fiches_data.keys()]
+        # --- Reprendre où on s'est arrêté ---
+        _toutes_fiches_ord = [(b, f) for b in BLOCS for f in b.get("fiches", [])]
+        _prochaine = next((tf for tf in _toutes_fiches_ord
+                           if f"{tf[0]['id']}#{tf[1].get('id')}" not in P["fiches_lues"]), None)
+        st.write("")
+        if _prochaine:
+            _b_suiv, _f_suiv = _prochaine
+            _rang = _toutes_fiches_ord.index(_prochaine) + 1
+            st.markdown(
+                f'<div class="info-box" style="display:flex;justify-content:space-between;'
+                f'align-items:center;flex-wrap:wrap;gap:10px">'
+                f'<div><b>Reprendre où vous en étiez</b><br>'
+                f'<span style="color:#475569">Fiche {_rang}/{len(_toutes_fiches_ord)} — '
+                f'{_f_suiv["id"]} · {_f_suiv.get("titre", "")}</span></div></div>',
+                unsafe_allow_html=True)
+            st.write("")
+            if st.button(f"▶ Continuer — fiche {_f_suiv['id']}", type="primary", key="btn_reprendre"):
+                _aller_a_fiche(_b_suiv["titre"], _f_suiv["id"])
         else:
-            fiches_bloc = [f"{bloc.get('id', 'bloc')}#{f.get('id', '')}" for f in fiches_data]
-            fiches_titles = [f"{f.get('titre', '')}" for f in fiches_data]
+            st.success(f"🎉 Les {nb_fiches} fiches ont été lues au moins une fois. Bravo — direction "
+                      "le mode révision du quiz pour consolider.")
 
-        lues_bloc = sum(1 for f in fiches_bloc if f in P["fiches_lues"])
-        with st.container(border=True):
-            col_a, col_b = st.columns([5, 1])
-            with col_a:
-                _pal = palier_du_bloc(bloc)
-                st.markdown(f"{PALIERS[_pal]['icone']} `Palier {_pal} — {PALIERS[_pal]['nom']}` "
-                            f"&nbsp; **{bloc['titre']}**", unsafe_allow_html=True)
-                st.caption(bloc.get("resume", ""))
-                st.caption(" · ".join(fiches_titles))
-            with col_b:
-                st.metric("Lues", f"{lues_bloc}/{len(fiches_data)}")
-                
-    st.divider()
-    st.subheader("Par où commencer ?")
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        st.markdown("""
-        <div class="info-box">
-        <b>1. Lire les fiches dans l'ordre</b><br>
-        Chaque fiche contient le cours, les formules, un cas industriel réel et un exercice
-        de type examen entièrement corrigé.
-        </div>""", unsafe_allow_html=True)
-    with col2:
-        st.markdown("""
-        <div class="info-box">
-        <b>2. Se tester au quiz</b><br>
-        Les questions marquées « Piège » correspondent aux erreurs les plus fréquentes
-        en devoir surveillé. Chaque réponse est expliquée.
-        </div>""", unsafe_allow_html=True)
-    with col3:
-        st.markdown("""
-        <div class="info-box">
-        <b>3. Vérifier ses calculs</b><br>
-        Les calculateurs servent à contrôler un résultat obtenu à la main —
-        pas à le remplacer. Toujours poser le calcul avant.
-        </div>""", unsafe_allow_html=True)
+        st.divider()
+        st.subheader("Couverture officielle du programme")
+        st.caption(
+            "Les 18 matières du référentiel, confrontées au contenu réel de l'application — "
+            "cliquez sur une matière pour ouvrir sa fiche principale.")
 
-    st.divider()
-    st.subheader("Les cinq réflexes à acquérir cette année")
-    st.markdown("""
+        _total_matieres = sum(len(mats) for _, mats in MATIERES_PROGRAMME)
+        _total_complet = sum(1 for _, mats in MATIERES_PROGRAMME for (_, statut, _, _) in mats
+                              if statut == "Complet")
+        _c1, _c2, _c3 = st.columns(3)
+        _c1.metric("Complet", f"{_total_complet}/{_total_matieres}")
+        _c2.metric("Incomplet (à enrichir)",
+                   sum(1 for _, mats in MATIERES_PROGRAMME for (_, statut, _, _) in mats
+                       if statut == "Incomplet (à enrichir)"))
+        _c3.metric("Manquant",
+                   sum(1 for _, mats in MATIERES_PROGRAMME for (_, statut, _, _) in mats
+                       if statut == "Manquant"))
+
+        _classe_statut = {"Complet": "chip-lue", "Incomplet (à enrichir)": "chip-nonlue",
+                           "Manquant": "chip-manquant"}
+
+        for _categorie, _matieres in MATIERES_PROGRAMME:
+            with st.expander(f"**{_categorie}** ({len(_matieres)} matières)", expanded=False):
+                for _nom, _statut, _justif, _refs in _matieres:
+                    _fiches_resolues = _resoudre_fiches_matiere(_refs)
+                    with st.container(border=True):
+                        _col_txt, _col_btn = st.columns([4, 1])
+                        with _col_txt:
+                            st.markdown(
+                                f'<span class="chip {_classe_statut.get(_statut, "chip-bloc")}">'
+                                f'{_statut.upper()}</span> &nbsp; **{_nom}**',
+                                unsafe_allow_html=True)
+                            st.caption(_justif)
+                            if _fiches_resolues:
+                                _tags = " ".join(
+                                    f'<span class="chip chip-bloc">{fid}</span>'
+                                    for _, fid, _ in _fiches_resolues)
+                                st.markdown(_tags, unsafe_allow_html=True)
+                        with _col_btn:
+                            if _fiches_resolues:
+                                _bloc_titre, _fid, _ftitre = _fiches_resolues[0]
+                                _cle = "btn_matiere_" + re.sub(r"[^a-z0-9]+", "_", _nom.lower())
+                                if st.button(f"Ouvrir {_fid}", key=_cle, width="stretch"):
+                                    _aller_a_fiche(_bloc_titre, _fid)
+
+        st.divider()
+        st.subheader("Les blocs du programme")
+
+        for bloc in BLOCS:
+            fiches_data = bloc.get("fiches", {})
+            if isinstance(fiches_data, dict):
+                fiches_bloc = [f"{bloc.get('id', 'bloc')}#{k}" for k in fiches_data.keys()]
+                fiches_titles = [f"{k}" for k in fiches_data.keys()]
+            else:
+                fiches_bloc = [f"{bloc.get('id', 'bloc')}#{f.get('id', '')}" for f in fiches_data]
+                fiches_titles = [f"{f.get('titre', '')}" for f in fiches_data]
+
+            lues_bloc = sum(1 for f in fiches_bloc if f in P["fiches_lues"])
+            with st.container(border=True):
+                col_a, col_b = st.columns([5, 1])
+                with col_a:
+                    _pal = palier_du_bloc(bloc)
+                    st.markdown(f"{PALIERS[_pal]['icone']} `Palier {_pal} — {PALIERS[_pal]['nom']}` "
+                                f"&nbsp; **{bloc['titre']}**", unsafe_allow_html=True)
+                    st.caption(bloc.get("resume", ""))
+                    st.caption(" · ".join(fiches_titles))
+                with col_b:
+                    st.metric("Lues", f"{lues_bloc}/{len(fiches_data)}")
+
+        st.divider()
+        st.subheader("Par où commencer ?")
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            st.markdown("""
+            <div class="info-box">
+            <b>1. Lire les fiches dans l'ordre</b><br>
+            Chaque fiche contient le cours, les formules, un cas industriel réel et un exercice
+            de type examen entièrement corrigé.
+            </div>""", unsafe_allow_html=True)
+        with col2:
+            st.markdown("""
+            <div class="info-box">
+            <b>2. Se tester au quiz</b><br>
+            Les questions marquées « Piège » correspondent aux erreurs les plus fréquentes
+            en devoir surveillé. Chaque réponse est expliquée.
+            </div>""", unsafe_allow_html=True)
+        with col3:
+            st.markdown("""
+            <div class="info-box">
+            <b>3. Vérifier ses calculs</b><br>
+            Les calculateurs servent à contrôler un résultat obtenu à la main —
+            pas à le remplacer. Toujours poser le calcul avant.
+            </div>""", unsafe_allow_html=True)
+
+        st.divider()
+        st.subheader("Les cinq réflexes à acquérir cette année")
+        st.markdown("""
 | # | Réflexe | Pourquoi |
 |---|---|---|
 | 1 | **Toujours vérifier résistance ET rigidité** | Tantôt l'une, tantôt l'autre dimensionne. Sur les pièces longues, c'est presque toujours la rigidité. |
@@ -59797,6 +60800,48 @@ if PAGE == "🏠 Tableau de bord":
 | 4 | **Ne jamais resserrer une tolérance « par sécurité »** | Passer de IT11 à IT7 multiplie le coût par 3 à 5. On resserre parce que la fonction l'exige. |
 | 5 | **Modéliser pour la modification à venir** | Une esquisse bleue est une bombe à retardement. Contraindre à 100 %, ancrer sur les plans de référence. |
 """)
+
+    with _tab_stats:
+        st.subheader("Taux de fiches lues")
+        _sc1, _sc2, _sc3 = st.columns(3)
+        _sc1.metric("Fiches lues", f"{lues}/{nb_fiches}", f"{_pct} %")
+        _sc2.metric("Blocs entièrement lus",
+                    sum(1 for _b in BLOCS
+                        if _b.get("fiches") and all(
+                            f"{_b['id']}#{_f.get('id')}" in P["fiches_lues"]
+                            for _f in _b.get("fiches", []))))
+        _sc3.metric("Palier actuel",
+                    f"{PALIERS[palier_actuel_et_pourcentages()[0]]['icone']} "
+                    f"{PALIERS[palier_actuel_et_pourcentages()[0]]['nom']}")
+        st.progress(lues / nb_fiches if nb_fiches else 0)
+
+        st.divider()
+        st.subheader("État de la révision espacée")
+        _cartes_srs = P.get("srs") or {}
+        _toutes_q_srs = {q["uid"]: q for q in toutes_les_questions()}
+        _dues_srs = [(uid, c) for uid, c in srs_dues() if uid in _toutes_q_srs]
+        _total_srs = len([u for u in _cartes_srs if u in _toutes_q_srs])
+
+        _rc1, _rc2, _rc3 = st.columns(3)
+        _rc1.metric("Cartes en révision espacée", _total_srs)
+        _rc2.metric("À réviser aujourd'hui", len(_dues_srs))
+        _rc3.metric("À jour", max(0, _total_srs - len(_dues_srs)))
+
+        if _total_srs:
+            st.caption("Répartition par palier d'espacement (jours avant la prochaine révision) :")
+            _repartition = {j: 0 for j in PALIERS_SRS}
+            for _uid, _carte in _cartes_srs.items():
+                if _uid in _toutes_q_srs:
+                    _p_srs = _carte.get("palier", 0)
+                    if 0 <= _p_srs < len(PALIERS_SRS):
+                        _repartition[PALIERS_SRS[_p_srs]] += 1
+            _cols_srs = st.columns(len(PALIERS_SRS))
+            for _col_srs, _jours in zip(_cols_srs, PALIERS_SRS):
+                with _col_srs:
+                    st.metric(f"{_jours} j" if _jours else "0 j (échec)", _repartition[_jours])
+        else:
+            st.info("Aucune carte en révision espacée pour l'instant — elles se créent "
+                    "automatiquement dès qu'une question de quiz ou de contrôle est ratée.")
 
 
 # ===========================================================================
