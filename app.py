@@ -87,13 +87,22 @@ def projection_europeenne():
     p.append(_txt(175, 258, "VUE DE DESSUS", 12, TRAIT, "middle", True))
     p.append(_txt(175, 276, "dessinée en dessous", 10, ALERTE, "middle"))
     # lignes d'alignement
-    p.append(f"<line x1='60' y1='190' x2='470' y2='190' stroke='{AXE}' stroke-width='1' stroke-dasharray='6 4'/>")
-    p.append(f"<line x1='290' y1='40' x2='290' y2='330' stroke='{AXE}' stroke-width='1' stroke-dasharray='6 4'/>")
+    # les lignes d'alignement pulsent en phase : on VOIT que les trois vues restent
+    # solidaires, jamais décalées l'une par rapport à l'autre.
+    p.append(f"<line x1='60' y1='190' x2='470' y2='190' stroke='{AXE}' stroke-width='1' stroke-dasharray='6 4'>"
+             f"<animate attributeName='opacity' values='0.4;1;0.4' dur='1.8s' repeatCount='indefinite'/></line>")
+    p.append(f"<line x1='290' y1='40' x2='290' y2='330' stroke='{AXE}' stroke-width='1' stroke-dasharray='6 4'>"
+             f"<animate attributeName='opacity' values='0.4;1;0.4' dur='1.8s' repeatCount='indefinite'/></line>")
     p.append(_txt(60, 45, "Les vues restent alignées : jamais de décalage", 11, AXE))
     # observateur
     p.append(f"<circle cx='545' cy='115' r='16' fill='none' stroke={chr(39)}{ARBRE}{chr(39)} stroke-width='2'/>")
     p.append(_txt(545, 120, "œil", 10, ARBRE, "middle"))
-    p.append(f"<line x1='529' y1='115' x2='450' y2='115' stroke='{ARBRE}' stroke-width='2' marker-end='url(#fl)'/>")
+    # le regard de l'observateur défile vers la pièce : on VOIT le sens d'observation
+    # qui détermine où la vue se dessine.
+    p.append(f"<line x1='529' y1='115' x2='450' y2='115' stroke='{ARBRE}' stroke-width='2' "
+             f"marker-end='url(#fl)' stroke-dasharray='6 4'>"
+             f"<animate attributeName='stroke-dashoffset' values='0;-20' dur='1.2s' "
+             f"repeatCount='indefinite'/></line>")
     p.append("<defs><marker id='fl' markerWidth='9' markerHeight='9' refX='8' refY='4.5' orient='auto'>"
              f"<path d='M0,0 L9,4.5 L0,9 z' fill='{ARBRE}'/></marker></defs>")
     p.append(_txt(575, 150, "L'observateur regarde", 11, FIN))
@@ -120,8 +129,17 @@ def types_de_traits():
               13, FIN)]
     y = 78
     for nom, role, couleur, ep, tirets in lignes:
-        dash = "" if tirets == "none" else f" stroke-dasharray='{tirets}'"
-        p.append(f"<line x1='45' y1='{y}' x2='250' y2='{y}' stroke='{couleur}' stroke-width='{ep}'{dash}/>")
+        if tirets == "none":
+            # trait continu : il se trace de gauche à droite une fois, comme au crayon.
+            p.append(f"<line x1='45' y1='{y}' x2='250' y2='{y}' stroke='{couleur}' stroke-width='{ep}' "
+                     f"stroke-dasharray='205' stroke-dashoffset='205'>"
+                     f"<animate attributeName='stroke-dashoffset' from='205' to='0' dur='1s' fill='freeze'/></line>")
+        else:
+            # trait interrompu/mixte : les tirets défilent, comme un aperçu de logiciel de CAO.
+            p.append(f"<line x1='45' y1='{y}' x2='250' y2='{y}' stroke='{couleur}' stroke-width='{ep}' "
+                     f"stroke-dasharray='{tirets}'>"
+                     f"<animate attributeName='stroke-dashoffset' values='0;-40' dur='2.4s' "
+                     f"repeatCount='indefinite'/></line>")
         p.append(_txt(270, y - 4, nom, 13, TRAIT, "start", True))
         p.append(_txt(270, y + 14, role, 12, FIN))
         y += 62
@@ -144,8 +162,10 @@ def pourquoi_couper():
         p.append(f"<line x1='{x}' y1='55' x2='{x}' y2='205' stroke='{TRAIT}' stroke-width='1.3' stroke-dasharray='8 5'/>")
     p.append(_txt(170, 235, "illisible : que des traits cachés", 12, ALERTE, "middle"))
 
-    # flèche
-    p.append(f"<line x1='310' y1='130' x2='390' y2='130' stroke='{FIN}' stroke-width='2' marker-end='url(#f2)'/>")
+    # flèche — le trait défile : on VOIT le geste de scier, avant/après.
+    p.append(f"<line x1='310' y1='130' x2='390' y2='130' stroke='{FIN}' stroke-width='2' "
+             f"marker-end='url(#f2)' stroke-dasharray='6 4'>"
+             f"<animate attributeName='stroke-dashoffset' values='0;-20' dur='1s' repeatCount='indefinite'/></line>")
     p.append("<defs><marker id='f2' markerWidth='10' markerHeight='10' refX='9' refY='5' orient='auto'>"
              f"<path d='M0,0 L10,5 L0,10 z' fill='{FIN}'/></marker></defs>")
     p.append(_txt(350, 118, "on scie", 11, FIN, "middle"))
@@ -153,9 +173,11 @@ def pourquoi_couper():
     # après : coupe hachurée
     p.append(_txt(420, 34, "APRÈS — la pièce coupée (COUPE A-A)", 13, TRAIT, "start", True))
     p.append(f"<rect x='435' y='55' width='230' height='150' fill='none' stroke='{TRAIT}' stroke-width='2.5'/>")
-    # matière hachurée à gauche et à droite du trou central
-    for x0 in range(440, 660, 12):
-        p.append(f"<line x1='{x0}' y1='200' x2='{x0 + 45}' y2='55' stroke='{FIN}' stroke-width='0.9'/>")
+    # matière hachurée à gauche et à droite du trou central — les hachures apparaissent
+    # une à une, comme si la scie venait de les révéler.
+    for _k, x0 in enumerate(range(440, 660, 12)):
+        p.append(f"<line x1='{x0}' y1='200' x2='{x0 + 45}' y2='55' stroke='{FIN}' stroke-width='0.9' opacity='0'>"
+                 f"<animate attributeName='opacity' from='0' to='1' dur='.06s' begin='{_k * 0.05}s' fill='freeze'/></line>")
     p.append(f"<rect x='510' y='55' width='80' height='150' fill='{FOND}' stroke='{TRAIT}' stroke-width='2.5'/>")
     p.append(_txt(550, 135, "le trou", 12, TRAIT, "middle"))
     p.append(_txt(550, 235, "clair : la matière est hachurée,", 12, OK, "middle"))
@@ -174,8 +196,19 @@ def pourquoi_couper():
 def pourquoi_tolerance():
     p = [_txt(40, 32, "On demande 20 mm. Voilà ce qui sort vraiment de la machine :", 13, TRAIT, "start", True)]
     valeurs = [("19,98", 120), ("20,01", 210), ("19,99", 300), ("20,03", 390), ("20,00", 480)]
-    for v, x in valeurs:
-        p.append(f"<circle cx='{x}' cy='95' r='26' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='2'/>")
+    for _i, (v, x) in enumerate(valeurs):
+        # les pièces sortent de la machine l'une après l'autre ; celle qui sera refusée
+        # (20,03) clignote ensuite en rouge : on VOIT laquelle pose problème.
+        if v == "20,03":
+            p.append(f"<circle cx='{x}' cy='95' r='0' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='2'>"
+                     f"<animate attributeName='r' from='0' to='26' dur='.5s' begin='{_i * 0.3}s' fill='freeze'/>"
+                     f"<animate attributeName='stroke' values='{TRAIT};{ALERTE};{TRAIT}' dur='1.2s' "
+                     f"begin='{_i * 0.3 + 0.5}s' repeatCount='indefinite'/>"
+                     f"<animate attributeName='stroke-width' values='2;3.4;2' dur='1.2s' "
+                     f"begin='{_i * 0.3 + 0.5}s' repeatCount='indefinite'/></circle>")
+        else:
+            p.append(f"<circle cx='{x}' cy='95' r='0' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='2'>"
+                     f"<animate attributeName='r' from='0' to='26' dur='.5s' begin='{_i * 0.3}s' fill='freeze'/></circle>")
         p.append(_txt(x, 100, v, 12, TRAIT, "middle"))
     p.append(_txt(600, 100, "aucune n'est", 12, FIN))
     p.append(_txt(600, 116, "exactement 20", 12, ALERTE, "start", True))
@@ -213,9 +246,12 @@ def _cas_ajustement(x0, titre, y_arbre, couleur_cadre, legende, sous_legende):
     p.append(f"<rect x='{x0 + 35}' y='{zero - 42}' width='68' height='42' fill='{ALESAGE}' opacity='0.28' "
              f"stroke='{ALESAGE}' stroke-width='1.5'/>")
     p.append(_txt(x0 + 69, zero - 17, "trou", 11, ALESAGE, "middle", True))
-    # zone arbre
+    # zone arbre — elle glisse doucement vers le trou et revient : on VOIT l'arbre
+    # « essayer » de s'assembler dans l'alésage, comme au montage.
     p.append(f"<rect x='{x0 + 118}' y='{y_arbre}' width='68' height='34' fill='{ARBRE}' opacity='0.32' "
-             f"stroke='{ARBRE}' stroke-width='1.5'/>")
+             f"stroke='{ARBRE}' stroke-width='1.5'>"
+             f"<animate attributeName='x' values='{x0 + 118};{x0 + 100};{x0 + 118}' dur='2.2s' "
+             f"repeatCount='indefinite'/></rect>")
     p.append(_txt(x0 + 152, y_arbre + 22, "arbre", 11, ARBRE, "middle", True))
     p.append(_txt(x0 + 107, 236, legende, 11, TRAIT, "middle", True))
     p.append(_txt(x0 + 107, 256, sous_legende, 10, FIN, "middle"))
@@ -249,9 +285,13 @@ def lire_h7g6():
     p.append(_txt(380, 62, "Ø30 H7 / g6", 40, TRAIT, "middle", True))
     reperes = [(250, "1", FIN), (360, "2", ALESAGE), (405, "3", ALESAGE),
                (492, "4", ARBRE), (535, "5", ARBRE)]
-    for x, num, couleur in reperes:
+    for _i, (x, num, couleur) in enumerate(reperes):
+        # les 5 repères grossissent l'un après l'autre, en haut ET dans la légende du
+        # bas au même instant : on VOIT le lien entre le morceau et son explication.
         p.append(f"<line x1='{x}' y1='75' x2='{x}' y2='96' stroke='{couleur}' stroke-width='1.5'/>")
-        p.append(f"<circle cx='{x}' cy='108' r='11' fill='{couleur}'/>")
+        p.append(f"<circle cx='{x}' cy='108' r='11' fill='{couleur}'>"
+                 f"<animate attributeName='r' values='11;14;11;11;11;11;11;11;11;11' dur='5s' "
+                 f"begin='{_i}s' repeatCount='indefinite'/></circle>")
         p.append(_txt(x, 112, num, 11, "#ffffff", "middle", True))
 
     lignes = [
@@ -262,8 +302,10 @@ def lire_h7g6():
         ("5", "6", "la précision de l'arbre — 6 est plus serré que 7", ARBRE),
     ]
     y = 165
-    for num, morceau, texte, couleur in lignes:
-        p.append(f"<circle cx='62' cy='{y - 4}' r='11' fill='{couleur}'/>")
+    for _i, (num, morceau, texte, couleur) in enumerate(lignes):
+        p.append(f"<circle cx='62' cy='{y - 4}' r='11' fill='{couleur}'>"
+                 f"<animate attributeName='r' values='11;14;11;11;11;11;11;11;11;11' dur='5s' "
+                 f"begin='{_i}s' repeatCount='indefinite'/></circle>")
         p.append(_txt(62, y, num, 11, "#ffffff", "middle", True))
         p.append(_txt(88, y, morceau, 15, couleur, "start", True))
         p.append(_txt(115, y, texte, 12, TRAIT))
@@ -285,7 +327,11 @@ def flexion_hauteur():
     # poutre à plat
     p.append(f"<rect x='70' y='105' width='230' height='26' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='2'/>")
     p.append(_txt(185, 55, "posée à plat (h = 26)", 12, FIN, "middle"))
-    p.append(f"<path d='M70,131 Q185,175 300,131' fill='none' stroke='{ALERTE}' stroke-width='2' stroke-dasharray='5 4'/>")
+    # elle plie visiblement, en boucle : on VOIT l'ampleur de la flèche, contre la
+    # poutre sur chant qui, elle, ne bouge pas du tout — le contraste EST la leçon.
+    p.append(f"<path d='M70,131 Q185,175 300,131' fill='none' stroke='{ALERTE}' stroke-width='2' stroke-dasharray='5 4'>"
+             f"<animate attributeName='d' dur='1.6s' repeatCount='indefinite' values="
+             f"'M70,131 Q185,175 300,131;M70,131 Q185,195 300,131;M70,131 Q185,175 300,131'/></path>")
     p.append(_txt(185, 200, "elle plie beaucoup", 12, ALERTE, "middle", True))
     # poutre sur chant
     p.append(f"<rect x='470' y='60' width='26' height='115' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='2'/>")
@@ -320,6 +366,11 @@ def rugosite_ra():
     p.append(f"<line x1='60' y1='130' x2='540' y2='130' stroke='{ALESAGE}' stroke-width='1.5' stroke-dasharray='6 4'/>")
     p.append(_txt(548, 134, "ligne moyenne", 11, ALESAGE))
     p.append(f"<line x1='300' y1='112' x2='300' y2='130' stroke='{ARBRE}' stroke-width='2'/>")
+    # un stylet parcourt le profil rugueux, comme un rugosimètre : on VOIT que Ra
+    # n'est pas une seule bosse mais une moyenne sur toute la longueur palpée.
+    _chemin = "M" + " L".join(pts)
+    p.append(f"<circle r='4' fill='{ARBRE}'>"
+             f"<animateMotion dur='3s' repeatCount='indefinite' path='{_chemin}'/></circle>")
     p.append(_txt(60, 70, "Ra = hauteur moyenne des bosses au-dessus de la ligne moyenne", 11, ARBRE, "start", True))
 
     niveaux = [("brut de fonderie", "Ra 12,5", "on sent nettement les aspérités", ALERTE),
@@ -352,7 +403,18 @@ def liaisons_de_base():
     y = 75
     for nom, ddl, exemple, i in cas:
         p.append(f"<rect x='45' y='{y}' width='95' height='46' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='2' rx='4'/>")
-        p.append(f"<rect x='140' y='{y + 8}' width='75' height='30' fill='#cbd5e1' stroke='{TRAIT}' stroke-width='2' rx='4'/>")
+        # la pièce mobile fait exactement ce que le nom de la liaison autorise — rien de
+        # plus : tourne (pivot), glisse (glissière), les deux, ou reste figée (encastrement).
+        if i == 1:
+            p.append(f"<rect x='140' y='{y + 8}' width='75' height='30' fill='#cbd5e1' stroke='{TRAIT}' stroke-width='2' rx='4'>"
+                      f"<animateTransform attributeName='transform' type='rotate' "
+                      f"values='-6 177 {y + 23}; 6 177 {y + 23}; -6 177 {y + 23}' dur='2s' repeatCount='indefinite'/></rect>")
+        elif i in (2, 3):
+            p.append(f"<rect x='140' y='{y + 8}' width='75' height='30' fill='#cbd5e1' stroke='{TRAIT}' stroke-width='2' rx='4'>"
+                      f"<animateTransform attributeName='transform' type='translate' "
+                      f"values='0,0; 10,0; 0,0' dur='2s' repeatCount='indefinite'/></rect>")
+        else:
+            p.append(f"<rect x='140' y='{y + 8}' width='75' height='30' fill='#cbd5e1' stroke='{TRAIT}' stroke-width='2' rx='4'/>")
         if i == 1:
             p.append(f"<path d='M232,{y + 30} a 14,14 0 1,1 12,-8' fill='none' stroke='{ARBRE}' stroke-width='2.2' marker-end='url(#f4)'/>")
         if i in (2, 3):
@@ -380,6 +442,14 @@ def engrenage_module():
     p.append(f"<circle cx='230' cy='185' r='80' fill='none' stroke='{AXE}' stroke-width='1.4' stroke-dasharray='8 4'/>")
     p.append(f"<circle cx='450' cy='185' r='60' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='2'/>")
     p.append(f"<circle cx='450' cy='185' r='45' fill='none' stroke='{AXE}' stroke-width='1.4' stroke-dasharray='8 4'/>")
+    # les deux roues tournent en sens opposé, la petite plus vite : Z1=32, Z2=18, donc
+    # la petite tourne 32/18 fois plus vite — on VOIT le rapport de transmission.
+    p.append(f"<line x1='230' y1='185' x2='230' y2='90' stroke='{ARBRE}' stroke-width='3'>"
+             f"<animateTransform attributeName='transform' type='rotate' "
+             f"values='0 230 185; -360 230 185' dur='4s' repeatCount='indefinite'/></line>")
+    p.append(f"<line x1='450' y1='185' x2='450' y2='125' stroke='{ARBRE}' stroke-width='3'>"
+             f"<animateTransform attributeName='transform' type='rotate' "
+             f"values='0 450 185; 360 450 185' dur='2.25s' repeatCount='indefinite'/></line>")
     p.append(_txt(230, 155, "Z1 = 32 dents", 12, TRAIT, "middle", True))
     p.append(_txt(450, 155, "Z2 = 18", 12, TRAIT, "middle", True))
     p.append(_txt(230, 300, "d1 = m × Z1", 12, AXE, "middle"))
@@ -413,13 +483,25 @@ def bete_a_cornes():
     p.append(f"<rect x='280' y='170' width='200' height='62' rx='8' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='2.5'/>")
     p.append(_txt(380, 197, "LE PRODUIT", 13, TRAIT, "middle", True))
     p.append(_txt(380, 217, "l'étau de bridage", 11, FIN, "middle"))
-    p.append(f"<line x1='200' y1='118' x2='330' y2='170' stroke='{ALESAGE}' stroke-width='2'/>")
-    p.append(f"<line x1='560' y1='118' x2='430' y2='170' stroke='{ARBRE}' stroke-width='2'/>")
+    # les trois traits se tracent l'un après l'autre, dans l'ordre où on répond aux
+    # trois questions : on VOIT la démarche se construire, pas juste le résultat figé.
+    _l_corne = ((330 - 200) ** 2 + (170 - 118) ** 2) ** 0.5
+    p.append(f"<line x1='200' y1='118' x2='330' y2='170' stroke='{ALESAGE}' stroke-width='2' "
+             f"stroke-dasharray='{_l_corne:.0f}' stroke-dashoffset='{_l_corne:.0f}'>"
+             f"<animate attributeName='stroke-dashoffset' from='{_l_corne:.0f}' to='0' dur='.6s' "
+             f"begin='0s' fill='freeze'/></line>")
+    p.append(f"<line x1='560' y1='118' x2='430' y2='170' stroke='{ARBRE}' stroke-width='2' "
+             f"stroke-dasharray='{_l_corne:.0f}' stroke-dashoffset='{_l_corne:.0f}'>"
+             f"<animate attributeName='stroke-dashoffset' from='{_l_corne:.0f}' to='0' dur='.6s' "
+             f"begin='.6s' fill='freeze'/></line>")
     # le but
     p.append(f"<rect x='230' y='275' width='300' height='58' rx='8' fill='#dcfce7' stroke='{OK}' stroke-width='2'/>")
     p.append(_txt(380, 299, "DANS QUEL BUT ?", 12, OK, "middle", True))
     p.append(_txt(380, 319, "immobiliser la pièce pendant l'usinage", 11, TRAIT, "middle"))
-    p.append(f"<line x1='380' y1='232' x2='380' y2='275' stroke='{OK}' stroke-width='2'/>")
+    p.append(f"<line x1='380' y1='232' x2='380' y2='275' stroke='{OK}' stroke-width='2' "
+             f"stroke-dasharray='43' stroke-dashoffset='43'>"
+             f"<animate attributeName='stroke-dashoffset' from='43' to='0' dur='.5s' "
+             f"begin='1.2s' fill='freeze'/></line>")
     p.append(_txt(380, 362, "Cette dernière phrase est la fonction globale : c'est elle qu'on écrira en tête du cahier des charges.",
                   12, TRAIT, "middle", True))
     return _svg("".join(p), 760, 380)
@@ -443,14 +525,22 @@ def diagramme_pieuvre():
         p.append(f"<rect x='{x - 62}' y='{y - 17}' width='124' height='34' rx='17' fill='#f1f5f9' "
                  f"stroke='{FIN}' stroke-width='1.5'/>")
         p.append(_txt(x, y + 5, nom, 11, TRAIT, "middle"))
-    # FP : traverse le produit et relie deux elements
+    # FP : traverse le produit et relie deux elements — elle se trace en entier, comme
+    # une ligne continue et forte : c'est la fonction PRINCIPALE.
     x1, y1 = pos["Opérateur"]; x2, y2 = pos["Pièce"]
-    p.append(f"<line x1='{x1 + 62}' y1='{y1}' x2='{x2 - 62}' y2='{y2}' stroke='{OK}' stroke-width='2.5'/>")
+    _l_fp = ((x2 - 62) - (x1 + 62)) ** 2 + (y2 - y1) ** 2
+    _l_fp = _l_fp ** 0.5
+    p.append(f"<line x1='{x1 + 62}' y1='{y1}' x2='{x2 - 62}' y2='{y2}' stroke='{OK}' stroke-width='2.5' "
+             f"stroke-dasharray='{_l_fp:.0f}' stroke-dashoffset='{_l_fp:.0f}'>"
+             f"<animate attributeName='stroke-dashoffset' from='{_l_fp:.0f}' to='0' dur='1s' fill='freeze'/></line>")
     p.append(_txt(cx, cy - 80, "FP — serrer la pièce", 12, OK, "middle", True))
-    # FC : relie le produit a un seul element
+    # FC : relie le produit a un seul element — le pointillé défile, comme une simple
+    # contrainte subie plutôt qu'un trait plein assumé.
     for nom, couleur in (("Table machine", ARBRE), ("Copeaux, huile", ARBRE), ("Budget", ARBRE)):
         x, y = pos[nom]
-        p.append(f"<line x1='{cx}' y1='{cy}' x2='{x}' y2='{y}' stroke='{couleur}' stroke-width='1.6' stroke-dasharray='6 4'/>")
+        p.append(f"<line x1='{cx}' y1='{cy}' x2='{x}' y2='{y}' stroke='{couleur}' stroke-width='1.6' "
+                 f"stroke-dasharray='6 4'><animate attributeName='stroke-dashoffset' values='0;-20' "
+                 f"dur='2s' repeatCount='indefinite'/></line>")
     p.append(f"<circle cx='{cx}' cy='{cy}' r='{r}' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='2.5'/>")
     p.append(_txt(cx, cy + 5, "L'ÉTAU", 13, TRAIT, "middle", True))
     p.append(f"<rect x='40' y='400' width='680' height='46' fill='#f8fafc' stroke='{FIN}' rx='6'/>")
@@ -470,11 +560,15 @@ def diagramme_fast():
         (255, "Fonctions techniques", ["Créer un effort", "Guider le mors", "Bloquer en position"], TRAIT),
         (490, "Solutions techniques", ["Vis + écrou", "Glissière queue d'aronde", "Écrou de blocage"], ARBRE),
     ]
-    for x, titre, items, couleur in colonnes:
+    for _c, (x, titre, items, couleur) in enumerate(colonnes):
         p.append(_txt(x + 100, 60, titre, 12, couleur, "middle", True))
         y = 90
         for it in items:
-            p.append(f"<rect x='{x}' y='{y}' width='200' height='46' rx='6' fill='#f8fafc' stroke='{couleur}' stroke-width='1.8'/>")
+            # les colonnes s'éclairent de gauche à droite : on VOIT le sens de lecture
+            # « comment ? », de la fonction vers la solution technique.
+            p.append(f"<rect x='{x}' y='{y}' width='200' height='46' rx='6' fill='#f8fafc' stroke='{couleur}' stroke-width='1.8'>"
+                     f"<animate attributeName='stroke-width' values='1.8;3.2;1.8;1.8;1.8;1.8' dur='3.6s' "
+                     f"begin='{_c * 1.1}s' repeatCount='indefinite'/></rect>")
             p.append(_txt(x + 100, y + 28, it, 11, TRAIT, "middle"))
             y += 66
     for y in (113, 179, 245):
@@ -525,7 +619,10 @@ def elements_cotation():
     ]
     y_leg = 70
     for i, (x, y, num, texte, lx, ly) in enumerate(reperes):
-        p.append(f"<circle cx='{lx - 18}' cy='{ly - 4}' r='10' fill='{AXE}'/>")
+        # les quatre repères grossissent l'un après l'autre : on VOIT l'ordre de lecture.
+        p.append(f"<circle cx='{lx - 18}' cy='{ly - 4}' r='10' fill='{AXE}'>"
+                 f"<animate attributeName='r' values='10;13;10;10;10;10;10;10' dur='3.2s' "
+                 f"begin='{i * 0.8}s' repeatCount='indefinite'/></circle>")
         p.append(_txt(lx - 18, ly, num, 10, "#ffffff", "middle", True))
         p.append(_txt(lx, ly, texte, 11, TRAIT))
     p.append(f"<rect x='40' y='250' width='680' height='88' fill='#f0fdf4' stroke='{OK}' rx='6'/>")
@@ -556,7 +653,11 @@ def lettres_et_grades():
         p.append(_txt(x, y + 16, lettre, 12, ARBRE, "middle", True))
         p.append(_txt(x, 258, role, 9, FIN, "middle"))
     p.append(_txt(640, zero - 30, "l'arbre grossit", 11, ARBRE, "middle", True))
-    p.append(f"<line x1='95' y1='240' x2='585' y2='240' stroke='{ARBRE}' stroke-width='1.6' marker-end='url(#h1)'/>")
+    # la flèche défile de d vers p : on VOIT le sens de la progression, lettre après lettre.
+    p.append(f"<line x1='95' y1='240' x2='585' y2='240' stroke='{ARBRE}' stroke-width='1.6' "
+             f"marker-end='url(#h1)' stroke-dasharray='8 5'>"
+             f"<animate attributeName='stroke-dashoffset' values='0;-26' dur='1.6s' "
+             f"repeatCount='indefinite'/></line>")
     p.append("<defs><marker id='h1' markerWidth='9' markerHeight='9' refX='8' refY='4.5' orient='auto'>"
              f"<path d='M0,0 L9,4.5 L0,9 z' fill='{ARBRE}'/></marker></defs>")
     # alesage H, toujours au-dessus
@@ -578,13 +679,17 @@ def lettres_et_grades():
 
 def defaut_geometrique():
     p = [_txt(40, 28, "Les deux arbres mesurent 30 mm partout au pied à coulisse :", 13, TRAIT, "start", True)]
-    # arbre droit
-    p.append(f"<rect x='70' y='90' width='250' height='44' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='2'/>")
+    # arbre droit — il glisse et entre complètement : l'essai réussit, sans à-coup.
+    p.append(f"<rect x='70' y='90' width='250' height='44' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='2'>"
+             f"<animateTransform attributeName='transform' type='translate' "
+             f"values='0,0; 14,0; 0,0' dur='2.2s' repeatCount='indefinite'/></rect>")
     p.append(_txt(195, 75, "arbre droit", 12, OK, "middle", True))
     p.append(_txt(195, 160, "il entre dans son alésage", 11, OK, "middle"))
-    # arbre banane
+    # arbre banane — il essaie d'entrer, coince à mi-course, puis revient : l'essai échoue.
     p.append(f"<path d='M440,105 Q565,55 690,105 L690,140 Q565,90 440,140 Z' fill='#e2e8f0' "
-             f"stroke='{TRAIT}' stroke-width='2'/>")
+             f"stroke='{TRAIT}' stroke-width='2'>"
+             f"<animateTransform attributeName='transform' type='translate' "
+             f"values='0,0; 6,0; 6,0; 0,0' dur='2.2s' repeatCount='indefinite'/></path>")
     p.append(_txt(565, 75, "arbre cintré (banane)", 12, ALERTE, "middle", True))
     p.append(_txt(565, 175, "il n'entre pas", 11, ALERTE, "middle", True))
     # mesures
@@ -621,9 +726,13 @@ def cadre_tolerance():
         (x0 + 176, "3", "par rapport à quoi : la surface de référence A", OK),
     ]
     y = 165
-    for x, num, texte, couleur in legendes:
+    for _i, (x, num, texte, couleur) in enumerate(legendes):
+        # les trois repères grossissent l'un après l'autre : on VOIT l'ordre de lecture
+        # du cadre, toujours de gauche à droite.
         p.append(f"<line x1='{x}' y1='{y0 + 46}' x2='{x}' y2='{y - 15}' stroke='{couleur}' stroke-width='1.4' opacity='0.55'/>")
-        p.append(f"<circle cx='{x}' cy='{y - 4}' r='11' fill='{couleur}'/>")
+        p.append(f"<circle cx='{x}' cy='{y - 4}' r='11' fill='{couleur}'>"
+                 f"<animate attributeName='r' values='11;14;11;11;11;11' dur='2.4s' "
+                 f"begin='{_i * 0.8}s' repeatCount='indefinite'/></circle>")
         p.append(_txt(x, y, num, 11, "#ffffff", "middle", True))
         p.append(_txt(x + 20, y, texte, 12, TRAIT))
         y += 42
@@ -651,15 +760,23 @@ def chaine_de_cotes():
     p.append(f"<rect x='470' y='95' width='90' height='95' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='2'/>")
     p.append(_txt(515, 148, "couvercle", 11, TRAIT, "middle", True))
     p.append(_txt(515, 165, "(C)", 11, TRAIT, "middle"))
-    # jeu
-    p.append(f"<rect x='440' y='95' width='30' height='95' fill='{ALERTE}' opacity='0.25' stroke='{ALERTE}' stroke-width='1.5'/>")
+    # jeu — il pulse en continu : Ja n'est pas fixe, il est ce qui RESTE une fois
+    # les trois cotes posées, donc il « respire » avec elles.
+    p.append(f"<rect x='440' y='95' width='30' height='95' fill='{ALERTE}' opacity='0.25' stroke='{ALERTE}' stroke-width='1.5'>"
+             f"<animate attributeName='opacity' values='0.25;0.55;0.25' dur='1.6s' repeatCount='indefinite'/></rect>")
     p.append(_txt(455, 80, "Ja", 13, ALERTE, "middle", True))
-    # cotes
-    p.append(f"<line x1='120' y1='250' x2='560' y2='250' stroke='{ALESAGE}' stroke-width='1.5'/>")
+    # cotes — A, B puis C s'éclairent dans l'ordre : les TROIS entrent dans le calcul de Ja.
+    p.append(f"<line x1='120' y1='250' x2='560' y2='250' stroke='{ALESAGE}' stroke-width='1.5'>"
+             f"<animate attributeName='stroke-width' values='1.5;3.5;1.5;1.5;1.5' dur='4.5s' begin='0s' "
+             f"repeatCount='indefinite'/></line>")
     p.append(_txt(340, 268, "A = 60 (le carter)", 12, ALESAGE, "middle", True))
-    p.append(f"<line x1='210' y1='290' x2='440' y2='290' stroke='{ARBRE}' stroke-width='1.5'/>")
+    p.append(f"<line x1='210' y1='290' x2='440' y2='290' stroke='{ARBRE}' stroke-width='1.5'>"
+             f"<animate attributeName='stroke-width' values='1.5;3.5;1.5;1.5;1.5' dur='4.5s' begin='1.5s' "
+             f"repeatCount='indefinite'/></line>")
     p.append(_txt(325, 308, "B = 40 (la roue)", 12, ARBRE, "middle", True))
-    p.append(f"<line x1='470' y1='290' x2='560' y2='290' stroke='{ARBRE}' stroke-width='1.5'/>")
+    p.append(f"<line x1='470' y1='290' x2='560' y2='290' stroke='{ARBRE}' stroke-width='1.5'>"
+             f"<animate attributeName='stroke-width' values='1.5;3.5;1.5;1.5;1.5' dur='4.5s' begin='3s' "
+             f"repeatCount='indefinite'/></line>")
     p.append(_txt(515, 308, "C = 19,7", 11, ARBRE, "middle", True))
     p.append(f"<rect x='40' y='330' width='680' height='66' fill='#eff6ff' stroke='{ALESAGE}' rx='6'/>")
     p.append(_txt(56, 353, "Ja = A − B − C = 60 − 40 − 19,7 = 0,3 mm", 13, TRAIT, "start", True))
@@ -683,6 +800,11 @@ def courbe_traction():
     p.append(f"<path d='M{ox},{oy} L250,150' fill='none' stroke='{ALESAGE}' stroke-width='2.6'/>")
     p.append(f"<path d='M250,150 Q330,95 430,90 Q510,88 560,130' fill='none' stroke='{ARBRE}' stroke-width='2.6'/>")
     p.append(f"<circle cx='560' cy='130' r='5' fill='{ALERTE}'/>")
+    # un point parcourt la courbe de l'origine jusqu'à la rupture, en boucle : on VOIT
+    # l'essai se dérouler, élastique puis plastique, jusqu'à la casse.
+    p.append(f"<circle r='6' fill='{ALERTE}'>"
+             f"<animateMotion dur='3s' repeatCount='indefinite' "
+             f"path='M{ox},{oy} L250,150 Q330,95 430,90 Q510,88 560,130'/></circle>")
     # reperes Re et Rm
     p.append(f"<line x1='{ox}' y1='150' x2='250' y2='150' stroke='{ALESAGE}' stroke-width='1' stroke-dasharray='5 4'/>")
     p.append(_txt(ox - 8, 154, "Re", 13, ALESAGE, "end", True))
@@ -716,11 +838,18 @@ def resistance_vs_rigidite():
     donnees = [("Acier S235", 235, 210), ("Acier 42CrMo4 traité", 750, 210),
                ("Aluminium 6060", 160, 70), ("Polymère POM", 65, 3)]
     y = 70
-    for nom, re_, e in donnees:
+    for _i, (nom, re_, e) in enumerate(donnees):
+        # les deux barres poussent depuis la gauche, matériau après matériau : on VOIT
+        # que Re varie énormément d'un matériau à l'autre, contrairement à E.
         p.append(_txt(48, y + 16, nom, 12, TRAIT, "start", True))
-        p.append(f"<rect x='250' y='{y}' width='{re_ * 0.22:.0f}' height='22' fill='{ARBRE}' opacity='0.75' rx='3'/>")
+        _w_re, _w_e = re_ * 0.22, e * 0.78
+        p.append(f"<rect x='250' y='{y}' width='0' height='22' fill='{ARBRE}' opacity='0.75' rx='3'>"
+                 f"<animate attributeName='width' from='0' to='{_w_re:.0f}' dur='.9s' "
+                 f"begin='{_i * 0.3}s' fill='freeze'/></rect>")
         p.append(_txt(250 + re_ * 0.22 + 8, y + 17, f"Re = {re_} MPa", 11, ARBRE))
-        p.append(f"<rect x='250' y='{y + 26}' width='{e * 0.78:.0f}' height='22' fill='{ALESAGE}' opacity='0.75' rx='3'/>")
+        p.append(f"<rect x='250' y='{y + 26}' width='0' height='22' fill='{ALESAGE}' opacity='0.75' rx='3'>"
+                 f"<animate attributeName='width' from='0' to='{_w_e:.0f}' dur='.9s' "
+                 f"begin='{_i * 0.3 + 0.15}s' fill='freeze'/></rect>")
         p.append(_txt(250 + e * 0.78 + 8, y + 43, f"E = {e} GPa", 11, ALESAGE))
         y += 72
     p.append(f"<rect x='40' y='360' width='680' height='86' fill='#fff7ed' stroke='{ARBRE}' rx='6'/>")
@@ -754,12 +883,17 @@ def decoder_designation():
         p.append(f"<rect x='40' y='{y - 24}' width='680' height='84' fill='#ffffff' stroke='{FIN}' rx='6'/>")
         p.append(_txt(58, y + 4, nom, 20, TRAIT, "start", True))
         x = 195
-        for texte, sens, couleur in morceaux:
-            p.append(f"<rect x='{x}' y='{y - 16}' width='{max(58, len(texte) * 11)}' height='26' fill='{couleur}' "
-                     f"opacity='0.18' stroke='{couleur}' stroke-width='1.2' rx='4'/>")
-            p.append(_txt(x + max(58, len(texte) * 11) / 2, y + 3, texte, 12, couleur, "middle", True))
+        for _j, (texte, sens, couleur) in enumerate(morceaux):
+            # les morceaux du code s'éclairent l'un après l'autre, de gauche à droite :
+            # on VOIT dans quel ordre décoder une désignation.
+            _w = max(58, len(texte) * 11)
+            p.append(f"<rect x='{x}' y='{y - 16}' width='{_w}' height='26' fill='{couleur}' "
+                     f"opacity='0.18' stroke='{couleur}' stroke-width='1.2' rx='4'>"
+                     f"<animate attributeName='stroke-width' values='1.2;2.6;1.2;1.2;1.2;1.2' dur='3.6s' "
+                     f"begin='{_j * 0.7}s' repeatCount='indefinite'/></rect>")
+            p.append(_txt(x + _w / 2, y + 3, texte, 12, couleur, "middle", True))
             p.append(_txt(x, y + 30, sens, 10, FIN))
-            x += max(58, len(texte) * 11) + 130
+            x += _w + 130
         p.append(_txt(58, y + 46, usage, 11, FIN))
         y += 104
     return _svg("".join(p), 760, y - 40)
@@ -776,13 +910,20 @@ def peau_dure_coeur_tenace():
     p.append(_txt(190, 70, "Trempée dans la masse", 12, ALERTE, "middle", True))
     p.append(f"<path d='M120,190 L150,110 L230,110 L260,190 Z' fill='#fecaca' stroke='{TRAIT}' stroke-width='2'/>")
     p.append(_txt(190, 160, "dure partout", 11, TRAIT, "middle"))
-    p.append(f"<path d='M150,110 L165,132' stroke='{ALERTE}' stroke-width='2.5'/>")
+    # la fissure se propage puis repart de zéro, en boucle : on VOIT la dent casser net,
+    # faute de cœur tenace pour arrêter la fissure.
+    p.append(f"<path d='M150,110 L165,132' stroke='{ALERTE}' stroke-width='2.5' "
+             f"stroke-dasharray='27' stroke-dashoffset='27'>"
+             f"<animate attributeName='stroke-dashoffset' values='27;0;0;27' dur='2.4s' "
+             f"repeatCount='indefinite'/></path>")
     p.append(_txt(190, 215, "dure = fragile :", 11, ALERTE, "middle", True))
     p.append(_txt(190, 232, "la dent casse net au premier choc", 10, FIN, "middle"))
     # dent cementee
     p.append(_txt(540, 70, "Cémentée puis trempée", 12, OK, "middle", True))
     p.append(f"<path d='M470,190 L500,110 L580,110 L610,190 Z' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='2'/>")
-    p.append(f"<path d='M470,190 L500,110 L580,110 L610,190' fill='none' stroke='{OK}' stroke-width='7' opacity='0.55'/>")
+    # la peau dure respire doucement : une protection stable, pas une fissure qui court.
+    p.append(f"<path d='M470,190 L500,110 L580,110 L610,190' fill='none' stroke='{OK}' stroke-width='7' opacity='0.55'>"
+             f"<animate attributeName='opacity' values='0.4;0.7;0.4' dur='2s' repeatCount='indefinite'/></path>")
     p.append(_txt(540, 155, "cœur tenace", 11, TRAIT, "middle"))
     p.append(_txt(645, 120, "peau dure", 11, OK, "start", True))
     p.append(_txt(645, 137, "0,5 à 1,5 mm", 10, FIN, "start"))
@@ -811,15 +952,23 @@ def isoler_et_couper():
     p.append(_txt(45, 62, "F", 13, ARBRE, "middle", True))
     p.append(_txt(432, 62, "F", 13, ARBRE, "middle", True))
     p.append(_txt(240, 138, "la barre tendue, vue de l'extérieur", 11, FIN, "middle"))
-    p.append(f"<line x1='240' y1='60' x2='240' y2='120' stroke='{ALERTE}' stroke-width='1.6' stroke-dasharray='6 4'/>")
+    # le plan de coupe clignote comme un flash : on VOIT le geste « couper par la pensée ».
+    p.append(f"<line x1='240' y1='60' x2='240' y2='120' stroke='{ALERTE}' stroke-width='1.6' stroke-dasharray='6 4'>"
+             f"<animate attributeName='opacity' values='1;0.2;1' dur='1.4s' repeatCount='indefinite'/></line>")
     p.append(_txt(240, 52, "on coupe ici", 10, ALERTE, "middle", True))
     # les deux troncons
     p.append(f"<rect x='90' y='215' width='150' height='40' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='2'/>")
     p.append(f"<rect x='300' y='215' width='150' height='40' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='2'/>")
     p.append(f"<line x1='60' y1='235' x2='88' y2='235' stroke='{ARBRE}' stroke-width='2.5' marker-start='url(#k1)'/>")
     p.append(f"<line x1='452' y1='235' x2='480' y2='235' stroke='{ARBRE}' stroke-width='2.5' marker-end='url(#k2)'/>")
-    p.append(f"<line x1='240' y1='235' x2='262' y2='235' stroke='{ALESAGE}' stroke-width='3' marker-end='url(#k3)'/>")
-    p.append(f"<line x1='300' y1='235' x2='278' y2='235' stroke='{ALESAGE}' stroke-width='3' marker-end='url(#k4)'/>")
+    # les deux N s'écartent puis reviennent, en phase : l'action et la réaction internes,
+    # égales et opposées, révélées par la coupe.
+    p.append(f"<line x1='240' y1='235' x2='262' y2='235' stroke='{ALESAGE}' stroke-width='3' marker-end='url(#k3)'>"
+             f"<animateTransform attributeName='transform' type='translate' "
+             f"values='0,0; -4,0; 0,0' dur='1.4s' repeatCount='indefinite'/></line>")
+    p.append(f"<line x1='300' y1='235' x2='278' y2='235' stroke='{ALESAGE}' stroke-width='3' marker-end='url(#k4)'>"
+             f"<animateTransform attributeName='transform' type='translate' "
+             f"values='0,0; 4,0; 0,0' dur='1.4s' repeatCount='indefinite'/></line>")
     p.append("<defs>"
              f"<marker id='k3' markerWidth='10' markerHeight='8' refX='9' refY='4' orient='auto'><path d='M0,0 L10,4 L0,8 z' fill='{ALESAGE}'/></marker>"
              f"<marker id='k4' markerWidth='10' markerHeight='8' refX='1' refY='4' orient='auto'><path d='M10,0 L0,4 L10,8 z' fill='{ALESAGE}'/></marker>"
@@ -854,22 +1003,49 @@ def quatre_sollicitations():
         p.append(_txt(x + 82, 80, nom, 12, couleur, "middle", True))
         cy = 135
         if nom == "TRACTION":
-            p.append(f"<rect x='{x + 52}' y='{cy - 30}' width='60' height='60' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='2'/>")
-            p.append(f"<line x1='{x + 82}' y1='{cy - 55}' x2='{x + 82}' y2='{cy - 33}' stroke='{couleur}' stroke-width='2.5'/>")
-            p.append(f"<line x1='{x + 82}' y1='{cy + 33}' x2='{x + 82}' y2='{cy + 55}' stroke='{couleur}' stroke-width='2.5'/>")
+            # le carré s'étire verticalement, les deux flèches s'écartent : on VOIT la traction.
+            p.append(f"<rect x='{x + 52}' y='{cy - 30}' width='60' height='60' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='2'>"
+                     f"<animate attributeName='y' values='{cy - 30};{cy - 34};{cy - 30}' dur='1.6s' repeatCount='indefinite'/>"
+                     f"<animate attributeName='height' values='60;68;60' dur='1.6s' repeatCount='indefinite'/></rect>")
+            p.append(f"<line x1='{x + 82}' y1='{cy - 55}' x2='{x + 82}' y2='{cy - 33}' stroke='{couleur}' stroke-width='2.5'>"
+                     f"<animateTransform attributeName='transform' type='translate' "
+                     f"values='0,0; 0,-5; 0,0' dur='1.6s' repeatCount='indefinite'/></line>")
+            p.append(f"<line x1='{x + 82}' y1='{cy + 33}' x2='{x + 82}' y2='{cy + 55}' stroke='{couleur}' stroke-width='2.5'>"
+                     f"<animateTransform attributeName='transform' type='translate' "
+                     f"values='0,0; 0,5; 0,0' dur='1.6s' repeatCount='indefinite'/></line>")
         elif nom == "CISAILLEMENT":
-            p.append(f"<rect x='{x + 42}' y='{cy - 28}' width='80' height='26' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='2'/>")
-            p.append(f"<rect x='{x + 42}' y='{cy + 2}' width='80' height='26' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='2'/>")
+            # les deux tranches glissent en sens opposé : on VOIT le cisaillement.
+            p.append(f"<rect x='{x + 42}' y='{cy - 28}' width='80' height='26' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='2'>"
+                     f"<animateTransform attributeName='transform' type='translate' "
+                     f"values='0,0; 5,0; 0,0' dur='1.4s' repeatCount='indefinite'/></rect>")
+            p.append(f"<rect x='{x + 42}' y='{cy + 2}' width='80' height='26' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='2'>"
+                     f"<animateTransform attributeName='transform' type='translate' "
+                     f"values='0,0; -5,0; 0,0' dur='1.4s' repeatCount='indefinite'/></rect>")
             p.append(f"<line x1='{x + 30}' y1='{cy - 15}' x2='{x + 130}' y2='{cy - 15}' stroke='{couleur}' stroke-width='2'/>")
             p.append(f"<line x1='{x + 130}' y1='{cy + 15}' x2='{x + 30}' y2='{cy + 15}' stroke='{couleur}' stroke-width='2'/>")
         elif nom == "TORSION":
+            # un pointillé qui défile le long des deux flèches courbes : on VOIT le sens de rotation.
             p.append(f"<rect x='{x + 32}' y='{cy - 18}' width='100' height='36' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='2'/>")
-            p.append(f"<path d='M{x + 40},{cy - 30} a 18,18 0 1,1 -6,14' fill='none' stroke='{couleur}' stroke-width='2.2'/>")
-            p.append(f"<path d='M{x + 124},{cy + 30} a 18,18 0 1,1 6,-14' fill='none' stroke='{couleur}' stroke-width='2.2'/>")
+            p.append(f"<path d='M{x + 40},{cy - 30} a 18,18 0 1,1 -6,14' fill='none' stroke='{couleur}' "
+                     f"stroke-width='2.4' stroke-dasharray='3 3'>"
+                     f"<animate attributeName='stroke-dashoffset' values='0;-12' dur='1s' repeatCount='indefinite'/></path>")
+            p.append(f"<path d='M{x + 124},{cy + 30} a 18,18 0 1,1 6,-14' fill='none' stroke='{couleur}' "
+                     f"stroke-width='2.4' stroke-dasharray='3 3'>"
+                     f"<animate attributeName='stroke-dashoffset' values='0;-12' dur='1s' repeatCount='indefinite'/></path>")
         else:
+            # la poutre plie sous la charge, la flèche appuie : on VOIT la flexion.
             p.append(f"<path d='M{x + 25},{cy - 12} Q{x + 82},{cy + 32} {x + 139},{cy - 12} L{x + 139},{cy + 6} "
-                     f"Q{x + 82},{cy + 50} {x + 25},{cy + 6} Z' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='2'/>")
-            p.append(f"<line x1='{x + 82}' y1='{cy - 45}' x2='{x + 82}' y2='{cy - 18}' stroke='{couleur}' stroke-width='2.5'/>")
+                     f"Q{x + 82},{cy + 50} {x + 25},{cy + 6} Z' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='2'>"
+                     f"<animate attributeName='d' dur='1.6s' repeatCount='indefinite' values="
+                     f"'M{x + 25},{cy - 12} Q{x + 82},{cy + 32} {x + 139},{cy - 12} L{x + 139},{cy + 6} "
+                     f"Q{x + 82},{cy + 50} {x + 25},{cy + 6} Z;"
+                     f"M{x + 25},{cy - 12} Q{x + 82},{cy + 44} {x + 139},{cy - 12} L{x + 139},{cy + 6} "
+                     f"Q{x + 82},{cy + 62} {x + 25},{cy + 6} Z;"
+                     f"M{x + 25},{cy - 12} Q{x + 82},{cy + 32} {x + 139},{cy - 12} L{x + 139},{cy + 6} "
+                     f"Q{x + 82},{cy + 50} {x + 25},{cy + 6} Z'/></path>")
+            p.append(f"<line x1='{x + 82}' y1='{cy - 45}' x2='{x + 82}' y2='{cy - 18}' stroke='{couleur}' stroke-width='2.5'>"
+                     f"<animateTransform attributeName='transform' type='translate' "
+                     f"values='0,0; 0,4; 0,0' dur='1.6s' repeatCount='indefinite'/></line>")
         p.append(_txt(x + 82, 205, formule, 12, TRAIT, "middle", True))
         # description sur deux lignes
         mots = desc.split()
@@ -891,7 +1067,11 @@ def fibres_flexion():
     p.append(f"<path d='M80,135 Q330,200 580,135' fill='none' stroke='{AXE}' stroke-width='1.6' stroke-dasharray='7 4'/>")
     p.append(_txt(628, 132, "axe neutre", 11, AXE, "end", True))
     p.append(_txt(628, 148, "(ni tendu ni comprimé)", 9, FIN, "end"))
-    p.append(f"<line x1='330' y1='60' x2='330' y2='88' stroke='{ALERTE}' stroke-width='2.5' marker-end='url(#m1)'/>")
+    # la charge F pulse vers le bas : on VOIT ce qui provoque la compression en haut
+    # et la traction en bas.
+    p.append(f"<line x1='330' y1='60' x2='330' y2='88' stroke='{ALERTE}' stroke-width='2.5' marker-end='url(#m1)'>"
+             f"<animateTransform attributeName='transform' type='translate' "
+             f"values='0,0; 0,5; 0,0' dur='1.4s' repeatCount='indefinite'/></line>")
     p.append("<defs><marker id='m1' markerWidth='9' markerHeight='9' refX='8' refY='4.5' orient='auto'>"
              f"<path d='M0,0 L9,4.5 L0,9 z' fill='{ALERTE}'/></marker></defs>")
     p.append(_txt(330, 52, "F", 13, ALERTE, "middle", True))
@@ -929,7 +1109,10 @@ def concentration_contrainte():
     for i in range(8):
         x = 442 + i * 33
         if 520 < x < 610:
-            p.append(f"<path d='M{x},95 Q{x + (10 if x > 563 else -10)},120 {x},145' fill='none' stroke='{ALERTE}' stroke-width='2'/>")
+            # les lignes resserrées près de l'entaille pulsent : on VOIT la contrainte
+            # locale qui « explose », contrairement aux lignes régulières et immobiles.
+            p.append(f"<path d='M{x},95 Q{x + (10 if x > 563 else -10)},120 {x},145' fill='none' stroke='{ALERTE}' stroke-width='2'>"
+                     f"<animate attributeName='stroke-width' values='2;3.4;2' dur='1s' repeatCount='indefinite'/></path>")
         else:
             p.append(f"<line x1='{x}' y1='95' x2='{x}' y2='145' stroke='{OK}' stroke-width='1.6'/>")
     p.append(_txt(563, 78, "entaille", 10, ALERTE, "middle", True))
@@ -952,8 +1135,13 @@ def esquisse_contraintes():
     # sous-contrainte
     p.append(_txt(190, 58, "SOUS-CONTRAINTE (bleue)", 12, ALERTE, "middle", True))
     p.append(f"<rect x='95' y='80' width='190' height='110' fill='none' stroke='#3b82f6' stroke-width='2.2'/>")
-    p.append(f"<rect x='118' y='96' width='190' height='110' fill='none' stroke='#93c5fd' stroke-width='1.6' stroke-dasharray='6 4'/>")
-    p.append(f"<circle cx='190' cy='135' r='22' fill='none' stroke='#3b82f6' stroke-width='2'/>")
+    # le contour et le cercle sous-contraints DÉRIVENT lentement : on VOIT qu'ils ne
+    # sont pas figés, contrairement à la version totalement contrainte, immobile.
+    p.append(f"<g><animateTransform attributeName='transform' type='translate' "
+             f"values='0,0; 4,3; -3,2; 2,-3; 0,0' dur='3.4s' repeatCount='indefinite'/>"
+             f"<rect x='118' y='96' width='190' height='110' fill='none' stroke='#93c5fd' stroke-width='1.6' "
+             f"stroke-dasharray='6 4'/>"
+             f"<circle cx='190' cy='135' r='22' fill='none' stroke='#3b82f6' stroke-width='2'/></g>")
     p.append(_txt(190, 232, "elle peut encore bouger toute seule", 11, ALERTE, "middle", True))
     p.append(_txt(190, 250, "à la prochaine modification", 10, FIN, "middle"))
     # totalement contrainte
@@ -987,12 +1175,25 @@ def arbre_de_creation():
         p.append(f"<rect x='{x}' y='55' width='290' height='278' rx='8' fill='#ffffff' stroke='{couleur}' stroke-width='2'/>")
         p.append(_txt(x + 145, 80, titre, 13, couleur, "middle", True))
         y = 105
-        for item in liste:
+        for _i, item in enumerate(liste):
             marque = ALERTE if ("Congé" in item and liste is mauvais and item != liste[-1]) else FIN
-            p.append(f"<rect x='{x + 20}' y='{y}' width='250' height='26' rx='4' fill='#f8fafc' stroke='{FIN}' stroke-width='1'/>")
+            if liste is bon:
+                # un liseré qui parcourt la liste ordonnée dans l'ordre : on VOIT la
+                # construction se dérouler étape après étape, jamais dans le désordre.
+                p.append(f"<rect x='{x + 20}' y='{y}' width='250' height='26' rx='4' fill='#f8fafc' "
+                         f"stroke='{FIN}' stroke-width='1'>"
+                         f"<animate attributeName='stroke' values='{FIN};{OK};{FIN};{FIN};{FIN};{FIN}' "
+                         f"dur='3.6s' begin='{_i * 0.55}s' repeatCount='indefinite'/>"
+                         f"<animate attributeName='stroke-width' values='1;2.4;1;1;1;1' "
+                         f"dur='3.6s' begin='{_i * 0.55}s' repeatCount='indefinite'/></rect>")
+            else:
+                p.append(f"<rect x='{x + 20}' y='{y}' width='250' height='26' rx='4' fill='#f8fafc' stroke='{FIN}' stroke-width='1'/>")
             p.append(_txt(x + 32, y + 18, item, 11, TRAIT))
             if "Congé" in item and liste is mauvais:
-                p.append(_txt(x + 258, y + 18, "!", 13, ALERTE, "end", True))
+                p.append(f"<text x='{x + 258}' y='{y + 18}' {_POLICE} font-size='13' fill='{ALERTE}' "
+                         f"text-anchor='end' font-weight='600'>!"
+                         f"<animate attributeName='opacity' values='1;0.15;1' dur='.9s' "
+                         f"repeatCount='indefinite'/></text>")
             y += 33
         p.append(_txt(x + 145, 320, verdict, 11, couleur, "middle", True))
     p.append(f"<rect x='40' y='350' width='680' height='68' fill='#fff7ed' stroke='{ARBRE}' rx='6'/>")
@@ -1021,8 +1222,11 @@ def formats_echange():
          "diffusion, archivage, envoi à l'atelier", FIN),
     ]
     y = 62
-    for ext, nature, contenu, usage, couleur in lignes:
-        p.append(f"<rect x='45' y='{y}' width='670' height='58' rx='6' fill='#ffffff' stroke='{couleur}' stroke-width='1.6'/>")
+    for _i, (ext, nature, contenu, usage, couleur) in enumerate(lignes):
+        # les formats s'éclairent un par un, du plus complet au plus dégradé.
+        p.append(f"<rect x='45' y='{y}' width='670' height='58' rx='6' fill='#ffffff' stroke='{couleur}' stroke-width='1.6'>"
+                 f"<animate attributeName='stroke-width' values='1.6;3;1.6;1.6;1.6' dur='4s' "
+                 f"begin='{_i * 0.7}s' repeatCount='indefinite'/></rect>")
         p.append(_txt(62, y + 24, ext, 14, couleur, "start", True))
         p.append(_txt(62, y + 44, nature, 10, FIN))
         p.append(_txt(215, y + 24, contenu, 11, TRAIT))
@@ -1044,8 +1248,15 @@ def isostatique_hyperstatique():
              "l'arbre s'allonge librement : la dilatation est absorbée")):
         p.append(f"<rect x='{x0}' y='50' width='315' height='190' rx='8' fill='#ffffff' stroke='{couleur}' stroke-width='2'/>")
         p.append(_txt(x0 + 157, 75, titre, 12, couleur, "middle", True))
-        # arbre
-        p.append(f"<rect x='{x0 + 40}' y='140' width='235' height='22' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='2'/>")
+        # arbre — il essaie de se dilater à la chaleur : bloqué des deux côtés (tremble,
+        # ne bouge pas), libre d'un côté (s'allonge et revient). On VOIT la différence.
+        if titre.endswith("HYPERSTATIQUE"):
+            p.append(f"<rect x='{x0 + 40}' y='140' width='235' height='22' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='2'>"
+                     f"<animateTransform attributeName='transform' type='translate' "
+                     f"values='0,0; 1,0; -1,0; 0,0' dur='.3s' repeatCount='indefinite'/></rect>")
+        else:
+            p.append(f"<rect x='{x0 + 40}' y='140' width='235' height='22' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='2'>"
+                     f"<animate attributeName='width' values='235;245;235' dur='2s' repeatCount='indefinite'/></rect>")
         # paliers
         for xp in (x0 + 60, x0 + 235):
             p.append(f"<rect x='{xp - 16}' y='120' width='32' height='62' fill='#cbd5e1' stroke='{TRAIT}' stroke-width='1.8'/>")
@@ -1091,9 +1302,14 @@ def regle_des_charges():
         p.append(f"<rect x='{x0}' y='120' width='300' height='170' rx='8' fill='#ffffff' stroke='{FIN}' stroke-width='1.6'/>")
         p.append(_txt(x0 + 150, 145, titre, 12, TRAIT, "middle", True))
         p.append(_txt(x0 + 150, 163, exemple, 10, FIN, "middle"))
-        p.append(f"<rect x='{x0 + 30}' y='185' width='240' height='34' rx='5' fill='{ARBRE}' opacity='0.16' stroke='{ARBRE}'/>")
+        # la bague serrée « tient » (bordure qui se resserre), la bague glissante bouge
+        # un peu : on VOIT laquelle est bloquée et laquelle est libre.
+        p.append(f"<rect x='{x0 + 30}' y='185' width='240' height='34' rx='5' fill='{ARBRE}' opacity='0.16' stroke='{ARBRE}'>"
+                 f"<animate attributeName='stroke-width' values='1;2.6;1' dur='1.6s' repeatCount='indefinite'/></rect>")
         p.append(_txt(x0 + 150, 207, serre, 11, ARBRE, "middle", True))
-        p.append(f"<rect x='{x0 + 30}' y='230' width='240' height='34' rx='5' fill='{ALESAGE}' opacity='0.14' stroke='{ALESAGE}'/>")
+        p.append(f"<rect x='{x0 + 30}' y='230' width='240' height='34' rx='5' fill='{ALESAGE}' opacity='0.14' stroke='{ALESAGE}'>"
+                 f"<animateTransform attributeName='transform' type='translate' "
+                 f"values='0,0; 5,0; 0,0; -5,0; 0,0' dur='2.4s' repeatCount='indefinite'/></rect>")
         p.append(_txt(x0 + 150, 252, glisse, 11, ALESAGE, "middle", True))
     p.append(f"<rect x='40' y='305' width='680' height='66' fill='#fff7ed' stroke='{ARBRE}' rx='6'/>")
     p.append(_txt(56, 328, "Si la bague qui devrait être serrée est montée avec du jeu, elle « flue » lentement", 12, TRAIT, "start", True))
@@ -1124,7 +1340,11 @@ def liaison_arbre_moyeu():
         p.append(_txt(x + 82, 80, nom, 12, couleur, "middle", True))
         cy = 130
         p.append(f"<circle cx='{x + 82}' cy='{cy}' r='38' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='2'/>")
-        p.append(f"<circle cx='{x + 82}' cy='{cy}' r='22' fill='{FOND}' stroke='{TRAIT}' stroke-width='2'/>")
+        # l'arbre et sa marque de couple tournent ensemble : on VOIT que la solution
+        # transmet vraiment la rotation, pas seulement qu'elle « tient » deux pièces.
+        p.append(f"<g><animateTransform attributeName='transform' type='rotate' "
+                 f"values='0 {x + 82} {cy}; 360 {x + 82} {cy}' dur='4s' repeatCount='indefinite'/>"
+                 f"<circle cx='{x + 82}' cy='{cy}' r='22' fill='{FOND}' stroke='{TRAIT}' stroke-width='2'/>")
         if nom == "Clavette":
             p.append(f"<rect x='{x + 74}' y='{cy - 30}' width='16' height='16' fill='{couleur}' stroke='{TRAIT}' stroke-width='1.4'/>")
         elif nom == "Cannelures":
@@ -1138,6 +1358,7 @@ def liaison_arbre_moyeu():
             p.append(f"<circle cx='{x + 82}' cy='{cy}' r='26' fill='none' stroke='{couleur}' stroke-width='3' stroke-dasharray='4 3'/>")
         else:
             p.append(f"<line x1='{x + 44}' y1='{cy}' x2='{x + 120}' y2='{cy}' stroke='{couleur}' stroke-width='3.5'/>")
+        p.append("</g>")
         p.append(_txt(x + 82, 190, principe.split(" ")[0], 10, FIN, "middle"))
         p.append(_txt(x + 82, 204, " ".join(principe.split(" ")[1:]), 10, FIN, "middle"))
         p.append(_txt(x + 82, 234, "+ " + avantage.split(",")[0], 10, OK, "middle", True))
@@ -1162,9 +1383,13 @@ def calcul_ajustement_etapes():
         ("4", "Soustraire", "Jmax = 30,021 − 29,980 = 0,041   ·   Jmin = 30,000 − 29,993 = 0,007", OK),
     ]
     y = 62
-    for num, titre, detail, couleur in etapes:
+    for _i, (num, titre, detail, couleur) in enumerate(etapes):
+        # les 4 étapes s'éclairent l'une après l'autre : on VOIT la marche à suivre se
+        # dérouler dans l'ordre, jamais en désordre.
         p.append(f"<rect x='45' y='{y}' width='670' height='62' rx='6' fill='#ffffff' stroke='{couleur}' stroke-width='1.6'/>")
-        p.append(f"<circle cx='78' cy='{y + 31}' r='16' fill='{couleur}'/>")
+        p.append(f"<circle cx='78' cy='{y + 31}' r='16' fill='{couleur}'>"
+                 f"<animate attributeName='r' values='16;20;16;16;16;16;16;16' dur='4.8s' "
+                 f"begin='{_i * 0.9}s' repeatCount='indefinite'/></circle>")
         p.append(_txt(78, y + 36, num, 14, "#ffffff", "middle", True))
         p.append(_txt(110, y + 26, titre, 12, TRAIT, "start", True))
         p.append(_txt(110, y + 47, detail, 12, couleur))
@@ -1196,8 +1421,12 @@ def choisir_materiau():
          "une nuance introuvable ou à 4 mois de délai est un mauvais choix, même si elle est idéale", FIN),
     ]
     y = 58
-    for question, reponse, couleur in questions:
-        p.append(f"<rect x='45' y='{y}' width='670' height='52' rx='6' fill='#ffffff' stroke='{couleur}' stroke-width='1.5'/>")
+    for _i, (question, reponse, couleur) in enumerate(questions):
+        # les questions s'éclairent l'une après l'autre : c'est un ARBRE, on les pose
+        # dans l'ordre, jamais toutes à la fois.
+        p.append(f"<rect x='45' y='{y}' width='670' height='52' rx='6' fill='#ffffff' stroke='{couleur}' stroke-width='1.5'>"
+                 f"<animate attributeName='stroke-width' values='1.5;3.2;1.5;1.5;1.5;1.5' dur='6s' "
+                 f"begin='{_i}s' repeatCount='indefinite'/></rect>")
         p.append(_txt(62, y + 22, question, 12, TRAIT, "start", True))
         p.append(_txt(62, y + 41, reponse, 11, couleur))
         y += 60
@@ -1222,12 +1451,17 @@ def decomposer_force():
     p.append("<defs><marker id='p1' markerWidth='10' markerHeight='10' refX='9' refY='5' orient='auto'>"
              f"<path d='M0,0 L10,5 L0,10 z' fill='{ALERTE}'/></marker></defs>")
     p.append(_txt(395, 105, "F = 800 N", 13, ALERTE, "start", True))
-    # composantes
-    p.append(f"<line x1='{ox}' y1='{oy}' x2='380' y2='{oy}' stroke='{ALESAGE}' stroke-width='2.5' marker-end='url(#p2)'/>")
+    # composantes — Fx puis Fy se tracent l'une après l'autre : on VOIT F se décomposer
+    # en ses deux projections, dans l'ordre où on les calcule.
+    p.append(f"<line x1='{ox}' y1='{oy}' x2='380' y2='{oy}' stroke='{ALESAGE}' stroke-width='2.5' "
+             f"marker-end='url(#p2)' stroke-dasharray='240' stroke-dashoffset='240'>"
+             f"<animate attributeName='stroke-dashoffset' from='240' to='0' dur='.7s' fill='freeze'/></line>")
     p.append("<defs><marker id='p2' markerWidth='9' markerHeight='9' refX='8' refY='4.5' orient='auto'>"
              f"<path d='M0,0 L9,4.5 L0,9 z' fill='{ALESAGE}'/></marker></defs>")
     p.append(_txt(260, oy + 22, "Fx = F cos α = 693 N", 12, ALESAGE, "middle", True))
-    p.append(f"<line x1='380' y1='{oy}' x2='380' y2='110' stroke='{ARBRE}' stroke-width='2.5' stroke-dasharray='6 4' marker-end='url(#p3)'/>")
+    p.append(f"<line x1='380' y1='{oy}' x2='380' y2='110' stroke='{ARBRE}' stroke-width='2.5' stroke-dasharray='6 4' "
+             f"marker-end='url(#p3)' stroke-dashoffset='140'>"
+             f"<animate attributeName='stroke-dashoffset' from='140' to='0' dur='.7s' begin='.7s' fill='freeze'/></line>")
     p.append("<defs><marker id='p3' markerWidth='9' markerHeight='9' refX='8' refY='4.5' orient='auto'>"
              f"<path d='M0,0 L9,4.5 L0,9 z' fill='{ARBRE}'/></marker></defs>")
     p.append(_txt(370, 190, "Fy = F sin α", 12, ARBRE, "end", True))
@@ -1258,6 +1492,11 @@ def profil_trapezoidal():
     p.append(f"<text x='38' y='150' {_POLICE} font-size='11' fill='{FIN}' transform='rotate(-90 38,150)'>vitesse (m/s)</text>")
     # trapeze
     p.append(f"<path d='M{ox},{oy} L230,110 L470,110 L610,{oy} Z' fill='{ALESAGE}' opacity='0.18' stroke='{ALESAGE}' stroke-width='2.5'/>")
+    # un point parcourt le profil trapézoïdal en boucle : on VOIT l'axe accélérer,
+    # tenir sa vitesse, puis décélérer — jamais un démarrage brutal.
+    p.append(f"<circle r='6' fill='{ARBRE}'>"
+             f"<animateMotion dur='3s' repeatCount='indefinite' "
+             f"path='M{ox},{oy} L230,110 L470,110 L610,{oy}'/></circle>")
     p.append(f"<line x1='{ox}' y1='110' x2='230' y2='110' stroke='{FIN}' stroke-width='1' stroke-dasharray='4 3'/>")
     p.append(_txt(ox - 8, 114, "v", 13, ALESAGE, "end", True))
     # zones
@@ -1308,8 +1547,11 @@ def courbe_capabilite():
     p.append(cloche(345, 40, ALESAGE, 1))
     p.append(_txt(345, 272, "Cp = 1,4 · Cpk = 1,4", 12, ALESAGE, "middle", True))
     p.append(_txt(345, 290, "capable et centrée", 10, FIN, "middle"))
-    # production decalee
-    p.append(cloche(470, 40, ARBRE, 1))
+    # production decalee — elle dérive doucement, contrairement à la cloche centrée qui
+    # reste fixe : on VOIT le déréglage, pas seulement le chiffre Cpk.
+    p.append(f"<g><animateTransform attributeName='transform' type='translate' "
+             f"values='0,0; 10,0; 0,0; -6,0; 0,0' dur='3s' repeatCount='indefinite'/>"
+             f"{cloche(470, 40, ARBRE, 1)}</g>")
     p.append(_txt(600, 200, "même dispersion,", 11, ARBRE, "start", True))
     p.append(_txt(600, 218, "mais décalée :", 11, ARBRE, "start", True))
     p.append(_txt(600, 240, "Cp = 1,4 inchangé", 11, TRAIT, "start", True))
@@ -1339,10 +1581,15 @@ def effort_verin():
         p.append(f"<rect x='{px}' y='{y0 + 36}' width='16' height='54' fill='{couleur}' opacity='0.6' stroke='{TRAIT}' stroke-width='1.5'/>")
         # tige
         p.append(f"<rect x='{px + 16}' y='{y0 + 56}' width='{300 - px}' height='14' fill='#cbd5e1' stroke='{TRAIT}' stroke-width='1.5'/>")
-        # pression
+        # pression — trois flèches qui pulsent en cascade : on VOIT le sens du flux d'air.
         for k in range(3):
             xa = 70 + k * 18 if y0 == 70 else 300 + k * 14
-            p.append(_txt(xa, y0 + 68, "»" if y0 == 70 else "«", 15, ALESAGE, "middle", True))
+            glyphe = "»" if y0 == 70 else "«"
+            delai = k * 0.25
+            p.append(f"<text x='{xa}' y='{y0 + 68}' {_POLICE} font-size='15' fill='{ALESAGE}' "
+                     f"text-anchor='middle' font-weight='600' opacity='0.25'>{glyphe}"
+                     f"<animate attributeName='opacity' values='0.25;1;0.25' dur='1.2s' "
+                     f"begin='{delai}s' repeatCount='indefinite'/></text>")
         p.append(_txt(330, y0 + 52, formule, 12, TRAIT, "start", True))
         p.append(_txt(330, y0 + 76, valeur, 12, couleur, "start", True))
     p.append(f"<rect x='40' y='330' width='680' height='66' fill='#fff7ed' stroke='{ARBRE}' rx='6'/>")
@@ -1372,8 +1619,12 @@ def plaque_moteur():
                (189, "1445 et non 1500 : c'est le glissement", ARBRE),
                (215, "0,8 environ pour un moteur asynchrone", FIN),
                (241, "5 = protégé poussière · 5 = jets d'eau", OK)]
-    for ly, texte, couleur in reperes:
-        p.append(f"<line x1='362' y1='{ly - 4}' x2='395' y2='{ly - 4}' stroke='{couleur}' stroke-width='1.2'/>")
+    for _i, (ly, texte, couleur) in enumerate(reperes):
+        # les repères s'éclairent l'un après l'autre : on VOIT chaque ligne de la
+        # plaque expliquée à son tour, pas un mur de texte d'un coup.
+        p.append(f"<line x1='362' y1='{ly - 4}' x2='395' y2='{ly - 4}' stroke='{couleur}' stroke-width='1.2'>"
+                 f"<animate attributeName='stroke-width' values='1.2;3;1.2;1.2;1.2;1.2' dur='4.2s' "
+                 f"begin='{_i * 0.7}s' repeatCount='indefinite'/></line>")
         p.append(_txt(402, ly, texte, 11, couleur))
     p.append(f"<rect x='40' y='285' width='680' height='86' fill='#eff6ff' stroke='{ALESAGE}' rx='6'/>")
     p.append(_txt(56, 308, "Le couple se déduit : C = P / ω, avec ω = 2π × 1445 / 60 = 151 rad/s", 12, TRAIT, "start", True))
@@ -1408,10 +1659,19 @@ def planning_projet():
         x1 = ox + deb * largeur / 16
         x2 = ox + fin * largeur / 16
         p.append(_txt(180, y + 15, nom, 11, TRAIT, "end"))
-        p.append(f"<rect x='{x1}' y='{y}' width='{x2 - x1}' height='22' rx='4' fill='{couleur}' "
-                 f"opacity='{0.75 if critique else 0.4}' stroke='{couleur}' stroke-width='1.4'/>")
+        if nom == "Commande matière":
+            # la tâche sur le chemin critique pulse : un retard ici décale tout le reste.
+            p.append(f"<rect x='{x1}' y='{y}' width='{x2 - x1}' height='22' rx='4' fill='{couleur}' "
+                     f"opacity='0.75' stroke='{couleur}' stroke-width='1.4'>"
+                     f"<animate attributeName='stroke-width' values='1.4;3;1.4' dur='1.4s' "
+                     f"repeatCount='indefinite'/></rect>")
+        else:
+            p.append(f"<rect x='{x1}' y='{y}' width='{x2 - x1}' height='22' rx='4' fill='{couleur}' "
+                     f"opacity='{0.75 if critique else 0.4}' stroke='{couleur}' stroke-width='1.4'/>")
         y += 33
-    p.append(f"<line x1='{ox + 16 * largeur / 16}' y1='52' x2='{ox + largeur}' y2='300' stroke='{ALERTE}' stroke-width='2'/>")
+    # la ligne de soutenance clignote : c'est la date qu'on ne peut pas décaler.
+    p.append(f"<line x1='{ox + 16 * largeur / 16}' y1='52' x2='{ox + largeur}' y2='300' stroke='{ALERTE}' stroke-width='2'>"
+             f"<animate attributeName='opacity' values='0.4;1;0.4' dur='1.4s' repeatCount='indefinite'/></line>")
     p.append(_txt(ox + largeur - 6, 180, "soutenance", 11, ALERTE, "end", True))
     p.append(f"<rect x='40' y='312' width='680' height='84' fill='#fff7ed' stroke='{ARBRE}' rx='6'/>")
     p.append(_txt(56, 335, "La commande de matière (en orange) est sur le CHEMIN CRITIQUE : tout retard sur", 12, TRAIT, "start", True))
@@ -1441,8 +1701,9 @@ def seuil_rentabilite():
     p.append(_txt(650, 170, "8 500 € + 7 €/pièce", 10, FIN, "start"))
     p.append(f"<line x1='{ox}' y1='215' x2='{ox}' y2='{oy}' stroke='{ARBRE}' stroke-width='1.4' stroke-dasharray='4 3'/>")
     p.append(_txt(ox - 8, 212, "outillage", 10, ARBRE, "end"))
-    # croisement
-    p.append(f"<circle cx='265' cy='222' r='7' fill='{ALERTE}'/>")
+    # croisement — il pulse : c'est LE point qui décide du procédé.
+    p.append(f"<circle cx='265' cy='222' r='7' fill='{ALERTE}'>"
+             f"<animate attributeName='r' values='7;10;7' dur='1.3s' repeatCount='indefinite'/></circle>")
     p.append(f"<line x1='265' y1='222' x2='265' y2='{oy}' stroke='{ALERTE}' stroke-width='1.4' stroke-dasharray='4 3'/>")
     p.append(_txt(265, 318, "≈ 218 pièces", 11, ALERTE, "middle", True))
     p.append(_txt(175, 150, "on usine", 11, ALESAGE, "middle", True))
@@ -1471,9 +1732,13 @@ def structure_soutenance():
     ox, largeur = 60, 640
     x = ox
     p.append(_txt(40, 60, "Répartition du temps :", 12, FIN, "start", True))
-    for nom, duree, couleur in parties:
+    for _i, (nom, duree, couleur) in enumerate(parties):
+        # les segments apparaissent dans l'ordre du passage à l'oral, comme le minuteur
+        # qui avance pendant la soutenance.
         w = duree * largeur / total
-        p.append(f"<rect x='{x}' y='70' width='{w - 3}' height='30' rx='4' fill='{couleur}' opacity='0.55'/>")
+        p.append(f"<rect x='{x}' y='70' width='0' height='30' rx='4' fill='{couleur}' opacity='0.55'>"
+                 f"<animate attributeName='width' from='0' to='{w - 3}' dur='.4s' "
+                 f"begin='{_i * 0.35}s' fill='freeze'/></rect>")
         p.append(_txt(x + w / 2, 90, f"{duree}′", 11, TRAIT, "middle", True))
         x += w
     y = 130
@@ -1508,8 +1773,18 @@ def types_appuis():
         p.append(f"<rect x='{x}' y='50' width='200' height='250' rx='8' fill='#ffffff' stroke='{couleur}' stroke-width='2'/>")
         p.append(_txt(x + 100, 74, nom, 12, couleur, "middle", True))
         cx, cy = x + 100, 140
-        # poutre
-        p.append(f"<rect x='{cx - 70}' y='{cy - 30}' width='140' height='14' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='1.6'/>")
+        # poutre — elle glisse (appui simple) ou pivote (articulation) : on VOIT ce qui
+        # reste libre. Rien ne bouge sur l'encastrement : ça aussi, ça s'illustre tout seul.
+        if nom == "APPUI SIMPLE":
+            p.append(f"<rect x='{cx - 70}' y='{cy - 30}' width='140' height='14' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='1.6'>"
+                     f"<animateTransform attributeName='transform' type='translate' "
+                     f"values='0,0; 8,0; 0,0; -8,0; 0,0' dur='2.4s' repeatCount='indefinite'/></rect>")
+        elif nom == "ARTICULATION":
+            p.append(f"<rect x='{cx - 70}' y='{cy - 30}' width='140' height='14' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='1.6'>"
+                     f"<animateTransform attributeName='transform' type='rotate' "
+                     f"values='-5 {cx} {cy - 6}; 5 {cx} {cy - 6}; -5 {cx} {cy - 6}' dur='2.4s' repeatCount='indefinite'/></rect>")
+        else:
+            p.append(f"<rect x='{cx - 70}' y='{cy - 30}' width='140' height='14' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='1.6'/>")
         if nom == "APPUI SIMPLE":
             p.append(f"<circle cx='{cx}' cy='{cy - 6}' r='9' fill='none' stroke='{TRAIT}' stroke-width='1.8'/>")
             p.append(f"<line x1='{cx - 30}' y1='{cy + 5}' x2='{cx + 30}' y2='{cy + 5}' stroke='{TRAIT}' stroke-width='2'/>")
@@ -1550,7 +1825,10 @@ def frottement_adherence():
     # bloc
     p.append(f"<rect x='300' y='150' width='58' height='40' fill='#cbd5e1' stroke='{TRAIT}' stroke-width='2' transform='rotate(-17.9 329,170)'/>")
     # poids
-    p.append(f"<line x1='329' y1='176' x2='329' y2='236' stroke='{ALERTE}' stroke-width='2.6' marker-end='url(#r1)'/>")
+    # le poids pulse : on VOIT la force qui pousse la pièce à glisser, en permanence.
+    p.append(f"<line x1='329' y1='176' x2='329' y2='236' stroke='{ALERTE}' stroke-width='2.6' marker-end='url(#r1)'>"
+             f"<animateTransform attributeName='transform' type='translate' "
+             f"values='0,0; 0,4; 0,0' dur='1.4s' repeatCount='indefinite'/></line>")
     p.append("<defs><marker id='r1' markerWidth='9' markerHeight='9' refX='8' refY='4.5' orient='auto'>"
              f"<path d='M0,0 L9,4.5 L0,9 z' fill='{ALERTE}'/></marker></defs>")
     p.append(_txt(336, 232, "P = mg", 11, ALERTE, "start", True))
@@ -1595,9 +1873,15 @@ def flambement_euler():
     p.append(_txt(127, 222, "barre COURTE", 12, OK, "middle", True))
     p.append(_txt(127, 240, "elle s'écrase : σ = N/S", 10, FIN, "middle"))
     p.append(_txt(127, 256, "on compare à Re", 10, FIN, "middle"))
-    # barre elancee
-    p.append(f"<path d='M300,200 Q345,145 300,90' fill='none' stroke='{TRAIT}' stroke-width='14' stroke-linecap='round' opacity='0.35'/>")
-    p.append(f"<path d='M300,200 Q345,145 300,90' fill='none' stroke='{ALERTE}' stroke-width='2.4' stroke-dasharray='6 4'/>")
+    # barre elancee — elle se dérobe sur le côté en boucle : on VOIT le flambement,
+    # contre la barre courte qui reste parfaitement droite.
+    p.append(f"<path d='M300,200 Q345,145 300,90' fill='none' stroke='{TRAIT}' stroke-width='14' "
+             f"stroke-linecap='round' opacity='0.35'>"
+             f"<animate attributeName='d' dur='1.8s' repeatCount='indefinite' values="
+             f"'M300,200 Q345,145 300,90;M300,200 Q365,145 300,90;M300,200 Q345,145 300,90'/></path>")
+    p.append(f"<path d='M300,200 Q345,145 300,90' fill='none' stroke='{ALERTE}' stroke-width='2.4' stroke-dasharray='6 4'>"
+             f"<animate attributeName='d' dur='1.8s' repeatCount='indefinite' values="
+             f"'M300,200 Q345,145 300,90;M300,200 Q365,145 300,90;M300,200 Q345,145 300,90'/></path>")
     p.append(f"<line x1='300' y1='55' x2='300' y2='84' stroke='{ARBRE}' stroke-width='2.6' marker-end='url(#s1)'/>")
     p.append(_txt(310, 222, "barre ÉLANCÉE", 12, ALERTE, "middle", True))
     p.append(_txt(310, 240, "elle se dérobe sur le côté", 10, FIN, "middle"))
@@ -1630,12 +1914,18 @@ def sollicitations_composees():
     p.append(f"<rect x='420' y='105' width='30' height='76' fill='#cbd5e1' stroke='{TRAIT}' stroke-width='1.8'/>")
     # poulie et effort
     p.append(f"<rect x='250' y='96' width='30' height='94' fill='#cbd5e1' stroke='{TRAIT}' stroke-width='1.8'/>")
-    p.append(f"<line x1='265' y1='60' x2='265' y2='92' stroke='{ALERTE}' stroke-width='2.6' marker-end='url(#t1)'/>")
+    # la tension pulse, la torsion défile en rotation : les deux sollicitations agissent
+    # EN MÊME TEMPS, dans des directions différentes.
+    p.append(f"<line x1='265' y1='60' x2='265' y2='92' stroke='{ALERTE}' stroke-width='2.6' marker-end='url(#t1)'>"
+             f"<animateTransform attributeName='transform' type='translate' "
+             f"values='0,0; 0,4; 0,0' dur='1.2s' repeatCount='indefinite'/></line>")
     p.append("<defs><marker id='t1' markerWidth='9' markerHeight='9' refX='8' refY='4.5' orient='auto'>"
              f"<path d='M0,0 L9,4.5 L0,9 z' fill='{ALERTE}'/></marker></defs>")
     p.append(_txt(275, 62, "tension de courroie → FLEXION (σ)", 11, ALERTE, "start", True))
     # torsion
-    p.append(f"<path d='M100,200 a 22,22 0 1,1 18,-12' fill='none' stroke='{OK}' stroke-width='2.4' marker-end='url(#t2)'/>")
+    p.append(f"<path d='M100,200 a 22,22 0 1,1 18,-12' fill='none' stroke='{OK}' stroke-width='2.4' "
+             f"marker-end='url(#t2)' stroke-dasharray='4 3'>"
+             f"<animate attributeName='stroke-dashoffset' values='0;-14' dur='.9s' repeatCount='indefinite'/></path>")
     p.append("<defs><marker id='t2' markerWidth='9' markerHeight='9' refX='8' refY='4.5' orient='auto'>"
              f"<path d='M0,0 L9,4.5 L0,9 z' fill='{OK}'/></marker></defs>")
     p.append(_txt(140, 205, "couple moteur → TORSION (τ)", 11, OK, "start", True))
@@ -1691,8 +1981,11 @@ def moulage_principe():
               "congés partout, jamais d'angle vif",
               "surépaisseur d'usinage sur les portées"]
     y = 148
-    for r in regles:
-        p.append(f"<circle cx='450' cy='{y - 4}' r='4' fill='{OK}'/>")
+    for _i, r in enumerate(regles):
+        # les 4 règles s'éclairent l'une après l'autre.
+        p.append(f"<circle cx='450' cy='{y - 4}' r='4' fill='{OK}'>"
+                 f"<animate attributeName='r' values='4;7;4;4' dur='3.2s' begin='{_i * 0.8}s' "
+                 f"repeatCount='indefinite'/></circle>")
         p.append(_txt(464, y, r, 11, TRAIT))
         y += 26
     p.append(f"<rect x='40' y='275' width='680' height='96' fill='#fff7ed' stroke='{ARBRE}' rx='6'/>")
@@ -1715,12 +2008,18 @@ def tournage_fraisage():
     p.append(f"<rect x='55' y='55' width='320' height='250' rx='8' fill='#ffffff' stroke='{ALESAGE}' stroke-width='2'/>")
     p.append(_txt(215, 80, "TOURNAGE", 13, ALESAGE, "middle", True))
     p.append(f"<rect x='95' y='120' width='210' height='58' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='2'/>")
-    p.append(f"<path d='M110,110 a 18,18 0 1,1 -14,12' fill='none' stroke='{ALESAGE}' stroke-width='2.4' marker-end='url(#v1)'/>")
+    # rotation et avance défilent chacune à leur rythme : on VOIT ce qui tourne et ce
+    # qui avance — la question centrale pour distinguer tournage et fraisage.
+    p.append(f"<path d='M110,110 a 18,18 0 1,1 -14,12' fill='none' stroke='{ALESAGE}' stroke-width='2.4' "
+             f"marker-end='url(#v1)' stroke-dasharray='4 3'>"
+             f"<animate attributeName='stroke-dashoffset' values='0;-14' dur='.8s' repeatCount='indefinite'/></path>")
     p.append("<defs><marker id='v1' markerWidth='9' markerHeight='9' refX='8' refY='4.5' orient='auto'>"
              f"<path d='M0,0 L9,4.5 L0,9 z' fill='{ALESAGE}'/></marker></defs>")
     p.append(_txt(140, 106, "LA PIÈCE tourne", 11, ALESAGE, "start", True))
     p.append(f"<path d='M250,205 L268,185 L280,197 Z' fill='{ARBRE}' stroke='{TRAIT}' stroke-width='1.4'/>")
-    p.append(f"<line x1='268' y1='215' x2='170' y2='215' stroke='{ARBRE}' stroke-width='2.2' marker-end='url(#v2)'/>")
+    p.append(f"<line x1='268' y1='215' x2='170' y2='215' stroke='{ARBRE}' stroke-width='2.2' "
+             f"marker-end='url(#v2)' stroke-dasharray='7 5'>"
+             f"<animate attributeName='stroke-dashoffset' values='0;-24' dur='1s' repeatCount='indefinite'/></line>")
     p.append("<defs><marker id='v2' markerWidth='9' markerHeight='9' refX='8' refY='4.5' orient='auto'>"
              f"<path d='M0,0 L9,4.5 L0,9 z' fill='{ARBRE}'/></marker></defs>")
     p.append(_txt(215, 236, "l'outil avance", 11, ARBRE, "middle", True))
@@ -1731,11 +2030,15 @@ def tournage_fraisage():
     p.append(_txt(565, 80, "FRAISAGE", 13, OK, "middle", True))
     p.append(f"<rect x='450' y='170' width='230' height='50' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='2'/>")
     p.append(f"<rect x='545' y='108' width='34' height='60' fill='#cbd5e1' stroke='{TRAIT}' stroke-width='2'/>")
-    p.append(f"<path d='M560,100 a 18,18 0 1,1 -14,12' fill='none' stroke='{OK}' stroke-width='2.4' marker-end='url(#v3)'/>")
+    p.append(f"<path d='M560,100 a 18,18 0 1,1 -14,12' fill='none' stroke='{OK}' stroke-width='2.4' "
+             f"marker-end='url(#v3)' stroke-dasharray='4 3'>"
+             f"<animate attributeName='stroke-dashoffset' values='0;-14' dur='.8s' repeatCount='indefinite'/></path>")
     p.append("<defs><marker id='v3' markerWidth='9' markerHeight='9' refX='8' refY='4.5' orient='auto'>"
              f"<path d='M0,0 L9,4.5 L0,9 z' fill='{OK}'/></marker></defs>")
     p.append(_txt(590, 100, "L'OUTIL tourne", 11, OK, "start", True))
-    p.append(f"<line x1='470' y1='240' x2='660' y2='240' stroke='{ARBRE}' stroke-width='2.2' marker-end='url(#v2)'/>")
+    p.append(f"<line x1='470' y1='240' x2='660' y2='240' stroke='{ARBRE}' stroke-width='2.2' "
+             f"marker-end='url(#v2)' stroke-dasharray='7 5'>"
+             f"<animate attributeName='stroke-dashoffset' values='0;-24' dur='1s' repeatCount='indefinite'/></line>")
     p.append(_txt(565, 262, "la pièce avance", 11, ARBRE, "middle", True))
     p.append(_txt(565, 286, "→ surfaces PLANES, poches, rainures", 11, TRAIT, "middle", True))
     p.append(f"<rect x='40' y='320' width='680' height='68' fill='#eff6ff' stroke='{ALESAGE}' rx='6'/>")
@@ -1761,9 +2064,13 @@ def gamme_usinage():
               ("70", "Rectification", "seulement sur les portées qui l'exigent", OK),
               ("80", "Contrôle", "on vérifie ce qui a été spécifié, pas tout", TRAIT)]
     y = 58
-    for num, titre, detail, couleur in etapes:
+    for _i, (num, titre, detail, couleur) in enumerate(etapes):
+        # le numéro de chaque étape s'éclaire l'un après l'autre, dans l'ordre : on VOIT
+        # la gamme se dérouler et qu'aucune étape ne peut être prise avant son tour.
         p.append(f"<rect x='55' y='{y}' width='660' height='36' rx='5' fill='#ffffff' stroke='{couleur}' stroke-width='1.5'/>")
-        p.append(f"<rect x='55' y='{y}' width='46' height='36' rx='5' fill='{couleur}' opacity='0.25'/>")
+        p.append(f"<rect x='55' y='{y}' width='46' height='36' rx='5' fill='{couleur}' opacity='0.25'>"
+                 f"<animate attributeName='opacity' values='0.25;0.75;0.25;0.25;0.25;0.25;0.25;0.25' "
+                 f"dur='4.8s' begin='{_i * 0.55}s' repeatCount='indefinite'/></rect>")
         p.append(_txt(78, y + 23, num, 12, couleur, "middle", True))
         p.append(_txt(115, y + 16, titre, 12, TRAIT, "start", True))
         p.append(_txt(115, y + 30, detail, 10, FIN))
@@ -1782,6 +2089,11 @@ def gamme_usinage():
 def geometrie_engrenage():
     p = [_txt(40, 26, "Tout part du module m — la taille d'une dent :", 13, TRAIT, "start", True)]
     cx, cy = 250, 190
+    # la roue dentée tourne lentement sur elle-même : on VOIT une vraie roue, pas
+    # seulement un schéma coté.
+    p.append("<g>")
+    p.append(f"<animateTransform attributeName='transform' type='rotate' "
+             f"values='0 {cx} {cy}; 360 {cx} {cy}' dur='10s' repeatCount='indefinite'/>")
     p.append(f"<circle cx='{cx}' cy='{cy}' r='120' fill='none' stroke='{TRAIT}' stroke-width='2'/>")
     p.append(f"<circle cx='{cx}' cy='{cy}' r='105' fill='none' stroke='{AXE}' stroke-width='2' stroke-dasharray='9 5'/>")
     p.append(f"<circle cx='{cx}' cy='{cy}' r='86' fill='none' stroke='{FIN}' stroke-width='1.4'/>")
@@ -1797,6 +2109,7 @@ def geometrie_engrenage():
         x4, y4 = cx + 105 * _m.cos(a2), cy + 105 * _m.sin(a2)
         p.append(f"<path d='M{x1:.0f},{y1:.0f} L{x2:.0f},{y2:.0f} L{x3:.0f},{y3:.0f} L{x4:.0f},{y4:.0f}' "
                  f"fill='#e2e8f0' stroke='{TRAIT}' stroke-width='1.4'/>")
+    p.append("</g>")
     # cotes
     p.append(f"<line x1='{cx}' y1='{cy}' x2='{cx + 120}' y2='{cy}' stroke='{TRAIT}' stroke-width='1.2'/>")
     p.append(_txt(cx + 60, cy - 8, "da/2", 11, TRAIT, "middle", True))
@@ -1840,8 +2153,11 @@ def instruments_mesure():
         ("MMT tridimensionnelle", "0,001 mm", "géométrie complète, tolérances GPS", ALESAGE, 0.001),
     ]
     y = 60
-    for nom, prec, usage, couleur, _ in outils:
-        p.append(f"<rect x='50' y='{y}' width='670' height='44' rx='6' fill='#ffffff' stroke='{couleur}' stroke-width='1.5'/>")
+    for _i, (nom, prec, usage, couleur, _tol) in enumerate(outils):
+        # les 6 instruments s'éclairent l'un après l'autre, du moins précis au plus précis.
+        p.append(f"<rect x='50' y='{y}' width='670' height='44' rx='6' fill='#ffffff' stroke='{couleur}' stroke-width='1.5'>"
+                 f"<animate attributeName='stroke-width' values='1.5;3;1.5;1.5;1.5;1.5' dur='4.8s' "
+                 f"begin='{_i * 0.8}s' repeatCount='indefinite'/></rect>")
         p.append(_txt(68, y + 27, nom, 12, couleur, "start", True))
         p.append(_txt(250, y + 27, prec, 12, TRAIT, "start", True))
         p.append(_txt(345, y + 27, usage, 11, FIN))
@@ -1886,6 +2202,11 @@ def grafcet_principe():
     p.append(f"<line x1='{x + 27}' y1='380' x2='80' y2='380' stroke='{TRAIT}' stroke-width='1.8'/>")
     p.append(f"<line x1='80' y1='380' x2='80' y2='91' stroke='{TRAIT}' stroke-width='1.8'/>")
     p.append(f"<line x1='80' y1='91' x2='{x}' y2='91' stroke='{TRAIT}' stroke-width='1.8'/>")
+    # un jeton parcourt le cycle des étapes en boucle : on VOIT l'étape ACTIVE se
+    # déplacer, une seule à la fois, jamais deux en même temps.
+    p.append(f"<circle r='7' fill='{ALERTE}'>"
+             f"<animateMotion dur='6s' repeatCount='indefinite' "
+             f"path='M{x + 27},91 L{x + 27},352 L{x + 27},380 L80,380 L80,91 L{x},91'/></circle>")
     p.append(f"<rect x='540' y='60' width='200' height='150' rx='8' fill='#f0fdf4' stroke='{OK}' stroke-width='2'/>")
     p.append(_txt(556, 86, "Deux règles :", 12, TRAIT, "start", True))
     p.append(_txt(556, 110, "1. l'étape au-dessus", 11, FIN))
@@ -1916,6 +2237,11 @@ def methode_resolution():
     x, y0, pas, r = 70, 60, 38, 15
     p.append(f"<line x1='{x}' y1='{y0}' x2='{x}' y2='{y0 + pas * (len(etapes) - 1)}' "
              f"stroke='{FIN}' stroke-width='2'/>")
+    # un point descend la ligne, étape après étape, sans jamais en sauter une : on VOIT
+    # l'ordre imposé.
+    p.append(f"<circle r='6' fill='{ALERTE}'>"
+             f"<animateMotion dur='{len(etapes) * 0.5}s' repeatCount='indefinite' "
+             f"path='M{x},{y0} L{x},{y0 + pas * (len(etapes) - 1)}'/></circle>")
     for i, (num, texte, couleur) in enumerate(etapes):
         y = y0 + i * pas
         p.append(f"<circle cx='{x}' cy='{y}' r='{r}' fill='#ffffff' stroke='{couleur}' "
@@ -1954,6 +2280,10 @@ def cycle_de_vie():
     p.append(f"<circle cx='{cx}' cy='{cy}' r='58' fill='none' stroke='{FIN}' stroke-width='1.4' stroke-dasharray='7 5'/>")
     p.append(_txt(cx, cy - 4, "cycle", 12, FIN, "middle", True))
     p.append(_txt(cx, cy + 14, "de vie", 12, FIN, "middle", True))
+    # un point parcourt le cercle des cinq phases en boucle : on VOIT que ça recommence.
+    p.append(f"<circle r='7' fill='{ALERTE}'>"
+             f"<animateMotion dur='6s' repeatCount='indefinite' "
+             f"path='M {cx + r},{cy} A {r},{r} 0 1,1 {cx - r},{cy} A {r},{r} 0 1,1 {cx + r},{cy}'/></circle>")
     p.append(f"<rect x='400' y='70' width='320' height='170' rx='8' fill='#ffffff' stroke='{ALERTE}' stroke-width='2'/>")
     p.append(_txt(560, 96, "Où est l'impact ?", 12, ALERTE, "middle", True))
     p.append(_txt(418, 124, "Machine-outil, véhicule, appareil :", 11, TRAIT, "start", True))
@@ -1998,8 +2328,11 @@ def regles_injection():
               ("4", "Congés partout, R ≥ 0,5 e", "un angle vif concentre et bloque l'écoulement"),
               ("5", "Position du seuil réfléchie", "elle décide des lignes de soudure")]
     y = 92
-    for num, titre, pourquoi in regles:
-        p.append(f"<circle cx='422' cy='{y - 4}' r='11' fill='{ALESAGE}'/>")
+    for _i, (num, titre, pourquoi) in enumerate(regles):
+        # les 5 règles s'éclairent dans l'ordre.
+        p.append(f"<circle cx='422' cy='{y - 4}' r='11' fill='{ALESAGE}'>"
+                 f"<animate attributeName='r' values='11;14;11;11;11' dur='4s' begin='{_i * 0.8}s' "
+                 f"repeatCount='indefinite'/></circle>")
         p.append(_txt(422, y, num, 11, "#ffffff", "middle", True))
         p.append(_txt(442, y - 2, titre, 11, TRAIT, "start", True))
         p.append(_txt(442, y + 14, pourquoi, 10, FIN))
@@ -2026,8 +2359,11 @@ def composite_stratifie():
                ("Pli à −45°", ARBRE, 14),
                ("Pli à 90° — fibres transversales", OK, 14),
                ("Pli à 0°", ALESAGE, 14)]
-    for nom, couleur, h in couches:
-        p.append(f"<rect x='70' y='{y}' width='300' height='{h}' fill='{couleur}' opacity='0.35' stroke='{couleur}' stroke-width='1.2'/>")
+    for _i, (nom, couleur, h) in enumerate(couches):
+        # les plis s'éclairent l'un après l'autre, dans l'ordre réel de l'empilement.
+        p.append(f"<rect x='70' y='{y}' width='300' height='{h}' fill='{couleur}' opacity='0.35' stroke='{couleur}' stroke-width='1.2'>"
+                 f"<animate attributeName='opacity' values='0.35;0.8;0.35;0.35;0.35;0.35' dur='6s' "
+                 f"begin='{_i * 0.9}s' repeatCount='indefinite'/></rect>")
         p.append(_txt(384, y + h - 2, nom, 10, couleur, "start", True))
         y += h + 4
     p.append(_txt(220, y + 18, "le STRATIFIÉ : l'orientation des plis fait la résistance", 11, TRAIT, "middle", True))
@@ -2068,8 +2404,11 @@ def symbole_soudure():
                 (240, 262, "200 = longueur du cordon", OK),
                 (280, 292, "(3) = nombre de cordons", FIN)]
     y0 = 200
-    for x, y, texte, couleur in legendes:
-        p.append(f"<circle cx='{x}' cy='{y - 4}' r='4' fill='{couleur}'/>")
+    for _i, (x, y, texte, couleur) in enumerate(legendes):
+        # les 5 légendes s'éclairent dans l'ordre de lecture du symbole.
+        p.append(f"<circle cx='{x}' cy='{y - 4}' r='4' fill='{couleur}'>"
+                 f"<animate attributeName='r' values='4;7;4;4;4' dur='5s' begin='{_i * 0.9}s' "
+                 f"repeatCount='indefinite'/></circle>")
         p.append(_txt(x + 12, y, texte, 11, couleur, "start", True))
     # symboles courants
     p.append(f"<rect x='430' y='60' width='290' height='210' rx='8' fill='#ffffff' stroke='{FIN}' stroke-width='1.6'/>")
@@ -2102,8 +2441,9 @@ def calcul_cordon():
     # cordon
     p.append(f"<path d='M150,160 L150,220 L215,220 Z' fill='{ARBRE}' opacity='0.45' stroke='{ARBRE}' stroke-width='2'/>")
     p.append(_txt(238, 200, "le cordon", 11, ARBRE, "start", True))
-    # gorge a
-    p.append(f"<line x1='150' y1='220' x2='190' y2='182' stroke='{ALERTE}' stroke-width='2.4'/>")
+    # gorge a — elle pulse : c'est la SEULE dimension qui entre dans le calcul.
+    p.append(f"<line x1='150' y1='220' x2='190' y2='182' stroke='{ALERTE}' stroke-width='2.4'>"
+             f"<animate attributeName='stroke-width' values='2.4;4.6;2.4' dur='1.3s' repeatCount='indefinite'/></line>")
     p.append(_txt(200, 172, "a", 15, ALERTE, "start", True))
     p.append(_txt(214, 174, "= gorge", 11, ALERTE, "start"))
     # cote z
@@ -2143,11 +2483,19 @@ def inertie_ramenee():
     p.append(f"<rect x='330' y='148' width='60' height='14' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='1.6'/>")
     # charge
     p.append(f"<circle cx='430' cy='155' r='42' fill='#e2e8f0' stroke='{ARBRE}' stroke-width='2'/>")
+    # le repère tourne LENTEMENT sur la charge, dix fois plus vite sur ce que ressent
+    # le moteur : l'image directe du rapport de réduction 1/10.
+    p.append(f"<line x1='430' y1='155' x2='430' y2='115' stroke='{ARBRE}' stroke-width='2.5'>"
+             f"<animateTransform attributeName='transform' type='rotate' from='0 430 155' "
+             f"to='360 430 155' dur='4s' repeatCount='indefinite'/></line>")
     p.append(_txt(430, 152, "CHARGE", 11, ARBRE, "middle", True))
     p.append(_txt(430, 168, "J = 4 kg·m²", 10, FIN, "middle"))
     p.append(_txt(430, 218, "ce qu'elle est vraiment", 10, FIN, "middle"))
     # ce que voit le moteur
     p.append(f"<circle cx='115' cy='250' r='16' fill='{ALERTE}' opacity='0.3' stroke='{ALERTE}' stroke-width='2'/>")
+    p.append(f"<line x1='115' y1='250' x2='115' y2='234' stroke='{ALERTE}' stroke-width='2'>"
+             f"<animateTransform attributeName='transform' type='rotate' from='0 115 250' "
+             f"to='360 115 250' dur='0.4s' repeatCount='indefinite'/></line>")
     p.append(_txt(115, 290, "ce que le moteur ressent", 10, ALERTE, "middle", True))
     p.append(_txt(115, 306, "J ramenée = 0,04 kg·m²", 11, ALERTE, "middle", True))
     p.append(f"<rect x='490' y='95' width='230' height='120' rx='8' fill='#eff6ff' stroke='{ALESAGE}' stroke-width='2'/>")
@@ -2176,7 +2524,10 @@ def tribologie():
     p.append(f"<path d='M70,100 L100,118 L130,96 L160,116 L190,98 L220,120 L250,100 L280,122 L310,102 L310,70 L70,70 Z' "
              f"fill='#e2e8f0' stroke='{TRAIT}' stroke-width='1.6'/>")
     for x in (100, 160, 220, 280):
-        p.append(f"<circle cx='{x}' cy='119' r='6' fill='{ALERTE}' opacity='0.5'/>")
+        # les points de contact pulsent : on VOIT la pression énorme concentrée sur
+        # ces seuls sommets, pas répartie sur toute la surface.
+        p.append(f"<circle cx='{x}' cy='119' r='6' fill='{ALERTE}' opacity='0.5'>"
+                 f"<animate attributeName='r' values='6;9;6' dur='1s' repeatCount='indefinite'/></circle>")
     p.append(_txt(190, 195, "seuls les sommets portent : la pression locale est énorme", 10, ALERTE, "middle", True))
     p.append(_txt(190, 212, "→ c'est là que naissent l'usure et l'échauffement", 10, FIN, "middle"))
     # regimes de lubrification
@@ -2186,8 +2537,11 @@ def tribologie():
            ("MIXTE", "film partiel, quelques sommets touchent", ARBRE),
            ("HYDRODYNAMIQUE", "film complet, f = 0,001 à 0,01", OK)]
     y = 116
-    for nom, detail, couleur in reg:
-        p.append(f"<circle cx='422' cy='{y - 4}' r='5' fill='{couleur}'/>")
+    for _i, (nom, detail, couleur) in enumerate(reg):
+        # les trois régimes s'éclairent l'un après l'autre, du sec vers l'hydrodynamique.
+        p.append(f"<circle cx='422' cy='{y - 4}' r='5' fill='{couleur}'>"
+                 f"<animate attributeName='r' values='5;8;5;5;5' dur='4s' begin='{_i * 1.1}s' "
+                 f"repeatCount='indefinite'/></circle>")
         p.append(_txt(438, y, nom, 11, couleur, "start", True))
         p.append(_txt(438, y + 15, detail, 10, FIN))
         y += 42
@@ -2228,6 +2582,14 @@ def resonance():
             pts.append(f"{ox + i * 4:.0f},{y:.1f}")
         p.append(f"<polyline points='{' '.join(pts)}' fill='none' stroke='{couleur}' stroke-width='2.6'/>")
         p.append(_txt(600, ly, label, 11, couleur, "start", True))
+    # à la résonance (x=1), le point PEU AMORTI tremble violemment tandis que le point
+    # BIEN AMORTI bouge à peine : la preuve visuelle de ce qu'apporte l'amortissement.
+    p.append(f"<circle cx='{ox + 200}' cy='70' r='5' fill='{ALERTE}'>"
+             f"<animateTransform attributeName='transform' type='translate' "
+             f"values='0,0; 0,-14; 0,9; 0,-11; 0,0' dur='0.35s' repeatCount='indefinite'/></circle>")
+    p.append(f"<circle cx='{ox + 200}' cy='238' r='5' fill='{OK}'>"
+             f"<animateTransform attributeName='transform' type='translate' "
+             f"values='0,0; 0,-3; 0,0' dur='1.4s' repeatCount='indefinite'/></circle>")
     # ligne de resonance
     p.append(f"<line x1='{ox + 200}' y1='70' x2='{ox + 200}' y2='{oy}' stroke='{FIN}' stroke-width='1.4' stroke-dasharray='6 4'/>")
     p.append(_txt(ox + 200, 60, "RÉSONANCE", 12, ALERTE, "middle", True))
@@ -2275,7 +2637,13 @@ def diagrammes_efforts():
     p.append(f"<line x1='{ox}' y1='{y1}' x2='{ox + L}' y2='{y1}' stroke='{FIN}' stroke-width='1'/>")
     p.append(f"<path d='M{ox},{y1} L{ox + L / 2},{y1 - 52} L{ox + L},{y1} Z' fill='{ARBRE}' opacity='0.28' stroke='{ARBRE}' stroke-width='1.8'/>")
     p.append(_txt(ox + L / 2, y1 - 62, "Mf maxi = F L / 4", 12, ARBRE, "middle", True))
-    p.append(f"<line x1='{ox + L / 2}' y1='82' x2='{ox + L / 2}' y2='{y1}' stroke='{FIN}' stroke-width='1' stroke-dasharray='4 4'/>")
+    # la ligne de correspondance clignote avec un point au sommet du triangle : on VOIT
+    # que Mf est maximal exactement là où T change de signe, jamais ailleurs.
+    p.append(f"<line x1='{ox + L / 2}' y1='82' x2='{ox + L / 2}' y2='{y1}' stroke='{FIN}' stroke-width='1' "
+             f"stroke-dasharray='4 4'><animate attributeName='opacity' values='0.4;1;0.4' dur='1.4s' "
+             f"repeatCount='indefinite'/></line>")
+    p.append(f"<circle cx='{ox + L / 2}' cy='{y1 - 52}' r='4' fill='{ARBRE}'>"
+             f"<animate attributeName='r' values='4;7;4' dur='1.4s' repeatCount='indefinite'/></circle>")
     p.append(f"<rect x='40' y='330' width='680' height='68' fill='#f0fdf4' stroke='{OK}' rx='6'/>")
     p.append(_txt(56, 353, "Là où T s'annule ou change de signe, Mf est MAXIMAL. C'est là qu'on dimensionne.",
                   12, TRAIT, "start", True))
@@ -2299,15 +2667,25 @@ def simple_double_cisaillement():
             p.append(f"<rect x='{x0 + 40}' y='{cy - 40}' width='110' height='34' fill='#cbd5e1' stroke='{TRAIT}' stroke-width='1.8'/>")
             p.append(f"<rect x='{x0 + 150}' y='{cy + 6}' width='110' height='34' fill='#cbd5e1' stroke='{TRAIT}' stroke-width='1.8'/>")
             p.append(f"<rect x='{x0 + 132}' y='{cy - 46}' width='16' height='92' fill='{ARBRE}' opacity='0.6' stroke='{TRAIT}' stroke-width='1.6'/>")
-            p.append(f"<line x1='{x0 + 124}' y1='{cy + 3}' x2='{x0 + 156}' y2='{cy + 3}' stroke='{ALERTE}' stroke-width='2.6'/>")
+            # le plan de coupe glisse un peu, comme au cisaillement : on VOIT UNE seule
+            # section travailler.
+            p.append(f"<line x1='{x0 + 124}' y1='{cy + 3}' x2='{x0 + 156}' y2='{cy + 3}' stroke='{ALERTE}' stroke-width='2.6'>"
+                     f"<animateTransform attributeName='transform' type='translate' "
+                     f"values='0,0; 0,3; 0,-3; 0,0' dur='1.2s' repeatCount='indefinite'/></line>")
             p.append(_txt(x0 + 190, cy - 20, "1 section", 11, ALERTE, "start", True))
         else:
             p.append(f"<rect x='{x0 + 40}' y='{cy - 46}' width='60' height='30' fill='#cbd5e1' stroke='{TRAIT}' stroke-width='1.8'/>")
             p.append(f"<rect x='{x0 + 40}' y='{cy + 16}' width='60' height='30' fill='#cbd5e1' stroke='{TRAIT}' stroke-width='1.8'/>")
             p.append(f"<rect x='{x0 + 130}' y='{cy - 16}' width='120' height='32' fill='#cbd5e1' stroke='{TRAIT}' stroke-width='1.8'/>")
             p.append(f"<rect x='{x0 + 60}' y='{cy - 50}' width='16' height='100' fill='{ARBRE}' opacity='0.6' stroke='{TRAIT}' stroke-width='1.6'/>")
-            p.append(f"<line x1='{x0 + 52}' y1='{cy - 14}' x2='{x0 + 84}' y2='{cy - 14}' stroke='{OK}' stroke-width='2.6'/>")
-            p.append(f"<line x1='{x0 + 52}' y1='{cy + 18}' x2='{x0 + 84}' y2='{cy + 18}' stroke='{OK}' stroke-width='2.6'/>")
+            # les deux plans glissent ensemble : on VOIT que l'effort se partage sur DEUX
+            # sections — moitié moins de contrainte sur chacune.
+            p.append(f"<line x1='{x0 + 52}' y1='{cy - 14}' x2='{x0 + 84}' y2='{cy - 14}' stroke='{OK}' stroke-width='2.6'>"
+                     f"<animateTransform attributeName='transform' type='translate' "
+                     f"values='0,0; 0,2; 0,-2; 0,0' dur='1.2s' repeatCount='indefinite'/></line>")
+            p.append(f"<line x1='{x0 + 52}' y1='{cy + 18}' x2='{x0 + 84}' y2='{cy + 18}' stroke='{OK}' stroke-width='2.6'>"
+                     f"<animateTransform attributeName='transform' type='translate' "
+                     f"values='0,0; 0,2; 0,-2; 0,0' dur='1.2s' repeatCount='indefinite'/></line>")
             p.append(_txt(x0 + 150, cy - 34, "2 sections", 11, OK, "start", True))
             p.append(_txt(x0 + 150, cy - 18, "en parallèle", 10, FIN, "start"))
         p.append(_txt(x0 + 152, 226, tau, 14, couleur, "middle", True))
@@ -2336,8 +2714,11 @@ def sections_comparees():
         (580, "Profil I", "I = 780 000", "6,4", ARBRE,
          [("i", 0, 0)]),
     ]
-    for x0, nom, inertie, rapport, couleur, forme in cases:
-        p.append(f"<rect x='{x0}' y='55' width='150' height='250' rx='8' fill='#ffffff' stroke='{couleur}' stroke-width='2'/>")
+    for _i, (x0, nom, inertie, rapport, couleur, forme) in enumerate(cases):
+        # les 4 cartes s'éclairent dans l'ordre croissant de résistance : 1,0 → 6,4.
+        p.append(f"<rect x='{x0}' y='55' width='150' height='250' rx='8' fill='#ffffff' stroke='{couleur}' stroke-width='2'>"
+                 f"<animate attributeName='stroke-width' values='2;4.2;2;2;2' dur='5.2s' begin='{_i * 1.1}s' "
+                 f"repeatCount='indefinite'/></rect>")
         p.append(_txt(x0 + 75, 79, nom, 11, couleur, "middle", True))
         cx, cy = x0 + 75, 155
         kind = forme[0][0]
@@ -2371,10 +2752,15 @@ def sections_comparees():
 
 def resistance_ou_fleche():
     p = [_txt(40, 26, "Une pièce peut résister parfaitement et être inutilisable :", 13, TRAIT, "start", True)]
-    # poutre qui ne casse pas mais flechit
-    p.append(f"<path d='M80,110 Q250,190 420,110' fill='none' stroke='{TRAIT}' stroke-width='12' stroke-linecap='round' opacity='0.4'/>")
+    # poutre qui ne casse pas mais flechit — elle respire entre sa forme droite et sa
+    # flèche maxi : on VOIT qu'elle plie, en continu, sans jamais rompre.
+    p.append(f"<path d='M80,110 Q250,190 420,110' fill='none' stroke='{TRAIT}' stroke-width='12' "
+             f"stroke-linecap='round' opacity='0.4'>"
+             f"<animate attributeName='d' dur='2.2s' repeatCount='indefinite' values="
+             f"'M80,110 Q250,190 420,110;M80,110 Q250,112 420,110;M80,110 Q250,190 420,110'/></path>")
     p.append(f"<line x1='80' y1='110' x2='420' y2='110' stroke='{FIN}' stroke-width='1.2' stroke-dasharray='6 4'/>")
-    p.append(f"<line x1='250' y1='110' x2='250' y2='152' stroke='{ALERTE}' stroke-width='2'/>")
+    p.append(f"<line x1='250' y1='110' x2='250' y2='152' stroke='{ALERTE}' stroke-width='2'>"
+             f"<animate attributeName='y2' values='152;112;152' dur='2.2s' repeatCount='indefinite'/></line>")
     p.append(_txt(262, 140, "flèche f", 11, ALERTE, "start", True))
     p.append(_txt(250, 78, "σ = 40 MPa   ≤   Rpe = 78 MPa", 12, OK, "middle", True))
     p.append(_txt(250, 190, "elle ne casse pas… mais elle plie de 4 mm", 11, ALERTE, "middle", True))
@@ -2416,7 +2802,10 @@ def lire_table_iso():
     y = 104
     for i, (a, b, it6, it7) in enumerate(lignes):
         if i == 1:
-            p.append(f"<rect x='56' y='{y - 18}' width='328' height='30' fill='{ARBRE}' opacity='0.18'/>")
+            # la ligne retenue clignote : on VOIT laquelle des trois lignes est la bonne.
+            p.append(f"<rect x='56' y='{y - 18}' width='328' height='30' fill='{ARBRE}' opacity='0.18'>"
+                     f"<animate attributeName='opacity' values='0.18;0.4;0.18' dur='1.6s' "
+                     f"repeatCount='indefinite'/></rect>")
         for x, v in zip(xs, (a, b, it6, it7)):
             gras = i == 1
             p.append(_txt(x, y, v, 11, TRAIT if not gras else ARBRE, "start", gras))
@@ -2429,8 +2818,11 @@ def lire_table_iso():
               ("3", "lire l'écart de la LETTRE", "g : es = −7 µm"),
               ("4", "en déduire l'autre écart", "ei = es − IT = −20 µm")]
     y = 88
-    for num, titre, detail in etapes:
-        p.append(f"<circle cx='432' cy='{y - 4}' r='11' fill='{ALESAGE}'/>")
+    for _i, (num, titre, detail) in enumerate(etapes):
+        # les quatre repères grossissent l'un après l'autre : on VOIT l'ordre de lecture.
+        p.append(f"<circle cx='432' cy='{y - 4}' r='11' fill='{ALESAGE}'>"
+                 f"<animate attributeName='r' values='11;14;11;11;11;11;11;11' dur='3.2s' "
+                 f"begin='{_i * 0.8}s' repeatCount='indefinite'/></circle>")
         p.append(_txt(432, y, num, 11, "#ffffff", "middle", True))
         p.append(_txt(452, y - 2, titre, 11, TRAIT, "start", True))
         p.append(_txt(452, y + 14, detail, 10, ARBRE))
@@ -2457,10 +2849,14 @@ def cout_precision():
         ("IT 0,005 mm", "rectification, atelier stabilisé", 10, ALERTE, 240),
     ]
     y = 62
-    for nom, moyen, cout, couleur, largeur in niveaux:
+    for _i, (nom, moyen, cout, couleur, largeur) in enumerate(niveaux):
+        # les barres de coût poussent l'une après l'autre : on VOIT le coût grimper à
+        # mesure que la tolérance se resserre.
         p.append(_txt(58, y + 18, nom, 12, TRAIT, "start", True))
         p.append(_txt(170, y + 18, moyen, 11, FIN))
-        p.append(f"<rect x='430' y='{y + 4}' width='{largeur}' height='22' rx='4' fill='{couleur}' opacity='0.6'/>")
+        p.append(f"<rect x='430' y='{y + 4}' width='0' height='22' rx='4' fill='{couleur}' opacity='0.6'>"
+                 f"<animate attributeName='width' from='0' to='{largeur}' dur='.7s' "
+                 f"begin='{_i * 0.25}s' fill='freeze'/></rect>")
         p.append(_txt(430 + largeur + 10, y + 20, f"× {cout:g}".replace(".", ","), 11, couleur, "start", True))
         y += 40
     p.append(f"<rect x='40' y='275' width='680' height='96' fill='#f0fdf4' stroke='{OK}' rx='6'/>")
@@ -2491,8 +2887,12 @@ def familles_gps():
         (565, "BATTEMENT", "avec référence", ["radial", "axial", "total"],
          "ce que lit un comparateur", ALERTE),
     ]
-    for x0, nom, ref, liste, resume, couleur in familles:
-        p.append(f"<rect x='{x0}' y='104' width='140' height='190' rx='8' fill='#ffffff' stroke='{couleur}' stroke-width='2'/>")
+    for _i, (x0, nom, ref, liste, resume, couleur) in enumerate(familles):
+        # les quatre familles s'éclairent l'une après l'autre : on VOIT qu'il y en a
+        # exactement quatre, chacune répondant différemment à la même question.
+        p.append(f"<rect x='{x0}' y='104' width='140' height='190' rx='8' fill='#ffffff' stroke='{couleur}' stroke-width='2'>"
+                 f"<animate attributeName='stroke-width' values='2;3.6;2;2;2;2;2;2' dur='6.4s' "
+                 f"begin='{_i * 0.9}s' repeatCount='indefinite'/></rect>")
         p.append(_txt(x0 + 70, 128, nom, 12, couleur, "middle", True))
         p.append(_txt(x0 + 70, 146, ref, 10, FIN, "middle"))
         y = 174
@@ -2531,8 +2931,11 @@ def tracer_chaine():
               ("3", "une pièce traversée = UNE cote", "si une pièce revient deux fois, la chaîne est fausse"),
               ("4", "revenir à l'extrémité du vecteur", "la chaîne DOIT se refermer : c'est l'autocontrôle")]
     y = 240
-    for num, titre, detail in gestes:
-        p.append(f"<circle cx='72' cy='{y - 4}' r='12' fill='{ALESAGE}'/>")
+    for _i, (num, titre, detail) in enumerate(gestes):
+        # les 4 gestes s'éclairent dans l'ordre : c'est une MÉTHODE, pas un inventaire.
+        p.append(f"<circle cx='72' cy='{y - 4}' r='12' fill='{ALESAGE}'>"
+                 f"<animate attributeName='r' values='12;16;12;12;12' dur='5s' begin='{_i * 1.1}s' "
+                 f"repeatCount='indefinite'/></circle>")
         p.append(_txt(72, y, num, 12, "#ffffff", "middle", True))
         p.append(_txt(94, y - 2, titre, 12, TRAIT, "start", True))
         p.append(_txt(94, y + 14, detail, 10, FIN))
@@ -2581,12 +2984,20 @@ def methode_schema():
     # temps 3 : schema
     p.append(_txt(620, 58, "3. SCHÉMA CINÉMATIQUE", 11, ALESAGE, "middle", True))
     p.append(f"<line x1='545' y1='170' x2='700' y2='170' stroke='{TRAIT}' stroke-width='2.4'/>")
-    p.append(f"<rect x='556' y='150' width='22' height='20' fill='none' stroke='{TRAIT}' stroke-width='2'/>")
+    # la chaîne cinématique s'anime : le pivot tourne, l'hélicoïdale transforme, la
+    # glissière translate — on VOIT la rotation de la vis devenir une translation.
+    p.append(f"<rect x='556' y='150' width='22' height='20' fill='none' stroke='{TRAIT}' stroke-width='2'>"
+             f"<animateTransform attributeName='transform' type='rotate' "
+             f"values='0 567 160; 360 567 160' dur='2s' repeatCount='indefinite'/></rect>")
     p.append(_txt(567, 140, "pivot", 9, FIN, "middle"))
-    p.append(f"<rect x='612' y='158' width='44' height='24' fill='none' stroke='{TRAIT}' stroke-width='2'/>")
-    p.append(_txt(634, 196, "glissière", 9, FIN, "middle"))
-    p.append(f"<path d='M666,158 l10,12 l-10,12' fill='none' stroke='{TRAIT}' stroke-width='2'/>")
+    p.append(f"<path d='M666,158 l10,12 l-10,12' fill='none' stroke='{TRAIT}' stroke-width='2' "
+             f"stroke-dasharray='8 6'><animate attributeName='stroke-dashoffset' values='0;-28' "
+             f"dur='1.2s' repeatCount='indefinite'/></path>")
     p.append(_txt(682, 140, "hélicoïdale", 9, FIN, "middle"))
+    p.append(f"<rect x='612' y='158' width='44' height='24' fill='none' stroke='{TRAIT}' stroke-width='2'>"
+             f"<animateTransform attributeName='transform' type='translate' "
+             f"values='0,0; 12,0; 0,0; -12,0; 0,0' dur='2.4s' repeatCount='indefinite'/></rect>")
+    p.append(_txt(634, 196, "glissière", 9, FIN, "middle"))
     p.append(_txt(620, 250, "on dessine les MOUVEMENTS,", 10, FIN, "middle"))
     p.append(_txt(620, 264, "jamais les formes", 10, FIN, "middle"))
     p.append(f"<rect x='40' y='285' width='680' height='68' fill='#f0fdf4' stroke='{OK}' rx='6'/>")
@@ -2616,9 +3027,14 @@ def montage_arbre_complet():
     # butees palier fixe
     p.append(f"<line x1='122' y1='104' x2='122' y2='154' stroke='{OK}' stroke-width='3'/>")
     p.append(f"<line x1='158' y1='104' x2='158' y2='154' stroke='{OK}' stroke-width='3'/>")
-    # palier libre : fleche de coulissement
-    p.append(f"<line x1='598' y1='129' x2='632' y2='129' stroke='{ALESAGE}' stroke-width='2'/>")
-    p.append(f"<line x1='562' y1='129' x2='546' y2='129' stroke='{ALESAGE}' stroke-width='2'/>")
+    # palier libre : flèches de coulissement qui s'écartent puis reviennent — on VOIT
+    # que ce palier laisse l'arbre libre de se dilater, contrairement au palier fixe.
+    p.append(f"<line x1='598' y1='129' x2='632' y2='129' stroke='{ALESAGE}' stroke-width='2'>"
+             f"<animateTransform attributeName='transform' type='translate' "
+             f"values='0,0; 6,0; 0,0' dur='1.6s' repeatCount='indefinite'/></line>")
+    p.append(f"<line x1='562' y1='129' x2='546' y2='129' stroke='{ALESAGE}' stroke-width='2'>"
+             f"<animateTransform attributeName='transform' type='translate' "
+             f"values='0,0; -6,0; 0,0' dur='1.6s' repeatCount='indefinite'/></line>")
     # joint a levres
     p.append(f"<path d='M636,118 l14,6 l-14,6' fill='none' stroke='{ALERTE}' stroke-width='2'/>")
     p.append(_txt(658, 100, "joint à lèvres", 10, ALERTE, "start", True))
@@ -2631,8 +3047,12 @@ def montage_arbre_complet():
         ("5", "quelle étanchéité ?", "joint à lèvres, lèvre vers l'intérieur, portée Ra 0,8", ALERTE),
     ]
     y = 205
-    for num, question, reponse, couleur in decisions:
-        p.append(f"<circle cx='72' cy='{y - 4}' r='11' fill='{couleur}'/>")
+    for _i, (num, question, reponse, couleur) in enumerate(decisions):
+        # les 5 décisions s'éclairent l'une après l'autre : on VOIT qu'il y en a
+        # exactement cinq à prendre, dans cet ordre, pour un montage complet.
+        p.append(f"<circle cx='72' cy='{y - 4}' r='11' fill='{couleur}'>"
+                 f"<animate attributeName='r' values='11;14;11;11;11' dur='4s' "
+                 f"begin='{_i * 0.9}s' repeatCount='indefinite'/></circle>")
         p.append(_txt(72, y, num, 11, "#ffffff", "middle", True))
         p.append(_txt(92, y, question, 11, couleur, "start", True))
         p.append(_txt(262, y, reponse, 11, FIN))
@@ -2656,14 +3076,21 @@ def precharge_vissage():
     p.append(f"<rect x='230' y='120' width='20' height='72' fill='{ARBRE}' opacity='0.35' stroke='{TRAIT}' stroke-width='1.6'/>")
     p.append(f"<rect x='222' y='172' width='36' height='20' fill='{ARBRE}' opacity='0.5' stroke='{TRAIT}' stroke-width='1.8'/>")
     # precharge : fleches de serrage
-    p.append(f"<line x1='240' y1='90' x2='240' y2='60' stroke='{OK}' stroke-width='2.6' marker-end='url(#y1)'/>")
-    p.append(f"<line x1='240' y1='198' x2='240' y2='228' stroke='{OK}' stroke-width='2.6' marker-end='url(#y1)'/>")
+    # les flèches de précharge s'étirent puis reviennent : on VOIT la vis travailler
+    # comme un ressort tendu, en permanence, pas juste au serrage.
+    p.append(f"<line x1='240' y1='90' x2='240' y2='60' stroke='{OK}' stroke-width='2.6' marker-end='url(#y1)'>"
+             f"<animateTransform attributeName='transform' type='translate' "
+             f"values='0,0; 0,-3; 0,0' dur='1.4s' repeatCount='indefinite'/></line>")
+    p.append(f"<line x1='240' y1='198' x2='240' y2='228' stroke='{OK}' stroke-width='2.6' marker-end='url(#y1)'>"
+             f"<animateTransform attributeName='transform' type='translate' "
+             f"values='0,0; 0,3; 0,0' dur='1.4s' repeatCount='indefinite'/></line>")
     p.append("<defs><marker id='y1' markerWidth='9' markerHeight='9' refX='8' refY='4.5' orient='auto'>"
              f"<path d='M0,0 L9,4.5 L0,9 z' fill='{OK}'/></marker></defs>")
     p.append(_txt(258, 62, "la vis est ÉTIRÉE : elle est un ressort tendu", 11, OK, "start", True))
-    # pression de contact
+    # pression de contact — les repères pulsent ensemble : on VOIT les tôles plaquées.
     for x in range(150, 340, 22):
-        p.append(f"<line x1='{x}' y1='138' x2='{x}' y2='154' stroke='{ALESAGE}' stroke-width='2.4'/>")
+        p.append(f"<line x1='{x}' y1='138' x2='{x}' y2='154' stroke='{ALESAGE}' stroke-width='2.4'>"
+                 f"<animate attributeName='stroke-width' values='2.4;3.6;2.4' dur='1.4s' repeatCount='indefinite'/></line>")
     p.append(_txt(240, 250, "les tôles sont PLAQUÉES l'une contre l'autre", 11, ALESAGE, "middle", True))
     # effort transmis par adherence
     p.append(f"<line x1='60' y1='133' x2='86' y2='133' stroke='{ALERTE}' stroke-width='2.4'/>")
@@ -2701,8 +3128,17 @@ def arc_boutement():
         # rail
         p.append(f"<rect x='{x0 + 30}' y='120' width='245' height='12' fill='#cbd5e1' stroke='{TRAIT}' stroke-width='1.4'/>")
         p.append(f"<rect x='{x0 + 30}' y='180' width='245' height='12' fill='#cbd5e1' stroke='{TRAIT}' stroke-width='1.4'/>")
-        # chariot
-        p.append(f"<rect x='{x0 + 50}' y='132' width='{Lg}' height='48' fill='#e2e8f0' stroke='{couleur}' stroke-width='2'/>")
+        # chariot — il coulisse librement s'il est assez long, il tente de bouger puis
+        # se coince (légère rotation) s'il est trop court : on VOIT l'arc-boutement.
+        if Lg == 60:
+            p.append(f"<rect x='{x0 + 50}' y='132' width='{Lg}' height='48' fill='#e2e8f0' stroke='{couleur}' stroke-width='2'>"
+                     f"<animateTransform attributeName='transform' type='rotate' "
+                     f"values='0 {x0 + 80} {156}; 3 {x0 + 80} {156}; 0 {x0 + 80} {156}' dur='1.4s' "
+                     f"repeatCount='indefinite'/></rect>")
+        else:
+            p.append(f"<rect x='{x0 + 50}' y='132' width='{Lg}' height='48' fill='#e2e8f0' stroke='{couleur}' stroke-width='2'>"
+                     f"<animateTransform attributeName='transform' type='translate' "
+                     f"values='0,0; 30,0; 0,0' dur='2.4s' repeatCount='indefinite'/></rect>")
         p.append(f"<line x1='{x0 + 50}' y1='205' x2='{x0 + 50 + Lg}' y2='205' stroke='{couleur}' stroke-width='1.4'/>")
         p.append(_txt(x0 + 50 + Lg / 2, 220, "longueur de guidage", 9, couleur, "middle"))
         # effort excentre
@@ -2711,8 +3147,10 @@ def arc_boutement():
                  f"<path d='M0,0 L9,4.5 L0,9 z' fill='{ARBRE}'/></marker></defs>")
         p.append(_txt(x0 + 255, 148, "F", 12, ARBRE, "start", True))
         if Lg == 60:
-            p.append(f"<circle cx='{x0 + 52}' cy='134' r='6' fill='{ALERTE}' opacity='0.6'/>")
-            p.append(f"<circle cx='{x0 + 108}' cy='178' r='6' fill='{ALERTE}' opacity='0.6'/>")
+            p.append(f"<circle cx='{x0 + 52}' cy='134' r='6' fill='{ALERTE}' opacity='0.6'>"
+                     f"<animate attributeName='r' values='6;9;6' dur='1.4s' repeatCount='indefinite'/></circle>")
+            p.append(f"<circle cx='{x0 + 108}' cy='178' r='6' fill='{ALERTE}' opacity='0.6'>"
+                     f"<animate attributeName='r' values='6;9;6' dur='1.4s' repeatCount='indefinite'/></circle>")
             p.append(_txt(x0 + 152, 246, "les 2 points de contact bloquent", 10, ALERTE, "middle", True))
         else:
             p.append(_txt(x0 + 152, 246, "l'effort se répartit sur la longueur", 10, OK, "middle", True))
@@ -2735,8 +3173,11 @@ def caracteriser_fonction():
     p.append(_txt(205, 76, "CE QUE DIT LE CLIENT", 11, ALERTE, "middle", True))
     p.append(_txt(205, 104, "« le carter doit être solide", 12, TRAIT, "middle"))
     p.append(_txt(205, 124, "et facile à nettoyer »", 12, TRAIT, "middle"))
-    # fleche
-    p.append(f"<line x1='368' y1='100' x2='408' y2='100' stroke='{FIN}' stroke-width='2' marker-end='url(#aa1)'/>")
+    # fleche — elle pulse en boucle : on VOIT la transformation de la phrase vague vers
+    # l'exigence vérifiable.
+    p.append(f"<line x1='368' y1='100' x2='408' y2='100' stroke='{FIN}' stroke-width='2' marker-end='url(#aa1)' "
+             f"stroke-dasharray='6 4'><animate attributeName='stroke-dashoffset' values='0;-20' "
+             f"dur='1.4s' repeatCount='indefinite'/></line>")
     p.append("<defs><marker id='aa1' markerWidth='9' markerHeight='9' refX='8' refY='4.5' orient='auto'>"
              f"<path d='M0,0 L9,4.5 L0,9 z' fill='{FIN}'/></marker></defs>")
     # apres
@@ -2748,8 +3189,12 @@ def caracteriser_fonction():
     colonnes = [(70, "CRITÈRE", "la grandeur observée", "énergie de choc", ALESAGE),
                 (295, "NIVEAU", "la valeur à atteindre", "5 J sans déformation", ARBRE),
                 (520, "FLEXIBILITÉ", "ce qui est négociable", "F0 — impératif", OK)]
-    for x, nom, quoi, exemple, couleur in colonnes:
-        p.append(f"<rect x='{x}' y='180' width='195' height='110' rx='8' fill='#ffffff' stroke='{couleur}' stroke-width='2'/>")
+    for _i, (x, nom, quoi, exemple, couleur) in enumerate(colonnes):
+        # les trois éléments s'éclairent l'un après l'autre : on VOIT qu'il en faut
+        # exactement trois pour qu'une exigence soit vérifiable.
+        p.append(f"<rect x='{x}' y='180' width='195' height='110' rx='8' fill='#ffffff' stroke='{couleur}' stroke-width='2'>"
+                 f"<animate attributeName='stroke-width' values='2;3.6;2;2;2;2' dur='3.6s' "
+                 f"begin='{_i * 1.1}s' repeatCount='indefinite'/></rect>")
         p.append(_txt(x + 97, 206, nom, 12, couleur, "middle", True))
         p.append(_txt(x + 97, 228, quoi, 10, FIN, "middle"))
         p.append(f"<line x1='{x + 30}' y1='242' x2='{x + 165}' y2='242' stroke='{FIN}' stroke-width='0.8'/>")
@@ -2776,9 +3221,13 @@ def lire_plan_methode():
         ("6", "Les états de surface et le GPS", "ils disent où est la précision, et pourquoi", OK),
     ]
     y = 60
-    for num, titre, detail, couleur in etapes:
+    for _i, (num, titre, detail, couleur) in enumerate(etapes):
+        # les 6 étapes s'éclairent dans l'ordre : on VOIT la méthode se dérouler, jamais
+        # en commençant par les cotes.
         p.append(f"<rect x='55' y='{y}' width='650' height='44' rx='6' fill='#ffffff' stroke='{couleur}' stroke-width='1.5'/>")
-        p.append(f"<circle cx='84' cy='{y + 22}' r='14' fill='{couleur}'/>")
+        p.append(f"<circle cx='84' cy='{y + 22}' r='14' fill='{couleur}'>"
+                 f"<animate attributeName='r' values='14;17;14;14;14;14;14;14;14;14;14;14' dur='7.2s' "
+                 f"begin='{_i * 1.1}s' repeatCount='indefinite'/></circle>")
         p.append(_txt(84, y + 27, num, 13, "#ffffff", "middle", True))
         p.append(_txt(112, y + 19, titre, 12, TRAIT, "start", True))
         p.append(_txt(112, y + 35, detail, 10, FIN))
@@ -2806,19 +3255,28 @@ def cotation_reference():
         for tx in trous:
             p.append(f"<circle cx='{tx}' cy='119' r='7' fill='{FOND}' stroke='{TRAIT}' stroke-width='1.6'/>")
         if mode == "chaine":
+            # les cotes apparaissent l'une après l'autre, comme l'erreur qui s'accumule
+            # de trou en trou : on VOIT le cumul se construire.
             y = 160
             for i in range(4):
                 x1 = x0 + 30 if i == 0 else trous[i - 1]
                 x2 = trous[i]
-                p.append(f"<line x1='{x1}' y1='{y}' x2='{x2}' y2='{y}' stroke='{couleur}' stroke-width='1.4'/>")
-                p.append(_txt((x1 + x2) / 2, y - 5, "±0,2", 9, couleur, "middle"))
+                p.append(f"<g opacity='0'><animate attributeName='opacity' from='0' to='1' "
+                         f"dur='.4s' begin='{i * 0.5}s' fill='freeze'/>"
+                         f"<line x1='{x1}' y1='{y}' x2='{x2}' y2='{y}' stroke='{couleur}' stroke-width='1.4'/>"
+                         f"{_txt((x1 + x2) / 2, y - 5, '±0,2', 9, couleur, 'middle')}</g>")
             p.append(_txt(x0 + 152, 196, "sur le 4e trou : ±0,8 cumulé", 11, ALERTE, "middle", True))
         else:
+            # les quatre cotes apparaissent ENSEMBLE, toutes depuis la même référence :
+            # on VOIT qu'aucune ne dépend d'une autre.
             y = 156
+            p.append("<g opacity='0'><animate attributeName='opacity' from='0' to='1' "
+                     "dur='.4s' begin='2s' fill='freeze'/>")
             for i, tx in enumerate(trous):
                 p.append(f"<line x1='{x0 + 30}' y1='{y}' x2='{tx}' y2='{y}' stroke='{couleur}' stroke-width='1.4'/>")
                 p.append(_txt(tx + 4, y - 4, "±0,2", 9, couleur, "start"))
                 y += 13
+            p.append("</g>")
             p.append(f"<line x1='{x0 + 30}' y1='142' x2='{x0 + 30}' y2='215' stroke='{OK}' stroke-width='2'/>")
             p.append(_txt(x0 + 152, 232, "sur le 4e trou : ±0,2 seulement", 11, OK, "middle", True))
         p.append(_txt(x0 + 152, 252, verdict, 11, couleur, "middle", True))
@@ -2847,9 +3305,13 @@ def etats_surface_cout():
         ("Ra 0,1", "0,1", "rodage, polissage", "glace optique, calibre", ALERTE),
     ]
     y = 58
-    for nom, ra, moyen, usage, couleur in lignes:
+    for _i, (nom, ra, moyen, usage, couleur) in enumerate(lignes):
+        # les niveaux de rugosité s'éclairent du plus grossier au plus fin : on VOIT
+        # chaque cran ajouter une opération, donc un coût.
         p.append(f"<rect x='55' y='{y}' width='650' height='36' rx='5' fill='#ffffff' stroke='{couleur}' stroke-width='1.4'/>")
-        p.append(f"<rect x='55' y='{y}' width='90' height='36' rx='5' fill='{couleur}' opacity='0.2'/>")
+        p.append(f"<rect x='55' y='{y}' width='90' height='36' rx='5' fill='{couleur}' opacity='0.2'>"
+                 f"<animate attributeName='opacity' values='0.2;0.5;0.2;0.2;0.2;0.2;0.2' dur='4.9s' "
+                 f"begin='{_i * 0.7}s' repeatCount='indefinite'/></rect>")
         p.append(_txt(100, y + 23, nom, 12, couleur, "middle", True))
         p.append(_txt(165, y + 23, moyen, 11, TRAIT))
         p.append(_txt(400, y + 23, usage, 11, FIN))
@@ -2880,8 +3342,12 @@ def arbre_choix_materiau():
         (400, "NE PAS PLIER", "on joue sur I, donc sur la FORME", OK,
          ["nervures, profil creux", "augmenter la hauteur", "raccourcir la portée"]),
     ]
-    for x0, titre, sous, couleur, items in branches:
-        p.append(f"<rect x='{x0}' y='120' width='300' height='130' rx='8' fill='#ffffff' stroke='{couleur}' stroke-width='2'/>")
+    for _i, (x0, titre, sous, couleur, items) in enumerate(branches):
+        # les deux branches s'éclairent en alternance : on VOIT que c'est un choix,
+        # pas une liste — RÉSISTER ou NE PAS PLIER, jamais les deux à la fois.
+        p.append(f"<rect x='{x0}' y='120' width='300' height='130' rx='8' fill='#ffffff' stroke='{couleur}' stroke-width='2'>"
+                 f"<animate attributeName='stroke-width' values='2;4;2;2' dur='3.2s' begin='{_i * 1.6}s' "
+                 f"repeatCount='indefinite'/></rect>")
         p.append(_txt(x0 + 150, 145, titre, 12, couleur, "middle", True))
         p.append(_txt(x0 + 150, 165, sous, 10, FIN, "middle"))
         y = 194
@@ -2922,7 +3388,11 @@ def gamme_traitement():
     ]
     y = 56
     for i, (titre, detail, couleur) in enumerate(etapes):
-        p.append(f"<rect x='60' y='{y}' width='640' height='40' rx='6' fill='#ffffff' stroke='{couleur}' stroke-width='1.5'/>")
+        # les étapes s'éclairent dans l'ordre : ÉBAUCHE → TRAITEMENT → FINITION,
+        # un ordre qu'on ne peut pas inverser.
+        p.append(f"<rect x='60' y='{y}' width='640' height='40' rx='6' fill='#ffffff' stroke='{couleur}' stroke-width='1.5'>"
+                 f"<animate attributeName='stroke-width' values='1.5;3.4;1.5;1.5;1.5;1.5;1.5' dur='7s' "
+                 f"begin='{i}s' repeatCount='indefinite'/></rect>")
         p.append(f"<circle cx='88' cy='{y + 20}' r='13' fill='{couleur}' opacity='0.8'/>")
         p.append(_txt(88, y + 25, str((i + 1) * 10), 10, "#ffffff", "middle", True))
         p.append(_txt(116, y + 17, titre, 12, TRAIT, "start", True))
@@ -2953,8 +3423,12 @@ def contraintes_esquisse():
         ("fixe", "l'entité ne bougera plus du tout", ALERTE),
     ]
     y = 56
-    for nom, detail, couleur in contraintes:
-        p.append(f"<rect x='55' y='{y}' width='400' height='32' rx='5' fill='#ffffff' stroke='{couleur}' stroke-width='1.3'/>")
+    for _i, (nom, detail, couleur) in enumerate(contraintes):
+        # les 8 contraintes s'éclairent l'une après l'autre : on VOIT qu'il y a un vrai
+        # catalogue à connaître, pas une seule recette.
+        p.append(f"<rect x='55' y='{y}' width='400' height='32' rx='5' fill='#ffffff' stroke='{couleur}' stroke-width='1.3'>"
+                 f"<animate attributeName='stroke-width' values='1.3;2.6;1.3;1.3;1.3;1.3;1.3;1.3' dur='6.4s' "
+                 f"begin='{_i * 0.8}s' repeatCount='indefinite'/></rect>")
         p.append(_txt(72, y + 21, nom.replace("**", ""), 11, couleur, "start", True))
         p.append(_txt(240, y + 21, detail, 10, FIN))
         y += 38
@@ -2992,8 +3466,12 @@ def chaine_numerique():
         (430, 250, "DXF à plat", "la découpe laser", "tôlerie", ARBRE),
         (610, 250, "STL", "l'impression 3D", "maillage, non modifiable", OK),
     ]
-    for x, y, titre, qui, note, couleur in destinations:
-        p.append(f"<line x1='{cx}' y1='{cy + 32}' x2='{x + 60}' y2='{y - 8}' stroke='{couleur}' stroke-width='1.6'/>")
+    for _i, (x, y, titre, qui, note, couleur) in enumerate(destinations):
+        # les données défilent du modèle vers chaque format : on VOIT la chaîne
+        # alimenter les 4 métiers en même temps, depuis une source unique.
+        p.append(f"<line x1='{cx}' y1='{cy + 32}' x2='{x + 60}' y2='{y - 8}' stroke='{couleur}' stroke-width='1.6' "
+                 f"stroke-dasharray='6 4'><animate attributeName='stroke-dashoffset' values='0;-20' "
+                 f"dur='1.2s' begin='{_i * 0.15}s' repeatCount='indefinite'/></line>")
         p.append(f"<rect x='{x}' y='{y}' width='120' height='74' rx='7' fill='#ffffff' stroke='{couleur}' stroke-width='2'/>")
         p.append(_txt(x + 60, y + 24, titre, 11, couleur, "middle", True))
         p.append(_txt(x + 60, y + 44, qui, 9, TRAIT, "middle"))
@@ -3034,7 +3512,15 @@ def intention_conception():
         p.append(_txt(x0 + 152, 202, "on élargit la plaque de 120 à 180", 10, FIN, "middle"))
         p.append(f"<rect x='{x0 + 42}' y='212' width='180' height='58' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='1.6'/>")
         cxt = x0 + 102 if couleur == ALERTE else x0 + 132
-        p.append(f"<circle cx='{cxt}' cy='241' r='11' fill='{FOND}' stroke='{couleur}' stroke-width='2'/>")
+        if couleur == ALERTE:
+            # le trou décalé dérive : il ne s'est pas replacé tout seul.
+            p.append(f"<circle cx='{cxt}' cy='241' r='11' fill='{FOND}' stroke='{couleur}' stroke-width='2'>"
+                     f"<animateTransform attributeName='transform' type='translate' "
+                     f"values='0,0; 3,2; -2,1; 0,0' dur='2.6s' repeatCount='indefinite'/></circle>")
+        else:
+            # le trou contraint reste stable, il respire juste sur place.
+            p.append(f"<circle cx='{cxt}' cy='241' r='11' fill='{FOND}' stroke='{couleur}' stroke-width='2'>"
+                     f"<animate attributeName='r' values='11;13;11' dur='2.6s' repeatCount='indefinite'/></circle>")
         p.append(_txt(x0 + 152, 306, verdict, 11, couleur, "middle", True))
         p.append(_txt(x0 + 152, 288, apres, 10, couleur, "middle"))
     p.append(f"<rect x='40' y='334' width='680' height='68' fill='#eff6ff' stroke='{ALESAGE}' rx='6'/>")
@@ -3053,11 +3539,17 @@ def trois_temps_methode(titre_avant="AVANT de calculer", titre_pendant="PENDANT 
                         titre_apres="APRÈS le résultat"):
     p = [_txt(40, 24, "Le même réflexe, quel que soit l'exercice :", 13, TRAIT, "start", True)]
     temps = [(55, titre_avant, ALESAGE), (285, titre_pendant, ARBRE), (515, titre_apres, OK)]
-    for x0, titre, couleur in temps:
-        p.append(f"<rect x='{x0}' y='55' width='200' height='40' rx='8' fill='{couleur}'/>")
+    for _i, (x0, titre, couleur) in enumerate(temps):
+        # les trois temps s'éclairent dans l'ordre : avant, pendant, après — jamais
+        # dans un autre ordre.
+        p.append(f"<rect x='{x0}' y='55' width='200' height='40' rx='8' fill='{couleur}'>"
+                 f"<animate attributeName='opacity' values='0.6;1;0.6;0.6;0.6' dur='3.6s' "
+                 f"begin='{_i * 0.8}s' repeatCount='indefinite'/></rect>")
         p.append(_txt(x0 + 100, 80, titre, 12, "#ffffff", "middle", True))
     for x0 in (255, 485):
-        p.append(f"<path d='M{x0},75 l24,0' stroke='{FIN}' stroke-width='2.4' marker-end='url(#zz)'/>")
+        p.append(f"<path d='M{x0},75 l24,0' stroke='{FIN}' stroke-width='2.4' marker-end='url(#zz)' "
+                 f"stroke-dasharray='6 4'><animate attributeName='stroke-dashoffset' values='0;-20' "
+                 f"dur='1s' repeatCount='indefinite'/></path>")
     p.append("<defs><marker id='zz' markerWidth='9' markerHeight='9' refX='8' refY='4.5' orient='auto'>"
              f"<path d='M0,0 L9,4.5 L0,9 z' fill='{FIN}'/></marker></defs>")
     p.append(f"<rect x='40' y='115' width='680' height='70' fill='#eff6ff' stroke='{ALESAGE}' rx='6'/>")
@@ -3085,9 +3577,12 @@ def schema_bridage_etude_cas():
     # levier : de 40mm vers le verin (gauche-bas), a 65mm vers la piece (droite)
     vx, vy = px - 56, py + 44
     sx, sy = px + 65, py - 6
-    p.append(f"<line x1='{vx}' y1='{vy}' x2='{sx}' y2='{sy}' stroke='{TRAIT}' stroke-width='7' stroke-linecap='round'/>")
-    p.append(f"<line x1='{px}' y1='{py}' x2='{vx}' y2='{vy}' stroke='{ALESAGE}' stroke-width='1.2' stroke-dasharray='4 3'/>")
-    p.append(f"<line x1='{px}' y1='{py}' x2='{sx}' y2='{sy}' stroke='{ARBRE}' stroke-width='1.2' stroke-dasharray='4 3'/>")
+    # le levier bascule légèrement autour de son axe : on VOIT le rapport de bras agir.
+    p.append(f"<g><animateTransform attributeName='transform' type='rotate' "
+             f"values='-3 {px} {py};3 {px} {py};-3 {px} {py}' dur='2.6s' repeatCount='indefinite'/>"
+             f"<line x1='{vx}' y1='{vy}' x2='{sx}' y2='{sy}' stroke='{TRAIT}' stroke-width='7' stroke-linecap='round'/>"
+             f"<line x1='{px}' y1='{py}' x2='{vx}' y2='{vy}' stroke='{ALESAGE}' stroke-width='1.2' stroke-dasharray='4 3'/>"
+             f"<line x1='{px}' y1='{py}' x2='{sx}' y2='{sy}' stroke='{ARBRE}' stroke-width='1.2' stroke-dasharray='4 3'/></g>")
     p.append(_txt((px + vx) / 2 - 18, (py + vy) / 2 + 6, "40 mm", 11, ALESAGE, "end", True))
     p.append(_txt((px + sx) / 2, (py + sy) / 2 - 12, "65 mm", 11, ARBRE, "middle", True))
     # verin, decale a gauche pour ne pas croiser les cotes
@@ -3130,8 +3625,14 @@ def schema_reducteur_etude_cas():
         p.append(_txt(x0 + 50, 114, nom, 11, couleur, "middle", True))
         p.append(_txt(x0 + 50, 132, l1, 10, FIN, "middle"))
         p.append(_txt(x0 + 50, 148, l2, 10, FIN, "middle"))
-    for x0 in (170, 350, 530):
-        p.append(f"<line x1='{x0}' y1='125' x2='{x0 + 78}' y2='125' stroke='{FIN}' stroke-width='2.4' marker-end='url(#cc1)'/>")
+    # les flèches défilent : plus vite avant la réduction, plus lentement après —
+    # on VOIT la vitesse chuter et, en contrepartie, le couple monter.
+    for _i, x0 in enumerate((170, 350, 530)):
+        vitesse = ".5s" if _i < 1 else ("1.6s" if _i == 1 else "2.4s")
+        p.append(f"<line x1='{x0}' y1='125' x2='{x0 + 78}' y2='125' stroke='{FIN}' stroke-width='2.4' "
+                 f"marker-end='url(#cc1)' stroke-dasharray='7 5'>"
+                 f"<animate attributeName='stroke-dashoffset' values='0;-24' dur='{vitesse}' "
+                 f"repeatCount='indefinite'/></line>")
     p.append("<defs><marker id='cc1' markerWidth='9' markerHeight='9' refX='8' refY='4.5' orient='auto'>"
              f"<path d='M0,0 L9,4.5 L0,9 z' fill='{FIN}'/></marker></defs>")
     p.append(_txt(210, 116, "Mt₁ = 26,3 N·m", 9, FIN, "middle"))
@@ -3159,8 +3660,11 @@ def methode_synthese():
         ("4", "RÉDIGER", "reformuler avec VOS mots, jamais recopier ni citer votre avis", OK),
     ]
     x = 60
-    for num, titre, detail, couleur in etapes:
-        p.append(f"<rect x='{x}' y='55' width='150' height='150' rx='8' fill='#ffffff' stroke='{couleur}' stroke-width='2'/>")
+    for _i, (num, titre, detail, couleur) in enumerate(etapes):
+        # les 4 étapes s'éclairent dans l'ordre : LIRE, CONFRONTER, PLANIFIER, RÉDIGER.
+        p.append(f"<rect x='{x}' y='55' width='150' height='150' rx='8' fill='#ffffff' stroke='{couleur}' stroke-width='2'>"
+                 f"<animate attributeName='stroke-width' values='2;4;2;2' dur='4.8s' begin='{_i * 1.1}s' "
+                 f"repeatCount='indefinite'/></rect>")
         p.append(f"<circle cx='{x + 75}' cy='85' r='16' fill='{couleur}'/>")
         p.append(_txt(x + 75, 91, num, 14, "#ffffff", "middle", True))
         p.append(_txt(x + 75, 118, titre, 12, couleur, "middle", True))
@@ -3198,9 +3702,12 @@ def plan_argumentation():
         (60, "CONCLUSION", "une réponse personnelle, qui ne répète pas l'intro", OK),
     ]
     y = 55
-    for x, titre, detail, couleur in blocs_:
+    for _i, (x, titre, detail, couleur) in enumerate(blocs_):
+        # les 4 blocs s'éclairent dans l'ordre : intro, thèse, nuance, conclusion.
         p.append(f"<rect x='{x}' y='{y}' width='660' height='46' rx='6' fill='#ffffff' stroke='{couleur}' stroke-width='1.8'/>")
-        p.append(f"<rect x='{x}' y='{y}' width='10' height='46' fill='{couleur}'/>")
+        p.append(f"<rect x='{x}' y='{y}' width='10' height='46' fill='{couleur}'>"
+                 f"<animate attributeName='width' values='10;18;10;10' dur='4.4s' begin='{_i * 1.1}s' "
+                 f"repeatCount='indefinite'/></rect>")
         p.append(_txt(x + 26, y + 20, titre, 12, couleur, "start", True))
         p.append(_txt(x + 26, y + 37, detail, 10, FIN, "start"))
         y += 54
@@ -3223,8 +3730,12 @@ def relecture_trois_passages():
         (60, "3e PASSAGE", "PONCTUATION", "a/à, on/ont, ce/se, ces/ses", OK),
     ]
     y = 55
-    for x, num, titre, detail, couleur in passages:
-        p.append(f"<rect x='{x}' y='{y}' width='660' height='56' rx='6' fill='#ffffff' stroke='{couleur}' stroke-width='1.8'/>")
+    for _i, (x, num, titre, detail, couleur) in enumerate(passages):
+        # les 3 passages s'éclairent dans l'ordre : sens, accords, ponctuation —
+        # trois lectures différentes, jamais une seule.
+        p.append(f"<rect x='{x}' y='{y}' width='660' height='56' rx='6' fill='#ffffff' stroke='{couleur}' stroke-width='1.8'>"
+                 f"<animate attributeName='stroke-width' values='1.8;4;1.8;1.8' dur='4.2s' begin='{_i * 1.4}s' "
+                 f"repeatCount='indefinite'/></rect>")
         p.append(f"<rect x='{x}' y='{y}' width='130' height='56' fill='{couleur}' opacity='0.12'/>")
         p.append(_txt(x + 65, y + 24, num, 11, couleur, "middle", True))
         p.append(_txt(x + 65, y + 42, titre, 11, couleur, "middle", True))
@@ -3276,8 +3787,11 @@ def dessin_definition_atelier():
     p.append(f"<line x1='{dx}' y1='{dy+104}' x2='{dx+40}' y2='{dy+104}' stroke='{FIN}' stroke-width='1'/>")
     p.append(_txt(dx+20, dy+118, "20", 11, TRAIT, "middle", True))
 
-    # trait d'axe de correspondance entre les deux vues
-    p.append(f"<line x1='{ox+20}' y1='{oy+130}' x2='{ox+20}' y2='{dy-8}' stroke='{AXE}' stroke-width='0.8' stroke-dasharray='4 4'/>")
+    # trait d'axe de correspondance entre les deux vues — le pointillé défile doucement :
+    # on VOIT le lien entre la vue de face et la vue de dessus, sans gêner la lecture.
+    p.append(f"<line x1='{ox+20}' y1='{oy+130}' x2='{ox+20}' y2='{dy-8}' stroke='{AXE}' stroke-width='0.8' "
+             f"stroke-dasharray='4 4'><animate attributeName='stroke-dashoffset' values='0;-16' "
+             f"dur='2.4s' repeatCount='indefinite'/></line>")
 
     # --- COUPE A-A a droite ---
     p.append(_txt(500, 46, "COUPE A-A", 11, FIN, "middle", True))
@@ -3337,28 +3851,36 @@ def sadt_actigramme():
     p.append(_txt(bx+bw/2, by+80, "(la fonction du système)", 10, FIN, "middle"))
     p.append(_txt(bx+bw-8, by+bh-8, "A-0", 10, FIN, "end", True))
 
-    # ENTREE (gauche)
-    p.append(f"<line x1='60' y1='{by+65}' x2='{bx-4}' y2='{by+65}' stroke='{OK}' stroke-width='2.4' marker-end='url(#fl)'/>")
+    # ENTREE (gauche) — le flux défile vers la boîte : on VOIT la matière/énergie entrer.
+    p.append(f"<line x1='60' y1='{by+65}' x2='{bx-4}' y2='{by+65}' stroke='{OK}' stroke-width='2.4' "
+             f"marker-end='url(#fl)' stroke-dasharray='7 5'>"
+             f"<animate attributeName='stroke-dashoffset' values='0;-24' dur='1.2s' repeatCount='indefinite'/></line>")
     p.append(_txt(60, by+52, "ENTRÉE", 11, OK, "start", True))
     p.append(_txt(60, by+90, "matière, énergie", 10, FIN, "start"))
     p.append(_txt(60, by+104, "ou information", 10, FIN, "start"))
     p.append(_txt(60, by+118, "AVANT transformation", 10, FIN, "start"))
 
-    # SORTIE (droite)
-    p.append(f"<line x1='{bx+bw+4}' y1='{by+65}' x2='{bx+bw+180}' y2='{by+65}' stroke='{ALESAGE}' stroke-width='2.4' marker-end='url(#fl)'/>")
+    # SORTIE (droite) — même flux qui continue de défiler, après transformation.
+    p.append(f"<line x1='{bx+bw+4}' y1='{by+65}' x2='{bx+bw+180}' y2='{by+65}' stroke='{ALESAGE}' "
+             f"stroke-width='2.4' marker-end='url(#fl)' stroke-dasharray='7 5'>"
+             f"<animate attributeName='stroke-dashoffset' values='0;-24' dur='1.2s' repeatCount='indefinite'/></line>")
     p.append(_txt(bx+bw+10, by+52, "SORTIE", 11, ALESAGE, "start", True))
     p.append(_txt(bx+bw+10, by+90, "le MÊME flux,", 10, FIN, "start"))
     p.append(_txt(bx+bw+10, by+104, "après transformation", 10, FIN, "start"))
 
-    # CONTROLES (haut)
+    # CONTROLES (haut) — les 4 pilotes s'éclairent l'un après l'autre, jamais ensemble.
     for i, lab in enumerate(["W", "C", "R", "E"]):
         x = bx + 30 + i*55
-        p.append(f"<line x1='{x}' y1='{by-58}' x2='{x}' y2='{by-4}' stroke='{ARBRE}' stroke-width='2' marker-end='url(#fl)'/>")
+        p.append(f"<line x1='{x}' y1='{by-58}' x2='{x}' y2='{by-4}' stroke='{ARBRE}' stroke-width='2' marker-end='url(#fl)'>"
+                 f"<animate attributeName='stroke-width' values='2;3.6;2;2;2;2;2;2' dur='4.8s' "
+                 f"begin='{i * 0.6}s' repeatCount='indefinite'/></line>")
         p.append(_txt(x, by-64, lab, 11, ARBRE, "middle", True))
     p.append(_txt(bx+bw/2, by-80, "CONTRÔLES (ce qui pilote, ne se transforme pas)", 10, ARBRE, "middle", True))
 
-    # MECANISME (bas)
-    p.append(f"<line x1='{bx+bw/2}' y1='{by+bh+58}' x2='{bx+bw/2}' y2='{by+bh+4}' stroke='{FIN}' stroke-width='2' marker-end='url(#fl)'/>")
+    # MECANISME (bas) — le flux monte vers la boîte : ce qui réalise l'action.
+    p.append(f"<line x1='{bx+bw/2}' y1='{by+bh+58}' x2='{bx+bw/2}' y2='{by+bh+4}' stroke='{FIN}' "
+             f"stroke-width='2' marker-end='url(#fl)' stroke-dasharray='6 4'>"
+             f"<animate attributeName='stroke-dashoffset' values='0;-20' dur='1.4s' repeatCount='indefinite'/></line>")
     p.append(_txt(bx+bw/2, by+bh+76, "MÉCANISME — ce qui réalise (la matière d'œuvre du support)", 10, FIN, "middle", True))
 
     # legende WCRE
@@ -3397,6 +3919,12 @@ def grille_amdec():
         for (lab, x), val in zip(cols, ligne):
             coul = ALERTE if (i >= 2 and lab in ("G","O","D","C = G×O×D")) else TRAIT
             gras = lab in ("G","O","D","C = G×O×D")
+            if val == "60":
+                # la criticité qui dépasse le seuil clignote : on VOIT pourquoi l'action
+                # est obligatoire sur cette ligne précisément.
+                p.append(f"<rect x='{x - 4}' y='{y - 12}' width='26' height='16' fill='{ALERTE}' opacity='0'>"
+                         f"<animate attributeName='opacity' values='0;0.25;0' dur='1.2s' "
+                         f"repeatCount='indefinite'/></rect>")
             p.append(_txt(x, y, val, 10, coul, "start", gras))
 
     yb = 196
@@ -3418,6 +3946,10 @@ def probabilite_arbre():
               12, TRAIT, "start", True)]
     x0, y0 = 90, 190
     p.append(f"<circle cx='{x0}' cy='{y0}' r='4' fill='{TRAIT}'/>")
+    # un point parcourt un chemin complet de l'arbre, en boucle : on VOIT ce que
+    # veut dire « suivre une branche » avant de multiplier les probabilités.
+    p.append(f"<circle r='6' fill='{ALERTE}'>"
+             f"<animateMotion dur='3s' repeatCount='indefinite' path='M{x0},{y0} L280,110 L430,75'/></circle>")
     branches = [
         (280, 110, "0,6", "Fournisseur A", ALESAGE),
         (280, 270, "0,4", "Fournisseur B", ARBRE),
@@ -3457,7 +3989,14 @@ def loi_binomiale_histo():
         x = 90 + k * largeur_barre
         h = 200 * pk / maxp
         coul = ALESAGE if k in (0, 1) else FIN
-        p.append(f"<rect x='{x}' y='{base - h}' width='{largeur_barre - 14}' height='{h:.1f}' fill='{coul}' opacity='0.85'/>")
+        if k in (0, 1):
+            # les deux barres les plus probables pulsent l'une après l'autre —
+            # elles portent l'essentiel de la probabilité, autour de E(X) = 1,2.
+            p.append(f"<rect x='{x}' y='{base - h}' width='{largeur_barre - 14}' height='{h:.1f}' fill='{coul}' opacity='0.85'>"
+                     f"<animate attributeName='opacity' values='0.85;1;0.5;0.85;0.85' dur='3.6s' "
+                     f"begin='{k * 1.1}s' repeatCount='indefinite'/></rect>")
+        else:
+            p.append(f"<rect x='{x}' y='{base - h}' width='{largeur_barre - 14}' height='{h:.1f}' fill='{coul}' opacity='0.85'/>")
         p.append(_txt(x + (largeur_barre - 14) / 2, base + 20, str(k), 12, TRAIT, "middle", True))
         if pk > 0.02:
             p.append(_txt(x + (largeur_barre - 14) / 2, base - h - 8, f"{pk*100:.0f}%", 10, FIN, "middle"))
@@ -3478,7 +4017,11 @@ def intervalle_confiance():
     p.append(f"<line x1='{xmin}' y1='{y}' x2='{xmax}' y2='{y}' stroke='{FIN}' stroke-width='1.6'/>")
     for x in range(xmin, xmax + 1, 40):
         p.append(f"<line x1='{x}' y1='{y-5}' x2='{x}' y2='{y+5}' stroke='{FIN}' stroke-width='1'/>")
-    p.append(f"<rect x='{xmoy - marge}' y='{y-26}' width='{2*marge}' height='52' fill='{ALESAGE}' opacity='0.15' stroke='{ALESAGE}' stroke-width='1.6'/>")
+    # la fenêtre respire légèrement : un autre échantillon donnerait une moyenne
+    # un peu différente, donc une fenêtre un peu décalée — jamais figée.
+    p.append(f"<rect x='{xmoy - marge}' y='{y-26}' width='{2*marge}' height='52' fill='{ALESAGE}' opacity='0.15' stroke='{ALESAGE}' stroke-width='1.6'>"
+             f"<animate attributeName='x' values='{xmoy - marge};{xmoy - marge - 6};{xmoy - marge}' "
+             f"dur='2.6s' repeatCount='indefinite'/></rect>")
     p.append(f"<line x1='{xmoy}' y1='{y-40}' x2='{xmoy}' y2='{y+40}' stroke='{ARBRE}' stroke-width='2.4'/>")
     p.append(_txt(xmoy, y - 50, "moyenne mesurée x̄", 12, ARBRE, "middle", True))
     p.append(f"<line x1='{xmoy - marge}' y1='{y+50}' x2='{xmoy + marge}' y2='{y+50}' stroke='{ALESAGE}' stroke-width='2'/>")
@@ -3510,6 +4053,11 @@ def decroissance_exponentielle():
         y = ylimv + (y0v - ylimv) * _m.exp(-t / tau)
         pts.append(f"{ox + t:.1f},{oy - y:.1f}")
     p.append(f"<polyline points='{' '.join(pts)}' fill='none' stroke='{ALESAGE}' stroke-width='2.6'/>")
+    # un point parcourt la courbe : on VOIT la vitesse ralentir en s'approchant
+    # du palier, sans jamais l'atteindre.
+    ligne_pts = " L".join(pts)
+    p.append(f"<circle r='6' fill='{ARBRE}'>"
+             f"<animateMotion dur='3.5s' repeatCount='indefinite' path='M{ligne_pts}'/></circle>")
     p.append(f"<line x1='{ox}' y1='{oy - ylimv}' x2='680' y2='{oy - ylimv}' stroke='{FIN}' stroke-width='1.2' stroke-dasharray='6 4'/>")
     p.append(_txt(690, oy - ylimv + 4, "y final", 11, FIN, "start"))
     xtau = ox + tau
@@ -3539,6 +4087,11 @@ def rotation_matricielle():
     p.append(f"<line x1='{ox}' y1='{oy}' x2='{x2}' y2='{y2}' stroke='{ARBRE}' stroke-width='2'/>")
     p.append(_txt(x2 + 12, y2 - 8, "A' (0 ; 3)", 12, ARBRE, "start", True))
     p.append(f"<path d='M{ox+50},{oy} a 50,50 0 0,0 -50,-50' fill='none' stroke='{TRAIT}' stroke-width='1.4'/>")
+    # un point parcourt l'arc de A vers A' : on VOIT la rotation se faire, pas
+    # seulement son résultat final.
+    p.append(f"<circle r='6' fill='{ALERTE}'>"
+             f"<animateMotion dur='2s' repeatCount='indefinite' "
+             f"path='M{x1},{y1} A120,120 0 0,0 {x2},{y2}'/></circle>")
     p.append(_txt(ox + 40, oy - 40, "90°", 12, TRAIT, "start", True))
     p.append(f"<rect x='440' y='120' width='280' height='170' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
     p.append(_txt(456, 146, "Rotation de 90° :", 12, TRAIT, "start", True))
@@ -3562,7 +4115,9 @@ def systeme_lineaire_geometrique():
     p.append(f"<line x1='100' y1='60' x2='650' y2='300' stroke='{ARBRE}' stroke-width='2.4'/>")
     p.append(_txt(650, 312, "x + 4y = 9", 12, ARBRE, "end", True))
     xs, ys = 380, 180
-    p.append(f"<circle cx='{xs}' cy='{ys}' r='6' fill='{TRAIT}'/>")
+    # le point de croisement pulse : c'est LA solution, le seul point commun aux deux droites.
+    p.append(f"<circle cx='{xs}' cy='{ys}' r='6' fill='{TRAIT}'>"
+             f"<animate attributeName='r' values='6;9;6' dur='1.3s' repeatCount='indefinite'/></circle>")
     p.append(_txt(xs + 14, ys - 10, "solution unique (1 ; 2)", 12, TRAIT, "start", True))
     p.append(f"<rect x='40' y='300' width='680' height='40' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
     p.append(_txt(56, 325, "La matrice inverse fait le même calcul, mais directement sur les nombres — sans tracer.", 12, TRAIT, "start", True))
@@ -3594,6 +4149,11 @@ def courbe_bezier():
         x, y = bezier_cubique(t)
         courbe.append(f"{x:.1f},{y:.1f}")
     p.append(f"<polyline points='{' '.join(courbe)}' fill='none' stroke='{TRAIT}' stroke-width='3'/>")
+    # un point trace la courbe de P0 à P3, en boucle : c'est exactement ce que dessine
+    # un logiciel de CAO quand on déplace une poignée de contrôle.
+    courbe_pts = " L".join(courbe)
+    p.append(f"<circle r='6' fill='{ALERTE}'>"
+             f"<animateMotion dur='3s' repeatCount='indefinite' path='M{courbe_pts}'/></circle>")
     p.append(f"<rect x='40' y='290' width='680' height='60' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
     p.append(_txt(56, 312, "La courbe touche P0 et P3 (ses extrémités), mais reste seulement attirée par", 12, TRAIT, "start", True))
     p.append(_txt(56, 334, "P1 et P2 — jamais posée dessus. C'est ce que règle un logiciel de CAO quand tu déplaces une poignée.", 12, TRAIT, "start", True))
@@ -3607,7 +4167,11 @@ def cercle_et_droite():
     p.append(f"<circle cx='{cx}' cy='{cy}' r='{r}' fill='none' stroke='{ALESAGE}' stroke-width='2.4'/>")
     p.append(f"<circle cx='{cx}' cy='{cy}' r='4' fill='{TRAIT}'/>")
     p.append(_txt(cx, cy - 14, "Ω(a ; b)", 12, TRAIT, "middle", True))
-    p.append(f"<line x1='{cx}' y1='{cy}' x2='{cx+r}' y2='{cy}' stroke='{TRAIT}' stroke-width='1.6' stroke-dasharray='4 3'/>")
+    # le rayon R tourne autour du centre : on VOIT que TOUS les points du cercle sont
+    # à la même distance R de Ω, pas seulement celui dessiné.
+    p.append(f"<line x1='{cx}' y1='{cy}' x2='{cx+r}' y2='{cy}' stroke='{TRAIT}' stroke-width='1.6' stroke-dasharray='4 3'>"
+             f"<animateTransform attributeName='transform' type='rotate' "
+             f"values='0 {cx} {cy}; 360 {cx} {cy}' dur='4s' repeatCount='indefinite'/></line>")
     p.append(_txt(cx + r/2, cy - 8, "R", 12, TRAIT, "middle", True))
     p.append(f"<line x1='120' y1='90' x2='560' y2='330' stroke='{ARBRE}' stroke-width='2.4'/>")
     p.append(_txt(560, 340, "droite d", 12, ARBRE, "start", True))
@@ -3631,7 +4195,14 @@ def barycentre_points():
         p.append(_txt(x, y - rayon - 8, f"{lab} ({masse} kg)", 12, coul, "middle", True))
     gx = (120*2 + 560*3 + 340*1) / 6
     gy = (280*2 + 280*3 + 90*1) / 6
-    p.append(f"<circle cx='{gx:.0f}' cy='{gy:.0f}' r='7' fill='{TRAIT}'/>")
+    # G est tiré vers chaque masse, avec un léger biais vers B (la plus lourde) : on
+    # VOIT G se rapprocher du point le plus lourd, pas juste le lire dans le texte.
+    for x, y, lab, masse, coul in pts:
+        p.append(f"<line x1='{gx:.0f}' y1='{gy:.0f}' x2='{x}' y2='{y}' stroke='{coul}' stroke-width='{masse}' opacity='0.25'>"
+                 f"<animate attributeName='opacity' values='0.15;0.4;0.15' dur='1.6s' repeatCount='indefinite'/></line>")
+    p.append(f"<circle cx='{gx:.0f}' cy='{gy:.0f}' r='7' fill='{TRAIT}'>"
+             f"<animateTransform attributeName='transform' type='translate' "
+             f"values='0,0; 3,0; 0,0' dur='1.6s' repeatCount='indefinite'/></circle>")
     p.append(f"<line x1='{gx:.0f}' y1='{gy-16:.0f}' x2='{gx:.0f}' y2='{gy+16:.0f}' stroke='{TRAIT}' stroke-width='2'/>")
     p.append(f"<line x1='{gx-16:.0f}' y1='{gy:.0f}' x2='{gx+16:.0f}' y2='{gy:.0f}' stroke='{TRAIT}' stroke-width='2'/>")
     p.append(_txt(gx, gy + 32, "G", 13, TRAIT, "middle", True))
@@ -3650,7 +4221,11 @@ def couple_galvanique():
         p.append(f"<circle cx='{cx}' cy='165' r='16' fill='{ALESAGE}'/>")
         p.append(_txt(cx, 170, "vis", 10, "#ffffff", "middle", True))
     p.append(_txt(500, 145, "vis en laiton (E° = +0,34 V)", 11, ALESAGE, "middle", True))
-    p.append(f"<path d='M240,181 q0,40 60,40' fill='none' stroke='{ALERTE}' stroke-width='2' marker-end='url(#fleche)'/>")
+    # les électrons défilent le long de la flèche : on VOIT le sens du courant, de
+    # l'acier (qui se corrode) vers le laiton (protégé).
+    p.append(f"<path d='M240,181 q0,40 60,40' fill='none' stroke='{ALERTE}' stroke-width='2' "
+             f"marker-end='url(#fleche)' stroke-dasharray='5 4'>"
+             f"<animate attributeName='stroke-dashoffset' values='0;-18' dur='1s' repeatCount='indefinite'/></path>")
     p.append(f"<defs><marker id='fleche' markerWidth='8' markerHeight='8' refX='6' refY='3' orient='auto'>"
              f"<path d='M0,0 L6,3 L0,6 Z' fill='{ALERTE}'/></marker></defs>")
     p.append(_txt(300, 250, "électrons : l'acier (plus réactif) les cède aux vis en laiton", 12, ALERTE, "start", True))
@@ -3669,17 +4244,25 @@ def seuil_rentabilite_graphe():
     p.append(f"<line x1='{ox}' y1='{oy}' x2='{ox}' y2='40' stroke='{TRAIT}' stroke-width='2'/>")
     p.append(_txt(700, oy + 20, "nombre de pièces", 12, TRAIT, "end"))
     p.append(_txt(ox - 10, 34, "coût total (€)", 12, TRAIT, "end"))
-    # usinage : 46 * n, pas d'outillage — droite depuis l'origine
-    p.append(f"<line x1='{ox}' y1='{oy}' x2='620' y2='60' stroke='{ALESAGE}' stroke-width='2.4'/>")
+    # les deux droites se tracent depuis l'origine, puis le point de croisement pulse :
+    # on VOIT le nombre de pièces exact où les deux solutions coûtent pareil.
+    _l1 = ((620 - ox) ** 2 + (60 - oy) ** 2) ** 0.5
+    p.append(f"<line x1='{ox}' y1='{oy}' x2='620' y2='60' stroke='{ALESAGE}' stroke-width='2.4' "
+             f"stroke-dasharray='{_l1:.0f}' stroke-dashoffset='{_l1:.0f}'>"
+             f"<animate attributeName='stroke-dashoffset' from='{_l1:.0f}' to='0' dur='1s' fill='freeze'/></line>")
     p.append(_txt(560, 78, "usinage : 46 €/pièce", 12, ALESAGE, "start", True))
     # fonderie : 8500 + 7*n — ordonnée à l'origine élevée, pente faible
     oy_fond = oy - 55
-    p.append(f"<line x1='{ox}' y1='{oy_fond}' x2='620' y2='{oy_fond - 90}' stroke='{OK}' stroke-width='2.4'/>")
+    _l2 = ((620 - ox) ** 2 + (oy_fond - 90 - oy_fond) ** 2) ** 0.5
+    p.append(f"<line x1='{ox}' y1='{oy_fond}' x2='620' y2='{oy_fond - 90}' stroke='{OK}' stroke-width='2.4' "
+             f"stroke-dasharray='{_l2:.0f}' stroke-dashoffset='{_l2:.0f}'>"
+             f"<animate attributeName='stroke-dashoffset' from='{_l2:.0f}' to='0' dur='1s' fill='freeze'/></line>")
     p.append(_txt(560, oy_fond - 100, "fonderie : 8 500 € + 7 €/pièce", 12, OK, "start", True))
     # point de croisement approx (218 pièces)
     xc = ox + 218 / 1000 * (620 - ox)
     yc = oy - 218 / 1000 * (oy - 60)
-    p.append(f"<circle cx='{xc:.0f}' cy='{yc:.0f}' r='5' fill='{ALERTE}'/>")
+    p.append(f"<circle cx='{xc:.0f}' cy='{yc:.0f}' r='5' fill='{ALERTE}'>"
+             f"<animate attributeName='r' values='5;9;5' dur='1.2s' begin='1s' repeatCount='indefinite'/></circle>")
     p.append(f"<line x1='{xc:.0f}' y1='{yc:.0f}' x2='{xc:.0f}' y2='{oy}' stroke='{ALERTE}' stroke-width='1.6' stroke-dasharray='4 3'/>")
     p.append(_txt(xc, oy + 20, "≈ 218 pièces", 12, ALERTE, "middle", True))
     p.append(f"<rect x='40' y='300' width='660' height='40' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
@@ -3699,14 +4282,20 @@ def flux_puissance():
         p.append(f"<rect x='{x}' y='120' width='170' height='70' rx='8' fill='{FOND}' stroke='{coul}' stroke-width='2'/>")
         p.append(_txt(x + 85, 148, label, 12, coul, "middle", True))
         p.append(_txt(x + 85, 172, val, 14, coul, "middle", True))
+    # la puissance défile vers la droite, les pertes s'échappent vers le bas : on VOIT
+    # le flux principal ET les pertes, jamais un simple nombre final.
     for x1, x2, rendement in ((230, 290, "×0,85"), (460, 520, "×0,92")):
-        p.append(f"<line x1='{x1}' y1='155' x2='{x2}' y2='155' stroke='{TRAIT}' stroke-width='2.4' marker-end='url(#flechep)'/>")
+        p.append(f"<line x1='{x1}' y1='155' x2='{x2}' y2='155' stroke='{TRAIT}' stroke-width='2.4' "
+                 f"marker-end='url(#flechep)' stroke-dasharray='6 4'>"
+                 f"<animate attributeName='stroke-dashoffset' values='0;-20' dur='1s' repeatCount='indefinite'/></line>")
         p.append(_txt((x1 + x2) / 2, 140, rendement, 12, TRAIT, "middle", True))
     p.append(f"<defs><marker id='flechep' markerWidth='8' markerHeight='8' refX='6' refY='3' orient='auto'>"
              f"<path d='M0,0 L6,3 L0,6 Z' fill='{TRAIT}'/></marker></defs>")
-    p.append(f"<line x1='260' y1='190' x2='260' y2='240' stroke='{ALERTE}' stroke-width='2' stroke-dasharray='4 3'/>")
+    p.append(f"<line x1='260' y1='190' x2='260' y2='240' stroke='{ALERTE}' stroke-width='2' stroke-dasharray='4 3'>"
+             f"<animate attributeName='stroke-dashoffset' values='0;-14' dur='1s' repeatCount='indefinite'/></line>")
     p.append(_txt(260, 254, "pertes moteur", 11, ALERTE, "middle"))
-    p.append(f"<line x1='490' y1='190' x2='490' y2='240' stroke='{ALERTE}' stroke-width='2' stroke-dasharray='4 3'/>")
+    p.append(f"<line x1='490' y1='190' x2='490' y2='240' stroke='{ALERTE}' stroke-width='2' stroke-dasharray='4 3'>"
+             f"<animate attributeName='stroke-dashoffset' values='0;-14' dur='1s' repeatCount='indefinite'/></line>")
     p.append(_txt(490, 254, "pertes réducteur", 11, ALERTE, "middle"))
     p.append(f"<rect x='40' y='280' width='660' height='50' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
     p.append(_txt(56, 304, "η_global = 0,85 × 0,92 = 0,782 : 163,5 W sur 750 W partent en pertes, jamais en énergie utile.", 12, TRAIT, "start", True))
@@ -3726,8 +4315,10 @@ def distribution_mesures():
     p.append(f"<line x1='{ox}' y1='{oy}' x2='680' y2='{oy}' stroke='{FIN}' stroke-width='1.4'/>")
     mesures = [19.987, 19.991, 19.985, 19.989, 19.988]
     for i, v in enumerate(mesures):
+        # les 5 mesures apparaissent une à une, comme prises au fil du contrôle.
         x = px(v)
-        p.append(f"<circle cx='{x:.0f}' cy='{oy}' r='6' fill='{ALESAGE}'/>")
+        p.append(f"<circle cx='{x:.0f}' cy='{oy}' r='0' fill='{ALESAGE}'>"
+                 f"<animate attributeName='r' from='0' to='6' dur='.4s' begin='{i * 0.3}s' fill='freeze'/></circle>")
         p.append(_txt(x, oy + 28 + (i % 2) * 16, f"{v:.3f}", 10.5, ALESAGE, "middle"))
     moy = sum(mesures) / len(mesures)
     xm = px(moy)
@@ -3748,8 +4339,18 @@ def dilatation_differentielle():
         cx = 220 + i * 340
         cy = 190
         p.append(_txt(cx, 90, titre, 13, coul_titre, "middle", True))
-        p.append(f"<circle cx='{cx}' cy='{cy}' r='{r_alesage}' fill='{FOND}' stroke='{ALESAGE}' stroke-width='2.4'/>")
-        p.append(f"<circle cx='{cx}' cy='{cy}' r='{r_arbre}' fill='{ARBRE}' opacity='0.85'/>")
+        if i == 1:
+            # à 80°C, les deux cercles pulsent en grandissant : on VOIT la dilatation
+            # se produire, pas seulement un diamètre plus grand déjà figé.
+            p.append(f"<circle cx='{cx}' cy='{cy}' r='{r_alesage}' fill='{FOND}' stroke='{ALESAGE}' stroke-width='2.4'>"
+                     f"<animate attributeName='r' values='{r_alesage - 3};{r_alesage};{r_alesage - 3}' "
+                     f"dur='1.8s' repeatCount='indefinite'/></circle>")
+            p.append(f"<circle cx='{cx}' cy='{cy}' r='{r_arbre}' fill='{ARBRE}' opacity='0.85'>"
+                     f"<animate attributeName='r' values='{r_arbre - 2};{r_arbre};{r_arbre - 2}' "
+                     f"dur='1.8s' repeatCount='indefinite'/></circle>")
+        else:
+            p.append(f"<circle cx='{cx}' cy='{cy}' r='{r_alesage}' fill='{FOND}' stroke='{ALESAGE}' stroke-width='2.4'/>")
+            p.append(f"<circle cx='{cx}' cy='{cy}' r='{r_arbre}' fill='{ARBRE}' opacity='0.85'/>")
         p.append(_txt(cx, cy + r_arbre + 22, f"arbre acier {lab_arbre}", 11, ARBRE, "middle"))
         p.append(_txt(cx, cy - r_alesage - 10, f"alésage alu {lab_alesage}", 11, ALESAGE, "middle"))
     p.append(f"<rect x='40' y='300' width='680' height='64' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
@@ -3761,7 +4362,11 @@ def dilatation_differentielle():
 def retrait_moulage():
     p = [_txt(40, 24, "La pièce refroidit après le moulage : elle rétrécit, le moule doit donc être plus grand.",
               12, TRAIT, "start", True)]
-    p.append(f"<rect x='90' y='90' width='230' height='120' rx='6' fill='none' stroke='{TRAIT}' stroke-width='2.4' stroke-dasharray='5 4'/>")
+    # l'empreinte du moule rétrécit doucement vers la taille de la pièce finie, en
+    # boucle : on VOIT le retrait se produire au refroidissement.
+    p.append(f"<rect x='90' y='90' width='230' height='120' rx='6' fill='none' stroke='{TRAIT}' stroke-width='2.4' stroke-dasharray='5 4'>"
+             f"<animate attributeName='width' values='230;227;230' dur='2s' repeatCount='indefinite'/>"
+             f"<animate attributeName='height' values='120;118.5;120' dur='2s' repeatCount='indefinite'/></rect>")
     p.append(_txt(205, 76, "empreinte du moule", 12, TRAIT, "middle", True))
     p.append(_txt(205, 155, "120,00 mm", 15, TRAIT, "middle", True))
     p.append(f"<path d='M360,150 L430,150' stroke='{FIN}' stroke-width='2' marker-end='url(#flechem)'/>")
@@ -3785,12 +4390,15 @@ def vitesse_disque_meulage():
     p.append(f"<circle cx='{cx}' cy='{cy}' r='{R}' fill='{FOND}' stroke='{TRAIT}' stroke-width='2.4'/>")
     p.append(f"<circle cx='{cx}' cy='{cy}' r='4' fill='{TRAIT}'/>")
     p.append(_txt(cx, cy + 20, "centre", 10, FIN, "middle"))
-    p.append(f"<line x1='{cx}' y1='{cy}' x2='{cx+R}' y2='{cy}' stroke='{ALESAGE}' stroke-width='2'/>")
-    p.append(_txt(cx + R/2, cy - 10, "R = 200 mm", 12, ALESAGE, "middle", True))
-    p.append(f"<circle cx='{cx+R}' cy='{cy}' r='6' fill='{ARBRE}'/>")
-    p.append(f"<path d='M{cx+R},{cy-20} L{cx+R},{cy-70}' stroke='{ARBRE}' stroke-width='2.6' marker-end='url(#flv)'/>")
+    # le rayon, le point ET la flèche v tournent ensemble à vitesse constante : on VOIT
+    # v rester tangente en tout point, avec ω identique partout sur le disque.
     p.append(f"<defs><marker id='flv' markerWidth='9' markerHeight='9' refX='6' refY='3' orient='auto'>"
              f"<path d='M0,0 L6,3 L0,6 Z' fill='{ARBRE}'/></marker></defs>")
+    p.append(f"<g><animateTransform attributeName='transform' type='rotate' "
+             f"values='0 {cx} {cy}; 360 {cx} {cy}' dur='2.5s' repeatCount='indefinite'/>"
+             f"<line x1='{cx}' y1='{cy}' x2='{cx+R}' y2='{cy}' stroke='{ALESAGE}' stroke-width='2'/>"
+             f"<circle cx='{cx+R}' cy='{cy}' r='6' fill='{ARBRE}'/>"
+             f"<path d='M{cx+R},{cy-20} L{cx+R},{cy-70}' stroke='{ARBRE}' stroke-width='2.6' marker-end='url(#flv)'/></g>")
     p.append(_txt(cx + R + 14, cy - 55, "v = 25,13 m/s", 12, ARBRE, "start", True))
     p.append(_txt(cx, cy - R - 14, "N = 1 200 tr/min", 12, TRAIT, "middle", True))
     p.append(f"<rect x='40' y='360' width='680' height='58' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
@@ -3810,12 +4418,18 @@ def flux_puissance_chaine():
             p.append(_txt(x + 100, 150 + j * 18, ligne, 13, coul, "middle", True))
         p.append(_txt(x + 100, 226, val, 13, TRAIT, "middle", True))
         if i < 2:
-            p.append(f"<path d='M{x+200},165 L{x+250},165' stroke='{FIN}' stroke-width='2.4' marker-end='url(#flp)'/>")
+            # la puissance défile vers la droite : on VOIT le flux traverser la chaîne.
+            p.append(f"<path d='M{x+200},165 L{x+250},165' stroke='{FIN}' stroke-width='2.4' "
+                     f"marker-end='url(#flp)' stroke-dasharray='6 4'>"
+                     f"<animate attributeName='stroke-dashoffset' values='0;-20' dur='1s' repeatCount='indefinite'/></path>")
     p.append(f"<defs><marker id='flp' markerWidth='9' markerHeight='9' refX='6' refY='3' orient='auto'>"
              f"<path d='M0,0 L6,3 L0,6 Z' fill='{FIN}'/></marker></defs>")
-    p.append(f"<path d='M160,210 L160,270' stroke='{ALERTE}' stroke-width='2' stroke-dasharray='4 3'/>")
+    # les pertes s'échappent vers le bas, en défilant : on VOIT l'énergie qui fuit.
+    p.append(f"<path d='M160,210 L160,270' stroke='{ALERTE}' stroke-width='2' stroke-dasharray='4 3'>"
+             f"<animate attributeName='stroke-dashoffset' values='0;-14' dur='1s' repeatCount='indefinite'/></path>")
     p.append(_txt(160, 288, "120 W perdus", 11, ALERTE, "middle"))
-    p.append(f"<path d='M410,210 L410,270' stroke='{ALERTE}' stroke-width='2' stroke-dasharray='4 3'/>")
+    p.append(f"<path d='M410,210 L410,270' stroke='{ALERTE}' stroke-width='2' stroke-dasharray='4 3'>"
+             f"<animate attributeName='stroke-dashoffset' values='0;-14' dur='1s' repeatCount='indefinite'/></path>")
     p.append(_txt(410, 288, "194 W perdus", 11, ALERTE, "middle"))
     p.append(f"<rect x='40' y='320' width='680' height='58' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
     p.append(_txt(56, 344, "η global = 0,97 × 0,95 = 0,9215 → 4 000 × 0,9215 = 3 686 W utiles, 314 W perdus", 12, TRAIT, "start", True))
@@ -3828,10 +4442,15 @@ def circuit_loi_ohm():
               12, TRAIT, "start", True)]
     p.append(f"<rect x='120' y='90' width='60' height='110' rx='4' fill='{FOND}' stroke='{TRAIT}' stroke-width='2.4'/>")
     p.append(_txt(150, 82, "U (source)", 12, TRAIT, "middle", True))
-    p.append(f"<path d='M180,110 L520,110' stroke='{ARBRE}' stroke-width='2.6'/>")
+    # le courant défile tout autour de la boucle : on VOIT I circuler en permanence,
+    # dans tout le circuit, jamais seulement « sortir » de la source.
+    p.append(f"<path d='M180,110 L520,110' stroke='{ARBRE}' stroke-width='2.6' stroke-dasharray='8 5'>"
+             f"<animate attributeName='stroke-dashoffset' values='0;-26' dur='1.2s' repeatCount='indefinite'/></path>")
     p.append(f"<path d='M340,95 L400,95 L400,125 L340,125 Z' fill='{FOND}' stroke='{ALESAGE}' stroke-width='2.4'/>")
     p.append(_txt(370, 78, "R (résistance)", 12, ALESAGE, "middle", True))
-    p.append(f"<path d='M520,110 L520,200 L180,200 L180,145' stroke='{ARBRE}' stroke-width='2.6' marker-end='url(#fli)'/>")
+    p.append(f"<path d='M520,110 L520,200 L180,200 L180,145' stroke='{ARBRE}' stroke-width='2.6' "
+             f"marker-end='url(#fli)' stroke-dasharray='8 5'>"
+             f"<animate attributeName='stroke-dashoffset' values='0;-26' dur='1.2s' repeatCount='indefinite'/></path>")
     p.append(f"<defs><marker id='fli' markerWidth='9' markerHeight='9' refX='6' refY='3' orient='auto'>"
              f"<path d='M0,0 L6,3 L0,6 Z' fill='{ARBRE}'/></marker></defs>")
     p.append(_txt(350, 220, "I (intensité) circule dans tout le circuit", 12, ARBRE, "middle", True))
@@ -3862,6 +4481,11 @@ def lire_tableau_variations():
     p.append(f"<path d='M400,150 L660,240' stroke='{ALERTE}' stroke-width='2.6' marker-end='url(#fld)'/>")
     p.append(f"<defs><marker id='fld' markerWidth='9' markerHeight='9' refX='6' refY='3' orient='auto'>"
              f"<path d='M0,0 L6,3 L0,6 Z' fill='{ALERTE}'/></marker></defs>")
+    # un point parcourt tout le trajet, de gauche à droite : « lire comme un trajet »,
+    # au sens propre.
+    p.append(f"<circle r='6' fill='{TRAIT}'>"
+             f"<animateMotion dur='3.2s' repeatCount='indefinite' "
+             f"path='M100,240 L360,150 L400,150 L660,240'/></circle>")
     p.append(_txt(380, 145, "2", 13, TRAIT, "middle", True))
     p.append(_txt(100, 260, "−∞", 12, FIN, "middle"))
     p.append(_txt(660, 260, "−∞", 12, FIN, "middle"))
@@ -3883,6 +4507,11 @@ def fonction_homographique_asymptotes():
     p.append(_txt(ox - 90, 396, "x = −3", 12, ALESAGE, "middle", True))
     p.append(f"<path d='M{ox-260},{oy-8} Q{ox-150},{oy-30} {ox-95},{oy-260}' fill='none' stroke='{TRAIT}' stroke-width='2.4'/>")
     p.append(f"<path d='M{ox-85},{oy+300} Q{ox-30},{oy-10} {ox+280},{oy-38}' fill='none' stroke='{TRAIT}' stroke-width='2.4'/>")
+    # un point remonte la branche vers l'asymptote verticale, en boucle : il s'en
+    # approche sans jamais la toucher.
+    p.append(f"<circle r='6' fill='{ALERTE}'>"
+             f"<animateMotion dur='2.4s' repeatCount='indefinite' "
+             f"path='M{ox-260},{oy-8} Q{ox-150},{oy-30} {ox-95},{oy-260}'/></circle>")
     p.append(f"<rect x='40' y='330' width='680' height='58' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
     p.append(_txt(56, 354, "La courbe s'approche de y = 2 sans jamais la toucher (asymptote horizontale),", 12, TRAIT, "start", True))
     p.append(_txt(56, 376, "et explose près de x = −3, où le dénominateur s'annule (asymptote verticale).", 12, TRAIT, "start", True))
@@ -3896,6 +4525,11 @@ def extremums_polynome():
     p.append(f"<line x1='60' y1='{oy}' x2='700' y2='{oy}' stroke='{FIN}' stroke-width='1.4'/>")
     p.append(f"<line x1='{ox}' y1='40' x2='{ox}' y2='360' stroke='{FIN}' stroke-width='1.4'/>")
     p.append(f"<path d='M100,340 C220,200 260,90 380,90 C500,90 540,300 660,60' fill='none' stroke='{TRAIT}' stroke-width='2.6'/>")
+    # un point parcourt la courbe : on VOIT la pente changer de signe, exactement aux
+    # deux extremums repérés ci-dessous.
+    p.append(f"<circle r='6' fill='{ARBRE}'>"
+             f"<animateMotion dur='4s' repeatCount='indefinite' "
+             f"path='M100,340 C220,200 260,90 380,90 C500,90 540,300 660,60'/></circle>")
     p.append(f"<circle cx='380' cy='90' r='6' fill='{OK}'/>")
     p.append(_txt(380, 74, "max local : f(0) = 2", 12, OK, "middle", True))
     p.append(f"<circle cx='500' cy='300' r='6' fill='{ALERTE}'/>")
@@ -3918,9 +4552,13 @@ def dispersion_deux_reglages():
     echelle = 6000
     p.append(f"<line x1='{80 + (moy-19.97)*echelle}' y1='{y0-50}' x2='{80 + (moy-19.97)*echelle}' y2='{y0+50}' stroke='{ARBRE}' stroke-width='2' stroke-dasharray='4 3'/>")
     p.append(_txt(80 + (moy-19.97)*echelle, y0-60, f"moyenne = {moy:.2f} mm", 12, ARBRE, "middle", True))
-    for v in valeurs:
+    for _i, v in enumerate(valeurs):
+        # les 6 mesures s'éclairent l'une après l'autre : on VOIT la dispersion
+        # se construire, mesure par mesure, autour de la moyenne.
         x = 80 + (v - 19.97) * echelle
-        p.append(f"<circle cx='{x:.0f}' cy='{y0}' r='7' fill='{ALESAGE}' opacity='0.85'/>")
+        p.append(f"<circle cx='{x:.0f}' cy='{y0}' r='7' fill='{ALESAGE}' opacity='0.85'>"
+                 f"<animate attributeName='r' values='7;10;7;7;7;7' dur='6s' begin='{_i}s' "
+                 f"repeatCount='indefinite'/></circle>")
     p.append(f"<rect x='40' y='280' width='680' height='80' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
     p.append(_txt(56, 304, "σ ≈ 0,0129 mm sur ce réglage (pièces de 20 mm). Le même écart-type sur des", 12, TRAIT, "start", True))
     p.append(_txt(56, 326, "pièces de 100 mm serait bien meilleur en proportion — d'où le coefficient de", 12, TRAIT, "start", True))
@@ -3937,6 +4575,10 @@ def venn_deux_evenements():
     p.append(_txt(240, 172, "P(A) = 0,02", 12, ALESAGE, "middle"))
     p.append(_txt(500, 150, "B : défaut surface", 12, ARBRE, "middle", True))
     p.append(_txt(500, 172, "P(B) = 0,05", 12, ARBRE, "middle"))
+    # la zone commune pulse : c'est elle qu'on retranche une fois pour ne pas la
+    # compter deux fois dans P(A∪B).
+    p.append(f"<circle cx='370' cy='210' r='10' fill='{TRAIT}' opacity='0.35'>"
+             f"<animate attributeName='r' values='10;16;10' dur='1.6s' repeatCount='indefinite'/></circle>")
     p.append(_txt(370, 214, "A∩B", 12, TRAIT, "middle", True))
     p.append(_txt(370, 234, "0,001", 11, TRAIT, "middle"))
     p.append(f"<rect x='40' y='360' width='680' height='58' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
@@ -3955,7 +4597,10 @@ def echelle_mm_um():
         p.append(_txt(x, 104, f"{i*5} mm", 11, TRAIT, "middle"))
     p.append(_txt(80, 148, "0", 11, ALESAGE, "middle"))
     p.append(_txt(200, 148, "5 000 µm", 11, ALESAGE, "middle", True))
-    p.append(f"<path d='M80 160 L200 160' stroke='{ALESAGE}' stroke-width='2' marker-end='url(#fl)'/>")
+    # le trait avance de 0 à 5000 µm en boucle : on VOIT la mesure se dérouler.
+    p.append(f"<path d='M80 160 L200 160' stroke='{ALESAGE}' stroke-width='2' marker-end='url(#fl)' "
+             f"stroke-dasharray='6 4'><animate attributeName='stroke-dashoffset' values='0;-20' "
+             f"dur='1.2s' repeatCount='indefinite'/></path>")
     p.append(_txt(140, 180, "1 mm = 1 000 µm : la même distance, mille fois plus de graduations", 11.5, ALESAGE, "middle"))
     p.append(f"<rect x='60' y='230' width='300' height='90' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
     p.append(_txt(76, 254, "masse 5 kg", 12, ARBRE, "start", True))
@@ -3979,7 +4624,10 @@ def conversion_surface():
         p.append(f"<line x1='{90+i*44}' y1='70' x2='{90+i*44}' y2='290' stroke='{ALESAGE}' stroke-width='0.6' opacity='0.5'/>")
         p.append(f"<line x1='90' y1='{70+i*44}' x2='310' y2='{70+i*44}' stroke='{ALESAGE}' stroke-width='0.6' opacity='0.5'/>")
     p.append(_txt(200, 305, "chaque petit carré = 1 case de 200×200 mm environ", 10.5, FIN, "middle"))
-    p.append(f"<path d='M330 180 L410 180' stroke='{TRAIT}' stroke-width='2.2' marker-end='url(#fl2)'/>")
+    # la flèche « pulse » vers la droite en boucle : on VOIT la conversion s'opérer.
+    p.append(f"<path d='M330 180 L410 180' stroke='{TRAIT}' stroke-width='2.2' marker-end='url(#fl2)' "
+             f"stroke-dasharray='6 4'><animate attributeName='stroke-dashoffset' values='0;-20' "
+             f"dur='1s' repeatCount='indefinite'/></path>")
     p.append(_txt(370, 165, "× 1 000 000", 12.5, TRAIT, "middle", True))
     p.append(f"<rect x='430' y='90' width='260" + "' height='180' fill='" + FOND + f"' stroke='{FIN}' stroke-width='1'/>")
     p.append(_txt(560, 115, "1 000 000 mm²", 15, ARBRE, "middle", True))
@@ -4000,7 +4648,9 @@ def piege_couple_nm_nmm():
     p.append(_txt(76, 152, "τ = 180 / 3 068", 12.5, TRAIT, "start"))
     p.append(_txt(76, 178, "= 0,059 MPa", 13, ALERTE, "start", True))
     p.append(_txt(76, 202, "→ absurde pour de l'acier", 10.5, ALERTE, "start"))
-    p.append(f"<rect x='400' y='70' width='300' height='150' rx='6' fill='{FOND}' stroke='{OK}' stroke-width='2'/>")
+    # le cadre de la bonne méthode pulse doucement : on VOIT laquelle des deux suivre.
+    p.append(f"<rect x='400' y='70' width='300' height='150' rx='6' fill='{FOND}' stroke='{OK}' stroke-width='2'>"
+             f"<animate attributeName='stroke-width' values='2;3.4;2' dur='1.6s' repeatCount='indefinite'/></rect>")
     p.append(_txt(550, 96, "Avec conversion", 13, OK, "middle", True))
     p.append(_txt(416, 128, "couple = 180 N·m × 1 000", 12, TRAIT, "start"))
     p.append(_txt(416, 152, "= 180 000 N·mm", 12.5, TRAIT, "start", True))
@@ -4016,15 +4666,25 @@ def poutre_deux_appuis():
     p = [_txt(40, 24, "Charge centrée, appuis symétriques : chaque appui reprend la moitié.",
               13, TRAIT, "start", True)]
     y0 = 140
-    p.append(f"<line x1='100' y1='{y0}' x2='620' y2='{y0}' stroke='{TRAIT}' stroke-width='5'/>")
+    # la poutre fléchit légèrement sous la charge puis revient : on VOIT la flexion et
+    # les flèches de charge/réactions pulsent en phase pour montrer l'équilibre.
+    p.append(f"<path d='M100,{y0} L620,{y0}' fill='none' stroke='{TRAIT}' stroke-width='5'>"
+             f"<animate attributeName='d' dur='1.8s' repeatCount='indefinite' values="
+             f"'M100,{y0} L620,{y0};M100,{y0} Q360,{y0 + 10} 620,{y0};M100,{y0} L620,{y0}'/></path>")
     for x, lab in [(100, "A"), (620, "B")]:
         p.append(f"<path d='M{x} {y0} L{x-18} {y0+34} L{x+18} {y0+34} Z' fill='none' stroke='{ALESAGE}' stroke-width='2.2'/>")
         p.append(_txt(x, y0 + 52, lab, 13, ALESAGE, "middle", True))
-    p.append(f"<line x1='360' y1='{y0-70}' x2='360' y2='{y0-6}' stroke='{ARBRE}' stroke-width='2.6' marker-end='url(#fl3)'/>")
+    p.append(f"<line x1='360' y1='{y0-70}' x2='360' y2='{y0-6}' stroke='{ARBRE}' stroke-width='2.6' marker-end='url(#fl3)'>"
+             f"<animateTransform attributeName='transform' type='translate' "
+             f"values='0,0; 0,5; 0,0' dur='1.8s' repeatCount='indefinite'/></line>")
     p.append(_txt(360, y0 - 80, "F = 600 N", 13, ARBRE, "middle", True))
-    p.append(f"<line x1='100' y1='{y0+70}' x2='100' y2='{y0+34}' stroke='{OK}' stroke-width='2.2' marker-end='url(#fl3b)'/>")
+    p.append(f"<line x1='100' y1='{y0+70}' x2='100' y2='{y0+34}' stroke='{OK}' stroke-width='2.2' marker-end='url(#fl3b)'>"
+             f"<animateTransform attributeName='transform' type='translate' "
+             f"values='0,0; 0,-3; 0,0' dur='1.8s' repeatCount='indefinite'/></line>")
     p.append(_txt(100, y0 + 88, "RA = 300 N", 12, OK, "middle", True))
-    p.append(f"<line x1='620' y1='{y0+70}' x2='620' y2='{y0+34}' stroke='{OK}' stroke-width='2.2' marker-end='url(#fl3b)'/>")
+    p.append(f"<line x1='620' y1='{y0+70}' x2='620' y2='{y0+34}' stroke='{OK}' stroke-width='2.2' marker-end='url(#fl3b)'>"
+             f"<animateTransform attributeName='transform' type='translate' "
+             f"values='0,0; 0,-3; 0,0' dur='1.8s' repeatCount='indefinite'/></line>")
     p.append(_txt(620, y0 + 88, "RB = 300 N", 12, OK, "middle", True))
     p.append(f"<rect x='40' y='250' width='680' height='56' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
     p.append(_txt(56, 274, "Vérification : RA + RB = 300 + 300 = 600 N = la charge appliquée. Équilibre confirmé.", 12, TRAIT, "start", True))
@@ -4044,7 +4704,12 @@ def contrainte_admissible_seuil():
     p.append(_txt(x1 + 12, y_re + 13, "Re = 300 MPa (résistance du matériau)", 12, ALESAGE, "start", True))
     p.append(f"<line x1='{x0}' y1='{y_adm}' x2='{x1}' y2='{y_adm}' stroke='{ARBRE}' stroke-width='2.4' stroke-dasharray='5 4'/>")
     p.append(_txt(x1 + 12, y_adm + 4, "contrainte admissible = Re / s = 100 MPa", 12, ARBRE, "start", True))
-    p.append(f"<rect x='{x0}' y='{y_sigma}' width='{(x1-x0)*90/300}' height='14' fill='{OK}' opacity='0.35' stroke='{OK}' stroke-width='1.6'/>")
+    # la barre de contrainte réelle grandit jusqu'à son niveau puis revient : on VOIT
+    # qu'elle reste sous le seuil admissible, jamais qu'elle le dépasse.
+    _larg_sigma = (x1 - x0) * 90 / 300
+    p.append(f"<rect x='{x0}' y='{y_sigma}' width='0' height='14' fill='{OK}' opacity='0.35' stroke='{OK}' stroke-width='1.6'>"
+             f"<animate attributeName='width' from='0' to='{_larg_sigma}' dur='1.4s' "
+             f"fill='freeze'/></rect>")
     p.append(_txt(x1 + 12, y_sigma + 12, "σ réelle = 90 MPa → tient (σ ≤ admissible)", 12, OK, "start", True))
     p.append(_txt(x0 - 10, y_re + 12, "300", 11, ALESAGE, "end"))
     p.append(_txt(x0 - 10, y_adm + 4, "100", 11, ARBRE, "end"))
@@ -4064,8 +4729,11 @@ def criteres_choix_materiau():
     for i, t in enumerate(["résiste à la température", "résiste aux vibrations", "criticité de sécurité"]):
         p.append(_txt(430, 118 + i * 24, "• " + t, 12, TRAIT))
     p.append(_txt(550, 220, "→ alliage métallique", 12.5, OK, "middle", True))
-    p.append(_txt(380, 155, "même fonction :", 11, FIN, "middle"))
-    p.append(_txt(380, 170, "« protéger un circuit »", 11, FIN, "middle"))
+    # le texte central respire doucement : on VOIT que c'est la MÊME fonction qui relie
+    # les deux boîtiers, malgré des matériaux opposés.
+    p.append(f"<g><animate attributeName='opacity' values='.5;1;.5' dur='2s' "
+             f"repeatCount='indefinite'/>{_txt(380, 155, 'même fonction :', 11, FIN, 'middle')}"
+             f"{_txt(380, 170, '« protéger un circuit »', 11, FIN, 'middle')}</g>")
     return _svg("".join(p), 760, 270)
 
 
@@ -4076,9 +4744,13 @@ def classement_trois_materiaux():
     hauteurs = [110, 85, 60]
     couleurs = [OK, AXE, ARBRE]
     xs = [130, 340, 550]
-    for x, h, nom, note, coul in zip(xs, hauteurs, noms, notes, couleurs):
+    for _i, (x, h, nom, note, coul) in enumerate(zip(xs, hauteurs, noms, notes, couleurs)):
         y = 230 - h
-        p.append(f"<rect x='{x-70}' y='{y}' width='140' height='{h}' fill='{coul}' opacity='0.22' stroke='{coul}' stroke-width='2'/>")
+        # chaque barre pousse depuis la ligne de base, l'une après l'autre dans l'ordre
+        # du classement : on VOIT le 1er, puis le 2e, puis le 3e.
+        p.append(f"<rect x='{x-70}' y='230' width='140' height='0' fill='{coul}' opacity='0.22' stroke='{coul}' stroke-width='2'>"
+                 f"<animate attributeName='y' from='230' to='{y}' dur='.8s' begin='{_i * 0.35}s' fill='freeze'/>"
+                 f"<animate attributeName='height' from='0' to='{h}' dur='.8s' begin='{_i * 0.35}s' fill='freeze'/></rect>")
         p.append(_txt(x, y - 10, nom, 14, coul, "middle", True))
         p.append(_txt(x, 250, note, 11, FIN, "middle"))
     p.append(f"<line x1='60' y1='230' x2='700' y2='230' stroke='{TRAIT}' stroke-width='1.6'/>")
@@ -4094,8 +4766,12 @@ def panorama_procedes():
         ("Traitement / finition", ["Découpe laser", "Traitement thermique", "Finition/contrôle"], OK, 60 + 340),
     ]
     ys = [55, 55, 180, 180]
-    for (titre, items, coul, x), y in zip(familles, ys):
-        p.append(f"<rect x='{x}' y='{y}' width='320' height='110' rx='8' fill='{FOND}' stroke='{coul}' stroke-width='2'/>")
+    for _k, ((titre, items, coul, x), y) in enumerate(zip(familles, ys)):
+        # les quatre familles s'éclairent l'une après l'autre : on VOIT qu'il y en a
+        # exactement quatre, pas un inventaire flou.
+        p.append(f"<rect x='{x}' y='{y}' width='320' height='110' rx='8' fill='{FOND}' stroke='{coul}' stroke-width='2'>"
+                 f"<animate attributeName='stroke-width' values='2;4;2;2;2;2;2;2' dur='4.8s' "
+                 f"begin='{_k * 0.7}s' repeatCount='indefinite'/></rect>")
         p.append(_txt(x + 14, y + 22, titre, 12.5, coul, "start", True))
         for i, it in enumerate(items):
             p.append(_txt(x + 14, y + 44 + i * 20, "• " + it, 11.5, TRAIT))
@@ -4109,11 +4785,19 @@ def cout_outillage_croisement():
     p.append(f"<line x1='{x0}' y1='{y0}' x2='{x0}' y2='50' stroke='{TRAIT}' stroke-width='1.6'/>")
     p.append(_txt(680, y0 + 18, "quantité produite", 11, FIN, "end"))
     p.append(_txt(x0 - 6, 46, "coût total", 11, FIN, "end"))
-    p.append(f"<line x1='{x0}' y1='210' x2='680' y2='70' stroke='{ARBRE}' stroke-width='2.2'/>")
+    # les deux droites de coût se tracent de gauche à droite, puis le point de bascule
+    # pulse : on VOIT le moment précis où l'outillage devient rentable.
+    _long = ((680 - x0) ** 2 + (210 - 70) ** 2) ** 0.5
+    p.append(f"<line x1='{x0}' y1='210' x2='680' y2='70' stroke='{ARBRE}' stroke-width='2.2' "
+             f"stroke-dasharray='{_long:.0f}' stroke-dashoffset='{_long:.0f}'>"
+             f"<animate attributeName='stroke-dashoffset' from='{_long:.0f}' to='0' dur='1.1s' fill='freeze'/></line>")
     p.append(_txt(560, 85, "usinage / impression 3D (sans outillage)", 11.5, ARBRE, "start", True))
-    p.append(f"<line x1='{x0}' y1='90' x2='680' y2='200' stroke='{ALESAGE}' stroke-width='2.2'/>")
+    p.append(f"<line x1='{x0}' y1='90' x2='680' y2='200' stroke='{ALESAGE}' stroke-width='2.2' "
+             f"stroke-dasharray='{_long:.0f}' stroke-dashoffset='{_long:.0f}'>"
+             f"<animate attributeName='stroke-dashoffset' from='{_long:.0f}' to='0' dur='1.1s' fill='freeze'/></line>")
     p.append(_txt(560, 215, "injection / emboutissage (avec outillage)", 11.5, ALESAGE, "start", True))
-    p.append(f"<circle cx='355' cy='150' r='5' fill='{OK}'/>")
+    p.append(f"<circle cx='355' cy='150' r='5' fill='{OK}'>"
+             f"<animate attributeName='r' values='5;9;5' dur='1.2s' begin='1.1s' repeatCount='indefinite'/></circle>")
     p.append(_txt(355, 135, "quantité de bascule", 11.5, OK, "middle", True))
     return _svg("".join(p), 760, 270)
 
@@ -4123,7 +4807,12 @@ def plan_brut_mise_en_position():
     etapes = ["Plan de\ndéfinition", "Choix\ndu brut", "Mise en\nposition", "1ère opération\nd'usinage"]
     xs = [110, 300, 490, 660]
     for i, (x, nom) in enumerate(zip(xs, etapes)):
-        p.append(f"<rect x='{x-70}' y='90' width='140' height='70' rx='8' fill='{FOND}' stroke='{ALESAGE if i < 3 else OK}' stroke-width='2'/>")
+        # chaque étape s'éclaire à son tour, dans l'ordre : on VOIT que le choix du brut
+        # vient avant l'usinage, jamais après.
+        _coul_i = ALESAGE if i < 3 else OK
+        p.append(f"<rect x='{x-70}' y='90' width='140' height='70' rx='8' fill='{FOND}' stroke='{_coul_i}' stroke-width='2'>"
+                 f"<animate attributeName='stroke-width' values='2;4;2;2;2;2;2;2' dur='4.8s' "
+                 f"begin='{i * 0.9}s' repeatCount='indefinite'/></rect>")
         for j, ligne in enumerate(nom.split("\n")):
             p.append(_txt(x, 118 + j * 18, ligne, 12, TRAIT, "middle", True))
         if i < 3:
@@ -4137,11 +4826,19 @@ def plan_brut_mise_en_position():
 def piece_sous_ensemble_systeme():
     p = [_txt(40, 24, "Pièce, sous-ensemble, système : trois échelles emboîtées.",
               13, TRAIT, "start", True)]
-    p.append(f"<rect x='60' y='70' width='640' height='230' rx='8' fill='{FOND}' stroke='{TRAIT}' stroke-width='2'/>")
+    # les trois cadres s'éclairent l'un après l'autre, du plus grand au plus petit : on
+    # VOIT le zoom depuis le système jusqu'à la pièce élémentaire.
+    p.append(f"<rect x='60' y='70' width='640' height='230' rx='8' fill='{FOND}' stroke='{TRAIT}' stroke-width='2'>"
+             f"<animate attributeName='stroke-width' values='2;4;2;2;2;2' dur='3.6s' begin='0s' "
+             f"repeatCount='indefinite'/></rect>")
     p.append(_txt(80, 96, "SYSTÈME — le réducteur", 13, TRAIT, "start", True))
-    p.append(f"<rect x='90' y='114' width='340' height='166' rx='8' fill='#ffffff' stroke='{ARBRE}' stroke-width='2'/>")
+    p.append(f"<rect x='90' y='114' width='340' height='166' rx='8' fill='#ffffff' stroke='{ARBRE}' stroke-width='2'>"
+             f"<animate attributeName='stroke-width' values='2;4;2;2;2;2' dur='3.6s' begin='1.2s' "
+             f"repeatCount='indefinite'/></rect>")
     p.append(_txt(108, 138, "SOUS-ENSEMBLE — l'arbre monté sur ses roulements", 11.5, ARBRE, "start", True))
-    p.append(f"<rect x='118' y='156' width='140' height='100' rx='6' fill='{FOND}' stroke='{ALESAGE}' stroke-width='2'/>")
+    p.append(f"<rect x='118' y='156' width='140' height='100' rx='6' fill='{FOND}' stroke='{ALESAGE}' stroke-width='2'>"
+             f"<animate attributeName='stroke-width' values='2;4;2;2;2;2' dur='3.6s' begin='2.4s' "
+             f"repeatCount='indefinite'/></rect>")
     p.append(_txt(188, 178, "PIÈCE", 12, ALESAGE, "middle", True))
     p.append(_txt(188, 200, "l'axe", 11.5, ALESAGE, "middle"))
     p.append(_txt(188, 222, "(solide unique,", 10, FIN, "middle"))
@@ -4165,8 +4862,13 @@ def structure_cdcf():
         coeur = (i == 3)
         fill = "#dcfce7" if coeur else FOND
         stroke = OK if coeur else FIN
+        # les 7 parties s'éclairent dans l'ordre d'empilement : on VOIT que la partie 4
+        # (contractuelle) est encadrée par les 6 autres, jamais isolée.
+        _ep = 2.4 if coeur else 1.4
         p.append(f"<rect x='60' y='{y}' width='640' height='32' rx='6' fill='{fill}' "
-                 f"stroke='{stroke}' stroke-width='{2.4 if coeur else 1.4}'/>")
+                 f"stroke='{stroke}' stroke-width='{_ep}'>"
+                 f"<animate attributeName='stroke-width' values='{_ep};{_ep + 1.6};{_ep};{_ep};{_ep};{_ep}' "
+                 f"dur='4.2s' begin='{i * 0.6}s' repeatCount='indefinite'/></rect>")
         p.append(_txt(80, y + 21, nom, 12.5, OK if coeur else TRAIT, "start", coeur))
     p.append(_txt(380, y0 + len(parties) * 40 + 14,
                   "Les 6 autres parties expliquent ou encadrent la partie 4 — c'est elle qui engage les deux parties.",
@@ -43922,7 +44624,9 @@ def corrige_progressif(texte, cle, afficher):
                     "apprends le plus.</div>", unsafe_allow_html=True)
 
     for i in range(vues):
-        st.markdown(f"**Étape {i + 1} sur {len(etapes)}**")
+        _cls = "anim-step" if i == vues - 1 else ""
+        st.markdown(f'<div class="{_cls}"><b>Étape {i + 1} sur {len(etapes)}</b></div>',
+                    unsafe_allow_html=True)
         afficher(etapes[i])
         st.divider()
 
@@ -44857,6 +45561,27 @@ st.markdown("""
   .info-box{ background:#eff6ff; border-left:5px solid #2563eb; padding:13px 16px; border-radius:6px;
              height:100%; }
   .warn-box{ background:#fff7ed; border-left:5px solid #ea580c; padding:13px 16px; border-radius:6px; }
+
+  /* ---------- ANIMATIONS (schémas, étapes de corrigé, encadrés) ----------
+     Rejoue à chaque apparition d'un élément (nouvelle étape, nouveau
+     schéma) : une entrée en douceur, jamais un mouvement qui distrait. */
+  @keyframes bts-fade-slide-in {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes bts-pop-in {
+      from { opacity: 0; transform: scale(.94); }
+      to   { opacity: 1; transform: scale(1); }
+  }
+  .anim-step, .ok-box, .ko-box, .warn-box, .info-box {
+      animation: bts-fade-slide-in .45s ease-out;
+  }
+  .anim-figure, figure { animation: bts-pop-in .5s ease-out; }
+  @media (prefers-reduced-motion: reduce) {
+      .anim-step, .ok-box, .ko-box, .warn-box, .info-box, .anim-figure, figure {
+          animation: none;
+      }
+  }
 
   /* ---------- DIVERS ---------- */
   div[data-testid="stMetricValue"] { font-size: 1.6rem; color: #14375e; }
