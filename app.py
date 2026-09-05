@@ -60333,6 +60333,67 @@ def _premiere_fiche_utile(bloc):
     return _fiches[0].get("id") if _fiches else None
 
 
+st.sidebar.divider()
+
+# --- Saut rapide par numéro de fiche, depuis n'importe quelle page ---
+_jump_val = st.sidebar.text_input(
+    "Aller directement à une fiche", placeholder="ex : 4.3, 12.5, 15.1",
+    key="sidebar_jump_input")
+if _jump_val and _jump_val.strip() != st.session_state.get("_dernier_saut_traite"):
+    st.session_state["_dernier_saut_traite"] = _jump_val.strip()
+    _trouve = None
+    for _b in BLOCS:
+        for _f in _b.get("fiches", []):
+            if _f.get("id") == _jump_val.strip():
+                _trouve = _b["titre"]
+                break
+        if _trouve:
+            break
+    if _trouve:
+        _aller_a_fiche(_trouve, _jump_val.strip())
+    else:
+        st.sidebar.caption(f"⚠️ Fiche « {_jump_val.strip()} » introuvable.")
+
+# --- Recherche globale par mots-clés, filtre instantané sur toutes les fiches ---
+_recherche_val = st.sidebar.text_input(
+    "🔎 Rechercher dans les fiches", placeholder="ex : reynolds, chasles, prototypage…",
+    key="sidebar_recherche_input")
+if _recherche_val and _recherche_val.strip():
+    _terme = _recherche_val.strip().lower()
+    _resultats_recherche = []
+    for _b in BLOCS:
+        for _f in _b.get("fiches", []):
+            _hay = " ".join(str(_f.get(_champ, "")) for _champ in
+                             ("id", "titre", "cours", "formules", "exemple", "exercice"))
+            if _terme in _hay.lower():
+                _resultats_recherche.append((_b, _f))
+    with st.sidebar.expander(
+            f"🔎 {len(_resultats_recherche)} résultat(s) pour « {_recherche_val.strip()} »",
+            expanded=True):
+        if not _resultats_recherche:
+            st.caption("Aucune fiche ne contient ce mot.")
+        for _b_res, _f_res in _resultats_recherche[:20]:
+            _titre_res = _f_res.get("titre", "")
+            _label = f"{_f_res.get('id')} — {_titre_res[:42]}{'…' if len(_titre_res) > 42 else ''}"
+            if st.button(_label, key=f"srch_{_b_res.get('id')}_{_f_res.get('id')}",
+                         width="stretch"):
+                _aller_a_fiche(_b_res["titre"], _f_res.get("id"))
+        if len(_resultats_recherche) > 20:
+            st.caption(f"… et {len(_resultats_recherche) - 20} autre(s) — affinez votre recherche.")
+
+with st.sidebar.expander("Détail par bloc", expanded=False):
+    for _b in BLOCS:
+        _tot = len(_b.get("fiches", []))
+        _lu = sum(1 for _f in _b.get("fiches", [])
+                  if f"{_b['id']}#{_f.get('id')}" in P["fiches_lues"])
+        _puce = "🟢" if _lu == _tot else ("🟡" if _lu else "⚪")
+        if st.button(f"{_puce} {_b['titre'].split(' — ')[0]} — {_lu}/{_tot}",
+                     key=f"jump_bloc_{_b['id']}", width="stretch"):
+            _cible = _premiere_fiche_utile(_b)
+            if _cible:
+                _aller_a_fiche(_b["titre"], _cible)
+
+
 def _afficher_fiche(bloc, fiche, fiche_id):
     """Affiche une fiche complète (en-tête, navigation, onglets, notes).
 
@@ -60576,64 +60637,6 @@ lues = len(set(P["fiches_lues"]))
 _pct = int(100 * lues / nb_fiches) if nb_fiches else 0
 st.sidebar.progress(lues / nb_fiches if nb_fiches else 0)
 st.sidebar.caption(f"**{lues} / {nb_fiches} fiches lues** — {_pct} %")
-
-# --- Saut rapide par numéro de fiche, depuis n'importe quelle page ---
-_jump_val = st.sidebar.text_input(
-    "Aller directement à une fiche", placeholder="ex : 4.3, 12.5, 15.1",
-    key="sidebar_jump_input")
-if _jump_val and _jump_val.strip() != st.session_state.get("_dernier_saut_traite"):
-    st.session_state["_dernier_saut_traite"] = _jump_val.strip()
-    _trouve = None
-    for _b in BLOCS:
-        for _f in _b.get("fiches", []):
-            if _f.get("id") == _jump_val.strip():
-                _trouve = _b["titre"]
-                break
-        if _trouve:
-            break
-    if _trouve:
-        _aller_a_fiche(_trouve, _jump_val.strip())
-    else:
-        st.sidebar.caption(f"⚠️ Fiche « {_jump_val.strip()} » introuvable.")
-
-# --- Recherche globale par mots-clés, filtre instantané sur toutes les fiches ---
-_recherche_val = st.sidebar.text_input(
-    "🔎 Rechercher dans les fiches", placeholder="ex : reynolds, chasles, prototypage…",
-    key="sidebar_recherche_input")
-if _recherche_val and _recherche_val.strip():
-    _terme = _recherche_val.strip().lower()
-    _resultats_recherche = []
-    for _b in BLOCS:
-        for _f in _b.get("fiches", []):
-            _hay = " ".join(str(_f.get(_champ, "")) for _champ in
-                             ("id", "titre", "cours", "formules", "exemple", "exercice"))
-            if _terme in _hay.lower():
-                _resultats_recherche.append((_b, _f))
-    with st.sidebar.expander(
-            f"🔎 {len(_resultats_recherche)} résultat(s) pour « {_recherche_val.strip()} »",
-            expanded=True):
-        if not _resultats_recherche:
-            st.caption("Aucune fiche ne contient ce mot.")
-        for _b_res, _f_res in _resultats_recherche[:20]:
-            _titre_res = _f_res.get("titre", "")
-            _label = f"{_f_res.get('id')} — {_titre_res[:42]}{'…' if len(_titre_res) > 42 else ''}"
-            if st.button(_label, key=f"srch_{_b_res.get('id')}_{_f_res.get('id')}",
-                         width="stretch"):
-                _aller_a_fiche(_b_res["titre"], _f_res.get("id"))
-        if len(_resultats_recherche) > 20:
-            st.caption(f"… et {len(_resultats_recherche) - 20} autre(s) — affinez votre recherche.")
-
-with st.sidebar.expander("Détail par bloc", expanded=False):
-    for _b in BLOCS:
-        _tot = len(_b.get("fiches", []))
-        _lu = sum(1 for _f in _b.get("fiches", [])
-                  if f"{_b['id']}#{_f.get('id')}" in P["fiches_lues"])
-        _puce = "🟢" if _lu == _tot else ("🟡" if _lu else "⚪")
-        if st.button(f"{_puce} {_b['titre'].split(' — ')[0]} — {_lu}/{_tot}",
-                     key=f"jump_bloc_{_b['id']}", width="stretch"):
-            _cible = _premiere_fiche_utile(_b)
-            if _cible:
-                _aller_a_fiche(_b["titre"], _cible)
 
 
 # ===========================================================================
