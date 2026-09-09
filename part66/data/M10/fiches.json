@@ -1,0 +1,62 @@
+{
+  "module": "M10",
+  "titre_module": "Législation aéronautique",
+  "fiches": [
+    {
+      "id": "M10.1",
+      "sous_chapitre": "Cadre réglementaire international",
+      "titre": "L'OACI et le cadre international de l'aviation civile",
+      "duree_min": 8,
+      "contenu_md": "En 1944, à la fin de la Seconde Guerre mondiale, les grandes nations aériennes signent à Chicago la **Convention relative à l'aviation civile internationale**. Ce traité crée l'**OACI** (Organisation de l'aviation civile internationale, *ICAO* en anglais), une institution spécialisée des Nations unies dont le siège est à Montréal.\n\nL'OACI ne fabrique pas de lois qui s'appliquent directement dans les aéroports : elle rédige des **Annexes techniques** qui fixent des standards et des pratiques recommandées (les *SARPs* — Standards And Recommended Practices). Ce sont ensuite les **États membres** (environ 190 pays, dont la France) qui doivent transposer ces standards dans leur propre réglementation nationale ou régionale.\n\nÀ retenir : l'OACI fixe le cadre commun mondial, mais chaque État (ou groupe d'États comme l'Union européenne) reste responsable de sa propre réglementation de sécurité aérienne, tant qu'elle respecte le niveau minimal fixé par les Annexes OACI."
+    },
+    {
+      "id": "M10.2",
+      "sous_chapitre": "Cadre réglementaire européen",
+      "titre": "L'AESA (EASA) et le cadre réglementaire européen",
+      "duree_min": 8,
+      "contenu_md": "Au niveau européen, c'est l'**AESA** (Agence de l'Union européenne pour la sécurité aérienne, *EASA* en anglais) qui joue le rôle central. Elle a été créée au début des années 2000 pour harmoniser les règles de sécurité aérienne entre les pays européens, qui avaient jusque-là des réglementations nationales différentes (en France : les *JAR*, remplacées progressivement par les règles EASA).\n\nLe texte de base qui définit les missions de l'AESA est le **règlement (UE) 2018/1139** (dit *Basic Regulation*), qui a remplacé un règlement plus ancien de 2008. L'AESA rédige la réglementation technique détaillée (certification des aéronefs, entretien, licences de personnel, organismes de formation...), que la Commission européenne adopte ensuite sous forme de règlements directement applicables dans tous les États membres.\n\nDans chaque pays, une **autorité nationale de l'aviation civile** reste chargée de la surveillance directe des acteurs (compagnies, ateliers, organismes de formation) : en France, c'est la **DGAC** (Direction générale de l'aviation civile)."
+    },
+    {
+      "id": "M10.3",
+      "sous_chapitre": "Maintien de la navigabilité — vue d'ensemble",
+      "titre": "Le règlement (UE) n° 1321/2014 : vue d'ensemble",
+      "duree_min": 10,
+      "contenu_md": "Toute la réglementation européenne du **maintien de la navigabilité** et de la **maintenance** est regroupée dans un seul règlement : le **règlement (UE) n° 1321/2014**. Ce texte comporte plusieurs annexes, chacune désignée par un nom court commençant par « Part- » :\n\n- **Part-M** (annexe I) — le maintien de la navigabilité : qui est responsable de quoi, programme d'entretien, gestion de la navigabilité.\n- **Part-145** (annexe II) — les organismes de maintenance agréés (les ateliers habilités à entretenir des aéronefs).\n- **Part-66** (annexe III) — les licences du personnel certificateur de maintenance aéronautique (c'est ce module qui prépare cette licence).\n- **Part-147** (annexe IV) — les organismes de formation agréés pour préparer la licence Part-66.\n\nCes quatre annexes fonctionnent ensemble : un aéronef reste en état de navigabilité grâce à un programme d'entretien (Part-M) exécuté par un atelier agréé (Part-145), par du personnel titulaire d'une licence (Part-66) obtenue dans un organisme de formation agréé (Part-147)."
+    },
+    {
+      "id": "M10.4",
+      "sous_chapitre": "Part-M",
+      "titre": "Part-M : le maintien de la navigabilité",
+      "duree_min": 10,
+      "contenu_md": "Le **Part-M** définit qui est responsable du maintien de la navigabilité d'un aéronef. Pour un aéronef, c'est en général l'**exploitant** (ou le propriétaire pour l'aviation légère) qui porte la responsabilité finale : il doit s'assurer que l'aéronef est entretenu conformément à un **programme d'entretien** approuvé, que les consignes de navigabilité sont appliquées, et que les documents de navigabilité sont à jour.\n\nCette gestion peut être confiée à un organisme spécialisé, le **CAMO** (*Continuing Airworthiness Management Organisation*), qui planifie l'entretien, suit les échéances et gère la documentation technique.\n\nÀ la fin d'une intervention de maintenance, un document appelé **CRS** (*Certificate of Release to Service*, ou APRS en français — Approbation Pour Remise en Service) est signé par une personne habilitée : c'est ce document qui autorise l'aéronef à être remis en exploitation après l'entretien effectué."
+    },
+    {
+      "id": "M10.5",
+      "sous_chapitre": "Part-145",
+      "titre": "Part-145 : les organismes de maintenance agréés",
+      "duree_min": 8,
+      "contenu_md": "Le **Part-145** encadre les **organismes de maintenance agréés** : les ateliers ou entreprises habilités à entretenir des aéronefs, moteurs ou équipements. Pour obtenir et garder cet agrément, un organisme doit démontrer qu'il dispose des installations, des outillages, des procédures écrites (le *manuel des spécifications* de l'organisme) et surtout du **personnel qualifié** nécessaires.\n\nUn organisme Part-145 emploie du personnel titulaire d'une licence **Part-66**, mais l'agrément Part-145 porte sur l'*organisme* lui-même (ses procédures, sa gestion qualité, ses moyens), pas uniquement sur les qualifications individuelles de ses salariés. C'est la distinction essentielle à retenir entre Part-66 (la personne) et Part-145 (l'organisme)."
+    },
+    {
+      "id": "M10.6",
+      "sous_chapitre": "Part-66",
+      "titre": "Part-66 : les licences de maintenance aéronautique",
+      "duree_min": 10,
+      "contenu_md": "Le **Part-66** définit la licence de maintenance aéronautique (*Part-66 Aircraft Maintenance Licence*, ou AML) et ses catégories, qui correspondent chacune à un type d'aéronef et de travaux :\n\n- **Catégorie A** — tâches d'entretien en ligne simples et prédéfinies.\n- **Catégorie B1** — cellule, moteurs et systèmes mécaniques/électriques, avec des connaissances avioniques limitées. Elle se subdivise selon le type d'aéronef : **B1.1** (avions à turbine), B1.2 (avions à moteur à pistons), B1.3 (hélicoptères à turbine), B1.4 (hélicoptères à moteur à pistons).\n- **Catégorie B2** — systèmes avioniques et électroniques.\n- **Catégorie C** — maintenance de base (*base maintenance*) sur gros aéronefs, réservée à des titulaires expérimentés d'une licence B1 ou B2.\n\nCe module de législation prépare la **licence B1.1**, qui autorise à certifier l'entretien de la cellule, des moteurs et des systèmes mécaniques/électriques des **avions à turbine**."
+    },
+    {
+      "id": "M10.7",
+      "sous_chapitre": "Part-147",
+      "titre": "Part-147 : les organismes de formation agréés",
+      "duree_min": 6,
+      "contenu_md": "Le **Part-147** encadre les organismes de formation habilités à dispenser l'enseignement théorique et pratique nécessaire à l'obtention d'une licence **Part-66**, et à faire passer les examens correspondants.\n\nUn organisme Part-147 doit être agréé par l'autorité compétente : il doit suivre les **syllabus** (les programmes détaillés) définis dans les annexes du Part-66 pour chaque module (comme ce module 10), disposer d'instructeurs et d'examinateurs qualifiés, et garantir la traçabilité des résultats d'examen. C'est cet agrément qui donne sa valeur réglementaire au diplôme obtenu à l'issue de la formation."
+    },
+    {
+      "id": "M10.8",
+      "sous_chapitre": "Documents et consignes de navigabilité",
+      "titre": "Documents de bord, consignes de navigabilité et immatriculation",
+      "duree_min": 10,
+      "contenu_md": "Un aéronef doit disposer à son bord d'un certain nombre de documents obligatoires :\n\n- Le **certificat de navigabilité** (*Certificate of Airworthiness*, CofA) atteste que l'aéronef est conforme à son type certifié et apte à voler ; il est délivré par l'autorité de l'État d'immatriculation.\n- Le **certificat d'immatriculation** (*Certificate of Registration*, CofR) atteste la nationalité de l'aéronef, associée à des **marques d'immatriculation** peintes sur le fuselage (en France, un préfixe *F-*).\n- Le **certificat de limitation de nuisances** atteste la conformité aux normes acoustiques applicables.\n- La **fiche de masse et centrage** doit refléter la configuration réelle de l'aéronef.\n\nEnfin, quand un défaut de sécurité est identifié sur un type d'aéronef, l'autorité de conception (l'AESA en Europe) peut émettre une **consigne de navigabilité** (*Airworthiness Directive*, AD ou CN) : son application est **obligatoire**, à la différence d'un simple bulletin de service émis par le constructeur, qui n'est obligatoire que si une consigne de navigabilité le rend tel."
+    }
+  ]
+}
