@@ -37,6 +37,8 @@ from datetime import datetime, timedelta
 import pandas as pd
 import streamlit as st
 
+from part66.ui import page_part66
+
 
 # ==========================================================================
 # CONTENU DE figures.py
@@ -60377,7 +60379,8 @@ _OPTIONS_NAV = ["🏠 Tableau de bord",
                 "📚 À revoir",
                 "📝 Mode contrôle",
                 "🗂️ Aide-mémoire",
-                "🎲 Entraînement illimité"]
+                "🎲 Entraînement illimité",
+                "✈️ Espace Part-66 (EASA)"]
 
 # Un widget avec clé ne peut pas être modifié après sa création dans le même run :
 # on applique donc le changement de page EN ATTENTE avant de créer le radio.
@@ -62662,3 +62665,6 @@ elif PAGE == "🗂️ Aide-mémoire":
 
 elif PAGE == "🎲 Entraînement illimité":
     page_entrainement()
+
+elif PAGE == "✈️ Espace Part-66 (EASA)":
+    page_part66()
