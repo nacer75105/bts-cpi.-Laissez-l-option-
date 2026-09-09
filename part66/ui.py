@@ -34,9 +34,10 @@ def _progression():
 
 def _module_courant():
     """Sélecteur de module, affiché seulement s'il y a un vrai choix à
-    faire — aujourd'hui un seul module (M10) est disponible, donc aucun
-    widget n'est affiché (l'accueil reste réduit au bouton Session du
-    jour, conformément au principe 1 de METHODOLOGIE.md)."""
+    faire : masqué tant qu'un seul module est disponible (l'accueil reste
+    alors réduit au bouton Session du jour, conformément au principe 1 de
+    METHODOLOGIE.md), affiché dès qu'un second module (comme M5) est
+    disponible, pour permettre de choisir lequel réviser."""
     dispo = [m for m, info in logic.MODULES.items() if info["disponible"]]
     if not dispo:
         return None

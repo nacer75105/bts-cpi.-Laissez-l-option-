@@ -23,14 +23,15 @@ SEUIL_REUSSITE_EXAMEN_PCT = 75
 SEUIL_RESERVATION_EXAMEN_REEL_PCT = 85
 NB_BLANCS_CONSECUTIFS_REQUIS = 3
 
-# Modules du programme B1.1. Seul M10 est construit pour l'instant ; les
-# titres des autres modules sont des libellés d'affichage à confirmer avant
-# de les construire (voir part66/A_VERIFIER.md).
+# Modules du programme B1.1. M10 et M5 sont construits ; les titres des
+# autres modules sont des libellés d'affichage à confirmer avant de les
+# construire (voir part66/A_VERIFIER.md).
 MODULES = {
     "M10": {"titre": "Législation aéronautique", "disponible": True,
              "nb_questions_examen": 32, "duree_examen_min": 40},
     "M5": {"titre": "Techniques numériques / systèmes d'instruments électroniques",
-           "disponible": False},
+           "disponible": True,
+           "nb_questions_examen": 20, "duree_examen_min": 25},
     "M7A": {"titre": "Pratiques de maintenance", "disponible": False},
     "M11A": {"titre": "Aérodynamique, structures et systèmes — avion à turbine",
               "disponible": False},
