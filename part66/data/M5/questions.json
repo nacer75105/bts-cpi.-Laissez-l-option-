@@ -1,0 +1,401 @@
+{
+  "module": "M5",
+  "questions": [
+    {
+      "uid": "M5-0001",
+      "sous_chapitre": "M5.1",
+      "question": "Converti en décimal, le nombre binaire 1010 vaut :",
+      "options": ["10", "12", "5"],
+      "bonne": 0,
+      "explication": "1010(2) = 1×2³ + 0×2² + 1×2¹ + 0×2⁰ = 8 + 0 + 2 + 0 = 10(10). Les deux autres valeurs ne correspondent à aucune décomposition correcte de ce nombre binaire.",
+      "source": "Notions générales d'électronique numérique — conversion binaire/décimal"
+    },
+    {
+      "uid": "M5-0002",
+      "sous_chapitre": "M5.1",
+      "question": "Un octet (byte) est composé de :",
+      "options": ["4 bits", "8 bits", "16 bits"],
+      "bonne": 1,
+      "explication": "Un octet regroupe 8 bits, par définition. 4 bits ne représentent que la moitié de cette valeur, et 16 bits le double : ni l'un ni l'autre ne correspond à la définition de l'octet.",
+      "source": "Notions générales d'électronique numérique — unités binaires"
+    },
+    {
+      "uid": "M5-0003",
+      "sous_chapitre": "M5.1",
+      "question": "Le système hexadécimal utilise une base :",
+      "options": ["8", "2", "16"],
+      "bonne": 2,
+      "explication": "Le système hexadécimal utilise 16 symboles (0-9 puis A-F), d'où sa base 16. La base 8 correspond au système octal, la base 2 au système binaire.",
+      "source": "Notions générales d'électronique numérique — systèmes de numération"
+    },
+    {
+      "uid": "M5-0004",
+      "sous_chapitre": "M5.1",
+      "question": "Un chiffre hexadécimal (un « quartet ») représente exactement :",
+      "options": ["4 bits", "3 bits", "8 bits"],
+      "bonne": 0,
+      "explication": "Un chiffre hexadécimal encode exactement 4 bits (un quartet) : c'est la valeur qui définit ce système de numération. 3 bits correspondent à un chiffre du système octal, et 8 bits représentent le double de la valeur recherchée.",
+      "source": "Notions générales d'électronique numérique — systèmes de numération"
+    },
+    {
+      "uid": "M5-0005",
+      "sous_chapitre": "M5.1",
+      "question": "En hexadécimal, le chiffre « F » correspond, en décimal, à :",
+      "options": ["14", "15", "16"],
+      "bonne": 1,
+      "explication": "En hexadécimal, les chiffres vont de 0 à 9 puis de A (10) à F (15). F correspond donc à 15 en décimal, et non à 14 ou 16.",
+      "source": "Notions générales d'électronique numérique — systèmes de numération"
+    },
+    {
+      "uid": "M5-0006",
+      "sous_chapitre": "M5.2",
+      "question": "Un convertisseur qui transforme un signal analogique en signal numérique est appelé :",
+      "options": ["DAC", "Multiplexeur", "ADC"],
+      "bonne": 2,
+      "explication": "L'ADC (Analog-to-Digital Converter, convertisseur analogique-numérique, ou CAN en français) numérise un signal analogique : c'est cette conversion précise qui est demandée ici. Le DAC (convertisseur numérique-analogique) désigne un convertisseur différent, et un multiplexeur n'effectue aucune conversion de nature du signal.",
+      "source": "Notions générales d'électronique numérique — conversion de données"
+    },
+    {
+      "uid": "M5-0007",
+      "sous_chapitre": "M5.2",
+      "question": "Un convertisseur qui transforme un signal numérique en signal analogique est appelé :",
+      "options": ["DAC", "ADC", "Registre"],
+      "bonne": 0,
+      "explication": "Le DAC (Digital-to-Analog Converter, convertisseur numérique-analogique, ou CNA en français) reconstitue un signal analogique à partir d'une donnée numérique : c'est cette conversion précise qui est demandée ici. L'ADC (convertisseur analogique-numérique) désigne un convertisseur différent, et un registre est un élément de mémoire interne d'un processeur, pas un convertisseur.",
+      "source": "Notions générales d'électronique numérique — conversion de données"
+    },
+    {
+      "uid": "M5-0008",
+      "sous_chapitre": "M5.2",
+      "question": "Un signal analogique se caractérise par :",
+      "options": ["Des valeurs discrètes, codées en binaire", "Une variation continue de son amplitude", "L'absence totale de bruit électrique"],
+      "bonne": 1,
+      "explication": "Un signal analogique varie de façon continue dans le temps, contrairement à un signal numérique qui ne prend que des valeurs discrètes. Aucun signal réel n'est par ailleurs totalement exempt de bruit.",
+      "source": "Notions générales d'électronique numérique — conversion de données"
+    },
+    {
+      "uid": "M5-0009",
+      "sous_chapitre": "M5.2",
+      "question": "Le signal d'un capteur analogique est converti en numérique avant traitement principalement parce que :",
+      "options": ["Cela réduit systématiquement sa tension de sortie", "Cela élimine tout bruit électrique du signal", "Un calculateur numérique ne traite que des données numériques"],
+      "bonne": 2,
+      "explication": "Un calculateur numérique traite des données codées en binaire : un signal capteur analogique doit donc être converti (ADC) avant d'être exploité par ce type de calculateur. La conversion ne réduit pas systématiquement la tension du signal, et ne supprime pas non plus le bruit électrique : un signal numérisé peut rester bruité, et la conversion elle-même introduit sa propre erreur (de quantification).",
+      "source": "Notions générales d'électronique numérique — conversion de données"
+    },
+    {
+      "uid": "M5-0010",
+      "sous_chapitre": "M5.2",
+      "question": "L'opération qui consiste à mesurer périodiquement l'amplitude d'un signal analogique pour le numériser s'appelle :",
+      "options": ["L'échantillonnage", "Le multiplexage", "Le filtrage"],
+      "bonne": 0,
+      "explication": "L'échantillonnage mesure l'amplitude du signal analogique à intervalles réguliers, première étape de sa conversion en numérique. Le multiplexage et le filtrage sont des opérations différentes, qui ne visent pas à numériser un signal.",
+      "source": "Notions générales d'électronique numérique — conversion de données"
+    },
+    {
+      "uid": "M5-0011",
+      "sous_chapitre": "M5.3",
+      "question": "Une porte logique ET (AND) délivre un niveau haut (1) en sortie quand :",
+      "options": ["Au moins une des entrées est à l'état haut", "Toutes les entrées sont à l'état haut", "Aucune entrée n'est à l'état haut"],
+      "bonne": 1,
+      "explication": "La porte ET ne délivre un 1 en sortie que si toutes ses entrées sont à 1 : c'est la condition qui définit son fonctionnement. Une seule entrée à l'état haut, ou aucune, ne suffit pas — il faut la totalité des entrées.",
+      "source": "Notions générales d'électronique numérique — algèbre de Boole et portes logiques"
+    },
+    {
+      "uid": "M5-0012",
+      "sous_chapitre": "M5.3",
+      "question": "Une porte logique OU (OR) délivre un niveau haut (1) en sortie dès que :",
+      "options": ["Toutes les entrées sont à l'état haut, et uniquement dans ce cas", "Aucune entrée n'est à l'état haut", "Au moins une des entrées est à l'état haut"],
+      "bonne": 2,
+      "explication": "La porte OU délivre un 1 dès qu'au moins une de ses entrées est à 1 : c'est la condition générale qui définit son fonctionnement. « Toutes les entrées hautes » n'est qu'un cas particulier déjà couvert par cette condition, pas la règle qui caractérise la porte OU elle-même.",
+      "source": "Notions générales d'électronique numérique — algèbre de Boole et portes logiques"
+    },
+    {
+      "uid": "M5-0013",
+      "sous_chapitre": "M5.3",
+      "question": "La porte logique NON (NOT) est aussi appelée :",
+      "options": ["Un inverseur", "Un amplificateur", "Un comparateur"],
+      "bonne": 0,
+      "explication": "La porte NON inverse simplement l'état logique de son unique entrée (0 devient 1, et inversement) : c'est pourquoi on l'appelle aussi inverseur. Elle n'amplifie ni ne compare deux signaux.",
+      "source": "Notions générales d'électronique numérique — algèbre de Boole et portes logiques"
+    },
+    {
+      "uid": "M5-0014",
+      "sous_chapitre": "M5.3",
+      "question": "Une porte logique OU-Exclusif (XOR) délivre un niveau haut (1) en sortie quand :",
+      "options": ["Les deux entrées sont à l'état haut", "Les deux entrées sont dans des états différents", "Les deux entrées sont à l'état bas"],
+      "bonne": 1,
+      "explication": "La porte XOR délivre un 1 uniquement lorsque ses deux entrées sont différentes l'une de l'autre (une haute, une basse). Si les deux entrées sont identiques (toutes hautes ou toutes basses), sa sortie est à 0.",
+      "source": "Notions générales d'électronique numérique — algèbre de Boole et portes logiques"
+    },
+    {
+      "uid": "M5-0015",
+      "sous_chapitre": "M5.3",
+      "question": "En logique combinatoire, la sortie d'un circuit dépend :",
+      "options": ["De l'état mémorisé lors du cycle précédent", "Des entrées présentes, combinées à un signal d'horloge de synchronisation", "Uniquement des entrées présentes à l'instant considéré"],
+      "bonne": 2,
+      "explication": "Un circuit combinatoire n'a pas de mémoire d'état et ne se synchronise sur aucune horloge : sa sortie ne dépend que de la combinaison des entrées à l'instant présent. C'est la logique séquentielle qui, elle, ajoute une mémoire d'état et se synchronise sur un signal d'horloge.",
+      "source": "Notions générales d'électronique numérique — logique combinatoire"
+    },
+    {
+      "uid": "M5-0016",
+      "sous_chapitre": "M5.4",
+      "question": "La mémoire d'un ordinateur qui perd son contenu à la mise hors tension s'appelle :",
+      "options": ["La RAM (mémoire vive)", "La ROM (mémoire morte)", "Un disque de stockage externe"],
+      "bonne": 0,
+      "explication": "La RAM (mémoire vive) est une mémoire volatile : elle perd son contenu dès que l'alimentation est coupée. La ROM est au contraire une mémoire non volatile, conçue pour conserver son contenu hors tension — ce n'est donc pas elle qui est recherchée ici. Un disque de stockage externe n'est pas non plus la mémoire interne du calculateur visée par la question.",
+      "source": "Notions générales d'électronique numérique — structure d'un ordinateur"
+    },
+    {
+      "uid": "M5-0017",
+      "sous_chapitre": "M5.4",
+      "question": "La mémoire d'un ordinateur qui conserve son contenu hors tension, et n'est en général pas destinée à être réécrite en fonctionnement normal, s'appelle :",
+      "options": ["La RAM (mémoire vive)", "La ROM (mémoire morte)", "Le cache processeur"],
+      "bonne": 1,
+      "explication": "La ROM (mémoire morte, non volatile) conserve son contenu même hors tension et n'est en général pas réécrite en fonctionnement normal : ce sont les deux caractéristiques recherchées ici. Le cache processeur est une mémoire rapide mais volatile, distincte de la ROM.",
+      "source": "Notions générales d'électronique numérique — structure d'un ordinateur"
+    },
+    {
+      "uid": "M5-0018",
+      "sous_chapitre": "M5.4",
+      "question": "L'unité qui, au sein d'un processeur, exécute les opérations arithmétiques et logiques s'appelle :",
+      "options": ["Le bus de données", "Un registre", "L'unité arithmétique et logique (UAL)"],
+      "bonne": 2,
+      "explication": "L'unité arithmétique et logique (UAL, ALU en anglais) est le bloc du processeur chargé d'exécuter les calculs et opérations logiques : c'est le rôle précis recherché ici. Un bus a un rôle de transport d'information, pas de calcul ; un registre a un rôle de stockage, pas de calcul non plus.",
+      "source": "Notions générales d'électronique numérique — structure d'un ordinateur"
+    },
+    {
+      "uid": "M5-0019",
+      "sous_chapitre": "M5.4",
+      "question": "Le bus qui transporte les données échangées entre le processeur, la mémoire et les périphériques s'appelle :",
+      "options": ["Le bus de données", "Le bus d'adresse", "Le bus de contrôle"],
+      "bonne": 0,
+      "explication": "Le bus de données transporte les données elles-mêmes, échangées entre le processeur, la mémoire et les périphériques. Le bus d'adresse indique quel emplacement mémoire (ou quel périphérique) est concerné par l'échange, sans transporter la donnée elle-même ; le bus de contrôle transporte les signaux de synchronisation et de commande, pas les données.",
+      "source": "Notions générales d'électronique numérique — structure d'un ordinateur"
+    },
+    {
+      "uid": "M5-0020",
+      "sous_chapitre": "M5.4",
+      "question": "Le bus qui indique quel emplacement mémoire est concerné par un échange de données s'appelle :",
+      "options": ["Le bus de contrôle", "Le bus d'adresse", "Le bus de données"],
+      "bonne": 1,
+      "explication": "Le bus d'adresse transporte l'information sur l'emplacement mémoire (ou le périphérique) concerné par un échange. Le bus de contrôle transporte plutôt les signaux de synchronisation et de commande ; le bus de données transporte les données elles-mêmes échangées, mais n'indique pas leur emplacement.",
+      "source": "Notions générales d'électronique numérique — structure d'un ordinateur"
+    },
+    {
+      "uid": "M5-0021",
+      "sous_chapitre": "M5.5",
+      "question": "Le cycle de base d'exécution d'une instruction par un microprocesseur est, dans l'ordre :",
+      "options": ["Décodage, exécution, recherche", "Exécution, recherche, décodage", "Recherche, décodage, exécution"],
+      "bonne": 2,
+      "explication": "Le cycle d'instruction d'un microprocesseur suit l'ordre recherche (fetch) → décodage (decode) → exécution (execute) : l'instruction est d'abord lue en mémoire, puis interprétée, puis seulement exécutée.",
+      "source": "Notions générales d'électronique numérique — microprocesseurs"
+    },
+    {
+      "uid": "M5-0022",
+      "sous_chapitre": "M5.5",
+      "question": "Dans un microprocesseur, un registre sert à :",
+      "options": ["Stocker temporairement une donnée ou une adresse en cours de traitement", "Stocker en permanence le système d'exploitation", "Amplifier le signal électrique d'entrée"],
+      "bonne": 0,
+      "explication": "Un registre est une petite zone de mémoire interne au processeur, très rapide, qui stocke temporairement une donnée ou une adresse pendant le traitement d'une instruction. Ce n'est ni un support de stockage permanent, ni un composant d'amplification.",
+      "source": "Notions générales d'électronique numérique — microprocesseurs"
+    },
+    {
+      "uid": "M5-0023",
+      "sous_chapitre": "M5.5",
+      "question": "Le signal d'horloge d'un microprocesseur sert à :",
+      "options": ["Fournir l'alimentation électrique du circuit", "Synchroniser les différentes opérations internes", "Mesurer la température du composant"],
+      "bonne": 1,
+      "explication": "L'horloge cadence et synchronise les opérations internes successives du microprocesseur (cycle fetch-decode-execute). Elle ne fournit pas l'alimentation électrique et ne mesure aucune grandeur physique comme la température.",
+      "source": "Notions générales d'électronique numérique — microprocesseurs"
+    },
+    {
+      "uid": "M5-0024",
+      "sous_chapitre": "M5.5",
+      "question": "Un microprocesseur est un circuit intégré qui contient principalement :",
+      "options": ["Le système d'exploitation et l'ensemble des logiciels applicatifs", "La mémoire de masse (disque dur ou équivalent) de l'ordinateur", "L'unité centrale de traitement (CPU) d'un calculateur"],
+      "bonne": 2,
+      "explication": "Un microprocesseur intègre sur une seule puce l'unité centrale de traitement (CPU), avec notamment son unité arithmétique et logique et ses registres. Le système d'exploitation et les logiciels sont des programmes stockés en mémoire, pas des composants du microprocesseur ; la mémoire de masse est elle aussi un composant distinct, qui stocke des données durablement mais n'exécute aucun traitement.",
+      "source": "Notions générales d'électronique numérique — microprocesseurs"
+    },
+    {
+      "uid": "M5-0025",
+      "sous_chapitre": "M5.5",
+      "question": "Toutes choses égales par ailleurs, plus la fréquence d'horloge d'un microprocesseur est élevée :",
+      "options": ["Plus il peut exécuter d'opérations par seconde", "Moins il consomme d'énergie", "Plus sa mémoire interne est grande"],
+      "bonne": 0,
+      "explication": "Une fréquence d'horloge plus élevée permet, toutes choses égales par ailleurs, d'exécuter davantage de cycles d'instruction par seconde. Elle augmente au contraire la consommation d'énergie du circuit (la consommation dynamique d'un circuit numérique croît avec sa fréquence de fonctionnement), et n'a aucun effet sur la taille de sa mémoire interne.",
+      "source": "Notions générales d'électronique numérique — microprocesseurs"
+    },
+    {
+      "uid": "M5-0026",
+      "sous_chapitre": "M5.6",
+      "question": "Un circuit intégré (CI) regroupe, sur une seule puce :",
+      "options": ["Un seul transistor", "Une carte électronique complète, avec l'ensemble des composants d'un équipement", "Un grand nombre de composants électroniques élémentaires"],
+      "bonne": 2,
+      "explication": "Un circuit intégré rassemble sur une seule puce de silicium un grand nombre de composants élémentaires (transistors, portes logiques...), ce qui permet de miniaturiser des fonctions complexes. Il ne se limite pas à un seul transistor, mais ne constitue pas non plus à lui seul une carte électronique complète : plusieurs circuits intégrés et d'autres composants sont en général assemblés ensemble sur une carte.",
+      "source": "Notions générales d'électronique numérique — circuits intégrés"
+    },
+    {
+      "uid": "M5-0027",
+      "sous_chapitre": "M5.6",
+      "question": "Concernant la manipulation des composants électroniques sensibles à l'électricité statique :",
+      "options": ["Ils doivent être manipulés avec des gants en caoutchouc isolant", "Aucune précaution particulière n'est nécessaire si le composant semble en bon état", "Ils doivent être manipulés en portant un bracelet antistatique dédié à cet usage"],
+      "bonne": 2,
+      "explication": "Un bracelet antistatique conçu pour cet usage — et non un simple fil improvisé — permet d'évacuer l'électricité statique du technicien avant qu'il ne touche un composant sensible. Des gants isolants ne remplissent pas cette fonction, et l'absence de précaution expose le composant à une décharge, même s'il paraît intact. Le matériel et la procédure exacts à utiliser, y compris les précautions vis-à-vis du risque électrique du poste de travail, relèvent de la documentation du fabricant et de l'atelier.",
+      "source": "Notions générales d'électronique numérique — composants sensibles à l'ESD"
+    },
+    {
+      "uid": "M5-0028",
+      "sous_chapitre": "M5.6",
+      "question": "Un composant électronique sensible à l'électricité statique doit être stocké ou transporté :",
+      "options": ["Dans l'emballage antistatique recommandé par le fabricant du composant", "Dans un sachet plastique standard, sans précaution particulière", "À l'air libre, hors de tout emballage"],
+      "bonne": 0,
+      "explication": "Un composant sensible doit être stocké et transporté dans le type d'emballage antistatique recommandé par son fabricant (les emballages antistatiques ne sont pas tous équivalents selon le composant et le contexte). Un sachet plastique standard n'est pas un emballage antistatique et ne convient donc pas à cet usage ; l'absence d'emballage laisse le composant sans aucune protection.",
+      "source": "Notions générales d'électronique numérique — composants sensibles à l'ESD"
+    },
+    {
+      "uid": "M5-0029",
+      "sous_chapitre": "M5.6",
+      "question": "Une décharge électrostatique sur un composant sensible peut :",
+      "options": ["Ne jamais causer de dommage, ce risque étant surestimé", "L'endommager sans dommage visible immédiat, la défaillance apparaissant plus tard", "Uniquement l'endommager si un arc électrique visible se produit"],
+      "bonne": 1,
+      "explication": "Une décharge électrostatique peut créer un dommage interne invisible sur le moment : le composant semble fonctionner normalement puis tombe en panne plus tard en service. Le risque n'est donc ni nul, ni limité aux seuls cas où un arc électrique est visible.",
+      "source": "Notions générales d'électronique numérique — composants sensibles à l'ESD"
+    },
+    {
+      "uid": "M5-0030",
+      "sous_chapitre": "M5.6",
+      "question": "Le sigle ESD signifie :",
+      "options": ["Emergency Shutdown Device", "Electronic System Design", "Electro-Static Discharge"],
+      "bonne": 2,
+      "explication": "ESD signifie Electro-Static Discharge, c'est-à-dire décharge électrostatique. Les deux autres développements ne correspondent à aucun sigle standard utilisé dans ce contexte.",
+      "source": "Notions générales d'électronique numérique — composants sensibles à l'ESD"
+    },
+    {
+      "uid": "M5-0031",
+      "sous_chapitre": "M5.7",
+      "question": "Un bus série transmet les bits d'une donnée :",
+      "options": ["Les uns après les autres, sur une seule ligne", "Tous simultanément, chacun sur sa propre ligne", "Dans un ordre aléatoire, sans structure"],
+      "bonne": 0,
+      "explication": "Un bus série transmet les bits d'une même donnée successivement, sur une seule ligne (ou paire de lignes) : c'est ce mode de transmission précis qui est demandé ici, par opposition à une transmission simultanée sur plusieurs lignes ou à un envoi sans ordre défini.",
+      "source": "Notions générales d'électronique numérique — bus de données"
+    },
+    {
+      "uid": "M5-0032",
+      "sous_chapitre": "M5.7",
+      "question": "Un bus parallèle transmet les bits d'une donnée :",
+      "options": ["Les uns après les autres, sur une seule ligne", "Simultanément, chacun sur sa propre ligne", "Un par un, en alternant deux lignes"],
+      "bonne": 1,
+      "explication": "Un bus parallèle transmet plusieurs bits en même temps, chacun sur sa propre ligne dédiée : c'est ce mode de transmission précis qui est demandé ici, par opposition à une transmission successive sur une seule ligne ou à une alternance entre deux lignes.",
+      "source": "Notions générales d'électronique numérique — bus de données"
+    },
+    {
+      "uid": "M5-0033",
+      "sous_chapitre": "M5.7",
+      "question": "Le bus ARINC 429, très utilisé en avionique, est caractérisé par une liaison :",
+      "options": ["Bidirectionnelle, entre deux équipements strictement identiques", "En réseau maillé, sans émetteur dédié", "Unidirectionnelle, d'un émetteur vers un ou plusieurs récepteurs"],
+      "bonne": 2,
+      "explication": "Le bus ARINC 429 relie un seul équipement émetteur à un ou plusieurs équipements récepteurs, dans un seul sens de transmission : il n'est pas bidirectionnel sur une même liaison, contrairement à d'autres protocoles avioniques plus récents.",
+      "source": "TODO: source à vérifier manuellement — caractéristiques précises du protocole ARINC 429 à confirmer sur la norme ARINC (voir part66/A_VERIFIER.md)"
+    },
+    {
+      "uid": "M5-0034",
+      "sous_chapitre": "M5.7",
+      "question": "Le multiplexage consiste à :",
+      "options": ["Faire transiter plusieurs signaux sur un même support de transmission", "Convertir un signal numérique en signal analogique", "Amplifier un signal unique sans le combiner à d'autres"],
+      "bonne": 0,
+      "explication": "Le multiplexage regroupe plusieurs signaux ou voies d'information sur un même support physique de transmission, au lieu de dédier une ligne distincte à chacun. Il ne s'agit ni d'une conversion de signal, ni d'une simple amplification.",
+      "source": "Notions générales d'électronique numérique — bus de données et multiplexage"
+    },
+    {
+      "uid": "M5-0036",
+      "sous_chapitre": "M5.8",
+      "question": "Un des principaux avantages de la fibre optique par rapport à un câble électrique classique est :",
+      "options": ["Un poids systématiquement supérieur", "Une immunité totale aux dommages mécaniques (chocs, écrasement)", "L'insensibilité aux interférences électromagnétiques"],
+      "bonne": 2,
+      "explication": "La fibre optique ne transporte pas de courant électrique, ce qui la rend insensible aux interférences électromagnétiques (elle ne les capte ni ne les émet), contrairement à un câble électrique. Elle est en général plus légère qu'un câble électrique équivalent, mais n'est pas plus résistante aux dommages mécaniques (chocs, écrasement, pliage excessif) — c'est même souvent l'inverse.",
+      "source": "Notions générales d'électronique numérique — fibre optique"
+    },
+    {
+      "uid": "M5-0037",
+      "sous_chapitre": "M5.8",
+      "question": "La transmission d'information par fibre optique s'effectue au moyen :",
+      "options": ["D'impulsions lumineuses", "D'un courant électrique continu", "D'ondes radio propagées dans l'air"],
+      "bonne": 0,
+      "explication": "La fibre optique transmet l'information sous forme d'impulsions lumineuses guidées dans la fibre, et non par un courant électrique ou par des ondes radio propagées en espace libre.",
+      "source": "Notions générales d'électronique numérique — fibre optique"
+    },
+    {
+      "uid": "M5-0038",
+      "sous_chapitre": "M5.8",
+      "question": "Le sigle CEM (EMC en anglais) désigne :",
+      "options": ["Le circuit électronique modulaire", "La compatibilité électromagnétique", "Le contrôle électrique manuel"],
+      "bonne": 1,
+      "explication": "CEM signifie compatibilité électromagnétique (EMC, Electromagnetic Compatibility, en anglais) : l'aptitude d'un équipement à fonctionner sans être perturbé par son environnement électromagnétique, ni le perturber lui-même. Les deux autres développements ne correspondent à aucun sigle standard dans ce contexte.",
+      "source": "Notions générales d'électronique numérique — environnement électromagnétique"
+    },
+    {
+      "uid": "M5-0039",
+      "sous_chapitre": "M5.8",
+      "question": "Le sigle HIRF désigne un risque lié :",
+      "options": ["À des vibrations mécaniques excessives du moteur", "À une baisse anormale de la pression en cabine", "À un champ électromagnétique de forte intensité, externe à l'aéronef"],
+      "bonne": 2,
+      "explication": "HIRF (High Intensity Radiated Field) désigne un risque lié à un champ électromagnétique externe de forte intensité, susceptible de perturber le fonctionnement des systèmes électroniques embarqués. Il ne s'agit ni d'un risque vibratoire ni d'un risque de pressurisation, qui relèvent d'autres domaines de la sécurité aéronautique.",
+      "source": "TODO: source à vérifier manuellement — définition et portée exactes du risque HIRF, y compris sa distinction avec d'autres phénomènes électromagnétiques (foudre, champ magnétique terrestre), à confirmer (voir part66/A_VERIFIER.md)"
+    },
+    {
+      "uid": "M5-0040",
+      "sous_chapitre": "M5.8",
+      "question": "Pour limiter la sensibilité d'un système électronique aux perturbations électromagnétiques, on utilise notamment :",
+      "options": ["Un blindage (câbles blindés, boîtiers métalliques reliés à la masse)", "L'utilisation de connecteurs et de boîtiers en matériau plastique non conducteur", "Un allongement des câbles, sans autre protection"],
+      "bonne": 0,
+      "explication": "Le blindage (câbles blindés, boîtiers métalliques reliés électriquement à la masse) limite la sensibilité d'un équipement aux perturbations électromagnétiques. Un connecteur ou un boîtier en matériau plastique non conducteur ne peut pas assurer cette fonction de blindage, et un simple allongement des câbles sans autre protection n'apporte rien non plus.",
+      "source": "Notions générales d'électronique numérique — environnement électromagnétique"
+    },
+    {
+      "uid": "M5-0041",
+      "sous_chapitre": "M5.9",
+      "question": "Le terme « glass cockpit » désigne un poste de pilotage équipé principalement :",
+      "options": ["D'instruments purement mécaniques, sans aucune électronique", "De parois vitrées renforcées offrant une meilleure visibilité au pilote", "D'écrans électroniques remplaçant les instruments électromécaniques traditionnels"],
+      "bonne": 2,
+      "explication": "Un « glass cockpit » remplace la plupart des instruments électromécaniques traditionnels (à aiguille) par des écrans électroniques regroupant les informations de vol. Malgré la traduction littérale de « glass » (verre), l'expression ne désigne pas les parois vitrées du poste de pilotage.",
+      "source": "Notions générales d'avionique — systèmes d'instruments électroniques"
+    },
+    {
+      "uid": "M5-0042",
+      "sous_chapitre": "M5.9",
+      "question": "Le sigle EFIS désigne :",
+      "options": ["Un système de surveillance moteurs et d'alerte équipage (comme l'ECAM ou l'EICAS)", "Un système de gestion de vol (FMS, Flight Management System)", "Un système d'instruments de vol électroniques (Electronic Flight Instrument System)"],
+      "bonne": 2,
+      "explication": "EFIS signifie Electronic Flight Instrument System : le sous-système qui affiche les paramètres de vol sur les écrans d'un poste de pilotage moderne. L'ECAM/EICAS et le FMS sont d'autres systèmes bien réels de ce même poste de pilotage, mais aux fonctions distinctes (surveillance moteurs/alertes pour l'un, gestion du plan de vol pour l'autre).",
+      "source": "Notions générales d'avionique — systèmes d'instruments électroniques"
+    },
+    {
+      "uid": "M5-0043",
+      "sous_chapitre": "M5.9",
+      "question": "Le logiciel embarqué d'un système avionique est identifié, comme un composant matériel, par :",
+      "options": ["Un numéro de référence (part number) et une version logicielle", "Le seul numéro de série du calculateur qui l'héberge, sans référence logicielle propre", "Une simple date d'installation, sans numéro de référence formel"],
+      "bonne": 0,
+      "explication": "Le logiciel embarqué est suivi en maintenance comme une pièce matérielle : il porte son propre numéro de référence et sa propre version logicielle, distincts du numéro de série du calculateur qui l'héberge (celui-ci identifie le matériel, pas le logiciel qu'il exécute). Une simple date d'installation ne permet pas, à elle seule, d'identifier précisément quelle version est en place.",
+      "source": "TODO: source à vérifier manuellement — cadre précis de traçabilité du logiciel embarqué (gestion de configuration logicielle) à confirmer (voir part66/A_VERIFIER.md)"
+    },
+    {
+      "uid": "M5-0044",
+      "sous_chapitre": "M5.9",
+      "question": "Une modification d'un logiciel embarqué sur un aéronef doit :",
+      "options": ["Être consignée uniquement dans le carnet de bord du pilote, sans autre procédure", "Suivre une procédure approuvée et contrôlée, avec traçabilité de la version installée", "Être dispensée de tout contrôle particulier si elle provient du constructeur de l'aéronef"],
+      "bonne": 1,
+      "explication": "Une modification logicielle doit être effectuée selon des données et une procédure approuvées, et faire l'objet d'une traçabilité, quelle que soit son origine : une provenance constructeur ne dispense d'aucun contrôle. Une simple mention au carnet de bord du pilote ne remplace pas cette procédure de modification elle-même.",
+      "source": "TODO: source à vérifier manuellement — cadre précis de traçabilité du logiciel embarqué (gestion de configuration logicielle) à confirmer (voir part66/A_VERIFIER.md)"
+    },
+    {
+      "uid": "M5-0045",
+      "sous_chapitre": "M5.9",
+      "question": "Un écran de type PFD (Primary Flight Display) affiche typiquement :",
+      "options": ["Le plan de vol complet et la carte de navigation détaillée", "Les paramètres moteurs et la consommation de carburant", "Les paramètres de vol essentiels (attitude, vitesse, altitude...)"],
+      "bonne": 2,
+      "explication": "Le PFD regroupe les paramètres de vol essentiels au pilotage (attitude, vitesse, altitude, cap...). Le plan de vol et la carte de navigation détaillée sont en général affichés sur un écran de navigation (ND) distinct, et les paramètres moteurs sur un écran dédié (ECAM/EICAS) : trois écrans réels du glass cockpit, mais à contenus différents.",
+      "source": "Notions générales d'avionique — systèmes d'instruments électroniques"
+    }
+  ]
+}
