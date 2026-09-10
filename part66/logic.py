@@ -10,6 +10,7 @@ import json
 import os
 import random
 from datetime import datetime, timedelta
+from pathlib import Path
 
 _ICI = os.path.dirname(__file__)
 _RACINE = os.path.dirname(_ICI)
@@ -50,6 +51,16 @@ def charger_fiches(module):
         return []
     with open(chemin, "r", encoding="utf-8") as f:
         return json.load(f)["fiches"]
+
+
+def charger_schema(module, fiche_id):
+    """Chemin (pathlib.Path, requis par st.html pour lire un fichier local)
+    vers un schéma HTML interactif pour une fiche donnée
+    (part66/data/<module>/schemas/<fiche_id>.html), ou None si ce
+    complément n'existe pas pour cette fiche — l'illustration interactive
+    est optionnelle, la fiche reste utilisable sans elle."""
+    chemin = Path(_fichier_module(module, os.path.join("schemas", f"{fiche_id}.html")))
+    return chemin if chemin.exists() else None
 
 
 def charger_questions(module):
