@@ -1,23 +1,37 @@
-<div id="schema-m59-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<div id="schema-m59-wrap" style="font-family: inherit; max-width: 860px; margin: 0.8em 0 0.4em; border:1px solid #ddd; border-radius:12px; padding:18px 22px; background:rgba(128,128,128,0.03);">
 <style>
-#schema-m59-wrap .m59-btn { padding:7px 16px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.95em; }
+#schema-m59-wrap .m59-header { font-size:1.15em; font-weight:bold; margin-bottom:4px; }
+#schema-m59-wrap .m59-subheader { font-size:0.85em; color:#666; margin-bottom:14px; }
+#schema-m59-wrap .m59-sectiontitle { font-weight:bold; margin-top:4px; margin-bottom:4px; }
+#schema-m59-wrap .m59-btn { padding:8px 16px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:1em; margin:2px 6px 2px 0; }
 #schema-m59-wrap .m59-btn:hover { background:#e8e8e8; }
-#schema-m59-wrap .m59-view { display:flex; gap:18px; margin-top:16px; align-items:flex-end; flex-wrap:wrap; }
-#schema-m59-wrap .m59-gauge-block { text-align:center; }
-#schema-m59-wrap .m59-gauge { width:70px; height:70px; border-radius:50%; border:3px solid #555; position:relative; background:#fdfdfd; margin:0 auto; }
-#schema-m59-wrap .m59-needle { position:absolute; width:2px; height:26px; background:#c0392b; left:50%; bottom:50%; transform-origin:bottom center; }
-#schema-m59-wrap .m59-gauge-label { font-size:0.72em; color:#555; margin-top:4px; }
-#schema-m59-wrap .m59-screen { background:#12181f; color:#7fce7f; border-radius:10px; border:3px solid #333; padding:14px 18px; font-family: monospace; font-size:0.95em; line-height:1.7; min-width:220px; }
+#schema-m59-wrap .m59-view { display:flex; gap:22px; margin-top:16px; align-items:flex-start; flex-wrap:wrap; }
+#schema-m59-wrap .m59-gauge-block { text-align:center; width:100px; }
+#schema-m59-wrap .m59-gauge { width:88px; height:88px; border-radius:50%; border:3px solid #555; position:relative; background:#fdfdfd; margin:0 auto; }
+#schema-m59-wrap .m59-gauge::before { content:''; position:absolute; top:4px; left:50%; width:2px; height:8px; background:#888; transform:translateX(-50%); }
+#schema-m59-wrap .m59-needle { position:absolute; width:3px; height:32px; background:#c0392b; left:50%; bottom:50%; transform-origin:bottom center; }
+#schema-m59-wrap .m59-gauge-label { font-size:0.85em; font-weight:bold; color:#333; margin-top:6px; }
+#schema-m59-wrap .m59-gauge-subcap { font-size:0.7em; color:#666; font-style:italic; margin-top:2px; }
+#schema-m59-wrap .m59-screen { background:#12181f; color:#7fce7f; border-radius:10px; border:3px solid #333; padding:16px 20px; font-family: monospace; font-size:1.05em; line-height:1.9; min-width:260px; }
 #schema-m59-wrap .m59-screen .m59-sub { color:#9fd6ff; }
-#schema-m59-wrap .m59-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; }
-#schema-m59-wrap .m59-sep { margin:22px 0 6px; border:none; border-top:1px solid #ccc; }
-#schema-m59-wrap .m59-arrow { font-size:1.2em; color:#888; }
-#schema-m59-wrap .m59-update-row { display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
-#schema-m59-wrap .m59-update-box { border:2px solid #888; border-radius:8px; padding:10px 14px; font-size:0.85em; background:#f7f7f7; color:#222; min-width:170px; }
-#schema-m59-wrap .m59-trace-box { margin-top:12px; border:2px dashed #888; border-radius:8px; padding:10px 14px; font-size:0.85em; background:#fdfdf0; color:#222; }
+#schema-m59-wrap .m59-screen-caption { font-size:0.7em; color:#666; font-style:italic; margin-top:6px; text-align:center; }
+#schema-m59-wrap .m59-caption { margin-top:14px; padding:12px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; font-size:1.02em; min-height:2.6em; }
+#schema-m59-wrap .m59-sep { margin:26px 0 10px; border:none; border-top:1px solid #ccc; }
+#schema-m59-wrap .m59-arrow { font-size:1.3em; color:#888; align-self:center; }
+#schema-m59-wrap .m59-update-row { display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+#schema-m59-wrap .m59-update-box { border:2px solid #888; border-radius:8px; padding:12px 16px; font-size:0.92em; background:#f7f7f7; color:#222; min-width:190px; }
+#schema-m59-wrap .m59-trace-box { margin-top:14px; border:2px dashed #888; border-radius:8px; padding:12px 16px; font-size:0.92em; background:#fdfdf0; color:#222; }
+#schema-m59-wrap .m59-stakes { display:inline-block; padding:2px 8px; border-radius:10px; font-size:0.75em; font-weight:bold; margin-left:6px; }
+#schema-m59-wrap .m59-stakes.low { background:#d7f0d7; color:#2a6b2a; }
+#schema-m59-wrap .m59-stakes.medium { background:#fdeecb; color:#8a5a00; }
+#schema-m59-wrap .m59-stakes.high { background:#f5c6c6; color:#8a2020; }
 </style>
 
-<p><strong>Essaie toi-même :</strong> bascule entre un poste de pilotage classique et un glass cockpit, pour comparer la même information affichée des deux façons.</p>
+<div class="m59-header">✈️ Glass cockpit et logiciel embarqué — 2 expériences à explorer</div>
+<div class="m59-subheader">Comment l'électronique protégée, interconnectée et fiable des fiches précédentes sert concrètement le pilote.</div>
+
+<div class="m59-sectiontitle">① Instruments classiques vs glass cockpit</div>
+<p><strong>Essaie toi-même :</strong> bascule entre un poste de pilotage classique et un glass cockpit, pour comparer la même information affichée des deux façons. Chaque cadran garde une légende permanente rappelant son rôle.</p>
 
 <button class="m59-btn" id="m59-toggle">Afficher le glass cockpit ▶</button>
 
@@ -25,37 +39,46 @@
   <div class="m59-gauge-block">
     <div class="m59-gauge"><div class="m59-needle" style="transform:rotate(40deg);"></div></div>
     <div class="m59-gauge-label">Vitesse</div>
+    <div class="m59-gauge-subcap">1 instrument, 1 aiguille</div>
   </div>
   <div class="m59-gauge-block">
     <div class="m59-gauge"><div class="m59-needle" style="transform:rotate(-25deg);"></div></div>
     <div class="m59-gauge-label">Altitude</div>
+    <div class="m59-gauge-subcap">1 instrument, 1 aiguille</div>
   </div>
   <div class="m59-gauge-block">
     <div class="m59-gauge"><div class="m59-needle" style="transform:rotate(80deg);"></div></div>
     <div class="m59-gauge-label">Variomètre</div>
+    <div class="m59-gauge-subcap">1 instrument, 1 aiguille</div>
   </div>
   <div class="m59-gauge-block">
     <div class="m59-gauge"><div class="m59-needle" style="transform:rotate(-60deg);"></div></div>
     <div class="m59-gauge-label">Cap</div>
+    <div class="m59-gauge-subcap">1 instrument, 1 aiguille</div>
   </div>
 </div>
 
 <div class="m59-view" id="m59-glass" style="display:none;">
-  <div class="m59-screen">
-    <div><span class="m59-sub">VITESSE</span> 250 kt</div>
-    <div><span class="m59-sub">ALTITUDE</span> 8 500 ft</div>
-    <div><span class="m59-sub">VARIO</span> +500 ft/min</div>
-    <div><span class="m59-sub">CAP</span> 087°</div>
+  <div>
+    <div class="m59-screen">
+      <div><span class="m59-sub">VITESSE</span> 250 kt</div>
+      <div><span class="m59-sub">ALTITUDE</span> 8 500 ft</div>
+      <div><span class="m59-sub">VARIO</span> +500 ft/min</div>
+      <div><span class="m59-sub">CAP</span> 087°</div>
+    </div>
+    <div class="m59-screen-caption">4 informations, 1 seul écran électronique</div>
   </div>
 </div>
 
 <div class="m59-caption" id="m59-caption">Poste classique : 4 instruments mécaniques séparés, chacun avec sa propre aiguille et son propre cadran.</div>
 
 <hr class="m59-sep">
-<p><strong>Deuxième expérience :</strong> compare deux mises à jour logicielles très différentes en apparence, et regarde ce qui se passe pour la traçabilité dans chaque cas.</p>
+<div class="m59-sectiontitle">② Traçabilité d'une mise à jour logicielle, selon son enjeu apparent</div>
+<p><strong>Essaie toi-même :</strong> compare trois mises à jour logicielles d'enjeu très différent, et observe ce qui se passe pour la traçabilité dans chaque cas.</p>
 
 <div>
   <button class="m59-btn" id="m59-scenario-cosmetic">Exemple : mise à jour cosmétique</button>
+  <button class="m59-btn" id="m59-scenario-affichage">Exemple : réorganisation d'un menu</button>
   <button class="m59-btn" id="m59-scenario-calcul">Exemple : mise à jour qui change un calcul</button>
 </div>
 
@@ -63,7 +86,7 @@
   <div class="m59-update-row">
     <div class="m59-update-box"><strong>Avant</strong><div id="m59-update-before"></div></div>
     <span class="m59-arrow">→</span>
-    <div class="m59-update-box"><strong>Après</strong><div id="m59-update-after"></div></div>
+    <div class="m59-update-box"><strong>Après</strong> <span id="m59-update-stakes"></span><div id="m59-update-after"></div></div>
   </div>
   <div class="m59-trace-box" id="m59-trace-box">
     <strong>Fiche de traçabilité</strong>
@@ -108,10 +131,12 @@
   var wrap = document.getElementById('schema-m59-wrap');
   if (!wrap) { return; }
   var btnCosmetic = wrap.querySelector('#m59-scenario-cosmetic');
+  var btnAffichage = wrap.querySelector('#m59-scenario-affichage');
   var btnCalcul = wrap.querySelector('#m59-scenario-calcul');
   var updateView = wrap.querySelector('#m59-update-view');
   var beforeEl = wrap.querySelector('#m59-update-before');
   var afterEl = wrap.querySelector('#m59-update-after');
+  var stakesEl = wrap.querySelector('#m59-update-stakes');
   var traceOld = wrap.querySelector('#m59-trace-old');
   var traceNew = wrap.querySelector('#m59-trace-new');
   var traceProc = wrap.querySelector('#m59-trace-proc');
@@ -119,13 +144,24 @@
 
   var scenarios = {
     cosmetic: {
-      before: 'Icône de navigation affichée en bleu (version 1.0)',
-      after: 'Icône de navigation affichée en vert (version 1.1)',
+      before: 'Icône de navigation affichée en bleu (version 2.3)',
+      after: 'Icône de navigation affichée en vert (version 2.4)',
+      oldV: '2.3', newV: '2.4',
+      stakes: 'low', stakesLabel: 'Enjeu faible',
       txt: 'Ici, la mise à jour ne change qu\'une couleur d\'icône à l\'écran : l\'enjeu semble minime, purement esthétique.'
     },
+    affichage: {
+      before: 'Menu de configuration organisé en 2 pages (version 3.0)',
+      after: 'Menu de configuration réorganisé en 1 seule page (version 3.1)',
+      oldV: '3.0', newV: '3.1',
+      stakes: 'medium', stakesLabel: 'Enjeu modéré',
+      txt: 'Ici, la mise à jour réorganise un menu d\'affichage sans toucher aux calculs : l\'enjeu semble modéré, mais une réorganisation peut faire apparaître une information au mauvais endroit, ou la rendre plus difficile à trouver rapidement.'
+    },
     calcul: {
-      before: 'Calcul de la vitesse d\'approche affichée au pilote (version 1.0)',
-      after: 'Calcul de la vitesse d\'approche corrigé (version 1.1)',
+      before: 'Calcul de la vitesse d\'approche affichée au pilote (version 4.1)',
+      after: 'Calcul de la vitesse d\'approche corrigé (version 4.2)',
+      oldV: '4.1', newV: '4.2',
+      stakes: 'high', stakesLabel: 'Enjeu élevé',
       txt: 'Ici, la mise à jour change un calcul dont le pilote se sert pour ses décisions : l\'enjeu est nettement plus important.'
     }
   };
@@ -135,13 +171,16 @@
     updateView.style.display = 'block';
     beforeEl.textContent = s.before;
     afterEl.textContent = s.after;
-    traceOld.textContent = 'version 1.0';
-    traceNew.textContent = 'version 1.1';
+    stakesEl.textContent = s.stakesLabel;
+    stakesEl.className = 'm59-stakes ' + s.stakes;
+    traceOld.textContent = 'version ' + s.oldV;
+    traceNew.textContent = 'version ' + s.newV;
     traceProc.textContent = 'Oui';
-    caption.textContent = s.txt + ' Pourtant, dans les deux cas, la modification est tracée et passe par une procédure approuvée : on ne peut pas toujours savoir à l\'avance si une modification en apparence mineure aura, ou non, des conséquences importantes.';
+    caption.textContent = s.txt + ' Pourtant, dans les trois cas, la modification est tracée et passe par une procédure approuvée : on ne peut pas toujours savoir à l\'avance si une modification en apparence mineure aura, ou non, des conséquences importantes.';
   }
 
   btnCosmetic.addEventListener('click', function () { show('cosmetic'); });
+  btnAffichage.addEventListener('click', function () { show('affichage'); });
   btnCalcul.addEventListener('click', function () { show('calcul'); });
 })();
 </script>

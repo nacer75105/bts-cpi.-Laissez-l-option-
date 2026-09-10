@@ -232,6 +232,78 @@ bases d'électronique numérique) :
   unidirectionnelle, un émetteur vers plusieurs récepteurs) : correcte sur
   le principe général, mais non vérifiée directement sur la norme ARINC.
 
+- **Fiche M5.1** (texte, pas une question) — affirmation ajoutée le
+  2026-09-10 : « le numéro de label d'un mot de données ARINC 429
+  s'exprime traditionnellement en octal ». C'est une convention
+  largement documentée dans la littérature avionique généraliste, mais
+  elle n'a pas été vérifiée directement sur la norme ARINC 429 elle-même
+  — même statut de prudence que M5-0033 ci-dessus, à confirmer avant de
+  la considérer comme définitivement établie.
+
+- **Fiche M5.9** (texte, pas une question) — affirmation ajoutée le
+  2026-09-10 : le glass cockpit se serait généralisé dans l'aviation
+  commerciale « à partir des années 1980 ». Fait d'histoire de
+  l'aviation largement cité dans la littérature généraliste (première
+  génération d'EFIS sur des appareils commerciaux de cette décennie),
+  mais non vérifié sur une source précise. Sans effet sur la justesse
+  technique du reste de la fiche ni sur aucune question du lot ; à
+  confirmer ou à assouplir (« à partir des années 1980 » → « depuis
+  plusieurs décennies ») si un doute apparaît.
+
+**Round d'enrichissement majeur de M5.1, M5.4, M5.9 (2026-09-10)** :
+texte doublé (paragraphes « pourquoi », exemples progressifs
+supplémentaires, questions rhétoriques, rappels) et schémas agrandis
+(bandeaux, tables de référence permanentes, sous-légendes visibles sans
+clic, étapes/scénarios supplémentaires) sur ces 3 fiches. Une relecture
+complète a trouvé 3 BLOQUANT, tous corrigés avant commit par retrait ou
+atténuation (aucune donnée nouvelle non vérifiée ajoutée en
+remplacement) :
+- Fiche M5.9 — « des instruments de secours **purement mécaniques**
+  restent présents » (généralisation fausse pour une bonne partie de la
+  flotte moderne, qui utilise des instruments de secours électroniques)
+  corrigé en « mécaniques ou électroniques selon l'appareil ». Absolu
+  « ne repose **jamais** sur un seul écran » restreint à l'aviation
+  commerciale.
+- Fiche M5.9 — « un logiciel […] peut être modifié **à distance**,
+  rapidement, sans démontage » : « à distance » retiré (affirmation
+  opérationnelle non sourcée et inexacte pour de l'avionique certifiée,
+  chargée normalement lors d'une opération de data loading sur
+  l'aéronef, pas à distance).
+- `schemas/M5.4.html` — le bouton « Écrire une nouvelle donnée en RAM »
+  interdisait toute réécriture dans le même cycle d'alimentation
+  (« la RAM contient déjà une donnée »), ce qui contredisait
+  directement le texte de la fiche (valeurs « remplacées en continu »
+  en RAM) et la nature même d'une mémoire vive. Corrigé en deux temps :
+  la garde JS a d'abord été retirée, mais l'attribut HTML `disabled` du
+  bouton avait été oublié (une vérification l'a détecté et il a été
+  retiré à son tour) — la RAM peut désormais être réécrite librement
+  tant qu'elle est alimentée, dès le chargement de la page ; seule une
+  coupure d'alimentation la vide. Le message affiché référence la
+  valeur réellement présente avant chaque écriture ou coupure (au lieu
+  d'une valeur « 42 » écrite en dur, qui devenait fausse après
+  plusieurs cycles), avec une formulation dédiée pour le cas où la RAM
+  était déjà vide au moment de l'action (pas de citation incohérente
+  du type « elle contenait « — vide — »  »).
+
+Correctif mineur associé : `schemas/M5.1.html`, la table des exposants
+(`SUP_DIGITS`) ne couvrait que les positions 0 à 4 ; le nouveau preset à
+8 bits (11001101) affichait un mélange d'exposants typographiques et de
+notation `2^7` en texte brut. Étendue aux positions 0 à 9.
+
+**Dette assumée supplémentaire, non corrigée** :
+- `fiches.json` — les durées `duree_min` de M5.1, M5.4 et M5.9 ont été
+  révisées à la hausse (8/10/10 → 16/15/16 minutes) pour refléter le
+  doublement du contenu ; ces valeurs restent des estimations internes,
+  non chronométrées.
+- `schemas/M5.1.html` — un `&lt;br&gt;` dans la table de référence
+  hexadécimale est sans effet dans le conteneur flex (le retour à la
+  ligne se fait naturellement par le wrap) : purement cosmétique, rendu
+  inchangé.
+- Fiche M5.4 — « une simple coupure d'alimentation ne suffit **jamais**,
+  à elle seule, à effacer une configuration permanente » reste un
+  absolu, mais vrai par définition du non-volatile et jugé acceptable
+  au niveau B1.1.
+
 - **M5-0039** — Définition générale du risque HIRF (champ électromagnétique
   de forte intensité) : correcte sur le principe, mais la définition
   précise et sa distinction avec d'autres phénomènes électromagnétiques
@@ -463,12 +535,11 @@ Une vérification finale a confirmé les 2 BLOQUANT effectivement corrigés
 (pas seulement documentés) et relevé 4 points mineurs supplémentaires,
 non corrigés, versés à la dette assumée :
 
-- `schemas/M5.4.html` — après un second cycle Couper→Remettre→Couper, la
-  légende affirme « la RAM a perdu son contenu » alors que la case
-  était déjà vide avant cette coupure (rien n'a donc été réellement
-  perdu à cet instant). Le principe de volatilité reste vrai, seule la
-  formulation ne décrit pas exactement ce que l'apprenant voit à ce
-  moment précis.
+- ~~`schemas/M5.4.html` — après un second cycle Couper→Remettre→Couper,
+  la légende affirmait « la RAM a perdu son contenu » alors que la case
+  était déjà vide avant cette coupure.~~ **Corrigé le 2026-09-10** lors
+  du round d'enrichissement majeur : le handler distingue désormais si
+  la RAM était déjà vide avant l'action (message dédié), voir plus haut.
 - `schemas/M5.1.html` — la phrase « Le nombre d'origine (1101101, 7
   bits) n'est pas un multiple de 4 » attribue au nombre une propriété
   qui concerne en réalité son nombre de bits (glissement valeur/longueur).

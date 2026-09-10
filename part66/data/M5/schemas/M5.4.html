@@ -1,54 +1,67 @@
-<div id="schema-m54-wrap" style="font-family: inherit; max-width: 680px; margin: 0.6em 0 0.2em;">
+<div id="schema-m54-wrap" style="font-family: inherit; max-width: 860px; margin: 0.8em 0 0.4em; border:1px solid #ddd; border-radius:12px; padding:18px 22px; background:rgba(128,128,128,0.03);">
 <style>
-#schema-m54-wrap .m54-btn { margin:4px 6px 4px 0; padding:6px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.95em; }
+#schema-m54-wrap .m54-header { font-size:1.15em; font-weight:bold; margin-bottom:4px; }
+#schema-m54-wrap .m54-subheader { font-size:0.85em; color:#666; margin-bottom:14px; }
+#schema-m54-wrap .m54-sectiontitle { font-weight:bold; margin-top:4px; margin-bottom:4px; }
+#schema-m54-wrap .m54-btn { margin:4px 6px 4px 0; padding:8px 16px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:1em; }
 #schema-m54-wrap .m54-btn:hover { background:#e8e8e8; }
-#schema-m54-wrap .m54-row { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; align-items:center; }
-#schema-m54-wrap .m54-box { border:2px solid #888; border-radius:8px; padding:8px 10px; font-size:0.85em; text-align:center; background:#f7f7f7; color:#222; transition: all .25s ease; min-width:70px; }
-#schema-m54-wrap .m54-box.on { background:#fff3b0; border-color:#e0a800; transform: scale(1.06); }
-#schema-m54-wrap .m54-bus-group { display:flex; flex-direction:column; gap:4px; }
-#schema-m54-wrap .m54-arrow { font-size:1.3em; color:#888; }
-#schema-m54-wrap .m54-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:3.2em; }
-#schema-m54-wrap .m54-sep { margin:22px 0 6px; border:none; border-top:1px solid #ccc; }
-#schema-m54-wrap .m54-mem-box { border:2px solid #888; border-radius:8px; padding:12px 16px; font-size:0.9em; text-align:center; background:#f7f7f7; color:#222; min-width:130px; transition: all .25s ease; }
+#schema-m54-wrap .m54-btn:disabled { opacity:0.5; cursor:not-allowed; }
+#schema-m54-wrap .m54-row { display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; align-items:flex-start; }
+#schema-m54-wrap .m54-unit { display:flex; flex-direction:column; align-items:center; }
+#schema-m54-wrap .m54-box { border:2px solid #888; border-radius:8px; padding:12px 14px; font-size:0.95em; text-align:center; background:#f7f7f7; color:#222; transition: all .25s ease; min-width:88px; font-weight:bold; }
+#schema-m54-wrap .m54-box.on { background:#fff3b0; border-color:#e0a800; transform: scale(1.07); }
+#schema-m54-wrap .m54-subcap { font-size:0.72em; color:#666; font-weight:normal; margin-top:4px; max-width:110px; text-align:center; font-style:italic; }
+#schema-m54-wrap .m54-bus-group { display:flex; flex-direction:column; gap:6px; }
+#schema-m54-wrap .m54-arrow { font-size:1.4em; color:#888; margin-top:16px; }
+#schema-m54-wrap .m54-caption { margin-top:14px; padding:12px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:3.4em; font-size:1.02em; }
+#schema-m54-wrap .m54-sep { margin:26px 0 10px; border:none; border-top:1px solid #ccc; }
+#schema-m54-wrap .m54-mem-box { border:2px solid #888; border-radius:8px; padding:14px 18px; font-size:1em; text-align:center; background:#f7f7f7; color:#222; min-width:160px; transition: all .25s ease; }
 #schema-m54-wrap .m54-mem-box.cleared { background:#fdf1f1; border-color:#b23b3b; border-style:dashed; color:#8a4a4a; font-style:italic; }
-#schema-m54-wrap .m54-mem-content { display:block; margin-top:6px; font-weight:bold; }
+#schema-m54-wrap .m54-mem-content { display:block; margin-top:8px; font-weight:bold; font-size:1.05em; }
+#schema-m54-wrap .m54-mem-subcap { display:block; margin-top:6px; font-size:0.72em; color:#666; font-weight:normal; font-style:italic; }
 </style>
 
-<p><strong>Essaie toi-même :</strong> clique sur « Étape suivante » pour suivre le trajet d'une donnée, du capteur jusqu'au processeur.</p>
+<div class="m54-header">🖥️ Structure d'un calculateur — 2 expériences à explorer</div>
+<div class="m54-subheader">Processeur, mémoire, bus : comment une donnée circule, et ce qui survit (ou non) à une coupure d'alimentation.</div>
+
+<div class="m54-sectiontitle">① Le trajet d'une donnée, du capteur au processeur</div>
+<p><strong>Essaie toi-même :</strong> clique sur « Étape suivante » pour suivre le trajet d'une donnée, du capteur jusqu'au processeur. Chaque bloc porte une légende permanente qui rappelle son rôle, même avant de cliquer.</p>
 
 <div class="m54-row">
-  <div class="m54-box" id="m54-capteur">Capteur</div>
+  <div class="m54-unit"><div class="m54-box" id="m54-capteur">Capteur</div><div class="m54-subcap">mesure une grandeur physique</div></div>
   <span class="m54-arrow">→</span>
-  <div class="m54-box" id="m54-adc">ADC</div>
+  <div class="m54-unit"><div class="m54-box" id="m54-adc">ADC</div><div class="m54-subcap">convertit en nombre binaire</div></div>
   <span class="m54-arrow">→</span>
   <div class="m54-bus-group">
-    <div class="m54-box" id="m54-busctrl">Bus de contrôle</div>
-    <div class="m54-box" id="m54-busadr">Bus d'adresse</div>
-    <div class="m54-box" id="m54-busdon">Bus de données</div>
+    <div class="m54-unit"><div class="m54-box" id="m54-busctrl">Bus de contrôle</div><div class="m54-subcap">quelle opération ?</div></div>
+    <div class="m54-unit"><div class="m54-box" id="m54-busadr">Bus d'adresse</div><div class="m54-subcap">à quel emplacement ?</div></div>
+    <div class="m54-unit"><div class="m54-box" id="m54-busdon">Bus de données</div><div class="m54-subcap">quelle valeur ?</div></div>
   </div>
   <span class="m54-arrow">→</span>
-  <div class="m54-box" id="m54-ram">RAM</div>
+  <div class="m54-unit"><div class="m54-box" id="m54-ram">RAM</div><div class="m54-subcap">stockage temporaire</div></div>
   <span class="m54-arrow">→</span>
-  <div class="m54-box" id="m54-cpu">CPU</div>
+  <div class="m54-unit"><div class="m54-box" id="m54-cpu">CPU</div><div class="m54-subcap">traitement de la donnée</div></div>
 </div>
 
-<div style="margin-top:10px;">
+<div style="margin-top:12px;">
   <button class="m54-btn" id="m54-next">Étape suivante ▶</button>
   <button class="m54-btn" id="m54-reset">Recommencer</button>
 </div>
 <div class="m54-caption" id="m54-caption">Clique sur « Étape suivante » pour commencer.</div>
 
 <hr class="m54-sep">
-<p><strong>Deuxième expérience :</strong> observe ce qui arrive à la RAM et à la ROM quand on coupe l'alimentation.</p>
+<div class="m54-sectiontitle">② RAM contre ROM face à une coupure d'alimentation</div>
+<p><strong>Essaie toi-même :</strong> observe ce qui arrive à la RAM et à la ROM quand on coupe l'alimentation, puis quand on la rétablit — et essaie d'écrire une nouvelle donnée.</p>
 
 <div class="m54-row">
-  <div class="m54-mem-box" id="m54-rambox">RAM<span class="m54-mem-content" id="m54-ram-content">Température : 42</span></div>
-  <div class="m54-mem-box" id="m54-rombox">ROM<span class="m54-mem-content" id="m54-rom-content">Programme de démarrage</span></div>
+  <div class="m54-mem-box" id="m54-rambox">RAM<span class="m54-mem-content" id="m54-ram-content">Température : 42</span><span class="m54-mem-subcap">Mémoire vive — rapide à lire et à écrire, mais volatile</span></div>
+  <div class="m54-mem-box" id="m54-rombox">ROM<span class="m54-mem-content" id="m54-rom-content">Programme de démarrage</span><span class="m54-mem-subcap">Mémoire morte — non volatile, pas réécrite en fonctionnement normal</span></div>
 </div>
 
-<div style="margin-top:10px;">
+<div style="margin-top:12px;">
   <button class="m54-btn" id="m54-power-off">Couper l'alimentation</button>
   <button class="m54-btn" id="m54-power-on">Remettre sous tension</button>
+  <button class="m54-btn" id="m54-write-data">Écrire une nouvelle donnée en RAM</button>
 </div>
 <div class="m54-caption" id="m54-power-caption">Les deux mémoires contiennent actuellement une information.</div>
 </div>
@@ -109,23 +122,46 @@
   var ramContent = wrap.querySelector('#m54-ram-content');
   var powerOff = wrap.querySelector('#m54-power-off');
   var powerOn = wrap.querySelector('#m54-power-on');
+  var writeBtn = wrap.querySelector('#m54-write-data');
   var powerCaption = wrap.querySelector('#m54-power-caption');
   var powered = true;
+  var writeCount = 0;
+  var lastDisplayed = 'Température : 42';
+  var SAMPLE_VALUES = ['18', '27', '31', '9'];
 
   powerOff.addEventListener('click', function () {
     if (!powered) { powerCaption.textContent = 'L\'alimentation est déjà coupée.'; return; }
+    lastDisplayed = ramContent.textContent;
+    var etaitVide = (lastDisplayed.indexOf('vide') !== -1);
     powered = false;
+    writeBtn.disabled = true;
     ramContent.textContent = '— vide —';
     ramBox.classList.add('cleared');
-    powerCaption.textContent = 'Alimentation coupée : la RAM a perdu son contenu (elle est volatile). La ROM, elle, garde toujours « Programme de démarrage » : elle est non volatile, son contenu ne dépend pas de l\'alimentation.';
+    powerCaption.textContent = etaitVide
+      ? 'Alimentation coupée : la RAM était déjà vide, elle le reste. La ROM, elle, garde toujours « Programme de démarrage » : elle est non volatile, son contenu ne dépend pas de l\'alimentation.'
+      : 'Alimentation coupée : la RAM a perdu son contenu (elle est volatile) — juste avant, elle contenait « ' + lastDisplayed + ' ». La ROM, elle, garde toujours « Programme de démarrage » : elle est non volatile, son contenu ne dépend pas de l\'alimentation.';
   });
 
   powerOn.addEventListener('click', function () {
     if (powered) { powerCaption.textContent = 'L\'alimentation est déjà présente.'; return; }
     powered = true;
+    writeBtn.disabled = false;
     ramBox.classList.remove('cleared');
     ramContent.textContent = '— vide, en attente d\'une donnée —';
-    powerCaption.textContent = 'Alimentation rétablie : la RAM repart vide, elle ne se souvient de rien de ce qu\'elle contenait avant la coupure (il faudra y réécrire une donnée). La ROM, elle, n\'a jamais rien perdu : son contenu est resté « Programme de démarrage » pendant toute la coupure, sans interruption.';
+    powerCaption.textContent = 'Alimentation rétablie : la RAM repart vide, elle ne se souvient de rien de ce qu\'elle contenait avant la coupure. La ROM, elle, n\'a jamais rien perdu : son contenu est resté « Programme de démarrage » pendant toute la coupure, sans interruption. Essaie le bouton « Écrire une nouvelle donnée en RAM » — tu peux le faire autant de fois que tu veux, tant que l\'alimentation reste présente : c\'est justement ce qui distingue la RAM de la ROM.';
+  });
+
+  writeBtn.addEventListener('click', function () {
+    if (!powered) { powerCaption.textContent = 'Impossible d\'écrire : l\'alimentation est coupée.'; return; }
+    var previous = ramContent.textContent;
+    var val = SAMPLE_VALUES[writeCount % SAMPLE_VALUES.length];
+    writeCount++;
+    var nouveau = 'Température : ' + val;
+    var etaitVide = (previous.indexOf('vide') !== -1);
+    ramContent.textContent = nouveau;
+    powerCaption.textContent = etaitVide
+      ? 'Nouvelle donnée écrite en RAM : « ' + nouveau + ' » (la RAM était vide, elle contient maintenant cette valeur). Tant que l\'alimentation reste présente, la RAM peut être réécrite autant de fois que nécessaire — c\'est une mémoire de travail, pas une mémoire figée comme la ROM.'
+      : 'Nouvelle donnée écrite en RAM : « ' + nouveau + ' », à la place de « ' + previous + ' ». Tant que l\'alimentation reste présente, la RAM peut être réécrite autant de fois que nécessaire — c\'est une mémoire de travail, pas une mémoire figée comme la ROM.';
   });
 })();
 </script>
