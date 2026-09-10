@@ -426,6 +426,104 @@ relecture finale, non corrigés, à traiter dans un round ultérieur :
   équipement n'est mal décrit), mais un badge du type « en panne (dans
   ce scénario) » lèverait ce flottement résiduel.
 
+**Second schéma ajouté sur 3 fiches (2026-09-10)**, suite à une revue de
+priorisation demandée à l'utilisateur (une notion importante par fiche
+restait mal couverte par le seul premier schéma) :
+
+- `schemas/M5.1.html` — devient à onglets (Binaire→Décimal déjà
+  existant et inchangé, + Décimal→Binaire par divisions successives,
+  + Binaire→Hexadécimal par regroupement en quartets, avec gestion du
+  complément par des zéros quand le dernier groupe est incomplet).
+- `schemas/M5.4.html` — ajout d'une deuxième expérience (bouton
+  « couper l'alimentation ») qui vide visuellement une case RAM tout en
+  laissant une case ROM intacte, pour rendre concrète la distinction
+  volatile/non volatile déjà testée par M5-0016/M5-0017.
+- `schemas/M5.9.html` — ajout d'un deuxième schéma sur la gestion des
+  versions logicielles : deux scénarios comparables (mise à jour
+  cosmétique vs mise à jour qui change un calcul) remplissent tous deux
+  la même fiche de traçabilité, pour illustrer sans absolu le paragraphe
+  déjà présent dans le texte de la fiche.
+
+Une relecture de ce round a trouvé 2 BLOQUANT, tous deux corrigés avant
+commit : `schemas/M5.9.html` réintroduisait l'absolu « la même procédure
+d'approbation est suivie » que le round précédent avait justement retiré
+de la fiche (corrigé en « passe par une procédure approuvée », sans
+comparatif) ; `schemas/M5.4.html` laissait le bouton « Remettre sous
+tension » afficher une coupure d'alimentation qui n'avait pas eu lieu si
+on le cliquait sans avoir d'abord coupé (garde d'état symétrique
+ajoutée, comme celle qui existait déjà sur « Couper l'alimentation »).
+Corrections mineures associées : persistance visuelle de l'explication
+du complément par des zéros dans le mode Binaire→Hexadécimal de
+`schemas/M5.1.html` (elle disparaissait auparavant dès le premier clic),
+accord grammatical corrigé, et donnée de la case RAM de `schemas/M5.4.html`
+reliée au thème du premier schéma (température plutôt qu'un nombre
+isolé).
+
+Une vérification finale a confirmé les 2 BLOQUANT effectivement corrigés
+(pas seulement documentés) et relevé 4 points mineurs supplémentaires,
+non corrigés, versés à la dette assumée :
+
+- `schemas/M5.4.html` — après un second cycle Couper→Remettre→Couper, la
+  légende affirme « la RAM a perdu son contenu » alors que la case
+  était déjà vide avant cette coupure (rien n'a donc été réellement
+  perdu à cet instant). Le principe de volatilité reste vrai, seule la
+  formulation ne décrit pas exactement ce que l'apprenant voit à ce
+  moment précis.
+- `schemas/M5.1.html` — la phrase « Le nombre d'origine (1101101, 7
+  bits) n'est pas un multiple de 4 » attribue au nombre une propriété
+  qui concerne en réalité son nombre de bits (glissement valeur/longueur).
+  Sens et calcul restent corrects, seule la formulation est ambiguë.
+- `schemas/M5.9.html` — les deux scénarios de la fiche de traçabilité
+  affichent une carte visuellement identique (mêmes numéros de version
+  1.0→1.1 dans les deux cas), ce qui peut se lire comme « la procédure
+  est visuellement la même » même si le texte ne l'affirme plus.
+- `A_VERIFIER.md` (ce fichier, plus haut) — la formulation « complément
+  par des zéros quand le dernier groupe est incomplet » omet « à
+  gauche » ; le schéma et la fiche M5.1, eux, sont explicites sur ce
+  point.
+
+**Améliorations futures identifiées mais non traitées (priorité jugée
+plus faible, décidé avec l'utilisateur le 2026-09-10)** — un schéma
+existe déjà pour l'exemple simple de chacune de ces fiches, mais pas
+pour l'exemple progressif le plus avancé du texte :
+
+- **M5.3 (portes logiques)** — le schéma ne gère qu'une porte à la fois ;
+  l'exemple du texte qui chaîne deux portes (ET puis OU) n'a pas
+  d'équivalent interactif.
+- **M5.5 (microprocesseurs)** — le schéma anime un seul cycle
+  fetch-decode-execute (une addition) ; l'exemple à 3 cycles enchaînés
+  du texte (lire un capteur, comparer à un seuil, décider) n'est pas
+  représenté.
+- **M5.7 (bus série/parallèle)** — le schéma anime la différence de
+  timing série/parallèle, mais pas la topologie particulière d'ARINC 429
+  (un seul émetteur vers plusieurs récepteurs), testée par M5-0033.
+- **M5.8 (fibre optique/CEM)** — le schéma qualitatif couvre le blindage
+  d'un câble électrique, mais pas l'immunité de la fibre optique
+  elle-même (absence de courant électrique), qui reste seulement décrite
+  par l'analogie texte (lampe torche/morse).
+
+**Trois autres points mineurs, non corrigés (dette assumée) :**
+
+- `schemas/M5.1.html` — dans le mode Binaire→Hexadécimal, le chiffre
+  hexadécimal résultat de chaque groupe est affiché avec la classe
+  `.m51-pow` (petit, gris), initialement prévue pour les exposants de 2 :
+  purement cosmétique, mais ça affaiblit visuellement un résultat qui
+  mériterait d'être mis en avant plutôt qu'en retrait.
+- **Standard inégal sur « relié à la masse »** — le round de correction
+  2bis avait retiré de `schemas/M5.8.html` la mention « gaine métallique
+  reliée à la masse » comme détail d'installation non vérifié, mais la
+  fiche M5.8 et l'option correcte de M5-0040 conservent « boîtiers
+  métalliques reliés (électriquement) à la masse » pour le blindage. Le
+  principe relève de notions d'électronique générales, mais le critère
+  appliqué au schéma n'est pas appliqué de la même façon à la fiche et à
+  la question qu'il illustre : à trancher une fois pour les trois
+  emplacements.
+- **M5-0004** — l'énoncé « Un chiffre hexadécimal (un « quartet »)
+  représente exactement : » assimile le chiffre hexadécimal au quartet,
+  alors qu'un quartet est le groupe de 4 bits *représenté par* ce
+  chiffre (la fiche M5.1 est correcte sur ce point). Sans effet sur la
+  bonne réponse ; à reformuler dans un round de finition.
+
 ## Point de configuration à confirmer (hors banque de questions)
 
 - **Nombre de questions et durée de l'examen officiel du module M10** pour

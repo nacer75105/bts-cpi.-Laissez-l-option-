@@ -9,8 +9,19 @@
 #schema-m51-wrap .m51-btn.active { background:#333; color:#fff; border-color:#333; }
 #schema-m51-wrap .m51-caption { margin-top:10px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:2.6em; }
 #schema-m51-wrap .m51-total { font-size:1.2em; font-weight:bold; margin-top:10px; }
+#schema-m51-wrap .m51-tabs { margin-bottom:12px; border-bottom:1px solid #ccc; padding-bottom:8px; }
+#schema-m51-wrap .m51-tab { margin:2px 6px 2px 0; padding:6px 12px; border-radius:6px 6px 0 0; border:1px solid #888; border-bottom:none; background:#eee; color:#222; cursor:pointer; font-size:0.9em; }
+#schema-m51-wrap .m51-tab.active { background:#333; color:#fff; }
+#schema-m51-wrap .m51-divline { padding:2px 0; }
 </style>
 
+<div class="m51-tabs">
+  <button class="m51-tab active" data-mode="bin2dec">Binaire → Décimal</button>
+  <button class="m51-tab" data-mode="dec2bin">Décimal → Binaire</button>
+  <button class="m51-tab" data-mode="bin2hex">Binaire → Hexadécimal</button>
+</div>
+
+<div id="m51-mode-bin2dec" class="m51-mode">
 <p><strong>Essaie toi-même :</strong> choisis un nombre binaire, puis clique sur « Étape suivante » pour voir la conversion se faire bit par bit, en partant de la droite.</p>
 
 <div>
@@ -28,6 +39,41 @@
 <div class="m51-caption" id="m51-caption">Choisis un nombre binaire ci-dessus pour commencer.</div>
 </div>
 
+<div id="m51-mode-dec2bin" class="m51-mode" style="display:none;">
+<p><strong>Essaie toi-même :</strong> choisis un nombre décimal, puis clique sur « Étape suivante » pour voir les divisions successives par 2.</p>
+
+<div>
+  <button class="m51-btn" data-dec="13">13</button>
+  <button class="m51-btn" data-dec="22">22</button>
+</div>
+
+<div id="m51-divisions" style="margin-top:12px; font-family: monospace; font-size:0.95em;"></div>
+<div style="margin-top:8px;">
+  <button class="m51-btn" id="m51-dec2bin-next">Étape suivante ▶</button>
+  <button class="m51-btn" id="m51-dec2bin-reset">Recommencer</button>
+</div>
+<div class="m51-caption" id="m51-dec2bin-caption">Choisis un nombre décimal ci-dessus pour commencer.</div>
+</div>
+
+<div id="m51-mode-bin2hex" class="m51-mode" style="display:none;">
+<p><strong>Essaie toi-même :</strong> choisis un nombre binaire, puis clique sur « Étape suivante » pour le regrouper par quartets (4 bits) et le convertir en hexadécimal.</p>
+
+<div>
+  <button class="m51-btn" data-bin2="10101100">10101100</button>
+  <button class="m51-btn" data-bin2="1101101">1101101</button>
+</div>
+
+<div id="m51-padnote" style="margin-top:10px; font-size:0.85em; color:#666; font-style:italic;"></div>
+<div id="m51-groups" style="margin-top:8px;"></div>
+<div style="margin-top:8px;">
+  <button class="m51-btn" id="m51-bin2hex-next">Étape suivante ▶</button>
+  <button class="m51-btn" id="m51-bin2hex-reset">Recommencer</button>
+</div>
+<div class="m51-caption" id="m51-bin2hex-caption">Choisis un nombre binaire ci-dessus pour commencer.</div>
+</div>
+
+</div>
+
 <script>
 (function () {
   var wrap = document.getElementById('schema-m51-wrap');
@@ -37,7 +83,7 @@
   var captionEl = wrap.querySelector('#m51-caption');
   var nextBtn = wrap.querySelector('#m51-next');
   var resetBtn = wrap.querySelector('#m51-reset');
-  var presetBtns = wrap.querySelectorAll('.m51-btn[data-bin]');
+  var presetBtns = wrap.querySelectorAll('#m51-mode-bin2dec .m51-btn[data-bin]');
 
   var state = { bits: [], step: 0, total: 0 };
   var SUP_DIGITS = ['⁰', '¹', '²', '³', '⁴']; // 0,1,2,3,4 en exposant, comme dans la fiche (2⁰, 2¹...)
@@ -110,5 +156,179 @@
   });
 
   loadBinary('1010');
+})();
+
+(function () {
+  // Bascule entre les 3 modes (onglets)
+  var wrap = document.getElementById('schema-m51-wrap');
+  if (!wrap) { return; }
+  var tabs = wrap.querySelectorAll('.m51-tab');
+  var modes = {
+    bin2dec: wrap.querySelector('#m51-mode-bin2dec'),
+    dec2bin: wrap.querySelector('#m51-mode-dec2bin'),
+    bin2hex: wrap.querySelector('#m51-mode-bin2hex')
+  };
+  tabs.forEach(function (t) {
+    t.addEventListener('click', function () {
+      tabs.forEach(function (x) { x.classList.toggle('active', x === t); });
+      var m = t.getAttribute('data-mode');
+      Object.keys(modes).forEach(function (k) {
+        modes[k].style.display = (k === m) ? 'block' : 'none';
+      });
+    });
+  });
+})();
+
+(function () {
+  // Mode Décimal -> Binaire (divisions successives par 2)
+  var wrap = document.getElementById('schema-m51-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('#m51-mode-dec2bin .m51-btn[data-dec]');
+  var divsEl = wrap.querySelector('#m51-divisions');
+  var nextBtn = wrap.querySelector('#m51-dec2bin-next');
+  var resetBtn = wrap.querySelector('#m51-dec2bin-reset');
+  var caption = wrap.querySelector('#m51-dec2bin-caption');
+
+  var steps = [];
+  var revealed = 0;
+
+  function computeSteps(n) {
+    var arr = [];
+    while (n > 0) {
+      var q = Math.floor(n / 2);
+      var r = n % 2;
+      arr.push({ n: n, q: q, r: r });
+      n = q;
+    }
+    return arr;
+  }
+
+  function render() {
+    var lines = [];
+    for (var i = 0; i < revealed; i++) {
+      var s = steps[i];
+      lines.push('<div class="m51-divline">' + s.n + ' ÷ 2 = ' + s.q + ' reste <strong>' + s.r + '</strong></div>');
+    }
+    divsEl.innerHTML = lines.join('');
+  }
+
+  function load(n) {
+    steps = computeSteps(n);
+    revealed = 0;
+    render();
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-dec') === String(n)); });
+    caption.textContent = 'Nombre décimal ' + n + ' choisi. Clique sur « Étape suivante » pour diviser successivement par 2.';
+  }
+
+  function next() {
+    if (!steps.length) { caption.textContent = 'Choisis d\'abord un nombre décimal ci-dessus.'; return; }
+    if (revealed >= steps.length) {
+      var bin = steps.map(function (s) { return s.r; }).reverse().join('');
+      caption.textContent = 'Conversion déjà terminée : en relisant les restes du dernier au premier, on obtient ' + bin + '(2).';
+      return;
+    }
+    revealed++;
+    render();
+    var s = steps[revealed - 1];
+    if (revealed === steps.length) {
+      var bin2 = steps.map(function (st) { return st.r; }).reverse().join('');
+      caption.textContent = 'Dernière division : ' + s.n + ' ÷ 2 = ' + s.q + ', reste ' + s.r + ' (quotient 0, on s\'arrête). En relisant les restes du dernier au premier : ' + bin2 + '. Donc ' + steps[0].n + '(10) = ' + bin2 + '(2).';
+    } else {
+      caption.textContent = s.n + ' ÷ 2 = ' + s.q + ', reste ' + s.r + '. On continue en divisant le quotient ' + s.q + '.';
+    }
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { load(parseInt(b.getAttribute('data-dec'), 10)); });
+  });
+  nextBtn.addEventListener('click', next);
+  resetBtn.addEventListener('click', function () { if (steps.length) { load(steps[0].n); } });
+
+  load(13);
+})();
+
+(function () {
+  // Mode Binaire -> Hexadécimal (regroupement par quartets)
+  var wrap = document.getElementById('schema-m51-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('#m51-mode-bin2hex .m51-btn[data-bin2]');
+  var groupsEl = wrap.querySelector('#m51-groups');
+  var padNoteEl = wrap.querySelector('#m51-padnote');
+  var nextBtn = wrap.querySelector('#m51-bin2hex-next');
+  var resetBtn = wrap.querySelector('#m51-bin2hex-reset');
+  var caption = wrap.querySelector('#m51-bin2hex-caption');
+  var HEXCHARS = '0123456789ABCDEF';
+
+  var groups = [];
+  var revealed = 0;
+  var original = '';
+  var padCount = 0;
+
+  function computeGroups(bin) {
+    var padded = bin;
+    var rem = padded.length % 4;
+    var pad = 0;
+    if (rem !== 0) {
+      pad = 4 - rem;
+      for (var p = 0; p < pad; p++) { padded = '0' + padded; }
+    }
+    var g = [];
+    for (var i = 0; i < padded.length; i += 4) { g.push(padded.substr(i, 4)); }
+    return { groups: g, padCount: pad };
+  }
+
+  function render() {
+    var html = '';
+    for (var i = 0; i < groups.length; i++) {
+      var val = parseInt(groups[i], 2);
+      var hexDigit = revealed > i ? HEXCHARS[val] : '?';
+      var cls = revealed > i ? 'm51-box done' : 'm51-box';
+      html += '<div class="' + cls + '">' + groups[i] + '<span class="m51-pow">' + hexDigit + '</span></div>';
+    }
+    groupsEl.innerHTML = html;
+  }
+
+  function load(bin) {
+    original = bin;
+    var res = computeGroups(bin);
+    groups = res.groups;
+    padCount = res.padCount;
+    revealed = 0;
+    render();
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-bin2') === bin); });
+    if (padCount > 0) {
+      padNoteEl.textContent = 'Le nombre d\'origine (' + bin + ', ' + bin.length + ' bits) n\'est pas un multiple de 4 : ' + padCount + (padCount > 1 ? ' zéros ont été ajoutés' : ' zéro a été ajouté') + ' devant, pour former le groupe de gauche.';
+    } else {
+      padNoteEl.textContent = '';
+    }
+    caption.textContent = 'Nombre binaire ' + bin + ' choisi, regroupé par 4 bits en partant de la droite. Clique sur « Étape suivante » pour convertir chaque groupe.';
+  }
+
+  function next() {
+    if (!groups.length) { caption.textContent = 'Choisis d\'abord un nombre binaire ci-dessus.'; return; }
+    if (revealed >= groups.length) {
+      var hex = groups.map(function (g) { return HEXCHARS[parseInt(g, 2)]; }).join('');
+      caption.textContent = 'Conversion déjà terminée : ' + original + '(2) = ' + hex + '(16).';
+      return;
+    }
+    revealed++;
+    render();
+    var g = groups[revealed - 1];
+    var val = parseInt(g, 2);
+    if (revealed === groups.length) {
+      var hexFull = groups.map(function (gr) { return HEXCHARS[parseInt(gr, 2)]; }).join('');
+      caption.textContent = 'Dernier groupe ' + g + ' = ' + val + ' = ' + HEXCHARS[val] + '. Résultat complet : ' + original + '(2) = ' + hexFull + '(16).';
+    } else {
+      caption.textContent = 'Groupe ' + g + ' = ' + val + ' en décimal = ' + HEXCHARS[val] + ' en hexadécimal.';
+    }
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { load(b.getAttribute('data-bin2')); });
+  });
+  nextBtn.addEventListener('click', next);
+  resetBtn.addEventListener('click', function () { if (original) { load(original); } });
+
+  load('10101100');
 })();
 </script>

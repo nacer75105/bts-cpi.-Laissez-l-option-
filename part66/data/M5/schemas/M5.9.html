@@ -10,6 +10,11 @@
 #schema-m59-wrap .m59-screen { background:#12181f; color:#7fce7f; border-radius:10px; border:3px solid #333; padding:14px 18px; font-family: monospace; font-size:0.95em; line-height:1.7; min-width:220px; }
 #schema-m59-wrap .m59-screen .m59-sub { color:#9fd6ff; }
 #schema-m59-wrap .m59-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; }
+#schema-m59-wrap .m59-sep { margin:22px 0 6px; border:none; border-top:1px solid #ccc; }
+#schema-m59-wrap .m59-arrow { font-size:1.2em; color:#888; }
+#schema-m59-wrap .m59-update-row { display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+#schema-m59-wrap .m59-update-box { border:2px solid #888; border-radius:8px; padding:10px 14px; font-size:0.85em; background:#f7f7f7; color:#222; min-width:170px; }
+#schema-m59-wrap .m59-trace-box { margin-top:12px; border:2px dashed #888; border-radius:8px; padding:10px 14px; font-size:0.85em; background:#fdfdf0; color:#222; }
 </style>
 
 <p><strong>Essaie toi-même :</strong> bascule entre un poste de pilotage classique et un glass cockpit, pour comparer la même information affichée des deux façons.</p>
@@ -45,6 +50,30 @@
 </div>
 
 <div class="m59-caption" id="m59-caption">Poste classique : 4 instruments mécaniques séparés, chacun avec sa propre aiguille et son propre cadran.</div>
+
+<hr class="m59-sep">
+<p><strong>Deuxième expérience :</strong> compare deux mises à jour logicielles très différentes en apparence, et regarde ce qui se passe pour la traçabilité dans chaque cas.</p>
+
+<div>
+  <button class="m59-btn" id="m59-scenario-cosmetic">Exemple : mise à jour cosmétique</button>
+  <button class="m59-btn" id="m59-scenario-calcul">Exemple : mise à jour qui change un calcul</button>
+</div>
+
+<div id="m59-update-view" style="margin-top:14px; display:none;">
+  <div class="m59-update-row">
+    <div class="m59-update-box"><strong>Avant</strong><div id="m59-update-before"></div></div>
+    <span class="m59-arrow">→</span>
+    <div class="m59-update-box"><strong>Après</strong><div id="m59-update-after"></div></div>
+  </div>
+  <div class="m59-trace-box" id="m59-trace-box">
+    <strong>Fiche de traçabilité</strong>
+    <div>Version précédente : <span id="m59-trace-old"></span></div>
+    <div>Nouvelle version : <span id="m59-trace-new"></span></div>
+    <div>Procédure approuvée suivie ? <span id="m59-trace-proc"></span></div>
+  </div>
+</div>
+
+<div class="m59-caption" id="m59-update-caption">Choisis un exemple ci-dessus.</div>
 </div>
 
 <script>
@@ -72,5 +101,47 @@
   });
 
   render();
+})();
+
+(function () {
+  // Deuxième expérience : traçabilité d'une mise à jour logicielle, mineure ou non
+  var wrap = document.getElementById('schema-m59-wrap');
+  if (!wrap) { return; }
+  var btnCosmetic = wrap.querySelector('#m59-scenario-cosmetic');
+  var btnCalcul = wrap.querySelector('#m59-scenario-calcul');
+  var updateView = wrap.querySelector('#m59-update-view');
+  var beforeEl = wrap.querySelector('#m59-update-before');
+  var afterEl = wrap.querySelector('#m59-update-after');
+  var traceOld = wrap.querySelector('#m59-trace-old');
+  var traceNew = wrap.querySelector('#m59-trace-new');
+  var traceProc = wrap.querySelector('#m59-trace-proc');
+  var caption = wrap.querySelector('#m59-update-caption');
+
+  var scenarios = {
+    cosmetic: {
+      before: 'Icône de navigation affichée en bleu (version 1.0)',
+      after: 'Icône de navigation affichée en vert (version 1.1)',
+      txt: 'Ici, la mise à jour ne change qu\'une couleur d\'icône à l\'écran : l\'enjeu semble minime, purement esthétique.'
+    },
+    calcul: {
+      before: 'Calcul de la vitesse d\'approche affichée au pilote (version 1.0)',
+      after: 'Calcul de la vitesse d\'approche corrigé (version 1.1)',
+      txt: 'Ici, la mise à jour change un calcul dont le pilote se sert pour ses décisions : l\'enjeu est nettement plus important.'
+    }
+  };
+
+  function show(key) {
+    var s = scenarios[key];
+    updateView.style.display = 'block';
+    beforeEl.textContent = s.before;
+    afterEl.textContent = s.after;
+    traceOld.textContent = 'version 1.0';
+    traceNew.textContent = 'version 1.1';
+    traceProc.textContent = 'Oui';
+    caption.textContent = s.txt + ' Pourtant, dans les deux cas, la modification est tracée et passe par une procédure approuvée : on ne peut pas toujours savoir à l\'avance si une modification en apparence mineure aura, ou non, des conséquences importantes.';
+  }
+
+  btnCosmetic.addEventListener('click', function () { show('cosmetic'); });
+  btnCalcul.addEventListener('click', function () { show('calcul'); });
 })();
 </script>

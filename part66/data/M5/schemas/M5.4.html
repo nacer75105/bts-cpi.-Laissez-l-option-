@@ -8,6 +8,10 @@
 #schema-m54-wrap .m54-bus-group { display:flex; flex-direction:column; gap:4px; }
 #schema-m54-wrap .m54-arrow { font-size:1.3em; color:#888; }
 #schema-m54-wrap .m54-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:3.2em; }
+#schema-m54-wrap .m54-sep { margin:22px 0 6px; border:none; border-top:1px solid #ccc; }
+#schema-m54-wrap .m54-mem-box { border:2px solid #888; border-radius:8px; padding:12px 16px; font-size:0.9em; text-align:center; background:#f7f7f7; color:#222; min-width:130px; transition: all .25s ease; }
+#schema-m54-wrap .m54-mem-box.cleared { background:#fdf1f1; border-color:#b23b3b; border-style:dashed; color:#8a4a4a; font-style:italic; }
+#schema-m54-wrap .m54-mem-content { display:block; margin-top:6px; font-weight:bold; }
 </style>
 
 <p><strong>Essaie toi-même :</strong> clique sur « Étape suivante » pour suivre le trajet d'une donnée, du capteur jusqu'au processeur.</p>
@@ -33,6 +37,20 @@
   <button class="m54-btn" id="m54-reset">Recommencer</button>
 </div>
 <div class="m54-caption" id="m54-caption">Clique sur « Étape suivante » pour commencer.</div>
+
+<hr class="m54-sep">
+<p><strong>Deuxième expérience :</strong> observe ce qui arrive à la RAM et à la ROM quand on coupe l'alimentation.</p>
+
+<div class="m54-row">
+  <div class="m54-mem-box" id="m54-rambox">RAM<span class="m54-mem-content" id="m54-ram-content">Température : 42</span></div>
+  <div class="m54-mem-box" id="m54-rombox">ROM<span class="m54-mem-content" id="m54-rom-content">Programme de démarrage</span></div>
+</div>
+
+<div style="margin-top:10px;">
+  <button class="m54-btn" id="m54-power-off">Couper l'alimentation</button>
+  <button class="m54-btn" id="m54-power-on">Remettre sous tension</button>
+</div>
+<div class="m54-caption" id="m54-power-caption">Les deux mémoires contiennent actuellement une information.</div>
 </div>
 
 <script>
@@ -80,6 +98,34 @@
     step = -1;
     render();
     caption.textContent = 'Clique sur « Étape suivante » pour commencer.';
+  });
+})();
+
+(function () {
+  // Deuxième expérience : RAM (volatile) vs ROM (non volatile) face à une coupure d'alimentation
+  var wrap = document.getElementById('schema-m54-wrap');
+  if (!wrap) { return; }
+  var ramBox = wrap.querySelector('#m54-rambox');
+  var ramContent = wrap.querySelector('#m54-ram-content');
+  var powerOff = wrap.querySelector('#m54-power-off');
+  var powerOn = wrap.querySelector('#m54-power-on');
+  var powerCaption = wrap.querySelector('#m54-power-caption');
+  var powered = true;
+
+  powerOff.addEventListener('click', function () {
+    if (!powered) { powerCaption.textContent = 'L\'alimentation est déjà coupée.'; return; }
+    powered = false;
+    ramContent.textContent = '— vide —';
+    ramBox.classList.add('cleared');
+    powerCaption.textContent = 'Alimentation coupée : la RAM a perdu son contenu (elle est volatile). La ROM, elle, garde toujours « Programme de démarrage » : elle est non volatile, son contenu ne dépend pas de l\'alimentation.';
+  });
+
+  powerOn.addEventListener('click', function () {
+    if (powered) { powerCaption.textContent = 'L\'alimentation est déjà présente.'; return; }
+    powered = true;
+    ramBox.classList.remove('cleared');
+    ramContent.textContent = '— vide, en attente d\'une donnée —';
+    powerCaption.textContent = 'Alimentation rétablie : la RAM repart vide, elle ne se souvient de rien de ce qu\'elle contenait avant la coupure (il faudra y réécrire une donnée). La ROM, elle, n\'a jamais rien perdu : son contenu est resté « Programme de démarrage » pendant toute la coupure, sans interruption.';
   });
 })();
 </script>
