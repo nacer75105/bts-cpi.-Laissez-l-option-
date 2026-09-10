@@ -326,6 +326,106 @@ corrections suivantes, toutes appliquées :
 Toutes ces corrections ont été vérifiées par relecture avant ce commit ;
 aucune erreur factuelle n'a été trouvée dans le contenu enrichi.
 
+**Round « pourquoi / exemples progressifs / transitions » + 6 nouveaux
+schémas interactifs (2026-09-09)**, suite au retour utilisateur après test
+des 3 premiers schémas (M5.1, M5.3, M5.7) en navigateur : approche
+conservée, étendue aux 6 fiches restantes.
+
+- **Texte des 9 fiches** : chacune a reçu un paragraphe « pourquoi » en
+  ouverture (à quoi sert la notion avant de la définir), un ou deux
+  exemples progressifs supplémentaires, et une phrase de transition vers
+  la fiche suivante. Chaîne de transitions complète M5.1→M5.2→...→M5.9,
+  à une exception près : le maillon M5.3→M5.4 n'a pas reçu de phrase de
+  liaison explicite (mineur, à compléter dans un round ultérieur).
+
+- **6 nouveaux schémas interactifs**, même technique que les 3 premiers
+  (fichier `.html` autonome dans `part66/data/M5/schemas/`, rendu via
+  `st.html(..., unsafe_allow_javascript=True)`, aucune dépendance
+  externe, aucune communication Python) : M5.2 (simulateur ADC avec
+  effet de quantification), M5.4 (parcours animé d'une donnée capteur →
+  bus → RAM → CPU), M5.5 (cycle fetch-decode-execute animé), M5.6 et
+  M5.8 (schémas **volontairement qualitatifs**, sans aucun chiffre ni
+  norme, conformément au critère 2bis), M5.9 (bascule visuelle
+  instruments classiques / glass cockpit). Les 9 fiches ont désormais
+  chacune leur schéma.
+
+- **5 explications de questions renforcées** (M5-0001, M5-0013, M5-0021,
+  M5-0030, M5-0038) : elles justifiaient déjà la bonne réponse mais
+  dismissaient les distracteurs trop sèchement ; elles expliquent
+  maintenant plus clairement pourquoi chaque distracteur est faux.
+
+- **5 points BLOQUANT trouvés et corrigés par une première relecture
+  complète de ce round**, tous par atténuation du contenu (aucune
+  donnée nouvelle non vérifiée ajoutée en remplacement) :
+  - Fiche M5.2 — confusion technique corrigée (l'automanette ne pilote
+    pas de gouverne ; le nouvel exemple attribue ce rôle à un
+    calculateur de commandes de vol).
+  - Fiche M5.8 — retrait d'une affirmation de « exigence de
+    certification » non sourcée, remplacée par une formulation sans
+    prétention réglementaire.
+  - Fiche M5.9 — retrait d'un absolu non sourcé (« de la même manière
+    stricte ») sur la procédure de modification logicielle.
+  - `schemas/M5.6.html` — régression 2bis : le panneau nommait le
+    bracelet seul comme suffisant (perdant le qualificatif « dédié » et
+    les autres précautions de la fiche), et l'issue de la « panne » était
+    présentée comme certaine plutôt que possible. Panneau reformulé
+    pour lister les précautions de la fiche, issue mise au conditionnel.
+  - `schemas/M5.8.html` — régression 2bis : l'efficacité du blindage
+    était présentée comme totale (« arrive intact ») et un détail
+    d'installation non vérifié avait été ajouté (« gaine métallique
+    reliée à la masse »). Reformulé en « limite la sensibilité, ne
+    l'annule pas », détail d'installation retiré.
+
+  Une relecture de vérification a confirmé les 5 corrections
+  effectives, sans nouvelle régression.
+
+- **Points « À REVOIR » traités dans la foulée** (non bloquants mais
+  corrigés par prudence) : cas de tension ambiguë du simulateur ADC
+  (2,5 V → 2,4 V, plus d'égalité exacte entre deux marches, robustesse
+  ajoutée au cas où), bug d'affichage de fin de cycle sur
+  `schemas/M5.5.html` (dernière case restait jaune au lieu de passer
+  verte), cadran « Attitude » de `schemas/M5.9.html` remplacé par
+  « Variomètre » (plus fidèle à un instrument réellement à aiguille),
+  disclaimer « valeurs illustratives » rendu visible sur les deux vues
+  de ce même schéma, paragraphe « pourquoi » ajouté à la fiche M5.6
+  (seule fiche qui n'en avait pas), transitions manquantes ajoutées
+  entre fiches (dont M5.3→M5.4, complétant la chaîne M5.1→...→M5.9),
+  formulations de M5-0030/M5-0038 allégées d'une clause qui révélait la
+  technique de rédaction du QCM plutôt que d'enseigner.
+
+**Dette de qualité assumée, round texte enrichi + 6 schémas (décidée
+avec l'utilisateur le 2026-09-10)** — points mineurs identifiés par la
+relecture finale, non corrigés, à traiter dans un round ultérieur :
+
+- **Fiche M5.7** — la phrase « c'est ce compromis, favorable au
+  câblage, qui explique le choix du série en avionique » présente le
+  poids du câblage comme la seule raison du choix du bus série, alors
+  que l'intégrité du signal en haute fréquence en est une autre. Le
+  calcul chiffré associé (32 bits : 32 fils/1 instant en parallèle vs
+  1 fil/32 instants en série) reste exact ; seule la formulation de la
+  causalité est à nuancer.
+
+- **Fiche M5.8** — l'exemple d'ouverture (grésillement d'un téléphone
+  portable près d'une enceinte) est un phénomène réel mais surtout
+  associé aux anciens réseaux 2G/GSM, de moins en moins observé
+  aujourd'hui : risque de ne plus évoquer grand-chose à un candidat
+  jeune. À remplacer par un exemple plus intemporel si l'occasion se
+  présente.
+
+- **`schemas/M5.4.html`** — le diagramme est câblé Capteur → ADC → Bus
+  → RAM → CPU avec des flèches uniquement de gauche à droite, alors que
+  l'étape 7 (relecture par le CPU) décrit un flux RAM → CPU qui remonte
+  visuellement à contre-sens des flèches dessinées. Les 7 étapes
+  restent correctes sur le fond ; seul le rendu visuel de la dernière
+  étape peut prêter à confusion.
+
+- **`schemas/M5.6.html`** — le badge du panneau « sans précaution »
+  affiche un résultat déterministe (« Composant : en panne ») alors
+  que la légende qui l'accompagne dit bien « peut tomber en panne ».
+  La légende rattrape le sens correctement (aucune procédure ni aucun
+  équipement n'est mal décrit), mais un badge du type « en panne (dans
+  ce scénario) » lèverait ce flottement résiduel.
+
 ## Point de configuration à confirmer (hors banque de questions)
 
 - **Nombre de questions et durée de l'examen officiel du module M10** pour

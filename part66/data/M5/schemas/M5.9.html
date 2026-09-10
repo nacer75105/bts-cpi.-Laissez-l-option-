@@ -1,0 +1,76 @@
+<div id="schema-m59-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m59-wrap .m59-btn { padding:7px 16px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.95em; }
+#schema-m59-wrap .m59-btn:hover { background:#e8e8e8; }
+#schema-m59-wrap .m59-view { display:flex; gap:18px; margin-top:16px; align-items:flex-end; flex-wrap:wrap; }
+#schema-m59-wrap .m59-gauge-block { text-align:center; }
+#schema-m59-wrap .m59-gauge { width:70px; height:70px; border-radius:50%; border:3px solid #555; position:relative; background:#fdfdfd; margin:0 auto; }
+#schema-m59-wrap .m59-needle { position:absolute; width:2px; height:26px; background:#c0392b; left:50%; bottom:50%; transform-origin:bottom center; }
+#schema-m59-wrap .m59-gauge-label { font-size:0.72em; color:#555; margin-top:4px; }
+#schema-m59-wrap .m59-screen { background:#12181f; color:#7fce7f; border-radius:10px; border:3px solid #333; padding:14px 18px; font-family: monospace; font-size:0.95em; line-height:1.7; min-width:220px; }
+#schema-m59-wrap .m59-screen .m59-sub { color:#9fd6ff; }
+#schema-m59-wrap .m59-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> bascule entre un poste de pilotage classique et un glass cockpit, pour comparer la même information affichée des deux façons.</p>
+
+<button class="m59-btn" id="m59-toggle">Afficher le glass cockpit ▶</button>
+
+<div class="m59-view" id="m59-classic">
+  <div class="m59-gauge-block">
+    <div class="m59-gauge"><div class="m59-needle" style="transform:rotate(40deg);"></div></div>
+    <div class="m59-gauge-label">Vitesse</div>
+  </div>
+  <div class="m59-gauge-block">
+    <div class="m59-gauge"><div class="m59-needle" style="transform:rotate(-25deg);"></div></div>
+    <div class="m59-gauge-label">Altitude</div>
+  </div>
+  <div class="m59-gauge-block">
+    <div class="m59-gauge"><div class="m59-needle" style="transform:rotate(80deg);"></div></div>
+    <div class="m59-gauge-label">Variomètre</div>
+  </div>
+  <div class="m59-gauge-block">
+    <div class="m59-gauge"><div class="m59-needle" style="transform:rotate(-60deg);"></div></div>
+    <div class="m59-gauge-label">Cap</div>
+  </div>
+</div>
+
+<div class="m59-view" id="m59-glass" style="display:none;">
+  <div class="m59-screen">
+    <div><span class="m59-sub">VITESSE</span> 250 kt</div>
+    <div><span class="m59-sub">ALTITUDE</span> 8 500 ft</div>
+    <div><span class="m59-sub">VARIO</span> +500 ft/min</div>
+    <div><span class="m59-sub">CAP</span> 087°</div>
+  </div>
+</div>
+
+<div class="m59-caption" id="m59-caption">Poste classique : 4 instruments mécaniques séparés, chacun avec sa propre aiguille et son propre cadran.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m59-wrap');
+  if (!wrap) { return; }
+  var toggle = wrap.querySelector('#m59-toggle');
+  var classic = wrap.querySelector('#m59-classic');
+  var glass = wrap.querySelector('#m59-glass');
+  var caption = wrap.querySelector('#m59-caption');
+  var showingGlass = false;
+
+  function render() {
+    classic.style.display = showingGlass ? 'none' : 'flex';
+    glass.style.display = showingGlass ? 'flex' : 'none';
+    toggle.textContent = showingGlass ? 'Revenir aux instruments classiques ◀' : 'Afficher le glass cockpit ▶';
+    caption.textContent = showingGlass
+      ? 'Glass cockpit : les mêmes 4 informations (vitesse, altitude, variomètre, cap) sont regroupées sur un seul écran électronique — même contenu, présentation totalement différente (valeurs purement illustratives, sans lien avec un vol réel).'
+      : 'Poste classique : 4 instruments mécaniques séparés, chacun avec sa propre aiguille et son propre cadran (valeurs et angles d\'aiguille purement illustratifs, sans lien avec un vol réel).';
+  }
+
+  toggle.addEventListener('click', function () {
+    showingGlass = !showingGlass;
+    render();
+  });
+
+  render();
+})();
+</script>

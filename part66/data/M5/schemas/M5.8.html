@@ -1,0 +1,59 @@
+<div id="schema-m58-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m58-wrap .m58-btn { padding:8px 16px; border-radius:6px; border:2px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.95em; font-weight:bold; }
+#schema-m58-wrap .m58-btn.off { background:#f5c6c6; border-color:#8a2020; }
+#schema-m58-wrap .m58-btn.on { background:#d7f0d7; border-color:#2a6b2a; }
+#schema-m58-wrap .m58-diagram { display:flex; align-items:center; gap:10px; margin-top:16px; flex-wrap:wrap; }
+#schema-m58-wrap .m58-box { border:2px solid #888; border-radius:8px; padding:10px; font-size:0.85em; text-align:center; background:#f7f7f7; color:#222; flex:1; min-width:140px; }
+#schema-m58-wrap .m58-cable { border:2px dashed #999; border-radius:6px; padding:8px; font-size:0.8em; text-align:center; color:#666; min-width:80px; transition: all .3s ease; }
+#schema-m58-wrap .m58-cable.shielded { border-style:solid; border-color:#555; background:#e2e2e2; color:#222; }
+#schema-m58-wrap .m58-signal-box.perturbe { background:#f5c6c6; border-color:#8a2020; }
+#schema-m58-wrap .m58-signal-box.stable { background:#d7f0d7; border-color:#2a6b2a; }
+#schema-m58-wrap .m58-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:3.2em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> active ou désactive le blindage du câble, et observe l'effet sur le signal reçu à proximité d'une source de perturbation.</p>
+
+<button class="m58-btn off" id="m58-toggle" data-on="0">Blindage : désactivé</button>
+
+<div class="m58-diagram">
+  <div class="m58-box">Source de perturbation électromagnétique à proximité</div>
+  <div class="m58-cable" id="m58-cable">Câble</div>
+  <div class="m58-box m58-signal-box perturbe" id="m58-signal">Signal reçu : perturbé</div>
+</div>
+
+<div class="m58-caption" id="m58-caption">Le câble n'est pas blindé : la perturbation proche affecte le signal transmis.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m58-wrap');
+  if (!wrap) { return; }
+  var toggle = wrap.querySelector('#m58-toggle');
+  var cable = wrap.querySelector('#m58-cable');
+  var signal = wrap.querySelector('#m58-signal');
+  var caption = wrap.querySelector('#m58-caption');
+
+  function render(on) {
+    toggle.setAttribute('data-on', on ? '1' : '0');
+    toggle.textContent = 'Blindage : ' + (on ? 'activé' : 'désactivé');
+    toggle.classList.toggle('on', on);
+    toggle.classList.toggle('off', !on);
+    cable.classList.toggle('shielded', on);
+    cable.textContent = on ? 'Câble blindé' : 'Câble';
+    signal.classList.toggle('perturbe', !on);
+    signal.classList.toggle('stable', on);
+    signal.textContent = on ? 'Signal reçu : peu perturbé' : 'Signal reçu : perturbé';
+    caption.textContent = on
+      ? 'Le câble blindé fait largement écran à la perturbation électromagnétique proche : le signal utile arrive nettement moins dégradé (un blindage limite la sensibilité aux perturbations, il ne l\'annule pas).'
+      : 'Le câble n\'est pas blindé : la perturbation électromagnétique proche vient s\'ajouter au signal utile, qui arrive dégradé de l\'autre côté.';
+  }
+
+  toggle.addEventListener('click', function () {
+    var on = toggle.getAttribute('data-on') !== '1';
+    render(on);
+  });
+
+  render(false);
+})();
+</script>

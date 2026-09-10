@@ -7,7 +7,7 @@
       "question": "Converti en décimal, le nombre binaire 1010 vaut :",
       "options": ["10", "12", "5"],
       "bonne": 0,
-      "explication": "1010(2) = 1×2³ + 0×2² + 1×2¹ + 0×2⁰ = 8 + 0 + 2 + 0 = 10(10). Les deux autres valeurs ne correspondent à aucune décomposition correcte de ce nombre binaire.",
+      "explication": "1010(2) = 1×2³ + 0×2² + 1×2¹ + 0×2⁰ = 8 + 0 + 2 + 0 = 10(10). 12 correspondrait plutôt à 1100(2) (8+4), et 5 à 0101(2) (4+1) : ce sont d'autres nombres binaires, pas 1010. Il faut reprendre la décomposition bit par bit pour ne pas se tromper de valeur.",
       "source": "Notions générales d'électronique numérique — conversion binaire/décimal"
     },
     {
@@ -115,7 +115,7 @@
       "question": "La porte logique NON (NOT) est aussi appelée :",
       "options": ["Un inverseur", "Un amplificateur", "Un comparateur"],
       "bonne": 0,
-      "explication": "La porte NON inverse simplement l'état logique de son unique entrée (0 devient 1, et inversement) : c'est pourquoi on l'appelle aussi inverseur. Elle n'amplifie ni ne compare deux signaux.",
+      "explication": "La porte NON inverse simplement l'état logique de son unique entrée (0 devient 1, et inversement) : c'est pourquoi on l'appelle aussi inverseur. Un amplificateur augmente la puissance d'un signal sans changer sa valeur logique, et un comparateur a besoin de deux entrées à confronter l'une à l'autre — la porte NON n'a qu'une seule entrée, et se contente de l'inverser, sans rien amplifier ni comparer.",
       "source": "Notions générales d'électronique numérique — algèbre de Boole et portes logiques"
     },
     {
@@ -187,7 +187,7 @@
       "question": "Le cycle de base d'exécution d'une instruction par un microprocesseur est, dans l'ordre :",
       "options": ["Décodage, exécution, recherche", "Exécution, recherche, décodage", "Recherche, décodage, exécution"],
       "bonne": 2,
-      "explication": "Le cycle d'instruction d'un microprocesseur suit l'ordre recherche (fetch) → décodage (decode) → exécution (execute) : l'instruction est d'abord lue en mémoire, puis interprétée, puis seulement exécutée.",
+      "explication": "Le cycle d'instruction d'un microprocesseur suit l'ordre recherche (fetch) → décodage (decode) → exécution (execute) : l'instruction est d'abord lue en mémoire, puis interprétée, puis seulement exécutée. Les deux autres ordres proposés sont impossibles dans la pratique : on ne peut pas décoder une instruction qu'on n'a pas encore recherchée en mémoire, ni l'exécuter avant même de savoir ce qu'elle demande de faire.",
       "source": "Notions générales d'électronique numérique — microprocesseurs"
     },
     {
@@ -268,7 +268,7 @@
       "question": "Le sigle ESD signifie :",
       "options": ["Emergency Shutdown Device", "Electronic System Design", "Electro-Static Discharge"],
       "bonne": 2,
-      "explication": "ESD signifie Electro-Static Discharge, c'est-à-dire décharge électrostatique. Les deux autres développements ne correspondent à aucun sigle standard utilisé dans ce contexte.",
+      "explication": "ESD signifie Electro-Static Discharge, c'est-à-dire décharge électrostatique — exactement le phénomène décrit dans cette fiche. « Emergency Shutdown Device » n'est pas inventé au hasard (ce sigle existe réellement, mais dans l'industrie des procédés industriels, pour désigner un système d'arrêt d'urgence) : ce n'est simplement pas son sens en électronique. « Electronic System Design » sonne technique et plausible en anglais, mais ne correspond à aucun sigle standard dans ce domaine.",
       "source": "Notions générales d'électronique numérique — composants sensibles à l'ESD"
     },
     {
@@ -331,7 +331,7 @@
       "question": "Le sigle CEM (EMC en anglais) désigne :",
       "options": ["Le circuit électronique modulaire", "La compatibilité électromagnétique", "Le contrôle électrique manuel"],
       "bonne": 1,
-      "explication": "CEM signifie compatibilité électromagnétique (EMC, Electromagnetic Compatibility, en anglais) : l'aptitude d'un équipement à fonctionner sans être perturbé par son environnement électromagnétique, ni le perturber lui-même. Les deux autres développements ne correspondent à aucun sigle standard dans ce contexte.",
+      "explication": "CEM signifie compatibilité électromagnétique (EMC, Electromagnetic Compatibility, en anglais) : l'aptitude d'un équipement à fonctionner sans être perturbé par son environnement électromagnétique, ni le perturber lui-même. « Circuit électronique modulaire » et « contrôle électrique manuel » sonnent techniques mais ne correspondent à aucun sigle standard réellement utilisé dans ce domaine.",
       "source": "Notions générales d'électronique numérique — environnement électromagnétique"
     },
     {

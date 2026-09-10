@@ -1,0 +1,77 @@
+<div id="schema-m56-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m56-wrap .m56-panels { display:flex; gap:16px; flex-wrap:wrap; margin-top:12px; }
+#schema-m56-wrap .m56-panel { flex:1; min-width:220px; border:2px solid #888; border-radius:10px; padding:12px; background:#f7f7f7; }
+#schema-m56-wrap .m56-panel h4 { margin:0 0 8px; font-size:0.95em; }
+#schema-m56-wrap .m56-status { padding:8px; border-radius:6px; background:#e2e2e2; font-weight:bold; text-align:center; margin-bottom:8px; transition: all .3s ease; }
+#schema-m56-wrap .m56-status.ok { background:#d7f0d7; color:#2a6b2a; }
+#schema-m56-wrap .m56-status.hs { background:#f5c6c6; color:#8a2020; }
+#schema-m56-wrap .m56-btn { padding:6px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.9em; width:100%; }
+#schema-m56-wrap .m56-btn:hover:not(:disabled) { background:#e8e8e8; }
+#schema-m56-wrap .m56-btn:disabled { opacity:0.5; cursor:not-allowed; }
+#schema-m56-wrap .m56-later { margin-top:14px; padding:8px 16px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.95em; }
+#schema-m56-wrap .m56-later:disabled { opacity:0.5; cursor:not-allowed; }
+#schema-m56-wrap .m56-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:3.2em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> manipule le composant dans les deux scénarios, puis avance dans le temps pour voir la différence.</p>
+
+<div class="m56-panels">
+  <div class="m56-panel">
+    <h4>Avec les précautions ESD (bracelet dédié, plan de travail et emballage adaptés)</h4>
+    <div class="m56-status ok" id="m56-status-a">Composant : état OK</div>
+    <button class="m56-btn" id="m56-touch-a">Manipuler le composant</button>
+  </div>
+  <div class="m56-panel">
+    <h4>Sans précaution particulière</h4>
+    <div class="m56-status ok" id="m56-status-b">Composant : état OK</div>
+    <button class="m56-btn" id="m56-touch-b">Manipuler le composant</button>
+  </div>
+</div>
+
+<button class="m56-later" id="m56-later" disabled>Voir ce qui se passe plus tard, en service ▶</button>
+<div class="m56-caption" id="m56-caption">Clique sur « Manipuler le composant » dans les deux cas.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m56-wrap');
+  if (!wrap) { return; }
+  var touchA = wrap.querySelector('#m56-touch-a');
+  var touchB = wrap.querySelector('#m56-touch-b');
+  var laterBtn = wrap.querySelector('#m56-later');
+  var statusA = wrap.querySelector('#m56-status-a');
+  var statusB = wrap.querySelector('#m56-status-b');
+  var caption = wrap.querySelector('#m56-caption');
+
+  var doneA = false;
+  var doneB = false;
+
+  function checkReady() {
+    if (doneA && doneB) {
+      laterBtn.disabled = false;
+      caption.textContent = 'Les deux composants ont été manipulés. Au premier coup d\'œil, ils semblent identiques : aucun des deux ne montre de dommage visible, aucune étincelle, rien à signaler. Clique sur « Voir ce qui se passe plus tard » pour avancer dans le temps.';
+    }
+  }
+
+  touchA.addEventListener('click', function () {
+    doneA = true;
+    touchA.disabled = true;
+    checkReady();
+  });
+  touchB.addEventListener('click', function () {
+    doneB = true;
+    touchB.disabled = true;
+    checkReady();
+  });
+
+  laterBtn.addEventListener('click', function () {
+    laterBtn.disabled = true;
+    statusA.textContent = 'Composant : état OK';
+    statusB.textContent = 'Composant : en panne';
+    statusB.classList.remove('ok');
+    statusB.classList.add('hs');
+    caption.textContent = 'Plus tard, en service : le composant manipulé avec les précautions ESD fonctionne toujours normalement. Celui manipulé sans précaution peut tomber en panne — sans qu\'aucun signe n\'ait permis de le prévoir au moment de la manipulation. C\'est précisément pour cela que la procédure ESD doit être suivie systématiquement, même quand « ça a l\'air d\'aller ».';
+  });
+})();
+</script>

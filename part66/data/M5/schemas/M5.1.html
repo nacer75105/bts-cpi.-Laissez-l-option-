@@ -1,0 +1,114 @@
+<div id="schema-m51-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m51-wrap .m51-box { display:inline-flex; flex-direction:column; align-items:center; justify-content:center; width:46px; height:46px; margin:2px; border:2px solid #888; border-radius:6px; font-weight:bold; font-size:1.1em; transition: all .25s ease; background:#f7f7f7; color:#222; }
+#schema-m51-wrap .m51-box.done { background:#d7f0d7; border-color:#3a9d3a; }
+#schema-m51-wrap .m51-box.current { background:#fff3b0; border-color:#e0a800; transform: scale(1.12); }
+#schema-m51-wrap .m51-pow { font-size:0.6em; font-weight:normal; color:#666; }
+#schema-m51-wrap .m51-btn { margin:4px 6px 4px 0; padding:6px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.95em; }
+#schema-m51-wrap .m51-btn:hover { background:#e8e8e8; }
+#schema-m51-wrap .m51-btn.active { background:#333; color:#fff; border-color:#333; }
+#schema-m51-wrap .m51-caption { margin-top:10px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:2.6em; }
+#schema-m51-wrap .m51-total { font-size:1.2em; font-weight:bold; margin-top:10px; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> choisis un nombre binaire, puis clique sur « Étape suivante » pour voir la conversion se faire bit par bit, en partant de la droite.</p>
+
+<div>
+  <button class="m51-btn" data-bin="1010">1010</button>
+  <button class="m51-btn" data-bin="1101">1101</button>
+  <button class="m51-btn" data-bin="11111">11111</button>
+</div>
+
+<div id="m51-bits" style="margin-top:12px;"></div>
+<div class="m51-total" id="m51-total">Total : 0</div>
+<div style="margin-top:8px;">
+  <button class="m51-btn" id="m51-next">Étape suivante ▶</button>
+  <button class="m51-btn" id="m51-reset">Recommencer</button>
+</div>
+<div class="m51-caption" id="m51-caption">Choisis un nombre binaire ci-dessus pour commencer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m51-wrap');
+  if (!wrap) { return; }
+  var bitsEl = wrap.querySelector('#m51-bits');
+  var totalEl = wrap.querySelector('#m51-total');
+  var captionEl = wrap.querySelector('#m51-caption');
+  var nextBtn = wrap.querySelector('#m51-next');
+  var resetBtn = wrap.querySelector('#m51-reset');
+  var presetBtns = wrap.querySelectorAll('.m51-btn[data-bin]');
+
+  var state = { bits: [], step: 0, total: 0 };
+  var SUP_DIGITS = ['⁰', '¹', '²', '³', '⁴']; // 0,1,2,3,4 en exposant, comme dans la fiche (2⁰, 2¹...)
+
+  function expo(pos) {
+    // "2" suivi du chiffre en exposant, même notation que la fiche M5.1 (2⁰, 2¹, 2², 2³...)
+    return '2' + (SUP_DIGITS[pos] || ('^' + pos));
+  }
+
+  function renderBits() {
+    bitsEl.innerHTML = '';
+    for (var i = 0; i < state.bits.length; i++) {
+      var pos = state.bits.length - 1 - i; // position (puissance de 2) du bit i, 0 = le plus à droite
+      var box = document.createElement('div');
+      box.className = 'm51-box';
+      if (pos < state.step - 1) { box.classList.add('done'); }
+      if (pos === state.step - 1) { box.classList.add('current'); }
+      box.innerHTML = state.bits[i] + '<span class="m51-pow">' + expo(pos) + '</span>';
+      bitsEl.appendChild(box);
+    }
+  }
+
+  function loadBinary(bin) {
+    state.bits = bin.split('');
+    state.step = 0;
+    state.total = 0;
+    presetBtns.forEach(function (b) {
+      b.classList.toggle('active', b.getAttribute('data-bin') === bin);
+    });
+    renderBits();
+    totalEl.textContent = 'Total : 0';
+    captionEl.textContent = 'Nombre binaire ' + bin + ' choisi. Clique sur « Étape suivante » : on va l\'examiner bit par bit, en commençant par celui de droite (position 2^0).';
+  }
+
+  function nextStep() {
+    if (state.bits.length === 0) {
+      captionEl.textContent = 'Choisis d\'abord un nombre binaire ci-dessus.';
+      return;
+    }
+    if (state.step >= state.bits.length) {
+      captionEl.textContent = 'Conversion déjà terminée : ' + state.bits.join('') + '(2) = ' + state.total + '(10). Clique sur « Recommencer » pour la revoir.';
+      return;
+    }
+    var pos = state.step; // puissance de 2 traitée à cette étape (0, 1, 2...)
+    var idx = state.bits.length - 1 - pos; // index dans le tableau (0 = bit le plus à gauche)
+    var bitVal = state.bits[idx];
+    var powVal = Math.pow(2, pos);
+    var msg;
+    if (bitVal === '1') {
+      state.total += powVal;
+      msg = 'Bit en position ' + expo(pos) + ' : il vaut 1, donc on ajoute ' + expo(pos) + ' = ' + powVal + '. Total actuel : ' + state.total + '.';
+    } else {
+      msg = 'Bit en position ' + expo(pos) + ' : il vaut 0, on n\'ajoute rien. Total actuel : ' + state.total + '.';
+    }
+    state.step++;
+    renderBits();
+    totalEl.textContent = 'Total : ' + state.total;
+    if (state.step === state.bits.length) {
+      msg += ' Conversion terminée : ' + state.bits.join('') + '(2) = ' + state.total + '(10).';
+    }
+    captionEl.textContent = msg;
+  }
+
+  presetBtns.forEach(function (b) {
+    b.addEventListener('click', function () { loadBinary(b.getAttribute('data-bin')); });
+  });
+  nextBtn.addEventListener('click', nextStep);
+  resetBtn.addEventListener('click', function () {
+    if (state.bits.length) { loadBinary(state.bits.join('')); }
+  });
+
+  loadBinary('1010');
+})();
+</script>

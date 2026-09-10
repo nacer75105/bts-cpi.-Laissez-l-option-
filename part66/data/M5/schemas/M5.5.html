@@ -1,0 +1,76 @@
+<div id="schema-m55-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m55-wrap .m55-btn { margin:4px 6px 4px 0; padding:6px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.95em; }
+#schema-m55-wrap .m55-btn:hover { background:#e8e8e8; }
+#schema-m55-wrap .m55-row { display:flex; gap:14px; margin-top:14px; align-items:center; }
+#schema-m55-wrap .m55-box { border:2px solid #888; border-radius:8px; padding:14px 10px; font-size:0.9em; text-align:center; background:#f7f7f7; color:#222; transition: all .25s ease; flex:1; }
+#schema-m55-wrap .m55-box.on { background:#fff3b0; border-color:#e0a800; transform: scale(1.06); }
+#schema-m55-wrap .m55-box.done { background:#d7f0d7; border-color:#3a9d3a; }
+#schema-m55-wrap .m55-sub { display:block; font-size:0.78em; color:#666; margin-top:2px; }
+#schema-m55-wrap .m55-arrow { font-size:1.2em; color:#888; }
+#schema-m55-wrap .m55-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:3.2em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> clique sur « Étape suivante » pour dérouler le cycle d'exécution de l'instruction « additionner R1 et R2 ».</p>
+
+<div class="m55-row">
+  <div class="m55-box" id="m55-fetch">Mémoire<span class="m55-sub">recherche (fetch)</span></div>
+  <span class="m55-arrow">→</span>
+  <div class="m55-box" id="m55-decode">Décodeur<span class="m55-sub">décodage (decode)</span></div>
+  <span class="m55-arrow">→</span>
+  <div class="m55-box" id="m55-execute">UAL<span class="m55-sub">exécution (execute)</span></div>
+</div>
+
+<div style="margin-top:10px;">
+  <button class="m55-btn" id="m55-next">Étape suivante ▶</button>
+  <button class="m55-btn" id="m55-reset">Recommencer</button>
+</div>
+<div class="m55-caption" id="m55-caption">Clique sur « Étape suivante » pour commencer le cycle.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m55-wrap');
+  if (!wrap) { return; }
+  var nextBtn = wrap.querySelector('#m55-next');
+  var resetBtn = wrap.querySelector('#m55-reset');
+  var caption = wrap.querySelector('#m55-caption');
+  var boxes = { fetch: wrap.querySelector('#m55-fetch'), decode: wrap.querySelector('#m55-decode'), execute: wrap.querySelector('#m55-execute') };
+
+  var steps = [
+    { id: 'fetch', txt: 'Recherche (fetch) : le processeur va chercher l\'instruction « additionner R1 et R2 » en mémoire.' },
+    { id: 'decode', txt: 'Décodage (decode) : le processeur analyse l\'instruction et comprend qu\'il s\'agit d\'une addition portant sur les registres R1 et R2.' },
+    { id: 'execute', txt: 'Exécution (execute) : l\'unité arithmétique et logique (UAL) réalise l\'addition, et écrit le résultat dans un registre.' }
+  ];
+
+  var step = -1;
+
+  function render() {
+    Object.keys(boxes).forEach(function (k) { boxes[k].classList.remove('on'); });
+    for (var i = 0; i < step; i++) { boxes[steps[i].id].classList.add('done'); }
+    if (step >= 0 && step < steps.length) {
+      boxes[steps[step].id].classList.remove('done');
+      boxes[steps[step].id].classList.add('on');
+      caption.textContent = steps[step].txt;
+    }
+  }
+
+  nextBtn.addEventListener('click', function () {
+    if (step >= steps.length) {
+      caption.textContent = 'Cycle déjà terminé. Clique sur « Recommencer » pour le revoir.';
+      return;
+    }
+    step++;
+    render();
+    if (step === steps.length) {
+      caption.textContent = 'Cycle terminé : R1 + R2 a été calculé et rangé dans un registre. Dans un programme réel, ce cycle recommence aussitôt pour l\'instruction suivante — des milliers, voire des millions de fois par seconde. Clique sur « Recommencer » pour le revoir.';
+    }
+  });
+
+  resetBtn.addEventListener('click', function () {
+    step = -1;
+    Object.keys(boxes).forEach(function (k) { boxes[k].classList.remove('on', 'done'); });
+    caption.textContent = 'Clique sur « Étape suivante » pour commencer le cycle.';
+  });
+})();
+</script>

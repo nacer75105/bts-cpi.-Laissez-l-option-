@@ -1,0 +1,126 @@
+<div id="schema-m57-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m57-wrap .m57-btn { margin:4px 6px 4px 0; padding:6px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.95em; }
+#schema-m57-wrap .m57-btn:hover { background:#e8e8e8; }
+#schema-m57-wrap .m57-btn.active { background:#333; color:#fff; border-color:#333; }
+#schema-m57-wrap .m57-btn:disabled { opacity:0.5; cursor:not-allowed; }
+#schema-m57-wrap .m57-track { position:relative; height:34px; border-bottom:2px dashed #999; margin:6px 0; }
+#schema-m57-wrap .m57-bit { position:absolute; top:3px; left:0; width:26px; height:26px; border-radius:5px; background:#4a90d9; color:#fff; display:flex; align-items:center; justify-content:center; font-size:0.72em; font-weight:bold; transition: left 0.5s linear; }
+#schema-m57-wrap .m57-receiver { position:absolute; top:-6px; bottom:-6px; width:6px; background:#555; }
+#schema-m57-wrap .m57-tracks-box { position:relative; overflow:visible; }
+#schema-m57-wrap .m57-caption { margin-top:12px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:2.6em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> choisis un mode, puis clique sur « Envoyer un octet » pour voir comment les 8 bits circulent.</p>
+
+<div>
+  <button class="m57-btn active" data-mode="serie">Bus série</button>
+  <button class="m57-btn" data-mode="parallele">Bus parallèle</button>
+</div>
+
+<div id="m57-tracks" class="m57-tracks-box" style="margin-top:14px;"></div>
+
+<button id="m57-send" class="m57-btn" style="margin-top:8px;">Envoyer un octet ▶</button>
+<div class="m57-caption" id="m57-caption">Choisis un mode et clique sur « Envoyer un octet ».</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m57-wrap');
+  if (!wrap) { return; }
+  var tracksEl = wrap.querySelector('#m57-tracks');
+  var caption = wrap.querySelector('#m57-caption');
+  var sendBtn = wrap.querySelector('#m57-send');
+  var modeBtns = wrap.querySelectorAll('.m57-btn[data-mode]');
+
+  var mode = 'serie';
+  var sending = false;
+  var BIT_COUNT = 8;
+  var TRACK_WIDTH = 260;
+
+  function buildTracks() {
+    tracksEl.innerHTML = '';
+    var nbTracks = (mode === 'serie') ? 1 : BIT_COUNT;
+    for (var i = 0; i < nbTracks; i++) {
+      var track = document.createElement('div');
+      track.className = 'm57-track';
+      track.style.width = (TRACK_WIDTH + 36) + 'px';
+      var receiver = document.createElement('div');
+      receiver.className = 'm57-receiver';
+      receiver.style.left = (TRACK_WIDTH + 26) + 'px';
+      track.appendChild(receiver);
+      tracksEl.appendChild(track);
+    }
+  }
+
+  function setButtonsDisabled(disabled) {
+    sendBtn.disabled = disabled;
+    modeBtns.forEach(function (b) { b.disabled = disabled; });
+  }
+
+  function setMode(m) {
+    if (sending) { return; }
+    mode = m;
+    modeBtns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-mode') === m); });
+    buildTracks();
+    caption.textContent = (m === 'serie')
+      ? 'Mode bus série sélectionné : les 8 bits vont voyager les uns après les autres, sur une seule ligne.'
+      : 'Mode bus parallèle sélectionné : les 8 bits vont voyager tous en même temps, chacun sur sa propre ligne.';
+  }
+
+  function send() {
+    if (sending) { return; }
+    sending = true;
+    setButtonsDisabled(true);
+    buildTracks();
+
+    if (mode === 'serie') {
+      var track = tracksEl.querySelector('.m57-track');
+      var i = 0;
+      function sendNext() {
+        if (i >= BIT_COUNT) {
+          caption.textContent = 'Les 8 bits sont arrivés un par un : il a fallu 8 déplacements successifs, mais une seule ligne a suffi.';
+          sending = false;
+          setButtonsDisabled(false);
+          return;
+        }
+        var bit = document.createElement('div');
+        bit.className = 'm57-bit';
+        bit.textContent = 'b' + i;
+        track.appendChild(bit);
+        caption.textContent = 'Envoi du bit n°' + (i + 1) + ' sur 8 (bus série : un seul bit voyage à la fois).';
+        var currentBit = i; // décalage pour que chaque bit reste visible à l'arrivée, sans se superposer aux précédents
+        setTimeout(function () { bit.style.left = (TRACK_WIDTH + currentBit * 3) + 'px'; }, 20);
+        i++;
+        setTimeout(sendNext, 550);
+      }
+      sendNext();
+    } else {
+      var tracks = tracksEl.querySelectorAll('.m57-track');
+      for (var j = 0; j < tracks.length; j++) {
+        var bit = document.createElement('div');
+        bit.className = 'm57-bit';
+        bit.textContent = 'b' + j;
+        tracks[j].appendChild(bit);
+      }
+      caption.textContent = 'Envoi des 8 bits en même temps (bus parallèle : une ligne par bit).';
+      setTimeout(function () {
+        var allBits = tracksEl.querySelectorAll('.m57-bit');
+        allBits.forEach(function (b) { b.style.left = TRACK_WIDTH + 'px'; });
+      }, 20);
+      setTimeout(function () {
+        caption.textContent = 'Les 8 bits sont arrivés tous en même temps : un seul déplacement a suffi, mais il a fallu 8 lignes au lieu d\'une seule.';
+        sending = false;
+        setButtonsDisabled(false);
+      }, 650);
+    }
+  }
+
+  modeBtns.forEach(function (b) {
+    b.addEventListener('click', function () { setMode(b.getAttribute('data-mode')); });
+  });
+  sendBtn.addEventListener('click', send);
+
+  setMode('serie');
+})();
+</script>

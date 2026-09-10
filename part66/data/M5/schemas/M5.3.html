@@ -1,0 +1,117 @@
+<div id="schema-m53-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m53-wrap .m53-btn { margin:4px 6px 4px 0; padding:6px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.92em; }
+#schema-m53-wrap .m53-btn:hover { background:#e8e8e8; }
+#schema-m53-wrap .m53-btn.active { background:#333; color:#fff; border-color:#333; }
+#schema-m53-wrap .m53-switch { padding:6px 16px; border-radius:6px; border:2px solid #888; background:#f0f0f0; color:#222; cursor:pointer; font-weight:bold; font-size:1em; min-width:34px; }
+#schema-m53-wrap .m53-switch.on { background:#fff3b0; border-color:#e0a800; }
+#schema-m53-wrap .m53-switch:disabled { opacity:0.35; cursor:not-allowed; }
+#schema-m53-wrap .m53-gate-box { width:100px; height:64px; border:3px solid #555; border-radius:14px; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:1em; background:#ccc; color:#222; transition:background .25s; }
+#schema-m53-wrap .m53-gate-box.on { background:#7fce7f; }
+#schema-m53-wrap .m53-lamp { width:28px; height:28px; border-radius:50%; border:2px solid #555; background:#ccc; transition:background .25s; margin-left:14px; }
+#schema-m53-wrap .m53-lamp.on { background:#3a9d3a; }
+#schema-m53-wrap .m53-wire { width:26px; height:3px; background:#555; margin-left:14px; }
+#schema-m53-wrap .m53-row { display:flex; align-items:center; margin-top:16px; }
+#schema-m53-wrap .m53-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:2.6em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> choisis une porte logique, puis clique sur les interrupteurs E1 et E2 pour voir la sortie changer en direct.</p>
+
+<div id="m53-gates">
+  <button class="m53-btn active" data-gate="ET">ET (AND)</button>
+  <button class="m53-btn" data-gate="OU">OU (OR)</button>
+  <button class="m53-btn" data-gate="NON">NON (NOT)</button>
+  <button class="m53-btn" data-gate="XOR">OU-Exclusif (XOR)</button>
+</div>
+
+<div class="m53-row">
+  <div>
+    <div>E1 : <button id="m53-e1" class="m53-switch" data-val="0">0</button></div>
+    <div id="m53-e2-line" style="margin-top:8px;">E2 : <button id="m53-e2" class="m53-switch" data-val="0">0</button></div>
+  </div>
+  <div class="m53-wire"></div>
+  <div id="m53-gate-box" class="m53-gate-box">ET</div>
+  <div class="m53-wire"></div>
+  <div id="m53-lamp" class="m53-lamp"></div>
+</div>
+
+<div class="m53-caption" id="m53-caption">Choisis une porte, puis clique sur E1 (et E2) pour voir la sortie.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m53-wrap');
+  if (!wrap) { return; }
+  var gateBtns = wrap.querySelectorAll('.m53-btn[data-gate]');
+  var e1Btn = wrap.querySelector('#m53-e1');
+  var e2Btn = wrap.querySelector('#m53-e2');
+  var e2Line = wrap.querySelector('#m53-e2-line');
+  var gateBox = wrap.querySelector('#m53-gate-box');
+  var lamp = wrap.querySelector('#m53-lamp');
+  var caption = wrap.querySelector('#m53-caption');
+
+  var gate = 'ET';
+  var e1 = 0;
+  var e2 = 0;
+
+  var noms = { ET: 'ET', OU: 'OU', NON: 'NON', XOR: 'XOR' };
+
+  function computeOut() {
+    if (gate === 'ET') { return (e1 && e2) ? 1 : 0; }
+    if (gate === 'OU') { return (e1 || e2) ? 1 : 0; }
+    if (gate === 'NON') { return e1 ? 0 : 1; }
+    return (e1 !== e2) ? 1 : 0; // XOR
+  }
+
+  function explain(out) {
+    var base;
+    if (gate === 'ET') {
+      base = (e1 && e2)
+        ? 'Les deux entrées sont à 1 (état haut) : la porte ET exige que TOUTES les entrées soient à 1 pour sortir 1, et c\'est le cas ici.'
+        : 'Au moins une entrée est à 0 : la porte ET ne sort 1 que si toutes les entrées sont à 1, donc la sortie reste à 0.';
+    } else if (gate === 'OU') {
+      base = (e1 || e2)
+        ? 'Au moins une entrée est à 1 (état haut) : cela suffit pour que la porte OU sorte 1.'
+        : 'Aucune entrée n\'est à 1 : la porte OU a besoin qu\'au moins une entrée soit à 1, donc la sortie reste à 0.';
+    } else if (gate === 'NON') {
+      base = (e1
+        ? 'L\'entrée E1 est à 1 : la porte NON inverse l\'état, donc la sortie passe à 0.'
+        : 'L\'entrée E1 est à 0 : la porte NON inverse l\'état, donc la sortie passe à 1.')
+        + ' La porte NON n\'a qu\'une seule entrée : E2 est ignorée ici (elle n\'existe pas pour cette porte).';
+    } else {
+      base = (e1 !== e2)
+        ? 'Les deux entrées sont différentes : la porte OU-Exclusif ne sort 1 que dans ce cas précis.'
+        : 'Les deux entrées sont identiques : la porte OU-Exclusif exige des entrées différentes pour sortir 1, donc la sortie reste à 0.';
+    }
+    var entrees = (gate === 'NON') ? ('E1 = ' + e1) : ('E1 = ' + e1 + ', E2 = ' + e2);
+    return entrees + '. ' + base + ' Sortie = ' + out + '.';
+  }
+
+  function render() {
+    var out = computeOut();
+    gateBox.textContent = noms[gate];
+    gateBox.classList.toggle('on', out === 1);
+    lamp.classList.toggle('on', out === 1);
+    e1Btn.textContent = String(e1);
+    e1Btn.classList.toggle('on', e1 === 1);
+    var isNon = (gate === 'NON');
+    e2Btn.textContent = isNon ? '—' : String(e2);
+    e2Btn.classList.toggle('on', !isNon && e2 === 1);
+    e2Btn.disabled = isNon;
+    e2Line.style.opacity = isNon ? '0.4' : '1';
+    caption.textContent = explain(out);
+  }
+
+  gateBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      gate = b.getAttribute('data-gate');
+      gateBtns.forEach(function (x) { x.classList.toggle('active', x === b); });
+      render();
+    });
+  });
+  e1Btn.addEventListener('click', function () { e1 = e1 ? 0 : 1; render(); });
+  e2Btn.addEventListener('click', function () { if (!e2Btn.disabled) { e2 = e2 ? 0 : 1; render(); } });
+
+  render();
+})();
+</script>

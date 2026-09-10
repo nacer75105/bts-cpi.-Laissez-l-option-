@@ -1,0 +1,85 @@
+<div id="schema-m54-wrap" style="font-family: inherit; max-width: 680px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m54-wrap .m54-btn { margin:4px 6px 4px 0; padding:6px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.95em; }
+#schema-m54-wrap .m54-btn:hover { background:#e8e8e8; }
+#schema-m54-wrap .m54-row { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; align-items:center; }
+#schema-m54-wrap .m54-box { border:2px solid #888; border-radius:8px; padding:8px 10px; font-size:0.85em; text-align:center; background:#f7f7f7; color:#222; transition: all .25s ease; min-width:70px; }
+#schema-m54-wrap .m54-box.on { background:#fff3b0; border-color:#e0a800; transform: scale(1.06); }
+#schema-m54-wrap .m54-bus-group { display:flex; flex-direction:column; gap:4px; }
+#schema-m54-wrap .m54-arrow { font-size:1.3em; color:#888; }
+#schema-m54-wrap .m54-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:3.2em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> clique sur « Étape suivante » pour suivre le trajet d'une donnée, du capteur jusqu'au processeur.</p>
+
+<div class="m54-row">
+  <div class="m54-box" id="m54-capteur">Capteur</div>
+  <span class="m54-arrow">→</span>
+  <div class="m54-box" id="m54-adc">ADC</div>
+  <span class="m54-arrow">→</span>
+  <div class="m54-bus-group">
+    <div class="m54-box" id="m54-busctrl">Bus de contrôle</div>
+    <div class="m54-box" id="m54-busadr">Bus d'adresse</div>
+    <div class="m54-box" id="m54-busdon">Bus de données</div>
+  </div>
+  <span class="m54-arrow">→</span>
+  <div class="m54-box" id="m54-ram">RAM</div>
+  <span class="m54-arrow">→</span>
+  <div class="m54-box" id="m54-cpu">CPU</div>
+</div>
+
+<div style="margin-top:10px;">
+  <button class="m54-btn" id="m54-next">Étape suivante ▶</button>
+  <button class="m54-btn" id="m54-reset">Recommencer</button>
+</div>
+<div class="m54-caption" id="m54-caption">Clique sur « Étape suivante » pour commencer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m54-wrap');
+  if (!wrap) { return; }
+  var nextBtn = wrap.querySelector('#m54-next');
+  var resetBtn = wrap.querySelector('#m54-reset');
+  var caption = wrap.querySelector('#m54-caption');
+  var allBoxes = wrap.querySelectorAll('.m54-box');
+
+  var steps = [
+    { on: ['m54-capteur'], txt: 'Le capteur mesure une grandeur physique (par exemple une température) et produit un signal analogique.' },
+    { on: ['m54-adc'], txt: 'L\'ADC convertit ce signal analogique en un nombre binaire (voir la fiche M5.2 sur la conversion analogique/numérique).' },
+    { on: ['m54-busctrl'], txt: 'Le bus de contrôle envoie le signal « écriture en mémoire » : il indique quelle opération va avoir lieu.' },
+    { on: ['m54-busadr'], txt: 'Le bus d\'adresse indique précisément à quel emplacement de la RAM cette valeur doit être rangée.' },
+    { on: ['m54-busdon'], txt: 'Le bus de données transporte la valeur numérique elle-même jusqu\'à cet emplacement.' },
+    { on: ['m54-ram'], txt: 'La valeur est maintenant stockée en RAM, prête à être utilisée.' },
+    { on: ['m54-cpu', 'm54-busadr', 'm54-busdon'], txt: 'Plus tard, le processeur a besoin de cette valeur pour un calcul : le bus d\'adresse indique où aller la chercher, et le bus de données la ramène jusqu\'au CPU (voir la fiche M5.5 pour la suite : ce que le processeur en fait).' }
+  ];
+
+  var step = -1;
+
+  function render() {
+    allBoxes.forEach(function (b) { b.classList.remove('on'); });
+    if (step >= 0 && step < steps.length) {
+      steps[step].on.forEach(function (id) {
+        var el = wrap.querySelector('#' + id);
+        if (el) { el.classList.add('on'); }
+      });
+      caption.textContent = steps[step].txt;
+    }
+  }
+
+  nextBtn.addEventListener('click', function () {
+    if (step >= steps.length - 1) {
+      caption.textContent = 'Parcours terminé : la donnée est passée du capteur à la RAM, puis a été relue par le CPU. Clique sur « Recommencer » pour le revoir.';
+      return;
+    }
+    step++;
+    render();
+  });
+
+  resetBtn.addEventListener('click', function () {
+    step = -1;
+    render();
+    caption.textContent = 'Clique sur « Étape suivante » pour commencer.';
+  });
+})();
+</script>
