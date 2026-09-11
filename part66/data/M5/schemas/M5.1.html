@@ -2,7 +2,6 @@
 <style>
 #schema-m51-wrap .m51-btn { padding:8px 16px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:1em; margin:2px 6px 2px 0; }
 #schema-m51-wrap .m51-btn:hover { background:#e8e8e8; }
-#schema-m51-wrap .m51-btn.active { background:#333; color:#fff; border-color:#333; }
 #schema-m51-wrap .m51-bits { margin-top:14px; display:flex; gap:4px; flex-wrap:wrap; }
 #schema-m51-wrap .m51-box { display:inline-flex; flex-direction:column; align-items:center; justify-content:center; width:52px; height:52px; border:2px solid #888; border-radius:8px; font-weight:bold; font-size:1.15em; background:#f7f7f7; color:#222; }
 #schema-m51-wrap .m51-box.done { background:#d7f0d7; border-color:#3a9d3a; }
@@ -20,7 +19,16 @@
 <button class="m51-btn" id="m51-preset-b">1101</button>
 <button class="m51-btn" id="m51-preset-c">11001101</button>
 
-<div class="m51-bits" id="m51-bits"></div>
+<div class="m51-bits" id="m51-bits">
+  <div class="m51-box" id="m51-box-7" style="display:none;"><span id="m51-digit-7"></span><span class="m51-pow" id="m51-pow-7"></span></div>
+  <div class="m51-box" id="m51-box-6" style="display:none;"><span id="m51-digit-6"></span><span class="m51-pow" id="m51-pow-6"></span></div>
+  <div class="m51-box" id="m51-box-5" style="display:none;"><span id="m51-digit-5"></span><span class="m51-pow" id="m51-pow-5"></span></div>
+  <div class="m51-box" id="m51-box-4" style="display:none;"><span id="m51-digit-4"></span><span class="m51-pow" id="m51-pow-4"></span></div>
+  <div class="m51-box" id="m51-box-3" style="display:none;"><span id="m51-digit-3"></span><span class="m51-pow" id="m51-pow-3"></span></div>
+  <div class="m51-box" id="m51-box-2" style="display:none;"><span id="m51-digit-2"></span><span class="m51-pow" id="m51-pow-2"></span></div>
+  <div class="m51-box" id="m51-box-1" style="display:none;"><span id="m51-digit-1"></span><span class="m51-pow" id="m51-pow-1"></span></div>
+  <div class="m51-box" id="m51-box-0" style="display:none;"><span id="m51-digit-0"></span><span class="m51-pow" id="m51-pow-0"></span></div>
+</div>
 <div class="m51-equation" id="m51-equation"></div>
 <div class="m51-total" id="m51-total">Total : 0</div>
 
@@ -41,11 +49,19 @@
   var presetC = wrap.querySelector('#m51-preset-c');
   var nextBtn = wrap.querySelector('#m51-next');
   var resetBtn = wrap.querySelector('#m51-reset');
-  var bitsEl = wrap.querySelector('#m51-bits');
   var equationEl = wrap.querySelector('#m51-equation');
   var totalEl = wrap.querySelector('#m51-total');
   var caption = wrap.querySelector('#m51-caption');
-  var SUP = ['⁰', '¹', '²', '³', '⁴', '⁵', '⁶', '⁷', '⁸', '⁹'];
+  var SUP = ['⁰', '¹', '²', '³', '⁴', '⁵', '⁶', '⁷'];
+
+  var boxEls = [];
+  var digitEls = [];
+  var powEls = [];
+  for (var k = 0; k < 8; k++) {
+    boxEls[k] = wrap.querySelector('#m51-box-' + k);
+    digitEls[k] = wrap.querySelector('#m51-digit-' + k);
+    powEls[k] = wrap.querySelector('#m51-pow-' + k);
+  }
 
   var bits = [];
   var step = 0;
@@ -57,15 +73,18 @@
   }
 
   function renderBits() {
-    bitsEl.innerHTML = '';
-    for (var i = 0; i < bits.length; i++) {
+    for (var i = 0; i < 8; i++) {
+      if (i >= bits.length) {
+        boxEls[i].style.display = 'none';
+        continue;
+      }
       var pos = bits.length - 1 - i;
-      var box = document.createElement('div');
-      box.className = 'm51-box';
-      if (pos < step - 1) { box.className = 'm51-box done'; }
-      if (pos === step - 1) { box.className = 'm51-box current'; }
-      box.innerHTML = bits[i] + '<span class="m51-pow">' + expo(pos) + '</span>';
-      bitsEl.appendChild(box);
+      boxEls[i].style.display = 'inline-flex';
+      boxEls[i].className = 'm51-box';
+      if (pos < step - 1) { boxEls[i].className = 'm51-box done'; }
+      if (pos === step - 1) { boxEls[i].className = 'm51-box current'; }
+      digitEls[i].textContent = bits[i];
+      powEls[i].textContent = expo(pos);
     }
   }
 

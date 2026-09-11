@@ -19,7 +19,14 @@
   <button class="m7a10-btn" data-mode="etoile">Motif croisé / en étoile (1→4→2→5→3→6)</button>
 </div>
 
-<div class="m7a10-flange" id="m7a10-flange"></div>
+<div class="m7a10-flange" id="m7a10-flange">
+  <div class="m7a10-bolt" id="m7a10-bolt-1" style="left:110px; top:20px;">1</div>
+  <div class="m7a10-bolt" id="m7a10-bolt-2" style="left:187.9px; top:65px;">2</div>
+  <div class="m7a10-bolt" id="m7a10-bolt-3" style="left:187.9px; top:155px;">3</div>
+  <div class="m7a10-bolt" id="m7a10-bolt-4" style="left:110px; top:200px;">4</div>
+  <div class="m7a10-bolt" id="m7a10-bolt-5" style="left:32.1px; top:155px;">5</div>
+  <div class="m7a10-bolt" id="m7a10-bolt-6" style="left:32.1px; top:65px;">6</div>
+</div>
 
 <div>
   <button class="m7a10-btn" id="m7a10-suivant">Pas suivant →</button>
@@ -34,7 +41,6 @@
   var wrap = document.getElementById('schema-m7a10-wrap');
   if (!wrap) { return; }
   var modeBtns = wrap.querySelectorAll('.m7a10-btn[data-mode]');
-  var flange = wrap.querySelector('#m7a10-flange');
   var suivantBtn = wrap.querySelector('#m7a10-suivant');
   var resetBtn = wrap.querySelector('#m7a10-reset');
   var caption = wrap.querySelector('#m7a10-caption');
@@ -45,16 +51,7 @@
 
   var bolts = {};
   for (var n = 1; n <= 6; n++) {
-    var angle = (n - 1) * 60 * Math.PI / 180 - Math.PI / 2;
-    var x = 110 + 90 * Math.cos(angle);
-    var y = 110 + 90 * Math.sin(angle);
-    var b = document.createElement('div');
-    b.className = 'm7a10-bolt';
-    b.style.left = x + 'px';
-    b.style.top = y + 'px';
-    b.textContent = n;
-    flange.appendChild(b);
-    bolts[n] = b;
+    bolts[n] = wrap.querySelector('#m7a10-bolt-' + n);
   }
 
   function render() {

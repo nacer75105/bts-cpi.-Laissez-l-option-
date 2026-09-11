@@ -20,7 +20,17 @@
   <button class="m17a6a-btn" data-fam="elec">Électrique</button>
 </div>
 
-<div class="m17a6a-diagram" id="m17a6a-diagram"></div>
+<div class="m17a6a-diagram" id="m17a6a-diagram">
+  <div class="m17a6a-box active" id="m17a6a-box-0"></div>
+  <div class="m17a6a-arrow" id="m17a6a-arrow-0">→</div>
+  <div class="m17a6a-box active" id="m17a6a-box-1"></div>
+  <div class="m17a6a-arrow" id="m17a6a-arrow-1">→</div>
+  <div class="m17a6a-box active" id="m17a6a-box-2"></div>
+  <div class="m17a6a-arrow" id="m17a6a-arrow-2">→</div>
+  <div class="m17a6a-box active" id="m17a6a-box-3"></div>
+  <div class="m17a6a-arrow" id="m17a6a-arrow-3">→</div>
+  <div class="m17a6a-box active" id="m17a6a-box-4"></div>
+</div>
 
 <table>
   <tr><th>Famille</th><th>Fréquence</th><th>Point fort</th></tr>
@@ -35,11 +45,14 @@
   var wrap = document.getElementById('schema-m17a6a-wrap');
   if (!wrap) { return; }
   var btns = wrap.querySelectorAll('.m17a6a-btn');
-  var diagram = wrap.querySelector('#m17a6a-diagram');
   var nom = wrap.querySelector('#m17a6a-nom');
   var freq = wrap.querySelector('#m17a6a-freq');
   var fort = wrap.querySelector('#m17a6a-fort');
   var caption = wrap.querySelector('#m17a6a-caption');
+  var boxEls = [];
+  var arrowEls = [];
+  for (var i = 0; i < 5; i++) { boxEls[i] = wrap.querySelector('#m17a6a-box-' + i); }
+  for (var j = 0; j < 4; j++) { arrowEls[j] = wrap.querySelector('#m17a6a-arrow-' + j); }
 
   var DONNEES = {
     meca: {
@@ -67,19 +80,18 @@
     fort.textContent = d.fort;
     caption.textContent = d.texte;
 
-    diagram.innerHTML = '';
-    d.chemin.forEach(function (etape, i) {
-      var box = document.createElement('div');
-      box.className = 'm17a6a-box active';
-      box.textContent = etape;
-      diagram.appendChild(box);
-      if (i < d.chemin.length - 1) {
-        var arrow = document.createElement('div');
-        arrow.className = 'm17a6a-arrow';
-        arrow.textContent = '→';
-        diagram.appendChild(arrow);
+    var n = d.chemin.length;
+    for (var i = 0; i < 5; i++) {
+      if (i < n) {
+        boxEls[i].style.display = 'block';
+        boxEls[i].textContent = d.chemin[i];
+      } else {
+        boxEls[i].style.display = 'none';
       }
-    });
+    }
+    for (var j = 0; j < 4; j++) {
+      arrowEls[j].style.display = (j < n - 1) ? 'block' : 'none';
+    }
   }
 
   btns.forEach(function (b) {

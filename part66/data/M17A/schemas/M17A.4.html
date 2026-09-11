@@ -20,7 +20,14 @@
 
 <div class="m17a4-coupe">
   <div class="m17a4-coupe-title" id="m17a4-coupe-title">Couches de bois collées + revêtement métallique de bord d'attaque</div>
-  <div id="m17a4-coupe-stripes"></div>
+  <div id="m17a4-coupe-stripes">
+    <div class="m17a4-stripe" id="m17a4-stripe-0"></div>
+    <div class="m17a4-stripe" id="m17a4-stripe-1"></div>
+    <div class="m17a4-stripe" id="m17a4-stripe-2"></div>
+    <div class="m17a4-stripe" id="m17a4-stripe-3"></div>
+    <div class="m17a4-stripe" id="m17a4-stripe-4"></div>
+    <div class="m17a4-stripe" id="m17a4-stripe-5"></div>
+  </div>
 </div>
 
 <table>
@@ -35,10 +42,11 @@
   if (!wrap) { return; }
   var btns = wrap.querySelectorAll('.m17a4-btn');
   var coupeTitle = wrap.querySelector('#m17a4-coupe-title');
-  var coupeStripes = wrap.querySelector('#m17a4-coupe-stripes');
   var nom = wrap.querySelector('#m17a4-nom');
   var fort = wrap.querySelector('#m17a4-fort');
   var faible = wrap.querySelector('#m17a4-faible');
+  var stripeEls = [];
+  for (var s = 0; s < 6; s++) { stripeEls[s] = wrap.querySelector('#m17a4-stripe-' + s); }
 
   var DONNEES = {
     bois: {
@@ -68,13 +76,14 @@
     btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-mat') === mat); });
     var d = DONNEES[mat];
     coupeTitle.textContent = d.titre;
-    coupeStripes.innerHTML = '';
-    d.stripes.forEach(function (color) {
-      var s = document.createElement('div');
-      s.className = 'm17a4-stripe';
-      s.style.background = color;
-      coupeStripes.appendChild(s);
-    });
+    for (var i = 0; i < 6; i++) {
+      if (i < d.stripes.length) {
+        stripeEls[i].style.display = 'block';
+        stripeEls[i].style.background = d.stripes[i];
+      } else {
+        stripeEls[i].style.display = 'none';
+      }
+    }
     nom.textContent = d.nom;
     fort.textContent = d.fort;
     faible.textContent = d.faible;

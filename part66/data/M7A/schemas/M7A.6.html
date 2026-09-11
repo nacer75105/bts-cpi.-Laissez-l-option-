@@ -17,7 +17,13 @@
 
 <p><strong>Essaie toi-même :</strong> parmi ces quatre têtes bouterollées, une seule est conforme. Clique sur chacune pour voir le diagnostic.</p>
 
-<div id="m7a6-choices"></div>
+<div>
+  <button class="m7a6-btn" data-id="bon" data-ok="1"><div class="m7a6-hole"><div class="m7a6-rivet bon"></div></div><br>Rivet A</button>
+  <button class="m7a6-btn" data-id="fissure" data-ok="0"><div class="m7a6-hole"><div class="m7a6-rivet fissure"></div></div><br>Rivet B</button>
+  <button class="m7a6-btn" data-id="decentre" data-ok="0"><div class="m7a6-hole"><div class="m7a6-rivet decentre"></div></div><br>Rivet C</button>
+  <button class="m7a6-btn" data-id="lache" data-ok="0"><div class="m7a6-hole"><div class="m7a6-rivet lache"></div></div><br>Rivet D</button>
+</div>
+
 <div class="m7a6-caption" id="m7a6-caption">Clique sur une tête pour voir son diagnostic.</div>
 </div>
 
@@ -25,31 +31,25 @@
 (function () {
   var wrap = document.getElementById('schema-m7a6-wrap');
   if (!wrap) { return; }
-  var choicesDiv = wrap.querySelector('#m7a6-choices');
+  var btns = wrap.querySelectorAll('.m7a6-btn');
   var caption = wrap.querySelector('#m7a6-caption');
 
-  var cas = [
-    { id: 'bon', label: 'Rivet A', classe: 'bon', ok: true,
-      texte: 'Conforme : tête bouterollée bien formée, centrée, sans fissure, et rivet qui ne bouge pas dans son trou.' },
-    { id: 'fissure', label: 'Rivet B', classe: 'fissure', ok: false,
-      texte: 'Non conforme : la tête présente une fissure, signe que le métal a été travaillé de façon excessive lors de la pose (frappe trop violente, ou métal déjà fragilisé). Ce rivet doit être déposé et remplacé.' },
-    { id: 'decentre', label: 'Rivet C', classe: 'decentre', ok: false,
-      texte: 'Non conforme : la tête d’atelier est décentrée par rapport à l’axe du trou, signe que le tas à river n’était pas correctement aligné ou maintenu pendant la pose. La tenue mécanique de ce rivet n’est pas garantie.' },
-    { id: 'lache', label: 'Rivet D', classe: 'lache', ok: false,
-      texte: 'Non conforme : le rivet reste lâche dans son trou, souvent le signe d’un trou surdimensionné par rapport au diamètre du rivet. Un rivet lâche ne transmet pas correctement l’effort et doit être traité selon la procédure de reprise prévue par l’AMM (rivet de diamètre supérieur, par exemple), jamais laissé en l’état.' },
-  ];
+  var textes = {
+    bon: 'Conforme : tête bouterollée bien formée, centrée, sans fissure, et rivet qui ne bouge pas dans son trou.',
+    fissure: 'Non conforme : la tête présente une fissure, signe que le métal a été travaillé de façon excessive lors de la pose (frappe trop violente, ou métal déjà fragilisé). Ce rivet doit être déposé et remplacé.',
+    decentre: 'Non conforme : la tête d’atelier est décentrée par rapport à l’axe du trou, signe que le tas à river n’était pas correctement aligné ou maintenu pendant la pose. La tenue mécanique de ce rivet n’est pas garantie.',
+    lache: 'Non conforme : le rivet reste lâche dans son trou, souvent le signe d’un trou surdimensionné par rapport au diamètre du rivet. Un rivet lâche ne transmet pas correctement l’effort et doit être traité selon la procédure de reprise prévue par l’AMM (rivet de diamètre supérieur, par exemple), jamais laissé en l’état.'
+  };
 
-  cas.forEach(function (c) {
-    var btn = document.createElement('button');
-    btn.className = 'm7a6-btn';
-    btn.innerHTML = '<div class="m7a6-hole"><div class="m7a6-rivet ' + c.classe + '"></div></div><br>' + c.label;
+  btns.forEach(function (btn) {
     btn.addEventListener('click', function () {
-      wrap.querySelectorAll('.m7a6-btn').forEach(function (x) { x.classList.toggle('active', x === btn); });
+      btns.forEach(function (x) { x.classList.toggle('active', x === btn); });
+      var id = btn.getAttribute('data-id');
+      var ok = btn.getAttribute('data-ok') === '1';
       caption.classList.remove('ok', 'bad');
-      caption.classList.add(c.ok ? 'ok' : 'bad');
-      caption.textContent = (c.ok ? '✅ ' : '❌ ') + c.texte;
+      caption.classList.add(ok ? 'ok' : 'bad');
+      caption.textContent = (ok ? '✅ ' : '❌ ') + textes[id];
     });
-    choicesDiv.appendChild(btn);
   });
 })();
 </script>

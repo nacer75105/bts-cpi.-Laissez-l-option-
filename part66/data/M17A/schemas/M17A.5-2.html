@@ -18,6 +18,10 @@
 
 <div class="m17a5b-fan" id="m17a5b-fan">
   <div class="m17a5b-moyeu"></div>
+  <div class="m17a5b-blade" id="m17a5b-blade-0"></div>
+  <div class="m17a5b-blade" id="m17a5b-blade-1"></div>
+  <div class="m17a5b-blade" id="m17a5b-blade-2"></div>
+  <div class="m17a5b-blade" id="m17a5b-blade-3"></div>
 </div>
 
 <div class="m17a5b-caption" id="m17a5b-caption">Hélice bipale : la plus simple et la plus répandue sur les avions légers, avec la masse et le coût les plus faibles pour ce diamètre.</div>
@@ -28,8 +32,13 @@
   var wrap = document.getElementById('schema-m17a5b-wrap');
   if (!wrap) { return; }
   var btns = wrap.querySelectorAll('.m17a5b-btn');
-  var fan = wrap.querySelector('#m17a5b-fan');
   var caption = wrap.querySelector('#m17a5b-caption');
+  var bladeEls = [
+    wrap.querySelector('#m17a5b-blade-0'),
+    wrap.querySelector('#m17a5b-blade-1'),
+    wrap.querySelector('#m17a5b-blade-2'),
+    wrap.querySelector('#m17a5b-blade-3')
+  ];
 
   var TEXTES = {
     2: "Hélice bipale : la plus simple et la plus répandue sur les avions légers, avec la masse et le coût les plus faibles pour ce diamètre — mais une capacité de traction plus limitée qu'avec davantage de pales.",
@@ -42,13 +51,14 @@
     btns.forEach(function (b) { b.classList.toggle('active', parseInt(b.getAttribute('data-n'), 10) === n); });
     caption.textContent = TEXTES[n];
 
-    fan.querySelectorAll('.m17a5b-blade').forEach(function (b) { b.remove(); });
-    for (var i = 0; i < n; i++) {
-      var angle = (360 / n) * i;
-      var blade = document.createElement('div');
-      blade.className = 'm17a5b-blade';
-      blade.style.transform = 'rotate(' + angle + 'deg)';
-      fan.appendChild(blade);
+    for (var i = 0; i < 4; i++) {
+      if (i < n) {
+        var angle = (360 / n) * i;
+        bladeEls[i].style.display = 'block';
+        bladeEls[i].style.transform = 'rotate(' + angle + 'deg)';
+      } else {
+        bladeEls[i].style.display = 'none';
+      }
     }
   }
 

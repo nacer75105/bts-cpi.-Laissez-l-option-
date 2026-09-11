@@ -18,7 +18,10 @@
 <button class="m51b-btn" id="m51b-preset-c">11110000</button>
 
 <div class="m51b-note" id="m51b-note"></div>
-<div class="m51b-groups" id="m51b-groups"></div>
+<div class="m51b-groups" id="m51b-groups">
+  <div class="m51b-box" id="m51b-box-0" style="display:none;"><span id="m51b-bits-0"></span><span class="m51b-hex" id="m51b-hex-0">?</span></div>
+  <div class="m51b-box" id="m51b-box-1" style="display:none;"><span id="m51b-bits-1"></span><span class="m51b-hex" id="m51b-hex-1">?</span></div>
+</div>
 
 <div style="margin-top:10px;">
   <button class="m51b-btn" id="m51b-next">Étape suivante ▶</button>
@@ -37,10 +40,13 @@
   var presetC = wrap.querySelector('#m51b-preset-c');
   var nextBtn = wrap.querySelector('#m51b-next');
   var resetBtn = wrap.querySelector('#m51b-reset');
-  var groupsEl = wrap.querySelector('#m51b-groups');
   var noteEl = wrap.querySelector('#m51b-note');
   var caption = wrap.querySelector('#m51b-caption');
   var HEX = '0123456789ABCDEF';
+
+  var boxEls = [wrap.querySelector('#m51b-box-0'), wrap.querySelector('#m51b-box-1')];
+  var bitsEls = [wrap.querySelector('#m51b-bits-0'), wrap.querySelector('#m51b-bits-1')];
+  var hexEls = [wrap.querySelector('#m51b-hex-0'), wrap.querySelector('#m51b-hex-1')];
 
   var groups = [];
   var revealed = 0;
@@ -61,14 +67,17 @@
   }
 
   function render() {
-    var html = '';
-    for (var i = 0; i < groups.length; i++) {
+    for (var i = 0; i < 2; i++) {
+      if (i >= groups.length) {
+        boxEls[i].style.display = 'none';
+        continue;
+      }
       var val = parseInt(groups[i], 2);
-      var hexDigit = revealed > i ? HEX[val] : '?';
-      var cls = revealed > i ? 'm51b-box done' : 'm51b-box';
-      html = html + '<div class="' + cls + '">' + groups[i] + '<span class="m51b-hex">' + hexDigit + '</span></div>';
+      boxEls[i].style.display = 'inline-flex';
+      boxEls[i].className = revealed > i ? 'm51b-box done' : 'm51b-box';
+      bitsEls[i].textContent = groups[i];
+      hexEls[i].textContent = revealed > i ? HEX[val] : '?';
     }
-    groupsEl.innerHTML = html;
   }
 
   function load(bin) {
