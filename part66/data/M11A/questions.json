@@ -1,0 +1,590 @@
+{
+  "module": "M11A",
+  "questions": [
+    {
+      "uid": "M11A-0001",
+      "sous_chapitre": "M11A.1",
+      "question": "Quelles sont les quatre forces principales qui agissent sur un avion en vol ?",
+      "options": [
+        "Le poids, la portance, la poussée et la traînée",
+        "Le poids, la vitesse, l'altitude et la pression",
+        "La portance, la traînée, la pression et la température"
+      ],
+      "bonne": 0,
+      "explication": "Les quatre forces principales sont le poids (vers le bas), la portance (qui s'y oppose), la poussée (produite par les moteurs, vers l'avant) et la traînée (la résistance de l'air, qui s'oppose à l'avancement). La vitesse, l'altitude, la pression et la température sont des paramètres qui influencent ces forces, mais ce ne sont pas des forces en elles-mêmes.",
+      "source": "Notions générales d'aérodynamique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0002",
+      "sous_chapitre": "M11A.1",
+      "question": "Que désigne la corde d'un profil d'aile ?",
+      "options": [
+        "La distance entre l'extrados et l'intrados, mesurée à la perpendiculaire du profil",
+        "La ligne droite imaginaire qui relie le bord d'attaque et le bord de fuite",
+        "La longueur totale de l'aile, de l'emplanture à son extrémité"
+      ],
+      "bonne": 1,
+      "explication": "La corde est la ligne droite imaginaire qui relie le bord d'attaque (l'avant du profil) au bord de fuite (l'arrière). Elle ne mesure pas la distance entre extrados et intrados (qui correspondrait plutôt à l'épaisseur du profil), et elle ne décrit pas la longueur totale de l'aile (son envergure), une notion différente qui concerne l'aile entière, pas un seul profil.",
+      "source": "Notions générales d'aérodynamique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0003",
+      "sous_chapitre": "M11A.1",
+      "question": "Comment la déviation de l'air par l'aile explique-t-elle la portance, selon l'approche fondée sur la réaction ?",
+      "options": [
+        "La déviation de l'écoulement n'a aucun rapport avec la portance, qui provient uniquement d'une différence de pression",
+        "L'aile dévie l'écoulement vers le haut ; par réaction, une force dirigée vers le bas s'exerce sur l'aile",
+        "L'aile dévie l'écoulement vers le bas ; par réaction, une force dirigée vers le haut s'exerce sur l'aile"
+      ],
+      "bonne": 2,
+      "explication": "L'aile dévie l'écoulement vers le bas ; par un principe d'action-réaction, cette déviation produit sur l'aile une force de réaction dirigée vers le haut — la portance. Ce n'est donc pas l'inverse (une déviation vers le haut produirait une réaction vers le bas), et cette explication par la réaction ne s'oppose pas à celle par la différence de pression : les deux décrivent le même phénomène à deux échelles différentes, comme le précise la fiche.",
+      "source": "Notions générales d'aérodynamique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0004",
+      "sous_chapitre": "M11A.1",
+      "question": "Que représente exactement l'angle d'incidence d'une aile ?",
+      "options": [
+        "L'angle entre la corde de l'aile et la direction du vent relatif, distinct de l'inclinaison de l'avion par rapport au sol",
+        "L'inclinaison de l'avion par rapport au sol, rigoureusement identique à l'angle d'incidence en toutes circonstances",
+        "Un angle qui ne dépend que de la vitesse de l'avion, indépendamment de sa trajectoire dans l'air"
+      ],
+      "bonne": 0,
+      "explication": "L'angle d'incidence est l'angle entre la corde de l'aile et la direction du vent relatif (l'air vu depuis l'avion) ; un avion peut voler à plat tout en présentant un certain angle d'incidence, ou piquer fortement tout en gardant un angle d'incidence modéré selon sa trajectoire réelle dans l'air. Les deux angles ne sont donc pas identiques, et l'angle d'incidence dépend de la trajectoire de l'avion dans l'air, pas seulement de sa vitesse.",
+      "source": "Notions générales d'aérodynamique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0005",
+      "sous_chapitre": "M11A.1",
+      "question": "Pourquoi un avion produit-il plus de portance, à angle d'incidence et vitesse égaux, dans un air plus dense (basse altitude, air froid) que dans un air raréfié (haute altitude, air chaud) ?",
+      "options": [
+        "La densité de l'air n'a en réalité aucune influence sur la portance produite, seuls l'angle d'incidence et la vitesse comptent",
+        "Un air plus dense contient davantage de matière par unité de volume, ce qui permet à l'aile de produire une force plus importante pour un même écoulement",
+        "Un air plus dense ralentit l'écoulement autour de l'aile, ce qui augmente artificiellement l'angle d'incidence effectif"
+      ],
+      "bonne": 1,
+      "explication": "La densité de l'air est l'un des facteurs qui influencent la portance (avec l'angle d'incidence, la vitesse et la surface alaire) : un air plus dense contient davantage de matière par unité de volume, ce qui permet à l'aile de produire plus de portance à angle d'incidence et vitesse identiques. La densité n'est donc pas sans effet, et elle ne modifie pas l'angle d'incidence effectif : elle agit directement sur la force produite, pas sur cet angle.",
+      "source": "Notions générales d'aérodynamique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0006",
+      "sous_chapitre": "M11A.1",
+      "question": "Qu'est-ce qui distingue la traînée de forme (parasite) de la traînée induite ?",
+      "options": [
+        "Les deux désignent en réalité le même phénomène, décrit sous deux noms différents selon les sources",
+        "La traînée de forme n'existe que sur les ailes ; la traînée induite ne concerne que le fuselage et le train d'atterrissage",
+        "La traînée de forme provient de la résistance de l'air aux éléments peu profilés, indépendamment de la portance ; la traînée induite est directement liée à la production de portance elle-même"
+      ],
+      "bonne": 2,
+      "explication": "La traînée de forme provient de la résistance qu'oppose l'air à tout ce qui n'est pas profilé (fuselage, train sorti, antennes), et augmente avec la vitesse indépendamment de la portance ; la traînée induite, elle, provient des tourbillons de bout d'aile liés directement à la production de portance. Ce ne sont donc ni les mêmes zones concernées, ni le même phénomène : ce sont deux contributions distinctes à la traînée totale.",
+      "source": "Notions générales d'aérodynamique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0007",
+      "sous_chapitre": "M11A.1",
+      "question": "Pourquoi la traînée induite augmente-t-elle avec l'angle d'incidence ?",
+      "options": [
+        "Un angle d'incidence plus élevé produit plus de portance à une vitesse donnée, ce qui renforce les tourbillons de bout d'aile à l'origine de cette traînée",
+        "L'angle d'incidence n'a aucune influence sur la traînée induite, qui ne dépend que de la vitesse de l'avion",
+        "Un angle d'incidence plus élevé réduit la traînée induite, en alignant mieux l'écoulement avec le profil de l'aile"
+      ],
+      "bonne": 0,
+      "explication": "La traînée induite est directement liée à la portance produite (rappel : elle provient des tourbillons de bout d'aile, où se rencontrent l'air à haute pression de l'intrados et à basse pression de l'extrados) ; un angle d'incidence plus élevé, qui produit plus de portance à une vitesse donnée, renforce donc ces tourbillons et augmente cette traînée. Ce n'est donc ni sans effet, ni un effet inverse (réducteur).",
+      "source": "Notions générales d'aérodynamique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0008",
+      "sous_chapitre": "M11A.1",
+      "question": "Pourquoi le technicien de maintenance n'a-t-il pas à recalculer la surface ou la forme du profil d'une aile, mais doit néanmoins comprendre leur rôle ?",
+      "options": [
+        "Ces paramètres n'ont en réalité aucune importance pour la maintenance, qui ne s'intéresse qu'aux systèmes mécaniques et électriques",
+        "Ces paramètres sont fixés par la conception certifiée de l'avion ; les comprendre permet d'interpréter correctement l'effet d'un dommage sur les performances aérodynamiques",
+        "Ces paramètres changent en permanence selon les conditions de vol, ce qui rendrait tout calcul de maintenance obsolète immédiatement"
+      ],
+      "bonne": 1,
+      "explication": "La surface et la forme du profil sont fixées dès la conception certifiée de l'avion, ce que le technicien n'a pas à recalculer ; il doit en revanche comprendre leur rôle pour interpréter correctement un dommage (aile déformée, bord d'attaque endommagé) et son effet possible sur les performances aérodynamiques. Ces paramètres ont donc bien une importance pour la maintenance, et ils ne varient pas en vol : c'est une caractéristique fixe de l'avion, pas une variable changeante.",
+      "source": "Notions générales d'aérodynamique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0009",
+      "sous_chapitre": "M11A.1",
+      "question": "Dans l'exemple d'un avion en montée stabilisée décrit dans la fiche, quel équilibre de forces permet cette trajectoire ?",
+      "options": [
+        "Une traînée qui dépasse la poussée, ce qui pousserait l'avion vers le haut par un effet de réaction",
+        "Une portance qui dépasse systématiquement le poids de l'avion, quelle que soit la phase de vol considérée",
+        "Une poussée qui dépasse légèrement la traînée, et un angle d'incidence plus élevé qu'en palier pour équilibrer le poids malgré la trajectoire ascendante"
+      ],
+      "bonne": 2,
+      "explication": "Dans une montée stabilisée, la poussée dépasse légèrement la traînée (ce qui permet de maintenir la vitesse ou d'accélérer tout en montant), et un angle d'incidence légèrement supérieur à celui du palier permet aux ailes de produire la portance nécessaire pour équilibrer le poids malgré la trajectoire ascendante. La portance ne dépasse pas systématiquement le poids en toute phase de vol (en palier stabilisé, ils s'équilibrent), et ce n'est pas un excès de traînée sur la poussée qui produirait une montée : c'est la portance qui s'oppose au poids, la poussée/traînée gérant l'accélération.",
+      "source": "Notions générales d'aérodynamique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0010",
+      "sous_chapitre": "M11A.2",
+      "question": "Qu'est-ce qui provoque, physiquement, le décrochage d'une aile ?",
+      "options": [
+        "L'écoulement d'air se détache prématurément de l'extrados avant d'atteindre le bord de fuite, formant une zone de turbulence désordonnée",
+        "La vitesse de l'avion devient trop faible pour que l'air puisse encore exercer une quelconque pression sur l'aile",
+        "L'angle d'incidence devient excessif, ce qui provoque ce même détachement de l'écoulement, quelle que soit la puissance délivrée par le moteur"
+      ],
+      "bonne": 0,
+      "explication": "Le décrochage survient quand l'écoulement, à cause d'un angle d'incidence trop élevé, ne parvient plus à suivre la courbure de l'extrados jusqu'au bord de fuite et se détache prématurément, formant une turbulence désordonnée à la place d'un écoulement régulier. Ce n'est ni une absence totale de pression de l'air (l'air continue d'exercer une pression, mais de façon désorganisée), ni un phénomène qu'un simple excès de puissance moteur suffirait à empêcher : c'est l'angle d'incidence, indépendant de la puissance délivrée, qui est en cause.",
+      "source": "Notions générales d'aérodynamique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0011",
+      "sous_chapitre": "M11A.2",
+      "question": "Qu'est-ce qui détermine directement le décrochage d'une aile ?",
+      "options": [
+        "Une vitesse minimale fixe, en dessous de laquelle un avion décroche quelle que soit la manœuvre effectuée",
+        "L'angle d'incidence : une vitesse faible s'accompagne souvent d'un angle d'incidence élevé en vol normal, mais un décrochage peut survenir à haute vitesse aussi",
+        "L'altitude de vol, indépendamment de tout autre paramètre"
+      ],
+      "bonne": 1,
+      "explication": "C'est l'angle d'incidence, et non la vitesse en elle-même, qui détermine le décrochage ; en vol normal, une vitesse faible s'accompagne souvent d'un angle d'incidence élevé, ce qui explique le lien habituel entre les deux, mais un avion peut décrocher à vitesse élevée si une manœuvre brutale impose un angle d'incidence excessif. Il n'existe donc pas de vitesse minimale fixe indépendante de la manœuvre, et l'altitude seule ne détermine pas non plus le décrochage.",
+      "source": "Notions générales d'aérodynamique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0012",
+      "sous_chapitre": "M11A.2",
+      "question": "Sur quoi porte le principe technique des dispositifs d'alerte de décrochage, et que ne couvrent-ils pas ?",
+      "options": [
+        "Ils déclenchent automatiquement et sans confirmation la procédure complète de récupération après décrochage, sans intervention de l'équipage",
+        "Ils ne mesurent ni n'estiment rien : ils se contentent d'enregistrer la vitesse de l'avion pour une analyse après le vol",
+        "Ils mesurent ou estiment l'angle d'incidence réel et alertent l'équipage ; la façon dont l'équipage doit réagir relève du manuel de vol"
+      ],
+      "bonne": 2,
+      "explication": "Le principe technique de ces dispositifs est de mesurer ou estimer l'angle d'incidence réel de l'avion et d'alerter l'équipage avant qu'il n'atteigne la valeur critique ; la façon dont l'équipage doit réagir à cette alerte relève exclusivement du manuel de vol de chaque appareil. Ils ne déclenchent donc pas eux-mêmes une procédure de récupération, et ils font plus qu'un simple enregistrement a posteriori : ils alertent en temps réel.",
+      "source": "Notions générales d'aérodynamique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0013",
+      "sous_chapitre": "M11A.2",
+      "question": "Qu'est-ce qui distingue un avion stable d'un avion instable, après une perturbation extérieure ?",
+      "options": [
+        "Un avion stable tend à revenir de lui-même à son équilibre après la perturbation ; un avion instable tend au contraire à s'en écarter davantage",
+        "Un avion stable ne subit jamais aucune perturbation, contrairement à un avion instable qui y est constamment exposé",
+        "Un avion stable et un avion instable réagissent de façon identique à une perturbation, seule leur vitesse de croisière diffère"
+      ],
+      "bonne": 0,
+      "explication": "Un avion stable, après une perturbation, tend à revenir de lui-même vers son état d'équilibre ; un avion instable tend au contraire à s'en écarter davantage, la situation empirant si rien n'est fait. Les deux types d'avions subissent des perturbations (aucun avion n'y échappe), et leur réaction à ces perturbations diffère fondamentalement, indépendamment de leur seule vitesse de croisière.",
+      "source": "Notions générales d'aérodynamique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0014",
+      "sous_chapitre": "M11A.2",
+      "question": "Pourquoi un avion de voltige est-il conçu pour être moins stable qu'un avion de transport ?",
+      "options": [
+        "Un avion de voltige n'a en réalité aucun besoin de stabilité, car il ne vole jamais en ligne droite",
+        "La stabilité et la manœuvrabilité (la capacité à changer rapidement d'attitude sur commande) sont deux qualités partiellement opposées, et la voltige recherche avant tout la manœuvrabilité",
+        "La stabilité et la manœuvrabilité sont exactement la même qualité, un avion de voltige recherche donc davantage de stabilité, pas moins"
+      ],
+      "bonne": 1,
+      "explication": "La stabilité (qui demande moins d'attention constante pour maintenir la trajectoire) et la manœuvrabilité (la capacité à changer rapidement d'attitude) sont deux qualités partiellement opposées ; un avion de voltige recherche avant tout la seconde, ce qui s'accommode mal d'un avion qui « résiste » de lui-même à tout changement d'attitude. Un avion de voltige vole bien en ligne droite à certains moments, et les deux qualités ne sont pas identiques : ce sont deux notions distinctes, en partie contradictoires.",
+      "source": "Notions générales d'aérodynamique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0015",
+      "sous_chapitre": "M11A.2",
+      "question": "D'où provient principalement la tendance d'un avion à revenir à son équilibre après une perturbation en tangage (piqué/cabré) ?",
+      "options": [
+        "Du train d'atterrissage, dont la position influence directement la stabilité en vol, y compris une fois rentré",
+        "Du moteur, qui ajuste automatiquement sa poussée pour compenser toute perturbation en tangage",
+        "De l'empennage arrière, dont l'angle d'incidence local change avec la perturbation et produit une force qui s'oppose à ce mouvement"
+      ],
+      "bonne": 2,
+      "explication": "Cette tendance provient principalement de l'empennage arrière : une perturbation qui fait piquer ou cabrer l'avion modifie l'angle d'incidence local de ces surfaces arrière, produisant une force qui s'oppose au mouvement et ramène l'avion vers son assiette initiale — un mécanisme purement aérodynamique. Ce n'est ni un ajustement actif du moteur, ni un effet du train d'atterrissage, qui n'a pas de rôle aérodynamique en vol une fois rentré.",
+      "source": "Notions générales d'aérodynamique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0016",
+      "sous_chapitre": "M11A.2",
+      "question": "Quelle est la différence entre stabilité statique et stabilité dynamique ?",
+      "options": [
+        "La stabilité statique décrit la réaction initiale de l'avion juste après la perturbation ; la stabilité dynamique décrit le comportement des oscillations dans la durée qui suit",
+        "Les deux termes désignent exactement la même chose, la distinction n'étant qu'une question de vocabulaire sans conséquence pratique",
+        "La stabilité statique concerne uniquement le vol au sol, avant le décollage ; la stabilité dynamique ne concerne que le vol en altitude"
+      ],
+      "bonne": 0,
+      "explication": "La stabilité statique décrit la tendance initiale de l'avion, juste après la perturbation, à produire une force qui le ramène vers l'équilibre ; la stabilité dynamique décrit ce qui se passe ensuite, sur la durée (oscillations qui s'amortissent ou au contraire s'amplifient). Ce n'est donc pas une simple question de vocabulaire, et aucune des deux notions n'est liée au sol ou à l'altitude en tant que telle : les deux concernent le comportement en vol.",
+      "source": "Notions générales d'aérodynamique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0017",
+      "sous_chapitre": "M11A.2",
+      "question": "Pourquoi un avion peut-il être globalement indésirable en stabilité, même si sa stabilité statique est positive ?",
+      "options": [
+        "Parce que la stabilité statique positive garantit à elle seule un comportement parfaitement stable en toutes circonstances, sans aucune exception possible",
+        "Parce que sa stabilité dynamique pourrait être négative : les oscillations autour de l'équilibre s'amplifient au fil du temps au lieu de s'amortir",
+        "Parce qu'un avion statiquement stable ne peut jamais osciller autour de son équilibre, contrairement à un avion instable"
+      ],
+      "bonne": 1,
+      "explication": "Un avion peut amorcer correctement un retour vers l'équilibre (stabilité statique positive) tout en oscillant de façon de plus en plus marquée par la suite (stabilité dynamique négative) — un comportement globalement indésirable malgré une réaction initiale correcte. La stabilité statique positive ne garantit donc pas, à elle seule, un comportement stable en toutes circonstances, et un avion statiquement stable peut tout à fait osciller autour de son équilibre avant de s'y stabiliser (ou non).",
+      "source": "Notions générales d'aérodynamique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0018",
+      "sous_chapitre": "M11A.2",
+      "question": "Dans l'exemple de la rafale de vent décrit dans la fiche, que se passe-t-il si l'angle d'incidence résultant dépasse la valeur critique, plutôt que de rester en dessous ?",
+      "options": [
+        "Rien de particulier ne se produit, l'angle d'incidence n'ayant aucun effet une fois une certaine vitesse de croisière atteinte",
+        "L'avion devient automatiquement plus stable, la rafale renforçant la force de rappel produite par l'empennage",
+        "Une partie de l'écoulement sur les ailes se détache : c'est le décrochage, avec la chute de portance qui l'accompagne"
+      ],
+      "bonne": 2,
+      "explication": "Si la rafale impose un angle d'incidence dépassant la valeur critique, une partie de l'écoulement sur les ailes se détache : c'est le décrochage décrit en début de fiche, avec la chute de portance qui l'accompagne. Ce n'est pas un renforcement de la stabilité (le décrochage est un phénomène distinct, pas un effet stabilisateur), et l'angle d'incidence garde son effet quelle que soit la vitesse de croisière atteinte : c'est justement l'angle, pas la vitesse, qui détermine le décrochage (rappel de cette même fiche).",
+      "source": "Notions générales d'aérodynamique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0019",
+      "sous_chapitre": "M11A.3",
+      "question": "Que désigne la compressibilité de l'air, phénomène central de cette fiche ?",
+      "options": [
+        "La variation sensible de la densité de l'air quand il est fortement accéléré, un effet négligeable à basse vitesse mais significatif à haute vitesse",
+        "La capacité de l'air à être stocké sous pression dans un réservoir, comme dans un circuit pneumatique",
+        "La tendance de l'air à se réchauffer uniformément quel que soit son altitude ou sa vitesse d'écoulement"
+      ],
+      "bonne": 0,
+      "explication": "La compressibilité désigne la variation sensible de la densité de l'air sous l'effet d'une forte accélération, un effet négligeable à basse vitesse (rappel des fiches M11A.1/M11A.2) mais significatif à haute vitesse. Elle ne concerne pas le stockage de l'air sous pression (un tout autre sujet, propre aux circuits pneumatiques), et l'air ne se réchauffe pas uniformément : sa température varie justement avec l'altitude, comme le précise la fiche.",
+      "source": "Notions générales d'aérodynamique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0020",
+      "sous_chapitre": "M11A.3",
+      "question": "Que représente le nombre de Mach ?",
+      "options": [
+        "Le rapport entre la vitesse de l'avion et sa vitesse maximale certifiée, indépendamment de la température de l'air",
+        "Le rapport entre la vitesse de l'avion (ou d'un écoulement local) et la vitesse du son dans les conditions présentes",
+        "Une mesure directe de la densité de l'air à l'altitude de vol, sans lien avec la vitesse de l'avion"
+      ],
+      "bonne": 1,
+      "explication": "Le nombre de Mach est le rapport entre la vitesse de l'avion (ou d'un écoulement local) et la vitesse du son dans les conditions présentes. Ce n'est donc ni un rapport à la vitesse maximale certifiée (une notion différente), ni une mesure directe de la densité de l'air, même si cette dernière est liée à la température qui influence la vitesse du son.",
+      "source": "Notions générales d'aérodynamique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0021",
+      "sous_chapitre": "M11A.3",
+      "question": "Pourquoi la grande majorité des avions de transport civils volent-ils en régime transsonique plutôt que purement subsonique ?",
+      "options": [
+        "Le régime transsonique ne concerne que les avions militaires, les avions civils restant systématiquement bien en dessous de Mach 1 partout sur l'appareil",
+        "Ils volent en réalité toujours au-delà de Mach 1, le terme « subsonique » ne s'appliquant à aucun avion de ligne moderne",
+        "Leur vitesse de croisière reste sous Mach 1, mais assez proche pour que l'écoulement localement accéléré sur l'aile puisse ponctuellement dépasser la vitesse du son"
+      ],
+      "bonne": 2,
+      "explication": "Les avions de ligne volent en régime transsonique : leur vitesse reste sous Mach 1, mais assez proche pour que l'écoulement localement accéléré sur l'aile (rappel M11A.1 : l'air accélère davantage au-dessus de l'aile) puisse ponctuellement dépasser localement la vitesse du son. Ils ne volent donc pas au-delà de Mach 1 dans leur ensemble, et ce régime concerne bien les avions civils, pas seulement militaires.",
+      "source": "Notions générales d'aérodynamique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0022",
+      "sous_chapitre": "M11A.3",
+      "question": "Que se passe-t-il à la limite d'une zone d'écoulement local devenue supersonique sur une aile ?",
+      "options": [
+        "Une onde de choc se forme, une variation brutale de pression, de vitesse et de température, à travers laquelle l'écoulement repasse en dessous de la vitesse du son",
+        "L'écoulement ralentit progressivement et sans discontinuité jusqu'à revenir à sa vitesse d'origine, sans aucun phénomène particulier",
+        "L'air cesse totalement de circuler à cet endroit, créant une zone de vide localisé au-dessus de l'aile"
+      ],
+      "bonne": 0,
+      "explication": "Une onde de choc se forme à la limite de cette zone : une variation brutale et quasi instantanée de pression, de vitesse et de température, à travers laquelle l'écoulement repasse abruptement sous la vitesse du son. Ce n'est donc pas un ralentissement progressif et sans discontinuité, et il ne se forme aucune zone de vide : l'air continue de circuler, mais de façon brutalement modifiée à cet endroit précis.",
+      "source": "Notions générales d'aérodynamique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0023",
+      "sous_chapitre": "M11A.3",
+      "question": "Quelles conséquences une onde de choc peut-elle avoir sur l'aile qu'elle affecte ?",
+      "options": [
+        "Une diminution systématique de la traînée totale de l'aile, quelle que soit l'intensité de l'onde de choc",
+        "Une augmentation marquée de la traînée, et un risque de décollement de l'écoulement juste derrière elle (tremblement ou « buffet ») si elle devient suffisamment intense",
+        "Aucune conséquence mesurable : l'onde de choc reste un phénomène purement théorique sans effet réel sur l'aile"
+      ],
+      "bonne": 1,
+      "explication": "Une onde de choc augmente de façon marquée la traînée de l'aile à cet endroit, et peut provoquer, si elle devient assez intense, un décollement de l'écoulement juste derrière elle — un tremblement (buffet) perceptible dans la structure. Ce n'est donc ni une diminution de traînée, ni un phénomène sans effet réel : ses conséquences sont concrètes et mesurables.",
+      "source": "Notions générales d'aérodynamique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0024",
+      "sous_chapitre": "M11A.3",
+      "question": "Pourquoi les ailes des avions à réaction sont-elles généralement en flèche plutôt que perpendiculaires au fuselage ?",
+      "options": [
+        "La flèche augmente la composante de vitesse perpendiculaire au bord d'attaque, ce qui accélère volontairement l'apparition des ondes de choc",
+        "La flèche n'a aucun effet aérodynamique ; elle est choisie uniquement pour des raisons esthétiques et de gain de place au sol",
+        "La flèche réduit la composante de vitesse perpendiculaire au bord d'attaque, ce qui retarde l'apparition des ondes de choc à une vitesse de vol donnée"
+      ],
+      "bonne": 2,
+      "explication": "En inclinant l'aile vers l'arrière, seule la composante de vitesse perpendiculaire au bord d'attaque compte pleinement pour les effets de compressibilité ; cette composante devient plus faible que la vitesse réelle de l'avion, ce qui retarde l'apparition des ondes de choc à une vitesse de vol donnée. Ce n'est donc ni un choix purement esthétique, ni un effet qui accélérerait l'apparition des ondes de choc : c'est l'inverse qui est recherché.",
+      "source": "Notions générales d'aérodynamique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0025",
+      "sous_chapitre": "M11A.3",
+      "question": "Pourquoi un même nombre de Mach ne correspond-il pas à la même vitesse réelle selon l'altitude ?",
+      "options": [
+        "La vitesse du son dépend de la température de l'air, qui varie avec l'altitude ; un même Mach correspond donc à une vitesse réelle différente selon la température locale",
+        "Le nombre de Mach change de définition selon l'altitude de vol, ce qui explique cette différence de vitesse réelle",
+        "La vitesse réelle de l'avion ne dépend en réalité jamais de l'altitude, seul le nombre de Mach affiché au poste de pilotage varie"
+      ],
+      "bonne": 0,
+      "explication": "La vitesse du son dépend de la température de l'air, qui diminue avec l'altitude jusqu'à un certain niveau ; un même nombre de Mach correspond donc à une vitesse réelle différente selon la température locale (donc l'altitude). La définition du nombre de Mach ne change pas selon l'altitude (c'est toujours ce même rapport), et c'est bien la vitesse réelle de l'avion qui varie avec l'altitude pour un Mach donné, pas seulement l'affichage.",
+      "source": "Notions générales d'aérodynamique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0026",
+      "sous_chapitre": "M11A.3",
+      "question": "Pourquoi le vol transsonique et ses effets de compressibilité constituent-ils un sujet propre à ce module, plutôt qu'aux avions légers à hélice ?",
+      "options": [
+        "Les avions à hélice sont en réalité tout aussi concernés par ces effets, mais le sujet n'est simplement jamais enseigné à leur propos",
+        "La turbine permet d'atteindre des vitesses de croisière bien supérieures à celles d'un avion à hélice classique, rendant ces effets incontournables pour comprendre la conception de l'avion",
+        "Les effets de compressibilité ne dépendent pas du type de motorisation de l'avion, mais uniquement de sa taille et de son poids total"
+      ],
+      "bonne": 1,
+      "explication": "La turbine (rappel du module M15) permet d'atteindre des vitesses de croisière bien supérieures à celles d'un avion à hélice classique, ce qui rend les effets de compressibilité incontournables pour comprendre la conception, les performances et certaines limitations des avions à turbine. Un avion léger à hélice, plus lent dans son ensemble, ne rencontre généralement pas ces effets sur sa cellule en usage normal (les extrémités de pales d'hélice peuvent, elles, approcher ce domaine à régime élevé — une limite de conception propre à l'hélice, hors du cadre de cette fiche) ; et c'est bien la vitesse atteinte, pas seulement la taille ou le poids, qui détermine la pertinence de ce sujet.",
+      "source": "Notions générales d'aérodynamique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0027",
+      "sous_chapitre": "M11A.3",
+      "question": "Pourquoi le déplacement du centre de portance en régime transsonique a-t-il une importance pour la conception de l'avion ?",
+      "options": [
+        "Il n'a en réalité aucune conséquence pratique, le centre de portance restant rigoureusement fixe quel que soit le régime de vol",
+        "Il ne concerne que la position des réservoirs de carburant dans la voilure, sans aucun lien avec le comportement en vol de l'avion",
+        "Il modifie l'équilibre du moment de tangage de l'avion par rapport au vol subsonique pur, un effet pris en compte dès la conception des commandes de vol"
+      ],
+      "bonne": 2,
+      "explication": "Le centre de portance (le point où l'on peut considérer que s'applique, en moyenne, la force de portance) peut se déplacer quand l'écoulement devient localement supersonique par endroits, ce qui modifie l'équilibre du moment de tangage (la tendance à piquer ou cabrer) par rapport au vol subsonique pur — un effet pris en compte dès la conception de l'avion et de ses commandes de vol (thème détaillé en fiche M11A.6). Il ne reste donc pas fixe en toute circonstance, et ce déplacement n'a aucun rapport avec la position des réservoirs de carburant.",
+      "source": "Notions générales d'aérodynamique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0028",
+      "sous_chapitre": "M11A.4",
+      "question": "Quelle différence y a-t-il entre une force aérodynamique (vue dans les fiches précédentes) et une charge structurale ?",
+      "options": [
+        "Une charge désigne cette même force, considérée du point de vue de ce que la structure doit supporter plutôt que de son origine physique",
+        "Une charge structurale ne peut provenir que du poids des passagers, jamais d'une force aérodynamique comme la portance",
+        "Il n'existe aucune différence : les deux termes sont strictement interchangeables dans tous les contextes, y compris hors de la structure"
+      ],
+      "bonne": 0,
+      "explication": "Une charge désigne une force appliquée à une pièce ou un assemblage, considérée du point de vue de ce qu'elle doit supporter plutôt que de son origine physique ; la portance sur une aile devient ainsi une charge structurale une fois qu'on s'intéresse à la façon dont la structure doit l'encaisser. Une charge peut donc bien provenir d'une force aérodynamique (comme la portance), et le terme n'est pas simplement interchangeable en dehors de ce contexte structural précis.",
+      "source": "Notions générales de structures aéronautiques — avion à turbine"
+    },
+    {
+      "uid": "M11A-0029",
+      "sous_chapitre": "M11A.4",
+      "question": "Quelle est la différence entre une sollicitation en traction et une sollicitation en compression ?",
+      "options": [
+        "La traction fait glisser deux parties d'une pièce l'une par rapport à l'autre ; la compression la courbe comme une règle qu'on plierait",
+        "La traction étire une pièce dans le sens de sa longueur ; la compression la comprime au contraire dans ce même sens",
+        "Les deux termes désignent exactement le même type de sollicitation, appliqué simplement dans des directions différentes de l'espace"
+      ],
+      "bonne": 1,
+      "explication": "La traction étire une pièce dans le sens de sa longueur (un câble qui soutient une charge suspendue) ; la compression la comprime au contraire dans ce même sens (un pied de train qui supporte le poids de l'avion). Le glissement de deux parties l'une par rapport à l'autre décrit plutôt le cisaillement, et la courbure décrit la flexion : ce sont deux autres types de sollicitation, distincts de la traction et de la compression.",
+      "source": "Notions générales de structures aéronautiques — avion à turbine"
+    },
+    {
+      "uid": "M11A-0030",
+      "sous_chapitre": "M11A.4",
+      "question": "Pourquoi la classification des charges en cinq types fondamentaux (traction, compression, cisaillement, flexion, torsion) a-t-elle un intérêt pratique pour l'entretien ?",
+      "options": [
+        "Chaque type de charge ne peut apparaître seul sur une pièce donnée, jamais combiné à un autre type sur la même pièce",
+        "Cette classification n'a aucun intérêt pratique : elle ne sert qu'à un usage strictement théorique, sans lien avec l'entretien réel",
+        "Un même matériau ne résiste pas nécessairement aussi bien à chaque type de sollicitation, ce qui aide à interpréter un dommage selon le type de charge en cause à cet endroit"
+      ],
+      "bonne": 2,
+      "explication": "Un même matériau ne résiste pas nécessairement aussi bien à chacun de ces types de sollicitation, et un dommage constaté s'interprète différemment selon le type de charge en cause à cet endroit précis — un point utile pour l'entretien, pas seulement pour la théorie. La fiche précise d'ailleurs que la plupart des pièces réelles subissent une combinaison de plusieurs types à la fois, rarement un seul isolément.",
+      "source": "Notions générales de structures aéronautiques — avion à turbine"
+    },
+    {
+      "uid": "M11A-0031",
+      "sous_chapitre": "M11A.4",
+      "question": "Comment se développe la fatigue d'un matériau soumis à des charges répétées ?",
+      "options": [
+        "Une fissure microscopique peut se former et grandir progressivement à chaque nouveau cycle de charge, même sous une charge inférieure à celle qui romprait la pièce en une seule fois",
+        "La fatigue ne peut survenir que si la pièce est soumise, au moins une fois, à une charge supérieure à sa limite de rupture immédiate",
+        "La fatigue est un phénomène instantané qui ne dépend pas du nombre de cycles de charge subis par la pièce"
+      ],
+      "bonne": 0,
+      "explication": "Une pièce soumise de façon répétée à une charge, même largement inférieure à celle qui la romprait en une seule fois, peut développer une fissure microscopique qui grandit progressivement à chaque nouveau cycle de charge. La fatigue ne nécessite donc pas une charge dépassant la limite de rupture immédiate, et ce n'est pas un phénomène instantané : elle dépend au contraire directement du nombre de cycles subis.",
+      "source": "Notions générales de structures aéronautiques — avion à turbine"
+    },
+    {
+      "uid": "M11A-0032",
+      "sous_chapitre": "M11A.4",
+      "question": "En quoi le comportement d'un métal face à la fatigue diffère-t-il de celui d'un matériau composite ?",
+      "options": [
+        "Un métal n'est jamais sujet à la fatigue, contrairement à un matériau composite qui y serait systématiquement plus vulnérable",
+        "Une fissure métallique tend à progresser de façon visible et mesurable ; un dommage composite (comme un délaminage) peut rester invisible à l'inspection visuelle simple",
+        "Les deux matériaux se comportent de façon rigoureusement identique face à la fatigue, seule leur masse diffère"
+      ],
+      "bonne": 1,
+      "explication": "Un métal se comporte de façon relativement prévisible face à la fatigue (une fissure progresse de façon souvent visible et mesurable) ; un composite, à l'inverse, peut subir un dommage interne (délaminage) qui reste invisible à l'inspection visuelle simple, justifiant des méthodes de contrôle non destructif dédiées. Le métal est bien sujet à la fatigue (rappel du paragraphe précédent), et les deux matériaux ne se comportent donc pas de façon identique.",
+      "source": "Notions générales de structures aéronautiques — avion à turbine"
+    },
+    {
+      "uid": "M11A-0033",
+      "sous_chapitre": "M11A.4",
+      "question": "Pourquoi un matériau composite est-il généralement moins sujet à la corrosion qu'un alliage métallique ?",
+      "options": [
+        "Un composite se corrode plus rapidement qu'un métal une fois sa résine exposée à l'air, ce qui impose un traitement de surface encore plus strict",
+        "Un composite se corrode aussi facilement qu'un métal, mais les traces en restent invisibles plus longtemps du fait de la couleur sombre des fibres",
+        "La corrosion est une dégradation chimique propre aux métaux, au contact de l'humidité et de l'air ; un composite n'est pas concerné par ce même mécanisme"
+      ],
+      "bonne": 2,
+      "explication": "La corrosion est une dégradation chimique propre aux métaux, favorisée par le contact avec l'humidité et l'air ; un matériau composite, de nature différente, n'est pas concerné par ce même mécanisme. Il ne se corrode donc pas plus rapidement qu'un métal une fois sa résine exposée (c'est l'inverse : il n'y est pas sujet), et ce n'est pas une simple question de couleur masquant une corrosion bien réelle : le composite n'est tout simplement pas concerné par ce mécanisme chimique.",
+      "source": "Notions générales de structures aéronautiques — avion à turbine"
+    },
+    {
+      "uid": "M11A-0034",
+      "sous_chapitre": "M11A.4",
+      "question": "Pourquoi un avion moderne combine-t-il métaux et matériaux composites plutôt que de choisir un seul type de matériau pour toute sa structure ?",
+      "options": [
+        "Chaque matériau est utilisé là où ses atouts comptent le plus par rapport à ses inconvénients, selon la zone et la sollicitation concernées",
+        "Le choix entre métal et composite est purement arbitraire, sans lien avec les propriétés réelles de chaque matériau",
+        "Les matériaux composites sont en réalité interdits sur les zones les plus sollicitées, ce qui impose l'usage exclusif du métal à ces endroits"
+      ],
+      "bonne": 0,
+      "explication": "Chaque matériau est utilisé là où ses atouts comptent le plus par rapport à ses inconvénients : un composite pour de grands panneaux peu exposés aux impacts directs, un métal pour des zones fortement sollicitées ou exposées à des impacts où son comportement en fatigue plus prévisible est un atout. Ce choix n'est donc pas arbitraire, et les composites ne sont pas interdits sur les zones sollicitées : le choix dépend de la conception propre à chaque avion.",
+      "source": "Notions générales de structures aéronautiques — avion à turbine"
+    },
+    {
+      "uid": "M11A-0035",
+      "sous_chapitre": "M11A.4",
+      "question": "Pourquoi la corrosion est-elle prise très au sérieux dans le programme d'entretien, alors qu'elle progresse généralement lentement ?",
+      "options": [
+        "Elle n'a en réalité aucun effet sur la résistance des pièces métalliques, seul son aspect esthétique justifie son traitement",
+        "Elle réduit progressivement l'épaisseur utile d'une pièce métallique, donc sa capacité à supporter ses charges, tout en restant parfois peu visible tant qu'elle reste superficielle",
+        "Elle ne peut jamais être détectée avant une rupture complète de la pièce concernée, quelle que soit l'inspection réalisée"
+      ],
+      "bonne": 1,
+      "explication": "La corrosion réduit progressivement l'épaisseur utile d'une pièce métallique, donc sa capacité à supporter les charges pour lesquelles elle a été dimensionnée, tout en restant parfois peu visible tant qu'elle reste superficielle — d'où l'importance des inspections dédiées. Elle affecte donc bien la résistance (pas seulement l'aspect), et elle peut être détectée avant rupture grâce à ces inspections périodiques et aux traitements de protection.",
+      "source": "Notions générales de structures aéronautiques — avion à turbine"
+    },
+    {
+      "uid": "M11A-0036",
+      "sous_chapitre": "M11A.4",
+      "question": "Dans l'exemple du longeron d'aile décrit dans la fiche, quelles sollicitations subit-il simultanément en vol sous l'effet de la portance ?",
+      "options": [
+        "Uniquement du cisaillement, la flexion et la torsion ne concernant que le fuselage, jamais la voilure",
+        "Uniquement de la compression, sans aucune autre sollicitation associée quelle que soit la répartition de la portance",
+        "De la flexion, et selon sa position et la répartition de la portance le long de l'aile, une composante de torsion"
+      ],
+      "bonne": 2,
+      "explication": "Le longeron d'aile subit simultanément de la flexion (l'aile se courbe légèrement vers le haut sous la portance) et, selon sa position et la répartition de la portance, une composante de torsion — un exemple de combinaison de sollicitations, plutôt qu'une seule isolée. Ce n'est donc ni uniquement de la compression, ni un phénomène réservé au fuselage : la flexion et la torsion concernent bien la voilure dans cet exemple.",
+      "source": "Notions générales de structures aéronautiques — avion à turbine"
+    },
+    {
+      "uid": "M11A-0037",
+      "sous_chapitre": "M11A.5",
+      "question": "Qu'est-ce qui caractérise une construction de fuselage semi-monocoque ?",
+      "options": [
+        "Une peau extérieure qui participe elle-même à la résistance de la structure, renforcée de l'intérieur par des cadres et des lisses",
+        "Un revêtement qui n'a qu'un rôle d'habillage, l'essentiel des charges étant porté par un treillis de tubes internes",
+        "Un revêtement qui n'a qu'un rôle décoratif, porté par un fuselage entièrement rigide en une seule pièce moulée, sans aucun élément interne"
+      ],
+      "bonne": 0,
+      "explication": "Une construction semi-monocoque combine un revêtement porteur (qui participe à la résistance) avec des cadres (anneaux transversaux) et des lisses (raidisseurs longitudinaux) qui le renforcent. Un revêtement sans rôle structural, porté par un treillis de tubes internes, décrit plutôt une structure à treillis (une conception plus ancienne) ; et un fuselage en une seule pièce moulée sans aucun élément interne ne correspond à aucune des techniques de construction décrites dans cette fiche.",
+      "source": "Notions générales de structures aéronautiques — avion à turbine"
+    },
+    {
+      "uid": "M11A-0038",
+      "sous_chapitre": "M11A.5",
+      "question": "Quel rôle jouent les lisses dans un fuselage semi-monocoque ?",
+      "options": [
+        "Des anneaux transversaux qui donnent au fuselage sa forme générale et répartissent les charges concentrées",
+        "Des raidisseurs longitudinaux qui courent entre les cadres et renforcent le revêtement contre le flambement",
+        "Des réservoirs de carburant intégrés directement dans la structure du fuselage, entre les cadres"
+      ],
+      "bonne": 1,
+      "explication": "Les lisses sont des raidisseurs longitudinaux, entre les cadres, qui renforcent le revêtement contre le flambement (la tendance d'une surface mince à se déformer en cloque sous compression). Les anneaux transversaux qui donnent sa forme au fuselage sont les cadres, un élément distinct ; et les réservoirs de carburant se logent le plus souvent dans la voilure, pas dans le fuselage (rappel de cette même fiche).",
+      "source": "Notions générales de structures aéronautiques — avion à turbine"
+    },
+    {
+      "uid": "M11A-0039",
+      "sous_chapitre": "M11A.5",
+      "question": "Pourquoi un fuselage pressurisé subit-il une charge supplémentaire par rapport à un fuselage non pressurisé, comparable à celle d'un ballon gonflé ?",
+      "options": [
+        "Un fuselage pressurisé est en réalité soumis à moins de charges qu'un fuselage non pressurisé, la pression interne compensant les charges aérodynamiques",
+        "Cette charge supplémentaire ne provient que du poids des passagers assis à bord, sans lien avec la pressurisation elle-même",
+        "La différence de pression entre l'intérieur et l'extérieur de l'avion sollicite la structure de façon répétée à chaque vol (montée en pression, dépressurisation)"
+      ],
+      "bonne": 2,
+      "explication": "La différence de pression entre l'intérieur et l'extérieur d'un fuselage pressurisé sollicite sa structure comme un ballon gonflé, une charge qui se répète à chaque vol (montée en pression au décollage, dépressurisation à l'atterrissage) et qui s'ajoute aux charges aérodynamiques, contribuant à la fatigue du matériau. Ce n'est ni un simple effet du poids des passagers, ni une charge qui réduirait les autres sollicitations : elle s'y ajoute.",
+      "source": "Notions générales de structures aéronautiques — avion à turbine"
+    },
+    {
+      "uid": "M11A-0040",
+      "sous_chapitre": "M11A.5",
+      "question": "Quel est le rôle respectif des longerons et des nervures dans la voilure ?",
+      "options": [
+        "Les longerons courent sur la longueur de l'aile et supportent l'essentiel de la flexion ; les nervures donnent au profil sa forme et transmettent les charges locales vers les longerons",
+        "Les longerons donnent au profil de l'aile sa forme ; les nervures courent sur toute la longueur de l'aile et supportent la flexion",
+        "Les longerons et les nervures désignent exactement le même élément structural, simplement nommé différemment selon les constructeurs"
+      ],
+      "bonne": 0,
+      "explication": "Les longerons courent sur presque toute la longueur de l'aile et supportent l'essentiel de la flexion ; les nervures, des cloisons transversales, donnent au profil sa forme et transmettent les charges locales vers les longerons. Les rôles ne sont donc pas inversés, et ce ne sont pas deux noms pour le même élément : ce sont deux pièces distinctes aux fonctions complémentaires.",
+      "source": "Notions générales de structures aéronautiques — avion à turbine"
+    },
+    {
+      "uid": "M11A-0041",
+      "sous_chapitre": "M11A.5",
+      "question": "Pourquoi l'emplanture de l'aile (sa jonction avec le fuselage) est-elle une zone particulièrement surveillée à l'entretien ?",
+      "options": [
+        "C'est la zone de l'aile la moins sollicitée, ce qui permet d'y espacer davantage les inspections par rapport au reste de l'aile",
+        "C'est l'endroit où se concentre la charge transmise par toute l'envergure de l'aile, la flexion y atteignant son maximum",
+        "L'emplanture ne subit aucune charge particulière, elle sert uniquement de point de fixation esthétique entre l'aile et le fuselage"
+      ],
+      "bonne": 1,
+      "explication": "L'emplanture concentre l'ensemble des charges transmises par toute l'envergure de l'aile avant de rejoindre le fuselage : la flexion accumulée y atteint son maximum, ce qui en fait une zone à forte sollicitation régulièrement inspectée. Ce n'est donc ni la zone la moins sollicitée, ni un simple point de fixation esthétique sans charge réelle.",
+      "source": "Notions générales de structures aéronautiques — avion à turbine"
+    },
+    {
+      "uid": "M11A-0042",
+      "sous_chapitre": "M11A.5",
+      "question": "Quel rôle l'empennage horizontal joue-t-il dans la stabilité en tangage (piqué/cabré) d'un avion ?",
+      "options": [
+        "L'empennage horizontal n'a aucun rôle dans la stabilité de l'avion, qui provient uniquement de la forme du fuselage",
+        "La stabilité en tangage provient exclusivement du moteur, l'empennage horizontal ne servant qu'à des fins esthétiques",
+        "C'est en grande partie l'empennage horizontal, de par sa position à l'arrière de l'avion, qui produit la force correctrice assurant cette stabilité"
+      ],
+      "bonne": 2,
+      "explication": "Rappel de la fiche M11A.2 : c'est en grande partie l'empennage horizontal qui assure la stabilité de l'avion en tangage, sa position à l'arrière de l'avion étant précisément ce qui lui permet de produire la force correctrice décrite dans cette fiche précédente. Le fuselage seul n'assure pas ce rôle, et le moteur n'a pas de rôle stabilisateur en tangage de ce type.",
+      "source": "Notions générales de structures aéronautiques — avion à turbine"
+    },
+    {
+      "uid": "M11A-0043",
+      "sous_chapitre": "M11A.5",
+      "question": "Quel avantage recherche-t-on avec un empennage en T (stabilisateur horizontal au sommet de la dérive) ?",
+      "options": [
+        "Éloigner le stabilisateur horizontal du souffle des moteurs et du sillage de l'aile en vol normal",
+        "Réduire le poids total de l'empennage par rapport à une configuration classique, sans aucune autre conséquence structurale",
+        "Simplifier la fabrication de la dérive verticale, qui n'a alors plus besoin d'être renforcée structurellement"
+      ],
+      "bonne": 0,
+      "explication": "L'empennage en T éloigne le stabilisateur horizontal du souffle des moteurs et du sillage de l'aile en vol normal, ce qui peut améliorer son efficacité dans la plupart des phases de vol — mais à un angle d'incidence très élevé, il peut au contraire se retrouver plongé dans le sillage décollé de l'aile, perdant une partie de son efficacité. Cette configuration impose par ailleurs une structure de dérive renforcée (pas simplifiée), pour supporter les charges du stabilisateur qu'elle porte à son sommet ; ce n'est pas non plus d'abord un choix de réduction de poids.",
+      "source": "Notions générales de structures aéronautiques — avion à turbine"
+    },
+    {
+      "uid": "M11A-0044",
+      "sous_chapitre": "M11A.5",
+      "question": "Que désigne une voie de transfert de charge (load path) ?",
+      "options": [
+        "Le renforcement local ajouté à une pièce uniquement pour des raisons esthétiques, sans lien avec la répartition réelle des charges",
+        "Le chemin par lequel une charge appliquée en un point de la structure se répartit et se transmet jusqu'à un point d'appui capable de l'équilibrer",
+        "Le point précis où une charge est mesurée par un capteur, indépendamment de la façon dont elle se répartit ensuite dans la structure"
+      ],
+      "bonne": 1,
+      "explication": "Une voie de transfert de charge est le chemin par lequel une charge se répartit et se transmet à travers la structure jusqu'à un point d'appui capable de l'équilibrer — par exemple la portance transmise de l'aile au fuselage via les longerons et l'emplanture. Une voie de transfert de charge ne désigne ni un renforcement purement esthétique (chaque élément structural a un rôle dans la répartition des charges), ni un simple point de mesure : c'est le chemin complet suivi par la charge à travers la structure, jusqu'à son point d'équilibre.",
+      "source": "Notions générales de structures aéronautiques — avion à turbine"
+    },
+    {
+      "uid": "M11A-0045",
+      "sous_chapitre": "M11A.5",
+      "question": "Pourquoi un dommage structural localisé (par exemple une fissure qui sectionnerait un longeron) est-il pris très au sérieux, même s'il semble petit ?",
+      "options": [
+        "Un dommage localisé sur un longeron n'affecte jamais que ce seul longeron, sans aucune conséquence sur le reste de la structure de l'aile",
+        "Un tel dommage n'a en réalité aucune conséquence tant qu'il reste inférieur à une taille visible à l'œil nu",
+        "Il interrompt localement la voie de transfert de charge, obligeant celle-ci à emprunter un chemin alternatif souvent moins bien dimensionné pour cet usage"
+      ],
+      "bonne": 2,
+      "explication": "Un dommage qui interromprait une voie de transfert de charge oblige celle-ci à emprunter un chemin alternatif à travers le reste de la structure, souvent moins bien dimensionné pour cet usage — d'où l'importance de juger un dommage structural sur ses conséquences plutôt que sur sa seule taille apparente. Un tel dommage a donc bien des conséquences au-delà de sa taille visible, et au-delà de la seule pièce endommagée : il affecte la répartition des charges dans le reste de la structure.",
+      "source": "Notions générales de structures aéronautiques — avion à turbine"
+    }
+  ]
+}

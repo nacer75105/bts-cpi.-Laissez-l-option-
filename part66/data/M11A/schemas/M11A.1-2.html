@@ -1,0 +1,76 @@
+<div id="schema-m11a1b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m11a1b-wrap .m11a1b-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m11a1b-wrap .m11a1b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m11a1b-wrap .m11a1b-diagram { position:relative; height:120px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; overflow:hidden; }
+#schema-m11a1b-wrap .m11a1b-wing { position:absolute; left:50%; top:50%; width:120px; height:6px; background:#4a90d9; border-radius:3px; transform-origin:20% center; }
+#schema-m11a1b-wrap .m11a1b-flow { position:absolute; left:6px; top:50%; width:2px; height:2px; }
+#schema-m11a1b-wrap .m11a1b-arrow { position:absolute; left:6px; font-size:1.1em; color:#888; }
+#schema-m11a1b-wrap .m11a1b-label { position:absolute; font-size:0.68em; color:#555; }
+#schema-m11a1b-wrap .m11a1b-bar-box { margin-top:14px; }
+#schema-m11a1b-wrap .m11a1b-track { width:100%; height:10px; background:#ddd; border-radius:5px; overflow:hidden; }
+#schema-m11a1b-wrap .m11a1b-fill { height:100%; background:#4a90d9; border-radius:5px; transition: width 0.2s; }
+#schema-m11a1b-wrap .m11a1b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Angle d'incidence et portance :</strong> comparez trois angles d'incidence croissants.</p>
+
+<button class="m11a1b-btn active" id="m11a1b-btn-faible">Incidence faible</button>
+<button class="m11a1b-btn" id="m11a1b-btn-moyenne">Incidence moyenne</button>
+<button class="m11a1b-btn" id="m11a1b-btn-elevee">Incidence élevée (proche du maximum)</button>
+
+<div class="m11a1b-diagram">
+  <div class="m11a1b-arrow" style="top:44%;">→</div>
+  <div class="m11a1b-label" style="left:4px; top:58%;">Vent relatif</div>
+  <div class="m11a1b-wing" id="m11a1b-wing" style="transform: translateY(-3px) rotate(4deg);"></div>
+  <div class="m11a1b-label" style="right:6px; top:8%;">Aile (vue de profil)</div>
+</div>
+
+<div class="m11a1b-bar-box">
+  <div style="font-size:0.75em; color:#555;">Portance produite</div>
+  <div class="m11a1b-track"><div class="m11a1b-fill" id="m11a1b-fill" style="width:30%;"></div></div>
+</div>
+
+<div class="m11a1b-caption" id="m11a1b-caption">Ce schéma montre l'effet de l'angle d'incidence sur la portance. Vue actuelle — incidence faible : peu de portance produite, l'écoulement reste parfaitement attaché sur toute la longueur de l'extrados. Cliquez sur les boutons ci-dessus pour comparer les trois angles.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m11a1b-wrap');
+  if (!wrap) { return; }
+  var btnFaible = wrap.querySelector('#m11a1b-btn-faible');
+  var btnMoyenne = wrap.querySelector('#m11a1b-btn-moyenne');
+  var btnElevee = wrap.querySelector('#m11a1b-btn-elevee');
+  var wing = wrap.querySelector('#m11a1b-wing');
+  var fill = wrap.querySelector('#m11a1b-fill');
+  var caption = wrap.querySelector('#m11a1b-caption');
+  var btns = [btnFaible, btnMoyenne, btnElevee];
+
+  function reset() { btns.forEach(function (b) { b.className = 'm11a1b-btn'; }); }
+
+  function showFaible() {
+    reset(); btnFaible.className = 'm11a1b-btn active';
+    wing.style.transform = 'translateY(-3px) rotate(4deg)';
+    fill.style.width = '30%';
+    caption.textContent = "Ce schéma montre l'effet de l'angle d'incidence sur la portance. Vue actuelle — incidence faible : peu de portance produite, l'écoulement reste parfaitement attaché sur toute la longueur de l'extrados. Cliquez sur les boutons ci-dessus pour comparer les trois angles.";
+  }
+
+  function showMoyenne() {
+    reset(); btnMoyenne.className = 'm11a1b-btn active';
+    wing.style.transform = 'translateY(-3px) rotate(12deg)';
+    fill.style.width = '60%';
+    caption.textContent = "Incidence moyenne : la portance produite augmente nettement, et cette augmentation est plus rapide qu'une simple proportion à l'angle (rappel de la fiche). L'écoulement reste attaché, mais commence à ralentir vers le bord de fuite.";
+  }
+
+  function showElevee() {
+    reset(); btnElevee.className = 'm11a1b-btn active';
+    wing.style.transform = 'translateY(-3px) rotate(20deg)';
+    fill.style.width = '92%';
+    caption.textContent = "Incidence élevée, proche de la valeur critique : la portance est proche de son maximum (rappel de la fiche : augmenter l'angle d'incidence augmente la portance jusqu'à cette limite). Au-delà de cet angle critique, l'écoulement se détache brutalement de l'extrados et la portance chute : c'est le décrochage, détaillé en fiche M11A.2.";
+  }
+
+  btnFaible.addEventListener('click', showFaible);
+  btnMoyenne.addEventListener('click', showMoyenne);
+  btnElevee.addEventListener('click', showElevee);
+})();
+</script>

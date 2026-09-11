@@ -1,0 +1,113 @@
+<div id="schema-m11a4-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m11a4-wrap .m11a4-btn { margin:4px 4px 4px 0; padding:7px 10px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.78em; }
+#schema-m11a4-wrap .m11a4-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m11a4-wrap .m11a4-diagram { position:relative; height:110px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; }
+#schema-m11a4-wrap .m11a4-half { position:absolute; top:50%; width:80px; height:20px; background:#7fa8d9; border:1.5px solid #4a76a8; transition: transform 0.2s; }
+#schema-m11a4-wrap #m11a4-left { left:calc(50% - 80px); border-radius:4px 0 0 4px; transform-origin: right center; }
+#schema-m11a4-wrap #m11a4-right { left:50%; border-radius:0 4px 4px 0; transform-origin: left center; }
+#schema-m11a4-wrap .m11a4-arrow { position:absolute; font-size:1.3em; color:#333; }
+#schema-m11a4-wrap .m11a4-typelabel { position:absolute; left:50%; top:8px; transform:translateX(-50%); font-size:0.72em; color:#555; font-weight:bold; }
+#schema-m11a4-wrap .m11a4-piecelabel { position:absolute; bottom:8px; left:50%; transform:translateX(-50%); font-size:0.66em; color:#555; }
+#schema-m11a4-wrap .m11a4-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Cinq types de sollicitation structurale :</strong> cliquez sur chacune pour voir comment elle agit sur une pièce (représentée en deux moitiés).</p>
+
+<div>
+  <button class="m11a4-btn active" id="m11a4-btn-traction">Traction</button>
+  <button class="m11a4-btn" id="m11a4-btn-compression">Compression</button>
+  <button class="m11a4-btn" id="m11a4-btn-cisaillement">Cisaillement</button>
+  <button class="m11a4-btn" id="m11a4-btn-flexion">Flexion</button>
+  <button class="m11a4-btn" id="m11a4-btn-torsion">Torsion</button>
+</div>
+
+<div class="m11a4-diagram">
+  <div class="m11a4-typelabel" id="m11a4-typelabel">Traction</div>
+  <div class="m11a4-arrow" id="m11a4-arrow-left" style="left:14%; top:38%;">←</div>
+  <div class="m11a4-arrow" id="m11a4-arrow-right" style="right:14%; top:38%;">→</div>
+  <div class="m11a4-half" id="m11a4-left" style="transform: translateY(-50%) translateY(0px) rotate(0deg);"></div>
+  <div class="m11a4-half" id="m11a4-right" style="transform: translateY(-50%) translateY(0px) rotate(0deg);"></div>
+  <div class="m11a4-piecelabel">Pièce représentée en deux moitiés</div>
+</div>
+
+<div class="m11a4-caption" id="m11a4-caption">Ce schéma illustre les cinq types de sollicitation structurale, un par bouton. Vue actuelle — traction : deux forces opposées étirent la pièce dans le sens de sa longueur (un câble qui soutient une charge suspendue). Cliquez sur les autres boutons pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m11a4-wrap');
+  if (!wrap) { return; }
+  var keys = ['traction', 'compression', 'cisaillement', 'flexion', 'torsion'];
+  var btns = {};
+  keys.forEach(function (k) { btns[k] = wrap.querySelector('#m11a4-btn-' + k); });
+  var left = wrap.querySelector('#m11a4-left');
+  var right = wrap.querySelector('#m11a4-right');
+  var arrowLeft = wrap.querySelector('#m11a4-arrow-left');
+  var arrowRight = wrap.querySelector('#m11a4-arrow-right');
+  var caption = wrap.querySelector('#m11a4-caption');
+  var typelabel = wrap.querySelector('#m11a4-typelabel');
+  var labels = { traction: 'Traction', compression: 'Compression', cisaillement: 'Cisaillement', flexion: 'Flexion', torsion: 'Torsion' };
+
+  var config = {
+    traction: {
+      left: 'translateY(-50%) translateY(0px) rotate(0deg)',
+      right: 'translateY(-50%) translateY(0px) rotate(0deg)',
+      arrowLeft: { text: '←', top: '38%', left: '14%', right: 'auto' },
+      arrowRight: { text: '→', top: '38%', right: '14%', left: 'auto' },
+      text: "Ce schéma illustre les cinq types de sollicitation structurale, un par bouton. Vue actuelle — traction : deux forces opposées étirent la pièce dans le sens de sa longueur (un câble qui soutient une charge suspendue). Cliquez sur les autres boutons pour comparer.",
+    },
+    compression: {
+      left: 'translateY(-50%) translateY(0px) rotate(0deg)',
+      right: 'translateY(-50%) translateY(0px) rotate(0deg)',
+      arrowLeft: { text: '→', top: '38%', left: '30%', right: 'auto' },
+      arrowRight: { text: '←', top: '38%', right: '30%', left: 'auto' },
+      text: "Compression : deux forces opposées compriment la pièce dans le sens de sa longueur (un pied de train d'atterrissage qui supporte le poids de l'avion au sol).",
+    },
+    cisaillement: {
+      left: 'translateY(-50%) translateY(-9px) rotate(0deg)',
+      right: 'translateY(-50%) translateY(9px) rotate(0deg)',
+      arrowLeft: { text: '↑', top: '10%', left: '32%', right: 'auto' },
+      arrowRight: { text: '↓', top: '68%', right: '32%', left: 'auto' },
+      text: "Cisaillement : deux parties de la pièce glissent l'une par rapport à l'autre, comme deux feuilles de papier qu'on ferait glisser en sens opposés (une rivure qui retient deux tôles) — noter le décalage visible entre les deux moitiés.",
+    },
+    flexion: {
+      left: 'translateY(-50%) translateY(0px) rotate(-11deg)',
+      right: 'translateY(-50%) translateY(0px) rotate(11deg)',
+      arrowLeft: { text: '↓', top: '4%', left: '46%', right: 'auto' },
+      arrowRight: { text: '', top: '4%', right: '90%', left: 'auto' },
+      text: "Flexion : la pièce se courbe (ici en angle, pour rendre le mouvement visible), comme une règle qu'on plierait entre deux mains (une aile qui fléchit sous sa propre portance).",
+    },
+    torsion: {
+      left: 'translateY(-50%) translateY(0px) rotate(0deg)',
+      right: 'translateY(-50%) translateY(0px) rotate(0deg)',
+      arrowLeft: { text: '↻', top: '38%', left: '16%', right: 'auto' },
+      arrowRight: { text: '↺', top: '38%', right: '16%', left: 'auto' },
+      text: "Torsion : chaque extrémité de la pièce est tordue en sens opposé autour de son axe, comme on essorerait un linge (un arbre de transmission, ou une aile soumise à une répartition de portance inégale entre bord d'attaque et bord de fuite).",
+    },
+  };
+
+  function select(k) {
+    keys.forEach(function (kk) { btns[kk].classList.toggle('active', kk === k); });
+    typelabel.textContent = labels[k];
+    var c = config[k];
+    left.style.transform = c.left;
+    right.style.transform = c.right;
+    arrowLeft.textContent = c.arrowLeft.text;
+    arrowLeft.style.top = c.arrowLeft.top;
+    arrowLeft.style.left = c.arrowLeft.left;
+    arrowLeft.style.right = c.arrowLeft.right;
+    arrowRight.textContent = c.arrowRight.text;
+    arrowRight.style.top = c.arrowRight.top;
+    arrowRight.style.left = c.arrowRight.left;
+    arrowRight.style.right = c.arrowRight.right;
+    caption.textContent = c.text;
+  }
+
+  keys.forEach(function (k) {
+    btns[k].addEventListener('click', function () { select(k); });
+  });
+
+  select('traction');
+})();
+</script>

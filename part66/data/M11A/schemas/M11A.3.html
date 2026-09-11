@@ -1,0 +1,65 @@
+<div id="schema-m11a3-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m11a3-wrap .m11a3-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m11a3-wrap .m11a3-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m11a3-wrap .m11a3-diagram { position:relative; height:130px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; }
+#schema-m11a3-wrap .m11a3-wing { position:absolute; left:20%; top:60%; width:200px; height:6px; background:#4a90d9; border-radius:3px; }
+#schema-m11a3-wrap .m11a3-zone { position:absolute; top:35%; height:22px; background:rgba(224,168,0,0.35); border:1px solid #e0a800; border-radius:4px; display:none; }
+#schema-m11a3-wrap .m11a3-shock { position:absolute; top:20%; bottom:35%; width:3px; background:#c0392b; display:none; }
+#schema-m11a3-wrap .m11a3-label { position:absolute; font-size:0.68em; color:#555; }
+#schema-m11a3-wrap .m11a3-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Régime subsonique ou transsonique :</strong> comparez l'écoulement sur l'extrados dans les deux cas.</p>
+
+<button class="m11a3-btn active" id="m11a3-btn-subsonique">Subsonique pur</button>
+<button class="m11a3-btn" id="m11a3-btn-transsonique">Transsonique</button>
+
+<div class="m11a3-diagram">
+  <div class="m11a3-wing"></div>
+  <div class="m11a3-label" style="left:22%; top:38%;">Aile (profil)</div>
+  <div class="m11a3-zone" id="m11a3-zone" style="left:38%; width:70px;"></div>
+  <div class="m11a3-label" id="m11a3-zone-label" style="left:38%; top:12%; display:none;">Zone locale supersonique</div>
+  <div class="m11a3-shock" id="m11a3-shock" style="left:52%;"></div>
+  <div class="m11a3-label" id="m11a3-shock-label" style="left:56%; top:60%; display:none; color:#c0392b;">Onde de choc</div>
+</div>
+
+<div class="m11a3-caption" id="m11a3-caption">Ce schéma compare un régime subsonique pur à un régime transsonique. Vue actuelle — subsonique pur : l'écoulement reste partout en dessous de la vitesse du son, y compris dans sa zone la plus accélérée au-dessus de l'aile ; aucune onde de choc ne se forme. Cliquez sur « Transsonique » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m11a3-wrap');
+  if (!wrap) { return; }
+  var btnSub = wrap.querySelector('#m11a3-btn-subsonique');
+  var btnTrans = wrap.querySelector('#m11a3-btn-transsonique');
+  var zone = wrap.querySelector('#m11a3-zone');
+  var zoneLabel = wrap.querySelector('#m11a3-zone-label');
+  var shock = wrap.querySelector('#m11a3-shock');
+  var shockLabel = wrap.querySelector('#m11a3-shock-label');
+  var caption = wrap.querySelector('#m11a3-caption');
+
+  function showSub() {
+    btnSub.className = 'm11a3-btn active';
+    btnTrans.className = 'm11a3-btn';
+    zone.style.display = 'none';
+    zoneLabel.style.display = 'none';
+    shock.style.display = 'none';
+    shockLabel.style.display = 'none';
+    caption.textContent = "Ce schéma compare un régime subsonique pur à un régime transsonique. Vue actuelle — subsonique pur : l'écoulement reste partout en dessous de la vitesse du son, y compris dans sa zone la plus accélérée au-dessus de l'aile ; aucune onde de choc ne se forme. Cliquez sur « Transsonique » pour comparer.";
+  }
+
+  function showTrans() {
+    btnSub.className = 'm11a3-btn';
+    btnTrans.className = 'm11a3-btn active';
+    zone.style.display = 'block';
+    zoneLabel.style.display = 'block';
+    shock.style.display = 'block';
+    shockLabel.style.display = 'block';
+    caption.textContent = "Régime transsonique : bien que l'avion vole en dessous de Mach 1, l'écoulement localement accéléré au-dessus de l'aile (zone surlignée) dépasse ponctuellement la vitesse du son ; une onde de choc (ligne rouge) marque la limite où il repasse brutalement en dessous, augmentant la traînée à cet endroit. Cliquez sur « Subsonique pur » pour revenir à l'autre vue.";
+  }
+
+  btnSub.addEventListener('click', showSub);
+  btnTrans.addEventListener('click', showTrans);
+})();
+</script>

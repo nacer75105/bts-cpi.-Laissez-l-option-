@@ -1,0 +1,67 @@
+<div id="schema-m11a4b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m11a4b-wrap .m11a4b-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m11a4b-wrap .m11a4b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m11a4b-wrap .m11a4b-panel { display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
+#schema-m11a4b-wrap .m11a4b-card { flex:1 1 130px; border:1.5px solid #ccc; border-radius:8px; padding:10px; background:#fafafa; }
+#schema-m11a4b-wrap .m11a4b-card .titre { font-weight:bold; font-size:0.85em; margin-bottom:4px; }
+#schema-m11a4b-wrap .m11a4b-card .detail { font-size:0.72em; color:#555; }
+#schema-m11a4b-wrap .m11a4b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Métal ou composite :</strong> comparez leur comportement face à la fatigue et à la corrosion/aux dommages.</p>
+
+<button class="m11a4b-btn active" id="m11a4b-btn-metal">Alliage métallique</button>
+<button class="m11a4b-btn" id="m11a4b-btn-composite">Matériau composite</button>
+
+<div class="m11a4b-panel">
+  <div class="m11a4b-card">
+    <div class="titre">Fatigue</div>
+    <div class="detail" id="m11a4b-fatigue">Fissure qui progresse de façon visible et mesurable, souvent détectable avant d'atteindre une taille critique.</div>
+  </div>
+  <div class="m11a4b-card">
+    <div class="titre">Dégradation</div>
+    <div class="detail" id="m11a4b-degradation">Sensible à la corrosion au contact de l'humidité et de l'air ; traitements de protection nécessaires.</div>
+  </div>
+  <div class="m11a4b-card">
+    <div class="titre">Inspection</div>
+    <div class="detail" id="m11a4b-inspection">Inspection visuelle souvent suffisante pour repérer une fissure en progression.</div>
+  </div>
+</div>
+
+<div class="m11a4b-caption" id="m11a4b-caption">Ce schéma compare métal et composite sur trois critères (cartes ci-dessus). Vue actuelle — alliage métallique : comportement en fatigue relativement prévisible, mais sensible à la corrosion — d'où l'importance des traitements de protection et des inspections dédiées décrites dans la fiche. Cliquez sur « Matériau composite » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m11a4b-wrap');
+  if (!wrap) { return; }
+  var btnMetal = wrap.querySelector('#m11a4b-btn-metal');
+  var btnComposite = wrap.querySelector('#m11a4b-btn-composite');
+  var fatigue = wrap.querySelector('#m11a4b-fatigue');
+  var degradation = wrap.querySelector('#m11a4b-degradation');
+  var inspection = wrap.querySelector('#m11a4b-inspection');
+  var caption = wrap.querySelector('#m11a4b-caption');
+
+  function showMetal() {
+    btnMetal.className = 'm11a4b-btn active';
+    btnComposite.className = 'm11a4b-btn';
+    fatigue.textContent = "Fissure qui progresse de façon visible et mesurable, souvent détectable avant d'atteindre une taille critique.";
+    degradation.textContent = "Sensible à la corrosion au contact de l'humidité et de l'air ; traitements de protection nécessaires.";
+    inspection.textContent = "Inspection visuelle souvent suffisante pour repérer une fissure en progression.";
+    caption.textContent = "Ce schéma compare métal et composite sur trois critères (cartes ci-dessus). Vue actuelle — alliage métallique : comportement en fatigue relativement prévisible, mais sensible à la corrosion — d'où l'importance des traitements de protection et des inspections dédiées décrites dans la fiche. Cliquez sur « Matériau composite » pour comparer.";
+  }
+
+  function showComposite() {
+    btnMetal.className = 'm11a4b-btn';
+    btnComposite.className = 'm11a4b-btn active';
+    fatigue.textContent = "Un impact peut délaminer les couches de fibres entre elles, sans forcément laisser de marque visible en surface — un mode de dommage de nature différente de la fissure de fatigue métallique.";
+    degradation.textContent = "Insensible à la corrosion (nature différente d'un métal) ; le risque principal est le dommage interne invisible, pas la dégradation chimique.";
+    inspection.textContent = "Un dommage interne peut rester invisible à l'inspection visuelle simple : des méthodes de contrôle non destructif dédiées sont nécessaires (rappel M11A.25).";
+    caption.textContent = "Matériau composite : peu sujet à la corrosion, mais un dommage interne (délaminage) peut rester invisible à l'inspection visuelle — chaque matériau a ses propres points de vigilance, ce qui explique pourquoi un avion moderne combine les deux plutôt que d'en choisir un seul. Cliquez sur « Alliage métallique » pour revenir à l'autre vue.";
+  }
+
+  btnMetal.addEventListener('click', showMetal);
+  btnComposite.addEventListener('click', showComposite);
+})();
+</script>

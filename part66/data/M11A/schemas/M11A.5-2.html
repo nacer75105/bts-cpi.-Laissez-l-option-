@@ -1,0 +1,66 @@
+<div id="schema-m11a5b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m11a5b-wrap .m11a5b-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m11a5b-wrap .m11a5b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m11a5b-wrap .m11a5b-diagram { position:relative; height:130px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; }
+#schema-m11a5b-wrap .m11a5b-spar { position:absolute; background:#4a76a8; }
+#schema-m11a5b-wrap .m11a5b-rib { position:absolute; background:#7fa8d9; }
+#schema-m11a5b-wrap .m11a5b-hot { position:absolute; border:2px dashed #e0a800; border-radius:4px; }
+#schema-m11a5b-wrap .m11a5b-label { position:absolute; font-size:0.66em; color:#555; }
+#schema-m11a5b-wrap .m11a5b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Structure de la voilure :</strong> longerons, nervures, et la zone la plus sollicitée — l'emplanture.</p>
+
+<button class="m11a5b-btn active" id="m11a5b-btn-vue">Longerons et nervures</button>
+<button class="m11a5b-btn" id="m11a5b-btn-emplanture">Zone de l'emplanture</button>
+
+<div class="m11a5b-diagram" id="m11a5b-diagram-vue">
+  <div class="m11a5b-spar" style="left:10%; right:10%; top:30%; height:5px;"></div>
+  <div class="m11a5b-spar" style="left:10%; right:10%; top:70%; height:5px;"></div>
+  <div class="m11a5b-label" style="left:10%; top:8%;">Longerons</div>
+  <div class="m11a5b-rib" style="left:20%; top:20%; bottom:20%; width:4px;"></div>
+  <div class="m11a5b-rib" style="left:45%; top:20%; bottom:20%; width:4px;"></div>
+  <div class="m11a5b-rib" style="left:70%; top:20%; bottom:20%; width:4px;"></div>
+  <div class="m11a5b-label" style="left:38%; bottom:6%;">Nervures</div>
+</div>
+<div class="m11a5b-diagram" id="m11a5b-diagram-emplanture" style="display:none;">
+  <div class="m11a5b-spar" style="left:10%; right:10%; top:30%; height:5px;"></div>
+  <div class="m11a5b-spar" style="left:10%; right:10%; top:70%; height:5px;"></div>
+  <div class="m11a5b-hot" style="left:8%; top:15%; bottom:15%; width:60px;"></div>
+  <div class="m11a5b-label" style="left:8%; top:6%; color:#e0a800; font-weight:bold;">Emplanture (jonction aile/fuselage)</div>
+</div>
+
+<div class="m11a5b-caption" id="m11a5b-caption">Ce schéma montre la structure interne de la voilure. Vue actuelle — longerons et nervures : les longerons (traits horizontaux épais) courent sur la longueur de l'aile et supportent l'essentiel de la flexion ; les nervures (traits verticaux) donnent au profil sa forme et transmettent les charges locales vers les longerons. Cliquez sur « Zone de l'emplanture » pour voir la zone la plus sollicitée.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m11a5b-wrap');
+  if (!wrap) { return; }
+  var btnVue = wrap.querySelector('#m11a5b-btn-vue');
+  var btnEmplanture = wrap.querySelector('#m11a5b-btn-emplanture');
+  var diagVue = wrap.querySelector('#m11a5b-diagram-vue');
+  var diagEmplanture = wrap.querySelector('#m11a5b-diagram-emplanture');
+  var caption = wrap.querySelector('#m11a5b-caption');
+
+  function showVue() {
+    btnVue.className = 'm11a5b-btn active';
+    btnEmplanture.className = 'm11a5b-btn';
+    diagVue.style.display = 'block';
+    diagEmplanture.style.display = 'none';
+    caption.textContent = "Ce schéma montre la structure interne de la voilure. Vue actuelle — longerons et nervures : les longerons (traits horizontaux épais) courent sur la longueur de l'aile et supportent l'essentiel de la flexion ; les nervures (traits verticaux) donnent au profil sa forme et transmettent les charges locales vers les longerons. Cliquez sur « Zone de l'emplanture » pour voir la zone la plus sollicitée.";
+  }
+
+  function showEmplanture() {
+    btnVue.className = 'm11a5b-btn';
+    btnEmplanture.className = 'm11a5b-btn active';
+    diagVue.style.display = 'none';
+    diagEmplanture.style.display = 'block';
+    caption.textContent = "L'emplanture (zone encadrée), jonction de l'aile avec le fuselage, concentre la charge transmise par toute l'envergure de l'aile : la flexion accumulée y atteint son maximum, ce qui en fait une zone particulièrement surveillée à l'entretien (rappel de la fiche). Cliquez sur « Longerons et nervures » pour revenir à l'autre vue.";
+  }
+
+  btnVue.addEventListener('click', showVue);
+  btnEmplanture.addEventListener('click', showEmplanture);
+})();
+</script>

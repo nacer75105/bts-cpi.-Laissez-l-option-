@@ -1,0 +1,71 @@
+<div id="schema-m11a1-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m11a1-wrap .m11a1-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m11a1-wrap .m11a1-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m11a1-wrap .m11a1-diagram { position:relative; height:160px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; }
+#schema-m11a1-wrap .m11a1-profil { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:260px; height:60px; }
+#schema-m11a1-wrap .m11a1-label { position:absolute; font-size:0.68em; color:#555; }
+#schema-m11a1-wrap .m11a1-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Anatomie d'un profil d'aile :</strong> comparez un profil symétrique et un profil cambré.</p>
+
+<button class="m11a1-btn active" id="m11a1-btn-symetrique">Profil symétrique</button>
+<button class="m11a1-btn" id="m11a1-btn-cambre">Profil cambré</button>
+
+<div class="m11a1-diagram">
+  <div class="m11a1-profil" id="m11a1-profil-symetrique">
+    <div style="position:absolute; left:0; right:0; top:0; height:2px; background:#4a90d9;"></div>
+    <div style="position:absolute; left:0; right:0; bottom:0; height:2px; background:#4a90d9;"></div>
+    <div style="position:absolute; left:0; top:-4px; bottom:-4px; width:2px; background:#888;"></div>
+    <div style="position:absolute; right:0; top:20px; bottom:20px; width:2px; background:#888;"></div>
+    <div class="m11a1-label" style="left:0; top:-20px;">Bord d'attaque</div>
+    <div class="m11a1-label" style="right:-10px; top:30px;">Bord de fuite</div>
+    <div class="m11a1-label" style="left:40%; top:-36px;">Extrados</div>
+    <div class="m11a1-label" style="left:40%; bottom:-20px;">Intrados</div>
+  </div>
+  <div class="m11a1-profil" id="m11a1-profil-cambre" style="display:none;">
+    <div style="position:absolute; left:0; right:0; top:6px; height:2px; background:#4a90d9; border-radius:50% 50% 0 0/100% 100% 0 0; transform:scaleY(1.8);"></div>
+    <div style="position:absolute; left:0; right:0; bottom:14px; height:2px; background:#4a90d9;"></div>
+    <div style="position:absolute; left:0; top:-4px; bottom:-4px; width:2px; background:#888;"></div>
+    <div style="position:absolute; right:0; top:20px; bottom:20px; width:2px; background:#888;"></div>
+    <div class="m11a1-label" style="left:0; top:-20px;">Bord d'attaque</div>
+    <div class="m11a1-label" style="right:-10px; top:30px;">Bord de fuite</div>
+    <div class="m11a1-label" style="left:40%; top:-30px;">Extrados (bombé)</div>
+    <div class="m11a1-label" style="left:40%; bottom:-14px;">Intrados (plat)</div>
+  </div>
+</div>
+
+<div class="m11a1-caption" id="m11a1-caption">Ce schéma compare deux profils d'aile. Vue actuelle — profil symétrique : extrados et intrados ont la même courbure ; un tel profil ne produit de portance que grâce à un angle d'incidence non nul. Cliquez sur « Profil cambré » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m11a1-wrap');
+  if (!wrap) { return; }
+  var btnSym = wrap.querySelector('#m11a1-btn-symetrique');
+  var btnCam = wrap.querySelector('#m11a1-btn-cambre');
+  var profSym = wrap.querySelector('#m11a1-profil-symetrique');
+  var profCam = wrap.querySelector('#m11a1-profil-cambre');
+  var caption = wrap.querySelector('#m11a1-caption');
+
+  function showSym() {
+    btnSym.className = 'm11a1-btn active';
+    btnCam.className = 'm11a1-btn';
+    profSym.style.display = 'block';
+    profCam.style.display = 'none';
+    caption.textContent = "Ce schéma compare deux profils d'aile. Vue actuelle — profil symétrique : extrados et intrados ont la même courbure ; un tel profil ne produit de portance que grâce à un angle d'incidence non nul. Cliquez sur « Profil cambré » pour comparer.";
+  }
+
+  function showCam() {
+    btnSym.className = 'm11a1-btn';
+    btnCam.className = 'm11a1-btn active';
+    profSym.style.display = 'none';
+    profCam.style.display = 'block';
+    caption.textContent = "Profil cambré : l'extrados est plus bombé que l'intrados. Cette courbure accélère localement l'air qui la suit par rapport à l'air qui passe sous l'aile, ce qui abaisse la pression exercée sur l'extrados par rapport à l'intrados — la base du mécanisme de portance par différence de pression décrit dans la fiche. Cliquez sur « Profil symétrique » pour revenir à l'autre vue.";
+  }
+
+  btnSym.addEventListener('click', showSym);
+  btnCam.addEventListener('click', showCam);
+})();
+</script>

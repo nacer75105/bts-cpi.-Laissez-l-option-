@@ -1,0 +1,75 @@
+<div id="schema-m11a5-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m11a5-wrap .m11a5-btn { margin:4px 6px 4px 0; padding:8px 10px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.8em; }
+#schema-m11a5-wrap .m11a5-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m11a5-wrap .m11a5-diagram { position:relative; height:120px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; display:flex; align-items:center; justify-content:center; gap:3px; }
+#schema-m11a5-wrap .m11a5-frame { width:4px; height:70px; background:#4a76a8; }
+#schema-m11a5-wrap .m11a5-stringer { position:absolute; left:8%; right:8%; height:2px; background:#7fa8d9; }
+#schema-m11a5-wrap .m11a5-skin { position:absolute; left:6%; right:6%; top:15%; bottom:15%; border:2px solid #888; border-radius:10px; }
+#schema-m11a5-wrap .m11a5-truss { position:absolute; }
+#schema-m11a5-wrap .m11a5-label { position:absolute; font-size:0.66em; color:#555; }
+#schema-m11a5-wrap .m11a5-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Construction du fuselage :</strong> comparez semi-monocoque (revêtement porteur) et structure à treillis.</p>
+
+<button class="m11a5-btn active" id="m11a5-btn-semimono">Semi-monocoque</button>
+<button class="m11a5-btn" id="m11a5-btn-treillis">Structure à treillis</button>
+
+<div class="m11a5-diagram" id="m11a5-diagram-semimono">
+  <div class="m11a5-skin"></div>
+  <div class="m11a5-label" style="left:4%; top:4px;">Revêtement (peau porteuse)</div>
+  <div class="m11a5-frame"></div>
+  <div class="m11a5-frame"></div>
+  <div class="m11a5-frame"></div>
+  <div class="m11a5-frame"></div>
+  <div class="m11a5-label" style="left:4%; bottom:4px;">Cadres</div>
+  <div class="m11a5-stringer" style="top:35%;"></div>
+  <div class="m11a5-stringer" style="top:65%;"></div>
+  <div class="m11a5-label" style="right:4%; top:38%;">Lisses</div>
+</div>
+<div class="m11a5-diagram" id="m11a5-diagram-treillis" style="display:none;">
+  <div style="width:200px; height:70px; position:relative;">
+    <div style="position:absolute; left:0; top:0; width:2px; height:100%; background:#888;"></div>
+    <div style="position:absolute; right:0; top:0; width:2px; height:100%; background:#888;"></div>
+    <div style="position:absolute; left:0; top:0; right:0; height:2px; background:#888;"></div>
+    <div style="position:absolute; left:0; bottom:0; right:0; height:2px; background:#888;"></div>
+    <div style="position:absolute; left:0; top:0; width:141%; height:2px; background:#888; transform-origin:top left; transform:rotate(20deg);"></div>
+    <div style="position:absolute; right:0; top:0; width:141%; height:2px; background:#888; transform-origin:top right; transform:rotate(-20deg);"></div>
+    <div class="m11a5-label" style="left:50%; top:-18px; transform:translateX(-50%);">Treillis (tubes/poutrelles internes)</div>
+  </div>
+</div>
+
+<div class="m11a5-caption" id="m11a5-caption">Ce schéma compare deux techniques de construction du fuselage. Vue actuelle — semi-monocoque : le revêtement (peau) participe lui-même à la résistance de la structure, renforcé par des cadres (anneaux transversaux) et des lisses (raidisseurs longitudinaux) — la construction la plus répandue sur les avions modernes. Cliquez sur « Structure à treillis » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m11a5-wrap');
+  if (!wrap) { return; }
+  var btnSemi = wrap.querySelector('#m11a5-btn-semimono');
+  var btnTreillis = wrap.querySelector('#m11a5-btn-treillis');
+  var diagSemi = wrap.querySelector('#m11a5-diagram-semimono');
+  var diagTreillis = wrap.querySelector('#m11a5-diagram-treillis');
+  var caption = wrap.querySelector('#m11a5-caption');
+
+  function showSemi() {
+    btnSemi.className = 'm11a5-btn active';
+    btnTreillis.className = 'm11a5-btn';
+    diagSemi.style.display = 'flex';
+    diagTreillis.style.display = 'none';
+    caption.textContent = "Ce schéma compare deux techniques de construction du fuselage. Vue actuelle — semi-monocoque : le revêtement (peau) participe lui-même à la résistance de la structure, renforcé par des cadres (anneaux transversaux) et des lisses (raidisseurs longitudinaux) — la construction la plus répandue sur les avions modernes. Cliquez sur « Structure à treillis » pour comparer.";
+  }
+
+  function showTreillis() {
+    btnSemi.className = 'm11a5-btn';
+    btnTreillis.className = 'm11a5-btn active';
+    diagSemi.style.display = 'none';
+    diagTreillis.style.display = 'flex';
+    caption.textContent = "Structure à treillis : un assemblage de tubes ou de poutrelles internes porte l'essentiel des charges, le revêtement n'étant qu'un habillage sans rôle structural — une conception plus ancienne, aujourd'hui limitée aux avions légers. Cliquez sur « Semi-monocoque » pour revenir à l'autre vue.";
+  }
+
+  btnSemi.addEventListener('click', showSemi);
+  btnTreillis.addEventListener('click', showTreillis);
+})();
+</script>

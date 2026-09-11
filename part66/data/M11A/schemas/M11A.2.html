@@ -1,0 +1,70 @@
+<div id="schema-m11a2-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m11a2-wrap .m11a2-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m11a2-wrap .m11a2-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m11a2-wrap .m11a2-diagram { position:relative; height:130px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; }
+#schema-m11a2-wrap .m11a2-wing { position:absolute; left:30%; top:55%; width:140px; height:5px; background:#4a90d9; border-radius:3px; transform: rotate(10deg); }
+#schema-m11a2-wrap .m11a2-line { position:absolute; height:2px; background:#4a90d9; }
+#schema-m11a2-wrap .m11a2-turb { position:absolute; font-size:0.9em; color:#c0392b; }
+#schema-m11a2-wrap .m11a2-label { position:absolute; font-size:0.68em; color:#555; }
+#schema-m11a2-wrap .m11a2-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Écoulement attaché ou décroché :</strong> comparez le comportement de l'air sur l'extrados dans les deux cas.</p>
+
+<button class="m11a2-btn active" id="m11a2-btn-attache">Écoulement attaché</button>
+<button class="m11a2-btn" id="m11a2-btn-decroche">Écoulement décroché</button>
+
+<div class="m11a2-diagram">
+  <div class="m11a2-wing"></div>
+  <div class="m11a2-label" style="left:26%; top:8%;">Aile (profil)</div>
+  <div id="m11a2-lines-attache">
+    <div class="m11a2-line" style="left:15%; top:30%; width:70%;"></div>
+    <div class="m11a2-line" style="left:15%; top:40%; width:75%;"></div>
+    <div class="m11a2-line" style="left:15%; top:50%; width:80%;"></div>
+    <div class="m11a2-label" style="left:15%; top:16%;">Écoulement d'air (attaché)</div>
+  </div>
+  <div id="m11a2-lines-decroche" style="display:none;">
+    <div class="m11a2-line" style="left:15%; top:30%; width:35%;"></div>
+    <div class="m11a2-line" style="left:15%; top:40%; width:30%;"></div>
+    <div class="m11a2-label" style="left:15%; top:16%;">Écoulement (attaché en amont)</div>
+    <div class="m11a2-turb" style="left:55%; top:20%;">↻</div>
+    <div class="m11a2-turb" style="left:65%; top:35%;">↺</div>
+    <div class="m11a2-turb" style="left:58%; top:50%;">↻</div>
+    <div class="m11a2-label" style="left:53%; top:66%;">Turbulence (décollement)</div>
+  </div>
+</div>
+
+<div class="m11a2-caption" id="m11a2-caption">Ce schéma compare un écoulement normal à un écoulement décroché. Vue actuelle — écoulement attaché : l'air suit fidèlement la courbure de l'extrados jusqu'au bord de fuite, produisant une portance régulière et croissante avec l'angle d'incidence. Cliquez sur « Écoulement décroché » pour voir le décrochage.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m11a2-wrap');
+  if (!wrap) { return; }
+  var btnAttache = wrap.querySelector('#m11a2-btn-attache');
+  var btnDecroche = wrap.querySelector('#m11a2-btn-decroche');
+  var linesAttache = wrap.querySelector('#m11a2-lines-attache');
+  var linesDecroche = wrap.querySelector('#m11a2-lines-decroche');
+  var caption = wrap.querySelector('#m11a2-caption');
+
+  function showAttache() {
+    btnAttache.className = 'm11a2-btn active';
+    btnDecroche.className = 'm11a2-btn';
+    linesAttache.style.display = 'block';
+    linesDecroche.style.display = 'none';
+    caption.textContent = "Ce schéma compare un écoulement normal à un écoulement décroché. Vue actuelle — écoulement attaché : l'air suit fidèlement la courbure de l'extrados jusqu'au bord de fuite, produisant une portance régulière et croissante avec l'angle d'incidence. Cliquez sur « Écoulement décroché » pour voir le décrochage.";
+  }
+
+  function showDecroche() {
+    btnAttache.className = 'm11a2-btn';
+    btnDecroche.className = 'm11a2-btn active';
+    linesAttache.style.display = 'none';
+    linesDecroche.style.display = 'block';
+    caption.textContent = "Écoulement décroché : au-delà de l'angle d'incidence critique, l'air se détache prématurément de l'extrados et forme une zone de turbulence désordonnée — la portance chute brutalement (rappel : c'est l'angle d'incidence, pas la vitesse, qui déclenche ce phénomène). Cliquez sur « Écoulement attaché » pour revenir à la vue normale.";
+  }
+
+  btnAttache.addEventListener('click', showAttache);
+  btnDecroche.addEventListener('click', showDecroche);
+})();
+</script>

@@ -1,0 +1,106 @@
+<div id="schema-m11a2b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m11a2b-wrap .m11a2b-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m11a2b-wrap .m11a2b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m11a2b-wrap .m11a2b-chart { position:relative; height:150px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; }
+#schema-m11a2b-wrap .m11a2b-center { position:absolute; left:0; right:0; top:75px; height:1px; background:#aaa; border-top:1px dashed #aaa; }
+#schema-m11a2b-wrap .m11a2b-stem { position:absolute; width:3px; background:#4a90d9; border-radius:2px; }
+#schema-m11a2b-wrap .m11a2b-dot { position:absolute; width:8px; height:8px; margin-left:-3px; background:#4a76a8; border-radius:50%; }
+#schema-m11a2b-wrap .m11a2b-xlabel { position:absolute; bottom:-20px; font-size:0.6em; color:#888; transform:translateX(-50%); }
+#schema-m11a2b-wrap .m11a2b-ylabel { position:absolute; left:4px; top:4px; font-size:0.62em; color:#555; }
+#schema-m11a2b-wrap .m11a2b-centerlabel { position:absolute; right:4px; top:78px; font-size:0.62em; color:#888; }
+#schema-m11a2b-wrap .m11a2b-caption { margin-top:28px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Stabilité dynamique :</strong> comparez des oscillations qui s'amortissent à des oscillations qui s'amplifient, après une même perturbation (chaque point représente l'écart par rapport à l'assiette d'équilibre, à des instants successifs).</p>
+
+<button class="m11a2b-btn active" id="m11a2b-btn-positive">Stabilité dynamique positive</button>
+<button class="m11a2b-btn" id="m11a2b-btn-negative">Stabilité dynamique négative</button>
+
+<div class="m11a2b-chart">
+  <div class="m11a2b-ylabel">Écart par rapport à l'équilibre</div>
+  <div class="m11a2b-center"></div>
+  <div class="m11a2b-centerlabel">Assiette d'équilibre (écart nul)</div>
+
+  <div id="m11a2b-group-positive">
+    <div class="m11a2b-stem" style="left:5%; top:75px; height:0px;"></div>
+    <div class="m11a2b-dot" style="left:5%; top:71px;"></div>
+    <div class="m11a2b-stem" style="left:16%; top:75px; height:45px;"></div>
+    <div class="m11a2b-dot" style="left:16%; top:116px;"></div>
+    <div class="m11a2b-stem" style="left:27%; top:40px; height:35px;"></div>
+    <div class="m11a2b-dot" style="left:27%; top:36px;"></div>
+    <div class="m11a2b-stem" style="left:38%; top:75px; height:26px;"></div>
+    <div class="m11a2b-dot" style="left:38%; top:97px;"></div>
+    <div class="m11a2b-stem" style="left:49%; top:56px; height:19px;"></div>
+    <div class="m11a2b-dot" style="left:49%; top:52px;"></div>
+    <div class="m11a2b-stem" style="left:60%; top:75px; height:13px;"></div>
+    <div class="m11a2b-dot" style="left:60%; top:84px;"></div>
+    <div class="m11a2b-stem" style="left:71%; top:66px; height:9px;"></div>
+    <div class="m11a2b-dot" style="left:71%; top:62px;"></div>
+    <div class="m11a2b-stem" style="left:82%; top:75px; height:6px;"></div>
+    <div class="m11a2b-dot" style="left:82%; top:77px;"></div>
+    <div class="m11a2b-stem" style="left:93%; top:71px; height:4px;"></div>
+    <div class="m11a2b-dot" style="left:93%; top:67px;"></div>
+    <div class="m11a2b-xlabel" style="left:5%;">t0</div>
+    <div class="m11a2b-xlabel" style="left:49%;">temps</div>
+    <div class="m11a2b-xlabel" style="left:93%;">t8</div>
+  </div>
+
+  <div id="m11a2b-group-negative" style="display:none;">
+    <div class="m11a2b-stem" style="left:5%; top:75px; height:0px;"></div>
+    <div class="m11a2b-dot" style="left:5%; top:71px;"></div>
+    <div class="m11a2b-stem" style="left:16%; top:75px; height:8px;"></div>
+    <div class="m11a2b-dot" style="left:16%; top:79px;"></div>
+    <div class="m11a2b-stem" style="left:27%; top:64px; height:11px;"></div>
+    <div class="m11a2b-dot" style="left:27%; top:60px;"></div>
+    <div class="m11a2b-stem" style="left:38%; top:75px; height:15px;"></div>
+    <div class="m11a2b-dot" style="left:38%; top:86px;"></div>
+    <div class="m11a2b-stem" style="left:49%; top:55px; height:20px;"></div>
+    <div class="m11a2b-dot" style="left:49%; top:51px;"></div>
+    <div class="m11a2b-stem" style="left:60%; top:75px; height:27px;"></div>
+    <div class="m11a2b-dot" style="left:60%; top:98px;"></div>
+    <div class="m11a2b-stem" style="left:71%; top:39px; height:36px;"></div>
+    <div class="m11a2b-dot" style="left:71%; top:35px;"></div>
+    <div class="m11a2b-stem" style="left:82%; top:75px; height:49px;"></div>
+    <div class="m11a2b-dot" style="left:82%; top:120px;"></div>
+    <div class="m11a2b-stem" style="left:93%; top:9px; height:66px;"></div>
+    <div class="m11a2b-dot" style="left:93%; top:5px;"></div>
+    <div class="m11a2b-xlabel" style="left:5%;">t0</div>
+    <div class="m11a2b-xlabel" style="left:49%;">temps</div>
+    <div class="m11a2b-xlabel" style="left:93%;">t8</div>
+  </div>
+</div>
+
+<div class="m11a2b-caption" id="m11a2b-caption">Ce schéma compare deux comportements possibles après une perturbation. Vue actuelle — stabilité dynamique positive : l'écart par rapport à l'assiette d'équilibre s'amortit progressivement, jusqu'à un retour complet et stable — le comportement recherché sur un avion de transport. Cliquez sur « Stabilité dynamique négative » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m11a2b-wrap');
+  if (!wrap) { return; }
+  var btnPos = wrap.querySelector('#m11a2b-btn-positive');
+  var btnNeg = wrap.querySelector('#m11a2b-btn-negative');
+  var groupPos = wrap.querySelector('#m11a2b-group-positive');
+  var groupNeg = wrap.querySelector('#m11a2b-group-negative');
+  var caption = wrap.querySelector('#m11a2b-caption');
+
+  function showPositive() {
+    btnPos.className = 'm11a2b-btn active';
+    btnNeg.className = 'm11a2b-btn';
+    groupPos.style.display = 'block';
+    groupNeg.style.display = 'none';
+    caption.textContent = "Ce schéma compare deux comportements possibles après une perturbation. Vue actuelle — stabilité dynamique positive : l'écart par rapport à l'assiette d'équilibre s'amortit progressivement, jusqu'à un retour complet et stable — le comportement recherché sur un avion de transport. Cliquez sur « Stabilité dynamique négative » pour comparer.";
+  }
+
+  function showNegative() {
+    btnPos.className = 'm11a2b-btn';
+    btnNeg.className = 'm11a2b-btn active';
+    groupPos.style.display = 'none';
+    groupNeg.style.display = 'block';
+    caption.textContent = "Stabilité dynamique négative : l'écart s'amplifie au fil du temps au lieu de s'amortir — un comportement indésirable, même si la réaction initiale (stabilité statique) était correcte. C'est pourquoi la conception d'un avion doit considérer les deux aspects ensemble. Cliquez sur « Stabilité dynamique positive » pour revenir à l'autre vue.";
+  }
+
+  btnPos.addEventListener('click', showPositive);
+  btnNeg.addEventListener('click', showNegative);
+})();
+</script>

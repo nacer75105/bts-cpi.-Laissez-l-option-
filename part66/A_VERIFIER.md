@@ -1053,6 +1053,116 @@ aucune séquence d'actions pilote, aucun seuil d'alarme précis, aucune
 procédure d'urgence à reproduire ne doit figurer dans ces deux fiches
 ni dans leurs schémas ou questions.
 
+## M11A — construction en cours (module « Aérodynamique, structures et
+systèmes — avion à turbine »)
+
+Plan validé avec l'utilisateur le 2026-09-11 : de loin le plus gros
+module du parcours (140 questions à l'examen réel, contre 32 pour
+M17A ou 25 pour M15/M7A) — **25 fiches, construites en 5 lots de 5**
+plutôt que les 3 lots utilisés pour M15/M17A, calibrées selon le
+standard de la section ci-dessous dès la V1. Relecture et validation
+utilisateur après chaque lot, même méthode que M15/M17A.
+`disponible: False` dans `part66/logic.py` jusqu'à validation finale
+complète du module.
+
+Découpage éditorial de ce projet, pas la nomenclature officielle EASA
+du syllabus 11A — même statut que M5/M7A/M15/M17A, à confirmer contre
+le syllabus officiel avant de considérer la couverture du module comme
+complète.
+
+Table des 25 fiches (fige les titres et numéros pour tous les renvois
+croisés entre fiches) :
+
+| Lot | Fiche | Titre |
+|---|---|---|
+| 1 | M11A.1 | Forces aérodynamiques fondamentales (portance, traînée, profil, incidence) |
+| 1 | M11A.2 | Décrochage et stabilité |
+| 1 | M11A.3 | Vol à grande vitesse (compressibilité, effets Mach — spécificité avion à turbine) |
+| 1 | M11A.4 | Principes et matériaux de structure (charges, contraintes, métal/composite) |
+| 1 | M11A.5 | Éléments structuraux (fuselage, voilure, empennage, assemblage) |
+| 2 | M11A.6 | Commandes de vol : gouvernes principales et secondaires (trims, compensateurs) |
+| 2 | M11A.7 | Systèmes d'actionnement des commandes (mécanique, hydraulique, électrique/fly-by-wire) |
+| 2 | M11A.8 | Dispositifs hypersustentateurs (volets, becs, spoilers) |
+| 2 | M11A.9 | Circuits hydrauliques : principes (pression, pompes, actionneurs) |
+| 2 | M11A.10 | Circuits hydrauliques : architecture et redondance |
+| 3 | M11A.11 | Train d'atterrissage : structure et fonctionnement |
+| 3 | M11A.12 | Train d'atterrissage : extension/rétraction et secours |
+| 3 | M11A.13 | Circuits pneumatiques (air prélevé / bleed air) |
+| 3 | M11A.14 | Conditionnement d'air |
+| 3 | M11A.15 | Pressurisation |
+| 4 | M11A.16 | Protection contre le givre et la pluie |
+| 4 | M11A.17 | Circuit carburant (cellule : réservoirs, transfert, jaugeage) |
+| 4 | M11A.18 | Génération électrique (générateurs, batteries, alimentation de secours) |
+| 4 | M11A.19 | Réseau, distribution et protection des circuits électriques |
+| 4 | M11A.20 | Instruments de vol |
+| 5 | M11A.21 | Avionique et gestion de vol |
+| 5 | M11A.22 | Protection incendie (cellule, hors moteur déjà couvert en M15) |
+| 5 | M11A.23 | Oxygène |
+| 5 | M11A.24 | Portes et issues |
+| 5 | M11A.25 | Maintenance de la cellule (inspection, corrosion, CND) |
+
+**Consigne de portée explicite de l'utilisateur, même principe que
+M15.9/M15.13 — à respecter sur M11A.9/M11A.10 (hydraulique haute
+pression), M11A.12 (train : extension/rétraction et secours),
+M11A.15 (pressurisation), M11A.22 (protection incendie cellule),
+M11A.23 (oxygène) et M11A.24 (portes et issues) :** ces fiches
+touchent à des systèmes à haute énergie ou à des situations
+d'urgence réelles. Le contenu doit enseigner le principe technique —
+ce qui se passe, pourquoi c'est grave, ce que cela implique côté
+entretien — **mais jamais la procédure d'équipage ni un geste qui
+pourrait être reproduit sans les précautions complètes** (isolement
+de pression avant intervention, consignation, équipement de
+protection...), qui relèvent du manuel de vol ou de la documentation
+constructeur propre à chaque appareil. Le critère 2bis s'applique
+pleinement sur ces six fiches : aucune séquence d'actions
+équipage/mécanicien, aucun seuil précis (pression, altitude cabine,
+durée), aucune procédure à reproduire ne doit figurer dans leur texte,
+leurs schémas ou leurs questions.
+
+### Lot 1 (M11A.1-M11A.5, 5 fiches, 45 questions, 10 schémas) — validé, 2 rounds de relecture
+
+Relu par `relecteur-part66` : le premier round a trouvé 5 BLOQUANT —
+un sophisme du « temps de transit égal » dans l'explication de la
+portance (M11A.1, contredit par le schéma lui-même) ; l'avantage de
+l'empennage en T énoncé à l'envers sur son point critique (M11A.5 et
+M11A-0043 : l'éloignement du sillage est un avantage en vol normal,
+pas à fort angle d'incidence, où c'est l'inverse qui se produit) ; un
+renvoi fabriqué vers le module M5 (M11A.3, qui ne parle jamais de
+vitesse air) ; une courbe de portance qui chutait avant l'angle
+critique dans un schéma (`M11A.1-2.html`) ; un schéma de comparaison
+d'oscillations (`M11A.2-2.html`) rendu illisible par un `clip-path`
+en pourcentages sur un élément de 2px de haut. Tous corrigés ; un
+round de vérification a confirmé les 5 correctifs et trouvé 2
+régressions mineures introduites par les correctifs eux-mêmes
+(sequence d'amplitude plafonnée dans `M11A.2-2.html`, formulation
+ambiguë dans `M11A.1-2.html`), également corrigées. Plusieurs points
+À REVOIR traités dans la foulée : terminologie traction/poussée
+harmonisée avec M15, distracteurs faibles renforcés sur 4 questions,
+un doublon remplacé, deux questions « méta » reformulées, et le
+schéma des 5 sollicitations structurales (`M11A.4.html`) reconstruit
+pour que cisaillement/flexion/torsion soient visuellement
+distinguables plutôt que rendus par les seules flèches et le texte.
+
+**Retour utilisateur après test local (2026-09-12) : les 10 schémas
+manquaient de légendes permanentes et de texte d'explication initial
+utile.** Corrigé sur les 10 fichiers : chaque élément visuel porte
+désormais un libellé texte visible en permanence (pas seulement au
+clic), et la zone d'explication affiche dès le chargement une phrase
+qui décrit l'état montré et invite explicitely à cliquer pour
+comparer. Cette double exigence est désormais documentée comme
+contrainte permanente dans `C:\Users\pc\CLAUDE.md` (section
+« Contrainte de contenu : schémas interactifs Part-66 — légendes
+permanentes et texte initial non vide ») et s'applique dès la
+rédaction de tout schéma des lots suivants, pas seulement en
+correction a posteriori. **Lot 1 validé par l'utilisateur, tests
+locaux inclus, le 2026-09-12.**
+
+**Point de configuration (hors banque de questions)** : `nb_questions_examen: 140`
+confirmé par l'utilisateur. `duree_examen_min: 175` = 75 secondes par
+question × 140, règle générale Part-66 pour les QCM — valeur
+retenue sur cette base mais **non vérifiée sur l'Appendix VIII
+officiel**, même statut TODO que les autres modules.
+
 ## M5.1 / M5.5 / M15.1-2 — bug résolu : génération de DOM à l'exécution
 (investigation menée le 2026-09-11, cause identifiée et corrigée)
 
