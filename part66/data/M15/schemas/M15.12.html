@@ -1,0 +1,59 @@
+<div id="schema-m1512-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1512-wrap .m1512-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.9em; }
+#schema-m1512-wrap .m1512-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1512-wrap .m1512-diagram { position:relative; height:110px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; }
+#schema-m1512-wrap .m1512-engine { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:70px; height:40px; background:#7fa8d9; border:1.5px solid #4a76a8; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:0.7em; color:#fff; font-weight:bold; }
+#schema-m1512-wrap .m1512-arrow { position:absolute; top:50%; font-size:1.4em; transform:translateY(-50%); color:#333; }
+#schema-m1512-wrap .m1512-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Poussée normale ou inversée :</strong> la direction dans laquelle l'air est accéléré détermine le sens de la force produite.</p>
+
+<button class="m1512-btn active" id="m1512-btn-normal">Poussée normale</button>
+<button class="m1512-btn" id="m1512-btn-inverse">Poussée inversée</button>
+
+<div class="m1512-diagram">
+  <div class="m1512-engine">MOTEUR</div>
+  <div class="m1512-arrow" id="m1512-arrow-in" style="left:8px;">→</div>
+  <div class="m1512-arrow" id="m1512-arrow-out-normal" style="right:8px;">→</div>
+  <div class="m1512-arrow" id="m1512-arrow-out-rev1" style="left:20%; display:none;">↖</div>
+  <div class="m1512-arrow" id="m1512-arrow-out-rev2" style="right:20%; display:none;">↗</div>
+</div>
+
+<div class="m1512-caption" id="m1512-caption">Fonctionnement normal : l'air est accéléré vers l'arrière, produisant une poussée dirigée vers l'avant (rappel M15.1) — le principe de base de tout le cycle décrit dans ce module.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1512-wrap');
+  if (!wrap) { return; }
+  var btnNormal = wrap.querySelector('#m1512-btn-normal');
+  var btnInverse = wrap.querySelector('#m1512-btn-inverse');
+  var outNormal = wrap.querySelector('#m1512-arrow-out-normal');
+  var outRev1 = wrap.querySelector('#m1512-arrow-out-rev1');
+  var outRev2 = wrap.querySelector('#m1512-arrow-out-rev2');
+  var caption = wrap.querySelector('#m1512-caption');
+
+  function showNormal() {
+    btnNormal.className = 'm1512-btn active';
+    btnInverse.className = 'm1512-btn';
+    outNormal.style.display = 'block';
+    outRev1.style.display = 'none';
+    outRev2.style.display = 'none';
+    caption.textContent = "Fonctionnement normal : l'air est accéléré vers l'arrière, produisant une poussée dirigée vers l'avant (rappel M15.1) — le principe de base de tout le cycle décrit dans ce module.";
+  }
+
+  function showInverse() {
+    btnNormal.className = 'm1512-btn';
+    btnInverse.className = 'm1512-btn active';
+    outNormal.style.display = 'none';
+    outRev1.style.display = 'block';
+    outRev2.style.display = 'block';
+    caption.textContent = "Poussée inversée : des volets ou des portes redirigent l'air vers l'avant, produisant une force qui s'oppose au déplacement de l'avion — sans dépendre de l'adhérence des roues, précieux sur piste mouillée ou enneigée. Le cycle interne du moteur (compression, combustion, détente) reste inchangé ; seul le trajet des gaz après leur sortie de la partie motrice est modifié.";
+  }
+
+  btnNormal.addEventListener('click', showNormal);
+  btnInverse.addEventListener('click', showInverse);
+})();
+</script>

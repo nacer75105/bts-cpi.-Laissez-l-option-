@@ -1,0 +1,51 @@
+<div id="schema-m1514b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1514b-wrap .m1514b-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m1514b-wrap .m1514b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1514b-wrap .m1514b-view { margin-top:16px; height:110px; border:2px solid #888; border-radius:8px; background:#2b2b2b; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; }
+#schema-m1514b-wrap .m1514b-blade { width:70px; height:70px; border-radius:6px; background:#7fa8d9; border:1.5px solid #4a76a8; position:relative; }
+#schema-m1514b-wrap .m1514b-crack { position:absolute; left:20px; top:10px; width:3px; height:50px; background:#c0392b; transform:rotate(15deg); display:none; }
+#schema-m1514b-wrap .m1514b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5em; }
+</style>
+
+<p><strong>Inspection endoscopique (borescope) :</strong> un examen visuel direct, par un accès dédié, sans démontage du moteur.</p>
+
+<button class="m1514b-btn active" id="m1514b-btn-sain">Aube saine</button>
+<button class="m1514b-btn" id="m1514b-btn-fissure">Aube fissurée</button>
+
+<div class="m1514b-view">
+  <div class="m1514b-blade" id="m1514b-blade">
+    <div class="m1514b-crack" id="m1514b-crack"></div>
+  </div>
+</div>
+
+<div class="m1514b-caption" id="m1514b-caption">Vue endoscopique d'une aube en bon état : surface régulière, aucune fissure ni trace de surchauffe localisée visible.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1514b-wrap');
+  if (!wrap) { return; }
+  var btnSain = wrap.querySelector('#m1514b-btn-sain');
+  var btnFissure = wrap.querySelector('#m1514b-btn-fissure');
+  var crack = wrap.querySelector('#m1514b-crack');
+  var caption = wrap.querySelector('#m1514b-caption');
+
+  function showSain() {
+    btnSain.className = 'm1514b-btn active';
+    btnFissure.className = 'm1514b-btn';
+    crack.style.display = 'none';
+    caption.textContent = "Vue endoscopique d'une aube en bon état : surface régulière, aucune fissure ni trace de surchauffe localisée visible.";
+  }
+
+  function showFissure() {
+    btnSain.className = 'm1514b-btn';
+    btnFissure.className = 'm1514b-btn active';
+    crack.style.display = 'block';
+    caption.textContent = "Vue endoscopique révélant une fissure naissante : un dommage localisé qu'aucun paramètre chiffré (régime, température, vibration) ne révélerait forcément — l'endoscope permet de le détecter visuellement, par un accès dédié, sans démonter le moteur.";
+  }
+
+  btnSain.addEventListener('click', showSain);
+  btnFissure.addEventListener('click', showFissure);
+})();
+</script>

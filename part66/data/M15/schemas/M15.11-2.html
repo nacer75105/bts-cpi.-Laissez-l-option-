@@ -1,0 +1,57 @@
+<div id="schema-m1511b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1511b-wrap .m1511b-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.9em; }
+#schema-m1511b-wrap .m1511b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1511b-wrap .m1511b-dial { margin-top:16px; width:140px; height:140px; border-radius:50%; border:6px solid #7fa8d9; position:relative; box-sizing:border-box; }
+#schema-m1511b-wrap .m1511b-needle { position:absolute; left:50%; bottom:50%; width:3px; height:56px; background:#333; transform-origin:bottom center; }
+#schema-m1511b-wrap .m1511b-label { position:absolute; bottom:-24px; left:50%; transform:translateX(-50%); font-size:0.78em; color:#555; white-space:nowrap; }
+#schema-m1511b-wrap .m1511b-caption { margin-top:30px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5em; }
+</style>
+
+<p><strong>Deux façons de mesurer le même phénomène :</strong> régime moteur (N) ou taux de pression moteur (EPR), deux paramètres de substitution possibles pour estimer la poussée.</p>
+
+<button class="m1511b-btn active" id="m1511b-btn-n">Régime (N)</button>
+<button class="m1511b-btn" id="m1511b-btn-epr">Taux de pression (EPR)</button>
+
+<div class="m1511b-dial" id="m1511b-dial-n">
+  <div class="m1511b-needle" style="transform: rotate(65deg);"></div>
+  <div class="m1511b-label">N = 91 %</div>
+</div>
+<div class="m1511b-dial" id="m1511b-dial-epr" style="display:none;">
+  <div class="m1511b-needle" style="transform: rotate(50deg);"></div>
+  <div class="m1511b-label">EPR = 1,42</div>
+</div>
+
+<div class="m1511b-caption" id="m1511b-caption">Le régime (N), exprimé en % d'un régime de référence, reflète directement le débit d'air comprimé traversant le moteur (rappel M15.3/M15.5) : plus il est élevé, plus la poussée produite est grande pour des conditions extérieures données.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1511b-wrap');
+  if (!wrap) { return; }
+  var btnN = wrap.querySelector('#m1511b-btn-n');
+  var btnEpr = wrap.querySelector('#m1511b-btn-epr');
+  var dialN = wrap.querySelector('#m1511b-dial-n');
+  var dialEpr = wrap.querySelector('#m1511b-dial-epr');
+  var caption = wrap.querySelector('#m1511b-caption');
+
+  function showN() {
+    btnN.className = 'm1511b-btn active';
+    btnEpr.className = 'm1511b-btn';
+    dialN.style.display = 'block';
+    dialEpr.style.display = 'none';
+    caption.textContent = "Le régime (N), exprimé en % d'un régime de référence, reflète directement le débit d'air comprimé traversant le moteur (rappel M15.3/M15.5) : plus il est élevé, plus la poussée produite est grande pour des conditions extérieures données.";
+  }
+
+  function showEpr() {
+    btnN.className = 'm1511b-btn';
+    btnEpr.className = 'm1511b-btn active';
+    dialN.style.display = 'none';
+    dialEpr.style.display = 'block';
+    caption.textContent = "Le taux de pression moteur (EPR) compare la pression des gaz en sortie de moteur à celle de l'air à l'entrée : ce rapport reflète lui aussi directement l'accélération produite par le moteur (rappel M15.1 et M15.6), donc la poussée. Le choix entre N et EPR comme référence est une caractéristique de conception propre à chaque moteur.";
+  }
+
+  btnN.addEventListener('click', showN);
+  btnEpr.addEventListener('click', showEpr);
+})();
+</script>

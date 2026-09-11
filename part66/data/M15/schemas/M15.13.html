@@ -1,0 +1,57 @@
+<div id="schema-m1513-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1513-wrap .m1513-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.9em; }
+#schema-m1513-wrap .m1513-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1513-wrap .m1513-zone { position:relative; height:110px; margin-top:16px; border:2px solid #888; border-radius:8px; background:#f7f7f7; display:flex; align-items:center; justify-content:center; }
+#schema-m1513-wrap .m1513-loop { position:absolute; left:8%; right:8%; top:8%; bottom:8%; border:3px dashed #4a90d9; border-radius:8px; }
+#schema-m1513-wrap .m1513-loop.alarm { border-color:#c0392b; border-style:solid; }
+#schema-m1513-wrap .m1513-status { font-weight:bold; color:#333; }
+#schema-m1513-wrap .m1513-status.alarm { color:#c0392b; }
+#schema-m1513-wrap .m1513-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Détection incendie moteur :</strong> le principe des boucles de détection continue — le raisonnement technique, pas la procédure d'équipage.</p>
+
+<button class="m1513-btn active" id="m1513-btn-normal">État normal</button>
+<button class="m1513-btn" id="m1513-btn-alarme">Détection confirmée (2 boucles)</button>
+
+<div class="m1513-zone">
+  <div class="m1513-loop" id="m1513-loop"></div>
+  <div class="m1513-status" id="m1513-status">Zone moteur surveillée — température normale sur les deux boucles</div>
+</div>
+
+<div class="m1513-caption" id="m1513-caption">Deux boucles de détection continue parcourent chaque zone moteur. Une boucle réagit à une élévation de température sur tout son parcours, pas seulement en un point précis — la détection ne dépend donc pas de l'endroit exact où un foyer se déclarerait.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1513-wrap');
+  if (!wrap) { return; }
+  var btnNormal = wrap.querySelector('#m1513-btn-normal');
+  var btnAlarme = wrap.querySelector('#m1513-btn-alarme');
+  var loop = wrap.querySelector('#m1513-loop');
+  var status = wrap.querySelector('#m1513-status');
+  var caption = wrap.querySelector('#m1513-caption');
+
+  function showNormal() {
+    btnNormal.className = 'm1513-btn active';
+    btnAlarme.className = 'm1513-btn';
+    loop.className = 'm1513-loop';
+    status.className = 'm1513-status';
+    status.textContent = 'Zone moteur surveillée — température normale sur les deux boucles';
+    caption.textContent = "Deux boucles de détection continue parcourent chaque zone moteur. Une boucle réagit à une élévation de température sur tout son parcours, pas seulement en un point précis — la détection ne dépend donc pas de l'endroit exact où un foyer se déclarerait.";
+  }
+
+  function showAlarme() {
+    btnNormal.className = 'm1513-btn';
+    btnAlarme.className = 'm1513-btn active';
+    loop.className = 'm1513-loop alarm';
+    status.className = 'm1513-status alarm';
+    status.textContent = 'Élévation de température confirmée par les DEUX boucles';
+    caption.textContent = "L'accord mutuel des deux boucles indépendantes distingue une détection réelle d'une fausse alarme isolée. Le principe technique s'arrête ici : les actions qui suivent (décharge d'un agent extincteur, isolement des circuits, coupure du carburant), sans ordre imposé entre elles, ainsi que la façon dont l'équipage les déclenche, relèvent exclusivement du manuel de vol, hors du cadre de ce schéma.";
+  }
+
+  btnNormal.addEventListener('click', showNormal);
+  btnAlarme.addEventListener('click', showAlarme);
+})();
+</script>

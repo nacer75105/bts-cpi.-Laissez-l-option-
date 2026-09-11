@@ -1,0 +1,57 @@
+<div id="schema-m1513b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1513b-wrap .m1513b-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m1513b-wrap .m1513b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1513b-wrap .m1513b-row { display:flex; gap:14px; margin-top:16px; align-items:center; justify-content:center; }
+#schema-m1513b-wrap .m1513b-bottle { width:36px; height:70px; border:2px solid #888; border-radius:10px 10px 4px 4px; background:#d9d9d9; position:relative; overflow:hidden; }
+#schema-m1513b-wrap .m1513b-fill { position:absolute; left:0; right:0; bottom:0; background:#4a90d9; transition: height 0.3s; }
+#schema-m1513b-wrap .m1513b-lbl { text-align:center; font-size:0.7em; color:#555; margin-top:4px; }
+#schema-m1513b-wrap .m1513b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Les bouteilles d'agent extincteur :</strong> un nombre limité, à usage unique — le principe technique, sans procédure de déclenchement.</p>
+
+<button class="m1513b-btn active" id="m1513b-btn-disponible">Avant utilisation</button>
+<button class="m1513b-btn" id="m1513b-btn-dechargee">Une bouteille déchargée</button>
+
+<div class="m1513b-row">
+  <div>
+    <div class="m1513b-bottle"><div class="m1513b-fill" id="m1513b-fill-1" style="height:85%;"></div></div>
+    <div class="m1513b-lbl">Bouteille 1</div>
+  </div>
+  <div>
+    <div class="m1513b-bottle"><div class="m1513b-fill" id="m1513b-fill-2" style="height:85%;"></div></div>
+    <div class="m1513b-lbl">Bouteille 2</div>
+  </div>
+</div>
+
+<div class="m1513b-caption" id="m1513b-caption">Les bouteilles d'agent extincteur, en nombre limité et propre à chaque installation (parfois partagées entre plusieurs moteurs selon la configuration de l'avion), sont stockées sous pression et à usage unique — schéma représentatif à deux bouteilles, une configuration parmi d'autres possibles.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1513b-wrap');
+  if (!wrap) { return; }
+  var btnDisponible = wrap.querySelector('#m1513b-btn-disponible');
+  var btnDechargee = wrap.querySelector('#m1513b-btn-dechargee');
+  var fill1 = wrap.querySelector('#m1513b-fill-1');
+  var caption = wrap.querySelector('#m1513b-caption');
+
+  function showDisponible() {
+    btnDisponible.className = 'm1513b-btn active';
+    btnDechargee.className = 'm1513b-btn';
+    fill1.style.height = '85%';
+    caption.textContent = "Les bouteilles d'agent extincteur, en nombre limité et propre à chaque installation (parfois partagées entre plusieurs moteurs selon la configuration de l'avion), sont stockées sous pression et à usage unique — schéma représentatif à deux bouteilles, une configuration parmi d'autres possibles.";
+  }
+
+  function showDechargee() {
+    btnDisponible.className = 'm1513b-btn';
+    btnDechargee.className = 'm1513b-btn active';
+    fill1.style.height = '0%';
+    caption.textContent = "Une fois déchargée, une bouteille ne peut pas être rechargée en vol. La décision de la décharger, comme le choix d'utiliser une éventuelle seconde bouteille, relève entièrement du manuel de vol de chaque appareil, hors du cadre de ce schéma.";
+  }
+
+  btnDisponible.addEventListener('click', showDisponible);
+  btnDechargee.addEventListener('click', showDechargee);
+})();
+</script>

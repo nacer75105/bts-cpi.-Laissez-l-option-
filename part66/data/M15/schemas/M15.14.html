@@ -1,0 +1,67 @@
+<div id="schema-m1514-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1514-wrap .m1514-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m1514-wrap .m1514-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1514-wrap .m1514-chart { display:flex; align-items:flex-end; gap:6px; height:110px; margin-top:16px; border-bottom:2px solid #888; padding:0 4px; }
+#schema-m1514-wrap .m1514-bar { flex:1; background:#7fa8d9; border-radius:3px 3px 0 0; position:relative; }
+#schema-m1514-wrap .m1514-bar.warn { background:#e0a800; }
+#schema-m1514-wrap .m1514-bar span { position:absolute; top:-16px; left:50%; transform:translateX(-50%); font-size:0.62em; color:#555; }
+#schema-m1514-wrap .m1514-xlabels { display:flex; gap:6px; padding:0 4px; }
+#schema-m1514-wrap .m1514-xlabels span { flex:1; text-align:center; font-size:0.62em; color:#888; }
+#schema-m1514-wrap .m1514-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Suivi de tendance :</strong> une même valeur de marge de température, vol après vol — une dérive lente que la seule limite instantanée ne révèle pas. <em>Valeurs et rythme illustratifs, sans rapport avec un cas réel précis.</em></p>
+
+<button class="m1514-btn active" id="m1514-btn-stable">Moteur sain</button>
+<button class="m1514-btn" id="m1514-btn-derive">Encrassement progressif</button>
+
+<div class="m1514-chart" id="m1514-chart-stable">
+  <div class="m1514-bar" style="height:84%;"><span>44°</span></div>
+  <div class="m1514-bar" style="height:82%;"><span>43°</span></div>
+  <div class="m1514-bar" style="height:86%;"><span>45°</span></div>
+  <div class="m1514-bar" style="height:84%;"><span>44°</span></div>
+  <div class="m1514-bar" style="height:84%;"><span>44°</span></div>
+</div>
+<div class="m1514-chart" id="m1514-chart-derive" style="display:none;">
+  <div class="m1514-bar" style="height:84%;"><span>44°</span></div>
+  <div class="m1514-bar" style="height:72%;"><span>38°</span></div>
+  <div class="m1514-bar" style="height:59%;"><span>31°</span></div>
+  <div class="m1514-bar warn" style="height:46%;"><span>24°</span></div>
+  <div class="m1514-bar warn" style="height:30%;"><span>16°</span></div>
+</div>
+<div class="m1514-xlabels"><span>Vol 1</span><span>Vol 20</span><span>Vol 40</span><span>Vol 60</span><span>Vol 80</span></div>
+
+<div class="m1514-caption" id="m1514-caption">Marge de température (écart entre la TGT réelle et sa limite) stable d'un vol à l'autre : aucune dérive détectée, le moteur reste dans son état de référence.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1514-wrap');
+  if (!wrap) { return; }
+  var btnStable = wrap.querySelector('#m1514-btn-stable');
+  var btnDerive = wrap.querySelector('#m1514-btn-derive');
+  var chartStable = wrap.querySelector('#m1514-chart-stable');
+  var chartDerive = wrap.querySelector('#m1514-chart-derive');
+  var caption = wrap.querySelector('#m1514-caption');
+
+  function showStable() {
+    btnStable.className = 'm1514-btn active';
+    btnDerive.className = 'm1514-btn';
+    chartStable.style.display = 'flex';
+    chartDerive.style.display = 'none';
+    caption.textContent = "Marge de température (écart entre la TGT réelle et sa limite) stable d'un vol à l'autre : aucune dérive détectée, le moteur reste dans son état de référence.";
+  }
+
+  function showDerive() {
+    btnStable.className = 'm1514-btn';
+    btnDerive.className = 'm1514-btn active';
+    chartStable.style.display = 'none';
+    chartDerive.style.display = 'flex';
+    caption.textContent = "La marge se réduit progressivement, vol après vol, sans qu'aucune limite instantanée ne soit jamais franchie à un instant donné (rappel M15.11) — signe typique d'un encrassement progressif du compresseur (rappel M15.3), qui oblige le moteur à travailler plus fort, donc plus chaud, pour un même régime. C'est justement ce que le suivi de tendance permet de révéler, bien avant qu'une limite ne soit atteinte.";
+  }
+
+  btnStable.addEventListener('click', showStable);
+  btnDerive.addEventListener('click', showDerive);
+})();
+</script>

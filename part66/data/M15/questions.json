@@ -1144,6 +1144,474 @@
       "bonne": 1,
       "explication": "À manette de poussée constante, le débit réellement délivré par la régulation diminue à mesure que l'altitude augmente et que l'air se raréfie — un ajustement automatique que l'équipage n'a pas à calculer — et la poussée réellement produite diminue elle aussi : la régulation ajuste le débit au fonctionnement demandé par la manette compte tenu de l'air disponible, elle ne maintient pas une poussée absolue constante en toutes circonstances. Le débit ne reste donc pas identique du décollage à la croisière, et il n'existe pas de maintien parfait de la poussée malgré la baisse du débit.",
       "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0089",
+      "sous_chapitre": "M15.11",
+      "question": "Pourquoi n'existe-t-il pas, au poste de pilotage, un cadran affichant directement la poussée du moteur en kilogrammes ?",
+      "options": [
+        "La poussée résulte de l'accélération de l'air répartie sur tout le trajet des gaz, elle n'est pas mesurable directement par un capteur unique",
+        "Un tel cadran existe en réalité sur tous les avions modernes, mais il est réservé à un usage strictement réglementaire",
+        "La poussée ne varie jamais suffisamment en vol pour justifier un affichage continu de sa valeur exacte"
+      ],
+      "bonne": 0,
+      "explication": "La poussée résulte de l'accélération de l'air traversant le moteur (rappel M15.1), un phénomène réparti sur tout le trajet des gaz plutôt que localisé en un point précis où un capteur pourrait la mesurer directement ; l'équipage se fie donc à des paramètres de substitution (régime ou EPR). Un tel cadran n'existe donc pas faute de mesure directe possible, pas pour une raison réglementaire ; et la poussée varie au contraire constamment selon la phase de vol, ce qui justifierait au contraire un affichage si la mesure directe était possible.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0090",
+      "sous_chapitre": "M15.11",
+      "question": "Pourquoi le régime moteur (N) est-il généralement affiché en pourcentage plutôt qu'en valeur brute (tours par minute) ?",
+      "options": [
+        "La valeur brute en tours par minute ne peut techniquement pas être mesurée sur un moteur à turbine, contrairement à un moteur à pistons",
+        "Cela permet à l'équipage de comparer directement le fonctionnement du moteur à ses limites certifiées, sans retenir une valeur propre à chaque type de moteur",
+        "Le pourcentage est une convention purement historique, sans avantage réel par rapport à un affichage en tours par minute"
+      ],
+      "bonne": 1,
+      "explication": "Exprimer le régime en pourcentage d'un régime de référence permet à l'équipage de le comparer directement aux limites certifiées du moteur, sans avoir à retenir une valeur numérique propre à chaque type de moteur. Le régime de rotation est parfaitement mesurable en tours par minute sur un moteur à turbine (rien ne l'en empêche techniquement) ; le choix du pourcentage n'est donc pas une contrainte technique, et il apporte un avantage réel de lisibilité, ce n'est pas une simple convention sans effet.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0091",
+      "sous_chapitre": "M15.11",
+      "question": "Que reflète le taux de pression moteur (EPR), utilisé comme paramètre de référence sur certaines installations ?",
+      "options": [
+        "La pression atmosphérique extérieure rapportée à l'altitude de vol, sans lien avec le fonctionnement interne du moteur",
+        "Le rapport entre la pression d'huile et la pression de carburant, mesuré indépendamment du flux d'air traversant le moteur",
+        "Le rapport entre la pression des gaz en sortie de moteur et celle de l'air à l'entrée, qui reflète l'ampleur de l'accélération produite"
+      ],
+      "bonne": 2,
+      "explication": "L'EPR compare la pression des gaz en sortie de moteur à celle de l'air à l'entrée ; ce rapport reflète directement l'ampleur de l'accélération produite par le moteur, donc la poussée (rappel M15.1 et M15.6). Il ne s'agit ni d'un rapport entre pression d'huile et pression de carburant, ni d'une simple mesure de pression atmosphérique extérieure sans lien avec le moteur.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0092",
+      "sous_chapitre": "M15.11",
+      "question": "Pourquoi la température des gaz de turbine (TGT/EGT) est-elle surveillée en continu, y compris en fonctionnement parfaitement normal ?",
+      "options": [
+        "C'est l'indication la plus directe de la charge thermique subie par la turbine, un paramètre qui ne doit jamais dépasser une limite précise sans risque de dommage",
+        "Cette température n'a en réalité aucun lien avec l'état de la turbine, elle ne renseigne que sur la température extérieure de l'air ambiant",
+        "Elle n'est surveillée que lors des démarrages, et redevient sans intérêt une fois le régime de croisière atteint"
+      ],
+      "bonne": 0,
+      "explication": "La température des gaz de turbine est l'indication la plus directe de la charge thermique subie par la turbine à un instant donné (rappel M15.9 : un excès de chaleur peut endommager ses aubes) ; c'est un paramètre qui ne peut jamais être dépassé au-delà d'une limite précise sans risquer un dommage, même en fonctionnement par ailleurs normal. Elle n'est donc ni sans lien avec l'état de la turbine, ni surveillée uniquement au démarrage.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0093",
+      "sous_chapitre": "M15.11",
+      "question": "Qu'indique typiquement une augmentation du niveau de vibration d'un moteur, souvent avant que d'autres paramètres ne soient eux-mêmes affectés ?",
+      "options": [
+        "Une simple variation normale de l'altitude de vol, sans lien avec l'état mécanique du moteur",
+        "Un déséquilibre mécanique naissant, par exemple une aube de compresseur endommagée par un choc",
+        "Un excès de carburant délivré par le système de régulation, indépendamment de tout état mécanique"
+      ],
+      "bonne": 1,
+      "explication": "Un moteur en bon état vibre peu et de façon stable ; une augmentation du niveau de vibration signale typiquement un déséquilibre mécanique naissant (par exemple une aube de compresseur endommagée), souvent avant que d'autres paramètres ne soient affectés. Ce n'est ni un simple effet de l'altitude, ni un signe lié au débit de carburant délivré par la régulation.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0094",
+      "sous_chapitre": "M15.11",
+      "question": "Pourquoi le tableau de bord moteur regroupe-t-il plusieurs paramètres distincts (régime, température des gaz, huile, carburant, vibration) plutôt qu'un seul indicateur synthétique ?",
+      "options": [
+        "Les différents paramètres affichent en réalité toujours la même information, présentée sous plusieurs formes différentes par habitude",
+        "Un indicateur synthétique unique existe techniquement, mais il est volontairement désactivé pour des raisons de coût de fabrication",
+        "Chaque paramètre renseigne sur un aspect distinct du fonctionnement du moteur ; une anomalie peut affecter l'un sans affecter immédiatement les autres"
+      ],
+      "bonne": 2,
+      "explication": "Chaque paramètre renseigne sur un aspect distinct du fonctionnement du moteur (un défaut de lubrification se voit d'abord sur la pression d'huile, un dommage thermique sur la température des gaz, un déséquilibre mécanique sur la vibration) ; se fier à un seul paramètre reviendrait à ignorer une partie de ce que le moteur peut communiquer. Il ne s'agit donc ni d'un indicateur synthétique désactivé par économie, ni de paramètres redondants présentant la même information.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0095",
+      "sous_chapitre": "M15.11",
+      "question": "Quel lien existe entre le FADEC (rappel M15.10) et les indications moteur affichées au poste de pilotage ?",
+      "options": [
+        "Sur un moteur équipé d'un FADEC, ce calculateur assure la collecte de la plupart des paramètres moteur et leur mise en forme pour l'affichage",
+        "Le FADEC et les indications moteur sont deux systèmes entièrement indépendants, sans aucune interaction entre eux",
+        "Le FADEC affiche directement la poussée en kilogrammes, contournant ainsi la limitation générale décrite en début de fiche"
+      ],
+      "bonne": 0,
+      "explication": "Un FADEC assure, en plus de sa fonction de régulation (rappel M15.10), la collecte de la plupart des paramètres moteur et leur mise en forme pour l'affichage au poste de pilotage — ce qui explique pourquoi sa défaillance peut priver l'équipage d'une partie de ces indications. Les deux systèmes ne sont donc pas indépendants, et le FADEC n'affiche pas directement la poussée en kilogrammes, qui reste par nature non mesurable directement.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0096",
+      "sous_chapitre": "M15.11",
+      "question": "En quoi les paramètres moteur affichés au poste de pilotage servent-ils un usage qui dépasse leur seul affichage instantané ?",
+      "options": [
+        "Ils ne servent strictement qu'à l'affichage instantané ; aucun enregistrement dans la durée n'est jamais réalisé sur ces paramètres",
+        "Ils sont également enregistrés au fil des vols, formant la base du suivi de tendance du moteur détaillé en fiche M15.14",
+        "Ils sont uniquement transmis au sol après l'atterrissage, sans jamais être conservés ni comparés entre plusieurs vols"
+      ],
+      "bonne": 1,
+      "explication": "Ces mêmes paramètres sont enregistrés au fil des vols et comparés dans la durée : c'est la base du suivi de tendance du moteur, thème détaillé en fiche M15.14, qui permet de révéler une dérive progressive qu'aucune limite instantanée ne signalerait à elle seule. Ils ne servent donc pas qu'à l'affichage instantané, et leur usage dans la durée dépasse la seule transmission après atterrissage.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0097",
+      "sous_chapitre": "M15.11",
+      "question": "Dans l'exemple d'un équipage en croisière stable, pourquoi la lecture conjointe de tous les paramètres moteur est-elle plus informative que la lecture d'un seul d'entre eux ?",
+      "options": [
+        "La lecture conjointe n'apporte aucune information supplémentaire par rapport à la seule température des gaz de turbine",
+        "Un seul paramètre, le régime moteur, suffit en réalité à lui seul à garantir que tous les autres systèmes fonctionnent normalement",
+        "Aucun paramètre pris isolément ne raconte toute l'histoire du moteur ; leur ensemble donne une image fidèle et immédiate de son fonctionnement"
+      ],
+      "bonne": 2,
+      "explication": "Chaque paramètre (régime, température des gaz, huile, carburant, vibration) renseigne sur un aspect distinct du moteur ; aucun pris isolément ne raconte toute l'histoire, mais leur ensemble donne une image fidèle et immédiate du fonctionnement du moteur. Le régime seul ne garantit donc pas le bon fonctionnement des autres systèmes, et la lecture conjointe apporte bien une information que la seule température des gaz ne donnerait pas.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0098",
+      "sous_chapitre": "M15.12",
+      "question": "Pourquoi l'inversion de poussée apporte-t-elle une aide au freinage particulièrement précieuse sur piste mouillée ou enneigée ?",
+      "options": [
+        "Elle agit directement sur l'air traversant le moteur, sans dépendre de l'adhérence entre les pneus et la piste, contrairement aux freins de roues",
+        "Elle remplace entièrement les freins de roues, qui deviennent inutiles dès lors qu'un inverseur de poussée est installé sur l'avion",
+        "Elle n'apporte en réalité aucun avantage particulier sur piste mouillée, son effet étant strictement identique en toutes conditions de piste"
+      ],
+      "bonne": 0,
+      "explication": "Contrairement aux freins de roues, dont l'efficacité dépend de l'adhérence entre les pneus et la piste (dégradée sur piste mouillée ou enneigée), l'inversion de poussée agit directement sur l'air traversant le moteur, sans dépendre de cette adhérence. Elle ne remplace pas les freins de roues pour autant (elle les complète), et son avantage relatif est justement plus marqué, pas identique, quand l'adhérence est réduite.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0099",
+      "sous_chapitre": "M15.12",
+      "question": "Sur quel principe repose fondamentalement l'inversion de poussée ?",
+      "options": [
+        "Un inverseur modifie le cycle de fonctionnement interne du moteur (compression, combustion, détente) pour produire une poussée inversée",
+        "La poussée résultant de la direction dans laquelle l'air est accéléré, rediriger cet air vers l'avant produit une force qui s'oppose au déplacement de l'avion",
+        "L'inverseur agit en réduisant fortement le régime du moteur, la baisse de régime produisant à elle seule l'effet de freinage recherché"
+      ],
+      "bonne": 1,
+      "explication": "La poussée résulte de la direction dans laquelle l'air est accéléré (rappel M15.1) ; rediriger cet air vers l'avant produit donc une force qui s'oppose au déplacement de l'avion. Un inverseur ne modifie rien au cycle interne du moteur (qui reste inchangé), il agit uniquement sur le trajet des gaz une fois qu'ils ont quitté la partie motrice ; la baisse de régime seule, sans redirection du flux, ne produirait pas cet effet de freinage inversé.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0100",
+      "sous_chapitre": "M15.12",
+      "question": "Sur quel flux de gaz agit un inverseur à grilles (dit « à cascade »), typique d'un turbofan moderne ?",
+      "options": [
+        "L'air prélevé au niveau du compresseur, avant même son admission dans la chambre de combustion",
+        "Le flux primaire uniquement, celui qui a traversé la chambre de combustion et la turbine",
+        "Le flux secondaire, produit par la soufflante, qui ne traverse jamais le cœur du moteur"
+      ],
+      "bonne": 2,
+      "explication": "L'inverseur à grilles agit sur le flux secondaire d'un turbofan (rappel M15.6 : l'air accéléré par la soufflante, qui ne traverse jamais le cœur du moteur), le plus abondant sur ce type de moteur. Il n'agit donc pas sur le flux primaire (rôle plutôt de l'inverseur à godets), ni sur l'air prélevé au niveau du compresseur avant la chambre de combustion.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0101",
+      "sous_chapitre": "M15.12",
+      "question": "Pourquoi un inverseur agissant sur le seul flux secondaire d'un turbofan suffit-il généralement à produire un effet de freinage important ?",
+      "options": [
+        "Le flux secondaire représente généralement une part largement majoritaire de la poussée totale du moteur sur un turbofan moderne",
+        "Le flux secondaire est toujours plus chaud que le flux primaire, ce qui rend son inversion mécaniquement plus simple à réaliser",
+        "Le flux primaire ne participe en réalité jamais à la poussée totale du moteur, seul le flux secondaire y contribue"
+      ],
+      "bonne": 0,
+      "explication": "Sur un turbofan moderne, le flux secondaire représente généralement une part largement majoritaire de la poussée totale du moteur ; agir sur ce seul flux suffit donc à un effet de freinage important, sans exposer les portes de l'inverseur aux gaz chauds du flux primaire. Le flux secondaire n'est pas plus chaud que le primaire (c'est l'inverse, il n'a pas traversé la combustion) ; et le flux primaire contribue bien, lui aussi, à la poussée totale, dans une proportion moindre.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0102",
+      "sous_chapitre": "M15.12",
+      "question": "Pourquoi un inverseur de poussée intègre-t-il plusieurs verrous mécaniques et électriques indépendants ?",
+      "options": [
+        "Pour permettre à l'équipage de le déployer à tout moment du vol sans aucune restriction de sécurité particulière",
+        "Pour qu'il ne puisse jamais se déployer en vol, où il produirait un effet radicalement inverse de celui recherché à cet instant",
+        "Pour compenser une fragilité mécanique du dispositif, sans lien avec un quelconque risque lié au moment de son déploiement"
+      ],
+      "bonne": 1,
+      "explication": "Un inverseur ne doit jamais pouvoir se déployer en vol, où il produirait un effet radicalement inverse de celui recherché ; les verrous multiples et indépendants n'autorisent son déploiement que lorsque plusieurs conditions sont réunies (typiquement, la confirmation que l'avion repose sur ses roues). Ils ne visent donc pas à permettre un déploiement sans restriction, et ne compensent pas une fragilité mécanique : ils préviennent un risque précis lié au moment du déploiement.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0103",
+      "sous_chapitre": "M15.12",
+      "question": "Pourquoi le système de verrouillage d'un inverseur de poussée fait-il l'objet d'une attention particulière lors de l'entretien ?",
+      "options": [
+        "Parce que la réglementation impose cette attention pour des raisons purement administratives, sans justification technique particulière",
+        "Parce que ce système s'use plus rapidement que n'importe quel autre composant du moteur, sans lien avec la gravité de ce qu'il prévient",
+        "Parce qu'il protège contre un événement particulièrement grave (un déploiement en vol), ce qui justifie une vérification rigoureuse de sa fiabilité"
+      ],
+      "bonne": 2,
+      "explication": "Le système de verrouillage protège contre un événement particulièrement grave (un déploiement en vol), ce qui justifie une vérification rigoureuse et régulière de sa fiabilité lors de l'entretien. Rien n'indique qu'il s'use plus vite que les autres composants du moteur ; et l'attention qui lui est portée est justifiée par la gravité technique de ce qu'il prévient, pas par une simple exigence administrative sans fondement.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0104",
+      "sous_chapitre": "M15.12",
+      "question": "Pourquoi la conception précise d'un inverseur de poussée (orientation exacte des grilles ou des portes) fait-elle l'objet d'essais poussés lors de la certification de l'avion ?",
+      "options": [
+        "Pour s'assurer que l'écoulement d'air redirigé ne perturbe pas d'autres surfaces (empennage, gouvernes) d'une façon qui affecterait la contrôlabilité de l'avion",
+        "Pour garantir uniquement que l'inverseur produit le bruit le plus faible possible, sans lien avec l'aérodynamique de l'avion",
+        "Pour vérifier seulement la résistance mécanique des matériaux utilisés, sans considération pour l'écoulement d'air produit"
+      ],
+      "bonne": 0,
+      "explication": "Rediriger l'air vers l'avant modifie temporairement l'écoulement autour du moteur et parfois d'autres parties de l'avion ; les essais de certification vérifient que cet écoulement redirigé ne perturbe pas d'autres surfaces (empennage, gouvernes) d'une façon qui affecterait la contrôlabilité de l'avion. Il ne s'agit donc pas uniquement d'une question de bruit, ni d'un simple contrôle de résistance mécanique des matériaux sans lien avec l'écoulement produit.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0105",
+      "sous_chapitre": "M15.12",
+      "question": "Dans l'exemple d'un atterrissage sur piste mouillée, une fois les roues confirmées au sol, comment l'inverseur à grilles produit-il sa force de freinage ?",
+      "options": [
+        "Les volets coupent entièrement l'alimentation en carburant du moteur, qui cesse alors totalement de fonctionner le temps du freinage",
+        "Les volets bloquent le flux secondaire de la soufflante et le redirigent vers l'avant à travers des grilles dédiées",
+        "Les volets augmentent temporairement le régime du moteur, la seule augmentation de régime produisant l'effet de freinage recherché"
+      ],
+      "bonne": 1,
+      "explication": "Une fois les roues confirmées au sol, les volets d'un inverseur à grilles bloquent le flux secondaire de la soufflante et le redirigent vers l'avant à travers des grilles dédiées, produisant une force de freinage indépendante de l'adhérence au sol. Le moteur ne cesse pas de fonctionner pendant cette phase (le cycle continue, rappel du principe de la fiche), et ce n'est pas une simple augmentation de régime qui produit l'effet recherché, mais bien la redirection du flux.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0106",
+      "sous_chapitre": "M15.13",
+      "question": "Pourquoi le compartiment moteur (la nacelle) est-il divisé en plusieurs zones séparées par des cloisons pare-feu, plutôt que traité comme un seul volume ?",
+      "options": [
+        "Cette division permet uniquement de faciliter l'accès des techniciens lors des opérations d'entretien courant, sans lien avec la sécurité incendie",
+        "Cette division n'a qu'un rôle de facilité de fabrication, sans aucun lien avec la protection contre un incendie éventuel",
+        "Cette division limite la propagation d'un incendie vers les zones voisines et permet de cibler la détection et l'extinction sur la zone concernée"
+      ],
+      "bonne": 2,
+      "explication": "Diviser la nacelle en zones séparées par des cloisons pare-feu limite la propagation d'un incendie qui se déclarerait dans une zone donnée vers les zones voisines, et permet de cibler précisément la détection et l'extinction sur la zone réellement concernée. Ce n'est donc ni une simple facilité de fabrication, ni un aménagement pensé seulement pour l'accès en entretien, sans lien avec la protection incendie.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0107",
+      "sous_chapitre": "M15.13",
+      "question": "Quel avantage présente une boucle de détection continue par rapport à un capteur ponctuel isolé ?",
+      "options": [
+        "Elle réagit à une élévation de température le long de tout son parcours, garantissant la détection quel que soit l'endroit exact où un foyer se déclare",
+        "Elle coûte systématiquement moins cher à installer qu'un capteur ponctuel, ce qui explique son utilisation privilégiée",
+        "Elle ne peut détecter qu'un incendie déjà bien développé, contrairement à un capteur ponctuel plus sensible aux tout premiers instants"
+      ],
+      "bonne": 0,
+      "explication": "Une boucle de détection continue réagit à une élévation de température le long de tout son parcours, pas seulement en un point précis, garantissant qu'un foyer sera détecté quel que soit l'endroit exact de la zone où il se déclare — contrairement à un capteur ponctuel qui dépendrait de sa position exacte. Le coût n'est pas la raison de ce choix, et une boucle continue n'est pas moins sensible aux premiers instants qu'un capteur ponctuel.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0108",
+      "sous_chapitre": "M15.13",
+      "question": "Pourquoi chaque zone est-elle généralement équipée de deux boucles de détection indépendantes plutôt que d'une seule ?",
+      "options": [
+        "Une seule boucle ne pourrait techniquement pas parcourir l'ensemble d'une zone moteur, quelle que soit sa longueur",
+        "Leur accord mutuel confirme une détection réelle, tout en conservant une capacité de détection résiduelle si l'une des deux tombe en panne",
+        "La seconde boucle sert uniquement de réserve inactive, qui ne serait mise en service qu'après la panne complète et confirmée de la première"
+      ],
+      "bonne": 1,
+      "explication": "Deux boucles indépendantes permettent de confirmer une détection réelle par leur accord mutuel (évitant qu'une fausse indication isolée ne soit prise pour un incendie réel), tout en conservant une capacité de détection résiduelle si l'une des deux tombe en panne. Une seule boucle peut techniquement parcourir toute une zone (ce n'est pas une limite physique) ; et la seconde boucle fonctionne en parallèle de la première, pas seulement comme réserve inactive.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0109",
+      "sous_chapitre": "M15.13",
+      "question": "Quel est le principe des actions qui suivent une détection d'incendie confirmée (coupure du carburant, isolement des circuits, décharge d'un agent extincteur) ?",
+      "options": [
+        "Elles n'ont qu'un rôle d'alerte visuelle destiné à l'équipage, sans conséquence réelle sur les circuits traversant la zone",
+        "Elles visent uniquement à refroidir mécaniquement la zone incendiée, sans chercher à couper ce qui pourrait alimenter le foyer",
+        "Elles visent à priver le foyer de ce qui pourrait continuer à l'alimenter, en limitant les circuits qui traversent la zone concernée"
+      ],
+      "bonne": 2,
+      "explication": "Couper l'alimentation en carburant de la zone et isoler les circuits hydrauliques et pneumatiques qui la traversent limitent ce qui peut continuer à alimenter le foyer une fois détecté — un principe qui rejoint celui déjà rencontré en fiche M15.8 (isoler une menace avant qu'elle ne s'aggrave). Ce n'est donc pas un simple refroidissement mécanique, et ces actions ont un effet réel sur les circuits, pas seulement une valeur d'alerte visuelle.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0110",
+      "sous_chapitre": "M15.13",
+      "question": "Pourquoi une bouteille d'agent extincteur déchargée ne peut-elle pas être rechargée par l'équipage pendant le vol ?",
+      "options": [
+        "Le remplissage sous pression d'une bouteille d'extinction est une opération d'entretien réalisée au sol, avec un équipement dédié, pas une action possible en vol",
+        "Une bouteille déchargée peut être rechargée en vol par l'équipage, à l'aide d'un kit de recharge prévu à cet effet dans certains avions",
+        "Le remplissage d'une bouteille ne nécessite aucun équipement particulier, ce qui permettrait en théorie de la recharger en vol si le temps le permettait"
+      ],
+      "bonne": 0,
+      "explication": "Le remplissage d'une bouteille d'extinction sous pression est une opération d'entretien réalisée au sol, avec un équipement dédié (station de charge, contrôle de la pression) — ce n'est pas une action que l'équipage peut réaliser en vol. Aucun kit de recharge n'est prévu à bord : la charge d'un agent extincteur sous pression demande un équipement spécialisé, absent de l'avion lui-même, ce qui exclut tout remplissage en cours de vol, même avec du temps disponible. C'est précisément pourquoi le nombre de bouteilles disponibles à bord est limité et fixé dès la conception de l'avion.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0111",
+      "sous_chapitre": "M15.13",
+      "question": "Au-delà des systèmes de détection et d'extinction, en quoi la conception même de la nacelle participe-t-elle à la protection contre l'incendie ?",
+      "options": [
+        "La nacelle n'a aucun rôle propre en matière de protection incendie, cette fonction reposant entièrement sur les systèmes de détection et d'extinction",
+        "Des drainages limitent l'accumulation de carburant ou d'huile, et les matériaux des zones exposées à la chaleur sont choisis pour leur résistance au feu",
+        "La nacelle est conçue pour être entièrement hermétique à l'air, ce qui empêcherait par principe tout départ de feu de se déclarer"
+      ],
+      "bonne": 1,
+      "explication": "La conception de la nacelle limite les points d'accumulation de carburant ou d'huile (drainages dédiés) et utilise, dans les zones les plus exposées, des matériaux choisis pour leur résistance au feu, rendant un incendie moins susceptible de se propager au-delà du compartiment moteur. La nacelle n'est donc pas sans rôle propre, et elle n'est pas hermétique à l'air par principe (un moteur a justement besoin d'un apport d'air, rappel M15.2).",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0112",
+      "sous_chapitre": "M15.13",
+      "question": "Sur quoi porte typiquement l'inspection périodique des systèmes de détection et d'extinction incendie lors de l'entretien ?",
+      "options": [
+        "Le remplacement systématique de toutes les bouteilles d'agent extincteur à chaque visite, indépendamment de leur pression réelle",
+        "Un simple contrôle visuel extérieur de la nacelle, sans jamais vérifier l'état interne des systèmes de détection ou d'extinction eux-mêmes",
+        "L'intégrité des boucles de détection, la pression des bouteilles d'agent extincteur et l'état des cloisons pare-feu et des drainages"
+      ],
+      "bonne": 2,
+      "explication": "L'inspection périodique porte notamment sur l'intégrité des boucles de détection, la pression des bouteilles d'agent extincteur, et l'état général des cloisons pare-feu et des drainages de la nacelle — des systèmes rarement sollicités en usage courant, dont la disponibilité doit être garantie pour le jour où ils seraient nécessaires. Remplacer systématiquement toutes les bouteilles sans considération de leur état réel serait un gaspillage inutile plutôt qu'une inspection ciblée, et un simple contrôle visuel extérieur ne suffit pas à vérifier l'intégrité interne des boucles ni la pression réelle des bouteilles.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0113",
+      "sous_chapitre": "M15.13",
+      "question": "Que couvre précisément cette fiche à propos d'une alarme incendie moteur, et que ne couvre-t-elle volontairement pas ?",
+      "options": [
+        "Elle couvre le principe technique de détection et d'extinction et ses conséquences pour l'entretien, jamais la procédure ni l'ordre des actions suivies par l'équipage",
+        "Elle couvre entièrement la procédure suivie par l'équipage, dans l'ordre précis où chaque action doit être réalisée face à une alarme incendie",
+        "Elle ne couvre ni le principe technique ni la procédure, se limitant à un historique des incendies moteur survenus sur des avions anciens"
+      ],
+      "bonne": 0,
+      "explication": "Cette fiche s'en tient volontairement au principe technique de la détection et de l'extinction et à ce que cela implique pour l'entretien ; la procédure suivie par l'équipage (ordre des actions, seuils de déclenchement précis) relève exclusivement du manuel de vol de chaque appareil et n'est jamais abordée ici. Elle ne couvre donc pas la procédure d'équipage, et elle ne se limite pas non plus à un simple historique.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0114",
+      "sous_chapitre": "M15.13",
+      "question": "Dans l'exemple d'une élévation de température confirmée par les deux boucles indépendantes d'une même zone, que permet cette confirmation mutuelle ?",
+      "options": [
+        "De déclencher automatiquement, sans aucune autre condition, la décharge immédiate de l'ensemble des bouteilles d'agent extincteur disponibles",
+        "De distinguer une détection réelle d'une fausse alarme isolée, avant que d'autres actions ne soient engagées",
+        "De prouver qu'aucune action supplémentaire n'est nécessaire, la seule confirmation des deux boucles suffisant à éteindre le foyer"
+      ],
+      "bonne": 1,
+      "explication": "L'accord mutuel des deux boucles indépendantes distingue une détection réelle d'une fausse alarme isolée, avant que d'autres actions ne soient engagées. Cette confirmation ne déclenche pas automatiquement, à elle seule, la décharge de toutes les bouteilles disponibles, et elle n'éteint évidemment pas le foyer par elle-même : elle ne fait que fiabiliser la détection.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0115",
+      "sous_chapitre": "M15.14",
+      "question": "En quoi le suivi de tendance des paramètres moteur diffère-t-il d'une indication instantanée (rappel M15.11) ?",
+      "options": [
+        "Il ne concerne que les paramètres de vibration, les autres paramètres n'étant jamais utilisés dans un suivi de tendance",
+        "Il repose sur des paramètres entièrement différents de ceux utilisés pour les indications instantanées du poste de pilotage",
+        "Il compare les mêmes paramètres entre eux sur une longue période plutôt que de les consulter isolément, révélant une dérive progressive"
+      ],
+      "bonne": 2,
+      "explication": "Le suivi de tendance enregistre les mêmes paramètres qu'en fiche M15.11 (régime, température des gaz, huile...) systématiquement à chaque vol, puis les compare entre eux sur une longue période plutôt que de les consulter isolément, révélant une dérive progressive qu'aucune limite instantanée ne signalerait à elle seule. Il ne repose donc pas sur des paramètres différents, et il ne se limite pas au seul paramètre de vibration.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0116",
+      "sous_chapitre": "M15.14",
+      "question": "Pourquoi une valeur de température des gaz peut-elle rester dans sa plage normale à chaque vol, tout en révélant une dégradation progressive une fois comparée dans la durée ?",
+      "options": [
+        "Une dérive lente (par exemple un encrassement progressif du compresseur) peut faire progressivement remonter la valeur pour un même régime, sans jamais franchir la limite instantanée",
+        "La température des gaz ne peut techniquement jamais révéler de dégradation progressive, seule une inspection endoscopique le peut",
+        "Une telle situation est en réalité impossible : toute dégradation progressive franchit nécessairement la limite instantanée dès son apparition"
+      ],
+      "bonne": 0,
+      "explication": "Une dérive lente, comme un encrassement progressif du compresseur (rappel M15.3) qui réduit l'efficacité de la compression, peut faire progressivement remonter la température des gaz pour un même régime, vol après vol, sans jamais franchir la limite instantanée à un instant donné — c'est justement ce que révèle la comparaison dans la durée. La température des gaz peut donc bien révéler une dégradation progressive, et une telle dérive ne franchit pas nécessairement la limite instantanée.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0117",
+      "sous_chapitre": "M15.14",
+      "question": "En quoi l'analyse spectrométrique d'huile en laboratoire complète-t-elle le détecteur de particules métalliques déjà décrit en fiche M15.7 ?",
+      "options": [
+        "Elle remplace entièrement le détecteur de particules métalliques, devenu inutile une fois l'analyse spectrométrique disponible",
+        "Elle détecte des traces de métaux à une échelle bien plus fine, souvent invisibles à l'œil nu et trop petites pour être captées par un simple aimant",
+        "Elle ne détecte que les mêmes particules déjà captées par le détecteur du circuit, sans apporter d'information supplémentaire"
+      ],
+      "bonne": 1,
+      "explication": "Le détecteur de particules métalliques capture les débris assez gros pour être physiquement retenus par un aimant ; l'analyse spectrométrique détecte des traces de métaux à une échelle bien plus fine, souvent invisibles à l'œil nu, ce qui peut signaler l'usure naissante d'une pièce bien avant qu'un débris assez gros ne se forme. Elle ne remplace donc pas le détecteur (les deux se complètent), et elle apporte une information supplémentaire, pas redondante.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0118",
+      "sous_chapitre": "M15.14",
+      "question": "Quel avantage présente une inspection endoscopique (borescope) par rapport à un démontage complet du moteur ?",
+      "options": [
+        "Elle remplace entièrement le suivi de tendance des paramètres moteur, rendant ce dernier inutile une fois l'endoscope disponible",
+        "Elle détecte des paramètres chiffrés (température, pression) qu'aucune autre méthode de surveillance ne peut mesurer",
+        "Elle permet d'examiner visuellement l'intérieur du moteur par des accès dédiés, sans démontage, évitant une immobilisation prolongée et un coût important"
+      ],
+      "bonne": 2,
+      "explication": "Un endoscope introduit par des accès dédiés permet d'examiner visuellement l'intérieur du moteur (chambre de combustion, aubes) sans démonter le moteur, évitant l'immobilisation prolongée et le coût d'un démontage complet. Elle ne mesure pas de paramètres chiffrés (c'est un examen visuel), et elle ne remplace pas le suivi de tendance : les deux méthodes révèlent des types de problèmes différents.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0119",
+      "sous_chapitre": "M15.14",
+      "question": "Pourquoi le programme de surveillance moteur combine-t-il plusieurs méthodes différentes (suivi de tendance, analyse d'huile, inspection endoscopique) plutôt qu'une seule ?",
+      "options": [
+        "Chacune révèle un type de problème différent ; se fier à une seule laisserait passer les problèmes que les autres sont conçues pour détecter",
+        "Ces trois méthodes mesurent en réalité exactement la même information, présentée sous des formes différentes par simple habitude du secteur",
+        "Une seule de ces méthodes suffirait techniquement, les deux autres n'étant conservées que pour des raisons historiques sans justification actuelle"
+      ],
+      "bonne": 0,
+      "explication": "Le suivi de tendance révèle une dérive progressive de performance, l'analyse d'huile une usure interne avant qu'un débris ne soit assez gros pour le détecteur, l'inspection endoscopique un dommage visuel localisé qu'aucun paramètre chiffré ne capturerait : chacune révèle un type de problème différent, et se fier à une seule laisserait passer ce que les autres sont conçues pour détecter. Elles ne mesurent donc pas la même information, et aucune des trois n'est redondante ou simplement historique.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0120",
+      "sous_chapitre": "M15.14",
+      "question": "Qu'est-ce qu'une pièce à vie limitée (LLP), comme un disque de compresseur ou de turbine ?",
+      "options": [
+        "Une pièce inspectée uniquement selon son état réellement constaté, sans aucune limite de cycles fixée à l'avance",
+        "Une pièce retirée du service après un nombre défini de cycles, indépendamment de son état apparent au moment du retrait",
+        "Une pièce qui n'est jamais remplacée tant qu'elle ne présente aucun signe visible de dommage ou d'usure"
+      ],
+      "bonne": 1,
+      "explication": "Une pièce à vie limitée, comme les disques de compresseur ou de turbine soumis à des contraintes répétées à chaque cycle (rappel M15.9), est retirée du service après un nombre défini de cycles fixé à la certification, indépendamment de son état apparent au moment du retrait. Elle n'est donc pas suivie selon son seul état constaté (c'est le principe du reste du moteur, pas des LLP), et elle est bien remplacée même en l'absence de tout signe visible de dommage.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0121",
+      "sous_chapitre": "M15.14",
+      "question": "Pourquoi les pièces à vie limitée sont-elles retirées après un nombre de cycles fixe plutôt que selon leur état réellement constaté, comme le reste du moteur ?",
+      "options": [
+        "Ces pièces coûtent systématiquement moins cher à remplacer par avance qu'à inspecter régulièrement, ce qui justifie ce choix",
+        "Il serait techniquement impossible d'inspecter ces pièces en cours d'exploitation pour évaluer leur état réel",
+        "Elles sont exposées à un risque de rupture par fatigue, dont les conséquences seraient immédiates et graves, ce qui justifie une limite non négociable"
+      ],
+      "bonne": 2,
+      "explication": "Les pièces à vie limitée sont exposées à un risque de rupture par fatigue, dont les conséquences seraient immédiates et graves ; une limite de vie fixe et non négociable, définie par calcul et essais à la certification, prévient ce risque bien avant qu'une fatigue réelle ne s'installe. Ce n'est pas une impossibilité technique d'inspection qui justifie ce choix, ni une simple question de coût de remplacement.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0122",
+      "sous_chapitre": "M15.14",
+      "question": "Pourquoi la plupart des composants du moteur (hors pièces à vie limitée) sont-ils suivis selon leur état réellement constaté plutôt que selon une limite de vie fixe ?",
+      "options": [
+        "Leurs dégradations évoluent de façon variable selon les conditions réelles d'exploitation, et sont mieux anticipées par une surveillance continue de leur état réel",
+        "Une limite de vie fixe serait en réalité applicable à tous les composants du moteur, mais elle est volontairement ignorée pour la plupart d'entre eux",
+        "Ces composants ne présentent techniquement aucun risque de dégradation, ce qui rend toute forme de limite de vie superflue"
+      ],
+      "bonne": 0,
+      "explication": "La plupart des dégradations (usure progressive, encrassement, contamination) évoluent de façon variable selon les conditions réelles d'exploitation de chaque moteur, et sont mieux anticipées par une surveillance continue de leur état réel que par une limite fixée arbitrairement à l'avance. Une limite de vie fixe n'est donc pas simplement ignorée par choix pour ces composants, et ils ne sont pas non plus exempts de tout risque de dégradation.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0123",
+      "sous_chapitre": "M15.14",
+      "question": "Dans l'exemple d'un moteur suivi sur plusieurs mois, que révèle la combinaison du suivi de tendance et de l'analyse d'huile décrite dans la fiche ?",
+      "options": [
+        "Uniquement que le moteur a atteint la limite de cycles de ses pièces à vie limitée, sans aucune autre information utile",
+        "Une réduction progressive de la marge de température liée à un encrassement du compresseur, et une légère élévation d'un métal caractéristique d'un palier",
+        "Que le moteur doit être immédiatement démonté, ces deux méthodes ne pouvant conduire à aucune autre conclusion possible"
+      ],
+      "bonne": 1,
+      "explication": "Dans l'exemple donné, le suivi de tendance révèle une réduction progressive de la marge de température des gaz, signe d'un encrassement lent du compresseur (rappel M15.3), tandis qu'une analyse d'huile confirme une légère élévation d'un métal caractéristique d'un palier particulier (rappel M15.7). Ces deux méthodes ne renseignent pas sur les cycles des pièces à vie limitée (un suivi distinct), et elles n'imposent pas nécessairement un démontage immédiat : une inspection endoscopique programmée peut suffire, comme le précise l'exemple.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0124",
+      "sous_chapitre": "M15.14",
+      "question": "Que signifie l'affirmation selon laquelle ce module forme « un ensemble cohérent plutôt qu'une collection de pièces isolées » ?",
+      "options": [
+        "Le moteur ne peut fonctionner que si l'intégralité de ses systèmes est strictement identique d'un modèle de moteur à l'autre",
+        "Toutes les pièces du moteur doivent être remplacées simultanément lors de chaque visite d'entretien, sans distinction entre elles",
+        "Chaque système décrit (cycle, compresseur, combustion, turbine, huile, carburant, régulation, surveillance...) est relié aux autres plutôt que traité indépendamment"
+      ],
+      "bonne": 2,
+      "explication": "Le module a relié, fiche après fiche, chaque système du turboréacteur aux autres (le cycle du M15.1 explique la poussée retrouvée dans la tuyère et l'inversion de poussée, la régulation du M15.10 alimente les indications du M15.11, la surveillance du M15.14 s'appuie sur les paramètres de M15.11...) plutôt que de les traiter comme des pièces isolées sans lien entre elles. Cela ne signifie ni un remplacement simultané systématique de toutes les pièces, ni une identité stricte entre tous les modèles de moteurs.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
     }
   ]
 }
