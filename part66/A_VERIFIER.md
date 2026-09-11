@@ -979,15 +979,47 @@ non corrigés individuellement) ; un léger recouvrement conceptuel
 persiste entre certaines questions de la fiche M17A.14 (stockage),
 comme pour les lots précédents.
 
-## M15 — construction en cours (module « Turbomachines à gaz »)
+## M15 — module complet (« Turbomachines à gaz »)
 
 Plan validé avec l'utilisateur le 2026-09-11 : 14 fiches (M15.1 à
 M15.14, découpage maison à confirmer contre le syllabus officiel EASA,
-même statut que M11A/M15/M17A), calibrées selon le standard ci-dessous
-dès la V1, construites en 3 lots (M15.1-M15.5, M15.6-M15.10,
+même statut que M11A/M17A), calibrées selon le standard ci-dessous dès
+la V1, construites en 3 lots (M15.1-M15.5, M15.6-M15.10,
 M15.11-M15.14) avec relecture et validation utilisateur après chacun,
-même méthode que M17A. `disponible: False` dans `part66/logic.py`
-jusqu'à validation finale complète du module.
+même méthode que M17A. Module complet et validé par l'utilisateur
+(tests locaux inclus) le 2026-09-11 ; `disponible: True` dans
+`part66/logic.py`.
+
+**Lot 3 (M15.11-M15.14)** : relu en 2 rounds par `relecteur-part66`.
+Le premier round a trouvé 7 BLOQUANT — deux renvois croisés faux vers
+d'autres fiches du module (le FOD attribué à tort à M15.6 au lieu de
+M15.2 ; l'analyse spectrométrique d'huile attribuée à tort à M15.7, qui
+ne parle que du détecteur de particules magnétique), une formulation
+auto-contradictoire sur le régime de référence (« régime maximal
+certifié » présenté comme le 100 % de N, incompatible avec la phrase
+suivante sur la comparaison aux limites certifiées), une phrase
+impliquant à tort qu'un dépassement de régime serait sans risque, un
+chiffrage non sourcé et douteux sur le nombre de bouteilles
+d'extinction (« souvent deux par moteur »), une logique de
+déclenchement de l'extinction énoncée comme un principe technique alors
+qu'elle relève du seuil/de la procédure d'urgence hors du périmètre
+autorisé sur M15.13, et une séquence d'actions (coupure carburant →
+isolement circuits → décharge extincteur) répétée invariablement à 6
+endroits qui enseignait de fait un ordre malgré son disclaimer. Tous
+corrigés ; un round de vérification ciblée a trouvé un correctif
+incomplet (le renvoi croisé de M15.14 vers M15.7 n'avait été qu'à
+moitié corrigé) et deux régressions mineures (distracteurs trop faibles
+sur la question réécrite M15-0110, ordre non varié dans un des
+schémas), tous corrigés à leur tour et revérifiés directement dans les
+fichiers.
+
+**Schéma M15.11 (tableau de bord moteur), retour utilisateur après
+test local** : les valeurs chiffrées affichées (régime 91 %, TGT
+640 °C, débit 1 240 kg/h), bien que marquées « illustratives »,
+restaient le genre de valeurs qu'un débutant risque de mémoriser comme
+un repère réel. Remplacées par des indications qualitatives (barre de
+niveau sans valeur affichée, libellés « Plage normale » / « Débit
+stable » / « Faible ») plutôt que par un chiffre, même fictif.
 
 Table des 14 fiches (fige les titres et numéros pour tous les renvois
 croisés entre fiches, afin d'éviter toute incohérence comme celle
