@@ -201,7 +201,7 @@ def _page_cours(P, module):
         st.info("Pas encore de fiches pour ce module.")
         return
     for fiche in fiches:
-        with st.expander(f"{fiche['id']} — {fiche['titre']}"):
+        with st.expander(f"{fiche['id']} — {fiche['titre']}", key=f"p66_expander_{module}_{fiche['id']}"):
             st.caption(f"{fiche['sous_chapitre']} · ⏱ {fiche.get('duree_min', '?')} min")
             st.markdown(fiche["contenu_md"])
             for schema in logic.charger_schemas(module, fiche["id"]):

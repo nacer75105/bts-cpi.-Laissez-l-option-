@@ -1,0 +1,54 @@
+<div id="schema-m55b-wrap" style="font-family: inherit; max-width: 860px; margin: 0.8em 0 0.4em; border:1px solid #ddd; border-radius:12px; padding:18px 22px; background:rgba(128,128,128,0.03);">
+<style>
+#schema-m55b-wrap .m55b-btn { padding:8px 16px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:1em; margin:2px 6px 2px 0; }
+#schema-m55b-wrap .m55b-btn:hover { background:#e8e8e8; }
+#schema-m55b-wrap .m55b-btn.active { background:#333; color:#fff; border-color:#333; }
+#schema-m55b-wrap .m55b-row { display:flex; align-items:center; gap:10px; margin-top:14px; }
+#schema-m55b-wrap .m55b-label { flex:0 0 110px; font-size:0.9em; }
+#schema-m55b-wrap .m55b-track { flex:1; height:20px; border-radius:4px; background:#e8e8e8; position:relative; overflow:hidden; border:1px solid #ccc; }
+#schema-m55b-wrap .m55b-fill { height:100%; }
+#schema-m55b-wrap .m55b-caption { margin-top:14px; padding:12px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; font-size:1.02em; min-height:2.6em; }
+</style>
+
+<div style="font-size:1.15em; font-weight:bold; margin-bottom:4px;">Registres et mémoire RAM</div>
+<p><strong>Essaie toi-même :</strong> compare la rapidité d'accès et la capacité de stockage des registres et de la mémoire RAM.</p>
+
+<button class="m55b-btn active" id="m55b-btn-registres">Registres</button>
+<button class="m55b-btn" id="m55b-btn-ram">Mémoire RAM</button>
+
+<div class="m55b-row"><div class="m55b-label">Rapidité d'accès</div><div class="m55b-track"><div class="m55b-fill" id="m55b-vitesse" style="width:95%; background:#7fbf7f;"></div></div></div>
+<div class="m55b-row"><div class="m55b-label">Capacité</div><div class="m55b-track"><div class="m55b-fill" id="m55b-capacite" style="width:10%; background:#7fa8d9;"></div></div></div>
+
+<div class="m55b-caption" id="m55b-caption">Registres : rapidité maximale, très peu de place.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m55b-wrap');
+  if (!wrap) { return; }
+  var btnRegistres = wrap.querySelector('#m55b-btn-registres');
+  var btnRam = wrap.querySelector('#m55b-btn-ram');
+  var vitesse = wrap.querySelector('#m55b-vitesse');
+  var capacite = wrap.querySelector('#m55b-capacite');
+  var caption = wrap.querySelector('#m55b-caption');
+
+  function showRegistres() {
+    btnRegistres.className = 'm55b-btn active';
+    btnRam.className = 'm55b-btn';
+    vitesse.style.width = '95%';
+    capacite.style.width = '10%';
+    caption.textContent = "Les registres sont intégrés directement dans le processeur : l'UAL y accède quasiment sans délai. En contrepartie, ils sont très peu nombreux et ne peuvent stocker qu'une poignée de valeurs à la fois — juste ce dont l'instruction en cours a besoin.";
+  }
+
+  function showRam() {
+    btnRegistres.className = 'm55b-btn';
+    btnRam.className = 'm55b-btn active';
+    vitesse.style.width = '35%';
+    capacite.style.width = '90%';
+    caption.textContent = "La mémoire RAM est bien plus vaste et stocke tout le programme et ses données, mais elle est physiquement séparée du processeur : y accéder prend nettement plus de temps qu'un registre. C'est pourquoi une donnée est copiée depuis la RAM vers un registre avant que l'UAL puisse l'utiliser (rappel de l'étape « recherche » du cycle d'instruction).";
+  }
+
+  btnRegistres.addEventListener('click', showRegistres);
+  btnRam.addEventListener('click', showRam);
+})();
+</script>

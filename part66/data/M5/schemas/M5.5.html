@@ -1,16 +1,17 @@
-<div id="schema-m55-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<div id="schema-m55-wrap" style="font-family: inherit; max-width: 860px; margin: 0.8em 0 0.4em; border:1px solid #ddd; border-radius:12px; padding:18px 22px; background:rgba(128,128,128,0.03);">
 <style>
-#schema-m55-wrap .m55-btn { margin:4px 6px 4px 0; padding:6px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.95em; }
+#schema-m55-wrap .m55-btn { padding:8px 16px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:1em; margin:2px 6px 2px 0; }
 #schema-m55-wrap .m55-btn:hover { background:#e8e8e8; }
-#schema-m55-wrap .m55-row { display:flex; gap:14px; margin-top:14px; align-items:center; }
-#schema-m55-wrap .m55-box { border:2px solid #888; border-radius:8px; padding:14px 10px; font-size:0.9em; text-align:center; background:#f7f7f7; color:#222; transition: all .25s ease; flex:1; }
-#schema-m55-wrap .m55-box.on { background:#fff3b0; border-color:#e0a800; transform: scale(1.06); }
+#schema-m55-wrap .m55-row { display:flex; gap:14px; margin-top:14px; align-items:center; flex-wrap:wrap; }
+#schema-m55-wrap .m55-box { border:2px solid #888; border-radius:8px; padding:14px 10px; font-size:0.9em; text-align:center; background:#f7f7f7; color:#222; flex:1; min-width:100px; }
+#schema-m55-wrap .m55-box.on { background:#fff3b0; border-color:#e0a800; }
 #schema-m55-wrap .m55-box.done { background:#d7f0d7; border-color:#3a9d3a; }
 #schema-m55-wrap .m55-sub { display:block; font-size:0.78em; color:#666; margin-top:2px; }
 #schema-m55-wrap .m55-arrow { font-size:1.2em; color:#888; }
-#schema-m55-wrap .m55-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:3.2em; }
+#schema-m55-wrap .m55-caption { margin-top:14px; padding:12px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; font-size:1.02em; min-height:2.6em; }
 </style>
 
+<div style="font-size:1.15em; font-weight:bold; margin-bottom:4px;">Cycle d'une instruction</div>
 <p><strong>Essaie toi-même :</strong> clique sur « Étape suivante » pour dérouler le cycle d'exécution de l'instruction « additionner R1 et R2 ».</p>
 
 <div class="m55-row">
@@ -25,6 +26,7 @@
   <button class="m55-btn" id="m55-next">Étape suivante ▶</button>
   <button class="m55-btn" id="m55-reset">Recommencer</button>
 </div>
+
 <div class="m55-caption" id="m55-caption">Clique sur « Étape suivante » pour commencer le cycle.</div>
 </div>
 
@@ -34,42 +36,49 @@
   if (!wrap) { return; }
   var nextBtn = wrap.querySelector('#m55-next');
   var resetBtn = wrap.querySelector('#m55-reset');
+  var fetchBox = wrap.querySelector('#m55-fetch');
+  var decodeBox = wrap.querySelector('#m55-decode');
+  var executeBox = wrap.querySelector('#m55-execute');
   var caption = wrap.querySelector('#m55-caption');
-  var boxes = { fetch: wrap.querySelector('#m55-fetch'), decode: wrap.querySelector('#m55-decode'), execute: wrap.querySelector('#m55-execute') };
-
-  var steps = [
-    { id: 'fetch', txt: 'Recherche (fetch) : le processeur va chercher l\'instruction « additionner R1 et R2 » en mémoire.' },
-    { id: 'decode', txt: 'Décodage (decode) : le processeur analyse l\'instruction et comprend qu\'il s\'agit d\'une addition portant sur les registres R1 et R2.' },
-    { id: 'execute', txt: 'Exécution (execute) : l\'unité arithmétique et logique (UAL) réalise l\'addition, et écrit le résultat dans un registre.' }
-  ];
 
   var step = -1;
 
+  function clearBox(box) {
+    box.className = 'm55-box';
+  }
+
   function render() {
-    Object.keys(boxes).forEach(function (k) { boxes[k].classList.remove('on'); });
-    for (var i = 0; i < step; i++) { boxes[steps[i].id].classList.add('done'); }
-    if (step >= 0 && step < steps.length) {
-      boxes[steps[step].id].classList.remove('done');
-      boxes[steps[step].id].classList.add('on');
-      caption.textContent = steps[step].txt;
-    }
+    clearBox(fetchBox);
+    clearBox(decodeBox);
+    clearBox(executeBox);
+    if (step >= 1) { fetchBox.className = 'm55-box done'; }
+    if (step >= 2) { decodeBox.className = 'm55-box done'; }
+    if (step === 0) { fetchBox.className = 'm55-box on'; caption.textContent = 'Recherche (fetch) : le processeur va chercher l\'instruction « additionner R1 et R2 » en mémoire.'; }
+    if (step === 1) { decodeBox.className = 'm55-box on'; caption.textContent = 'Décodage (decode) : le processeur analyse l\'instruction et comprend qu\'il s\'agit d\'une addition portant sur les registres R1 et R2.'; }
+    if (step === 2) { executeBox.className = 'm55-box on'; caption.textContent = 'Exécution (execute) : l\'unité arithmétique et logique (UAL) réalise l\'addition, et écrit le résultat dans un registre.'; }
   }
 
   nextBtn.addEventListener('click', function () {
-    if (step >= steps.length) {
+    if (step >= 3) {
       caption.textContent = 'Cycle déjà terminé. Clique sur « Recommencer » pour le revoir.';
       return;
     }
-    step++;
-    render();
-    if (step === steps.length) {
+    step = step + 1;
+    if (step >= 3) {
+      fetchBox.className = 'm55-box done';
+      decodeBox.className = 'm55-box done';
+      executeBox.className = 'm55-box done';
       caption.textContent = 'Cycle terminé : R1 + R2 a été calculé et rangé dans un registre. Dans un programme réel, ce cycle recommence aussitôt pour l\'instruction suivante — des milliers, voire des millions de fois par seconde. Clique sur « Recommencer » pour le revoir.';
+      return;
     }
+    render();
   });
 
   resetBtn.addEventListener('click', function () {
     step = -1;
-    Object.keys(boxes).forEach(function (k) { boxes[k].classList.remove('on', 'done'); });
+    clearBox(fetchBox);
+    clearBox(decodeBox);
+    clearBox(executeBox);
     caption.textContent = 'Clique sur « Étape suivante » pour commencer le cycle.';
   });
 })();

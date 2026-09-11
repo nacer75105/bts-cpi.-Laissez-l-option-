@@ -979,6 +979,148 @@ non corrigés individuellement) ; un léger recouvrement conceptuel
 persiste entre certaines questions de la fiche M17A.14 (stockage),
 comme pour les lots précédents.
 
+## M15 — construction en cours (module « Turbomachines à gaz »)
+
+Plan validé avec l'utilisateur le 2026-09-11 : 14 fiches (M15.1 à
+M15.14, découpage maison à confirmer contre le syllabus officiel EASA,
+même statut que M11A/M15/M17A), calibrées selon le standard ci-dessous
+dès la V1, construites en 3 lots (M15.1-M15.5, M15.6-M15.10,
+M15.11-M15.14) avec relecture et validation utilisateur après chacun,
+même méthode que M17A. `disponible: False` dans `part66/logic.py`
+jusqu'à validation finale complète du module.
+
+Table des 14 fiches (fige les titres et numéros pour tous les renvois
+croisés entre fiches, afin d'éviter toute incohérence comme celle
+relevée en relecture du lot 1 sur M15.9) :
+
+| Lot | Fiche | Titre |
+|---|---|---|
+| 1 | M15.1 | Principe du cycle du turboréacteur |
+| 1 | M15.2 | Entrée d'air (inlet) |
+| 1 | M15.3 | Compresseurs |
+| 1 | M15.4 | Chambre de combustion |
+| 1 | M15.5 | Turbine |
+| 2 | M15.6 | Tuyère d'échappement |
+| 2 | M15.7 | Système d'huile |
+| 2 | M15.8 | Système carburant |
+| 2 | M15.9 | Démarrage anormal (allumage et démarrage — principe, sans procédure pilote) |
+| 2 | M15.10 | Régulation moteur |
+| 3 | M15.11 | Indications moteur (poste de pilotage) |
+| 3 | M15.12 | Inversion de poussée |
+| 3 | M15.13 | Protection incendie moteur |
+| 3 | M15.14 | Surveillance et entretien |
+
+**Consigne de portée explicite de l'utilisateur, à respecter sur les
+fiches M15.9 (démarrage anormal) et M15.13 (protection incendie
+moteur) :** ces deux fiches touchent à des situations d'urgence
+réelles. Le contenu doit enseigner le principe technique — ce qui se
+passe, pourquoi c'est grave, ce que cela implique côté entretien —
+**mais jamais la procédure pilote elle-même**, qui relève du manuel de
+vol propre à chaque appareil. Le critère 2bis s'applique pleinement :
+aucune séquence d'actions pilote, aucun seuil d'alarme précis, aucune
+procédure d'urgence à reproduire ne doit figurer dans ces deux fiches
+ni dans leurs schémas ou questions.
+
+## PROBLÈME OUVERT NON RÉSOLU — boutons inertes sur M5.1 / M5.5
+(investigation menée le 2026-09-11, abandonnée sans solution)
+
+**Symptôme :** dans les fiches M5.1 (systèmes de numération) et M5.5
+(microprocesseurs), les boutons des schémas interactifs ne répondent à
+aucun clic, sans aucune erreur en console — reproduit en local et sur
+le déploiement Streamlit Cloud, y compris en navigation privée (donc ni
+cache navigateur, ni serveur local périmé, ni session corrompue).
+**Statut au moment de l'arrêt de l'investigation : toujours cassé.**
+Ne pas supposer résolu sans nouveau test utilisateur explicite.
+
+**Un bug distinct, lui bien corrigé et confirmé**, a été trouvé en
+chemin : `st.expander()` était appelé sans `key=` explicite dans
+`part66/ui.py` (`_page_cours`), ce qui laissait Streamlit réutiliser
+l'identité d'un expander par position plutôt que par contenu réel lors
+d'un changement de module — la fiche M7A.9 affichait par moments le
+schéma de M5.9. **Corrigé** en ajoutant
+`key=f"p66_expander_{module}_{fiche['id']}"` à l'appel de
+`st.expander()`. Confirmé par test utilisateur : ce mélange de contenu
+a disparu. Ce correctif reste en place ; il est correct et indépendant
+du problème ci-dessous, qui persiste malgré lui.
+
+**Hypothèses explorées puis chacune invalidée par un test, dans
+l'ordre :**
+
+1. *Cache/session* — écarté : reproduit en navigation privée, sur deux
+   environnements différents (local et Streamlit Cloud).
+2. *Bug JS dans le fichier du schéma* — écarté : testé en conditions
+   réelles via `jsdom` en simulant exactement le mécanisme de montage
+   de Streamlit (`innerHTML` puis remplacement des balises `<script>`
+   pour forcer l'exécution) ; aucune erreur, tous les conteneurs
+   dynamiques se peuplent correctement, y compris en simulant les 57
+   schémas du projet montés ensemble sur une même page.
+3. *Collision entre scripts de schémas différents partageant la page*
+   — écarté : aucun identifiant dupliqué trouvé entre les 57 fichiers de
+   schémas des 4 modules construits.
+4. *Contenu HTML non à jour côté serveur* — écarté : confirmé à jour à
+   plusieurs reprises via des marqueurs de test insérés directement
+   dans le texte de la fiche (`contenu_md`) et dans un fichier de
+   schéma, visibles à l'écran sans avoir besoin de la console.
+5. *Longueur/complexité du schéma faisant échouer une mesure de hauteur
+   de `st.expander` (overflow:hidden verrouillé trop tôt)* — c'était
+   l'hypothèse la plus étayée à un moment de l'investigation (un simple
+   changement de texte sur un bouton déjà affiché apparaissait
+   correctement, mais tout contenu *ajoutant de la hauteur*, y compris
+   un `st.code()` sans rapport avec le schéma, restait invisible) —
+   **mais invalidée ensuite** : des schémas réécrits nettement plus
+   courts (M5.1 : 373 lignes → 2 schémas de ~100-110 lignes ; M5.5 :
+   schéma déjà court + second schéma court) sont restés tout aussi
+   cassés. La longueur n'est donc pas la cause, ou pas la seule.
+6. *Contenu du fichier lui-même, indépendamment de sa position dans la
+   liste des fiches* — écarté par un test décisif : le contenu exact et
+   fonctionnel de `M5.9.html` (identifiants renommés pour éviter toute
+   collision), placé tel quel dans l'emplacement de schéma de M5.1, **a
+   répondu normalement aux clics**. L'emplacement M5.1 n'est donc pas en
+   cause non plus.
+
+**Point où l'investigation s'est arrêtée :** une comparaison exhaustive
+entre `M5.9.html` (fonctionnel dans l'emplacement M5.1, testé
+directement) et la réécriture de M5.1 a relevé plusieurs différences
+structurelles (style de l'encadré wrapper — bordure/padding/fond
+absents dans la réécriture d'origine —, un seul bloc `(function(){...})()`
+contre deux dans M5.9, usage de `querySelectorAll(...).forEach(...)`
+absent de M5.9 qui déclare chaque bouton comme variable nommée
+individuelle). M5.1 (les deux schémas), M5.5 et M5.5-2 ont été
+**intégralement réécrits en partant de `M5.9.html` comme gabarit
+littéral** — même style de wrapper, même structure de script, mêmes
+variables nommées au lieu de `forEach` — en ne remplaçant que le
+contenu pédagogique. **Le résultat de ce dernier essai n'a pas été
+confirmé par un nouveau test utilisateur avant l'arrêt de
+l'investigation.** Aucune différence testée isolément (une par une) n'a
+donc formellement identifié la cause exacte — seule la comparaison
+groupée a été faite, sans decouper laquelle des trois différences (ou
+laquelle combinaison) est réellement en cause.
+
+**État actuel des fichiers concernés :**
+- `part66/data/M5/schemas/M5.1.html` et `M5.1-2.html` : contenu
+  pédagogique correct (conversion binaire→décimal, binaire→hexadécimal),
+  réécrit sur le gabarit M5.9, **fonctionnement non confirmé**.
+- `part66/data/M5/schemas/M5.5.html` et `M5.5-2.html` : contenu
+  pédagogique correct (cycle d'instruction, registres vs RAM), réécrit
+  sur le gabarit M5.9, **fonctionnement non confirmé**.
+- `part66/ui.py` : conserve uniquement le correctif `key=` validé
+  (point M7A.9/M5.9 ci-dessus). Toute tentative de contournement
+  (script de "nudge" de redimensionnement de l'expander) a été écartée
+  et retirée du code, jugée trop fragile pour un correctif non confirmé
+  d'une cause elle-même non confirmée.
+
+**Pour reprendre cette investigation plus tard :** le test le plus
+informatif qui n'a pas été fait est un test différentiel isolé —
+partir du fichier `M5.9.html` fonctionnel *dans l'emplacement M5.1* et
+lui appliquer une seule des trois différences relevées à la fois
+(d'abord juste le style du wrapper, tester ; puis juste passer à un
+seul bloc de script, tester ; puis juste remplacer les variables
+nommées par un `forEach`, tester), plutôt que les trois changements
+combinés d'un coup comme cela a été fait pour la réécriture finale.
+Cela isolerait laquelle de ces différences (probablement le
+`querySelectorAll(...).forEach(...)`, la piste la plus suspecte n'ayant
+jamais été testée seule) est réellement en cause.
+
 ## Standard de calibrage du contenu (décidé avec l'utilisateur le
 2026-09-11, applicable à partir de M17A)
 
