@@ -1,0 +1,70 @@
+<div id="schema-m7a4-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m7a4-wrap .m7a4-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:1em; }
+#schema-m7a4-wrap .m7a4-btn:hover { background:#e8e8e8; }
+#schema-m7a4-wrap .m7a4-viz { display:flex; align-items:center; justify-content:center; margin:16px 0; height:100px; position:relative; }
+#schema-m7a4-wrap .m7a4-hole { width:120px; height:80px; border:3px dashed #555; border-radius:10px; position:relative; display:flex; align-items:center; justify-content:center; }
+#schema-m7a4-wrap .m7a4-shaft { background:#7fa8ce; border:2px solid #345; border-radius:6px; transition:width .15s, height .15s; }
+#schema-m7a4-wrap .m7a4-value { font-weight:bold; text-align:center; }
+#schema-m7a4-wrap .m7a4-caption { margin-top:10px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:3em; }
+#schema-m7a4-wrap .m7a4-caption.jeu { border-left-color:#3a80c9; background:rgba(58,128,201,0.10); }
+#schema-m7a4-wrap .m7a4-caption.serrage { border-left-color:#c0392b; background:rgba(192,57,43,0.10); }
+#schema-m7a4-wrap .m7a4-caption.incertain { border-left-color:#e0a800; background:rgba(224,168,0,0.10); }
+</style>
+
+<p><strong>Essaie toi-même :</strong> l'alésage (le trou en pointillés) a une taille fixe, en unités arbitraires (pas des mm réels). Fais varier la taille de l'arbre et observe le type d'ajustement obtenu.</p>
+
+<div class="m7a4-value">Taille de l'arbre : <span id="m7a4-val">60</span> (alésage fixe : 70)</div>
+<div class="m7a4-viz">
+  <div class="m7a4-hole">
+    <div class="m7a4-shaft" id="m7a4-shaft"></div>
+  </div>
+</div>
+<div>
+  <button class="m7a4-btn" id="m7a4-moins">− Réduire l'arbre</button>
+  <button class="m7a4-btn" id="m7a4-plus">+ Agrandir l'arbre</button>
+</div>
+
+<div class="m7a4-caption" id="m7a4-caption"></div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m7a4-wrap');
+  if (!wrap) { return; }
+  var val = wrap.querySelector('#m7a4-val');
+  var shaft = wrap.querySelector('#m7a4-shaft');
+  var caption = wrap.querySelector('#m7a4-caption');
+  var moinsBtn = wrap.querySelector('#m7a4-moins');
+  var plusBtn = wrap.querySelector('#m7a4-plus');
+
+  var ALESAGE = 70;
+  var arbre = 60;
+
+  function render() {
+    val.textContent = arbre;
+    var taillePx = 20 + arbre; // visuel proportionnel
+    shaft.style.width = taillePx + 'px';
+    shaft.style.height = (taillePx * 0.55) + 'px';
+
+    caption.classList.remove('jeu', 'serrage', 'incertain');
+    var texte;
+    if (arbre < ALESAGE) {
+      texte = 'Ajustement avec JEU (clearance fit) : l’arbre est plus petit que l’alésage, un espace subsiste. Adapté à une pièce qui doit pouvoir tourner ou coulisser librement dans son logement.';
+      caption.classList.add('jeu');
+    } else if (arbre > ALESAGE) {
+      texte = 'Ajustement avec SERRAGE (interference fit) : l’arbre est plus grand que l’alésage, il y a interférence de matière entre les deux pièces. Adapté à une pièce qui doit rester fixe, sans jeu ni mouvement relatif.';
+      caption.classList.add('serrage');
+    } else {
+      texte = 'Cas limite, exactement à la frontière : selon la tolérance réelle de fabrication de chaque pièce, un ajustement aussi serré peut donner un léger jeu ou un léger serrage — c’est le principe de l’ajustement incertain (transition fit).';
+      caption.classList.add('incertain');
+    }
+    caption.textContent = texte;
+  }
+
+  plusBtn.addEventListener('click', function () { arbre = Math.min(100, arbre + 2); render(); });
+  moinsBtn.addEventListener('click', function () { arbre = Math.max(20, arbre - 2); render(); });
+
+  render();
+})();
+</script>

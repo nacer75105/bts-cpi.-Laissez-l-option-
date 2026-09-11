@@ -1,0 +1,111 @@
+<div id="schema-m7a2-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m7a2-wrap .m7a2-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:1em; }
+#schema-m7a2-wrap .m7a2-btn:hover { background:#e8e8e8; }
+#schema-m7a2-wrap .m7a2-btn:disabled { opacity:0.4; cursor:not-allowed; }
+#schema-m7a2-wrap .m7a2-mode { margin:4px 6px 4px 0; padding:6px 12px; border-radius:6px; border:2px solid #888; background:#f0f0f0; cursor:pointer; font-size:0.9em; }
+#schema-m7a2-wrap .m7a2-mode.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m7a2-wrap .m7a2-bar-outer { width:100%; max-width:420px; height:26px; background:#e2e2e2; border-radius:6px; margin:14px 0 6px; overflow:hidden; position:relative; }
+#schema-m7a2-wrap .m7a2-bar-inner { height:100%; width:0%; background:#888; transition:width .15s, background .15s; }
+#schema-m7a2-wrap .m7a2-zone { position:absolute; top:0; bottom:0; background:rgba(58,157,58,0.35); }
+#schema-m7a2-wrap .m7a2-value { font-weight:bold; margin-bottom:4px; }
+#schema-m7a2-wrap .m7a2-caption { margin-top:12px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:3em; }
+#schema-m7a2-wrap .m7a2-caption.ok { border-left-color:#3a9d3a; background:rgba(58,157,58,0.10); }
+#schema-m7a2-wrap .m7a2-caption.bad { border-left-color:#c0392b; background:rgba(192,57,43,0.10); }
+</style>
+
+<p><strong>Essaie toi-même :</strong> serre progressivement (valeurs d'illustration, pas des couples réels) jusqu'à la zone cible indiquée par l'AMM, puis compare l'effet d'une rallonge droite et d'un adaptateur déporté non compensé.</p>
+
+<div class="m7a2-value">Couple réglé/affiché sur la clé (unités d'illustration) : <span id="m7a2-lu">0</span></div>
+<div class="m7a2-bar-outer">
+  <div class="m7a2-zone" id="m7a2-zone"></div>
+  <div class="m7a2-bar-inner" id="m7a2-bar"></div>
+</div>
+
+<div>
+  <button class="m7a2-btn" id="m7a2-moins">− Desserrer</button>
+  <button class="m7a2-btn" id="m7a2-plus">+ Serrer</button>
+</div>
+
+<p style="margin-top:12px; margin-bottom:4px;"><strong>Accessoire monté sur la clé :</strong></p>
+<div>
+  <button class="m7a2-mode active" data-mode="aucun">Aucun</button>
+  <button class="m7a2-mode" data-mode="rallonge">Rallonge droite (dans l'axe)</button>
+  <button class="m7a2-mode" data-mode="deporte_plus">Adaptateur déporté — orientation qui augmente le couple</button>
+  <button class="m7a2-mode" data-mode="deporte_moins">Adaptateur déporté — orientation qui réduit le couple</button>
+</div>
+
+<div class="m7a2-caption" id="m7a2-caption">La zone verte représente la plage de couple spécifiée par l'AMM pour cet assemblage (valeurs d'illustration).</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m7a2-wrap');
+  if (!wrap) { return; }
+  var lu = wrap.querySelector('#m7a2-lu');
+  var bar = wrap.querySelector('#m7a2-bar');
+  var zone = wrap.querySelector('#m7a2-zone');
+  var moinsBtn = wrap.querySelector('#m7a2-moins');
+  var plusBtn = wrap.querySelector('#m7a2-plus');
+  var modeBtns = wrap.querySelectorAll('.m7a2-mode');
+  var caption = wrap.querySelector('#m7a2-caption');
+
+  var MAX = 100;
+  var ZONE_MIN = 55, ZONE_MAX = 70; // illustration only
+  var regle = 0; // ce que la clé affiche
+  var mode = 'aucun';
+  // Facteur d'illustration uniquement, dans les deux sens : le rapport réel dépend des
+  // longueurs de la clé et de l'adaptateur, et doit être calculé selon la méthode donnée par
+  // le fabricant ou l'AMM — jamais estimé.
+  var FACTEUR_DEPORTE_ILLUSTRATION = 1.4;
+
+  function pct(v) { return Math.max(0, Math.min(100, v)); }
+
+  function coupleReel() {
+    if (mode === 'deporte_plus') { return Math.round(regle * FACTEUR_DEPORTE_ILLUSTRATION); }
+    if (mode === 'deporte_moins') { return Math.round(regle / FACTEUR_DEPORTE_ILLUSTRATION); }
+    return regle; // 'aucun' et 'rallonge' : aucun effet sur le couple transmis
+  }
+
+  function render() {
+    var reel = coupleReel();
+    var estDeporte = (mode === 'deporte_plus' || mode === 'deporte_moins');
+    lu.textContent = regle + (estDeporte ? ' (réel appliqué à la vis, illustration : ' + reel + ')' : '');
+    bar.style.width = pct(reel) + '%';
+    bar.style.background = (reel < ZONE_MIN || reel > ZONE_MAX) ? '#c0392b' : '#3a9d3a';
+    zone.style.left = ZONE_MIN + '%';
+    zone.style.width = (ZONE_MAX - ZONE_MIN) + '%';
+
+    caption.classList.remove('ok', 'bad');
+    var texte;
+    if (reel < ZONE_MIN) {
+      texte = 'Couple insuffisant : sous la valeur minimale de la plage AMM. Un assemblage sous-serré risque de se desserrer sous l’effet des vibrations en service.';
+      caption.classList.add('bad');
+    } else if (reel > ZONE_MAX) {
+      texte = 'Couple excessif : au-dessus de la valeur maximale de la plage AMM. Un assemblage sur-serré risque d’endommager le filetage ou de précontraindre excessivement la pièce.';
+      caption.classList.add('bad');
+    } else {
+      texte = 'Couple dans la plage spécifiée par l’AMM pour cet assemblage : ni trop, ni trop peu.';
+      caption.classList.add('ok');
+    }
+    if (mode === 'rallonge') {
+      texte += ' Une rallonge droite, dans l’axe de la clé, ne modifie pas le bras de levier : le couple réellement transmis à la vis reste égal à la valeur affichée.';
+    } else if (estDeporte) {
+      texte += ' La clé affiche ' + regle + ', mais un adaptateur déporté (hors de l’axe de la clé) change le bras de levier : selon son orientation, le couple réellement transmis à la vis peut être supérieur (ici : ' + reel + ', valeur d’illustration) ou inférieur à ce que la clé indique — sans correction du réglage selon la méthode du fabricant ou l’AMM, l’assemblage n’est pas serré à la valeur que le technicien croit avoir réglée.';
+    }
+    caption.textContent = texte;
+  }
+
+  plusBtn.addEventListener('click', function () { regle = Math.min(MAX, regle + 5); render(); });
+  moinsBtn.addEventListener('click', function () { regle = Math.max(0, regle - 5); render(); });
+  modeBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      mode = b.getAttribute('data-mode');
+      modeBtns.forEach(function (x) { x.classList.toggle('active', x === b); });
+      render();
+    });
+  });
+
+  render();
+})();
+</script>

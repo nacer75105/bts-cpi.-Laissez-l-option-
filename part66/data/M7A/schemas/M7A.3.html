@@ -1,0 +1,92 @@
+<div id="schema-m7a3-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m7a3-wrap .m7a3-btn { margin:4px 6px 4px 0; padding:6px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.92em; }
+#schema-m7a3-wrap .m7a3-btn:hover { background:#e8e8e8; }
+#schema-m7a3-wrap .m7a3-btn.active { background:#333; color:#fff; border-color:#333; }
+#schema-m7a3-wrap .m7a3-caption { margin-top:10px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:2.6em; }
+#schema-m7a3-wrap .m7a3-sep { margin:18px 0; border:none; border-top:1px solid #ccc; }
+#schema-m7a3-wrap .m7a3-row { display:flex; align-items:center; margin-top:14px; flex-wrap:wrap; }
+#schema-m7a3-wrap .m7a3-wire { width:30px; height:3px; background:#ccc; }
+#schema-m7a3-wrap .m7a3-wire.courant { background:#3a9d3a; }
+#schema-m7a3-wrap .m7a3-wire.sous-tension { background:repeating-linear-gradient(90deg, #e0a800 0 6px, #fff3b0 6px 12px); }
+#schema-m7a3-wrap .m7a3-legende { font-size:0.82em; color:#666; margin-top:6px; }
+#schema-m7a3-wrap .m7a3-switch { padding:6px 14px; border-radius:6px; border:2px solid #888; background:#f0f0f0; cursor:pointer; font-weight:bold; }
+#schema-m7a3-wrap .m7a3-switch.closed { background:#fff3b0; border-color:#e0a800; }
+#schema-m7a3-wrap .m7a3-lamp { width:30px; height:30px; border-radius:50%; border:2px solid #555; background:#ccc; margin-left:2px; transition:background .2s; }
+#schema-m7a3-wrap .m7a3-lamp.on { background:#3a9d3a; }
+</style>
+
+<p><strong>1. Symboles de schéma</strong> — clique sur un symbole pour afficher sa signification.</p>
+<div id="m7a3-symbols">
+  <button class="m7a3-btn active" data-sym="interrupteur">Interrupteur</button>
+  <button class="m7a3-btn" data-sym="relais">Relais</button>
+  <button class="m7a3-btn" data-sym="masse">Masse (ground)</button>
+  <button class="m7a3-btn" data-sym="connecteur">Connecteur</button>
+</div>
+<div class="m7a3-caption" id="m7a3-def"></div>
+
+<hr class="m7a3-sep">
+
+<p><strong>2. Tracer un circuit</strong> — le schéma ne montre pas où sont les objets, mais comment ils sont reliés. Actionne l'interrupteur et observe la lampe.</p>
+<div class="m7a3-row">
+  <span>Source</span>
+  <div class="m7a3-wire sous-tension" id="m7a3-w1"></div>
+  <button class="m7a3-switch" id="m7a3-sw">Ouvert</button>
+  <div class="m7a3-wire" id="m7a3-w2"></div>
+  <div class="m7a3-lamp" id="m7a3-lamp"></div>
+</div>
+<p class="m7a3-legende">Trait hachuré orange = sous tension, mais aucun courant n'y circule tant que le circuit n'est pas fermé plus loin. Trait vert = parcouru par un courant. Trait gris = ni l'un ni l'autre.</p>
+<div class="m7a3-caption" id="m7a3-circuit-caption"></div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m7a3-wrap');
+  if (!wrap) { return; }
+
+  // Partie 1 : symboles
+  var symBtns = wrap.querySelectorAll('#m7a3-symbols .m7a3-btn');
+  var def = wrap.querySelector('#m7a3-def');
+  var defs = {
+    interrupteur: 'Interrupteur : représente un contact qui peut être ouvert (circuit interrompu) ou fermé (circuit continu). Sur le schéma, son état dessiné (ouvert ou fermé) indique l’état du circuit à ce point précis, pas sa position physique réelle dans l’aéronef.',
+    relais: 'Relais : un interrupteur commandé électriquement — une bobine, en s’activant, ouvre ou ferme un ou plusieurs contacts ailleurs dans le circuit. Il permet de commander un circuit de puissance à partir d’un circuit de commande séparé, de plus faible courant.',
+    masse: 'Masse (ground) : indique un point relié électriquement à la structure de l’aéronef, qui sert de retour commun à de nombreux circuits plutôt que de faire revenir chaque câble individuellement à la source.',
+    connecteur: 'Connecteur : représente le point de séparation démontable entre deux tronçons de câblage (par exemple entre un faisceau et un équipement), identifié par une référence propre pour le retrouver dans la documentation.',
+  };
+
+  function renderDef() {
+    var actif = wrap.querySelector('#m7a3-symbols .m7a3-btn.active');
+    def.textContent = defs[actif.getAttribute('data-sym')];
+  }
+  symBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      symBtns.forEach(function (x) { x.classList.toggle('active', x === b); });
+      renderDef();
+    });
+  });
+  renderDef();
+
+  // Partie 2 : circuit interrupteur/lampe
+  var sw = wrap.querySelector('#m7a3-sw');
+  var lamp = wrap.querySelector('#m7a3-lamp');
+  var w1 = wrap.querySelector('#m7a3-w1');
+  var w2 = wrap.querySelector('#m7a3-w2');
+  var circuitCaption = wrap.querySelector('#m7a3-circuit-caption');
+  var ferme = false;
+
+  function renderCircuit() {
+    sw.textContent = ferme ? 'Fermé' : 'Ouvert';
+    sw.classList.toggle('closed', ferme);
+    lamp.classList.toggle('on', ferme);
+    // Le tronçon amont (source → interrupteur) reste en permanence sous tension, que
+    // l'interrupteur soit ouvert ou fermé : c'est le tronçon aval (interrupteur → lampe) qui
+    // n'est parcouru par un courant que lorsque le circuit est fermé.
+    w2.classList.toggle('courant', ferme);
+    circuitCaption.textContent = ferme
+      ? 'L’interrupteur est fermé : un courant circule de la source jusqu’à la lampe, qui s’allume.'
+      : 'L’interrupteur est ouvert : aucun courant ne circule dans le circuit, la lampe reste éteinte. Le tronçon entre la source et l’interrupteur reste néanmoins sous tension — l’interrupteur ne supprime pas la tension en amont, il interrompt le passage du courant.';
+  }
+  sw.addEventListener('click', function () { ferme = !ferme; renderCircuit(); });
+  renderCircuit();
+})();
+</script>

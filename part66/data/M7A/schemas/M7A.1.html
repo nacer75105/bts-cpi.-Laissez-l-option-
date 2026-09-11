@@ -1,0 +1,97 @@
+<div id="schema-m7a1-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m7a1-wrap .m7a1-btn { margin:4px 6px 4px 0; padding:6px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.92em; }
+#schema-m7a1-wrap .m7a1-btn:hover { background:#e8e8e8; }
+#schema-m7a1-wrap .m7a1-btn.active { background:#333; color:#fff; border-color:#333; }
+#schema-m7a1-wrap .m7a1-result { margin-top:14px; padding:12px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:3.2em; }
+#schema-m7a1-wrap .m7a1-result.ok { border-left-color:#3a9d3a; background:rgba(58,157,58,0.10); }
+#schema-m7a1-wrap .m7a1-result.bad { border-left-color:#c0392b; background:rgba(192,57,43,0.10); }
+#schema-m7a1-wrap .m7a1-cols { display:flex; gap:24px; flex-wrap:wrap; margin-top:10px; }
+#schema-m7a1-wrap .m7a1-col { min-width:180px; }
+#schema-m7a1-wrap .m7a1-label { font-weight:bold; margin-bottom:4px; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> choisis un type de feu, puis choisis un agent extincteur — et regarde si le choix est adapté ou s'il aggraverait la situation.</p>
+
+<div class="m7a1-cols">
+  <div class="m7a1-col">
+    <div class="m7a1-label">Type de feu</div>
+    <div id="m7a1-feux">
+      <button class="m7a1-btn active" data-feu="solide">Solide (bois, tissu)</button><br>
+      <button class="m7a1-btn" data-feu="liquide">Liquide inflammable (carburant, huile)</button><br>
+      <button class="m7a1-btn" data-feu="electrique">Origine électrique</button>
+    </div>
+  </div>
+  <div class="m7a1-col">
+    <div class="m7a1-label">Agent extincteur</div>
+    <div id="m7a1-agents">
+      <button class="m7a1-btn active" data-agent="eau">Eau</button><br>
+      <button class="m7a1-btn" data-agent="co2">CO2</button><br>
+      <button class="m7a1-btn" data-agent="poudre">Poudre</button>
+    </div>
+  </div>
+</div>
+
+<div class="m7a1-result" id="m7a1-result"></div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m7a1-wrap');
+  if (!wrap) { return; }
+  var feuBtns = wrap.querySelectorAll('#m7a1-feux .m7a1-btn');
+  var agentBtns = wrap.querySelectorAll('#m7a1-agents .m7a1-btn');
+  var result = wrap.querySelector('#m7a1-result');
+
+  var feu = 'solide';
+  var agent = 'eau';
+
+  var nomsFeu = { solide: 'un feu de solide', liquide: 'un feu de liquide inflammable', electrique: 'un feu d’origine électrique' };
+  var nomsAgent = { eau: 'l’eau', co2: 'le CO2', poudre: 'la poudre' };
+
+  // true = adapté, false = à proscrire, 'ok_partiel' = utilisable mais pas le premier choix
+  function evalue() {
+    if (feu === 'solide') {
+      if (agent === 'eau') return { ok: true, texte: 'L’eau refroidit efficacement un feu de matériau solide (bois, tissu, papier) en abaissant sa température sous le point d’inflammation. C’est un choix adapté pour ce type de feu.' };
+      if (agent === 'co2') return { ok: 'partiel', texte: 'Le CO2 peut étouffer un feu de solide en le privant d’oxygène, mais il refroidit peu : sur un matériau qui couve encore (braises), le feu peut repartir une fois le gaz dissipé. Pas le meilleur choix, mais pas dangereux.' };
+      return { ok: 'partiel', texte: 'La poudre peut étouffer un feu de solide, mais l’eau reste en général plus efficace ici : elle refroidit le matériau en profondeur, ce que la poudre ne fait pas.' };
+    }
+    if (feu === 'liquide') {
+      if (agent === 'eau') return { ok: false, texte: 'À proscrire : projetée sur un liquide inflammable, l’eau ne l’éteint pas — elle disperse le liquide en surface (le carburant flotte sur l’eau) et peut propager le feu au lieu de l’éteindre.' };
+      if (agent === 'co2') return { ok: true, texte: 'Le CO2 étouffe le feu en chassant l’oxygène à sa surface, sans disperser le liquide : c’est un agent adapté à un feu de liquide inflammable.' };
+      return { ok: true, texte: 'La poudre étouffe rapidement un feu de liquide inflammable en interrompant sa réaction de combustion : c’est également un agent adapté à ce type de feu.' };
+    }
+    // electrique
+    if (agent === 'eau') return { ok: false, texte: 'À proscrire absolument : l’eau conduit le courant électrique. La projeter sur un équipement sous tension expose au risque d’électrocution pour la personne qui tient l’extincteur.' };
+    if (agent === 'co2') return { ok: true, texte: 'Le CO2 est un gaz non conducteur qui étouffe le feu sans laisser de résidu sur l’équipement : c’est un choix adapté à un feu d’origine électrique.' };
+    return { ok: 'partiel', texte: 'Certaines poudres sont utilisables sur un feu électrique, mais elles laissent un résidu corrosif qui peut endommager l’équipement électronique : le CO2 est généralement préféré quand il est disponible.' };
+  }
+
+  function render() {
+    var res = evalue();
+    result.classList.remove('ok', 'bad');
+    var intro = 'Sur ' + nomsFeu[feu] + ', utiliser ' + nomsAgent[agent] + ' : ';
+    if (res.ok === true) { result.classList.add('ok'); intro = '✅ ' + intro; }
+    else if (res.ok === false) { result.classList.add('bad'); intro = '❌ ' + intro; }
+    else { intro = '⚠️ ' + intro; }
+    result.textContent = intro + res.texte;
+  }
+
+  feuBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      feu = b.getAttribute('data-feu');
+      feuBtns.forEach(function (x) { x.classList.toggle('active', x === b); });
+      render();
+    });
+  });
+  agentBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      agent = b.getAttribute('data-agent');
+      agentBtns.forEach(function (x) { x.classList.toggle('active', x === b); });
+      render();
+    });
+  });
+
+  render();
+})();
+</script>

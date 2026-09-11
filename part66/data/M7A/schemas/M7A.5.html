@@ -1,0 +1,70 @@
+<div id="schema-m7a5-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m7a5-wrap .m7a5-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.92em; text-align:left; }
+#schema-m7a5-wrap .m7a5-btn:hover { background:#e8e8e8; }
+#schema-m7a5-wrap .m7a5-btn.active { background:#333; color:#fff; border-color:#333; }
+#schema-m7a5-wrap .m7a5-crimp { display:inline-block; width:130px; height:44px; border-radius:6px; margin:4px 8px 4px 0; position:relative; border:2px solid #555; background:#ddd; overflow:hidden; vertical-align:middle; }
+#schema-m7a5-wrap .m7a5-crimp .conducteur { position:absolute; left:6px; top:16px; height:12px; background:#c98a3a; }
+#schema-m7a5-wrap .m7a5-crimp .isolant { position:absolute; top:14px; height:16px; background:#3a80c9; }
+#schema-m7a5-wrap .m7a5-caption { margin-top:12px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:3.4em; }
+#schema-m7a5-wrap .m7a5-caption.ok { border-left-color:#3a9d3a; background:rgba(58,157,58,0.10); }
+#schema-m7a5-wrap .m7a5-caption.bad { border-left-color:#c0392b; background:rgba(192,57,43,0.10); }
+</style>
+
+<p><strong>Essaie toi-même :</strong> parmi ces quatre sertissages, un seul est conforme. Clique sur chacun pour voir le diagnostic, puis identifie lequel tu accepterais.</p>
+
+<div id="m7a5-choices"></div>
+<div class="m7a5-caption" id="m7a5-caption">Clique sur un sertissage pour voir son diagnostic.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m7a5-wrap');
+  if (!wrap) { return; }
+  var choicesDiv = wrap.querySelector('#m7a5-choices');
+  var caption = wrap.querySelector('#m7a5-caption');
+
+  var cas = [
+    { id: 'bon', label: 'Sertissage A', conducteurLen: 22, isolantLen: 90, ok: true,
+      texte: 'Conforme : longueur de dénudage adaptée (le conducteur s’engage bien dans la cosse sans dépasser exagérément), aucun brin coupé, isolant non pincé. Ce sertissage passerait le test de traction spécifié.' },
+    { id: 'court', label: 'Sertissage B', conducteurLen: 8, isolantLen: 118, ok: false,
+      texte: 'Non conforme : dénudage trop court. Le conducteur ne s’engage pas assez profondément dans la cosse — la surface de contact est insuffisante, la liaison risque de ne pas résister au test de traction.' },
+    { id: 'long', label: 'Sertissage C', conducteurLen: 45, isolantLen: 60, ok: false,
+      texte: 'Non conforme : dénudage trop long. Du cuivre nu dépasse de la cosse, ce qui peut créer un court-circuit avec un élément voisin dans le faisceau.' },
+    { id: 'pince', label: 'Sertissage D', conducteurLen: 22, isolantLen: 90, ok: false,
+      texte: 'Non conforme : l’isolant est pincé à l’intérieur de la zone sertie. La cosse ne serre pas correctement le conducteur lui-même, ce qui compromet la tenue mécanique et la conductivité de la liaison.' },
+  ];
+
+  cas.forEach(function (c) {
+    var btn = document.createElement('button');
+    btn.className = 'm7a5-btn';
+    btn.setAttribute('data-id', c.id);
+    var crimp = document.createElement('span');
+    crimp.className = 'm7a5-crimp';
+    var isolant = document.createElement('span');
+    isolant.className = 'isolant';
+    isolant.style.left = '0px';
+    isolant.style.width = c.isolantLen + 'px';
+    var conducteur = document.createElement('span');
+    conducteur.className = 'conducteur';
+    conducteur.style.left = (c.isolantLen - 4) + 'px';
+    conducteur.style.width = c.conducteurLen + 'px';
+    if (c.id === 'pince') {
+      isolant.style.width = (c.isolantLen + 14) + 'px';
+      conducteur.style.left = (c.isolantLen + 8) + 'px';
+    }
+    crimp.appendChild(isolant);
+    crimp.appendChild(conducteur);
+    btn.appendChild(document.createTextNode(c.label + ' '));
+    btn.appendChild(document.createElement('br'));
+    btn.appendChild(crimp);
+    btn.addEventListener('click', function () {
+      wrap.querySelectorAll('.m7a5-btn').forEach(function (x) { x.classList.toggle('active', x === btn); });
+      caption.classList.remove('ok', 'bad');
+      caption.classList.add(c.ok ? 'ok' : 'bad');
+      caption.textContent = (c.ok ? '✅ ' : '❌ ') + c.texte;
+    });
+    choicesDiv.appendChild(btn);
+  });
+})();
+</script>

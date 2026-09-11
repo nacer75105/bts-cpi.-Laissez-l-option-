@@ -610,6 +610,12 @@ pour l'exemple progressif le plus avancé du texte :
   officielle (Appendix VIII du Part-66). Même statut que la valeur M10
   ci-dessus : à confirmer avant usage en conditions d'examen réel.
 
+- **Nombre de questions et durée de l'examen officiel du module M7A** : la
+  valeur utilisée par défaut dans `part66/logic.py` (25 questions /
+  30 minutes) est une estimation provisoire, non vérifiée sur une source
+  officielle (Appendix VIII du Part-66). Même statut que M10 et M5
+  ci-dessus : à confirmer avant usage en conditions d'examen réel.
+
 ## Intitulés des modules non encore traités
 
 Les intitulés de M7A, M11A, M15 et M17A utilisés comme simples libellés
@@ -622,6 +628,76 @@ construits (fiches + questions) :
 - M11A : « Aérodynamique, structures et systèmes — avion à turbine »
 - M15 : « Turbomachines à gaz »
 - M17A : « Hélices »
+
+## M7A — construction en cours
+
+Le module M7A (« Pratiques de maintenance ») est en cours de construction,
+fiche par fiche. Le syllabus officiel EASA du module 7A compte, dans les
+versions généralement citées, une quinzaine de sous-chapitres distincts ;
+pour rester sur un format proche de celui de M5 (9-10 fiches), la
+répartition retenue ici **regroupe** plusieurs sous-chapitres officiels par
+fiche plutôt que de créer une fiche par sous-chapitre. Cette répartition en
+10 fiches (M7A.1 à M7A.10) est une construction éditoriale de ce projet,
+pas une nomenclature officielle recopiée du syllabus EASA : à confirmer
+contre le syllabus officiel avant de considérer la couverture du module
+comme complète.
+
+Trois sous-chapitres officiels du module 7A ne sont couverts par aucune des
+10 fiches actuellement prévues et doivent être ajoutés dans une extension
+ultérieure du module (nouvelles fiches, ou nouveau module dédié) :
+- les **matériaux composites** (structure, réparation de base, précautions
+  de mise en œuvre) ;
+- le **soudage et le brasage** (welding, brazing, soldering) ;
+- le **contrôle non destructif (CND)** (non-destructive inspection/testing).
+
+### M7A.1-M7A.5 — round 1 de relecture (dette mineure assumée)
+
+Le lot M7A.1-M7A.5 (5 fiches + 25 questions) a été relu par le sous-agent
+`relecteur-part66` avant commit. Les 4 points bloquants relevés (rallonge
+vs adaptateur déporté sur M7A.2/M7A-0009, cartouche/nom du dessinateur sur
+M7A-0013, distracteur ambigu sur la cote nominale de M7A-0018, résidu de
+poudre décrit à tort comme conducteur sur le schéma M7A.1) ont été corrigés
+avant commit, de même que les 3 questions à double distracteur non
+plausible signalées en priorité (M7A-0007, M7A-0015, M7A-0019).
+
+Un round 2 de relecture, ciblé sur la vérification de ces correctifs, a
+trouvé un 5ᵉ point bloquant (le schéma `M7A.3.html` grisait le tronçon de
+fil situé en amont de l'interrupteur exactement comme le tronçon en aval,
+alors que le premier reste sous tension même circuit ouvert — corrigé par
+un code couleur à trois états : sous tension/pas de courant, parcouru par
+un courant, ni l'un ni l'autre) et plusieurs raffinements mineurs, tous
+corrigés avant commit : le schéma `M7A.2.html` illustre maintenant les deux
+sens possibles de l'effet d'un adaptateur déporté (couple réel supérieur
+*ou* inférieur, pas seulement supérieur) ; M7A-0009 est reformulée en
+question ouverte pour que ses trois options soient grammaticalement
+homogènes ; l'explication de M7A-0018 ne décrit plus la méthode de montage
+par dilatation thermique (elle révélait la réponse de M7A-0020, même
+sous-chapitre) ; le distracteur de M7A-0020 ne mélange plus « cote
+nominale » et « cote réelle » ; les distracteurs de M7A-0007 et M7A-0015
+ont été encore affinés pour ne plus être éliminables par la seule lecture
+de l'énoncé.
+
+Restent, en dette mineure assumée (même statut que les points similaires
+documentés pour M5) :
+- des distracteurs trop peu plausibles sur une dizaine d'autres questions
+  (M7A-0004, M7A-0005, M7A-0010, M7A-0011, M7A-0016, M7A-0021, M7A-0023,
+  M7A-0024, M7A-0025) — à muscler lors d'un futur round de finition ;
+- un léger doublon thématique entre M7A-0001 et M7A-0005 (l'eau comme
+  mauvais agent extincteur, sur deux types de feu différents) ;
+- la position de la bonne réponse suit un cycle 0/1/2 régulier sur une
+  bonne partie du fichier source (neutralisé à l'affichage par le mélange
+  par session dans `part66/ui.py`, mais à casser dans le fichier source
+  lors d'un prochain passage) ;
+- couverture non testée par une question : l'ajustement incertain
+  (*transition fit*, fiche M7A.4), les consignes d'urgence (fiche M7A.1)
+  et le test de traction/*pull test* (fiche M7A.5) ;
+- nuance à apporter à l'explication de M7A-0016 : l'existence même d'une
+  tolérance tient à la variabilité de fabrication, mais le choix de sa
+  largeur peut aussi tenir compte du coût — l'explication actuelle rejette
+  le lien au coût de façon trop catégorique ;
+- FOD (M7A-0006) ne retient que l'acception *Foreign Object Damage* ; le
+  sigle recouvre aussi couramment *Foreign Object Debris* selon les
+  sources.
 
 ## Méthode
 

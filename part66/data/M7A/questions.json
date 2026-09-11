@@ -1,0 +1,330 @@
+{
+  "module": "M7A",
+  "questions": [
+    {
+      "uid": "M7A-0001",
+      "sous_chapitre": "M7A.1",
+      "question": "Sur un feu de carburant (liquide inflammable), quel geste faut-il proscrire ?",
+      "options": [
+        "Utiliser un extincteur à eau",
+        "Utiliser un extincteur au CO2",
+        "Utiliser un extincteur à poudre"
+      ],
+      "bonne": 0,
+      "explication": "L'eau est à proscrire sur un feu de liquide inflammable : projetée dessus, elle ne l'éteint pas mais disperse le liquide en surface, ce qui peut propager le feu au lieu de l'éteindre. Le CO2 et la poudre, eux, étouffent correctement ce type de feu en interrompant la combustion sans disperser le liquide : ce sont des choix adaptés, pas des gestes à proscrire.",
+      "source": "Notions générales de sécurité en maintenance aéronautique — classes de feu et agents extincteurs"
+    },
+    {
+      "uid": "M7A-0002",
+      "sous_chapitre": "M7A.1",
+      "question": "Comment rechercher une fuite de fluide hydraulique haute pression ?",
+      "options": [
+        "Avec la main nue, en passant lentement au-dessus du circuit",
+        "Avec un morceau de carton ou de bois tenu à distance",
+        "En augmentant la pression du circuit pour mieux voir la fuite"
+      ],
+      "bonne": 1,
+      "explication": "Un jet de fluide hydraulique haute pression peut être invisible et pourtant traverser la peau, provoquant une injection sous-cutanée grave : on recherche donc une fuite à distance, avec un objet comme un morceau de carton ou de bois, jamais à la main nue. Augmenter la pression du circuit pour « mieux voir » aggraverait le danger au lieu de le réduire.",
+      "source": "Notions générales de sécurité en maintenance aéronautique — risques hydrauliques haute pression"
+    },
+    {
+      "uid": "M7A-0003",
+      "sous_chapitre": "M7A.1",
+      "question": "Pourquoi relie-t-on électriquement l'aéronef et le moyen d'avitaillement avant un transfert de carburant ?",
+      "options": [
+        "Pour accélérer le débit de transfert du carburant",
+        "Pour mesurer la quantité de carburant transférée",
+        "Pour égaliser leur potentiel électrique et éviter une étincelle d'électricité statique"
+      ],
+      "bonne": 2,
+      "explication": "Le transfert de carburant dans une tuyauterie peut générer de l'électricité statique ; relier électriquement l'aéronef et le moyen d'avitaillement égalise leur potentiel et évite qu'une étincelle ne jaillisse à proximité des vapeurs de carburant. Cette liaison n'a aucun effet sur le débit de transfert ni sur la mesure de la quantité transférée, qui relèvent d'autres équipements.",
+      "source": "Notions générales de sécurité en maintenance aéronautique — avitaillement et électricité statique"
+    },
+    {
+      "uid": "M7A-0004",
+      "sous_chapitre": "M7A.1",
+      "question": "Pourquoi le port de gants est-il déconseillé à proximité d'un outil rotatif ?",
+      "options": [
+        "Les gants risquent d'être happés par l'outil en rotation",
+        "Les gants réduisent uniquement le confort de préhension",
+        "Les gants ne protègent pas contre le bruit"
+      ],
+      "bonne": 0,
+      "explication": "Près d'un outil rotatif, un gant peut être happé par la pièce en rotation et entraîner la main avec lui : c'est le danger principal, pas une simple question de confort. Le fait que les gants ne protègent pas contre le bruit est vrai mais hors sujet ici : ce n'est de toute façon pas leur fonction, et cela n'explique pas pourquoi ils sont déconseillés à cet endroit précis.",
+      "source": "Notions générales de sécurité en maintenance aéronautique — équipements de protection individuelle"
+    },
+    {
+      "uid": "M7A-0005",
+      "sous_chapitre": "M7A.1",
+      "question": "Pourquoi le CO2 est-il adapté à un feu d'origine électrique, contrairement à l'eau ?",
+      "options": [
+        "Le CO2 est moins cher que l'eau",
+        "Le CO2 ne conduit pas le courant électrique, contrairement à l'eau",
+        "Le CO2 refroidit davantage que l'eau"
+      ],
+      "bonne": 1,
+      "explication": "L'eau conduit le courant électrique et expose au risque d'électrocution si elle est projetée sur un équipement sous tension ; le CO2, gaz non conducteur, étouffe le feu sans ce risque. Le coût comparé des deux agents n'entre pas en jeu dans ce choix de sécurité, et le CO2 agit en étouffant le feu, pas en le refroidissant davantage que l'eau.",
+      "source": "Notions générales de sécurité en maintenance aéronautique — feux d'origine électrique"
+    },
+    {
+      "uid": "M7A-0006",
+      "sous_chapitre": "M7A.2",
+      "question": "Que signifie l'acronyme FOD, utilisé en maintenance aéronautique ?",
+      "options": [
+        "Fuel Overflow Detection — détection de débordement de carburant",
+        "Fitting Operation Diagram — schéma d'assemblage",
+        "Foreign Object Damage — dommage causé par un corps étranger"
+      ],
+      "bonne": 2,
+      "explication": "FOD désigne le dommage causé par un corps étranger (outil, visserie, débris) oublié ou introduit dans une zone sensible de l'aéronef. Les deux autres développés de l'acronyme sont inventés : ils ne correspondent à aucun terme technique standard associé à ces initiales dans ce contexte.",
+      "source": "Notions générales de pratiques de maintenance aéronautique — prévention du FOD"
+    },
+    {
+      "uid": "M7A-0007",
+      "sous_chapitre": "M7A.2",
+      "question": "Pourquoi un outil manquant en fin d'intervention n'est-il jamais considéré comme un détail à régulariser plus tard ?",
+      "options": [
+        "Parce qu'il sera de toute façon détecté automatiquement par les systèmes de surveillance de l'aéronef",
+        "Parce qu'un objet oublié dans l'aéronef peut créer un dommage qui ne se manifeste parfois que plus tard",
+        "Parce que la procédure impose de racheter un outil identique avant la clôture du chantier"
+      ],
+      "bonne": 1,
+      "explication": "Un outil oublié peut provoquer un dommage FOD qui n'apparaît pas immédiatement, parfois seulement en vol : c'est cette absence de signe visible immédiat qui impose de considérer le travail comme non terminé tant que l'outil n'est pas retrouvé, avant toute autre étape. Aucun système de surveillance de l'aéronef ne détecte un objet étranger oublié dans une structure ou un compartiment : compter sur une telle détection automatique reviendrait à ignorer le risque plutôt qu'à le traiter. Le sujet n'est pas non plus de remplacer l'outil manquant par un autre : un outil racheté ne fait pas disparaître celui resté dans l'aéronef, ce qui est précisément le danger à traiter.",
+      "source": "Notions générales de pratiques de maintenance aéronautique — contrôle des outils"
+    },
+    {
+      "uid": "M7A-0008",
+      "sous_chapitre": "M7A.2",
+      "question": "Quel est le risque d'un assemblage vissé serré à un couple insuffisant ?",
+      "options": [
+        "Il devient impossible à démonter ultérieurement",
+        "Il peut se desserrer sous l'effet des vibrations en service",
+        "Il précontraint excessivement le matériau"
+      ],
+      "bonne": 1,
+      "explication": "Un serrage insuffisant laisse l'assemblage vulnérable au desserrage progressif sous l'effet des vibrations en service. L'impossibilité de démonter ultérieurement et la précontrainte excessive du matériau sont au contraire des risques associés à un serrage trop important, pas à un serrage insuffisant.",
+      "source": "Notions générales de pratiques de maintenance aéronautique — couple de serrage"
+    },
+    {
+      "uid": "M7A-0009",
+      "sous_chapitre": "M7A.2",
+      "question": "Que peut-on dire de l'utilisation d'un adaptateur déporté (par exemple une clé à œil ouverte) monté sur une clé dynamométrique, sans correction du réglage ?",
+      "options": [
+        "Une rallonge droite, dans l'axe de la clé, produirait exactement le même effet sur le couple transmis",
+        "Le couple réellement appliqué à la vis reste rigoureusement identique à la valeur affichée, quel que soit l'accessoire utilisé",
+        "Le couple réellement appliqué à la vis peut être différent de la valeur affichée par la clé, selon l'orientation de l'adaptateur"
+      ],
+      "bonne": 2,
+      "explication": "Un adaptateur déporté par rapport à l'axe de la clé modifie le bras de levier effectif : selon son orientation, le couple réellement transmis à la vis peut être supérieur ou inférieur à la valeur affichée sur la clé, d'où la nécessité d'une correction calculée selon la méthode du fabricant ou de l'AMM. Affirmer que le couple reste identique ignore cet effet mécanique réel. Et une rallonge droite, dans l'axe de la clé, n'a au contraire aucun effet sur le bras de levier : contrairement à un adaptateur déporté, elle ne modifie pas le couple transmis — les deux accessoires ne se comportent donc pas du tout de la même façon.",
+      "source": "Notions générales de pratiques de maintenance aéronautique — utilisation de la clé dynamométrique"
+    },
+    {
+      "uid": "M7A-0010",
+      "sous_chapitre": "M7A.2",
+      "question": "Pourquoi une clé dynamométrique doit-elle être étalonnée périodiquement ?",
+      "options": [
+        "Parce que sa lecture peut dériver avec le temps, sans que rien ne le signale visuellement",
+        "Parce que la couleur de la clé s'estompe avec l'usage",
+        "Parce que l'étalonnage n'est requis qu'après une chute de la clé, jamais autrement"
+      ],
+      "bonne": 0,
+      "explication": "Comme tout instrument de mesure, une clé dynamométrique peut dériver avec le temps sans que rien à son aspect ne le laisse deviner : c'est précisément pour cela qu'un étalonnage périodique est nécessaire, indépendamment de toute chute. L'aspect esthétique de la clé n'a aucun rapport avec la fiabilité de sa mesure, et limiter l'étalonnage aux seuls cas de chute ignorerait la dérive normale qui peut survenir sans incident particulier.",
+      "source": "Notions générales de pratiques de maintenance aéronautique — étalonnage des instruments de mesure"
+    },
+    {
+      "uid": "M7A-0011",
+      "sous_chapitre": "M7A.3",
+      "question": "Quelle est la différence essentielle entre un dessin d'ensemble et un dessin de définition ?",
+      "options": [
+        "Le dessin d'ensemble est toujours en couleur, le dessin de définition toujours en noir et blanc",
+        "Le dessin d'ensemble montre l'assemblage de plusieurs pièces, le dessin de définition détaille une seule pièce avec ses cotes",
+        "Le dessin de définition ne concerne que les schémas électriques"
+      ],
+      "bonne": 1,
+      "explication": "Le dessin d'ensemble montre comment plusieurs pièces s'assemblent entre elles, tandis que le dessin de définition détaille une seule pièce avec toutes ses cotes et tolérances. La couleur du support n'est pas un critère qui distingue ces deux types de dessin, et le dessin de définition peut tout aussi bien décrire une pièce mécanique qu'un composant électrique : il n'est pas réservé aux schémas électriques.",
+      "source": "Notions générales de pratiques de maintenance aéronautique — types de dessins techniques"
+    },
+    {
+      "uid": "M7A-0012",
+      "sous_chapitre": "M7A.3",
+      "question": "Sur un schéma de câblage électrique, la position des symboles représente :",
+      "options": [
+        "L'emplacement physique réel des composants dans l'aéronef",
+        "L'ordre chronologique de montage des composants",
+        "Les relations fonctionnelles entre composants, indépendamment de leur position réelle"
+      ],
+      "bonne": 2,
+      "explication": "Un schéma de câblage représente les relations fonctionnelles entre composants (comment ils sont reliés électriquement), pas leur emplacement physique réel dans l'aéronef ni l'ordre dans lequel ils ont été montés. Confondre schéma fonctionnel et position réelle est une erreur classique de lecture, précisément parce que rien dans le schéma n'indique où se trouve réellement chaque composant.",
+      "source": "Notions générales de pratiques de maintenance aéronautique — lecture de schémas de câblage"
+    },
+    {
+      "uid": "M7A-0013",
+      "sous_chapitre": "M7A.3",
+      "question": "Pourquoi faut-il vérifier l'indice de révision d'un dessin avant de l'utiliser ?",
+      "options": [
+        "Parce qu'un dessin resté à une révision antérieure peut ne plus refléter la configuration réellement installée",
+        "Pour connaître le nom du dessinateur ayant réalisé le document",
+        "Parce que l'indice de révision indique l'échelle du dessin"
+      ],
+      "bonne": 0,
+      "explication": "Un dessin peut être révisé pour refléter une modification de la pièce ou de l'installation ; un exemplaire resté à une révision antérieure peut donc montrer une configuration qui n'est plus celle réellement installée, sans que rien à son aspect ne le signale. Le nom du dessinateur, même lorsqu'il figure au cartouche, ne renseigne en rien sur la validité de la configuration représentée : seul l'indice de révision le fait. Et l'échelle du dessin est une information distincte de l'indice de révision : elle ne dit rien non plus de la configuration réellement installée.",
+      "source": "Notions générales de pratiques de maintenance aéronautique — cartouche et indice de révision"
+    },
+    {
+      "uid": "M7A-0014",
+      "sous_chapitre": "M7A.3",
+      "question": "Sur un dessin technique, un trait interrompu (pointillé) représente en général :",
+      "options": [
+        "Un axe de symétrie ou de rotation",
+        "Une arête cachée, non visible sous l'angle de la vue",
+        "Une cote à vérifier en priorité"
+      ],
+      "bonne": 1,
+      "explication": "Un trait interrompu (pointillé) représente en général une arête cachée, non visible sous l'angle de la vue représentée. L'axe de symétrie ou de rotation se représente par un trait mixte (tirets longs et points), un type de trait différent ; et la nature du trait n'indique en rien une priorité de vérification d'une cote.",
+      "source": "Notions générales de pratiques de maintenance aéronautique — conventions de traits sur les dessins techniques"
+    },
+    {
+      "uid": "M7A-0015",
+      "sous_chapitre": "M7A.3",
+      "question": "Avant d'interpréter les vues d'un dessin technique, il faut vérifier :",
+      "options": [
+        "L'échelle indiquée dans le cartouche",
+        "Le nom du logiciel de CAO utilisé pour produire le dessin",
+        "Le symbole de projection porté dans le cartouche, car plusieurs conventions existent"
+      ],
+      "bonne": 2,
+      "explication": "Plusieurs conventions de projection orthogonale existent et ne placent pas les vues au même endroit les unes par rapport aux autres ; le symbole de projection du cartouche indique laquelle a été utilisée sur ce document précis, une vérification indispensable avant de lire les vues. L'échelle est elle aussi une information du cartouche, mais elle indique un rapport de taille, pas la disposition des vues : la connaître ne renseigne en rien sur la convention de projection utilisée. Le logiciel utilisé pour produire le dessin n'a, lui, aucune incidence sur la façon dont les vues doivent être lues.",
+      "source": "Notions générales de pratiques de maintenance aéronautique — conventions de projection"
+    },
+    {
+      "uid": "M7A-0016",
+      "sous_chapitre": "M7A.4",
+      "question": "Pourquoi une tolérance est-elle définie sur une cote plutôt qu'une valeur unique ?",
+      "options": [
+        "Parce qu'aucun processus de fabrication ne peut reproduire une cote de façon parfaitement identique d'une pièce à l'autre",
+        "Parce que les clients préfèrent avoir le choix entre plusieurs dimensions",
+        "Parce que la tolérance permet de réduire le prix de fabrication des pièces"
+      ],
+      "bonne": 0,
+      "explication": "La tolérance existe parce qu'aucun processus de fabrication ne peut reproduire une cote de façon parfaitement identique d'une pièce à l'autre : elle définit la plage de valeurs réelles jugées acceptables. Il ne s'agit ni d'une préférence commerciale pour un choix de dimensions, ni d'un moyen de réduire les coûts de fabrication.",
+      "source": "Notions générales de pratiques de maintenance aéronautique — tolérances dimensionnelles"
+    },
+    {
+      "uid": "M7A-0017",
+      "sous_chapitre": "M7A.4",
+      "question": "Un ajustement avec jeu (clearance fit) est adapté à :",
+      "options": [
+        "Une pièce qui doit rester rigoureusement fixe sans aucun mouvement relatif",
+        "Une pièce qui doit pouvoir tourner ou coulisser librement dans son logement",
+        "Une pièce dont la cote n'a pas encore été définie par le bureau d'études"
+      ],
+      "bonne": 1,
+      "explication": "Un ajustement avec jeu laisse un espace entre les deux pièces, ce qui convient à une pièce devant tourner ou coulisser librement dans son logement. Une pièce qui doit rester rigoureusement fixe a au contraire besoin d'une tenue ferme, sans le moindre espace : un jeu à cet endroit permettrait un mouvement non désiré. Et le type d'ajustement choisi par le bureau d'études suppose que la cote de la pièce est déjà définie sur le dessin : ce n'est pas une caractéristique d'une pièce dont la cote resterait encore à fixer.",
+      "source": "Notions générales de pratiques de maintenance aéronautique — types d'ajustements"
+    },
+    {
+      "uid": "M7A-0018",
+      "sous_chapitre": "M7A.4",
+      "question": "Dans un ajustement avec serrage (interference fit) :",
+      "options": [
+        "L'alésage est toujours plus grand que l'arbre",
+        "Le jeu ou le serrage obtenu ne dépend que de la température des pièces au moment du montage",
+        "L'arbre est toujours plus grand que l'alésage"
+      ],
+      "bonne": 2,
+      "explication": "Dans un ajustement avec serrage, l'arbre est toujours plus grand que l'alésage : c'est cette relation entre les cotes réelles des deux pièces, fixée par leurs tolérances respectives sur le dessin, qui crée une interférence de matière et une tenue ferme entre elles. C'est l'inverse d'un ajustement avec jeu, où l'alésage est plus grand que l'arbre. La température au moment du montage ne définit pas le type d'ajustement : celui-ci est déterminé par les cotes réelles des pièces une fois revenues à température stable, pas par leur température au moment précis du montage.",
+      "source": "Notions générales de pratiques de maintenance aéronautique — ajustement avec serrage"
+    },
+    {
+      "uid": "M7A-0019",
+      "sous_chapitre": "M7A.4",
+      "question": "Comment vérifie-t-on la conformité d'un ajustement en maintenance ?",
+      "options": [
+        "En comparant la pièce déposée à une pièce neuve conservée en magasin comme référence",
+        "En mesurant les cotes réelles et en les comparant aux tolérances de la documentation applicable",
+        "En vérifiant uniquement que la pièce provient du même lot de fabrication que celle qu'elle remplace"
+      ],
+      "bonne": 1,
+      "explication": "La conformité d'un ajustement se vérifie toujours par une mesure objective des cotes réelles, comparée aux tolérances spécifiées dans la documentation applicable. Comparer à une pièce de référence en magasin ne suffit pas : cette pièce de référence peut elle-même se situer n'importe où dans sa propre plage de tolérance, sans être identique à la pièce déposée. Vérifier seulement le lot de fabrication ne garantit rien non plus : deux pièces d'un même lot restent chacune soumises à la même plage de tolérance, pas à une cote unique identique.",
+      "source": "Notions générales de pratiques de maintenance aéronautique — contrôle des ajustements"
+    },
+    {
+      "uid": "M7A-0020",
+      "sous_chapitre": "M7A.4",
+      "question": "Pourquoi chauffer un logement (ou refroidir la pièce à insérer) facilite-t-il l'assemblage d'un ajustement avec serrage ?",
+      "options": [
+        "Le chauffage modifie définitivement la cote réelle de la pièce",
+        "La dilatation thermique modifie temporairement les cotes, ce qui facilite l'insertion sans effort excessif",
+        "Cette méthode remplace la nécessité de respecter la tolérance prévue par le dessin"
+      ],
+      "bonne": 1,
+      "explication": "La dilatation thermique modifie temporairement les cotes des pièces (le logement chauffé s'agrandit, la pièce refroidie rétrécit), ce qui facilite l'insertion sans effort excessif ; une fois revenues à température ambiante, les pièces retrouvent leurs cotes réelles d'origine et le serrage prévu se rétablit. Le changement de cote n'est donc que temporaire, pas définitif : la pièce ne conserve pas la cote qu'elle avait le temps du chauffage. Et cette méthode ne dispense en rien de respecter la tolérance prévue par le dessin : elle en facilite seulement la mise en œuvre.",
+      "source": "Notions générales de pratiques de maintenance aéronautique — assemblage par dilatation thermique"
+    },
+    {
+      "uid": "M7A-0021",
+      "sous_chapitre": "M7A.5",
+      "question": "Pourquoi un câble aéronautique est-il en général réalisé en brins multiples torsadés plutôt qu'en fil plein massif ?",
+      "options": [
+        "Un fil plein massif est toujours moins cher à produire",
+        "Les brins multiples conduisent mieux le courant qu'un fil plein de même section",
+        "Les brins multiples résistent mieux à la fatigue provoquée par les vibrations répétées"
+      ],
+      "bonne": 2,
+      "explication": "Un câble à brins multiples reste flexible et résiste beaucoup mieux à la fatigue provoquée par les vibrations répétées qu'un conducteur massif, qui finit par se fissurer aux endroits pliés de façon répétée. Le coût comparé des deux constructions et une éventuelle meilleure conductivité ne sont pas la raison de ce choix, qui repose sur la tenue mécanique en service, pas sur la conductivité électrique.",
+      "source": "Notions générales de pratiques de maintenance aéronautique — câblage aéronautique"
+    },
+    {
+      "uid": "M7A-0022",
+      "sous_chapitre": "M7A.5",
+      "question": "En jauge AWG (American Wire Gauge) :",
+      "options": [
+        "Plus le numéro de jauge est petit, plus le conducteur est gros",
+        "Plus le numéro de jauge est grand, plus le conducteur est gros",
+        "Le numéro de jauge n'a aucun lien avec la section du conducteur"
+      ],
+      "bonne": 0,
+      "explication": "En AWG, plus le numéro de jauge est petit, plus le conducteur est gros — une relation inversée qui surprend souvent au premier abord. Affirmer l'inverse (numéro grand = conducteur gros) inverse la relation réelle, et dire que le numéro n'a aucun lien avec la section ignore justement la fonction même de cette désignation normalisée.",
+      "source": "Notions générales de pratiques de maintenance aéronautique — désignation AWG des câbles"
+    },
+    {
+      "uid": "M7A-0023",
+      "sous_chapitre": "M7A.5",
+      "question": "Pourquoi le sertissage (crimping) est-il en général préféré au soudage pour les connexions électriques aéronautiques ?",
+      "options": [
+        "Le sertissage est toujours moins coûteux en outillage que le soudage",
+        "Une cosse sertie tolère mieux les vibrations qu'une soudure, rigide juste à côté d'un câble resté flexible",
+        "Le soudage est interdit dans tous les cas par la réglementation aéronautique"
+      ],
+      "bonne": 1,
+      "explication": "Une cosse correctement sertie forme une liaison mécanique tolérante aux vibrations, alors qu'une soudure est rigide exactement à la frontière avec le câble resté flexible juste à côté, ce qui concentre la contrainte de flexion à cet endroit. Le soudage n'est pas interdit dans tous les cas : certaines applications le prévoient explicitement ; et le coût de l'outillage n'est pas la raison technique de cette préférence.",
+      "source": "Notions générales de pratiques de maintenance aéronautique — sertissage et soudage des connexions"
+    },
+    {
+      "uid": "M7A-0024",
+      "sous_chapitre": "M7A.5",
+      "question": "Lors du contrôle visuel d'un sertissage, un dénudage trop long est problématique car :",
+      "options": [
+        "Il réduit la résistance électrique du conducteur",
+        "Il empêche tout simplement la cosse de se fermer sur le câble",
+        "Du cuivre nu dépasse de la cosse, avec un risque de court-circuit sur un élément voisin"
+      ],
+      "bonne": 2,
+      "explication": "Un dénudage trop long laisse dépasser du cuivre nu hors de la cosse, avec un risque de court-circuit contre un élément voisin dans le faisceau. Ce défaut n'a pas d'effet sur la résistance électrique propre du conducteur, et il n'empêche pas physiquement la cosse de se fermer : le problème est ce qui dépasse à l'extérieur de la cosse, pas la fermeture elle-même.",
+      "source": "Notions générales de pratiques de maintenance aéronautique — contrôle visuel du sertissage"
+    },
+    {
+      "uid": "M7A-0025",
+      "sous_chapitre": "M7A.5",
+      "question": "Pourquoi le code imprimé sur l'isolant d'un câble est-il plus fiable que sa seule couleur pour l'identifier dans un faisceau dense ?",
+      "options": [
+        "Parce que plusieurs câbles d'un même faisceau peuvent partager la même couleur, alors que le code reste unique à ce câble",
+        "Parce que la couleur d'un câble change avec le temps",
+        "Parce que la réglementation interdit l'usage de couleurs sur les câbles aéronautiques"
+      ],
+      "bonne": 0,
+      "explication": "Sur un faisceau qui rassemble un grand nombre de câbles, les couleurs finissent nécessairement par se répéter, alors que le code imprimé reste unique à ce câble précis et permet de le retrouver sans ambiguïté dans le schéma de câblage. La couleur d'un câble ne change pas dans le temps en usage normal, et les couleurs restent bien utilisées sur les câbles aéronautiques : ce n'est pas leur usage qui est en cause, mais leur caractère non unique à grande échelle.",
+      "source": "Notions générales de pratiques de maintenance aéronautique — identification des câbles"
+    }
+  ]
+}
