@@ -10,48 +10,54 @@
 
 <p><strong>Deux familles de compresseurs :</strong> comparez leur principe de fonctionnement.</p>
 
-<div>
-  <button class="m1503b-btn active" data-t="axial">Compresseur axial</button>
-  <button class="m1503b-btn" data-t="centrifuge">Compresseur centrifuge</button>
+<button class="m1503b-btn active" id="m1503b-btn-axial">Compresseur axial</button>
+<button class="m1503b-btn" id="m1503b-btn-centrifuge">Compresseur centrifuge</button>
+
+<div class="m1503b-flow" id="m1503b-flow-axial">
+  <div class="m1503b-box">Air (axe du moteur)</div>
+  <div class="m1503b-arrow">→</div>
+  <div class="m1503b-box">Rotor 1 + Stator 1</div>
+  <div class="m1503b-arrow">→</div>
+  <div class="m1503b-box">Rotor 2 + Stator 2 ...</div>
+</div>
+<div class="m1503b-flow" id="m1503b-flow-centrifuge" style="display:none;">
+  <div class="m1503b-box">Air (entrée axiale)</div>
+  <div class="m1503b-arrow">→</div>
+  <div class="m1503b-box">Rotor tournant (projection radiale, force centrifuge)</div>
+  <div class="m1503b-arrow">→</div>
+  <div class="m1503b-box">Diffuseur (vitesse → pression)</div>
 </div>
 
-<div class="m1503b-flow" id="m1503b-flow"></div>
-
-<div class="m1503b-caption" id="m1503b-caption"></div>
+<div class="m1503b-caption" id="m1503b-caption">Compresseur axial : l'air progresse en ligne droite, dans l'axe du moteur, à travers une succession d'étages rotor/stator, chacun ajoutant sa propre contribution à la pression.</div>
 </div>
 
 <script>
 (function () {
   var wrap = document.getElementById('schema-m1503b-wrap');
   if (!wrap) { return; }
-  var btns = wrap.querySelectorAll('.m1503b-btn');
-  var flow = wrap.querySelector('#m1503b-flow');
+  var btnAxial = wrap.querySelector('#m1503b-btn-axial');
+  var btnCentrifuge = wrap.querySelector('#m1503b-btn-centrifuge');
+  var flowAxial = wrap.querySelector('#m1503b-flow-axial');
+  var flowCentrifuge = wrap.querySelector('#m1503b-flow-centrifuge');
   var caption = wrap.querySelector('#m1503b-caption');
 
-  function renderAxial() {
-    flow.innerHTML =
-      '<div class="m1503b-box">Air (axe du moteur)</div><div class="m1503b-arrow">→</div>' +
-      '<div class="m1503b-box">Rotor 1 + Stator 1</div><div class="m1503b-arrow">→</div>' +
-      '<div class="m1503b-box">Rotor 2 + Stator 2 ...</div>';
+  function showAxial() {
+    btnAxial.className = 'm1503b-btn active';
+    btnCentrifuge.className = 'm1503b-btn';
+    flowAxial.style.display = 'flex';
+    flowCentrifuge.style.display = 'none';
     caption.textContent = "Compresseur axial : l'air progresse en ligne droite, dans l'axe du moteur, à travers une succession d'étages rotor/stator, chacun ajoutant sa propre contribution à la pression.";
   }
 
-  function renderCentrifuge() {
-    flow.innerHTML =
-      '<div class="m1503b-box">Air (entrée axiale)</div><div class="m1503b-arrow">→</div>' +
-      '<div class="m1503b-box">Rotor tournant (projection radiale, force centrifuge)</div><div class="m1503b-arrow">→</div>' +
-      '<div class="m1503b-box">Diffuseur (vitesse → pression)</div>';
+  function showCentrifuge() {
+    btnAxial.className = 'm1503b-btn';
+    btnCentrifuge.className = 'm1503b-btn active';
+    flowAxial.style.display = 'none';
+    flowCentrifuge.style.display = 'flex';
     caption.textContent = "Compresseur centrifuge : un disque tournant (rotor, ou « rouet ») projette l'air vers l'extérieur par force centrifuge ; un diffuseur qui l'entoure ralentit ensuite cet air, convertissant sa vitesse en pression.";
   }
 
-  btns.forEach(function (b) {
-    b.addEventListener('click', function () {
-      btns.forEach(function (x) { x.classList.remove('active'); });
-      b.classList.add('active');
-      if (b.getAttribute('data-t') === 'axial') { renderAxial(); } else { renderCentrifuge(); }
-    });
-  });
-
-  renderAxial();
+  btnAxial.addEventListener('click', showAxial);
+  btnCentrifuge.addEventListener('click', showCentrifuge);
 })();
 </script>

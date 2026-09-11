@@ -1,0 +1,59 @@
+<div id="schema-m1507-wrap" style="font-family: inherit; max-width: 660px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1507-wrap .m1507-box { padding:8px 6px; border-radius:6px; border:1.5px solid #999; background:#f7f7f7; font-size:0.7em; text-align:center; cursor:pointer; transition: all 0.15s; }
+#schema-m1507-wrap .m1507-box.active { font-weight:bold; box-shadow: 0 0 0 2px rgba(0,0,0,0.18) inset; background:rgba(224,168,0,0.18); border-color:#e0a800; }
+#schema-m1507-wrap .m1507-flow { display:flex; align-items:center; gap:4px; margin-top:14px; flex-wrap:wrap; }
+#schema-m1507-wrap .m1507-arrow { font-size:1em; color:#888; }
+#schema-m1507-wrap .m1507-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5em; }
+</style>
+
+<p><strong>Le circuit d'huile en boucle fermée :</strong> clique sur chaque étape pour comprendre son rôle.</p>
+
+<div class="m1507-flow">
+  <div class="m1507-box" data-z="reservoir">Réservoir</div>
+  <div class="m1507-arrow">→</div>
+  <div class="m1507-box" data-z="pompe-pression">Pompe de pression</div>
+  <div class="m1507-arrow">→</div>
+  <div class="m1507-box" data-z="filtre">Filtre</div>
+  <div class="m1507-arrow">→</div>
+  <div class="m1507-box" data-z="palier">Palier</div>
+  <div class="m1507-arrow">→</div>
+  <div class="m1507-box" data-z="pompe-retour">Pompe de retour</div>
+  <div class="m1507-arrow">→</div>
+  <div class="m1507-box" data-z="detecteur">Détecteur de particules</div>
+  <div class="m1507-arrow">→</div>
+  <div class="m1507-box" data-z="radiateur">Radiateur</div>
+  <div class="m1507-arrow">→</div>
+  <div class="m1507-box" data-z="reservoir2">Réservoir</div>
+</div>
+
+<div class="m1507-caption" id="m1507-caption">Clique sur une étape du circuit pour voir son rôle précis.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1507-wrap');
+  if (!wrap) { return; }
+  var boxes = wrap.querySelectorAll('.m1507-box');
+  var caption = wrap.querySelector('#m1507-caption');
+
+  var textes = {
+    reservoir: "Réservoir : point de départ du circuit, d'où l'huile est aspirée par la pompe de pression.",
+    'pompe-pression': "Pompe de pression : entraînée mécaniquement par un arbre du moteur, elle envoie l'huile vers les paliers à lubrifier et à refroidir.",
+    filtre: "Filtre : retient les impuretés fines qui pourraient sinon obstruer les canaux étroits menant aux paliers ou endommager leurs surfaces par abrasion.",
+    palier: "Palier : l'huile y forme un film qui sépare les pièces en mouvement (lubrification) tout en absorbant la chaleur dégagée par leur frottement (refroidissement).",
+    'pompe-retour': "Pompe de retour : récupère l'huile après son passage dans les paliers et la ramène vers le réservoir, en passant par le détecteur de particules puis le radiateur.",
+    detecteur: "Détecteur de particules métalliques (« chip detector ») : capture les minuscules particules libérées par l'usure normale des paliers, permettant de repérer une usure anormale lors de son inspection périodique.",
+    radiateur: "Radiateur : refroidit l'huile réchauffée par son passage dans les paliers, avant qu'elle ne retourne au réservoir pour recommencer ce trajet.",
+    reservoir2: "Retour au réservoir : le circuit est fermé — la même huile recommence indéfiniment ce trajet tant que le moteur fonctionne."
+  };
+
+  boxes.forEach(function (b) {
+    b.addEventListener('click', function () {
+      boxes.forEach(function (x) { x.classList.remove('active'); });
+      b.classList.add('active');
+      caption.textContent = textes[b.getAttribute('data-z')];
+    });
+  });
+})();
+</script>

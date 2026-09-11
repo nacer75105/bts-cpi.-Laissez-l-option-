@@ -1,0 +1,50 @@
+<div id="schema-m1508b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1508b-wrap .m1508b-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.9em; }
+#schema-m1508b-wrap .m1508b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1508b-wrap .m1508b-tank { margin-top:16px; height:90px; border:2px solid #888; border-radius:4px; position:relative; overflow:hidden; background:#f7f7f7; }
+#schema-m1508b-wrap .m1508b-fuel { position:absolute; left:0; right:0; bottom:0; height:70px; background:#e8c26a; }
+#schema-m1508b-wrap .m1508b-water { position:absolute; left:0; right:0; bottom:0; height:0; background:#7fa8d9; transition: height 0.3s; }
+#schema-m1508b-wrap .m1508b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>L'eau dans le carburant :</strong> compare un réservoir propre à un réservoir contenant de l'eau condensée.</p>
+
+<button class="m1508b-btn active" id="m1508b-btn-propre">Carburant propre</button>
+<button class="m1508b-btn" id="m1508b-btn-eau">Eau condensée présente</button>
+
+<div class="m1508b-tank">
+  <div class="m1508b-fuel"></div>
+  <div class="m1508b-water" id="m1508b-water"></div>
+</div>
+
+<div class="m1508b-caption" id="m1508b-caption">Carburant propre : aucune eau significative n'est présente au point bas du réservoir.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1508b-wrap');
+  if (!wrap) { return; }
+  var btnPropre = wrap.querySelector('#m1508b-btn-propre');
+  var btnEau = wrap.querySelector('#m1508b-btn-eau');
+  var water = wrap.querySelector('#m1508b-water');
+  var caption = wrap.querySelector('#m1508b-caption');
+
+  function showPropre() {
+    btnPropre.className = 'm1508b-btn active';
+    btnEau.className = 'm1508b-btn';
+    water.style.height = '0px';
+    caption.textContent = "Carburant propre : aucune eau significative n'est présente au point bas du réservoir.";
+  }
+
+  function showEau() {
+    btnPropre.className = 'm1508b-btn';
+    btnEau.className = 'm1508b-btn active';
+    water.style.height = '14px';
+    caption.textContent = "Eau condensée présente : plus dense que le carburant, elle se dépose au fond du réservoir. Par temps froid, elle peut geler et obstruer localement un filtre ou une canalisation — d'où l'intérêt des purges périodiques des points bas et du réchauffeur de carburant.";
+  }
+
+  btnPropre.addEventListener('click', showPropre);
+  btnEau.addEventListener('click', showEau);
+})();
+</script>

@@ -572,6 +572,578 @@
       "bonne": 1,
       "explication": "Chaque étage prélève une partie de l'énergie disponible dans les gaz, ce qui permet de prélever au total l'énergie nécessaire pour entraîner le ou les compresseurs sans tout prélever d'un coup sur un seul étage — une logique similaire à celle des étages de compression (M15.3). Ce n'est pas un choix esthétique, et ajouter des étages ne réduit pas l'énergie totale prélevée : cela permet au contraire de la répartir efficacement.",
       "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0045",
+      "sous_chapitre": "M15.6",
+      "question": "Pourquoi un conduit convergent (qui se rétrécit) accélère-t-il un écoulement d'air subsonique ?",
+      "options": [
+        "Le débit doit rester le même à l'entrée et à la sortie ; pour passer par une section plus petite, l'air doit aller plus vite",
+        "Le conduit convergent freine l'air en le comprimant contre ses parois, ce qui le ralentit avant de l'accélérer",
+        "L'air accélère uniquement parce que la température y diminue fortement, indépendamment de la forme du conduit"
+      ],
+      "bonne": 0,
+      "explication": "Le débit d'air traversant la tuyère est le même à l'entrée et à la sortie ; si la section diminue, l'air doit nécessairement aller plus vite pour que ce même débit passe par une section plus petite — comme un cours d'eau qui accélère en traversant un passage resserré. Le conduit ne freine pas l'air avant de l'accélérer, il l'accélère directement. La température des gaz diminue bien elle aussi en traversant la tuyère, mais cette baisse de température est une conséquence de l'accélération (au même titre que la baisse de pression), pas sa cause : c'est la réduction de section qui impose l'accélération, pas l'inverse.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0046",
+      "sous_chapitre": "M15.6",
+      "question": "Pour un même débit de gaz, qu'arriverait-il à l'accélération obtenue si la section de sortie de la tuyère était anormalement élargie par une déformation ?",
+      "options": [
+        "L'accélération obtenue serait au contraire plus forte, une section de sortie plus large accélérant toujours davantage les gaz",
+        "L'accélération obtenue serait moindre, puisque le rétrécissement entre l'entrée et cette section de sortie serait moins marqué",
+        "La déformation n'aurait aucune conséquence sur l'accélération, seule la section d'entrée de la tuyère compte réellement"
+      ],
+      "bonne": 1,
+      "explication": "L'accélération d'un écoulement subsonique dans un conduit convergent dépend du rapport entre la section d'entrée et la section de sortie : si la section de sortie s'élargit anormalement, le rétrécissement global est moins marqué, et l'accélération obtenue est donc moindre pour un même débit — pas plus forte. La section de sortie compte donc autant que celle d'entrée, ce n'est pas cette dernière seule qui détermine l'accélération.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0047",
+      "sous_chapitre": "M15.6",
+      "question": "En quoi le fonctionnement de la tuyère est-il l'inverse de celui du diffuseur de l'entrée d'air (rappel M15.2) ?",
+      "options": [
+        "Il n'existe en réalité aucune différence de principe entre les deux organes, seule leur position dans le moteur diffère",
+        "Le diffuseur accélère l'air alors que la tuyère le ralentit, les deux organes ayant des formes identiques mais des rôles opposés",
+        "Le diffuseur (conduit qui s'élargit) ralentit l'air subsonique et augmente sa pression ; la tuyère (conduit qui se rétrécit) l'accélère et diminue sa pression"
+      ],
+      "bonne": 2,
+      "explication": "Le diffuseur, qui s'élargit progressivement, ralentit un écoulement subsonique et augmente sa pression (rappel M15.2) ; la tuyère, qui se rétrécit, produit l'effet inverse : elle accélère l'écoulement et diminue sa pression. Ce n'est donc pas le diffuseur qui accélère et la tuyère qui ralentit (c'est l'inverse), et les deux organes ont des formes opposées (l'un s'élargit, l'autre se rétrécit), pas identiques.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0048",
+      "sous_chapitre": "M15.6",
+      "question": "Pourquoi l'état de surface et la forme précise de la tuyère sont-ils surveillés lors de l'entretien ?",
+      "options": [
+        "Une paroi endommagée ou encrassée peut perturber l'écoulement final et réduire la poussée obtenue pour une même quantité de carburant brûlé",
+        "La tuyère n'a aucune influence sur la poussée, seule la turbine juste en amont détermine la poussée finale",
+        "Un endommagement de la tuyère ne peut avoir aucune conséquence tant que le moteur continue de démarrer normalement"
+      ],
+      "bonne": 0,
+      "explication": "La forme précise et l'état de surface de la tuyère conditionnent directement l'efficacité avec laquelle l'énergie résiduelle des gaz est convertie en poussée ; une paroi endommagée ou encrassée peut perturber cet écoulement final et réduire la poussée pour une même quantité de carburant brûlé. La tuyère a donc bien une influence propre sur la poussée, indépendamment de la turbine ; et cette influence existe même si le moteur démarre normalement par ailleurs, un problème de tuyère n'empêchant pas nécessairement le démarrage.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0049",
+      "sous_chapitre": "M15.6",
+      "question": "Quelle énergie précisément est convertie en poussée lors du passage des gaz dans la tuyère ?",
+      "options": [
+        "L'énergie chimique restant dans le carburant non encore brûlé, qui continue de se consumer à l'intérieur même de la tuyère",
+        "L'énergie de pression en excès des gaz par rapport à l'air extérieur, convertie en énergie de vitesse à mesure qu'ils accélèrent",
+        "L'énergie cinétique de rotation de la turbine, transmise directement aux gaz par contact mécanique dans la tuyère"
+      ],
+      "bonne": 1,
+      "explication": "C'est l'énergie de pression des gaz, encore en excès par rapport à l'air extérieur en sortie de turbine, qui se convertit progressivement en énergie de vitesse à travers la tuyère — cette accélération finale produit la poussée, selon le principe de réaction déjà vu en M15.1. Il ne reste normalement plus de carburant non brûlé à ce stade (la combustion est achevée bien avant la tuyère, rappel M15.4) ; et la tuyère, dépourvue de toute pièce mobile, n'entraîne aucun contact mécanique avec la turbine, qui se trouve d'ailleurs déjà en amont d'elle.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0050",
+      "sous_chapitre": "M15.6",
+      "question": "Qu'est-ce qui distingue une tuyère convergente-divergente d'une tuyère simplement convergente ?",
+      "options": [
+        "La convergente-divergente est réservée exclusivement aux moteurs sans aucune turbine, ce qui exclut d'emblée les turboréacteurs décrits dans ce module",
+        "La convergente-divergente ne fait que ralentir les gaz, contrairement à la tuyère simplement convergente qui les accélère",
+        "La convergente-divergente associe une section qui se rétrécit puis une section qui s'élargit, adaptée aux écoulements atteignant la vitesse du son"
+      ],
+      "bonne": 2,
+      "explication": "La tuyère convergente-divergente associe une section qui se rétrécit puis une section qui s'élargit, car au-delà de la vitesse du son, c'est une section qui s'élargit (et non qui se rétrécit) qui continue à accélérer l'écoulement — l'inverse du principe subsonique. Elle ne se contente donc pas de ralentir les gaz (elle les accélère, comme la tuyère simplement convergente, mais au-delà d'une vitesse plus élevée) ; et elle équipe justement des turboréacteurs comme ceux décrits dans ce module, sur les installations conçues pour des vitesses très élevées — elle n'est pas réservée à des moteurs sans turbine.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0051",
+      "sous_chapitre": "M15.6",
+      "question": "Au-delà de la production de poussée, quel autre rôle la conception de la tuyère peut-elle jouer ?",
+      "options": [
+        "Elle peut participer à la maîtrise du bruit et de la signature thermique du jet, via des formes favorisant un mélange plus progressif avec l'air ambiant",
+        "Elle sert exclusivement à refroidir l'huile du moteur avant son retour au réservoir",
+        "Elle n'a strictement aucun autre rôle que la production de poussée, quelle que soit sa conception"
+      ],
+      "bonne": 0,
+      "explication": "Certaines tuyères intègrent des formes particulières (bords découpés, mélangeurs) destinées à favoriser un mélange plus progressif des gaz chauds avec l'air ambiant, ce qui influence le bruit et la signature thermique du jet. Le refroidissement de l'huile est assuré par un radiateur dédié au circuit d'huile (fiche M15.7), pas par la tuyère ; et la tuyère peut donc bien avoir un rôle au-delà de la seule production de poussée.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0052",
+      "sous_chapitre": "M15.6",
+      "question": "Sur un turboréacteur à double flux (turbofan), que devient l'air qui ne traverse jamais le cœur du moteur ?",
+      "options": [
+        "Il est systématiquement réinjecté dans le compresseur pour y être comprimé une seconde fois",
+        "Il est directement accéléré par la soufflante puis rejeté par une tuyère qui lui est propre, distincte de celle des gaz chauds",
+        "Il n'existe en réalité aucun air qui échapperait au cœur du moteur sur ce type d'installation"
+      ],
+      "bonne": 1,
+      "explication": "Sur un turbofan, une partie de l'air est directement accélérée par la soufflante et rejetée par une tuyère qui lui est propre, sans jamais traverser le compresseur, la chambre de combustion ni la turbine. Cet air n'est donc pas réinjecté dans le compresseur (il l'évite justement) ; et son existence est précisément ce qui caractérise un turbofan, par opposition au cycle simple décrit dans ce module.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0053",
+      "sous_chapitre": "M15.6",
+      "question": "Dans le trajet complet d'une particule d'air à travers le moteur, quel est le tout dernier organe qu'elle traverse ?",
+      "options": [
+        "La chambre de combustion, la turbine et la tuyère ne faisant que réchauffer l'air sans le faire progresser plus loin",
+        "Le compresseur, qui est toujours le dernier organe traversé quel que soit le type de turboréacteur",
+        "La tuyère d'échappement, après avoir traversé le compresseur, la chambre de combustion et la turbine"
+      ],
+      "bonne": 2,
+      "explication": "Le trajet complet, déjà résumé en fiche M15.1 et repris ici, se termine par la tuyère d'échappement, après le compresseur, la chambre de combustion et la turbine. Le compresseur est au contraire l'un des tout premiers organes traversés, pas le dernier ; et la turbine ainsi que la tuyère font bien progresser l'air (elles ne se contentent pas de le réchauffer sur place), la tuyère achevant ce trajet par l'accélération finale des gaz.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0054",
+      "sous_chapitre": "M15.7",
+      "question": "Quels sont les trois rôles que joue simultanément l'huile d'un turboréacteur ?",
+      "options": [
+        "Lubrification, refroidissement, protection contre la corrosion",
+        "Lubrification, combustion, refroidissement",
+        "Refroidissement, filtration du carburant, allumage"
+      ],
+      "bonne": 0,
+      "explication": "L'huile d'un turboréacteur remplit systématiquement trois rôles à la fois : elle lubrifie les paliers, les refroidit en absorbant la chaleur qu'ils dégagent, et protège les pièces métalliques contre la corrosion. Elle n'entre en contact avec aucune combustion dans un turboréacteur (contrairement à un moteur à pistons), et elle ne joue aucun rôle dans la filtration du carburant, un système distinct détaillé en fiche M15.8.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0055",
+      "sous_chapitre": "M15.7",
+      "question": "Pourquoi les paliers des arbres d'un turboréacteur nécessitent-ils une lubrification particulièrement soignée ?",
+      "options": [
+        "Ils ne nécessitent en réalité aucune lubrification particulière, un simple film d'huile appliqué une fois suffit pour toute la durée de vie du moteur",
+        "Ils tournent à des régimes très élevés, et le moindre défaut de lubrification peut, en quelques secondes, provoquer un échauffement sévère et un endommagement",
+        "Ils sont directement exposés aux gaz de combustion, ce qui impose une lubrification renforcée contre la chaleur de la flamme"
+      ],
+      "bonne": 1,
+      "explication": "Les arbres tournent à des régimes très élevés (rappel M15.3 et M15.5), et le moindre défaut de lubrification à un tel régime peut rapidement provoquer un échauffement local sévère et endommager le palier concerné — d'où un circuit d'huile continuellement surveillé plutôt qu'un simple remplissage occasionnel. Les paliers ne sont pas directement exposés aux gaz de combustion : ce sont les aubes de turbine (fiche M15.5) qui le sont, pas les paliers eux-mêmes.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0056",
+      "sous_chapitre": "M15.7",
+      "question": "Pourquoi les pompes de retour du circuit d'huile ont-elles volontairement une capacité supérieure à celle de la pompe de pression ?",
+      "options": [
+        "Pour empêcher toute circulation d'huile tant que le moteur n'a pas atteint son régime de croisière",
+        "Pour augmenter artificiellement la température de l'huile avant son passage dans le radiateur",
+        "Pour évacuer en continu le mélange d'huile et d'air présent dans chaque enceinte de palier, sans jamais laisser l'huile s'y accumuler"
+      ],
+      "bonne": 2,
+      "explication": "Chaque enceinte de palier contient, en fonctionnement, un mélange d'huile et d'air ; une pompe de retour surdimensionnée garantit que ce mélange est évacué en continu, sans jamais laisser l'huile s'accumuler dans l'enceinte. Cette surcapacité n'a pas pour but d'augmenter la température de l'huile (le radiateur sert au contraire à la refroidir), et elle n'empêche pas la circulation d'huile, qui doit au contraire être continue dès que le moteur tourne, quel que soit son régime.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0057",
+      "sous_chapitre": "M15.7",
+      "question": "À quoi sert le détecteur de particules métalliques (« chip detector ») placé sur le circuit d'huile ?",
+      "options": [
+        "Il capture les minuscules particules métalliques libérées par l'usure normale des paliers, permettant de repérer une usure anormale lors de son inspection périodique",
+        "Il mesure en continu la température exacte de l'huile et coupe automatiquement le moteur en cas d'anomalie",
+        "Il sert uniquement à filtrer les impuretés présentes dès le remplissage initial du réservoir d'huile"
+      ],
+      "bonne": 0,
+      "explication": "Le détecteur de particules métalliques capture les minuscules particules libérées par l'usure normale des paliers ; son inspection périodique lors de l'entretien programmé permet de repérer une usure anormale d'un palier avant qu'elle ne devienne un problème visible autrement. Il ne mesure pas la température (ce rôle revient à des capteurs dédiés, indications reprises en fiche M15.11) et ne se limite pas au remplissage initial : il agit en continu pendant toute la vie du circuit.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0058",
+      "sous_chapitre": "M15.7",
+      "question": "Que peut indiquer une pression d'huile anormalement basse ?",
+      "options": [
+        "Que le moteur fonctionne à un régime de croisière parfaitement stable, sans aucune anomalie",
+        "Que les paliers pourraient ne plus être correctement lubrifiés",
+        "Que le réservoir d'huile est au contraire rempli au-delà de sa capacité normale"
+      ],
+      "bonne": 1,
+      "explication": "Une pression d'huile anormalement basse signale que les paliers pourraient ne plus être correctement lubrifiés — un signe pris très au sérieux, sans qu'il soit nécessaire ici de préciser de valeur de seuil, propre à chaque moteur et définie par son constructeur. Ce n'est donc pas un signe de fonctionnement normal, et elle n'indique pas un remplissage excessif : un excès de remplissage ne se traduirait pas par une baisse de pression de cette façon.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0059",
+      "sous_chapitre": "M15.7",
+      "question": "Pourquoi l'huile est-elle filtrée en plus d'être simplement mise en circulation ?",
+      "options": [
+        "Le filtrage de l'huile n'a en réalité aucune utilité, seule la circulation compte pour la lubrification",
+        "Pour empêcher toute variation de température de l'huile au cours de son trajet dans le circuit",
+        "Pour retenir les impuretés fines susceptibles d'obstruer les canaux étroits menant aux paliers ou d'endommager leurs surfaces par abrasion"
+      ],
+      "bonne": 2,
+      "explication": "Le filtre retient les impuretés fines qui pourraient sinon obstruer les canaux étroits menant aux paliers ou endommager leurs surfaces par abrasion — une huile propre est une condition de fonctionnement aussi importante que sa seule présence en quantité suffisante. Le filtre ne contrôle pas la température (rôle du radiateur) ; et le filtrage a bien une utilité réelle, au-delà de la seule circulation.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0060",
+      "sous_chapitre": "M15.7",
+      "question": "Dans le trajet de l'huile en circuit fermé, que se passe-t-il juste après son passage dans un palier fortement sollicité ?",
+      "options": [
+        "Elle est récupérée par une pompe de retour, traverse le détecteur de particules métalliques, puis un radiateur, avant de rejoindre le réservoir",
+        "Elle est immédiatement rejetée hors du circuit, un nouveau volume d'huile étant utilisé pour chaque palier suivant",
+        "Elle retourne directement à la pompe de pression sans passer par aucun autre organe intermédiaire"
+      ],
+      "bonne": 0,
+      "explication": "Après avoir traversé un palier, l'huile est récupérée par une pompe de retour, traverse le détecteur de particules métalliques, puis un radiateur qui la refroidit, avant de rejoindre le réservoir pour recommencer ce trajet — un circuit fermé, pas un usage unique. Elle n'est donc pas rejetée hors du circuit à chaque passage, et elle ne retourne pas directement à la pompe de pression sans étape intermédiaire.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0061",
+      "sous_chapitre": "M15.7",
+      "question": "En quoi le rôle de refroidissement de l'huile dans un turboréacteur diffère-t-il de son rôle dans un moteur à pistons ?",
+      "options": [
+        "L'huile ne joue aucun rôle de refroidissement dans un turboréacteur, à la différence d'un moteur à pistons",
+        "Dans les deux cas l'huile refroidit des pièces en mouvement, mais dans le turboréacteur elle n'entre en contact avec aucune combustion, contrairement au moteur à pistons",
+        "L'huile d'un turboréacteur refroidit exclusivement le carburant, jamais les paliers eux-mêmes"
+      ],
+      "bonne": 1,
+      "explication": "Dans les deux types de moteurs, l'huile refroidit des pièces en mouvement (paliers dans le turboréacteur), mais dans un turboréacteur elle n'entre en contact avec aucune combustion, contrairement à un moteur à pistons où l'huile lubrifie des pièces directement exposées aux gaz de combustion. L'huile joue donc bien un rôle de refroidissement dans un turboréacteur (ce n'est pas absent), et son rôle principal reste le refroidissement des paliers, pas du carburant (même si un échange de chaleur avec le carburant existe par ailleurs, détaillé en fiche M15.8).",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0062",
+      "sous_chapitre": "M15.7",
+      "question": "Quel organe entraîne la circulation de l'huile dans le circuit ?",
+      "options": [
+        "Un dispositif entièrement indépendant du moteur, alimenté par une source d'air extérieure",
+        "La seule différence de température entre le réservoir et les paliers, sans aucune pompe",
+        "Une pompe reliée mécaniquement à l'un des arbres du moteur"
+      ],
+      "bonne": 2,
+      "explication": "L'huile circule en boucle fermée grâce à une pompe entraînée mécaniquement par l'un des arbres du moteur. La circulation ne résulte donc pas d'une simple différence de température sans pompe, et le dispositif n'est pas indépendant du moteur : sa pompe est au contraire directement entraînée par lui.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0063",
+      "sous_chapitre": "M15.8",
+      "question": "Dans quel ordre le carburant traverse-t-il les organes principaux du circuit, du réservoir jusqu'aux injecteurs ?",
+      "options": [
+        "Pompe basse pression, filtre(s), pompe haute pression, injecteurs",
+        "Injecteurs, pompe haute pression, filtre, pompe basse pression",
+        "Pompe haute pression directement suivie des injecteurs, sans aucune filtration ni pompe basse pression"
+      ],
+      "bonne": 0,
+      "explication": "Le trajet suit cet ordre : une pompe basse pression aspire le carburant du réservoir, il traverse ensuite un ou plusieurs filtres, puis une pompe haute pression l'amène à la pression nécessaire pour être pulvérisé par les injecteurs. L'ordre inverse n'a pas de sens physique (les injecteurs sont la toute dernière étape) ; et la filtration ainsi que la pompe basse pression sont des étapes réelles, pas absentes du circuit.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0064",
+      "sous_chapitre": "M15.8",
+      "question": "Pourquoi la pompe basse pression met-elle le carburant en pression avant qu'il n'atteigne la pompe haute pression ?",
+      "options": [
+        "Pour refroidir directement le carburant avant son passage dans la chambre de combustion",
+        "Pour éviter la formation de bulles de vapeur en cours de route, qui interromprait localement l'écoulement",
+        "Parce que la pompe haute pression ne peut fonctionner que si le carburant lui arrive déjà à une température élevée"
+      ],
+      "bonne": 1,
+      "explication": "La pompe basse pression met le carburant en pression suffisante pour éviter la formation de bulles de vapeur en cours de route, un phénomène qui interromprait localement l'écoulement. Elle ne refroidit pas le carburant (c'est un rôle propre au réchauffeur/échangeur évoqué plus loin dans la fiche, dans l'autre sens d'ailleurs) ; et la pompe haute pression ne dépend pas d'une température élevée en entrée, mais d'une pression suffisante.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0065",
+      "sous_chapitre": "M15.8",
+      "question": "D'où provient le plus souvent l'eau qui peut se retrouver dans le carburant des réservoirs ?",
+      "options": [
+        "D'une réaction chimique entre le carburant et l'aluminium du réservoir, qui produirait de l'eau en continu",
+        "D'une quantité d'eau introduite avec le carburant lors du ravitaillement, malgré la filtration effectuée par le camion-citerne",
+        "De la condensation de l'air humide contenu dans un réservoir partiellement vide, lorsque la température varie"
+      ],
+      "bonne": 2,
+      "explication": "L'eau provient le plus souvent de la condensation de l'air humide contenu dans un réservoir partiellement vide, lorsque la température varie — un phénomène comparable à la buée qui se forme sur un verre froid. Une trace d'eau introduite lors du ravitaillement reste possible malgré la filtration, mais la condensation en vol, répétée à chaque cycle de température, en est la source la plus courante et la plus régulière ; et il n'existe aucune réaction chimique de ce type entre le carburant et le réservoir qui produirait de l'eau.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0066",
+      "sous_chapitre": "M15.8",
+      "question": "Pourquoi l'eau présente dans le carburant est-elle un danger particulier par temps froid ?",
+      "options": [
+        "Elle peut geler et former des cristaux de glace susceptibles d'obstruer localement un filtre ou une canalisation",
+        "Elle réagit chimiquement avec le carburant pour former un gaz explosif dès que la température descend sous zéro",
+        "Elle n'est dangereuse qu'en cas de température élevée, jamais par temps froid"
+      ],
+      "bonne": 0,
+      "explication": "Par temps froid, l'eau présente dans le carburant peut geler et former des cristaux de glace susceptibles d'obstruer localement un filtre ou une canalisation — d'où l'intérêt d'un réchauffeur de carburant et de purges périodiques des points bas des réservoirs. Il n'y a pas de réaction chimique formant un gaz explosif dans ce contexte, et le danger de l'eau dans le carburant est précisément lié au froid, pas à la chaleur.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0067",
+      "sous_chapitre": "M15.8",
+      "question": "Comment le réchauffeur de carburant est-il souvent alimenté en chaleur ?",
+      "options": [
+        "Par une résistance électrique dédiée, sans aucun lien avec les autres systèmes du moteur",
+        "Par un échange avec le circuit d'huile, ce qui refroidit l'huile en même temps que cela réchauffe le carburant",
+        "Par la chaleur directement prélevée dans la chambre de combustion, court-circuitant la turbine"
+      ],
+      "bonne": 1,
+      "explication": "Le réchauffeur de carburant est souvent alimenté par la chaleur du circuit d'huile (rappel M15.7), un échange qui profite aux deux systèmes à la fois : le carburant est réchauffé pendant que l'huile est refroidie. Ce n'est donc pas systématiquement une résistance électrique isolée, et la chaleur ne provient pas directement de la chambre de combustion en court-circuitant la turbine, ce qui n'aurait pas de sens pratique pour ce réchauffage.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0068",
+      "sous_chapitre": "M15.8",
+      "question": "Pourquoi le carburant doit-il être pulvérisé en un brouillard très fin par les injecteurs ?",
+      "options": [
+        "La taille des gouttelettes de carburant n'a en réalité aucune influence sur la qualité de la combustion",
+        "Une pulvérisation fine permet uniquement de réduire le bruit du moteur, sans aucun effet sur la combustion elle-même",
+        "Plus les gouttelettes sont petites, plus leur surface de contact avec l'air comprimé est grande par rapport à leur volume, ce qui favorise une combustion rapide et complète"
+      ],
+      "bonne": 2,
+      "explication": "Plus les gouttelettes de carburant sont petites, plus leur surface de contact avec l'air comprimé environnant est grande par rapport à leur volume, ce qui favorise une combustion rapide et complète — comme un morceau de bois qui brûle plus facilement fendu en éclats qu'en bûche compacte. La pulvérisation fine n'est donc pas seulement une question de bruit (rôle plutôt associé à la tuyère, M15.6), et la taille des gouttelettes a au contraire une influence directe sur la qualité de la combustion.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0069",
+      "sous_chapitre": "M15.8",
+      "question": "Qu'est-ce qui détermine, à chaque instant, le débit de carburant réellement délivré aux injecteurs ?",
+      "options": [
+        "Le système de régulation du moteur, qui ajuste ce débit en continu",
+        "Un débit fixe, identique quelle que soit la poussée demandée ou les conditions de vol",
+        "Uniquement la capacité du réservoir restant, sans aucun autre facteur pris en compte"
+      ],
+      "bonne": 0,
+      "explication": "Le débit de carburant délivré aux injecteurs est en permanence ajusté par le système de régulation du moteur, selon la poussée demandée et les conditions du moment — thème détaillé en fiche M15.10. Ce n'est donc pas un débit fixe, et la capacité du réservoir restant ne détermine pas le débit instantané, qui dépend de la demande de poussée et des conditions, pas de la quantité de carburant encore disponible.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0070",
+      "sous_chapitre": "M15.8",
+      "question": "Au-delà de sa combustion, quel autre usage le carburant peut-il avoir sur de nombreuses installations ?",
+      "options": [
+        "Remplacer entièrement l'huile pour la lubrification des paliers, rendant le circuit d'huile inutile",
+        "Circuler à travers des échangeurs de chaleur comme fluide de refroidissement pour d'autres circuits du moteur, avant d'être brûlé",
+        "Servir uniquement de lest pour équilibrer l'avion, sans aucun lien avec le fonctionnement du moteur"
+      ],
+      "bonne": 1,
+      "explication": "Le carburant circule souvent à travers des échangeurs de chaleur qui l'utilisent comme fluide de refroidissement pour d'autres circuits du moteur (comme le réchauffeur alimenté par l'huile), avant d'être lui-même injecté et brûlé. Il ne remplace pas l'huile pour la lubrification (deux circuits distincts et nécessaires, M15.7) ; et son usage dépasse largement le simple rôle de lest, sans rapport avec le fonctionnement du moteur.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0071",
+      "sous_chapitre": "M15.8",
+      "question": "Pourquoi filtre-t-on le carburant alors qu'il est censé être conforme aux spécifications dès le ravitaillement ?",
+      "options": [
+        "Le carburant conforme aux spécifications ne nécessite jamais aucune filtration, cette étape ne concerne que l'huile",
+        "La filtration ne sert en réalité qu'à retirer l'excès de carburant avant son entrée dans le réservoir",
+        "Même un carburant conforme peut contenir des impuretés microscopiques susceptibles d'obstruer les orifices très fins des injecteurs"
+      ],
+      "bonne": 2,
+      "explication": "Même un carburant conforme aux spécifications peut contenir des impuretés microscopiques qui, sans filtration, risqueraient d'obstruer les orifices très fins des injecteurs — un principe similaire à celui déjà vu pour l'huile (M15.7), où la propreté du fluide compte autant que sa seule présence. La filtration ne retire pas un « excès » de carburant (notion sans rapport avec son rôle), et elle concerne bien le carburant, pas uniquement l'huile.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0072",
+      "sous_chapitre": "M15.9",
+      "question": "Qu'est-ce qui met en rotation le compresseur au tout début du démarrage, avant que la combustion ne s'établisse ?",
+      "options": [
+        "Un dispositif de démarrage externe (le plus souvent pneumatique), avant que la combustion ne prenne le relais",
+        "Le compresseur démarre seul, entraîné directement par la seule admission d'air ambiant sans aucun dispositif externe",
+        "La turbine, qui fonctionne dès l'instant initial indépendamment de toute source d'énergie extérieure"
+      ],
+      "bonne": 0,
+      "explication": "Avant que le moteur ne tourne de lui-même, rien ne peut entraîner le compresseur sauf une source d'énergie extérieure : un dispositif de démarrage externe (le plus souvent pneumatique, parfois électrique) le met en rotation, jusqu'à ce que la combustion, une fois établie, prenne le relais via la turbine. Le compresseur ne démarre donc pas seul par la simple admission d'air, et la turbine elle-même ne peut rien fournir tant qu'aucun gaz chaud ne la traverse, ce qui suppose que la combustion ait déjà commencé.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0073",
+      "sous_chapitre": "M15.9",
+      "question": "Quelle est la cause technique d'un démarrage chaud (« hot start ») ?",
+      "options": [
+        "Une quantité d'air excessive par rapport au carburant, ce qui refroidit anormalement la chambre de combustion",
+        "Trop de carburant par rapport à la quantité d'air disponible à ce stade du démarrage, dégageant une chaleur excessive",
+        "Une panne complète du dispositif de démarrage externe, empêchant toute mise en rotation du compresseur"
+      ],
+      "bonne": 1,
+      "explication": "Un démarrage chaud survient lorsque trop de carburant est présent par rapport à la quantité d'air disponible à ce stade du démarrage : la combustion trop riche dégage une chaleur excessive, alors que la turbine ne bénéficie pas encore du refroidissement complet du fonctionnement normal. Un excès d'air (et non de carburant) refroidirait plutôt la combustion sans la rendre trop chaude ; et une panne totale du démarreur empêcherait le démarrage plutôt que de causer un excès de chaleur.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0074",
+      "sous_chapitre": "M15.9",
+      "question": "Qu'est-ce qu'un démarrage interrompu ou incomplet (« hung start ») ?",
+      "options": [
+        "Aucun carburant n'a été introduit dans la chambre de combustion à aucun moment du démarrage",
+        "Le moteur atteint immédiatement son régime de ralenti, plus rapidement que lors d'un démarrage normal",
+        "Le moteur s'accélère après l'allumage, mais se stabilise à un régime insuffisant pour atteindre le ralenti, sans y parvenir de lui-même"
+      ],
+      "bonne": 2,
+      "explication": "Un démarrage interrompu (« hung start ») survient lorsque le moteur s'accélère bien après l'allumage, mais se stabilise à un régime insuffisant pour atteindre le ralenti, restant « accroché » à un régime intermédiaire. Ce n'est donc pas un démarrage plus rapide que la normale (c'est l'inverse : un blocage), et il ne correspond pas à une absence totale de carburant, qui décrirait plutôt une absence de combustion.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0075",
+      "sous_chapitre": "M15.9",
+      "question": "Qu'est-ce qui caractérise un démarrage noyé (« wet start ») ?",
+      "options": [
+        "Du carburant a été introduit dans la chambre de combustion sans que l'allumage ne se produise correctement, s'accumulant sans brûler",
+        "Une quantité d'huile anormalement élevée s'est infiltrée dans la chambre de combustion pendant le démarrage",
+        "Le moteur a atteint son régime de ralenti avec un léger retard, sans aucune accumulation de carburant"
+      ],
+      "bonne": 0,
+      "explication": "Un démarrage noyé survient lorsque du carburant introduit dans la chambre de combustion ne s'enflamme pas correctement et s'accumule sans brûler — un risque en soi, car ce carburant non brûlé peut ensuite s'enflammer de façon incontrôlée si les conditions d'allumage finissent par être réunies. Il ne s'agit pas d'une infiltration d'huile (un fluide distinct, M15.7), et un simple léger retard de démarrage sans accumulation de carburant ne correspond pas à cette anomalie.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0076",
+      "sous_chapitre": "M15.9",
+      "question": "Pourquoi un démarrage anormal donne-t-il systématiquement lieu à une inspection spécifique avant le vol suivant ?",
+      "options": [
+        "Cette inspection est purement administrative et ne répond à aucune nécessité technique réelle",
+        "Chaque type d'anomalie peut causer un dommage interne au moteur qui n'est pas nécessairement visible de l'extérieur",
+        "Elle ne concerne que le remplissage du réservoir de carburant, sans aucun lien avec l'état du moteur"
+      ],
+      "bonne": 1,
+      "explication": "Chacune des trois anomalies (chaud, interrompu, noyé) peut causer un dommage interne au moteur qui n'est pas nécessairement visible de l'extérieur — d'où une inspection spécifique systématique, conforme au programme d'entretien et à la documentation du constructeur. Cette inspection répond donc à une nécessité technique réelle, pas seulement administrative, et elle porte sur l'état du moteur (par exemple un contrôle endoscopique de la turbine), pas sur le seul remplissage de carburant.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0077",
+      "sous_chapitre": "M15.9",
+      "question": "Que peut notamment inclure l'inspection réalisée après un démarrage anormal ?",
+      "options": [
+        "Aucune inspection particulière n'est jamais nécessaire tant que le moteur redémarre normalement ensuite",
+        "Un remplacement systématique et automatique de l'ensemble du moteur, quelle que soit la nature de l'anomalie",
+        "Un contrôle endoscopique de la chambre de combustion et des premiers étages de turbine, pour repérer un dommage thermique non visible de l'extérieur"
+      ],
+      "bonne": 2,
+      "explication": "L'inspection après un démarrage anormal peut notamment inclure un contrôle endoscopique de la chambre de combustion et des premiers étages de turbine, pour repérer un dommage thermique qui ne serait pas visible depuis l'extérieur du moteur. Il ne s'agit pas d'un remplacement systématique de tout le moteur (une inspection ciblée suffit généralement), et cette inspection reste nécessaire même si le moteur semble redémarrer normalement ensuite, justement parce que le dommage peut être invisible autrement.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0078",
+      "sous_chapitre": "M15.9",
+      "question": "Pourquoi la turbine est-elle particulièrement vulnérable à un démarrage chaud, plus qu'elle ne l'est en fonctionnement stable ?",
+      "options": [
+        "Parce que l'air qui refroidit normalement les gaz avant la turbine est encore limité à ce stade du démarrage",
+        "Parce que la turbine ne commence à tourner qu'après un démarrage chaud, jamais lors d'un démarrage normal",
+        "Parce que l'huile de lubrification des paliers de la turbine est coupée par précaution pendant toute la phase de démarrage"
+      ],
+      "bonne": 0,
+      "explication": "En fonctionnement stable, l'air de la zone de dilution (rappel M15.4) refroidit fortement les gaz avant qu'ils n'atteignent la turbine ; à ce stade précoce du démarrage, cet air de dilution reste limité, ce qui expose la turbine à une chaleur bien plus proche de celle de la flamme elle-même si la combustion est trop riche. La turbine tourne dès le début du démarrage, pas seulement en cas d'anomalie ; et l'huile continue au contraire de lubrifier les paliers pendant toute la phase de démarrage, elle n'est jamais coupée par précaution.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0079",
+      "sous_chapitre": "M15.9",
+      "question": "Quelle est la différence de mécanisme entre un démarrage chaud et un démarrage noyé ?",
+      "options": [
+        "Les deux décrivent en réalité exactement le même mécanisme, la seule différence étant le nom utilisé selon le constructeur",
+        "Le démarrage chaud vient d'un excès de carburant qui brûle en dégageant une chaleur excessive ; le démarrage noyé vient de carburant qui ne s'enflamme pas correctement et s'accumule sans brûler",
+        "Le démarrage chaud vient d'un manque de carburant, et le démarrage noyé d'un excès d'air par rapport au carburant disponible"
+      ],
+      "bonne": 1,
+      "explication": "Le démarrage chaud vient d'un excès de carburant par rapport à l'air disponible, qui brûle et dégage une chaleur excessive ; le démarrage noyé vient au contraire d'un carburant qui ne s'enflamme pas correctement et s'accumule sans brûler — deux mécanismes opposés (trop de combustion d'un côté, pas assez de l'autre), pas le même phénomène sous deux noms. Ce n'est pas non plus un manque de carburant qui cause le démarrage chaud (c'est l'inverse, un excès), ni un excès d'air qui cause le démarrage noyé.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0080",
+      "sous_chapitre": "M15.10",
+      "question": "Quel est le rôle principal du système de régulation d'un turboréacteur ?",
+      "options": [
+        "Remplacer entièrement le système d'huile pour la lubrification des paliers",
+        "Assurer uniquement le démarrage du moteur, sans aucun rôle une fois le régime de croisière atteint",
+        "Traduire la position de la manette de poussée en un débit de carburant précis, ajusté en continu selon les conditions"
+      ],
+      "bonne": 2,
+      "explication": "La régulation traduit la demande de poussée exprimée par la position de la manette en un débit de carburant précis, envoyé aux injecteurs, et ajuste continuellement ce débit selon les conditions. Son rôle ne se limite pas au démarrage (rappel M15.9, un thème distinct) : elle agit en continu, y compris en croisière ; et elle n'a aucun rapport avec la lubrification, assurée par le système d'huile (M15.7).",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0081",
+      "sous_chapitre": "M15.10",
+      "question": "Pourquoi ne pas laisser la position de la manette de poussée commander directement, mécaniquement, l'ouverture d'une vanne de carburant, sans aucun calcul intermédiaire ?",
+      "options": [
+        "Parce que le débit nécessaire pour un même réglage de manette dépend aussi de l'altitude et de la température extérieure, qu'un simple lien mécanique ne pourrait pas prendre en compte",
+        "Parce qu'une liaison mécanique directe entre la manette et la vanne serait physiquement impossible à réaliser, quelles que soient les conditions",
+        "Parce que le débit de carburant doit être déterminé uniquement par la quantité restante dans le réservoir, indépendamment de la manette"
+      ],
+      "bonne": 0,
+      "explication": "Le débit nécessaire pour un même réglage de manette dépend aussi de l'altitude (air moins dense en altitude, rappel implicite du rôle du compresseur en M15.3) et de la température extérieure — des conditions qu'un simple lien mécanique fixe entre manette et vanne ne pourrait pas prendre en compte, d'où le besoin d'un calcul intermédiaire (hydromécanique ou FADEC). Une liaison mécanique directe est en réalité tout à fait réalisable techniquement, simplement insuffisante pour ajuster le débit aux conditions ; et ce n'est pas la quantité restante en réservoir qui détermine le débit instantané, mais la demande de la manette et les conditions du moment.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0082",
+      "sous_chapitre": "M15.10",
+      "question": "Quelle est la différence essentielle entre une régulation hydromécanique et un FADEC ?",
+      "options": [
+        "Le FADEC n'ajuste jamais le débit de carburant, contrairement à la régulation hydromécanique qui est seule capable de le faire",
+        "La régulation hydromécanique utilise des mécanismes physiques (cames, ressorts) pour reproduire le calcul voulu ; le FADEC utilise un calculateur électronique recevant les informations des capteurs du moteur",
+        "La régulation hydromécanique utilise elle aussi un calculateur électronique, mais moins puissant que celui d'un FADEC"
+      ],
+      "bonne": 1,
+      "explication": "La régulation hydromécanique réalise ses ajustements au moyen de mécanismes physiques (cames, ressorts, capteurs de pression) conçus pour reproduire la loi de calcul voulue à travers leur seule géométrie, sans aucun calculateur électronique ; le FADEC, lui, réalise ce même calcul au moyen d'un calculateur électronique recevant en continu les informations des capteurs du moteur, avant de commander une vanne motorisée. Le FADEC ajuste bien le débit de carburant (c'est justement sa fonction principale, pas une exclusivité de l'hydromécanique) ; et la différence entre les deux approches n'est donc pas une question de puissance de calcul, mais bien de nature (mécanique contre électronique).",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0083",
+      "sous_chapitre": "M15.10",
+      "question": "Au-delà de l'ajustement du débit selon la poussée demandée, quel autre rôle important joue la régulation ?",
+      "options": [
+        "Remplacer le détecteur de particules métalliques pour la surveillance de l'usure des paliers",
+        "Assurer exclusivement la filtration du carburant avant son entrée dans les injecteurs",
+        "Protéger le moteur contre ses propres limites de fonctionnement (par exemple le pompage du compresseur ou la surchauffe au démarrage)"
+      ],
+      "bonne": 2,
+      "explication": "La régulation surveille en permanence les paramètres du moteur et limite ou ajuste le débit de carburant pour éviter des situations comme le pompage du compresseur (rappel M15.3) ou la surchauffe au démarrage (rappel M15.9), même si la demande de l'équipage, satisfaite sans limite, y conduirait. La filtration du carburant est un rôle distinct assuré par les filtres du circuit (M15.8), pas par la régulation ; et le détecteur de particules métalliques reste propre au circuit d'huile (M15.7), pas remplacé par la régulation.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0084",
+      "sous_chapitre": "M15.10",
+      "question": "Pourquoi la défaillance d'un FADEC est-elle prise particulièrement au sérieux ?",
+      "options": [
+        "Elle prive le moteur non seulement de son calcul de débit précis, mais aussi d'une partie de sa protection automatique contre ses propres limites",
+        "Un FADEC défaillant provoque systématiquement et immédiatement l'arrêt complet et irréversible du moteur",
+        "La défaillance d'un FADEC n'a en réalité aucune conséquence notable, puisque le débit de carburant reste de toute façon fixé une fois pour toutes par la position de la manette"
+      ],
+      "bonne": 0,
+      "explication": "Le FADEC réalise à la fois le calcul précis du débit et la surveillance/protection du moteur ; sa défaillance prive donc le moteur des deux fonctions à la fois, ce qui explique le sérieux avec lequel cette défaillance est traitée. Elle ne provoque pas systématiquement un arrêt immédiat et irréversible du moteur ; et sa conséquence n'est pas non plus négligeable — rappel de la fiche : le débit n'est justement jamais fixé une fois pour toutes par la seule position de la manette, il dépend aussi du calcul du FADEC.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0085",
+      "sous_chapitre": "M15.10",
+      "question": "Qu'est-ce qu'un mode dégradé, prévu sur de nombreuses installations équipées d'un FADEC ?",
+      "options": [
+        "Un mode réservé exclusivement à la phase de démarrage du moteur, sans aucun rapport avec une défaillance du calculateur",
+        "Un mode de secours qui permet de continuer à faire fonctionner le moteur de façon plus limitée si le calculateur principal rencontre un problème",
+        "Un mode qui désactive complètement la régulation, laissant l'équipage ajuster manuellement chaque paramètre du moteur"
+      ],
+      "bonne": 1,
+      "explication": "Le mode dégradé permet de continuer à faire fonctionner le moteur de façon plus limitée si le calculateur principal (FADEC) rencontre un problème, plutôt que de perdre toute possibilité de régulation. Il n'est pas réservé au seul démarrage (thème distinct de M15.9), et il ne désactive pas complètement la régulation : il en maintient une version plus limitée, pas un contrôle entièrement manuel par l'équipage.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0086",
+      "sous_chapitre": "M15.10",
+      "question": "Quel rôle respectif jouent la régulation et le programme d'entretien face à une dégradation progressive du moteur (usure, encrassement) ?",
+      "options": [
+        "La régulation et le programme d'entretien visent exactement le même objectif, ce qui rend l'un des deux redondant",
+        "La régulation détecte elle-même toute dégradation progressive, rendant les inspections périodiques du programme d'entretien inutiles",
+        "La régulation réagit aux conditions instantanées ; l'évaluation de la santé générale du moteur sur la durée reste du ressort du programme de surveillance et d'entretien"
+      ],
+      "bonne": 2,
+      "explication": "La régulation ajuste le débit de carburant selon la poussée demandée et les conditions instantanées, mais l'évaluation de la santé générale du moteur sur la durée (usure, encrassement) reste du ressort du programme de surveillance et d'entretien, thème repris en fiche M15.14 — comme le détecteur de particules métalliques le fait déjà pour l'huile (M15.7). La régulation ne détecte donc pas elle-même une dégradation progressive, et les deux fonctions ne sont pas redondantes : elles répondent à des échelles de temps différentes (instantanée contre progressive).",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0087",
+      "sous_chapitre": "M15.10",
+      "question": "Qu'apporte un FADEC au poste de pilotage, en plus de sa fonction de régulation du débit de carburant ?",
+      "options": [
+        "Il surveille en continu l'état du moteur et transmet ces informations aux indications présentées à l'équipage",
+        "Il pilote directement les commandes de vol de l'avion, indépendamment de toute action de l'équipage",
+        "Il remplace entièrement le rôle des instruments classiques de mesure de la pression et de la température d'huile"
+      ],
+      "bonne": 0,
+      "explication": "Un FADEC surveille en continu l'état du moteur et transmet ces informations aux indications du poste de pilotage, thème détaillé en fiche M15.11 — une double fonction (réguler et surveiller) qui explique pourquoi sa défaillance est prise au sérieux. Il ne pilote pas les commandes de vol de l'avion, un système entièrement distinct ; et il ne remplace pas les capteurs de pression et température d'huile, il en relaie plutôt les informations.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0088",
+      "sous_chapitre": "M15.10",
+      "question": "Dans l'exemple d'un avion qui décolle par temps chaud puis grimpe vers son altitude de croisière, que se passe-t-il pour le débit de carburant et pour la poussée produite, à manette de poussée constante ?",
+      "options": [
+        "Le débit reste rigoureusement identique du décollage jusqu'à la croisière, la manette de poussée fixant une fois pour toutes une valeur constante",
+        "Le débit délivré diminue à mesure que l'air se raréfie, et la poussée produite diminue elle aussi : la régulation ne la maintient pas constante",
+        "Le débit diminue avec l'altitude, mais la régulation maintient malgré tout la poussée produite parfaitement constante quelle que soit l'altitude"
+      ],
+      "bonne": 1,
+      "explication": "À manette de poussée constante, le débit réellement délivré par la régulation diminue à mesure que l'altitude augmente et que l'air se raréfie — un ajustement automatique que l'équipage n'a pas à calculer — et la poussée réellement produite diminue elle aussi : la régulation ajuste le débit au fonctionnement demandé par la manette compte tenu de l'air disponible, elle ne maintient pas une poussée absolue constante en toutes circonstances. Le débit ne reste donc pas identique du décollage à la croisière, et il n'existe pas de maintien parfait de la poussée malgré la baisse du débit.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
     }
   ]
 }

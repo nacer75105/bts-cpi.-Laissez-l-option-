@@ -1087,26 +1087,79 @@ Règle permanente documentée dans `C:\Users\pc\CLAUDE.md` (section
 « Contrainte technique : schémas interactifs Part-66 — jamais de
 génération de DOM à l'exécution »).
 
-**Audit des schémas déjà en ligne (M7A, M17A), même motif à risque
-détecté par recherche de `innerHTML`/`appendChild` — non retesté
-individuellement en conditions réelles, à vérifier ou réécrire :**
-- `part66/data/M7A/schemas/M7A.5.html` (sertissage) — construit chaque
+**Audit des schémas déjà en ligne (M7A, M17A), même motif détecté par
+recherche de `innerHTML`/`appendChild`, puis corrigé et testé (jsdom +
+retour utilisateur en navigateur) — les 6 fichiers suivants ont tous été
+réécrits en contenu pré-rendu statiquement, script limité au basculement
+`style.display`/`className`/`textContent` :**
+- `part66/data/M7A/schemas/M7A.5.html` (sertissage) — construisait chaque
   bouton de réponse via `appendChild`/`createElement`/
-  `createTextNode` dans une boucle, au montage.
-- `part66/data/M7A/schemas/M7A.6.html` (rivetage) — construit chaque
+  `createTextNode` dans une boucle, au montage. **Corrigé.**
+- `part66/data/M7A/schemas/M7A.6.html` (rivetage) — construisait chaque
   bouton de réponse via `btn.innerHTML = '<div>...</div>' + label`
-  dans une boucle, au montage.
+  dans une boucle, au montage. **Corrigé.**
 - `part66/data/M7A/schemas/M7A.10.html` — `flange.appendChild(b)`
   dans `render()`, appelé au montage et à chaque navigation d'étape.
+  **Corrigé** (6 positions de boulon pré-calculées par trigonométrie et
+  figées en `div` statiques à position fixe).
 - `part66/data/M17A/schemas/M17A.4.html` (matériaux/coupe de pale) —
   `coupeStripes.innerHTML=''` puis boucle `appendChild`, dans
   `render(mat)`, appelé au montage (`render('bois')`) et au clic.
+  **Corrigé.**
 - `part66/data/M17A/schemas/M17A.5-2.html` (nombre de pales) —
   `fan.appendChild(blade)` dans `render(n)`, appelé au montage
-  (`render(2)`) et au clic.
+  (`render(2)`) et au clic. **Corrigé.**
 - `part66/data/M17A/schemas/M17A.6.html` (diagramme de chaîne) —
   `diagram.innerHTML=''` puis boucle `appendChild`, dans `render(fam)`,
-  appelé au montage (`render('meca')`) et au clic.
+  appelé au montage (`render('meca')`) et au clic. **Corrigé** (5
+  emplacements de boîte + 4 flèches pré-rendus, affichés selon le
+  nombre réel d'éléments de la chaîne).
+
+**Deux vagues de découverte supplémentaires, après ce premier audit —
+preuve que l'audit initial (recherche manuelle guidée par le rapport de
+relecture) n'était pas exhaustif :**
+
+1. **M15.3, M15.3-2, M15.4-2** — signalés cassés par l'utilisateur lors
+   du test en local du lot 1 de M15 (même symptôme : bouton actif
+   visuellement, contenu vide en dessous), alors que ces 3 fichiers
+   avaient été écrits *avant* que la cause ne soit comprise, dans la
+   même session que le lot 1. `M15.3.html` construisait ses 5 marches
+   d'escalier via `stairs.innerHTML = html` assemblé en boucle ;
+   `M15.3-2.html` construisait ses deux chaînes de boîtes/flèches
+   (axial/centrifuge) via `flow.innerHTML = '<div>...</div>' + ...` ;
+   `M15.4-2.html` construisait ses 3 visualisations (tubulaire/
+   annulaire/tubo-annulaire) via `viz.innerHTML = data[f].viz`, une
+   chaîne elle-même assemblée par une fonction `tubes(n,size)` en
+   boucle. **Les trois corrigés** : marches, boîtes/flèches et tubes
+   tous pré-rendus statiquement, cachés/affichés par `display`.
+2. **M5.7.html** (bus série/parallèle) — trouvé par un balayage
+   systématique `grep` du motif sur les 4 modules entiers (M5, M7A,
+   M15, M17A, 69 fichiers), demandé explicitement par l'utilisateur
+   après la découverte du point 1 ci-dessus, pour ne plus dépendre
+   d'un audit manuel partiel. `buildTracks()` vidait puis reconstruisait
+   1 ou 8 pistes via `createElement`/`appendChild` selon le mode ;
+   `send()` créait les bits à envoyer de la même façon (un par un en
+   série via une chaîne de `setTimeout`, ou tous en parallèle en une
+   boucle). **Corrigé** : 8 pistes et leurs bits pré-rendus
+   statiquement (`display:none` par défaut), le mode série réutilise/
+   repositionne le bit de la piste 0 en 8 étapes successives, le mode
+   parallèle affiche les 8 bits pré-existants simultanément.
+
+**Confirmation finale (2026-09-11)** : après ces deux vagues de
+correction, un balayage `grep -rn "innerHTML\s*=\|appendChild\|
+createElement\|insertAdjacentHTML\|insertBefore"` sur l'intégralité de
+`part66/data/*/schemas/*.html` (69 fichiers, les 4 modules construits)
+ne retourne **plus aucune occurrence**. Un test complémentaire (montage
+jsdom identique au mécanisme réel de `st.html`, puis clic simulé sur
+chaque bouton de chaque fichier) confirme 0 erreur de montage, 0
+exception au clic, et 0 fichier sans le moindre changement de DOM après
+clic — les 15 fichiers sans `<button>` utilisent tous un `input
+type="range"` comme seul contrôle, confirmé interactif. **Ce test jsdom
+ne peut cependant pas, par construction, détecter à lui seul ce bug
+précis** (il ne l'a jamais détecté sur aucun des fichiers cassés
+ci-dessus, y compris a posteriori) : c'est le balayage `grep`, pas le
+test jsdom, qui constitue la confirmation faisant autorité qu'aucun
+autre schéma du projet ne reproduit ce motif.
 
 ## Standard de calibrage du contenu (décidé avec l'utilisateur le
 2026-09-11, applicable à partir de M17A)

@@ -1,0 +1,67 @@
+<div id="schema-m1506-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1506-wrap .m1506-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.9em; }
+#schema-m1506-wrap .m1506-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1506-wrap .m1506-row { display:flex; align-items:center; gap:10px; margin-top:14px; }
+#schema-m1506-wrap .m1506-label { flex:0 0 90px; font-size:0.82em; }
+#schema-m1506-wrap .m1506-track { flex:1; height:20px; border-radius:4px; background:#e8e8e8; position:relative; overflow:hidden; border:1px solid #ccc; }
+#schema-m1506-wrap .m1506-fill { height:100%; }
+#schema-m1506-wrap .m1506-shape { margin-top:16px; height:60px; position:relative; background:#d8e6f5; border:1px solid #aaa; border-radius:4px; overflow:hidden; }
+#schema-m1506-wrap .m1506-cone { position:absolute; top:0; bottom:0; left:0; width:100%; background:rgba(127,168,217,0.35); }
+#schema-m1506-wrap .m1506-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:4.5em; }
+</style>
+
+<p><strong>La tuyère : l'inverse du diffuseur.</strong> Compare l'évolution de la vitesse et de la pression dans l'entrée d'air (rappel M15.2) et dans la tuyère.</p>
+
+<button class="m1506-btn active" id="m1506-btn-tuyere">Tuyère (sortie)</button>
+<button class="m1506-btn" id="m1506-btn-diffuseur">Diffuseur d'entrée d'air (rappel)</button>
+
+<div class="m1506-shape" id="m1506-shape-tuyere">
+  <div class="m1506-cone" style="clip-path: polygon(0% 5%, 100% 35%, 100% 65%, 0% 95%);"></div>
+</div>
+<div class="m1506-shape" id="m1506-shape-diffuseur" style="display:none;">
+  <div class="m1506-cone" style="clip-path: polygon(0% 35%, 100% 5%, 100% 95%, 0% 65%);"></div>
+</div>
+
+<div class="m1506-row"><div class="m1506-label">Vitesse</div><div class="m1506-track"><div class="m1506-fill" id="m1506-vit" style="width:85%; background:#c0392b;"></div></div></div>
+<div class="m1506-row"><div class="m1506-label">Pression</div><div class="m1506-track"><div class="m1506-fill" id="m1506-pre" style="width:25%; background:#7fbf7f;"></div></div></div>
+
+<div class="m1506-caption" id="m1506-caption">Tuyère (conduit convergent) : les gaz accélèrent fortement et leur pression diminue, cette énergie étant convertie en vitesse — donc en poussée.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1506-wrap');
+  if (!wrap) { return; }
+  var btnTuyere = wrap.querySelector('#m1506-btn-tuyere');
+  var btnDiffuseur = wrap.querySelector('#m1506-btn-diffuseur');
+  var shapeTuyere = wrap.querySelector('#m1506-shape-tuyere');
+  var shapeDiffuseur = wrap.querySelector('#m1506-shape-diffuseur');
+  var vit = wrap.querySelector('#m1506-vit');
+  var pre = wrap.querySelector('#m1506-pre');
+  var caption = wrap.querySelector('#m1506-caption');
+
+  function showTuyere() {
+    btnTuyere.className = 'm1506-btn active';
+    btnDiffuseur.className = 'm1506-btn';
+    shapeTuyere.style.display = 'block';
+    shapeDiffuseur.style.display = 'none';
+    vit.style.width = '85%';
+    pre.style.width = '25%';
+    caption.textContent = "Tuyère (conduit convergent) : les gaz accélèrent fortement et leur pression diminue, cette énergie étant convertie en vitesse — donc en poussée.";
+  }
+
+  function showDiffuseur() {
+    btnTuyere.className = 'm1506-btn';
+    btnDiffuseur.className = 'm1506-btn active';
+    shapeTuyere.style.display = 'none';
+    shapeDiffuseur.style.display = 'block';
+    vit.style.width = '30%';
+    pre.style.width = '80%';
+    caption.textContent = "Diffuseur d'entrée d'air (conduit divergent, rappel M15.2) : l'air ralentit et sa pression augmente — l'exact opposé de la tuyère, en cohérence avec sa forme opposée.";
+  }
+
+  btnTuyere.addEventListener('click', showTuyere);
+  btnDiffuseur.addEventListener('click', showDiffuseur);
+})();
+</script>

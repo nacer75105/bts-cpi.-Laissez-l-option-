@@ -1,0 +1,56 @@
+<div id="schema-m1508-wrap" style="font-family: inherit; max-width: 660px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1508-wrap .m1508-box { padding:8px 6px; border-radius:6px; border:1.5px solid #999; background:#f7f7f7; font-size:0.7em; text-align:center; cursor:pointer; transition: all 0.15s; }
+#schema-m1508-wrap .m1508-box.active { font-weight:bold; box-shadow: 0 0 0 2px rgba(0,0,0,0.18) inset; background:rgba(224,168,0,0.18); border-color:#e0a800; }
+#schema-m1508-wrap .m1508-flow { display:flex; align-items:center; gap:4px; margin-top:14px; flex-wrap:wrap; }
+#schema-m1508-wrap .m1508-arrow { font-size:1em; color:#888; }
+#schema-m1508-wrap .m1508-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5em; }
+</style>
+
+<p><strong>Le circuit carburant, du réservoir aux injecteurs :</strong> clique sur chaque étape pour voir son rôle.</p>
+
+<div class="m1508-flow">
+  <div class="m1508-box" data-z="reservoir">Réservoir</div>
+  <div class="m1508-arrow">→</div>
+  <div class="m1508-box" data-z="pompe-bp">Pompe basse pression</div>
+  <div class="m1508-arrow">→</div>
+  <div class="m1508-box" data-z="rechauffeur">Réchauffeur</div>
+  <div class="m1508-arrow">→</div>
+  <div class="m1508-box" data-z="filtre">Filtre</div>
+  <div class="m1508-arrow">→</div>
+  <div class="m1508-box" data-z="pompe-hp">Pompe haute pression</div>
+  <div class="m1508-arrow">→</div>
+  <div class="m1508-box" data-z="doseur">Doseur (régulation, M15.10)</div>
+  <div class="m1508-arrow">→</div>
+  <div class="m1508-box" data-z="injecteurs">Injecteurs</div>
+</div>
+
+<div class="m1508-caption" id="m1508-caption">Clique sur une étape du circuit pour voir son rôle précis.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1508-wrap');
+  if (!wrap) { return; }
+  var boxes = wrap.querySelectorAll('.m1508-box');
+  var caption = wrap.querySelector('#m1508-caption');
+
+  var textes = {
+    reservoir: "Réservoir : point de départ, le plus souvent logé dans la voilure sur un avion à turbine.",
+    'pompe-bp': "Pompe basse pression : aspire le carburant et le met en pression suffisante pour éviter la formation de bulles de vapeur en cours de route.",
+    filtre: "Filtre : retient les impuretés microscopiques susceptibles d'obstruer les orifices très fins des injecteurs, même si le carburant est conforme aux spécifications.",
+    rechauffeur: "Réchauffeur : prévient la formation de cristaux de glace si de l'eau est présente dans le carburant par temps froid, souvent alimenté par la chaleur du circuit d'huile — placé avant le filtre, pour éviter que ces cristaux ne l'obstruent.",
+    'pompe-hp': "Pompe haute pression : entraînée mécaniquement par le moteur, elle amène le carburant à la pression nécessaire pour être pulvérisé finement.",
+    doseur: "Doseur : ajuste en permanence le débit de carburant selon la poussée demandée et les conditions du moment, sous le contrôle du système de régulation (détaillé en fiche M15.10).",
+    injecteurs: "Injecteurs : pulvérisent le carburant en un brouillard très fin, pour une combustion rapide et complète dans la zone primaire de la chambre de combustion (rappel M15.4)."
+  };
+
+  boxes.forEach(function (b) {
+    b.addEventListener('click', function () {
+      boxes.forEach(function (x) { x.classList.remove('active'); });
+      b.classList.add('active');
+      caption.textContent = textes[b.getAttribute('data-z')];
+    });
+  });
+})();
+</script>

@@ -1,0 +1,53 @@
+<div id="schema-m1510b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1510b-wrap .m1510b-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.9em; }
+#schema-m1510b-wrap .m1510b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1510b-wrap .m1510b-row { display:flex; align-items:center; gap:10px; margin-top:14px; }
+#schema-m1510b-wrap .m1510b-label { flex:0 0 130px; font-size:0.82em; }
+#schema-m1510b-wrap .m1510b-track { flex:1; height:20px; border-radius:4px; background:#e8e8e8; position:relative; overflow:hidden; border:1px solid #ccc; }
+#schema-m1510b-wrap .m1510b-fill { height:100%; transition: width 0.3s; background:#e0a800; }
+#schema-m1510b-wrap .m1510b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Manette de poussée constante, conditions qui changent :</strong> observe ce qui arrive au débit de carburant réel quand l'avion prend de l'altitude.</p>
+
+<button class="m1510b-btn active" id="m1510b-btn-sol">Au sol, air dense</button>
+<button class="m1510b-btn" id="m1510b-btn-altitude">En altitude, air raréfié</button>
+
+<div class="m1510b-row"><div class="m1510b-label">Position manette</div><div class="m1510b-track"><div class="m1510b-fill" id="m1510b-manette" style="width:70%; background:#7fa8d9;"></div></div></div>
+<div class="m1510b-row"><div class="m1510b-label">Débit réel délivré</div><div class="m1510b-track"><div class="m1510b-fill" id="m1510b-debit" style="width:70%;"></div></div></div>
+<div class="m1510b-row"><div class="m1510b-label">Poussée produite</div><div class="m1510b-track"><div class="m1510b-fill" id="m1510b-poussee" style="width:70%; background:#7fbf7f;"></div></div></div>
+
+<div class="m1510b-caption" id="m1510b-caption">Au sol, air dense : pour cette position de manette, la régulation délivre un débit de carburant correspondant à ce que la manette demande dans ces conditions.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1510b-wrap');
+  if (!wrap) { return; }
+  var btnSol = wrap.querySelector('#m1510b-btn-sol');
+  var btnAltitude = wrap.querySelector('#m1510b-btn-altitude');
+  var debit = wrap.querySelector('#m1510b-debit');
+  var poussee = wrap.querySelector('#m1510b-poussee');
+  var caption = wrap.querySelector('#m1510b-caption');
+
+  function showSol() {
+    btnSol.className = 'm1510b-btn active';
+    btnAltitude.className = 'm1510b-btn';
+    debit.style.width = '70%';
+    poussee.style.width = '70%';
+    caption.textContent = "Au sol, air dense : pour cette position de manette, la régulation délivre un débit de carburant correspondant à ce que la manette demande dans ces conditions.";
+  }
+
+  function showAltitude() {
+    btnSol.className = 'm1510b-btn';
+    btnAltitude.className = 'm1510b-btn active';
+    debit.style.width = '40%';
+    poussee.style.width = '45%';
+    caption.textContent = "En altitude, air raréfié : la position de manette n'a pas changé, mais le débit réellement délivré par la régulation diminue — ajusté automatiquement compte tenu de l'air moins dense disponible (rappel du rôle du compresseur, M15.3). La poussée produite diminue elle aussi : la régulation ne la maintient pas constante, elle ajuste seulement le débit au fonctionnement demandé par la manette compte tenu des conditions. L'équipage n'a pas à calculer cet ajustement lui-même.";
+  }
+
+  btnSol.addEventListener('click', showSol);
+  btnAltitude.addEventListener('click', showAltitude);
+})();
+</script>

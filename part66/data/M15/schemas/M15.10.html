@@ -1,0 +1,65 @@
+<div id="schema-m1510-wrap" style="font-family: inherit; max-width: 660px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1510-wrap .m1510-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.9em; }
+#schema-m1510-wrap .m1510-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1510-wrap .m1510-flow { display:flex; align-items:center; gap:6px; margin-top:16px; flex-wrap:wrap; }
+#schema-m1510-wrap .m1510-box { padding:10px 8px; border-radius:6px; border:1.5px solid #888; background:#f7f7f7; font-size:0.76em; text-align:center; flex:1 1 100px; }
+#schema-m1510-wrap .m1510-arrow { font-size:1.1em; color:#888; }
+#schema-m1510-wrap .m1510-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Deux familles de régulation :</strong> comparez leur principe de fonctionnement.</p>
+
+<button class="m1510-btn active" id="m1510-btn-hydro">Hydromécanique</button>
+<button class="m1510-btn" id="m1510-btn-fadec">FADEC (électronique)</button>
+
+<div class="m1510-flow" id="m1510-flow-hydro">
+  <div class="m1510-box">Manette de poussée</div>
+  <div class="m1510-arrow">→</div>
+  <div class="m1510-box">Mécanismes physiques (cames, ressorts, capteurs de pression)</div>
+  <div class="m1510-arrow">→</div>
+  <div class="m1510-box">Débit de carburant</div>
+</div>
+<div class="m1510-flow" id="m1510-flow-fadec" style="display:none;">
+  <div class="m1510-box">Manette de poussée + capteurs moteur</div>
+  <div class="m1510-arrow">→</div>
+  <div class="m1510-box">Calculateur électronique</div>
+  <div class="m1510-arrow">→</div>
+  <div class="m1510-box">Vanne motorisée</div>
+  <div class="m1510-arrow">→</div>
+  <div class="m1510-box">Débit de carburant</div>
+</div>
+
+<div class="m1510-caption" id="m1510-caption">Régulation hydromécanique : le calcul du débit nécessaire est reproduit par la seule géométrie de mécanismes physiques (cames, ressorts, capteurs de pression) — une approche robuste mais moins précise et moins flexible qu'une régulation électronique.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1510-wrap');
+  if (!wrap) { return; }
+  var btnHydro = wrap.querySelector('#m1510-btn-hydro');
+  var btnFadec = wrap.querySelector('#m1510-btn-fadec');
+  var flowHydro = wrap.querySelector('#m1510-flow-hydro');
+  var flowFadec = wrap.querySelector('#m1510-flow-fadec');
+  var caption = wrap.querySelector('#m1510-caption');
+
+  function showHydro() {
+    btnHydro.className = 'm1510-btn active';
+    btnFadec.className = 'm1510-btn';
+    flowHydro.style.display = 'flex';
+    flowFadec.style.display = 'none';
+    caption.textContent = "Régulation hydromécanique : le calcul du débit nécessaire est reproduit par la seule géométrie de mécanismes physiques (cames, ressorts, capteurs de pression) — une approche robuste mais moins précise et moins flexible qu'une régulation électronique.";
+  }
+
+  function showFadec() {
+    btnHydro.className = 'm1510-btn';
+    btnFadec.className = 'm1510-btn active';
+    flowHydro.style.display = 'none';
+    flowFadec.style.display = 'flex';
+    caption.textContent = "FADEC (Full Authority Digital Engine Control) : un calculateur électronique reçoit en continu les informations des capteurs du moteur, calcule le débit nécessaire, puis commande une vanne motorisée — plus précis, capable de surveiller le moteur en continu, et le plus répandu sur les turboréacteurs civils modernes.";
+  }
+
+  btnHydro.addEventListener('click', showHydro);
+  btnFadec.addEventListener('click', showFadec);
+})();
+</script>

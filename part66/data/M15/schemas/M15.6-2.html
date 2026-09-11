@@ -1,0 +1,54 @@
+<div id="schema-m1506b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1506b-wrap .m1506b-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.9em; }
+#schema-m1506b-wrap .m1506b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1506b-wrap .m1506b-shape { margin-top:16px; height:60px; position:relative; background:#d8e6f5; border:1px solid #aaa; border-radius:4px; overflow:hidden; }
+#schema-m1506b-wrap .m1506b-cone { position:absolute; top:0; bottom:0; left:0; width:100%; background:rgba(127,168,217,0.35); }
+#schema-m1506b-wrap .m1506b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Deux types de tuyère :</strong> compare la tuyère simplement convergente à la tuyère convergente-divergente.</p>
+
+<button class="m1506b-btn active" id="m1506b-btn-simple">Simplement convergente</button>
+<button class="m1506b-btn" id="m1506b-btn-double">Convergente-divergente</button>
+
+<div class="m1506b-shape" id="m1506b-shape-simple">
+  <div class="m1506b-cone" style="clip-path: polygon(0% 5%, 100% 35%, 100% 65%, 0% 95%);"></div>
+</div>
+<div class="m1506b-shape" id="m1506b-shape-double" style="display:none;">
+  <div class="m1506b-cone" style="clip-path: polygon(0% 10%, 50% 40%, 100% 15%, 100% 85%, 50% 60%, 0% 90%);"></div>
+</div>
+
+<div class="m1506b-caption" id="m1506b-caption">Tuyère simplement convergente : un seul conduit qui se rétrécit progressivement, suffisant pour la grande majorité des installations civiles. C'est le principe à retenir en priorité.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1506b-wrap');
+  if (!wrap) { return; }
+  var btnSimple = wrap.querySelector('#m1506b-btn-simple');
+  var btnDouble = wrap.querySelector('#m1506b-btn-double');
+  var shapeSimple = wrap.querySelector('#m1506b-shape-simple');
+  var shapeDouble = wrap.querySelector('#m1506b-shape-double');
+  var caption = wrap.querySelector('#m1506b-caption');
+
+  function showSimple() {
+    btnSimple.className = 'm1506b-btn active';
+    btnDouble.className = 'm1506b-btn';
+    shapeSimple.style.display = 'block';
+    shapeDouble.style.display = 'none';
+    caption.textContent = "Tuyère simplement convergente : un seul conduit qui se rétrécit progressivement, suffisant pour la grande majorité des installations civiles. C'est le principe à retenir en priorité.";
+  }
+
+  function showDouble() {
+    btnSimple.className = 'm1506b-btn';
+    btnDouble.className = 'm1506b-btn active';
+    shapeSimple.style.display = 'none';
+    shapeDouble.style.display = 'block';
+    caption.textContent = "Tuyère convergente-divergente : une section qui se rétrécit, suivie d'une section qui s'élargit. Au-delà de la vitesse du son, c'est l'élargissement (et non plus le rétrécissement) qui continue d'accélérer l'écoulement — un cas qui dépasse le cadre de la grande majorité des installations civiles.";
+  }
+
+  btnSimple.addEventListener('click', showSimple);
+  btnDouble.addEventListener('click', showDouble);
+})();
+</script>

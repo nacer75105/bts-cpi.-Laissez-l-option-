@@ -1,0 +1,41 @@
+<div id="schema-m1509b-wrap" style="font-family: inherit; max-width: 660px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1509b-wrap .m1509b-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m1509b-wrap .m1509b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1509b-wrap .m1509b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:6em; }
+</style>
+
+<p><strong>Trois anomalies de démarrage :</strong> pour chacune, ce schéma indique uniquement le principe technique et la conséquence pour l'entretien — jamais la conduite à tenir par l'équipage, qui relève exclusivement du manuel de vol de chaque appareil.</p>
+
+<div>
+  <button class="m1509b-btn active" data-a="chaud">Démarrage chaud</button>
+  <button class="m1509b-btn" data-a="interrompu">Démarrage interrompu</button>
+  <button class="m1509b-btn" data-a="noye">Démarrage noyé</button>
+</div>
+
+<div class="m1509b-caption" id="m1509b-caption"></div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1509b-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('.m1509b-btn');
+  var caption = wrap.querySelector('#m1509b-caption');
+
+  var textes = {
+    chaud: "Démarrage chaud (« hot start ») : trop de carburant par rapport à l'air disponible à ce stade. La combustion trop riche dégage une chaleur excessive, alors que turbine et chambre de combustion ne bénéficient pas encore du refroidissement complet du fonctionnement normal. Conséquence pour l'entretien : inspection ciblée avant le vol suivant (par exemple un contrôle endoscopique de la turbine), pour repérer un dommage thermique non visible de l'extérieur.",
+    interrompu: "Démarrage interrompu (« hung start ») : le moteur s'accélère après l'allumage, mais se stabilise à un régime insuffisant pour atteindre le ralenti, sans y parvenir de lui-même — il reste « accroché » à un régime intermédiaire. Conséquence pour l'entretien : comme pour toute anomalie de démarrage, une inspection est requise conformément au programme d'entretien et à la documentation du constructeur.",
+    noye: "Démarrage noyé (« wet start ») : du carburant introduit dans la chambre de combustion ne s'enflamme pas correctement et s'accumule sans brûler — un risque en soi, ce carburant non brûlé pouvant s'enflammer de façon incontrôlée si les conditions d'allumage sont ensuite réunies. Conséquence pour l'entretien : inspection requise avant le vol suivant, selon le programme d'entretien applicable."
+  };
+
+  btns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      btns.forEach(function (b) { b.classList.toggle('active', b === btn); });
+      caption.textContent = textes[btn.getAttribute('data-a')];
+    });
+  });
+
+  caption.textContent = textes.chaud;
+})();
+</script>

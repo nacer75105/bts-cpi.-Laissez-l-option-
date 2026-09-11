@@ -2,8 +2,8 @@
 <style>
 #schema-m1503-wrap .m1503-btn { margin:4px 6px 4px 0; padding:6px 10px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
 #schema-m1503-wrap .m1503-btn.active { background:#fff3b0; border-color:#e0a800; }
-#schema-m1503-wrap .m1503-stairs { display:flex; align-items:flex-end; gap:4px; height:130px; margin-top:16px; }
-#schema-m1503-wrap .m1503-step { flex:1; background:#7fa8d9; border-radius:3px 3px 0 0; position:relative; transition: height 0.3s; display:flex; align-items:flex-start; justify-content:center; }
+#schema-m1503-wrap .m1503-stairs { display:flex; align-items:flex-end; gap:4px; margin-top:16px; }
+#schema-m1503-wrap .m1503-step { flex:1; background:#7fa8d9; border-radius:3px 3px 0 0; position:relative; transition: background 0.3s; display:flex; align-items:flex-start; justify-content:center; }
 #schema-m1503-wrap .m1503-step.active { background:#e0a800; }
 #schema-m1503-wrap .m1503-step span { font-size:0.68em; color:#fff; margin-top:2px; }
 #schema-m1503-wrap .m1503-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:4.5em; }
@@ -17,7 +17,13 @@
   <button class="m1503-btn" data-e="reset">↺ Réinitialiser</button>
 </div>
 
-<div class="m1503-stairs" id="m1503-stairs"></div>
+<div class="m1503-stairs" id="m1503-stairs">
+  <div class="m1503-step" id="m1503-step-1" style="height:38px;"><span>Étage 1</span></div>
+  <div class="m1503-step" id="m1503-step-2" style="height:56px;"><span>Étage 2</span></div>
+  <div class="m1503-step" id="m1503-step-3" style="height:74px;"><span>Étage 3</span></div>
+  <div class="m1503-step" id="m1503-step-4" style="height:92px;"><span>Étage 4</span></div>
+  <div class="m1503-step" id="m1503-step-5" style="height:110px;"><span>Étage 5</span></div>
+</div>
 
 <div class="m1503-caption" id="m1503-caption"></div>
 </div>
@@ -26,18 +32,16 @@
 (function () {
   var wrap = document.getElementById('schema-m1503-wrap');
   if (!wrap) { return; }
-  var stairs = wrap.querySelector('#m1503-stairs');
   var caption = wrap.querySelector('#m1503-caption');
   var nbEtages = 5;
   var courant = 1;
+  var steps = [];
+  for (var k = 1; k <= nbEtages; k++) { steps[k] = wrap.querySelector('#m1503-step-' + k); }
 
   function render() {
-    var html = '';
     for (var i = 1; i <= nbEtages; i++) {
-      var h = 20 + i * 18;
-      html += '<div class="m1503-step' + (i <= courant ? ' active' : '') + '" style="height:' + h + 'px;"><span>Étage ' + i + '</span></div>';
+      steps[i].className = (i <= courant) ? 'm1503-step active' : 'm1503-step';
     }
-    stairs.innerHTML = html;
     if (courant === 1) {
       caption.textContent = "Étage 1 : l'air, préparé par l'entrée d'air, traverse son premier rotor puis son premier stator. Sa pression augmente légèrement, et l'écoulement est redressé avant l'étage suivant.";
     } else if (courant === nbEtages) {

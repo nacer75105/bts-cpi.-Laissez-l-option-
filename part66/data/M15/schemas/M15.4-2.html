@@ -2,66 +2,86 @@
 <style>
 #schema-m1504b-wrap .m1504b-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
 #schema-m1504b-wrap .m1504b-btn.active { background:#fff3b0; border-color:#e0a800; }
-#schema-m1504b-wrap .m1504b-viz { margin-top:16px; height:90px; display:flex; align-items:center; justify-content:center; gap:4px; }
+#schema-m1504b-wrap .m1504b-viz { margin-top:16px; height:100px; display:flex; align-items:center; justify-content:center; gap:4px; flex-wrap:wrap; }
 #schema-m1504b-wrap .m1504b-tube { background:#7fa8d9; border-radius:50%; border:1.5px solid #4a76a8; }
 #schema-m1504b-wrap .m1504b-ring { border:6px solid #7fa8d9; border-radius:50%; width:100px; height:100px; box-sizing:border-box; }
+#schema-m1504b-wrap .m1504b-ring.dashed { display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:3px; padding:4px; border-style:dashed; }
 #schema-m1504b-wrap .m1504b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5em; }
 </style>
 
 <p><strong>Trois formes de chambre de combustion :</strong> sélectionnez chaque configuration pour voir son principe.</p>
 
-<div>
-  <button class="m1504b-btn active" data-f="tubulaire">Tubulaire</button>
-  <button class="m1504b-btn" data-f="annulaire">Annulaire</button>
-  <button class="m1504b-btn" data-f="tuboannulaire">Tubo-annulaire</button>
+<button class="m1504b-btn active" id="m1504b-btn-tubulaire">Tubulaire</button>
+<button class="m1504b-btn" id="m1504b-btn-annulaire">Annulaire</button>
+<button class="m1504b-btn" id="m1504b-btn-tuboannulaire">Tubo-annulaire</button>
+
+<div class="m1504b-viz" id="m1504b-viz-tubulaire">
+  <div class="m1504b-tube" style="width:22px; height:22px;"></div>
+  <div class="m1504b-tube" style="width:22px; height:22px;"></div>
+  <div class="m1504b-tube" style="width:22px; height:22px;"></div>
+  <div class="m1504b-tube" style="width:22px; height:22px;"></div>
+  <div class="m1504b-tube" style="width:22px; height:22px;"></div>
+  <div class="m1504b-tube" style="width:22px; height:22px;"></div>
+</div>
+<div class="m1504b-viz" id="m1504b-viz-annulaire" style="display:none;">
+  <div class="m1504b-ring"></div>
+</div>
+<div class="m1504b-viz" id="m1504b-viz-tuboannulaire" style="display:none;">
+  <div class="m1504b-ring dashed">
+    <div class="m1504b-tube" style="width:12px; height:12px;"></div>
+    <div class="m1504b-tube" style="width:12px; height:12px;"></div>
+    <div class="m1504b-tube" style="width:12px; height:12px;"></div>
+    <div class="m1504b-tube" style="width:12px; height:12px;"></div>
+  </div>
 </div>
 
-<div class="m1504b-viz" id="m1504b-viz"></div>
-
-<div class="m1504b-caption" id="m1504b-caption"></div>
+<div class="m1504b-caption" id="m1504b-caption">Chambre tubulaire (multiple) : plusieurs chambres individuelles distinctes, disposées en cercle autour de l'arbre moteur, chacune fonctionnant de façon largement indépendante — comme plusieurs petites marmites plutôt qu'une seule grande casserole. Avantage : facilité d'inspection et de remplacement d'une chambre isolée.</div>
 </div>
 
 <script>
 (function () {
   var wrap = document.getElementById('schema-m1504b-wrap');
   if (!wrap) { return; }
-  var btns = wrap.querySelectorAll('.m1504b-btn');
-  var viz = wrap.querySelector('#m1504b-viz');
+  var btnTubulaire = wrap.querySelector('#m1504b-btn-tubulaire');
+  var btnAnnulaire = wrap.querySelector('#m1504b-btn-annulaire');
+  var btnTuboannulaire = wrap.querySelector('#m1504b-btn-tuboannulaire');
+  var vizTubulaire = wrap.querySelector('#m1504b-viz-tubulaire');
+  var vizAnnulaire = wrap.querySelector('#m1504b-viz-annulaire');
+  var vizTuboannulaire = wrap.querySelector('#m1504b-viz-tuboannulaire');
   var caption = wrap.querySelector('#m1504b-caption');
 
-  function tubes(n, size) {
-    var html = '';
-    for (var i = 0; i < n; i++) {
-      html += '<div class="m1504b-tube" style="width:' + size + 'px; height:' + size + 'px;"></div>';
-    }
-    return html;
+  function hideAll() {
+    vizTubulaire.style.display = 'none';
+    vizAnnulaire.style.display = 'none';
+    vizTuboannulaire.style.display = 'none';
+    btnTubulaire.className = 'm1504b-btn';
+    btnAnnulaire.className = 'm1504b-btn';
+    btnTuboannulaire.className = 'm1504b-btn';
   }
 
-  var data = {
-    tubulaire: {
-      viz: tubes(6, 22),
-      txt: "Chambre tubulaire (multiple) : plusieurs chambres individuelles distinctes, disposées en cercle autour de l'arbre moteur, chacune fonctionnant de façon largement indépendante — comme plusieurs petites marmites plutôt qu'une seule grande casserole. Avantage : facilité d'inspection et de remplacement d'une chambre isolée."
-    },
-    annulaire: {
-      viz: '<div class="m1504b-ring"></div>',
-      txt: "Chambre annulaire : un seul volume continu en forme d'anneau tout autour de l'arbre moteur, sans cloisonnement interne. La configuration la plus répandue sur les moteurs modernes, pour son excellent rapport entre espace utilisé et surface de combustion disponible."
-    },
-    tuboannulaire: {
-      viz: '<div class="m1504b-ring" style="display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:3px; padding:4px; border-style:dashed;">' + tubes(4, 12) + '</div>',
-      txt: "Chambre tubo-annulaire : plusieurs tubes de combustion individuels logés à l'intérieur d'une seule enveloppe annulaire commune — une solution intermédiaire combinant certains avantages des deux configurations précédentes."
-    }
-  };
-
-  function render(f) {
-    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-f') === f); });
-    viz.innerHTML = data[f].viz;
-    caption.textContent = data[f].txt;
+  function showTubulaire() {
+    hideAll();
+    btnTubulaire.className = 'm1504b-btn active';
+    vizTubulaire.style.display = 'flex';
+    caption.textContent = "Chambre tubulaire (multiple) : plusieurs chambres individuelles distinctes, disposées en cercle autour de l'arbre moteur, chacune fonctionnant de façon largement indépendante — comme plusieurs petites marmites plutôt qu'une seule grande casserole. Avantage : facilité d'inspection et de remplacement d'une chambre isolée.";
   }
 
-  btns.forEach(function (b) {
-    b.addEventListener('click', function () { render(b.getAttribute('data-f')); });
-  });
+  function showAnnulaire() {
+    hideAll();
+    btnAnnulaire.className = 'm1504b-btn active';
+    vizAnnulaire.style.display = 'flex';
+    caption.textContent = "Chambre annulaire : un seul volume continu en forme d'anneau tout autour de l'arbre moteur, sans cloisonnement interne. La configuration la plus répandue sur les moteurs modernes, pour son excellent rapport entre espace utilisé et surface de combustion disponible.";
+  }
 
-  render('tubulaire');
+  function showTuboannulaire() {
+    hideAll();
+    btnTuboannulaire.className = 'm1504b-btn active';
+    vizTuboannulaire.style.display = 'flex';
+    caption.textContent = "Chambre tubo-annulaire : plusieurs tubes de combustion individuels logés à l'intérieur d'une seule enveloppe annulaire commune — une solution intermédiaire combinant certains avantages des deux configurations précédentes.";
+  }
+
+  btnTubulaire.addEventListener('click', showTubulaire);
+  btnAnnulaire.addEventListener('click', showAnnulaire);
+  btnTuboannulaire.addEventListener('click', showTuboannulaire);
 })();
 </script>

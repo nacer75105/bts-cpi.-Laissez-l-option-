@@ -1,0 +1,59 @@
+<div id="schema-m1507b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1507b-wrap .m1507b-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.9em; }
+#schema-m1507b-wrap .m1507b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1507b-wrap .m1507b-row { display:flex; align-items:center; gap:10px; margin-top:14px; }
+#schema-m1507b-wrap .m1507b-label { flex:0 0 110px; font-size:0.82em; }
+#schema-m1507b-wrap .m1507b-track { flex:1; height:20px; border-radius:4px; background:#e8e8e8; position:relative; overflow:hidden; border:1px solid #ccc; }
+#schema-m1507b-wrap .m1507b-fill { height:100%; }
+#schema-m1507b-wrap .m1507b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5em; }
+#schema-m1507b-wrap .m1507b-caption.alerte { border-left-color:#c0392b; background:rgba(192,57,43,0.10); }
+</style>
+
+<p><strong>Surveillance de l'huile au poste de pilotage :</strong> compare un fonctionnement normal à une anomalie.</p>
+
+<button class="m1507b-btn active" id="m1507b-btn-normal">Fonctionnement normal</button>
+<button class="m1507b-btn" id="m1507b-btn-anomalie">Pression anormalement basse</button>
+
+<div class="m1507b-row"><div class="m1507b-label">Pression d'huile</div><div class="m1507b-track"><div class="m1507b-fill" id="m1507b-pression" style="width:70%; background:#7fbf7f;"></div></div></div>
+<div class="m1507b-row"><div class="m1507b-label">Température d'huile</div><div class="m1507b-track"><div class="m1507b-fill" id="m1507b-temp" style="width:50%; background:#7fbf7f;"></div></div></div>
+
+<div class="m1507b-caption" id="m1507b-caption">Fonctionnement normal : pression et température d'huile stables dans leur plage habituelle — signe que la lubrification et le refroidissement des paliers sont assurés correctement.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1507b-wrap');
+  if (!wrap) { return; }
+  var btnNormal = wrap.querySelector('#m1507b-btn-normal');
+  var btnAnomalie = wrap.querySelector('#m1507b-btn-anomalie');
+  var pression = wrap.querySelector('#m1507b-pression');
+  var temp = wrap.querySelector('#m1507b-temp');
+  var caption = wrap.querySelector('#m1507b-caption');
+
+  function showNormal() {
+    btnNormal.className = 'm1507b-btn active';
+    btnAnomalie.className = 'm1507b-btn';
+    pression.style.width = '70%';
+    pression.style.background = '#7fbf7f';
+    temp.style.width = '50%';
+    temp.style.background = '#7fbf7f';
+    caption.className = 'm1507b-caption';
+    caption.textContent = "Fonctionnement normal : pression et température d'huile stables dans leur plage habituelle — signe que la lubrification et le refroidissement des paliers sont assurés correctement.";
+  }
+
+  function showAnomalie() {
+    btnNormal.className = 'm1507b-btn';
+    btnAnomalie.className = 'm1507b-btn active';
+    pression.style.width = '15%';
+    pression.style.background = '#c0392b';
+    temp.style.width = '50%';
+    temp.style.background = '#7fbf7f';
+    caption.className = 'm1507b-caption alerte';
+    caption.textContent = "Pression d'huile anormalement basse : signale que les paliers pourraient ne plus être correctement lubrifiés — un signe pris très au sérieux. Le seuil précis à partir duquel cette pression est considérée anormale est propre à chaque moteur et défini par son constructeur.";
+  }
+
+  btnNormal.addEventListener('click', showNormal);
+  btnAnomalie.addEventListener('click', showAnomalie);
+})();
+</script>
