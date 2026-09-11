@@ -1,0 +1,95 @@
+<div id="schema-m7a7-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m7a7-wrap .m7a7-btn { margin:4px 6px 4px 0; padding:6px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.9em; }
+#schema-m7a7-wrap .m7a7-btn:hover { background:#e8e8e8; }
+#schema-m7a7-wrap .m7a7-btn.active { background:#333; color:#fff; border-color:#333; }
+#schema-m7a7-wrap .m7a7-result { margin-top:14px; padding:12px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:3.6em; }
+#schema-m7a7-wrap .m7a7-result.ok { border-left-color:#3a9d3a; background:rgba(58,157,58,0.10); }
+#schema-m7a7-wrap .m7a7-result.bad { border-left-color:#c0392b; background:rgba(192,57,43,0.10); }
+#schema-m7a7-wrap .m7a7-cols { display:flex; gap:24px; flex-wrap:wrap; margin-top:10px; }
+#schema-m7a7-wrap .m7a7-col { min-width:220px; }
+#schema-m7a7-wrap .m7a7-label { font-weight:bold; margin-bottom:4px; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> choisis une situation d'installation, puis choisis rigide ou flexible — et vois si le choix est adapté.</p>
+
+<div class="m7a7-cols">
+  <div class="m7a7-col">
+    <div class="m7a7-label">Situation</div>
+    <div id="m7a7-situations">
+      <button class="m7a7-btn active" data-sit="fixe">Tracé fixe et rectiligne, entre deux points immobiles</button><br>
+      <button class="m7a7-btn" data-sit="moteur">Liaison vers un moteur mobile sur ses supports</button><br>
+      <button class="m7a7-btn" data-sit="paroi">Traversée d'une cloison pare-feu</button>
+    </div>
+  </div>
+  <div class="m7a7-col">
+    <div class="m7a7-label">Choix</div>
+    <div id="m7a7-choix">
+      <button class="m7a7-btn active" data-choix="rigide">Tuyauterie rigide</button><br>
+      <button class="m7a7-btn" data-choix="flexible">Flexible</button>
+    </div>
+  </div>
+</div>
+
+<div class="m7a7-result" id="m7a7-result"></div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m7a7-wrap');
+  if (!wrap) { return; }
+  var sitBtns = wrap.querySelectorAll('#m7a7-situations .m7a7-btn');
+  var choixBtns = wrap.querySelectorAll('#m7a7-choix .m7a7-btn');
+  var result = wrap.querySelector('#m7a7-result');
+
+  var situation = 'fixe';
+  var choix = 'rigide';
+
+  var nomsSit = {
+    fixe: 'un tracé fixe et rectiligne entre deux points immobiles',
+    moteur: 'une liaison vers un moteur mobile sur ses supports',
+    paroi: 'une traversée de cloison pare-feu',
+  };
+
+  function evalue() {
+    if (situation === 'fixe') {
+      if (choix === 'rigide') return { ok: true, texte: 'Adapté : rien ne bouge à cet endroit, une tuyauterie rigide convient parfaitement — plus légère et moins perméable qu’un flexible équivalent, sans aucun besoin d’absorber un mouvement.' };
+      return { ok: 'partiel', texte: 'Un flexible fonctionnerait techniquement ici, mais sans mouvement à absorber, il n’apporte aucun avantage : la tuyauterie rigide reste le choix le plus adapté (poids, coût, perméabilité).' };
+    }
+    if (situation === 'moteur') {
+      if (choix === 'flexible') return { ok: true, texte: 'Adapté : le flexible absorbe les petits mouvements du moteur sur ses supports sans subir de flexion répétée destructrice.' };
+      return { ok: false, texte: 'À proscrire : une tuyauterie rigide installée à cet endroit serait soumise à une flexion répétée à chaque mouvement du moteur, et finirait par se fissurer par fatigue — exactement le même mécanisme qu’un câble électrique massif plié à répétition.' };
+    }
+    // paroi
+    if (choix === 'flexible') return { ok: true, texte: 'Adapté : une cloison pare-feu sépare souvent une zone contenant un moteur légèrement mobile sur ses supports ; un flexible absorbe ce mouvement relatif sans se fissurer (un flexible utilisé à cet endroit doit en plus être spécifiquement qualifié pour résister au feu, une exigence propre à cette traversée précise).' };
+    return { ok: false, texte: 'Risqué : le moteur, de l’autre côté de la cloison, est mobile sur ses supports ; une tuyauterie rigide à cet endroit serait soumise à ce mouvement relatif sans pouvoir l’absorber, avec un risque de fissuration par fatigue au point de passage.' };
+  }
+
+  function render() {
+    var res = evalue();
+    result.classList.remove('ok', 'bad');
+    var intro = 'Pour ' + nomsSit[situation] + ', installer ' + (choix === 'rigide' ? 'une tuyauterie rigide' : 'un flexible') + ' : ';
+    if (res.ok === true) { result.classList.add('ok'); intro = '✅ ' + intro; }
+    else if (res.ok === false) { result.classList.add('bad'); intro = '❌ ' + intro; }
+    else { intro = '⚠️ ' + intro; }
+    result.textContent = intro + res.texte;
+  }
+
+  sitBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      situation = b.getAttribute('data-sit');
+      sitBtns.forEach(function (x) { x.classList.toggle('active', x === b); });
+      render();
+    });
+  });
+  choixBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      choix = b.getAttribute('data-choix');
+      choixBtns.forEach(function (x) { x.classList.toggle('active', x === b); });
+      render();
+    });
+  });
+
+  render();
+})();
+</script>

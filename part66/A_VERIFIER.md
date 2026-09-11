@@ -699,6 +699,47 @@ documentés pour M5) :
   sigle recouvre aussi couramment *Foreign Object Debris* selon les
   sources.
 
+### M7A.6-M7A.10 — round de relecture du module complet (dette mineure assumée)
+
+À la clôture du module (10 fiches, 50 questions), une relecture complète a
+porté un regard neuf sur M7A.6 à M7A.10 et un contrôle de cohérence sur
+l'ensemble. Deux points bloquants ont été trouvés et corrigés avant
+commit : la fiche M7A.6 décrivait la mécanique de pose du rivet plein à
+l'envers (la bouterolle est l'outil de la riveteuse appliqué côté tête
+d'usine, pas l'outil qui « soutient » cette tête — c'est le tas à river,
+côté tige, qui forme la tête d'atelier), corrigé dans la fiche, dans
+M7A-0026 et dans le schéma `M7A.6.html` ; et la fiche M7A.9 donnait le
+sens inverse de celui du schéma `M7A.9.html` sur l'effet du froid sur la
+tension d'un câble de commande (le schéma était juste : un refroidissement
+détend le câble, la structure se contractant davantage que lui), corrigé
+dans la fiche.
+
+Restent, en dette mineure assumée :
+- une dizaine de distracteurs trop peu plausibles sur le lot M7A.6-M7A.10
+  (M7A-0026, M7A-0027, M7A-0033, M7A-0034, M7A-0039, M7A-0041, M7A-0046,
+  M7A-0048, M7A-0050) ;
+- un gabarit répété sur 4 questions (M7A-0019, M7A-0029, M7A-0032,
+  M7A-0047) où la bonne réponse est systématiquement celle qui cite un
+  document de référence (dessin/AMM/SRM), reconnaissable sans connaître le
+  sujet ;
+- plusieurs fuites d'explication entre questions du même sous-chapitre ou
+  de sous-chapitres différents pouvant tomber dans le même examen blanc :
+  M7A-0045 → M7A-0038 (brinelling), M7A-0031 → M7A-0021 (fatigue par
+  flexion répétée), M7A-0030 → M7A-0027 (durcissement structural) ;
+- une paire miroir M7A-0026/M7A-0028 (accès un côté vs deux côtés d'un
+  rivet), même statut que les paires miroir déjà assumées pour M5 ;
+- le cycle de position de la bonne réponse (dette déjà notée pour
+  M7A.1-M7A.5) concerne également M7A.6-M7A.10 ;
+- M7A-0050 (pesée simultanée aux points d'appui) reste peu discriminante :
+  la vraie raison (les charges aux différents points d'appui doivent être
+  saisies au même instant et dans la même assiette pour qu'un centre de
+  gravité calculé à partir d'elles ait un sens) n'est qu'esquissée par la
+  bonne réponse actuelle ;
+- `schemas/M7A.7.html`, cas « traversée de cloison pare-feu » : la
+  justification a été complétée (mouvement du moteur + exigence de tenue
+  au feu du flexible), mais reste résumée par rapport à la réalité du
+  sujet.
+
 ## Méthode
 
 Avant tout commit d'un nouveau lot de questions, faire relire le lot par

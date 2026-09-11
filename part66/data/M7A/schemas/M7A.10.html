@@ -1,0 +1,98 @@
+<div id="schema-m7a10-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m7a10-wrap .m7a10-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.92em; }
+#schema-m7a10-wrap .m7a10-btn:hover { background:#e8e8e8; }
+#schema-m7a10-wrap .m7a10-btn.active { background:#333; color:#fff; border-color:#333; }
+#schema-m7a10-wrap .m7a10-flange { position:relative; width:220px; height:220px; margin:16px auto; border:6px dashed #999; border-radius:50%; }
+#schema-m7a10-wrap .m7a10-bolt { position:absolute; width:34px; height:34px; margin-left:-17px; margin-top:-17px; border-radius:50%; border:2px solid #555; background:#ddd; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:0.85em; transition:background .2s, color .2s; }
+#schema-m7a10-wrap .m7a10-bolt.serre { background:#3a9d3a; color:#fff; border-color:#2c7a2c; }
+#schema-m7a10-wrap .m7a10-bolt.courant { background:#e0a800; color:#fff; border-color:#b98600; }
+#schema-m7a10-wrap .m7a10-caption { margin-top:12px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:3.6em; }
+#schema-m7a10-wrap .m7a10-caption.ok { border-left-color:#3a9d3a; background:rgba(58,157,58,0.10); }
+#schema-m7a10-wrap .m7a10-caption.bad { border-left-color:#c0392b; background:rgba(192,57,43,0.10); }
+</style>
+
+<p><strong>Essaie toi-même :</strong> choisis un ordre de serrage pour les 6 fixations de cette bride, puis avance pas à pas pour voir la différence entre les deux méthodes.</p>
+
+<div>
+  <button class="m7a10-btn active" data-mode="sequentiel">Ordre séquentiel (1→2→3→4→5→6)</button>
+  <button class="m7a10-btn" data-mode="etoile">Motif croisé / en étoile (1→4→2→5→3→6)</button>
+</div>
+
+<div class="m7a10-flange" id="m7a10-flange"></div>
+
+<div>
+  <button class="m7a10-btn" id="m7a10-suivant">Pas suivant →</button>
+  <button class="m7a10-btn" id="m7a10-reset">↺ Recommencer</button>
+</div>
+
+<div class="m7a10-caption" id="m7a10-caption">Choisis un mode, puis avance pas à pas.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m7a10-wrap');
+  if (!wrap) { return; }
+  var modeBtns = wrap.querySelectorAll('.m7a10-btn[data-mode]');
+  var flange = wrap.querySelector('#m7a10-flange');
+  var suivantBtn = wrap.querySelector('#m7a10-suivant');
+  var resetBtn = wrap.querySelector('#m7a10-reset');
+  var caption = wrap.querySelector('#m7a10-caption');
+
+  var ORDRES = { sequentiel: [1, 2, 3, 4, 5, 6], etoile: [1, 4, 2, 5, 3, 6] };
+  var mode = 'sequentiel';
+  var pas = 0; // nombre de fixations déjà "serrées"
+
+  var bolts = {};
+  for (var n = 1; n <= 6; n++) {
+    var angle = (n - 1) * 60 * Math.PI / 180 - Math.PI / 2;
+    var x = 110 + 90 * Math.cos(angle);
+    var y = 110 + 90 * Math.sin(angle);
+    var b = document.createElement('div');
+    b.className = 'm7a10-bolt';
+    b.style.left = x + 'px';
+    b.style.top = y + 'px';
+    b.textContent = n;
+    flange.appendChild(b);
+    bolts[n] = b;
+  }
+
+  function render() {
+    var ordre = ORDRES[mode];
+    for (var n = 1; n <= 6; n++) { bolts[n].classList.remove('serre', 'courant'); }
+    for (var i = 0; i < pas; i++) { bolts[ordre[i]].classList.add(i === pas - 1 ? 'courant' : 'serre'); }
+    if (pas === 0) {
+      caption.classList.remove('ok', 'bad');
+      caption.textContent = 'Aucune fixation serrée pour l’instant. Clique sur « Pas suivant » pour commencer.';
+    } else if (pas < 6) {
+      caption.classList.remove('ok', 'bad');
+      if (mode === 'sequentiel') {
+        caption.textContent = 'Fixation ' + ordre[pas - 1] + ' serrée à fond avant même de passer à la suivante juste à côté : la pression se concentre d’un côté de la bride, qui se déforme légèrement de façon asymétrique à ce stade.';
+      } else {
+        caption.textContent = 'Fixation ' + ordre[pas - 1] + ' serrée : chaque nouvelle fixation est prise à l’écart des précédentes, en alternant les zones du pourtour plutôt qu’en avançant d’un cran, ce qui répartit progressivement la pression sur toute la bride.';
+      }
+    } else {
+      if (mode === 'sequentiel') {
+        caption.classList.add('bad');
+        caption.textContent = '❌ Les 6 fixations sont serrées, mais chacune a été portée à fond dans l’ordre : la déformation asymétrique créée aux premières fixations reste figée dans le joint final, avec un risque de répartition inégale de la pression.';
+      } else {
+        caption.classList.add('ok');
+        caption.textContent = '✅ Les 6 fixations sont serrées en motif croisé, ce qui répartit la pression bien plus régulièrement que l’ordre séquentiel. Ce schéma simplifie toutefois la réalité : en pratique, ce même parcours en motif croisé se répète sur plusieurs passes progressives (par exemple un pré-serrage léger, puis une passe au couple final), plutôt qu’en une seule fois comme illustré ici.';
+      }
+    }
+  }
+
+  modeBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      mode = b.getAttribute('data-mode');
+      pas = 0;
+      modeBtns.forEach(function (x) { x.classList.toggle('active', x === b); });
+      render();
+    });
+  });
+  suivantBtn.addEventListener('click', function () { pas = Math.min(6, pas + 1); render(); });
+  resetBtn.addEventListener('click', function () { pas = 0; render(); });
+
+  render();
+})();
+</script>

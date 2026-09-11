@@ -1,0 +1,69 @@
+<div id="schema-m7a8-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m7a8-wrap .m7a8-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:1em; }
+#schema-m7a8-wrap .m7a8-btn:hover { background:#e8e8e8; }
+#schema-m7a8-wrap .m7a8-viz { display:flex; align-items:center; justify-content:center; margin:16px 0; }
+#schema-m7a8-wrap .m7a8-gear { width:70px; height:70px; border-radius:50%; border:8px dashed #7a7a7a; box-sizing:border-box; }
+#schema-m7a8-wrap .m7a8-gap { height:26px; background:#e2e2e2; border-radius:4px; transition:width .15s, background .15s; }
+#schema-m7a8-wrap .m7a8-value { font-weight:bold; text-align:center; }
+#schema-m7a8-wrap .m7a8-caption { margin-top:10px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:3.4em; }
+#schema-m7a8-wrap .m7a8-caption.ok { border-left-color:#3a9d3a; background:rgba(58,157,58,0.10); }
+#schema-m7a8-wrap .m7a8-caption.bad { border-left-color:#c0392b; background:rgba(192,57,43,0.10); }
+</style>
+
+<p><strong>Essaie toi-même :</strong> ajuste le jeu de denture entre deux engrenages (unités arbitraires, pas des mm réels) et observe le risque associé à chaque extrême.</p>
+
+<div class="m7a8-value">Jeu de denture (unités d'illustration) : <span id="m7a8-val">10</span></div>
+<div class="m7a8-viz">
+  <div class="m7a8-gear"></div>
+  <div class="m7a8-gap" id="m7a8-gap" style="width:20px;"></div>
+  <div class="m7a8-gear"></div>
+</div>
+<div>
+  <button class="m7a8-btn" id="m7a8-moins">− Réduire le jeu</button>
+  <button class="m7a8-btn" id="m7a8-plus">+ Augmenter le jeu</button>
+</div>
+
+<div class="m7a8-caption" id="m7a8-caption"></div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m7a8-wrap');
+  if (!wrap) { return; }
+  var val = wrap.querySelector('#m7a8-val');
+  var gap = wrap.querySelector('#m7a8-gap');
+  var caption = wrap.querySelector('#m7a8-caption');
+  var moinsBtn = wrap.querySelector('#m7a8-moins');
+  var plusBtn = wrap.querySelector('#m7a8-plus');
+
+  var ZONE_MIN = 6, ZONE_MAX = 16;
+  var jeu = 10;
+
+  function render() {
+    val.textContent = jeu;
+    gap.style.width = (10 + jeu * 2) + 'px';
+    caption.classList.remove('ok', 'bad');
+    var texte;
+    if (jeu < ZONE_MIN) {
+      gap.style.background = '#c0392b';
+      texte = 'Jeu insuffisant : si les pièces se dilatent sous l’effet de la température en service, les dents risquent de se coincer (blocage de la transmission).';
+      caption.classList.add('bad');
+    } else if (jeu > ZONE_MAX) {
+      gap.style.background = '#c0392b';
+      texte = 'Jeu excessif : chaque inversion de sens de rotation produit un choc entre les dents, avec une usure accélérée et un bruit caractéristique.';
+      caption.classList.add('bad');
+    } else {
+      gap.style.background = '#3a9d3a';
+      texte = 'Jeu dans la plage attendue : assez d’espace pour tolérer la dilatation thermique, sans choc excessif à l’inversion du sens de rotation.';
+      caption.classList.add('ok');
+    }
+    caption.textContent = texte + ' (Dans la réalité, la valeur exacte à respecter est toujours celle donnée par l’AMM pour l’engrenage concerné, jamais estimée.)';
+  }
+
+  plusBtn.addEventListener('click', function () { jeu = Math.min(22, jeu + 2); render(); });
+  moinsBtn.addEventListener('click', function () { jeu = Math.max(0, jeu - 2); render(); });
+
+  render();
+})();
+</script>

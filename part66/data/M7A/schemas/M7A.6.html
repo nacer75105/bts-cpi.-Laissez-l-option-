@@ -1,0 +1,55 @@
+<div id="schema-m7a6-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m7a6-wrap .m7a6-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.92em; text-align:center; }
+#schema-m7a6-wrap .m7a6-btn:hover { background:#e8e8e8; }
+#schema-m7a6-wrap .m7a6-btn.active { background:#333; color:#fff; border-color:#333; }
+#schema-m7a6-wrap .m7a6-hole { display:inline-block; width:36px; height:36px; border:2px dashed #999; border-radius:50%; margin-bottom:4px; position:relative; }
+#schema-m7a6-wrap .m7a6-rivet { position:absolute; width:26px; height:26px; border-radius:50%; border:2px solid #555; top:3px; left:3px; }
+#schema-m7a6-wrap .m7a6-rivet.bon { background:#bcd6ec; }
+#schema-m7a6-wrap .m7a6-rivet.fissure { background:#bcd6ec; }
+#schema-m7a6-wrap .m7a6-rivet.fissure::after { content:''; position:absolute; left:50%; top:2px; bottom:2px; width:2px; background:#c0392b; transform:rotate(20deg); }
+#schema-m7a6-wrap .m7a6-rivet.decentre { background:#bcd6ec; top:-2px; left:12px; }
+#schema-m7a6-wrap .m7a6-rivet.lache { width:16px; height:16px; top:8px; left:8px; background:#e8e8e8; border-style:dashed; }
+#schema-m7a6-wrap .m7a6-caption { margin-top:12px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:3.4em; }
+#schema-m7a6-wrap .m7a6-caption.ok { border-left-color:#3a9d3a; background:rgba(58,157,58,0.10); }
+#schema-m7a6-wrap .m7a6-caption.bad { border-left-color:#c0392b; background:rgba(192,57,43,0.10); }
+</style>
+
+<p><strong>Essaie toi-même :</strong> parmi ces quatre têtes bouterollées, une seule est conforme. Clique sur chacune pour voir le diagnostic.</p>
+
+<div id="m7a6-choices"></div>
+<div class="m7a6-caption" id="m7a6-caption">Clique sur une tête pour voir son diagnostic.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m7a6-wrap');
+  if (!wrap) { return; }
+  var choicesDiv = wrap.querySelector('#m7a6-choices');
+  var caption = wrap.querySelector('#m7a6-caption');
+
+  var cas = [
+    { id: 'bon', label: 'Rivet A', classe: 'bon', ok: true,
+      texte: 'Conforme : tête bouterollée bien formée, centrée, sans fissure, et rivet qui ne bouge pas dans son trou.' },
+    { id: 'fissure', label: 'Rivet B', classe: 'fissure', ok: false,
+      texte: 'Non conforme : la tête présente une fissure, signe que le métal a été travaillé de façon excessive lors de la pose (frappe trop violente, ou métal déjà fragilisé). Ce rivet doit être déposé et remplacé.' },
+    { id: 'decentre', label: 'Rivet C', classe: 'decentre', ok: false,
+      texte: 'Non conforme : la tête d’atelier est décentrée par rapport à l’axe du trou, signe que le tas à river n’était pas correctement aligné ou maintenu pendant la pose. La tenue mécanique de ce rivet n’est pas garantie.' },
+    { id: 'lache', label: 'Rivet D', classe: 'lache', ok: false,
+      texte: 'Non conforme : le rivet reste lâche dans son trou, souvent le signe d’un trou surdimensionné par rapport au diamètre du rivet. Un rivet lâche ne transmet pas correctement l’effort et doit être traité selon la procédure de reprise prévue par l’AMM (rivet de diamètre supérieur, par exemple), jamais laissé en l’état.' },
+  ];
+
+  cas.forEach(function (c) {
+    var btn = document.createElement('button');
+    btn.className = 'm7a6-btn';
+    btn.innerHTML = '<div class="m7a6-hole"><div class="m7a6-rivet ' + c.classe + '"></div></div><br>' + c.label;
+    btn.addEventListener('click', function () {
+      wrap.querySelectorAll('.m7a6-btn').forEach(function (x) { x.classList.toggle('active', x === btn); });
+      caption.classList.remove('ok', 'bad');
+      caption.classList.add(c.ok ? 'ok' : 'bad');
+      caption.textContent = (c.ok ? '✅ ' : '❌ ') + c.texte;
+    });
+    choicesDiv.appendChild(btn);
+  });
+})();
+</script>

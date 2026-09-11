@@ -1,0 +1,88 @@
+<div id="schema-m7a9-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m7a9-wrap .m7a9-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:1em; }
+#schema-m7a9-wrap .m7a9-btn:hover { background:#e8e8e8; }
+#schema-m7a9-wrap .m7a9-bar-outer { width:100%; max-width:420px; height:26px; background:#e2e2e2; border-radius:6px; margin:14px 0 6px; overflow:hidden; position:relative; }
+#schema-m7a9-wrap .m7a9-bar-inner { height:100%; width:0%; background:#888; transition:width .15s, background .15s; }
+#schema-m7a9-wrap .m7a9-zone { position:absolute; top:0; bottom:0; background:rgba(58,157,58,0.35); }
+#schema-m7a9-wrap .m7a9-value { font-weight:bold; margin-bottom:4px; }
+#schema-m7a9-wrap .m7a9-caption { margin-top:12px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:3.4em; }
+#schema-m7a9-wrap .m7a9-caption.ok { border-left-color:#3a9d3a; background:rgba(58,157,58,0.10); }
+#schema-m7a9-wrap .m7a9-caption.bad { border-left-color:#c0392b; background:rgba(192,57,43,0.10); }
+</style>
+
+<p><strong>Essaie toi-même :</strong> le ridoir a été réglé une fois, par temps chaud, à la tension cible (unités d'illustration). Fais varier la température ambiante et observe ce que devient la tension réelle du câble, sans nouveau réglage.</p>
+
+<div class="m7a9-value">Température ambiante : <span id="m7a9-temp">30</span> °C (illustration)</div>
+<div class="m7a9-value">Tension réelle du câble (unités d'illustration) : <span id="m7a9-tens">62</span></div>
+<div class="m7a9-bar-outer">
+  <div class="m7a9-zone" id="m7a9-zone"></div>
+  <div class="m7a9-bar-inner" id="m7a9-bar"></div>
+</div>
+
+<div>
+  <button class="m7a9-btn" id="m7a9-froid">− Refroidir</button>
+  <button class="m7a9-btn" id="m7a9-chaud">+ Réchauffer</button>
+</div>
+
+<div class="m7a9-caption" id="m7a9-caption"></div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m7a9-wrap');
+  if (!wrap) { return; }
+  var tempSpan = wrap.querySelector('#m7a9-temp');
+  var tensSpan = wrap.querySelector('#m7a9-tens');
+  var bar = wrap.querySelector('#m7a9-bar');
+  var zone = wrap.querySelector('#m7a9-zone');
+  var caption = wrap.querySelector('#m7a9-caption');
+  var froidBtn = wrap.querySelector('#m7a9-froid');
+  var chaudBtn = wrap.querySelector('#m7a9-chaud');
+
+  var TEMP_REGLAGE = 30; // température au moment du réglage initial
+  var TENSION_CIBLE = 62; // ce que l'abaque prescrivait à cette température
+  var ZONE_MIN = 55, ZONE_MAX = 70;
+  var temp = TEMP_REGLAGE;
+
+  function pct(v) { return Math.max(0, Math.min(100, v)); }
+
+  function tensionReelle() {
+    // Illustration : la structure et le câble ne se dilatent pas pareil, donc la tension
+    // réelle dérive quand la température s'écarte de celle du réglage initial.
+    return Math.round(TENSION_CIBLE + (temp - TEMP_REGLAGE) * 1.2);
+  }
+
+  function render() {
+    var tens = tensionReelle();
+    tempSpan.textContent = temp;
+    tensSpan.textContent = tens;
+    bar.style.width = pct(tens) + '%';
+    bar.style.background = (tens < ZONE_MIN || tens > ZONE_MAX) ? '#c0392b' : '#3a9d3a';
+    zone.style.left = ZONE_MIN + '%';
+    zone.style.width = (ZONE_MAX - ZONE_MIN) + '%';
+
+    caption.classList.remove('ok', 'bad');
+    var texte;
+    if (temp === TEMP_REGLAGE) {
+      texte = 'À la température du réglage initial, la tension correspond exactement à la valeur cible.';
+      caption.classList.add('ok');
+    } else if (tens < ZONE_MIN) {
+      texte = 'Le câble s’est détendu par rapport à la température de réglage : risque de mou excessif et de câble qui saute hors de sa gorge de poulie.';
+      caption.classList.add('bad');
+    } else if (tens > ZONE_MAX) {
+      texte = 'Le câble s’est tendu par rapport à la température de réglage : sollicitation excessive de toute la chaîne mécanique (poulies, fixations).';
+      caption.classList.add('bad');
+    } else {
+      texte = 'Léger écart de température, tension encore acceptable — mais qui continuerait à dériver si l’écart augmentait.';
+      caption.classList.add('ok');
+    }
+    caption.textContent = texte + ' C’est exactement pour cette raison que le réglage se fait avec un abaque température/tension, jamais avec une valeur fixe indépendante de la température.';
+  }
+
+  chaudBtn.addEventListener('click', function () { temp = Math.min(50, temp + 5); render(); });
+  froidBtn.addEventListener('click', function () { temp = Math.max(-20, temp - 5); render(); });
+
+  render();
+})();
+</script>
