@@ -1,0 +1,63 @@
+<div id="schema-m17a12b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m17a12b-wrap .m17a12b-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.9em; }
+#schema-m17a12b-wrap .m17a12b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m17a12b-wrap .m17a12b-track { position:relative; max-width:420px; height:90px; margin-top:16px; border:1px solid #ccc; border-radius:6px; background:#fafafa; }
+#schema-m17a12b-wrap .m17a12b-ref { position:absolute; top:50%; left:10px; right:10px; height:2px; background:#bbb; background-image:repeating-linear-gradient(90deg,#bbb 0 8px,transparent 8px 14px); transform:translateY(-50%); }
+#schema-m17a12b-wrap .m17a12b-tip { position:absolute; width:16px; height:16px; border-radius:50%; transition:top .3s; }
+#schema-m17a12b-wrap .m17a12b-tipA { left:25%; top:50%; margin-top:-8px; background:#2e7d32; border:2px solid #1e5c1e; }
+#schema-m17a12b-wrap .m17a12b-tipB { left:50%; top:50%; margin-top:-8px; background:#2e7d32; border:2px solid #1e5c1e; }
+#schema-m17a12b-wrap .m17a12b-tipC { left:75%; top:50%; margin-top:-8px; background:#2e7d32; border:2px solid #1e5c1e; }
+#schema-m17a12b-wrap .m17a12b-tip.off { background:#c0392b; border-color:#8a2020; }
+#schema-m17a12b-wrap .m17a12b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+#schema-m17a12b-wrap .m17a12b-caption.bad { border-left-color:#c0392b; background:rgba(192,57,43,0.10); }
+</style>
+
+<p><strong>Cas d'application — le tracking :</strong> compare une hélice tripale dont les pales suivent le même plan de rotation (trait pointillé) et une hélice où une pale dévie.</p>
+
+<div>
+  <button class="m17a12b-btn active" data-mode="bon">Tracking correct</button>
+  <button class="m17a12b-btn" data-mode="defaut">Défaut de tracking</button>
+</div>
+
+<div class="m17a12b-track">
+  <div class="m17a12b-ref"></div>
+  <div class="m17a12b-tip m17a12b-tipA" id="m17a12b-tipA"></div>
+  <div class="m17a12b-tip m17a12b-tipB" id="m17a12b-tipB"></div>
+  <div class="m17a12b-tip m17a12b-tipC" id="m17a12b-tipC"></div>
+</div>
+<div style="font-size:0.75em; color:#666; text-align:center; margin-top:4px;">Position de l'extrémité de chaque pale par rapport au plan de rotation (déviation exagérée pour rester visible)</div>
+
+<div class="m17a12b-caption" id="m17a12b-caption">Tracking correct : les trois extrémités de pale passent exactement au même niveau par rapport au plan de rotation, tour après tour.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m17a12b-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('.m17a12b-btn');
+  var tipB = wrap.querySelector('#m17a12b-tipB');
+  var caption = wrap.querySelector('#m17a12b-caption');
+
+  function render(mode) {
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-mode') === mode); });
+    if (mode === 'bon') {
+      tipB.style.top = '50%';
+      tipB.classList.remove('off');
+      caption.className = 'm17a12b-caption';
+      caption.textContent = "Tracking correct : les trois extrémités de pale passent exactement au même niveau par rapport au plan de rotation, tour après tour — aucune ne « déborde » par rapport aux autres.";
+    } else {
+      tipB.style.top = '25%';
+      tipB.classList.add('off');
+      caption.className = 'm17a12b-caption bad';
+      caption.textContent = "Défaut de tracking : une pale (rouge) dévie du plan commun aux deux autres — une pale légèrement déformée, ou un système de retenue légèrement différent, peuvent en être la cause. Ce défaut, même minime, introduit une vibration caractéristique en vol, en lien avec l'équilibrage détaillé en fiche M17A.13.";
+    }
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { render(b.getAttribute('data-mode')); });
+  });
+
+  render('bon');
+})();
+</script>

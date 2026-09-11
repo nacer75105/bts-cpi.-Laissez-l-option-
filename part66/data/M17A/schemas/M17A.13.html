@@ -1,0 +1,61 @@
+<div id="schema-m17a13a-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m17a13a-wrap .m17a13a-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.95em; }
+#schema-m17a13a-wrap .m17a13a-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m17a13a-wrap .m17a13a-btn:disabled { opacity:0.4; cursor:not-allowed; }
+#schema-m17a13a-wrap .m17a13a-stage { position:relative; width:220px; height:140px; margin:16px auto 0; }
+#schema-m17a13a-wrap .m17a13a-pivot { position:absolute; top:20px; left:50%; width:6px; height:6px; margin-left:-3px; border-radius:50%; background:#555; }
+#schema-m17a13a-wrap .m17a13a-bar { position:absolute; top:20px; left:50%; width:170px; height:10px; margin-left:-85px; background:#9fb8d9; border:1.5px solid #33507a; border-radius:5px; transform-origin:center; transition:transform .4s; }
+#schema-m17a13a-wrap .m17a13a-mass { position:absolute; width:14px; height:14px; border-radius:50%; background:#e0a800; border:2px solid #a67c00; top:-14px; left:-4px; opacity:0; transition:opacity .3s; }
+#schema-m17a13a-wrap .m17a13a-caption { margin-top:16px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+#schema-m17a13a-wrap .m17a13a-caption.ok { border-left-color:#2e7d32; background:rgba(46,125,50,0.10); }
+</style>
+
+<p><strong>Essaie toi-même :</strong> une pale plus lourde qu'une autre fait basculer l'ensemble monté sur son axe. Ajoute une petite masse du côté léger pour rétablir l'équilibre.</p>
+
+<div>
+  <button class="m17a13a-btn active" data-etat="desequilibre">Déséquilibré (pale droite plus lourde)</button>
+  <button class="m17a13a-btn" id="m17a13a-corriger" data-etat="equilibre">Ajouter une masse d'équilibrage</button>
+</div>
+
+<div class="m17a13a-stage">
+  <div class="m17a13a-pivot"></div>
+  <div class="m17a13a-bar" id="m17a13a-bar">
+    <div class="m17a13a-mass" id="m17a13a-mass"></div>
+  </div>
+</div>
+
+<div class="m17a13a-caption" id="m17a13a-caption">Déséquilibré : le côté le plus lourd (droite) descend spontanément — l'ensemble ne reste pas immobile dans n'importe quelle position.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m17a13a-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('.m17a13a-btn');
+  var bar = wrap.querySelector('#m17a13a-bar');
+  var mass = wrap.querySelector('#m17a13a-mass');
+  var caption = wrap.querySelector('#m17a13a-caption');
+
+  function render(etat) {
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-etat') === etat); });
+    if (etat === 'equilibre') {
+      bar.style.transform = 'rotate(0deg)';
+      mass.style.opacity = '1';
+      caption.className = 'm17a13a-caption ok';
+      caption.textContent = "Équilibré : une petite masse d'équilibrage, ajoutée du côté le plus léger (gauche), aux points prévus à cet effet par le constructeur, compense la différence. L'ensemble reste désormais immobile quelle que soit la position dans laquelle on le place.";
+    } else {
+      bar.style.transform = 'rotate(18deg)';
+      mass.style.opacity = '0';
+      caption.className = 'm17a13a-caption';
+      caption.textContent = "Déséquilibré : le côté le plus lourd (droite) descend spontanément — l'ensemble ne reste pas immobile dans n'importe quelle position, un peu comme une roue de vélo mal équilibrée qui s'arrête toujours au même endroit.";
+    }
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { render(b.getAttribute('data-etat')); });
+  });
+
+  render('desequilibre');
+})();
+</script>

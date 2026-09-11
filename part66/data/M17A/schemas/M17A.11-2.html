@@ -1,0 +1,57 @@
+<div id="schema-m17a11b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m17a11b-wrap .m17a11b-slider { width:100%; max-width:420px; }
+#schema-m17a11b-wrap .m17a11b-row { display:flex; align-items:center; gap:10px; margin-top:12px; }
+#schema-m17a11b-wrap .m17a11b-rowlabel { width:150px; font-size:0.85em; color:#333; }
+#schema-m17a11b-wrap .m17a11b-bar-outer { flex:1; max-width:300px; height:18px; background:#e2e2e2; border-radius:4px; overflow:hidden; }
+#schema-m17a11b-wrap .m17a11b-bar-inner { height:100%; transition:width .15s, background .2s; }
+#schema-m17a11b-wrap .m17a11b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+#schema-m17a11b-wrap .m17a11b-caption.bad { border-left-color:#c0392b; background:rgba(192,57,43,0.10); }
+</style>
+
+<p><strong>Cas d'application — hélice sans protection efficace contre le givre :</strong> fais varier l'accumulation de givre sur une seule pale et observe les deux conséquences qui en découlent.</p>
+
+<div class="m17a11b-value">Givre accumulé sur une pale (illustration) : <span id="m17a11b-lu">0</span> %</div>
+<input type="range" class="m17a11b-slider" id="m17a11b-givre" min="0" max="100" value="0" step="5">
+
+<div class="m17a11b-row">
+  <div class="m17a11b-rowlabel">Déséquilibre de masse</div>
+  <div class="m17a11b-bar-outer"><div class="m17a11b-bar-inner" id="m17a11b-desequilibre" style="background:#e0a800;"></div></div>
+</div>
+<div class="m17a11b-row">
+  <div class="m17a11b-rowlabel">Perte de traction</div>
+  <div class="m17a11b-bar-outer"><div class="m17a11b-bar-inner" id="m17a11b-traction" style="background:#c0392b;"></div></div>
+</div>
+
+<div class="m17a11b-caption" id="m17a11b-caption">Pas de givre : aucun déséquilibre, aucune perte de traction liée au givre.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m17a11b-wrap');
+  if (!wrap) { return; }
+  var slider = wrap.querySelector('#m17a11b-givre');
+  var lu = wrap.querySelector('#m17a11b-lu');
+  var desequilibre = wrap.querySelector('#m17a11b-desequilibre');
+  var traction = wrap.querySelector('#m17a11b-traction');
+  var caption = wrap.querySelector('#m17a11b-caption');
+
+  function render() {
+    var v = parseInt(slider.value, 10);
+    lu.textContent = v;
+    desequilibre.style.width = v + '%';
+    traction.style.width = v + '%';
+
+    if (v === 0) {
+      caption.textContent = "Pas de givre : aucun déséquilibre, aucune perte de traction liée au givre.";
+    } else if (v < 50) {
+      caption.textContent = "Accumulation modérée sur une seule pale : la pale givrée devient plus lourde que les autres (déséquilibre de masse, rappel M17A.13), et son profil dégradé produit déjà un peu moins de traction (rappel M17A.1).";
+    } else {
+      caption.textContent = "Accumulation importante, sans protection efficace : le déséquilibre de masse entre pales et la perte de traction s'aggravent ensemble, sans compter le risque qu'un morceau de glace se détache brutalement et de façon asymétrique, provoquant une vibration soudaine ou endommageant d'autres parties de l'avion.";
+    }
+  }
+
+  slider.addEventListener('input', render);
+  render();
+})();
+</script>

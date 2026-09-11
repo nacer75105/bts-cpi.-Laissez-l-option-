@@ -1,0 +1,99 @@
+<div id="schema-m17a11a-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m17a11a-wrap .m17a11a-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.95em; }
+#schema-m17a11a-wrap .m17a11a-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m17a11a-wrap .m17a11a-pale-row { display:flex; align-items:center; gap:8px; margin-top:16px; }
+#schema-m17a11a-wrap .m17a11a-pale { flex:1; height:26px; background:#9fb8d9; border:1.5px solid #33507a; border-radius:4px; position:relative; overflow:hidden; }
+#schema-m17a11a-wrap .m17a11a-zone { position:absolute; top:0; bottom:0; width:22%; transition:background .3s; }
+#schema-m17a11a-wrap .m17a11a-zone.z1 { left:0; }
+#schema-m17a11a-wrap .m17a11a-zone.z2 { left:26%; }
+#schema-m17a11a-wrap .m17a11a-zone.z3 { left:52%; }
+#schema-m17a11a-wrap .m17a11a-zone.z4 { left:78%; }
+#schema-m17a11a-wrap .m17a11a-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> compare un cycle de dégivrage électrothermique (traite un givre déjà formé) et un antigivrage par fluide (empêche le givre de prendre).</p>
+
+<div>
+  <button class="m17a11a-btn active" data-mode="electro">Dégivrage électrothermique</button>
+  <button class="m17a11a-btn" data-mode="fluide">Antigivrage par fluide</button>
+</div>
+<div style="margin-top:8px;"><button class="m17a11a-btn" id="m17a11a-play">▶ Lancer</button></div>
+
+<div class="m17a11a-pale-row">
+  <div class="m17a11a-pale" id="m17a11a-pale">
+    <div class="m17a11a-zone z1" id="m17a11a-z1" style="background:#c0392b;"></div>
+    <div class="m17a11a-zone z2" id="m17a11a-z2" style="background:#c0392b;"></div>
+    <div class="m17a11a-zone z3" id="m17a11a-z3" style="background:#c0392b;"></div>
+    <div class="m17a11a-zone z4" id="m17a11a-z4" style="background:#c0392b;"></div>
+  </div>
+</div>
+<div style="font-size:0.75em; color:#666; text-align:center;">Bord d'attaque de la pale (pied à gauche, extrémité à droite) — rouge = givre présent, bleu = protégé par le fluide, vert = dégagé</div>
+
+<div class="m17a11a-caption" id="m17a11a-caption">Pale givrée sur toute sa longueur. Choisis un système puis lance pour observer comment il agit.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m17a11a-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('.m17a11a-btn[data-mode]');
+  var playBtn = wrap.querySelector('#m17a11a-play');
+  var zones = [wrap.querySelector('#m17a11a-z1'), wrap.querySelector('#m17a11a-z2'), wrap.querySelector('#m17a11a-z3'), wrap.querySelector('#m17a11a-z4')];
+  var caption = wrap.querySelector('#m17a11a-caption');
+  var mode = 'electro';
+  var playing = false;
+
+  function reset() {
+    if (mode === 'electro') {
+      zones.forEach(function (z) { z.style.background = '#c0392b'; });
+      caption.textContent = "Dégivrage électrothermique : pale déjà givrée sur toute sa longueur. Lance le cycle pour voir les résistances chauffer chaque zone tour à tour et détacher ce givre déjà formé.";
+      playBtn.textContent = '▶ Lancer le cycle de dégivrage';
+    } else {
+      zones.forEach(function (z) { z.style.background = '#7ec8e3'; });
+      caption.textContent = "Antigivrage par fluide : pale déjà protégée par le fluide, réparti sur toute sa longueur par la force centrifuge — pas de givre accumulé. Lance pour simuler l'arrivée de conditions givrantes.";
+      playBtn.textContent = '▶ Simuler des conditions givrantes';
+    }
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      mode = b.getAttribute('data-mode');
+      btns.forEach(function (x) { x.classList.toggle('active', x === b); });
+      reset();
+    });
+  });
+
+  playBtn.addEventListener('click', function () {
+    if (playing) { return; }
+    playing = true;
+    if (mode === 'electro') {
+      zones.forEach(function (z) { z.style.background = '#c0392b'; });
+      var i = 0;
+      var step = function () {
+        if (i > 0) { zones[i - 1].style.background = '#2e7d32'; }
+        if (i < zones.length) {
+          zones[i].style.background = '#e0a800';
+          caption.textContent = "Résistance active sur la zone " + (i + 1) + " : la fine couche de glace en contact avec la pale fond, la force centrifuge projette le reste du givre déjà décollé.";
+          i++;
+          setTimeout(step, 500);
+        } else {
+          caption.textContent = "Cycle terminé : chaque zone a été chauffée à son tour, puis dégagée par la force centrifuge — un chauffage cyclique, pas continu, économise l'énergie électrique tout en traitant un givre déjà formé.";
+          playing = false;
+        }
+      };
+      step();
+    } else {
+      zones.forEach(function (z) { z.style.background = '#e0a800'; });
+      caption.textContent = "Conditions givrantes rencontrées : le liquide, déjà présent sur la pale, empêche la glace d'adhérer avant même qu'elle ne se forme.";
+      setTimeout(function () {
+        zones.forEach(function (z) { z.style.background = '#7ec8e3'; });
+        caption.textContent = "Le fluide abaisse la température à laquelle l'eau gèle : la pale reste protégée en continu, sans jamais accumuler de givre à traiter après coup — la différence essentielle avec le dégivrage électrothermique, qui agit sur un givre déjà formé.";
+        playing = false;
+      }, 700);
+    }
+  });
+
+  reset();
+})();
+</script>

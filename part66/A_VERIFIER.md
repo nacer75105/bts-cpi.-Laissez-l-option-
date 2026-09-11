@@ -920,6 +920,65 @@ recouvrements déjà admis pour M5/M7A) ; les sources restent génériques
 (« Notions générales de construction aéronautique — … »), conforme au
 traitement des modules techniques (voir section Méthode).
 
+### Lot 3 (M17A.11-M17A.14, 4 fiches, 32 questions, 8 schémas) — dernier
+lot, module complet à 14 fiches, 5 rounds de relecture
+
+Dégivrage/antigivrage, inspection, équilibrage, stockage. Schémas
+construits directement en HTML/CSS/JS pur dès le départ, comme le lot 2.
+
+**BLOQUANT trouvés et corrigés au fil des rounds** : une contradiction
+avec le lot 1 déjà commité (la fiche M17A.5 attribue les masses logées
+dans le spinner à l'équilibrage *dynamique* ; une première version de
+M17A.13 les attribuait à tort à l'équilibrage *statique* — corrigé en
+retirant la mention du spinner du paragraphe statique et en la
+déplaçant vers le paragraphe dynamique, seul endroit cohérent avec
+M17A.5) ; un schéma (`M17A.13.html`) où la masse d'équilibrage
+s'affichait visuellement du côté lourd de la balance au lieu du côté
+léger ; un geste concret de sécurité (rotation manuelle de l'hélice)
+enseigné sans aucun garde-fou, contraire au critère 2bis — retiré au
+profit du seul principe général, renvoyé au manuel constructeur et aux
+procédures de sécurité applicables (retiré en deux temps : une
+première correction avait laissé une mention résiduelle dans le
+paragraphe de traçabilité, trouvée au round suivant) ; un ressuage
+présenté à tort comme applicable au bois (corrigé : rattaché
+spécifiquement au métal, le bois n'étant pas sujet à la corrosion) ;
+un terme inventé sans signification (« roue à roue ») pour décrire une
+méthode de tracking ; une composition de fluide antigivrage affirmée
+catégoriquement (« à base de glycol ») alors que plusieurs produits
+coexistent selon l'installation ; un schéma (`M17A.11.html`) dont le
+mode « antigivrage par fluide » représentait à tort un dégivrage après
+coup (pale givrée puis traitée) plutôt qu'une prévention (pale déjà
+protégée, jamais givrée) — contredisant directement les questions
+testant cette distinction ; un verdict de schéma (`M17A.14-2.html`)
+affirmant qu'un contrôle de routine est catégoriquement « suffisant »
+sans renvoi au programme d'entretien ; un superlatif non soutenu
+(« le plus probablement ») sur la localisation d'une corrosion de
+stockage ; un schéma (`M17A.12.html`) dont la mise en page (trois zones
+côte à côte, « Pied — Bord d'attaque — Extrémité ») suggérait à tort
+que le bord d'attaque est un tronçon entre les deux autres zones, alors
+qu'il court sur toute la longueur de la pale — corrigé par réordonnancement
+et légende explicite ; une contradiction interne à la fiche M17A.14
+(la phrase d'ouverture affirmait que « le temps, à lui seul, peut
+dégrader » l'hélice, contredisant mot pour mot le paragraphe suivant
+et la question testant précisément ce point).
+
+**Problème systémique trouvé et corrigé** : les 32 questions du lot
+avaient toutes leur bonne réponse à l'index 0 des options (contrairement
+au simple déséquilibre, tolérable, déjà documenté pour les lots
+précédents). Corrigé par un rééquilibrage mécanique (permutation
+d'options, contenu inchangé) plutôt qu'une réécriture manuelle,
+donnant une répartition 11/11/10 sur les trois index.
+
+**Dette mineure assumée** : le rééquilibrage des positions suit un
+cycle 0/1/2/0/1/2 strictement régulier (prévisible en théorie, neutralisé
+en pratique par le mélange à l'affichage dans `part66/ui.py`) plutôt
+qu'une permutation aléatoire — même statut que la dette de position déjà
+documentée pour M7A et les lots précédents de M17A ; quelques distracteurs
+restent plus faibles que la moyenne du lot (signalés en relecture,
+non corrigés individuellement) ; un léger recouvrement conceptuel
+persiste entre certaines questions de la fiche M17A.14 (stockage),
+comme pour les lots précédents.
+
 ## Standard de calibrage du contenu (décidé avec l'utilisateur le
 2026-09-11, applicable à partir de M17A)
 

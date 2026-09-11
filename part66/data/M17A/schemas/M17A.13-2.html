@@ -1,0 +1,61 @@
+<div id="schema-m17a13b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m17a13b-wrap .m17a13b-slider { width:100%; max-width:420px; }
+#schema-m17a13b-wrap .m17a13b-row { display:flex; align-items:center; gap:10px; margin-top:12px; }
+#schema-m17a13b-wrap .m17a13b-rowlabel { width:170px; font-size:0.85em; color:#333; }
+#schema-m17a13b-wrap .m17a13b-bar-outer { flex:1; max-width:280px; height:20px; background:#e2e2e2; border-radius:5px; overflow:hidden; }
+#schema-m17a13b-wrap .m17a13b-bar-inner { height:100%; transition:width .1s, background .2s; }
+#schema-m17a13b-wrap .m17a13b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+#schema-m17a13b-wrap .m17a13b-caption.ok { border-left-color:#2e7d32; background:rgba(46,125,50,0.10); }
+#schema-m17a13b-wrap .m17a13b-caption.bad { border-left-color:#c0392b; background:rgba(192,57,43,0.10); }
+</style>
+
+<p><strong>Cas d'application — équilibrage dynamique, moteur en fonctionnement :</strong> ajuste la masse d'équilibrage ajoutée et observe l'amplitude de vibration résiduelle mesurée en rotation réelle.</p>
+
+<div class="m17a13b-value">Masse d'équilibrage ajoutée (illustration) : <span id="m17a13b-lu">0</span></div>
+<input type="range" class="m17a13b-slider" id="m17a13b-masse" min="0" max="100" value="0" step="2">
+
+<div class="m17a13b-row">
+  <div class="m17a13b-rowlabel">Vibration résiduelle mesurée</div>
+  <div class="m17a13b-bar-outer"><div class="m17a13b-bar-inner" id="m17a13b-vib" style="background:#c0392b;"></div></div>
+</div>
+
+<div class="m17a13b-caption" id="m17a13b-caption">Aucune masse ajoutée : la vibration résiduelle, mesurée par l'appareil pendant que l'hélice tourne réellement, est maximale.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m17a13b-wrap');
+  if (!wrap) { return; }
+  var slider = wrap.querySelector('#m17a13b-masse');
+  var lu = wrap.querySelector('#m17a13b-lu');
+  var vib = wrap.querySelector('#m17a13b-vib');
+  var caption = wrap.querySelector('#m17a13b-caption');
+  var CIBLE = 60;
+
+  function render() {
+    var v = parseInt(slider.value, 10);
+    lu.textContent = v;
+    var ecart = Math.abs(v - CIBLE);
+    var amplitude = Math.min(100, 15 + ecart * 1.4);
+    vib.style.width = amplitude + '%';
+
+    if (ecart <= 8) {
+      vib.style.background = '#2e7d32';
+      caption.className = 'm17a13b-caption ok';
+      caption.textContent = "Masse proche de la valeur qui annule la vibration : l'amplitude résiduelle, mesurée pendant que l'hélice tourne réellement, est au plus bas — c'est ce réglage fin, invisible lors d'un simple équilibrage statique à l'arrêt, que l'équilibrage dynamique permet d'atteindre.";
+    } else if (v < CIBLE) {
+      vib.style.background = '#c0392b';
+      caption.className = 'm17a13b-caption bad';
+      caption.textContent = "Masse insuffisante : le déséquilibre n'est que partiellement corrigé, la vibration résiduelle reste sensible.";
+    } else {
+      vib.style.background = '#c0392b';
+      caption.className = 'm17a13b-caption bad';
+      caption.textContent = "Masse excessive : au-delà de la valeur qui annule le déséquilibre, on en recrée un nouveau, dans l'autre sens — ce qui montre bien qu'il s'agit d'un réglage fin, pas d'une simple règle « plus il y a de masse, mieux c'est ».";
+    }
+  }
+
+  slider.addEventListener('input', render);
+  render();
+})();
+</script>

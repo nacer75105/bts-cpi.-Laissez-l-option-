@@ -1,0 +1,63 @@
+<div id="schema-m17a14a-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m17a14a-wrap .m17a14a-slider { width:100%; max-width:420px; }
+#schema-m17a14a-wrap .m17a14a-row { display:flex; align-items:center; gap:10px; margin-top:12px; }
+#schema-m17a14a-wrap .m17a14a-swatch { width:60px; height:34px; border-radius:5px; border:1.5px solid #999; transition:background .3s; }
+#schema-m17a14a-wrap .m17a14a-rowlabel { width:160px; font-size:0.85em; color:#333; }
+#schema-m17a14a-wrap .m17a14a-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> fais avancer le temps de stockage et compare une pale protégée (nettoyée, huilée, conditionnée) à une pale laissée sans protection.</p>
+
+<div class="m17a14a-value">Temps de stockage écoulé (illustration) : <span id="m17a14a-lu">0</span> %</div>
+<input type="range" class="m17a14a-slider" id="m17a14a-temps" min="0" max="100" value="0" step="5">
+
+<div class="m17a14a-row">
+  <div class="m17a14a-rowlabel">Pale protégée</div>
+  <div class="m17a14a-swatch" id="m17a14a-protegee" style="background:#b6c4cf;"></div>
+</div>
+<div class="m17a14a-row">
+  <div class="m17a14a-rowlabel">Pale non protégée</div>
+  <div class="m17a14a-swatch" id="m17a14a-nonprotegee" style="background:#b6c4cf;"></div>
+</div>
+
+<div class="m17a14a-caption" id="m17a14a-caption">Début du stockage : aucune différence visible entre les deux pales.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m17a14a-wrap');
+  if (!wrap) { return; }
+  var slider = wrap.querySelector('#m17a14a-temps');
+  var lu = wrap.querySelector('#m17a14a-lu');
+  var protegee = wrap.querySelector('#m17a14a-protegee');
+  var nonprotegee = wrap.querySelector('#m17a14a-nonprotegee');
+  var caption = wrap.querySelector('#m17a14a-caption');
+
+  function melange(pct) {
+    // interpole qualitativement du gris-bleu propre vers une teinte rouille
+    var r = Math.round(182 + (150 - 182) * pct);
+    var g = Math.round(196 + (90 - 196) * pct);
+    var b = Math.round(207 + (60 - 207) * pct);
+    return 'rgb(' + r + ',' + g + ',' + b + ')';
+  }
+
+  function render() {
+    var v = parseInt(slider.value, 10);
+    lu.textContent = v;
+    protegee.style.background = melange(v * 0.08 / 100 * v / 100);
+    nonprotegee.style.background = melange(v / 100);
+
+    if (v === 0) {
+      caption.textContent = "Début du stockage : aucune différence visible entre les deux pales.";
+    } else if (v < 50) {
+      caption.textContent = "Stockage en cours : la pale protégée (nettoyée, huilée, conditionnée) reste quasiment inchangée. La pale non protégée commence déjà à se dégrader sous l'effet de l'humidité ambiante, même si l'hélice ne tourne pas — le temps, à lui seul, laisse le phénomène s'installer.";
+    } else {
+      caption.textContent = "Stockage prolongé : l'écart se creuse nettement. La pale non protégée risque de présenter une corrosion visible, alors que la protection appliquée avant stockage limite la dégradation de l'autre — sans pour autant dispenser d'une inspection spécifique avant remise en service, dans un cas comme dans l'autre.";
+    }
+  }
+
+  slider.addEventListener('input', render);
+  render();
+})();
+</script>

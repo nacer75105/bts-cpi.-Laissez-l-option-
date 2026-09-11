@@ -1092,6 +1092,422 @@
       "bonne": 0,
       "explication": "Le phénomène de battements traduit une vibration de la cellule de l'avion, qui use plus vite certains équipements avec le temps si elle se répète en permanence — un enjeu de durabilité, pas seulement de confort immédiat. Les battements n'ont aucun effet sur la portance des ailes, un phénomène aérodynamique distinct ; et ils n'empêchent en rien chaque régulateur de continuer à remplir son propre rôle, indépendamment l'un de l'autre.",
       "source": "Notions générales de construction aéronautique — synchronisation d'hélices"
+    },
+    {
+      "uid": "M17A-0085",
+      "sous_chapitre": "M17A.11",
+      "question": "Pourquoi une accumulation de givre sur une seule pale d'une hélice pose-t-elle un problème d'équilibrage ?",
+      "options": [
+        "Parce que le givre se dépose rarement de façon identique sur chaque pale, rendant certaines plus lourdes que d'autres",
+        "Parce que le givre rend automatiquement toutes les pales plus légères de façon identique",
+        "Parce que le givre n'a aucun effet sur la masse d'une pale, seulement sur sa couleur"
+      ],
+      "bonne": 0,
+      "explication": "Le givre ne se dépose jamais de façon parfaitement identique sur chaque pale : une pale plus givrée qu'une autre devient plus lourde qu'elle, ce qui introduit un déséquilibre de masse entre les pales — le type de problème que l'équilibrage (fiche M17A.13) cherche justement à éviter. Le givre ajoute de la masse, il ne rend jamais les pales plus légères, et son effet dépasse largement une simple question d'aspect visuel.",
+      "source": "Notions générales de construction aéronautique — dégivrage d'hélice"
+    },
+    {
+      "uid": "M17A-0086",
+      "sous_chapitre": "M17A.11",
+      "question": "Pourquoi une pale givrée produit-elle moins de traction pour un régime donné ?",
+      "options": [
+        "Parce que le givre augmente directement le régime du moteur",
+        "Parce que le givre modifie le profil de la pale, dont la forme est responsable de la production de traction",
+        "Parce que le givre empêche toute rotation de l'hélice"
+      ],
+      "bonne": 1,
+      "explication": "Le givre modifie le profil de la pale, or c'est justement ce profil qui est responsable de la production de traction (rappel M17A.1) : une forme dégradée produit moins de traction pour le même régime. Le givre n'a pas d'effet direct sur le régime du moteur lui-même, et il ne bloque pas la rotation de l'hélice tant qu'il ne s'agit que d'une couche de givre sur les pales.",
+      "source": "Notions générales de construction aéronautique — dégivrage d'hélice"
+    },
+    {
+      "uid": "M17A-0087",
+      "sous_chapitre": "M17A.11",
+      "question": "Comment fonctionne un système de dégivrage électrothermique d'hélice ?",
+      "options": [
+        "Un courant d'air chaud, prélevé sur le moteur, est soufflé directement sur les pales",
+        "Un liquide antigivrage, réparti par un anneau répartiteur et la force centrifuge, empêche la glace de se former",
+        "Des résistances chauffantes intégrées au bord d'attaque s'activent selon un cycle, pale par pale ou zone par zone"
+      ],
+      "bonne": 2,
+      "explication": "Le dégivrage électrothermique utilise des résistances chauffantes intégrées dans le bord d'attaque de chaque pale, activées selon un cycle plutôt qu'en continu. Le liquide réparti par anneau répartiteur décrit l'antigivrage par fluide, un système différent qui agit en prévention plutôt qu'après coup. Ce module ne décrit aucun système à air chaud soufflé directement sur les pales : seules les deux familles électrothermique et fluide sont présentées.",
+      "source": "Notions générales de construction aéronautique — dégivrage d'hélice"
+    },
+    {
+      "uid": "M17A-0088",
+      "sous_chapitre": "M17A.11",
+      "question": "Pourquoi un système de dégivrage électrothermique chauffe-t-il selon un cycle plutôt qu'en continu ?",
+      "options": [
+        "Faire fondre juste la fine couche de glace en contact avec la pale suffit à rompre l'adhérence ; la force centrifuge projette ensuite le reste du givre",
+        "Le chauffage continu endommagerait immédiatement et systématiquement la structure de la pale",
+        "Un chauffage cyclique est obligatoire par réglementation, quel que soit le principe physique en jeu"
+      ],
+      "bonne": 0,
+      "explication": "Chauffer juste assez pour rompre l'adhérence entre le givre et la pale suffit : la force centrifuge (rappel M17A.2) projette ensuite le reste du givre déjà décollé, sans qu'il soit nécessaire de faire fondre toute la couche accumulée — un chauffage continu consommerait beaucoup plus d'énergie pour un résultat comparable. Un chauffage continu ne présente pas de risque particulier pour la structure de la pale elle-même : c'est une question d'efficacité énergétique face à la consommation électrique disponible à bord, pas une contrainte de sécurité structurelle imposée de l'extérieur.",
+      "source": "Notions générales de construction aéronautique — dégivrage d'hélice"
+    },
+    {
+      "uid": "M17A-0089",
+      "sous_chapitre": "M17A.11",
+      "question": "Comment un système antigivrage par fluide achemine-t-il le liquide vers chaque pale ?",
+      "options": [
+        "Chaque pale embarque son propre réservoir individuel de fluide, indépendant des autres",
+        "Un anneau répartiteur central distribue le fluide, puis la force centrifuge l'étale le long du bord d'attaque de chaque pale",
+        "Le fluide est directement mélangé au carburant du moteur avant la combustion"
+      ],
+      "bonne": 1,
+      "explication": "Le fluide est pompé vers un anneau répartiteur au centre de l'hélice, acheminé le long du bord d'attaque de chaque pale, puis étalé sur toute la longueur par la force centrifuge. Il n'y a pas de réservoir individuel par pale : un seul réservoir central alimente l'ensemble via le répartiteur. Et le fluide antigivrage n'a aucun rapport avec le carburant du moteur : ce sont deux circuits entièrement distincts.",
+      "source": "Notions générales de construction aéronautique — dégivrage d'hélice"
+    },
+    {
+      "uid": "M17A-0090",
+      "sous_chapitre": "M17A.11",
+      "question": "Quel est le principal facteur limitant l'autonomie d'un système antigivrage par fluide, contrairement à un système électrothermique ?",
+      "options": [
+        "La température extérieure, qui doit obligatoirement rester positive",
+        "La vitesse de rotation de l'hélice, qui doit rester inférieure à un seuil fixe",
+        "La quantité de liquide disponible dans le réservoir, qui s'épuise avec l'usage"
+      ],
+      "bonne": 2,
+      "explication": "Le système à fluide dépend d'un consommable en quantité limitée dans un réservoir : une fois ce réservoir vide, la protection cesse, quelle que soit la durée du vol restant — à la différence d'un système électrique qui reste actif tant que l'alimentation électrique est disponible. La vitesse de rotation n'est pas le facteur limitant décrit ici, et rien n'indique que la température extérieure devrait rester positive : le givre se forme justement par temps froid et humide.",
+      "source": "Notions générales de construction aéronautique — dégivrage d'hélice"
+    },
+    {
+      "uid": "M17A-0091",
+      "sous_chapitre": "M17A.11",
+      "question": "Qu'ont en commun le dégivrage électrothermique et l'antigivrage par fluide, malgré leurs principes physiques différents ?",
+      "options": [
+        "Ils poursuivent le même objectif : empêcher une accumulation dangereuse de givre sur les pales",
+        "Ils utilisent tous deux exactement la même source d'énergie",
+        "Ils sont tous deux obligatoires sur toute hélice à pas variable"
+      ],
+      "bonne": 0,
+      "explication": "Les deux familles poursuivent le même objectif — empêcher le givre de s'accumuler dangereusement sur les pales — mais chacune y parvient par un moyen physique qui lui est propre, détaillé plus haut dans cette même fiche. Elles ne partagent donc pas la même source d'énergie, et rien n'indique qu'un système de dégivrage soit obligatoire sur toute hélice à pas variable : beaucoup d'installations légères n'en sont pas équipées, selon leur domaine d'utilisation prévu.",
+      "source": "Notions générales de construction aéronautique — dégivrage d'hélice"
+    },
+    {
+      "uid": "M17A-0092",
+      "sous_chapitre": "M17A.11",
+      "question": "Au-delà de la perte d'efficacité et du déséquilibre de masse, quel troisième risque le givre fait-il peser sur un avion ?",
+      "options": [
+        "Le givre peut inverser le sens de rotation de l'hélice",
+        "Un morceau de glace qui se détache brutalement et de façon asymétrique peut provoquer une vibration soudaine ou endommager d'autres parties de l'avion",
+        "Le givre rend impossible toute mise en drapeau de l'hélice"
+      ],
+      "bonne": 1,
+      "explication": "Un détachement brutal et asymétrique de givre peut provoquer une vibration soudaine, ou projeter de la glace sur d'autres parties de l'avion (fuselage, empennage) qu'elle peut endommager. Le givre n'inverse jamais le sens de rotation de l'hélice, et il n'empêche pas non plus la mise en drapeau : cette fonction dépend du mécanisme de calage (fiche M17A.7), qui agit sur l'angle de la pale indépendamment de la présence de givre sur sa surface.",
+      "source": "Notions générales de construction aéronautique — dégivrage d'hélice"
+    },
+    {
+      "uid": "M17A-0093",
+      "sous_chapitre": "M17A.12",
+      "question": "Pourquoi l'inspection régulière d'une hélice est-elle irremplaçable, plutôt qu'une simple précaution parmi d'autres ?",
+      "options": [
+        "Parce que la réglementation l'exige, indépendamment de toute considération technique",
+        "Parce que le pilote ressent immédiatement en vol le moindre dommage sur une pale",
+        "Parce qu'une grande partie des dommages qui la menacent ne perturbent en rien son fonctionnement apparent au moment où ils apparaissent"
+      ],
+      "bonne": 2,
+      "explication": "Une fissure naissante, un début de corrosion sous un revêtement encore intact, ou un délaminage interne composite ne perturbent en rien le comportement apparent de l'hélice : rien ne les signale au pilote. Seule une inspection attentive permet de les détecter avant qu'ils ne s'aggravent — voler avec une hélice apparemment normale ne garantit rien sur son état réel. Ce n'est donc pas quelque chose que le pilote ressentirait en vol, et l'argument technique prime ici sur toute justification purement réglementaire.",
+      "source": "Notions générales de construction aéronautique — inspection d'hélice"
+    },
+    {
+      "uid": "M17A-0094",
+      "sous_chapitre": "M17A.12",
+      "question": "Pourquoi le bord d'attaque d'une pale demande-t-il une attention particulière lors de l'inspection ?",
+      "options": [
+        "C'est la partie la plus directement exposée à l'air, à la pluie, au sable et aux corps étrangers projetés",
+        "C'est la seule partie de la pale qui subit la force centrifuge",
+        "C'est la partie la plus éloignée de tout risque de corrosion"
+      ],
+      "bonne": 0,
+      "explication": "Le bord d'attaque est la partie la plus directement exposée à l'air et aux éléments (pluie, sable, grêle, corps étrangers), ce qui en fait le siège privilégié de l'érosion et des entailles par impact. La force centrifuge s'applique à toute la pale, pas seulement au bord d'attaque (rappel M17A.2) ; et le bord d'attaque n'est en rien à l'abri de la corrosion, bien au contraire, puisqu'il est le plus exposé aux éléments qui la favorisent.",
+      "source": "Notions générales de construction aéronautique — inspection d'hélice"
+    },
+    {
+      "uid": "M17A-0095",
+      "sous_chapitre": "M17A.12",
+      "question": "Pourquoi l'extrémité de la pale est-elle une zone particulièrement surveillée lors de l'inspection ?",
+      "options": [
+        "Elle ne subit jamais aucune contrainte aérodynamique, contrairement au reste de la pale",
+        "Elle se déplace à la vitesse la plus élevée de toute la pale, ce qui l'expose aux contraintes et chocs les plus importants",
+        "Elle est la seule partie de la pale fabriquée dans un matériau différent du reste"
+      ],
+      "bonne": 1,
+      "explication": "L'extrémité de la pale se déplace à la vitesse la plus élevée de toute sa longueur (rappel du vrillage et de la vitesse de rotation croissante vus en M17A.3), ce qui l'expose aux contraintes aérodynamiques et aux chocs à haute énergie les plus importants. Elle subit au contraire les contraintes les plus fortes, pas l'absence de contrainte, et rien n'indique qu'elle serait fabriquée dans un matériau différent du reste de la pale.",
+      "source": "Notions générales de construction aéronautique — inspection d'hélice"
+    },
+    {
+      "uid": "M17A-0096",
+      "sous_chapitre": "M17A.12",
+      "question": "Pourquoi le pied de pale et sa zone de fixation méritent-ils une vigilance particulière lors de l'inspection ?",
+      "options": [
+        "C'est la seule zone de la pale où le vrillage s'applique",
+        "C'est la seule zone protégée par un revêtement anti-érosion dédié",
+        "C'est là que se concentre la force centrifuge de la pale entière, transmise au système de retenue"
+      ],
+      "bonne": 2,
+      "explication": "Le pied de pale concentre la force centrifuge de la pale entière, transmise au système de retenue décrit en fiche M17A.5 : une fissure à cet endroit, bien que plus rare, aurait des conséquences particulièrement graves. Le revêtement anti-érosion protège en priorité le bord d'attaque (rappel M17A.4), pas spécifiquement le pied de pale ; et le vrillage s'applique sur toute la longueur de la pale (fiche M17A.3), pas seulement au pied.",
+      "source": "Notions générales de construction aéronautique — inspection d'hélice"
+    },
+    {
+      "uid": "M17A-0097",
+      "sous_chapitre": "M17A.12",
+      "question": "Pourquoi l'inspection visuelle simple peut-elle ne pas suffire, même sur une pale métallique ?",
+      "options": [
+        "Une fissure fine peut être difficile à distinguer d'une simple rayure sans un examen attentif, parfois complété par le ressuage",
+        "L'inspection visuelle est totalement inutile sur le métal, seul un contrôle instrumenté est valable",
+        "Le métal ne présente jamais de défaut détectable visuellement, contrairement au composite"
+      ],
+      "bonne": 0,
+      "explication": "Une fissure fine peut être difficile à distinguer d'une simple rayure sans attention particulière ; le ressuage, une méthode adaptée aux surfaces métalliques non poreuses, peut alors compléter l'inspection visuelle sur les zones les plus sollicitées. L'inspection visuelle reste néanmoins la base du contrôle sur métal, elle n'est pas inutile ; et le métal présente au contraire de nombreux défauts détectables visuellement (entailles, corrosion, déformations), à la différence du composite dont le délaminage interne reste invisible en surface.",
+      "source": "Notions générales de construction aéronautique — inspection d'hélice"
+    },
+    {
+      "uid": "M17A-0098",
+      "sous_chapitre": "M17A.12",
+      "question": "Qu'est-ce que le tracking (suivi de trajectoire) d'une hélice ?",
+      "options": [
+        "Le suivi électronique en temps réel de la position du régulateur de survitesse",
+        "La vérification que toutes les pales suivent exactement le même plan de rotation, sans qu'aucune ne dévie par rapport aux autres",
+        "L'enregistrement du nombre total d'heures de vol effectuées par l'hélice"
+      ],
+      "bonne": 1,
+      "explication": "Le tracking vérifie que toutes les pales suivent le même plan de rotation, sans qu'aucune ne dévie légèrement en avant ou en arrière par rapport aux autres — un peu comme vérifier que toutes les dents d'un peigne sont alignées. Il n'a aucun rapport avec le dispositif de survitesse (fiche M17A.9), ni avec un simple comptage d'heures de vol, qui est une donnée administrative distincte.",
+      "source": "Notions générales de construction aéronautique — inspection d'hélice"
+    },
+    {
+      "uid": "M17A-0099",
+      "sous_chapitre": "M17A.12",
+      "question": "Quelle conséquence un défaut de tracking, même minime, peut-il produire en vol ?",
+      "options": [
+        "Une augmentation permanente et irréversible du diamètre de l'hélice",
+        "Une inversion immédiate et automatique du sens de rotation de l'hélice",
+        "Une vibration caractéristique, en lien avec le problème d'équilibrage entre pales détaillé dans la fiche suivante"
+      ],
+      "bonne": 2,
+      "explication": "Un défaut de tracking introduit une vibration caractéristique en vol, un lien direct avec l'équilibrage de l'hélice (fiche M17A.13) : faire en sorte que toutes les pales se comportent de façon aussi identique que possible. Il n'inverse jamais le sens de rotation de l'hélice, et il ne change en rien son diamètre, une grandeur géométrique fixe (rappel M17A.3) sans rapport avec un défaut de trajectoire.",
+      "source": "Notions générales de construction aéronautique — inspection d'hélice"
+    },
+    {
+      "uid": "M17A-0100",
+      "sous_chapitre": "M17A.12",
+      "question": "Sur quoi repose la décision de réparer ou de déposer une pale après la découverte d'une marque suspecte lors de l'inspection ?",
+      "options": [
+        "Une procédure documentée, dans les limites précises fixées par le manuel du constructeur, jamais une appréciation visuelle isolée",
+        "L'intuition et l'expérience personnelle du technicien, sans référence à un document particulier",
+        "Un vote collectif de l'ensemble de l'équipe de maintenance présente ce jour-là"
+      ],
+      "bonne": 0,
+      "explication": "La décision ne repose jamais sur une appréciation visuelle isolée : elle suit une procédure documentée, dans les limites précises fixées par le manuel du constructeur — exactement le principe déjà détaillé pour une pale métallique en fiche M17A.4. Ni l'intuition personnelle d'un technicien, aussi expérimenté soit-il, ni un vote collectif informel ne remplacent cette procédure documentée.",
+      "source": "Notions générales de construction aéronautique — inspection d'hélice"
+    },
+    {
+      "uid": "M17A-0101",
+      "sous_chapitre": "M17A.13",
+      "question": "En quoi le déséquilibre de masse entre pales, traité par l'équilibrage, est-il différent de la vibration décrite en fiche M17A.2 ?",
+      "options": [
+        "Il s'agit exactement du même phénomène physique, décrit deux fois avec des mots différents",
+        "Il vient d'une différence de masse entre pales (fabrication, réparation, givre inégal), alors que la vibration de M17A.2 vient de charges cycliques inévitables présentes même sur une hélice parfaitement homogène",
+        "Le déséquilibre de masse ne peut jamais se produire sur une hélice correctement fabriquée"
+      ],
+      "bonne": 1,
+      "explication": "Le déséquilibre de masse entre pales — venant d'une différence de fabrication, d'une réparation asymétrique ou d'une accumulation de givre inégale — est une source de vibration distincte des charges cycliques inévitables (poids qui varie selon la position, air jamais parfaitement uniforme) déjà vues en M17A.2, présentes même sur une hélice parfaitement homogène. Ce ne sont donc pas deux descriptions du même phénomène, et un déséquilibre de masse peut tout à fait apparaître même sur une hélice bien fabriquée, par exemple après une réparation ou un givrage inégal.",
+      "source": "Notions générales de construction aéronautique — équilibrage d'hélice"
+    },
+    {
+      "uid": "M17A-0102",
+      "sous_chapitre": "M17A.13",
+      "question": "Comment se manifeste un déséquilibre de masse lors d'un équilibrage statique ?",
+      "options": [
+        "L'hélice change progressivement de couleur au point le plus lourd",
+        "L'hélice se met à tourner de plus en plus vite, sans intervention extérieure",
+        "L'ensemble monté sur son axe ne reste pas immobile dans n'importe quelle position : le point le plus lourd descend toujours vers le bas"
+      ],
+      "bonne": 2,
+      "explication": "Si une pale est plus lourde qu'une autre, l'ensemble ne reste pas immobile dans n'importe quelle position : le point le plus lourd finit toujours par descendre vers le bas sous l'effet de son propre poids, comme une roue de vélo mal équilibrée. Un déséquilibre statique ne fait jamais accélérer spontanément la rotation de l'hélice (aucune énergie n'est ajoutée par ce phénomène), et il ne change évidemment rien à la couleur de la pale.",
+      "source": "Notions générales de construction aéronautique — équilibrage d'hélice"
+    },
+    {
+      "uid": "M17A-0103",
+      "sous_chapitre": "M17A.13",
+      "question": "Comment corrige-t-on un déséquilibre détecté lors d'un équilibrage statique ?",
+      "options": [
+        "En ajoutant de petites masses du côté le plus léger, aux points prévus à cet effet par le constructeur",
+        "En retirant de la matière sur toutes les pales de façon identique",
+        "En augmentant la vitesse de rotation jusqu'à ce que le déséquilibre disparaisse de lui-même"
+      ],
+      "bonne": 0,
+      "explication": "On ajoute de petites masses du côté le plus léger, aux points prévus à cet effet par le constructeur, jusqu'à obtenir un équilibre neutre à toute position. Retirer de la matière de façon identique sur toutes les pales ne corrigerait aucun déséquilibre relatif entre elles ; et augmenter la vitesse de rotation ne fait pas disparaître un déséquilibre de masse, qui reste présent quel que soit le régime.",
+      "source": "Notions générales de construction aéronautique — équilibrage d'hélice"
+    },
+    {
+      "uid": "M17A-0104",
+      "sous_chapitre": "M17A.13",
+      "question": "Où et comment se pratique concrètement un équilibrage dynamique ?",
+      "options": [
+        "Hélice démontée, posée sur un établi, sans aucun appareil de mesure",
+        "Hélice montée sur l'avion, moteur en fonctionnement, à l'aide d'un appareil de mesure de vibration fixé temporairement sur le moteur ou son support",
+        "Hélice montée sur l'avion, moteur à l'arrêt, par simple observation visuelle"
+      ],
+      "bonne": 1,
+      "explication": "L'équilibrage dynamique se pratique hélice montée sur l'avion, moteur en fonctionnement, à l'aide d'un appareil de mesure de vibration fixé temporairement sur le moteur ou son support — c'est cette mise en situation réelle qui permet de détecter des effets invisibles à l'arrêt. Une hélice démontée sur un établi sans appareil de mesure, ou un simple examen visuel moteur à l'arrêt, décrivent tout autre chose qu'un équilibrage dynamique.",
+      "source": "Notions générales de construction aéronautique — équilibrage d'hélice"
+    },
+    {
+      "uid": "M17A-0105",
+      "sous_chapitre": "M17A.13",
+      "question": "Pourquoi l'équilibrage statique et l'équilibrage dynamique sont-ils qualifiés de complémentaires plutôt que redondants ?",
+      "options": [
+        "Parce que l'un corrige les déséquilibres de masse et l'autre corrige exclusivement les problèmes de corrosion",
+        "Parce qu'il est réglementairement obligatoire de réaliser les deux à chaque fois, sans justification technique",
+        "Chacun détecte un type de déséquilibre que l'autre ne voit pas : le statique est rapide mais approximatif, le dynamique plus précis mais plus contraignant à mettre en œuvre"
+      ],
+      "bonne": 2,
+      "explication": "L'équilibrage statique est rapide et simple mais reste une approximation, ne mesurant jamais la vibration en conditions réelles ; l'équilibrage dynamique est plus précis, capturant des effets invisibles à l'arrêt, mais nécessite un appareillage dédié et une hélice déjà montée. Cette complémentarité est justifiée techniquement, pas seulement par une exigence réglementaire arbitraire ; et la corrosion, un tout autre sujet (fiche M17A.4), n'a aucun rapport avec l'équilibrage dynamique.",
+      "source": "Notions générales de construction aéronautique — équilibrage d'hélice"
+    },
+    {
+      "uid": "M17A-0106",
+      "sous_chapitre": "M17A.13",
+      "question": "Quelle conséquence un déséquilibre de masse non corrigé peut-il avoir, au-delà du simple inconfort des occupants ?",
+      "options": [
+        "Une accélération de la fatigue de pièces qui n'ont pourtant rien à voir directement avec l'hélice elle-même",
+        "Une augmentation immédiate et automatique de la puissance délivrée par le moteur",
+        "Une réduction permanente du diamètre de l'hélice"
+      ],
+      "bonne": 0,
+      "explication": "La vibration supplémentaire produite par un déséquilibre non corrigé se transmet au moteur, à ses supports et à la cellule de l'avion, accélérant au fil du temps la fatigue de pièces sans rapport direct avec l'hélice elle-même (rappel du mécanisme de fatigue vu en M17A.2) — bien au-delà d'une simple question de confort. Un déséquilibre de masse n'augmente jamais la puissance délivrée par le moteur, et il ne change strictement rien au diamètre de l'hélice, une grandeur géométrique fixe.",
+      "source": "Notions générales de construction aéronautique — équilibrage d'hélice"
+    },
+    {
+      "uid": "M17A-0107",
+      "sous_chapitre": "M17A.13",
+      "question": "Dans l'exemple d'une pale réparée par limage après une entaille, pourquoi un déséquilibrage apparaît-il ?",
+      "options": [
+        "Le limage a ajouté de la matière sur la pale réparée, la rendant plus lourde que les autres",
+        "Le limage a retiré une petite quantité de matière sur cette seule pale, la rendant légèrement plus légère que les autres",
+        "Le limage n'a strictement aucun effet sur la masse d'une pale"
+      ],
+      "bonne": 1,
+      "explication": "Le limage retire de la matière (rappel M17A.4 : il consiste à retirer entièrement la matière endommagée puis à raccorder progressivement le profil), rendant la pale réparée légèrement plus légère que les autres, non traitées de la même façon — d'où le déséquilibre à corriger. Le limage n'ajoute jamais de matière, et il a bien un effet mesurable sur la masse d'une pale, aussi petit soit-il.",
+      "source": "Notions générales de construction aéronautique — équilibrage d'hélice"
+    },
+    {
+      "uid": "M17A-0116",
+      "sous_chapitre": "M17A.13",
+      "question": "L'équilibrage d'une hélice est-il une opération à réaliser une seule fois, à la construction, puis à ne plus jamais revérifier ?",
+      "options": [
+        "Non, il doit être refait automatiquement avant chaque vol, quelles que soient les circonstances",
+        "Oui, un équilibrage réalisé en usine reste valable pendant toute la durée de vie de l'hélice, sans exception",
+        "Non : toute intervention susceptible de changer la répartition de masse entre pales (réparation, remplacement d'une pale, accessoire ajouté) justifie une nouvelle vérification"
+      ],
+      "bonne": 2,
+      "explication": "Toute intervention susceptible de changer, même légèrement, la répartition de masse entre pales — une réparation par limage, un remplacement de pale isolée, un accessoire ajouté au moyeu ou au spinner — justifie de vérifier à nouveau l'équilibrage plutôt que de le supposer valable. Ce n'est donc pas une opération figée à vie dès la sortie d'usine, mais ce n'est pas non plus une vérification systématique avant chaque vol : elle est requise après une intervention pertinente, pas en routine permanente.",
+      "source": "Notions générales de construction aéronautique — équilibrage d'hélice"
+    },
+    {
+      "uid": "M17A-0108",
+      "sous_chapitre": "M17A.14",
+      "question": "Pourquoi une hélice immobile, déposée ou peu utilisée, reste-t-elle vulnérable à certaines menaces déjà vues dans ce module ?",
+      "options": [
+        "Parce que l'humidité ambiante continue d'agir sur elle, qu'elle tourne ou non, favorisant corrosion et dégradation du bois",
+        "Parce qu'une hélice immobile subit une force centrifuge plus importante qu'en vol",
+        "Parce que l'immobilité fabrique de nouveaux types de dommages qui n'existent pas en vol"
+      ],
+      "bonne": 0,
+      "explication": "L'humidité ambiante continue d'agir sur l'hélice, qu'elle tourne ou non : elle favorise la corrosion du métal et le gonflement du bois (rappel M17A.4), deux phénomènes qui n'ont pas besoin de rotation pour progresser. Une hélice immobile ne subit aucune force centrifuge, bien au contraire (elle n'apparaît qu'en rotation, M17A.2), et l'immobilité ne fabrique aucun dommage nouveau : elle laisse simplement le temps à des phénomènes lents déjà connus de s'installer.",
+      "source": "Notions générales de construction aéronautique — stockage d'hélice"
+    },
+    {
+      "uid": "M17A-0109",
+      "sous_chapitre": "M17A.14",
+      "question": "Pourquoi nettoyer une hélice avant un stockage prolongé, plutôt que de la stocker telle quelle ?",
+      "options": [
+        "Le nettoyage n'a aucun effet réel sur la conservation de l'hélice, c'est une étape purement esthétique",
+        "Poussière, saleté et résidus retiendraient l'humidité contre la surface, aggravant le risque de corrosion ou de dégradation",
+        "Le nettoyage remplace entièrement le besoin d'une protection anticorrosion"
+      ],
+      "bonne": 1,
+      "explication": "Poussière, saleté et résidus divers, laissés en place, retiendraient l'humidité contre la surface au lieu de la laisser s'évaporer, aggravant précisément le risque de corrosion ou de dégradation qu'on cherche à éviter. Ce n'est donc pas une étape purement esthétique, et elle ne remplace pas la protection anticorrosion : les deux étapes sont complémentaires, pas interchangeables.",
+      "source": "Notions générales de construction aéronautique — stockage d'hélice"
+    },
+    {
+      "uid": "M17A-0110",
+      "sous_chapitre": "M17A.14",
+      "question": "Quel type d'environnement de stockage favorise le moins la condensation sur une hélice ?",
+      "options": [
+        "La condensation ne dépend en rien de l'environnement de stockage",
+        "Un local où la température varie fréquemment et fortement au cours de la journée",
+        "Un local sec, à l'abri de variations importantes de température"
+      ],
+      "bonne": 2,
+      "explication": "Un local sec, à l'abri de variations importantes de température, limite la condensation — cette eau qui se dépose sur une surface froide lorsque l'air humide qui l'entoure se refroidit brusquement, comme sur un verre de boisson fraîche par temps chaud et humide. Des variations fréquentes et fortes de température favorisent au contraire ce phénomène, et l'environnement de stockage a bien une influence directe sur son apparition.",
+      "source": "Notions générales de construction aéronautique — stockage d'hélice"
+    },
+    {
+      "uid": "M17A-0111",
+      "sous_chapitre": "M17A.14",
+      "question": "Pourquoi peut-on dire que le temps qui passe, à lui seul, ne fabrique aucun dommage nouveau sur une hélice stockée ?",
+      "options": [
+        "Il laisse simplement le temps à des phénomènes lents déjà connus (corrosion, absorption d'humidité) de s'installer, sans qu'aucun vol ne vienne les révéler avant qu'ils ne deviennent importants",
+        "Les dommages de stockage sont exclusivement d'origine mécanique, et une hélice immobile ne subit aucune contrainte mécanique",
+        "La corrosion et l'humidité n'agissent que pendant le vol, jamais au sol"
+      ],
+      "bonne": 0,
+      "explication": "Une hélice stockée n'est pas exposée à un dommage d'un genre nouveau du simple fait du temps qui passe : elle reste vulnérable aux mêmes phénomènes lents déjà présents en vol (corrosion, absorption d'humidité), qui ont simplement le temps de s'installer sans qu'aucun vol ne vienne les révéler avant qu'ils ne deviennent importants. Les dommages qui menacent une hélice au repos ne sont pas d'origine mécanique : ce sont précisément des phénomènes physico-chimiques (corrosion, absorption d'humidité) qui ne demandent aucune contrainte mécanique pour progresser ; et corrosion comme humidité agissent aussi bien au sol qu'en vol, pas exclusivement en vol.",
+      "source": "Notions générales de construction aéronautique — stockage d'hélice"
+    },
+    {
+      "uid": "M17A-0112",
+      "sous_chapitre": "M17A.14",
+      "question": "Pourquoi la remise en service d'une hélice après un stockage prolongé ne se limite-t-elle pas à un simple contrôle visuel rapide ?",
+      "options": [
+        "Un contrôle visuel rapide est en réalité totalement suffisant, la mention d'une inspection spécifique est une précaution excessive",
+        "Une préparation au stockage qui a fonctionné correctement ne garantit pas, à elle seule, l'absence de tout dommage accumulé pendant l'inactivité",
+        "La remise en service ne concerne que la partie électronique de l'avion, jamais l'hélice elle-même"
+      ],
+      "bonne": 1,
+      "explication": "Le principe est le même qu'après un régime de survitesse correctement maîtrisé (fiche M17A.9) : une protection ou une précaution qui a fonctionné correctement ne garantit pas, à elle seule, l'absence de tout dommage. Seule une inspection spécifique, conforme aux instructions du constructeur, permet de confirmer l'aptitude au vol après une période d'inactivité. Ce n'est donc pas une précaution excessive, et l'hélice elle-même est bien concernée au premier chef, pas seulement l'électronique de l'avion.",
+      "source": "Notions générales de construction aéronautique — stockage d'hélice"
+    },
+    {
+      "uid": "M17A-0113",
+      "sous_chapitre": "M17A.14",
+      "question": "Pourquoi une corrosion qui se forme à un point de contact du mécanisme resté immobile pendant un stockage prolongé est-elle particulièrement difficile à détecter ?",
+      "options": [
+        "Parce qu'elle change immédiatement et visiblement la couleur de l'ensemble de l'hélice",
+        "Parce qu'elle ne se forme jamais sur un point de contact, uniquement sur les surfaces les plus exposées",
+        "Parce qu'elle reste localisée à l'intérieur du mécanisme, invisible depuis l'extérieur sans inspection spécifique"
+      ],
+      "bonne": 2,
+      "explication": "Une corrosion localisée à un point de contact interne du mécanisme reste invisible depuis l'extérieur, sans qu'un simple contrôle visuel ne permette de la détecter — exactement le type de dommage qu'une inspection spécifique est destinée à révéler. Elle peut au contraire se former précisément à ce type d'endroit, pas seulement sur les surfaces les plus exposées ; et rien n'indique qu'elle changerait immédiatement et visiblement la couleur de l'ensemble de l'hélice.",
+      "source": "Notions générales de construction aéronautique — stockage d'hélice"
+    },
+    {
+      "uid": "M17A-0114",
+      "sous_chapitre": "M17A.14",
+      "question": "Pourquoi conditionner une hélice dans un emballage ou une housse adaptée avant un stockage prolongé ?",
+      "options": [
+        "Pour la protéger de la poussière, de l'humidité ambiante et des chocs accidentels pendant toute la durée du stockage",
+        "Pour améliorer son équilibrage statique sans avoir à ajouter de masses",
+        "Pour remplacer entièrement le besoin d'un nettoyage préalable"
+      ],
+      "bonne": 0,
+      "explication": "Un emballage ou une housse adaptée protège l'hélice de la poussière, de l'humidité ambiante et des chocs accidentels pendant toute la durée du stockage — un principe déjà rencontré à propos de l'emballage antistatique de composants électroniques sensibles (fiche M5.6), transposé ici à un autre type de risque. Le conditionnement n'a aucun effet sur l'équilibrage de l'hélice, une opération mécanique distincte (fiche M17A.13), et il ne remplace pas le nettoyage préalable : les deux étapes sont complémentaires.",
+      "source": "Notions générales de construction aéronautique — stockage d'hélice"
+    },
+    {
+      "uid": "M17A-0115",
+      "sous_chapitre": "M17A.14",
+      "question": "Pourquoi consigner la date de mise en stockage et la nature de la protection appliquée à une hélice ?",
+      "options": [
+        "Cette consignation n'a aucune utilité pratique, c'est une simple formalité administrative",
+        "Pour permettre, des mois ou des années plus tard, de vérifier ce qui a réellement été fait plutôt que de le deviner",
+        "Uniquement pour calculer automatiquement le prix de revente de l'hélice"
+      ],
+      "bonne": 1,
+      "explication": "Une hélice stockée sans aucune trace écrite de sa préparation expose la personne qui la remet en service à devoir deviner ce qui a réellement été fait, plutôt que de le vérifier dans un document — la traçabilité permet de lever ce doute, comme pour l'inspection décrite en fiche M17A.12. Ce n'est donc pas une simple formalité sans utilité pratique, et elle n'a aucun rapport avec un calcul de prix de revente, une question commerciale étrangère à la sécurité du vol.",
+      "source": "Notions générales de construction aéronautique — stockage d'hélice"
     }
   ]
 }

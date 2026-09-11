@@ -1,0 +1,57 @@
+<div id="schema-m17a14b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m17a14b-wrap .m17a14b-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.9em; }
+#schema-m17a14b-wrap .m17a14b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m17a14b-wrap .m17a14b-flow { display:flex; align-items:center; gap:8px; margin-top:16px; flex-wrap:wrap; }
+#schema-m17a14b-wrap .m17a14b-box { padding:10px 12px; border-radius:6px; border:1.5px solid #888; background:#f7f7f7; font-size:0.82em; text-align:center; }
+#schema-m17a14b-wrap .m17a14b-box.verdict { font-weight:bold; }
+#schema-m17a14b-wrap .m17a14b-box.verdict.routine { background:rgba(128,128,128,0.15); border-color:#666; color:#444; }
+#schema-m17a14b-wrap .m17a14b-box.verdict.specifique { background:rgba(192,57,43,0.15); border-color:#c0392b; color:#8a2020; }
+#schema-m17a14b-wrap .m17a14b-arrow { font-size:1.2em; color:#888; }
+#schema-m17a14b-wrap .m17a14b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Cas d'application — remise en service :</strong> compare l'avion resté immobile peu de temps et celui resté immobile longtemps, hélice montée.</p>
+
+<div>
+  <button class="m17a14b-btn active" data-duree="courte">Immobilisation courte</button>
+  <button class="m17a14b-btn" data-duree="longue">Immobilisation prolongée</button>
+</div>
+
+<div class="m17a14b-flow">
+  <div class="m17a14b-box">Avion immobile, hélice montée</div>
+  <div class="m17a14b-arrow">→</div>
+  <div class="m17a14b-box verdict routine" id="m17a14b-verdict">Contrôle prévu par le programme d'entretien</div>
+</div>
+
+<div class="m17a14b-caption" id="m17a14b-caption">Immobilisation courte : le contrôle prévu par le programme d'entretien applicable, comme avant tout vol, reste la référence — c'est la documentation de l'installation, pas une estimation personnelle, qui fixe si une immobilisation de cette durée appelle ou non une vérification supplémentaire.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m17a14b-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('.m17a14b-btn');
+  var verdict = wrap.querySelector('#m17a14b-verdict');
+  var caption = wrap.querySelector('#m17a14b-caption');
+
+  function render(duree) {
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-duree') === duree); });
+    if (duree === 'courte') {
+      verdict.textContent = "Contrôle prévu par le programme d'entretien";
+      verdict.className = 'm17a14b-box verdict routine';
+      caption.textContent = "Immobilisation courte : le contrôle prévu par le programme d'entretien applicable, comme avant tout vol, reste la référence — c'est la documentation de l'installation, pas une estimation personnelle, qui fixe si une immobilisation de cette durée appelle ou non une vérification supplémentaire.";
+    } else {
+      verdict.textContent = 'Inspection spécifique requise';
+      verdict.className = 'm17a14b-box verdict specifique';
+      caption.textContent = "Immobilisation prolongée : une inspection spécifique, conforme aux instructions du constructeur, devient nécessaire avant le vol suivant — la durée précise à partir de laquelle elle s'impose est propre à chaque installation, à vérifier dans la documentation applicable plutôt qu'à deviner.";
+    }
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { render(b.getAttribute('data-duree')); });
+  });
+
+  render('courte');
+})();
+</script>

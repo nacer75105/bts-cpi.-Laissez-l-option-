@@ -1,0 +1,42 @@
+<div id="schema-m17a12a-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m17a12a-wrap .m17a12a-pale-row { display:flex; align-items:center; gap:2px; margin-top:16px; }
+#schema-m17a12a-wrap .m17a12a-zone { flex:1; height:34px; border:1.5px solid #33507a; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:0.75em; color:#fff; font-weight:bold; background:#9fb8d9; }
+#schema-m17a12a-wrap .m17a12a-zone:hover { opacity:0.85; }
+#schema-m17a12a-wrap .m17a12a-zone.active { background:#e0a800; border-color:#a67c00; }
+#schema-m17a12a-wrap .m17a12a-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:6em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> clique sur chaque zone de la pale pour voir les défauts qu'on y recherche en priorité, et pourquoi.</p>
+
+<div class="m17a12a-pale-row">
+  <div class="m17a12a-zone" data-zone="pied">Pied de pale</div>
+  <div class="m17a12a-zone" data-zone="extremite">Extrémité</div>
+  <div class="m17a12a-zone" data-zone="bordattaque">Bord d'attaque</div>
+</div>
+<div style="font-size:0.75em; color:#666; text-align:center; margin-top:4px;">Trois zones de vigilance distinctes — le bord d'attaque n'est pas un tronçon entre le pied et l'extrémité, il court sur toute la longueur de la pale</div>
+
+<div class="m17a12a-caption" id="m17a12a-caption">Clique sur une zone pour afficher les défauts recherchés à cet endroit.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m17a12a-wrap');
+  if (!wrap) { return; }
+  var zones = wrap.querySelectorAll('.m17a12a-zone');
+  var caption = wrap.querySelector('#m17a12a-caption');
+
+  var DESCR = {
+    pied: "Pied de pale et zone de fixation : c'est là que se concentre la force centrifuge de la pale entière, transmise au système de retenue (M17A.5). Une fissure y est plus rare, mais ses conséquences seraient particulièrement graves.",
+    bordattaque: "Bord d'attaque : sur toute la longueur de la pale, du pied à l'extrémité, c'est la zone la plus directement exposée à l'air, à la pluie, au sable et aux corps étrangers — siège privilégié de l'érosion et des entailles par impact, avec le risque de fissure de fatigue qui peut s'ensuivre.",
+    extremite: "Extrémité de la pale : elle se déplace à la vitesse la plus élevée de toute la pale (rappel du vrillage, M17A.3), ce qui l'expose aux contraintes aérodynamiques et aux chocs à haute énergie les plus importants."
+  };
+
+  zones.forEach(function (z) {
+    z.addEventListener('click', function () {
+      zones.forEach(function (x) { x.classList.toggle('active', x === z); });
+      caption.textContent = DESCR[z.getAttribute('data-zone')];
+    });
+  });
+})();
+</script>

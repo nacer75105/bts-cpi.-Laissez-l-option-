@@ -38,7 +38,7 @@ MODULES = {
     "M11A": {"titre": "Aérodynamique, structures et systèmes — avion à turbine",
               "disponible": False},
     "M15": {"titre": "Turbomachines à gaz", "disponible": False},
-    "M17A": {"titre": "Hélices", "disponible": False,  # lot 1/3 (M17A.1-M17A.5) validé ; reste lot 2 (M17A.6-M17A.10) et lot 3 (M17A.11-M17A.14) avant disponible: True
+    "M17A": {"titre": "Hélices", "disponible": False,  # module complet (14 fiches) et relu ; disponible: True apres validation finale de l'utilisateur (test local en cours)
              "nb_questions_examen": 25, "duree_examen_min": 30},
 }
 
