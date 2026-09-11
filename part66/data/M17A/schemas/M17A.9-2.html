@@ -1,0 +1,61 @@
+<div id="schema-m17a9b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m17a9b-wrap .m17a9b-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.9em; }
+#schema-m17a9b-wrap .m17a9b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m17a9b-wrap .m17a9b-slider { width:100%; max-width:420px; }
+#schema-m17a9b-wrap .m17a9b-track-wrap { position:relative; max-width:420px; padding-top:6px; }
+#schema-m17a9b-wrap .m17a9b-zone { position:absolute; top:6px; right:0; height:20px; width:20%; background:rgba(192,57,43,0.18); border-radius:0 5px 5px 0; z-index:1; }
+#schema-m17a9b-wrap .m17a9b-zone-label { max-width:420px; text-align:right; font-size:0.68em; color:#c0392b; }
+#schema-m17a9b-wrap .m17a9b-track { position:relative; height:20px; background:#e2e2e2; border-radius:5px; overflow:hidden; }
+#schema-m17a9b-wrap .m17a9b-bar { height:100%; transition:width .1s, background .2s; }
+#schema-m17a9b-wrap .m17a9b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+#schema-m17a9b-wrap .m17a9b-caption.bad { border-left-color:#c0392b; background:rgba(192,57,43,0.10); }
+#schema-m17a9b-wrap .m17a9b-caption.ok { border-left-color:#2e7d32; background:rgba(46,125,50,0.10); }
+</style>
+
+<p><strong>Cas d'application — le régulateur normal tombe en panne :</strong> compare le régime obtenu, à la même puissance moteur élevée, selon que le régulateur normal fonctionne ou non.</p>
+
+<div>
+  <button class="m17a9b-btn active" data-etat="normal">Régulateur normal fonctionnel</button>
+  <button class="m17a9b-btn" data-etat="panne">Régulateur normal en panne</button>
+</div>
+
+<div class="m17a9b-zone-label">seuil du dispositif de survitesse</div>
+<div class="m17a9b-track-wrap">
+  <div class="m17a9b-zone"></div>
+  <div class="m17a9b-track"><div class="m17a9b-bar" id="m17a9b-bar" style="width:45%; background:#2e7d32;"></div></div>
+</div>
+
+<div class="m17a9b-caption ok" id="m17a9b-caption">Régulateur normal fonctionnel : il maintient le régime proche de sa consigne, bien en dessous du seuil de survitesse (zone rouge) — le dispositif de survitesse reste inactif.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m17a9b-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('.m17a9b-btn');
+  var bar = wrap.querySelector('#m17a9b-bar');
+  var caption = wrap.querySelector('#m17a9b-caption');
+
+  function render(etat) {
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-etat') === etat); });
+    if (etat === 'normal') {
+      bar.style.width = '45%';
+      bar.style.background = '#2e7d32';
+      caption.className = 'm17a9b-caption ok';
+      caption.textContent = "Régulateur normal fonctionnel : il maintient le régime proche de sa consigne, bien en dessous du seuil de survitesse (zone rouge) — le dispositif de survitesse reste inactif, comme dans l'immense majorité des vols.";
+    } else {
+      bar.style.width = '90%';
+      bar.style.background = '#c0392b';
+      caption.className = 'm17a9b-caption bad';
+      caption.textContent = "Régulateur normal en panne (grippage qui le bloquerait en position de pas fin, par exemple) : plus rien n'empêche mécaniquement le régime de continuer à grimper avec la puissance. C'est précisément dans ce scénario que le dispositif de survitesse, indépendant du régulateur normal, intervient pour ramener le régime sous la limite dangereuse — la protection de dernier recours prend le relais.";
+    }
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { render(b.getAttribute('data-etat')); });
+  });
+
+  render('normal');
+})();
+</script>

@@ -1,0 +1,73 @@
+<div id="schema-m17a6b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m17a6b-wrap .m17a6b-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.9em; }
+#schema-m17a6b-wrap .m17a6b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m17a6b-wrap .m17a6b-row { display:flex; align-items:center; gap:10px; margin-top:10px; }
+#schema-m17a6b-wrap .m17a6b-rowlabel { width:110px; font-size:0.85em; color:#333; }
+#schema-m17a6b-wrap .m17a6b-status { flex:1; padding:6px 10px; border-radius:5px; font-size:0.85em; font-weight:bold; text-align:center; }
+#schema-m17a6b-wrap .m17a6b-status.ok { background:rgba(46,125,50,0.15); color:#2a6b2a; }
+#schema-m17a6b-wrap .m17a6b-status.affected { background:rgba(192,57,43,0.15); color:#8a2020; }
+#schema-m17a6b-wrap .m17a6b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:4.5em; }
+</style>
+
+<p><strong>Cas d'application — une panne, trois réactions différentes :</strong> choisis un scénario de panne et observe l'effet sur chacune des trois familles de commande de pas.</p>
+
+<div>
+  <button class="m17a6b-btn active" data-scenario="normal">Fonctionnement normal</button>
+  <button class="m17a6b-btn" data-scenario="elec">Panne électrique de bord</button>
+  <button class="m17a6b-btn" data-scenario="huile">Panne du circuit d'huile moteur</button>
+</div>
+
+<div class="m17a6b-row"><div class="m17a6b-rowlabel">Mécanique</div><div class="m17a6b-status ok" id="m17a6b-meca">Non affectée</div></div>
+<div class="m17a6b-row"><div class="m17a6b-rowlabel">Hydraulique</div><div class="m17a6b-status ok" id="m17a6b-hydro">Non affectée</div></div>
+<div class="m17a6b-row"><div class="m17a6b-rowlabel">Électrique</div><div class="m17a6b-status ok" id="m17a6b-elec">Non affectée</div></div>
+
+<div class="m17a6b-caption" id="m17a6b-caption">Fonctionnement normal : les trois familles remplissent leur rôle, chacune selon son propre principe.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m17a6b-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('.m17a6b-btn');
+  var meca = wrap.querySelector('#m17a6b-meca');
+  var hydro = wrap.querySelector('#m17a6b-hydro');
+  var elec = wrap.querySelector('#m17a6b-elec');
+  var caption = wrap.querySelector('#m17a6b-caption');
+
+  var SCENARIOS = {
+    normal: {
+      meca: false, hydro: false, elec: false,
+      texte: "Fonctionnement normal : les trois familles remplissent leur rôle, chacune selon son propre principe (liaison directe, équilibre huile/contrepoids, ou moteur électrique piloté par calculateur)."
+    },
+    elec: {
+      meca: false, hydro: false, elec: true,
+      texte: "Panne électrique de bord : la commande mécanique n'en dépend pas du tout (liaison purement physique). La commande hydraulique n'en dépend pas non plus pour sa fonction de base (l'équilibre huile/contrepoids est purement mécanique et hydraulique). La commande électrique, en revanche, est directement affectée : c'est justement la contrepartie de son indépendance vis-à-vis de la pression d'huile, soulignée dans la fiche."
+    },
+    huile: {
+      meca: false, hydro: true, elec: false,
+      texte: "Panne du circuit d'huile moteur : la commande mécanique n'en dépend pas (aucune huile en jeu). La commande hydraulique, elle, est directement affectée puisque son fonctionnement repose entièrement sur la pression d'huile — sur une installation à contrepoids, la pale dérive alors vers un pas plus gros (voire le drapeau), un comportement de repli sûr détaillé en fiche M17A.7. La commande électrique n'en dépend pas non plus, précisément parce qu'elle a été conçue indépendante de ce circuit."
+    }
+  };
+
+  function setStatus(el, affected) {
+    el.className = 'm17a6b-status ' + (affected ? 'affected' : 'ok');
+    el.textContent = affected ? 'Affectée' : 'Non affectée';
+  }
+
+  function render(scenario) {
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-scenario') === scenario); });
+    var s = SCENARIOS[scenario];
+    setStatus(meca, s.meca);
+    setStatus(hydro, s.hydro);
+    setStatus(elec, s.elec);
+    caption.textContent = s.texte;
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { render(b.getAttribute('data-scenario')); });
+  });
+
+  render('normal');
+})();
+</script>

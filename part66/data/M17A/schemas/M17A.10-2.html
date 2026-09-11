@@ -1,0 +1,57 @@
+<div id="schema-m17a10b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m17a10b-wrap .m17a10b-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.95em; }
+#schema-m17a10b-wrap .m17a10b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m17a10b-wrap .m17a10b-row { display:flex; align-items:center; gap:10px; margin-top:12px; }
+#schema-m17a10b-wrap .m17a10b-rowlabel { width:110px; font-size:0.85em; color:#333; }
+#schema-m17a10b-wrap .m17a10b-track { position:relative; flex:1; max-width:300px; height:18px; background:#e2e2e2; border-radius:4px; }
+#schema-m17a10b-wrap .m17a10b-mark { position:absolute; top:-3px; width:2px; height:24px; background:#2e7d32; }
+#schema-m17a10b-wrap .m17a10b-needle { position:absolute; top:0; width:4px; height:18px; background:#c0392b; border-radius:2px; transition:left .5s; }
+#schema-m17a10b-wrap .m17a10b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Cas d'application — le synchrophaseur en action</strong> (écart de position exagéré pour rester visible ; l'écart réel entre deux moteurs désynchronisés n'est que de quelques tours par minute) : observe comment le régime du moteur esclave rejoint celui du moteur maître (repère vert) une fois le synchrophaseur activé.</p>
+
+<div>
+  <button class="m17a10b-btn active" data-etat="off">Synchrophaseur désactivé</button>
+  <button class="m17a10b-btn" data-etat="on">Synchrophaseur activé</button>
+</div>
+
+<div class="m17a10b-row">
+  <div class="m17a10b-rowlabel">Moteur maître</div>
+  <div class="m17a10b-track"><div class="m17a10b-mark" style="left:50%;"></div><div class="m17a10b-needle" style="left:calc(50% - 2px); background:#33507a;"></div></div>
+</div>
+<div class="m17a10b-row">
+  <div class="m17a10b-rowlabel">Moteur esclave</div>
+  <div class="m17a10b-track"><div class="m17a10b-mark" style="left:50%;"></div><div class="m17a10b-needle" id="m17a10b-esclave" style="left:calc(38% - 2px);"></div></div>
+</div>
+
+<div class="m17a10b-caption" id="m17a10b-caption">Synchrophaseur désactivé : chaque régulateur (fiche M17A.8) maintient son propre moteur, sans lien entre eux — un léger écart subsiste entre le régime esclave et celui du maître (repère vert).</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m17a10b-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('.m17a10b-btn');
+  var esclave = wrap.querySelector('#m17a10b-esclave');
+  var caption = wrap.querySelector('#m17a10b-caption');
+
+  function render(etat) {
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-etat') === etat); });
+    if (etat === 'on') {
+      esclave.style.left = 'calc(50% - 2px)';
+      caption.textContent = "Synchrophaseur activé : il compare en continu le régime du moteur esclave à celui du moteur maître, et ajuste légèrement la consigne transmise au régulateur esclave jusqu'à ce que les deux régimes coïncident — sans jamais remplacer le régulateur de chaque moteur, qui continue de gérer lui-même sa propre pression d'huile de calage.";
+    } else {
+      esclave.style.left = 'calc(38% - 2px)';
+      caption.textContent = "Synchrophaseur désactivé : chaque régulateur (fiche M17A.8) maintient son propre moteur, sans lien entre eux — un léger écart subsiste entre le régime esclave et celui du maître (repère vert), source des battements. Si l'avion vole sans synchrophaseur, cet écart ne menace en rien la sécurité du vol : seul le confort en pâtit.";
+    }
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { render(b.getAttribute('data-etat')); });
+  });
+
+  render('off');
+})();
+</script>

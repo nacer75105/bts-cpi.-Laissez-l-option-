@@ -1,0 +1,74 @@
+<div id="schema-m17a7a-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m17a7a-wrap .m17a7a-slider { width:100%; max-width:420px; }
+#schema-m17a7a-wrap .m17a7a-row { display:flex; align-items:center; gap:10px; margin-top:10px; }
+#schema-m17a7a-wrap .m17a7a-rowlabel { width:150px; font-size:0.85em; color:#333; }
+#schema-m17a7a-wrap .m17a7a-bar-outer { flex:1; max-width:300px; height:18px; background:#e2e2e2; border-radius:4px; overflow:hidden; }
+#schema-m17a7a-wrap .m17a7a-bar-inner { height:100%; transition:width .15s; }
+#schema-m17a7a-wrap .m17a7a-gauge-block { margin-top:16px; text-align:center; }
+#schema-m17a7a-wrap .m17a7a-gauge { width:90px; height:90px; border-radius:50%; border:2px solid #999; background:#eef2f5; position:relative; margin:0 auto; }
+#schema-m17a7a-wrap .m17a7a-ref { position:absolute; top:50%; left:6px; right:6px; height:2px; background:#bbb; background-image:repeating-linear-gradient(90deg,#bbb 0 6px,transparent 6px 10px); transform:translateY(-50%); }
+#schema-m17a7a-wrap .m17a7a-chord { position:absolute; top:50%; left:10px; right:10px; height:4px; background:#33507a; transform-origin:center; border-radius:2px; transition:transform .15s; }
+#schema-m17a7a-wrap .m17a7a-gauge-label { font-size:0.75em; color:#666; margin-top:6px; }
+#schema-m17a7a-wrap .m17a7a-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> fais varier la pression d'huile de calage et observe l'équilibre avec les contrepoids, et son effet sur l'angle de calage.</p>
+
+<div class="m17a7a-value">Pression d'huile (illustration) : <span id="m17a7a-lu">50</span> %</div>
+<input type="range" class="m17a7a-slider" id="m17a7a-pression" min="0" max="100" value="50" step="5">
+
+<div class="m17a7a-row">
+  <div class="m17a7a-rowlabel">Pression d'huile</div>
+  <div class="m17a7a-bar-outer"><div class="m17a7a-bar-inner" id="m17a7a-huile" style="background:#33507a;"></div></div>
+</div>
+<div class="m17a7a-row">
+  <div class="m17a7a-rowlabel">Contrepoids (rappel)</div>
+  <div class="m17a7a-bar-outer"><div class="m17a7a-bar-inner" id="m17a7a-contre" style="background:#e0a800;"></div></div>
+</div>
+
+<div class="m17a7a-gauge-block">
+  <div class="m17a7a-gauge">
+    <div class="m17a7a-ref"></div>
+    <div class="m17a7a-chord" id="m17a7a-chord"></div>
+  </div>
+  <div class="m17a7a-gauge-label">Angle de calage résultant (par rapport au plan de rotation, pointillé)</div>
+</div>
+
+<div class="m17a7a-caption" id="m17a7a-caption">Équilibre à 50 % : pression d'huile et contrepoids se compensent à mi-course (illustration).</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m17a7a-wrap');
+  if (!wrap) { return; }
+  var slider = wrap.querySelector('#m17a7a-pression');
+  var lu = wrap.querySelector('#m17a7a-lu');
+  var huile = wrap.querySelector('#m17a7a-huile');
+  var contre = wrap.querySelector('#m17a7a-contre');
+  var chord = wrap.querySelector('#m17a7a-chord');
+  var caption = wrap.querySelector('#m17a7a-caption');
+
+  function render() {
+    var v = parseInt(slider.value, 10);
+    lu.textContent = v;
+    huile.style.width = v + '%';
+    contre.style.width = (100 - v) + '%';
+    // angle qualitatif, toujours positif : de +65deg (pas gros/drapeau, huile faible)
+    // a +10deg (pas fin, huile forte) - jamais de calage nul ni negatif en usage normal.
+    var angle = 65 - (v / 100) * 55;
+    chord.style.transform = 'rotate(' + angle + 'deg)';
+
+    if (v < 35) {
+      caption.textContent = "Pression d'huile faible : les contrepoids l'emportent, poussant la pale vers un pas plus gros — jusqu'au drapeau sur les installations qui le permettent (fiche M17A.7). C'est cet équilibre, piloté en continu par le régulateur (fiche M17A.8), qui fixe l'angle de calage à chaque instant.";
+    } else if (v > 65) {
+      caption.textContent = "Pression d'huile forte : elle l'emporte sur les contrepoids, poussant la pale vers un pas plus fin. Le régulateur module cette pression en continu selon le régime à maintenir.";
+    } else {
+      caption.textContent = "Équilibre proche du milieu : pression d'huile et contrepoids se compensent à peu près (illustration, sans valeur réelle). Le moindre déséquilibre entre les deux fait pivoter la pale dans un sens ou dans l'autre.";
+    }
+  }
+
+  slider.addEventListener('input', render);
+  render();
+})();
+</script>

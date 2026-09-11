@@ -559,6 +559,539 @@
       "bonne": 1,
       "explication": "Un avion d'entraînement simple est le plus souvent équipé d'une hélice bipale à pas fixe, en bois ou en métal — la solution la plus simple pour un usage peu exigeant. L'hélice tripale ou quadripale à pas variable équipe plutôt les avions plus performants dits « complexes ». Et une hélice à pas variable sans aucune régulation automatique ne correspond pas à une installation courante : le pas variable est presque toujours associé à un régulateur, comme vu plus haut dans cette fiche.",
       "source": "Notions générales de construction aéronautique — hélice à pas variable"
+    },
+    {
+      "uid": "M17A-0044",
+      "sous_chapitre": "M17A.6",
+      "question": "Quelles sont les trois grandes familles de commande de pas d'hélice ?",
+      "options": [
+        "Mécanique, hydraulique et pneumatique",
+        "Mécanique, hydraulique et électrique",
+        "Hydraulique, électrique et pneumatique"
+      ],
+      "bonne": 1,
+      "explication": "Trois grandes familles coexistent : la commande mécanique (câbles/biellettes directs), la commande hydraulique (pression d'huile contre contrepoids, la plus répandue) et la commande électrique (moteur électrique piloté par un calculateur). Aucune famille pneumatique n'existe pour la commande de pas : les deux options qui la citent sont donc fausses.",
+      "source": "Notions générales de construction aéronautique — commande de pas d'hélice"
+    },
+    {
+      "uid": "M17A-0045",
+      "sous_chapitre": "M17A.6",
+      "question": "Comment fonctionne une commande de pas mécanique ?",
+      "options": [
+        "Un système de câbles ou de biellettes relie directement un levier de cockpit au mécanisme de calage, sans calcul automatique",
+        "Une pression d'huile pousse un piston relié au pied de chaque pale",
+        "Un moteur électrique entraîne un engrenage qui fait pivoter la pale"
+      ],
+      "bonne": 0,
+      "explication": "La commande mécanique relie directement, par câbles ou biellettes, un levier de cockpit au mécanisme de calage : la position du levier détermine l'angle obtenu, sans automatisme. La pression d'huile contre un piston décrit la commande hydraulique, et le moteur électrique piloté par calculateur décrit la commande électrique — deux familles distinctes.",
+      "source": "Notions générales de construction aéronautique — commande de pas d'hélice"
+    },
+    {
+      "uid": "M17A-0046",
+      "sous_chapitre": "M17A.6",
+      "question": "Quelle est la famille de commande de pas la plus répandue sur les avions légers à moteur à pistons ?",
+      "options": [
+        "La commande mécanique",
+        "La commande hydraulique",
+        "La commande électrique"
+      ],
+      "bonne": 1,
+      "explication": "La commande hydraulique est de très loin la plus répandue sur ce type d'appareil : une pression d'huile pousse un piston relié au pied de chaque pale, contre des forces de rappel comme les contrepoids. La commande mécanique reste rare sur les installations modernes, et la commande électrique, plus récente, demeure minoritaire sur la flotte légère existante.",
+      "source": "Notions générales de construction aéronautique — commande de pas d'hélice"
+    },
+    {
+      "uid": "M17A-0047",
+      "sous_chapitre": "M17A.6",
+      "question": "D'où vient généralement la pression d'huile utilisée par une commande de pas hydraulique ?",
+      "options": [
+        "D'un compresseur d'air dédié, indépendant du moteur",
+        "De l'huile du moteur lui-même, ou parfois d'un circuit hydraulique dédié",
+        "D'une batterie électrique qui alimente une pompe hydraulique de secours uniquement"
+      ],
+      "bonne": 1,
+      "explication": "La pression utilisée est le plus souvent celle de l'huile du moteur lui-même, parfois celle d'un circuit hydraulique dédié à l'hélice. Aucun compresseur d'air n'est en jeu ici (ce ne serait pas une commande hydraulique mais pneumatique, une famille non présentée dans ce module), et l'huile ne provient pas d'une batterie électrique.",
+      "source": "Notions générales de construction aéronautique — commande de pas d'hélice"
+    },
+    {
+      "uid": "M17A-0048",
+      "sous_chapitre": "M17A.6",
+      "question": "Quel est le principal avantage de la commande électrique par rapport à la commande hydraulique ?",
+      "options": [
+        "Elle est indépendante de la pression d'huile du moteur et permet souvent un contrôle plus précis avec surveillance automatique des pannes",
+        "Elle ne nécessite aucune alimentation électrique pour fonctionner",
+        "Elle équipe la quasi-totalité des avions légers actuellement en service"
+      ],
+      "bonne": 0,
+      "explication": "L'indépendance vis-à-vis de la pression d'huile moteur et un contrôle électronique plus précis, avec davantage de surveillance automatique des pannes, sont les avantages cités. C'est au contraire une dépendance à une alimentation électrique fiable qui constitue sa principale contrainte, et elle reste minoritaire sur la flotte légère existante, pas dominante.",
+      "source": "Notions générales de construction aéronautique — commande de pas d'hélice"
+    },
+    {
+      "uid": "M17A-0049",
+      "sous_chapitre": "M17A.6",
+      "question": "En quoi la commande hydraulique se rapproche-t-elle d'un mitigeur thermostatique plutôt que d'un simple robinet manuel ?",
+      "options": [
+        "Elle régule automatiquement par un mécanisme physique interne, sans intervention continue du pilote ni calcul électronique",
+        "Elle nécessite un réglage manuel permanent du pilote, comme un robinet classique",
+        "Elle dépend entièrement d'un calculateur électronique pour fonctionner"
+      ],
+      "bonne": 0,
+      "explication": "Comme un mitigeur thermostatique, la commande hydraulique régule automatiquement (l'équilibre entre pression d'huile et contrepoids) par un mécanisme purement physique, sans réglage manuel continu ni calcul électronique — c'est justement ce qui la distingue de la commande mécanique (réglage manuel constant) et de la commande électrique (pilotée par un calculateur).",
+      "source": "Notions générales de construction aéronautique — commande de pas d'hélice"
+    },
+    {
+      "uid": "M17A-0050",
+      "sous_chapitre": "M17A.6",
+      "question": "Pourquoi la commande hydraulique s'accompagne-t-elle presque toujours d'un régulateur automatique plutôt que d'un simple levier manuel ?",
+      "options": [
+        "Parce que rester en permanence au bon réglage, à chaque instant du vol, dépasse ce qu'un pilote pourrait ajuster manuellement en continu",
+        "Parce qu'un levier manuel serait physiquement incompatible avec un système hydraulique",
+        "Parce que la réglementation impose un régulateur automatique sur toute hélice hydraulique"
+      ],
+      "bonne": 0,
+      "explication": "Un pas variable a besoin de rester stable en permanence face aux forces qui le sollicitent sans cesse (les deux couples de torsion vus en M17A.2, entre autres) : ajuster cela manuellement en continu dépasse ce qu'un pilote peut faire. Rien n'empêche physiquement un levier manuel sur un système hydraulique (c'est d'ailleurs envisageable sur certaines installations simples), et aucune exigence réglementaire de ce type n'est mentionnée dans la fiche.",
+      "source": "Notions générales de construction aéronautique — commande de pas d'hélice"
+    },
+    {
+      "uid": "M17A-0051",
+      "sous_chapitre": "M17A.6",
+      "question": "Pourquoi un pas variable ne peut-il pas rester mécaniquement passif, livré à lui-même ?",
+      "options": [
+        "Parce que les deux couples de torsion vus en M17A.2 agissent en permanence sur la pale, simultanément et en sens opposés",
+        "Parce que le vrillage de la pale change continuellement en cours de vol",
+        "Parce que la corrosion menace en permanence les pales métalliques"
+      ],
+      "bonne": 0,
+      "explication": "La pale reste sollicitée en permanence par deux couples de torsion opposés (rappel M17A.2) : le couple de torsion centrifuge, qui pousse vers un pas plus fin, et le couple de torsion aérodynamique, qui pousse vers un pas plus gros — sans mécanisme de maintien actif, rien ne garderait la pale au réglage voulu. Le vrillage est une caractéristique géométrique fixée à la fabrication, qui ne change pas en vol (M17A.3) ; la corrosion est une vulnérabilité du métal (M17A.4), sans rapport avec ce point précis.",
+      "source": "Notions générales de construction aéronautique — commande de pas d'hélice"
+    },
+    {
+      "uid": "M17A-0052",
+      "sous_chapitre": "M17A.7",
+      "question": "Comment le piston du mécanisme hydraulique de calage est-il relié aux pales ?",
+      "options": [
+        "Par un système de manivelles ou de crémaillères qui transforme son déplacement en rotation des pales",
+        "Par un simple aimant qui attire la pale vers un pas plus fin",
+        "Les pales ne sont pas reliées au piston : elles pivotent uniquement sous l'effet de la force centrifuge"
+      ],
+      "bonne": 0,
+      "explication": "Le piston est relié mécaniquement au pied de chaque pale par un système de manivelles ou de crémaillères, dont les détails précis varient selon les constructeurs : son déplacement se traduit directement par une rotation des pales sur leur axe de calage. Il n'y a pas d'aimant en jeu, et les pales ne pivotent pas seules sous le seul effet de la force centrifuge — c'est justement l'équilibre entre huile et contrepoids qui détermine l'angle.",
+      "source": "Notions générales de construction aéronautique — mécanisme hydraulique de calage"
+    },
+    {
+      "uid": "M17A-0053",
+      "sous_chapitre": "M17A.7",
+      "question": "Quel principe physique, déjà vu en M17A.2, explique pourquoi les contrepoids peuvent créer un couple de rappel sans consommer d'énergie supplémentaire ?",
+      "options": [
+        "La force centrifuge, déjà présente dès que l'hélice tourne",
+        "La traînée aérodynamique de rotation",
+        "Le couple de torsion aérodynamique du profil de la pale"
+      ],
+      "bonne": 0,
+      "explication": "Les contrepoids exploitent la force centrifuge, déjà présente dès que l'hélice tourne (rappel M17A.2 : elle pousse toute masse en rotation à s'éloigner de l'axe) : positionnés intelligemment, ils créent un couple de rappel sans avoir besoin d'une source d'énergie dédiée. La traînée de rotation est une autre force, qui s'oppose à la rotation elle-même, pas au calage. Le couple de torsion aérodynamique existe bien lui aussi (M17A.2), mais il agit sur la pale elle-même par la répartition des pressions de l'air sur son profil, pas par des masses ajoutées exploitant la force centrifuge comme le font les contrepoids.",
+      "source": "Notions générales de construction aéronautique — mécanisme hydraulique de calage"
+    },
+    {
+      "uid": "M17A-0054",
+      "sous_chapitre": "M17A.7",
+      "question": "Que se passe-t-il en cas de perte totale de pression d'huile de calage, d'après la fiche ?",
+      "options": [
+        "La pale dérive systématiquement vers un pas fin, sur toutes les installations sans exception",
+        "La pale dérive systématiquement vers le drapeau, sur toutes les installations sans exception",
+        "Le comportement dépend de la conception retenue par le constructeur, à vérifier dans la documentation de chaque installation"
+      ],
+      "bonne": 2,
+      "explication": "Sur une installation à contrepoids — la plus courante — une perte de pression d'huile laisse les contrepoids l'emporter sans opposition, et la pale dérive vers un pas plus gros, voire jusqu'au drapeau sur les installations qui le permettent : c'est le comportement standard, mais il reste une caractéristique de conception à confirmer dans la documentation de chaque installation, une architecture sans contrepoids pouvant se comporter différemment. Aucun des deux comportements « systématiques, sans exception » proposés n'est donc correct en toute généralité : le premier (vers un pas fin) est même l'inverse du comportement standard, et le second (vers le drapeau) ne tient pas compte des architectures qui en sont dépourvues.",
+      "source": "Notions générales de construction aéronautique — mécanisme hydraulique de calage"
+    },
+    {
+      "uid": "M17A-0055",
+      "sous_chapitre": "M17A.7",
+      "question": "Qu'est-ce que la mise en drapeau d'une pale d'hélice ?",
+      "options": [
+        "Un angle de calage très important, presque parallèle à l'axe de vol, qui minimise la surface présentée à l'écoulement d'air",
+        "Un angle de calage négatif, utilisé au sol pour aider au freinage",
+        "Un angle de calage qui maximise la traction produite par l'hélice"
+      ],
+      "bonne": 0,
+      "explication": "La mise en drapeau amène la pale à un angle très important, presque parallèle à l'axe de vol, ce qui minimise la surface présentée à l'écoulement d'air et réduit fortement la traînée. L'angle négatif utilisé au sol pour freiner, c'est le pas reverse — l'inverse conceptuellement. Et la mise en drapeau ne cherche jamais à maximiser la traction : c'est justement le contraire, minimiser la résistance d'une hélice qui ne produit plus de traction utile (moteur en panne).",
+      "source": "Notions générales de construction aéronautique — mécanisme hydraulique de calage"
+    },
+    {
+      "uid": "M17A-0056",
+      "sous_chapitre": "M17A.7",
+      "question": "Comment la fiche nomme-t-elle le phénomène de rotation d'une hélice sous le seul effet du vent relatif, moteur non entraîné ?",
+      "options": [
+        "Le synchrophasage",
+        "Le moulinet",
+        "Le drapeau"
+      ],
+      "bonne": 1,
+      "explication": "Ce phénomène de rotation forcée par le vent, quand le moteur n'entraîne plus l'hélice, porte le nom de moulinet. Le synchrophasage est une notion totalement différente, liée à la synchronisation de plusieurs hélices (fiche M17A.10). Le drapeau est la position de calage qui, justement, cherche à limiter ce moulinet, pas le nom du phénomène lui-même.",
+      "source": "Notions générales de construction aéronautique — mécanisme hydraulique de calage"
+    },
+    {
+      "uid": "M17A-0057",
+      "sous_chapitre": "M17A.7",
+      "question": "Pourquoi la mise en drapeau d'une hélice en panne est-elle importante sur un avion multimoteur ?",
+      "options": [
+        "Elle réduit fortement la traînée supplémentaire que l'hélice en moulinet produirait sinon, au moment où l'avion a le plus besoin de performance",
+        "Elle permet au moteur en panne de continuer à produire de la traction",
+        "Elle est obligatoire pour activer le synchrophaseur des autres moteurs"
+      ],
+      "bonne": 0,
+      "explication": "Sans mise en drapeau, l'hélice du moteur en panne continuerait à tourner en moulinet, produisant une traînée importante qui dégraderait les performances de l'avion précisément quand il dispose d'un moteur en moins. La mise en drapeau ne restaure aucune traction (le moteur reste en panne), et elle n'a aucun rapport avec l'activation du synchrophaseur, une fonction indépendante détaillée en M17A.10.",
+      "source": "Notions générales de construction aéronautique — mécanisme hydraulique de calage"
+    },
+    {
+      "uid": "M17A-0058",
+      "sous_chapitre": "M17A.7",
+      "question": "À quoi sert le pas reverse ?",
+      "options": [
+        "À produire une poussée vers l'arrière au sol, après l'atterrissage, pour aider au freinage",
+        "À réduire la traînée d'une hélice en panne en vol",
+        "À synchroniser le régime de plusieurs hélices entre elles"
+      ],
+      "bonne": 0,
+      "explication": "Le pas reverse inverse le sens de la traction produite, utilisé au sol après l'atterrissage pour aider au freinage en complément des freins de roues — jamais en vol. Réduire la traînée d'une hélice en panne, c'est le rôle de la mise en drapeau, une fonction différente. Et la synchronisation entre hélices est le sujet de la fiche M17A.10, sans rapport avec le pas reverse.",
+      "source": "Notions générales de construction aéronautique — mécanisme hydraulique de calage"
+    },
+    {
+      "uid": "M17A-0059",
+      "sous_chapitre": "M17A.7",
+      "question": "Sur un avion bimoteur dont un moteur tombe en panne, que fait l'hélice de l'autre moteur, resté en fonctionnement ?",
+      "options": [
+        "Elle est automatiquement mise en drapeau elle aussi, par sécurité",
+        "Elle continue d'être réglée normalement par son propre mécanisme hydraulique et son propre régulateur, indépendamment du moteur en panne",
+        "Elle passe automatiquement en pas reverse pour compenser la perte de puissance"
+      ],
+      "bonne": 1,
+      "explication": "L'hélice du moteur resté en fonctionnement continue d'être réglée par son propre mécanisme hydraulique et son propre régulateur, de façon indépendante — les deux hélices d'un bimoteur fonctionnent séparément, sauf synchrophaseur activé (M17A.10). Elle n'est pas mise en drapeau (elle produit encore de la traction utile), et le pas reverse est réservé au sol après l'atterrissage, jamais utilisé en vol pour compenser une panne.",
+      "source": "Notions générales de construction aéronautique — mécanisme hydraulique de calage"
+    },
+    {
+      "uid": "M17A-0060",
+      "sous_chapitre": "M17A.8",
+      "question": "Quel est le rôle du régulateur d'hélice ?",
+      "options": [
+        "Décider de la pression d'huile à envoyer, à chaque instant, pour maintenir le régime souhaité",
+        "Régler la puissance délivrée par le moteur à la place de la manette des gaz",
+        "Empêcher toute variation de puissance moteur pendant le vol"
+      ],
+      "bonne": 0,
+      "explication": "Le régulateur décide, en continu, de la pression d'huile à envoyer au mécanisme de calage (M17A.7) pour maintenir le régime choisi. Régler la puissance reste le rôle de la manette des gaz, pas du régulateur — une distinction que la fiche souligne explicitement. Et le régulateur n'empêche aucune variation de puissance : il absorbe cette variation en ajustant le pas, sans l'empêcher.",
+      "source": "Notions générales de construction aéronautique — régulateur d'hélice"
+    },
+    {
+      "uid": "M17A-0061",
+      "sous_chapitre": "M17A.8",
+      "question": "Que fait le régulateur si le régime réel de l'hélice dépasse la consigne choisie par le pilote ?",
+      "options": [
+        "Il réduit la pression d'huile, ce qui laisse les contrepoids l'emporter vers un pas plus gros et freine le moteur",
+        "Il augmente la pression d'huile, ce qui ramène la pale vers un pas plus fin et accélère le moteur",
+        "Il coupe l'arrivée d'huile de calage jusqu'à ce que le moteur s'arrête"
+      ],
+      "bonne": 0,
+      "explication": "Si le régime dépasse la consigne, le régulateur réduit la pression d'huile : les contrepoids l'emportent alors davantage et poussent la pale vers un pas plus gros, qui « mord » davantage dans l'air à chaque tour, freinant le moteur et ramenant le régime vers la consigne. L'option inverse (plus de pression, pas fin, accélération) décrit au contraire la réaction à un régime trop bas. Et le régulateur ne coupe jamais l'huile jusqu'à l'arrêt du moteur : il corrige en continu, sans viser un arrêt.",
+      "source": "Notions générales de construction aéronautique — régulateur d'hélice"
+    },
+    {
+      "uid": "M17A-0062",
+      "sous_chapitre": "M17A.8",
+      "question": "Comment le régulateur détecte-t-il le régime réel de l'hélice ?",
+      "options": [
+        "Par des masselottes montées sur pivot, dont l'écartement sous l'effet de la force centrifuge traduit le régime",
+        "Par une mesure électronique de la vitesse du vent relatif",
+        "Par la température de l'huile moteur"
+      ],
+      "bonne": 0,
+      "explication": "Des masselottes montées sur pivot, entraînées par l'hélice, s'écartent sous l'effet de la force centrifuge d'autant plus que le régime augmente : leur position traduit directement le régime réel, un mécanisme purement mécanique à la base de la plupart des régulateurs. La vitesse du vent relatif et la température de l'huile ne sont pas les grandeurs mesurées par ce mécanisme.",
+      "source": "Notions générales de construction aéronautique — régulateur d'hélice"
+    },
+    {
+      "uid": "M17A-0063",
+      "sous_chapitre": "M17A.8",
+      "question": "À quoi correspond le régime de consigne, choisi par le pilote, dans le mécanisme du régulateur ?",
+      "options": [
+        "À la tension d'un ressort réglable, qui s'oppose à l'écartement des masselottes",
+        "À la pression d'huile maximale que le circuit peut délivrer",
+        "Au régime maximal autorisé par le constructeur, fixe et non réglable"
+      ],
+      "bonne": 0,
+      "explication": "Le régime de consigne correspond à la tension d'un ressort réglable par le pilote, qui s'oppose à l'écartement des masselottes sous l'effet de la force centrifuge : l'équilibre entre les deux détermine si le régulateur ouvre ou ferme le passage vers plus de pression d'huile. Ce n'est ni la pression maximale du circuit, ni le régime maximal autorisé (une limite fixe, indépendante du réglage du pilote, vue en M17A.9).",
+      "source": "Notions générales de construction aéronautique — régulateur d'hélice"
+    },
+    {
+      "uid": "M17A-0064",
+      "sous_chapitre": "M17A.8",
+      "question": "Sur une hélice à vitesse constante, que se passe-t-il si le pilote augmente la puissance moteur en poussant la manette des gaz ?",
+      "options": [
+        "Le régime monte directement et proportionnellement à la puissance ajoutée",
+        "Le régulateur ajuste l'angle de calage pour absorber la puissance supplémentaire tout en maintenant le régime constant",
+        "Rien ne se passe : la manette des gaz est inactive tant que le régulateur fonctionne"
+      ],
+      "bonne": 1,
+      "explication": "Le régulateur ajuste aussitôt l'angle de calage pour absorber la puissance supplémentaire, en maintenant le régime choisi constant — c'est précisément ce qui distingue une hélice à vitesse constante d'une hélice à pas fixe, où pousser les gaz ferait directement monter le régime (M17A.5). La manette des gaz reste pleinement active : elle règle la puissance, pas le régime.",
+      "source": "Notions générales de construction aéronautique — régulateur d'hélice"
+    },
+    {
+      "uid": "M17A-0065",
+      "sous_chapitre": "M17A.8",
+      "question": "Si un avion en montée rencontre un fort courant ascendant qui perturbe momentanément le régime, que fait le régulateur ?",
+      "options": [
+        "Il détecte l'écart de régime dès qu'il apparaît et ajuste la pression d'huile pour ramener le régime vers la consigne",
+        "Il attend que le pilote signale manuellement le changement de conditions avant d'agir",
+        "Il coupe temporairement la régulation, le temps que les conditions de vol se stabilisent"
+      ],
+      "bonne": 0,
+      "explication": "Le régulateur détecte l'écart dès qu'il apparaît et corrige aussitôt, sans attendre d'intervention du pilote — c'est tout l'intérêt d'une correction automatique et continue. Il n'attend donc aucun signal manuel, et il ne coupe jamais la régulation : c'est justement l'inverse, une correction permanente, qui caractérise son fonctionnement.",
+      "source": "Notions générales de construction aéronautique — régulateur d'hélice"
+    },
+    {
+      "uid": "M17A-0066",
+      "sous_chapitre": "M17A.8",
+      "question": "Pourquoi peut-on dire que le régulateur d'hélice fonctionne « en boucle », plutôt que par une action ponctuelle ?",
+      "options": [
+        "Parce qu'il mesure, compare et corrige sans cesse, tant que l'avion vole, sans jamais figer un réglage une fois pour toutes",
+        "Parce qu'il n'agit qu'une seule fois, au moment du décollage, puis reste inactif pour le reste du vol",
+        "Parce qu'il ne s'active qu'en cas de danger, comme une protection de secours"
+      ],
+      "bonne": 0,
+      "explication": "Le régulateur répète en continu le cycle mesurer/comparer/corriger, tant que l'avion vole — il ne « décide » jamais une fois pour toutes, contrairement à une action ponctuelle qui ne s'exécuterait qu'une seule fois, comme au décollage. Ce n'est pas non plus un dispositif qui ne s'active qu'en cas de danger : ce type de comportement de secours correspond à un tout autre organe, indépendant du régulateur normal, présenté dans la fiche suivante.",
+      "source": "Notions générales de construction aéronautique — régulateur d'hélice"
+    },
+    {
+      "uid": "M17A-0067",
+      "sous_chapitre": "M17A.8",
+      "question": "Comment le pilote choisit-il le régime de consigne d'une hélice à vitesse constante ?",
+      "options": [
+        "Via une commande dédiée, distincte de la manette des gaz",
+        "En agissant directement sur les masselottes du régulateur, accessibles depuis le cockpit",
+        "Le régime de consigne est fixé une fois pour toutes en usine, non modifiable par le pilote"
+      ],
+      "bonne": 0,
+      "explication": "Le régime de consigne est choisi par le pilote via une commande dédiée, distincte de la manette des gaz qui règle la puissance délivrée par le moteur — les deux commandes sont indépendantes, chacune avec son propre rôle. Les masselottes ne sont pas accessibles depuis le cockpit : elles font partie du mécanisme interne du régulateur, entraîné par l'hélice elle-même. Et le régime de consigne n'est pas figé en usine : le pilote peut l'ajuster en vol selon la phase de vol.",
+      "source": "Notions générales de construction aéronautique — régulateur d'hélice"
+    },
+    {
+      "uid": "M17A-0068",
+      "sous_chapitre": "M17A.8",
+      "question": "Qu'est-ce qui distingue une hélice à pas fixe d'une hélice à vitesse constante, du point de vue de la réaction à la manette des gaz ?",
+      "options": [
+        "Sur le pas fixe, pousser les gaz fait directement monter le régime, faute de régulateur pour l'en empêcher",
+        "Sur le pas fixe, pousser les gaz n'a aucun effet, le régime étant toujours figé",
+        "Il n'y a aucune différence : les deux réagissent de façon identique à la manette des gaz"
+      ],
+      "bonne": 0,
+      "explication": "Sans régulateur, une hélice à pas fixe voit son régime monter directement avec la puissance ajoutée à la manette des gaz — rien n'absorbe cette puissance supplémentaire en ajustant le pas. Le régime n'est donc pas figé sur un pas fixe : il varie librement avec la puissance, contrairement à une hélice à vitesse constante où le régulateur le maintient stable.",
+      "source": "Notions générales de construction aéronautique — régulateur d'hélice"
+    },
+    {
+      "uid": "M17A-0069",
+      "sous_chapitre": "M17A.9",
+      "question": "Pourquoi une survitesse n'est-elle jamais une situation anodine, même brève ?",
+      "options": [
+        "Parce que la force centrifuge subie par la pale peut dépasser ce que la structure de l'hélice est conçue pour supporter durablement",
+        "Parce qu'elle consomme immédiatement toute l'huile de calage disponible",
+        "Parce qu'elle déclenche automatiquement une mise en drapeau permanente"
+      ],
+      "bonne": 0,
+      "explication": "Au-delà d'une certaine limite de régime, la force centrifuge dépasse ce que la structure de l'hélice (pied de pale, système de retenue, moyeu) peut supporter durablement, exposant l'hélice à des dommages pas toujours visibles immédiatement. Une survitesse ne consomme pas toute l'huile de calage d'un coup, et elle ne déclenche pas non plus une mise en drapeau permanente — deux affirmations sans rapport avec le mécanisme décrit dans la fiche.",
+      "source": "Notions générales de construction aéronautique — protection en survitesse"
+    },
+    {
+      "uid": "M17A-0070",
+      "sous_chapitre": "M17A.9",
+      "question": "Pourquoi le régulateur normal, à lui seul, ne suffit-il pas toujours à garantir qu'une survitesse ne se produira jamais ?",
+      "options": [
+        "Parce qu'il peut lui-même tomber en panne (grippage bloquant le mécanisme en position de pas fin, par exemple)",
+        "Parce qu'il n'est conçu que pour fonctionner au sol, jamais en vol",
+        "Parce qu'il doit être réarmé manuellement par le pilote avant chaque vol"
+      ],
+      "bonne": 0,
+      "explication": "Un mécanisme mécanique ou hydraulique reste vulnérable à ses propres pannes : un grippage qui le bloquerait en position de pas fin, par exemple, empêcherait la pale de s'orienter vers un pas suffisamment gros, et rien n'empêcherait alors mécaniquement le régime de continuer à grimper. Le régulateur fonctionne aussi bien en vol qu'au sol, et rien dans la fiche ne mentionne un réarmement manuel avant chaque vol.",
+      "source": "Notions générales de construction aéronautique — protection en survitesse"
+    },
+    {
+      "uid": "M17A-0071",
+      "sous_chapitre": "M17A.9",
+      "question": "Comment le dispositif de survitesse se distingue-t-il du régulateur normal ?",
+      "options": [
+        "Il est conçu et installé séparément, pour rester capable d'agir même si le régulateur normal a complètement cessé de fonctionner",
+        "Il remplace entièrement le régulateur normal dès le décollage",
+        "Il fonctionne uniquement quand le moteur est à l'arrêt, au sol"
+      ],
+      "bonne": 0,
+      "explication": "Le dispositif de survitesse est conçu et installé séparément du régulateur normal, précisément pour rester opérationnel même si ce dernier tombe en panne — c'est le principe même d'une protection indépendante. Il ne remplace jamais le régulateur normal au quotidien, et il agit en vol, pas seulement moteur à l'arrêt au sol.",
+      "source": "Notions générales de construction aéronautique — protection en survitesse"
+    },
+    {
+      "uid": "M17A-0072",
+      "sous_chapitre": "M17A.9",
+      "question": "Quand le dispositif de survitesse intervient-il ?",
+      "options": [
+        "En permanence, en parallèle du régulateur normal",
+        "Uniquement si le régime dépasse le seuil pour lequel il est réglé, propre à chaque installation",
+        "Uniquement lors de la mise en drapeau volontaire d'une hélice"
+      ],
+      "bonne": 1,
+      "explication": "Le dispositif de survitesse reste inactif tant que le régime est dans la plage normale ; il n'intervient que si le régime dépasse le seuil pour lequel il est réglé, un seuil propre à chaque installation et fixé par le constructeur. Il n'agit donc pas en permanence (ce serait redondant avec le régulateur normal), et il n'a aucun rapport direct avec la mise en drapeau volontaire, une action différente vue en M17A.7.",
+      "source": "Notions générales de construction aéronautique — protection en survitesse"
+    },
+    {
+      "uid": "M17A-0073",
+      "sous_chapitre": "M17A.9",
+      "question": "Le dispositif de survitesse fonctionne-t-il selon le même principe que le régulateur normal (mesurer, comparer, corriger) ?",
+      "options": [
+        "Oui, mais il régule en continu la température plutôt que le régime",
+        "Oui pour le principe (une pièce sensible au régime comparée à une référence), mais installé séparément pour rester actif même si le régulateur normal a cessé de fonctionner",
+        "Non, il ne mesure jamais le régime : il se contente de couper le moteur au hasard par sécurité"
+      ],
+      "bonne": 1,
+      "explication": "Le dispositif de survitesse reprend le même principe de base que le régulateur normal — une pièce sensible au régime, comparée à une valeur de référence — mais il est conçu et installé séparément, précisément pour rester capable d'agir même si le régulateur normal a complètement cessé de fonctionner. Il ne régule aucune température (c'est le régime qui est en jeu ici, pas un four), et il mesure bien le régime en continu : rien n'est laissé au hasard dans son déclenchement.",
+      "source": "Notions générales de construction aéronautique — protection en survitesse"
+    },
+    {
+      "uid": "M17A-0074",
+      "sous_chapitre": "M17A.9",
+      "question": "Quel principe de sécurité général la fiche illustre-t-elle à travers cette architecture à deux niveaux (régulateur normal + dispositif de survitesse) ?",
+      "options": [
+        "Ne jamais faire reposer la sécurité d'un système critique sur un seul mécanisme, quand une défaillance peut avoir des conséquences importantes",
+        "Toujours privilégier le mécanisme le plus simple possible, même au prix d'une redondance",
+        "Réserver les systèmes de secours exclusivement aux avions multimoteurs"
+      ],
+      "bonne": 0,
+      "explication": "Cette architecture à deux niveaux illustre un principe retrouvé dans de nombreux systèmes aéronautiques critiques, pas seulement sur l'hélice : ne jamais faire reposer la sécurité d'un système sur un seul mécanisme, quand une défaillance peut avoir des conséquences importantes. Ce n'est pas un choix de simplicité maximale (c'est plutôt l'inverse : ajouter un second dispositif complexifie l'ensemble), et rien ne limite ce principe aux avions multimoteurs.",
+      "source": "Notions générales de construction aéronautique — protection en survitesse"
+    },
+    {
+      "uid": "M17A-0075",
+      "sous_chapitre": "M17A.9",
+      "question": "Un pilote qui respecte les limites de régime publiées pour son appareil devrait-il, en usage normal, solliciter le dispositif de survitesse ?",
+      "options": [
+        "Oui, à chaque vol, car c'est un réglage de fonctionnement courant",
+        "Non, il reste une protection de dernier recours, comparable à une soupape de sécurité qui ne doit jamais s'activer en usage normal",
+        "Oui, mais uniquement lors de la phase de décollage"
+      ],
+      "bonne": 1,
+      "explication": "La fiche est explicite : un pilote respectant les limites publiées ne devrait, en usage normal, jamais solliciter le dispositif de survitesse, comparé à une soupape de sécurité qui ne doit jamais s'activer dans un usage normal et correctement entretenu. Ce n'est donc ni un réglage de fonctionnement courant, ni une action attendue systématiquement au décollage.",
+      "source": "Notions générales de construction aéronautique — protection en survitesse"
+    },
+    {
+      "uid": "M17A-0084",
+      "sous_chapitre": "M17A.9",
+      "question": "Que doit-on faire après qu'un régime de survitesse a été constaté ou seulement suspecté, même si le dispositif de survitesse a bien fonctionné ?",
+      "options": [
+        "Une inspection spécifique de l'hélice, conformément aux instructions du constructeur, avant de la considérer comme apte à un nouveau vol",
+        "Rien de particulier : le fonctionnement correct du dispositif de survitesse suffit à garantir qu'aucun dommage n'a eu lieu",
+        "Remplacer systématiquement le régulateur normal, même s'il n'est pour rien dans l'incident"
+      ],
+      "bonne": 0,
+      "explication": "Même si le dispositif de survitesse a rempli son rôle, l'hélice a pu être sollicitée au-delà de ce pour quoi elle est habituellement conçue, ne serait-ce que brièvement : une inspection spécifique, conforme aux instructions du constructeur de l'hélice, est requise avant de la considérer comme apte à un nouveau vol. Un dispositif de survitesse qui s'est déclenché correctement limite les dégâts, il n'en garantit pas l'absence. Et rien ne justifie de remplacer systématiquement le régulateur normal, qui n'est pas nécessairement en cause dans l'épisode de survitesse.",
+      "source": "Notions générales de construction aéronautique — protection en survitesse"
+    },
+    {
+      "uid": "M17A-0076",
+      "sous_chapitre": "M17A.10",
+      "question": "Pourquoi deux hélices réglées sur le même régime de consigne ne tournent-elles pas forcément exactement au même régime réel ?",
+      "options": [
+        "Parce que de très légers écarts entre les deux mécanismes (usure, réglage, tolérances de fabrication) suffisent à produire une différence minime",
+        "Parce que les régulateurs de chaque moteur communiquent entre eux et introduisent volontairement un décalage",
+        "Parce que la réglementation impose un écart minimal entre les régimes des différents moteurs"
+      ],
+      "bonne": 0,
+      "explication": "De très légers écarts entre les deux mécanismes — usure, réglage, tolérances de fabrication — suffisent à produire une différence minime de régime réel, chaque régulateur fonctionnant de façon totalement indépendante. Les régulateurs ne communiquent pas entre eux sans synchrophaseur, et aucune exigence réglementaire d'écart minimal n'est mentionnée dans la fiche.",
+      "source": "Notions générales de construction aéronautique — synchronisation d'hélices"
+    },
+    {
+      "uid": "M17A-0077",
+      "sous_chapitre": "M17A.10",
+      "question": "Qu'est-ce que le phénomène de battements évoqué dans la fiche ?",
+      "options": [
+        "Un effet acoustique où le volume perçu monte et descend de façon cyclique, produit par la combinaison de deux sons de fréquences très proches mais non identiques",
+        "Une vibration violente et ponctuelle causée par un choc sur une pale",
+        "Le bruit produit par la mise en drapeau d'une hélice"
+      ],
+      "bonne": 0,
+      "explication": "Les battements sont un effet acoustique bien connu : deux sons de fréquences très proches mais non identiques se combinent, faisant monter et descendre le volume perçu de façon cyclique, comme deux métronomes presque synchronisés. Ce n'est ni une vibration ponctuelle causée par un choc, ni un bruit spécifique à la mise en drapeau, une opération sans rapport direct avec ce phénomène.",
+      "source": "Notions générales de construction aéronautique — synchronisation d'hélices"
+    },
+    {
+      "uid": "M17A-0078",
+      "sous_chapitre": "M17A.10",
+      "question": "En quoi consiste la synchronisation manuelle, la première réponse au problème des battements présentée dans la fiche ?",
+      "options": [
+        "Le pilote ajuste finement le régime de consigne d'un moteur, en écoutant les battements, jusqu'à les faire disparaître",
+        "Un calculateur électronique ajuste automatiquement et en continu le régime de chaque moteur",
+        "Les deux moteurs sont mécaniquement reliés par un arbre commun qui impose le même régime"
+      ],
+      "bonne": 0,
+      "explication": "La synchronisation manuelle consiste, pour le pilote, à ajuster finement le régime de consigne d'un des moteurs en écoutant les battements, jusqu'à les faire disparaître ou les ralentir fortement — une technique ancienne et entièrement manuelle. Le calculateur électronique automatique décrit le synchrophaseur, une réponse différente et plus moderne. Aucun arbre mécanique commun n'existe entre les moteurs d'un avion multimoteur classique.",
+      "source": "Notions générales de construction aéronautique — synchronisation d'hélices"
+    },
+    {
+      "uid": "M17A-0079",
+      "sous_chapitre": "M17A.10",
+      "question": "Qu'est-ce qu'un synchrophaseur ?",
+      "options": [
+        "Un dispositif électronique qui compare en continu le régime des moteurs entre eux et agit automatiquement pour réduire l'écart",
+        "Un bouton qui coupe simultanément tous les moteurs en cas d'urgence",
+        "Un capteur qui mesure uniquement la température des gaz d'échappement"
+      ],
+      "bonne": 0,
+      "explication": "Le synchrophaseur compare en continu le régime des moteurs entre eux, un moteur étant désigné comme référence, et ajuste automatiquement le régime des autres via leurs régulateurs respectifs. Il n'a aucun rapport avec une coupure moteur d'urgence, ni avec une mesure de température des gaz d'échappement.",
+      "source": "Notions générales de construction aéronautique — synchronisation d'hélices"
+    },
+    {
+      "uid": "M17A-0080",
+      "sous_chapitre": "M17A.10",
+      "question": "Qu'est-ce qui distingue un synchrophaseur avancé d'un simple synchroniseur de régime ?",
+      "options": [
+        "Il ajuste aussi la phase, c'est-à-dire la position angulaire relative des pales entre les moteurs, pas seulement leur régime",
+        "Il fonctionne uniquement au sol, jamais en vol",
+        "Il remplace complètement les régulateurs individuels de chaque moteur"
+      ],
+      "bonne": 0,
+      "explication": "C'est précisément l'ajustement de la phase — la position angulaire relative des pales, pas seulement l'égalité de régime — qui donne son nom au synchrophaseur et le distingue d'un simple synchroniseur de régime. Il fonctionne en vol, pas seulement au sol, et il ne remplace jamais les régulateurs individuels : il ajuste seulement la consigne qui leur est transmise.",
+      "source": "Notions générales de construction aéronautique — synchronisation d'hélices"
+    },
+    {
+      "uid": "M17A-0081",
+      "sous_chapitre": "M17A.10",
+      "question": "Si le synchrophaseur d'un avion qui en est équipé restait inopérant ou désactivé, quelles conséquences cela aurait-il ?",
+      "options": [
+        "Essentiellement un inconfort acoustique et vibratoire, chaque moteur restant par ailleurs correctement piloté",
+        "Les moteurs s'arrêteraient l'un après l'autre, faute de synchronisation",
+        "Le régime de chaque moteur deviendrait totalement incontrôlable"
+      ],
+      "bonne": 0,
+      "explication": "Un synchrophaseur inopérant ou désactivé n'empêche pas les moteurs de fonctionner correctement : c'est essentiellement le confort acoustique et vibratoire qui en pâtit. Les moteurs ne s'arrêtent pas pour autant, et le régime de chacun reste maîtrisé — il continue de dépendre d'un autre organe, présenté dans une fiche précédente, qui n'a aucun lien de fonctionnement avec le synchrophaseur.",
+      "source": "Notions générales de construction aéronautique — synchronisation d'hélices"
+    },
+    {
+      "uid": "M17A-0082",
+      "sous_chapitre": "M17A.10",
+      "question": "Le synchrophaseur remplace-t-il le rôle du régulateur de chaque moteur ?",
+      "options": [
+        "Oui, il prend entièrement le contrôle de la pression d'huile de calage",
+        "Non, il ajuste seulement légèrement la consigne transmise à chaque régulateur esclave, sans remplacer leur fonction",
+        "Oui, mais uniquement pour le moteur désigné comme maître"
+      ],
+      "bonne": 1,
+      "explication": "Le synchrophaseur ne remplace aucun régulateur : il se contente d'ajuster légèrement la consigne transmise à chaque régulateur esclave, pour qu'elle colle à celle du moteur maître. Chaque régulateur continue, de son côté, à gérer lui-même la pression d'huile de calage — y compris celui du moteur maître, qui n'est pas davantage remplacé que les autres.",
+      "source": "Notions générales de construction aéronautique — synchronisation d'hélices"
+    },
+    {
+      "uid": "M17A-0083",
+      "sous_chapitre": "M17A.10",
+      "question": "Au-delà de la gêne sonore, pourquoi les battements entre hélices désynchronisées sont-ils un problème à prendre au sérieux sur la durée ?",
+      "options": [
+        "Ils traduisent une vibration de la cellule de l'avion, qui use plus vite certains équipements si elle se répète en permanence",
+        "Ils réduisent la portance produite par les ailes, quelle que soit la phase de vol",
+        "Ils empêchent tout réglage ultérieur du régime par les régulateurs concernés"
+      ],
+      "bonne": 0,
+      "explication": "Le phénomène de battements traduit une vibration de la cellule de l'avion, qui use plus vite certains équipements avec le temps si elle se répète en permanence — un enjeu de durabilité, pas seulement de confort immédiat. Les battements n'ont aucun effet sur la portance des ailes, un phénomène aérodynamique distinct ; et ils n'empêchent en rien chaque régulateur de continuer à remplir son propre rôle, indépendamment l'un de l'autre.",
+      "source": "Notions générales de construction aéronautique — synchronisation d'hélices"
     }
   ]
 }

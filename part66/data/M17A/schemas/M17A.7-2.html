@@ -1,0 +1,55 @@
+<div id="schema-m17a7b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m17a7b-wrap .m17a7b-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.9em; }
+#schema-m17a7b-wrap .m17a7b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m17a7b-wrap .m17a7b-row { display:flex; align-items:center; gap:10px; margin-top:12px; }
+#schema-m17a7b-wrap .m17a7b-rowlabel { width:140px; font-size:0.85em; color:#333; }
+#schema-m17a7b-wrap .m17a7b-bar-outer { flex:1; max-width:300px; height:20px; background:#e2e2e2; border-radius:5px; overflow:hidden; }
+#schema-m17a7b-wrap .m17a7b-bar-inner { height:100%; transition:width .3s; background:#c0392b; }
+#schema-m17a7b-wrap .m17a7b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+#schema-m17a7b-wrap .m17a7b-caption.ok { border-left-color:#2e7d32; background:rgba(46,125,50,0.10); }
+</style>
+
+<p><strong>Cas d'application — panne moteur en vol sur un bimoteur :</strong> compare l'hélice laissée en moulinet et l'hélice mise en drapeau.</p>
+
+<div>
+  <button class="m17a7b-btn active" data-mode="moulinet">Sans mise en drapeau (moulinet)</button>
+  <button class="m17a7b-btn" data-mode="drapeau">Avec mise en drapeau</button>
+</div>
+
+<div class="m17a7b-row">
+  <div class="m17a7b-rowlabel">Traînée de l'hélice</div>
+  <div class="m17a7b-bar-outer"><div class="m17a7b-bar-inner" id="m17a7b-trainee" style="width:75%;"></div></div>
+</div>
+
+<div class="m17a7b-caption" id="m17a7b-caption">Sans mise en drapeau, moteur en panne : le vent relatif continue à entraîner l'hélice en rotation (moulinet), qui produit alors une traînée importante — au pire moment, avec un moteur en moins pour la compenser.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m17a7b-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('.m17a7b-btn');
+  var trainee = wrap.querySelector('#m17a7b-trainee');
+  var caption = wrap.querySelector('#m17a7b-caption');
+
+  function render(mode) {
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-mode') === mode); });
+    if (mode === 'moulinet') {
+      trainee.style.width = '75%';
+      caption.className = 'm17a7b-caption';
+      caption.textContent = "Sans mise en drapeau, moteur en panne : le vent relatif continue à entraîner l'hélice en rotation (moulinet), qui produit alors une traînée importante — au pire moment, avec un moteur en moins pour la compenser.";
+    } else {
+      trainee.style.width = '15%';
+      caption.className = 'm17a7b-caption ok';
+      caption.textContent = "Avec mise en drapeau : la pale pivote jusqu'à un angle presque parallèle à l'axe de vol, ce qui minimise la surface présentée à l'écoulement d'air. L'hélice cesse quasiment de tourner et sa traînée chute fortement — une manœuvre essentielle sur un bimoteur dont un moteur tombe en panne en vol.";
+    }
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { render(b.getAttribute('data-mode')); });
+  });
+
+  render('moulinet');
+})();
+</script>

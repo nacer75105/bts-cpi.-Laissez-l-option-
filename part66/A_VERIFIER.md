@@ -873,6 +873,53 @@ rounds 3-4, jugée non bloquante) :
   l'affichage par le mélange par session (`part66/ui.py`), même statut
   que la dette déjà documentée pour M7A.
 
+### Lot 2 (M17A.6-M17A.10, 5 fiches, 41 questions, 10 schémas) — construit
+sans balise `<svg>` dès le départ, 3 rounds de relecture
+
+Contrairement au lot 1, les 10 schémas de ce lot ont été construits
+directement en HTML/CSS/JS pur (barres, cadrans en `border-radius:50%`,
+aiguilles tournées par `transform: rotate()`), sans jamais passer par
+une version SVG — la contrainte technique documentée dans
+`C:\Users\pc\CLAUDE.md` a été respectée dès la rédaction, pas découverte
+après coup.
+
+**BLOQUANT trouvés et corrigés au fil des 3 rounds** : le sujet du lot
+(mécanisme hydraulique de calage) introduit une relation physique
+précise — les contrepoids poussent la pale vers un pas plus gros
+(jusqu'au drapeau), la pression d'huile vers un pas plus fin, en sens
+opposés — qui doit rester cohérente à travers 4 fiches, plusieurs
+schémas et une douzaine de questions. Une première rédaction a mélangé
+cette relation (contrepoids ↔ pas fin au lieu de pas gros) dans les
+fiches M17A.7/M17A.8, le schéma `M17A.7.html`, la question M17A-0061 et,
+par ricochet, la fiche M17A.6 et la question M17A-0051 (formulation
+imprécise des deux couples de torsion opposés de M17A.2) ; corrigé au
+round 1 en fixant une seule convention et en la propageant partout.
+Round 2 a trouvé que la correction n'avait pas été propagée à un
+triplet resté sur l'ancienne logique inversée (fiche M17A.9, question
+M17A-0070, schéma `M17A.9-2.html` — tous trois présentaient encore une
+« fuite d'huile » comme cause de survitesse, alors que dans le modèle
+retenu une perte de pression d'huile laisse les contrepoids l'emporter
+et pousse au contraire vers un pas plus gros, donc pas vers une
+survitesse) : corrigé en remplaçant l'exemple de panne par un grippage
+qui bloquerait le mécanisme en position de pas fin, cohérent avec le
+reste du lot. Deux erreurs isolées corrigées au round 1 : une
+régression du BLOQUANT « la force centrifuge croît plus vite que les
+autres forces » déjà corrigé au lot 1, réapparue par erreur dans la
+fiche M17A.9 (reformulée en « intensité largement supérieure », comme
+dans `schemas/M17A.2.html`) ; une description auto-contradictoire du
+dispositif de survitesse (« une voie de décharge qui envoie davantage
+de pression » — corrigée en « qui réduit la pression »). Un bug
+d'affichage sans lien avec la physique (zone rouge de survitesse rendue
+invisible par un défaut d'empilement CSS dans `M17A.9.html` et
+`M17A.9-2.html`, la piste opaque recouvrant la zone) corrigé par un
+`z-index` au round 2, vérifié effectif au round 3.
+
+**Dette mineure assumée** : quelques renvois entre questions gardent un
+recouvrement conceptuel léger, jugé acceptable (même statut que les
+recouvrements déjà admis pour M5/M7A) ; les sources restent génériques
+(« Notions générales de construction aéronautique — … »), conforme au
+traitement des modules techniques (voir section Méthode).
+
 ## Standard de calibrage du contenu (décidé avec l'utilisateur le
 2026-09-11, applicable à partir de M17A)
 

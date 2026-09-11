@@ -1,0 +1,63 @@
+<div id="schema-m17a8b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m17a8b-wrap .m17a8b-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.9em; }
+#schema-m17a8b-wrap .m17a8b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m17a8b-wrap .m17a8b-slider { width:100%; max-width:420px; }
+#schema-m17a8b-wrap .m17a8b-row { display:flex; align-items:center; gap:10px; margin-top:10px; }
+#schema-m17a8b-wrap .m17a8b-rowlabel { width:150px; font-size:0.85em; color:#333; }
+#schema-m17a8b-wrap .m17a8b-bar-outer { flex:1; max-width:300px; height:18px; background:#e2e2e2; border-radius:4px; overflow:hidden; }
+#schema-m17a8b-wrap .m17a8b-bar-inner { height:100%; transition:width .15s; background:#c0392b; }
+#schema-m17a8b-wrap .m17a8b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5em; }
+</style>
+
+<p><strong>Cas d'application — hélice à vitesse constante contre hélice à pas fixe :</strong> fais varier la puissance moteur et compare l'effet sur le régime, avec ou sans régulateur.</p>
+
+<div>
+  <button class="m17a8b-btn active" data-type="constante">Hélice à vitesse constante (régulateur actif)</button>
+  <button class="m17a8b-btn" data-type="fixe">Hélice à pas fixe (pas de régulateur)</button>
+</div>
+
+<div class="m17a8b-value" style="margin-top:10px;">Puissance moteur (illustration) : <span id="m17a8b-lu">50</span> %</div>
+<input type="range" class="m17a8b-slider" id="m17a8b-puissance" min="0" max="100" value="50" step="5">
+
+<div class="m17a8b-row">
+  <div class="m17a8b-rowlabel">Régime résultant</div>
+  <div class="m17a8b-bar-outer"><div class="m17a8b-bar-inner" id="m17a8b-regime"></div></div>
+</div>
+
+<div class="m17a8b-caption" id="m17a8b-caption">Vitesse constante : quelle que soit la puissance, le régulateur ajuste le pas pour maintenir le régime proche de la consigne.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m17a8b-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('.m17a8b-btn');
+  var slider = wrap.querySelector('#m17a8b-puissance');
+  var lu = wrap.querySelector('#m17a8b-lu');
+  var regime = wrap.querySelector('#m17a8b-regime');
+  var caption = wrap.querySelector('#m17a8b-caption');
+  var type = 'constante';
+
+  function render() {
+    var v = parseInt(slider.value, 10);
+    lu.textContent = v;
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-type') === type); });
+
+    if (type === 'constante') {
+      regime.style.width = (48 + (v - 50) * 0.06) + '%';
+      caption.textContent = "Vitesse constante : quelle que soit la puissance envoyée, le régulateur ajuste le pas pour maintenir le régime proche de sa consigne (fiche M17A.8) — la barre bouge à peine quand on déplace le curseur de puissance.";
+    } else {
+      regime.style.width = v + '%';
+      caption.textContent = "Pas fixe, sans régulateur : le régime suit directement la puissance envoyée, sans aucun mécanisme pour le ramener à une valeur stable — c'est justement l'absence de cette régulation qui distingue une hélice à pas fixe d'une hélice à vitesse constante (fiche M17A.5).";
+    }
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { type = b.getAttribute('data-type'); render(); });
+  });
+  slider.addEventListener('input', render);
+
+  render();
+})();
+</script>

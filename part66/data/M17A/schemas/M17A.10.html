@@ -1,0 +1,85 @@
+<div id="schema-m17a10a-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m17a10a-wrap .m17a10a-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.95em; }
+#schema-m17a10a-wrap .m17a10a-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m17a10a-wrap .m17a10a-gauges { display:flex; gap:30px; margin-top:16px; justify-content:center; }
+#schema-m17a10a-wrap .m17a10a-gauge-block { text-align:center; }
+#schema-m17a10a-wrap .m17a10a-gauge { width:80px; height:80px; border-radius:50%; border:3px solid #555; position:relative; background:#fdfdfd; margin:0 auto; }
+#schema-m17a10a-wrap .m17a10a-needle { position:absolute; width:3px; height:30px; background:#c0392b; left:50%; bottom:50%; transform-origin:bottom center; transition:transform .4s; }
+#schema-m17a10a-wrap .m17a10a-gauge-label { font-size:0.8em; font-weight:bold; margin-top:6px; }
+#schema-m17a10a-wrap .m17a10a-beat { margin-top:16px; max-width:420px; height:16px; background:#e2e2e2; border-radius:4px; overflow:hidden; position:relative; }
+#schema-m17a10a-wrap .m17a10a-beat-fill { height:100%; background:#7b3fa0; width:50%; }
+#schema-m17a10a-wrap .m17a10a-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Essaie toi-même</strong> (écart d'aiguille et volume exagérés pour rester visibles ; l'écart de régime réel entre deux hélices désynchronisées n'est en pratique que de quelques tours par minute) : compare deux hélices désynchronisées et synchronisées.</p>
+
+<div>
+  <button class="m17a10a-btn active" data-mode="desync">Désynchronisées</button>
+  <button class="m17a10a-btn" data-mode="sync">Synchronisées</button>
+</div>
+
+<div class="m17a10a-gauges">
+  <div class="m17a10a-gauge-block">
+    <div class="m17a10a-gauge"><div class="m17a10a-needle" id="m17a10a-needle1" style="transform:rotate(40deg);"></div></div>
+    <div class="m17a10a-gauge-label">Moteur 1</div>
+  </div>
+  <div class="m17a10a-gauge-block">
+    <div class="m17a10a-gauge"><div class="m17a10a-needle" id="m17a10a-needle2" style="transform:rotate(55deg);"></div></div>
+    <div class="m17a10a-gauge-label">Moteur 2</div>
+  </div>
+</div>
+
+<div class="m17a10a-beat" id="m17a10a-beat-wrap">
+  <div class="m17a10a-beat-fill" id="m17a10a-beat"></div>
+</div>
+<div style="font-size:0.75em; color:#666; text-align:center;" id="m17a10a-beat-label">Volume perçu des battements (illustration, animé)</div>
+
+<div class="m17a10a-caption" id="m17a10a-caption">Désynchronisées : un léger écart de régime entre les deux moteurs produit des battements — le volume perçu monte et descend de façon cyclique.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m17a10a-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('.m17a10a-btn');
+  var needle1 = wrap.querySelector('#m17a10a-needle1');
+  var needle2 = wrap.querySelector('#m17a10a-needle2');
+  var beat = wrap.querySelector('#m17a10a-beat');
+  var caption = wrap.querySelector('#m17a10a-caption');
+  var mode = 'desync';
+  var t = 0;
+  var timer = null;
+
+  function tick() {
+    if (!document.body.contains(wrap)) { clearInterval(timer); return; }
+    t += 1;
+    if (mode === 'desync') {
+      var v = 50 + 45 * Math.sin(t / 8);
+      beat.style.width = Math.max(5, v) + '%';
+    } else {
+      beat.style.width = '12%';
+    }
+  }
+
+  function render() {
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-mode') === mode); });
+    if (mode === 'sync') {
+      needle1.style.transform = 'rotate(45deg)';
+      needle2.style.transform = 'rotate(45deg)';
+      caption.textContent = "Synchronisées : les deux moteurs tournent exactement au même régime (aiguilles alignées) — le son se superpose sans battement, et la vibration de la cellule qui en résulte est nettement atténuée.";
+    } else {
+      needle1.style.transform = 'rotate(40deg)';
+      needle2.style.transform = 'rotate(55deg)';
+      caption.textContent = "Désynchronisées : un léger écart de régime entre les deux moteurs (aiguilles légèrement différentes) produit des battements — le volume perçu monte et descend de façon cyclique, comme deux métronomes presque réglés à l'identique.";
+    }
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { mode = b.getAttribute('data-mode'); render(); });
+  });
+
+  render();
+  timer = setInterval(tick, 60);
+})();
+</script>

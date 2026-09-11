@@ -1,0 +1,60 @@
+<div id="schema-m17a9a-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m17a9a-wrap .m17a9a-slider { width:100%; max-width:420px; }
+#schema-m17a9a-wrap .m17a9a-track-wrap { position:relative; max-width:420px; padding-top:16px; }
+#schema-m17a9a-wrap .m17a9a-zone { position:absolute; top:16px; right:0; height:20px; width:20%; background:rgba(192,57,43,0.18); border-radius:0 5px 5px 0; z-index:1; }
+#schema-m17a9a-wrap .m17a9a-zone-label { position:absolute; top:0; right:0; font-size:0.68em; color:#c0392b; }
+#schema-m17a9a-wrap .m17a9a-track { position:relative; height:20px; background:#e2e2e2; border-radius:5px; overflow:hidden; }
+#schema-m17a9a-wrap .m17a9a-bar { height:100%; background:#2e7d32; transition:width .1s, background .2s; }
+#schema-m17a9a-wrap .m17a9a-status { margin-top:10px; font-size:0.85em; font-weight:bold; }
+#schema-m17a9a-wrap .m17a9a-status.armed { color:#c0392b; }
+#schema-m17a9a-wrap .m17a9a-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+#schema-m17a9a-wrap .m17a9a-caption.bad { border-left-color:#c0392b; background:rgba(192,57,43,0.10); }
+</style>
+
+<p><strong>Essaie toi-même :</strong> fais monter le régime (illustration, pas des tr/min réels) et observe à quel moment le dispositif de survitesse — normalement inactif — entre en jeu.</p>
+
+<div class="m17a9a-value">Régime (illustration) : <span id="m17a9a-lu">0</span> %</div>
+<div class="m17a9a-track-wrap">
+  <div class="m17a9a-zone-label">seuil du dispositif de survitesse</div>
+  <div class="m17a9a-zone"></div>
+  <div class="m17a9a-track"><div class="m17a9a-bar" id="m17a9a-bar" style="width:0%;"></div></div>
+</div>
+<input type="range" class="m17a9a-slider" id="m17a9a-regime" min="0" max="100" value="0" step="2">
+
+<div class="m17a9a-status" id="m17a9a-status">Dispositif de survitesse : inactif</div>
+<div class="m17a9a-caption" id="m17a9a-caption">Régime normal : le dispositif de survitesse reste totalement inactif, sans aucune influence sur le fonctionnement de l'hélice.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m17a9a-wrap');
+  if (!wrap) { return; }
+  var slider = wrap.querySelector('#m17a9a-regime');
+  var lu = wrap.querySelector('#m17a9a-lu');
+  var bar = wrap.querySelector('#m17a9a-bar');
+  var status = wrap.querySelector('#m17a9a-status');
+  var caption = wrap.querySelector('#m17a9a-caption');
+  var SEUIL = 80;
+
+  function render() {
+    var v = parseInt(slider.value, 10);
+    lu.textContent = v;
+    var actif = v >= SEUIL;
+    bar.style.width = v + '%';
+    bar.style.background = actif ? '#c0392b' : '#2e7d32';
+    status.textContent = 'Dispositif de survitesse : ' + (actif ? 'ACTIF' : 'inactif');
+    status.className = 'm17a9a-status' + (actif ? ' armed' : '');
+    caption.classList.toggle('bad', actif);
+
+    if (actif) {
+      caption.textContent = "Régime au-delà du seuil (illustration — la valeur réelle dépend de chaque installation) : le dispositif de survitesse, jusque-là inactif, intervient directement sur le circuit d'huile pour ramener le régime sous la limite dangereuse, indépendamment de ce que fait le régulateur normal à ce moment-là.";
+    } else {
+      caption.textContent = "Régime normal : le dispositif de survitesse reste totalement inactif, sans aucune influence sur le fonctionnement de l'hélice. Il n'intervient que si le régime dépasse le seuil pour lequel il est réglé.";
+    }
+  }
+
+  slider.addEventListener('input', render);
+  render();
+})();
+</script>
