@@ -1,0 +1,59 @@
+<div id="schema-m17a1b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m17a1b-wrap .m17a1b-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.95em; }
+#schema-m17a1b-wrap .m17a1b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m17a1b-wrap .m17a1b-flightdir { text-align:center; font-size:0.85em; color:#2e7d32; font-weight:bold; margin-top:14px; }
+#schema-m17a1b-wrap .m17a1b-row { display:flex; align-items:center; gap:8px; margin-top:4px; }
+#schema-m17a1b-wrap .m17a1b-label { font-size:0.75em; color:#555; white-space:nowrap; }
+#schema-m17a1b-wrap .m17a1b-plane { flex:1; height:20px; background:#b6c4cf; border:1.5px solid #5b6b75; border-radius:10px; position:relative; }
+#schema-m17a1b-wrap .m17a1b-helice { position:absolute; top:50%; width:26px; height:26px; margin-top:-13px; border-radius:50%; background:#9fb8d9; border:2px solid #33507a; display:flex; align-items:center; justify-content:center; font-size:0.7em; color:#33507a; font-weight:bold; transition:left .2s, right .2s; }
+#schema-m17a1b-wrap .m17a1b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:4.5em; }
+</style>
+
+<p><strong>Cas d'application :</strong> compare une installation tractive et une installation propulsive — même principe aérodynamique, position différente sur l'avion. Le nez (avant) et le sens de vol restent fixes ; seule la position de l'hélice (le disque marqué « H ») change.</p>
+
+<div>
+  <button class="m17a1b-btn active" data-mode="tractive">Hélice tractive</button>
+  <button class="m17a1b-btn" data-mode="propulsive">Hélice propulsive</button>
+</div>
+
+<div class="m17a1b-flightdir">← sens de vol</div>
+<div class="m17a1b-row">
+  <div class="m17a1b-label">Nez (avant)</div>
+  <div class="m17a1b-plane" id="m17a1b-plane">
+    <div class="m17a1b-helice" id="m17a1b-helice">H</div>
+  </div>
+  <div class="m17a1b-label">Arrière</div>
+</div>
+
+<div class="m17a1b-caption" id="m17a1b-caption">Hélice tractive : montée à l'avant, elle tire l'avion vers l'avant — la configuration la plus répandue sur les avions légers.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m17a1b-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('.m17a1b-btn');
+  var helice = wrap.querySelector('#m17a1b-helice');
+  var caption = wrap.querySelector('#m17a1b-caption');
+
+  function render(mode) {
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-mode') === mode); });
+    if (mode === 'tractive') {
+      helice.style.left = '2px';
+      helice.style.right = 'auto';
+      caption.textContent = "Hélice tractive : montée à l'avant, elle tire l'avion vers l'avant — la configuration la plus répandue sur les avions légers.";
+    } else {
+      helice.style.left = 'auto';
+      helice.style.right = '2px';
+      caption.textContent = "Hélice propulsive : montée à l'arrière, elle pousse l'avion vers l'avant. Le principe aérodynamique de génération de la traction (vu dans le premier schéma de cette fiche) reste rigoureusement identique ; seule la position sur l'avion change.";
+    }
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { render(b.getAttribute('data-mode')); });
+  });
+
+  render('tractive');
+})();
+</script>

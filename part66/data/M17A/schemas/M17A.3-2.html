@@ -1,0 +1,70 @@
+<div id="schema-m17a3b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m17a3b-wrap .m17a3b-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.95em; }
+#schema-m17a3b-wrap .m17a3b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m17a3b-wrap .m17a3b-row { display:flex; gap:10px; margin-top:14px; }
+#schema-m17a3b-wrap .m17a3b-tranche { flex:1; text-align:center; }
+#schema-m17a3b-wrap .m17a3b-tranche-label { font-size:0.75em; color:#555; margin-bottom:4px; }
+#schema-m17a3b-wrap .m17a3b-block { height:34px; border-radius:5px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:0.8em; font-weight:bold; }
+#schema-m17a3b-wrap .m17a3b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+#schema-m17a3b-wrap .m17a3b-caption.bad { border-left-color:#c0392b; background:rgba(192,57,43,0.10); }
+#schema-m17a3b-wrap .m17a3b-caption.ok { border-left-color:#2e7d32; background:rgba(46,125,50,0.10); }
+</style>
+
+<p><strong>Cas d'application — pourquoi vriller la pale :</strong> compare une pale vrillée (angle décroissant du pied vers l'extrémité) à une pale plate imaginaire, au même régime.</p>
+
+<div>
+  <button class="m17a3b-btn active" data-mode="vrillee">Pale vrillée (réelle)</button>
+  <button class="m17a3b-btn" data-mode="plate">Pale plate (hypothèse)</button>
+</div>
+
+<div class="m17a3b-row">
+  <div class="m17a3b-tranche">
+    <div class="m17a3b-tranche-label">Pied (rotation lente)</div>
+    <div class="m17a3b-block" id="m17a3b-tr1">efficace</div>
+  </div>
+  <div class="m17a3b-tranche">
+    <div class="m17a3b-tranche-label">Milieu</div>
+    <div class="m17a3b-block" id="m17a3b-tr2">efficace</div>
+  </div>
+  <div class="m17a3b-tranche">
+    <div class="m17a3b-tranche-label">Extrémité (rotation rapide)</div>
+    <div class="m17a3b-block" id="m17a3b-tr3">efficace</div>
+  </div>
+</div>
+
+<div class="m17a3b-caption ok" id="m17a3b-caption">Pale vrillée : l'angle de calage diminue du pied vers l'extrémité, pour rester adapté à la vitesse d'air propre à chaque rayon (plus rapide vers l'extrémité). Les trois tranches représentées restent efficaces.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m17a3b-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('.m17a3b-btn');
+  var caption = wrap.querySelector('#m17a3b-caption');
+  var t1 = wrap.querySelector('#m17a3b-tr1');
+  var t2 = wrap.querySelector('#m17a3b-tr2');
+  var t3 = wrap.querySelector('#m17a3b-tr3');
+
+  function render(mode) {
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-mode') === mode); });
+    if (mode === 'vrillee') {
+      [t1, t2, t3].forEach(function (t) { t.style.background = '#2e7d32'; t.textContent = 'efficace'; });
+      caption.className = 'm17a3b-caption ok';
+      caption.textContent = "Pale vrillée : l'angle de calage diminue du pied vers l'extrémité, pour rester adapté à la vitesse d'air propre à chaque rayon (plus rapide vers l'extrémité, comme les chevaux extérieurs d'un manège). Les trois tranches représentées restent efficaces sur toute la longueur de la pale.";
+    } else {
+      t1.style.background = '#c0392b'; t1.textContent = 'peu efficace';
+      t2.style.background = '#2e7d32'; t2.textContent = 'efficace';
+      t3.style.background = '#c0392b'; t3.textContent = 'incidence excessive';
+      caption.className = 'm17a3b-caption bad';
+      caption.textContent = "Pale plate (hypothèse) : avec un angle de calage identique partout, seule la tranche dont la vitesse de rotation locale correspond à cet angle reste efficace (ici, une tranche intermédiaire). Le pied, plus lent, rencontre l'air sous un angle d'écoulement plus redressé : le même calage y produit une incidence trop faible, peu efficace. L'extrémité, plus rapide, rencontre l'air sous un angle d'écoulement plus couché : le même calage y produit au contraire une incidence excessive, proche du décrochage. Une grande partie de la pale perdrait alors en efficacité — c'est ce que le vrillage évite, en augmentant l'angle de calage vers le pied et en le réduisant vers l'extrémité.";
+    }
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { render(b.getAttribute('data-mode')); });
+  });
+
+  render('vrillee');
+})();
+</script>

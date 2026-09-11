@@ -1,0 +1,72 @@
+<div id="schema-m17a2b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m17a2b-wrap .m17a2b-slider-wrap { position:relative; max-width:420px; padding-top:14px; }
+#schema-m17a2b-wrap .m17a2b-zone { position:absolute; top:14px; height:6px; background:rgba(192,57,43,0.35); border-radius:3px; pointer-events:none; }
+#schema-m17a2b-wrap .m17a2b-zone-label { position:absolute; top:0; font-size:0.7em; color:#c0392b; }
+#schema-m17a2b-wrap .m17a2b-slider { width:100%; }
+#schema-m17a2b-wrap .m17a2b-row { display:flex; align-items:center; gap:10px; margin-top:14px; }
+#schema-m17a2b-wrap .m17a2b-rowlabel { width:150px; font-size:0.85em; color:#333; }
+#schema-m17a2b-wrap .m17a2b-bar-outer { flex:1; max-width:300px; height:22px; background:#e2e2e2; border-radius:5px; overflow:hidden; }
+#schema-m17a2b-wrap .m17a2b-bar-inner { height:100%; width:0%; background:#33507a; transition:width .1s; }
+#schema-m17a2b-wrap .m17a2b-bar-inner.peak { background:#c0392b; }
+#schema-m17a2b-wrap .m17a2b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+#schema-m17a2b-wrap .m17a2b-caption.bad { border-left-color:#c0392b; background:rgba(192,57,43,0.10); }
+</style>
+
+<p><strong>Cas d'application — la résonance :</strong> une pale soumise à des charges cycliques (poids qui varie selon la position, air jamais parfaitement uniforme) peut entrer en résonance à certains régimes. Fais varier le régime et observe l'amplitude de vibration résultante (illustration qualitative, aucune valeur réelle : la plage à éviter est directement surlignée sur le curseur ci-dessous, mais sa position et sa largeur réelles sont propres à chaque installation et se trouvent dans le manuel constructeur).</p>
+
+<div class="m17a2b-value">Régime (illustration) : <span id="m17a2b-lu">0</span> %</div>
+<div class="m17a2b-slider-wrap">
+  <div class="m17a2b-zone-label" style="left:50%;">plage à éviter</div>
+  <div class="m17a2b-zone" style="left:50%; width:12%;"></div>
+  <input type="range" class="m17a2b-slider" id="m17a2b-regime" min="0" max="100" value="0" step="2">
+</div>
+
+<div class="m17a2b-row">
+  <div class="m17a2b-rowlabel">Amplitude de vibration</div>
+  <div class="m17a2b-bar-outer"><div class="m17a2b-bar-inner" id="m17a2b-bar"></div></div>
+</div>
+
+<div class="m17a2b-caption" id="m17a2b-caption">Régime nul : la pale est parfaitement immobile, aucune vibration.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m17a2b-wrap');
+  if (!wrap) { return; }
+  var slider = wrap.querySelector('#m17a2b-regime');
+  var lu = wrap.querySelector('#m17a2b-lu');
+  var caption = wrap.querySelector('#m17a2b-caption');
+  var bar = wrap.querySelector('#m17a2b-bar');
+
+  function amplitude(v) {
+    if (v === 0) { return 0; }
+    // pic qualitatif dans la zone 50-62 (illustration), sinon amplitude faible
+    var dist = Math.abs(v - 56);
+    if (dist <= 6) { return 3 + v * 0.05 + 45 * (1 - dist / 6); }
+    return 3 + v * 0.05;
+  }
+
+  function render() {
+    var v = parseInt(slider.value, 10);
+    lu.textContent = v;
+    var amp = amplitude(v);
+    var enZone = (v >= 50 && v <= 62);
+    bar.style.width = Math.min(100, amp) + '%';
+    bar.classList.toggle('peak', enZone);
+
+    caption.classList.remove('bad');
+    if (v === 0) {
+      caption.textContent = "Régime nul : la pale est parfaitement immobile, aucune vibration.";
+    } else if (enZone) {
+      caption.textContent = "Régime dans la zone rouge (illustration, surlignée sur le curseur) : les charges cycliques entrent en résonance avec la structure de la pale, l'amplitude de vibration augmente fortement — exactement comme pousser une balançoire au bon rythme l'amplifie. C'est le principe des plages de régime « à éviter en utilisation prolongée » signalées par certains constructeurs : rester dans cette zone plus que le temps nécessaire pour la traverser use la pale par fatigue.";
+      caption.classList.add('bad');
+    } else {
+      caption.textContent = "En dehors de la zone de résonance, l'amplitude de vibration reste modeste, même si elle n'est jamais parfaitement nulle en rotation (poids de la pale, air jamais parfaitement uniforme).";
+    }
+  }
+
+  slider.addEventListener('input', render);
+  render();
+})();
+</script>

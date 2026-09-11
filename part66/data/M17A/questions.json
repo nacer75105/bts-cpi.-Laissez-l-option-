@@ -1,0 +1,564 @@
+{
+  "module": "M17A",
+  "questions": [
+    {
+      "uid": "M17A-0001",
+      "sous_chapitre": "M17A.1",
+      "question": "Quel est le rôle fondamental de l'hélice sur un avion à hélice ?",
+      "options": [
+        "Transformer la rotation et le couple du moteur en une force de traction",
+        "Refroidir le moteur en faisant circuler de l'air autour de lui",
+        "Produire une portance supplémentaire qui s'ajoute à celle des ailes"
+      ],
+      "bonne": 0,
+      "explication": "L'hélice existe pour transformer un mouvement de rotation (fourni par le moteur) en une force qui pousse l'avion en ligne droite : la traction. Le refroidissement du moteur peut être amélioré par le flux d'air généré par l'hélice, mais ce n'est qu'un effet secondaire, pas sa fonction. Quant à la portance, elle est produite par les ailes, pas par l'hélice : une pale d'hélice réoriente la force aérodynamique vers l'avant (traction) plutôt que vers le haut (portance).",
+      "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
+    },
+    {
+      "uid": "M17A-0002",
+      "sous_chapitre": "M17A.1",
+      "question": "Pourquoi peut-on dire qu'une pale d'hélice fonctionne comme une petite aile ?",
+      "options": [
+        "Parce qu'elle est toujours fabriquée dans le même matériau qu'une aile d'avion",
+        "Parce qu'elle a un profil aérodynamique et génère une force aérodynamique par son déplacement dans l'air",
+        "Parce qu'elle produit une portance dirigée vers le haut, exactement comme une aile"
+      ],
+      "bonne": 1,
+      "explication": "Une pale a un profil incurvé (bord d'attaque, bord de fuite) qui, en se déplaçant dans l'air, génère une force aérodynamique — le même mécanisme physique de base qu'une aile. Le matériau n'est pas le critère de comparaison : une pale et une aile peuvent être fabriquées dans des matériaux différents ou identiques, cela n'a rien à voir avec le principe aérodynamique. Et contrairement à l'aile, la force produite par la pale n'est pas orientée vers le haut : la rotation la réoriente vers l'avant, en traction.",
+      "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
+    },
+    {
+      "uid": "M17A-0003",
+      "sous_chapitre": "M17A.1",
+      "question": "Si l'air se comportait comme un solide, par exemple du bois, qu'est-ce que le pas de l'hélice représenterait ?",
+      "options": [
+        "La distance que l'hélice avancerait à chaque tour complet",
+        "Le nombre de tours nécessaires pour que l'avion atteigne sa vitesse maximale",
+        "La force totale de traction produite par l'hélice à un instant donné"
+      ],
+      "bonne": 0,
+      "explication": "Le pas de l'hélice reprend l'image d'une vis enfoncée dans du bois, qui avance d'une distance fixe à chaque tour selon l'inclinaison de son filetage : c'est cette distance théorique par tour que représente le pas. Ce n'est ni un nombre de tours nécessaire pour atteindre une vitesse donnée, ni une force de traction — deux notions différentes, sans rapport direct avec cette distance théorique.",
+      "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
+    },
+    {
+      "uid": "M17A-0004",
+      "sous_chapitre": "M17A.1",
+      "question": "Qu'est-ce que le couple délivré par un moteur d'avion ?",
+      "options": [
+        "La force de rotation transmise par l'arbre moteur",
+        "La vitesse à laquelle l'arbre moteur tourne, exprimée en tours par minute",
+        "La quantité totale d'énergie consommée par le moteur pendant le vol"
+      ],
+      "bonne": 0,
+      "explication": "Le couple est la force de rotation transmise par l'arbre — l'exemple donné dans la fiche est celui d'un boulon serré à la main : plus on pousse fort sur la clé, plus le couple appliqué est grand. La vitesse de rotation en tr/min, c'est le régime, une notion différente bien que liée à travers la notion de puissance. La consommation d'énergie totale n'est pas non plus ce que mesure le couple.",
+      "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
+    },
+    {
+      "uid": "M17A-0005",
+      "sous_chapitre": "M17A.1",
+      "question": "Comment la puissance d'un moteur se calcule-t-elle ?",
+      "options": [
+        "En additionnant le couple et le régime de rotation",
+        "En ne considérant que le régime de rotation, indépendamment du couple transmis",
+        "En multipliant le couple transmis par le régime de rotation"
+      ],
+      "bonne": 2,
+      "explication": "La puissance combine les deux notions par une multiplication, pas une addition : couple × régime. C'est ce produit qui compte, pas l'un ou l'autre pris isolément — un couple important combiné à un régime faible peut ainsi donner la même puissance qu'un couple modeste combiné à un régime élevé. Additionner simplement le couple et le régime, ou ne considérer que le régime seul, ne reflète pas cette relation.",
+      "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
+    },
+    {
+      "uid": "M17A-0006",
+      "sous_chapitre": "M17A.1",
+      "question": "Quelle est la différence entre une hélice tractive et une hélice propulsive ?",
+      "options": [
+        "La tractive est montée à l'avant du moteur et tire l'avion, la propulsive est montée à l'arrière et le pousse",
+        "La tractive utilise un principe aérodynamique différent de la propulsive",
+        "La tractive équipe uniquement les avions à pas fixe, la propulsive uniquement les avions à pas variable"
+      ],
+      "bonne": 0,
+      "explication": "Seule la position change : une hélice tractive, à l'avant, tire l'appareil ; une hélice propulsive, à l'arrière, le pousse. Le principe aérodynamique de génération de la traction reste rigoureusement identique dans les deux cas — ce n'est pas un mécanisme différent. Et le choix pas fixe/pas variable (détaillé en M17A.5) est indépendant de la position tractive ou propulsive : on trouve les deux configurations avec l'un ou l'autre type de pas.",
+      "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
+    },
+    {
+      "uid": "M17A-0007",
+      "sous_chapitre": "M17A.1",
+      "question": "Sur une pale d'hélice, quel bord rencontre l'air en premier lors de la rotation ?",
+      "options": [
+        "Le bord de fuite",
+        "Le bord d'attaque",
+        "Cela dépend du sens de rotation de l'hélice, qui varie selon les modèles"
+      ],
+      "bonne": 1,
+      "explication": "Le bord d'attaque est le bord épais et arrondi du profil de la pale, monté face au sens de rotation : c'est donc physiquement le premier point de la pale à traverser l'air à chaque tour, quel que soit le sens de rotation retenu par le constructeur (il varie effectivement selon les modèles). Le bord de fuite, plus fin, est l'opposé, par lequel l'air repart après avoir suivi le profil de la pale.",
+      "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
+    },
+    {
+      "uid": "M17A-0008",
+      "sous_chapitre": "M17A.1",
+      "question": "Pourquoi la vitesse de l'air rencontrée par un point d'une pale n'est-elle pas due uniquement à la rotation de l'hélice ?",
+      "options": [
+        "Parce que le vent atmosphérique s'ajoute toujours à la vitesse de rotation",
+        "Parce que l'avancement de l'avion se combine à la rotation pour donner une vitesse d'air résultante",
+        "Parce que la vitesse de rotation de l'hélice varie en permanence même à régime stabilisé"
+      ],
+      "bonne": 1,
+      "explication": "La fiche explique que deux mouvements se combinent : la rotation de la pale autour du moyeu, et l'avancement de l'avion lui-même vers l'avant. C'est cette combinaison qui donne, en chaque point de la pale, une vitesse et une direction d'air résultantes différentes de la seule vitesse de rotation — un point qui explique le vrillage, détaillé en M17A.3. Le vent atmosphérique n'est pas le facteur en cause ici, et le régime n'est pas supposé varier en vol stabilisé.",
+      "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
+    },
+    {
+      "uid": "M17A-0009",
+      "sous_chapitre": "M17A.1",
+      "question": "Quelle différence essentielle sépare un ventilateur de bureau d'une hélice d'avion, bien qu'ils partagent le même principe physique de base ?",
+      "options": [
+        "Le ventilateur utilise un profil de pale radicalement différent, ce qui change le principe physique en jeu",
+        "L'hélice doit produire une force suffisante pour vaincre la traînée de tout l'avion et le faire accélérer, pas seulement déplacer de l'air localement",
+        "Le sens de rotation du ventilateur est toujours opposé à celui d'une hélice d'avion"
+      ],
+      "bonne": 1,
+      "explication": "Un ventilateur et une hélice d'avion partagent le même principe physique de base (des pales profilées en rotation) : ce n'est donc pas le profil qui change fondamentalement entre les deux. La vraie différence est que l'hélice doit produire une force suffisante pour vaincre la traînée de tout l'appareil et le faire accélérer, alors qu'un ventilateur, posé sur une table fixe, ne fait que déplacer de l'air localement sans vaincre ni son propre poids ni celui d'autre chose. Le sens de rotation n'est pas non plus un critère de comparaison pertinent entre les deux objets.",
+      "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
+    },
+    {
+      "uid": "M17A-0010",
+      "sous_chapitre": "M17A.2",
+      "question": "Quelle force tend à arracher une pale d'hélice de son moyeu, radialement vers l'extérieur ?",
+      "options": [
+        "La force centrifuge",
+        "La torsion aérodynamique",
+        "La traînée de rotation"
+      ],
+      "bonne": 0,
+      "explication": "La force centrifuge est la seule des trois à agir radialement, en tirant la pale vers l'extérieur, loin du moyeu — comme un seau d'eau qu'on fait tourner au bout du bras. La torsion aérodynamique (détaillée plus loin dans cette même fiche) fait pivoter la pale sur son axe longitudinal, sans l'arracher radialement. La traînée de rotation, elle, s'oppose au mouvement de rotation lui-même : elle agit dans le sens contraire de la rotation, ce qui n'est pas non plus une force radiale.",
+      "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
+    },
+    {
+      "uid": "M17A-0011",
+      "sous_chapitre": "M17A.2",
+      "question": "Comment la force centrifuge subie par une pale évolue-t-elle avec le régime de rotation ?",
+      "options": [
+        "Elle reste constante, quel que soit le régime",
+        "Elle augmente, mais moins vite que le régime lui-même",
+        "Elle augmente très rapidement avec le régime, selon le carré de la vitesse de rotation"
+      ],
+      "bonne": 2,
+      "explication": "C'est un fait de physique de base : la force centrifuge augmente avec le carré de la vitesse de rotation, donc très rapidement dès que le régime croît. C'est pourquoi un régime moteur ne doit jamais dépasser la limite fixée par le constructeur, même brièvement. Elle n'est donc ni constante, ni une simple proportion directe (plus lente) du régime.",
+      "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
+    },
+    {
+      "uid": "M17A-0012",
+      "sous_chapitre": "M17A.2",
+      "question": "Quel rôle joue la puissance délivrée par le moteur vis-à-vis de la traînée de rotation d'une hélice en vol ?",
+      "options": [
+        "Elle la compense en permanence pour maintenir le régime souhaité",
+        "Elle n'a aucune interaction avec cette traînée, qui ne dépend que de la vitesse de l'avion",
+        "Elle l'annule totalement et définitivement dès que l'hélice atteint son régime de croisière"
+      ],
+      "bonne": 0,
+      "explication": "Le moteur doit vaincre en permanence la traînée de rotation pour maintenir le régime de l'hélice ; réduire fortement la puissance fait baisser le régime sous l'effet de cette résistance non compensée. Cette traînée ne dépend donc pas seulement de la vitesse de l'avion : c'est aussi une résistance au mouvement de rotation lui-même, ressentie par exemple quand on essaie de faire tourner une hélice à la main, moteur coupé, au sol. Et elle ne disparaît jamais totalement, à aucun régime : le moteur continue de la compenser en continu, même en croisière stabilisée.",
+      "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
+    },
+    {
+      "uid": "M17A-0013",
+      "sous_chapitre": "M17A.2",
+      "question": "Sur une pale d'hélice, à quoi correspond la force de flexion décrite dans la fiche ?",
+      "options": [
+        "À la tendance de la pale à se courber sous l'effet de la traction, qui ne s'applique pas au même endroit que la fixation au moyeu",
+        "À la tendance de la pale à se dilater sous l'effet de l'échauffement du moteur",
+        "À la tendance de la pale à se rétracter légèrement vers le moyeu à haut régime"
+      ],
+      "bonne": 0,
+      "explication": "La flexion vient du fait que la force de traction générée par la pale ne s'applique pas au point de fixation au moyeu : elle pousse l'ensemble de la pale vers l'avant, ce qui la courbe, un peu comme un plongeoir sous le poids d'une personne. Il ne s'agit ni d'un effet thermique (dilatation), ni d'un mouvement de rétraction vers le moyeu — c'est justement la force centrifuge, une autre force, qui tire la pale vers l'extérieur.",
+      "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
+    },
+    {
+      "uid": "M17A-0014",
+      "sous_chapitre": "M17A.2",
+      "question": "Qu'est-ce que le couple de torsion aérodynamique, tel que décrit pour une pale d'hélice ?",
+      "options": [
+        "Un moment produit par la répartition des pressions de l'air, qui tend à faire pivoter la pale vers un pas plus gros",
+        "La déformation permanente d'une pale après un impact avec un corps étranger",
+        "L'usure progressive du revêtement de bord d'attaque sous l'effet du sable et de la poussière"
+      ],
+      "bonne": 0,
+      "explication": "Le couple de torsion aérodynamique est un moment (une force qui tend à faire tourner un objet autour d'un axe), produit par la répartition des pressions de l'air sur le profil de la pale, dont le centre se situe légèrement en avant de l'axe de calage : il pousse la pale vers un pas plus gros. Le couple de torsion centrifuge, un autre effet distinct lié à la seule rotation de la pale, est détaillé plus haut dans cette même fiche. Ce n'est ni une déformation liée à un impact, ni une usure par abrasion : ces deux phénomènes relèvent plutôt de l'entretien et de l'inspection (fiche M17A.12), pas des forces en vol normal.",
+      "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
+    },
+    {
+      "uid": "M17A-0015",
+      "sous_chapitre": "M17A.2",
+      "question": "Quel est l'effet du couple de torsion centrifuge sur une pale d'hélice à pas variable ?",
+      "options": [
+        "Il tend à faire pivoter la pale vers un pas plus fin, et c'est en général le plus intense des deux couples de torsion",
+        "Il tend à faire pivoter la pale vers un pas plus gros, tout comme le couple de torsion aérodynamique",
+        "Il annule exactement le couple de torsion aérodynamique, à n'importe quel régime"
+      ],
+      "bonne": 0,
+      "explication": "Le couple de torsion centrifuge pousse la pale vers un pas plus fin, et il est en général le plus intense des deux moments de torsion, croissant avec le régime à peu près comme la force centrifuge elle-même. C'est l'inverse du couple de torsion aérodynamique, qui pousse vers un pas plus gros : les deux ne s'annulent pas exactement l'un l'autre à tout régime. C'est justement pour compenser ce déséquilibre que les systèmes de régulation (fiches M17A.7 et M17A.8) doivent agir activement.",
+      "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
+    },
+    {
+      "uid": "M17A-0016",
+      "sous_chapitre": "M17A.2",
+      "question": "D'où viennent les charges cycliques qui peuvent faire vibrer une pale à chaque tour ?",
+      "options": [
+        "De la seule action du vent atmosphérique sur la pale, indépendamment de sa rotation",
+        "Du poids de la pale qui agit différemment selon sa position, et d'un air rencontré jamais parfaitement uniforme",
+        "Du frottement de la pale contre l'air ambiant, quelle que soit sa position en rotation"
+      ],
+      "bonne": 1,
+      "explication": "Deux sources principales expliquent ces charges cycliques : le poids de la pale, qui agit tantôt vers le haut, tantôt vers le bas selon sa position en rotation, et l'air rencontré, jamais parfaitement uniforme (sillage du fuselage, turbulence, irrégularités du moteur). Le vent atmosphérique n'est pas la cause en jeu ici, et le frottement de l'air seul, sans tenir compte de la position de la pale, n'explique pas non plus ce caractère cyclique : ce qui varie à chaque tour, c'est bien la position de la pale elle-même.",
+      "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
+    },
+    {
+      "uid": "M17A-0017",
+      "sous_chapitre": "M17A.2",
+      "question": "Quel est le principal effet, à long terme, d'une vibration répétée sur le matériau d'une pale d'hélice ?",
+      "options": [
+        "Une fatigue progressive, pouvant conduire à une fissure",
+        "Une déformation progressive du vrillage, sans effet sur la solidité de la pale",
+        "Une amélioration progressive de sa résistance, à mesure qu'il est sollicité"
+      ],
+      "bonne": 0,
+      "explication": "Une vibration répétée, même modeste, use progressivement le matériau par un phénomène de fatigue, qui peut conduire à l'apparition d'une fissure — c'est justement ce que recherche l'inspection régulière décrite en fiche M17A.12. Le vrillage, lui, est une caractéristique géométrique fixée à la fabrication (fiche M17A.3) : la vibration ne le déforme pas progressivement sans laisser d'autre trace. Et le matériau ne se renforce pas non plus avec les sollicitations répétées : c'est l'inverse qui se produit, une usure progressive plutôt qu'une amélioration.",
+      "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
+    },
+    {
+      "uid": "M17A-0018",
+      "sous_chapitre": "M17A.2",
+      "question": "Que faut-il faire concernant les plages de régime à éviter en utilisation prolongée signalées par certains constructeurs moteur ?",
+      "options": [
+        "Les ignorer, puisqu'elles ne concernent que les très anciens moteurs",
+        "Appliquer une valeur générale valable pour tous les moteurs à pistons",
+        "Vérifier la documentation du constructeur propre à l'installation moteur-hélice concernée"
+      ],
+      "bonne": 2,
+      "explication": "La fiche est explicite : l'usage exact de ces plages de régime à éviter, propre à chaque installation moteur-hélice, reste à vérifier dans le manuel constructeur avant tout usage réel. Ce n'est ni une question réservée aux moteurs anciens, ni une valeur générale applicable telle quelle à tous les moteurs : chaque installation a ses propres plages, liées à ses fréquences de résonance particulières.",
+      "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
+    },
+    {
+      "uid": "M17A-0019",
+      "sous_chapitre": "M17A.3",
+      "question": "Comment définit-on le diamètre de l'hélice ?",
+      "options": [
+        "La distance parcourue par l'avion en un seul tour d'hélice",
+        "La distance d'un bout à l'autre du cercle balayé par les pales en rotation",
+        "La distance entre le bord d'attaque et le bord de fuite d'une pale"
+      ],
+      "bonne": 1,
+      "explication": "Le diamètre est la distance d'un bout à l'autre du cercle balayé par les pales en rotation, mesurée pointe de pale à pointe de pale. La distance parcourue par l'avion en un tour d'hélice est une autre notion géométrique de l'hélice, détaillée juste après dans cette même fiche — elle ne porte pas le nom de diamètre. La distance entre bord d'attaque et bord de fuite d'une pale, c'est la corde (déjà vue en M17A.1), également différente du diamètre.",
+      "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
+    },
+    {
+      "uid": "M17A-0020",
+      "sous_chapitre": "M17A.3",
+      "question": "Qu'est-ce qui limite, en pratique, la possibilité d'agrandir indéfiniment le diamètre d'une hélice ?",
+      "options": [
+        "Uniquement le poids total que peut supporter le moteur",
+        "La garde au sol disponible et la vitesse atteinte par l'extrémité des pales",
+        "Le nombre de pales déjà montées sur l'hélice, qui fixe à lui seul un diamètre maximal indépassable"
+      ],
+      "bonne": 1,
+      "explication": "Deux limites entrent en jeu : la garde au sol (la pale ne doit jamais risquer de toucher le sol) et la vitesse atteinte par l'extrémité de la pale, qui cumule vitesse de rotation et vitesse d'avancement — au-delà d'un certain seuil propre à chaque installation, l'efficacité se dégrade et le bruit augmente. Le poids supporté par le moteur n'est pas le facteur cité. Et le nombre de pales n'impose pas, à lui seul, un diamètre maximal : c'est plutôt l'inverse qui se produit en pratique — un diamètre déjà limité par la vitesse d'extrémité pousse parfois à ajouter des pales plutôt qu'à agrandir encore le disque, comme le détaille la fiche M17A.5.",
+      "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
+    },
+    {
+      "uid": "M17A-0021",
+      "sous_chapitre": "M17A.3",
+      "question": "Comment est défini l'angle de calage d'une pale d'hélice ?",
+      "options": [
+        "L'angle entre la corde de la pale et le plan de rotation de l'hélice",
+        "L'angle entre le bord d'attaque et le bord de fuite, mesuré au moyeu",
+        "L'angle entre l'axe du moteur et la trajectoire de vol de l'avion"
+      ],
+      "bonne": 0,
+      "explication": "L'angle de calage est l'angle formé entre la corde de la pale (la ligne droite reliant bord d'attaque et bord de fuite) et le plan de rotation de l'hélice. Le bord d'attaque et le bord de fuite ne forment pas un angle entre eux : ils délimitent la corde. Et l'angle entre l'axe moteur et la trajectoire de vol est une notion étrangère à la géométrie de la pale elle-même.",
+      "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
+    },
+    {
+      "uid": "M17A-0022",
+      "sous_chapitre": "M17A.3",
+      "question": "D'après l'analogie du vélo, à quoi correspond un « gros pas » d'hélice ?",
+      "options": [
+        "À un petit braquet, qui fait tourner les jambes facilement mais avance peu par tour de pédale",
+        "À un grand braquet, qui avance davantage par tour de pédale mais demande plus de force pour être lancé",
+        "À l'absence totale de résistance ressentie en pédalant, quel que soit le braquet"
+      ],
+      "bonne": 1,
+      "explication": "Un gros pas se compare à un grand braquet à vélo : on avance davantage à chaque tour de pédale, mais il faut plus de force pour lancer le mouvement. Le petit braquet, à l'inverse, correspond à un petit pas — facile à faire tourner, mais qui avance peu par tour. La troisième option ne correspond à aucun des deux cas : il y a toujours une résistance liée au pas choisi.",
+      "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
+    },
+    {
+      "uid": "M17A-0023",
+      "sous_chapitre": "M17A.3",
+      "question": "Quelle est la différence entre le pas géométrique et le pas effectif d'une hélice ?",
+      "options": [
+        "Le pas géométrique est mesuré au sol, le pas effectif uniquement en vol de croisière",
+        "Le pas géométrique dépend de l'angle de calage seul, le pas effectif dépend uniquement du régime moteur",
+        "Le pas géométrique est l'avancement théorique par tour sans glissement, le pas effectif est l'avancement réellement parcouru par l'avion"
+      ],
+      "bonne": 2,
+      "explication": "Le pas géométrique est une valeur purement calculée à partir de l'angle de calage et du rayon considéré, comme si l'hélice « vissait » dans un solide sans glissement. Le pas effectif est la distance réellement parcourue par l'avion pour un tour d'hélice, toujours inférieure au pas géométrique à cause du glissement dans l'air. Aucun des deux n'est défini par un lieu de mesure (sol/croisière) ni par le seul régime moteur.",
+      "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
+    },
+    {
+      "uid": "M17A-0024",
+      "sous_chapitre": "M17A.3",
+      "question": "Pourquoi le pas effectif est-il toujours inférieur au pas géométrique ?",
+      "options": [
+        "Parce que l'air, contrairement au bois, cède sous la pale plutôt que de la retenir fermement",
+        "Parce que le moteur ne peut jamais atteindre son régime maximal en vol",
+        "Parce que l'angle de calage diminue automatiquement à chaque tour d'hélice"
+      ],
+      "bonne": 0,
+      "explication": "Le glissement existe parce que l'air n'est pas un solide : il cède sous la pale plutôt que de la retenir fermement comme le ferait du bois, contrairement à l'image de la vis. Ce n'est pas une question de régime moteur maximal, ni d'un changement automatique de l'angle de calage à chaque tour — l'angle de calage reste ce qu'il est réglé, à un instant donné.",
+      "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
+    },
+    {
+      "uid": "M17A-0025",
+      "sous_chapitre": "M17A.3",
+      "question": "Dans quelle condition de vol le glissement d'une hélice est-il le plus important ?",
+      "options": [
+        "Au point fixe, avion immobile au sol malgré la rotation de l'hélice",
+        "En croisière stabilisée à vitesse constante",
+        "Le glissement est rigoureusement identique dans toutes les conditions de vol"
+      ],
+      "bonne": 0,
+      "explication": "Au point fixe, l'avion n'avance pas du tout malgré la rotation de l'hélice : l'écart entre pas géométrique et pas effectif est donc maximal. En croisière stabilisée, cet écart est nettement plus réduit, l'avion progressant alors à une vitesse stabilisée, plus proche des conditions pour lesquelles l'hélice est optimisée. Le glissement n'est donc pas identique dans toutes les conditions de vol.",
+      "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
+    },
+    {
+      "uid": "M17A-0026",
+      "sous_chapitre": "M17A.3",
+      "question": "Pourquoi une pale d'hélice est-elle vrillée (l'angle de calage varie du pied vers l'extrémité) plutôt que plate sur toute sa longueur ?",
+      "options": [
+        "Pour réduire la masse totale de la pale et limiter la force centrifuge",
+        "Parce qu'un point proche du moyeu et un point proche de l'extrémité se déplacent à des vitesses de rotation très différentes",
+        "Pour faciliter la fabrication en usine, quelle que soit la vitesse de rotation"
+      ],
+      "bonne": 1,
+      "explication": "Pour un même régime, un point proche du moyeu parcourt un petit cercle (vitesse faible), un point proche de l'extrémité un cercle bien plus grand dans le même temps (vitesse élevée) — comme les chevaux d'un manège. Le vrillage adapte l'angle de calage le long de la pale pour conserver une orientation efficace face à l'air réellement rencontré à chaque rayon. Ce n'est ni un choix de masse, ni une facilité de fabrication : une pale plate serait au contraire plus simple à produire, mais inefficace sur une grande partie de sa longueur.",
+      "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
+    },
+    {
+      "uid": "M17A-0027",
+      "sous_chapitre": "M17A.3",
+      "question": "Pourquoi un gros pas convient-il bien à un vol de croisière stabilisé ?",
+      "options": [
+        "Parce qu'il permet d'avancer davantage par tour d'hélice à un régime moteur qui reste modéré",
+        "Parce qu'il empêche totalement le moteur de dépasser son régime de ralenti",
+        "Parce qu'il supprime le glissement de l'hélice, rendant le pas effectif égal au pas géométrique"
+      ],
+      "bonne": 0,
+      "explication": "Un gros pas fait avancer l'avion davantage à chaque tour d'hélice, ce qui permet de maintenir un régime moteur modéré tout en conservant une bonne vitesse d'avancement en croisière — l'inverse du petit pas, mieux adapté au décollage. Il n'empêche pas le moteur de dépasser le ralenti : un moteur en croisière tourne bien au-delà du régime de ralenti. Et il ne supprime jamais le glissement, présent à un degré ou un autre dans toutes les conditions de vol (voir M17A.3).",
+      "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
+    },
+    {
+      "uid": "M17A-0028",
+      "sous_chapitre": "M17A.4",
+      "question": "Comment une pale d'hélice en bois est-elle généralement construite ?",
+      "options": [
+        "Taillée dans une seule pièce massive de bois",
+        "Laminée, c'est-à-dire construite en collant plusieurs fines couches de bois superposées",
+        "Moulée à partir de sciure de bois compressée"
+      ],
+      "bonne": 1,
+      "explication": "Une pale en bois est laminée : plusieurs fines couches de bois sont collées ensemble, un peu comme du contreplaqué — une méthode de fabrication bien précise, dont l'intérêt est développé juste après dans cette même fiche. Une pièce massive taillée d'un seul bloc ne bénéficie pas de cette construction en couches. Le moulage à partir de sciure compressée, de son côté, ne correspond à aucune méthode de fabrication de pale en bois.",
+      "source": "Notions générales de construction aéronautique — matériaux de pale d'hélice"
+    },
+    {
+      "uid": "M17A-0029",
+      "sous_chapitre": "M17A.4",
+      "question": "Quel est l'intérêt principal de laminer une pale en bois plutôt que de la tailler dans une seule pièce massive ?",
+      "options": [
+        "Cela rend la pale totalement insensible à l'humidité",
+        "Cela répartit les défauts naturels du bois sur plusieurs couches, limitant les risques de fissure et de déformation",
+        "Cela permet de supprimer entièrement le revêtement de bord d'attaque"
+      ],
+      "bonne": 1,
+      "explication": "Le laminage répartit les défauts naturels du bois (nœuds, fil irrégulier) sur plusieurs couches indépendantes, ce qui limite fortement les risques de fissure et de déformation dans le temps. Une pale en bois, même laminée, reste sensible à l'humidité — c'est justement une de ses limites citées dans la fiche. Et le laminage ne dispense pas du revêtement protecteur de bord d'attaque, toujours nécessaire contre l'érosion et les impacts.",
+      "source": "Notions générales de construction aéronautique — matériaux de pale d'hélice"
+    },
+    {
+      "uid": "M17A-0030",
+      "sous_chapitre": "M17A.4",
+      "question": "Quelle est la principale vulnérabilité d'une pale métallique, différente de celle d'une pale en bois ?",
+      "options": [
+        "Le gonflement et le décollement des couches internes, comme sur une pale en bois exposée à l'eau",
+        "La corrosion, si le traitement de surface protecteur est endommagé ou négligé",
+        "L'absorption excessive des vibrations, qui fragilise la structure"
+      ],
+      "bonne": 1,
+      "explication": "Une pale métallique ne réagit pas à l'humidité comme le bois : elle ne gonfle pas et ne se délamine pas. Sa vulnérabilité est ailleurs, et l'humidité y joue justement un rôle central : la corrosion, si le traitement de surface protecteur est endommagé ou négligé. L'absorption des vibrations n'est pas un facteur de fragilisation dans la fiche : c'est au contraire une qualité recherchée, plus marquée sur le bois que sur le métal.",
+      "source": "Notions générales de construction aéronautique — matériaux de pale d'hélice"
+    },
+    {
+      "uid": "M17A-0031",
+      "sous_chapitre": "M17A.4",
+      "question": "Pourquoi une simple entaille sur le bord d'attaque d'une pale métallique est-elle prise au sérieux, même si elle paraît minime ?",
+      "options": [
+        "Parce qu'elle peut amorcer une fissure de fatigue sous l'effet des charges cycliques subies en vol",
+        "Parce qu'elle réduit immédiatement et fortement le diamètre effectif de l'hélice",
+        "Parce qu'elle rend automatiquement la pale plus lourde"
+      ],
+      "bonne": 0,
+      "explication": "Même une entaille minime peut amorcer une fissure de fatigue sous l'effet des charges cycliques vues en M17A.2 — c'est pour cette raison que l'inspection visuelle régulière porte une attention particulière à toute marque sur le bord d'attaque. Une entaille ne change pas le diamètre de l'hélice de façon mesurable, et elle n'alourdit pas la pale : au contraire, elle enlève une infime quantité de matière.",
+      "source": "Notions générales de construction aéronautique — matériaux de pale d'hélice"
+    },
+    {
+      "uid": "M17A-0032",
+      "sous_chapitre": "M17A.4",
+      "question": "Comment est construite une pale composite ?",
+      "options": [
+        "Des fibres de renfort noyées dans une résine, souvent autour d'une âme intérieure légère",
+        "Un bloc unique de résine coulée, sans aucun renfort interne",
+        "Une plaque de métal recouverte d'une fine couche de peinture composite"
+      ],
+      "bonne": 0,
+      "explication": "Une pale composite associe des fibres de renfort (verre, carbone ou kevlar selon les modèles) noyées dans une résine, souvent autour d'une âme intérieure légère qui donne du volume sans ajouter de masse excessive. Ce n'est ni un simple bloc de résine sans renfort, ni du métal recouvert de peinture — ces descriptions ne correspondent à aucune pale composite réelle.",
+      "source": "Notions générales de construction aéronautique — matériaux de pale d'hélice"
+    },
+    {
+      "uid": "M17A-0033",
+      "sous_chapitre": "M17A.4",
+      "question": "Quel avantage principal le composite offre-t-il par rapport au bois et au métal ?",
+      "options": [
+        "Un coût de fabrication systématiquement inférieur à celui du bois",
+        "Le meilleur rapport résistance/masse des trois familles, avec une excellente tenue à la fatigue",
+        "Une insensibilité totale à tout type de dommage, y compris interne"
+      ],
+      "bonne": 1,
+      "explication": "Le composite offre le meilleur rapport résistance/masse des trois familles et une excellente tenue à la fatigue, en plus de permettre des formes aérodynamiques complexes. Rien n'indique un coût systématiquement inférieur au bois. Et le composite n'est pas insensible à tout dommage : une autre particularité de ce matériau, développée juste après dans cette fiche, nuance cette impression de robustesse totale.",
+      "source": "Notions générales de construction aéronautique — matériaux de pale d'hélice"
+    },
+    {
+      "uid": "M17A-0034",
+      "sous_chapitre": "M17A.4",
+      "question": "Quelle particularité du composite, propre à ce matériau, est à retenir pour l'inspection (développée en fiche M17A.12) ?",
+      "options": [
+        "Un dommage interne (délaminage) peut rester invisible lors d'une simple inspection visuelle de surface",
+        "Le composite ne nécessite aucune inspection, contrairement au bois et au métal",
+        "Le composite change de couleur de façon visible dès qu'un dommage interne apparaît"
+      ],
+      "bonne": 0,
+      "explication": "Un délaminage (décollement entre les couches internes) peut rester invisible en surface, ce qui motive des méthodes de contrôle plus poussées que la seule observation à l'œil nu. Le composite nécessite bien une inspection, comme les deux autres matériaux — ce n'est pas une exception. Et rien n'indique un changement de couleur automatique et visible en cas de dommage interne.",
+      "source": "Notions générales de construction aéronautique — matériaux de pale d'hélice"
+    },
+    {
+      "uid": "M17A-0035",
+      "sous_chapitre": "M17A.4",
+      "question": "Pourquoi le moyeu d'une hélice est-il presque toujours métallique, plutôt que fabriqué dans un matériau plus léger ?",
+      "options": [
+        "Parce qu'il doit recevoir et transmettre à l'arbre moteur les forces cumulées de toutes les pales",
+        "Parce que la réglementation impose un moyeu métallique sur tous les types d'hélice",
+        "Parce que le métal est toujours moins coûteux que les autres matériaux disponibles"
+      ],
+      "bonne": 0,
+      "explication": "Le moyeu doit recevoir et transmettre à l'arbre moteur les forces cumulées de toutes les pales à la fois, un rôle qui laisse peu de place à des matériaux plus légers mais moins résistants aux chocs répétés. La fiche ne mentionne aucune exigence réglementaire de ce type, et le coût comparé des matériaux n'est pas la raison avancée ici.",
+      "source": "Notions générales de construction aéronautique — matériaux de pale d'hélice"
+    },
+    {
+      "uid": "M17A-0036",
+      "sous_chapitre": "M17A.5",
+      "question": "Sur une hélice à pas variable, quelle exigence supplémentaire le système de retenue du pied de pale doit-il satisfaire, en plus de résister à la force centrifuge ?",
+      "options": [
+        "Permettre à la pale de pivoter librement sur son axe longitudinal",
+        "Permettre à la pale de se déplacer légèrement en traînée, dans le plan de rotation",
+        "Permettre à la pale de se libérer automatiquement du moyeu en cas de dépassement du régime maximal autorisé"
+      ],
+      "bonne": 0,
+      "explication": "Sur une hélice à pas variable, le système de retenue doit à la fois tenir fermement la pale radialement (contre la force centrifuge) et la laisser pivoter librement sur son propre axe longitudinal, pour permettre le changement d'angle de calage — un axe distinct du plan de rotation lui-même. Une pale d'hélice ne dispose pas d'une articulation de traînée dans ce plan, contrairement à une pale de rotor d'hélicoptère articulé : elle reste rigidement solidaire du moyeu dans cette direction. Et aucune pale n'est conçue pour se libérer automatiquement du moyeu : dépasser le régime maximal autorisé est une situation à éviter absolument, pas un mécanisme de sécurité prévu par la conception.",
+      "source": "Notions générales de construction aéronautique — hélice à pas variable"
+    },
+    {
+      "uid": "M17A-0037",
+      "sous_chapitre": "M17A.5",
+      "question": "Où trouver les valeurs précises de montage et de contrôle du système de retenue d'une pale sur son moyeu ?",
+      "options": [
+        "Dans le manuel constructeur ou l'AMM applicable à l'installation concernée",
+        "Elles sont identiques sur toutes les hélices, quel que soit le constructeur",
+        "Elles se déduisent directement du diamètre de l'hélice"
+      ],
+      "bonne": 0,
+      "explication": "La fiche est explicite : les détails précis de ce montage varient selon les constructeurs et les modèles, et leur assemblage et leur contrôle relèvent systématiquement du manuel constructeur ou de l'AMM applicable, jamais d'une valeur générique. Elles ne sont donc pas identiques d'un constructeur à l'autre, et ne se déduisent pas du diamètre de l'hélice, une grandeur sans rapport direct avec ce montage.",
+      "source": "Notions générales de construction aéronautique — hélice à pas variable"
+    },
+    {
+      "uid": "M17A-0038",
+      "sous_chapitre": "M17A.5",
+      "question": "En reprenant l'analogie du vélo, à quoi correspond une hélice à pas fixe ?",
+      "options": [
+        "À un vélo à plusieurs vitesses, toujours dans le rapport idéal",
+        "À un vélo à un seul braquet, simple mais jamais dans le rapport idéal pour toutes les situations",
+        "À un vélo sans pédales, qui n'avance que grâce à la gravité"
+      ],
+      "bonne": 1,
+      "explication": "Une hélice à pas fixe est comparée à un vélo à un seul braquet : simple et léger, mais qui n'est jamais dans le rapport idéal à la fois pour démarrer et pour rouler vite. C'est au contraire l'hélice à pas variable qui se compare à un vélo à plusieurs vitesses. La troisième option ne correspond à aucune des deux analogies utilisées dans la fiche.",
+      "source": "Notions générales de construction aéronautique — hélice à pas variable"
+    },
+    {
+      "uid": "M17A-0039",
+      "sous_chapitre": "M17A.5",
+      "question": "Quel est le principal inconvénient d'une hélice à pas variable par rapport à une hélice à pas fixe ?",
+      "options": [
+        "Elle produit systématiquement moins de traction à tous les régimes",
+        "Un mécanisme plus complexe, plus lourd et plus coûteux à l'achat comme à l'entretien",
+        "Elle nécessite systématiquement un nombre de pales supérieur à celui d'une hélice à pas fixe"
+      ],
+      "bonne": 1,
+      "explication": "La souplesse offerte par le pas variable a un prix : un mécanisme plus complexe, plus lourd et plus coûteux à l'achat comme à l'entretien. Ce n'est pas une question de traction produite (le pas variable vise justement à optimiser la traction à chaque phase de vol), ni de nombre de pales : le choix pas fixe/pas variable et le nombre de pales sont deux décisions indépendantes l'une de l'autre.",
+      "source": "Notions générales de construction aéronautique — hélice à pas variable"
+    },
+    {
+      "uid": "M17A-0040",
+      "sous_chapitre": "M17A.5",
+      "question": "Quel rôle secondaire, en plus de son rôle principal, le spinner peut-il jouer sur beaucoup d'installations à pas variable ?",
+      "options": [
+        "Il offre souvent l'espace nécessaire pour loger de petites masses d'équilibrage",
+        "Il assure à lui seul l'étanchéité du mécanisme de changement de pas",
+        "Il sert de seul point de fixation de l'hélice sur l'arbre moteur"
+      ],
+      "bonne": 0,
+      "explication": "Sur beaucoup d'installations à pas variable, le spinner offre l'espace nécessaire pour loger de petites masses d'équilibrage, ajoutées lors d'une opération d'équilibrage dynamique (fiche M17A.13) pour réduire les vibrations résiduelles. Il n'assure pas à lui seul l'étanchéité du mécanisme de changement de pas, qui dépend du système de retenue et de ses propres joints. Et il ne sert pas de point de fixation de l'hélice sur l'arbre moteur : c'est le moyeu qui joue ce rôle.",
+      "source": "Notions générales de construction aéronautique — hélice à pas variable"
+    },
+    {
+      "uid": "M17A-0041",
+      "sous_chapitre": "M17A.5",
+      "question": "Quel est l'inconvénient d'ajouter des pales supplémentaires à une hélice, évoqué dans la fiche ?",
+      "options": [
+        "Chaque pale ajoutée pénalise légèrement le rendement des pales voisines, dont une partie traverse le sillage de la pale précédente",
+        "Chaque pale ajoutée réduit automatiquement la force centrifuge globale de l'hélice",
+        "Chaque pale ajoutée supprime totalement le besoin d'un moyeu résistant"
+      ],
+      "bonne": 0,
+      "explication": "Chaque pale ajoutée augmente la masse totale (et donc la force centrifuge globale, pas l'inverse) et le coût, et pénalise légèrement le rendement aérodynamique des pales voisines, chacune traversant en partie le sillage déjà perturbé par la pale qui la précède. Le besoin d'un moyeu résistant, lui, ne fait qu'augmenter avec le nombre de pales, puisqu'il doit transmettre les forces cumulées de toutes les pales.",
+      "source": "Notions générales de construction aéronautique — hélice à pas variable"
+    },
+    {
+      "uid": "M17A-0042",
+      "sous_chapitre": "M17A.5",
+      "question": "Quel est le rôle principal du cône avant (spinner) d'une hélice tractive ?",
+      "options": [
+        "Réduire la traînée que produirait un moyeu nu, aux formes anguleuses, exposé directement au vent relatif",
+        "Assurer à lui seul la fixation des pales sur le moyeu",
+        "Réguler automatiquement le régime moteur à la place du régulateur d'hélice"
+      ],
+      "bonne": 0,
+      "explication": "Le spinner réduit la traînée que produirait un moyeu nu et anguleux, et canalise souvent l'air de refroidissement vers le moteur sur beaucoup d'installations. Il n'intervient pas dans la fixation des pales elle-même, qui repose sur le système de retenue du pied de pale décrit plus haut dans la fiche. Et la régulation du régime relève du régulateur d'hélice, un système entièrement différent, présenté à partir de la fiche M17A.8.",
+      "source": "Notions générales de construction aéronautique — hélice à pas variable"
+    },
+    {
+      "uid": "M17A-0043",
+      "sous_chapitre": "M17A.5",
+      "question": "Quelle hélice équipe le plus souvent un avion d'entraînement simple, léger et peu puissant ?",
+      "options": [
+        "Une hélice tripale ou quadripale à pas variable, en composite",
+        "Une hélice bipale à pas fixe, en bois ou en métal",
+        "Une hélice bipale à pas variable, mais sans aucun système de régulation automatique"
+      ],
+      "bonne": 1,
+      "explication": "Un avion d'entraînement simple est le plus souvent équipé d'une hélice bipale à pas fixe, en bois ou en métal — la solution la plus simple pour un usage peu exigeant. L'hélice tripale ou quadripale à pas variable équipe plutôt les avions plus performants dits « complexes ». Et une hélice à pas variable sans aucune régulation automatique ne correspond pas à une installation courante : le pas variable est presque toujours associé à un régulateur, comme vu plus haut dans cette fiche.",
+      "source": "Notions générales de construction aéronautique — hélice à pas variable"
+    }
+  ]
+}

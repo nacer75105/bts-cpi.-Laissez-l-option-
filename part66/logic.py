@@ -38,7 +38,8 @@ MODULES = {
     "M11A": {"titre": "Aérodynamique, structures et systèmes — avion à turbine",
               "disponible": False},
     "M15": {"titre": "Turbomachines à gaz", "disponible": False},
-    "M17A": {"titre": "Hélices", "disponible": False},
+    "M17A": {"titre": "Hélices", "disponible": False,  # lot 1/3 (M17A.1-M17A.5) validé ; reste lot 2 (M17A.6-M17A.10) et lot 3 (M17A.11-M17A.14) avant disponible: True
+             "nb_questions_examen": 25, "duree_examen_min": 30},
 }
 
 
@@ -54,14 +55,17 @@ def charger_fiches(module):
         return json.load(f)["fiches"]
 
 
-def charger_schema(module, fiche_id):
-    """Chemin (pathlib.Path, requis par st.html pour lire un fichier local)
-    vers un schéma HTML interactif pour une fiche donnée
-    (part66/data/<module>/schemas/<fiche_id>.html), ou None si ce
-    complément n'existe pas pour cette fiche — l'illustration interactive
-    est optionnelle, la fiche reste utilisable sans elle."""
-    chemin = Path(_fichier_module(module, os.path.join("schemas", f"{fiche_id}.html")))
-    return chemin if chemin.exists() else None
+def charger_schemas(module, fiche_id):
+    """Liste des chemins (pathlib.Path) vers les schémas HTML interactifs
+    d'une fiche, dans l'ordre d'affichage : <fiche_id>.html (principe) puis
+    <fiche_id>-2.html (application/panne) s'il existe. Liste vide si aucun
+    schéma — l'illustration interactive reste optionnelle."""
+    chemins = []
+    for suffixe in ("", "-2"):
+        chemin = Path(_fichier_module(module, os.path.join("schemas", f"{fiche_id}{suffixe}.html")))
+        if chemin.exists():
+            chemins.append(chemin)
+    return chemins
 
 
 def charger_questions(module):

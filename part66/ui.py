@@ -204,8 +204,7 @@ def _page_cours(P, module):
         with st.expander(f"{fiche['id']} — {fiche['titre']}"):
             st.caption(f"{fiche['sous_chapitre']} · ⏱ {fiche.get('duree_min', '?')} min")
             st.markdown(fiche["contenu_md"])
-            schema = logic.charger_schema(module, fiche["id"])
-            if schema:
+            for schema in logic.charger_schemas(module, fiche["id"]):
                 st.html(schema, unsafe_allow_javascript=True)
 
 

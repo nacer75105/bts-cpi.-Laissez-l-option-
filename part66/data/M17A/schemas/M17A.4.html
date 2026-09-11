@@ -1,0 +1,89 @@
+<div id="schema-m17a4-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m17a4-wrap .m17a4-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.95em; }
+#schema-m17a4-wrap .m17a4-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m17a4-wrap .m17a4-coupe { margin-top:12px; border:1px solid #ccc; border-radius:6px; background:#fafafa; padding:10px; min-height:70px; }
+#schema-m17a4-wrap .m17a4-coupe-title { font-size:0.75em; color:#555; margin-bottom:6px; }
+#schema-m17a4-wrap .m17a4-stripe { height:10px; margin-bottom:2px; border-radius:2px; }
+#schema-m17a4-wrap table { width:100%; max-width:480px; border-collapse:collapse; margin-top:10px; font-size:0.9em; }
+#schema-m17a4-wrap td, #schema-m17a4-wrap th { border:1px solid #ccc; padding:6px 8px; text-align:left; }
+#schema-m17a4-wrap th { background:#eee; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> choisis un matériau et observe sa coupe interne schématique et son profil qualitatif.</p>
+
+<div>
+  <button class="m17a4-btn active" data-mat="bois">Bois laminé</button>
+  <button class="m17a4-btn" data-mat="metal">Métal</button>
+  <button class="m17a4-btn" data-mat="composite">Composite</button>
+</div>
+
+<div class="m17a4-coupe">
+  <div class="m17a4-coupe-title" id="m17a4-coupe-title">Couches de bois collées + revêtement métallique de bord d'attaque</div>
+  <div id="m17a4-coupe-stripes"></div>
+</div>
+
+<table>
+  <tr><th>Matériau</th><th>Point fort</th><th>Point de vigilance</th></tr>
+  <tr><td id="m17a4-nom">Bois laminé</td><td id="m17a4-fort">Léger, absorbe bien les vibrations</td><td id="m17a4-faible">Sensible à l'humidité</td></tr>
+</table>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m17a4-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('.m17a4-btn');
+  var coupeTitle = wrap.querySelector('#m17a4-coupe-title');
+  var coupeStripes = wrap.querySelector('#m17a4-coupe-stripes');
+  var nom = wrap.querySelector('#m17a4-nom');
+  var fort = wrap.querySelector('#m17a4-fort');
+  var faible = wrap.querySelector('#m17a4-faible');
+
+  var DONNEES = {
+    bois: {
+      nom: "Bois laminé",
+      fort: "Léger, absorbe bien les vibrations",
+      faible: "Sensible à l'humidité, revêtement de bord d'attaque indispensable",
+      titre: "Couches de bois collées (marron) + revêtement métallique de bord d'attaque (gris)",
+      stripes: ['#888', '#c9a56b', '#b8935a', '#c9a56b', '#b8935a']
+    },
+    metal: {
+      nom: "Métal (alliage d'aluminium)",
+      fort: "Résistant aux impacts, ne gonfle pas et ne se délamine pas comme le bois",
+      faible: "Sensible à la corrosion si le traitement de surface est endommagé",
+      titre: "Pièce massive forgée puis usinée, généralement en une seule pièce",
+      stripes: ['#b6c4cf']
+    },
+    composite: {
+      nom: "Composite (fibres + résine)",
+      fort: "Meilleur rapport résistance/masse, bonne tenue à la fatigue",
+      faible: "Un dommage interne (délaminage) peut être invisible en surface",
+      titre: "Revêtement anti-érosion de bord d'attaque (gris) + peau en fibres/résine (noir) autour d'une âme légère (clair)",
+      stripes: ['#7a8a94', '#444', '#dfe7ea', '#dfe7ea', '#dfe7ea', '#444']
+    }
+  };
+
+  function render(mat) {
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-mat') === mat); });
+    var d = DONNEES[mat];
+    coupeTitle.textContent = d.titre;
+    coupeStripes.innerHTML = '';
+    d.stripes.forEach(function (color) {
+      var s = document.createElement('div');
+      s.className = 'm17a4-stripe';
+      s.style.background = color;
+      coupeStripes.appendChild(s);
+    });
+    nom.textContent = d.nom;
+    fort.textContent = d.fort;
+    faible.textContent = d.faible;
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { render(b.getAttribute('data-mat')); });
+  });
+
+  render('bois');
+})();
+</script>

@@ -1,0 +1,72 @@
+<div id="schema-m17a2a-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m17a2a-wrap .m17a2a-slider { width:100%; max-width:420px; }
+#schema-m17a2a-wrap .m17a2a-row { display:flex; align-items:center; gap:10px; margin-top:8px; }
+#schema-m17a2a-wrap .m17a2a-rowlabel { width:150px; font-size:0.85em; color:#333; }
+#schema-m17a2a-wrap .m17a2a-bar-outer { flex:1; max-width:300px; height:18px; background:#e2e2e2; border-radius:4px; overflow:hidden; }
+#schema-m17a2a-wrap .m17a2a-bar-inner { height:100%; width:0%; transition:width .15s; }
+#schema-m17a2a-wrap .m17a2a-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> fais varier le régime (valeurs d'illustration, pas des tours/minute réels) et observe l'intensité relative de quatre des forces vues dans cette fiche (la cinquième, la vibration, est illustrée dans le second schéma) — en particulier la force centrifuge, dont l'intensité dépasse largement celle des trois autres, à tout régime non nul.</p>
+
+<div class="m17a2a-value">Régime (illustration) : <span id="m17a2a-lu">0</span> %</div>
+<input type="range" class="m17a2a-slider" id="m17a2a-regime" min="0" max="100" value="0" step="5">
+
+<div class="m17a2a-row">
+  <div class="m17a2a-rowlabel">Force centrifuge</div>
+  <div class="m17a2a-bar-outer"><div class="m17a2a-bar-inner" id="m17a2a-fc" style="background:#c0392b;"></div></div>
+</div>
+<div class="m17a2a-row">
+  <div class="m17a2a-rowlabel">Traînée de rotation</div>
+  <div class="m17a2a-bar-outer"><div class="m17a2a-bar-inner" id="m17a2a-tr" style="background:#2e7d32;"></div></div>
+</div>
+<div class="m17a2a-row">
+  <div class="m17a2a-rowlabel">Flexion</div>
+  <div class="m17a2a-bar-outer"><div class="m17a2a-bar-inner" id="m17a2a-fl" style="background:#e0a800;"></div></div>
+</div>
+<div class="m17a2a-row">
+  <div class="m17a2a-rowlabel">Torsion (intensité, sens non représenté)</div>
+  <div class="m17a2a-bar-outer"><div class="m17a2a-bar-inner" id="m17a2a-to" style="background:#7b3fa0;"></div></div>
+</div>
+
+<div class="m17a2a-caption" id="m17a2a-caption">Régime nul : aucune force en jeu, hormis le poids de la pale au repos.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m17a2a-wrap');
+  if (!wrap) { return; }
+  var slider = wrap.querySelector('#m17a2a-regime');
+  var lu = wrap.querySelector('#m17a2a-lu');
+  var caption = wrap.querySelector('#m17a2a-caption');
+  var fc = wrap.querySelector('#m17a2a-fc');
+  var tr = wrap.querySelector('#m17a2a-tr');
+  var fl = wrap.querySelector('#m17a2a-fl');
+  var to = wrap.querySelector('#m17a2a-to');
+
+  function render() {
+    var v = parseInt(slider.value, 10);
+    lu.textContent = v;
+    // Les quatre grandeurs augmentent toutes avec le régime (approximativement avec son
+    // carré, comme la pression dynamique de l'air) : seule leur intensité relative diffère,
+    // la force centrifuge atteignant une intensité largement supérieure aux trois autres.
+    var q = Math.pow(v / 100, 2);
+    var pFc = v > 0 ? Math.max(8, Math.round(95 * q)) : 0;
+    var pLin = v > 0 ? Math.max(3, Math.round(32 * q)) : 0;
+    fc.style.width = pFc + '%';
+    tr.style.width = pLin + '%';
+    fl.style.width = Math.round(pLin * 0.85) + '%';
+    to.style.width = Math.round(pLin * 0.7) + '%';
+
+    if (v === 0) {
+      caption.textContent = "Régime nul : aucune force en jeu, hormis le poids de la pale au repos.";
+    } else {
+      caption.textContent = "Dès que l'hélice tourne, la force centrifuge (rouge) est nettement plus intense que la traînée de rotation, la flexion et la torsion (les trois autres barres) — un rapport qui reste à peu près constant, quel que soit le régime : les quatre grandeurs augmentent toutes ensemble avec le régime, approximativement comme son carré. C'est cette intensité largement supérieure qui fait de la force centrifuge, en général, la contrainte la plus déterminante pour la limite de régime — la valeur précise de cette limite dépend toujours du manuel constructeur.";
+    }
+  }
+
+  slider.addEventListener('input', render);
+  render();
+})();
+</script>

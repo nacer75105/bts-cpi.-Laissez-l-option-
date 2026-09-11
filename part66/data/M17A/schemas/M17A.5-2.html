@@ -1,0 +1,61 @@
+<div id="schema-m17a5b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m17a5b-wrap .m17a5b-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.95em; }
+#schema-m17a5b-wrap .m17a5b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m17a5b-wrap .m17a5b-fan { position:relative; width:220px; height:220px; margin:16px auto 6px; }
+#schema-m17a5b-wrap .m17a5b-moyeu { position:absolute; top:50%; left:50%; width:26px; height:26px; margin:-13px 0 0 -13px; border-radius:50%; background:#8899a6; border:2px solid #444; z-index:2; }
+#schema-m17a5b-wrap .m17a5b-blade { position:absolute; top:50%; left:50%; width:90px; height:12px; margin-top:-6px; background:#9fb8d9; border:1.5px solid #33507a; border-radius:0 6px 6px 0; transform-origin:left center; }
+#schema-m17a5b-wrap .m17a5b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Cas d'application — pourquoi ajouter des pales plutôt qu'agrandir le diamètre :</strong> à diamètre identique, compare la surface de pale balayant le disque d'une hélice bipale, tripale et quadripale.</p>
+
+<div>
+  <button class="m17a5b-btn active" data-n="2">Bipale</button>
+  <button class="m17a5b-btn" data-n="3">Tripale</button>
+  <button class="m17a5b-btn" data-n="4">Quadripale</button>
+</div>
+
+<div class="m17a5b-fan" id="m17a5b-fan">
+  <div class="m17a5b-moyeu"></div>
+</div>
+
+<div class="m17a5b-caption" id="m17a5b-caption">Hélice bipale : la plus simple et la plus répandue sur les avions légers, avec la masse et le coût les plus faibles pour ce diamètre.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m17a5b-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('.m17a5b-btn');
+  var fan = wrap.querySelector('#m17a5b-fan');
+  var caption = wrap.querySelector('#m17a5b-caption');
+
+  var TEXTES = {
+    2: "Hélice bipale : la plus simple et la plus répandue sur les avions légers, avec la masse et le coût les plus faibles pour ce diamètre — mais une capacité de traction plus limitée qu'avec davantage de pales.",
+    3: "Hélice tripale : plus de surface de pale balayant le même disque, donc plus de traction possible sans agrandir le diamètre (limité par la vitesse d'extrémité, vue en M17A.3) — au prix d'une masse, d'un coût et d'un rendement par pale légèrement pénalisé par le sillage de la pale précédente.",
+    4: "Hélice quadripale : encore plus de surface de pale dans le même disque, pour les installations les plus puissantes — la masse totale de l'hélice augmente d'autant, et davantage de pales traversent le sillage de celles qui les précèdent."
+  };
+
+  function render(n) {
+    n = parseInt(n, 10);
+    btns.forEach(function (b) { b.classList.toggle('active', parseInt(b.getAttribute('data-n'), 10) === n); });
+    caption.textContent = TEXTES[n];
+
+    fan.querySelectorAll('.m17a5b-blade').forEach(function (b) { b.remove(); });
+    for (var i = 0; i < n; i++) {
+      var angle = (360 / n) * i;
+      var blade = document.createElement('div');
+      blade.className = 'm17a5b-blade';
+      blade.style.transform = 'rotate(' + angle + 'deg)';
+      fan.appendChild(blade);
+    }
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { render(b.getAttribute('data-n')); });
+  });
+
+  render(2);
+})();
+</script>

@@ -740,6 +740,185 @@ Restent, en dette mineure assumée :
   au feu du flexible), mais reste résumée par rapport à la réalité du
   sujet.
 
+## M17A — construction en cours (Lot 1 : M17A.1-M17A.5)
+
+Module M17A (« Hélices »), calibré selon le nouveau standard ci-dessous
+(12 fiches minimum, 8-10 questions/fiche, 2 schémas/fiche quand justifié,
+texte 6000+ caractères dès la V1). Plan validé avec l'utilisateur le
+2026-09-11 : 14 fiches au total, construites en 3 lots avec relecture et
+validation utilisateur après chacun. `disponible: False` dans
+`part66/logic.py` jusqu'à validation finale complète du module par
+l'utilisateur (test en local requis avant tout push).
+
+**Découpage en 14 fiches** : construction éditoriale de ce projet (comme
+pour M5 et M7A), pas une nomenclature officielle recopiée du syllabus
+EASA 17A — à confirmer contre le syllabus officiel avant de considérer
+la couverture du module comme complète. « Régulation et gouverneur »
+(M17A.8) est notamment scindée du reste de la commande de pas (M17A.6,
+M17A.7) pour un découpage plus fin que les 7 sous-chapitres officiels
+généralement cités.
+
+### Lot 1 (M17A.1-M17A.5, 5 fiches, 43 questions, 10 schémas) — 5 rounds de relecture + reconstruction complète des schémas
+
+Relu par `relecteur-part66` en 5 rounds successifs avant commit —
+nettement plus que M5/M7A (1-2 rounds), reflet direct de la complexité
+du contenu (deux moments de torsion opposés sur la pale, nouveau
+mécanisme à 2 schémas/fiche) : chaque round de correction a corrigé les
+BLOQUANT signalés, mais en a parfois introduit de nouveaux (erreur de
+sens physique, contradiction entre légende et code d'un schéma,
+citation fragile par uid de question). Round 5 : plus aucun BLOQUANT,
+lot jugé commitable sur le fond (fiches + questions).
+
+**Test en local (2026-09-11) : schémas signalés absents ou incomplets par
+l'utilisateur.** Diagnostic : les 7 schémas du lot 1 étaient tous
+construits autour d'une balise `<svg>`, silencieusement supprimée au
+rendu par `st.html` (voir la contrainte technique ajoutée dans
+`C:\Users\pc\CLAUDE.md` et le point 3 du standard ci-dessus). Les 54
+schémas existants de M5 et M7A n'utilisaient déjà aucune balise `<svg>`
+— une convention jusque-là non documentée, mais qui s'est révélée être
+la seule raison pour laquelle ils fonctionnaient. **Les 7 schémas du lot
+1 ont été intégralement reconstruits en HTML/CSS/JS pur** (barres,
+aiguilles en `div` tournées par `transform: rotate()`, cadrans
+circulaires), et complétés à 2 par fiche (10 schémas au total, contre 7
+avant) conformément au standard révisé : M17A.1-2 (comparaison hélice
+tractive/propulsive), M17A.4-2 (réparabilité selon matériau et type de
+dommage), M17A.5-2 (comparaison bipale/tripale/quadripale) sont
+nouveaux ; les 7 autres reprennent le contenu pédagogique déjà validé
+par la relecture, seule la technique de rendu change.
+
+Deux rounds de relecture supplémentaires sur les 10 schémas reconstruits :
+round 1 a trouvé 2 BLOQUANT (`M17A.1-2.html` — flèche « sens de vol »
+statique contredisant la position de l'hélice dans au moins un des deux
+modes ; `M17A.4-2.html` — description d'un limage de pale métallique
+résumée à tort à « restaurer un profil lisse », sans préciser qu'il faut
+retirer entièrement la matière endommagée) et 7 À REVOIR (disclaimers
+« illustration » manquants sur plusieurs schémas, libellé ambigu sur la
+barre de torsion combinant deux couples opposés, superlatif non
+soutenu sur le glissement en croisière, nuances « généralement »/
+revêtement de bord d'attaque manquantes sur la coupe composite,
+accroche ambiguë et renvoi circulaire sur M17A.5-2) — tous corrigés.
+Round 2 (vérification ciblée) a trouvé 1 BLOQUANT résiduel (le
+rééquilibrage après réparation métallique était mentionné dans le
+schéma `M17A.4-2.html` mais pas dans la fiche M17A.4 — harmonisé) et 3
+points mineurs (formulation « en atelier » trop absolue, assouplie en
+« selon une procédure approuvée et par du personnel habilité » dans la
+fiche et le schéma ; position de la bande de bord d'attaque incohérente
+entre les coupes bois et composite du schéma `M17A.4.html`, uniformisée ;
+disque « H » de `M17A.1-2.html` non légendé, légende ajoutée) — tous
+corrigés. **Lot 1 jugé commitable** après ce second round, sous réserve
+de la portée annoncée par le relecteur (round ciblé sur les fichiers
+touchés, pas une relecture complète de l'ensemble du lot).
+
+**Points BLOQUANT trouvés et corrigés au fil des rounds** (résumé) :
+- Fiche M17A.2 — sens du couple de torsion aérodynamique initialement
+  inversé (corrigé : pousse vers un pas plus gros, pas vers un pas
+  fin) ; couple de torsion centrifuge absent du texte initial, ajouté
+  (pousse vers un pas fin, généralement dominant) ; une première
+  reformulation de sa justification physique était elle-même inversée
+  (« cherche à se rapprocher de l'axe » corrigé en « à s'éloigner de
+  l'axe »).
+- `schemas/M17A.3-2.html` — étiquettes pied/extrémité de pale inversées
+  par rapport à l'effet réel d'un calage constant (corrigées), puis
+  illisibles (texte blanc hors de leur repère) une fois le sens corrigé
+  (recentrées, couleur foncée).
+- `schemas/M17A.2.html` — affirmait que la force centrifuge « croît plus
+  vite » que les trois autres forces représentées, alors que les quatre
+  croissent selon la même loi qualitative (seule l'intensité relative
+  diffère, à tout régime) ; légende et code désynchronisés sur ce point
+  pendant un round.
+- Fiche M17A.4 + `schemas/M17A.4.html` + M17A-0030 — pale métallique
+  décrite comme « insensible à l'humidité » alors que sa vulnérabilité
+  annoncée (la corrosion) est justement favorisée par l'humidité :
+  contradiction corrigée par nuance (« ne gonfle pas, ne se délamine
+  pas » plutôt qu'« insensible »).
+- `schemas/M17A.5.html` — le changement de pas était d'abord représenté
+  par un basculement de la pale dans le plan de la vue de dessus (lu
+  comme un battement, pas un changement d'angle de calage) ; puis, une
+  fois corrigé par une vue en coupe séparée, cette vue ne comportait
+  aucune référence au plan de rotation et affichait un calage nul en
+  « pas fixe » (laissant croire qu'une hélice à pas fixe n'a pas
+  d'angle de calage).
+- M17A-0017 — le distracteur « desserrage progressif de la fixation »
+  était défendable comme vrai avec un énoncé en « peut provoquer »
+  (un desserrage sous vibration est un phénomène réel) : question
+  recentrée sur l'effet propre au matériau de la pale.
+- M17A-0036 — le distracteur de remplacement confondait battement
+  (hors du plan de rotation, propre aux rotors d'hélicoptère) et
+  traînée/*lead-lag* (dans le plan de rotation) : terminologie corrigée.
+- Plusieurs fuites d'explication entre questions (M17A-0004→0005,
+  0019→0023, 0028→0029, 0033→0034, 0010→0014/0015) et un doublon
+  déplacé plutôt que résolu au premier passage (M17A-0040 dupliquait
+  M17A-0035 après une première réécriture ; recentrée sur le rôle
+  secondaire du spinner dans l'équilibrage).
+
+**Dette mineure assumée, non corrigée** (signalée par le relecteur aux
+rounds 3-4, jugée non bloquante) :
+- `schemas/M17A.2-2.html` — la bande rouge « plage à éviter » est une
+  zone fixe du graphique, sans correspondance réelle avec l'axe de
+  régime (curseur) ; la légende de résonance (v∈[50,62]) et la forme de
+  la courbe ne coïncident pas exactement à la limite des deux bornes.
+- `schemas/M17A.2.html` — le plancher de longueur minimale des flèches
+  n'est appliqué qu'à la force centrifuge et à la traînée, pas à la
+  flexion et à la torsion (tracées à `lLin * 0.6`, sans plancher
+  propre) : aux tout petits régimes, les quatre flèches peuvent
+  paraître d'intensité comparable, contredisant brièvement le message
+  du schéma avant qu'il ne devienne net à régime plus élevé.
+- `schemas/M17A.5.html` — l'angle de corde affiché reste visuellement
+  plus grand en « pas variable » (−50°) qu'en « pas fixe » (−20°) ; la
+  légende précise que ce n'est qu'un exemple parmi une plage possible,
+  mais le visuel seul pourrait laisser croire que pas variable signifie
+  systématiquement un plus gros pas.
+- Déséquilibre de la position de la bonne réponse dans le fichier
+  source (23× index 0, 16× index 1, 4× index 2) — neutralisé à
+  l'affichage par le mélange par session (`part66/ui.py`), même statut
+  que la dette déjà documentée pour M7A.
+
+## Standard de calibrage du contenu (décidé avec l'utilisateur le
+2026-09-11, applicable à partir de M17A)
+
+À partir du module M17A, le calibrage suivant devient le standard du
+projet pour tout nouveau module. Il remplace le calibrage plus léger
+utilisé pour M10, M5 et M7A (8-10 fiches, 5 questions/fiche, 1 schéma/
+fiche, texte de premier jet) :
+
+1. **Découpage plus fin** — 12 fiches minimum par module. Un sous-thème
+   trop large se scinde en plusieurs fiches plutôt que d'être condensé
+   (ex. principes aérodynamiques séparés des forces subies par la pièce ;
+   inspection visuelle séparée de l'équilibrage ; chaque famille de
+   mécanisme dans sa propre fiche).
+2. **Plus de questions par fiche** — 8 à 10 questions par fiche (au lieu
+   de 5). Motif explicite : avec 5 questions/fiche, l'examen blanc
+   retire quasiment toujours les mêmes questions, problème déjà identifié
+   sur M10.
+3. **Deux schémas interactifs minimum par fiche, systématiquement** (un
+   pour le principe, un pour l'application concrète, le cas de panne ou
+   la comparaison) — révisé le 2026-09-11 après retour utilisateur sur le
+   lot 1 de M17A : « quand le sujet le justifie » abandonné, le minimum de
+   deux schémas s'applique à toute fiche de tout module construit ou
+   complété à partir de cette date. **Contrainte technique impérative,
+   découverte le 2026-09-11 lors de ce même retour utilisateur : aucun
+   schéma ne doit utiliser de balise `<svg>`** — voir la note dans
+   `C:\Users\pc\CLAUDE.md` (« Contrainte technique : schémas interactifs
+   Part-66 — jamais de `<svg>` ») pour le détail technique (DOMPurify,
+   configuré par `st.html` avec `USE_PROFILES: {html:true}`, supprime
+   silencieusement tout `<svg>` au rendu, y compris avec
+   `unsafe_allow_javascript=True`) et les techniques de remplacement
+   (barres, aiguilles en `div` tournées par `transform: rotate()`,
+   cadrans circulaires).
+4. **Texte substantiellement développé dès la première version** — viser
+   le niveau des versions enrichies de M5.1/M5.4/M5.9 (6000+ caractères
+   par fiche) dès la rédaction initiale, pas au terme d'un round
+   d'enrichissement séparé.
+5. **Vulgarisation systématique** — chaque terme technique ou sigle est
+   expliqué en mots simples à sa première apparition, avec une analogie
+   concrète quand c'est possible. Rédaction pour un débutant complet
+   découvrant l'aéronautique, pas pour un technicien confirmé qui
+   réviserait.
+
+**Application rétroactive à M10, M5 et M7A** : décidée en principe, mais
+**différée** à un chantier ultérieur, après la construction de M17A. Ne
+pas la traiter avant que M17A ne soit terminé, relu et validé.
+
 ## Méthode
 
 Avant tout commit d'un nouveau lot de questions, faire relire le lot par

@@ -1,0 +1,65 @@
+<div id="schema-m17a4b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m17a4b-wrap .m17a4b-btn { margin:4px 6px 4px 0; padding:7px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.9em; }
+#schema-m17a4b-wrap .m17a4b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m17a4b-wrap .m17a4b-group { margin-top:10px; }
+#schema-m17a4b-wrap .m17a4b-grouplabel { font-size:0.8em; color:#555; margin-bottom:4px; }
+#schema-m17a4b-wrap .m17a4b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5em; }
+#schema-m17a4b-wrap .m17a4b-caption.bad { border-left-color:#c0392b; background:rgba(192,57,43,0.10); }
+#schema-m17a4b-wrap .m17a4b-caption.warn { border-left-color:#e0a800; background:rgba(224,168,0,0.10); }
+</style>
+
+<p><strong>Cas d'application — dommage et réparabilité :</strong> choisis un matériau, puis un type de dommage, pour voir comment cela oriente la décision réparer/déposer — toujours selon les limites précises du manuel constructeur, jamais à l'appréciation visuelle seule.</p>
+
+<div class="m17a4b-group">
+  <div class="m17a4b-grouplabel">Matériau :</div>
+  <button class="m17a4b-btn active" data-mat="bois">Bois</button>
+  <button class="m17a4b-btn" data-mat="metal">Métal</button>
+  <button class="m17a4b-btn" data-mat="composite">Composite</button>
+</div>
+<div class="m17a4b-group">
+  <div class="m17a4b-grouplabel">Dommage constaté :</div>
+  <button class="m17a4b-btn active" data-dmg="entaille">Petite entaille de bord d'attaque</button>
+  <button class="m17a4b-btn" data-dmg="choc">Choc plus important</button>
+</div>
+
+<div class="m17a4b-caption" id="m17a4b-caption"></div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m17a4b-wrap');
+  if (!wrap) { return; }
+  var matBtns = wrap.querySelectorAll('.m17a4b-btn[data-mat]');
+  var dmgBtns = wrap.querySelectorAll('.m17a4b-btn[data-dmg]');
+  var caption = wrap.querySelector('#m17a4b-caption');
+  var mat = 'bois';
+  var dmg = 'entaille';
+
+  var TEXTES = {
+    'bois-entaille': { cls: 'warn', txt: "Bois + petite entaille : un dommage mineur peut parfois être réparé localement par un atelier spécialisé, strictement dans les limites définies par le manuel constructeur — jamais à l'appréciation visuelle seule." },
+    'bois-choc': { cls: 'bad', txt: "Bois + choc plus important : au-delà des limites de réparation locale autorisées, la pale doit être déposée et envoyée pour expertise ou remplacement — le bois collé en couches ne pardonne pas un dommage structurel important." },
+    'metal-entaille': { cls: 'warn', txt: "Métal + petite entaille : un limage soigneux peut parfois être autorisé, à condition de retirer entièrement la matière endommagée (pas seulement lisser la surface en laissant le fond de l'entaille, où une fissure de fatigue pourrait s'amorcer) et de raccorder progressivement le profil, toujours dans les limites précises de profondeur et de zone fixées par la documentation applicable, selon une procédure approuvée et par du personnel habilité. Un contrôle — voire un rééquilibrage — est requis après l'intervention. Au-delà de ces limites, la pale doit être déposée." },
+    'metal-choc': { cls: 'bad', txt: "Métal + choc plus important : un choc qui dépasse les limites de limage autorisées peut amorcer une fissure de fatigue sous l'effet des charges cycliques en vol — la pale doit être déposée et expertisée." },
+    'composite-entaille': { cls: 'warn', txt: "Composite + petite entaille : même une entaille superficielle en apparence mineure impose un contrôle plus poussé qu'un simple examen visuel, car un dommage interne (délaminage) peut rester invisible en surface." },
+    'composite-choc': { cls: 'bad', txt: "Composite + choc plus important : la réparation touche potentiellement plusieurs couches internes invisibles de l'extérieur — elle demande des compétences et des contrôles spécifiques, bien au-delà d'un simple ponçage de surface." }
+  };
+
+  function render() {
+    matBtns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-mat') === mat); });
+    dmgBtns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-dmg') === dmg); });
+    var info = TEXTES[mat + '-' + dmg];
+    caption.className = 'm17a4b-caption ' + info.cls;
+    caption.textContent = info.txt;
+  }
+
+  matBtns.forEach(function (b) {
+    b.addEventListener('click', function () { mat = b.getAttribute('data-mat'); render(); });
+  });
+  dmgBtns.forEach(function (b) {
+    b.addEventListener('click', function () { dmg = b.getAttribute('data-dmg'); render(); });
+  });
+
+  render();
+})();
+</script>

@@ -1,0 +1,98 @@
+<div id="schema-m17a5-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m17a5-wrap .m17a5-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.95em; }
+#schema-m17a5-wrap .m17a5-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m17a5-wrap .m17a5-diagram { display:flex; align-items:center; gap:6px; margin-top:14px; flex-wrap:wrap; }
+#schema-m17a5-wrap .m17a5-part { cursor:pointer; border:1.5px solid transparent; }
+#schema-m17a5-wrap .m17a5-part:hover { opacity:0.8; }
+#schema-m17a5-wrap .m17a5-spinner { width:36px; height:44px; background:#c9a56b; border-radius:50% 50% 40% 40%/60% 60% 40% 40%; }
+#schema-m17a5-wrap .m17a5-moyeu { width:48px; height:48px; border-radius:50%; background:#8899a6; border:1.5px solid #444; display:flex; align-items:center; justify-content:center; font-size:0.65em; color:#fff; }
+#schema-m17a5-wrap .m17a5-retenue { width:16px; height:26px; background:#e0a800; border:1px solid #a67c00; }
+#schema-m17a5-wrap .m17a5-pale { width:170px; height:14px; background:#9fb8d9; border:1.5px solid #33507a; }
+#schema-m17a5-wrap .m17a5-partlabel { text-align:center; font-size:0.7em; color:#555; margin-top:3px; }
+#schema-m17a5-wrap .m17a5-gauge-block { margin-top:16px; text-align:center; }
+#schema-m17a5-wrap .m17a5-gauge { width:96px; height:96px; border-radius:50%; border:2px solid #999; background:#eef2f5; position:relative; margin:0 auto; }
+#schema-m17a5-wrap .m17a5-ref { position:absolute; top:50%; left:6px; right:6px; height:2px; background:#bbb; background-image:repeating-linear-gradient(90deg,#bbb 0 6px,transparent 6px 10px); transform:translateY(-50%); }
+#schema-m17a5-wrap .m17a5-chord { position:absolute; top:50%; left:10px; right:10px; height:4px; background:#33507a; transform-origin:center; border-radius:2px; }
+#schema-m17a5-wrap .m17a5-gauge-label { font-size:0.75em; color:#666; margin-top:6px; }
+#schema-m17a5-wrap .m17a5-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:4.5em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> clique sur chaque pièce de l'ensemble hélice pour afficher son rôle, puis compare pas fixe et pas variable.</p>
+
+<div>
+  <button class="m17a5-btn active" data-pas="fixe">Pas fixe</button>
+  <button class="m17a5-btn" data-pas="variable">Pas variable</button>
+</div>
+
+<div class="m17a5-diagram">
+  <div>
+    <div class="m17a5-part m17a5-spinner" data-part="spinner"></div>
+    <div class="m17a5-partlabel">Spinner</div>
+  </div>
+  <div>
+    <div class="m17a5-part m17a5-moyeu" data-part="moyeu">moyeu</div>
+    <div class="m17a5-partlabel">Moyeu</div>
+  </div>
+  <div>
+    <div class="m17a5-part m17a5-retenue" data-part="retenue"></div>
+    <div class="m17a5-partlabel">Retenue</div>
+  </div>
+  <div>
+    <div class="m17a5-part m17a5-pale" data-part="pale"></div>
+    <div class="m17a5-partlabel">Pale (vue de dessus)</div>
+  </div>
+</div>
+
+<div class="m17a5-gauge-block">
+  <div class="m17a5-gauge">
+    <div class="m17a5-ref"></div>
+    <div class="m17a5-chord" id="m17a5-chord"></div>
+  </div>
+  <div class="m17a5-gauge-label">Coupe dans la pale : la corde (trait bleu) contre le plan de rotation (pointillé)</div>
+</div>
+
+<div class="m17a5-caption" id="m17a5-caption">Clique sur une pièce, ou change de mode (pas fixe / pas variable) pour voir la corde pivoter.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m17a5-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('.m17a5-btn');
+  var parts = wrap.querySelectorAll('.m17a5-part');
+  var caption = wrap.querySelector('#m17a5-caption');
+  var chord = wrap.querySelector('#m17a5-chord');
+  var pas = 'fixe';
+
+  var DESCR = {
+    spinner: "Spinner (cône avant) : habillage aérodynamique qui réduit la traînée du moyeu nu et canalise souvent l'air de refroidissement vers le moteur. Peut aussi loger de petites masses d'équilibrage (fiche M17A.13).",
+    moyeu: "Moyeu : pièce centrale, presque toujours métallique, qui reçoit toutes les pales et transmet à l'arbre moteur les forces cumulées de chacune d'elles.",
+    retenue: "Système de retenue du pied de pale : résiste en continu à la force centrifuge (M17A.2) et, sur une hélice à pas variable, laisse la pale pivoter librement sur son axe longitudinal.",
+    pale: "Pale : produit la traction par rotation dans l'air (M17A.1), vrillée le long de sa longueur (M17A.3), fabriquée en bois, métal ou composite (M17A.4)."
+  };
+
+  function renderPas() {
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-pas') === pas); });
+    if (pas === 'variable') {
+      chord.style.transform = 'rotate(-50deg)';
+      caption.textContent = "Pas variable : la corde (trait bleu) peut occuper n'importe quel angle par rapport au plan de rotation (pointillé) entre ses butées — celle-ci n'en est qu'un exemple. Ce mouvement, invisible sur la pale vue de dessus, est ce que le système de retenue autorise sur une hélice à pas variable.";
+    } else {
+      chord.style.transform = 'rotate(-20deg)';
+      caption.textContent = "Pas fixe : la pale a bien un angle de calage — la corde n'est jamais parfaitement alignée sur le plan de rotation (pointillé) — mais cet angle est figé dès la fabrication : le système de retenue tient la pale fermement, sans autoriser de rotation en vol.";
+    }
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { pas = b.getAttribute('data-pas'); renderPas(); });
+  });
+
+  parts.forEach(function (p) {
+    p.addEventListener('click', function () {
+      caption.textContent = DESCR[p.getAttribute('data-part')];
+    });
+  });
+
+  renderPas();
+})();
+</script>

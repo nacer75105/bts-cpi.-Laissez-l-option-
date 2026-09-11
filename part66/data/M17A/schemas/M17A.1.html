@@ -1,0 +1,65 @@
+<div id="schema-m17a1-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m17a1-wrap .m17a1-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:1em; }
+#schema-m17a1-wrap .m17a1-btn:hover { background:#e8e8e8; }
+#schema-m17a1-wrap .m17a1-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m17a1-wrap .m17a1-row { display:flex; align-items:center; gap:10px; margin-top:10px; }
+#schema-m17a1-wrap .m17a1-rowlabel { width:120px; font-size:0.9em; color:#333; }
+#schema-m17a1-wrap .m17a1-bar-outer { flex:1; max-width:340px; height:22px; background:#e2e2e2; border-radius:5px; overflow:hidden; }
+#schema-m17a1-wrap .m17a1-bar-inner { height:100%; width:0%; transition:width .2s; }
+#schema-m17a1-wrap .m17a1-bar-inner.tract { background:#2e7d32; }
+#schema-m17a1-wrap .m17a1-bar-inner.resist { background:#c0392b; }
+#schema-m17a1-wrap .m17a1-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:4.5em; }
+</style>
+
+<p><strong>Essaie toi-même</strong> (longueurs de barres d'illustration, sans rapport chiffré réel) : une pale se comporte comme une aile qui tourne. Choisis un régime moteur et observe comment la même pale réoriente sa force aérodynamique en traction utile (verte) — au prix d'une résistance à vaincre (rouge).</p>
+
+<div>
+  <button class="m17a1-btn active" data-regime="arret">Moteur à l'arrêt</button>
+  <button class="m17a1-btn" data-regime="ralenti">Ralenti</button>
+  <button class="m17a1-btn" data-regime="croisiere">Régime de croisière</button>
+</div>
+
+<div class="m17a1-row">
+  <div class="m17a1-rowlabel">Traction utile</div>
+  <div class="m17a1-bar-outer"><div class="m17a1-bar-inner tract" id="m17a1-tract"></div></div>
+</div>
+<div class="m17a1-row">
+  <div class="m17a1-rowlabel">Résistance à vaincre</div>
+  <div class="m17a1-bar-outer"><div class="m17a1-bar-inner resist" id="m17a1-resist"></div></div>
+</div>
+
+<div class="m17a1-caption" id="m17a1-caption">Moteur à l'arrêt : aucune rotation, donc aucune force aérodynamique. La pale n'est, pour l'instant, qu'une forme profilée immobile.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m17a1-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('.m17a1-btn');
+  var caption = wrap.querySelector('#m17a1-caption');
+  var tract = wrap.querySelector('#m17a1-tract');
+  var resist = wrap.querySelector('#m17a1-resist');
+
+  var TEXTES = {
+    arret: "Moteur à l'arrêt : aucune rotation, donc aucune force aérodynamique. La pale n'est, pour l'instant, qu'une forme profilée immobile.",
+    ralenti: "Au ralenti, la pale tourne lentement : une force aérodynamique modeste apparaît déjà, réorientée par la rotation en une petite traction utile et une résistance à la rotation que le moteur doit vaincre.",
+    croisiere: "Au régime de croisière, la même pale, avec le même profil, tourne bien plus vite : la force aérodynamique produite est nettement plus intense — traction utile plus grande, mais résistance à vaincre plus grande aussi. Le principe reste rigoureusement identique à celui du ralenti, seule l'intensité change."
+  };
+  var VALEURS = { arret: 0, ralenti: 35, croisiere: 85 };
+
+  function render(regime) {
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-regime') === regime); });
+    caption.textContent = TEXTES[regime];
+    var v = VALEURS[regime];
+    tract.style.width = v + '%';
+    resist.style.width = Math.round(v * 0.6) + '%';
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { render(b.getAttribute('data-regime')); });
+  });
+
+  render('arret');
+})();
+</script>

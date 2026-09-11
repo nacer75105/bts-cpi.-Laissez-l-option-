@@ -1,0 +1,56 @@
+<div id="schema-m17a3a-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m17a3a-wrap .m17a3a-slider { width:100%; max-width:420px; }
+#schema-m17a3a-wrap .m17a3a-row { margin-top:14px; }
+#schema-m17a3a-wrap .m17a3a-rowlabel { font-size:0.9em; color:#333; margin-bottom:4px; }
+#schema-m17a3a-wrap .m17a3a-bar-outer { max-width:400px; height:16px; background:#e2e2e2; border-radius:4px; overflow:hidden; }
+#schema-m17a3a-wrap .m17a3a-bar-inner { height:100%; transition:width .15s; }
+#schema-m17a3a-wrap .m17a3a-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5em; }
+</style>
+
+<p><strong>Essaie toi-même</strong> (barres d'illustration, la valeur exacte du glissement dépend de chaque installation) : compare, pour un même angle de calage, le pas géométrique (avancement théorique « dans un solide ») et le pas effectif (avancement réel dans l'air) selon la condition de vol.</p>
+
+<div>
+  <input type="range" class="m17a3a-slider" id="m17a3a-cond" min="0" max="100" value="0" step="10">
+  <div style="display:flex; justify-content:space-between; max-width:420px; font-size:0.85em; color:#555;">
+    <span>Point fixe (avion immobile)</span><span>Croisière stabilisée</span>
+  </div>
+</div>
+
+<div class="m17a3a-row">
+  <div class="m17a3a-rowlabel">Pas géométrique (théorique, constant)</div>
+  <div class="m17a3a-bar-outer"><div class="m17a3a-bar-inner" id="m17a3a-geo" style="background:#7b3fa0; width:100%;"></div></div>
+</div>
+<div class="m17a3a-row">
+  <div class="m17a3a-rowlabel">Pas effectif (avancement réel)</div>
+  <div class="m17a3a-bar-outer"><div class="m17a3a-bar-inner" id="m17a3a-eff" style="background:#2e7d32; width:0%;"></div></div>
+</div>
+
+<div class="m17a3a-caption" id="m17a3a-caption">Point fixe : l'avion n'avance pas du tout malgré la rotation de l'hélice. Le pas effectif est nul ; le glissement est donc maximal.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m17a3a-wrap');
+  if (!wrap) { return; }
+  var slider = wrap.querySelector('#m17a3a-cond');
+  var eff = wrap.querySelector('#m17a3a-eff');
+  var caption = wrap.querySelector('#m17a3a-caption');
+
+  function render() {
+    var v = parseInt(slider.value, 10);
+    eff.style.width = (0.75 * v) + '%';
+
+    if (v === 0) {
+      caption.textContent = "Point fixe : l'avion n'avance pas du tout malgré la rotation de l'hélice. Le pas effectif est nul ; le glissement (écart entre pas géométrique et pas effectif) est donc maximal.";
+    } else if (v < 90) {
+      caption.textContent = "En vol, l'avion avance à chaque tour d'hélice, mais toujours moins que ne l'indique le pas géométrique : l'air cède sous la pale plutôt que de la retenir fermement comme le ferait un solide. Le glissement diminue à mesure que l'avion prend de la vitesse.";
+    } else {
+      caption.textContent = "En croisière stabilisée, l'écart entre pas effectif et pas géométrique est nettement plus réduit qu'au point fixe : le glissement diminue avec la vitesse d'avancement, même s'il n'est jamais nul.";
+    }
+  }
+
+  slider.addEventListener('input', render);
+  render();
+})();
+</script>
