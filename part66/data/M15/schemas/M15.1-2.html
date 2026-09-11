@@ -1,0 +1,68 @@
+<div id="schema-m1501b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1501b-wrap .m1501b-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.9em; }
+#schema-m1501b-wrap .m1501b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1501b-wrap .m1501b-row { display:flex; align-items:center; gap:10px; margin-top:10px; }
+#schema-m1501b-wrap .m1501b-label { flex:0 0 110px; font-size:0.82em; }
+#schema-m1501b-wrap .m1501b-track { flex:1; height:20px; border-radius:4px; background:#e8e8e8; position:relative; overflow:hidden; border:1px solid #ccc; }
+#schema-m1501b-wrap .m1501b-seg { position:absolute; top:0; bottom:0; display:flex; align-items:center; justify-content:center; font-size:0.62em; color:#fff; text-align:center; overflow:hidden; padding:0 2px; box-sizing:border-box; }
+#schema-m1501b-wrap .m1501b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5em; }
+</style>
+
+<p><strong>Comparaison :</strong> comment les quatre phases du cycle se répartissent-elles dans le temps, selon le type de moteur ?</p>
+
+<button class="m1501b-btn active" id="m1501b-btn-pistons">Moteur à pistons</button>
+<button class="m1501b-btn" id="m1501b-btn-turbine">Turboréacteur</button>
+
+<div id="m1501b-view-pistons">
+  <div class="m1501b-row">
+    <div class="m1501b-label">Même cylindre</div>
+    <div class="m1501b-track">
+      <div class="m1501b-seg" style="left:0%; width:25%; background:#7fa8d9;">Admission</div>
+      <div class="m1501b-seg" style="left:25%; width:25%; background:#e0a800;">Compression</div>
+      <div class="m1501b-seg" style="left:50%; width:25%; background:#c0392b;">Combustion</div>
+      <div class="m1501b-seg" style="left:75%; width:25%; background:#7fbf7f;">Échappement</div>
+    </div>
+  </div>
+</div>
+
+<div id="m1501b-view-turbine" style="display:none;">
+  <div class="m1501b-row"><div class="m1501b-label">Admission</div><div class="m1501b-track"><div class="m1501b-seg" style="left:0; width:100%; background:#7fa8d9;"></div></div></div>
+  <div class="m1501b-row"><div class="m1501b-label">Compression</div><div class="m1501b-track"><div class="m1501b-seg" style="left:0; width:100%; background:#e0a800;"></div></div></div>
+  <div class="m1501b-row"><div class="m1501b-label">Combustion</div><div class="m1501b-track"><div class="m1501b-seg" style="left:0; width:100%; background:#c0392b;"></div></div></div>
+  <div class="m1501b-row"><div class="m1501b-label">Détente</div><div class="m1501b-track"><div class="m1501b-seg" style="left:0; width:100%; background:#7fbf7f;"></div></div></div>
+</div>
+
+<div class="m1501b-caption" id="m1501b-caption">Moteur à pistons : les quatre phases se déroulent l'une après l'autre, dans le même cylindre, à chaque tour du vilebrequin — répétées en série.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1501b-wrap');
+  if (!wrap) { return; }
+  var btnPistons = wrap.querySelector('#m1501b-btn-pistons');
+  var btnTurbine = wrap.querySelector('#m1501b-btn-turbine');
+  var viewPistons = wrap.querySelector('#m1501b-view-pistons');
+  var viewTurbine = wrap.querySelector('#m1501b-view-turbine');
+  var caption = wrap.querySelector('#m1501b-caption');
+
+  function showPistons() {
+    btnPistons.className = 'm1501b-btn active';
+    btnTurbine.className = 'm1501b-btn';
+    viewPistons.style.display = 'block';
+    viewTurbine.style.display = 'none';
+    caption.textContent = "Moteur à pistons : les quatre phases se déroulent l'une après l'autre, dans le même cylindre, à chaque tour du vilebrequin — répétées en série.";
+  }
+
+  function showTurbine() {
+    btnPistons.className = 'm1501b-btn';
+    btnTurbine.className = 'm1501b-btn active';
+    viewPistons.style.display = 'none';
+    viewTurbine.style.display = 'block';
+    caption.textContent = "Turboréacteur : les quatre phases se déroulent simultanément et en continu, chacune dans sa propre zone dédiée du moteur — comme une chaîne de montage plutôt qu'un artisan isolé.";
+  }
+
+  btnPistons.addEventListener('click', showPistons);
+  btnTurbine.addEventListener('click', showTurbine);
+})();
+</script>

@@ -1,0 +1,59 @@
+<div id="schema-m1505b-wrap" style="font-family: inherit; max-width: 660px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1505b-wrap .m1505b-shaft { display:flex; align-items:center; gap:0; margin-top:16px; flex-wrap:wrap; }
+#schema-m1505b-wrap .m1505b-box { flex:1 1 130px; padding:10px 8px; border-radius:6px; border:1.5px solid #999; font-size:0.76em; text-align:center; cursor:pointer; margin:3px; }
+#schema-m1505b-wrap .m1505b-box.hp { background:rgba(192,57,43,0.15); border-color:#c0392b; }
+#schema-m1505b-wrap .m1505b-box.bp { background:rgba(127,168,217,0.20); border-color:#4a76a8; }
+#schema-m1505b-wrap .m1505b-box.active { font-weight:bold; box-shadow: 0 0 0 2px rgba(0,0,0,0.15) inset; }
+#schema-m1505b-wrap .m1505b-arrow { font-size:1.1em; color:#888; }
+#schema-m1505b-wrap .m1505b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Architecture à deux corps :</strong> les flèches suivent le sens de circulation du gaz. Cliquez sur chaque organe pour voir à quel arbre il est relié (même couleur = même arbre).</p>
+
+<div class="m1505b-shaft">
+  <div class="m1505b-box bp" data-o="compbp">Compresseur BP</div>
+  <div class="m1505b-arrow">→</div>
+  <div class="m1505b-box hp" data-o="comphp">Compresseur HP</div>
+  <div class="m1505b-arrow">→</div>
+  <div class="m1505b-box" style="background:rgba(224,168,0,0.15); border-color:#e0a800;">Combustion</div>
+  <div class="m1505b-arrow">→</div>
+  <div class="m1505b-box hp" data-o="turbhp">Turbine HP</div>
+  <div class="m1505b-arrow">→</div>
+  <div class="m1505b-box bp" data-o="turbbp">Turbine BP</div>
+</div>
+
+<div class="m1505b-caption" id="m1505b-caption">Cliquez sur un compresseur ou une turbine pour voir sa liaison mécanique.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1505b-wrap');
+  if (!wrap) { return; }
+  var boxes = wrap.querySelectorAll('.m1505b-box[data-o]');
+  var caption = wrap.querySelector('#m1505b-caption');
+
+  var groupes = {
+    compbp: ['compbp', 'turbbp'],
+    turbbp: ['compbp', 'turbbp'],
+    comphp: ['comphp', 'turbhp'],
+    turbhp: ['comphp', 'turbhp']
+  };
+
+  var textes = {
+    compbp: "Arbre basse pression : la turbine basse pression, la plus en aval (les gaz lui arrivent après avoir déjà cédé une partie de leur énergie à la turbine haute pression), entraîne le compresseur basse pression, via un arbre qui traverse l'arbre haute pression sans y être mécaniquement lié.",
+    turbbp: "Arbre basse pression : la turbine basse pression, la plus en aval (les gaz lui arrivent après avoir déjà cédé une partie de leur énergie à la turbine haute pression), entraîne le compresseur basse pression, via un arbre qui traverse l'arbre haute pression sans y être mécaniquement lié.",
+    comphp: "Arbre haute pression : la turbine haute pression, la plus proche de la chambre de combustion, entraîne directement le compresseur haute pression — chaque arbre tourne à son propre régime, optimisé pour sa section.",
+    turbhp: "Arbre haute pression : la turbine haute pression, la plus proche de la chambre de combustion, entraîne directement le compresseur haute pression — chaque arbre tourne à son propre régime, optimisé pour sa section."
+  };
+
+  boxes.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var o = b.getAttribute('data-o');
+      var actifs = groupes[o];
+      boxes.forEach(function (x) { x.classList.toggle('active', actifs.indexOf(x.getAttribute('data-o')) !== -1); });
+      caption.textContent = textes[o];
+    });
+  });
+})();
+</script>

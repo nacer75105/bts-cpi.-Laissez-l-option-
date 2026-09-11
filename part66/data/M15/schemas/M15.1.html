@@ -1,0 +1,74 @@
+<div id="schema-m1501-wrap" style="font-family: inherit; max-width: 660px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1501-wrap .m1501-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m1501-wrap .m1501-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1501-wrap .m1501-flow { display:flex; align-items:stretch; gap:6px; margin-top:14px; flex-wrap:wrap; }
+#schema-m1501-wrap .m1501-box { flex:1 1 110px; padding:10px 8px; border-radius:6px; border:1.5px solid #999; background:#f7f7f7; font-size:0.78em; text-align:center; transition: all 0.2s; }
+#schema-m1501-wrap .m1501-box.active { background:rgba(224,168,0,0.20); border-color:#e0a800; font-weight:bold; transform: scale(1.05); }
+#schema-m1501-wrap .m1501-arrow { font-size:1.1em; color:#888; align-self:center; }
+#schema-m1501-wrap .m1501-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:4.5em; font-size:0.9em; }
+</style>
+
+<p><strong>Le cycle en continu :</strong> observez une particule d'air progresser à travers les quatre étapes, chacune dans sa propre zone du moteur.</p>
+
+<div>
+  <button class="m1501-btn" data-etape="0">◀ Étape précédente</button>
+  <button class="m1501-btn" data-etape="auto" id="m1501-auto">▶ Lecture automatique</button>
+  <button class="m1501-btn" data-etape="1">Étape suivante ▶</button>
+</div>
+
+<div class="m1501-flow">
+  <div class="m1501-box" data-i="0">1. Admission<br>(entrée d'air)</div>
+  <div class="m1501-arrow">→</div>
+  <div class="m1501-box" data-i="1">2. Compression<br>(compresseur)</div>
+  <div class="m1501-arrow">→</div>
+  <div class="m1501-box" data-i="2">3. Combustion<br>(chambre)</div>
+  <div class="m1501-arrow">→</div>
+  <div class="m1501-box" data-i="3">4. Détente<br>(turbine + tuyère)</div>
+</div>
+
+<div class="m1501-caption" id="m1501-caption"></div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1501-wrap');
+  if (!wrap) { return; }
+  var boxes = wrap.querySelectorAll('.m1501-box');
+  var caption = wrap.querySelector('#m1501-caption');
+  var autoBtn = wrap.querySelector('#m1501-auto');
+  var idx = 0;
+  var timer = null;
+
+  var textes = [
+    "1. Admission : l'air extérieur entre dans le moteur et est préparé (ralenti, régularisé) avant le compresseur.",
+    "2. Compression : le compresseur élève fortement la pression de l'air, étage après étage.",
+    "3. Combustion : du carburant est injecté dans l'air comprimé et brûlé en continu, ce qui élève son énergie.",
+    "4. Détente : les gaz brûlants se détendent en traversant la turbine (qui entraîne le compresseur) puis la tuyère, produisant la poussée."
+  ];
+
+  function render() {
+    boxes.forEach(function (b) {
+      b.classList.toggle('active', parseInt(b.getAttribute('data-i'), 10) === idx);
+    });
+    caption.textContent = textes[idx];
+  }
+
+  wrap.querySelectorAll('.m1501-btn[data-etape]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var v = btn.getAttribute('data-etape');
+      if (v === 'auto') {
+        if (timer) { clearInterval(timer); timer = null; autoBtn.textContent = '▶ Lecture automatique'; return; }
+        autoBtn.textContent = '⏸ Arrêter';
+        timer = setInterval(function () { idx = (idx + 1) % 4; render(); }, 1600);
+        return;
+      }
+      if (timer) { clearInterval(timer); timer = null; autoBtn.textContent = '▶ Lecture automatique'; }
+      idx = v === '0' ? (idx + 3) % 4 : (idx + 1) % 4;
+      render();
+    });
+  });
+
+  render();
+})();
+</script>

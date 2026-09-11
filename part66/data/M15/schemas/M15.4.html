@@ -1,0 +1,56 @@
+<div id="schema-m1504-wrap" style="font-family: inherit; max-width: 660px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1504-wrap .m1504-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m1504-wrap .m1504-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1504-wrap .m1504-diagram { display:flex; align-items:center; gap:6px; margin-top:16px; flex-wrap:wrap; }
+#schema-m1504-wrap .m1504-in { flex:0 0 100px; padding:10px 6px; border-radius:6px; border:1.5px solid #888; background:#f7f7f7; font-size:0.78em; text-align:center; }
+#schema-m1504-wrap .m1504-split { display:flex; flex-direction:column; gap:6px; flex:1 1 200px; }
+#schema-m1504-wrap .m1504-seg { padding:8px; border-radius:6px; border:1.5px solid #999; font-size:0.76em; text-align:center; cursor:pointer; transition: all 0.15s; }
+#schema-m1504-wrap .m1504-seg.primaire { background:rgba(192,57,43,0.15); border-color:#c0392b; }
+#schema-m1504-wrap .m1504-seg.secondaire { background:rgba(224,168,0,0.15); border-color:#e0a800; }
+#schema-m1504-wrap .m1504-seg.dilution { background:rgba(127,168,217,0.20); border-color:#4a76a8; }
+#schema-m1504-wrap .m1504-seg.active { font-weight:bold; box-shadow: 0 0 0 2px rgba(0,0,0,0.18) inset; transform: scale(1.02); }
+#schema-m1504-wrap .m1504-out { flex:0 0 120px; padding:10px 6px; border-radius:6px; border:1.5px solid #888; background:#f7f7f7; font-size:0.78em; text-align:center; }
+#schema-m1504-wrap .m1504-arrow { font-size:1.1em; color:#888; }
+#schema-m1504-wrap .m1504-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>La répartition de l'air comprimé en trois zones :</strong> cliquez sur chaque zone pour comprendre son rôle.</p>
+
+<div class="m1504-diagram">
+  <div class="m1504-in">Air comprimé (compresseur)</div>
+  <div class="m1504-arrow">→</div>
+  <div class="m1504-split">
+    <div class="m1504-seg primaire" data-z="primaire">Zone primaire (petite quantité d'air + carburant)</div>
+    <div class="m1504-seg secondaire" data-z="secondaire">Zone secondaire (achève la combustion)</div>
+    <div class="m1504-seg dilution" data-z="dilution">Zone de dilution (grande quantité d'air, refroidissement)</div>
+  </div>
+  <div class="m1504-arrow">→</div>
+  <div class="m1504-out">Gaz refroidis vers la turbine</div>
+</div>
+
+<div class="m1504-caption" id="m1504-caption">Cliquez sur une zone pour voir son rôle précis.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1504-wrap');
+  if (!wrap) { return; }
+  var segs = wrap.querySelectorAll('.m1504-seg');
+  var caption = wrap.querySelector('#m1504-caption');
+
+  var textes = {
+    primaire: "Zone primaire : reçoit une petite partie de l'air comprimé, où le carburant est injecté et mélangé dans une proportion favorable à une combustion stable. Une zone de recirculation y crée une poche à faible vitesse qui ancre la flamme malgré le flux général rapide.",
+    secondaire: "Zone secondaire : reçoit un second apport d'air qui participe encore à la réaction, en achevant de brûler ce qui n'aurait pas eu le temps de l'être complètement dans la zone primaire, tout en commençant à refroidir légèrement les gaz.",
+    dilution: "Zone de dilution : reçoit la majeure partie de l'air comprimé — bien plus que les deux zones précédentes réunies. Cet air ne participe plus du tout à la combustion : il se mélange aux gaz déjà brûlants pour les refroidir fortement avant qu'ils n'atteignent la turbine, qui ne pourrait pas supporter la température de la flamme."
+  };
+
+  segs.forEach(function (s) {
+    s.addEventListener('click', function () {
+      segs.forEach(function (x) { x.classList.remove('active'); });
+      s.classList.add('active');
+      caption.textContent = textes[s.getAttribute('data-z')];
+    });
+  });
+})();
+</script>

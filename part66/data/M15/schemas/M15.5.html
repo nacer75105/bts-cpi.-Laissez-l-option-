@@ -1,0 +1,59 @@
+<div id="schema-m1505-wrap" style="font-family: inherit; max-width: 660px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1505-wrap .m1505-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m1505-wrap .m1505-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1505-wrap .m1505-row { display:flex; align-items:center; gap:10px; margin-top:14px; }
+#schema-m1505-wrap .m1505-label { flex:0 0 150px; font-size:0.82em; }
+#schema-m1505-wrap .m1505-track { flex:1; height:20px; border-radius:4px; background:#e8e8e8; position:relative; overflow:hidden; border:1px solid #ccc; }
+#schema-m1505-wrap .m1505-fill { height:100%; transition: width 0.4s; }
+#schema-m1505-wrap .m1505-arbre { margin-top:14px; padding:10px; border-radius:6px; border:1.5px solid #e0a800; background:rgba(224,168,0,0.12); font-size:0.85em; text-align:center; font-weight:bold; }
+#schema-m1505-wrap .m1505-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5em; }
+</style>
+
+<p><strong>Compresseur et turbine : sens opposés de transfert d'énergie.</strong> Cliquez sur chaque organe pour comparer.</p>
+
+<div>
+  <button class="m1505-btn active" data-o="compresseur">Compresseur</button>
+  <button class="m1505-btn" data-o="turbine">Turbine</button>
+</div>
+
+<div class="m1505-row"><div class="m1505-label">Pression — entrée</div><div class="m1505-track"><div class="m1505-fill" id="m1505-entree" style="width:30%; background:#7fa8d9;"></div></div></div>
+<div class="m1505-row"><div class="m1505-label">Pression — sortie</div><div class="m1505-track"><div class="m1505-fill" id="m1505-sortie" style="width:85%; background:#7fbf7f;"></div></div></div>
+
+<div class="m1505-arbre" id="m1505-arbre"></div>
+
+<div class="m1505-caption" id="m1505-caption"></div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1505-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('.m1505-btn');
+  var entree = wrap.querySelector('#m1505-entree');
+  var sortie = wrap.querySelector('#m1505-sortie');
+  var arbre = wrap.querySelector('#m1505-arbre');
+  var caption = wrap.querySelector('#m1505-caption');
+
+  function render(o) {
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-o') === o); });
+    if (o === 'compresseur') {
+      entree.style.width = '30%';
+      sortie.style.width = '85%';
+      arbre.textContent = "Référentiel arbre : énergie PRÉLEVÉE sur l'arbre. Référentiel fluide : le compresseur CÈDE de l'énergie à l'air.";
+      caption.textContent = "Compresseur : la pression du fluide augmente entre l'entrée et la sortie. Vu depuis l'arbre, cette augmentation prélève de l'énergie sur l'arbre ; vu depuis le fluide, c'est le compresseur qui cède cette énergie à l'air — les deux descriptions désignent le même échange, sous deux angles différents.";
+    } else {
+      entree.style.width = '85%';
+      sortie.style.width = '30%';
+      arbre.textContent = "Référentiel arbre : énergie FOURNIE à l'arbre. Référentiel fluide : la turbine PRÉLÈVE de l'énergie au gaz.";
+      caption.textContent = "Turbine : la pression du fluide diminue entre l'entrée et la sortie. Vu depuis l'arbre, cette énergie est fournie à l'arbre ; vu depuis le fluide, c'est la turbine qui prélève cette énergie au gaz — sens exactement opposé à celui du compresseur, quel que soit le référentiel choisi.";
+    }
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { render(b.getAttribute('data-o')); });
+  });
+
+  render('compresseur');
+})();
+</script>

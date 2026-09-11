@@ -1,0 +1,577 @@
+{
+  "module": "M15",
+  "questions": [
+    {
+      "uid": "M15-0001",
+      "sous_chapitre": "M15.1",
+      "question": "Quelles sont, dans l'ordre, les quatre étapes du cycle d'un turboréacteur ?",
+      "options": [
+        "Admission, compression, combustion, détente",
+        "Compression, admission, détente, combustion",
+        "Admission, combustion, compression, détente"
+      ],
+      "bonne": 0,
+      "explication": "Le cycle se déroule toujours dans cet ordre : admission (l'air entre), compression (sa pression augmente), combustion (le carburant brûle dans cet air comprimé), détente (les gaz se détendent en traversant turbine et tuyère). Inverser compression et admission n'a pas de sens physique (rien à comprimer avant l'admission), et brûler le carburant avant la compression produirait une combustion bien moins efficace.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0002",
+      "sous_chapitre": "M15.1",
+      "question": "Quelle est la différence essentielle entre le cycle d'un turboréacteur et celui d'un moteur à pistons ?",
+      "options": [
+        "Le moteur à pistons produit de la poussée, alors que le turboréacteur ne produit que de la puissance mécanique",
+        "Le turboréacteur réalise les quatre phases simultanément et en continu, chacune dans une zone dédiée, alors que le moteur à pistons les répète l'une après l'autre dans le même cylindre",
+        "Le turboréacteur n'a besoin d'aucune admission d'air, contrairement au moteur à pistons"
+      ],
+      "bonne": 1,
+      "explication": "Le turboréacteur réalise ses quatre phases en continu, chacune dans un organe dédié traversé sans interruption par l'air ; le moteur à pistons répète ces mêmes phases l'une après l'autre, dans le même cylindre, à chaque tour. C'est le turboréacteur qui produit directement une poussée (par accélération d'un flux d'air), pas exclusivement de la puissance mécanique ; et un turboréacteur a bien besoin d'admettre de l'air en continu, exactement comme un moteur à pistons.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0003",
+      "sous_chapitre": "M15.1",
+      "question": "Pourquoi peut-on dire que la combustion, dans un turboréacteur, est permanente plutôt qu'intermittente ?",
+      "options": [
+        "Parce que la combustion ne s'arrête que lorsque l'avion atteint son altitude de croisière",
+        "Parce que le carburant est injecté une seule fois, au démarrage, pour toute la durée du vol",
+        "Parce qu'une fois allumée, la flamme brûle sans interruption tant que le moteur fonctionne, contrairement à l'étincelle répétée d'un moteur à pistons"
+      ],
+      "bonne": 2,
+      "explication": "Une fois allumée, la flamme brûle en continu tant que le moteur fonctionne, à la différence d'un moteur à pistons où chaque combustion est brève et se répète à chaque cycle. Le carburant continue d'être injecté en continu tant que le moteur tourne, pas une seule fois au démarrage ; et la combustion ne s'interrompt pas à l'atteinte d'une altitude de croisière, elle reste permanente tant que le moteur fonctionne.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0004",
+      "sous_chapitre": "M15.1",
+      "question": "D'où vient la poussée produite par un turboréacteur ?",
+      "options": [
+        "D'une force de réaction produite par l'accélération d'une masse d'air, comme pour une hélice mais avec une masse d'air plus réduite accélérée à une vitesse plus élevée",
+        "De la rotation du compresseur, qui pousse directement l'avion vers l'avant",
+        "De la chaleur dégagée par la combustion, qui pousse l'avion par simple dilatation de l'air ambiant"
+      ],
+      "bonne": 0,
+      "explication": "Le principe est le même que pour une hélice (module M17A) : une force de réaction apparaît lorsqu'une masse d'air est accélérée dans une direction. Le turboréacteur accélère une masse d'air plus réduite qu'une hélice, mais à une vitesse bien plus élevée, en l'éjectant par la tuyère. Le compresseur, à lui seul, ne produit pas la poussée : il élève la pression d'un air qui poursuit ensuite son trajet vers la chambre de combustion, bien avant d'être éjecté ; et la chaleur seule, sans accélération de l'air, ne produit aucune poussée par simple dilatation ambiante.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0005",
+      "sous_chapitre": "M15.1",
+      "question": "Qu'est-ce qu'une turbomachine, au sens général du terme ?",
+      "options": [
+        "Une machine qui ne peut fonctionner qu'à un seul régime fixe, sans aucune variation possible",
+        "Une machine qui échange de l'énergie avec un fluide au moyen de pièces tournantes munies d'aubes",
+        "Un synonyme réservé exclusivement à la chambre de combustion"
+      ],
+      "bonne": 1,
+      "explication": "Une turbomachine échange de l'énergie avec un fluide (air ou gaz) au moyen de pièces tournantes munies d'aubes — le compresseur et la turbine en sont deux exemples. Une turbomachine n'est pas limitée à un seul régime fixe : son régime varie selon les besoins du moteur. Et le terme ne désigne pas spécifiquement la chambre de combustion, qui ne comporte elle-même aucune pièce tournante.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0006",
+      "sous_chapitre": "M15.1",
+      "question": "Pourquoi la combustion continue d'un turboréacteur contribue-t-elle à une puissance délivrée de façon particulièrement régulière ?",
+      "options": [
+        "Parce que la combustion continue élimine tout besoin de turbine pour entraîner le compresseur",
+        "Parce que la combustion continue permet de couper le compresseur pendant de courtes périodes sans perdre de puissance",
+        "Parce qu'il n'y a pas d'allumages répétés qui s'arrêtent et redémarrent à chaque cycle, contrairement à un moteur à pistons"
+      ],
+      "bonne": 2,
+      "explication": "La flamme, une fois allumée, brûle sans interruption tant que le moteur fonctionne, sans les allumages et extinctions répétés d'un moteur à pistons à chaque cycle — ce qui limite les vibrations liées au cycle moteur lui-même. La combustion continue ne permet en rien de couper le compresseur (qui doit au contraire être entraîné en continu, M15.5), et elle ne supprime nullement le besoin d'une turbine, qui reste indispensable pour entraîner ce compresseur.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0007",
+      "sous_chapitre": "M15.1",
+      "question": "Quel est le tout premier organe traversé par les gaz juste après la chambre de combustion, dans un turboréacteur ?",
+      "options": [
+        "La turbine, qui prélève au passage une partie de leur énergie pour entraîner le compresseur",
+        "Le compresseur, pour y être comprimés une seconde fois avant la détente finale",
+        "Aucun organe : les gaz ressortent directement à l'extérieur du moteur"
+      ],
+      "bonne": 0,
+      "explication": "Après la chambre de combustion, l'air chargé d'énergie traverse d'abord la turbine, qui en prélève une partie pour entraîner le compresseur. Il ne ressort jamais directement du moteur sans traverser cet organe, et il ne retourne jamais vers le compresseur : le trajet dans un turboréacteur se fait dans un seul sens, sans retour en arrière ni recompression.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0008",
+      "sous_chapitre": "M15.1",
+      "question": "Pourquoi un avion de ligne n'utilise-t-il pas un moteur à pistons comme celui d'un avion léger ?",
+      "options": [
+        "Parce que la réglementation interdit les moteurs à pistons sur tout avion transportant des passagers",
+        "Parce qu'au-delà d'une certaine puissance et vitesse recherchées, un moteur à pistons devient trop lourd, trop volumineux et trop limité en régime",
+        "Parce qu'un moteur à pistons ne peut fonctionner qu'au sol, jamais en vol à haute altitude"
+      ],
+      "bonne": 1,
+      "explication": "Au-delà d'une certaine puissance et vitesse recherchées, un moteur à pistons devient trop lourd, trop volumineux et trop limité en régime pour rester efficace — d'où le recours à la turbomachine à gaz. Aucune réglementation générale n'interdit les moteurs à pistons sur les avions de transport de passagers (certains petits avions commerciaux en utilisent) ; et un moteur à pistons fonctionne bien en vol, y compris en altitude, dans les limites de sa conception.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0009",
+      "sous_chapitre": "M15.1",
+      "question": "Une fois que la turbine a prélevé une partie de l'énergie des gaz pour entraîner le compresseur, que devient le reste de cette énergie ?",
+      "options": [
+        "Il est perdu sans être utilisé, la turbine ayant épuisé toute l'énergie disponible dans les gaz",
+        "Il retourne intégralement vers la chambre de combustion pour y être réutilisé lors du cycle suivant",
+        "Il sert encore à accélérer les gaz une dernière fois dans la tuyère d'échappement, produisant la poussée finale"
+      ],
+      "bonne": 2,
+      "explication": "La turbine ne prélève qu'une partie de l'énergie des gaz ; le reste sert encore à les accélérer une dernière fois dans la tuyère d'échappement, produisant la poussée finale. Cette énergie n'est donc pas perdue sans être utilisée : elle est au contraire indispensable à la poussée. Et il n'existe aucun retour des gaz vers la chambre de combustion : le trajet dans un turboréacteur se fait dans un seul sens, sans cycle répété comme dans un moteur à pistons.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0010",
+      "sous_chapitre": "M15.2",
+      "question": "Quel est le rôle principal de l'entrée d'air, au-delà du simple fait de laisser entrer l'air dans le moteur ?",
+      "options": [
+        "Préparer l'air (le ralentir et le régulariser) avant qu'il n'atteigne le compresseur",
+        "Comprimer déjà fortement l'air avant qu'il n'entre dans le compresseur",
+        "Mélanger l'air au carburant avant la combustion"
+      ],
+      "bonne": 0,
+      "explication": "L'entrée d'air prépare l'air — le ralentit et le régularise — avant qu'il n'atteigne le compresseur, qui a besoin d'un flux uniforme pour fonctionner efficacement. Elle ne comprime pas fortement l'air elle-même : c'est le rôle du compresseur (M15.3), même si une légère montée en pression accompagne le ralentissement. Et le mélange avec le carburant se produit bien plus loin, dans la chambre de combustion (M15.4).",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0011",
+      "sous_chapitre": "M15.2",
+      "question": "Que se passe-t-il pour la vitesse et la pression de l'air en traversant un diffuseur d'entrée d'air subsonique ?",
+      "options": [
+        "La vitesse augmente et la pression diminue",
+        "La vitesse diminue et la pression augmente",
+        "La vitesse et la pression restent rigoureusement constantes"
+      ],
+      "bonne": 1,
+      "explication": "Dans un diffuseur, un conduit qui s'élargit légèrement, la vitesse de l'air diminue tandis que sa pression augmente — comme un cours d'eau qui ralentit et gagne en profondeur en entrant dans une section plus large de son lit. Ce n'est donc pas l'inverse (vitesse qui augmente), et il ne s'agit pas d'un conduit sans aucun effet sur l'air qui le traverse.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0012",
+      "sous_chapitre": "M15.2",
+      "question": "Pourquoi un écoulement d'air irrégulier à l'entrée du compresseur pose-t-il problème ?",
+      "options": [
+        "Il augmente automatiquement la température de l'air avant même son entrée dans la chambre de combustion",
+        "Il n'a strictement aucune conséquence, le compresseur pouvant fonctionner indifféremment avec n'importe quel type d'écoulement",
+        "Il dégrade l'efficacité du compresseur et peut, dans les cas marqués, contribuer à un phénomène de pompage"
+      ],
+      "bonne": 2,
+      "explication": "Un air turbulent ou mal réparti dégrade l'efficacité du compresseur et peut contribuer, dans les cas les plus marqués, à un phénomène de pompage (détaillé en fiche M15.3). Ce n'est donc pas sans conséquence, et il ne s'agit pas d'un effet sur la température de l'air avant la chambre de combustion, un point sans rapport direct avec la régularité de l'écoulement à ce stade.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0013",
+      "sous_chapitre": "M15.2",
+      "question": "Pourquoi le givrage de l'entrée d'air est-il pris au sérieux, comme le givrage d'une pale d'hélice (rappel M17A.11) ?",
+      "options": [
+        "Un morceau de glace qui se détache peut être ingéré par le moteur et endommager le compresseur",
+        "Le givre améliore en réalité l'aérodynamisme de l'entrée d'air, sans aucun risque",
+        "Le givre ne peut jamais se former sur une entrée d'air, contrairement à une pale d'hélice"
+      ],
+      "bonne": 0,
+      "explication": "Un morceau de glace détaché de l'entrée d'air peut être ingéré par le moteur et endommager le compresseur, plus fragile — d'où l'intérêt de systèmes de protection contre le givre sur de nombreuses installations. Le givre ne présente aucun avantage aérodynamique, bien au contraire ; et il peut tout à fait se former sur une entrée d'air, dans les mêmes conditions atmosphériques favorables qu'une pale d'hélice.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0014",
+      "sous_chapitre": "M15.2",
+      "question": "Comment la protection contre le givre d'une entrée d'air fonctionne-t-elle le plus souvent ?",
+      "options": [
+        "Par un revêtement en fluide antigivrage, réparti par la force centrifuge comme sur une hélice",
+        "Par réchauffage (air chaud prélevé plus loin dans le moteur, ou résistance électrique)",
+        "Par un système de dégivrage mécanique qui fait vibrer la structure de l'entrée d'air"
+      ],
+      "bonne": 1,
+      "explication": "La protection contre le givre d'une entrée d'air fonctionne le plus souvent par réchauffage, avec de l'air chaud prélevé plus loin dans le moteur ou une résistance électrique — un principe proche du dégivrage électrothermique vu pour l'hélice (M17A.11), mais appliqué à un conduit fixe. Le fluide antigivrage réparti par force centrifuge est propre aux pièces tournantes comme l'hélice, pas à un conduit fixe non tournant ; un dégivrage par vibration mécanique existe sur certaines surfaces d'aéronef, mais ce n'est pas le moyen usuel sur une entrée d'air de turbomachine, où le réchauffage reste la solution la plus répandue — le moyen exact retenu sur chaque installation reste propre à sa documentation constructeur.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0015",
+      "sous_chapitre": "M15.2",
+      "question": "Sur un avion volant à une vitesse supersonique, en quoi le rôle de l'entrée d'air diffère-t-il de celui d'un avion subsonique ?",
+      "options": [
+        "Son rôle se limite à filtrer les corps étrangers, la vitesse de l'air n'ayant plus aucune importance à ce régime",
+        "C'est désormais le compresseur, et non plus l'entrée d'air, qui assure entièrement le ralentissement de l'air avant la chambre de combustion",
+        "L'air doit être ralenti bien davantage, parfois au moyen d'une géométrie interne variable selon la vitesse de vol"
+      ],
+      "bonne": 2,
+      "explication": "À vitesse supersonique, l'air arrive à une vitesse que le compresseur ne pourrait pas admettre directement : c'est l'entrée d'air qui doit le ralentir bien davantage, parfois par une géométrie interne variable selon la vitesse de vol — ce ralentissement reste sa mission propre, non transférée au compresseur. Et la vitesse de l'air conserve toute son importance à ce régime : c'est justement pour la maîtriser que l'entrée d'air devient déterminante, bien au-delà de la seule filtration des corps étrangers.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0016",
+      "sous_chapitre": "M15.2",
+      "question": "Pourquoi une simple bosse ou une surface rugueuse sur la paroi interne de l'entrée d'air peut-elle poser problème ?",
+      "options": [
+        "Elle peut suffire à perturber l'écoulement d'air, malgré l'absence de toute pièce mobile dans cet organe",
+        "Elle n'a aucune conséquence tant que l'entrée d'air reste globalement propre",
+        "Elle augmente automatiquement la puissance disponible du moteur"
+      ],
+      "bonne": 0,
+      "explication": "Même sans aucune pièce mobile, une simple bosse ou une surface rugueuse peut suffire à perturber la régularité de l'écoulement recherchée, avec des conséquences sur le compresseur en aval. Ce n'est donc pas sans conséquence même si l'entrée reste globalement propre par ailleurs, et cela n'augmente en rien la puissance disponible du moteur — c'est l'inverse qui est à craindre.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0017",
+      "sous_chapitre": "M15.2",
+      "question": "Pourquoi une déformation même mineure de la structure de l'entrée d'air (choc au sol, par exemple) est-elle prise au sérieux en inspection ?",
+      "options": [
+        "Une déformation mineure de l'entrée d'air n'a jamais aucune conséquence sur le fonctionnement du moteur",
+        "Sa géométrie interne précise est calculée pour toute la plage de vitesses et d'assiettes rencontrées en vol ; une déformation peut suffire à dégrader la régularité de l'écoulement recherchée",
+        "Seule une déformation touchant directement le compresseur, jamais l'entrée d'air elle-même, peut avoir une conséquence"
+      ],
+      "bonne": 1,
+      "explication": "L'entrée d'air est une pièce structurale à part entière, dont la géométrie interne précise est calculée pour fonctionner correctement sur toute la plage de vitesses et d'assiettes rencontrées en vol ; une déformation, même mineure, peut suffire à dégrader la régularité de l'écoulement recherchée, même si le dommage paraît anodin à l'œil nu. Ce n'est donc pas sans conséquence, et l'entrée d'air elle-même, pas seulement le compresseur, peut être à l'origine d'une perturbation de l'écoulement.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0018",
+      "sous_chapitre": "M15.3",
+      "question": "Pourquoi comprime-t-on l'air avant de le mélanger au carburant dans la chambre de combustion ?",
+      "options": [
+        "La compression élimine toute trace d'humidité dans l'air avant la combustion",
+        "La compression refroidit l'air, ce qui est nécessaire avant toute combustion",
+        "Un air plus dense permet de brûler davantage de carburant dans un espace donné, ce qui améliore l'efficacité de la combustion et le rendement global du cycle"
+      ],
+      "bonne": 2,
+      "explication": "Un air plus dense (plus de molécules dans un même volume) permet de brûler davantage de carburant dans un espace donné, ce qui améliore fortement l'efficacité de la combustion et le rendement global du cycle (la part de l'énergie du carburant effectivement récupérée en sortie). La compression ne refroidit pas l'air : elle a au contraire tendance à l'échauffer fortement, et elle n'élimine pas l'humidité, un phénomène sans rapport avec l'objectif de la compression.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0019",
+      "sous_chapitre": "M15.3",
+      "question": "Comment un compresseur centrifuge augmente-t-il la pression de l'air ?",
+      "options": [
+        "Un disque tournant projette l'air vers l'extérieur par force centrifuge, puis un diffuseur le ralentit, convertissant sa vitesse en pression",
+        "L'air traverse une succession d'étages rotor/stator disposés en ligne droite, dans l'axe du moteur",
+        "L'air est directement comprimé par un piston qui va et vient à l'intérieur du compresseur"
+      ],
+      "bonne": 0,
+      "explication": "Un compresseur centrifuge utilise un disque tournant (rotor, ou « rouet ») qui projette l'air vers l'extérieur par force centrifuge ; cet air est ensuite ralenti dans un diffuseur, ce qui convertit sa vitesse en pression — le même principe que pour l'entrée d'air, mais appliqué après une accélération radiale. La succession d'étages en ligne droite décrit un compresseur axial, une famille différente ; et aucun piston n'intervient dans un compresseur de turbomachine, qui fonctionne en continu.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0020",
+      "sous_chapitre": "M15.3",
+      "question": "Dans un étage de compresseur axial, quel est le rôle du stator, par rapport à celui du rotor ?",
+      "options": [
+        "Le rotor et le stator remplissent exactement le même rôle, tous deux fixes et immobiles",
+        "Le rotor transmet de l'énergie à l'air en le poussant ; le stator, fixe, redresse l'écoulement et convertit lui aussi une partie de sa vitesse en pression",
+        "Le stator tourne plus vite que le rotor, pour compenser son immobilité apparente"
+      ],
+      "bonne": 1,
+      "explication": "Le rotor, muni d'aubes et entraîné par l'arbre moteur, transmet de l'énergie à l'air ; le stator, fixe, redresse l'écoulement tourbillonnant en sortie de rotor pour préparer l'étage suivant, et joue en plus un rôle de diffuseur — ses canaux, légèrement divergents, convertissent une partie de la vitesse de l'air en pression, exactement comme le diffuseur de l'entrée d'air. Le rotor n'est donc pas immobile (c'est justement sa rotation qui transmet l'énergie), et le stator, par définition, ne tourne pas du tout.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0021",
+      "sous_chapitre": "M15.3",
+      "question": "Pourquoi répartir la compression totale recherchée sur plusieurs étages plutôt que d'utiliser un seul étage très puissant ?",
+      "options": [
+        "La réglementation impose un nombre minimal d'étages sur tout compresseur",
+        "Un seul étage coûterait exactement le même prix que plusieurs étages combinés",
+        "Un seul étage ne peut fournir qu'une augmentation de pression limitée avant que l'écoulement d'air ne devienne instable"
+      ],
+      "bonne": 2,
+      "explication": "Un seul étage, aussi bien conçu soit-il, ne peut fournir qu'une augmentation de pression limitée avant que l'écoulement ne devienne instable ; répartir la compression sur plusieurs étages modestes permet d'atteindre un taux de compression global plus élevé tout en gardant un écoulement maîtrisé. Il ne s'agit ni d'une question de coût comparable, ni d'une exigence réglementaire sur le nombre d'étages.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0022",
+      "sous_chapitre": "M15.3",
+      "question": "Quelle différence sépare le décrochage et le pompage d'un compresseur ?",
+      "options": [
+        "Le décrochage reste localisé à une ou quelques aubes d'un étage, alors que le pompage s'étend à l'ensemble du compresseur avec interruption ou inversion brève du débit",
+        "Ce sont deux noms différents pour désigner exactement le même phénomène, sans aucune nuance entre eux",
+        "Le décrochage ne peut se produire qu'à l'arrêt du moteur, alors que le pompage ne peut se produire qu'en plein vol"
+      ],
+      "bonne": 0,
+      "explication": "Le décrochage est une rupture localisée de l'écoulement, sur une ou quelques aubes d'un même étage — comparable au décrochage d'une aile au-delà d'un certain angle d'incidence — sans forcément affecter tout le compresseur. Le pompage est plus global et plus sévère : la rupture s'étend à l'ensemble du compresseur, avec une interruption ou une brève inversion du débit d'air, accompagnée d'à-coups et de bruits caractéristiques. Ce ne sont donc pas deux noms pour le même phénomène ; et aucun des deux n'est limité à une seule situation de vol (arrêt ou vol) — les deux surviennent en fonctionnement, sous des conditions d'écoulement dégradées.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0023",
+      "sous_chapitre": "M15.3",
+      "question": "Sur un moteur à plusieurs corps, que désignent généralement les indications N1 et N2 présentées au poste de pilotage ?",
+      "options": [
+        "Le nombre total de pales présentes sur chaque étage du compresseur",
+        "Les régimes respectifs des compresseurs (et turbines associées) basse pression et haute pression, sur un moteur à plusieurs corps",
+        "La température exacte atteinte dans la chambre de combustion"
+      ],
+      "bonne": 1,
+      "explication": "N1 et N2 désignent généralement les régimes respectifs des ensembles basse pression et haute pression (compresseur et turbine associés) sur un moteur à plusieurs corps, chacun tournant à son propre régime optimisé. Ce ne sont donc ni un nombre de pales, ni une température : ces indications sont détaillées plus loin dans le module, en fiche M15.11.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0024",
+      "sous_chapitre": "M15.3",
+      "question": "Quelle différence sépare la trajectoire de l'air dans un compresseur axial et dans un compresseur centrifuge ?",
+      "options": [
+        "Dans l'axial, l'air est projeté vers l'extérieur par force centrifuge ; dans le centrifuge, il progresse en ligne droite dans l'axe du moteur",
+        "Les deux types de compresseur font suivre à l'air exactement la même trajectoire, seule la vitesse de rotation diffère",
+        "Dans l'axial, l'air progresse en ligne droite dans l'axe du moteur ; dans le centrifuge, il est projeté radialement vers l'extérieur avant d'être ralenti dans un diffuseur"
+      ],
+      "bonne": 2,
+      "explication": "Dans un compresseur axial, l'air progresse en ligne droite, dans l'axe du moteur, à travers une succession d'étages rotor/stator ; dans un compresseur centrifuge, un disque tournant projette l'air radialement vers l'extérieur par force centrifuge, avant qu'un diffuseur ne le ralentisse pour convertir sa vitesse en pression. Ce ne sont donc pas des trajectoires identiques, et la dernière option inverse simplement les deux définitions.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0025",
+      "sous_chapitre": "M15.3",
+      "question": "Quel principe physique, déjà rencontré dans le module M17A à propos des contrepoids d'hélice, explique le fonctionnement d'un compresseur centrifuge ?",
+      "options": [
+        "La force centrifuge, qui projette ici l'air vers l'extérieur plutôt que de repositionner une pale",
+        "Le couple de torsion aérodynamique, qui pousse la pale vers un pas plus gros",
+        "La traînée de rotation, qui s'oppose au mouvement de l'hélice"
+      ],
+      "bonne": 0,
+      "explication": "La force centrifuge, déjà rencontrée à propos des contrepoids d'hélice (M17A.7), est ici mise à profit pour projeter l'air vers l'extérieur du disque tournant, plutôt que pour repositionner une pale. Le couple de torsion aérodynamique et la traînée de rotation sont deux autres notions du module M17A, sans rapport avec le principe de fonctionnement d'un compresseur centrifuge.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0026",
+      "sous_chapitre": "M15.3",
+      "question": "Que se passerait-il si un étage de compresseur axial ne comportait aucun stator après le rotor ?",
+      "options": [
+        "Rien de particulier : le stator est un élément purement décoratif, sans effet sur le fonctionnement",
+        "L'air arriverait de travers dans l'étage suivant, et l'efficacité de la compression s'effondrerait rapidement au fil des étages",
+        "Le rotor tournerait alors deux fois plus vite pour compenser l'absence de stator"
+      ],
+      "bonne": 1,
+      "explication": "Sans stator pour redresser l'écoulement tourbillonnant en sortie de rotor, l'air arriverait de travers dans l'étage suivant, et l'efficacité de la compression s'effondrerait rapidement au fil des étages. Le stator n'est donc pas un élément décoratif sans effet, et le rotor ne compense pas automatiquement son absence en tournant plus vite : ce sont deux organes aux rôles distincts et complémentaires.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0027",
+      "sous_chapitre": "M15.4",
+      "question": "Comment l'air comprimé arrivant dans la chambre de combustion est-il réparti entre les différentes zones ?",
+      "options": [
+        "Toutes les zones de la chambre de combustion reçoivent exactement la même quantité d'air, sans aucune répartition privilégiée",
+        "La zone primaire et la zone secondaire brûlent chacune une quantité identique de carburant, en parallèle",
+        "Une petite partie alimente la zone primaire (combustion), une autre la zone secondaire (achève la combustion), et la majeure partie la zone de dilution (refroidissement, sans participer à la combustion)"
+      ],
+      "bonne": 2,
+      "explication": "Une petite partie de l'air rejoint la zone primaire pour la combustion elle-même ; une autre part, en zone secondaire, achève la combustion de ce qui n'aurait pas eu le temps de brûler complètement ; le reste, bien plus abondant, rejoint la zone de dilution, qui ne participe plus à la combustion et sert uniquement à refroidir les gaz avant la turbine. La zone secondaire ne brûle donc pas une quantité identique de carburant que la primaire (elle en brûle beaucoup moins), et la répartition n'est pas du tout égale entre les zones.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0028",
+      "sous_chapitre": "M15.4",
+      "question": "Pourquoi une zone de recirculation est-elle nécessaire dans la zone primaire de la chambre de combustion ?",
+      "options": [
+        "Elle crée une poche à faible vitesse qui sert d'ancrage stable à la flamme, malgré la vitesse élevée du flux d'air général",
+        "Elle sert à refroidir intégralement les gaz avant leur sortie de la chambre",
+        "Elle permet d'augmenter la vitesse de l'air à l'intérieur de la zone primaire, au-delà de celle du flux général"
+      ],
+      "bonne": 0,
+      "explication": "La zone de recirculation crée une poche à faible vitesse, qui sert d'ancrage stable à la flamme malgré la vitesse élevée du flux général — un peu comme protéger une allumette du vent en formant une coupe avec ses mains. Le refroidissement des gaz est plutôt le rôle de la zone de dilution, bien plus en aval, pas de la zone de recirculation ; et cette dernière ralentit localement l'air, elle ne l'accélère pas au-delà du flux général.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0029",
+      "sous_chapitre": "M15.4",
+      "question": "Quelle est la principale caractéristique d'une chambre de combustion annulaire ?",
+      "options": [
+        "Elle est composée de plusieurs chambres individuelles totalement indépendantes, disposées en cercle",
+        "Elle forme un seul volume continu en forme d'anneau tout autour de l'arbre moteur, sans cloisonnement interne",
+        "Elle combine plusieurs tubes de combustion individuels logés à l'intérieur d'une enveloppe commune"
+      ],
+      "bonne": 1,
+      "explication": "La chambre annulaire forme un seul volume continu en anneau autour de l'arbre moteur, sans cloisonnement interne — la configuration la plus répandue sur les moteurs modernes pour son excellent rapport espace/surface de combustion. Les chambres individuelles indépendantes décrivent la configuration tubulaire, et la combinaison de tubes dans une enveloppe commune décrit la configuration tubo-annulaire — deux familles différentes.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0030",
+      "sous_chapitre": "M15.4",
+      "question": "Quel avantage la configuration tubulaire (chambres individuelles) offre-t-elle, par rapport à la configuration annulaire ?",
+      "options": [
+        "Une combustion qui ne nécessite aucun carburant, contrairement aux autres configurations",
+        "Un rendement global systématiquement supérieur à celui de toute configuration annulaire",
+        "Une facilité d'inspection et de remplacement d'une chambre individuelle sans devoir toucher aux autres"
+      ],
+      "bonne": 2,
+      "explication": "La configuration tubulaire facilite l'inspection et le remplacement d'une chambre individuelle sans toucher aux autres — un avantage pratique de maintenance. Ce n'est pas un avantage de rendement global (la configuration annulaire est plutôt réputée pour cela) ; et toute configuration de chambre de combustion, quelle qu'elle soit, nécessite bien du carburant pour fonctionner.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0031",
+      "sous_chapitre": "M15.4",
+      "question": "Pourquoi la richesse du mélange dans la zone primaire n'est-elle pas la même chose que le rapport air-carburant global du moteur ?",
+      "options": [
+        "L'air de la zone de dilution, bien plus abondant, ne participe pas du tout à la combustion : il refroidit les gaz sans brûler",
+        "Ce sont en réalité rigoureusement la même grandeur, exprimée de deux façons différentes",
+        "Le rapport global ne dépend que de la vitesse de l'avion, indépendamment de la quantité d'air admise"
+      ],
+      "bonne": 0,
+      "explication": "L'air de la zone de dilution, bien plus abondant que celui de la zone primaire, ne participe pas du tout à la combustion : il refroidit les gaz sans brûler, ce qui rend le rapport air-carburant global très différent de la richesse locale du mélange dans la zone primaire. Ce ne sont donc pas la même grandeur, et le rapport global dépend de la quantité d'air admise par le moteur, pas seulement de la vitesse de l'avion.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0032",
+      "sous_chapitre": "M15.4",
+      "question": "Pourquoi la combustion continue d'un turboréacteur doit-elle affronter une contrainte que n'a pas un moteur à pistons ?",
+      "options": [
+        "Le carburant utilisé dans un turboréacteur ne peut brûler qu'à très basse température",
+        "La flamme doit rester allumée en permanence, malgré un flux d'air qui aurait sans précaution tendance à l'éteindre",
+        "Un turboréacteur ne peut fonctionner qu'au sol, jamais pendant que l'avion est en vol"
+      ],
+      "bonne": 1,
+      "explication": "Rappel de la fiche M15.1 : une fois allumée, la flamme doit rester allumée en permanence, malgré un flux d'air qui, sans précaution particulière, aurait plutôt tendance à l'éteindre — comme le vent souffle une bougie. Le carburant ne brûle pas à très basse température (bien au contraire), et un turboréacteur fonctionne bien sûr aussi en vol : c'est même son usage principal.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0033",
+      "sous_chapitre": "M15.4",
+      "question": "Quel est le rôle des injecteurs dans la chambre de combustion ?",
+      "options": [
+        "Refroidir les parois de la chambre de combustion à l'aide d'un liquide dédié",
+        "Injecter de l'air supplémentaire directement dans la turbine, sans passer par la chambre de combustion",
+        "Introduire le carburant dans la zone primaire, où il se mélange à l'air dans une proportion favorable à une combustion stable"
+      ],
+      "bonne": 2,
+      "explication": "Les injecteurs introduisent le carburant dans la zone primaire, où il se mélange à l'air dans une proportion favorable à une combustion stable et efficace. Ils n'injectent pas d'air (c'est le compresseur qui fournit l'air, M15.3), et ils ne servent pas au refroidissement des parois, un rôle assuré par la circulation de l'air lui-même dans la chambre.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0034",
+      "sous_chapitre": "M15.4",
+      "question": "Pourquoi le choix entre les trois formes de chambre de combustion (tubulaire, annulaire, tubo-annulaire) résulte-t-il d'un compromis ?",
+      "options": [
+        "Chaque configuration équilibre différemment la facilité d'inspection, la compacité/rendement, et la répartition homogène de la température des gaz",
+        "Une seule de ces trois configurations est réellement utilisée aujourd'hui, les deux autres étant purement théoriques",
+        "Le choix ne dépend que du prix d'achat du moteur, sans aucune autre considération technique"
+      ],
+      "bonne": 0,
+      "explication": "Chaque configuration représente un compromis différent entre plusieurs exigences réelles : facilité d'inspection (plutôt en faveur du tubulaire), compacité et rendement (plutôt en faveur de l'annulaire), et répartition homogène de la température en sortie, qui affecte la durée de vie de la turbine. Les trois configurations sont bien utilisées en pratique, pas seulement une, et le choix ne se limite pas à une simple question de prix.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0035",
+      "sous_chapitre": "M15.4",
+      "question": "Quel organe, situé juste après la chambre de combustion, impose la limite de température qui rend le refroidissement des gaz indispensable ?",
+      "options": [
+        "Le compresseur, qui se trouve en réalité juste après la chambre de combustion",
+        "La turbine, dont les aubes ne pourraient pas supporter la température atteinte au cœur même de la flamme",
+        "L'entrée d'air, qui doit recevoir des gaz suffisamment refroidis avant l'admission"
+      ],
+      "bonne": 1,
+      "explication": "C'est la turbine (fiche M15.5), organe qui suit directement la chambre de combustion, dont les aubes ne pourraient pas supporter la température atteinte au cœur même de la flamme — d'où la nécessité de refroidir les gaz avant leur sortie. Le compresseur se trouve en amont de la chambre de combustion, pas en aval ; et l'entrée d'air se trouve tout au début du moteur, bien avant la chambre de combustion, pas juste après elle.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0036",
+      "sous_chapitre": "M15.5",
+      "question": "Quel est le rôle principal de la turbine dans un turboréacteur ?",
+      "options": [
+        "Injecter le carburant dans la chambre de combustion",
+        "Comprimer l'air avant son entrée dans la chambre de combustion",
+        "Prélever une partie de l'énergie des gaz de combustion pour entraîner le ou les compresseurs"
+      ],
+      "bonne": 2,
+      "explication": "La turbine prélève une partie de l'énergie des gaz issus de la combustion pour entraîner, via un arbre, le ou les compresseurs — sans cette énergie fournie en continu, le compresseur ne pourrait pas fonctionner. Comprimer l'air avant la combustion est le rôle du compresseur (M15.3), pas de la turbine ; et l'injection de carburant est le rôle des injecteurs de la chambre de combustion (M15.4).",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0037",
+      "sous_chapitre": "M15.5",
+      "question": "En quoi le sens de transfert d'énergie dans la turbine est-il opposé à celui du compresseur ?",
+      "options": [
+        "Le compresseur ajoute de l'énergie à l'air (pression qui augmente) ; la turbine prélève de l'énergie au gaz (pression et température qui diminuent)",
+        "Le compresseur et la turbine transfèrent l'énergie exactement dans le même sens, sans aucune différence",
+        "Seule la turbine échange de l'énergie avec le fluide qui la traverse ; le compresseur n'en échange aucune"
+      ],
+      "bonne": 0,
+      "explication": "Le compresseur reçoit de l'énergie mécanique pour l'ajouter à l'air (la pression augmente à sa traversée) ; la turbine, à l'inverse, reçoit de l'énergie du gaz en mouvement pour la transformer en énergie mécanique (la pression et la température diminuent à sa traversée). Ce n'est donc pas le même sens de transfert, et le compresseur échange bien de l'énergie avec l'air : c'est précisément sa fonction (M15.3).",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0038",
+      "sous_chapitre": "M15.5",
+      "question": "Dans un étage de turbine, quel est le rôle du distributeur, placé juste avant le rotor ?",
+      "options": [
+        "Ralentir totalement les gaz jusqu'à l'arrêt avant leur passage dans le rotor",
+        "Accélérer les gaz brûlants (en convertissant une partie de leur pression en vitesse) et les orienter précisément vers les aubes mobiles suivantes",
+        "Refroidir intégralement les gaz avant qu'ils n'atteignent le rotor suivant"
+      ],
+      "bonne": 1,
+      "explication": "Le distributeur, équivalent du stator vu pour le compresseur mais avec des canaux convergents plutôt que divergents, accélère les gaz en convertissant une partie de leur pression en vitesse, et les oriente précisément vers les aubes mobiles du rotor suivant, pour que leur énergie soit transmise le plus efficacement possible. Il ne ralentit pas les gaz jusqu'à l'arrêt (ils continuent leur trajet à travers tout le moteur), et il ne refroidit pas intégralement les gaz, un rôle qui relève plutôt de la conception de la chambre de combustion en amont.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0039",
+      "sous_chapitre": "M15.5",
+      "question": "Sur un moteur à plusieurs corps, quelle turbine entraîne généralement le compresseur haute pression ?",
+      "options": [
+        "Les deux turbines entraînent indifféremment n'importe quel compresseur, selon le régime du moment",
+        "La turbine basse pression, la plus éloignée de la chambre de combustion",
+        "La turbine haute pression, la plus proche de la chambre de combustion"
+      ],
+      "bonne": 2,
+      "explication": "La turbine haute pression, la plus proche de la chambre de combustion, entraîne le compresseur haute pression, via un arbre dédié ; la turbine basse pression, plus en aval, entraîne le compresseur basse pression, via un second arbre indépendant. Ce n'est donc pas la turbine basse pression qui entraîne le compresseur haute pression, et l'association entre chaque turbine et son compresseur reste fixe, pas indifférente selon le régime.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0040",
+      "sous_chapitre": "M15.5",
+      "question": "Pourquoi les aubes de turbine sont-elles souvent refroidies activement, contrairement à la plupart des aubes de compresseur ?",
+      "options": [
+        "Elles sont exposées à des gaz beaucoup plus chauds, en plus de la force centrifuge déjà présente sur toute pièce en rotation",
+        "Le refroidissement des aubes de turbine est purement esthétique, sans aucune utilité technique",
+        "Les aubes de compresseur sont en réalité plus exposées à la chaleur que celles de la turbine"
+      ],
+      "bonne": 0,
+      "explication": "Les aubes de turbine sont exposées à des gaz beaucoup plus chauds que l'air traversant le compresseur, en plus de la force centrifuge déjà présente sur toute pièce en rotation rapide — cette combinaison justifie un refroidissement actif que les aubes de compresseur n'ont généralement pas besoin de recevoir. Ce refroidissement a une utilité technique réelle (préserver la résistance mécanique du métal), pas esthétique ; et ce sont bien les aubes de turbine, pas celles du compresseur, qui affrontent la chaleur la plus intense du moteur.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0041",
+      "sous_chapitre": "M15.5",
+      "question": "Comment le refroidissement interne d'une aube de turbine fonctionne-t-il concrètement ?",
+      "options": [
+        "L'aube est plongée dans un bain de liquide refroidissant avant chaque vol, puis remontée à sec",
+        "De l'air prélevé plus en amont dans le compresseur, plus froid, circule à l'intérieur de l'aube creuse avant de ressortir en surface, comme un os creux parcouru d'air frais",
+        "Un revêtement de glace est appliqué volontairement sur l'aube avant le décollage"
+      ],
+      "bonne": 1,
+      "explication": "De l'air prélevé plus en amont dans le compresseur, plus froid que les gaz de combustion, circule à l'intérieur de l'aube (creuse à cet effet) avant de ressortir par de petits orifices en surface — comparé à un os creux parcouru d'air frais qui protège sa structure externe de la chaleur environnante. Il ne s'agit ni d'un bain de liquide avant chaque vol, ni d'un revêtement de glace volontaire : ce serait d'ailleurs incompatible avec la chaleur intense régnant à cet endroit du moteur.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0042",
+      "sous_chapitre": "M15.5",
+      "question": "Qu'est-ce que le fluage d'une aube de turbine ?",
+      "options": [
+        "Une vibration sonore répétée de l'aube, provoquée par le passage des gaz, sans aucune conséquence sur sa forme ou sa résistance",
+        "Un dépôt de givre qui se forme progressivement sur l'aube lorsque le moteur reste longtemps arrêté au sol par temps froid et humide",
+        "Une déformation lente et progressive du métal, sous l'effet d'une contrainte mécanique maintenue à haute température"
+      ],
+      "bonne": 2,
+      "explication": "Le fluage est la déformation lente et progressive d'un métal soumis en continu à une contrainte mécanique importante alors qu'il est porté à haute température — un peu comme un fil de métal très chaud qui s'allongerait imperceptiblement sous un poids suspendu en permanence. C'est précisément ce que subit une aube de turbine, tirée vers l'extérieur par la force centrifuge tout en étant maintenue à haute température, d'où la surveillance de son allongement dans le cadre du programme d'entretien. Ce n'est ni un dépôt de givre (qui suppose un moteur froid à l'arrêt, pas en fonctionnement à haute température), ni une simple vibration sonore sans conséquence sur la forme de l'aube : le fluage, lui, change durablement sa géométrie.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0043",
+      "sous_chapitre": "M15.5",
+      "question": "Contrairement aux pales d'hélice, souvent en alliage d'aluminium (rappel M17A.4), pourquoi les aubes de turbine ne peuvent-elles pas être fabriquées dans ce même type d'alliage ?",
+      "options": [
+        "Un alliage d'aluminium classique ne conserverait pas sa résistance à la température atteinte par les gaz traversant la turbine",
+        "L'aluminium est un matériau bien trop lourd pour être utilisé sur une pièce tournante",
+        "L'aluminium ne peut jamais être façonné sous forme d'aube, quelle que soit la pièce concernée"
+      ],
+      "bonne": 0,
+      "explication": "Un alliage d'aluminium classique ne conserverait pas sa résistance mécanique à la température élevée atteinte par les gaz traversant la turbine — d'où le recours à des alliages métalliques spécialement conçus pour cet usage. Ce n'est pas une question de poids (l'aluminium est au contraire un matériau léger, largement utilisé ailleurs, y compris pour des pales d'hélice), et l'aluminium peut bien être façonné en aube dans d'autres contextes moins exigeants en température.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    },
+    {
+      "uid": "M15-0044",
+      "sous_chapitre": "M15.5",
+      "question": "Pourquoi la turbine est-elle généralement composée de plusieurs étages, plutôt que d'un seul étage unique ?",
+      "options": [
+        "Un seul étage suffirait largement, mais plusieurs étages sont ajoutés uniquement pour des raisons esthétiques",
+        "Chaque étage prélève une partie de l'énergie disponible, ce qui évite de tout prélever d'un coup sur un seul étage",
+        "Chaque étage supplémentaire réduit la quantité totale d'énergie que la turbine peut prélever aux gaz"
+      ],
+      "bonne": 1,
+      "explication": "Chaque étage prélève une partie de l'énergie disponible dans les gaz, ce qui permet de prélever au total l'énergie nécessaire pour entraîner le ou les compresseurs sans tout prélever d'un coup sur un seul étage — une logique similaire à celle des étages de compression (M15.3). Ce n'est pas un choix esthétique, et ajouter des étages ne réduit pas l'énergie totale prélevée : cela permet au contraire de la répartir efficacement.",
+      "source": "Notions générales de motorisation aéronautique — turbomachines à gaz"
+    }
+  ]
+}

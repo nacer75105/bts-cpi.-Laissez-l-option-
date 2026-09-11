@@ -1,0 +1,41 @@
+<div id="schema-m1502b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1502b-wrap .m1502b-zone { display:inline-block; width:47%; min-width:170px; margin:4px 1%; padding:12px; border-radius:6px; border:1.5px solid #999; background:#f7f7f7; cursor:pointer; text-align:center; font-size:0.85em; vertical-align:top; }
+#schema-m1502b-wrap .m1502b-zone.active { border-color:#e0a800; background:rgba(224,168,0,0.15); font-weight:bold; }
+#schema-m1502b-wrap .m1502b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:6em; }
+</style>
+
+<p><strong>Deux menaces pour l'entrée d'air :</strong> cliquez sur chaque zone pour découvrir le risque et la parade associée.</p>
+
+<div>
+  <div class="m1502b-zone active" data-z="fod">Ingestion de corps étrangers (FOD)</div>
+  <div class="m1502b-zone" data-z="givre">Givrage</div>
+</div>
+
+<div class="m1502b-caption" id="m1502b-caption"></div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1502b-wrap');
+  if (!wrap) { return; }
+  var zones = wrap.querySelectorAll('.m1502b-zone');
+  var caption = wrap.querySelector('#m1502b-caption');
+
+  var textes = {
+    fod: "FOD (Foreign Object Damage, déjà rencontré en fiche M7A.2) : gravillons projetés au décollage, objets laissés sur une piste, ou un oiseau croisant la trajectoire. L'entrée d'air, premier point de contact avec l'environnement, est la porte d'entrée de ce type de dommage vers les organes internes plus fragiles (compresseur en particulier).",
+    givre: "Givrage : dans certaines conditions atmosphériques (humidité visible, air froid), de la glace peut se former sur les parois de l'entrée d'air, comme sur une pale d'hélice — et même par une température extérieure déjà positive, l'air se refroidissant encore localement en s'accélérant dans le conduit. Un morceau détaché peut être ingéré et endommager le compresseur — d'où des systèmes de protection par réchauffage (air chaud prélevé ou résistance électrique), dont les conditions précises d'activation relèvent du manuel constructeur."
+  };
+
+  function render(z) {
+    zones.forEach(function (el) { el.classList.toggle('active', el.getAttribute('data-z') === z); });
+    caption.textContent = textes[z];
+  }
+
+  zones.forEach(function (el) {
+    el.addEventListener('click', function () { render(el.getAttribute('data-z')); });
+  });
+
+  render('fod');
+})();
+</script>

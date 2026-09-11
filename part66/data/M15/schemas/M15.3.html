@@ -1,0 +1,60 @@
+<div id="schema-m1503-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1503-wrap .m1503-btn { margin:4px 6px 4px 0; padding:6px 10px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m1503-wrap .m1503-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1503-wrap .m1503-stairs { display:flex; align-items:flex-end; gap:4px; height:130px; margin-top:16px; }
+#schema-m1503-wrap .m1503-step { flex:1; background:#7fa8d9; border-radius:3px 3px 0 0; position:relative; transition: height 0.3s; display:flex; align-items:flex-start; justify-content:center; }
+#schema-m1503-wrap .m1503-step.active { background:#e0a800; }
+#schema-m1503-wrap .m1503-step span { font-size:0.68em; color:#fff; margin-top:2px; }
+#schema-m1503-wrap .m1503-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:4.5em; }
+</style>
+
+<p><strong>Montée en pression étage par étage :</strong> chaque étage rotor/stator ajoute sa propre contribution modeste à la pression totale.</p>
+
+<div>
+  <button class="m1503-btn" data-e="-1">◀</button>
+  <button class="m1503-btn" data-e="1">Étage suivant ▶</button>
+  <button class="m1503-btn" data-e="reset">↺ Réinitialiser</button>
+</div>
+
+<div class="m1503-stairs" id="m1503-stairs"></div>
+
+<div class="m1503-caption" id="m1503-caption"></div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1503-wrap');
+  if (!wrap) { return; }
+  var stairs = wrap.querySelector('#m1503-stairs');
+  var caption = wrap.querySelector('#m1503-caption');
+  var nbEtages = 5;
+  var courant = 1;
+
+  function render() {
+    var html = '';
+    for (var i = 1; i <= nbEtages; i++) {
+      var h = 20 + i * 18;
+      html += '<div class="m1503-step' + (i <= courant ? ' active' : '') + '" style="height:' + h + 'px;"><span>Étage ' + i + '</span></div>';
+    }
+    stairs.innerHTML = html;
+    if (courant === 1) {
+      caption.textContent = "Étage 1 : l'air, préparé par l'entrée d'air, traverse son premier rotor puis son premier stator. Sa pression augmente légèrement, et l'écoulement est redressé avant l'étage suivant.";
+    } else if (courant === nbEtages) {
+      caption.textContent = "Étage " + nbEtages + " (dernier étage) : la pression a atteint son maximum, obtenue progressivement plutôt qu'en un seul bond. L'air comprimé est prêt à entrer dans la chambre de combustion.";
+    } else {
+      caption.textContent = "Étage " + courant + " : chaque nouvel étage ajoute sa propre contribution modeste à la pression totale, tout en gardant un écoulement maîtrisé — comme monter un escalier marche par marche.";
+    }
+  }
+
+  wrap.querySelectorAll('.m1503-btn').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var v = b.getAttribute('data-e');
+      if (v === 'reset') { courant = 1; } else { courant = Math.min(nbEtages, Math.max(1, courant + parseInt(v, 10))); }
+      render();
+    });
+  });
+
+  render();
+})();
+</script>
