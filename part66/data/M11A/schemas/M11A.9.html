@@ -1,0 +1,65 @@
+<div id="schema-m119-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m119-wrap .m119-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m119-wrap .m119-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m119-wrap .m119-chain { position:relative; min-height:110px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; display:flex; align-items:center; justify-content:center; gap:4px; flex-wrap:wrap; padding:10px; }
+#schema-m119-wrap .m119-box { padding:8px 9px; border-radius:6px; border:1.5px solid #4a76a8; background:#7fa8d9; color:#fff; font-size:0.68em; text-align:center; transition: background 0.2s, border-color 0.2s; }
+#schema-m119-wrap .m119-box.active-flow { background:#e0a800; border-color:#a87a00; }
+#schema-m119-wrap .m119-arrow { font-size:1.1em; color:#ccc; transition: color 0.2s; }
+#schema-m119-wrap .m119-arrow.active-flow { color:#e0a800; }
+#schema-m119-wrap .m119-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Le trajet du fluide hydraulique :</strong> comparez le circuit au repos et le circuit en fonctionnement.</p>
+
+<button class="m119-btn active" id="m119-btn-repos">Circuit au repos</button>
+<button class="m119-btn" id="m119-btn-fonction">Circuit en fonctionnement</button>
+
+<div class="m119-chain" id="m119-chain">
+  <div class="m119-box" id="m119-b1">Réservoir</div>
+  <div class="m119-arrow" id="m119-a1">→</div>
+  <div class="m119-box" id="m119-b2">Pompe</div>
+  <div class="m119-arrow" id="m119-a2">→</div>
+  <div class="m119-box" id="m119-b3">Filtre</div>
+  <div class="m119-arrow" id="m119-a3">→</div>
+  <div class="m119-box" id="m119-b4">Valve</div>
+  <div class="m119-arrow" id="m119-a4">→</div>
+  <div class="m119-box" id="m119-b5">Vérin (actionneur)</div>
+</div>
+
+<div class="m119-caption" id="m119-caption">Ce schéma montre le trajet du fluide à travers les éléments fondamentaux d'un circuit hydraulique. Vue actuelle — circuit au repos : le fluide reste dans le réservoir, la pompe ne le met pas encore en circulation. Cliquez sur « Circuit en fonctionnement » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m119-wrap');
+  if (!wrap) { return; }
+  var btnRepos = wrap.querySelector('#m119-btn-repos');
+  var btnFonction = wrap.querySelector('#m119-btn-fonction');
+  var boxes = ['m119-b1', 'm119-b2', 'm119-b3', 'm119-b4', 'm119-b5'].map(function (id) { return wrap.querySelector('#' + id); });
+  var arrows = ['m119-a1', 'm119-a2', 'm119-a3', 'm119-a4'].map(function (id) { return wrap.querySelector('#' + id); });
+  var caption = wrap.querySelector('#m119-caption');
+
+  function setActive(on) {
+    boxes.forEach(function (b) { b.classList.toggle('active-flow', on); });
+    arrows.forEach(function (a) { a.classList.toggle('active-flow', on); });
+  }
+
+  function showRepos() {
+    btnRepos.className = 'm119-btn active';
+    btnFonction.className = 'm119-btn';
+    setActive(false);
+    caption.textContent = "Ce schéma montre le trajet du fluide à travers les éléments fondamentaux d'un circuit hydraulique. Vue actuelle — circuit au repos : le fluide reste dans le réservoir, la pompe ne le met pas encore en circulation. Cliquez sur « Circuit en fonctionnement » pour comparer.";
+  }
+
+  function showFonction() {
+    btnRepos.className = 'm119-btn';
+    btnFonction.className = 'm119-btn active';
+    setActive(true);
+    caption.textContent = "Circuit en fonctionnement : la pompe met le fluide sous pression depuis le réservoir ; il traverse le filtre qui retient les impuretés, puis la valve qui dirige la pression vers le vérin, lequel produit le mouvement demandé. Cliquez sur « Circuit au repos » pour revenir à l'autre vue.";
+  }
+
+  btnRepos.addEventListener('click', showRepos);
+  btnFonction.addEventListener('click', showFonction);
+})();
+</script>

@@ -1,0 +1,64 @@
+<div id="schema-m117b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m117b-wrap .m117b-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m117b-wrap .m117b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m117b-wrap .m117b-diagram { position:relative; height:120px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; display:flex; align-items:center; justify-content:space-around; padding:0 10px; }
+#schema-m117b-wrap .m117b-stick { width:8px; height:60px; background:#888; border-radius:4px; position:relative; }
+#schema-m117b-wrap .m117b-knob { width:20px; height:20px; border-radius:50%; background:#4a76a8; position:absolute; top:-10px; left:50%; transform:translateX(-50%); }
+#schema-m117b-wrap .m117b-link { font-size:0.68em; color:#555; text-align:center; max-width:110px; }
+#schema-m117b-wrap .m117b-gauge { width:60px; height:60px; border-radius:50%; border:6px solid #ddd; position:relative; }
+#schema-m117b-wrap .m117b-needle { position:absolute; left:50%; bottom:50%; width:3px; height:26px; background:#c0392b; transform-origin:bottom center; transition: transform 0.2s; }
+#schema-m117b-wrap .m117b-label { font-size:0.62em; color:#555; text-align:center; }
+#schema-m117b-wrap .m117b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>D'où vient la résistance ressentie sur la commande ?</strong> Comparez sensation naturelle et sensation artificielle.</p>
+
+<button class="m117b-btn active" id="m117b-btn-naturelle">Sensation naturelle (mécanique)</button>
+<button class="m117b-btn" id="m117b-btn-artificielle">Sensation artificielle (hydraulique/électrique)</button>
+
+<div class="m117b-diagram">
+  <div>
+    <div class="m117b-stick"><div class="m117b-knob"></div></div>
+    <div class="m117b-link">Commande du pilote</div>
+  </div>
+  <div class="m117b-arrow" style="font-size:1.3em; color:#888;">→</div>
+  <div>
+    <div class="m117b-gauge"><div class="m117b-needle" id="m117b-needle" style="transform: rotate(20deg);"></div></div>
+    <div class="m117b-label" id="m117b-source-label">Effort aérodynamique réel sur la gouverne</div>
+  </div>
+</div>
+
+<div class="m117b-caption" id="m117b-caption">Ce schéma compare l'origine de la résistance ressentie par le pilote. Vue actuelle — sensation naturelle (commande purement mécanique) : la résistance vient directement de l'effort aérodynamique réel sur la gouverne, transmis sans intermédiaire. Cliquez sur « Sensation artificielle » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m117b-wrap');
+  if (!wrap) { return; }
+  var btnNat = wrap.querySelector('#m117b-btn-naturelle');
+  var btnArt = wrap.querySelector('#m117b-btn-artificielle');
+  var needle = wrap.querySelector('#m117b-needle');
+  var sourceLabel = wrap.querySelector('#m117b-source-label');
+  var caption = wrap.querySelector('#m117b-caption');
+
+  function showNaturelle() {
+    btnNat.className = 'm117b-btn active';
+    btnArt.className = 'm117b-btn';
+    needle.style.transform = 'rotate(20deg)';
+    sourceLabel.textContent = 'Effort aérodynamique réel sur la gouverne';
+    caption.textContent = "Ce schéma compare l'origine de la résistance ressentie par le pilote. Vue actuelle — sensation naturelle (commande purement mécanique) : la résistance vient directement de l'effort aérodynamique réel sur la gouverne, transmis sans intermédiaire. Cliquez sur « Sensation artificielle » pour comparer.";
+  }
+
+  function showArtificielle() {
+    btnNat.className = 'm117b-btn';
+    btnArt.className = 'm117b-btn active';
+    needle.style.transform = 'rotate(20deg)';
+    sourceLabel.textContent = 'Dispositif dédié (ressort calibré), sans lien mécanique avec la gouverne';
+    caption.textContent = "Sensation artificielle (commande hydraulique ou électrique) : un vérin ou un calculateur s'interpose entre le pilote et la gouverne, supprimant le retour d'effort naturel ; un dispositif dédié recrée artificiellement une résistance, pour que le pilote garde un repère physique. Cliquez sur « Sensation naturelle » pour revenir à l'autre vue.";
+  }
+
+  btnNat.addEventListener('click', showNaturelle);
+  btnArt.addEventListener('click', showArtificielle);
+})();
+</script>

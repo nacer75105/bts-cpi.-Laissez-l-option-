@@ -1,0 +1,56 @@
+<div id="schema-m1110-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1110-wrap .m1110-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m1110-wrap .m1110-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1110-wrap .m1110-diagram { position:relative; min-height:130px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; padding:10px; display:flex; flex-direction:column; align-items:center; gap:6px; }
+#schema-m1110-wrap .m1110-sources { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+#schema-m1110-wrap .m1110-box { padding:7px 9px; border-radius:6px; border:1.5px solid #4a76a8; background:#7fa8d9; color:#fff; font-size:0.66em; text-align:center; transition: background 0.2s, border-color 0.2s, opacity 0.2s; }
+#schema-m1110-wrap .m1110-box.down { background:#c0392b; border-color:#8a2a1c; opacity:0.6; }
+#schema-m1110-wrap .m1110-target { margin-top:8px; padding:8px 12px; border-radius:6px; border:1.5px solid #4a76a8; background:#4a76a8; color:#fff; font-size:0.72em; text-align:center; }
+#schema-m1110-wrap .m1110-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Redondance des circuits :</strong> comparez le fonctionnement normal à la perte d'un circuit.</p>
+
+<button class="m1110-btn active" id="m1110-btn-normal">Tous les circuits opérationnels</button>
+<button class="m1110-btn" id="m1110-btn-panne">Un circuit en panne</button>
+
+<div class="m1110-diagram">
+  <div class="m1110-sources">
+    <div class="m1110-box" id="m1110-c1">Circuit 1<br>(moteur 1)</div>
+    <div class="m1110-box" id="m1110-c2">Circuit 2<br>(moteur 2)</div>
+    <div class="m1110-box" id="m1110-c3">Circuit 3<br>(pompe électrique)</div>
+  </div>
+  <div class="m1110-target">Gouverne critique (alimentée par les 3 circuits)</div>
+</div>
+
+<div class="m1110-caption" id="m1110-caption">Ce schéma montre comment plusieurs circuits indépendants protègent une gouverne critique. Vue actuelle — tous les circuits opérationnels : chaque circuit, alimenté par une source différente, contribue normalement à l'actionnement de la gouverne. Cliquez sur « Un circuit en panne » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1110-wrap');
+  if (!wrap) { return; }
+  var btnNormal = wrap.querySelector('#m1110-btn-normal');
+  var btnPanne = wrap.querySelector('#m1110-btn-panne');
+  var c2 = wrap.querySelector('#m1110-c2');
+  var caption = wrap.querySelector('#m1110-caption');
+
+  function showNormal() {
+    btnNormal.className = 'm1110-btn active';
+    btnPanne.className = 'm1110-btn';
+    c2.classList.remove('down');
+    caption.textContent = "Ce schéma montre comment plusieurs circuits indépendants protègent une gouverne critique. Vue actuelle — tous les circuits opérationnels : chaque circuit, alimenté par une source différente, contribue normalement à l'actionnement de la gouverne. Cliquez sur « Un circuit en panne » pour comparer.";
+  }
+
+  function showPanne() {
+    btnNormal.className = 'm1110-btn';
+    btnPanne.className = 'm1110-btn active';
+    c2.classList.add('down');
+    caption.textContent = "Un circuit en panne : le circuit 2 (moteur 2) a perdu sa pression, mais les circuits 1 et 3, totalement indépendants et alimentés par des sources différentes, continuent d'actionner la gouverne — la perte d'un seul circuit ne prive donc jamais totalement le pilote de son contrôle. Cliquez sur « Tous les circuits opérationnels » pour revenir à l'autre vue.";
+  }
+
+  btnNormal.addEventListener('click', showNormal);
+  btnPanne.addEventListener('click', showPanne);
+})();
+</script>

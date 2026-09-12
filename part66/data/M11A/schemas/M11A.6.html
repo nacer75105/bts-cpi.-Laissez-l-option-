@@ -1,0 +1,83 @@
+<div id="schema-m116-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m116-wrap .m116-btn { margin:4px 6px 4px 0; padding:8px 10px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.8em; }
+#schema-m116-wrap .m116-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m116-wrap .m116-diagram { position:relative; height:150px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; }
+#schema-m116-wrap .m116-plane-top { position:absolute; left:50%; top:50%; width:8px; height:60px; background:#888; transform:translate(-50%,-50%); border-radius:4px; }
+#schema-m116-wrap .m116-wing { position:absolute; top:50%; width:90px; height:8px; background:#7fa8d9; border:1.5px solid #4a76a8; transition: transform 0.2s; }
+#schema-m116-wrap .m116-tail-h { position:absolute; left:50%; bottom:16%; width:70px; height:6px; background:#7fa8d9; border:1.5px solid #4a76a8; transform:translateX(-50%); transition: transform 0.2s; }
+#schema-m116-wrap .m116-tail-v { position:absolute; left:50%; bottom:16%; width:6px; height:36px; background:#7fa8d9; border:1.5px solid #4a76a8; transform:translateX(-50%) translateY(-30px); transform-origin: bottom center; transition: transform 0.2s; }
+#schema-m116-wrap .m116-label { position:absolute; font-size:0.66em; color:#555; }
+#schema-m116-wrap .m116-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Trois gouvernes, trois axes :</strong> cliquez sur chaque bouton pour voir quelle gouverne agit sur quel axe.</p>
+
+<div>
+  <button class="m116-btn active" id="m116-btn-roulis">Ailerons (roulis)</button>
+  <button class="m116-btn" id="m116-btn-tangage">Profondeur (tangage)</button>
+  <button class="m116-btn" id="m116-btn-lacet">Direction (lacet)</button>
+</div>
+
+<div class="m116-diagram">
+  <div class="m116-plane-top"></div>
+  <div class="m116-label" style="left:50%; top:6px; transform:translateX(-50%);">Fuselage</div>
+  <div class="m116-wing" id="m116-wing-g" style="left:8%; transform: rotate(0deg);"></div>
+  <div class="m116-wing" id="m116-wing-d" style="right:8%; transform: rotate(0deg);"></div>
+  <div class="m116-label" id="m116-label-aileron-g" style="left:10%; top:32%;">Aileron</div>
+  <div class="m116-label" id="m116-label-aileron-d" style="right:10%; top:32%;">Aileron</div>
+  <div class="m116-tail-h" id="m116-tail-h" style="transform: translateX(-50%) rotate(0deg);"></div>
+  <div class="m116-label" id="m116-label-profondeur" style="left:50%; bottom:6%; transform:translateX(-50%);">Gouverne de profondeur</div>
+  <div class="m116-tail-v" id="m116-tail-v" style="transform: translateX(-50%) translateY(-30px) rotate(0deg);"></div>
+  <div class="m116-label" id="m116-label-direction" style="left:58%; bottom:40%;">Gouverne de direction</div>
+</div>
+
+<div class="m116-caption" id="m116-caption">Ce schéma montre les trois gouvernes principales et l'axe qu'elles contrôlent. Vue actuelle — ailerons (roulis) : braqués en sens opposé, ils font rouler l'avion vers l'aile la moins portante. Cliquez sur les autres boutons pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m116-wrap');
+  if (!wrap) { return; }
+  var btnRoulis = wrap.querySelector('#m116-btn-roulis');
+  var btnTangage = wrap.querySelector('#m116-btn-tangage');
+  var btnLacet = wrap.querySelector('#m116-btn-lacet');
+  var wingG = wrap.querySelector('#m116-wing-g');
+  var wingD = wrap.querySelector('#m116-wing-d');
+  var tailH = wrap.querySelector('#m116-tail-h');
+  var tailV = wrap.querySelector('#m116-tail-v');
+  var caption = wrap.querySelector('#m116-caption');
+  var btns = [btnRoulis, btnTangage, btnLacet];
+
+  function reset() {
+    btns.forEach(function (b) { b.className = 'm116-btn'; });
+    wingG.style.transform = 'rotate(0deg)';
+    wingD.style.transform = 'rotate(0deg)';
+    tailH.style.transform = 'translateX(-50%) rotate(0deg)';
+    tailV.style.transform = 'translateX(-50%) translateY(-30px) rotate(0deg)';
+  }
+
+  function showRoulis() {
+    reset(); btnRoulis.className = 'm116-btn active';
+    wingG.style.transform = 'rotate(-18deg)';
+    wingD.style.transform = 'rotate(18deg)';
+    caption.textContent = "Ce schéma montre les trois gouvernes principales et l'axe qu'elles contrôlent. Vue actuelle — ailerons (roulis) : braqués en sens opposé, ils font rouler l'avion vers l'aile la moins portante. Cliquez sur les autres boutons pour comparer.";
+  }
+
+  function showTangage() {
+    reset(); btnTangage.className = 'm116-btn active';
+    tailH.style.transform = 'translateX(-50%) rotate(14deg)';
+    caption.textContent = "Gouverne de profondeur (tangage) : sur le bord de fuite du stabilisateur horizontal, elle modifie la portance de l'empennage, créant un moment qui fait monter ou descendre le nez de l'avion. Cliquez sur les autres boutons pour comparer.";
+  }
+
+  function showLacet() {
+    reset(); btnLacet.className = 'm116-btn active';
+    tailV.style.transform = 'translateX(-50%) translateY(-30px) rotate(16deg)';
+    caption.textContent = "Gouverne de direction (lacet) : sur le bord de fuite de la dérive verticale, elle modifie la force latérale de la dérive, faisant pivoter le nez à droite ou à gauche — surtout utilisée pour coordonner le virage, pas pour le produire seule. Cliquez sur les autres boutons pour comparer.";
+  }
+
+  btnRoulis.addEventListener('click', showRoulis);
+  btnTangage.addEventListener('click', showTangage);
+  btnLacet.addEventListener('click', showLacet);
+})();
+</script>

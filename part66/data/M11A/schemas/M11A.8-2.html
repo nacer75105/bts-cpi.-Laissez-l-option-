@@ -1,0 +1,79 @@
+<div id="schema-m118b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m118b-wrap .m118b-btn { margin:4px 4px 4px 0; padding:7px 9px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.74em; }
+#schema-m118b-wrap .m118b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m118b-wrap .m118b-diagram { position:relative; height:120px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; display:flex; align-items:center; justify-content:center; gap:30px; }
+#schema-m118b-wrap .m118b-wingtop { width:100px; height:8px; background:#7fa8d9; border:1.5px solid #4a76a8; border-radius:3px; position:relative; }
+#schema-m118b-wrap .m118b-spoiler { position:absolute; left:30px; top:-6px; width:36px; height:6px; background:#c0392b; border:1.5px solid #8a2a1c; border-radius:2px; transform-origin: left center; transition: transform 0.2s; }
+#schema-m118b-wrap .m118b-label { position:absolute; font-size:0.62em; color:#555; }
+#schema-m118b-wrap .m118b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Les trois rôles du spoiler :</strong> cliquez sur chaque bouton pour voir comment son usage change selon le moment.</p>
+
+<div>
+  <button class="m118b-btn active" id="m118b-btn-roulis">Assistance au roulis</button>
+  <button class="m118b-btn" id="m118b-btn-frein">Aérofrein en vol</button>
+  <button class="m118b-btn" id="m118b-btn-destruction">Destruction de portance (sol)</button>
+</div>
+
+<div class="m118b-diagram">
+  <div>
+    <div class="m118b-wingtop">
+      <div class="m118b-spoiler" id="m118b-spoiler-g" style="transform: rotate(0deg);"></div>
+      <div class="m118b-label" style="left:30px; top:-20px;">Spoiler</div>
+    </div>
+    <div class="m118b-label" style="text-align:center; margin-top:4px;">Aile gauche</div>
+  </div>
+  <div>
+    <div class="m118b-wingtop">
+      <div class="m118b-spoiler" id="m118b-spoiler-d" style="transform: rotate(0deg);"></div>
+      <div class="m118b-label" style="left:30px; top:-20px;">Spoiler</div>
+    </div>
+    <div class="m118b-label" style="text-align:center; margin-top:4px;">Aile droite</div>
+  </div>
+</div>
+
+<div class="m118b-caption" id="m118b-caption">Ce schéma montre l'usage asymétrique ou symétrique des spoilers selon leur rôle. Vue actuelle — assistance au roulis : un seul spoiler se relève, en complément de l'aileron de la même aile. Cliquez sur les autres boutons pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m118b-wrap');
+  if (!wrap) { return; }
+  var btnRoulis = wrap.querySelector('#m118b-btn-roulis');
+  var btnFrein = wrap.querySelector('#m118b-btn-frein');
+  var btnDestruction = wrap.querySelector('#m118b-btn-destruction');
+  var spoilerG = wrap.querySelector('#m118b-spoiler-g');
+  var spoilerD = wrap.querySelector('#m118b-spoiler-d');
+  var caption = wrap.querySelector('#m118b-caption');
+  var btns = [btnRoulis, btnFrein, btnDestruction];
+
+  function reset() { btns.forEach(function (b) { b.className = 'm118b-btn'; }); }
+
+  function showRoulis() {
+    reset(); btnRoulis.className = 'm118b-btn active';
+    spoilerG.style.transform = 'rotate(-35deg)';
+    spoilerD.style.transform = 'rotate(0deg)';
+    caption.textContent = "Ce schéma montre l'usage asymétrique ou symétrique des spoilers selon leur rôle. Vue actuelle — assistance au roulis : un seul spoiler se relève, en complément de l'aileron de la même aile. Cliquez sur les autres boutons pour comparer.";
+  }
+
+  function showFrein() {
+    reset(); btnFrein.className = 'm118b-btn active';
+    spoilerG.style.transform = 'rotate(-18deg)';
+    spoilerD.style.transform = 'rotate(-18deg)';
+    caption.textContent = "Aérofrein en vol : les spoilers se relèvent symétriquement sur les deux ailes, augmentant fortement la traînée sans déséquilibrer l'avion latéralement, pour ralentir ou descendre plus rapidement. Cliquez sur les autres boutons pour comparer.";
+  }
+
+  function showDestruction() {
+    reset(); btnDestruction.className = 'm118b-btn active';
+    spoilerG.style.transform = 'rotate(-70deg)';
+    spoilerD.style.transform = 'rotate(-70deg)';
+    caption.textContent = "Destruction de portance au sol : après le posé des roues, les spoilers se déploient pleinement et symétriquement, annulant la portance résiduelle pour reporter tout le poids sur les roues et permettre un freinage pleinement efficace. Cliquez sur les autres boutons pour comparer.";
+  }
+
+  btnRoulis.addEventListener('click', showRoulis);
+  btnFrein.addEventListener('click', showFrein);
+  btnDestruction.addEventListener('click', showDestruction);
+})();
+</script>

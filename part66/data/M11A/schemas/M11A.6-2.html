@@ -1,0 +1,59 @@
+<div id="schema-m116b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m116b-wrap .m116b-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m116b-wrap .m116b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m116b-wrap .m116b-diagram { position:relative; height:110px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; display:flex; align-items:center; justify-content:center; }
+#schema-m116b-wrap .m116b-surface { width:160px; height:16px; background:#7fa8d9; border:1.5px solid #4a76a8; border-radius:3px; position:relative; transform: rotate(-14deg); transform-origin: left center; }
+#schema-m116b-wrap .m116b-tab { position:absolute; right:-30px; top:50%; width:28px; height:10px; background:#e0a800; border:1.5px solid #a87a00; border-radius:3px; transform-origin: left center; transform: translateY(-50%) rotate(0deg); transition: transform 0.2s; }
+#schema-m116b-wrap .m116b-force { position:absolute; font-size:1.1em; color:#333; }
+#schema-m116b-wrap .m116b-label { position:absolute; font-size:0.66em; color:#555; }
+#schema-m116b-wrap .m116b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Le trim en action :</strong> comparez l'effort nécessaire sur la commande, avant et après réglage du trim.</p>
+
+<button class="m116b-btn active" id="m116b-btn-sans">Sans trim (effort constant requis)</button>
+<button class="m116b-btn" id="m116b-btn-avec">Avec trim réglé (effort annulé)</button>
+
+<div class="m116b-diagram">
+  <div class="m116b-label" style="top:8px; left:8px;">Gouverne principale</div>
+  <div class="m116b-surface">
+    <div class="m116b-tab" id="m116b-tab"></div>
+    <div class="m116b-label" id="m116b-tab-label" style="right:-34px; top:-16px;">Trim</div>
+  </div>
+  <div class="m116b-force" id="m116b-force" style="left:6%; top:20%;">✋ effort</div>
+</div>
+
+<div class="m116b-caption" id="m116b-caption">Ce schéma compare l'effort du pilote avant et après réglage du trim. Vue actuelle — sans trim : le pilote doit maintenir un effort constant pour garder la gouverne hors de sa position neutre. Cliquez sur « Avec trim réglé » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m116b-wrap');
+  if (!wrap) { return; }
+  var btnSans = wrap.querySelector('#m116b-btn-sans');
+  var btnAvec = wrap.querySelector('#m116b-btn-avec');
+  var tab = wrap.querySelector('#m116b-tab');
+  var force = wrap.querySelector('#m116b-force');
+  var caption = wrap.querySelector('#m116b-caption');
+
+  function showSans() {
+    btnSans.className = 'm116b-btn active';
+    btnAvec.className = 'm116b-btn';
+    tab.style.transform = 'translateY(-50%) rotate(0deg)';
+    force.style.display = 'block';
+    caption.textContent = "Ce schéma compare l'effort du pilote avant et après réglage du trim. Vue actuelle — sans trim : le pilote doit maintenir un effort constant pour garder la gouverne hors de sa position neutre. Cliquez sur « Avec trim réglé » pour comparer.";
+  }
+
+  function showAvec() {
+    btnSans.className = 'm116b-btn';
+    btnAvec.className = 'm116b-btn active';
+    tab.style.transform = 'translateY(-50%) rotate(-25deg)';
+    force.style.display = 'none';
+    caption.textContent = "Avec trim réglé : la petite surface du trim modifie le moment de charnière de la gouverne principale, qui reste dans la position voulue sans aucun effort du pilote — la gouverne elle-même n'a pas bougé, seul le trim a été déplacé. Cliquez sur « Sans trim » pour revenir à l'autre vue.";
+  }
+
+  btnSans.addEventListener('click', showSans);
+  btnAvec.addEventListener('click', showAvec);
+})();
+</script>

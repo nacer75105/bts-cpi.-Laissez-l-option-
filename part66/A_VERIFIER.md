@@ -1148,7 +1148,7 @@ manquaient de légendes permanentes et de texte d'explication initial
 utile.** Corrigé sur les 10 fichiers : chaque élément visuel porte
 désormais un libellé texte visible en permanence (pas seulement au
 clic), et la zone d'explication affiche dès le chargement une phrase
-qui décrit l'état montré et invite explicitely à cliquer pour
+qui décrit l'état montré et invite explicitement à cliquer pour
 comparer. Cette double exigence est désormais documentée comme
 contrainte permanente dans `C:\Users\pc\CLAUDE.md` (section
 « Contrainte de contenu : schémas interactifs Part-66 — légendes
@@ -1156,6 +1156,39 @@ permanentes et texte initial non vide ») et s'applique dès la
 rédaction de tout schéma des lots suivants, pas seulement en
 correction a posteriori. **Lot 1 validé par l'utilisateur, tests
 locaux inclus, le 2026-09-12.**
+
+### Lot 2 (M11A.6-M11A.10, 5 fiches, 45 questions, 10 schémas) — validé
+
+Commandes de vol (gouvernes principales/secondaires, trims,
+servo-tabs), systèmes d'actionnement (mécanique, hydraulique assisté,
+électrique/fly-by-wire), dispositifs hypersustentateurs (volets, becs,
+spoilers), circuits hydrauliques (principes, puis architecture et
+redondance). M11A.9 et M11A.10 soumises à la même consigne de portée
+stricte que M15.9/M15.13 (principe et conséquences entretien
+uniquement, jamais de valeur de pression ni de procédure d'isolement
+détaillée).
+
+Relu par `relecteur-part66` : 3 BLOQUANT trouvés et corrigés — un
+renvoi fabriqué vers M11A.5 dans M11A.7 (même motif que le lot 1) ;
+une légende de schéma (`M11A.9-2.html`) affirmant que dépressuriser et
+isoler « rend une intervention sûre », un raccourci trop absolu compte
+tenu de l'énergie résiduelle possible d'un accumulateur — corrigé, et
+la fiche M11A.9 complétée d'une phrase de principe sur cette énergie
+résiduelle ; trois schémas (`M11A.6-2.html`, `M11A.8.html`,
+`M11A.8-2.html`) où un élément visible dès le chargement (trim, bec,
+volet, spoiler) n'était pourtant nommé qu'après un clic, contraire à
+la contrainte de légendes permanentes tout juste adoptée — corrigé en
+rendant ces libellés visibles en permanence. Coquilles corrigées suite
+à un retour utilisateur : « different » → « différent » (M11A.9),
+anglicisme « near » → « près de » (M11A.6). Plusieurs points À REVOIR
+traités dans la foulée : deux doublons de questions remplacés, trois
+questions « méta » reformulées, un jeu de distracteurs auto-réfutants
+corrigé, six distracteurs trop faibles (« à des fins esthétiques »,
+« par confort », etc.) renforcés, et deux incohérences visuelles
+mineures corrigées (`M11A.6-2.html` : la gouverne reste maintenant
+visiblement braquée dans les deux vues ; `M11A.7-2.html` : l'aiguille
+de sensation garde le même angle entre les deux vues, seule son
+origine change). **Lot 2 validé par l'utilisateur le 2026-09-12.**
 
 **Point de configuration (hors banque de questions)** : `nb_questions_examen: 140`
 confirmé par l'utilisateur. `duree_examen_min: 175` = 75 secondes par

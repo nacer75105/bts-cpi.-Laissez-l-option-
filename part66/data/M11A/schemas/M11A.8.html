@@ -1,0 +1,59 @@
+<div id="schema-m118-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m118-wrap .m118-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m118-wrap .m118-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m118-wrap .m118-diagram { position:relative; height:130px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; }
+#schema-m118-wrap .m118-wing { position:absolute; left:15%; top:55%; width:220px; height:8px; background:#7fa8d9; border:1.5px solid #4a76a8; border-radius:3px; }
+#schema-m118-wrap .m118-flap { position:absolute; width:50px; height:8px; background:#e0a800; border:1.5px solid #a87a00; border-radius:0 0 4px 4px; transform-origin: top left; transition: transform 0.2s; }
+#schema-m118-wrap .m118-slat { position:absolute; width:24px; height:6px; background:#5aa06a; border:1.5px solid #3a7a4a; border-radius:4px 4px 0 0; transform-origin: bottom right; transition: transform 0.2s; }
+#schema-m118-wrap .m118-label { position:absolute; font-size:0.66em; color:#555; }
+#schema-m118-wrap .m118-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Aile lisse ou hypersustentée :</strong> comparez la configuration de croisière et celle d'approche (volets et becs déployés).</p>
+
+<button class="m118-btn active" id="m118-btn-lisse">Aile lisse (croisière)</button>
+<button class="m118-btn" id="m118-btn-hyper">Volets et becs déployés (approche)</button>
+
+<div class="m118-diagram">
+  <div class="m118-label" style="left:15%; top:10%;">Aile</div>
+  <div class="m118-wing"></div>
+  <div class="m118-slat" id="m118-slat" style="left:14%; top:55%; transform: rotate(0deg);"></div>
+  <div class="m118-label" id="m118-label-slat" style="left:6%; top:38%;">Bec (slat)</div>
+  <div class="m118-flap" id="m118-flap" style="right:5%; top:63%; transform: rotate(0deg);"></div>
+  <div class="m118-label" id="m118-label-flap" style="right:2%; top:82%;">Volet (flap)</div>
+</div>
+
+<div class="m118-caption" id="m118-caption">Ce schéma compare une aile lisse à une aile hypersustentée. Vue actuelle — aile lisse : configuration de croisière, optimisée pour un vol rapide et économe, sans volet ni bec déployé. Cliquez sur « Volets et becs déployés » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m118-wrap');
+  if (!wrap) { return; }
+  var btnLisse = wrap.querySelector('#m118-btn-lisse');
+  var btnHyper = wrap.querySelector('#m118-btn-hyper');
+  var slat = wrap.querySelector('#m118-slat');
+  var flap = wrap.querySelector('#m118-flap');
+  var caption = wrap.querySelector('#m118-caption');
+
+  function showLisse() {
+    btnLisse.className = 'm118-btn active';
+    btnHyper.className = 'm118-btn';
+    slat.style.transform = 'rotate(0deg)';
+    flap.style.transform = 'rotate(0deg)';
+    caption.textContent = "Ce schéma compare une aile lisse à une aile hypersustentée. Vue actuelle — aile lisse : configuration de croisière, optimisée pour un vol rapide et économe, sans volet ni bec déployé. Cliquez sur « Volets et becs déployés » pour comparer.";
+  }
+
+  function showHyper() {
+    btnLisse.className = 'm118-btn';
+    btnHyper.className = 'm118-btn active';
+    slat.style.transform = 'rotate(-35deg) translateY(4px)';
+    flap.style.transform = 'rotate(28deg)';
+    caption.textContent = "Volets et becs déployés : le bec, à l'avant, réénergise l'écoulement au bord d'attaque et retarde le décrochage ; le volet, à l'arrière, augmente la cambrure et la portance disponible — ensemble, ils permettent de voler nettement plus lentement, avec une marge confortable avant le décrochage. Cliquez sur « Aile lisse » pour revenir à l'autre vue.";
+  }
+
+  btnLisse.addEventListener('click', showLisse);
+  btnHyper.addEventListener('click', showHyper);
+})();
+</script>

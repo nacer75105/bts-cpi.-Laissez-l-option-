@@ -585,6 +585,591 @@
       "bonne": 2,
       "explication": "Un dommage qui interromprait une voie de transfert de charge oblige celle-ci à emprunter un chemin alternatif à travers le reste de la structure, souvent moins bien dimensionné pour cet usage — d'où l'importance de juger un dommage structural sur ses conséquences plutôt que sur sa seule taille apparente. Un tel dommage a donc bien des conséquences au-delà de sa taille visible, et au-delà de la seule pièce endommagée : il affecte la répartition des charges dans le reste de la structure.",
       "source": "Notions générales de structures aéronautiques — avion à turbine"
+    },
+    {
+      "uid": "M11A-0046",
+      "sous_chapitre": "M11A.6",
+      "question": "Pourquoi un avion a-t-il besoin de trois familles de gouvernes principales distinctes ?",
+      "options": [
+        "Un avion peut tourner autour de trois axes indépendants (roulis, tangage, lacet), chacun nécessitant un contrôle propre",
+        "Chaque gouverne est une simple redondance des deux autres, prévue uniquement en cas de panne",
+        "Les trois gouvernes contrôlent en réalité le même mouvement, mais avec des noms différents selon la partie de l'avion concernée"
+      ],
+      "bonne": 0,
+      "explication": "Un avion peut tourner autour de trois axes indépendants passant par son centre de gravité (roulis, tangage, lacet) ; contrôler l'avion suppose de pouvoir agir sur chacun indépendamment des deux autres, d'où trois familles de gouvernes principales. Elles ne sont donc pas de simples redondances l'une de l'autre, et elles ne contrôlent pas le même mouvement : chacune est dédiée à un axe distinct.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0047",
+      "sous_chapitre": "M11A.6",
+      "question": "Comment les ailerons produisent-ils un moment de roulis ?",
+      "options": [
+        "Ils sont braqués dans le même sens sur les deux ailes, augmentant la portance totale de l'avion sans créer de moment de roulis",
+        "Ils sont braqués en sens opposé l'un de l'autre, créant une différence de portance entre les deux ailes qui fait rouler l'avion vers l'aile la moins portante",
+        "Ils agissent uniquement sur la traînée des deux ailes, sans jamais modifier la portance produite"
+      ],
+      "bonne": 1,
+      "explication": "Les ailerons sont braqués en sens opposé (l'un s'abaisse pendant que l'autre se relève), ce qui modifie la portance locale de chaque aile en sens opposé et crée une différence de portance entre les deux ailes : ce déséquilibre produit le moment qui fait rouler l'avion vers l'aile dont la portance a diminué. Un braquage dans le même sens ne produirait donc pas ce moment, et les ailerons agissent bien sur la portance locale, pas seulement sur la traînée.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0048",
+      "sous_chapitre": "M11A.6",
+      "question": "Quel est le rôle principal de la gouverne de direction, souvent mal compris ?",
+      "options": [
+        "Elle contrôle le tangage de l'avion, au même titre que la gouverne de profondeur",
+        "Elle sert uniquement à faire virer l'avion, les ailerons n'ayant aucun rôle dans un virage complet",
+        "Elle sert surtout à coordonner le virage et à contrer des effets asymétriques, le virage lui-même étant principalement assuré par les ailerons"
+      ],
+      "bonne": 2,
+      "explication": "Contrairement à une idée reçue, la gouverne de direction ne sert pas d'abord à « tourner » l'avion (rôle principalement assuré par les ailerons et l'inclinaison qui en résulte) : elle sert surtout à coordonner le virage et à contrer des effets asymétriques comme une panne moteur d'un côté. Elle ne contrôle donc pas le tangage (rôle de la gouverne de profondeur, un axe différent).",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0049",
+      "sous_chapitre": "M11A.6",
+      "question": "Pourquoi un trim (compensateur) est-il nécessaire en complément des gouvernes principales ?",
+      "options": [
+        "Maintenir une gouverne principale hors de sa position neutre demande une force constante du pilote, épuisante sur un vol long sans compensation",
+        "Un trim remplace entièrement la gouverne principale, qui devient alors inutile une fois le trim réglé",
+        "Un trim sert uniquement à indiquer au pilote la position actuelle de la gouverne principale, sans effet mécanique réel"
+      ],
+      "bonne": 0,
+      "explication": "Maintenir une gouverne principale dans une position autre que neutre demande une force constante, épuisante sur un vol long ; le trim modifie l'équilibre aérodynamique de la gouverne principale pour qu'elle reste dans la position voulue sans effort du pilote. Il ne remplace donc pas la gouverne principale (qui reste manœuvrable normalement), et il a un effet mécanique réel, pas seulement indicatif.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0050",
+      "sous_chapitre": "M11A.6",
+      "question": "Sur quoi agit précisément un trim pour annuler l'effort nécessaire sur une gouverne principale ?",
+      "options": [
+        "Directement sur la portance globale de l'avion, exactement comme le ferait la gouverne principale elle-même",
+        "Sur le moment de charnière de la gouverne principale, plutôt que directement sur la portance globale de l'avion",
+        "Sur la vitesse de l'avion, en la réduisant légèrement pour diminuer l'effort nécessaire sur la commande"
+      ],
+      "bonne": 1,
+      "explication": "Le trim agit sur le moment de charnière de la gouverne principale (sa tendance à revenir ou non vers sa position neutre sous l'effet de l'écoulement), plutôt que directement sur la portance globale de l'avion — une petite déflexion suffit ainsi à annuler l'effort nécessaire. Il n'agit donc pas comme la gouverne principale elle-même, et il ne modifie pas la vitesse de l'avion pour obtenir cet effet.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0051",
+      "sous_chapitre": "M11A.6",
+      "question": "En quoi une servo-tab diffère-t-elle d'un trim, bien qu'utilisant un principe voisin (une petite surface sur le bord de fuite de la gouverne principale) ?",
+      "options": [
+        "Une servo-tab remplace entièrement l'actionnement hydraulique décrit dans la fiche suivante, rendant celui-ci inutile",
+        "Une servo-tab et un trim sont rigoureusement identiques, seul leur emplacement sur l'aile diffère",
+        "Une servo-tab est déviée directement par le mouvement du pilote et aide la gouverne à se déplacer avec un effort réduit, plutôt que d'annuler complètement l'effort comme un trim"
+      ],
+      "bonne": 2,
+      "explication": "Une servo-tab est déviée directement par le mouvement du pilote sur la commande, et aide ainsi la gouverne principale à se déplacer avec un effort réduit — une forme d'assistance, plutôt que l'annulation complète de l'effort recherchée par un trim. Ce n'est donc pas la même chose qu'un trim malgré le principe voisin, et elle ne rend pas l'actionnement hydraulique inutile : ce sont deux formes d'assistance distinctes.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0052",
+      "sous_chapitre": "M11A.6",
+      "question": "Pourquoi le trim de profondeur est-il le plus systématiquement utilisé en vol, parmi les trois trims possibles ?",
+      "options": [
+        "L'effort de tangage varie le plus avec la vitesse et le centrage de l'avion, deux paramètres qui changent en permanence en vol",
+        "C'est le seul trim qui existe réellement sur un avion, les trims de direction et d'ailerons n'étant que des concepts théoriques",
+        "Le trim de profondeur est utilisé uniquement au sol, avant le décollage, jamais en vol"
+      ],
+      "bonne": 0,
+      "explication": "L'effort de tangage varie le plus avec la vitesse et le centrage de l'avion (deux paramètres qui changent en permanence en vol), ce qui explique l'usage systématique du trim de profondeur. Les trims de direction et d'ailerons existent bien réellement (rappel de la fiche : ils compensent respectivement les effets asymétriques prolongés et un déséquilibre latéral), et le trim de profondeur est bien utilisé en vol, pas seulement au sol.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0053",
+      "sous_chapitre": "M11A.6",
+      "question": "Pourquoi est-il important, pour l'entretien, de distinguer une gouverne principale bloquée d'un trim mal réglé ou bloqué ?",
+      "options": [
+        "Les deux anomalies ont exactement les mêmes conséquences pour la sécurité du vol, sans aucune différence de gravité",
+        "Une gouverne principale bloquée prive l'avion d'un contrôle direct sur un axe entier, tandis qu'un trim bloqué modifie seulement l'effort à exercer, sans empêcher la manœuvre directe",
+        "Un trim bloqué est toujours plus grave qu'une gouverne principale bloquée, car il ne peut jamais être compensé par le pilote"
+      ],
+      "bonne": 1,
+      "explication": "Une gouverne principale bloquée prive l'avion d'un contrôle direct sur un axe entier, tandis qu'un trim mal réglé ou bloqué modifie seulement l'effort à exercer sur la commande correspondante, sans empêcher le pilote de continuer à la manœuvrer directement (avec un effort accru). Les deux anomalies n'ont donc pas la même gravité, et un trim bloqué reste compensable par un effort accru du pilote, contrairement à l'affirmation inverse.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0054",
+      "sous_chapitre": "M11A.6",
+      "question": "Que se passe-t-il si un trim de profondeur reste réglé dans une position inadaptée à la phase de vol actuelle ?",
+      "options": [
+        "Un trim déréglé n'a aucune conséquence tant que la gouverne principale elle-même reste en bon état",
+        "Le trim empêche totalement la gouverne de profondeur de bouger, quel que soit l'effort exercé par le pilote",
+        "La gouverne de profondeur tend vers une position d'équilibre différente de celle voulue, obligeant le pilote à exercer un effort constant pour compenser ce déréglage"
+      ],
+      "bonne": 2,
+      "explication": "Un trim mal réglé modifie le moment de charnière de la gouverne vers une position d'équilibre différente de celle voulue par le pilote, qui doit alors exercer un effort constant pour la maintenir dans la position réellement souhaitée — l'inverse du confort recherché par un trim bien réglé. Il n'empêche pas la gouverne de bouger (elle reste manœuvrable, rappel de la fiche), et ses conséquences sont bien réelles même si la gouverne principale est par ailleurs en parfait état.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0055",
+      "sous_chapitre": "M11A.7",
+      "question": "Quelle est la caractéristique principale de l'actionnement mécanique (manuel) des commandes de vol ?",
+      "options": [
+        "Des câbles, tringles et poulies relient directement les commandes du poste de pilotage aux gouvernes, sans intermédiaire",
+        "Un calculateur interprète le mouvement du pilote avant de commander les gouvernes via des vérins hydrauliques",
+        "Un vérin hydraulique fournit l'intégralité de la force nécessaire, le pilote ne fournissant qu'un signal électrique"
+      ],
+      "bonne": 0,
+      "explication": "L'actionnement mécanique relie directement, par des câbles, des tringles et des poulies, les commandes du poste de pilotage aux gouvernes elles-mêmes, sans intermédiaire ; le pilote fournit directement la force nécessaire. Les deux autres descriptions correspondent respectivement à la commande électrique (fly-by-wire) et à la commande hydraulique à puissance intégrale, deux familles distinctes détaillées plus loin dans la fiche.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0056",
+      "sous_chapitre": "M11A.7",
+      "question": "Pourquoi l'actionnement purement mécanique devient-il insuffisant sur un avion plus grand ou plus rapide ?",
+      "options": [
+        "L'actionnement mécanique est en réalité toujours suffisant, quelle que soit la taille ou la vitesse de l'avion",
+        "La force aérodynamique sur les gouvernes augmente avec la vitesse et la taille des surfaces, dépassant ce qu'un pilote peut fournir directement",
+        "Les câbles et tringles deviennent trop légers pour transmettre une force suffisante au-delà d'une certaine taille d'avion"
+      ],
+      "bonne": 1,
+      "explication": "La force aérodynamique augmente fortement avec la vitesse (rappel M11A.1) et les surfaces de contrôle d'un grand avion sont elles-mêmes plus grandes ; la force nécessaire pour déplacer une gouverne peut ainsi dépasser ce qu'un pilote peut fournir directement. Ce n'est donc pas toujours suffisant quelle que soit la taille, et le problème n'est pas la légèreté des câbles mais l'insuffisance de la force humaine disponible.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0057",
+      "sous_chapitre": "M11A.7",
+      "question": "Quel rôle joue un vérin hydraulique dans une commande de vol assistée ?",
+      "options": [
+        "Il remplace entièrement le rôle du pilote, qui n'a alors plus aucune action à effectuer sur la commande",
+        "Il ne fait que transmettre le mouvement du pilote sans jamais fournir de force supplémentaire propre",
+        "Il fournit tout ou partie de la force nécessaire pour déplacer la gouverne, le pilote commandant une valve plutôt que la gouverne directement"
+      ],
+      "bonne": 2,
+      "explication": "Le vérin hydraulique fournit tout ou partie de la force nécessaire pour déplacer la gouverne ; le pilote ne déplace plus directement la gouverne, mais commande, via des câbles ou tringles, une valve qui dirige le fluide vers le vérin. Le vérin fournit donc bien une force supplémentaire propre, et le pilote garde un rôle actif de commande, même si l'effort physique direct est réduit ou supprimé.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0058",
+      "sous_chapitre": "M11A.7",
+      "question": "Pourquoi un système de sensation artificielle (artificial feel) équipe-t-il les avions à commande hydraulique ?",
+      "options": [
+        "En interposant un vérin, le pilote perd la sensation naturelle de l'effort aérodynamique sur la gouverne, un repère qu'il utilisait pour doser ses actions",
+        "Ce système sert uniquement à rendre la commande plus lourde à manier, sans aucun lien avec l'information transmise au pilote",
+        "Ce système remplace entièrement le vérin hydraulique, qui devient alors superflu une fois la sensation artificielle installée"
+      ],
+      "bonne": 0,
+      "explication": "En interposant un vérin entre le pilote et la gouverne, le pilote perd la sensation naturelle de l'effort aérodynamique réel, un repère qu'il utilisait pour doser ses actions sur une commande purement mécanique ; le système de sensation artificielle recrée cette résistance de façon artificielle. Ce n'est donc pas un simple alourdissement sans rapport avec l'information transmise, et il ne remplace pas le vérin : les deux systèmes coexistent.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0059",
+      "sous_chapitre": "M11A.7",
+      "question": "Qu'est-ce qui caractérise fondamentalement une commande de vol électrique (fly-by-wire) ?",
+      "options": [
+        "Le pilote actionne directement, par câbles et tringles, les vérins hydrauliques des gouvernes, sans aucun calculateur intermédiaire",
+        "Le mouvement du pilote est converti en signal électrique, transmis à un calculateur qui détermine l'ordre envoyé aux vérins, sans liaison mécanique directe",
+        "Un fly-by-wire n'utilise aucun vérin : les gouvernes sont déplacées directement par un moteur électrique fixé sur chacune d'elles"
+      ],
+      "bonne": 1,
+      "explication": "Dans une commande de vol électrique, le mouvement du pilote est converti en signal électrique, transmis à un calculateur qui détermine l'ordre à envoyer aux vérins des gouvernes, sans liaison mécanique directe entre le poste de pilotage et les gouvernes. Ce n'est donc pas un actionnement direct par câbles (ce serait de l'hydraulique assisté classique), et les vérins restent bien présents : c'est la liaison de commande qui devient électrique, pas nécessairement l'actionnement final.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0060",
+      "sous_chapitre": "M11A.7",
+      "question": "En quoi un calculateur de commande de vol électrique est-il considéré comme un progrès plutôt qu'une simple complication ?",
+      "options": [
+        "Il remplace entièrement le rôle du pilote, qui n'a plus qu'à observer les décisions prises automatiquement par le système",
+        "Il élimine totalement le besoin d'une quelconque redondance, puisqu'un seul calculateur suffit à garantir la sécurité",
+        "Il peut appliquer des protections automatiques (par exemple limiter une déflexion qui mènerait au décrochage) sans empêcher un contrôle complet en vol normal"
+      ],
+      "bonne": 2,
+      "explication": "Un calculateur peut appliquer des protections automatiques (comme limiter une déflexion qui mènerait au décrochage, rappel M11A.2) sans empêcher un contrôle complet dans le domaine de vol normal. Il ne réduit pas le besoin de redondance (au contraire, une redondance poussée est nécessaire, rappel de la fiche), et le pilote garde un rôle de commande actif, le calculateur n'agissant qu'en interprète et en protection.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0061",
+      "sous_chapitre": "M11A.7",
+      "question": "Pourquoi une redondance poussée (plusieurs calculateurs indépendants) est-elle indispensable sur une commande de vol électrique ?",
+      "options": [
+        "Sans liaison mécanique directe, une panne électrique ou informatique complète priverait entièrement le pilote de tout contrôle si aucune protection n'existait",
+        "La redondance n'est en réalité pas nécessaire sur ce type de système, un seul calculateur suffisant largement",
+        "La redondance sert uniquement à respecter une exigence réglementaire administrative, sans lien réel avec la sécurité du vol"
+      ],
+      "bonne": 0,
+      "explication": "Puisqu'aucune liaison mécanique directe ne subsiste sur une commande de vol électrique, une panne électrique ou informatique complète priverait entièrement le pilote de tout contrôle si aucune protection n'existait ; c'est pourquoi ces systèmes reposent sur plusieurs calculateurs indépendants qui se vérifient mutuellement. La redondance est donc bien indispensable, et elle répond directement à un enjeu de sécurité, pas seulement de confort.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0062",
+      "sous_chapitre": "M11A.7",
+      "question": "En quoi la sensation artificielle d'une commande de vol électrique diffère-t-elle de celle d'une commande hydraulique ?",
+      "options": [
+        "Les deux systèmes de sensation artificielle sont rigoureusement identiques, sans aucune différence de principe",
+        "Sur une commande électrique, la résistance ressentie est entièrement produite par un dispositif dédié, sans aucun lien mécanique avec l'effort aérodynamique réel sur la gouverne",
+        "Une commande de vol électrique n'a jamais besoin de sensation artificielle, contrairement à une commande hydraulique"
+      ],
+      "bonne": 1,
+      "explication": "Sur une commande électrique, sans aucune liaison mécanique ni hydraulique avec la gouverne, la résistance ressentie est entièrement produite par un dispositif dédié (souvent un ressort calibré), sans lien mécanique avec l'effort aérodynamique réel — une différence de principe avec la sensation artificielle hydraulique, qui reste au moins indirectement liée au circuit qui actionne la gouverne. Les deux ne sont donc pas identiques, et une commande électrique a bien besoin, elle aussi, d'un tel dispositif.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0063",
+      "sous_chapitre": "M11A.7",
+      "question": "Dans l'exemple de l'avion à commandes de vol électriques décrit dans la fiche, comment le calculateur traite-t-il l'inclinaison des commandes par le pilote ?",
+      "options": [
+        "Il ignore totalement la vitesse et l'assiette de l'avion, se contentant de reproduire strictement l'amplitude du mouvement du pilote",
+        "Il transmet le signal sans aucune interprétation, exactement comme le ferait un câble mécanique reliant directement la commande à la gouverne",
+        "Il interprète le signal électrique en tenant compte de la vitesse et de l'assiette actuelles, puis coordonne automatiquement la déflexion des ailerons et de la gouverne de direction"
+      ],
+      "bonne": 2,
+      "explication": "Le calculateur interprète le signal électrique en tenant compte de la vitesse et de l'assiette actuelles de l'avion avant de commander les vérins, coordonnant automatiquement la déflexion des ailerons et de la gouverne de direction. Il ne se contente donc pas de transmettre le signal brut comme un câble mécanique, et il tient bien compte des conditions de vol plutôt que de les ignorer.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0064",
+      "sous_chapitre": "M11A.8",
+      "question": "Pourquoi une aile n'est-elle pas conçue pour produire, sans aucun dispositif additionnel, toute la portance nécessaire à basse vitesse ?",
+      "options": [
+        "Une telle aile produirait, en croisière à haute vitesse, bien plus de portance et de traînée que nécessaire, pénalisant la consommation de carburant",
+        "Il serait techniquement impossible de concevoir une aile qui produise assez de portance à basse vitesse, quelle que soit sa forme",
+        "Les dispositifs hypersustentateurs agissent uniquement en augmentant la puissance moteur disponible au décollage, sans modifier la forme de l'aile"
+      ],
+      "bonne": 0,
+      "explication": "Une aile dimensionnée pour produire toute sa portance nécessaire à basse vitesse produirait, en croisière à haute vitesse, bien plus de portance et de traînée que nécessaire (rappel M11A.1 : la traînée induite augmente avec la portance), pénalisant sérieusement la consommation de carburant. Ce n'est pas une impossibilité technique de principe, et les dispositifs hypersustentateurs ont un effet réel et mesurable sur la portance, pas seulement esthétique.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0065",
+      "sous_chapitre": "M11A.8",
+      "question": "Par quels mécanismes un volet abaissé augmente-t-il la portance de l'aile ?",
+      "options": [
+        "Il augmente uniquement la vitesse de l'avion, ce qui accroît indirectement la portance produite",
+        "Il augmente la cambrure effective du profil et, selon sa conception, la surface exposée à l'écoulement",
+        "Il réduit l'angle d'incidence de l'aile, ce qui augmente mécaniquement la portance produite à cet angle plus faible"
+      ],
+      "bonne": 1,
+      "explication": "Un volet abaissé augmente à la fois la cambrure effective de l'aile et, selon sa conception, sa surface exposée à l'écoulement — deux effets qui augmentent la portance disponible à une vitesse donnée. Il n'augmente pas la vitesse de l'avion (c'est l'inverse qui est recherché, voler plus lentement) et il ne réduit pas l'angle d'incidence de l'aile en tant que tel.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0066",
+      "sous_chapitre": "M11A.8",
+      "question": "Comment une fente entre un volet déployé et le reste de l'aile retarde-t-elle le décollement de l'écoulement ?",
+      "options": [
+        "Elle n'a aucun effet sur l'écoulement d'air : son seul rôle est de réduire le poids du volet",
+        "Elle bloque totalement l'écoulement d'air à cet endroit, empêchant tout risque de décollement par absence complète d'air",
+        "Elle réintroduit de l'air à haute énergie venu de l'intrados vers l'extrados du volet, retardant le décollement à cet endroit"
+      ],
+      "bonne": 2,
+      "explication": "La fente réintroduit de l'air à haute énergie venu de l'intrados vers l'extrados du volet, ce qui retarde le décollement de l'écoulement à cet endroit (rappel M11A.2 : le décrochage provient d'un tel décollement). Elle ne bloque donc pas l'écoulement (au contraire, elle le fait circuler), et son rôle est aérodynamique, pas lié au poids du volet.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0067",
+      "sous_chapitre": "M11A.8",
+      "question": "Quel rôle jouent les becs de bord d'attaque (slats) ?",
+      "options": [
+        "Ils créent une fente qui réintroduit de l'air à haute énergie sur l'extrados juste après le bord d'attaque, retardant l'apparition du décrochage",
+        "Ils augmentent uniquement la traînée de l'aile, sans aucun effet sur la portance ou sur le décrochage",
+        "Ils remplacent entièrement les volets, qui deviennent alors inutiles une fois les becs déployés"
+      ],
+      "bonne": 0,
+      "explication": "Les becs créent une fente qui réintroduit de l'air à haute énergie sur l'extrados, juste après le bord d'attaque, retardant l'apparition du décrochage (rappel M11A.2). Ils ne se limitent donc pas à un effet sur la traînée, et ils ne remplacent pas les volets : les deux dispositifs sont souvent utilisés ensemble, comme le précise la fiche.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0068",
+      "sous_chapitre": "M11A.8",
+      "question": "Pourquoi volets et becs sont-ils souvent utilisés ensemble plutôt que l'un sans l'autre ?",
+      "options": [
+        "Les volets et les becs remplissent exactement le même rôle, leur usage combiné n'apportant donc rien de plus qu'un seul des deux",
+        "Les becs compensent la réduction de marge avant le décrochage que peuvent introduire les volets, permettant d'exploiter pleinement leur gain de portance",
+        "Les becs n'ont d'effet que si les volets sont rentrés, ce qui rend leur usage simultané physiquement impossible"
+      ],
+      "bonne": 1,
+      "explication": "Les volets peuvent réduire légèrement la marge avant le décrochage ; les becs, en repoussant plus loin l'apparition du décrochage, compensent cet effet et permettent d'exploiter pleinement le gain de portance des volets sans réduire la marge de sécurité. Ils ne remplissent donc pas le même rôle, et leur usage simultané est au contraire la configuration recherchée, pas une impossibilité.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0069",
+      "sous_chapitre": "M11A.8",
+      "question": "En quoi l'effet d'un spoiler sur l'écoulement d'air est-il presque inverse de celui d'un volet ou d'un bec ?",
+      "options": [
+        "Un spoiler agit uniquement en réduisant la vitesse de l'avion, sans modifier l'écoulement d'air autour de l'aile",
+        "Un spoiler produit exactement le même effet qu'un volet, mais situé sur l'intrados plutôt que sur l'extrados",
+        "Un spoiler provoque volontairement un décollement local de l'écoulement, réduisant la portance et augmentant la traînée"
+      ],
+      "bonne": 2,
+      "explication": "Un spoiler, en se relevant sur l'extrados, provoque volontairement un décollement local de l'écoulement (rappel M11A.2), réduisant la portance et augmentant la traînée — l'inverse de l'effet recherché par un volet ou un bec. Il ne produit donc pas le même effet qu'un volet, et son effet est bien aérodynamique, pas lié à son poids.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0070",
+      "sous_chapitre": "M11A.8",
+      "question": "Quels sont les trois rôles distincts que peuvent jouer les spoilers, selon le moment où ils sont utilisés ?",
+      "options": [
+        "Assistance au contrôle en roulis, aérofrein en vol, et destruction de la portance résiduelle après l'atterrissage",
+        "Uniquement le freinage au sol après l'atterrissage, sans aucun autre usage possible en vol",
+        "Uniquement l'assistance au roulis, un rôle qu'ils partagent en permanence et exclusivement avec les ailerons"
+      ],
+      "bonne": 0,
+      "explication": "Les spoilers jouent trois rôles distincts selon le moment : assistance au contrôle en roulis en complément des ailerons, aérofrein symétrique en vol, et destruction de la portance résiduelle après l'atterrissage pour reporter le poids sur les roues. Ils ne se limitent donc pas au seul freinage au sol, et leur rôle ne se limite pas non plus à la seule assistance au roulis.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0071",
+      "sous_chapitre": "M11A.8",
+      "question": "Pourquoi détruire la portance résiduelle après l'atterrissage améliore-t-il l'efficacité du freinage des roues ?",
+      "options": [
+        "La portance résiduelle n'a aucun effet sur la charge supportée par les roues, qui reste toujours identique quelle que soit la portance",
+        "Tant qu'une partie du poids reste portée par les ailes, les roues supportent moins de charge et freinent moins efficacement",
+        "Détruire la portance résiduelle sert uniquement à réduire la vitesse de l'avion après l'atterrissage, sans lien avec la charge supportée par les roues"
+      ],
+      "bonne": 1,
+      "explication": "Tant qu'une partie du poids de l'avion reste portée par les ailes (via la portance résiduelle), les roues supportent moins de charge et freinent moins efficacement ; détruire cette portance reporte tout le poids sur les roues, permettant un freinage pleinement efficace. La portance résiduelle a donc bien un effet direct sur la charge des roues, et ce rôle des spoilers a un lien direct avec le freinage, pas seulement esthétique.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0072",
+      "sous_chapitre": "M11A.8",
+      "question": "Dans l'exemple de l'approche d'atterrissage décrit dans la fiche, quel est l'enchaînement des dispositifs hypersustentateurs utilisés ?",
+      "options": [
+        "Volets, becs et spoilers sont tous déployés simultanément dès le début de l'approche, sans aucun enchaînement particulier",
+        "Spoilers déployés pendant toute l'approche, puis volets et becs déployés seulement après le posé des roues",
+        "Volets et becs déployés pendant l'approche pour voler plus lentement avec une marge de sécurité, puis spoilers pleinement déployés après le posé des roues"
+      ],
+      "bonne": 2,
+      "explication": "Pendant l'approche, volets et becs sont déployés pour voler plus lentement tout en conservant une marge avant le décrochage ; une fois les roues posées, les spoilers se déploient pleinement pour détruire la portance résiduelle et permettre un freinage efficace. Ce n'est donc pas l'inverse (spoilers en approche, volets/becs après le posé), et il y a bien un enchaînement dans le temps plutôt qu'un déploiement simultané de tous les dispositifs.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0073",
+      "sous_chapitre": "M11A.9",
+      "question": "Pourquoi un fluide sous pression permet-il de transmettre une force efficacement à travers un trajet sinueux, contrairement à un mécanisme rigide ?",
+      "options": [
+        "Un liquide ne se comprime pratiquement pas : la pression se transmet intégralement à tout point du circuit, quelle que soit la forme des conduites",
+        "Un liquide se comprime fortement, ce qui permet d'accumuler de l'énergie sur tout le trajet avant de la restituer à l'actionneur",
+        "La forme des conduites n'a en réalité aucune importance pour un mécanisme rigide non plus, les deux solutions étant équivalentes"
+      ],
+      "bonne": 0,
+      "explication": "Un liquide ne se comprime pratiquement pas : la pression appliquée se transmet intégralement et quasi instantanément à tout point du circuit, quelle que soit la forme des conduites (rigides, flexibles, sinueuses). Ce n'est donc pas une propriété de compression qui explique cet avantage, et un mécanisme rigide, lui, doit suivre un chemin plus direct et encombrant pour transmettre une force comparable.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0074",
+      "sous_chapitre": "M11A.9",
+      "question": "Quel est le rôle des filtres dans un circuit hydraulique ?",
+      "options": [
+        "Refroidir le fluide hydraulique pour l'empêcher de se dégrader sous l'effet de la chaleur",
+        "Retenir les impuretés avant qu'elles n'atteignent des passages étroits (comme les valves), où elles pourraient provoquer un grippage",
+        "Mettre le fluide sous pression avant qu'il ne traverse les actionneurs du circuit"
+      ],
+      "bonne": 1,
+      "explication": "Les filtres retiennent les impuretés avant qu'elles n'atteignent les passages étroits du circuit (notamment les valves), où même une impureté de petite taille peut provoquer un grippage. Refroidir le fluide est plutôt le rôle du radiateur, et mettre le fluide sous pression est le rôle de la pompe : ce sont deux fonctions distinctes, assurées par d'autres composants du circuit.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0075",
+      "sous_chapitre": "M11A.9",
+      "question": "Pourquoi le fluide hydraulique est-il choisi, entre autres critères, pour sa résistance au feu ?",
+      "options": [
+        "Le fluide hydraulique n'entre jamais en contact avec l'air ambiant, ce qui rend sa résistance au feu totalement superflue",
+        "La résistance au feu n'a en réalité aucune importance pour un fluide hydraulique, seule sa capacité à transmettre la pression compte",
+        "Un circuit hydraulique chemine à travers toute la structure de l'avion, parfois à proximité de zones chaudes, où un fluide facilement inflammable présenterait un risque"
+      ],
+      "bonne": 2,
+      "explication": "Un circuit hydraulique chemine à travers toute la structure de l'avion, parfois à proximité de zones chaudes ; un fluide difficilement inflammable limite le risque en cas de fuite près d'une telle zone. Ce critère a donc bien de l'importance au-delà de la seule transmission de pression, et une fuite reste toujours possible, exposant potentiellement le fluide à l'air ambiant.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0076",
+      "sous_chapitre": "M11A.9",
+      "question": "Pourquoi toute intervention sur un circuit hydraulique impose-t-elle de le dépressuriser et de l'isoler au préalable ?",
+      "options": [
+        "Le circuit fonctionne sous une pression très élevée ; une fuite sous cette pression peut projeter du fluide avec une force suffisante pour causer une blessure grave",
+        "La dépressurisation sert uniquement à faciliter le nettoyage du circuit, sans aucun enjeu de sécurité pour le technicien",
+        "Cette précaution n'est nécessaire que sur les circuits les plus anciens, les circuits modernes ne présentant plus aucun risque"
+      ],
+      "bonne": 0,
+      "explication": "Un circuit hydraulique fonctionne sous une pression très élevée ; une fuite sous une telle pression peut projeter du fluide avec une force suffisante pour traverser la peau et causer une blessure grave, même si la fuite paraît minime. Ce n'est donc pas qu'une question de nettoyage, et cette précaution reste nécessaire sur tout circuit hydraulique moderne, pas seulement les plus anciens.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0077",
+      "sous_chapitre": "M11A.9",
+      "question": "Quel rôle joue un accumulateur dans un circuit hydraulique ?",
+      "options": [
+        "Il filtre les impuretés du fluide hydraulique, un rôle identique à celui déjà décrit pour les filtres du circuit",
+        "Il emmagasine une réserve d'énergie hydraulique, restituée rapidement en cas de demande soudaine sur plusieurs actionneurs à la fois",
+        "Il mesure en continu la température du fluide, pour alerter l'équipage en cas de surchauffe"
+      ],
+      "bonne": 1,
+      "explication": "Un accumulateur emmagasine une réserve d'énergie hydraulique, restituée rapidement en cas de demande soudaine sur plusieurs actionneurs à la fois, sans que la pompe seule n'ait à fournir instantanément tout ce débit. Ce n'est pas un filtre (rôle distinct déjà décrit), et il ne mesure pas la température : ce sont des fonctions séparées du circuit.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0078",
+      "sous_chapitre": "M11A.9",
+      "question": "Pourquoi la température du fluide hydraulique est-elle surveillée, au même titre que sa pression ?",
+      "options": [
+        "Seule la pression est réellement surveillée sur un circuit hydraulique ; la température n'est jamais un paramètre suivi",
+        "La température du fluide n'a en réalité aucun effet sur ses propriétés ni sur celles des joints du circuit",
+        "Le passage à travers valves et actionneurs, ainsi que le frottement dans les conduites, dégage de la chaleur qui pourrait dégrader le fluide ou les joints"
+      ],
+      "bonne": 2,
+      "explication": "Le passage du fluide à travers les valves et les actionneurs, ainsi que le frottement dans les conduites, dégage de la chaleur ; une température excessive pourrait dégrader les propriétés du fluide ou des joints du circuit, d'où la présence d'un radiateur et la surveillance de cette température. Elle a donc bien un effet réel, et elle est bien surveillée au même titre que la pression.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0079",
+      "sous_chapitre": "M11A.9",
+      "question": "Pourquoi la procédure précise de dépressurisation et d'isolement d'un circuit hydraulique n'est-elle pas la même sur tous les avions ?",
+      "options": [
+        "Elle dépend de l'architecture propre à chaque circuit (nombre de valves, présence d'un accumulateur...), définie par le constructeur de l'avion",
+        "Une seule procédure universelle existe en réalité, valable à l'identique sur tous les circuits hydrauliques quels qu'ils soient",
+        "La procédure varie uniquement selon la couleur du fluide utilisé, sans lien avec l'architecture réelle du circuit"
+      ],
+      "bonne": 0,
+      "explication": "La procédure de dépressurisation et d'isolement dépend de l'architecture propre à chaque circuit (nombre et emplacement des valves, présence d'un accumulateur susceptible de conserver de l'énergie résiduelle...), ce qui explique qu'elle soit définie par le constructeur de chaque avion plutôt qu'universelle. Elle ne dépend donc pas de la seule couleur du fluide, un détail sans lien avec cette architecture.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0080",
+      "sous_chapitre": "M11A.9",
+      "question": "Dans l'exemple de la gouverne de vol actionnée par un vérin hydraulique décrit dans la fiche, quel trajet suit le fluide depuis le réservoir jusqu'au mouvement final ?",
+      "options": [
+        "Réservoir, vérin directement, sans passer par aucun filtre ni aucune valve avant d'atteindre la gouverne",
+        "Réservoir, pompe (mise sous pression), filtre, valve (orientation du flux), puis vérin qui produit le mouvement demandé",
+        "Pompe, réservoir, vérin, puis filtre en tout dernier lieu, une fois le mouvement de la gouverne déjà produit"
+      ],
+      "bonne": 1,
+      "explication": "Le fluide part du réservoir, est mis sous pression par la pompe, traverse un filtre qui retient les impuretés, puis une valve qui dirige la pression vers le côté voulu du vérin, lequel produit le mouvement demandé. Le trajet ne saute donc pas le filtre ni la valve, et l'ordre décrit dans les deux autres options ne correspond pas à celui présenté dans l'exemple de la fiche.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0091",
+      "sous_chapitre": "M11A.9",
+      "question": "Pourquoi un mélange accidentel entre deux types de fluide hydraulique différents est-il pris au sérieux lors de l'entretien ?",
+      "options": [
+        "Un tel mélange améliore au contraire les performances du circuit, en combinant les qualités de chaque fluide",
+        "Un mélange de fluides différents n'a en réalité aucun effet, tous les fluides hydrauliques étant chimiquement identiques entre eux",
+        "Un tel mélange peut dégrader les propriétés essentielles du fluide (résistance au feu, stabilité) et endommager les joints du circuit"
+      ],
+      "bonne": 2,
+      "explication": "Le fluide hydraulique est choisi pour des propriétés précises (résistance au feu, stabilité, compatibilité avec les joints) ; un mélange accidentel avec un fluide d'un type différent peut dégrader ces propriétés essentielles et endommager les joints du circuit. Les fluides hydrauliques ne sont donc pas tous chimiquement identiques, et un tel mélange ne combine pas leurs qualités : il risque au contraire de les compromettre.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0081",
+      "sous_chapitre": "M11A.10",
+      "question": "Pourquoi un avion de transport dispose-t-il presque systématiquement de plusieurs circuits hydrauliques indépendants ?",
+      "options": [
+        "Un seul circuit priverait l'avion de tout contrôle des gouvernes en cas de panne, une situation inacceptable pour un système aussi critique",
+        "Plusieurs circuits permettent uniquement de réduire le poids total du système hydraulique par rapport à un circuit unique",
+        "Un seul circuit suffirait largement ; la redondance ne sert qu'à respecter une norme administrative, sans justification technique réelle"
+      ],
+      "bonne": 0,
+      "explication": "Rappel de la fiche M11A.7 : les gouvernes dépendent largement de la pression hydraulique ; une panne qui priverait l'avion de toute pression laisserait le pilote sans moyen de contrôle, une situation inacceptable. Plusieurs circuits indépendants ne réduisent pas le poids total (au contraire, ils l'augmentent probablement), et ce n'est pas une question esthétique mais de sécurité.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0082",
+      "sous_chapitre": "M11A.10",
+      "question": "Qu'entend-on par « indépendance » entre plusieurs circuits hydrauliques ?",
+      "options": [
+        "Les circuits partagent le même réservoir mais utilisent des pompes différentes, ce qui suffit à les considérer comme indépendants",
+        "Chaque circuit a son propre réservoir, sa propre pompe et ses propres conduites, sans point de mélange du fluide avec un autre circuit",
+        "L'indépendance ne concerne que l'emplacement physique des conduites, le fluide restant commun à tous les circuits"
+      ],
+      "bonne": 1,
+      "explication": "Chaque circuit dispose de son propre réservoir, de sa (ou ses) propre pompe, et de ses propres conduites, sans point de mélange du fluide entre circuits distincts. Un réservoir partagé ne suffirait donc pas à définir des circuits indépendants, et l'indépendance porte bien sur le fluide lui-même, pas seulement sur l'emplacement physique des conduites.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0083",
+      "sous_chapitre": "M11A.10",
+      "question": "Pourquoi la source de pression de chacun des circuits varie-t-elle délibérément d'un circuit à l'autre (un moteur différent, une pompe électrique) ?",
+      "options": [
+        "Cette diversité n'a aucun objectif de sécurité particulier : elle résulte uniquement de contraintes de fabrication sans lien avec la redondance",
+        "Chaque circuit doit obligatoirement utiliser la même source, la diversité décrite n'existant en réalité sur aucun avion",
+        "Cette diversité garantit que la panne d'un seul moteur ou d'une seule source électrique ne prive pas l'avion de l'ensemble de sa puissance hydraulique"
+      ],
+      "bonne": 2,
+      "explication": "Cette diversité délibérée des sources de pression garantit que la panne d'un seul moteur ou d'une seule source électrique ne prive pas l'avion de l'ensemble de sa puissance hydraulique — un principe de redondance qui va au-delà de la seule séparation des circuits. Elle répond donc bien à un objectif de sécurité, et cette diversité existe réellement sur les avions multimoteurs décrits dans la fiche.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0084",
+      "sous_chapitre": "M11A.10",
+      "question": "Quel est le principe d'une turbine à air dynamique (RAT, Ram Air Turbine) ?",
+      "options": [
+        "Une petite hélice qui se déploie dans le flux d'air relatif et entraîne, grâce à la seule vitesse de l'avion, une pompe hydraulique de secours",
+        "Un réservoir supplémentaire de fluide hydraulique, sans aucune pompe ni turbine associée",
+        "Un système qui recharge électriquement les batteries principales de l'avion, sans lien avec le circuit hydraulique"
+      ],
+      "bonne": 0,
+      "explication": "Une RAT est une petite hélice qui se déploie automatiquement dans le flux d'air relatif et entraîne, grâce à la seule vitesse de l'avion, une pompe hydraulique (et souvent un générateur électrique) de secours. Ce n'est donc pas un simple réservoir supplémentaire, et son lien avec le circuit hydraulique est direct, pas seulement électrique.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0085",
+      "sous_chapitre": "M11A.10",
+      "question": "Quel rôle jouent les valves de priorité et d'isolement dans l'architecture hydraulique d'un avion ?",
+      "options": [
+        "Elles servent uniquement à mesurer la pression du circuit, sans jamais intervenir sur la circulation du fluide",
+        "Elles peuvent isoler une portion défaillante du circuit ou couper des fonctions moins critiques pour préserver la pression des fonctions essentielles",
+        "Elles remplacent entièrement la pompe principale en cas de panne, en devenant elles-mêmes la source de pression du circuit"
+      ],
+      "bonne": 1,
+      "explication": "Ces valves peuvent isoler une portion défaillante du circuit (par exemple une fuite localisée) ou couper automatiquement l'alimentation de fonctions moins critiques, pour préserver la pression disponible pour les commandes de vol. Elles ne se limitent donc pas à une simple mesure de pression, et elles ne remplacent pas la pompe : elles gèrent la répartition de la pression existante.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0086",
+      "sous_chapitre": "M11A.10",
+      "question": "À quoi servent les indications de pression et de quantité présentées par circuit au poste de pilotage ?",
+      "options": [
+        "Elles n'ont qu'un rôle décoratif au poste de pilotage, sans usage réel pour l'équipage",
+        "Elles servent uniquement à calculer automatiquement la consommation de carburant de l'avion",
+        "Elles permettent de détecter rapidement une perte de pression ou une fuite sur l'un des circuits avant qu'elle ne s'aggrave"
+      ],
+      "bonne": 2,
+      "explication": "Ces indications, propres à chaque circuit, permettent de détecter rapidement une perte de pression ou une fuite avant qu'elle ne s'aggrave (thème général déjà abordé pour le moteur en fiche M15.11). Elles n'ont aucun lien avec le calcul de consommation de carburant, et leur rôle est bien réel pour l'équipage, pas seulement décoratif.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0087",
+      "sous_chapitre": "M11A.10",
+      "question": "Pourquoi l'entretien vérifie-t-il que l'indépendance des circuits hydrauliques reste effective, au-delà de leur seule conception d'origine ?",
+      "options": [
+        "Une intervention mal réalisée (mélange accidentel de fluides) ou un dommage affectant simultanément plusieurs circuits proches peut compromettre cette indépendance pensée dès la conception",
+        "L'indépendance des circuits, une fois établie à la conception, ne peut jamais être compromise par la suite, quelle que soit l'intervention réalisée",
+        "Cette vérification ne concerne que la propreté visuelle des conduites, sans lien avec l'indépendance réelle des circuits"
+      ],
+      "bonne": 0,
+      "explication": "Cette indépendance, pensée dès la conception, peut être compromise par une intervention mal réalisée (mélange accidentel de fluides) ou par un dommage affectant simultanément des conduites de circuits normalement séparés mais cheminant à proximité. Elle n'est donc pas garantie de façon permanente et automatique, et cette vérification porte sur le fonctionnement réel du système, pas sur son seul aspect visuel.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0088",
+      "sous_chapitre": "M11A.10",
+      "question": "Pourquoi une gouverne de vol critique est-elle généralement alimentée par plusieurs circuits hydrauliques à la fois, plutôt que par un seul ?",
+      "options": [
+        "Cela permet uniquement de répartir le poids du système hydraulique de façon plus homogène sur la structure de l'aile",
+        "Ainsi, la perte d'un seul circuit ne prive jamais totalement le pilote du contrôle de cette gouverne, chaque circuit restant capable d'en actionner une partie",
+        "Un seul circuit ne serait techniquement jamais capable de produire une pression suffisante pour actionner une gouverne, quelle que soit sa conception"
+      ],
+      "bonne": 1,
+      "explication": "Alimenter une gouverne critique par plusieurs circuits indépendants garantit que la perte d'un seul circuit ne prive jamais totalement le pilote de son contrôle, chaque circuit restant capable d'en actionner une partie. Ce n'est donc pas d'abord une question de répartition de poids, et un circuit unique pourrait techniquement fournir une pression suffisante (rappel M11A.9) : c'est la redondance en cas de panne qui justifie ce choix, pas une limite de puissance.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0090",
+      "sous_chapitre": "M11A.10",
+      "question": "Pourquoi le train d'atterrissage, sujet de la fiche suivante, dépend-il lui aussi largement du circuit hydraulique tout juste détaillé ?",
+      "options": [
+        "Le circuit hydraulique ne peut alimenter qu'un seul système à la fois sur un même avion, jamais plusieurs systèmes différents",
+        "Le train d'atterrissage n'utilise en réalité jamais l'hydraulique, contrairement aux commandes de vol",
+        "Comme les commandes de vol et les hypersustentateurs, sortir ou rentrer le train nécessite un actionneur alimenté en pression hydraulique"
+      ],
+      "bonne": 2,
+      "explication": "Comme les commandes de vol (M11A.6-M11A.7) et les hypersustentateurs (M11A.8), sortir ou rentrer un train d'atterrissage nécessite un actionneur alimenté en pression hydraulique (rappel M11A.9 : un vérin convertit cette pression en mouvement mécanique utile). Le train utilise donc bien l'hydraulique, et un même circuit alimente couramment plusieurs systèmes différents de l'avion, pas un seul exclusivement.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
     }
   ]
 }

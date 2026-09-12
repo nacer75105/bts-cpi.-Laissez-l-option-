@@ -1,0 +1,56 @@
+<div id="schema-m1110b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1110b-wrap .m1110b-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m1110b-wrap .m1110b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1110b-wrap .m1110b-diagram { position:relative; height:120px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; display:flex; align-items:center; justify-content:center; }
+#schema-m1110b-wrap .m1110b-fuselage { width:14px; height:80px; background:#888; border-radius:6px; }
+#schema-m1110b-wrap .m1110b-rat { position:absolute; left:56%; top:50%; width:30px; height:6px; background:#e0a800; border:1.5px solid #a87a00; border-radius:3px; transform-origin: left center; transition: transform 0.3s; }
+#schema-m1110b-wrap .m1110b-label { position:absolute; font-size:0.66em; color:#555; }
+#schema-m1110b-wrap .m1110b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>La turbine à air dynamique (RAT) :</strong> comparez son état rentré et son état déployé.</p>
+
+<button class="m1110b-btn active" id="m1110b-btn-rentree">RAT rentrée (sources normales actives)</button>
+<button class="m1110b-btn" id="m1110b-btn-deployee">RAT déployée (secours ultime)</button>
+
+<div class="m1110b-diagram">
+  <div class="m1110b-fuselage"></div>
+  <div class="m1110b-label" style="left:36%; top:8%;">Fuselage</div>
+  <div class="m1110b-rat" id="m1110b-rat" style="transform: rotate(0deg) scaleX(0.3);"></div>
+  <div class="m1110b-label" id="m1110b-rat-label" style="left:60%; bottom:20%;">RAT (repliée)</div>
+</div>
+
+<div class="m1110b-caption" id="m1110b-caption">Ce schéma montre le principe de la source de secours ultime. Vue actuelle — RAT rentrée : les sources normales (pompes entraînées par les moteurs ou électriques) suffisent, la RAT reste repliée contre le fuselage. Cliquez sur « RAT déployée » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1110b-wrap');
+  if (!wrap) { return; }
+  var btnRentree = wrap.querySelector('#m1110b-btn-rentree');
+  var btnDeployee = wrap.querySelector('#m1110b-btn-deployee');
+  var rat = wrap.querySelector('#m1110b-rat');
+  var ratLabel = wrap.querySelector('#m1110b-rat-label');
+  var caption = wrap.querySelector('#m1110b-caption');
+
+  function showRentree() {
+    btnRentree.className = 'm1110b-btn active';
+    btnDeployee.className = 'm1110b-btn';
+    rat.style.transform = 'rotate(0deg) scaleX(0.3)';
+    ratLabel.textContent = 'RAT (repliée)';
+    caption.textContent = "Ce schéma montre le principe de la source de secours ultime. Vue actuelle — RAT rentrée : les sources normales (pompes entraînées par les moteurs ou électriques) suffisent, la RAT reste repliée contre le fuselage. Cliquez sur « RAT déployée » pour comparer.";
+  }
+
+  function showDeployee() {
+    btnRentree.className = 'm1110b-btn';
+    btnDeployee.className = 'm1110b-btn active';
+    rat.style.transform = 'rotate(0deg) scaleX(1)';
+    ratLabel.textContent = 'RAT déployée';
+    caption.textContent = "RAT déployée : si toutes les sources normales de pression hydraulique venaient à manquer simultanément, une petite hélice se déploie automatiquement dans le flux d'air relatif et entraîne, grâce à la seule vitesse de l'avion, une pompe de secours — une puissance réduite mais suffisante pour maintenir un contrôle minimal. Cliquez sur « RAT rentrée » pour revenir à l'autre vue.";
+  }
+
+  btnRentree.addEventListener('click', showRentree);
+  btnDeployee.addEventListener('click', showDeployee);
+})();
+</script>

@@ -1,0 +1,61 @@
+<div id="schema-m119b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m119b-wrap .m119b-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m119b-wrap .m119b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m119b-wrap .m119b-diagram { position:relative; height:110px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; display:flex; align-items:center; justify-content:center; gap:20px; }
+#schema-m119b-wrap .m119b-conduit { width:140px; height:14px; border-radius:7px; background:#c0392b; transition: background 0.2s; }
+#schema-m119b-wrap .m119b-conduit.safe { background:#5aa06a; }
+#schema-m119b-wrap .m119b-icon { font-size:1.8em; }
+#schema-m119b-wrap .m119b-label { font-size:0.7em; color:#555; text-align:center; margin-top:6px; }
+#schema-m119b-wrap .m119b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Circuit sous pression ou dépressurisé :</strong> pourquoi une intervention exige un état précis du circuit — principe seul, sans procédure.</p>
+
+<button class="m119b-btn active" id="m119b-btn-pression">En fonctionnement (sous pression)</button>
+<button class="m119b-btn" id="m119b-btn-depress">Dépressurisé et isolé (avant intervention)</button>
+
+<div class="m119b-diagram">
+  <div>
+    <div class="m119b-conduit" id="m119b-conduit"></div>
+    <div class="m119b-label" id="m119b-conduit-label">Conduite sous très haute pression</div>
+  </div>
+  <div class="m119b-icon" id="m119b-icon">⚠️</div>
+</div>
+
+<div class="m119b-caption" id="m119b-caption">Ce schéma illustre pourquoi l'état du circuit compte avant toute intervention. Vue actuelle — en fonctionnement : le circuit reste sous très haute pression ; une fuite à cet état peut projeter du fluide avec une force suffisante pour blesser gravement. Cliquez sur « Dépressurisé et isolé » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m119b-wrap');
+  if (!wrap) { return; }
+  var btnPression = wrap.querySelector('#m119b-btn-pression');
+  var btnDepress = wrap.querySelector('#m119b-btn-depress');
+  var conduit = wrap.querySelector('#m119b-conduit');
+  var conduitLabel = wrap.querySelector('#m119b-conduit-label');
+  var icon = wrap.querySelector('#m119b-icon');
+  var caption = wrap.querySelector('#m119b-caption');
+
+  function showPression() {
+    btnPression.className = 'm119b-btn active';
+    btnDepress.className = 'm119b-btn';
+    conduit.classList.remove('safe');
+    conduitLabel.textContent = 'Conduite sous très haute pression';
+    icon.textContent = '⚠️';
+    caption.textContent = "Ce schéma illustre pourquoi l'état du circuit compte avant toute intervention. Vue actuelle — en fonctionnement : le circuit reste sous très haute pression ; une fuite à cet état peut projeter du fluide avec une force suffisante pour blesser gravement. Cliquez sur « Dépressurisé et isolé » pour comparer.";
+  }
+
+  function showDepress() {
+    btnPression.className = 'm119b-btn';
+    btnDepress.className = 'm119b-btn active';
+    conduit.classList.add('safe');
+    conduitLabel.textContent = 'Conduite dépressurisée et isolée';
+    icon.textContent = '✅';
+    caption.textContent = "Dépressurisé et isolé : avant toute intervention, la portion concernée du circuit est mise hors pression et isolée du reste du circuit, selon une procédure précise définie par le constructeur (non détaillée ici). C'est cet état, obtenu selon cette procédure complète, qui constitue le préalable indispensable à toute intervention — une énergie résiduelle peut en effet subsister même pompes arrêtées (rappel de la fiche : rôle de l'accumulateur), d'où la nécessité de suivre la procédure dans son intégralité plutôt que la seule mise à l'arrêt des pompes. Cliquez sur « En fonctionnement » pour revenir à l'autre vue.";
+  }
+
+  btnPression.addEventListener('click', showPression);
+  btnDepress.addEventListener('click', showDepress);
+})();
+</script>

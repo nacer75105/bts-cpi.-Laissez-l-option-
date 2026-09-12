@@ -1,0 +1,81 @@
+<div id="schema-m117-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m117-wrap .m117-btn { margin:4px 6px 4px 0; padding:7px 10px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.78em; }
+#schema-m117-wrap .m117-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m117-wrap .m117-chain { position:relative; height:110px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; display:flex; align-items:center; justify-content:center; gap:4px; flex-wrap:wrap; }
+#schema-m117-wrap .m117-box { padding:8px 10px; border-radius:6px; border:1.5px solid #4a76a8; background:#7fa8d9; color:#fff; font-size:0.72em; text-align:center; }
+#schema-m117-wrap .m117-arrow { font-size:1.1em; color:#888; }
+#schema-m117-wrap .m117-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Trois chaînes d'actionnement :</strong> comparez comment le mouvement du pilote atteint la gouverne selon le type de commande.</p>
+
+<div>
+  <button class="m117-btn active" id="m117-btn-meca">Mécanique</button>
+  <button class="m117-btn" id="m117-btn-hydro">Hydraulique assisté</button>
+  <button class="m117-btn" id="m117-btn-elec">Électrique (fly-by-wire)</button>
+</div>
+
+<div class="m117-chain" id="m117-chain">
+  <div class="m117-box">Pilote</div>
+  <div class="m117-arrow" id="m117-arrow-1">→</div>
+  <div class="m117-box" id="m117-box-2">Câbles / tringles</div>
+  <div class="m117-arrow" id="m117-arrow-2" style="display:none;">→</div>
+  <div class="m117-box" id="m117-box-3" style="display:none;">Valve</div>
+  <div class="m117-arrow" id="m117-arrow-3">→</div>
+  <div class="m117-box" id="m117-box-4">Gouverne</div>
+</div>
+
+<div class="m117-caption" id="m117-caption">Ce schéma compare les trois chaînes d'actionnement des commandes de vol. Vue actuelle — mécanique : le pilote transmet directement sa force à la gouverne par câbles et tringles, sans intermédiaire. Cliquez sur les autres boutons pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m117-wrap');
+  if (!wrap) { return; }
+  var btnMeca = wrap.querySelector('#m117-btn-meca');
+  var btnHydro = wrap.querySelector('#m117-btn-hydro');
+  var btnElec = wrap.querySelector('#m117-btn-elec');
+  var box2 = wrap.querySelector('#m117-box-2');
+  var box3 = wrap.querySelector('#m117-box-3');
+  var box4 = wrap.querySelector('#m117-box-4');
+  var arrow2 = wrap.querySelector('#m117-arrow-2');
+  var caption = wrap.querySelector('#m117-caption');
+  var btns = [btnMeca, btnHydro, btnElec];
+
+  function reset() { btns.forEach(function (b) { b.className = 'm117-btn'; }); }
+
+  function showMeca() {
+    reset(); btnMeca.className = 'm117-btn active';
+    box2.textContent = 'Câbles / tringles';
+    box3.style.display = 'none';
+    arrow2.style.display = 'none';
+    box4.textContent = 'Gouverne';
+    caption.textContent = "Ce schéma compare les trois chaînes d'actionnement des commandes de vol. Vue actuelle — mécanique : le pilote transmet directement sa force à la gouverne par câbles et tringles, sans intermédiaire. Cliquez sur les autres boutons pour comparer.";
+  }
+
+  function showHydro() {
+    reset(); btnHydro.className = 'm117-btn active';
+    box2.textContent = 'Câbles / tringles (légers)';
+    box3.style.display = 'block';
+    box3.textContent = 'Valve + vérin hydraulique';
+    arrow2.style.display = 'inline';
+    box4.textContent = 'Gouverne';
+    caption.textContent = "Hydraulique assisté : le pilote commande une valve (via des câbles légers), qui dirige le fluide hydraulique vers un vérin fournissant tout ou partie de la force réelle — un système de sensation artificielle recrée l'effort que le pilote ne perçoit plus directement. Cliquez sur les autres boutons pour comparer.";
+  }
+
+  function showElec() {
+    reset(); btnElec.className = 'm117-btn active';
+    box2.textContent = 'Signal électrique';
+    box3.style.display = 'block';
+    box3.textContent = 'Calculateur + vérin';
+    arrow2.style.display = 'inline';
+    box4.textContent = 'Gouverne';
+    caption.textContent = "Électrique (fly-by-wire) : le mouvement du pilote devient un signal électrique, interprété par un calculateur qui commande le vérin — aucune liaison mécanique directe ne subsiste, d'où une redondance poussée (plusieurs calculateurs indépendants). Cliquez sur les autres boutons pour comparer.";
+  }
+
+  btnMeca.addEventListener('click', showMeca);
+  btnHydro.addEventListener('click', showHydro);
+  btnElec.addEventListener('click', showElec);
+})();
+</script>
