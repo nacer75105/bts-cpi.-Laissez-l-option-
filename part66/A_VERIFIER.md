@@ -117,6 +117,23 @@ lors d'un futur élargissement de la banque M10, en même temps que les
 thèmes du syllabus encore absents (MEL/CDL, ETOPS, Part-21/formulaire
 EASA 1, privilèges et validité de la licence 66.A.20, ARC).
 
+**Rééquilibrage de la position de la bonne réponse (audit technique du
+2026-09-13)** : un audit du projet a trouvé que les 37 questions du lot
+étaient réparties 31/6/0 sur les positions 0/1/2 — la position 2 n'était
+utilisée dans aucune question, un déséquilibre plus sévère que celui déjà
+documenté pour d'autres modules (M7A, M17A). Sans effet sur l'élève
+(les options sont mélangées à l'affichage par session, `part66/ui.py`),
+mais un vrai défaut du fichier source. Corrigé par permutation mécanique
+des options (contenu inchangé, même principe que le rééquilibrage déjà
+appliqué à M17A lot 3) : nouvelle répartition 13/12/12. Une exception
+trouvée au passage et corrigée à la main plutôt que mécaniquement :
+l'explication de **M10-0002** désignait ses distracteurs par leur
+position (« ce qui écarte la première option », « troisième option »)
+plutôt que par leur contenu — une formulation qui serait devenue fausse
+après permutation. Reformulée pour désigner chaque distracteur par ce
+qu'il affirme, avant d'appliquer le rééquilibrage. Un balayage des 37
+explications n'a trouvé aucune autre occurrence de ce type.
+
 ## Module M5 — Techniques numériques / systèmes d'instruments électroniques
 
 Construit le 2026-09-09 (9 fiches, 45 questions à la rédaction initiale,
@@ -594,6 +611,22 @@ pour l'exemple progressif le plus avancé du texte :
   alors qu'un quartet est le groupe de 4 bits *représenté par* ce
   chiffre (la fiche M5.1 est correcte sur ce point). Sans effet sur la
   bonne réponse ; à reformuler dans un round de finition.
+
+**Renvoi fabriqué trouvé et corrigé (audit technique du 2026-09-13)** :
+la fiche M5.9 affirmait « la réponse tient à un principe déjà vu
+ailleurs dans ce module (M5.4) : la redondance », alors que le mot
+« redondance » n'apparaît nulle part dans la fiche M5.4 (vérifié par
+recherche exacte dans le texte) — le seul autre usage du mot dans le
+module, en M5.1, désigne un sens différent (le fait d'apprendre trois
+systèmes de numération n'est « pas une redondance »), pas le principe
+de tolérance de panne développé en M5.9. Ce renvoi n'a été détecté par
+aucun round de relecture antérieur (M5 a été construit avant que la
+vérification systématique des renvois croisés ne devienne une étape
+obligatoire de relecture, contrairement aux modules construits à partir
+de M17A). Corrigé en retirant le renvoi inventé plutôt qu'en lui
+trouvant une fausse cible de remplacement : la fiche M5.9 introduit
+maintenant la redondance comme un principe expliqué sur place, sans
+prétendre qu'il a été vu plus tôt dans le module.
 
 ## Point de configuration à confirmer (hors banque de questions)
 
