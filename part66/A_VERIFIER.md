@@ -1476,13 +1476,9 @@ Restent, en dette mineure assumée :
   mais sans garantie absolue sur un thème très éloigné du défaut.
 
 **Lot 5 relu et corrigé le 2026-09-13. Le module M11A est maintenant
-complet à 25/25 fiches, 225 questions, 50 schémas. Reste, avant de
-passer `disponible` à `True` : un test complet en local du module
-entier (les 5 lots, y compris la navigation entre fiches et l'examen
-blanc à 140 questions), et la validation de l'utilisateur — même
-étape que pour tous les modules précédents, et particulièrement
-importante ici compte tenu du nombre de schémas reconstruits sur ce
-seul dernier lot.**
+complet à 25/25 fiches, 225 questions, 50 schémas. Module validé par
+l'utilisateur, test local complet inclus, le 2026-09-13 ; `disponible`
+passé à `True` dans `part66/logic.py`.**
 
 ## M5.1 / M5.5 / M15.1-2 — bug résolu : génération de DOM à l'exécution
 (investigation menée le 2026-09-11, cause identifiée et corrigée)
