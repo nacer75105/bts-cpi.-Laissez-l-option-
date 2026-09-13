@@ -1,0 +1,81 @@
+<div id="schema-m1112-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1112-wrap .m1112-btn { margin:4px 6px 4px 0; padding:8px 10px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.8em; }
+#schema-m1112-wrap .m1112-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1112-wrap .m1112-diagram { position:relative; height:130px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; display:flex; align-items:flex-start; justify-content:center; }
+#schema-m1112-wrap .m1112-wing { width:200px; height:14px; background:#7fa8d9; border:1.5px solid #4a76a8; margin-top:20px; border-radius:4px; }
+#schema-m1112-wrap .m1112-door { position:absolute; top:34px; left:50%; width:30px; height:8px; background:#e0a800; border:1.5px solid #a87a00; transform-origin: top center; transition: transform 0.2s; margin-left:-15px; }
+#schema-m1112-wrap .m1112-leg { position:absolute; top:42px; left:50%; width:8px; background:#4a76a8; transform-origin: top center; transition: transform 0.2s, height 0.2s; margin-left:-4px; }
+#schema-m1112-wrap .m1112-wheel { position:absolute; width:20px; height:20px; border-radius:50%; background:#333; border:2px solid #111; transition: top 0.2s, left 0.2s, opacity 0.2s; }
+#schema-m1112-wrap .m1112-indic { position:absolute; right:10px; top:10px; padding:4px 8px; border-radius:4px; font-size:0.7em; font-weight:bold; }
+#schema-m1112-wrap .m1112-label { position:absolute; font-size:0.64em; color:#555; }
+#schema-m1112-wrap .m1112-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Position du train :</strong> comparez rentré (verrouillé) et sorti (verrouillé), avec l'indicateur de position.</p>
+
+<button class="m1112-btn active" id="m1112-btn-rentre">Rentré et verrouillé</button>
+<button class="m1112-btn" id="m1112-btn-sorti">Sorti et verrouillé</button>
+
+<div class="m1112-diagram">
+  <div class="m1112-wing"></div>
+  <div class="m1112-label" style="left:38%; top:4px;">Voilure</div>
+  <div class="m1112-door" id="m1112-door" style="transform: rotate(0deg);"></div>
+  <div class="m1112-label" style="left:56%; top:20px;">Trappe</div>
+  <div class="m1112-leg" id="m1112-leg" style="height:0px;"></div>
+  <div class="m1112-label" id="m1112-label-leg" style="left:38%; top:44px; opacity:0;">Jambe de train</div>
+  <div class="m1112-wheel" id="m1112-wheel" style="left:calc(50% - 10px); top:42px; opacity:0;"></div>
+  <div class="m1112-label" id="m1112-label-wheel" style="left:60%; top:100px; opacity:0;">Roue</div>
+  <div class="m1112-indic" id="m1112-indic" style="background:#5aa06a; color:#fff;">UP (train rentré)</div>
+</div>
+
+<div class="m1112-caption" id="m1112-caption">Ce schéma montre le train en position rentrée puis sortie, avec son indicateur de position. Vue actuelle — rentré et verrouillé : la trappe est fermée, restaurant une surface profilée ; l'indicateur confirme le verrouillage en position rentrée. Cliquez sur « Sorti et verrouillé » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1112-wrap');
+  if (!wrap) { return; }
+  var btnRentre = wrap.querySelector('#m1112-btn-rentre');
+  var btnSorti = wrap.querySelector('#m1112-btn-sorti');
+  var door = wrap.querySelector('#m1112-door');
+  var leg = wrap.querySelector('#m1112-leg');
+  var wheel = wrap.querySelector('#m1112-wheel');
+  var labelLeg = wrap.querySelector('#m1112-label-leg');
+  var labelWheel = wrap.querySelector('#m1112-label-wheel');
+  var indic = wrap.querySelector('#m1112-indic');
+  var caption = wrap.querySelector('#m1112-caption');
+
+  function showRentre() {
+    btnRentre.className = 'm1112-btn active';
+    btnSorti.className = 'm1112-btn';
+    door.style.transform = 'rotate(0deg)';
+    leg.style.height = '0px';
+    wheel.style.opacity = '0';
+    labelLeg.style.opacity = '0';
+    labelWheel.style.opacity = '0';
+    indic.textContent = 'UP (train rentré)';
+    indic.style.background = '#5aa06a';
+    indic.style.color = '#fff';
+    caption.textContent = "Ce schéma montre le train en position rentrée puis sortie, avec son indicateur de position. Vue actuelle — rentré et verrouillé : la trappe est fermée, restaurant une surface profilée ; l'indicateur confirme le verrouillage en position rentrée. Cliquez sur « Sorti et verrouillé » pour comparer.";
+  }
+
+  function showSorti() {
+    btnRentre.className = 'm1112-btn';
+    btnSorti.className = 'm1112-btn active';
+    door.style.transform = 'rotate(70deg)';
+    leg.style.height = '60px';
+    wheel.style.top = '100px';
+    wheel.style.opacity = '1';
+    labelLeg.style.opacity = '1';
+    labelWheel.style.opacity = '1';
+    indic.textContent = 'DOWN (train sorti)';
+    indic.style.background = '#5aa06a';
+    indic.style.color = '#fff';
+    caption.textContent = "Sorti et verrouillé : la trappe s'est ouverte, le train est descendu et son verrou mécanique de position sortie l'a fixé indépendamment de toute pression hydraulique ultérieure ; l'indicateur confirme cet état à l'équipage. Cliquez sur « Rentré et verrouillé » pour revenir à l'autre vue.";
+  }
+
+  btnRentre.addEventListener('click', showRentre);
+  btnSorti.addEventListener('click', showSorti);
+})();
+</script>

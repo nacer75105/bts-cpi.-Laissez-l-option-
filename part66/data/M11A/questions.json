@@ -1170,6 +1170,591 @@
       "bonne": 2,
       "explication": "Comme les commandes de vol (M11A.6-M11A.7) et les hypersustentateurs (M11A.8), sortir ou rentrer un train d'atterrissage nécessite un actionneur alimenté en pression hydraulique (rappel M11A.9 : un vérin convertit cette pression en mouvement mécanique utile). Le train utilise donc bien l'hydraulique, et un même circuit alimente couramment plusieurs systèmes différents de l'avion, pas un seul exclusivement.",
       "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0092",
+      "sous_chapitre": "M11A.11",
+      "question": "Pourquoi la configuration tricycle (roue avant + roues principales) domine-t-elle les avions de transport modernes ?",
+      "options": [
+        "Elle place le centre de gravité en avant des roues principales, améliorant la stabilité au roulage/freinage et offrant une meilleure visibilité au sol",
+        "Elle est systématiquement plus légère que la configuration classique, quel que soit le type d'avion considéré",
+        "Elle est la seule configuration qui permette techniquement de monter plus de deux roues sur un même avion"
+      ],
+      "bonne": 0,
+      "explication": "La configuration tricycle place le centre de gravité en avant des roues principales, ce qui améliore la stabilité au roulage et au freinage (l'avion tend à rester droit) et offre une meilleure visibilité au sol, l'avion restant pratiquement horizontal. Ce n'est pas une question de poids systématiquement moindre, et la configuration classique peut tout à fait comporter plusieurs roues par jambe : ce n'est pas une exclusivité du tricycle.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0093",
+      "sous_chapitre": "M11A.11",
+      "question": "Comment un amortisseur oléopneumatique absorbe-t-il l'énergie de l'atterrissage sans la retransmettre brutalement à la structure ?",
+      "options": [
+        "Il se contente de bloquer rigidement tout mouvement de la jambe de train, empêchant ainsi toute transmission d'énergie vers la structure",
+        "Un gaz comprimé encaisse le choc en se comprimant comme un ressort, tandis qu'un fluide hydraulique dissipe l'essentiel de l'énergie en chaleur en traversant un orifice étroit",
+        "Il fonctionne uniquement grâce à un ressort métallique classique, sans qu'aucun gaz ni fluide n'intervienne dans son principe"
+      ],
+      "bonne": 1,
+      "explication": "Un amortisseur oléopneumatique combine un gaz comprimé (qui encaisse le choc en se comprimant, comme un ressort) et un fluide hydraulique, forcé de traverser un orifice étroit, qui dissipe ainsi l'essentiel de l'énergie sous forme de chaleur plutôt que de la laisser être restituée d'un coup comme le ferait un ressort seul. Il ne bloque donc pas rigidement le mouvement (ce qui transmettrait l'énergie plutôt que de l'absorber), et il ne repose pas sur un simple ressort métallique classique.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0094",
+      "sous_chapitre": "M11A.11",
+      "question": "Pourquoi un avion lourd utilise-t-il souvent plusieurs roues par jambe de train principal (bogie) plutôt qu'une seule roue ?",
+      "options": [
+        "Une seule roue serait techniquement incapable de tourner à la vitesse nécessaire lors de l'atterrissage, quelle que soit sa taille",
+        "Plusieurs roues permettent uniquement de réduire le poids total du train d'atterrissage, sans aucune conséquence sur la charge réellement supportée",
+        "Répartir la charge sur plusieurs roues réduit la charge supportée par chacune, prolongeant leur durée de vie et limitant la contrainte sur la piste"
+      ],
+      "bonne": 2,
+      "explication": "Répartir la charge d'un avion lourd sur plusieurs roues réduit la charge supportée par chacune individuellement, prolongeant leur durée de vie et limitant la contrainte imposée à la piste. Ce n'est donc pas une simple réduction de poids sans conséquence sur la charge réellement supportée (c'est au contraire cette charge qui est directement concernée), et la vitesse de rotation d'une roue ne dépend pas de leur nombre : c'est bien la répartition de charge qui justifie ce choix.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0095",
+      "sous_chapitre": "M11A.11",
+      "question": "Pourquoi la roue avant orientable, plutôt que les gouvernes de vol, assure-t-elle la direction précise de l'avion à très faible vitesse de roulage ?",
+      "options": [
+        "Les gouvernes de vol agissent par déviation de l'écoulement d'air, un effet qui dépend de la vitesse et reste faible à très basse vitesse",
+        "Les gouvernes de vol sont physiquement désactivées dès que l'avion touche le sol, quelle que soit sa vitesse de roulage",
+        "La roue avant orientable et les gouvernes de vol jouent en réalité exactement le même rôle, à n'importe quelle vitesse"
+      ],
+      "bonne": 0,
+      "explication": "Les gouvernes de vol agissent par déviation de l'écoulement d'air (rappel M11A.6), un effet qui dépend directement de la vitesse et reste donc faible à très basse vitesse de roulage ; c'est pourquoi la roue avant orientable prend le relais à ce moment. Les gouvernes ne sont pas désactivées au sol (elles restent mécaniquement fonctionnelles), et les deux systèmes ne jouent pas le même rôle à toute vitesse : leur efficacité relative dépend justement de la vitesse.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0096",
+      "sous_chapitre": "M11A.11",
+      "question": "Pourquoi les freins des roues principales utilisent-ils souvent plusieurs disques empilés plutôt qu'un seul disque de friction ?",
+      "options": [
+        "Plusieurs disques empilés servent uniquement à réduire le bruit produit par le freinage, sans lien avec l'énergie dissipée",
+        "Une plus grande surface de friction permet de dissiper une énergie de freinage plus importante, critique juste après l'atterrissage",
+        "Plusieurs disques empilés servent surtout à réduire les vibrations ressenties par les passagers pendant le freinage, sans lien direct avec l'énergie dissipée"
+      ],
+      "bonne": 1,
+      "explication": "Une plus grande surface de friction (obtenue par plusieurs disques empilés) permet de dissiper une énergie de freinage plus importante, un point critique juste après l'atterrissage où l'énergie cinétique à dissiper est maximale. Ce n'est ni une question de réduction de bruit ni de vibrations ressenties par les passagers : c'est la capacité de dissipation d'énergie qui motive ce choix.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0097",
+      "sous_chapitre": "M11A.11",
+      "question": "Quel est le principe de l'antidérapage (anti-skid) sur les freins de roues ?",
+      "options": [
+        "Empêcher totalement et en permanence tout freinage tant que l'avion roule à une vitesse élevée",
+        "Augmenter systématiquement la pression de freinage sur toutes les roues dès qu'une seule d'entre elles montre un signe de blocage",
+        "Détecter qu'une roue est sur le point de se bloquer et réduire momentanément la pression de freinage sur cette roue pour lui permettre de continuer à rouler"
+      ],
+      "bonne": 2,
+      "explication": "L'antidérapage détecte qu'une roue est sur le point de se bloquer et réduit momentanément la pression de freinage sur cette roue précise pour lui permettre de continuer à rouler, avant de réappliquer le freinage. Il n'augmente donc pas la pression sur toutes les roues en réaction à une seule, et il n'empêche pas le freinage à haute vitesse : au contraire, il vise à le rendre plus efficace.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0098",
+      "sous_chapitre": "M11A.11",
+      "question": "Pourquoi le cycle de détection et de réduction de pression de l'antidérapage est-il entièrement automatique, sans action du pilote ?",
+      "options": [
+        "Une roue proche du blocage doit être libérée quasi instantanément pour ne pas perdre d'efficacité de freinage, un temps de réaction trop court pour une action manuelle",
+        "Le pilote pourrait très bien réaliser cette action manuellement ; le système automatique n'est installé que par confort",
+        "L'automatisme ne sert qu'à afficher une information au pilote, sans réellement modifier la pression de freinage appliquée"
+      ],
+      "bonne": 0,
+      "explication": "Un cycle de détection et de correction doit intervenir en une fraction de seconde pour ne pas perdre l'efficacité du freinage, un temps de réaction trop court pour une action manuelle fiable — d'où l'automatisme complet du système. Ce n'est donc pas un simple confort dispensable, et le système modifie bien réellement la pression appliquée, pas seulement une information affichée au pilote.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0099",
+      "sous_chapitre": "M11A.11",
+      "question": "Pourquoi la jambe de train est-elle l'une des pièces les plus sollicitées de tout l'avion, justifiant une attention particulière à l'entretien ?",
+      "options": [
+        "Elle ne subit en réalité aucune charge notable, l'essentiel de l'énergie de l'atterrissage étant absorbé uniquement par les pneus",
+        "Elle doit transmettre à la structure toutes les charges rencontrées au sol (compression, flexion lors d'un freinage ou d'un virage), rappel des types de charge du module",
+        "Son entretien n'est pas différent de celui d'une pièce structurale ordinaire de la voilure, sans particularité liée aux charges au sol"
+      ],
+      "bonne": 1,
+      "explication": "La jambe de train doit transmettre à la structure toutes les charges rencontrées au sol (rappel M11A.4 : compression essentiellement, mais aussi flexion lors d'un freinage ou d'un virage serré), ce qui en fait l'une des pièces les plus sollicitées de l'avion. Les pneus n'absorbent pas seuls l'énergie de l'atterrissage (l'amortisseur en absorbe l'essentiel), et cette forte sollicitation justifie bien une attention particulière, différente d'une pièce structurale ordinaire.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0100",
+      "sous_chapitre": "M11A.11",
+      "question": "Dans l'exemple d'un avion qui vient de se poser décrit dans la fiche, dans quel ordre interviennent les différents systèmes du train ?",
+      "options": [
+        "Les freins agissent en tout premier lieu et se relâchent dès que l'antidérapage le permet, avant même que les amortisseurs n'aient eu le temps d'absorber l'énergie de l'atterrissage",
+        "La roue avant guide l'avion dès le toucher des roues et prend le relais des gouvernes de vol immédiatement, avant même que les amortisseurs n'aient absorbé l'énergie de l'impact",
+        "Les amortisseurs absorbent l'impact, les roues réparties par bogie limitent la charge individuelle, les freins (assistés par l'antidérapage) dissipent l'énergie cinétique, puis la roue avant guide l'avion à basse vitesse"
+      ],
+      "bonne": 2,
+      "explication": "Selon l'exemple de la fiche, les amortisseurs absorbent d'abord l'énergie de l'impact, la charge se répartit sur les roues du bogie, les freins (avec l'antidérapage) dissipent ensuite l'énergie cinétique restante, et c'est seulement à vitesse réduite que la roue avant orientable prend le relais des gouvernes pour guider précisément l'avion. La roue avant n'intervient donc pas dès le toucher des roues, et les freins n'agissent pas avant l'amortissement de l'impact.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0101",
+      "sous_chapitre": "M11A.12",
+      "question": "Pourquoi un avion rétracte-t-il son train d'atterrissage une fois en vol plutôt que de le laisser sorti en permanence ?",
+      "options": [
+        "Un train sorti produit une traînée de forme importante, une économie de traînée particulièrement significative à la vitesse de croisière d'un avion à turbine",
+        "Le train doit être rentré pour des raisons purement esthétiques, sans conséquence réelle sur la consommation de carburant",
+        "Un train qui resterait sorti en vol s'endommagerait automatiquement après quelques minutes, quelle que soit la vitesse de l'avion"
+      ],
+      "bonne": 0,
+      "explication": "Un train sorti, non profilé, produit une traînée de forme importante (rappel M11A.1), un gain de traînée particulièrement significatif à la vitesse de croisière d'un avion à turbine. Ce n'est donc pas une question esthétique sans conséquence réelle, et rien n'indique qu'un train resterait endommagé simplement en restant sorti quelques minutes en vol.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0102",
+      "sous_chapitre": "M11A.12",
+      "question": "Pourquoi des verrous mécaniques dédiés complètent-ils systématiquement l'actionnement hydraulique du train ?",
+      "options": [
+        "Les verrous mécaniques remplacent entièrement les vérins hydrauliques, qui deviennent alors inutiles une fois le train en position",
+        "Une pression hydraulique peut en principe être perdue ; les verrous mécaniques maintiennent le train en position indépendamment de toute pression résiduelle",
+        "Les verrous mécaniques ne servent qu'à faciliter l'inspection visuelle du train, sans aucun rôle dans son maintien en position"
+      ],
+      "bonne": 1,
+      "explication": "Une pression hydraulique peut en principe être perdue (rappel M11A.10) ; les verrous mécaniques dédiés maintiennent le train dans sa position une fois celle-ci atteinte, indépendamment de toute pression hydraulique résiduelle. Ils ne remplacent donc pas les vérins (qui restent nécessaires pour le mouvement lui-même), et leur rôle dépasse la seule facilité d'inspection : ils assurent un maintien réel de la position.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0103",
+      "sous_chapitre": "M11A.12",
+      "question": "Quel est le principe du moyen de secours qui permet de sortir le train en cas de perte totale de la pression hydraulique normale ?",
+      "options": [
+        "Un moteur électrique de secours, alimenté par la batterie de l'avion, entraîne un mécanisme qui pousse activement le train en position sortie",
+        "Un vérin de secours, alimenté par une seconde pompe hydraulique entièrement dédiée, pousse activement le train en position sortie",
+        "Le train est libéré de son verrou de position rentrée et descend sous l'effet conjugué de son propre poids et de la résistance de l'air, sans pression hydraulique nécessaire"
+      ],
+      "bonne": 2,
+      "explication": "Le moyen de secours libère le train de son verrou de position rentrée, pour qu'il descende par gravité et par la résistance de l'air jusqu'à son verrouillage en position sortie, sans qu'aucune pression hydraulique ni aucune source d'énergie active ne soit nécessaire pour ce mouvement. Ce n'est donc ni un vérin hydraulique de secours ni un moteur électrique de secours (l'un comme l'autre resteraient vulnérables à une panne de leur propre source d'énergie) : c'est précisément l'indépendance vis-à-vis de toute source d'énergie qui rend ce moyen fiable.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0104",
+      "sous_chapitre": "M11A.12",
+      "question": "Pourquoi le moyen de secours du train évite-t-il volontairement de reposer sur un vérin de secours alimenté par une source de pression alternative ?",
+      "options": [
+        "Un vérin de secours dépendrait lui aussi d'une source de pression, potentiellement affectée par la même cause qui a privé le circuit normal",
+        "Un vérin de secours serait en réalité plus simple et moins coûteux à mettre en œuvre, mais son usage est interdit par principe",
+        "Un vérin de secours ne pourrait techniquement pas produire une force suffisante pour déplacer le train, quelle que soit sa conception"
+      ],
+      "bonne": 0,
+      "explication": "Un vérin de secours dépendrait lui aussi d'une source de pression, susceptible d'être affectée par la même cause qui a privé le circuit normal de sa pression ; confier l'extension à la seule gravité rend ce moyen indépendant de l'état de tout circuit hydraulique. Ce n'est donc pas une question de coût ou d'interdiction de principe, ni une limite de force technique : c'est la robustesse face à une panne commune qui motive ce choix.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0105",
+      "sous_chapitre": "M11A.12",
+      "question": "Pourquoi l'entretien porte-t-il une attention particulière aux verrous mécaniques et au système de libération de secours du train ?",
+      "options": [
+        "Ces éléments s'usent en réalité plus vite que tout autre composant du train, ce qui justifie une inspection quotidienne systématique",
+        "Rarement sollicités en usage normal, un défaut sur ces éléments pourrait rester non détecté longtemps sans une inspection régulière dédiée",
+        "Cette attention ne concerne que la propreté visuelle de ces éléments, sans lien avec leur fonctionnement réel"
+      ],
+      "bonne": 1,
+      "explication": "Rarement sollicités en usage normal (le verrou de secours n'étant utilisé que dans une situation exceptionnelle), un défaut sur ces éléments pourrait rester non détecté longtemps sans une inspection régulière dédiée — un principe déjà rencontré pour d'autres systèmes de sécurité peu sollicités (rappel M15.13). Rien n'indique une usure plus rapide que les autres composants, et cette attention porte bien sur le fonctionnement réel, pas sur l'aspect esthétique.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0106",
+      "sous_chapitre": "M11A.12",
+      "question": "Que signifie un indicateur de position de train affichant « en transit » ?",
+      "options": [
+        "Un indicateur « en transit » signale une panne définitive du système de position, indépendamment de l'état réel du train",
+        "Le train est fermement verrouillé en position sortie, prêt pour l'atterrissage",
+        "Le train est en train de se déplacer entre sa position rentrée et sa position sortie, sans être encore verrouillé dans l'une ou l'autre"
+      ],
+      "bonne": 2,
+      "explication": "Rappel de la fiche : les indicateurs informent l'équipage de l'état réel de chaque jambe de train, parmi trois états possibles — sortie et verrouillée, rentrée et verrouillée, ou en transit entre les deux. « En transit » signifie donc que le train est en cours de mouvement, sans être encore fermement engagé dans l'une des deux positions verrouillées ; ce n'est ni un état verrouillé sorti, ni nécessairement une panne définitive.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0107",
+      "sous_chapitre": "M11A.12",
+      "question": "Quel rôle jouent les trappes (portes de train), coordonnées avec le mouvement du train lui-même ?",
+      "options": [
+        "Elles s'ouvrent avant que le train ne bouge puis se referment une fois le mouvement terminé, restaurant une surface extérieure profilée",
+        "Elles restent en permanence ouvertes, que le train soit sorti ou rentré, sans aucune coordination avec son mouvement",
+        "Elles remplacent entièrement les verrous mécaniques du train, qui deviennent alors superflus une fois les trappes fermées"
+      ],
+      "bonne": 0,
+      "explication": "Les trappes s'ouvrent avant que le train ne bouge, puis se referment une fois le mouvement terminé, restaurant une surface extérieure profilée qui limite la traînée résiduelle une fois le train rentré. Elles ne restent donc pas ouvertes en permanence, et elles ne remplacent pas les verrous mécaniques du train, qui restent nécessaires pour maintenir sa position.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0108",
+      "sous_chapitre": "M11A.12",
+      "question": "Combien de verrous mécaniques dédiés équipent typiquement chaque jambe de train, et pourquoi ?",
+      "options": [
+        "Un seul verrou unique, capable de maintenir indifféremment le train aussi bien en position rentrée qu'en position sortie",
+        "Généralement deux verrous distincts, un pour la position rentrée et un pour la position sortie, chacun ne maintenant que l'une des deux positions",
+        "Aucun verrou dédié : la seule pression hydraulique suffit à maintenir le train dans n'importe quelle position"
+      ],
+      "bonne": 1,
+      "explication": "Rappel de la fiche : des verrous mécaniques dédiés, un pour la position rentrée et un pour la position sortie, maintiennent chacun le train dans la position pour laquelle il est prévu. Un verrou unique capable des deux positions n'est donc pas la conception décrite, et la seule pression hydraulique ne suffit justement pas (c'est précisément pourquoi ces verrous existent).",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0109",
+      "sous_chapitre": "M11A.12",
+      "question": "Qui définit la procédure précise que doit suivre l'équipage en cas de panne totale de la pression hydraulique normale du train ?",
+      "options": [
+        "Le manuel de vol propre à chaque appareil, le principe technique du moyen de secours restant lui du ressort de la formation technique générale",
+        "Chaque compagnie aérienne, indépendamment de tout document fourni par le constructeur de l'appareil",
+        "Aucune procédure formelle n'existe pour cette situation, l'équipage devant improviser une réponse adaptée sur le moment"
+      ],
+      "bonne": 0,
+      "explication": "Comme pour les autres systèmes critiques du module, la procédure suivie par l'équipage face à une panne relève du manuel de vol propre à chaque appareil, document du constructeur ; le principe technique du moyen de secours (gravité et résistance de l'air) et ses conséquences pour l'entretien relèvent, eux, de la formation technique générale. La procédure ne dépend donc pas du seul choix de chaque compagnie, et une situation aussi critique n'est jamais laissée à l'improvisation : une procédure formelle existe bien.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0110",
+      "sous_chapitre": "M11A.13",
+      "question": "D'où provient précisément l'air prélevé (bleed air) sur un turboréacteur ?",
+      "options": [
+        "D'un ou plusieurs étages du compresseur, prélevé avant même que cet air n'entre dans la chambre de combustion",
+        "Des gaz d'échappement, prélevés après leur passage dans la turbine et la tuyère",
+        "D'un réservoir d'air comprimé dédié, totalement indépendant du cycle de fonctionnement du moteur"
+      ],
+      "bonne": 0,
+      "explication": "L'air prélevé provient d'un ou plusieurs étages du compresseur (rappel M15.3), avant même d'entrer dans la chambre de combustion — un air déjà chaud et sous pression du seul fait de la compression, sans combustion. Il ne provient donc pas des gaz d'échappement (déjà passés par la combustion et la turbine), et il ne provient pas d'un réservoir dédié indépendant du moteur.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0111",
+      "sous_chapitre": "M11A.13",
+      "question": "Pourquoi l'air prélevé est-il utile à des systèmes aux fonctions aussi différentes que le démarrage moteur et le conditionnement d'air ?",
+      "options": [
+        "Il n'est en réalité utile qu'à un seul système à la fois, jamais à plusieurs systèmes différents simultanément",
+        "Il combine deux propriétés recherchées séparément : sa pression (utile mécaniquement) et sa chaleur (utile pour le conditionnement d'air et le dégivrage)",
+        "Sa seule propriété utile est sa pression ; sa température n'a aucun rôle dans les usages qui en sont faits"
+      ],
+      "bonne": 1,
+      "explication": "L'air prélevé combine deux propriétés recherchées séparément par différents systèmes : sa pression (utile pour un usage mécanique comme le démarrage) et sa chaleur (utile pour le conditionnement d'air et la protection contre le givre). Un seul prélèvement peut donc bien alimenter plusieurs systèmes différents, et sa température joue un rôle réel, pas seulement sa pression.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0112",
+      "sous_chapitre": "M11A.13",
+      "question": "Quel rôle joue l'APU (groupe auxiliaire de bord) en lien avec les circuits pneumatiques ?",
+      "options": [
+        "L'APU ne peut fonctionner qu'une fois les moteurs principaux déjà démarrés et stabilisés, jamais avant",
+        "L'APU ne fournit que de l'électricité, jamais d'air prélevé, contrairement aux moteurs principaux",
+        "Il peut fournir de l'air prélevé (et de l'électricité) notamment lorsque les moteurs principaux sont encore arrêtés, par exemple pour leur démarrage"
+      ],
+      "bonne": 2,
+      "explication": "L'APU, une petite turbine indépendante des moteurs principaux, peut fournir à la fois de l'air prélevé et de l'électricité, notamment lorsque les moteurs sont encore arrêtés — un rôle clé pour leur démarrage (rappel M15.9). Il fournit donc bien de l'air prélevé, pas seulement de l'électricité, et il peut fonctionner avant même que les moteurs principaux ne soient démarrés, précisément pour permettre ce démarrage.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0113",
+      "sous_chapitre": "M11A.13",
+      "question": "Pourquoi l'air prélevé, très chaud en sortie de compresseur, ne peut-il pas être envoyé tel quel vers les systèmes qui l'utilisent ?",
+      "options": [
+        "Sa température, liée à son degré de compression, resterait bien trop élevée pour un usage direct, notamment en cabine",
+        "L'air prélevé se refroidit en réalité de lui-même dès sa sortie du compresseur, avant même d'atteindre le précooler",
+        "La température de l'air prélevé n'a aucune importance pour les systèmes qui l'utilisent, seule sa pression compte réellement"
+      ],
+      "bonne": 0,
+      "explication": "La température de l'air prélevé, directement liée à son degré de compression, resterait bien trop élevée pour un usage direct, notamment dans une cabine occupée par des passagers — d'où le rôle du précooler. Il ne se refroidit donc pas de lui-même avant le précooler (c'est justement le rôle de cet échangeur, pas un phénomène spontané), et sa température a une importance réelle, pas seulement sa pression.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0114",
+      "sous_chapitre": "M11A.13",
+      "question": "Quel est le principe de fonctionnement du précooler ?",
+      "options": [
+        "Une valve qui réduit uniquement la pression de l'air prélevé, sans aucun effet sur sa température",
+        "Un échangeur de chaleur qui refroidit l'air prélevé en cédant sa chaleur à un flux d'air extérieur",
+        "Un filtre qui retient les impuretés de l'air prélevé, sans effet sur sa température ni sa pression"
+      ],
+      "bonne": 1,
+      "explication": "Le précooler est un échangeur de chaleur qui refroidit l'air prélevé en cédant sa chaleur à un flux d'air extérieur (principe similaire à celui déjà vu pour le circuit d'huile en M15.7), tout en conservant sa pression utile. Il ne se limite donc pas à une réduction de pression, et son rôle n'est pas la filtration des impuretés : c'est bien le refroidissement qui le définit.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0115",
+      "sous_chapitre": "M11A.13",
+      "question": "Pourquoi des valves de régulation de pression équipent-elles le circuit pneumatique, alors que la pression de l'air prélevé varie avec le régime moteur ?",
+      "options": [
+        "Elles n'ont en réalité aucun effet sur la pression du circuit, leur seul rôle étant de mesurer la température de l'air",
+        "Elles augmentent systématiquement la pression de l'air prélevé, quel que soit le régime moteur du moment",
+        "Elles maintiennent une pression sensiblement constante en sortie de circuit, quelle que soit la pression réellement disponible à la source"
+      ],
+      "bonne": 2,
+      "explication": "Les valves de régulation de pression maintiennent une pression sensiblement constante en sortie du circuit, quelle que soit la pression réellement disponible à la source (qui varie avec le régime moteur, rappel M15.10). Elles n'augmentent donc pas systématiquement la pression, et leur rôle est bien d'agir sur la pression, pas seulement de mesurer la température.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0116",
+      "sous_chapitre": "M11A.13",
+      "question": "Pourquoi des boucles de détection de surchauffe surveillent-elles les conduites du circuit pneumatique, sur un principe comparable à la détection incendie ?",
+      "options": [
+        "Une fuite d'air chaud dans un espace clos de la structure pourrait endommager les éléments environnants si elle n'était pas détectée rapidement",
+        "Ces boucles servent uniquement à mesurer la pression du circuit, sans aucun lien avec une éventuelle fuite d'air chaud",
+        "Ces boucles servent uniquement à réguler automatiquement la pression du circuit, sans lien avec une éventuelle fuite d'air chaud"
+      ],
+      "bonne": 0,
+      "explication": "Une fuite d'air chaud dans un espace clos de la structure pourrait endommager les éléments environnants (câblages, structure) si elle n'était pas détectée rapidement ; ces boucles, sur le principe déjà vu pour la détection incendie (rappel M15.13), surveillent précisément ce risque. Elles ne mesurent donc pas la pression, et elles ne servent pas non plus à la réguler automatiquement (ce rôle revient aux valves de régulation, une fonction distincte) : leur seul rôle est la détection d'une fuite d'air chaud.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0117",
+      "sous_chapitre": "M11A.13",
+      "question": "Dans l'exemple de l'avion au sol avant démarrage décrit dans la fiche, quel rôle joue l'APU au tout début de la séquence ?",
+      "options": [
+        "Il attend que le premier moteur soit déjà démarré et stabilisé avant de fournir la moindre source d'air prélevé au circuit pneumatique, contrairement à son rôle habituel au sol",
+        "Il fournit de l'air prélevé qui rejoint directement le circuit pneumatique par sa propre valve, sans passer par le précooler des moteurs, et sert au démarrage du premier moteur",
+        "Il remplace définitivement les moteurs principaux dès le début de la séquence, qui ne sont alors plus jamais nécessaires une fois l'APU en fonctionnement, y compris pour la poussée en vol"
+      ],
+      "bonne": 1,
+      "explication": "Selon l'exemple de la fiche, l'air de l'APU rejoint directement le circuit pneumatique par sa propre valve dédiée, sans passer par le précooler des moteurs (resté inactif tant qu'aucun moteur ne tourne), et sert à démarrer le premier moteur. Il n'attend donc pas qu'un moteur soit déjà démarré (c'est l'inverse, il permet ce démarrage), et il ne remplace pas les moteurs principaux, nécessaires pour la poussée en vol.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0118",
+      "sous_chapitre": "M11A.13",
+      "question": "Quel rôle jouent les valves d'isolement du circuit pneumatique ?",
+      "options": [
+        "Elles remplacent entièrement le précooler, qui devient alors inutile une fois ces valves installées",
+        "Elles augmentent la pression de l'air prélevé dans la portion du circuit qu'elles isolent, par rapport au reste du circuit",
+        "Elles permettent de couper l'alimentation d'une portion du circuit sans priver les autres sources de leur capacité à alimenter le reste du circuit"
+      ],
+      "bonne": 2,
+      "explication": "Les valves d'isolement permettent de couper l'alimentation d'une portion du circuit (par exemple pour isoler un moteur) sans priver les autres sources (l'autre moteur, l'APU) de leur capacité à alimenter le circuit. Elles n'augmentent pas la pression de la portion isolée, et elles ne remplacent pas le précooler, qui reste nécessaire pour le refroidissement de l'air prélevé.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0119",
+      "sous_chapitre": "M11A.14",
+      "question": "Pourquoi l'air prélevé, déjà refroidi une première fois par le précooler, nécessite-t-il un traitement supplémentaire avant d'être envoyé en cabine ?",
+      "options": [
+        "Le précooler le ramène à une température exploitable en aval, mais encore trop élevée pour un usage direct en cabine, qui demande une température proche du confort recherché",
+        "Le précooler n'a en réalité aucun effet réel sur la température de l'air, ce qui rend tout traitement supplémentaire indispensable",
+        "Le traitement supplémentaire ne sert qu'à retirer d'éventuelles vapeurs d'huile de l'air prélevé, sa température étant déjà adaptée à la cabine dès la sortie du précooler"
+      ],
+      "bonne": 0,
+      "explication": "Le précooler ramène l'air prélevé à une température exploitable par les systèmes en aval, mais encore trop élevée pour un usage direct en cabine, où une température proche du confort recherché est nécessaire — d'où le rôle du pack de conditionnement d'air. Le précooler a donc bien un effet réel, et c'est justement la température (pas la seule pureté de l'air) qui reste à traiter avant la cabine.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0120",
+      "sous_chapitre": "M11A.14",
+      "question": "Comment une machine à cycle d'air (ACM) parvient-elle à refroidir l'air prélevé au-delà de ce qu'un simple échangeur de chaleur permettrait ?",
+      "options": [
+        "Elle se contente d'ajouter un second échangeur de chaleur identique au précooler, sans aucun autre principe physique impliqué",
+        "L'air, déjà partiellement refroidi, est détendu à travers une turbine, ce qui produit un refroidissement supplémentaire important",
+        "Elle refroidit l'air en le comprimant davantage, une compression supplémentaire produisant toujours un refroidissement selon ce principe"
+      ],
+      "bonne": 1,
+      "explication": "Une machine à cycle d'air détend l'air, déjà partiellement refroidi, à travers une turbine (rappel implicite M15.6 : une tuyère convergente accélère un gaz en abaissant sa pression et sa température, un principe analogue à celui d'une détente), un effet bien supérieur à celui d'un simple échangeur de chaleur. Ce n'est donc pas un simple second échangeur identique, et ce n'est pas une compression supplémentaire qui produit ce refroidissement : c'est au contraire une détente.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0121",
+      "sous_chapitre": "M11A.14",
+      "question": "Que devient l'énergie cédée par l'air en traversant la turbine de la machine à cycle d'air ?",
+      "options": [
+        "Elle sert uniquement à alimenter le circuit électrique de l'avion, sans aucun lien avec le processus de refroidissement lui-même",
+        "Elle est absorbée par un frein interne à la turbine, sans lien avec le reste du processus de refroidissement de l'air",
+        "Elle entraîne, sur le même axe, un ventilateur qui aspire l'air extérieur à travers l'échangeur de chaleur situé en amont, renforçant son refroidissement"
+      ],
+      "bonne": 2,
+      "explication": "Cette turbine entraîne, sur le même axe, un ventilateur qui aspire l'air extérieur à travers l'échangeur de chaleur en amont, renforçant son refroidissement — l'énergie prélevée à l'air est ainsi réinvestie dans le même processus de refroidissement. Elle n'est donc ni absorbée par un frein interne ni simplement perdue, et elle ne sert pas non plus au circuit électrique : son usage reste interne au processus de conditionnement d'air.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0122",
+      "sous_chapitre": "M11A.14",
+      "question": "Pourquoi l'air envoyé en cabine mélange-t-il air neuf conditionné et air recyclé de la cabine, plutôt que d'être entièrement composé d'air neuf ?",
+      "options": [
+        "Prélever et conditionner en continu la totalité de l'air nécessaire représenterait un prélèvement important sur le cycle moteur, coûteux en performance et en carburant",
+        "L'air recyclé de la cabine est en réalité plus propre que l'air neuf prélevé sur les moteurs, ce qui justifie sa préférence",
+        "Le mélange avec de l'air recyclé n'a aucune justification technique : il ne s'agit que d'une habitude de conception sans réel avantage"
+      ],
+      "bonne": 0,
+      "explication": "Prélever et conditionner en continu la totalité de l'air nécessaire à partir des seuls moteurs représenterait un prélèvement important sur leur cycle (cet air, une fois détourné vers d'autres usages, n'est plus disponible pour la combustion ni la poussée), coûteux en performance et en carburant ; recycler une partie de l'air cabine (filtré) réduit ce prélèvement. Ce n'est pas une question de propreté supérieure de l'air recyclé (qui est filtré, pas intrinsèquement plus propre), et ce choix a bien une justification technique réelle.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0123",
+      "sous_chapitre": "M11A.14",
+      "question": "Comment la température est-elle ajustée séparément selon les différentes zones de la cabine ?",
+      "options": [
+        "Chaque zone dispose de son propre pack de conditionnement d'air entièrement indépendant, sans aucun mélange d'air entre elles",
+        "Une quantité réglable d'air chaud prélevé, non passé par le pack, est mélangée à l'air conditionné plus froid, selon une proportion propre à chaque zone",
+        "La température est en réalité identique dans toutes les zones de l'avion, aucun ajustement zone par zone n'étant possible"
+      ],
+      "bonne": 1,
+      "explication": "Une quantité réglable d'air chaud prélevé directement (sans passer par le pack) est mélangée à l'air conditionné plus froid, en proportion ajustable pour chaque zone, permettant des températures différentes simultanément. Cela ne nécessite pas un pack entièrement dédié par zone, et un ajustement zone par zone est bien possible, contrairement à l'affirmation d'une température uniforme imposée.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0124",
+      "sous_chapitre": "M11A.14",
+      "question": "Pourquoi l'air cabine reste-t-il généralement plus sec que l'air ambiant habituel ?",
+      "options": [
+        "L'air cabine n'est en réalité pas plus sec que l'air ambiant habituel, cette sensation étant purement subjective sans fondement physique",
+        "Le processus de conditionnement d'air assèche activement l'air cabine par un dispositif dédié, indépendamment de l'air extérieur prélevé",
+        "L'air prélevé, initialement admis à haute altitude où l'air extérieur est naturellement très sec, conserve cette faible humidité tout au long du conditionnement"
+      ],
+      "bonne": 2,
+      "explication": "L'air prélevé, initialement admis à haute altitude où l'air extérieur est naturellement très sec (rappel implicite M11A.3), conserve cette faible teneur en humidité tout au long du conditionnement, expliquant la sécheresse ressentie en cabine. Ce n'est donc pas un dispositif d'assèchement actif dédié, et le phénomène a bien un fondement physique réel, pas seulement subjectif.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0125",
+      "sous_chapitre": "M11A.14",
+      "question": "Pourquoi un usage direct, sans filtrage, de l'air recyclé de la cabine serait-il problématique ?",
+      "options": [
+        "L'air recyclé doit être filtré (souvent par des filtres à haute efficacité) pour retenir les particules, y compris microbiologiques, avant d'être remélangé à l'air neuf",
+        "L'air recyclé ne contient en réalité aucune particule à filtrer, le filtrage n'étant qu'une précaution sans utilité réelle",
+        "Le filtrage de l'air recyclé sert uniquement à en modifier la température, sans aucun rôle sur sa composition ou sa propreté"
+      ],
+      "bonne": 0,
+      "explication": "L'air recyclé de la cabine est filtré, souvent par des filtres à haute efficacité qui retiennent une grande partie des particules (y compris microbiologiques), avant d'être remélangé à l'air neuf conditionné. Ce filtrage a donc une utilité réelle (l'air recyclé contient bien des particules à retenir), et son rôle porte sur la composition/propreté de l'air, pas sur sa température.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0126",
+      "sous_chapitre": "M11A.14",
+      "question": "Dans l'exemple de l'air prélevé en croisière décrit dans la fiche, quelles étapes traverse-t-il avant d'atteindre sa zone de destination en cabine ?",
+      "options": [
+        "Il est directement envoyé en cabine dès sa sortie du compresseur moteur, sans passer par aucune étape de refroidissement intermédiaire ni par aucun mélange avec de l'air recyclé",
+        "Précooler, puis échangeur et turbine du pack (avec entraînement d'un ventilateur de refroidissement), puis mélange avec l'air recyclé filtré, puis dosage d'air chaud selon la zone",
+        "Il est mélangé à l'air recyclé en tout premier lieu, avant même de traverser le précooler ou le pack de conditionnement, puis dosé en air chaud dès sa sortie du compresseur"
+      ],
+      "bonne": 1,
+      "explication": "Selon l'exemple de la fiche, l'air traverse d'abord le précooler, puis l'échangeur et la turbine du pack (dont l'énergie entraîne un ventilateur de refroidissement), avant d'être mélangé à l'air recyclé filtré, puis dosé avec de l'air chaud selon la zone de destination. Il ne va donc pas directement en cabine sans étape intermédiaire, et le mélange avec l'air recyclé intervient après, pas avant, le passage par le précooler et le pack.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0135",
+      "sous_chapitre": "M11A.14",
+      "question": "Pourquoi un avion dispose-t-il généralement de plusieurs groupes de conditionnement d'air indépendants plutôt qu'un seul ?",
+      "options": [
+        "Un seul groupe suffirait largement en usage normal, mais consommerait à lui seul trop de puissance prélevée aux moteurs pour être installé sans redondance",
+        "Plusieurs groupes permettent uniquement de refroidir l'air plus rapidement, sans aucun lien avec une éventuelle panne d'un groupe",
+        "La défaillance d'un seul groupe ne prive pas l'avion de toute climatisation, un autre groupe pouvant assurer seul un conditionnement pour toute la cabine"
+      ],
+      "bonne": 2,
+      "explication": "Comme pour les circuits hydrauliques (rappel M11A.10), la redondance de plusieurs groupes de conditionnement d'air garantit qu'une défaillance d'un seul groupe ne prive pas l'avion de toute climatisation, un autre groupe pouvant assurer seul un conditionnement pour l'ensemble de la cabine. Ce n'est donc ni une question de rapidité de refroidissement ni de consommation de puissance prélevée : c'est la panne potentielle d'un groupe qui justifie cette redondance.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0127",
+      "sous_chapitre": "M11A.15",
+      "question": "Pourquoi la pressurisation est-elle nécessaire, alors que l'avion vole justement pour profiter d'un air raréfié en altitude ?",
+      "options": [
+        "L'air raréfié en altitude, favorable aux performances, ne contient plus assez d'oxygène ni de pression pour un fonctionnement humain normal sans assistance",
+        "L'air raréfié en altitude ne pose problème qu'au-delà d'une durée de vol très longue, jamais lors d'un vol de courte durée",
+        "L'air raréfié en altitude serait en réalité tout aussi respirable que l'air au niveau de la mer, sans aucune différence physiologique"
+      ],
+      "bonne": 0,
+      "explication": "L'air raréfié en altitude, excellent pour réduire la traînée et la consommation (rappel M11A.3), ne contient plus assez d'oxygène ni une pression suffisante pour un fonctionnement humain normal sans assistance ; la pressurisation permet de concilier performance en altitude et confort physiologique en cabine. Ce manque d'oxygène et de pression se manifeste dès l'altitude atteinte, pas seulement au-delà d'une durée de vol très longue, et l'air raréfié n'est pas équivalent à l'air du niveau de la mer sur le plan physiologique.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0128",
+      "sous_chapitre": "M11A.15",
+      "question": "Quel est le principe de la valve de contrôle de sortie (outflow valve) dans le système de pressurisation ?",
+      "options": [
+        "Elle introduit de l'air neuf supplémentaire en cabine, en complément de celui déjà fourni par le conditionnement d'air",
+        "Elle laisse s'échapper l'air cabine à un débit ajusté en permanence, la modulation de ce débit par rapport à l'air entrant contrôlant la pression cabine",
+        "Elle bloque totalement toute sortie d'air de la cabine, la pression cabine étant alors uniquement déterminée par l'air entrant"
+      ],
+      "bonne": 1,
+      "explication": "La valve de contrôle de sortie laisse s'échapper l'air cabine à un débit ajusté en permanence ; moduler ce débit par rapport au débit d'air entrant (rappel M11A.14) permet de contrôler précisément la pression cabine. Elle n'introduit pas d'air neuf (rôle du conditionnement d'air), et elle ne bloque pas totalement la sortie d'air : un débit de sortie nul ferait au contraire monter la pression cabine indéfiniment.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0129",
+      "sous_chapitre": "M11A.15",
+      "question": "Pourquoi ne cherche-t-on pas à maintenir, en cabine, une pression strictement identique à celle du niveau de la mer ?",
+      "options": [
+        "Une pression identique au niveau de la mer serait en réalité dangereuse pour la santé des occupants, contrairement à une altitude cabine plus élevée",
+        "Il serait techniquement impossible de maintenir une telle pression, quelle que soit la conception du système de pressurisation",
+        "Cela imposerait une différence de pression considérable avec l'extérieur en croisière, une charge structurale d'autant plus importante pour le fuselage"
+      ],
+      "bonne": 2,
+      "explication": "Maintenir une pression identique au niveau de la mer imposerait une différence de pression considérable avec l'extérieur en croisière, une charge structurale d'autant plus importante pour le fuselage (rappel M11A.5) ; une altitude cabine intermédiaire réduit cette charge tout en restant confortable. Ce n'est pas dangereux pour la santé (au contraire, plus proche du niveau de la mer serait plus confortable), et ce n'est pas une impossibilité technique : c'est un compromis délibéré avec la charge structurale.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0130",
+      "sous_chapitre": "M11A.15",
+      "question": "Pourquoi le système de pressurisation module-t-il la vitesse de variation de la pression cabine, au-delà de la seule valeur finale recherchée ?",
+      "options": [
+        "Un changement de pression trop rapide peut être inconfortable pour les occupants, d'où une transition progressive plutôt qu'un ajustement brutal",
+        "La vitesse de variation n'a en réalité aucune importance ; seule la valeur finale de pression compte pour le système",
+        "Une variation rapide de pression endommagerait systématiquement et immédiatement la structure du fuselage, quelle que soit son ampleur"
+      ],
+      "bonne": 0,
+      "explication": "Un changement de pression trop rapide peut être inconfortable pour les occupants ; le système anticipe le profil de vol (montée, croisière, descente) pour atteindre la pression voulue progressivement plutôt que brutalement. La vitesse de variation compte donc bien, au-delà de la seule valeur finale, et une variation rapide n'endommage pas systématiquement et immédiatement la structure (c'est plutôt une question de confort ici, la protection structurale relevant des valves de sécurité).",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0131",
+      "sous_chapitre": "M11A.15",
+      "question": "Quel rôle jouent les valves de sécurité (soupapes de sûreté), distinctes de la valve de contrôle de sortie normale ?",
+      "options": [
+        "Elles remplacent entièrement la valve de contrôle de sortie normale, qui devient alors inutile une fois ces valves installées",
+        "Elles s'ouvrent automatiquement si la différence de pression dépasse la limite structurale du fuselage, dans un sens comme dans l'autre",
+        "Elles ne s'ouvrent que sur commande manuelle de l'équipage, jamais automatiquement en fonction de la pression réelle"
+      ],
+      "bonne": 1,
+      "explication": "Les valves de sécurité s'ouvrent automatiquement si la différence de pression dépasse la limite pour laquelle la structure du fuselage a été dimensionnée (rappel M11A.4-M11A.5), dans un sens comme dans l'autre, protégeant ainsi l'intégrité structurale indépendamment de toute action de l'équipage. Elles ne remplacent donc pas la valve de contrôle normale (qui gère la régulation courante), et elles s'ouvrent bien automatiquement, pas seulement sur commande manuelle.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0132",
+      "sous_chapitre": "M11A.15",
+      "question": "Qui définit la réaction précise attendue de l'équipage face à une alerte d'altitude cabine anormale ?",
+      "options": [
+        "Le manuel de vol propre à chaque appareil, le principe de l'indication d'altitude cabine relevant lui de la formation technique générale",
+        "Le seul fabricant de l'indicateur d'altitude cabine, indépendamment de l'appareil sur lequel il est installé",
+        "Il n'existe aucune réaction formalisée face à ce type d'alerte, chaque équipage improvisant selon la situation"
+      ],
+      "bonne": 0,
+      "explication": "Comme pour les autres indications d'écart anormal déjà rencontrées (rappel M15.11), le principe de l'indication d'altitude cabine relève de la formation technique générale ; la réaction précise attendue de l'équipage face à une telle alerte relève, elle, exclusivement du manuel de vol propre à chaque appareil. Ce n'est donc pas le seul fabricant de l'indicateur qui la définit, et une situation aussi critique n'est jamais laissée à l'improvisation : une procédure formelle existe bien.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0133",
+      "sous_chapitre": "M11A.15",
+      "question": "Pourquoi le fuselage d'un avion pressurisé doit-il être dimensionné pour résister à une charge structurale supplémentaire, en plus des charges déjà décrites en M11A.5 ?",
+      "options": [
+        "Le fuselage doit résister à la différence de pression comme à une charge structurale à part entière, un peu comme un ballon gonflé",
+        "La pressurisation n'a en réalité aucun lien avec la charge structurale du fuselage, ces deux sujets étant totalement indépendants",
+        "Le fuselage n'a besoin d'aucune résistance particulière face à la pressurisation, cette charge étant négligeable par rapport aux charges de vol"
+      ],
+      "bonne": 0,
+      "explication": "Rappel de la fiche M11A.5 : un fuselage pressurisé se comporte comme un ballon gonflé, devant résister à la différence de pression comme à une charge structurale à part entière, qui s'ajoute aux charges aérodynamiques et contribue à la fatigue du matériau. Ce lien est donc direct et fort, pas négligeable ni indépendant des deux sujets.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0134",
+      "sous_chapitre": "M11A.15",
+      "question": "Dans l'exemple de l'avion qui monte vers son altitude de croisière décrit dans la fiche, comment évolue le débit de la valve de contrôle de sortie ?",
+      "options": [
+        "Il augmente progressivement à mesure que l'avion prend de l'altitude, pour compenser l'air conditionné entrant qui diminuerait autrement",
+        "Il diminue progressivement à mesure que l'avion prend de l'altitude, maintenant l'altitude cabine à une valeur intermédiaire de façon progressive",
+        "Il reste rigoureusement constant tout au long de la montée, quelle que soit l'altitude atteinte par l'avion ou la vitesse de sa progression"
+      ],
+      "bonne": 1,
+      "explication": "Selon l'exemple de la fiche, le débit de la valve de contrôle de sortie diminue progressivement à mesure que l'avion prend de l'altitude, maintenant l'altitude cabine à une valeur intermédiaire tout en assurant une transition progressive. Il n'augmente donc pas (ce serait l'inverse de l'effet recherché), et il ne reste pas constant : c'est justement sa modulation qui permet ce contrôle.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0136",
+      "sous_chapitre": "M11A.15",
+      "question": "Pourquoi le fait que le fuselage soit lui-même une enveloppe étanche ne suffit-il pas, à lui seul, à assurer la pressurisation ?",
+      "options": [
+        "L'étanchéité du fuselage n'a en réalité aucun rôle dans la pressurisation, qui ne dépend que du système de contrôle",
+        "Une enveloppe étanche suffit à condition d'être renforcée localement au niveau des hublots et des portes, sans autre système nécessaire ailleurs",
+        "Il faut aussi un moyen de contrôler précisément la pression à l'intérieur de cette enveloppe, ce qui est le rôle du système de pressurisation proprement dit"
+      ],
+      "bonne": 2,
+      "explication": "Une enveloppe étanche est nécessaire mais ne suffit pas : il faut aussi un moyen de contrôler précisément la pression à l'intérieur de cette enveloppe (la valve de contrôle de sortie et les valves de sécurité), ce qui est le rôle du système de pressurisation proprement dit. Un simple renforcement local de l'étanchéité ne remplace donc pas ce système de contrôle, et l'étanchéité joue bien un rôle indispensable en complément de ce système, pas à sa place.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
     }
   ]
 }

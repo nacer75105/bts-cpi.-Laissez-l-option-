@@ -1,0 +1,89 @@
+<div id="schema-m1111-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1111-wrap .m1111-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m1111-wrap .m1111-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1111-wrap .m1111-diagram { position:relative; height:130px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; }
+#schema-m1111-wrap .m1111-fuselage { position:absolute; left:0; right:0; top:20%; height:20px; background:#888; border-radius:10px; transform-origin: 78% center; transition: transform 0.25s; }
+#schema-m1111-wrap .m1111-leg { position:absolute; width:6px; background:#4a76a8; }
+#schema-m1111-wrap .m1111-wheel { position:absolute; width:18px; height:18px; border-radius:50%; background:#333; border:2px solid #111; }
+#schema-m1111-wrap .m1111-label { position:absolute; font-size:0.64em; color:#555; }
+#schema-m1111-wrap .m1111-cg { position:absolute; width:14px; height:14px; border-radius:50%; background:#e0a800; border:2px solid #a87a00; top:14px; }
+#schema-m1111-wrap .m1111-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Configuration tricycle :</strong> comparez la position des roues et le centre de gravité, en tricycle et en configuration classique.</p>
+
+<button class="m1111-btn active" id="m1111-btn-tricycle">Tricycle (moderne)</button>
+<button class="m1111-btn" id="m1111-btn-classique">Classique (roulette de queue)</button>
+
+<div class="m1111-diagram">
+  <div class="m1111-fuselage" id="m1111-fuselage"></div>
+  <div class="m1111-label" style="left:2%; top:2%;">Fuselage</div>
+  <div class="m1111-cg" id="m1111-cg" style="left:42%;"></div>
+  <div class="m1111-label" id="m1111-l-cg" style="left:38%; top:0;">CG</div>
+  <div class="m1111-label" id="m1111-l-cg-full" style="left:30%; top:32px;">Centre de gravité</div>
+  <div class="m1111-wheel" id="m1111-w-avant" style="left:12%; top:52%;"></div>
+  <div class="m1111-label" id="m1111-l-avant" style="left:6%; bottom:8%;">Roue avant</div>
+  <div class="m1111-wheel" id="m1111-w-p1" style="left:55%; top:52%;"></div>
+  <div class="m1111-wheel" id="m1111-w-p2" style="left:72%; top:52%;"></div>
+  <div class="m1111-label" id="m1111-l-principales" style="left:56%; bottom:8%;">Roues principales</div>
+</div>
+
+<div class="m1111-caption" id="m1111-caption">Ce schéma compare la position des roues selon la configuration. Vue actuelle — tricycle : la roue avant est à l'avant du centre de gravité, les roues principales en arrière — la configuration la plus stable et la plus visible depuis le poste de pilotage. Cliquez sur « Classique » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1111-wrap');
+  if (!wrap) { return; }
+  var btnTri = wrap.querySelector('#m1111-btn-tricycle');
+  var btnClas = wrap.querySelector('#m1111-btn-classique');
+  var wAvant = wrap.querySelector('#m1111-w-avant');
+  var lAvant = wrap.querySelector('#m1111-l-avant');
+  var wP1 = wrap.querySelector('#m1111-w-p1');
+  var wP2 = wrap.querySelector('#m1111-w-p2');
+  var lPrincipales = wrap.querySelector('#m1111-l-principales');
+  var cg = wrap.querySelector('#m1111-cg');
+  var lCg = wrap.querySelector('#m1111-l-cg');
+  var lCgFull = wrap.querySelector('#m1111-l-cg-full');
+  var fuselage = wrap.querySelector('#m1111-fuselage');
+  var caption = wrap.querySelector('#m1111-caption');
+
+  function showTricycle() {
+    btnTri.className = 'm1111-btn active';
+    btnClas.className = 'm1111-btn';
+    fuselage.style.transform = 'rotate(0deg)';
+    wAvant.style.left = '12%'; wAvant.style.top = '52%';
+    lAvant.textContent = 'Roue avant';
+    lAvant.style.left = '6%'; lAvant.style.bottom = '8%'; lAvant.style.top = 'auto';
+    wP1.style.left = '55%'; wP1.style.top = '52%';
+    wP2.style.left = '72%'; wP2.style.top = '52%';
+    lPrincipales.textContent = 'Roues principales';
+    lPrincipales.style.left = '56%';
+    cg.style.left = '42%';
+    lCg.style.left = '38%';
+    lCgFull.style.left = '30%';
+    caption.textContent = "Ce schéma compare la position des roues selon la configuration. Vue actuelle — tricycle : la roue avant est à l'avant du centre de gravité, les roues principales en arrière — la configuration la plus stable et la plus visible depuis le poste de pilotage. Cliquez sur « Classique » pour comparer.";
+  }
+
+  function showClassique() {
+    btnTri.className = 'm1111-btn';
+    btnClas.className = 'm1111-btn active';
+    fuselage.style.transform = 'rotate(-6deg)';
+    wAvant.style.left = '72%'; wAvant.style.top = '62%';
+    lAvant.textContent = 'Roulette de queue';
+    lAvant.style.left = '66%'; lAvant.style.bottom = '2%'; lAvant.style.top = 'auto';
+    wP1.style.left = '25%'; wP1.style.top = '52%';
+    wP2.style.left = '42%'; wP2.style.top = '52%';
+    lPrincipales.textContent = 'Roues principales';
+    lPrincipales.style.left = '26%';
+    cg.style.left = '55%';
+    lCg.style.left = '51%';
+    lCgFull.style.left = '48%';
+    caption.textContent = "Classique (roulette de queue) : les roues principales sont à l'avant du centre de gravité, une petite roulette à l'arrière — l'avion reste cabré au sol (fuselage incliné sur ce schéma), avec une visibilité vers l'avant réduite et une stabilité au freinage moindre que le tricycle. Cliquez sur « Tricycle » pour revenir à l'autre vue.";
+  }
+
+  btnTri.addEventListener('click', showTricycle);
+  btnClas.addEventListener('click', showClassique);
+})();
+</script>

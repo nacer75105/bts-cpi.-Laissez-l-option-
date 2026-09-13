@@ -1,0 +1,70 @@
+<div id="schema-m1114-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1114-wrap .m1114-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m1114-wrap .m1114-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1114-wrap .m1114-chain { position:relative; min-height:110px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; display:flex; align-items:center; justify-content:center; gap:4px; flex-wrap:wrap; padding:10px; }
+#schema-m1114-wrap .m1114-box { padding:8px 9px; border-radius:6px; border:1.5px solid #4a76a8; background:#7fa8d9; color:#fff; font-size:0.66em; text-align:center; transition: background 0.2s; }
+#schema-m1114-wrap .m1114-box.cold { background:#4a90d9; }
+#schema-m1114-wrap .m1114-arrow { font-size:1.1em; color:#888; }
+#schema-m1114-wrap .m1114-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>La machine à cycle d'air (ACM) :</strong> comparez l'air avant et après son passage dans le pack de conditionnement.</p>
+
+<button class="m1114-btn active" id="m1114-btn-avant">Avant le pack (précooler seul)</button>
+<button class="m1114-btn" id="m1114-btn-apres">Après le pack (échangeur + turbine)</button>
+
+<div class="m1114-chain">
+  <div class="m1114-box" id="m1114-b1">Air prélevé (précooler)</div>
+  <div class="m1114-arrow" id="m1114-a1">→</div>
+  <div class="m1114-box" id="m1114-b2" style="display:none;">Échangeur</div>
+  <div class="m1114-arrow" id="m1114-a2" style="display:none;">→</div>
+  <div class="m1114-box" id="m1114-b3" style="display:none;">Turbine (détente)</div>
+  <div class="m1114-arrow" id="m1114-a3" style="display:none;">→</div>
+  <div class="m1114-box" id="m1114-b4">Air encore chaud</div>
+</div>
+
+<div class="m1114-caption" id="m1114-caption">Ce schéma montre l'effet du pack de conditionnement d'air sur la température de l'air prélevé. Vue actuelle — avant le pack : l'air, déjà refroidi par le précooler (rappel M11A.13), reste encore trop chaud pour un usage direct en cabine. Cliquez sur « Après le pack » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1114-wrap');
+  if (!wrap) { return; }
+  var btnAvant = wrap.querySelector('#m1114-btn-avant');
+  var btnApres = wrap.querySelector('#m1114-btn-apres');
+  var b2 = wrap.querySelector('#m1114-b2');
+  var a2 = wrap.querySelector('#m1114-a2');
+  var b3 = wrap.querySelector('#m1114-b3');
+  var a3 = wrap.querySelector('#m1114-a3');
+  var b4 = wrap.querySelector('#m1114-b4');
+  var caption = wrap.querySelector('#m1114-caption');
+
+  function showAvant() {
+    btnAvant.className = 'm1114-btn active';
+    btnApres.className = 'm1114-btn';
+    b2.style.display = 'none';
+    a2.style.display = 'none';
+    b3.style.display = 'none';
+    a3.style.display = 'none';
+    b4.className = 'm1114-box';
+    b4.textContent = 'Air encore chaud';
+    caption.textContent = "Ce schéma montre l'effet du pack de conditionnement d'air sur la température de l'air prélevé. Vue actuelle — avant le pack : l'air, déjà refroidi par le précooler (rappel M11A.13), reste encore trop chaud pour un usage direct en cabine. Cliquez sur « Après le pack » pour comparer.";
+  }
+
+  function showApres() {
+    btnAvant.className = 'm1114-btn';
+    btnApres.className = 'm1114-btn active';
+    b2.style.display = 'block';
+    a2.style.display = 'inline';
+    b3.style.display = 'block';
+    a3.style.display = 'inline';
+    b4.className = 'm1114-box cold';
+    b4.textContent = 'Air cabine (froid)';
+    caption.textContent = "Après le pack : un échangeur refroidit encore l'air, puis une turbine le détend, produisant un refroidissement supplémentaire important — l'énergie cédée entraîne un ventilateur qui aspire l'air extérieur à travers l'échangeur, renforçant à son tour son refroidissement. Cliquez sur « Avant le pack » pour revenir à l'autre vue.";
+  }
+
+  btnAvant.addEventListener('click', showAvant);
+  btnApres.addEventListener('click', showApres);
+})();
+</script>

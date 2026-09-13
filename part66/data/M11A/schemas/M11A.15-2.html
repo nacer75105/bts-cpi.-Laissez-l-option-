@@ -1,0 +1,64 @@
+<div id="schema-m1115b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1115b-wrap .m1115b-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m1115b-wrap .m1115b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1115b-wrap .m1115b-diagram { position:relative; height:120px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; display:flex; align-items:center; justify-content:center; }
+#schema-m1115b-wrap .m1115b-fuselage { width:220px; height:70px; border:3px solid #4a76a8; border-radius:35px; position:relative; background:#f0f4f8; }
+#schema-m1115b-wrap .m1115b-valve { position:absolute; right:-10px; top:50%; width:20px; height:20px; border-radius:50%; background:#5aa06a; border:2px solid #3a7a4a; transform:translateY(-50%); transition: background 0.2s, border-color 0.2s; }
+#schema-m1115b-wrap .m1115b-label { position:absolute; font-size:0.66em; color:#555; }
+#schema-m1115b-wrap .m1115b-status { font-weight:bold; text-align:center; margin-top:8px; color:#333; }
+#schema-m1115b-wrap .m1115b-status.alarm { color:#c0392b; }
+#schema-m1115b-wrap .m1115b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Soupapes de sûreté :</strong> comparez l'état normal et une ouverture automatique de sécurité.</p>
+
+<button class="m1115b-btn active" id="m1115b-btn-normal">Régulation normale</button>
+<button class="m1115b-btn" id="m1115b-btn-ouverte">Soupape de sûreté ouverte</button>
+
+<div class="m1115b-diagram">
+  <div class="m1115b-fuselage">
+    <div class="m1115b-label" style="left:10px; top:6px;">Fuselage pressurisé</div>
+    <div class="m1115b-valve" id="m1115b-valve"></div>
+    <div class="m1115b-label" style="right:-70px; top:60%;">Soupape</div>
+  </div>
+</div>
+<div class="m1115b-status" id="m1115b-status">Différence de pression dans les limites structurales normales</div>
+
+<div class="m1115b-caption" id="m1115b-caption">Ce schéma montre le principe des soupapes de sûreté, distinctes de la valve de contrôle normale. Vue actuelle — régulation normale : la différence de pression reste dans les limites structurales, la soupape de sûreté reste fermée. Cliquez sur « Soupape de sûreté ouverte » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1115b-wrap');
+  if (!wrap) { return; }
+  var btnNormal = wrap.querySelector('#m1115b-btn-normal');
+  var btnOuverte = wrap.querySelector('#m1115b-btn-ouverte');
+  var valve = wrap.querySelector('#m1115b-valve');
+  var status = wrap.querySelector('#m1115b-status');
+  var caption = wrap.querySelector('#m1115b-caption');
+
+  function showNormal() {
+    btnNormal.className = 'm1115b-btn active';
+    btnOuverte.className = 'm1115b-btn';
+    valve.style.background = '#5aa06a';
+    valve.style.borderColor = '#3a7a4a';
+    status.className = 'm1115b-status';
+    status.textContent = 'Différence de pression dans les limites structurales normales';
+    caption.textContent = "Ce schéma montre le principe des soupapes de sûreté, distinctes de la valve de contrôle normale. Vue actuelle — régulation normale : la différence de pression reste dans les limites structurales, la soupape de sûreté reste fermée. Cliquez sur « Soupape de sûreté ouverte » pour comparer.";
+  }
+
+  function showOuverte() {
+    btnNormal.className = 'm1115b-btn';
+    btnOuverte.className = 'm1115b-btn active';
+    valve.style.background = '#c0392b';
+    valve.style.borderColor = '#8a2a1c';
+    status.className = 'm1115b-status alarm';
+    status.textContent = 'Limite structurale approchée : la soupape s\'ouvre automatiquement';
+    caption.textContent = "Soupape de sûreté ouverte : si la différence de pression dépassait la limite pour laquelle le fuselage a été dimensionné (rappel M11A.4-M11A.5), cette soupape s'ouvre automatiquement, indépendamment de toute action de l'équipage, pour protéger l'intégrité structurale — dans un sens comme dans l'autre selon la direction de l'écart. Cliquez sur « Régulation normale » pour revenir à l'autre vue.";
+  }
+
+  btnNormal.addEventListener('click', showNormal);
+  btnOuverte.addEventListener('click', showOuverte);
+})();
+</script>

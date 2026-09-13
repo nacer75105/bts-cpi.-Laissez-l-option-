@@ -1,0 +1,59 @@
+<div id="schema-m1113b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1113b-wrap .m1113b-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m1113b-wrap .m1113b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1113b-wrap .m1113b-zone { position:relative; height:110px; margin-top:16px; border:2px solid #888; border-radius:8px; background:#f7f7f7; display:flex; align-items:center; justify-content:center; }
+#schema-m1113b-wrap .m1113b-duct { position:absolute; left:8%; right:8%; top:45%; height:8px; border-radius:4px; background:#7fa8d9; border:2px dashed #4a76a8; }
+#schema-m1113b-wrap .m1113b-duct.alarm { border-color:#c0392b; background:#e0a8a0; }
+#schema-m1113b-wrap .m1113b-label { position:absolute; font-size:0.66em; color:#555; top:10px; left:10px; }
+#schema-m1113b-wrap .m1113b-status { position:absolute; left:0; right:0; bottom:12px; text-align:center; font-weight:bold; color:#333; }
+#schema-m1113b-wrap .m1113b-status.alarm { color:#c0392b; }
+#schema-m1113b-wrap .m1113b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Détection de surchauffe :</strong> comparez l'état normal et une fuite d'air chaud détectée — même principe que la détection incendie.</p>
+
+<button class="m1113b-btn active" id="m1113b-btn-normal">État normal</button>
+<button class="m1113b-btn" id="m1113b-btn-alarme">Fuite d'air chaud détectée</button>
+
+<div class="m1113b-zone">
+  <div class="m1113b-label">Conduite d'air prélevé, surveillée sur toute sa longueur</div>
+  <div class="m1113b-duct" id="m1113b-duct"></div>
+  <div class="m1113b-status" id="m1113b-status">Température normale sur toute la conduite</div>
+</div>
+
+<div class="m1113b-caption" id="m1113b-caption">Ce schéma montre le principe de la détection de surchauffe des conduites d'air prélevé. Vue actuelle — état normal : la boucle de détection continue ne signale aucune élévation de température anormale. Cliquez sur « Fuite d'air chaud détectée » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1113b-wrap');
+  if (!wrap) { return; }
+  var btnNormal = wrap.querySelector('#m1113b-btn-normal');
+  var btnAlarme = wrap.querySelector('#m1113b-btn-alarme');
+  var duct = wrap.querySelector('#m1113b-duct');
+  var status = wrap.querySelector('#m1113b-status');
+  var caption = wrap.querySelector('#m1113b-caption');
+
+  function showNormal() {
+    btnNormal.className = 'm1113b-btn active';
+    btnAlarme.className = 'm1113b-btn';
+    duct.className = 'm1113b-duct';
+    status.className = 'm1113b-status';
+    status.textContent = 'Température normale sur toute la conduite';
+    caption.textContent = "Ce schéma montre le principe de la détection de surchauffe des conduites d'air prélevé. Vue actuelle — état normal : la boucle de détection continue ne signale aucune élévation de température anormale. Cliquez sur « Fuite d'air chaud détectée » pour comparer.";
+  }
+
+  function showAlarme() {
+    btnNormal.className = 'm1113b-btn';
+    btnAlarme.className = 'm1113b-btn active';
+    duct.className = 'm1113b-duct alarm';
+    status.className = 'm1113b-status alarm';
+    status.textContent = 'Élévation de température détectée : fuite d\'air chaud probable';
+    caption.textContent = "Fuite d'air chaud détectée : la boucle réagit à une élévation de température le long de son parcours (même principe que la détection incendie, rappel M15.13), alertant l'équipage avant qu'une conduite endommagée dans un espace clos ne cause des dégâts environnants. Cliquez sur « État normal » pour revenir à l'autre vue.";
+  }
+
+  btnNormal.addEventListener('click', showNormal);
+  btnAlarme.addEventListener('click', showAlarme);
+})();
+</script>

@@ -1,0 +1,63 @@
+<div id="schema-m1113-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1113-wrap .m1113-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m1113-wrap .m1113-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1113-wrap .m1113-chain { position:relative; min-height:110px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; display:flex; align-items:center; justify-content:center; gap:4px; flex-wrap:wrap; padding:10px; }
+#schema-m1113-wrap .m1113-box { padding:8px 9px; border-radius:6px; border:1.5px solid #4a76a8; background:#7fa8d9; color:#fff; font-size:0.68em; text-align:center; }
+#schema-m1113-wrap .m1113-arrow { font-size:1.1em; color:#888; }
+#schema-m1113-wrap .m1113-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>D'où vient l'air prélevé :</strong> comparez la source moteur et la source APU.</p>
+
+<button class="m1113-btn active" id="m1113-btn-moteur">Source : moteur</button>
+<button class="m1113-btn" id="m1113-btn-apu">Source : APU</button>
+
+<div class="m1113-chain">
+  <div class="m1113-box" id="m1113-b1">Compresseur moteur</div>
+  <div class="m1113-arrow" id="m1113-a1">→</div>
+  <div class="m1113-box" id="m1113-b2">Précooler</div>
+  <div class="m1113-arrow" id="m1113-a2">→</div>
+  <div class="m1113-box">Valves de régulation/isolement</div>
+  <div class="m1113-arrow">→</div>
+  <div class="m1113-box">Circuit pneumatique</div>
+</div>
+
+<div class="m1113-caption" id="m1113-caption">Ce schéma montre le trajet de l'air prélevé selon sa source. Vue actuelle — source moteur : l'air est prélevé sur un ou plusieurs étages du compresseur, avant la chambre de combustion, puis refroidi par le précooler avant de rejoindre le circuit. Cliquez sur « Source : APU » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1113-wrap');
+  if (!wrap) { return; }
+  var btnMoteur = wrap.querySelector('#m1113-btn-moteur');
+  var btnApu = wrap.querySelector('#m1113-btn-apu');
+  var b1 = wrap.querySelector('#m1113-b1');
+  var b2 = wrap.querySelector('#m1113-b2');
+  var a1 = wrap.querySelector('#m1113-a1');
+  var a2 = wrap.querySelector('#m1113-a2');
+  var caption = wrap.querySelector('#m1113-caption');
+
+  function showMoteur() {
+    btnMoteur.className = 'm1113-btn active';
+    btnApu.className = 'm1113-btn';
+    b1.textContent = 'Compresseur moteur';
+    b2.style.display = 'block';
+    a1.style.display = 'inline';
+    a2.style.display = 'inline';
+    caption.textContent = "Ce schéma montre le trajet de l'air prélevé selon sa source. Vue actuelle — source moteur : l'air est prélevé sur un ou plusieurs étages du compresseur, avant la chambre de combustion, puis refroidi par le précooler avant de rejoindre le circuit. Cliquez sur « Source : APU » pour comparer.";
+  }
+
+  function showApu() {
+    btnMoteur.className = 'm1113-btn';
+    btnApu.className = 'm1113-btn active';
+    b1.textContent = 'Compresseur APU';
+    b2.style.display = 'none';
+    a2.style.display = 'none';
+    caption.textContent = "Source APU : la petite turbine du groupe auxiliaire de bord fournit elle aussi de l'air prélevé, qui rejoint directement le circuit par sa propre valve, sans passer par le précooler des moteurs (resté inactif tant qu'aucun moteur ne tourne) — notamment utile pour le démarrage des moteurs ou un conditionnement d'air minimal au sol. Cliquez sur « Source : moteur » pour revenir à l'autre vue.";
+  }
+
+  btnMoteur.addEventListener('click', showMoteur);
+  btnApu.addEventListener('click', showApu);
+})();
+</script>

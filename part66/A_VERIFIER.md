@@ -1196,6 +1196,91 @@ question × 140, règle générale Part-66 pour les QCM — valeur
 retenue sur cette base mais **non vérifiée sur l'Appendix VIII
 officiel**, même statut TODO que les autres modules.
 
+### Lot 3 (M11A.11-M11A.15, 5 fiches, 45 questions, 10 schémas) — relu, 4 BLOQUANT corrigés
+
+Train d'atterrissage (structure, extension/rétraction et moyen de secours),
+circuits pneumatiques (air prélevé), conditionnement d'air, pressurisation.
+M11A.12 et M11A.15 soumises à la même consigne de portée stricte que
+M11A.9/M11A.10 (principe et conséquences entretien uniquement, jamais de
+seuil précis ni de procédure d'équipage/mécanicien reproductible) — relu et
+jugé conforme.
+
+Relu par `relecteur-part66` : 4 BLOQUANT trouvés et corrigés avant commit —
+quatre explications de questions (M11A-0094, M11A-0113, M11A-0116,
+M11A-0127) réfutaient un distracteur imaginaire au lieu du distracteur
+réellement présent dans les options, laissant ce dernier sans réfutation
+(même motif que les « renvois inventés » des lots précédents, transposé aux
+options) ; la répartition énergétique de l'amortisseur oléopneumatique
+(fiche M11A.11 et M11A-0093) attribuait à tort au gaz comprimé l'essentiel
+de l'absorption d'énergie, alors que c'est le passage forcé du fluide
+hydraulique dans l'orifice calibré qui dissipe l'essentiel de l'énergie en
+chaleur (le gaz, lui, l'encaisse et la restitue comme un ressort) — reformulé
+dans les deux emplacements ; le schéma `M11A.11.html` contredisait sa
+propre légende en vue « Classique » (le marqueur CG et sa légende n'étaient
+jamais repositionnés par le script, plaçant le CG sur une roue principale
+au lieu de le montrer en arrière des roues principales comme l'annonce la
+légende) et la caption annonçait un avion « cabré au sol » sans qu'aucune
+inclinaison ne soit représentée — corrigé (CG et légendes repositionnés par
+mode, fuselage incliné par `transform: rotate()` en vue classique, technique
+déjà validée dans le projet pour les angles) ; `schemas/M11A.13.html`
+présentait une divergence entre le texte HTML statique et le texte JS de
+l'état par défaut (bug explicitement documenté comme à éviter dans
+`C:\Users\pc\CLAUDE.md`) — harmonisés.
+
+Plusieurs points À REVOIR traités dans la foulée : distracteurs
+auto-réfutés par la prémisse même de la question ou franchement absurdes
+renforcés sur 7 questions (M11A-0096, M11A-0103, M11A-0119, M11A-0121,
+M11A-0135, M11A-0136, et M11A-0109 reformulée) ; deux questions « méta »
+supplémentaires (M11A-0109, M11A-0132, portant sur ce que « la fiche »
+couvre ou non) reformulées en questions directes sur la répartition des
+responsabilités constructeur/manuel de vol, dans le même esprit que les
+questions méta déjà reformulées au lot 1 ; une troisième (M11A-0133)
+allégée de sa référence explicite à « la fiche » sans changer la
+connaissance testée ; indice de longueur de la bonne réponse atténué sur 4
+questions par allongement mesuré des distracteurs (M11A-0100, M11A-0117,
+M11A-0126, M11A-0134) ; légende « Voilure » de `M11A.12.html` repositionnée
+sur l'aile réellement centrée par le flex (elle flottait à gauche dans le
+vide) ; chevauchement texte/barre corrigé dans `M11A.13-2.html` (le statut
+passe désormais sous le cadre plutôt que par-dessus, même convention que
+`M11A.15-2.html`) ; `M11A.14.html` affichait deux flèches consécutives en
+vue par défaut (une flèche jamais masquée par le script, qui ne la
+référençait même pas) — corrigé, la flèche suit maintenant le même
+affichage/masquage que les autres éléments de l'étape turbine.
+
+Restent, en dette mineure assumée (même statut que les points similaires
+documentés pour M5/M7A/M17A) :
+- `schemas/M11A.11-2.html` — la coexistence gaz/fluide de l'amortisseur est
+  représentée par un simple rectangle bleu dont seule la hauteur varie, sans
+  chambre de gaz, chambre d'huile ni orifice identifiables ; la roue n'a pas
+  de libellé permanent. À enrichir dans un round de finition.
+- `schemas/M11A.15.html` — la « valve de contrôle de sortie » n'existe que
+  comme libellé texte, sans élément visuel associé, alors qu'elle est le
+  mécanisme central de la fiche.
+- `schemas/M11A.15-2.html` — une soupape unique y protège « dans un sens
+  comme dans l'autre », simplification d'un mécanisme qui comporte en
+  réalité des soupapes distinctes pour la surpression et la dépression ; la
+  fiche parle bien de « valves » au pluriel, seul le schéma simplifie à une
+  seule.
+- `schemas/M11A.14.html` — le ventilateur entraîné par la turbine, mentionné
+  dans la caption et testé par M11A-0121, n'apparaît pas visuellement dans
+  le diagramme.
+- `fiches.json` (M11A.14) — la machine à cycle d'air est décrite en cycle
+  simple (turbine entraînant un seul ventilateur), alors que la plupart des
+  avions de transport modernes utilisent une machine bootstrap à 3-4 roues
+  où la turbine entraîne aussi un compresseur ; acceptable au niveau B1.1
+  mais à noter explicitement si le sujet est approfondi plus tard.
+- Léger recouvrement de connaissance entre M11A-0128 (principe de la valve
+  de contrôle de sortie) et M11A-0134 (comportement de cette même valve en
+  montée) — pas un doublon strict, mais une distinction fine.
+- Numérotation : uid `M11A-0089` inexistant (saut hérité du lot 2 entre
+  0088 et 0090) et `M11A-0135`/`M11A-0136` insérés hors séquence au milieu
+  du lot 3 — sans effet fonctionnel, mais nuit à la traçabilité par uid.
+
+**Lot 3 relu et corrigé le 2026-09-13 ; reste à tester en local et faire
+valider par l'utilisateur avant de passer `disponible` à `True`** (même
+étape que les lots précédents — voir le retour utilisateur du lot 1 sur les
+légendes permanentes, qui n'était apparu qu'au test réel en navigateur).
+
 ## M5.1 / M5.5 / M15.1-2 — bug résolu : génération de DOM à l'exécution
 (investigation menée le 2026-09-11, cause identifiée et corrigée)
 

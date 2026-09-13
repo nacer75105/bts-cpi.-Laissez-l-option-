@@ -1,0 +1,66 @@
+<div id="schema-m1115-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1115-wrap .m1115-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m1115-wrap .m1115-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1115-wrap .m1115-diagram { position:relative; height:140px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; display:flex; align-items:flex-end; justify-content:space-around; padding-bottom:10px; }
+#schema-m1115-wrap .m1115-col { text-align:center; }
+#schema-m1115-wrap .m1115-bar { width:40px; background:#7fa8d9; border:1.5px solid #4a76a8; border-radius:3px 3px 0 0; margin:0 auto; transition: height 0.2s; }
+#schema-m1115-wrap .m1115-bar.cabine { background:#5aa06a; border-color:#3a7a4a; }
+#schema-m1115-wrap .m1115-label { font-size:0.66em; color:#555; margin-top:4px; }
+#schema-m1115-wrap .m1115-valve { position:absolute; right:8%; top:10%; font-size:0.66em; color:#555; text-align:center; }
+#schema-m1115-wrap .m1115-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Altitude cabine et altitude avion :</strong> comparez au sol et en croisière — les deux barres représentent une échelle qualitative, pas des valeurs chiffrées.</p>
+
+<button class="m1115-btn active" id="m1115-btn-sol">Au sol</button>
+<button class="m1115-btn" id="m1115-btn-croisiere">En croisière</button>
+
+<div class="m1115-diagram">
+  <div class="m1115-col">
+    <div class="m1115-bar" id="m1115-bar-avion" style="height:20px;"></div>
+    <div class="m1115-label">Altitude avion</div>
+  </div>
+  <div class="m1115-col">
+    <div class="m1115-bar cabine" id="m1115-bar-cabine" style="height:20px;"></div>
+    <div class="m1115-label">Altitude cabine</div>
+  </div>
+  <div class="m1115-valve" id="m1115-valve">Valve de contrôle de sortie : peu sollicitée</div>
+</div>
+
+<div class="m1115-caption" id="m1115-caption">Ce schéma compare l'altitude cabine à l'altitude réelle de l'avion (échelle qualitative). Vue actuelle — au sol : les deux altitudes sont proches, la valve de contrôle de sortie reste peu sollicitée. Cliquez sur « En croisière » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1115-wrap');
+  if (!wrap) { return; }
+  var btnSol = wrap.querySelector('#m1115-btn-sol');
+  var btnCroisiere = wrap.querySelector('#m1115-btn-croisiere');
+  var barAvion = wrap.querySelector('#m1115-bar-avion');
+  var barCabine = wrap.querySelector('#m1115-bar-cabine');
+  var valve = wrap.querySelector('#m1115-valve');
+  var caption = wrap.querySelector('#m1115-caption');
+
+  function showSol() {
+    btnSol.className = 'm1115-btn active';
+    btnCroisiere.className = 'm1115-btn';
+    barAvion.style.height = '20px';
+    barCabine.style.height = '20px';
+    valve.textContent = 'Valve de contrôle de sortie : peu sollicitée';
+    caption.textContent = "Ce schéma compare l'altitude cabine à l'altitude réelle de l'avion (échelle qualitative). Vue actuelle — au sol : les deux altitudes sont proches, la valve de contrôle de sortie reste peu sollicitée. Cliquez sur « En croisière » pour comparer.";
+  }
+
+  function showCroisiere() {
+    btnSol.className = 'm1115-btn';
+    btnCroisiere.className = 'm1115-btn active';
+    barAvion.style.height = '110px';
+    barCabine.style.height = '45px';
+    valve.textContent = 'Valve de contrôle de sortie : ajustée en continu';
+    caption.textContent = "En croisière : l'altitude avion (barre bleue) est bien plus élevée que l'altitude cabine (barre verte), maintenue à une valeur intermédiaire par la valve de contrôle de sortie — un compromis entre confort physiologique et charge structurale du fuselage (rappel M11A.5). Cliquez sur « Au sol » pour revenir à l'autre vue.";
+  }
+
+  btnSol.addEventListener('click', showSol);
+  btnCroisiere.addEventListener('click', showCroisiere);
+})();
+</script>

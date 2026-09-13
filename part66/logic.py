@@ -36,7 +36,7 @@ MODULES = {
     "M7A": {"titre": "Pratiques de maintenance", "disponible": True,
              "nb_questions_examen": 25, "duree_examen_min": 30},
     "M11A": {"titre": "Aérodynamique, structures et systèmes — avion à turbine",
-              "disponible": False,  # lots 1-2/5 (M11A.1-M11A.10) validés par l'utilisateur le 2026-09-12 ; reste lots 3-5
+              "disponible": False,  # lots 1-3/5 (M11A.1-M11A.15) relus et corrigés ; reste lots 4-5 puis test local avant activation
               "nb_questions_examen": 140, "duree_examen_min": 175},  # TODO : 175 min = 75 s/question x 140, à confirmer sur l'Appendix VIII officiel
     "M15": {"titre": "Turbomachines à gaz", "disponible": True,  # module complet (14 fiches), relu et validé par l'utilisateur (lots 1-3, tests locaux inclus) le 2026-09-11
              "nb_questions_examen": 25, "duree_examen_min": 30},  # TODO : valeurs provisoires non vérifiées (alignées sur M17A), à confirmer avec l'utilisateur une fois le module M15 complet (14 fiches)

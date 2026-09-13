@@ -1,0 +1,65 @@
+<div id="schema-m1114b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1114b-wrap .m1114b-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m1114b-wrap .m1114b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1114b-wrap .m1114b-diagram { position:relative; height:110px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; display:flex; align-items:center; justify-content:space-around; }
+#schema-m1114b-wrap .m1114b-zone { text-align:center; }
+#schema-m1114b-wrap .m1114b-track { width:60px; height:10px; background:#ddd; border-radius:5px; overflow:hidden; margin-top:6px; }
+#schema-m1114b-wrap .m1114b-fill { height:100%; background:#e0a800; border-radius:5px; transition: width 0.2s; }
+#schema-m1114b-wrap .m1114b-label { font-size:0.66em; color:#555; }
+#schema-m1114b-wrap .m1114b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Mélange d'air chaud par zone :</strong> comparez la proportion d'air chaud réinjecté selon la zone choisie.</p>
+
+<button class="m1114b-btn active" id="m1114b-btn-cockpit">Poste de pilotage (frais)</button>
+<button class="m1114b-btn" id="m1114b-btn-cabine">Cabine arrière (plus chaude)</button>
+
+<div class="m1114b-diagram">
+  <div class="m1114b-zone">
+    <div class="m1114b-label">Poste de pilotage</div>
+    <div class="m1114b-track"><div class="m1114b-fill" id="m1114b-fill-1" style="width:20%;"></div></div>
+  </div>
+  <div class="m1114b-zone">
+    <div class="m1114b-label">Cabine avant</div>
+    <div class="m1114b-track"><div class="m1114b-fill" id="m1114b-fill-2" style="width:45%;"></div></div>
+  </div>
+  <div class="m1114b-zone">
+    <div class="m1114b-label">Cabine arrière</div>
+    <div class="m1114b-track"><div class="m1114b-fill" id="m1114b-fill-3" style="width:45%;"></div></div>
+  </div>
+</div>
+
+<div class="m1114b-caption" id="m1114b-caption">Ce schéma montre comment la proportion d'air chaud réinjecté (barre) varie selon la zone. Vue actuelle — poste de pilotage réglé au frais : une faible proportion d'air chaud est mélangée à l'air conditionné, pour une température plus fraîche que dans les autres zones. Cliquez sur « Cabine arrière » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1114b-wrap');
+  if (!wrap) { return; }
+  var btnCockpit = wrap.querySelector('#m1114b-btn-cockpit');
+  var btnCabine = wrap.querySelector('#m1114b-btn-cabine');
+  var fill1 = wrap.querySelector('#m1114b-fill-1');
+  var fill3 = wrap.querySelector('#m1114b-fill-3');
+  var caption = wrap.querySelector('#m1114b-caption');
+
+  function showCockpit() {
+    btnCockpit.className = 'm1114b-btn active';
+    btnCabine.className = 'm1114b-btn';
+    fill1.style.width = '20%';
+    fill3.style.width = '45%';
+    caption.textContent = "Ce schéma montre comment la proportion d'air chaud réinjecté (barre) varie selon la zone. Vue actuelle — poste de pilotage réglé au frais : une faible proportion d'air chaud est mélangée à l'air conditionné, pour une température plus fraîche que dans les autres zones. Cliquez sur « Cabine arrière » pour comparer.";
+  }
+
+  function showCabine() {
+    btnCockpit.className = 'm1114b-btn';
+    btnCabine.className = 'm1114b-btn active';
+    fill1.style.width = '20%';
+    fill3.style.width = '75%';
+    caption.textContent = "Cabine arrière réglée plus chaude : une proportion plus importante d'air chaud, prélevé directement sans passer par le pack, est mélangée à l'air conditionné pour cette zone précise — chaque zone peut ainsi recevoir une température différente au même instant. Cliquez sur « Poste de pilotage » pour revenir à l'autre vue.";
+  }
+
+  btnCockpit.addEventListener('click', showCockpit);
+  btnCabine.addEventListener('click', showCabine);
+})();
+</script>

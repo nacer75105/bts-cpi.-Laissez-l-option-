@@ -1,0 +1,57 @@
+<div id="schema-m1112b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1112b-wrap .m1112b-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m1112b-wrap .m1112b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1112b-wrap .m1112b-diagram { position:relative; height:120px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; display:flex; align-items:center; justify-content:space-around; }
+#schema-m1112b-wrap .m1112b-box { padding:8px 10px; border-radius:6px; border:1.5px solid #4a76a8; background:#7fa8d9; color:#fff; font-size:0.7em; text-align:center; transition: opacity 0.2s, background 0.2s; }
+#schema-m1112b-wrap .m1112b-box.off { opacity:0.35; }
+#schema-m1112b-wrap .m1112b-box.active-src { background:#5aa06a; border-color:#3a7a4a; }
+#schema-m1112b-wrap .m1112b-arrow { font-size:1.1em; color:#888; }
+#schema-m1112b-wrap .m1112b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Extension normale ou de secours :</strong> comparez la source qui amène le train en position sortie.</p>
+
+<button class="m1112b-btn active" id="m1112b-btn-normale">Extension normale</button>
+<button class="m1112b-btn" id="m1112b-btn-secours">Extension de secours</button>
+
+<div class="m1112b-diagram">
+  <div class="m1112b-box" id="m1112b-src">Pression hydraulique (vérin)</div>
+  <div class="m1112b-arrow">→</div>
+  <div class="m1112b-box">Verrou libéré</div>
+  <div class="m1112b-arrow">→</div>
+  <div class="m1112b-box">Train sorti et verrouillé</div>
+</div>
+
+<div class="m1112b-caption" id="m1112b-caption">Ce schéma compare la source d'énergie qui amène le train en position sortie. Vue actuelle — extension normale : un vérin hydraulique pousse activement le train, jusqu'à son verrouillage mécanique en position sortie. Cliquez sur « Extension de secours » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1112b-wrap');
+  if (!wrap) { return; }
+  var btnNormale = wrap.querySelector('#m1112b-btn-normale');
+  var btnSecours = wrap.querySelector('#m1112b-btn-secours');
+  var src = wrap.querySelector('#m1112b-src');
+  var caption = wrap.querySelector('#m1112b-caption');
+
+  function showNormale() {
+    btnNormale.className = 'm1112b-btn active';
+    btnSecours.className = 'm1112b-btn';
+    src.textContent = 'Pression hydraulique (vérin)';
+    src.className = 'm1112b-box active-src';
+    caption.textContent = "Ce schéma compare la source d'énergie qui amène le train en position sortie. Vue actuelle — extension normale : un vérin hydraulique pousse activement le train, jusqu'à son verrouillage mécanique en position sortie. Cliquez sur « Extension de secours » pour comparer.";
+  }
+
+  function showSecours() {
+    btnNormale.className = 'm1112b-btn';
+    btnSecours.className = 'm1112b-btn active';
+    src.textContent = 'Poids du train + résistance de l\'air';
+    src.className = 'm1112b-box active-src';
+    caption.textContent = "Extension de secours : sans aucune pression hydraulique, le train est simplement libéré de son verrou de position rentrée et descend sous l'effet conjugué de son propre poids et de la résistance de l'air, jusqu'à son verrouillage en position sortie — un principe indépendant de toute source de pression, donc insensible à la panne qui a rendu ce moyen nécessaire. Cliquez sur « Extension normale » pour revenir à l'autre vue.";
+  }
+
+  btnNormale.addEventListener('click', showNormale);
+  btnSecours.addEventListener('click', showSecours);
+})();
+</script>

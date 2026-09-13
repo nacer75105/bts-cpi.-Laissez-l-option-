@@ -1,0 +1,54 @@
+<div id="schema-m1111b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1111b-wrap .m1111b-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m1111b-wrap .m1111b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1111b-wrap .m1111b-diagram { position:relative; height:120px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; display:flex; align-items:flex-end; justify-content:center; }
+#schema-m1111b-wrap .m1111b-leg { width:16px; background:#4a76a8; border:1.5px solid #2f5580; border-radius:3px 3px 0 0; transition: height 0.2s; }
+#schema-m1111b-wrap .m1111b-wheel { width:26px; height:26px; border-radius:50%; background:#333; border:2px solid #111; margin-top:-2px; }
+#schema-m1111b-wrap .m1111b-label { position:absolute; font-size:0.66em; color:#555; }
+#schema-m1111b-wrap .m1111b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>L'amortisseur oléopneumatique :</strong> comparez son état détendu et son état comprimé lors de l'impact.</p>
+
+<button class="m1111b-btn active" id="m1111b-btn-detendu">Détendu (au repos)</button>
+<button class="m1111b-btn" id="m1111b-btn-comprime">Comprimé (impact absorbé)</button>
+
+<div class="m1111b-diagram">
+  <div class="m1111b-label" style="left:8px; top:8px;">Jambe de train (amortisseur)</div>
+  <div>
+    <div class="m1111b-leg" id="m1111b-leg" style="height:80px;"></div>
+    <div class="m1111b-wheel"></div>
+  </div>
+</div>
+
+<div class="m1111b-caption" id="m1111b-caption">Ce schéma montre l'amortisseur avant et pendant l'absorption d'un impact. Vue actuelle — détendu : le gaz comprimé à l'intérieur maintient la jambe à sa longueur normale, aucune énergie d'impact à absorber. Cliquez sur « Comprimé » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1111b-wrap');
+  if (!wrap) { return; }
+  var btnDetendu = wrap.querySelector('#m1111b-btn-detendu');
+  var btnComprime = wrap.querySelector('#m1111b-btn-comprime');
+  var leg = wrap.querySelector('#m1111b-leg');
+  var caption = wrap.querySelector('#m1111b-caption');
+
+  function showDetendu() {
+    btnDetendu.className = 'm1111b-btn active';
+    btnComprime.className = 'm1111b-btn';
+    leg.style.height = '80px';
+    caption.textContent = "Ce schéma montre l'amortisseur avant et pendant l'absorption d'un impact. Vue actuelle — détendu : le gaz comprimé à l'intérieur maintient la jambe à sa longueur normale, aucune énergie d'impact à absorber. Cliquez sur « Comprimé » pour comparer.";
+  }
+
+  function showComprime() {
+    btnDetendu.className = 'm1111b-btn';
+    btnComprime.className = 'm1111b-btn active';
+    leg.style.height = '45px';
+    caption.textContent = "Comprimé : au moment de l'impact, le gaz se comprime davantage (comme un ressort) tandis que le fluide hydraulique traverse un orifice étroit, dissipant progressivement l'énergie plutôt que de la retransmettre brutalement à la structure. Cliquez sur « Détendu » pour revenir à l'autre vue.";
+  }
+
+  btnDetendu.addEventListener('click', showDetendu);
+  btnComprime.addEventListener('click', showComprime);
+})();
+</script>
