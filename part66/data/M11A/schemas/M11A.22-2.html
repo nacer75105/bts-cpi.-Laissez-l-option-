@@ -1,0 +1,66 @@
+<div id="schema-m1122b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1122b-wrap .m1122b-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m1122b-wrap .m1122b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1122b-wrap .m1122b-diagram { position:relative; min-height:130px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; padding:14px; }
+#schema-m1122b-wrap .m1122b-row { display:flex; align-items:center; justify-content:center; gap:6px; flex-wrap:wrap; }
+#schema-m1122b-wrap .m1122b-box { padding:8px 9px; border-radius:6px; border:1.5px solid #4a76a8; background:#7fa8d9; color:#fff; font-size:0.64em; text-align:center; transition: background 0.2s, border-color 0.2s; }
+#schema-m1122b-wrap .m1122b-box.alarm { background:#c0392b; border-color:#8e2a1f; }
+#schema-m1122b-wrap .m1122b-box.confine { background:#5aa06a; border-color:#3d7a4d; }
+#schema-m1122b-wrap .m1122b-arrow { font-size:1.1em; color:#888; }
+#schema-m1122b-wrap .m1122b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Détection, confinement et extinction en soute :</strong> comparez l'état normal et une fumée détectée.</p>
+
+<button class="m1122b-btn active" id="m1122b-btn-normal">État normal</button>
+<button class="m1122b-btn" id="m1122b-btn-fumee">Fumée détectée</button>
+
+<div class="m1122b-diagram">
+  <div class="m1122b-row">
+    <div class="m1122b-box" id="m1122b-detecteur">Détecteur de fumée : aucune alerte</div>
+    <div class="m1122b-arrow">→</div>
+    <div class="m1122b-box" id="m1122b-bouteille">Bouteille d'agent extincteur : en attente</div>
+  </div>
+  <div class="m1122b-row">
+    <div class="m1122b-box confine" id="m1122b-parois">Parois résistantes au feu : confinement passif, en permanence, indépendamment de la détection</div>
+  </div>
+</div>
+
+<div class="m1122b-caption" id="m1122b-caption">Ce schéma compare l'état normal et une fumée détectée en soute. Vue actuelle — normal : aucune alerte du détecteur, la bouteille d'agent extincteur reste en attente, les parois assurent un confinement passif permanent. Cliquez sur « Fumée détectée » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById("schema-m1122b-wrap");
+  if (!wrap) { return; }
+  var btnNormal = wrap.querySelector("#m1122b-btn-normal");
+  var btnFumee = wrap.querySelector("#m1122b-btn-fumee");
+  var detecteur = wrap.querySelector("#m1122b-detecteur");
+  var bouteille = wrap.querySelector("#m1122b-bouteille");
+  var caption = wrap.querySelector("#m1122b-caption");
+
+  function showNormal() {
+    btnNormal.className = "m1122b-btn active";
+    btnFumee.className = "m1122b-btn";
+    detecteur.textContent = "Détecteur de fumée : aucune alerte";
+    detecteur.classList.remove("alarm");
+    bouteille.textContent = "Bouteille d'agent extincteur : en attente";
+    bouteille.classList.remove("alarm");
+    caption.textContent = "Ce schéma compare l'état normal et une fumée détectée en soute. Vue actuelle — normal : aucune alerte du détecteur, la bouteille d'agent extincteur reste en attente, les parois assurent un confinement passif permanent. Cliquez sur « Fumée détectée » pour comparer.";
+  }
+
+  function showFumee() {
+    btnNormal.className = "m1122b-btn";
+    btnFumee.className = "m1122b-btn active";
+    detecteur.textContent = "Détecteur de fumée : alerte déclenchée";
+    detecteur.classList.add("alarm");
+    bouteille.textContent = "Bouteille d'agent extincteur : déchargée (selon procédure du manuel de vol)";
+    bouteille.classList.add("alarm");
+    caption.textContent = "Fumée détectée : le détecteur déclenche l'alerte, l'agent extincteur peut être déchargé selon la procédure du manuel de vol (non détaillée ici), pendant que les parois résistantes au feu continuent de confiner tout foyer à l'intérieur du volume de la soute. Cliquez sur « État normal » pour revenir à l'autre vue.";
+  }
+
+  btnNormal.addEventListener("click", showNormal);
+  btnFumee.addEventListener("click", showFumee);
+})();
+</script>

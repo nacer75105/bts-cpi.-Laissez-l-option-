@@ -1,0 +1,60 @@
+<div id="schema-m1125b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1125b-wrap .m1125b-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m1125b-wrap .m1125b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1125b-wrap .m1125b-diagram { position:relative; min-height:150px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; display:flex; align-items:flex-end; justify-content:center; gap:50px; padding:14px; }
+#schema-m1125b-wrap .m1125b-col { display:flex; flex-direction:column; align-items:center; }
+#schema-m1125b-wrap .m1125b-bar-wrap { width:44px; height:90px; border:1.5px solid #888; border-radius:4px; background:#fff; position:relative; display:flex; align-items:flex-end; }
+#schema-m1125b-wrap .m1125b-bar { width:100%; background:#bfe3d0; border-top:2px solid #5aa06a; transition: height 0.3s, background 0.3s, border-color 0.3s; }
+#schema-m1125b-wrap .m1125b-bar.critique { background:#e0a8a0; border-top-color:#c0392b; }
+#schema-m1125b-wrap .m1125b-label { font-size:0.62em; color:#555; text-align:center; margin-top:6px; max-width:130px; }
+#schema-m1125b-wrap .m1125b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Croissance d'une fissure de fatigue :</strong> comparez la taille de la fissure au moment de sa détection, selon la méthode.</p>
+
+<button class="m1125b-btn active" id="m1125b-btn-precoce">Détection précoce (CND)</button>
+<button class="m1125b-btn" id="m1125b-btn-tardive">Détection tardive (visuelle seule)</button>
+
+<div class="m1125b-diagram">
+  <div class="m1125b-col">
+    <div class="m1125b-bar-wrap"><div class="m1125b-bar" id="m1125b-bar" style="height:12%;"></div></div>
+    <div class="m1125b-label" id="m1125b-label">Fissure minuscule, détectée par CND bien avant d'être visible</div>
+  </div>
+</div>
+
+<div class="m1125b-caption" id="m1125b-caption">Ce schéma compare la taille d'une fissure de fatigue au moment de sa détection, selon la méthode utilisée. Vue actuelle — détection précoce : le contrôle non destructif révèle la fissure alors qu'elle est encore minuscule, bien avant de devenir visible à l'œil nu. Cliquez sur « Détection tardive » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById("schema-m1125b-wrap");
+  if (!wrap) { return; }
+  var btnPrecoce = wrap.querySelector("#m1125b-btn-precoce");
+  var btnTardive = wrap.querySelector("#m1125b-btn-tardive");
+  var bar = wrap.querySelector("#m1125b-bar");
+  var label = wrap.querySelector("#m1125b-label");
+  var caption = wrap.querySelector("#m1125b-caption");
+
+  function showPrecoce() {
+    btnPrecoce.className = "m1125b-btn active";
+    btnTardive.className = "m1125b-btn";
+    bar.style.height = "12%";
+    bar.classList.remove("critique");
+    label.textContent = "Fissure minuscule, détectée par CND bien avant d'être visible";
+    caption.textContent = "Ce schéma compare la taille d'une fissure de fatigue au moment de sa détection, selon la méthode utilisée. Vue actuelle — détection précoce : le contrôle non destructif révèle la fissure alors qu'elle est encore minuscule, bien avant de devenir visible à l'œil nu. Cliquez sur « Détection tardive » pour comparer.";
+  }
+
+  function showTardive() {
+    btnPrecoce.className = "m1125b-btn";
+    btnTardive.className = "m1125b-btn active";
+    bar.style.height = "88%";
+    bar.classList.add("critique");
+    label.textContent = "Fissure devenue visible à l'œil nu, proche de sa taille critique";
+    caption.textContent = "Détection tardive : sans contrôle non destructif adapté, la fissure de fatigue n'est détectée qu'une fois devenue visible à l'œil nu, après s'être agrandie progressivement à chaque cycle de charge (rappel M11A.4) — une situation bien plus proche de sa taille critique qu'une détection précoce par CND. Cliquez sur « Détection précoce » pour revenir à l'autre vue.";
+  }
+
+  btnPrecoce.addEventListener("click", showPrecoce);
+  btnTardive.addEventListener("click", showTardive);
+})();
+</script>

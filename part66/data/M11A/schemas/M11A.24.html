@@ -1,0 +1,63 @@
+<div id="schema-m1124-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1124-wrap .m1124-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m1124-wrap .m1124-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1124-wrap .m1124-diagram { position:relative; height:180px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; }
+#schema-m1124-wrap .m1124-side-label { position:absolute; top:8px; font-size:0.62em; color:#555; text-align:center; width:110px; }
+#schema-m1124-wrap .m1124-wall { position:absolute; left:200px; width:10px; background:#888; border-radius:2px; }
+#schema-m1124-wrap .m1124-wall-label { position:absolute; left:216px; font-size:0.6em; color:#555; width:100px; }
+#schema-m1124-wrap .m1124-door { position:absolute; top:40px; left:170px; width:30px; height:100px; background:#7fa8d9; border:2px solid #4a76a8; border-radius:3px; transition: left 0.3s, transform 0.3s; }
+#schema-m1124-wrap .m1124-door-label { position:absolute; font-size:0.6em; color:#555; text-align:center; width:150px; top:150px; left:130px; }
+#schema-m1124-wrap .m1124-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Porte à obturateur (plug door), vue de dessus :</strong> comparez la porte fermée et le début de sa séquence d'ouverture.</p>
+
+<button class="m1124-btn active" id="m1124-btn-fermee">Fermée et verrouillée</button>
+<button class="m1124-btn" id="m1124-btn-ouverture">Séquence d'ouverture amorcée</button>
+
+<div class="m1124-diagram">
+  <div class="m1124-side-label" style="left:20px;">Intérieur cabine</div>
+  <div class="m1124-side-label" style="right:20px;">Extérieur</div>
+  <div class="m1124-wall" style="top:15px; height:35px;"></div>
+  <div class="m1124-wall" style="top:130px; height:35px;"></div>
+  <div class="m1124-wall-label" style="top:75px;">Cadre (ouverture, 80 px de haut sur ce schéma)</div>
+  <div class="m1124-door" id="m1124-door" style="left:170px; transform: rotate(0deg);"></div>
+  <div class="m1124-door-label" id="m1124-door-label">Porte (100 px de haut) : plus grande que l'ouverture, plaquée contre le cadre depuis l'intérieur</div>
+</div>
+
+<div class="m1124-caption" id="m1124-caption">Ce schéma, vu de dessus, compare une porte à obturateur fermée et le début de sa séquence d'ouverture. Vue actuelle — fermée et verrouillée : la porte, plus haute que l'ouverture du cadre, chevauche la paroi en haut et en bas et reste plaquée contre elle depuis l'intérieur cabine. Cliquez sur « Séquence d'ouverture amorcée » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById("schema-m1124-wrap");
+  if (!wrap) { return; }
+  var btnFermee = wrap.querySelector("#m1124-btn-fermee");
+  var btnOuverture = wrap.querySelector("#m1124-btn-ouverture");
+  var door = wrap.querySelector("#m1124-door");
+  var doorLabel = wrap.querySelector("#m1124-door-label");
+  var caption = wrap.querySelector("#m1124-caption");
+
+  function showFermee() {
+    btnFermee.className = "m1124-btn active";
+    btnOuverture.className = "m1124-btn";
+    door.style.left = "170px";
+    door.style.transform = "rotate(0deg)";
+    doorLabel.textContent = "Porte (100 px de haut) : plus grande que l'ouverture, plaquée contre le cadre depuis l'intérieur";
+    caption.textContent = "Ce schéma, vu de dessus, compare une porte à obturateur fermée et le début de sa séquence d'ouverture. Vue actuelle — fermée et verrouillée : la porte, plus haute que l'ouverture du cadre, chevauche la paroi en haut et en bas et reste plaquée contre elle depuis l'intérieur cabine. Cliquez sur « Séquence d'ouverture amorcée » pour comparer.";
+  }
+
+  function showOuverture() {
+    btnFermee.className = "m1124-btn";
+    btnOuverture.className = "m1124-btn active";
+    door.style.left = "90px";
+    door.style.transform = "rotate(90deg)";
+    doorLabel.textContent = "Porte rétractée vers l'intérieur cabine, puis pivotée pour se dégager du cadre";
+    caption.textContent = "Séquence d'ouverture amorcée : la porte est d'abord déplacée vers l'intérieur de la cabine, dégagée de la paroi qu'elle chevauchait, puis pivotée — ce n'est qu'une fois ce dégagement effectué qu'elle peut ensuite basculer vers l'extérieur. La procédure précise d'ouverture relève du manuel de vol et n'est pas détaillée ici. Cliquez sur « Fermée et verrouillée » pour revenir à l'autre vue.";
+  }
+
+  btnFermee.addEventListener("click", showFermee);
+  btnOuverture.addEventListener("click", showOuverture);
+})();
+</script>

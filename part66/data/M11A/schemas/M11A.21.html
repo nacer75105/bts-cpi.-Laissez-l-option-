@@ -1,0 +1,72 @@
+<div id="schema-m1121-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1121-wrap .m1121-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m1121-wrap .m1121-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1121-wrap .m1121-diagram { position:relative; min-height:150px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; display:flex; flex-direction:column; align-items:center; gap:10px; padding:14px; }
+#schema-m1121-wrap .m1121-row { display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; }
+#schema-m1121-wrap .m1121-box { padding:8px 10px; border-radius:6px; border:1.5px solid #4a76a8; background:#7fa8d9; color:#fff; font-size:0.66em; text-align:center; transition: background 0.2s; }
+#schema-m1121-wrap .m1121-box.fms { background:#e0a800; border-color:#a87a00; }
+#schema-m1121-wrap .m1121-arrow { font-size:1.1em; color:#888; }
+#schema-m1121-wrap .m1121-label { font-size:0.6em; color:#555; text-align:center; }
+#schema-m1121-wrap .m1121-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Le FMS coordonne le pilote automatique et l'autothrust :</strong> comparez un plan initial et un reroutage en vol.</p>
+
+<button class="m1121-btn active" id="m1121-btn-initial">Plan initial</button>
+<button class="m1121-btn" id="m1121-btn-reroutage">Reroutage en vol</button>
+
+<div class="m1121-diagram">
+  <div class="m1121-box fms" id="m1121-fms">FMS : trajectoire = route A</div>
+  <div class="m1121-row">
+    <div class="m1121-arrow">↙</div>
+    <div class="m1121-arrow">↘</div>
+  </div>
+  <div class="m1121-row">
+    <div>
+      <div class="m1121-box" id="m1121-pa">Pilote automatique : suit route A</div>
+      <div class="m1121-label">Exécute la trajectoire</div>
+    </div>
+    <div>
+      <div class="m1121-box" id="m1121-at">Autothrust : vitesse cible initiale</div>
+      <div class="m1121-label">Exécute la poussée</div>
+    </div>
+  </div>
+</div>
+
+<div class="m1121-caption" id="m1121-caption">Ce schéma montre comment le FMS coordonne le pilote automatique et l'autothrust. Vue actuelle — plan initial : le FMS a calculé la route A, transmise au pilote automatique, et une vitesse cible transmise à l'autothrust. Cliquez sur « Reroutage en vol » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById("schema-m1121-wrap");
+  if (!wrap) { return; }
+  var btnInitial = wrap.querySelector("#m1121-btn-initial");
+  var btnReroutage = wrap.querySelector("#m1121-btn-reroutage");
+  var fms = wrap.querySelector("#m1121-fms");
+  var pa = wrap.querySelector("#m1121-pa");
+  var at = wrap.querySelector("#m1121-at");
+  var caption = wrap.querySelector("#m1121-caption");
+
+  function showInitial() {
+    btnInitial.className = "m1121-btn active";
+    btnReroutage.className = "m1121-btn";
+    fms.textContent = "FMS : trajectoire = route A";
+    pa.textContent = "Pilote automatique : suit route A";
+    at.textContent = "Autothrust : vitesse cible initiale";
+    caption.textContent = "Ce schéma montre comment le FMS coordonne le pilote automatique et l'autothrust. Vue actuelle — plan initial : le FMS a calculé la route A, transmise au pilote automatique, et une vitesse cible transmise à l'autothrust. Cliquez sur « Reroutage en vol » pour comparer.";
+  }
+
+  function showReroutage() {
+    btnInitial.className = "m1121-btn";
+    btnReroutage.className = "m1121-btn active";
+    fms.textContent = "FMS : trajectoire = route B (reroutage)";
+    pa.textContent = "Pilote automatique : suit route B";
+    at.textContent = "Autothrust : vitesse cible recalculée";
+    caption.textContent = "Reroutage en vol : le FMS recalcule une nouvelle trajectoire (route B) et une nouvelle vitesse cible, puis transmet aussitôt ces nouvelles consignes au pilote automatique et à l'autothrust, qui les exécutent sans que l'équipage n'ait à piloter manuellement ce changement. Cliquez sur « Plan initial » pour revenir à l'autre vue.";
+  }
+
+  btnInitial.addEventListener("click", showInitial);
+  btnReroutage.addEventListener("click", showReroutage);
+})();
+</script>

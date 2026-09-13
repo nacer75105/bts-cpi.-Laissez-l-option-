@@ -1,0 +1,67 @@
+<div id="schema-m1123-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1123-wrap .m1123-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m1123-wrap .m1123-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1123-wrap .m1123-diagram { position:relative; min-height:130px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; display:flex; align-items:center; justify-content:center; gap:20px; padding:14px; }
+#schema-m1123-wrap .m1123-col { display:flex; flex-direction:column; align-items:center; gap:6px; }
+#schema-m1123-wrap .m1123-box { padding:10px 12px; border-radius:6px; border:2px solid #4a76a8; background:#7fa8d9; color:#fff; font-size:0.66em; text-align:center; width:170px; }
+#schema-m1123-wrap .m1123-label { font-size:0.62em; color:#555; text-align:center; }
+#schema-m1123-wrap .m1123-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Oxygène passager ou équipage :</strong> comparez les deux systèmes, mis en évidence tour à tour.</p>
+
+<button class="m1123-btn active" id="m1123-btn-passager">Passagers</button>
+<button class="m1123-btn" id="m1123-btn-equipage">Équipage</button>
+
+<div class="m1123-diagram">
+  <div class="m1123-col">
+    <div class="m1123-box" id="m1123-source">Générateur chimique individuel</div>
+    <div class="m1123-label">Source d'oxygène</div>
+  </div>
+  <div class="m1123-col">
+    <div class="m1123-box" id="m1123-masque">Masque simple, tiré vers le visage</div>
+    <div class="m1123-label">Masque</div>
+  </div>
+  <div class="m1123-col">
+    <div class="m1123-box" id="m1123-duree">Durée limitée</div>
+    <div class="m1123-label">Autonomie</div>
+  </div>
+</div>
+
+<div class="m1123-caption" id="m1123-caption">Ce schéma compare le système d'oxygène des passagers et celui de l'équipage. Vue actuelle — passagers : un générateur chimique individuel produit l'oxygène dès son déclenchement via un masque simple, pour une durée limitée. Cliquez sur « Équipage » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById("schema-m1123-wrap");
+  if (!wrap) { return; }
+  var btnPassager = wrap.querySelector("#m1123-btn-passager");
+  var btnEquipage = wrap.querySelector("#m1123-btn-equipage");
+  var source = wrap.querySelector("#m1123-source");
+  var masque = wrap.querySelector("#m1123-masque");
+  var duree = wrap.querySelector("#m1123-duree");
+  var caption = wrap.querySelector("#m1123-caption");
+
+  function showPassager() {
+    btnPassager.className = "m1123-btn active";
+    btnEquipage.className = "m1123-btn";
+    source.textContent = "Générateur chimique individuel";
+    masque.textContent = "Masque simple, tiré vers le visage";
+    duree.textContent = "Durée limitée";
+    caption.textContent = "Ce schéma compare le système d'oxygène des passagers et celui de l'équipage. Vue actuelle — passagers : un générateur chimique individuel produit l'oxygène dès son déclenchement via un masque simple, pour une durée limitée. Cliquez sur « Équipage » pour comparer.";
+  }
+
+  function showEquipage() {
+    btnPassager.className = "m1123-btn";
+    btnEquipage.className = "m1123-btn active";
+    source.textContent = "Oxygène gazeux, bouteille à très haute pression";
+    masque.textContent = "Masque à demande diluée";
+    duree.textContent = "Durée bien supérieure";
+    caption.textContent = "Équipage : l'oxygène gazeux stocké sous très haute pression, associé à un masque à demande diluée, offre une durée bien supérieure à un générateur chimique — adapté à un poste de pilotage qui doit rester opérationnel sur toute la durée du vol. Cliquez sur « Passagers » pour revenir à l'autre vue.";
+  }
+
+  btnPassager.addEventListener("click", showPassager);
+  btnEquipage.addEventListener("click", showEquipage);
+})();
+</script>

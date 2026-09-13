@@ -1357,6 +1357,133 @@ Restent, en dette mineure assumée :
 **Lot 4 relu et corrigé le 2026-09-13 ; reste à tester en local et faire
 valider par l'utilisateur avant de passer `disponible` à `True`.**
 
+### Lot 5 (M11A.21-M11A.25, 5 fiches, 45 questions, 10 schémas) — dernier lot du module, relu et corrigé sur 5 rounds
+
+Avionique et gestion de vol (FMS, IRS/GPS, autothrust), protection
+incendie de la cellule hors moteur (soute, APU, cabine — complète
+M15.13), oxygène, portes et issues, maintenance de la cellule
+(inspection, corrosion, contrôle non destructif). Ce lot referme le
+module M11A à 25/25 fiches. M11A.22, M11A.23 et M11A.24 soumises à la
+consigne de portée stricte (même niveau que M11A.9/M11A.10/M11A.12/
+M11A.15) : principe technique et implications d'entretien uniquement,
+aucune procédure d'équipage/mécanicien, aucun seuil précis (pression,
+composition d'agent extincteur). Ce lot a en outre construit dès la
+rédaction la répartition 0/1/2 de la position de la bonne réponse
+(15/15/15), plutôt que de la corriger après coup comme au lot 4.
+
+Relu par `relecteur-part66` sur 5 rounds (1 relecture complète + 4
+vérifications ciblées, un nombre inhabituel reflétant la difficulté
+propre à ce lot — avionique de précision et mécanismes physiques peu
+intuitifs comme la porte à obturateur) :
+
+- **Round 1** a trouvé 7 BLOQUANT : la fiche M11A.21 attribuait à tort
+  aux gyroscopes de l'IRS le principe de « rigidité gyroscopique » des
+  instruments mécaniques de M11A.20, alors qu'une IRS moderne mesure
+  directement la rotation de l'avion (gyromètres) — corrigé en
+  distinguant explicitement les deux principes ; la fiche M11A.22 et
+  M11A-0193 justifiaient la décharge prolongée d'agent extincteur en
+  soute par une comparaison de facilité de ventilation avec le
+  compartiment moteur, un raisonnement physiquement inversé — corrigé
+  en expliquant que le contenu d'une soute, contrairement à un
+  incendie moteur privé de son carburant, ne peut pas être coupé de ce
+  qui l'alimente ; `schemas/M11A.22.html` présentait la détection du
+  compartiment moteur comme « tardive », contredisant la fiche
+  elle-même — schéma reconstruit ; `schemas/M11A.25.html` affichait un
+  état initial vide (aucun défaut ni libellé visible avant clic),
+  contraire à la caption qui annonçait déjà une fissure révélée —
+  reconstruit pour que les deux défauts restent visibles en
+  permanence, seul un badge « Détecté »/« Non détecté » basculant
+  selon la méthode ; `schemas/M11A.24.html` (porte à obturateur)
+  présentait une cinématique et un sens de vue incohérents avec sa
+  propre caption — reconstruit en vue de dessus explicite avec des
+  repères « Intérieur cabine »/« Extérieur » ; la fiche M11A.24
+  contenait un renvoi fabriqué vers M15.11 (qui ne traite que des
+  indications moteur, pas des indicateurs de position de porte),
+  corrigé en M11A.20 ; `schemas/M11A.23-2.html` (illustration
+  qualitative de l'oxygène comme comburant) omettait de préciser
+  qu'une combustion dans l'air ambiant nécessite une source
+  d'allumage, contrairement à l'oxygène concentré — précisé.
+- **Round 2** (vérification des 7 points) a confirmé 4 corrections
+  effectives et trouvé 3 résidus/régressions introduits par le
+  premier correctif lui-même : la reconstruction de `M11A.24.html`
+  avait corrigé le sens de vue mais laissait une géométrie fausse (la
+  porte débordait très majoritairement hors du cadre, et aucune
+  ouverture n'était visuellement représentée, juste une barre pleine)
+  — reconstruit une seconde fois avec des coordonnées explicites
+  (deux segments de paroi séparés par un vide de 80 px, une porte de
+  100 px qui les chevauche des deux côtés) ; la reconstruction de
+  `M11A.25.html` avait involontairement fait dire au badge de l'état
+  Ultrasons qu'une fissure de surface n'est « jamais » détectée par
+  cette méthode, une affirmation catégorique et fausse — adouci en
+  « méthode non privilégiée », aligné sur la formulation de la fiche
+  (« ultrasons pour une fissure plus profonde ») ; un renvoi vers
+  M11A.19 (redondance électrique de l'éclairage de secours), jugé
+  incohérent avec le reste du module qui associe cette redondance à
+  M11A.18, était resté dans l'explication de M11A-0214 après avoir été
+  corrigé dans la fiche — propagé à la question.
+- **Round 3** (vérification des 3 résidus) a confirmé 2 corrections
+  effectives et trouvé 1 problème de rendu introduit par le correctif
+  du round 2 : le nouveau texte du badge « Méthode non privilégiée »,
+  plus long que l'ancien, débordait sur le badge voisin dans
+  `M11A.25.html`, et le libellé permanent « Pièce inspectée (coupe) »
+  se superposait déjà au badge de la fissure de surface dans l'état
+  par défaut (un problème préexistant, pas une régression) — les deux
+  badges raccourcis (« Peu adapté » au lieu de « Méthode non
+  privilégiée ») et repositionnés, le libellé de la pièce déplacé plus
+  haut.
+- **Round 4** (vérification du repositionnement) a trouvé un
+  chevauchement résiduel de ~2 px entre les badges repositionnés et la
+  pointe du marqueur de fissure de surface, introduit par le
+  repositionnement lui-même — badges redescendus de 4 px.
+- **Round 5** (vérification finale) a confirmé l'absence de
+  chevauchement calculable dans les deux états, sous réserve d'une
+  dépendance non neutralisée à la hauteur de ligne héritée du thème
+  Streamlit (`st.html` insère son contenu directement dans le DOM,
+  sans iframe) — `line-height: 1.2` ajouté explicitement à la règle du
+  badge pour rendre le résultat indépendant du thème plutôt que de
+  laisser cette marge de 2 px reposer sur un calcul non garanti.
+
+Plusieurs points À REVOIR traités dans la foulée des rounds 1-2 :
+harmonisation de la terminologie « poussée » (plutôt que « régime »)
+entre l'autothrust de M11A.21 et la régulation moteur de M15.10 ;
+trois questions quasi identiques testant « qui définit la procédure
+suivie par l'équipage » (motif déjà utilisé pour M11A-0109 au lot 3)
+réduites à une seule occurrence dans ce lot, les deux autres
+recentrées sur un contenu distinct déjà présent dans leur fiche
+(indépendance des boucles/bouteille incendie de l'APU ; second usage
+du toboggan comme radeau flottant) ; deux autres recouvrements de
+questions (FMS/pilote automatique ; plaquage de la porte par la
+pression) résolus en recentrant l'une des deux questions sur un angle
+distinct déjà présent dans la fiche mais pas encore testé (rôle de
+l'IRS/GPS pendant l'exemple de descente ; état du toboggan pendant
+l'exemple de la porte) ; la fiche M11A.22 complétée d'une mention de
+l'extincteur automatique de la poubelle des essuie-mains des
+toilettes (équipement standard non mentionné dans la première
+version), avec le distracteur de M11A-0196 renforcé en conséquence.
+
+Restent, en dette mineure assumée :
+- `schemas/M11A.21.html` — les valeurs « 250 nœuds »/« 300 nœuds »
+  initialement utilisées pour illustrer un reroutage ont été
+  remplacées par « vitesse cible initiale »/« vitesse cible
+  recalculée » (un reroutage n'implique pas nécessairement une
+  augmentation de vitesse, et 250 kt évoque une limite réglementaire
+  sans rapport avec l'exemple) — dette déjà résolue au moment de la
+  rédaction, mentionnée ici pour mémoire.
+- `schemas/M11A.25.html` — la boîte du libellé « Pièce inspectée
+  (coupe) » ne laisse qu'une marge réduite avant un éventuel retour à
+  la ligne si la taille de police héritée du thème dépassait largement
+  16px ; `white-space:nowrap` a été ajouté pour neutraliser ce risque,
+  mais sans garantie absolue sur un thème très éloigné du défaut.
+
+**Lot 5 relu et corrigé le 2026-09-13. Le module M11A est maintenant
+complet à 25/25 fiches, 225 questions, 50 schémas. Reste, avant de
+passer `disponible` à `True` : un test complet en local du module
+entier (les 5 lots, y compris la navigation entre fiches et l'examen
+blanc à 140 questions), et la validation de l'utilisateur — même
+étape que pour tous les modules précédents, et particulièrement
+importante ici compte tenu du nombre de schémas reconstruits sur ce
+seul dernier lot.**
+
 ## M5.1 / M5.5 / M15.1-2 — bug résolu : génération de DOM à l'exécution
 (investigation menée le 2026-09-11, cause identifiée et corrigée)
 

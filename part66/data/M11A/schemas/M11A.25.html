@@ -1,0 +1,69 @@
+<div id="schema-m1125-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1125-wrap .m1125-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m1125-wrap .m1125-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1125-wrap .m1125-diagram { position:relative; height:150px; margin-top:46px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; display:flex; align-items:center; justify-content:center; }
+#schema-m1125-wrap .m1125-piece { position:relative; width:260px; height:60px; background:#c9c9c9; border:2px solid #888; border-radius:4px; }
+#schema-m1125-wrap .m1125-defect-surface { position:absolute; left:40px; top:-6px; width:3px; height:20px; background:#c0392b; }
+#schema-m1125-wrap .m1125-defect-internal { position:absolute; left:150px; top:22px; width:16px; height:16px; border-radius:50%; background:#c0392b; }
+#schema-m1125-wrap .m1125-label { position:absolute; font-size:0.6em; color:#555; text-align:center; }
+#schema-m1125-wrap .m1125-status { position:absolute; font-size:0.62em; line-height:1.2; font-weight:bold; text-align:center; padding:2px 6px; border-radius:4px; }
+#schema-m1125-wrap .m1125-status.detecte { background:#bfe3d0; color:#3d7a4d; }
+#schema-m1125-wrap .m1125-status.non-detecte { background:#e0e0e0; color:#777; }
+#schema-m1125-wrap .m1125-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Contrôle non destructif :</strong> comparez ce que révèle le ressuage et ce que révèle le contrôle par ultrasons sur la même pièce, qui porte les deux défauts en permanence.</p>
+
+<button class="m1125-btn active" id="m1125-btn-ressuage">Ressuage</button>
+<button class="m1125-btn" id="m1125-btn-ultrasons">Ultrasons</button>
+
+<div class="m1125-diagram">
+  <div class="m1125-piece">
+    <div class="m1125-label" style="left:4px; top:-42px; width:150px; text-align:left; white-space:nowrap;">Pièce inspectée (coupe)</div>
+    <div class="m1125-defect-surface"></div>
+    <div class="m1125-label" style="left:-6px; top:64px; width:100px;">Fissure débouchant en surface</div>
+    <div class="m1125-status detecte" id="m1125-status-surface" style="left:6px; top:-24px;">Détecté</div>
+    <div class="m1125-defect-internal"></div>
+    <div class="m1125-label" style="left:108px; top:64px; width:110px;">Défaut interne, invisible en surface</div>
+    <div class="m1125-status non-detecte" id="m1125-status-internal" style="left:150px; top:-24px;">Non détecté</div>
+  </div>
+</div>
+
+<div class="m1125-caption" id="m1125-caption">Ce schéma compare ce que révèlent deux méthodes de contrôle non destructif sur une même pièce, qui porte les deux défauts en permanence. Vue actuelle — ressuage : un produit pénétrant révèle la fissure qui débouche en surface, mais rien sur le défaut purement interne. Cliquez sur « Ultrasons » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById("schema-m1125-wrap");
+  if (!wrap) { return; }
+  var btnRessuage = wrap.querySelector("#m1125-btn-ressuage");
+  var btnUltrasons = wrap.querySelector("#m1125-btn-ultrasons");
+  var statusSurface = wrap.querySelector("#m1125-status-surface");
+  var statusInternal = wrap.querySelector("#m1125-status-internal");
+  var caption = wrap.querySelector("#m1125-caption");
+
+  function showRessuage() {
+    btnRessuage.className = "m1125-btn active";
+    btnUltrasons.className = "m1125-btn";
+    statusSurface.textContent = "Détecté";
+    statusSurface.className = "m1125-status detecte";
+    statusInternal.textContent = "Non détecté";
+    statusInternal.className = "m1125-status non-detecte";
+    caption.textContent = "Ce schéma compare ce que révèlent deux méthodes de contrôle non destructif sur une même pièce, qui porte les deux défauts en permanence. Vue actuelle — ressuage : un produit pénétrant révèle la fissure qui débouche en surface, mais rien sur le défaut purement interne. Cliquez sur « Ultrasons » pour comparer.";
+  }
+
+  function showUltrasons() {
+    btnRessuage.className = "m1125-btn";
+    btnUltrasons.className = "m1125-btn active";
+    statusSurface.textContent = "Peu adapté";
+    statusSurface.className = "m1125-status non-detecte";
+    statusInternal.textContent = "Détecté";
+    statusInternal.className = "m1125-status detecte";
+    caption.textContent = "Ultrasons : une onde sonore traverse l'épaisseur de la pièce et révèle, par son écho, le défaut interne, y compris à une profondeur où le ressuage ne peut rien révéler ; pour une fissure débouchant en surface, le ressuage ou les courants de Foucault restent la méthode la plus directe (rappel de la fiche), les ultrasons étant plutôt réservés aux défauts plus profonds. Cliquez sur « Ressuage » pour revenir à l'autre vue.";
+  }
+
+  btnRessuage.addEventListener("click", showRessuage);
+  btnUltrasons.addEventListener("click", showUltrasons);
+})();
+</script>

@@ -2340,6 +2340,591 @@
       "bonne": 2,
       "explication": "Selon l'exemple de la fiche, l'horizon artificiel continue d'indiquer précisément l'assiette grâce à la rigidité gyroscopique, sans dépendre d'une référence visuelle externe. Il ne cesse donc pas de fonctionner dans les nuages, et il indique l'assiette, pas la vitesse ni l'altitude, déjà couvertes par d'autres instruments.",
       "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0182",
+      "sous_chapitre": "M11A.21",
+      "question": "Pourquoi un avion de transport moderne dispose-t-il d'un pilote automatique ?",
+      "options": [
+        "Pour réduire la charge de travail de l'équipage sur un vol long, en maintenant automatiquement assiette, cap ou altitude, sans remplacer sa surveillance",
+        "Pour remplacer entièrement l'équipage, qui n'a plus besoin de surveiller le vol une fois le pilote automatique activé",
+        "Il n'existe que sur les vols courts, où la charge de travail de l'équipage est la plus importante"
+      ],
+      "bonne": 0,
+      "explication": "Le pilote automatique maintient automatiquement assiette, cap ou altitude (rappel M11A.20), réduisant la charge de travail sur un vol long tout en laissant l'équipage surveiller l'ensemble du vol. Il ne remplace donc pas cette surveillance, et il équipe au contraire les vols de toute durée, y compris et surtout les plus longs.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0183",
+      "sous_chapitre": "M11A.21",
+      "question": "D'où le FMS tient-il la trajectoire complète du plan de vol qu'il calcule ?",
+      "options": [
+        "Il reçoit cette trajectoire en continu depuis un contrôleur au sol, par liaison radio permanente",
+        "D'une base de données de navigation embarquée (points de passage, procédures, routes) qu'il utilise pour calculer ce plan de vol",
+        "Il ne calcule aucune trajectoire, cette fonction restant assurée uniquement par le pilote automatique"
+      ],
+      "bonne": 1,
+      "explication": "Le FMS contient une base de données de navigation embarquée, qu'il utilise pour calculer le plan de vol complet. Il ne dépend donc pas d'une liaison radio permanente avec le sol, et c'est bien lui qui calcule la trajectoire, que le pilote automatique se contente ensuite d'exécuter.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0184",
+      "sous_chapitre": "M11A.21",
+      "question": "Quelle est la différence entre le FMS et le pilote automatique ?",
+      "options": [
+        "Ce sont deux noms différents pour un seul et même calculateur, sans distinction fonctionnelle entre eux",
+        "Le pilote automatique calcule le plan de vol, le FMS se contentant ensuite de l'exécuter",
+        "Le FMS calcule le plan de vol et les consignes à suivre, le pilote automatique exécute ces consignes en agissant sur la trajectoire de l'avion"
+      ],
+      "bonne": 2,
+      "explication": "Le FMS calcule le plan de vol et transmet des consignes, que le pilote automatique exécute en agissant sur la trajectoire de l'avion. Ce ne sont donc pas deux noms pour le même calculateur, et les rôles ne sont pas inversés : c'est bien le FMS qui calcule, le pilote automatique qui exécute.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0185",
+      "sous_chapitre": "M11A.21",
+      "question": "Comment l'IRS détermine-t-elle la position de l'avion sans signal reçu de l'extérieur ?",
+      "options": [
+        "En combinant des gyroscopes, qui mesurent la rotation de l'avion, et des accéléromètres, dont la mesure d'accélération est intégrée deux fois dans le temps pour obtenir une position",
+        "Elle reçoit un signal satellite dédié, indépendant du signal GPS classique",
+        "Elle mesure directement la distance parcourue par un capteur placé sur une roue du train d'atterrissage"
+      ],
+      "bonne": 0,
+      "explication": "L'IRS combine des gyroscopes, qui mesurent la rotation de l'avion pour en déduire l'orientation, et des accéléromètres, dont l'accélération mesurée est intégrée deux fois dans le temps (vitesse puis position), sans aucun signal extérieur. Elle ne dépend donc d'aucun signal satellite, et un capteur sur une roue du train ne fonctionnerait plus une fois l'avion en vol, contrairement à l'IRS.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0186",
+      "sous_chapitre": "M11A.21",
+      "question": "Pourquoi la position calculée par l'IRS seule dérive-t-elle progressivement au cours d'un long vol ?",
+      "options": [
+        "L'IRS perd progressivement de la puissance électrique, ce qui dégrade sa précision avec le temps",
+        "Chaque petite erreur de mesure s'accumule au fil des intégrations répétées dans le temps",
+        "En réalité, l'IRS seule ne dérive jamais : cette dérive ne concerne que le GPS"
+      ],
+      "bonne": 1,
+      "explication": "Chaque petite erreur de mesure s'accumule au fil des intégrations répétées dans le temps, provoquant une dérive progressive de la position calculée par la seule IRS. Ce n'est pas une question de puissance électrique, et c'est bien l'IRS qui dérive dans le temps, pas le GPS, qui offre au contraire une position absolue sans dérive.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0187",
+      "sous_chapitre": "M11A.21",
+      "question": "Pourquoi combine-t-on l'IRS et le GPS plutôt que d'utiliser l'un ou l'autre seul ?",
+      "options": [
+        "Le GPS seul suffirait amplement, l'IRS n'étant conservée que par habitude de conception",
+        "L'IRS et le GPS mesurent en réalité exactement la même grandeur, leur combinaison ne changeant rien au résultat",
+        "L'IRS reste disponible sans signal extérieur mais dérive dans le temps, le GPS offre une position absolue sans dérive mais dépend d'un signal externe"
+      ],
+      "bonne": 2,
+      "explication": "L'IRS reste disponible sans signal extérieur mais dérive dans le temps ; le GPS offre une position absolue sans dérive mais dépend d'un signal externe qui pourrait manquer. Leur combinaison n'est donc pas une habitude sans effet : chacun compense la limite de l'autre.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0188",
+      "sous_chapitre": "M11A.21",
+      "question": "En quoi l'autothrust diffère-t-il de la régulation moteur déjà rencontrée en M15.10 ?",
+      "options": [
+        "L'autothrust décide de la poussée à demander en comparant la vitesse réelle à la vitesse souhaitée, la régulation moteur exécutant ensuite fidèlement cette demande au niveau du moteur",
+        "Ce sont deux systèmes strictement identiques, l'autothrust n'étant qu'un autre nom de la régulation moteur",
+        "L'autothrust régule directement la combustion à l'intérieur du moteur, un rôle habituellement dévolu à la régulation moteur"
+      ],
+      "bonne": 0,
+      "explication": "L'autothrust décide de la poussée à demander (comparaison vitesse réelle/souhaitée), pendant que la régulation moteur (rappel M15.10 : la manette exprime une demande de poussée) exécute fidèlement cette demande au niveau du moteur lui-même. Ce ne sont donc pas deux noms du même système, et l'autothrust n'agit pas directement sur la combustion : ce rôle reste celui de la régulation moteur.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0189",
+      "sous_chapitre": "M11A.21",
+      "question": "Pourquoi des bus de données numériques (rappel M5.7) relient-ils les calculateurs avioniques entre eux ?",
+      "options": [
+        "Uniquement pour alimenter électriquement ces calculateurs, sans transmettre aucune donnée",
+        "Pour échanger en continu position, vitesse, cap et consignes entre ces équipements",
+        "Ces bus ne relient en réalité que les instruments de secours, jamais les calculateurs principaux"
+      ],
+      "bonne": 1,
+      "explication": "Ces bus numériques (rappel M5.7 : bus série, notamment ARINC 429) échangent en continu position, vitesse, cap et consignes entre les calculateurs avioniques. Ils ne servent pas à l'alimentation électrique (un circuit distinct, rappel M11A.19), et ils relient bien les calculateurs principaux, pas seulement les instruments de secours.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0190",
+      "sous_chapitre": "M11A.21",
+      "question": "Dans l'exemple de la descente décrite dans la fiche, quel rôle jouent l'IRS et le GPS pendant que le FMS ajuste le profil ?",
+      "options": [
+        "L'IRS et le GPS sont désactivés pendant la descente, le FMS pilotant alors uniquement à partir de la trajectoire calculée avant le décollage",
+        "Seul le GPS reste actif pendant la descente, l'IRS n'étant utilisée qu'en croisière stabilisée",
+        "L'IRS et le GPS, recoupés en permanence, fournissent une position fiable au FMS pour qu'il puisse ajuster ce profil si nécessaire"
+      ],
+      "bonne": 2,
+      "explication": "Selon l'exemple de la fiche, l'IRS et le GPS, recoupés en permanence, fournissent une position fiable au FMS pour qu'il puisse ajuster le profil de descente si nécessaire. Ni l'un ni l'autre n'est désactivé pendant cette phase : les deux continuent de fonctionner ensemble, comme à tout moment du vol.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0191",
+      "sous_chapitre": "M11A.22",
+      "question": "Pourquoi la soute nécessite-t-elle sa propre protection incendie, distincte de celle du moteur ?",
+      "options": [
+        "Le risque y vient du contenu transporté (bagages, fret) plutôt que d'une source de chaleur ou de carburant comme au moteur, mais reste préoccupant dans cet espace clos proche de la cabine",
+        "La soute ne présente en réalité aucun risque d'incendie, cette protection n'existant que par précaution excessive",
+        "La soute utilise exactement le même système que le compartiment moteur, sans aucune adaptation"
+      ],
+      "bonne": 0,
+      "explication": "Le risque en soute vient du contenu transporté plutôt que d'une source de chaleur ou de carburant comme au moteur, mais reste réel dans cet espace clos proche de la cabine (rappel M15.13 pour le compartiment moteur). Ce n'est donc pas une précaution superflue, et la soute utilise des solutions adaptées (détecteurs de fumée notamment), pas exactement le même système que le moteur.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0192",
+      "sous_chapitre": "M11A.22",
+      "question": "Pourquoi la détection en soute repose-t-elle sur des détecteurs de fumée plutôt que sur des boucles de température comme au compartiment moteur ?",
+      "options": [
+        "Les boucles de température seraient en réalité plus sensibles, mais trop coûteuses pour être installées en soute",
+        "Dans un espace clos et peu ventilé, la fumée devient détectable bien avant une élévation de température significative",
+        "La fumée ne se détecte pas plus vite que la température : ce choix ne repose que sur une habitude de conception"
+      ],
+      "bonne": 1,
+      "explication": "Dans un espace clos et peu ventilé comme une soute, la fumée devient détectable bien avant une élévation de température significative, contrairement au compartiment moteur (rappel M15.13) où les températures normales sont déjà élevées. Ce n'est donc pas une question de coût ni une simple habitude : la fumée offre ici une détection réellement plus précoce.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0193",
+      "sous_chapitre": "M11A.22",
+      "question": "Pourquoi la décharge de l'agent extincteur en soute peut-elle se prolonger à faible débit après une décharge initiale ?",
+      "options": [
+        "Cette prolongation ne sert qu'à économiser l'agent extincteur, sans lien avec l'efficacité de l'extinction",
+        "Un compartiment moteur nécessite le même type de décharge prolongée, la soute ne faisant aucune exception",
+        "Contrairement à un incendie moteur, où l'on coupe l'alimentation en carburant de la zone, le contenu d'une soute ne peut pas être coupé de ce qui l'alimente, d'où le besoin de maintenir la concentration dans la durée"
+      ],
+      "bonne": 2,
+      "explication": "Contrairement à un incendie moteur, que l'on prive de son carburant en coupant l'alimentation de la zone (rappel M15.13), le contenu d'une soute ne peut pas être ainsi coupé de ce qui l'alimente : maintenir une concentration suffisante dans la durée devient donc nécessaire. Ce n'est pas une question d'économie, et le compartiment moteur, lui, ne fonctionne pas selon ce même principe de décharge prolongée : il dispose d'un autre moyen d'arrêter le foyer, couper son carburant.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0194",
+      "sous_chapitre": "M11A.22",
+      "question": "Quel rôle jouent les parois résistantes au feu de la soute ?",
+      "options": [
+        "Contenir un incendie à l'intérieur de ce volume plutôt que de le laisser se propager vers le reste de l'avion",
+        "Elles servent uniquement à isoler thermiquement le fret des variations de température extérieure, sans lien avec un incendie",
+        "Elles remplacent entièrement les détecteurs et l'agent extincteur, qui deviennent alors superflus"
+      ],
+      "bonne": 0,
+      "explication": "Les parois résistantes au feu contiennent un incendie à l'intérieur du volume de la soute plutôt que de le laisser se propager, un principe de confinement comparable aux cloisons pare-feu du compartiment moteur (rappel M15.13). Elles ne servent donc pas qu'à l'isolation thermique ordinaire, et elles ne remplacent pas les détecteurs ni l'agent extincteur, qui restent nécessaires.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0195",
+      "sous_chapitre": "M11A.22",
+      "question": "Pourquoi l'APU bénéficie-t-il d'une protection incendie comparable à celle d'un moteur principal ?",
+      "options": [
+        "L'APU ne présente aucun risque d'incendie propre, cette protection ne servant qu'à protéger les moteurs principaux voisins",
+        "Il réunit dans son propre compartiment les mêmes ingrédients d'incendie qu'un moteur (carburant, air comprimé, zones à haute température)",
+        "L'APU partage directement les mêmes boucles et bouteilles que les moteurs principaux, sans système qui lui soit dédié"
+      ],
+      "bonne": 1,
+      "explication": "L'APU réunit dans son propre compartiment les mêmes ingrédients d'incendie qu'un moteur principal (rappel M15.13), d'où une protection comparable. Le risque lui est donc propre, pas seulement lié aux moteurs voisins, et il dispose de boucles et d'une bouteille dédiées, indépendantes de celles des moteurs principaux.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0196",
+      "sous_chapitre": "M11A.22",
+      "question": "Quelle protection incendie équipe les toilettes de la cabine ?",
+      "options": [
+        "Aucune protection dédiée, les toilettes étant surveillées uniquement par les mêmes détecteurs que la soute",
+        "Un système d'extinction automatique identique à celui du compartiment moteur, avec une bouteille sous très haute pression pour toute la cabine",
+        "Des détecteurs de fumée et un petit extincteur automatique dédié à la poubelle des essuie-mains, un point d'ignition accidentelle fréquent"
+      ],
+      "bonne": 2,
+      "explication": "Les toilettes sont équipées de détecteurs de fumée dédiés et d'un petit extincteur automatique propre à la poubelle des essuie-mains, un point d'ignition accidentelle fréquent. Elles ne dépendent donc pas des seuls détecteurs de la soute, et ce système reste propre aux toilettes, à faible échelle : ce n'est pas le système à haute pression du compartiment moteur, dimensionné pour un tout autre volume et un tout autre risque.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0197",
+      "sous_chapitre": "M11A.22",
+      "question": "Que porte l'entretien des systèmes de protection incendie de la cellule (hors moteur) ?",
+      "options": [
+        "L'intégrité des détecteurs et boucles, la pression ou le poids des bouteilles d'agent extincteur, et l'état des extincteurs portables de cabine",
+        "Uniquement l'aspect visuel des extincteurs portables, sans contrôle de leur pression réelle",
+        "Aucun entretien spécifique, ces systèmes n'étant vérifiés qu'après un incendie réel"
+      ],
+      "bonne": 0,
+      "explication": "L'entretien porte sur l'intégrité des détecteurs et boucles, la pression ou le poids des bouteilles, et l'état des extincteurs portables (rappel du même principe que M15.13 pour le compartiment moteur). Ce n'est donc pas un simple contrôle visuel des extincteurs, et ces systèmes sont bien vérifiés périodiquement, pas seulement après un incendie réel.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0198",
+      "sous_chapitre": "M11A.22",
+      "question": "Dans l'exemple d'un début d'incendie dans un bagage en soute décrit dans la fiche, que se passe-t-il en premier ?",
+      "options": [
+        "Le système d'extinction se déclenche automatiquement sans aucune détection préalable, dès que l'avion atteint une certaine altitude",
+        "Les détecteurs de fumée dédiés à la soute détectent rapidement les premières particules de fumée, avant qu'une élévation de température ne soit perceptible",
+        "Les parois résistantes au feu détectent elles-mêmes la présence de fumée, avant tout système électronique"
+      ],
+      "bonne": 1,
+      "explication": "Selon l'exemple de la fiche, les détecteurs de fumée dédiés à la soute détectent rapidement les premières particules de fumée, avant toute élévation de température perceptible. Le système d'extinction ne se déclenche pas sans détection préalable, et les parois résistantes au feu ne détectent rien par elles-mêmes : leur rôle est de contenir l'incendie, pas de le détecter.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0199",
+      "sous_chapitre": "M11A.22",
+      "question": "Pourquoi l'APU dispose-t-il de boucles de détection et d'une bouteille d'agent extincteur indépendantes de celles des moteurs principaux ?",
+      "options": [
+        "Pour permettre à l'APU de partager sa bouteille avec un moteur en cas de besoin, une capacité que les moteurs n'ont pas entre eux",
+        "Cette indépendance ne sert qu'à faciliter l'accès pour la maintenance, sans lien avec la protection incendie elle-même",
+        "Pour qu'une panne ou une décharge d'agent extincteur sur un moteur n'affecte pas la protection de l'APU, et réciproquement"
+      ],
+      "bonne": 2,
+      "explication": "Des boucles et une bouteille indépendantes pour l'APU garantissent qu'une panne ou une décharge sur un moteur n'affecte pas sa propre protection, et réciproquement — un principe de redondance déjà rencontré ailleurs dans ce module. L'APU ne partage donc pas sa bouteille avec un moteur (chaque compartiment reste autonome), et cette indépendance sert la protection incendie elle-même, pas seulement la facilité de maintenance.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0200",
+      "sous_chapitre": "M11A.23",
+      "question": "Pourquoi un avion pressurisé a-t-il malgré tout besoin d'un système d'oxygène de secours ?",
+      "options": [
+        "En cas de dépressurisation rapide, l'altitude cabine rejoint l'altitude de vol où l'air ne contient plus assez d'oxygène, le temps que l'avion redescende vers une altitude sûre",
+        "La pressurisation ne fonctionne en réalité jamais correctement, rendant l'oxygène de secours indispensable en permanence",
+        "Ce système ne sert qu'en cas de panne totale de la pressurisation au sol, jamais en vol"
+      ],
+      "bonne": 0,
+      "explication": "En cas de dépressurisation rapide, l'altitude cabine rejoint l'altitude de vol (rappel M11A.15) où l'air ne contient plus assez d'oxygène, le temps que l'avion redescende. La pressurisation fonctionne normalement en usage courant (ce n'est pas un système défaillant en permanence), et ce risque concerne bien le vol, pas seulement le sol.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0201",
+      "sous_chapitre": "M11A.23",
+      "question": "Comment l'oxygène est-il fourni aux passagers en cas de dépressurisation ?",
+      "options": [
+        "Une bouteille de gaz comprimé unique alimente tous les masques passagers simultanément depuis un réservoir central",
+        "Un générateur chimique individuel ou partagé produit de l'oxygène par une réaction chimique déclenchée quand le masque est tiré vers le visage",
+        "Les masques passagers puisent directement dans les mêmes bouteilles à haute pression que l'équipage"
+      ],
+      "bonne": 1,
+      "explication": "Chaque poste passager dispose d'un générateur chimique individuel ou partagé, qui produit de l'oxygène par réaction chimique déclenchée quand le masque est tiré. Ce n'est donc ni une bouteille centrale unique, ni un raccordement aux bouteilles à haute pression de l'équipage, qui reposent sur un principe différent (rappel de la fiche).",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0202",
+      "sous_chapitre": "M11A.23",
+      "question": "En quoi l'oxygène de l'équipage diffère-t-il de celui des passagers ?",
+      "options": [
+        "L'équipage utilise exactement le même générateur chimique que les passagers, sans différence de principe",
+        "L'équipage ne dispose d'aucun système d'oxygène propre, partageant les masques passagers les plus proches",
+        "L'équipage dispose d'oxygène gazeux stocké sous très haute pression, avec des masques à demande diluée, offrant une durée bien supérieure à un générateur chimique"
+      ],
+      "bonne": 2,
+      "explication": "L'équipage dispose d'oxygène gazeux sous très haute pression et de masques à demande diluée, offrant une durée bien supérieure à un générateur chimique, adaptée à un poste de pilotage qui doit rester opérationnel sur toute la durée du vol. Ce n'est donc pas le même principe que les passagers, et l'équipage dispose bien de son propre système, distinct des masques passagers.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0203",
+      "sous_chapitre": "M11A.23",
+      "question": "Pourquoi la très haute pression des bouteilles d'oxygène impose-t-elle la même prudence que le circuit hydraulique (rappel M11A.9) ?",
+      "options": [
+        "Une défaillance de la bouteille ou de sa robinetterie pourrait libérer cette énergie brutalement, avec un risque de projection dangereuse",
+        "Cette pression est en réalité comparable à celle d'un pneu de vélo, sans risque particulier",
+        "Le risque ne concerne que la contamination du système, jamais une libération brutale d'énergie"
+      ],
+      "bonne": 0,
+      "explication": "Une bouteille sous très haute pression représente une source d'énergie considérable ; sa défaillance ou celle de sa robinetterie pourrait la libérer brutalement, avec un risque de projection dangereuse. Ce n'est donc pas une pression négligeable, et le risque principal évoqué ici est bien la libération brutale d'énergie, pas seulement une contamination.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0204",
+      "sous_chapitre": "M11A.23",
+      "question": "Pourquoi l'oxygène est-il incompatible avec les corps gras (graisse, huile) ?",
+      "options": [
+        "Les corps gras neutralisent chimiquement l'oxygène, rendant le système inefficace mais sans risque d'incendie",
+        "L'oxygène est un comburant dont la concentration élevée facilite et intensifie une combustion, une trace de graisse pouvant s'enflammer violemment à son contact",
+        "Cette incompatibilité ne concerne que l'oxygène liquide, jamais l'oxygène gazeux utilisé à bord"
+      ],
+      "bonne": 1,
+      "explication": "L'oxygène est un comburant dont la forte concentration facilite et intensifie une combustion ; une trace de graisse ou d'huile peut s'enflammer violemment à son contact. Les corps gras ne neutralisent donc pas l'oxygène (au contraire, ils en aggravent le risque), et cette incompatibilité concerne bien l'oxygène gazeux utilisé à bord, pas seulement une forme liquide.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0205",
+      "sous_chapitre": "M11A.23",
+      "question": "Un système d'oxygène portable, distinct du système fixe, existe-t-il à bord ?",
+      "options": [
+        "Non, seul le système fixe existe : tout déplacement en cas de dépressurisation est interdit par principe",
+        "Le système portable remplace entièrement le système fixe sur les avions les plus récents",
+        "Oui, une ou plusieurs bouteilles portables permettent à un membre d'équipage de disposer d'oxygène en dehors de son poste ou de porter assistance à un passager"
+      ],
+      "bonne": 2,
+      "explication": "Une ou plusieurs bouteilles portables permettent à un membre d'équipage de disposer d'oxygène hors de son poste ou d'assister un passager. Le système fixe reste donc bien présent en complément (le portable ne le remplace pas), et le principe même du système portable contredit l'idée d'une interdiction générale de déplacement.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0206",
+      "sous_chapitre": "M11A.23",
+      "question": "Que porte l'entretien du système d'oxygène ?",
+      "options": [
+        "Un contrôle périodique de la pression des bouteilles, le remplacement systématique des générateurs chimiques activés ou périmés, et le respect strict de la propreté du circuit",
+        "Uniquement le remplacement des masques, sans contrôle de la pression des bouteilles",
+        "Aucun entretien spécifique : ce système n'est vérifié qu'après une dépressurisation réelle"
+      ],
+      "bonne": 0,
+      "explication": "L'entretien porte sur un contrôle périodique de la pression des bouteilles, le remplacement des générateurs chimiques activés ou périmés, et une propreté stricte du circuit. Ce n'est donc pas qu'un remplacement des masques, et ce système est bien vérifié périodiquement, pas seulement après un usage réel.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0207",
+      "sous_chapitre": "M11A.23",
+      "question": "Dans l'exemple d'une dépressurisation rapide en croisière décrit dans la fiche, comment passagers et équipage sont-ils alimentés en oxygène ?",
+      "options": [
+        "L'équipage partage directement les mêmes masques et générateurs chimiques que les passagers les plus proches du poste de pilotage",
+        "Les masques passagers se déploient automatiquement avec activation du générateur chimique au moment où ils sont tirés, l'équipage utilisant l'oxygène gazeux des bouteilles à haute pression via ses masques à demande diluée",
+        "Seuls les passagers reçoivent de l'oxygène automatiquement, l'équipage devant d'abord activer manuellement un générateur chimique identique"
+      ],
+      "bonne": 1,
+      "explication": "Selon l'exemple de la fiche, les masques passagers se déploient automatiquement (générateur chimique activé au moment où ils sont tirés), tandis que l'équipage utilise l'oxygène gazeux de ses bouteilles à haute pression via ses masques à demande diluée. L'équipage ne partage donc pas les masques passagers, et il ne dépend pas non plus d'un générateur chimique identique.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0208",
+      "sous_chapitre": "M11A.23",
+      "question": "Qui définit la procédure précise suivie par l'équipage face à une dépressurisation rapide ?",
+      "options": [
+        "Chaque membre d'équipage individuellement, selon son expérience personnelle",
+        "Il n'existe aucune procédure formalisée pour cette situation, jugée trop rare pour être normalisée",
+        "Le manuel de vol propre à chaque appareil, cette fiche se limitant au principe technique du système d'oxygène"
+      ],
+      "bonne": 2,
+      "explication": "Comme pour les autres systèmes critiques du module, la procédure suivie par l'équipage relève exclusivement du manuel de vol propre à chaque appareil ; la fiche se limite au principe technique. Ce n'est donc pas laissé à l'appréciation individuelle, et une situation aussi critique dispose bien d'une procédure formalisée.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0209",
+      "sous_chapitre": "M11A.24",
+      "question": "Pourquoi les portes principales d'un avion pressurisé sont-elles souvent conçues en porte à obturateur (plug door) ?",
+      "options": [
+        "Plus grande que son propre cadre vu de l'intérieur, elle ne peut être poussée directement vers l'extérieur, et la pression cabine la plaque contre son cadre plutôt que de tendre à l'ouvrir",
+        "Cette conception ne sert qu'à réduire le poids de la porte, sans lien avec la pression cabine",
+        "Une porte plus grande que son cadre serait en réalité plus simple et moins coûteuse à fabriquer, sans autre avantage"
+      ],
+      "bonne": 0,
+      "explication": "Une porte à obturateur, plus grande que son cadre vu de l'intérieur, ne peut être poussée directement vers l'extérieur ; la pression cabine (rappel M11A.15) la plaque au contraire contre son cadre. Ce n'est donc pas une question de poids ni de simplicité de fabrication : c'est bien un avantage de sécurité lié à la pressurisation.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0210",
+      "sous_chapitre": "M11A.24",
+      "question": "Comment une porte à obturateur s'ouvre-t-elle, étant donné qu'elle est plus grande que son cadre ?",
+      "options": [
+        "Elle est poussée directement vers l'extérieur avec une force suffisante pour forcer le passage à travers le cadre",
+        "Elle est d'abord rétractée légèrement vers l'intérieur, pivotée pour se dégager du cadre, puis basculée vers l'extérieur",
+        "Elle glisse latéralement le long du fuselage sans jamais se déplacer vers l'intérieur"
+      ],
+      "bonne": 1,
+      "explication": "La porte à obturateur est d'abord rétractée légèrement vers l'intérieur, pivotée pour se dégager du cadre, puis basculée vers l'extérieur. Elle n'est donc jamais poussée directement vers l'extérieur à travers le cadre (elle est trop grande pour cela), et son mouvement passe bien par un déplacement initial vers l'intérieur.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0211",
+      "sous_chapitre": "M11A.24",
+      "question": "Pourquoi certaines issues plus petites ne suivent-elles pas le principe de porte à obturateur ?",
+      "options": [
+        "Ces issues ne sont en réalité jamais soumises à la pression cabine, quelle que soit leur position sur le fuselage",
+        "Elles suivent exactement le même principe que les portes principales, sans aucune différence de conception",
+        "Leur taille plus proche de celle de leur cadre les prive de l'effet passif de plaquage par la pression, nécessitant des verrous mécaniques dédiés"
+      ],
+      "bonne": 2,
+      "explication": "Une issue plus proche de la taille de son cadre ne bénéficie pas de l'effet passif de plaquage par la pression, d'où des verrous mécaniques dédiés (rappel M11A.12 : verrouillage mécanique du train). Ces issues restent bien soumises à la même pression cabine que le reste du fuselage, et leur conception diffère donc de celle des portes à obturateur.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0212",
+      "sous_chapitre": "M11A.24",
+      "question": "Comment l'équipage sait-il que toutes les portes sont correctement fermées et verrouillées avant le décollage ?",
+      "options": [
+        "Chaque porte est équipée d'un indicateur de position qui signale distinctement son état verrouillé ou non",
+        "Uniquement par une inspection visuelle directe de chaque porte depuis l'extérieur de l'avion avant chaque vol",
+        "Aucune indication n'existe : l'équipage se fie uniquement au bruit de fermeture de chaque porte"
+      ],
+      "bonne": 0,
+      "explication": "Chaque porte est équipée d'un indicateur de position (même principe que pour le train d'atterrissage, rappel M11A.12), qui signale distinctement son état. Ce n'est donc pas la seule inspection visuelle externe qui renseigne l'équipage, ni le seul bruit de fermeture, qui ne confirme pas un verrouillage effectif.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0213",
+      "sous_chapitre": "M11A.24",
+      "question": "Qu'est-ce qu'un toboggan d'évacuation, et à quel moment se déploie-t-il ?",
+      "options": [
+        "Un dispositif qui se gonfle en permanence dès la fermeture de la porte, dégonflé seulement à l'atterrissage",
+        "Un dispositif souple comprimé contre la porte, qui se gonfle automatiquement en quelques secondes dès que la porte est ouverte alors que le système est préparé à cet effet",
+        "Un dispositif actionné manuellement par chaque passager individuellement lors de l'évacuation"
+      ],
+      "bonne": 1,
+      "explication": "Le toboggan est un dispositif souple comprimé contre la porte, qui se gonfle automatiquement dès l'ouverture de la porte si le système est préparé à cet effet. Il ne reste donc pas gonflé en permanence en vol, et son déploiement n'est pas actionné individuellement par chaque passager.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0214",
+      "sous_chapitre": "M11A.24",
+      "question": "Quel rôle joue le balisage lumineux d'évacuation au sol de la cabine ?",
+      "options": [
+        "Il ne sert qu'à décorer l'allée centrale, sans fonction de sécurité réelle",
+        "Il remplace entièrement l'éclairage principal de la cabine en fonctionnement normal",
+        "Guider les occupants vers les issues même si l'éclairage principal ou la visibilité en hauteur venait à manquer (fumée, panne électrique)"
+      ],
+      "bonne": 2,
+      "explication": "Ce balisage, souvent alimenté séparément du circuit principal (rappel M11A.18), guide les occupants vers les issues même si l'éclairage principal manque ou si la fumée gêne une signalisation en hauteur. Ce n'est donc pas un simple élément décoratif, et il ne remplace pas l'éclairage principal en usage normal : il ne sert qu'en cas de besoin.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0215",
+      "sous_chapitre": "M11A.24",
+      "question": "Pourquoi les joints qui entourent chaque porte font-ils l'objet d'une attention particulière lors de l'entretien ?",
+      "options": [
+        "Un joint dégradé compromettrait l'étanchéité de la cabine pressurisée, obligeant le système de pressurisation à compenser une fuite permanente",
+        "Les joints n'ont qu'un rôle esthétique, sans lien avec l'étanchéité de la cabine pressurisée",
+        "Un joint dégradé n'affecte que le bruit ambiant en cabine, jamais la pressurisation elle-même"
+      ],
+      "bonne": 0,
+      "explication": "Un joint dégradé compromettrait l'étanchéité de la cabine pressurisée (rappel M11A.15), obligeant le système à compenser une fuite permanente. Ce n'est donc pas un rôle purement esthétique, et l'effet dépasse largement le seul bruit ambiant : c'est bien la pressurisation elle-même qui est concernée.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0216",
+      "sous_chapitre": "M11A.24",
+      "question": "Dans l'exemple d'une porte principale à obturateur décrit dans la fiche, quel est l'état du toboggan qui lui est associé une fois l'avion en croisière ?",
+      "options": [
+        "Il reste gonflé en permanence dès que l'avion est pressurisé, quel que soit l'état de la porte",
+        "Il reste comprimé contre la porte, prêt à se déployer automatiquement si la porte est ouverte alors que le système est préparé à cet effet",
+        "Il ne joue aucun rôle tant que l'avion est en vol, n'étant installé qu'une fois au sol après l'atterrissage"
+      ],
+      "bonne": 1,
+      "explication": "Selon l'exemple de la fiche, le toboggan reste comprimé contre la porte tout le vol, prêt à se déployer automatiquement si la porte est ouverte alors que le système est préparé à cet effet. Il ne reste donc pas gonflé en permanence en vol, et il est bien présent dès le décollage, pas seulement installé après l'atterrissage.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0217",
+      "sous_chapitre": "M11A.24",
+      "question": "Sur certains modèles, à quoi le toboggan d'évacuation peut-il également servir, au-delà de l'évacuation vers le sol ?",
+      "options": [
+        "De rampe d'accès pour le chargement du fret, une fois au sol",
+        "De réserve d'air comprimé de secours pour d'autres systèmes de l'avion",
+        "De radeau flottant, en cas d'amerrissage"
+      ],
+      "bonne": 2,
+      "explication": "Sur certains modèles, le toboggan peut aussi servir de radeau flottant en cas d'amerrissage, un second usage distinct de l'évacuation vers le sol. Il ne sert ni à charger le fret ni de réserve d'air comprimé pour d'autres systèmes : ces deux usages ne figurent pas parmi les fonctions du toboggan décrites dans la fiche.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0218",
+      "sous_chapitre": "M11A.25",
+      "question": "Sur quel principe repose un programme d'entretien programmé de la cellule ?",
+      "options": [
+        "Des inspections à intervalles définis précèdent l'apparition d'un défaut, plutôt que d'attendre qu'il se manifeste par une panne",
+        "N'intervenir que lorsque le défaut devient visible ou provoque une panne constatée",
+        "Remplacer systématiquement la totalité de la cellule à intervalles réguliers, sans inspection préalable"
+      ],
+      "bonne": 0,
+      "explication": "Des inspections à intervalles définis (rappel M15.14 pour le moteur) précèdent l'apparition d'un défaut plutôt que d'attendre une panne constatée. Ce n'est donc pas une intervention seulement réactive, ni un remplacement systématique sans inspection : c'est bien l'inspection préventive qui structure ce programme.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0219",
+      "sous_chapitre": "M11A.25",
+      "question": "Qu'est-ce que la corrosion galvanique ?",
+      "options": [
+        "Une dégradation uniforme qui affecte de la même façon n'importe quel métal, quelle que soit sa composition",
+        "Une dégradation localisée qui se produit lorsque deux métaux différents restent en contact prolongé en présence d'humidité",
+        "Une dégradation qui ne concerne que les pièces composites, jamais les pièces métalliques"
+      ],
+      "bonne": 1,
+      "explication": "La corrosion galvanique est une dégradation localisée qui se produit quand deux métaux différents restent en contact prolongé en présence d'humidité. Elle n'est donc pas uniforme (contrairement à un autre type de corrosion mentionné dans la fiche), et elle concerne bien les pièces métalliques, pas les composites.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0220",
+      "sous_chapitre": "M11A.25",
+      "question": "Comment la conception et l'entretien limitent-ils l'apparition de la corrosion ?",
+      "options": [
+        "Uniquement par le choix d'un métal totalement insensible à la corrosion, sans autre précaution nécessaire",
+        "La corrosion ne peut être ni prévenue ni limitée : seule une inspection après coup est possible",
+        "Des revêtements protecteurs, des produits d'étanchéité et un drainage soigné isolent le métal de l'humidité et évitent la stagnation d'eau"
+      ],
+      "bonne": 2,
+      "explication": "Des revêtements protecteurs, des produits d'étanchéité et un drainage soigné isolent le métal de l'humidité et évitent la stagnation d'eau. Aucun métal courant n'est totalement insensible à la corrosion (une inspection régulière reste nécessaire malgré ces précautions), et la corrosion peut bien être prévenue, pas seulement constatée après coup.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0221",
+      "sous_chapitre": "M11A.25",
+      "question": "Pourquoi le contrôle non destructif (CND) porte-t-il ce nom ?",
+      "options": [
+        "Il détecte un défaut interne ou naissant sans démonter ni endommager la pièce inspectée",
+        "Parce qu'il ne détecte que les défauts déjà visibles en surface, sans jamais révéler de défaut interne",
+        "Parce qu'il remplace entièrement l'inspection visuelle, rendue inutile une fois le CND généralisé"
+      ],
+      "bonne": 0,
+      "explication": "Le CND détecte un défaut interne ou naissant sans démonter ni endommager la pièce inspectée, contrairement à une méthode qui nécessiterait de la découper. Il révèle justement des défauts internes, pas seulement des défauts déjà visibles en surface, et il complète l'inspection visuelle plutôt que de la rendre inutile.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0222",
+      "sous_chapitre": "M11A.25",
+      "question": "Quel principe distingue le ressuage du contrôle par courants de Foucault ?",
+      "options": [
+        "Les deux méthodes reposent en réalité sur exactement le même principe physique, sous deux noms différents",
+        "Le ressuage révèle une fissure débouchant à la surface d'une pièce non poreuse par pénétration d'un produit coloré, tandis que les courants de Foucault détectent une fissure superficielle sur un matériau conducteur sans contact direct",
+        "Le ressuage détecte les défauts internes profonds, les courants de Foucault ne révélant que la couleur de la surface"
+      ],
+      "bonne": 1,
+      "explication": "Le ressuage révèle une fissure débouchant à la surface d'une pièce non poreuse par pénétration d'un produit coloré ; les courants de Foucault détectent une fissure superficielle sur un matériau conducteur, sans contact direct. Ce ne sont donc pas deux noms du même principe, et le ressuage ne révèle pas de défauts internes profonds (réservés à d'autres méthodes comme les ultrasons).",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0223",
+      "sous_chapitre": "M11A.25",
+      "question": "Quel est le principe du contrôle par ultrasons ?",
+      "options": [
+        "Il consiste à écouter directement, à l'oreille, un bruit anormal émis par la pièce en fonctionnement",
+        "Il ne détecte que les défauts de surface, au même titre que le ressuage",
+        "Une onde sonore traverse l'épaisseur de la pièce, et l'analyse de son écho révèle un défaut interne invisible depuis l'extérieur"
+      ],
+      "bonne": 2,
+      "explication": "Une onde sonore traverse l'épaisseur de la pièce, et l'analyse de son écho révèle un défaut interne invisible depuis l'extérieur. Ce n'est donc pas une écoute directe à l'oreille (l'onde utilisée est ultrasonore, inaudible), et cette méthode révèle des défauts internes, au-delà des seuls défauts de surface détectés par le ressuage.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0224",
+      "sous_chapitre": "M11A.25",
+      "question": "Pourquoi la détection précoce d'une fissure de fatigue (rappel M11A.4) est-elle un enjeu important du contrôle non destructif ?",
+      "options": [
+        "Une fissure de fatigue commence minuscule et souvent invisible à l'œil nu, avant de s'agrandir progressivement jusqu'à une taille critique",
+        "Une fissure de fatigue atteint toujours sa taille critique dès son apparition, sans phase de croissance progressive",
+        "Une fissure de fatigue reste toujours visible à l'œil nu dès son apparition, rendant le CND superflu pour ce type de défaut"
+      ],
+      "bonne": 0,
+      "explication": "Une fissure de fatigue commence minuscule et souvent invisible à l'œil nu, avant de s'agrandir progressivement jusqu'à une taille critique (rappel M11A.4 : charges répétées). Elle n'atteint donc pas sa taille critique dès son apparition, et elle n'est pas non plus toujours visible à l'œil nu : c'est précisément pourquoi le CND reste utile.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0225",
+      "sous_chapitre": "M11A.25",
+      "question": "Pourquoi une inspection uniquement visuelle serait-elle insuffisante pour détecter un défaut de matériau composite comme un délaminage ?",
+      "options": [
+        "Un délaminage composite est en réalité toujours plus visible en surface qu'une fissure métallique équivalente",
+        "Un délaminage ou un décollement localisé ne provoque souvent aucune trace visible en surface, contrairement à une fissure métallique",
+        "Les matériaux composites ne présentent jamais de défaut interne, seule leur surface pouvant être endommagée"
+      ],
+      "bonne": 1,
+      "explication": "Un délaminage ou un décollement localisé ne provoque souvent aucune trace visible en surface, contrairement à une fissure métallique qui finit généralement par apparaître (rappel M11A.4 : matériaux composites). Ce n'est donc pas un défaut plus visible qu'une fissure métallique, et les composites peuvent bien présenter des défauts internes, pas seulement en surface.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0226",
+      "sous_chapitre": "M11A.25",
+      "question": "Dans l'exemple d'une visite d'entretien qui révèle une zone de corrosion sur le bas du fuselage décrit dans la fiche, quelles étapes suivent la détection initiale ?",
+      "options": [
+        "La pièce est immédiatement remplacée dans son intégralité, sans évaluation préalable de l'étendue réelle du défaut",
+        "Aucune action supplémentaire n'est nécessaire une fois la corrosion détectée visuellement : la documentation reste optionnelle",
+        "Un contrôle non destructif adapté évalue l'étendue réelle du défaut sous la surface, puis l'intervention réalisée est intégralement documentée"
+      ],
+      "bonne": 2,
+      "explication": "Selon l'exemple de la fiche, un contrôle non destructif adapté évalue l'étendue réelle du défaut sous la surface, puis l'intervention est intégralement documentée. La pièce n'est donc pas remplacée d'emblée sans évaluation, et la documentation n'est pas optionnelle : elle garantit la traçabilité de navigabilité.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
     }
   ]
 }

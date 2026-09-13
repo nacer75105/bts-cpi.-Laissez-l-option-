@@ -1,0 +1,57 @@
+<div id="schema-m1122-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1122-wrap .m1122-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m1122-wrap .m1122-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1122-wrap .m1122-diagram { position:relative; min-height:150px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; display:flex; align-items:flex-end; justify-content:center; gap:50px; padding:14px; }
+#schema-m1122-wrap .m1122-col { display:flex; flex-direction:column; align-items:center; }
+#schema-m1122-wrap .m1122-bar-wrap { width:44px; height:90px; border:1.5px solid #888; border-radius:4px; background:#fff; position:relative; display:flex; align-items:flex-end; }
+#schema-m1122-wrap .m1122-bar { width:100%; background:#e0a800; border-top:2px solid #a87a00; transition: height 0.3s; }
+#schema-m1122-wrap .m1122-label { font-size:0.62em; color:#555; text-align:center; margin-top:6px; max-width:140px; }
+#schema-m1122-wrap .m1122-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Compartiment moteur ou soute :</strong> comparez le signal physique exploité par la détection dans chaque zone, et sa rapidité d'apparition propre à cette zone.</p>
+
+<button class="m1122-btn active" id="m1122-btn-moteur">Compartiment moteur (boucle de température)</button>
+<button class="m1122-btn" id="m1122-btn-soute">Soute (détecteur de fumée)</button>
+
+<div class="m1122-diagram">
+  <div class="m1122-col">
+    <div class="m1122-bar-wrap"><div class="m1122-bar" id="m1122-bar" style="height:80%;"></div></div>
+    <div class="m1122-label" id="m1122-label">Élévation de température : se manifeste rapidement dans cet environnement déjà chaud</div>
+  </div>
+</div>
+
+<div class="m1122-caption" id="m1122-caption">Ce schéma compare le signal physique exploité par la détection incendie selon la zone, et sa rapidité d'apparition propre à cette zone. Vue actuelle — compartiment moteur : les températures normales de fonctionnement y sont déjà élevées, et la chaleur d'un incendie s'y manifeste rapidement (rappel M15.13) — d'où le choix d'une boucle de température, un signal exploitable tôt dans cet environnement. Cliquez sur « Soute » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById("schema-m1122-wrap");
+  if (!wrap) { return; }
+  var btnMoteur = wrap.querySelector("#m1122-btn-moteur");
+  var btnSoute = wrap.querySelector("#m1122-btn-soute");
+  var bar = wrap.querySelector("#m1122-bar");
+  var label = wrap.querySelector("#m1122-label");
+  var caption = wrap.querySelector("#m1122-caption");
+
+  function showMoteur() {
+    btnMoteur.className = "m1122-btn active";
+    btnSoute.className = "m1122-btn";
+    bar.style.height = "80%";
+    label.textContent = "Élévation de température : se manifeste rapidement dans cet environnement déjà chaud";
+    caption.textContent = "Ce schéma compare le signal physique exploité par la détection incendie selon la zone, et sa rapidité d'apparition propre à cette zone. Vue actuelle — compartiment moteur : les températures normales de fonctionnement y sont déjà élevées, et la chaleur d'un incendie s'y manifeste rapidement (rappel M15.13) — d'où le choix d'une boucle de température, un signal exploitable tôt dans cet environnement. Cliquez sur « Soute » pour comparer.";
+  }
+
+  function showSoute() {
+    btnMoteur.className = "m1122-btn";
+    btnSoute.className = "m1122-btn active";
+    bar.style.height = "80%";
+    label.textContent = "Fumée : devient détectable bien avant toute élévation de température significative";
+    caption.textContent = "Soute : dans cet espace clos et peu ventilé, c'est la fumée qui devient détectable tôt, bien avant toute élévation de température significative — un compartiment moteur, déjà chaud en fonctionnement normal, ne se prête pas à ce même signal. D'où le choix d'un détecteur de fumée, un signal exploitable tôt dans cet environnement précis. Cliquez sur « Compartiment moteur » pour revenir à l'autre vue.";
+  }
+
+  btnMoteur.addEventListener("click", showMoteur);
+  btnSoute.addEventListener("click", showSoute);
+})();
+</script>

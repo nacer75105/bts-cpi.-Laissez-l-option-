@@ -1,0 +1,55 @@
+<div id="schema-m1123b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1123b-wrap .m1123b-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m1123b-wrap .m1123b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1123b-wrap .m1123b-diagram { position:relative; min-height:140px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; padding:14px; }
+#schema-m1123b-wrap .m1123b-icon { font-size:1.6em; transition: font-size 0.2s; }
+#schema-m1123b-wrap .m1123b-label { font-size:0.66em; color:#555; text-align:center; max-width:340px; }
+#schema-m1123b-wrap .m1123b-disclaimer { font-size:0.6em; color:#888; text-align:center; margin-top:6px; }
+#schema-m1123b-wrap .m1123b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>L'oxygène, un comburant :</strong> comparez qualitativement l'intensité d'une combustion selon la concentration d'oxygène, en présence d'une trace de graisse.</p>
+
+<button class="m1123b-btn active" id="m1123b-btn-air">Air ambiant + trace de graisse</button>
+<button class="m1123b-btn" id="m1123b-btn-oxygene">Oxygène concentré + trace de graisse</button>
+
+<div class="m1123b-diagram">
+  <div class="m1123b-icon" id="m1123b-icon" style="font-size:1.3em;">🔥</div>
+  <div class="m1123b-label" id="m1123b-label">Air ambiant : en présence d'une source d'allumage, une trace de graisse s'enflammerait comme n'importe quel combustible ordinaire, sans intensité particulière.</div>
+</div>
+<div class="m1123b-disclaimer">Illustration qualitative du principe, sans valeur chiffrée ni procédure — voir la fiche pour la prudence associée.</div>
+
+<div class="m1123b-caption" id="m1123b-caption">Ce schéma illustre pourquoi la concentration d'oxygène change radicalement le comportement d'une même trace de graisse. Vue actuelle — air ambiant : une combustion resterait comparable à celle de n'importe quel combustible ordinaire. Cliquez sur « Oxygène concentré » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById("schema-m1123b-wrap");
+  if (!wrap) { return; }
+  var btnAir = wrap.querySelector("#m1123b-btn-air");
+  var btnOxygene = wrap.querySelector("#m1123b-btn-oxygene");
+  var icon = wrap.querySelector("#m1123b-icon");
+  var label = wrap.querySelector("#m1123b-label");
+  var caption = wrap.querySelector("#m1123b-caption");
+
+  function showAir() {
+    btnAir.className = "m1123b-btn active";
+    btnOxygene.className = "m1123b-btn";
+    icon.style.fontSize = "1.3em";
+    label.textContent = "Air ambiant : en présence d'une source d'allumage, une trace de graisse s'enflammerait comme n'importe quel combustible ordinaire, sans intensité particulière.";
+    caption.textContent = "Ce schéma illustre pourquoi la concentration d'oxygène change radicalement le comportement d'une même trace de graisse. Vue actuelle — air ambiant : une combustion resterait comparable à celle de n'importe quel combustible ordinaire. Cliquez sur « Oxygène concentré » pour comparer.";
+  }
+
+  function showOxygene() {
+    btnAir.className = "m1123b-btn";
+    btnOxygene.className = "m1123b-btn active";
+    icon.style.fontSize = "2.6em";
+    label.textContent = "Oxygène concentré : la même trace de graisse peut s'enflammer de façon quasi instantanée et bien plus violente, sans source d'allumage extérieure identifiable.";
+    caption.textContent = "Oxygène concentré : l'oxygène, comburant, facilite et intensifie fortement la combustion à mesure que sa concentration augmente ; la même trace de graisse ou d'huile peut alors s'enflammer de façon quasi instantanée et violente. C'est pourquoi tout composant du circuit d'oxygène doit rester rigoureusement exempt de corps gras (rappel de la fiche). Cliquez sur « Air ambiant » pour revenir à l'autre vue.";
+  }
+
+  btnAir.addEventListener("click", showAir);
+  btnOxygene.addEventListener("click", showOxygene);
+})();
+</script>

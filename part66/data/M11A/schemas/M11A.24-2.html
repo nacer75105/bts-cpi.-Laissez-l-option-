@@ -1,0 +1,64 @@
+<div id="schema-m1124b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1124b-wrap .m1124b-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m1124b-wrap .m1124b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1124b-wrap .m1124b-diagram { position:relative; height:150px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; display:flex; align-items:flex-end; justify-content:center; gap:24px; padding:14px; }
+#schema-m1124b-wrap .m1124b-door { width:24px; height:120px; background:#7fa8d9; border:2px solid #4a76a8; border-radius:3px; }
+#schema-m1124b-wrap .m1124b-col { display:flex; flex-direction:column; align-items:center; }
+#schema-m1124b-wrap .m1124b-toboggan { width:50px; border-radius:6px; background:#e0a800; border:2px solid #a87a00; transition: height 0.3s, width 0.3s; }
+#schema-m1124b-wrap .m1124b-label { font-size:0.62em; color:#555; text-align:center; margin-top:6px; max-width:110px; }
+#schema-m1124b-wrap .m1124b-row { display:flex; align-items:flex-end; gap:10px; }
+#schema-m1124b-wrap .m1124b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Toboggan d'évacuation :</strong> comparez l'état rangé et l'état déployé.</p>
+
+<button class="m1124b-btn active" id="m1124b-btn-range">Rangé (comprimé contre la porte)</button>
+<button class="m1124b-btn" id="m1124b-btn-deploye">Déployé (porte ouverte, système armé)</button>
+
+<div class="m1124b-diagram">
+  <div class="m1124b-row">
+    <div class="m1124b-col">
+      <div class="m1124b-door"></div>
+      <div class="m1124b-label">Porte</div>
+    </div>
+    <div class="m1124b-col">
+      <div class="m1124b-toboggan" id="m1124b-toboggan" style="height:24px;"></div>
+      <div class="m1124b-label" id="m1124b-toboggan-label">Toboggan : comprimé, rangé contre la porte</div>
+    </div>
+  </div>
+</div>
+
+<div class="m1124b-caption" id="m1124b-caption">Ce schéma compare le toboggan d'évacuation rangé et déployé. Vue actuelle — rangé : le toboggan reste comprimé contre la porte, prêt à se déployer si la porte est ouverte alors que le système est armé. Cliquez sur « Déployé » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById("schema-m1124b-wrap");
+  if (!wrap) { return; }
+  var btnRange = wrap.querySelector("#m1124b-btn-range");
+  var btnDeploye = wrap.querySelector("#m1124b-btn-deploye");
+  var toboggan = wrap.querySelector("#m1124b-toboggan");
+  var tobogganLabel = wrap.querySelector("#m1124b-toboggan-label");
+  var caption = wrap.querySelector("#m1124b-caption");
+
+  function showRange() {
+    btnRange.className = "m1124b-btn active";
+    btnDeploye.className = "m1124b-btn";
+    toboggan.style.height = "24px";
+    tobogganLabel.textContent = "Toboggan : comprimé, rangé contre la porte";
+    caption.textContent = "Ce schéma compare le toboggan d'évacuation rangé et déployé. Vue actuelle — rangé : le toboggan reste comprimé contre la porte, prêt à se déployer si la porte est ouverte alors que le système est armé. Cliquez sur « Déployé » pour comparer.";
+  }
+
+  function showDeploye() {
+    btnRange.className = "m1124b-btn";
+    btnDeploye.className = "m1124b-btn active";
+    toboggan.style.height = "120px";
+    tobogganLabel.textContent = "Toboggan : gonflé automatiquement en quelques secondes";
+    caption.textContent = "Déployé : dès l'ouverture de la porte, alors que le système est préparé à cet effet, le toboggan se gonfle automatiquement en quelques secondes pour permettre une évacuation rapide vers le sol. Les circonstances précises de préparation du système relèvent du manuel de vol et ne sont pas détaillées ici. Cliquez sur « Rangé » pour revenir à l'autre vue.";
+  }
+
+  btnRange.addEventListener("click", showRange);
+  btnDeploye.addEventListener("click", showDeploye);
+})();
+</script>

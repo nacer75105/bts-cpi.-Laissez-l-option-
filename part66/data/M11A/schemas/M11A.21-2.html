@@ -1,0 +1,60 @@
+<div id="schema-m1121b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1121b-wrap .m1121b-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m1121b-wrap .m1121b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1121b-wrap .m1121b-diagram { position:relative; min-height:150px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; display:flex; align-items:flex-end; justify-content:center; gap:50px; padding:14px; }
+#schema-m1121b-wrap .m1121b-col { display:flex; flex-direction:column; align-items:center; }
+#schema-m1121b-wrap .m1121b-bar-wrap { width:44px; height:90px; border:1.5px solid #888; border-radius:4px; background:#fff; position:relative; display:flex; align-items:flex-end; }
+#schema-m1121b-wrap .m1121b-bar { width:100%; background:#e0a8a0; border-top:2px solid #c0392b; transition: height 0.3s; }
+#schema-m1121b-wrap .m1121b-bar.ok { background:#bfe3d0; border-top-color:#5aa06a; }
+#schema-m1121b-wrap .m1121b-label { font-size:0.62em; color:#555; text-align:center; margin-top:6px; max-width:110px; }
+#schema-m1121b-wrap .m1121b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Dérive de l'IRS et recalage par GPS :</strong> comparez l'erreur de position après plusieurs heures de vol.</p>
+
+<button class="m1121b-btn active" id="m1121b-btn-seule">IRS seule</button>
+<button class="m1121b-btn" id="m1121b-btn-gps">IRS + GPS</button>
+
+<div class="m1121b-diagram">
+  <div class="m1121b-col">
+    <div class="m1121b-bar-wrap"><div class="m1121b-bar" id="m1121b-bar" style="height:75%;"></div></div>
+    <div class="m1121b-label" id="m1121b-label">IRS seule : erreur de position croissante avec le temps de vol</div>
+  </div>
+</div>
+
+<div class="m1121b-caption" id="m1121b-caption">Ce schéma compare l'erreur de position de l'IRS après plusieurs heures de vol, seule ou recalée par GPS. Vue actuelle — IRS seule : l'erreur accumulée par la double intégration croît progressivement avec le temps de vol. Cliquez sur « IRS + GPS » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById("schema-m1121b-wrap");
+  if (!wrap) { return; }
+  var btnSeule = wrap.querySelector("#m1121b-btn-seule");
+  var btnGps = wrap.querySelector("#m1121b-btn-gps");
+  var bar = wrap.querySelector("#m1121b-bar");
+  var label = wrap.querySelector("#m1121b-label");
+  var caption = wrap.querySelector("#m1121b-caption");
+
+  function showSeule() {
+    btnSeule.className = "m1121b-btn active";
+    btnGps.className = "m1121b-btn";
+    bar.style.height = "75%";
+    bar.classList.remove("ok");
+    label.textContent = "IRS seule : erreur de position croissante avec le temps de vol";
+    caption.textContent = "Ce schéma compare l'erreur de position de l'IRS après plusieurs heures de vol, seule ou recalée par GPS. Vue actuelle — IRS seule : l'erreur accumulée par la double intégration croît progressivement avec le temps de vol. Cliquez sur « IRS + GPS » pour comparer.";
+  }
+
+  function showGps() {
+    btnSeule.className = "m1121b-btn";
+    btnGps.className = "m1121b-btn active";
+    bar.style.height = "8%";
+    bar.classList.add("ok");
+    label.textContent = "IRS + GPS : erreur maintenue faible, recalée en continu";
+    caption.textContent = "IRS + GPS : la position absolue du GPS, sans dérive dans le temps, recale en continu la position de l'IRS, maintenant l'erreur globale faible quelle que soit la durée du vol — la combinaison des deux compense la dérive propre à l'IRS seule. Cliquez sur « IRS seule » pour revenir à l'autre vue.";
+  }
+
+  btnSeule.addEventListener("click", showSeule);
+  btnGps.addEventListener("click", showGps);
+})();
+</script>
