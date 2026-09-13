@@ -11,6 +11,185 @@ M5 ci-dessous). Le principe général de chaque question concernée reste
 solide ; c'est la précision de la référence ou de la formulation qui doit
 être confirmée avant un usage en conditions d'examen réel.
 
+## Audit de couverture du syllabus officiel EASA — feuille de route (2026-09-13)
+
+Après l'enrichissement de M17A à partir d'une fiche externe (voir plus
+bas), l'utilisateur a demandé un audit de couverture des 6 modules
+construits contre le syllabus officiel EASA — *Easy Access Rules for
+Continuing Airworthiness (Regulation (EU) No 1321/2014)*, révision
+**septembre 2025**, Appendix I to Part-66 (section AMC1, la plus
+détaillée : sous-thèmes en prose par item, pas seulement les intitulés).
+Même document déjà utilisé pour sourcer les niveaux M7A et le format
+d'examen des 6 modules (voir plus bas dans ce fichier). Colonne **B1.1**
+utilisée partout (licence préparée par ce projet).
+
+**Ceci est un état des lieux, pas un plan de correction.** Rien n'a été
+modifié suite à cet audit ; c'est une feuille de route pour de futures
+sessions, à traiter module par module, probablement en plusieurs
+chantiers séparés compte tenu du volume. Un item listé « non couvert »
+n'est pas nécessairement urgent — le classement par niveau (1/2/3) aide à
+prioriser : un manque sur un item niveau 3 pèse plus qu'un manque sur un
+item niveau 1.
+
+**Réserve méthodologique sur M11A** : l'extraction texte de la section
+détaillée désaligne par endroits les colonnes de niveaux sur les items à
+nombreuses sous-parties (11.7, 11.9, 11.13, 11.14 notamment) — les
+niveaux cités pour M11A s'appuient sur le tableau réglementaire compact,
+plus fiable, mais restent à confirmer visuellement avant de prioriser
+finement dessus.
+
+### M5 — Techniques numériques / systèmes d'instruments électroniques (9 fiches / 15 items officiels)
+
+**Non couvert :**
+- **5.4** Réseau avionique/Ethernet (AFDX) — M5.7 couvre ARINC 429 mais
+  pas les réseaux modernes de type Ethernet embarqué.
+- **5.11** Principes de fonctionnement des technologies d'affichage
+  (CRT/LED/LCD) — M5.9 décrit le glass cockpit fonctionnellement, jamais
+  comment ces écrans fonctionnent réellement.
+- **5.15** Sur ~11 systèmes nommés par le syllabus (ACARS, FBW, FMS, IRS,
+  GNSS, TCAS, avionique modulaire intégrée, systèmes cabine, systèmes
+  d'information...), seuls 3 sont couverts (EFIS, ECAM, EICAS) dans M5.9.
+
+**Superficiel :** 5.14 (EMC/HIRF couverts, mais protection foudre et le
+sigle EMI distinctement nommé absents).
+
+### M7A — Pratiques de maintenance (10 fiches + mémo / 21 items officiels)
+
+Le déficit le plus large du lot (syllabus très dense, 21 items dont
+plusieurs jamais traités).
+
+**Non couvert :**
+- **7.1** : sécurité fosse à carburant (accès en espace confiné),
+  aéronefs équipés d'un parachute de secours balistique.
+- **7.3** : instruments de mesure de précision (pied à coulisse,
+  micromètre) et matériel électrique de test — jamais traités en fiche.
+- **7.14** : les 3 sous-items (tôlerie, composite, fabrication additive)
+  — absents en bloc (7.14.3 déjà noté par ailleurs dans ce fichier,
+  7.14.1 et 7.14.2 identifiés seulement par cet audit).
+- **7.17** : remorquage/roulage, calage/blocage, ravitaillement/dépose
+  carburant, groupes de parc électrique/hydraulique/pneumatique — seule
+  la manutention générique est couverte (ajout du 2026-09-13).
+- **7.19** (événements anormaux : foudre, atterrissage dur), **7.20**
+  (procédures de maintenance : planification, modification, pièces à
+  vie limitée), **7.21** (documentation/communication) — trois items
+  entiers absents.
+
+**Superficiel :** 7.18 (CND décrit génériquement, sans nommer les 5
+méthodes du syllabus dont le ressuage magnétoscopique).
+
+### M10 — Législation aéronautique (8 fiches / 10 items officiels, très denses)
+
+**Le module le plus daté par rapport à la réforme (UE) 2023/989** — déjà
+pressenti lors du travail sur le format d'examen (voir plus bas), confirmé
+ici sur le fond :
+
+- **10.4 Personnel certificateur indépendant (niveau 3, le plus élevé du
+  module)** — absent en totalité.
+- **10.1** : Part 21, Part-T, Part-ML, **Part-CAMO, Part-CAO** (la
+  scission CAMO/CAO hors du Part-M — cohérente avec le doute déjà noté
+  sur M10-0017/M10-0020 et sur le rattachement du CAMO en M17A), règlement
+  Air Ops (UE 965/2012), règlement Air Crew (UE 1178/2011), *soft law*
+  (AMC/GM/CS) vs *hard law*, signalement d'événements (UE 376/2014),
+  accords bilatéraux — aucun mentionné.
+- **10.5** : AOC, MEL/CDL, placardage, ARC (*Airworthiness Review
+  Certificate* — document différent du CofA, jamais mentionné), Permit
+  to Fly, licence radio — absents (seuls CofA/CofR/masse-centrage/bruit
+  sont couverts).
+- **10.6** Part 21 et spécifications de certification (CS-23/25/27...) —
+  absent.
+- **10.10** Cybersécurité en maintenance — absent (item récent, ajouté
+  par la réforme 2023/989).
+
+**Superficiel :** 10.2 (licences/privilèges décrits sans profondeur
+d'exercice), 10.7 (Part-M couvert mais hors cadre Part-ML/CAMO/CAO).
+
+### M11A — Aérodynamique, structures et systèmes (25 fiches / ~21 items, 60+ sous-thèmes — audité par un agent dédié)
+
+**7 chapitres ATA entiers non couverts** : ATA 25 (équipements/
+aménagements cabine), ATA 33 (éclairage), ATA 38 (eau/déchets), ATA 42
+(avionique modulaire intégrée), ATA 44 (systèmes cabine), ATA 45
+(systèmes de maintenance embarqués), ATA 46 (systèmes d'information).
+
+**Dispositifs isolés non couverts**, dont plusieurs classiquement testés
+en examen : *gust lock*, *yaw damper*, *Mach trim*, équilibrage/rigging
+des gouvernes (11.9, niveau 3), largage carburant d'urgence (11.10),
+*tail skids*/*autobraking*/pneus/détection air-sol (11.13), dispositifs de
+remorquage planeur (11.3.1, niveau 3), classification structurale
+primaire/secondaire/tertiaire et concepts *fail-safe*/*safe-life*/
+*damage-tolerance* (11.2).
+
+**Superficiel :** communications/navigation individuelles non nommées
+(11.5.2 : VHF, HF, SATCOM, CPDLC, ELT, CVR, VOR, ADF, ILS, MLS, DME,
+transpondeur, TCAS, radar météo, radioaltimètre), inertage réservoir
+(11.10), onduleurs/régulation de tension (11.6), système de chargement
+du fret (11.3.1(c), niveau 3), protection de surface — chromatation/
+anodisation (11.2(c)).
+
+**Le cœur technique reste solide** : hydraulique, train d'atterrissage
+(hors pneus/autobraking), conditionnement d'air, givre/pluie, carburant
+cellule (hors largage/inertage), instruments de vol, incendie, portes
+(hors sièges/fenêtres), maintenance cellule/CND — bien couverts, parfois
+au-delà du niveau exigé. Les manques se concentrent sur le confort
+cabine/avionique récente et une poignée de dispositifs de sécurité en
+commandes de vol.
+
+### M15 — Turbomachines à gaz (14 fiches / 22 items officiels)
+
+**Non couvert :**
+- **15.2** Performances moteur (poussée brute/nette, taux de dilution,
+  consommation spécifique, régimes/limitations) — jamais traité comme
+  sujet propre.
+- **15.15** Architectures alternatives (turbofan à réducteur, open rotor,
+  hybride électrique).
+- **15.16 / 15.17 / 15.18** Turbopropulseurs, turbomoteurs, APU —
+  chacun absent comme sujet dédié (l'APU n'apparaît qu'en passant comme
+  source d'air de démarrage en M15.9).
+- **15.19** Installation motrice (pare-feu, supports moteur, câblage,
+  points de levage).
+- **15.22** Stockage et conservation du moteur (l'équivalent existe pour
+  l'hélice en M17A.14, pas pour le moteur).
+
+**Superficiel :**
+- **15.1** : le terme « cycle de Brayton » n'est jamais nommé ; les 5
+  architectures moteur (turboréacteur/turbofan/turbopropulseur/
+  turbomoteur/geared turbofan) ne sont jamais comparées comme
+  fondamentaux.
+- **15.4** : contrôle de l'écoulement (vannes de décharge, aubes de
+  stator/entrée variables) absent.
+- **15.9** : propriétés/spécifications des carburants et lubrifiants
+  (grades, additifs) non traitées — seule l'architecture des circuits
+  est couverte.
+- **15.21 (niveau 3, le plus élevé du module)** : lavage/nettoyage du
+  compresseur absent ; le run-up comme procédure formelle sous-développé
+  malgré le niveau exigé.
+
+### M17A — Hélices (15 fiches / 7 items officiels — le mieux couvert après l'enrichissement du 2026-09-13)
+
+**Superficiel seulement**, tout le reste étant désormais couvert en
+profondeur après les ajouts du jour (construction, commande de pas,
+synchronisation, givre, entretien, stockage) :
+- **17.1** : « angle d'attaque » n'est jamais nommé comme tel (choix
+  délibéré, déjà documenté plus bas — cohérence du vocabulaire du module
+  privilégiée à la reprise littérale de la fiche externe) ; vibrations/
+  résonance et le repère visuel de l'arc rouge au compte-tours ne sont
+  pas traités (présents dans la fiche externe analysée, non retenus lors
+  de l'intégration sélective du 2026-09-13).
+
+### Priorisation suggérée pour une reprise future
+
+Par ordre approximatif d'impact (item niveau 3 absent > item niveau 2
+absent en bloc > superficiel) : **M10** (10.4 niveau 3 absent, plus tout
+le paysage réglementaire post-2023/989 jamais intégré) et **M7A** (3
+items entiers absents sur un total de seulement 21, dont un impact
+pratique direct — sécurité fosse carburant, outillage de mesure) semblent
+les chantiers les plus rentables à reprendre en premier. **M11A**, malgré
+son volume de manques bruts, a un cœur technique déjà solide — les
+manques y sont plus concentrés sur du contenu périphérique (confort
+cabine, avionique récente) que sur la sécurité de vol directe, à
+l'exception du groupe commandes de vol (11.9). **M15** et **M5** ont des
+manques ciblés, plus rapides à combler individuellement. **M17A** peut
+attendre.
+
 ## Module M10 — questions concernées
 
 Relecture du 2026-09-09 par le sous-agent `relecteur-part66` (3 rounds) :
