@@ -8,10 +8,10 @@
       "options": [
         "1944, à Chicago",
         "1919, à Paris",
-        "1970, à Montréal"
+        "1948, à Genève"
       ],
       "bonne": 0,
-      "explication": "L'OACI a été créée par la Convention de Chicago en 1944. La convention de Paris de 1919 est un traité aéronautique antérieur, mais ce n'est pas lui qui a créé l'OACI. Montréal est le siège actuel de l'organisation, pas la date ni le lieu de sa création.",
+      "explication": "La convention de Chicago de 1944 a créé l'OACI. La convention de Paris de 1919 est un traité aéronautique antérieur et distinct. Aucune convention fondatrice de l'OACI n'a été signée à Genève.",
       "source": "Convention relative à l'aviation civile internationale (Chicago, 1944)"
     },
     {
@@ -19,12 +19,12 @@
       "sous_chapitre": "M10.1",
       "question": "Les Annexes publiées par l'OACI sont :",
       "options": [
-        "Des lois directement applicables dans tous les aéroports du monde",
-        "Des standards et pratiques recommandées, à transposer par chaque État",
-        "Des accords commerciaux entre compagnies aériennes"
+        "Des règlements de l'Union européenne applicables dans chaque État membre",
+        "Des normes et pratiques recommandées que les États transposent dans leur droit national",
+        "Des accords bilatéraux négociés entre deux États membres de l'OACI"
       ],
       "bonne": 1,
-      "explication": "Les Annexes OACI fixent des standards et pratiques recommandées (SARPs) : ce sont les États membres qui doivent les transposer dans leur propre réglementation. Elles ne sont donc pas directement applicables comme des lois, et n'ont rien à voir avec des accords commerciaux entre compagnies.",
+      "explication": "Les Annexes OACI fixent des normes et pratiques recommandées (SARPs), que chaque État transpose dans son droit national. Les règlements de l'Union européenne relèvent d'un mécanisme propre à l'UE, distinct du système OACI ; les accords bilatéraux résultent de négociations entre deux États, pas de l'organisation dans son ensemble.",
       "source": "TODO: source à vérifier manuellement — l'obligation de transposition figure probablement dans le corps de la Convention (art. 37/38), pas dans les Annexes elles-mêmes (voir part66/A_VERIFIER.md)"
     },
     {
@@ -37,7 +37,7 @@
         "Montréal"
       ],
       "bonne": 2,
-      "explication": "Le siège de l'OACI est à Montréal, au Canada. Genève accueille d'autres organisations internationales (comme l'OMS), et Bruxelles est le siège de plusieurs institutions de l'Union européenne, mais pas de l'OACI.",
+      "explication": "Le siège de l'OACI est à Montréal, au Canada. Genève accueille d'autres organisations internationales, et Bruxelles est le siège de plusieurs institutions de l'Union européenne, mais pas de l'OACI.",
       "source": "TODO: source à vérifier manuellement — référence exacte pour le siège de l'OACI à Montréal (voir part66/A_VERIFIER.md)"
     },
     {
@@ -46,11 +46,11 @@
       "question": "L'OACI est :",
       "options": [
         "Une institution spécialisée des Nations unies",
-        "Une agence de l'Union européenne",
-        "Un constructeur aéronautique international"
+        "Un organe technique relevant du G20",
+        "Une agence exécutive de la Commission européenne"
       ],
       "bonne": 0,
-      "explication": "L'OACI est une institution spécialisée de l'ONU, à vocation mondiale — ce n'est ni une agence propre à l'Union européenne (c'est le rôle de l'AESA), ni un constructeur d'aéronefs.",
+      "explication": "L'OACI est une institution spécialisée de l'ONU. Ni la Commission européenne (dont l'agence compétente en aviation, l'AESA, est distincte de la Commission elle-même), ni le G20 (qui ne dispose pas d'un organe technique de ce type), n'exercent ce rôle.",
       "source": "TODO: source à vérifier manuellement — le statut d'institution spécialisée de l'ONU découle probablement de l'accord ONU/OACI qui a suivi la Convention, pas de la Convention seule (voir part66/A_VERIFIER.md)"
     },
     {
@@ -58,12 +58,12 @@
       "sous_chapitre": "M10.1",
       "question": "Quand la réglementation d'un État s'écarte d'un standard OACI, cet État doit :",
       "options": [
-        "Demander l'autorisation préalable de tous les autres États membres",
-        "Notifier cette différence à l'OACI",
-        "Ne rien faire, les Annexes n'ont aucune valeur"
+        "Suspendre l'application du standard concerné jusqu'à nouvel ordre",
+        "Obtenir l'accord préalable des autres États membres",
+        "En informer l'organisation, selon la procédure prévue à cet effet"
       ],
-      "bonne": 1,
-      "explication": "Un État qui s'écarte d'un standard OACI doit notifier cette différence à l'organisation ; il n'a pas besoin de l'accord préalable des autres États, mais les Annexes ne sont pas non plus sans valeur : elles fixent le cadre de référence international.",
+      "bonne": 2,
+      "explication": "Un État qui s'écarte d'un standard OACI en informe l'organisation, sans avoir besoin de l'accord préalable des autres États ; il n'a pas non plus à suspendre l'application du standard en attendant, l'écart étant simplement notifié et documenté.",
       "source": "TODO: source à vérifier manuellement — numéro exact de l'article de la Convention de Chicago concerné (voir part66/A_VERIFIER.md)"
     },
     {
@@ -71,12 +71,12 @@
       "sous_chapitre": "M10.2",
       "question": "Le texte de base qui définit actuellement les missions de l'AESA (EASA) est :",
       "options": [
-        "Le règlement (CE) 1592/2002, encore en vigueur aujourd'hui",
-        "Une directive Euratom",
-        "Le règlement (UE) 2018/1139"
+        "Le règlement (UE) 2018/1139",
+        "Le règlement propre à la sûreté aéroportuaire",
+        "Le règlement (CE) 1592/2002"
       ],
-      "bonne": 2,
-      "explication": "Le règlement (UE) 2018/1139 (dit « Basic Regulation ») est le texte de base actuel. Le règlement (CE) 1592/2002 était le texte fondateur de l'AESA mais a depuis été remplacé (par le règlement (CE) 216/2008, puis par le 2018/1139) : il n'est donc plus en vigueur. Euratom concerne le nucléaire civil, sans lien avec l'aviation.",
+      "bonne": 0,
+      "explication": "Le règlement (UE) 2018/1139 (dit « Basic Regulation ») est le texte de base actuellement en vigueur. Le règlement (CE) 1592/2002 était le texte fondateur de l'AESA en 2002, mais il a depuis été remplacé par des textes successifs. La sûreté aéroportuaire relève d'un cadre réglementaire distinct, sans lien avec les missions générales de l'AESA.",
       "source": "Règlement (UE) 2018/1139"
     },
     {
@@ -84,25 +84,25 @@
       "sous_chapitre": "M10.2",
       "question": "En France, l'autorité nationale de l'aviation civile est :",
       "options": [
-        "La DGAC",
-        "L'AESA",
-        "Le BEA"
+        "AESA",
+        "BEA",
+        "DGAC"
       ],
-      "bonne": 0,
-      "explication": "La DGAC (Direction générale de l'aviation civile) est l'autorité nationale française. L'AESA est l'agence européenne, pas une autorité nationale. Le BEA (Bureau d'enquêtes et d'analyses) a une mission différente : enquêter sur les accidents et incidents, pas surveiller au quotidien les acteurs du secteur.",
+      "bonne": 2,
+      "explication": "La DGAC (Direction générale de l'aviation civile) est l'autorité nationale française, chargée de la surveillance quotidienne du secteur. L'AESA est l'agence européenne, pas une autorité nationale. Le BEA a une mission différente : enquêter sur les accidents et incidents, pas surveiller au quotidien les acteurs du secteur.",
       "source": "TODO: source à vérifier manuellement — texte fondant le statut d'autorité nationale de la DGAC (voir part66/A_VERIFIER.md)"
     },
     {
       "uid": "M10-0008",
       "sous_chapitre": "M10.2",
-      "question": "Le rôle de l'AESA (EASA) est notamment de :",
+      "question": "Le rôle de l'AESA (EASA) est de :",
       "options": [
-        "Remplacer les compagnies aériennes dans la gestion de leur flotte",
-        "Rédiger la réglementation technique européenne de sécurité aérienne",
-        "Fixer le prix des billets d'avion en Europe"
+        "Superviser l'exploitation courante des flottes des compagnies aériennes",
+        "Délivrer les licences individuelles de mécanicien Part-66",
+        "Rédiger la réglementation technique européenne de sécurité aérienne"
       ],
-      "bonne": 1,
-      "explication": "L'AESA rédige la réglementation technique de sécurité (certification, entretien, licences...). Elle ne gère pas les flottes des compagnies à leur place, et n'a aucune compétence sur la tarification des billets.",
+      "bonne": 2,
+      "explication": "L'AESA rédige la réglementation technique de sécurité (certification, entretien, licences...). Les licences individuelles Part-66 sont délivrées par l'autorité compétente de chaque État, pas par l'AESA. Elle ne supervise pas non plus l'exploitation courante des flottes, qui reste de la responsabilité de chaque compagnie.",
       "source": "Règlement (UE) 2018/1139"
     },
     {
@@ -110,25 +110,25 @@
       "sous_chapitre": "M10.2",
       "question": "Avant l'harmonisation européenne, la réglementation de maintenance utilisée en France s'appuyait notamment sur :",
       "options": [
-        "Le Part-M actuel",
-        "Les Annexes OACI appliquées directement, sans texte national",
-        "Les JAR (Joint Aviation Requirements)"
+        "Les standards OACI, transposables sans qu'un texte français ne soit nécessaire",
+        "Les JAR (Joint Aviation Requirements)",
+        "Le Part-M"
       ],
-      "bonne": 2,
-      "explication": "Les JAR étaient le cadre de référence utilisé avant que les règlements EASA (dont le Part-M) ne les remplacent progressivement. Le Part-M est le texte actuel, pas celui utilisé avant l'harmonisation ; et les Annexes OACI ne s'appliquaient pas directement, elles devaient être transposées.",
+      "bonne": 1,
+      "explication": "Avant l'harmonisation européenne, la France appliquait les JAR (Joint Aviation Requirements), un cadre européen antérieur repris dans la réglementation nationale. Le Part-M est le texte harmonisé actuel, entré en vigueur après cette période. Les standards OACI nécessitent au contraire une transposition nationale.",
       "source": "TODO: source à vérifier manuellement — référence historique précise des JAR en droit français (voir part66/A_VERIFIER.md)"
     },
     {
       "uid": "M10-0011",
       "sous_chapitre": "M10.3",
-      "question": "Le règlement (UE) n° 1321/2014 regroupe notamment :",
+      "question": "Le règlement (UE) n° 1321/2014 regroupe :",
       "options": [
-        "Part-M, Part-145, Part-66 et Part-147",
-        "Uniquement les règles de circulation aérienne",
-        "Les règles de sûreté contre les actes illicites"
+        "Les annexes Part-M et Part-145 seulement",
+        "Les annexes Part-66 et Part-147 seulement",
+        "Les annexes Part-66, Part-147, Part-M et Part-145"
       ],
-      "bonne": 0,
-      "explication": "Le règlement (UE) 1321/2014 regroupe les annexes Part-M, Part-145, Part-66 et Part-147, toutes liées au maintien de la navigabilité et à la maintenance. La circulation aérienne et la sûreté relèvent d'autres textes réglementaires distincts.",
+      "bonne": 2,
+      "explication": "Le règlement (UE) 1321/2014 regroupe bien les quatre annexes ensemble : Part-M, Part-145, Part-66 et Part-147. Ni le couple Part-M/Part-145 seul, ni le couple Part-66/Part-147 seul, n'épuisent son contenu : les quatre annexes en font partie.",
       "source": "Règlement (UE) n° 1321/2014"
     },
     {
@@ -136,12 +136,12 @@
       "sous_chapitre": "M10.3",
       "question": "Le Part-145 concerne :",
       "options": [
+        "Les organismes de formation agréés",
         "Les licences individuelles du personnel certificateur",
-        "Les organismes de maintenance agréés",
-        "Les organismes de formation"
+        "Les organismes de maintenance agréés"
       ],
-      "bonne": 1,
-      "explication": "Le Part-145 encadre les organismes de maintenance. Les licences individuelles relèvent du Part-66, et les organismes de formation du Part-147 : ce sont deux annexes distinctes du même règlement.",
+      "bonne": 2,
+      "explication": "Le Part-145 encadre les organismes de maintenance agréés. Les licences individuelles relèvent du Part-66, et les organismes de formation du Part-147 : ce sont deux annexes distinctes du même règlement.",
       "source": "Règlement (UE) n° 1321/2014, annexe II (Part-145)"
     },
     {
@@ -150,37 +150,37 @@
       "question": "Le Part-M correspond à quelle annexe du règlement (UE) n° 1321/2014 ?",
       "options": [
         "Annexe III",
-        "Annexe IV",
-        "Annexe I"
+        "Annexe I",
+        "Annexe II"
       ],
-      "bonne": 2,
-      "explication": "Le Part-M est l'annexe I du règlement. L'annexe III correspond au Part-66 (les licences) et l'annexe IV au Part-147 (les organismes de formation).",
+      "bonne": 1,
+      "explication": "Le Part-M est l'annexe I du règlement (UE) 1321/2014. L'annexe II correspond au Part-145 (organismes de maintenance) et l'annexe III au Part-66 (licences du personnel).",
       "source": "Règlement (UE) n° 1321/2014, annexe I (Part-M), annexe II (Part-145), annexe III (Part-66), annexe IV (Part-147) — correspondance vérifiée manuellement"
     },
     {
       "uid": "M10-0015",
       "sous_chapitre": "M10.3",
-      "question": "Les quatre annexes Part-M, Part-145, Part-66 et Part-147 fonctionnent ensemble pour :",
+      "question": "Les quatre annexes Part-147, Part-M, Part-145 et Part-66 fonctionnent ensemble pour :",
       "options": [
+        "Garantir la conformité des aéronefs pendant leur seule période de garantie constructeur",
         "Garantir le maintien de la navigabilité des aéronefs",
-        "Fixer les tarifs de maintenance",
-        "Organiser le contrôle du trafic aérien"
+        "Garantir la conformité des aéronefs neufs à leur certification de type, avant leur première mise en service"
       ],
-      "bonne": 0,
-      "explication": "Ces quatre annexes forment un système cohérent centré sur le maintien de la navigabilité : programme d'entretien (Part-M), atelier agréé (Part-145), personnel licencié (Part-66) formé par un organisme agréé (Part-147). Ni les tarifs ni le contrôle du trafic aérien n'entrent dans leur champ.",
+      "bonne": 1,
+      "explication": "Ces quatre annexes garantissent le maintien de la navigabilité tout au long de la vie de l'aéronef, pas seulement lors de sa première mise en service ni durant sa période de garantie constructeur : programme d'entretien (Part-M), atelier agréé (Part-145), personnel licencié (Part-66) formé par un organisme agréé (Part-147).",
       "source": "Règlement (UE) n° 1321/2014"
     },
     {
       "uid": "M10-0016",
       "sous_chapitre": "M10.4",
-      "question": "Pour un aéronef, la responsabilité finale du maintien de la navigabilité incombe en général :",
+      "question": "Pour un aéronef, la responsabilité finale du maintien de la navigabilité incombe, par défaut :",
       "options": [
-        "Au constructeur",
-        "À l'exploitant (ou au propriétaire)",
-        "À l'organisme de formation Part-147"
+        "Au propriétaire, sauf transfert prévu par la réglementation (location, transport aérien commercial licencié)",
+        "Au constructeur, tant que l'aéronef reste sous garantie",
+        "À l'organisme CAMO agréé en charge du dossier de navigabilité"
       ],
-      "bonne": 1,
-      "explication": "C'est l'exploitant (ou le propriétaire pour l'aviation légère) qui porte la responsabilité finale du maintien de la navigabilité, même s'il peut la déléguer à un CAMO. Le constructeur est responsable de la conception, pas du suivi en exploitation ; l'organisme Part-147 n'a aucun rôle ici.",
+      "bonne": 0,
+      "explication": "Par défaut, c'est le propriétaire qui porte la responsabilité du maintien de la navigabilité (M.A.201). Cette responsabilité est transférée à l'exploitant dans des cas définis par la réglementation : aéronef loué, ou exploité par un transporteur aérien titulaire d'une licence d'exploitation (règlement (CE) 1008/2008). Le constructeur répond de la conception, y compris après la période de garantie ; le CAMO gère ce dossier pour le compte du responsable désigné, sans en porter lui-même la responsabilité finale.",
       "source": "Règlement (UE) n° 1321/2014, annexe I (Part-M)"
     },
     {
@@ -188,25 +188,25 @@
       "sous_chapitre": "M10.4",
       "question": "Le CAMO est :",
       "options": [
-        "Un type de licence Part-66",
-        "Un document remis au passager",
-        "Un organisme de gestion du maintien de la navigabilité"
+        "Un organisme chargé de planifier et suivre l'entretien d'un aéronef",
+        "Un rapport technique associé à chaque visite de maintenance",
+        "Un type de licence individuelle délivré au titre du Part-66"
       ],
-      "bonne": 2,
-      "explication": "Le CAMO (Continuing Airworthiness Management Organisation) est l'organisme qui planifie l'entretien et suit la navigabilité d'un aéronef pour le compte de l'exploitant. Ce n'est ni une licence individuelle (Part-66), ni un document destiné aux passagers.",
+      "bonne": 0,
+      "explication": "Le CAMO (Continuing Airworthiness Management Organisation) est l'organisme qui planifie l'entretien et suit la navigabilité d'un aéronef pour le compte de l'exploitant. Ce n'est ni une licence individuelle (Part-66), ni un rapport technique associé à une visite de maintenance.",
       "source": "TODO: source à vérifier manuellement — la relecture signale que les exigences CAMO pourraient avoir été déplacées hors du Part-M par un règlement modificatif postérieur à confirmer (voir part66/A_VERIFIER.md)"
     },
     {
       "uid": "M10-0018",
       "sous_chapitre": "M10.4",
-      "question": "Le document signé à la fin d'une intervention de maintenance, qui autorise la remise en exploitation de l'aéronef, s'appelle :",
+      "question": "Le CRS (Certificate of Release to Service), délivré à l'issue d'un entretien, doit être signé par :",
       "options": [
-        "Le CRS (Certificate of Release to Service)",
-        "Le certificat de navigabilité",
-        "Le certificat d'immatriculation"
+        "Le responsable qualité de l'organisme, quel que soit le type de travaux",
+        "Le personnel certificateur habilité pour les travaux réalisés",
+        "N'importe quel membre du personnel de l'organisme"
       ],
-      "bonne": 0,
-      "explication": "Le CRS est délivré après chaque intervention de maintenance. Le certificat de navigabilité et le certificat d'immatriculation sont des documents permanents de l'aéronef, pas liés à une intervention en particulier.",
+      "bonne": 1,
+      "explication": "Le CRS doit être signé par du personnel certificateur habilité pour le type de travaux réalisés (Part-66, domaine d'agrément de l'organisme). Ni un employé quelconque sans qualification, ni le responsable qualité en tant que tel (sauf s'il détient lui-même l'habilitation requise), ne peuvent le signer à sa place.",
       "source": "Règlement (UE) n° 1321/2014, annexe I (Part-M)"
     },
     {
@@ -214,38 +214,38 @@
       "sous_chapitre": "M10.4",
       "question": "Le programme d'entretien d'un aéronef doit être :",
       "options": [
-        "Improvisé par le mécanicien selon son expérience",
-        "Approuvé et suivi",
-        "Identique pour tous les aéronefs sans distinction de type"
+        "Laissé à l'appréciation du mécanicien",
+        "Valable indéfiniment après sa première approbation",
+        "Approuvé, puis suivi et révisé régulièrement"
       ],
-      "bonne": 1,
-      "explication": "Le programme d'entretien doit être approuvé et effectivement suivi : ce n'est pas laissé à l'improvisation individuelle, et il est propre à chaque type d'aéronef (et souvent à chaque exemplaire), pas identique pour tous.",
+      "bonne": 2,
+      "explication": "Le programme d'entretien doit être approuvé par l'autorité ou le CAMO compétent, puis suivi et révisé régulièrement : son approbation initiale ne vaut pas pour une durée indéfinie, et son application n'est pas laissée à la libre appréciation du mécanicien.",
       "source": "Règlement (UE) n° 1321/2014, annexe I (Part-M)"
     },
     {
       "uid": "M10-0020",
       "sous_chapitre": "M10.4",
-      "question": "Le Part-M porte principalement sur :",
+      "question": "Le Part-M porte sur :",
       "options": [
-        "La formation initiale des mécaniciens",
-        "La certification de type d'un nouvel aéronef",
-        "Qui est responsable de quoi dans le maintien de la navigabilité"
+        "La formation initiale menant à la licence Part-66",
+        "La répartition des responsabilités dans le maintien de la navigabilité",
+        "La certification de type d'un nouvel aéronef"
       ],
-      "bonne": 2,
-      "explication": "Le Part-M définit les responsabilités (exploitant, CAMO...) dans le maintien de la navigabilité. La formation initiale relève du Part-147, et la certification de type d'un nouvel aéronef relève d'un autre cadre réglementaire (la certification de production/conception).",
+      "bonne": 1,
+      "explication": "Le Part-M définit les responsabilités (exploitant, CAMO...) dans le maintien de la navigabilité. La formation initiale relève du Part-147, et la certification de type relève d'un autre cadre réglementaire.",
       "source": "Règlement (UE) n° 1321/2014, annexe I (Part-M)"
     },
     {
       "uid": "M10-0021",
       "sous_chapitre": "M10.5",
-      "question": "L'agrément Part-145 porte sur :",
+      "question": "L'agrément Part-145 est délivré à :",
       "options": [
-        "L'organisme de maintenance (ses procédures, ses moyens)",
-        "La licence individuelle de chaque mécanicien",
-        "Le type d'aéronef fabriqué"
+        "Un mécanicien de l'organisme, à titre individuel",
+        "L'organisme de maintenance dans son ensemble",
+        "Un type d'aéronef entretenu par l'organisme"
       ],
-      "bonne": 0,
-      "explication": "L'agrément Part-145 est délivré à l'organisme dans son ensemble (procédures, moyens, personnel). La licence individuelle relève du Part-66, et la fabrication d'un type d'aéronef relève de la certification de production, hors du champ du Part-145.",
+      "bonne": 1,
+      "explication": "L'agrément Part-145 est délivré à l'organisme dans son ensemble, et non à un mécanicien pris individuellement (licence Part-66) ni à un type d'aéronef entretenu (qui relève du domaine d'agrément accordé à l'organisme, pas d'un agrément séparé).",
       "source": "Règlement (UE) n° 1321/2014, annexe II (Part-145)"
     },
     {
@@ -253,12 +253,12 @@
       "sous_chapitre": "M10.5",
       "question": "Pour obtenir et conserver son agrément, un organisme Part-145 doit notamment démontrer qu'il dispose de :",
       "options": [
-        "Uniquement d'un local, sans autre exigence",
         "Installations, outillages, procédures et personnel qualifié",
-        "Un contrat d'assurance suffisant, seule condition requise"
+        "Des installations et du personnel qualifié, les procédures restant informelles",
+        "Des procédures et du personnel qualifié, sans obligation d'installations dédiées"
       ],
-      "bonne": 1,
-      "explication": "L'agrément Part-145 exige un ensemble de moyens (installations, outillages), de procédures écrites et de personnel qualifié. Un simple local ou une simple assurance, pris isolément, ne suffisent pas.",
+      "bonne": 0,
+      "explication": "L'agrément Part-145 exige conjointement des installations, des outillages, des procédures écrites et du personnel qualifié : aucun de ces quatre éléments ne peut être omis, que ce soit les procédures (qui ne peuvent rester informelles) ou des installations dédiées.",
       "source": "Règlement (UE) n° 1321/2014, annexe II (Part-145)"
     },
     {
@@ -266,25 +266,25 @@
       "sous_chapitre": "M10.5",
       "question": "Au-delà des procédures techniques et des moyens matériels, l'agrément Part-145 porte aussi sur :",
       "options": [
-        "Le prix pratiqué par l'organisme pour ses prestations",
-        "La nationalité des clients de l'organisme",
-        "Le système de gestion de la qualité de l'organisme"
+        "Son système de gestion, suivi de conformité inclus",
+        "Son système de gestion, à l'exclusion de tout suivi de conformité",
+        "Son système de gestion, pour les seuls aspects de sécurité, hors conformité réglementaire"
       ],
-      "bonne": 2,
-      "explication": "L'agrément Part-145 couvre également le système de gestion de la qualité de l'organisme, et pas seulement ses procédures techniques et ses moyens matériels. Le prix des prestations et la nationalité des clients ne relèvent en rien de cet agrément.",
+      "bonne": 0,
+      "explication": "L'agrément Part-145 couvre le système de gestion de l'organisme dans son ensemble, incluant sa fonction de suivi de conformité (compliance monitoring) : celle-ci n'en est pas exclue, et ne se limite pas non plus aux seuls aspects de sécurité au sens strict.",
       "source": "TODO: source à vérifier manuellement — la terminologie \"système de gestion de la qualité\" pourrait être périmée (un règlement modificatif du Part-145 applicable fin 2022 aurait remplacé le \"quality system\" par un \"management system\") ; à confirmer dans le texte consolidé avant usage en examen (voir part66/A_VERIFIER.md)"
     },
     {
       "uid": "M10-0024",
       "sous_chapitre": "M10.5",
-      "question": "Un organisme Part-145 emploie :",
+      "question": "Le personnel certificateur d'un organisme Part-145 doit être qualifié conformément :",
       "options": [
-        "Du personnel certificateur qualifié conformément au Part-66 pour la remise en service des aéronefs",
-        "Uniquement des ingénieurs sans licence spécifique",
-        "Aucun personnel qualifié, l'agrément de l'organisme suffit à lui seul"
+        "Au Part-147",
+        "Au Part-M",
+        "Au Part-66"
       ],
-      "bonne": 0,
-      "explication": "La certification des travaux effectués par un organisme Part-145 nécessite du personnel qualifié conformément au Part-66 (licence, ou équivalence reconnue par la réglementation dans certains cas) : l'agrément de l'organisme ne remplace pas la qualification individuelle.",
+      "bonne": 2,
+      "explication": "Le personnel certificateur d'un organisme Part-145 doit être qualifié conformément au Part-66, qui régit les licences individuelles. Le Part-147 encadre la formation menant à cette licence, et le Part-M définit les responsabilités du maintien de la navigabilité : ni l'un ni l'autre ne fixe la qualification du personnel certificateur lui-même.",
       "source": "Règlement (UE) n° 1321/2014, annexe II (Part-145)"
     },
     {
@@ -292,12 +292,12 @@
       "sous_chapitre": "M10.5",
       "question": "Le manuel des spécifications d'un organisme Part-145 décrit :",
       "options": [
-        "Le prix des pièces détachées",
-        "Ses procédures internes de gestion et de maintenance",
-        "Le programme d'examen du Part-66"
+        "Le programme d'examen de la licence Part-66",
+        "L'organisation interne et les procédures de maintenance",
+        "La liste des aéronefs immatriculés chez ses clients"
       ],
       "bonne": 1,
-      "explication": "Ce manuel décrit l'organisation interne et les procédures de l'atelier. Il n'a pas vocation à fixer des prix, et le programme d'examen Part-66 est défini par une autre annexe, pas par ce manuel.",
+      "explication": "Le manuel des spécifications décrit l'organisation interne et les procédures de l'atelier. Le programme d'examen Part-66 est défini par une autre annexe, pas par ce manuel ; la liste des aéronefs immatriculés chez les clients n'en fait pas partie non plus.",
       "source": "Règlement (UE) n° 1321/2014, annexe II (Part-145)"
     },
     {
@@ -305,12 +305,12 @@
       "sous_chapitre": "M10.6",
       "question": "La licence B1.1 du Part-66 concerne :",
       "options": [
-        "Uniquement les systèmes avioniques",
-        "Les hélicoptères à moteur à pistons",
-        "Cellule, moteurs et systèmes mécaniques/électriques des avions à turbine"
+        "Les seuls moteurs de l'avion, à l'exclusion de la cellule et des circuits électriques",
+        "La cellule, les moteurs et les systèmes mécaniques et électriques des avions à turbine",
+        "La cellule et les moteurs, mais seulement sur les avions long-courriers"
       ],
-      "bonne": 2,
-      "explication": "B1.1 couvre la cellule, les moteurs et les systèmes mécaniques/électriques des avions à turbine. Les systèmes avioniques relèvent de la catégorie B2, et les hélicoptères à pistons de la sous-catégorie B1.4.",
+      "bonne": 1,
+      "explication": "B1.1 couvre la cellule, les moteurs et les systèmes mécaniques et électriques des avions à turbine dans leur ensemble (66.A.20), sans se limiter aux seuls moteurs ni être réservée aux avions long-courriers : la distinction porte sur le type de motorisation (turbine) et l'étendue des systèmes couverts, pas sur la distance de vol de l'avion.",
       "source": "Règlement (UE) n° 1321/2014, annexe III (Part-66)"
     },
     {
@@ -318,12 +318,12 @@
       "sous_chapitre": "M10.6",
       "question": "La catégorie B2 du Part-66 est centrée sur :",
       "options": [
-        "Les systèmes avioniques et électroniques",
-        "La cellule et les moteurs",
-        "Les tâches d'entretien en ligne simples"
+        "Les systèmes avioniques et électriques de l'aéronef",
+        "Les systèmes avioniques des seuls avions monocouloirs",
+        "Les seuls systèmes de navigation par satellite, à l'exclusion des autres systèmes avioniques"
       ],
       "bonne": 0,
-      "explication": "B2 couvre les systèmes avioniques et électroniques. La cellule et les moteurs relèvent des sous-catégories B1, et les tâches d'entretien en ligne simples relèvent de la catégorie A.",
+      "explication": "B2 couvre l'ensemble des systèmes avioniques et électriques de l'aéronef (66.A.20), sans se limiter à la navigation par satellite ni être réservée aux avions monocouloirs.",
       "source": "Règlement (UE) n° 1321/2014, annexe III (Part-66)"
     },
     {
@@ -331,25 +331,25 @@
       "sous_chapitre": "M10.6",
       "question": "La catégorie A du Part-66 permet :",
       "options": [
-        "La maintenance de base sur gros aéronefs",
+        "Des tâches d'entretien en ligne, mais seulement sur les aéronefs de moins de 2 tonnes",
         "Des tâches d'entretien en ligne simples et prédéfinies",
-        "La conception de nouveaux aéronefs"
+        "Des tâches d'entretien en ligne, sans restriction de complexité ni de type de tâche"
       ],
       "bonne": 1,
-      "explication": "La catégorie A est limitée à des tâches d'entretien en ligne simples et prédéfinies. La maintenance de base sur gros aéronefs relève de la catégorie C, et la conception d'aéronefs est hors du champ du Part-66.",
+      "explication": "La catégorie A est limitée à des tâches d'entretien en ligne simples et prédéfinies : ni une compétence sans restriction de complexité, ni une limitation liée à la masse de l'aéronef, ne décrivent correctement son périmètre — c'est la nature de la tâche (simple, prédéfinie) qui la définit, pas la taille de l'appareil.",
       "source": "Règlement (UE) n° 1321/2014, annexe III (Part-66)"
     },
     {
       "uid": "M10-0029",
       "sous_chapitre": "M10.6",
-      "question": "La catégorie C du Part-66 est réservée à :",
+      "question": "L'accès à la catégorie C du Part-66 passe le plus souvent par :",
       "options": [
-        "Des débutants sans aucune expérience",
-        "Uniquement au personnel des organismes Part-147",
-        "Des titulaires expérimentés d'une licence B1 ou B2"
+        "Une licence B1 ou B2 assortie d'une expérience confirmée",
+        "Une simple déclaration sur l'honneur d'expérience suffisante, sans licence préalable",
+        "Un examen d'entrée spécifique à la catégorie C, sans lien avec une licence B1/B2 antérieure"
       ],
-      "bonne": 2,
-      "explication": "La catégorie C (maintenance de base sur gros aéronefs) nécessite une expérience préalable en catégorie B1 ou B2 : elle n'est donc pas accessible à des débutants, et n'est pas réservée au personnel des organismes de formation.",
+      "bonne": 0,
+      "explication": "L'accès à la catégorie C passe le plus souvent par une licence B1 ou B2 assortie d'une expérience confirmée (une voie académique alternative existe aussi, avec ses propres exigences d'expérience). Une simple déclaration sur l'honneur, sans licence ni vérification, ne suffit pas ; il n'existe pas non plus d'examen d'entrée à la catégorie C totalement indépendant d'une licence B1/B2 préalable.",
       "source": "TODO: source à vérifier manuellement — le mot \"réservée\" (option correcte) pourrait être trop absolu : une voie académique alternative (diplôme + expérience en environnement de maintenance civile) existerait pour l'accès à la catégorie C sans passer par B1/B2 ; à confirmer dans 66.A.30 avant usage en examen. La fiche M10.6 porte la même formulation et devra être alignée si confirmé (voir part66/A_VERIFIER.md)"
     },
     {
@@ -357,12 +357,12 @@
       "sous_chapitre": "M10.6",
       "question": "La sous-catégorie B1.2 correspond à :",
       "options": [
-        "Avions à moteur à pistons",
-        "Avions à turbine",
-        "Hélicoptères à turbine"
+        "Avions à moteur à pistons, mais seulement en dessous de 5,7 tonnes",
+        "Avions à moteur à pistons, mais seulement s'ils sont monomoteurs",
+        "Avions à moteur à pistons"
       ],
-      "bonne": 0,
-      "explication": "B1.2 concerne les avions à moteur à pistons : c'est la seule sous-catégorie B1 associée à ce type de motorisation sur avion, les deux autres options renvoyant à d'autres types d'aéronefs de la même famille B1.",
+      "bonne": 2,
+      "explication": "B1.2 concerne les avions à moteur à pistons, sans condition de masse ni de nombre de moteurs : la distinction avec les autres sous-catégories B1 porte sur le type de motorisation (pistons) et la nature de l'aéronef (avion), pas sur son poids ou son nombre de moteurs.",
       "source": "Règlement (UE) n° 1321/2014, annexe III (Part-66)"
     },
     {
@@ -370,12 +370,12 @@
       "sous_chapitre": "M10.7",
       "question": "Un organisme Part-147 est habilité à :",
       "options": [
-        "Délivrer directement un agrément Part-145",
         "Dispenser la formation et faire passer les examens de la licence Part-66",
-        "Fabriquer des aéronefs"
+        "Approuver le programme d'entretien d'un aéronef",
+        "Délivrer un agrément Part-145 à un atelier de maintenance"
       ],
-      "bonne": 1,
-      "explication": "Le Part-147 encadre la formation et les examens menant à la licence Part-66. Il n'a aucun pouvoir pour délivrer un agrément Part-145 (qui relève de l'autorité compétente), ni bien sûr pour fabriquer des aéronefs.",
+      "bonne": 0,
+      "explication": "Le Part-147 encadre la formation et les examens menant à la licence Part-66. Délivrer un agrément Part-145 relève de l'autorité compétente, et approuver un programme d'entretien relève du CAMO ou de l'autorité — ni l'un ni l'autre n'est une prérogative d'un organisme Part-147.",
       "source": "Règlement (UE) n° 1321/2014, annexe IV (Part-147)"
     },
     {
@@ -383,25 +383,25 @@
       "sous_chapitre": "M10.7",
       "question": "Le programme détaillé qu'un organisme Part-147 doit suivre pour chaque module est défini :",
       "options": [
-        "Par chaque organisme librement, sans cadre commun",
-        "Par les compagnies aériennes clientes",
-        "Dans les annexes du Part-66"
+        "Dans le programme annuel voté par le conseil d'administration de l'organisme",
+        "Dans l'appendice I du Part-66",
+        "Dans le manuel des spécifications de l'organisme Part-147"
       ],
-      "bonne": 2,
-      "explication": "Le syllabus de chaque module (comme ce module 10) est fixé dans les annexes du Part-66 : un organisme Part-147 ne peut pas le définir librement, et les compagnies aériennes clientes n'ont aucun rôle dans cette définition.",
+      "bonne": 1,
+      "explication": "Le syllabus de chaque module (comme ce module M10) est fixé dans l'appendice I du Part-66, commun à tous les organismes agréés — pas dans le manuel des spécifications propre à chaque organisme, ni dans un programme voté en interne par son conseil d'administration.",
       "source": "Règlement (UE) n° 1321/2014, annexe III (Part-66)"
     },
     {
       "uid": "M10-0033",
       "sous_chapitre": "M10.7",
-      "question": "Sans agrément Part-147, un organisme de formation :",
+      "question": "La valeur réglementaire des résultats d'examen de la licence Part-66 passés dans un organisme de formation dépend :",
       "options": [
-        "Ne peut pas donner de valeur réglementaire aux résultats d'examen Part-66",
-        "Peut délivrer lui-même la licence Part-66",
-        "N'a besoin d'aucun encadrement particulier"
+        "De l'agrément Part-147 détenu par cet organisme",
+        "Du nombre de stagiaires inscrits dans cet organisme",
+        "D'une validation a posteriori par un organisme partenaire agréé"
       ],
       "bonne": 0,
-      "explication": "C'est l'agrément Part-147 qui donne sa valeur réglementaire aux examens passés dans l'organisme. Aucun organisme, agréé ou non, ne délivre lui-même la licence : c'est l'autorité compétente qui la délivre. Un organisme non agréé reste soumis à l'exigence d'agrément s'il veut préparer à cette licence.",
+      "explication": "C'est l'agrément Part-147 de l'organisme qui donne leur valeur réglementaire aux résultats d'examen qui y sont passés. Le nombre de stagiaires inscrits n'entre pas en compte, et une validation a posteriori par un organisme tiers agréé n'est pas davantage prévue par la réglementation.",
       "source": "Règlement (UE) n° 1321/2014, annexe IV (Part-147)"
     },
     {
@@ -409,25 +409,25 @@
       "sous_chapitre": "M10.7",
       "question": "Un organisme Part-147 doit disposer de :",
       "options": [
-        "Uniquement de supports papier, sans personnel dédié",
         "Instructeurs et examinateurs qualifiés",
-        "Un agrément Part-145 obligatoire au préalable"
+        "Un agrément Part-145, complémentaire à son agrément Part-147",
+        "Des supports de cours normalisés, mis à jour annuellement"
       ],
-      "bonne": 1,
-      "explication": "Un organisme Part-147 doit disposer d'instructeurs et d'examinateurs qualifiés : de simples supports de cours ne suffisent pas. L'agrément Part-145 concerne les organismes de maintenance, ce n'est pas un préalable à l'agrément Part-147.",
+      "bonne": 0,
+      "explication": "Un organisme Part-147 doit disposer d'instructeurs et d'examinateurs qualifiés. Des supports de cours normalisés, aussi à jour soient-ils, ne remplacent pas ce personnel. L'agrément Part-145 concerne les organismes de maintenance ; ce n'est pas une exigence complémentaire pour l'agrément Part-147.",
       "source": "Règlement (UE) n° 1321/2014, annexe IV (Part-147)"
     },
     {
       "uid": "M10-0036",
       "sous_chapitre": "M10.8",
-      "question": "Le certificat de navigabilité (CofA) atteste que :",
+      "question": "Le CofA, délivré pour un aéronef donné, atteste que :",
       "options": [
-        "L'aéronef appartient à telle compagnie",
-        "L'aéronef respecte les normes de bruit",
-        "L'aéronef est conforme à son type certifié et apte à voler"
+        "L'aéronef répond à la dernière version en vigueur de la réglementation",
+        "L'aéronef est conforme à son type certifié",
+        "L'aéronef a satisfait à sa dernière visite périodique de maintenance"
       ],
-      "bonne": 2,
-      "explication": "Le CofA atteste la conformité au type certifié et l'aptitude au vol. La propriété de l'aéronef n'est pas son objet, et les normes de bruit relèvent d'un certificat distinct (le certificat de limitation de nuisances).",
+      "bonne": 1,
+      "explication": "Le certificat de navigabilité (CofA) atteste la conformité de l'aéronef à son type certifié — une condition permanente, liée à la conception, non à la date de la dernière visite de maintenance ni à la version réglementaire en vigueur au moment considéré.",
       "source": "TODO: source à vérifier manuellement — texte réglementaire précis fondant le certificat de navigabilité (voir part66/A_VERIFIER.md)"
     },
     {
@@ -436,49 +436,49 @@
       "question": "Le certificat d'immatriculation atteste :",
       "options": [
         "La nationalité de l'aéronef",
-        "Sa conformité technique au type certifié",
-        "Le respect des limites de masse et centrage"
+        "La catégorie de navigabilité à laquelle appartient l'aéronef",
+        "L'identité de l'exploitant qui utilise l'aéronef au quotidien"
       ],
       "bonne": 0,
-      "explication": "Le certificat d'immatriculation atteste la nationalité de l'aéronef, associée aux marques d'immatriculation peintes sur le fuselage. La conformité technique relève du certificat de navigabilité, et la masse et le centrage relèvent d'une fiche distincte.",
+      "explication": "Le certificat d'immatriculation atteste la nationalité de l'aéronef, associée à ses marques d'immatriculation. Il n'identifie pas l'exploitant qui l'utilise au quotidien (qui peut différer du propriétaire), et il ne précise pas non plus sa catégorie de navigabilité, qui relève d'un autre document.",
       "source": "TODO: source à vérifier manuellement — texte réglementaire précis fondant le certificat d'immatriculation (voir part66/A_VERIFIER.md)"
     },
     {
       "uid": "M10-0038",
       "sous_chapitre": "M10.8",
-      "question": "Une consigne de navigabilité (Airworthiness Directive) émise par l'AESA est :",
+      "question": "Une consigne de navigabilité (Airworthiness Directive) émise par l'AESA :",
       "options": [
-        "Facultative, à la discrétion de l'exploitant",
-        "Obligatoire",
-        "Réservée aux avions militaires"
+        "Ne s'impose qu'après accord de l'exploitant concerné",
+        "Ne s'impose qu'après accord du constructeur de l'aéronef",
+        "S'impose à l'exploitant concerné dès sa date d'application"
       ],
-      "bonne": 1,
-      "explication": "Une consigne de navigabilité est toujours obligatoire, à la différence d'un simple bulletin de service du constructeur. Elle s'applique à l'aviation civile, pas aux avions militaires.",
+      "bonne": 2,
+      "explication": "Une consigne de navigabilité de l'AESA s'impose à l'exploitant concerné dès sa date d'application, sans nécessiter son accord ni celui du constructeur de l'aéronef.",
       "source": "TODO: source à vérifier manuellement — la relecture signale que la définition et le caractère obligatoire des CN relèvent probablement d'un texte plus précis que le règlement de base (voir part66/A_VERIFIER.md)"
     },
     {
       "uid": "M10-0039",
       "sous_chapitre": "M10.8",
-      "question": "Un bulletin de service émis par le constructeur est :",
+      "question": "Un bulletin de service émis par le constructeur d'un aéronef :",
       "options": [
-        "Toujours obligatoire dans tous les cas",
-        "Sans aucune valeur, il peut être ignoré",
-        "Obligatoire seulement si une consigne de navigabilité le rend tel"
+        "Reste sans portée, même si un texte réglementaire y fait référence",
+        "S'impose immédiatement à l'ensemble des exploitants dès sa publication",
+        "N'est pas obligatoire par lui-même, mais peut le devenir si un texte réglementaire s'y réfère"
       ],
       "bonne": 2,
-      "explication": "Un bulletin de service du constructeur n'est en général qu'une recommandation ; il ne devient obligatoire que si une consigne de navigabilité s'y réfère et le rend tel. Il n'est donc ni systématiquement obligatoire, ni sans valeur.",
+      "explication": "Un bulletin de service du constructeur est en général une recommandation, dépourvue de caractère obligatoire par elle-même ; il peut néanmoins être rendu obligatoire si un texte réglementaire de l'autorité compétente s'y réfère. Il ne s'impose donc pas d'emblée à l'ensemble des exploitants dès sa publication, mais n'est pas non plus dépourvu de toute portée une fois qu'un tel texte y renvoie.",
       "source": "TODO: source à vérifier manuellement — la relecture signale que le statut non obligatoire du bulletin de service, et sa bascule en obligatoire lorsqu'une CN s'y réfère, relèvent probablement d'un texte plus précis que le règlement de base (voir part66/A_VERIFIER.md)"
     },
     {
       "uid": "M10-0040",
       "sous_chapitre": "M10.8",
-      "question": "En France, les marques d'immatriculation des aéronefs commencent par :",
+      "question": "Le préfixe F- des marques d'immatriculation désigne un aéronef immatriculé :",
       "options": [
-        "F-",
-        "D-",
-        "G-"
+        "Au Royaume-Uni",
+        "En France",
+        "En Allemagne"
       ],
-      "bonne": 0,
+      "bonne": 1,
       "explication": "Le préfixe F- correspond à la France. D- correspond à l'Allemagne, et G- au Royaume-Uni.",
       "source": "Marques de nationalité et d'immatriculation (Annexe 7 OACI)"
     }

@@ -81,21 +81,173 @@ ce point précis.
   figer la source.
 
 - **M10-0023** (et la fiche **M10.5**, même formulation : « sa gestion
-  qualité ») — La terminologie « système de gestion de la qualité » de
-  l'organisme Part-145 pourrait être périmée : un règlement modificatif du
-  Part-145 applicable fin 2022 aurait remplacé le « quality system » par un
-  « management system ». Ni confirmé ni infirmé. À vérifier dans le texte
-  consolidé avant de garder cette formulation, et à corriger question et
-  fiche ensemble si confirmé.
+  qualité ») — **Résolu le 2026-09-13.** Confirmé par `relecteur-part66` :
+  le règlement d'exécution (UE) 2021/1963, applicable depuis le
+  2026-12-02 2022, a bien introduit 145.A.200 « Management system », qui
+  énumère explicitement une fonction de suivi de conformité (*compliance
+  monitoring*) parmi les composantes du système de gestion. La question a
+  été reformulée (« son système de gestion, suivi de conformité inclus »)
+  pour refléter ce texte. Reste à aligner la fiche **M10.5** sur la même
+  formulation si elle porte encore « gestion qualité ». Le champ `source`
+  reste TODO (référence 145.A.200(a)(6) à y inscrire), hors périmètre de
+  la réécriture anti-triche ci-dessous.
 
-- **M10-0029** (et la fiche **M10.6**, même formulation) — L'option/le
-  texte disent que la catégorie C du Part-66 est « réservée » à des
-  titulaires expérimentés d'une licence B1 ou B2. La relecture signale
-  qu'une voie académique alternative (diplôme + expérience en environnement
-  de maintenance civile) pourrait exister pour l'accès à la catégorie C
-  sans passer par B1/B2, ce qui rendrait « réservée » trop absolu. Non
-  vérifié — à confirmer dans 66.A.30 avant de corriger la question et la
-  fiche ensemble.
+- **M10-0029** (et la fiche **M10.6**, même formulation) — **Résolu le
+  2026-09-13.** La question a été reformulée (« L'accès à la catégorie C
+  du Part-66 passe le plus souvent par... ») pour ne plus affirmer que la
+  catégorie C est strictement « réservée » aux titulaires B1/B2 :
+  `relecteur-part66` a confirmé l'existence d'une voie académique
+  alternative (66.A.30(a)(7) : diplôme technique reconnu + trois ans
+  d'expérience en environnement de maintenance civile, dont une période
+  d'observation en maintenance de base). Reste à aligner la fiche
+  **M10.6** sur la même nuance si elle porte encore « réservée ». Le champ
+  `source` reste TODO, hors périmètre de la réécriture ci-dessous.
+
+## Module M10 — réécriture anti-triche (2026-09-13) : plafond structurel documenté
+
+Demande initiale : faire relire les 37 questions de M10 par le sous-agent
+`eleve-adversaire` (qui tente de répondre sans aucune connaissance du
+domaine, par seule élimination logique) et corriger ce qui ressort. Quatre
+passages ont été faits dans la même session, avec relecture de fond
+(`relecteur-part66`) entre chaque réécriture de contenu. Décision de
+l'utilisateur après le 3e passage (score encore à ~90 %) : un seul passage
+de restructuration supplémentaire, priorité absolue à la justesse
+pédagogique sur le score adversarial, arrêt documenté après ce dernier
+passage quel que soit le résultat obtenu — c'est cet arrêt qui est
+documenté ici.
+
+**Chronologie des scores mesurés par `eleve-adversaire`** (devinées sans
+aucune connaissance du domaine / 37 questions) :
+
+1. **Lot original : 37/37 (100 %).** Cause principale : l'index de bonne
+   réponse suivait un cycle parfait 0→1→2→0→1→2 sur tout le fichier (une
+   rotation mécanique introduite par un commit antérieur pour équilibrer
+   13/12/12, en fait pire qu'un déséquilibre aléatoire), combiné à des
+   distracteurs à mots absolus (« uniquement », « aucun », « tous ») et des
+   échos littéraux énoncé → bonne réponse.
+2. **Après réécriture n°1 (positions vraiment randomisées + mots absolus
+   explicites supprimés) : 34/37 (92 %).** Les positions ne sont plus
+   exploitables (distribution 13/13/11, aucun cycle ni motif local
+   détecté) — point acquis et jamais régressé depuis. Mais des
+   qualificatifs asymétriques plus subtils (« directement », « seulement »,
+   « quel que soit », « sans conséquence »...), présents à 100 % du temps
+   sur les mauvaises réponses, ont pris le relais comme indice.
+3. **Après réécriture n°2 (qualificatifs asymétriques supprimés,
+   distracteurs hors-domaine remplacés par des notions réglementaires
+   réelles, tells grammaticaux et paires miroirs corrigés) : 33/37 (89 %).**
+   `relecteur-part66` a trouvé et fait corriger 3 erreurs bloquantes
+   introduites par cette réécriture (voir plus bas). Le score adversarial
+   n'a presque pas bougé : remplacer un distracteur absurde par une notion
+   réglementaire réelle règle l'absurdité mais réintroduit une fuite
+   croisée, car cette notion réelle est presque toujours la bonne réponse
+   d'une autre question du même fichier (le module ne couvre qu'une
+   dizaine de notions fermées : OACI/AESA/DGAC/BEA, Part-M/145/66/147,
+   CAMO/CRS/CofA/immatriculation/CN/BS, catégories A/B1.1-B1.4/B2/C).
+4. **Après réécriture n°3 (distracteurs des questions « grille » reformulés
+   pour porter sur le même sujet que la bonne réponse — mauvaise portée,
+   mauvais seuil, mauvaise condition — plutôt que sur une autre vraie
+   notion du module) : 34/37 (92 %), soit un score quasi identique à la
+   fin de l'étape 2, mais pour une raison différente.** `relecteur-part66`
+   a immédiatement repéré, avant même le test adversarial final, que cette
+   technique avait produit un nouveau gabarit systématique : sur 7
+   questions (0011, 0015, 0022, 0023, 0026, 0027, 0030), les trois options
+   partagent la même tête de phrase et seuls les distracteurs portent une
+   clause de retranchement (« seulement », « les seuls », « à l'exclusion
+   de ») — la règle « choisir l'option qui ne retranche rien » suffit à
+   toutes les résoudre. `eleve-adversaire` a confirmé ce motif de façon
+   indépendante lors du 4e passage, avec le même score final.
+
+**Ce qui est acquis et solide** (vérifié aux 4 passages, jamais régressé) :
+- Positions des bonnes réponses : équilibrées 13/13/11, aucun cycle,
+  aucune répétition locale de motif — la faille structurelle initiale
+  (100 % devinable par la seule position) est éliminée.
+- Mots absolus explicites (« uniquement », « aucun », « tous », « toujours »,
+  « jamais ») : absents des 37 questions.
+- 4 erreurs factuelles introduites par les réécritures ont été détectées
+  par `relecteur-part66` et corrigées avant tout commit :
+  - **M10-0016** : la réécriture n°2 avait inventé un critère « aviation
+    légère » pour le partage de responsabilité exploitant/propriétaire.
+    Corrigé sur la base de M.A.201 (le propriétaire est responsable par
+    défaut ; transfert à l'exploitant si aéronef loué ou exploité par un
+    transporteur aérien licencié au titre du règlement (CE) 1008/2008).
+  - **M10-0026 / M10-0027** : la réécriture n°2/3 employait « systèmes
+    électromécaniques » (B1.1) et « systèmes... électroniques » (B2), des
+    termes absents de 66.A.20 et contredisant la fiche M10.6. Corrigé en
+    « systèmes mécaniques et électriques », terminologie exacte de
+    66.A.20(a)(2)-(3).
+  - **M10-0033** : double négation (énoncé négatif + réponse négative).
+    Reformulée en énoncé et réponse positifs, même contenu.
+
+**Ce qui reste ouvert (non traité, hors périmètre du seul passage de
+restructuration autorisé)** — liste issue de la relecture de fond du
+2026-09-13, à reprendre si une nouvelle itération sur M10 est décidée :
+- **M10-0011** — la liste de 4 annexes se lit comme exhaustive alors que
+  le règlement 1321/2014 consolidé en compte d'autres (Part-T, Part-ML,
+  Part-CAMO, Part-CAO). L'explication reste prudente (« en font partie »),
+  donc pas faux, mais à clarifier.
+- **M10-0015** — quasi-doublon de M10-0011 (même quatuor d'annexes).
+- **M10-0017 / M10-0020** — le rattachement du CAMO au Part-M est
+  peut-être obsolète depuis l'introduction d'un Part-CAMO dédié (déjà
+  signalé plus haut pour M10-0017 ; possible que M10-0020 ait le même
+  souci).
+- **M10-0018** — contenu confirmé exact (145.A.50(a) : le CRS est signé par
+  du personnel certificateur habilité), mais la source ne cite que
+  « annexe I (Part-M) » sans article ; la règle directement applicable est
+  145.A.50 (et M.A.801 hors organisme agréé).
+- **M10-0019** — distracteur « laissé à l'appréciation du mécanicien »
+  jugé trop faible/absurde par la relecture.
+- **M10-0028 / M10-0030** — les explications généralisent au Part-66 dans
+  son ensemble une règle qui n'est vraie que pour la sous-catégorie visée
+  (pas de seuil de masse/nombre de moteurs pour A/B1.1/B1.2/B2), alors que
+  la catégorie B3 (pistons non pressurisés ≤ 2 000 kg) et la catégorie C
+  (*large aircraft* > 5 700 kg) sont bien définies par un seuil de masse
+  ailleurs dans le Part-66. À nuancer (« pour cette sous-catégorie »).
+- **M10-0029** — la marge entre la bonne réponse et le distracteur « examen
+  d'entrée... sans lien avec une licence B1/B2 » est jugée trop fine
+  depuis l'admission de la voie académique (66.A.30(a)(7)) ; « B1 ou B2 »
+  omet B3, admis pour la catégorie C *non-large aircraft* (66.A.30(a)(6)).
+- **M10-0034** — le distracteur « supports de cours mis à jour » recoupe
+  une exigence réelle des organismes Part-147 (147.A.105) ; seuls les mots
+  ajoutés (« normalisés », « annuellement ») le rendent faux — marge
+  jugée trop fine.
+- **M10-0036** — définition du CofA incomplète (conformité au type
+  certifié **et** aptitude au vol en sécurité ; validité subordonnée au
+  maintien de la navigabilité) : l'explication actuelle ne garde que le
+  premier volet.
+- **M10-0038 / M10-0039** — contenu confirmé juste, mais indices de
+  structure résiduels (deux distracteurs de 0038 partagent le même moule ;
+  une clause de 0039 se contredit dans sa propre phrase).
+- **M10-0012 / M10-0020 / M10-0024 / M10-0031** — fuite croisée résiduelle
+  entre les *explications* (pas les questions elles-mêmes) : chacune
+  redonne, en passant, la réponse d'une autre question du même quatuor
+  Part-M/145/66/147. Contenu juste partout ; c'est la rédaction des
+  explications qui mériterait d'être assainie si une prochaine itération
+  a lieu.
+
+**Score final mesuré et décision d'arrêt** : 34/37 (92 %) de devinabilité
+sans connaissance du domaine, mesuré par `eleve-adversaire` le 2026-09-13
+sur le lot après les 4 corrections factuelles ci-dessus. Très au-dessus du
+seuil visé (< 40 %). Conformément à la décision explicite de l'utilisateur,
+**la session s'arrête ici** : pas de 5e itération sans une demande
+explicite. Le diagnostic transversal (confirmé indépendamment par
+`relecteur-part66` et par 4 passages successifs d'`eleve-adversaire`) est
+qu'un module qui teste, par 37 questions, une taxonomie fermée d'une
+dizaine de notions (OACI/AESA/DGAC/BEA, Part-M/145/66/147,
+CAMO/CRS/CofA/immatriculation/CN/BS, catégories A-C) produit
+mécaniquement une fuite croisée dès que le lecteur traite les 37 questions
+comme un seul corpus : chaque bonne réponse ailleurs redevient un
+distracteur ici, et réciproquement. Trois familles de correctifs
+successives (mots absolus → qualificatifs asymétriques → distracteurs
+« même sujet, mauvaise portée ») ont chacune réglé le problème qu'elles
+visaient sans faire baisser durablement le score global, parce que
+chacune a fait apparaître un nouveau motif systématique repérable à
+l'échelle du fichier entier. Une amélioration réelle sous 40 % demanderait
+vraisemblablement une refonte plus profonde que du rewording de
+distracteurs — par exemple réduire le nombre de questions qui testent la
+même grille de notions sous plusieurs angles, ou changer de méthode de
+génération des distracteurs (valeurs numériques tirées aléatoirement
+plutôt que dérivées mécaniquement de la bonne réponse) — hors périmètre de
+cette session.
 
 ## Questions supprimées du lot (round de correction du 2026-09-09)
 
