@@ -1,0 +1,53 @@
+<div id="schema-m1012b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1012b-wrap .m1012b-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.9em; }
+#schema-m1012b-wrap .m1012b-btn:hover { background:#e8e8e8; }
+#schema-m1012b-wrap .m1012b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1012b-wrap .m1012b-row { display:flex; align-items:center; gap:10px; margin-top:8px; }
+#schema-m1012b-wrap .m1012b-rowlabel { width:130px; font-size:0.85em; color:#333; }
+#schema-m1012b-wrap .m1012b-value { font-weight:bold; }
+#schema-m1012b-wrap .m1012b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> compare la licence Part-66 (ce cours) et la licence EMAR 66 (domaine militaire).</p>
+
+<div>
+  <button class="m1012b-btn active" data-licence="part66">Licence Part-66</button>
+  <button class="m1012b-btn" data-licence="emar66">Licence EMAR 66</button>
+</div>
+
+<div class="m1012b-row">
+  <div class="m1012b-rowlabel">Domaine</div>
+  <div class="m1012b-value" id="m1012b-domaine">Civil</div>
+</div>
+
+<div class="m1012b-caption" id="m1012b-caption">La licence Part-66, préparée par ce cours, couvre le personnel certificateur de maintenance des aéronefs civils relevant du règlement (UE) 1321/2014.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1012b-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('.m1012b-btn');
+  var caption = wrap.querySelector('#m1012b-caption');
+  var domaine = wrap.querySelector('#m1012b-domaine');
+
+  var TEXTES = {
+    part66: "La licence Part-66, préparée par ce cours, couvre le personnel certificateur de maintenance des aéronefs civils relevant du règlement (UE) 1321/2014.",
+    emar66: "La licence EMAR 66 concerne les aéronefs militaires, dans un cadre distinct de la licence Part-66 civile — le détail de ce cadre n'est pas repris ici, ce module se limitant à signaler son existence."
+  };
+  var DOMAINE = { part66: "Civil", emar66: "Militaire" };
+
+  function render(licence) {
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-licence') === licence); });
+    caption.textContent = TEXTES[licence];
+    domaine.textContent = DOMAINE[licence];
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { render(b.getAttribute('data-licence')); });
+  });
+
+  render('part66');
+})();
+</script>

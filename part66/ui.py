@@ -230,6 +230,8 @@ def _page_cours(P, module):
     for fiche in fiches:
         with st.expander(f"{fiche['id']} — {fiche['titre']}", key=f"p66_expander_{module}_{fiche['id']}"):
             legende = f"{fiche['sous_chapitre']} · ⏱ {fiche.get('duree_min', '?')} min"
+            if fiche.get("item_syllabus"):
+                legende += f" · Item officiel {fiche['item_syllabus']}"
             if "niveau" in fiche and not fiche.get("niveau_note"):
                 legende += f" · Niveau {fiche['niveau']}"
             st.caption(legende)

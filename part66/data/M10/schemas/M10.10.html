@@ -1,0 +1,47 @@
+<div id="schema-m1010a-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1010a-wrap .m1010a-flow { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-top:10px; }
+#schema-m1010a-wrap .m1010a-box { flex:1; min-width:140px; padding:10px; text-align:center; border:2px solid #888; border-radius:8px; background:#f4f4f4; cursor:pointer; font-size:0.85em; }
+#schema-m1010a-wrap .m1010a-box.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1010a-wrap .m1010a-arrow { font-size:1.3em; color:#666; }
+#schema-m1010a-wrap .m1010a-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> clique sur chaque étape pour voir qui agit, et quel document en résulte.</p>
+
+<div class="m1010a-flow">
+  <div class="m1010a-box active" data-step="doa">Organisme de conception agréé (DOA)</div>
+  <div class="m1010a-arrow">→</div>
+  <div class="m1010a-box" data-step="tc">Certificat de type</div>
+  <div class="m1010a-arrow">→</div>
+  <div class="m1010a-box" data-step="service">Aéronef produit et exploité</div>
+</div>
+
+<div class="m1010a-caption" id="m1010a-caption">L'organisme de conception (DOA) est agréé directement par l'Agence (l'AESA elle-même, pas une autorité nationale) : c'est la voie de principe, avant même qu'un type d'aéronef existe. Des procédures allégées existent pour certains produits simples (ELA1/ELA2, moteurs à pistons, hélices à pas fixe ou réglable), mais c'est toujours l'Agence qui reste compétente.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1010a-wrap');
+  if (!wrap) { return; }
+  var boxes = wrap.querySelectorAll('.m1010a-box');
+  var caption = wrap.querySelector('#m1010a-caption');
+
+  var TEXTES = {
+    doa: "L'organisme de conception (DOA) est agréé directement par l'Agence (l'AESA elle-même, pas une autorité nationale) : c'est la voie de principe, avant même qu'un type d'aéronef existe. Des procédures allégées existent pour certains produits simples (ELA1/ELA2, moteurs à pistons, hélices à pas fixe ou réglable), mais c'est toujours l'Agence qui reste compétente.",
+    tc: "Une fois la conception validée, le certificat de type est délivré : il couvre le type design, les limitations d'emploi, les instructions de navigabilité continue et la base de certification retenue.",
+    service: "Muni de son certificat de type, l'aéronef peut être produit puis exploité — c'est seulement à partir de là que s'appliquent le maintien de navigabilité (Part-M et ses annexes) et l'entretien (Part-145/CAO) vus dans les fiches précédentes."
+  };
+
+  function render(step) {
+    boxes.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-step') === step); });
+    caption.textContent = TEXTES[step];
+  }
+
+  boxes.forEach(function (b) {
+    b.addEventListener('click', function () { render(b.getAttribute('data-step')); });
+  });
+
+  render('doa');
+})();
+</script>

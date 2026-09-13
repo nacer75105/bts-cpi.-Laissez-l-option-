@@ -1,0 +1,46 @@
+<div id="schema-m1010b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1010b-wrap .m1010b-level { padding:10px; margin-top:6px; border:2px solid #888; border-radius:8px; cursor:pointer; font-size:0.85em; }
+#schema-m1010b-wrap .m1010b-level.active { border-color:#e0a800; }
+#schema-m1010b-wrap .m1010b-level.hard { background:#fde8e8; }
+#schema-m1010b-wrap .m1010b-level.soft { background:#e8f0fd; }
+#schema-m1010b-wrap .m1010b-tag { font-size:0.75em; font-weight:bold; float:right; }
+#schema-m1010b-wrap .m1010b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> clique sur chaque niveau pour voir s'il relève du droit dur (obligatoire) ou du droit souple (moyen reconnu, non exclusif).</p>
+
+<div class="m1010b-level hard active" data-level="base">Règlement-cadre (UE) 2018/1139 <span class="m1010b-tag">DROIT DUR</span></div>
+<div class="m1010b-level hard" data-level="exec">Règlements d'exécution : 748/2012 (Part 21), 1321/2014, 965/2012, 1178/2011 <span class="m1010b-tag">DROIT DUR</span></div>
+<div class="m1010b-level soft" data-level="cs">Spécifications de certification (CS-23, CS-25...) <span class="m1010b-tag">DROIT SOUPLE</span></div>
+<div class="m1010b-level soft" data-level="amcgm">AMC et GM de l'AESA <span class="m1010b-tag">DROIT SOUPLE</span></div>
+
+<div class="m1010b-caption" id="m1010b-caption">Le règlement (UE) 2018/1139 fixe les exigences essentielles de sécurité, directement obligatoires dans tous les États membres : c'est le socle du « droit dur ».</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1010b-wrap');
+  if (!wrap) { return; }
+  var levels = wrap.querySelectorAll('.m1010b-level');
+  var caption = wrap.querySelector('#m1010b-caption');
+
+  var TEXTES = {
+    base: "Le règlement (UE) 2018/1139 fixe les exigences essentielles de sécurité, directement obligatoires dans tous les États membres : c'est le socle du « droit dur ».",
+    exec: "Les règlements d'exécution précisent ces exigences par domaine (navigabilité initiale, maintien de navigabilité, exploitation, personnel navigant) : eux aussi directement obligatoires, sans transposition nationale nécessaire.",
+    cs: "Les CS sont des actes de l'Agence, pas des règlements : elles offrent un moyen reconnu — mais pas forcément unique — de démontrer la conformité aux exigences essentielles.",
+    amcgm: "Les AMC et GM fonctionnent sur le même principe que les CS : ils illustrent une façon de se conformer à la règle, sans créer d'obligation nouvelle par eux-mêmes — un autre moyen de conformité (AltMoC) reste possible."
+  };
+
+  function render(level) {
+    levels.forEach(function (l) { l.classList.toggle('active', l.getAttribute('data-level') === level); });
+    caption.textContent = TEXTES[level];
+  }
+
+  levels.forEach(function (l) {
+    l.addEventListener('click', function () { render(l.getAttribute('data-level')); });
+  });
+
+  render('base');
+})();
+</script>

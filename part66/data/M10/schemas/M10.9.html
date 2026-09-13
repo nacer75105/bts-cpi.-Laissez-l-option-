@@ -1,0 +1,68 @@
+<div id="schema-m109a-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m109a-wrap .m109a-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.95em; }
+#schema-m109a-wrap .m109a-btn:hover { background:#e8e8e8; }
+#schema-m109a-wrap .m109a-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m109a-wrap .m109a-row { display:flex; align-items:center; gap:10px; margin-top:10px; }
+#schema-m109a-wrap .m109a-rowlabel { width:180px; font-size:0.85em; color:#333; }
+#schema-m109a-wrap .m109a-bar-outer { flex:1; max-width:280px; height:20px; background:#e2e2e2; border-radius:5px; overflow:hidden; }
+#schema-m109a-wrap .m109a-bar-inner { height:100%; width:0%; background:#2e7d32; transition:width .2s; }
+#schema-m109a-wrap .m109a-status { font-weight:bold; }
+#schema-m109a-wrap .m109a-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:6em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> compare les trois statuts qui peuvent délivrer une APRS, et ce qui les distingue.</p>
+
+<div>
+  <button class="m109a-btn active" data-role="organisme">Organisme agréé (Part-145/CAO)</button>
+  <button class="m109a-btn" data-role="independant">Certificateur indépendant</button>
+  <button class="m109a-btn" data-role="proprietaire">Pilote-propriétaire</button>
+</div>
+
+<div class="m109a-row">
+  <div class="m109a-rowlabel">Étendue des tâches certifiables (illustration)</div>
+  <div class="m109a-bar-outer"><div class="m109a-bar-inner" id="m109a-bar"></div></div>
+</div>
+<div class="m109a-row">
+  <div class="m109a-rowlabel">Rattachement</div>
+  <div class="m109a-status" id="m109a-status">Employé d'un organisme agréé</div>
+</div>
+
+<div class="m109a-caption" id="m109a-caption">Un organisme Part-145, ou un organisme Part-CAO (réservé aux aéronefs non complexes hors AOC), peut certifier toute tâche relevant de son domaine d'agrément, y compris les tâches complexes de l'Appendice VII (structure, moteur démonté, hélice...) : c'est le cas qui couvre le plus de travaux.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m109a-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('.m109a-btn');
+  var caption = wrap.querySelector('#m109a-caption');
+  var bar = wrap.querySelector('#m109a-bar');
+  var status = wrap.querySelector('#m109a-status');
+
+  var TEXTES = {
+    organisme: "Un organisme Part-145, ou un organisme Part-CAO (réservé aux aéronefs non complexes hors AOC), peut certifier toute tâche relevant de son domaine d'agrément, y compris les tâches complexes de l'Appendice VII (structure, moteur démonté, hélice...) : c'est le cas qui couvre le plus de travaux.",
+    independant: "Le certificateur indépendant n'agit pas pour le compte d'un organisme agréé, mais doit répondre aux exigences Part-66 (ou aux règles nationales si Part-66 ne s'applique pas). Il ne peut certifier que les tâches qui ne figurent PAS dans la liste des tâches complexes de l'Appendice VII.",
+    proprietaire: "Le pilote-propriétaire (M.A.803) est un statut encore plus restreint : seul le propriétaire-pilote peut l'exercer, sur son propre aéronef, pour des tâches limitées et prédéfinies listées dans le programme d'entretien — pas ouvert à un tiers."
+  };
+  var VALEURS = { organisme: 100, independant: 60, proprietaire: 15 };
+  var STATUTS = {
+    organisme: "Employé d'un organisme agréé",
+    independant: "Aucun organisme agréé — statut à part, encadré par l'Article 5",
+    proprietaire: "Aucun organisme agréé — propriétaire de l'aéronef uniquement"
+  };
+
+  function render(role) {
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-role') === role); });
+    caption.textContent = TEXTES[role];
+    bar.style.width = VALEURS[role] + '%';
+    status.textContent = STATUTS[role];
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { render(b.getAttribute('data-role')); });
+  });
+
+  render('organisme');
+})();
+</script>

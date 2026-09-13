@@ -79,6 +79,11 @@ méthodes du syllabus dont le ressuage magnétoscopique).
 
 ### M10 — Législation aéronautique (8 fiches / 10 items officiels, très denses)
 
+**→ Comblé le 2026-09-13** (13 fiches, mapping officiel 10.1-10.10 complet)
+— voir la section dédiée « M10 — comblement des manques du syllabus
+(2026-09-13) » plus bas pour le détail fiche par fiche, les sources
+utilisées, et les deux limites de sourçage assumées (CDL, EMAR).
+
 **Le module le plus daté par rapport à la réforme (UE) 2023/989** — déjà
 pressenti lors du travail sur le format d'examen (voir plus bas), confirmé
 ici sur le fond :
@@ -178,8 +183,9 @@ synchronisation, givre, entretien, stockage) :
 ### Priorisation suggérée pour une reprise future
 
 Par ordre approximatif d'impact (item niveau 3 absent > item niveau 2
-absent en bloc > superficiel) : **M10** (10.4 niveau 3 absent, plus tout
-le paysage réglementaire post-2023/989 jamais intégré) et **M7A** (3
+absent en bloc > superficiel) : ~~**M10** (10.4 niveau 3 absent, plus tout
+le paysage réglementaire post-2023/989 jamais intégré)~~ **comblé le
+2026-09-13** (voir section dédiée) et **M7A** (3
 items entiers absents sur un total de seulement 21, dont un impact
 pratique direct — sécurité fosse carburant, outillage de mesure) semblent
 les chantiers les plus rentables à reprendre en premier. **M11A**, malgré
@@ -189,6 +195,168 @@ cabine, avionique récente) que sur la sécurité de vol directe, à
 l'exception du groupe commandes de vol (11.9). **M15** et **M5** ont des
 manques ciblés, plus rapides à combler individuellement. **M17A** peut
 attendre.
+
+## M10 — comblement des manques du syllabus (2026-09-13)
+
+Chantier demandé explicitement pour combler les manques identifiés par
+l'audit de couverture ci-dessus, sur la base des 4 documents EASA
+officiels téléchargés cette session (aucune affirmation réglementaire
+issue de la mémoire — chaque point cite un article vérifié) :
+
+- `easa_2025.txt` — *Easy Access Rules for Continuing Airworthiness*
+  (Reg. 1321/2014), rév. sept. 2025.
+- `part21_2025.txt` — *Easy Access Rules for Initial Airworthiness and
+  Environmental Protection* (Reg. 748/2012), rév. 28 nov. 2025.
+- `airops_2026.txt` — *Easy Access Rules for Air Operations*
+  (Reg. 965/2012), rév. 27 mars 2026.
+- `aircrew_2025.txt` — *Easy Access Rules for Aircrew* (Reg. 1178/2011),
+  rév. 26 nov. 2025.
+
+**Trouvaille clé** : le texte intégral et officiel du syllabus Module 10
+(Appendix I à l'Annexe III, p.601-603 de `easa_2025.txt`) était présent
+dans le document déjà téléchargé — avec les niveaux exacts par item. Il a
+remplacé toute estimation antérieure. Deux items officiels (**10.8**
+« Oversight principles » et **10.9** « Maintenance beyond current EU
+regulations ») n'étaient PAS dans la liste de manques initiale de
+l'utilisateur : ils ont été découverts pendant la recherche et ajoutés
+au chantier avec son accord explicite.
+
+### Mapping fiche ↔ item officiel (13 fiches, décision structurelle)
+
+Les identifiants de fiche (M10.1-M10.13) restent **séquentiels**, pas
+renumérotés pour coller 1:1 aux items officiels (l'item 10.1 couvre à
+lui seul 3 fiches historiques, et M10.7/Part-147 ne correspond à aucun
+item officiel isolé). À la place, chaque fiche affiche désormais un
+badge **« Item officiel »** dans sa légende (voir `part66/ui.py`,
+champ `item_syllabus` ajouté au schéma des fiches, à côté du niveau) :
+
+| Fiche | Item officiel | Niveau | Statut |
+|---|---|---|---|
+| M10.1 OACI | 10.1 | 1 | inchangée |
+| M10.2 AESA/DGAC | 10.1 | 1 | étendue (hard/soft law, 376/2014, accords bilatéraux) |
+| M10.3 Vue d'ensemble 1321/2014 | 10.1 | 1 | étendue (Part-T/ML/CAMO/CAO, Basic Reg, Air Ops/Air Crew) |
+| M10.4 Part-M/ML/CAMO/CAO | 10.7 | 2 | **corrigée** (règle de responsabilité M.A.201) + étendue (AMP, AD/bulletin déplacés depuis M10.8) |
+| M10.5 Part-145/Part-CAO | 10.3 | 2 | étendue (Part-CAO) |
+| M10.6 Part-66 catégories | 10.2 | 2 | inchangée |
+| M10.7 Part-147 | 10.1 (complément) | 1 | inchangée |
+| M10.8 Air operations | 10.5 | 1 | **réécrite** (AOC, auto-déclaration, ETOPS/CAT II-III/BRNAV, MEL/CDL, placardage, ARC, Permit to Fly, licence radio) |
+| M10.9 Personnel certificateur indépendant *(nouvelle)* | 10.4 | 3 | créée |
+| M10.10 Part 21 + CS *(nouvelle)* | 10.6 | 2 | créée |
+| M10.11 Principes de surveillance *(nouvelle)* | 10.8 | 1 | créée |
+| M10.12 Maintenance au-delà de la réglementation UE *(nouvelle)* | 10.9 | 1 | créée, contenu volontairement minimal |
+| M10.13 Cybersécurité *(nouvelle)* | 10.10 | 1 | créée |
+
+### Correction factuelle appliquée
+
+M10.4 affirmait que l'**exploitant** (ou le propriétaire pour l'aviation
+légère) est responsable par défaut du maintien de navigabilité. C'est
+l'inverse de M.A.201(a) : le **propriétaire** est responsable par
+défaut ; le transfert à l'exploitant ne se fait que dans des cas définis
+(location M.A.201(b), transporteur licencié 1008/2008 M.A.201(e)). Même
+erreur, même référence, que celle déjà trouvée et corrigée cette session
+dans un sujet de rédaction M7A — jamais corrigée ici jusqu'à présent. La
+banque de questions (M10-0016) avait déjà la bonne règle ; seule la
+fiche était fausse.
+
+### Deux limites de sourçage assumées (contenu volontairement minimal)
+
+- **CDL (Configuration Deviation List)** : aucun article de définition
+  autonome trouvé dans `airops_2026.txt`, contrairement au MEL
+  (ORO.MLR.105) — le CDL n'y apparaît que par référence croisée
+  opérationnelle (ex. CAT.OP.MPA.175(b)(2)). La fiche M10.8 la mentionne
+  donc de façon générale, sans article dédié à l'appui.
+- **EMAR 66 / aéronefs Annexe I (item 10.9)** : le sigle EMAR
+  n'apparaît que dans la phrase même du syllabus officiel
+  (`easa_2025.txt`, Appendix I, item 10.9) — aucun article de fond,
+  dans aucun des 4 documents, ne le développe. La fiche M10.12 reste
+  donc délibérément générale sur ce point (pas d'organisme gestionnaire
+  cité, pas de détail sur la liste des aéronefs Annexe I), conformément
+  à la règle du chantier : si la source ne précise pas, on ne l'invente
+  pas.
+
+### Contenu ajouté
+
+- 5 fiches créées (M10.9 à M10.13), 5 fiches étendues (M10.2, M10.3,
+  M10.4, M10.5, M10.8 réécrite), 1 correction factuelle (M10.4), 10
+  schémas HTML/CSS/JS créés (2 par nouvelle fiche, aucun `<svg>`, aucune
+  génération de DOM à l'exécution — vérifié par sweep `grep -l "<svg"`),
+  50 nouvelles questions après relecture (banque totale : 37 → 87 ; un
+  doublon supprimé sur les 51 créées initialement), 2 questions
+  existantes (M10-0038 AD, M10-0039 bulletin de service) retaguées de
+  `sous_chapitre: "M10.8"` vers `"M10.4"` pour suivre le déplacement du
+  paragraphe correspondant dans la fiche.
+- Format d'examen (`nb_questions_examen`/`duree_examen_min` dans
+  `logic.py`) inchangé : ces valeurs viennent d'Appendix II du même
+  document officiel et ne dépendent pas du nombre de fiches ou de
+  questions en banque.
+- Test headless (`AppTest`) : aucune exception sur les 6 modules
+  (rendu initial) ni sur le rendu complet des 13 fiches + 10 schémas de
+  M10 (onglet Cours).
+
+### Relecture `relecteur-part66` (2026-09-13) — 10 BLOQUANT corrigés
+
+- **Date fausse** : la fiche M10.3 et la question M10-0044 disaient
+  « réforme de 2023 » pour l'ajout de Part-T/ML/CAMO/CAO — en réalité
+  Part-T vient du règlement (UE) 2015/1536 et Part-ML/CAMO/CAO du
+  règlement (UE) 2019/1383. Corrigé dans la fiche et la question.
+- **Exemple d'accord bilatéral faux** (M10.2, M10-0043) : Part-T
+  s'applique quand la surveillance d'un aéronef pays tiers **n'a pas**
+  été déléguée à un État membre (Articles 1(b)/3(6) du 1321/2014
+  lui-même), pas en vertu d'un accord bilatéral. Remplacé par
+  l'exemple réellement sourcé (TSO FAA acceptés par l'AESA).
+- **« Just culture »** (M10.2, M10-0042) : le détail « sauf négligence
+  grave ou faute intentionnelle » n'est écrit nulle part dans les 4
+  documents sourcés — c'était une affirmation issue de la mémoire,
+  malgré la règle absolue du chantier. Retiré ; reformulé sur ce qui
+  est réellement vérifiable (confidentialité, signalement franc).
+- **DOA présenté comme systématiquement obligatoire** (M10.10,
+  M10-0074, `schemas/M10.10.html`) : 21.A.14(b)/(c) prévoit des voies
+  allégées pour les ELA1/ELA2, moteurs à pistons, hélices à pas
+  fixe/réglable. Fiche, question et schéma corrigés.
+- **CS-STAN** (M10-0073) : l'explication disait à tort qu'elle ne vise
+  « aucun segment d'aéronefs en particulier » — 21.A.90B(a)(1) la
+  limite au contraire à un segment précis (≤ 5 700 kg, etc.). Corrigé.
+- **Mauvais alinéa** (M10-0065) : CAO.A.040(b), pas (c).
+- **Confusion entre deux délais distincts de M.A.801(c)** (M10.9,
+  M10-0063) : la nouvelle APRS de contrôle (7 jours à compter de la
+  première APRS) et la notification à l'organisme CAM/autorité (7
+  jours à compter de l'autorisation) sont deux obligations séparées,
+  fusionnées à tort dans la fiche et la question. Fiche réécrite avec
+  le détail complet de M.A.801(c) (qui peut être autorisé par le
+  propriétaire, à quelles conditions).
+- **Mauvaises références MEL/placardage** (M10-0056) : AMC1
+  ORO.MLR.105(d)(1) point (f), pas (d)(3) ; M.A.901(m)(1) concerne les
+  marquages de la définition de type lors de la revue de navigabilité,
+  pas le placardage MEL — retiré, gardé seulement la référence exacte.
+- **Restricted CofA confondu avec Permit to Fly** (M10.8) : ce sont
+  deux documents différents (21.A.173(b) vs 21.A.701(a)) — scindés en
+  deux puces distinctes.
+- **Appendice VII mal illustré** (`schemas/M10.9-2.html`) : une roue
+  figure bien au point 1(r) de l'Appendice VII — la nuance est la
+  **méthode** (rivetage/collage/soudage), pas la pièce elle-même ;
+  l'équilibrage d'hélice a deux exceptions explicites (statique exigé
+  par le manuel, dynamique sur hélice installée avec équipement
+  électronique) qui n'étaient pas mentionnées. Corrigé.
+
+Corrections mineures appliquées en plus : sources complétées
+(M10-0041, M10-0023 — TODO remplacé), doublon supprimé (M10-0051,
+recoupait M10-0045), M10-0048 reformulée (source non réglementaire
+remplacée par M.A.302(c), angle distinct de M10-0019), cohérence
+M10-0011/M10-0044 (4 annexes historiques « parmi les huit »), et un
+passage de reformulation sur ~20 questions pour retirer des mots
+absolus (« Uniquement », « Systématiquement », « sans exception ») ou
+des distracteurs trop absurdes, qui rendaient certaines questions
+devinables sans connaissance du domaine.
+
+Deux limites de sourçage assumées (CDL, EMAR 66) confirmées non
+signalées comme trous par la relecture — conformes à la règle du
+chantier.
+
+### Reste à faire avant commit
+
+`eleve-adversaire` sur les 87 questions (banque finale), puis test
+local par l'utilisateur avant tout push (consigne explicite de ce
+chantier).
 
 ## Module M10 — questions concernées
 
@@ -427,6 +595,121 @@ même grille de notions sous plusieurs angles, ou changer de méthode de
 génération des distracteurs (valeurs numériques tirées aléatoirement
 plutôt que dérivées mécaniquement de la bonne réponse) — hors périmètre de
 cette session.
+
+## M10 — relecture adversariale de la banque finale à 87 questions (2026-09-13)
+
+Étape « reste à faire avant commit » du chantier de comblement ci-dessus,
+exécutée dans la même session après une fermeture accidentelle de
+terminal (le travail de comblement avait entièrement survécu, non
+commité).
+
+**Passe 1 (`eleve-adversaire`, 87 questions) :** 83/87 (95 %) de
+devinabilité sans connaissance du domaine, décomposé à la demande de
+l'utilisateur en deux populations :
+- **37 anciennes (M10.1-M10.8) : 35/37 (95 %)**, dans la zone du plafond
+  déjà documenté (taxonomie fermée du module) — pas retouché.
+- **50 nouvelles (M10.9-M10.13) : 48/50 (96 %)**, pas meilleur en score
+  brut, mais pour un mécanisme différent et jugé corrigible par l'agent :
+  un carrousel de 5 valeurs numériques/dates réutilisées à l'identique
+  entre 5 questions (7 jours / 3 mois / 1 an / 22 février 2026),
+  plusieurs paires de questions se répondant mutuellement par
+  construction (options dupliquées ou auto-contradictoires), et des
+  échos littéraux énoncé→réponse.
+
+**Correctifs round 1** : 14 questions retouchées (M10-0041, 0044, 0046,
+0053, 0062, 0063, 0064, 0065, 0072, 0073, 0077, 0078, 0081, 0088) —
+carrousel numérique cassé, auto-contradictions supprimées, échos
+atténués. Aucun changement de fond réglementaire visé.
+
+**Relecture `relecteur-part66` sur ces 14 questions — 2 BLOQUANT
+trouvés et corrigés :**
+- **M10-0053** : le nouveau distracteur (« exploitants d'aéronefs non
+  complexes en exploitation commerciale ») était en réalité **vrai**
+  (ORO.DEC.100 couvre aussi les opérations spécialisées commerciales,
+  majoritairement non complexes) — la fiche M10.8 l'enseigne
+  explicitement. Remplacé par un distracteur réellement faux
+  (transport aérien commercial de passagers, qui exige un AOC quel que
+  soit l'aéronef).
+- **M10-0081** : le champ `source` citait un item de syllabus
+  inexistant (« Appendix I Module 10 item 10.9 ») comme fondement
+  réglementaire. Corrigé en citant le texte réel (règlement (UE)
+  2018/1139, Article 2(3)(d) et Annexe I) — le contenu de la question
+  était déjà exact, seule la source était fausse.
+
+6 autres corrections mineures appliquées suite à cette relecture (option
+englobante sur M10-0044, auto-élimination sur M10-0046/0072, paire
+miroir sur M10-0062, explications de M10-0057/0061/0077 qui révélaient
+la réponse d'une question voisine, distracteur trop absurde sur
+M10-0088).
+
+**Passe 2 (`eleve-adversaire`, 50 nouvelles questions seulement) :
+46/50 (92 %) — gain net d'une seule question (M10-0072) sur les 14
+retouchées.** Diagnostic de l'agent, confirmé en relisant son rapport :
+3 des correctifs du round 1 avaient **régressé** en introduisant une
+nouvelle asymétrie de longueur/qualification entre la bonne réponse et
+les distracteurs (M10-0078 : qualificatif ajouté uniquement sur la
+bonne réponse ; M10-0088 : clause auto-disqualifiante ajoutée au
+distracteur ; M10-0046 : distracteur rendu implausible par surenchère).
+**Ces 3 régressions ont été corrigées dans la foulée** (retour à des
+options de longueur/registre comparables, sans réintroduire les défauts
+d'origine — carrousel, auto-contradiction, écho).
+
+**Diagnostic transversal (le point important pour la suite) :** une fois
+le carrousel numérique, les auto-contradictions et les échos corrigés,
+le canal de devinabilité dominant sur les 50 nouvelles questions n'est
+**ni la taxonomie fermée (le plafond des 37 anciennes) ni les nombres
+partagés** — c'est la **mise en forme des options** : la bonne réponse y
+est structurellement plus longue, plus composée (deux notions liées par
+« et »/apposition) ou plus qualifiée/nuancée que ses distracteurs, qui
+sont souvent des paires quasi redondantes ou portent un marqueur absolu
+disqualifiant (« Limitées à... », « Reste soumise », « uniquement »).
+Le rapport le décrit comme **diffus** (46 questions sur 50 tombent,
+réparties sur tous les sous-chapitres) plutôt que concentré sur un motif
+isolé — et le corrige, question par question, referait remonter un motif
+différent à chaque fois, comme observé sur les 4 passages de
+l'anti-triche originale (voir section précédente). Les deux seules
+questions jugées solides du lot (M10-0066, M10-0074) le sont parce
+qu'elles inversent délibérément l'indice de longueur (la bonne réponse y
+est la plus courte) — modèle à généraliser si une nouvelle itération est
+décidée.
+
+**Score final mesuré à l'arrêt de cette session : 46/50 (92 %) sur les
+50 nouvelles, 35/37 (95 %) sur les 37 anciennes (inchangé).** Toujours
+très au-dessus du seuil visé (< 40 %). **Décision non prise dans cette
+session** — contrairement au chantier anti-triche original où l'arrêt
+après 4 passages avait été validé explicitement par l'utilisateur, la
+question n'a pas encore été posée ici : reprendre une itération de fond
+(harmoniser longueur/structure des options sur l'ensemble des 50
+questions, à l'image de M10-0066/0074) ou accepter ce second plateau et
+committer en l'état, comme pour les 37 anciennes.
+
+**Décision de l'utilisateur (2026-09-13)** : accepter ce second plateau
+et committer en l'état — même arbitrage que pour les 37 anciennes
+questions. Raison donnée : chaque itération de fond coûte cher en risque
+d'erreur factuelle (2 BLOQUANT trouvés dès le premier round de
+retouches ci-dessus) pour un gain marginal (+1 question nette sur 14
+retouchées, avec 3 régressions au passage). **Aucune 3e itération sans
+demande explicite.**
+
+**Pour une reprise future**, si elle est décidée : le canal de
+devinabilité dominant identifié est la **mise en forme des options**, pas
+leur contenu factuel — donc une itération efficace porterait sur la
+forme (longueur, structure syntaxique, degré de qualification des 3
+options), pas sur une nouvelle recherche de faits. Modèle concret à
+généraliser, tiré des 2 questions jugées solides du lot :
+- **M10-0066** (Part-145, personnel d'un État tiers) : le distracteur
+  faux est à la fois le plus long ET celui qui fait écho littéral à
+  « État tiers » de l'énoncé — les deux indices que l'agent utilise par
+  réflexe (longueur, écho) pointent activement vers la mauvaise réponse.
+- **M10-0074** (capacité de conception moteur/hélice) : la bonne réponse
+  est la plus **courte** des trois, à contre-courant du réflexe
+  « la plus longue/la plus qualifiée est la bonne réponse » qui fait
+  tomber le reste du lot.
+Concrètement : viser des options de longueur comparable à chaque
+question, éviter qu'un distracteur soit une négation strict miroir de la
+bonne réponse (paire « plus étroit / plus large », « limité à / non
+limité »), et de temps en temps inverser délibérément l'indice de
+longueur pour casser l'habitude.
 
 ## Positions des bonnes réponses corrigées sur 5 modules (2026-09-13)
 

@@ -1,0 +1,47 @@
+<div id="schema-m1013a-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1013a-wrap .m1013a-flow { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+#schema-m1013a-wrap .m1013a-box { flex:1; min-width:150px; padding:10px; text-align:center; border:2px solid #888; border-radius:8px; background:#f4f4f4; cursor:pointer; font-size:0.82em; }
+#schema-m1013a-wrap .m1013a-box.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1013a-wrap .m1013a-date { margin-top:10px; font-size:0.85em; color:#333; }
+#schema-m1013a-wrap .m1013a-caption { margin-top:10px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> clique sur chaque acteur pour voir son obligation de sécurité de l'information.</p>
+
+<div class="m1013a-flow">
+  <div class="m1013a-box active" data-acteur="145">Organisme de maintenance (Part-145)</div>
+  <div class="m1013a-box" data-acteur="camo">Organisme CAMO</div>
+  <div class="m1013a-box" data-acteur="autorite">Autorité compétente (Part-66)</div>
+</div>
+
+<div class="m1013a-date">Obligation applicable à partir du <strong>22 février 2026</strong> (règlement (UE) 2023/203), pour les trois acteurs.</div>
+
+<div class="m1013a-caption" id="m1013a-caption">L'organisme de maintenance doit établir, mettre en œuvre et maintenir un système de gestion de la sécurité de l'information, en plus de son système de gestion de la sécurité habituel (145.A.200A).</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1013a-wrap');
+  if (!wrap) { return; }
+  var boxes = wrap.querySelectorAll('.m1013a-box');
+  var caption = wrap.querySelector('#m1013a-caption');
+
+  var TEXTES = {
+    "145": "L'organisme de maintenance doit établir, mettre en œuvre et maintenir un système de gestion de la sécurité de l'information, en plus de son système de gestion de la sécurité habituel (145.A.200A).",
+    camo: "L'organisme CAMO est soumis à la même obligation, pour les mêmes raisons : maîtriser les risques de sécurité de l'information ayant un impact potentiel sur la sécurité aérienne (CAMO.A.200A).",
+    autorite: "L'autorité compétente elle-même n'est pas épargnée : elle doit mettre en place son propre système de gestion de la sécurité de l'information, en conformité avec l'Annexe Part-IS.AR (66.B.15)."
+  };
+
+  function render(acteur) {
+    boxes.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-acteur') === acteur); });
+    caption.textContent = TEXTES[acteur];
+  }
+
+  boxes.forEach(function (b) {
+    b.addEventListener('click', function () { render(b.getAttribute('data-acteur')); });
+  });
+
+  render('145');
+})();
+</script>

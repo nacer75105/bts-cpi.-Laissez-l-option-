@@ -1,0 +1,56 @@
+<div id="schema-m1012a-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1012a-wrap .m1012a-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.9em; }
+#schema-m1012a-wrap .m1012a-btn:hover { background:#e8e8e8; }
+#schema-m1012a-wrap .m1012a-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1012a-wrap .m1012a-row { display:flex; align-items:center; gap:10px; margin-top:8px; }
+#schema-m1012a-wrap .m1012a-rowlabel { width:150px; font-size:0.85em; color:#333; }
+#schema-m1012a-wrap .m1012a-value { font-weight:bold; }
+#schema-m1012a-wrap .m1012a-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> compare le régime applicable selon qu'un aéronef entre, ou non, dans le champ du règlement (UE) 2018/1139.</p>
+
+<div>
+  <button class="m1012a-btn active" data-cas="dans">Aéronef dans le champ du règlement</button>
+  <button class="m1012a-btn" data-cas="hors">Aéronef listé à l'Annexe I (hors champ)</button>
+</div>
+
+<div class="m1012a-row">
+  <div class="m1012a-rowlabel">Réglementation applicable</div>
+  <div class="m1012a-value" id="m1012a-reglementation">Réglementation UE (1321/2014, Part-66...)</div>
+</div>
+
+<div class="m1012a-caption" id="m1012a-caption">C'est le cas général traité dans tout le reste de ce cours : maintien de navigabilité et maintenance suivent le règlement (UE) 1321/2014 et ses annexes (Part-M, Part-145, Part-66...).</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1012a-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('.m1012a-btn');
+  var caption = wrap.querySelector('#m1012a-caption');
+  var reg = wrap.querySelector('#m1012a-reglementation');
+
+  var TEXTES = {
+    dans: "C'est le cas général traité dans tout le reste de ce cours : maintien de navigabilité et maintenance suivent le règlement (UE) 1321/2014 et ses annexes (Part-M, Part-145, Part-66...).",
+    hors: "Le règlement-cadre (UE) 2018/1139 définit lui-même, dans son Annexe I, une liste d'aéronefs qui restent hors de son champ d'application : leur maintenance suit alors des règles nationales, tant qu'aucune exigence UE ne vient s'y substituer."
+  };
+  var REG = {
+    dans: "Réglementation UE (1321/2014, Part-66...)",
+    hors: "Règles nationales (jusqu'à ce qu'une règle UE s'y substitue)"
+  };
+
+  function render(cas) {
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-cas') === cas); });
+    caption.textContent = TEXTES[cas];
+    reg.textContent = REG[cas];
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { render(b.getAttribute('data-cas')); });
+  });
+
+  render('dans');
+})();
+</script>

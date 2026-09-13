@@ -1,0 +1,50 @@
+<div id="schema-m1013b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1013b-wrap .m1013b-flow { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-top:10px; }
+#schema-m1013b-wrap .m1013b-box { flex:1; min-width:130px; padding:10px; text-align:center; border:2px solid #888; border-radius:8px; background:#f4f4f4; cursor:pointer; font-size:0.82em; }
+#schema-m1013b-wrap .m1013b-box.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1013b-wrap .m1013b-arrow { font-size:1.3em; color:#666; }
+#schema-m1013b-wrap .m1013b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> suis le circuit de réaction à un incident de sécurité de l'information.</p>
+
+<div class="m1013b-flow">
+  <div class="m1013b-box active" data-step="incident">Incident ou vulnérabilité constaté</div>
+  <div class="m1013b-arrow">→</div>
+  <div class="m1013b-box" data-step="signalement">Signalement à l'autorité compétente</div>
+  <div class="m1013b-arrow">→</div>
+  <div class="m1013b-box" data-step="coordination">Analyse et coordination entre autorités</div>
+  <div class="m1013b-arrow">→</div>
+  <div class="m1013b-box" data-step="mesures">Mesures diffusées sans délai injustifié</div>
+</div>
+
+<div class="m1013b-caption" id="m1013b-caption">Un incident ou une vulnérabilité de sécurité de l'information susceptible d'affecter la sécurité aérienne peut toucher un organisme de maintenance, un CAMO, ou tout autre acteur relevant du règlement 2018/1139.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1013b-wrap');
+  if (!wrap) { return; }
+  var boxes = wrap.querySelectorAll('.m1013b-box');
+  var caption = wrap.querySelector('#m1013b-caption');
+
+  var TEXTES = {
+    incident: "Un incident ou une vulnérabilité de sécurité de l'information susceptible d'affecter la sécurité aérienne peut toucher un organisme de maintenance, un CAMO, ou tout autre acteur relevant du règlement 2018/1139.",
+    signalement: "L'organisme concerné signale l'incident à son autorité compétente, qui doit disposer d'un dispositif pour le recueillir et l'analyser.",
+    coordination: "L'autorité compétente coordonne son analyse avec les autres autorités compétentes en cybersécurité de l'État membre, pour renforcer la cohérence des dispositifs de signalement.",
+    mesures: "Les mesures nécessaires pour traiter l'impact potentiel sur la sécurité aérienne sont ensuite prises et communiquées sans délai injustifié."
+  };
+
+  function render(step) {
+    boxes.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-step') === step); });
+    caption.textContent = TEXTES[step];
+  }
+
+  boxes.forEach(function (b) {
+    b.addEventListener('click', function () { render(b.getAttribute('data-step')); });
+  });
+
+  render('incident');
+})();
+</script>

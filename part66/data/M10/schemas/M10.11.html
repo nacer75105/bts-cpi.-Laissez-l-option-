@@ -1,0 +1,50 @@
+<div id="schema-m1011a-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1011a-wrap .m1011a-flow { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-top:10px; }
+#schema-m1011a-wrap .m1011a-box { flex:1; min-width:120px; padding:10px; text-align:center; border:2px solid #888; border-radius:8px; background:#f4f4f4; cursor:pointer; font-size:0.82em; }
+#schema-m1011a-wrap .m1011a-box.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1011a-wrap .m1011a-arrow { font-size:1.3em; color:#666; }
+#schema-m1011a-wrap .m1011a-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> suis le déroulement d'une surveillance, étape par étape.</p>
+
+<div class="m1011a-flow">
+  <div class="m1011a-box active" data-step="verif">Vérification continue (avant et après agrément)</div>
+  <div class="m1011a-arrow">→</div>
+  <div class="m1011a-box" data-step="audit">Audits, inspections (dont inopinées)</div>
+  <div class="m1011a-arrow">→</div>
+  <div class="m1011a-box" data-step="finding">Écart constaté : finding</div>
+  <div class="m1011a-arrow">→</div>
+  <div class="m1011a-box" data-step="action">Action de l'autorité</div>
+</div>
+
+<div class="m1011a-caption" id="m1011a-caption">L'autorité compétente vérifie la conformité avant de délivrer un agrément, puis surveille son maintien tout au long de sa durée de validité — la surveillance ne s'arrête jamais vraiment.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1011a-wrap');
+  if (!wrap) { return; }
+  var boxes = wrap.querySelectorAll('.m1011a-box');
+  var caption = wrap.querySelector('#m1011a-caption');
+
+  var TEXTES = {
+    verif: "L'autorité compétente vérifie la conformité avant de délivrer un agrément, puis surveille son maintien tout au long de sa durée de validité — la surveillance ne s'arrête jamais vraiment.",
+    audit: "Cette vérification s'appuie sur des audits, des inspections programmées et des inspections inopinées, en tenant compte des résultats des surveillances précédentes et des priorités de sécurité du moment.",
+    finding: "Quand un écart est constaté, l'autorité émet une constatation (finding), classée en niveau 1 (manquement significatif) ou niveau 2 (manquement qui pourrait abaisser la sécurité), selon sa gravité.",
+    action: "Selon le niveau du finding, l'autorité agit immédiatement (niveau 1, jusqu'à la suspension ou le retrait de l'agrément) ou accorde un délai correctif (niveau 2, 3 mois au départ en général)."
+  };
+
+  function render(step) {
+    boxes.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-step') === step); });
+    caption.textContent = TEXTES[step];
+  }
+
+  boxes.forEach(function (b) {
+    b.addEventListener('click', function () { render(b.getAttribute('data-step')); });
+  });
+
+  render('verif');
+})();
+</script>

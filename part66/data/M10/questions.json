@@ -128,7 +128,7 @@
         "Les annexes Part-66, Part-147, Part-M et Part-145"
       ],
       "bonne": 2,
-      "explication": "Le règlement (UE) 1321/2014 regroupe bien les quatre annexes ensemble : Part-M, Part-145, Part-66 et Part-147. Ni le couple Part-M/Part-145 seul, ni le couple Part-66/Part-147 seul, n'épuisent son contenu : les quatre annexes en font partie.",
+      "explication": "Le règlement (UE) 1321/2014 regroupe bien les quatre annexes historiques ensemble : Part-M, Part-145, Part-66 et Part-147. Ni le couple Part-M/Part-145 seul, ni le couple Part-66/Part-147 seul, n'épuisent son contenu — ces quatre annexes en font partie, parmi les huit que compte aujourd'hui le règlement (voir M10.3).",
       "source": "Règlement (UE) n° 1321/2014"
     },
     {
@@ -175,12 +175,12 @@
       "sous_chapitre": "M10.4",
       "question": "Pour un aéronef, la responsabilité finale du maintien de la navigabilité incombe, par défaut :",
       "options": [
-        "Au propriétaire, sauf transfert prévu par la réglementation (location, transport aérien commercial licencié)",
-        "Au constructeur, tant que l'aéronef reste sous garantie",
-        "À l'organisme CAMO agréé en charge du dossier de navigabilité"
+        "À l'autorité de l'aviation civile compétente",
+        "Au propriétaire de l'aéronef",
+        "À l'exploitant de l'aéronef"
       ],
-      "bonne": 0,
-      "explication": "Par défaut, c'est le propriétaire qui porte la responsabilité du maintien de la navigabilité (M.A.201). Cette responsabilité est transférée à l'exploitant dans des cas définis par la réglementation : aéronef loué, ou exploité par un transporteur aérien titulaire d'une licence d'exploitation (règlement (CE) 1008/2008). Le constructeur répond de la conception, y compris après la période de garantie ; le CAMO gère ce dossier pour le compte du responsable désigné, sans en porter lui-même la responsabilité finale.",
+      "bonne": 1,
+      "explication": "M.A.201(a) désigne le propriétaire comme responsable par défaut. La responsabilité ne passe à l'exploitant que dans des cas précis (location, transporteur licencié 1008/2008) ; l'autorité de l'aviation civile surveille, sans jamais être elle-même responsable du maintien de navigabilité.",
       "source": "Règlement (UE) n° 1321/2014, annexe I (Part-M)"
     },
     {
@@ -272,7 +272,7 @@
       ],
       "bonne": 0,
       "explication": "L'agrément Part-145 couvre le système de gestion de l'organisme dans son ensemble, incluant sa fonction de suivi de conformité (compliance monitoring) : celle-ci n'en est pas exclue, et ne se limite pas non plus aux seuls aspects de sécurité au sens strict.",
-      "source": "TODO: source à vérifier manuellement — la terminologie \"système de gestion de la qualité\" pourrait être périmée (un règlement modificatif du Part-145 applicable fin 2022 aurait remplacé le \"quality system\" par un \"management system\") ; à confirmer dans le texte consolidé avant usage en examen (voir part66/A_VERIFIER.md)"
+      "source": "easa_2025.txt — 145.A.200(a)(6)"
     },
     {
       "uid": "M10-0024",
@@ -445,7 +445,7 @@
     },
     {
       "uid": "M10-0038",
-      "sous_chapitre": "M10.8",
+      "sous_chapitre": "M10.4",
       "question": "Une consigne de navigabilité (Airworthiness Directive) émise par l'AESA :",
       "options": [
         "Ne s'impose qu'après accord de l'exploitant concerné",
@@ -458,7 +458,7 @@
     },
     {
       "uid": "M10-0039",
-      "sous_chapitre": "M10.8",
+      "sous_chapitre": "M10.4",
       "question": "Un bulletin de service émis par le constructeur d'un aéronef :",
       "options": [
         "Reste sans portée, même si un texte réglementaire y fait référence",
@@ -481,6 +481,656 @@
       "bonne": 1,
       "explication": "Le préfixe F- correspond à la France. D- correspond à l'Allemagne, et G- au Royaume-Uni.",
       "source": "Marques de nationalité et d'immatriculation (Annexe 7 OACI)"
+    },
+    {
+      "uid": "M10-0041",
+      "sous_chapitre": "M10.2",
+      "question": "Les moyens de conformité acceptables (AMC) et les documents d'orientation (GM) publiés par l'AESA sont :",
+      "options": [
+        "Un règlement de l'UE à part entière",
+        "Un outil de référence non contraignant en tant que tel, qu'un autre moyen équivalent peut remplacer",
+        "Une directive à transposer par les États membres"
+      ],
+      "bonne": 1,
+      "explication": "AMC et GM sont des actes de l'Agence, non contraignants en eux-mêmes et remplaçables par un autre moyen (AltMoC) accepté par l'autorité — pas des règlements comme le 1321/2014 lui-même, ni des directives (un instrument que ce domaine n'utilise pas ici).",
+      "source": "easa_2025.txt — Disclaimer p.3 ; 145.A.120 et 145.B.120 Moyens de conformité"
+    },
+    {
+      "uid": "M10-0042",
+      "sous_chapitre": "M10.2",
+      "question": "Le règlement (UE) n° 376/2014 porte sur :",
+      "options": [
+        "Le signalement des événements de sécurité et la « just culture »",
+        "La liste des pièces pouvant être fabriquées sans agrément",
+        "Le temps de vol maximal autorisé pour le personnel navigant"
+      ],
+      "bonne": 0,
+      "explication": "376/2014 régit le signalement d'événements et la « just culture ». Le temps de vol maximal relève du règlement Air Crew ; la fabrication de pièces standard relève de Part 21 — deux sujets réels, mais distincts.",
+      "source": "easa_2025.txt — glossaire « Just culture » (réf. Reg. (UE) 376/2014 Art. 2) ; AMC1 145.A.202"
+    },
+    {
+      "uid": "M10-0043",
+      "sous_chapitre": "M10.2",
+      "question": "Un accord bilatéral conclu par la Commission européenne avec un pays tiers a, par exemple, pour effet réel :",
+      "options": [
+        "Le régime particulier du Part-T pour un aéronef en dry lease",
+        "L'obligation de signalement des événements de sécurité",
+        "L'acceptation par l'AESA de certaines autorisations FAA sur des pièces"
+      ],
+      "bonne": 2,
+      "explication": "En vertu de ces accords, l'AESA accepte certaines autorisations FAA (TSO). Le régime Part-T découle des Articles 1(b)/3(6) du 1321/2014 lui-même, pas d'un accord bilatéral ; le signalement d'événements relève du 376/2014, un sujet distinct.",
+      "source": "part21_2025.txt — l.42526 (GM/AMC 21L.A.9(a))"
+    },
+    {
+      "uid": "M10-0044",
+      "sous_chapitre": "M10.3",
+      "question": "Les annexes Part-T, Part-ML, Part-CAMO et Part-CAO ont été ajoutées au règlement (UE) 1321/2014 par :",
+      "options": [
+        "2015 et 2019",
+        "2012 et 2019",
+        "2015 et 2021"
+      ],
+      "bonne": 0,
+      "explication": "Part-T vient du règlement (UE) 2015/1536 ; Part-ML, Part-CAMO et Part-CAO viennent du règlement (UE) 2019/1383, une réforme distincte et postérieure. Aucune de ces annexes n'a été introduite en 2012 ni en 2021.",
+      "source": "easa_2025.txt — règlements (UE) 2015/1536 et (UE) 2019/1383"
+    },
+    {
+      "uid": "M10-0045",
+      "sous_chapitre": "M10.3",
+      "question": "Le Part-CAO, comparé au Part-CAMO, se distingue en ce qu'il :",
+      "options": [
+        "Relève de l'annexe Vb du règlement",
+        "Combine dans un seul agrément l'entretien et la gestion de navigabilité",
+        "Réserve la gestion de navigabilité aux aéronefs sous AOC"
+      ],
+      "bonne": 1,
+      "explication": "Le Part-CAO (annexe Vd) cumule entretien et gestion de navigabilité, à la différence du CAMO (Vc) qui ne gère que la navigabilité. Il est réservé aux aéronefs NON sous AOC (l'inverse de D1) ; Vb est en réalité l'annexe du Part-ML.",
+      "source": "easa_2025.txt — CAO.A.010 Scope"
+    },
+    {
+      "uid": "M10-0046",
+      "sous_chapitre": "M10.3",
+      "question": "Le règlement (UE) 1321/2014, dans la hiérarchie des textes de l'aviation civile européenne, est :",
+      "options": [
+        "Une simple recommandation, sans force contraignante",
+        "Un texte de rang équivalent au règlement-cadre (UE) 2018/1139",
+        "Un règlement d'exécution du règlement-cadre (UE) 2018/1139"
+      ],
+      "bonne": 2,
+      "explication": "Le 2018/1139 est le règlement-cadre ; le 1321/2014 en est un règlement d'exécution (Article 17(1) du 2018/1139), de rang inférieur, pas de rang équivalent. C'est un règlement de l'UE directement applicable et contraignant, pas une simple recommandation.",
+      "source": "easa_2025.txt — règlement (UE) 2018/1139, Article 17(1)"
+    },
+    {
+      "uid": "M10-0047",
+      "sous_chapitre": "M10.4",
+      "question": "Un exploitant titulaire d'une licence 1008/2008 peut confier la gestion du maintien de navigabilité :",
+      "options": [
+        "À un organisme Part-CAO, réservé aux aéronefs légers",
+        "Au Part-ML, qui remplace Part-M pour ce type d'exploitant",
+        "À un organisme Part-CAMO ou via le Subpart G de Part-M"
+      ],
+      "bonne": 2,
+      "explication": "M.A.201(e)(2) permet Part-CAMO ou le Subpart G. Le Part-CAO n'est pas réservé aux aéronefs légers (sa restriction porte sur le hors-AOC) ; le Part-ML concerne l'aviation légère en général, pas spécifiquement ce type d'exploitant.",
+      "source": "easa_2025.txt — M.A.201(e)(2)"
+    },
+    {
+      "uid": "M10-0048",
+      "sous_chapitre": "M10.4",
+      "question": "Quand un CAMO ou un CAO gère la navigabilité d'un aéronef, l'approbation du programme d'entretien :",
+      "options": [
+        "Reste soumise à la signature directe de l'autorité compétente",
+        "Peut passer par une procédure indirecte propre à cet organisme",
+        "Est remplacée par l'accord préalable du propriétaire de l'aéronef"
+      ],
+      "bonne": 1,
+      "explication": "M.A.302(c) permet une approbation indirecte propre au CAMO/CAO — pas systématiquement la signature directe de l'autorité, et sans être remplacée par un simple accord du propriétaire.",
+      "source": "easa_2025.txt — M.A.302(c)"
+    },
+    {
+      "uid": "M10-0049",
+      "sous_chapitre": "M10.4",
+      "question": "Part-ML, Part-CAMO et Part-CAO portent tous les trois sur :",
+      "options": [
+        "Le maintien de la navigabilité des aéronefs",
+        "Les licences de personnel de maintenance",
+        "La formation initiale menant à la licence"
+      ],
+      "bonne": 0,
+      "explication": "Ces 3 annexes concernent le maintien de navigabilité. Les licences de personnel relèvent du Part-66 ; la formation relève du Part-147 — deux domaines distincts, sans lien direct avec ces 3 annexes.",
+      "source": "easa_2025.txt — Appendix I Module 10 item 10.7"
+    },
+    {
+      "uid": "M10-0050",
+      "sous_chapitre": "M10.5",
+      "question": "Un organisme Part-CAO est adapté à un aéronef :",
+      "options": [
+        "Complexe, quel que soit son régime d'exploitation",
+        "En cours de certification de type, avant son premier vol",
+        "Non complexe qui n'est pas exploité sous certificat de transporteur (AOC)"
+      ],
+      "bonne": 2,
+      "explication": "CAO.A.010 réserve le Part-CAO aux aéronefs non complexes hors AOC. Un aéronef complexe en sort par nature ; la certification de type avant premier vol relève de Part 21, pas de Part-CAO.",
+      "source": "easa_2025.txt — CAO.A.010 Scope"
+    },
+    {
+      "uid": "M10-0052",
+      "sous_chapitre": "M10.8",
+      "question": "L'exploitation commerciale d'aéronefs suppose en général la détention :",
+      "options": [
+        "D'un agrément Part-147",
+        "D'une auto-déclaration transmise à l'autorité compétente",
+        "D'un AOC délivré par l'autorité compétente"
+      ],
+      "bonne": 2,
+      "explication": "L'AOC (ORO.AOC.100) autorise l'exploitation commerciale. L'auto-déclaration existe, mais pour l'aviation non commerciale d'aéronefs complexes, pas le transport commercial classique ; Part-147 concerne la formation.",
+      "source": "airops_2026.txt — ORO.AOC.100"
+    },
+    {
+      "uid": "M10-0053",
+      "sous_chapitre": "M10.8",
+      "question": "L'auto-déclaration (self-declaration) s'adresse en particulier :",
+      "options": [
+        "À des exploitants d'aéronefs complexes en non commercial",
+        "Aux opérateurs de ballons et planeurs",
+        "Aux exploitants de transport aérien commercial de passagers"
+      ],
+      "bonne": 0,
+      "explication": "ORO.DEC.100 vise les exploitants d'aéronefs complexes en non commercial (et certains opérateurs spécialisés). Le transport aérien commercial de passagers exige un AOC quel que soit l'aéronef, jamais une simple auto-déclaration ; les ballons/planeurs suivent d'autres règles spécifiques (2018/395, 2018/1976).",
+      "source": "airops_2026.txt — ORO.DEC.100"
+    },
+    {
+      "uid": "M10-0054",
+      "sous_chapitre": "M10.8",
+      "question": "L'ETOPS est une approbation spécifique qui concerne :",
+      "options": [
+        "Les opérations d'atterrissage par faible visibilité",
+        "Les bimoteurs volant au-delà d'un certain temps de déroutement",
+        "La navigation de précision"
+      ],
+      "bonne": 1,
+      "explication": "L'ETOPS encadre les bimoteurs au-delà d'un seuil de déroutement (SPA.ETOPS.100). Les atterrissages par faible visibilité relèvent de CAT II/III ; la navigation de précision du BRNAV/RNAV — trois approbations réelles et distinctes.",
+      "source": "airops_2026.txt — SPA.ETOPS.100"
+    },
+    {
+      "uid": "M10-0055",
+      "sous_chapitre": "M10.8",
+      "question": "La MEL d'un aéronef donné est établie à partir :",
+      "options": [
+        "Du programme d'entretien de l'aéronef concerné",
+        "De la MMEL du constructeur, puis approuvée par l'autorité",
+        "De la CDL, pour les éléments structuraux manquants"
+      ],
+      "bonne": 1,
+      "explication": "La MEL découle de la MMEL du constructeur, puis est approuvée par l'autorité (ORO.MLR.105). La CDL est un document proche mais distinct ; l'AMP est le programme d'entretien, un document encore différent.",
+      "source": "airops_2026.txt — ORO.MLR.105"
+    },
+    {
+      "uid": "M10-0056",
+      "sous_chapitre": "M10.8",
+      "question": "Le préambule de la MEL doit prévoir, pour un équipement inopérant accessible en vol :",
+      "options": [
+        "Des consignes de placardage de l'équipement",
+        "Un report du vol jusqu'à réparation",
+        "Une mention dans le certificat de navigabilité"
+      ],
+      "bonne": 0,
+      "explication": "Le point (f) du préambule MEL vise le placardage des équipements inopérants accessibles en vol. La MEL n'impose pas un report du vol (elle organise la poursuite du vol sous conditions), et cette information ne figure pas dans le CofA.",
+      "source": "airops_2026.txt — AMC1 ORO.MLR.105(d)(1), point (f)"
+    },
+    {
+      "uid": "M10-0057",
+      "sous_chapitre": "M10.8",
+      "question": "La durée de validité d'un ARC, une fois délivré, est de :",
+      "options": [
+        "3 mois",
+        "7 jours",
+        "1 an"
+      ],
+      "bonne": 2,
+      "explication": "M.A.901 fixe la validité de l'ARC à 1 an. 3 mois est le délai de correction d'un finding de niveau 2 (CAMO.B.350) ; 7 jours correspond à un délai de notification prévu ailleurs dans le texte, sur un tout autre sujet.",
+      "source": "easa_2025.txt — M.A.901, M.A.902"
+    },
+    {
+      "uid": "M10-0058",
+      "sous_chapitre": "M10.8",
+      "question": "Un Permit to Fly encadre le vol d'un aéronef :",
+      "options": [
+        "Sous un ARC en cours de validité",
+        "Sous conditions définies, hors du cadre de navigabilité habituel",
+        "Sous un certificat de navigabilité restreint"
+      ],
+      "bonne": 1,
+      "explication": "Le Permit to Fly couvre un vol sous conditions définies (21.A.701). Le certificat de navigabilité restreint est un document distinct (21.A.173(b)) ; l'ARC concerne un aéronef déjà en exploitation normale.",
+      "source": "part21_2025.txt — 21.A.701 Scope (Subpart P)"
+    },
+    {
+      "uid": "M10-0059",
+      "sous_chapitre": "M10.9",
+      "question": "Ce qui distingue le certificateur indépendant, c'est qu'il :",
+      "options": [
+        "N'a pas de lien avec un organisme de maintenance agréé",
+        "Est reconnu dès la réussite de l'examen Part-66",
+        "Est titulaire d'un agrément Part-CAO personnel"
+      ],
+      "bonne": 0,
+      "explication": "ML.1(c)(1) définit ce statut par l'absence de lien avec un organisme agréé, sous réserve de la licence Part-66. Un agrément Part-CAO est un agrément d'organisme, pas personnel ; la licence doit être délivrée et en vigueur, pas seulement l'examen réussi.",
+      "source": "easa_2025.txt — ML.1(c)(1)"
+    },
+    {
+      "uid": "M10-0060",
+      "sous_chapitre": "M10.9",
+      "question": "La liste de l'Appendice VII sert à délimiter :",
+      "options": [
+        "Ce qu'un organisme Part-CAO confie à un sous-traitant",
+        "Ce que le pilote-propriétaire peut certifier en plus",
+        "Ce que le certificateur indépendant ne peut pas certifier"
+      ],
+      "bonne": 2,
+      "explication": "L'Appendice VII délimite les tâches hors de portée du certificateur indépendant. Un organisme Part-CAO peut réaliser ces tâches lui-même, sans sous-traitance ; le pilote-propriétaire a un privilège distinct, non étendu par l'Appendice VII.",
+      "source": "easa_2025.txt — M.A.801(b)"
+    },
+    {
+      "uid": "M10-0061",
+      "sous_chapitre": "M10.9",
+      "question": "Une réparation de longeron qui nécessite un rivetage relève :",
+      "options": [
+        "Des tâches soumises à notification sous 7 jours",
+        "Des tâches confiées au pilote-propriétaire",
+        "Des tâches complexes, réservées à un organisme agréé"
+      ],
+      "bonne": 2,
+      "explication": "Le rivetage d'une pièce structurale majeure (Appendice VII) relève d'un organisme agréé. Le pilote-propriétaire (M.A.803) n'a pas ce privilège ; les 7 jours proposés renvoient à une procédure de notification totalement distincte, sans rapport avec une réparation structurale planifiée.",
+      "source": "easa_2025.txt — Appendice VII à l'Annexe I (Part-M)"
+    },
+    {
+      "uid": "M10-0062",
+      "sous_chapitre": "M10.9",
+      "question": "Le privilège du pilote-propriétaire (M.A.803), comparé à celui du certificateur indépendant, est :",
+      "options": [
+        "Réservé à l'aéronef détenu en propre, pour des tâches prédéfinies limitées",
+        "Soumis aux mêmes exigences de formation que le certificateur indépendant",
+        "Équivalent au statut de certificateur indépendant"
+      ],
+      "bonne": 0,
+      "explication": "Le pilote-propriétaire (M.A.803) ne certifie que sur son propre aéronef, pour des tâches prédéfinies limitées, sans condition de formation ni de licence Part-66 équivalente à celle du certificateur indépendant. Ses conditions d'accès sont différentes de celles de l'Article 5.",
+      "source": "easa_2025.txt — M.A.803"
+    },
+    {
+      "uid": "M10-0063",
+      "sous_chapitre": "M10.9",
+      "question": "Après une autorisation exceptionnelle du propriétaire (M.A.801(c)), une nouvelle APRS de contrôle doit suivre sous :",
+      "options": [
+        "24 heures",
+        "7 jours",
+        "15 jours"
+      ],
+      "bonne": 1,
+      "explication": "M.A.801(c)(2) fixe ce délai à 7 jours à compter de l'autorisation exceptionnelle. Ni 24 heures ni 15 jours ne correspondent à un délai réel prévu par ce texte ou un texte voisin pour cette procédure précise.",
+      "source": "easa_2025.txt — M.A.801(c)(2) et (3)"
+    },
+    {
+      "uid": "M10-0064",
+      "sous_chapitre": "M10.9",
+      "question": "Le fondement réglementaire de l'exception permettant une certification hors organisme agréé se trouve :",
+      "options": [
+        "Dans une annexe distincte, réservée aux aéronefs de loisir",
+        "À l'Article 5 du règlement (UE) 1321/2014",
+        "Parmi les exigences de formation du Part-147"
+      ],
+      "bonne": 1,
+      "explication": "L'Article 5 « Certifying staff » du règlement lui-même pose ce principe, ensuite décliné dans M.A.801/M.A.803, ML.A.801/803, CAO.A.040 et 145.A.30(j) selon l'annexe applicable. Le Part-147 encadre la formation menant à la licence, pas la certification elle-même, et il n'existe pas d'annexe réservée aux seuls aéronefs de loisir pour ce sujet.",
+      "source": "easa_2025.txt — Article 5"
+    },
+    {
+      "uid": "M10-0065",
+      "sous_chapitre": "M10.9",
+      "question": "Dans un organisme Part-CAO, une autorisation « one-off » doit être signalée à l'autorité sous :",
+      "options": [
+        "7 jours",
+        "30 jours",
+        "3 jours"
+      ],
+      "bonne": 0,
+      "explication": "CAO.A.040(b) fixe ce signalement à 7 jours. Les autres délais proposés ne correspondent à aucune obligation réglementaire identifiée pour cette procédure précise.",
+      "source": "easa_2025.txt — CAO.A.040(b)"
+    },
+    {
+      "uid": "M10-0066",
+      "sous_chapitre": "M10.9",
+      "question": "Un organisme Part-145 peut employer du personnel certifié selon des règles nationales d'un État tiers :",
+      "options": [
+        "Pour des interventions couvertes par un accord bilatéral avec l'État tiers concerné",
+        "Pour des interventions réalisées sous la supervision directe d'un CAMO",
+        "Pour des interventions situées hors du territoire couvert par le règlement"
+      ],
+      "bonne": 2,
+      "explication": "145.A.30(j) vise les interventions hors du territoire couvert par le règlement, sous conditions propres, sans exiger un accord bilatéral spécifique ; et sans lien avec la supervision d'un CAMO, qui concerne la gestion de navigabilité, pas la qualification du personnel.",
+      "source": "easa_2025.txt — 145.A.30(j)"
+    },
+    {
+      "uid": "M10-0067",
+      "sous_chapitre": "M10.9",
+      "question": "Pour un aéronef hors du champ d'application de Part-66, le certificateur indépendant applique :",
+      "options": [
+        "Les règles EMAR",
+        "Les règles Part 21",
+        "Les règles de certification de l'État d'immatriculation"
+      ],
+      "bonne": 2,
+      "explication": "ML.1(c)(1)(ii) prévoit un repli sur les règles de l'État d'immatriculation. EMAR s'applique aux aéronefs militaires, pas comme repli général ; Part 21 concerne la conception du type, pas la certification du personnel.",
+      "source": "easa_2025.txt — ML.1(c)(1)(ii)"
+    },
+    {
+      "uid": "M10-0068",
+      "sous_chapitre": "M10.10",
+      "question": "Le règlement (UE) 748/2012, dit Part 21, encadre principalement :",
+      "options": [
+        "La navigabilité initiale des aéronefs civils",
+        "La navigabilité initiale des aéronefs militaires",
+        "La navigabilité initiale des aéronefs certifiés avant 2003"
+      ],
+      "bonne": 0,
+      "explication": "Part 21 encadre la navigabilité initiale des aéronefs civils. Les aéronefs militaires relèvent d'EMAR ; Part 21 ne connaît pas de limite de date liée à une certification antérieure à 2003.",
+      "source": "part21_2025.txt — objet du règlement"
+    },
+    {
+      "uid": "M10-0069",
+      "sous_chapitre": "M10.10",
+      "question": "Le certificat de type couvre, entre autres, la base de certification, c'est-à-dire :",
+      "options": [
+        "La liste des consignes de navigabilité déjà émises pour ce type",
+        "Les exigences techniques de conformité du type",
+        "Le programme d'entretien recommandé par le constructeur"
+      ],
+      "bonne": 1,
+      "explication": "La base de certification (21.A.41) regroupe les exigences de conformité au moment de la certification. Les consignes de navigabilité sont émises après, en cours de vie du type ; le programme d'entretien relève de Part-M/ML/CAMO/CAO.",
+      "source": "part21_2025.txt — 21.A.41 Type-certificate"
+    },
+    {
+      "uid": "M10-0070",
+      "sous_chapitre": "M10.10",
+      "question": "Un agrément d'organisme de conception (DOA) est délivré :",
+      "options": [
+        "Par l'autorité ayant délivré un certificat de type antérieur",
+        "Par l'organisme Part-147 concerné",
+        "Par l'Agence elle-même"
+      ],
+      "bonne": 2,
+      "explication": "21.A.235 confie cet agrément à l'Agence, quel que soit l'État de l'organisme. Il n'y a pas d'autorité distincte pour un certificat de type antérieur (c'est aussi l'Agence) ; un organisme Part-147 forme du personnel, sans compétence sur les agréments de conception.",
+      "source": "part21_2025.txt — 21.A.235 Issue of design organisation approval"
+    },
+    {
+      "uid": "M10-0071",
+      "sous_chapitre": "M10.10",
+      "question": "Les spécifications de certification (CS) tiennent leur autorité :",
+      "options": [
+        "Des mêmes règlements que le 1321/2014",
+        "D'accords entre l'AESA et les constructeurs",
+        "D'actes propres de l'Agence"
+      ],
+      "bonne": 2,
+      "explication": "21.B.70 confirme que les CS sont des actes propres de l'Agence — pas des règlements comme le 1321/2014, ni des accords bilatéraux avec les constructeurs, une procédure qui n'existe pas pour les CS.",
+      "source": "part21_2025.txt — 21.B.70 Certification specifications"
+    },
+    {
+      "uid": "M10-0072",
+      "sous_chapitre": "M10.10",
+      "question": "CS-25 et CS-27 se distinguent principalement en ce que :",
+      "options": [
+        "CS-25 concerne les gros avions, CS-27 les petits hélicoptères",
+        "CS-25 concerne les hélicoptères, CS-27 les planeurs",
+        "CS-25 concerne les avions de transport, CS-27 les gros hélicoptères"
+      ],
+      "bonne": 0,
+      "explication": "CS-25 (gros avions) et CS-27 (petits hélicoptères) couvrent des catégories d'aéronefs différentes, tout comme CS-23 (petits avions) ou CS-29 (gros hélicoptères, la contrepartie réelle de CS-27 pour les appareils plus lourds).",
+      "source": "part21_2025.txt — liste des CS (CS-22/23/25/27/29/STAN)"
+    },
+    {
+      "uid": "M10-0073",
+      "sous_chapitre": "M10.10",
+      "question": "CS-STAN encadre :",
+      "options": [
+        "Les modifications visées par CS-23",
+        "Des modifications et réparations mineures, pré-approuvées par l'Agence",
+        "Les procédures d'agrément des organismes de conception"
+      ],
+      "bonne": 1,
+      "explication": "CS-STAN vise des modifications/réparations dites « standard », préétablies et dont la conformité est reconnue à l'avance par l'Agence (21.A.90B). CS-23 fixe les exigences de navigabilité des petits avions, pas des modifications pré-approuvées ; les procédures d'agrément de conception relèvent du Subpart J.",
+      "source": "part21_2025.txt — 21.A.90B(a)(1)"
+    },
+    {
+      "uid": "M10-0074",
+      "sous_chapitre": "M10.10",
+      "question": "Pour un moteur à pistons ou une hélice à pas fixe/réglable, la capacité de conception peut se démontrer :",
+      "options": [
+        "Par un DOA complet, la dérogation ne visant que les ELA1",
+        "Par des procédures allégées acceptées par l'Agence",
+        "Par un programme de certification accepté par l'Agence, comme pour un ELA1"
+      ],
+      "bonne": 1,
+      "explication": "21.A.14(b) prévoit une voie allégée pour ces produits (dont les moteurs à pistons et hélices). Le programme de certification accepté (21.A.14(c)) est la voie propre aux ELA1, pas à ce cas ; et la dérogation ne se limite pas aux seuls ELA1.",
+      "source": "part21_2025.txt — 21.A.14(a)/(b)/(c)"
+    },
+    {
+      "uid": "M10-0075",
+      "sous_chapitre": "M10.11",
+      "question": "Les inspections menées dans le cadre de la surveillance d'un organisme agréé peuvent être :",
+      "options": [
+        "Annoncées ou inopinées, selon le programme de surveillance",
+        "Limitées aux organismes ayant déjà reçu un finding de niveau 1",
+        "Fondées sur le dossier de la demande d'agrément initial"
+      ],
+      "bonne": 0,
+      "explication": "CAMO.B.300(b)(3) prévoit des inspections annoncées et inopinées. La surveillance ne se limite pas au dossier de la demande initiale (elle est continue), ni aux seuls organismes ayant déjà un finding de niveau 1.",
+      "source": "easa_2025.txt — CAMO.B.300 Oversight principles"
+    },
+    {
+      "uid": "M10-0076",
+      "sous_chapitre": "M10.11",
+      "question": "Un finding de niveau 1 se distingue d'un finding de niveau 2 d'abord par :",
+      "options": [
+        "Le fait de concerner un aéronef plutôt que l'organisme",
+        "Le degré de danger pour la sécurité",
+        "Le moment de sa découverte, inopiné ou programmé"
+      ],
+      "bonne": 1,
+      "explication": "CAMO.B.350(b)/(c) distingue les niveaux par la gravité, pas par la méthode de découverte ; un finding peut concerner un organisme (procédures, agrément) autant qu'un aéronef.",
+      "source": "easa_2025.txt — CAMO.B.350(b)"
+    },
+    {
+      "uid": "M10-0077",
+      "sous_chapitre": "M10.11",
+      "question": "Un finding de niveau 1 déclenche, de la part de l'autorité :",
+      "options": [
+        "Une action immédiate, jusqu'à la suspension de l'agrément",
+        "Un délai correctif de 30 jours",
+        "Un signalement transmis au titulaire du certificat de type"
+      ],
+      "bonne": 0,
+      "explication": "CAMO.B.350(d)(1) impose une action immédiate pour un niveau 1, pouvant aller jusqu'à la suspension de l'agrément. Le niveau 2 prévoit un délai correctif plus long, fixé par un autre point du texte, mais jamais 30 jours ; l'action porte de toute façon sur l'organisme, pas sur une information transmise au constructeur.",
+      "source": "easa_2025.txt — CAMO.B.350(d)(1)"
+    },
+    {
+      "uid": "M10-0078",
+      "sous_chapitre": "M10.11",
+      "question": "Le délai initial accordé pour corriger un finding de niveau 2 est de :",
+      "options": [
+        "1 mois",
+        "6 mois",
+        "3 mois"
+      ],
+      "bonne": 2,
+      "explication": "CAMO.B.350(d)(2)(i) fixe ce délai initial à 3 mois, prolongeable si le plan d'action correctif est jugé satisfaisant. Ni « 1 mois » ni « 6 mois » ne correspondent à un délai réglementaire identifié pour cette procédure.",
+      "source": "easa_2025.txt — CAMO.B.350(d)(2)(i)"
+    },
+    {
+      "uid": "M10-0079",
+      "sous_chapitre": "M10.11",
+      "question": "Une fois un agrément délivré, l'autorité compétente :",
+      "options": [
+        "En vérifie le respect dans la durée",
+        "Délègue cette responsabilité à l'organisme Part-147 concerné",
+        "Transfère cette responsabilité à un CAMO ou un CAO"
+      ],
+      "bonne": 0,
+      "explication": "CAMO.B.300(a) prévoit une vérification continue par l'autorité elle-même — pas un transfert à un CAMO/CAO (eux-mêmes surveillés), ni à un organisme Part-147, sans rôle de surveillance réglementaire.",
+      "source": "easa_2025.txt — CAMO.B.300(a)"
+    },
+    {
+      "uid": "M10-0080",
+      "sous_chapitre": "M10.11",
+      "question": "Le mécanisme de finding à deux niveaux (1 et 2) figure :",
+      "options": [
+        "Dans Part-CAMO et Part-CAO",
+        "Dans le règlement de base (UE) 2018/1139",
+        "Dans plusieurs annexes du règlement 1321/2014"
+      ],
+      "bonne": 2,
+      "explication": "Le mécanisme se retrouve avec la même logique dans Part-M, Part-145, Part-CAMO et Part-CAO — pas seulement CAMO/CAO ; il est décrit dans les annexes d'exécution (1321/2014), pas dans le règlement de base.",
+      "source": "easa_2025.txt — CAMO.B.350, 145.B.350 (même logique)"
+    },
+    {
+      "uid": "M10-0081",
+      "sous_chapitre": "M10.12",
+      "question": "Concernant les aéronefs qui ne relèvent pas du champ d'application commun de l'aviation civile européenne, le règlement-cadre (UE) 2018/1139 :",
+      "options": [
+        "Renvoie leur identification à ses règlements d'exécution",
+        "Fixe lui-même, dans sa propre Annexe I, la liste de ces aéronefs",
+        "Ne prévoit aucune exclusion à son champ d'application"
+      ],
+      "bonne": 1,
+      "explication": "Le règlement de base fixe lui-même, dans sa propre Annexe I, la liste des aéronefs hors champ commun — il ne la délègue pas à ses règlements d'exécution, et il prévoit bien des exclusions.",
+      "source": "easa_2025.txt — Règlement (UE) 2018/1139, Article 2(3)(d) et Annexe I"
+    },
+    {
+      "uid": "M10-0082",
+      "sous_chapitre": "M10.12",
+      "question": "Un aéronef relevant de l'Annexe I du règlement (UE) 2018/1139 est entretenu :",
+      "options": [
+        "Selon les règles Part-ML",
+        "Selon des règles nationales",
+        "Selon les règles EMAR"
+      ],
+      "bonne": 1,
+      "explication": "Hors du champ commun, ces aéronefs suivent des règles nationales en l'absence d'exigence UE. Part-ML reste un texte européen, pour les aéronefs DANS le champ du règlement de base ; EMAR est propre au domaine militaire.",
+      "source": "easa_2025.txt — Appendix I Module 10 item 10.9"
+    },
+    {
+      "uid": "M10-0083",
+      "sous_chapitre": "M10.12",
+      "question": "La licence EMAR 66 s'adresse :",
+      "options": [
+        "Au personnel des organismes Part-CAO",
+        "Au personnel Part-66 avec une qualification ELA2",
+        "Au personnel de maintenance d'aéronefs militaires"
+      ],
+      "bonne": 2,
+      "explication": "EMAR 66 est propre au domaine militaire. La qualification ELA2 relève du Part-66 civil lui-même ; le Part-CAO reste un cadre civil, sans lien avec EMAR.",
+      "source": "easa_2025.txt — Appendix I Module 10 item 10.9 (mention du terme, sans détail réglementaire disponible dans nos sources)"
+    },
+    {
+      "uid": "M10-0084",
+      "sous_chapitre": "M10.12",
+      "question": "Des travaux spécialisés comme la soudure ou le contrôle non destructif peuvent, pour certains aéronefs, dépendre :",
+      "options": [
+        "De normes propres à l'État",
+        "Des spécifications CS-STAN",
+        "Du règlement Air Ops"
+      ],
+      "bonne": 0,
+      "explication": "En l'absence d'exigence UE équivalente, ces travaux restent soumis à des normes nationales/internationales. CS-STAN ne couvre que des modifications/réparations standard prédéfinies ; Air Ops régit l'exploitation, pas la maintenance.",
+      "source": "easa_2025.txt — Appendix I Module 10 item 10.9"
+    },
+    {
+      "uid": "M10-0085",
+      "sous_chapitre": "M10.13",
+      "question": "Le règlement (UE) 2023/203 ajoute, pour un organisme de maintenance ou de gestion de navigabilité :",
+      "options": [
+        "Un système de gestion de la sécurité de l'information distinct",
+        "Un renforcement du système de gestion existant",
+        "Une extension du programme d'entretien de chaque aéronef"
+      ],
+      "bonne": 0,
+      "explication": "145.A.200A/CAMO.A.200A créent un système distinct, en plus de l'existant — pas un simple renforcement, ni une extension du programme d'entretien.",
+      "source": "easa_2025.txt — 145.A.200A, CAMO.A.200A"
+    },
+    {
+      "uid": "M10-0086",
+      "sous_chapitre": "M10.13",
+      "question": "L'obligation de système de gestion de la sécurité de l'information devient applicable :",
+      "options": [
+        "En 2008",
+        "Le 22 février 2026",
+        "En 2015"
+      ],
+      "bonne": 1,
+      "explication": "Le texte fixe une date précise : le 22 février 2026. 2008 est l'année du règlement fondateur de l'AESA (remplacé depuis) ; 2015 celle du règlement ayant introduit le Part-T — deux dates réelles, sans rapport avec la cybersécurité.",
+      "source": "easa_2025.txt — 145.A.200A « Applicable from 22 February 2026 »"
+    },
+    {
+      "uid": "M10-0087",
+      "sous_chapitre": "M10.13",
+      "question": "L'obligation d'un système de gestion de la sécurité de l'information s'étend :",
+      "options": [
+        "Aux organismes de formation",
+        "Aux organismes de conception",
+        "Jusqu'à l'autorité compétente elle-même"
+      ],
+      "bonne": 2,
+      "explication": "66.B.15 étend l'obligation à l'autorité compétente elle-même, en plus des organismes de maintenance et de gestion de navigabilité. Les organismes de conception (Part 21) et de formation (Part-147) ne sont pas les destinataires cités ici.",
+      "source": "easa_2025.txt — 66.B.15"
+    },
+    {
+      "uid": "M10-0088",
+      "sous_chapitre": "M10.13",
+      "question": "Le système de gestion de la sécurité de l'information vise à traiter :",
+      "options": [
+        "Des risques informatiques ayant un impact sur la sécurité aérienne",
+        "Des risques de cybersécurité purement commerciaux (fraude, données clients)",
+        "Des risques couverts par le règlement 376/2014"
+      ],
+      "bonne": 0,
+      "explication": "Le texte vise les risques d'information ayant un impact potentiel sur la sécurité aérienne — pas les risques commerciaux (fraude, données clients), qui restent hors de ce champ précis ; le 376/2014 couvre le signalement d'événements en général, un sujet distinct.",
+      "source": "easa_2025.txt — règlement d'exécution (UE) 2023/203, IS.I.OR.200 (Annexe I)"
+    },
+    {
+      "uid": "M10-0089",
+      "sous_chapitre": "M10.13",
+      "question": "Face à un incident de sécurité de l'information touchant la sécurité aérienne, l'autorité compétente doit agir :",
+      "options": [
+        "En transmettant le dossier au titulaire du certificat de type",
+        "Rapidement, en coordination avec les autres autorités",
+        "En consultant d'abord l'Agence"
+      ],
+      "bonne": 1,
+      "explication": "145.B.135A impose une réaction rapide et coordonnée avec les autres autorités compétentes de l'État membre — sans consultation préalable obligatoire de l'Agence, ni transmission systématique au titulaire du certificat de type.",
+      "source": "easa_2025.txt — 145.B.135A"
+    },
+    {
+      "uid": "M10-0090",
+      "sous_chapitre": "M10.13",
+      "question": "Concrètement, l'obligation de gestion de la sécurité de l'information couvre surtout :",
+      "options": [
+        "Le manuel de vol de l'aéronef",
+        "Le programme d'entretien de l'aéronef",
+        "La documentation technique numérique et les outils de traçabilité"
+      ],
+      "bonne": 2,
+      "explication": "L'obligation vise les systèmes d'information de l'organisme. Le manuel de vol est un document du constructeur ; le programme d'entretien est un document de planification — deux documents réels, mais distincts d'un système d'information.",
+      "source": "easa_2025.txt — 145.A.200A (objet du système) ; exemples d'illustration pédagogique"
+    },
+    {
+      "uid": "M10-0091",
+      "sous_chapitre": "M10.13",
+      "question": "Par sa nature, le règlement (UE) 2023/203 relève :",
+      "options": [
+        "Du droit souple",
+        "Du droit dur, directement obligatoire",
+        "D'un accord bilatéral entre États"
+      ],
+      "bonne": 1,
+      "explication": "2023/203 est un règlement d'exécution : droit dur, directement obligatoire — pas du droit souple comme un CS, ni un accord bilatéral (un mécanisme distinct, vu en M10.2).",
+      "source": "easa_2025.txt — nature des textes (règlement vs AMC/GM), cohérence avec M10.2"
     }
   ]
 }

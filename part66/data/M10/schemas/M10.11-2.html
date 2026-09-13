@@ -1,0 +1,75 @@
+<div id="schema-m1011b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1011b-wrap .m1011b-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.9em; }
+#schema-m1011b-wrap .m1011b-btn:hover { background:#e8e8e8; }
+#schema-m1011b-wrap .m1011b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1011b-wrap .m1011b-row { display:flex; align-items:center; gap:10px; margin-top:8px; }
+#schema-m1011b-wrap .m1011b-rowlabel { width:110px; font-size:0.85em; color:#333; }
+#schema-m1011b-wrap .m1011b-value { font-weight:bold; }
+#schema-m1011b-wrap .m1011b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> compare la gravité, le délai et la conséquence d'un finding de niveau 1 et d'un finding de niveau 2.</p>
+
+<div>
+  <button class="m1011b-btn active" data-niveau="1">Finding niveau 1</button>
+  <button class="m1011b-btn" data-niveau="2">Finding niveau 2</button>
+</div>
+
+<div class="m1011b-row">
+  <div class="m1011b-rowlabel">Gravité</div>
+  <div class="m1011b-value" id="m1011b-gravite">Abaisse ou met sérieusement en danger la sécurité</div>
+</div>
+<div class="m1011b-row">
+  <div class="m1011b-rowlabel">Délai accordé</div>
+  <div class="m1011b-value" id="m1011b-delai">Aucun — action immédiate</div>
+</div>
+<div class="m1011b-row">
+  <div class="m1011b-rowlabel">Conséquence</div>
+  <div class="m1011b-value" id="m1011b-consequence">Jusqu'à suspension ou retrait de l'agrément</div>
+</div>
+
+<div class="m1011b-caption" id="m1011b-caption">Un finding de niveau 1 signale un manquement significatif : l'autorité agit sans délai, pouvant aller jusqu'à suspendre ou retirer l'agrément.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1011b-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('.m1011b-btn');
+  var caption = wrap.querySelector('#m1011b-caption');
+  var gravite = wrap.querySelector('#m1011b-gravite');
+  var delai = wrap.querySelector('#m1011b-delai');
+  var consequence = wrap.querySelector('#m1011b-consequence');
+
+  var DATA = {
+    "1": {
+      gravite: "Abaisse ou met sérieusement en danger la sécurité",
+      delai: "Aucun — action immédiate",
+      consequence: "Jusqu'à suspension ou retrait de l'agrément",
+      caption: "Un finding de niveau 1 signale un manquement significatif : l'autorité agit sans délai, pouvant aller jusqu'à suspendre ou retirer l'agrément."
+    },
+    "2": {
+      gravite: "Pourrait abaisser la sécurité, sans la mettre en danger immédiat",
+      delai: "3 mois au départ, prolongeable selon le dossier",
+      consequence: "Action corrective à mener dans le délai accordé",
+      caption: "Un finding de niveau 2 laisse à l'organisme un délai pour corriger l'écart — 3 mois au départ en général, éventuellement prolongé selon la nature du dossier et le dialogue avec l'autorité."
+    }
+  };
+
+  function render(niveau) {
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-niveau') === niveau); });
+    var d = DATA[niveau];
+    gravite.textContent = d.gravite;
+    delai.textContent = d.delai;
+    consequence.textContent = d.consequence;
+    caption.textContent = d.caption;
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { render(b.getAttribute('data-niveau')); });
+  });
+
+  render('1');
+})();
+</script>

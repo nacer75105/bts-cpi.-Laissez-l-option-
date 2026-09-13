@@ -1,0 +1,62 @@
+<div id="schema-m109b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m109b-wrap .m109b-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.9em; }
+#schema-m109b-wrap .m109b-btn:hover { background:#e8e8e8; }
+#schema-m109b-wrap .m109b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m109b-wrap .m109b-row { display:flex; align-items:center; gap:10px; margin-top:12px; }
+#schema-m109b-wrap .m109b-rowlabel { width:170px; font-size:0.85em; color:#333; }
+#schema-m109b-wrap .m109b-indic { padding:6px 14px; border-radius:6px; font-weight:bold; }
+#schema-m109b-wrap .m109b-indic.ok { background:#d4edda; color:#1e6b2f; }
+#schema-m109b-wrap .m109b-indic.non { background:#f8d7da; color:#a11c2c; }
+#schema-m109b-wrap .m109b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> pour chaque exemple de tâche, vérifie si le certificateur indépendant peut la certifier lui-même, ou si elle relève de l'Appendice VII (tâche complexe, réservée à un organisme agréé).</p>
+
+<div>
+  <button class="m109b-btn active" data-tache="roue">Remplacement d'une roue (déboulonnage, procédure normale)</button>
+  <button class="m109b-btn" data-tache="huile">Contrôle du niveau d'huile moteur</button>
+  <button class="m109b-btn" data-tache="longeron">Réparation d'un longeron par rivetage</button>
+  <button class="m109b-btn" data-tache="helice">Équilibrage d'une hélice</button>
+</div>
+
+<div class="m109b-row">
+  <div class="m109b-rowlabel">Certificateur indépendant</div>
+  <div class="m109b-indic ok" id="m109b-indic">Autorisé</div>
+</div>
+
+<div class="m109b-caption" id="m109b-caption">Un remplacement de roue par déboulonnage/reboulonnage, selon la procédure normale du manuel, n'implique ni rivetage ni collage ni soudage : ce n'est pas la tâche visée par l'Appendice VII (qui ne classe complexe qu'un remplacement PAR rivetage, collage, stratification ou soudage — une roue peut d'ailleurs en faire partie, mais seulement si elle est remplacée par ces méthodes).</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m109b-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('.m109b-btn');
+  var caption = wrap.querySelector('#m109b-caption');
+  var indic = wrap.querySelector('#m109b-indic');
+
+  var TEXTES = {
+    roue: "Un remplacement de roue par déboulonnage/reboulonnage, selon la procédure normale du manuel, n'implique ni rivetage ni collage ni soudage : ce n'est pas la tâche visée par l'Appendice VII (qui ne classe complexe qu'un remplacement PAR rivetage, collage, stratification ou soudage — une roue peut d'ailleurs en faire partie, mais seulement si elle est remplacée par ces méthodes).",
+    huile: "Le contrôle visuel d'un niveau d'huile moteur est une vérification simple et courante : elle reste, elle aussi, hors de la liste des tâches complexes.",
+    longeron: "La réparation d'un longeron par rivetage, collage ou soudage figure explicitement à l'Appendice VII comme tâche complexe : elle est réservée à un organisme agréé (Part-145 ou Part-CAO), hors de portée du certificateur indépendant.",
+    helice: "L'équilibrage d'une hélice est en principe une tâche complexe (Appendice VII) — sauf deux exceptions prévues par le texte lui-même : l'équilibrage statique exigé par le manuel d'entretien, ou l'équilibrage dynamique sur hélice installée avec un équipement électronique, si le manuel le permet. En dehors de ces deux cas précis, l'équilibrage reste réservé à un organisme agréé."
+  };
+  var AUTORISE = { roue: true, huile: true, longeron: false, helice: false };
+
+  function render(tache) {
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-tache') === tache); });
+    caption.textContent = TEXTES[tache];
+    var ok = AUTORISE[tache];
+    indic.textContent = ok ? "Autorisé" : "Non autorisé (réservé à un organisme agréé)";
+    indic.classList.toggle('ok', ok);
+    indic.classList.toggle('non', !ok);
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { render(b.getAttribute('data-tache')); });
+  });
+
+  render('roue');
+})();
+</script>
