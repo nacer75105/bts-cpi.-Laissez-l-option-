@@ -1,0 +1,85 @@
+<div id="schema-m7a13-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m7a13-wrap .m7a13-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:1em; }
+#schema-m7a13-wrap .m7a13-btn:hover { background:#e8e8e8; }
+#schema-m7a13-wrap .m7a13-btn.active { background:#333; color:#fff; border-color:#333; }
+#schema-m7a13-wrap .m7a13-track { position:relative; width:100%; max-width:460px; height:26px; background:#e2e2e2; border-radius:6px; margin:12px 0 4px; overflow:hidden; }
+#schema-m7a13-wrap .m7a13-zone { position:absolute; top:0; bottom:0; background:rgba(192,57,43,0.30); }
+#schema-m7a13-wrap .m7a13-bar { height:100%; width:0%; background:#3a9d3a; transition:width .15s, background .15s; }
+#schema-m7a13-wrap .m7a13-rowlabel { font-size:0.78em; color:#666; margin:2px 0 10px; }
+#schema-m7a13-wrap .m7a13-value { font-weight:bold; margin-bottom:4px; }
+#schema-m7a13-wrap .m7a13-caption { margin-top:12px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:4em; }
+#schema-m7a13-wrap .m7a13-caption.ok { border-left-color:#3a9d3a; background:rgba(58,157,58,0.10); }
+#schema-m7a13-wrap .m7a13-caption.bad { border-left-color:#c0392b; background:rgba(192,57,43,0.10); }
+</style>
+
+<p><strong>Essaie toi-même :</strong> un compte rendu d'atterrissage rude par l'équipage déclenche toujours l'évaluation prévue par l'AMM. Fais varier l'accélération verticale réellement enregistrée (unités d'illustration) pour voir ce que cette évaluation conclut.</p>
+
+<div class="m7a13-value">Accélération verticale réellement enregistrée (illustration) : <span id="m7a13-acc">1.4</span> g</div>
+<div class="m7a13-track">
+  <div class="m7a13-zone" id="m7a13-zone"></div>
+  <div class="m7a13-bar" id="m7a13-bar"></div>
+</div>
+<div class="m7a13-rowlabel">Zone rouge : seuil constructeur au-delà duquel l'inspection complète après atterrissage dur est requise (illustration : 2,0 g)</div>
+
+<div>
+  <button class="m7a13-btn" id="m7a13-moins">− Réduire</button>
+  <button class="m7a13-btn" id="m7a13-plus">+ Augmenter</button>
+</div>
+
+<div style="margin-top:10px;">
+  <button class="m7a13-btn active" data-ressenti="doux" id="m7a13-doux">Ressenti équipage : atterrissage doux</button>
+  <button class="m7a13-btn" data-ressenti="rude" id="m7a13-rude">Ressenti équipage : atterrissage rude (compte rendu déposé)</button>
+</div>
+
+<div class="m7a13-caption ok" id="m7a13-caption">Ressenti de l'équipage : atterrissage doux. Accélération réellement enregistrée sous le seuil constructeur : une fois évaluée, elle ne déclenche pas l'inspection complète — mais un compte rendu de rudesse, s'il y en avait eu un, aurait de toute façon déclenché cette évaluation, jamais ignoré d'emblée.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m7a13-wrap');
+  if (!wrap) { return; }
+  var accSpan = wrap.querySelector('#m7a13-acc');
+  var bar = wrap.querySelector('#m7a13-bar');
+  var zone = wrap.querySelector('#m7a13-zone');
+  var caption = wrap.querySelector('#m7a13-caption');
+  var moinsBtn = wrap.querySelector('#m7a13-moins');
+  var plusBtn = wrap.querySelector('#m7a13-plus');
+  var douxBtn = wrap.querySelector('#m7a13-doux');
+  var rudeBtn = wrap.querySelector('#m7a13-rude');
+
+  var MAX = 3.0;
+  var SEUIL = 2.0;
+  var acc = 1.4;
+  var ressenti = 'doux';
+
+  function pct(v) { return Math.max(0, Math.min(100, (v / MAX) * 100)); }
+
+  function render() {
+    accSpan.textContent = acc.toFixed(1);
+    bar.style.width = pct(acc) + '%';
+    bar.style.background = acc >= SEUIL ? '#c0392b' : '#3a9d3a';
+    zone.style.left = pct(SEUIL) + '%';
+    zone.style.width = (100 - pct(SEUIL)) + '%';
+
+    caption.classList.remove('ok', 'bad');
+    var depasse = acc >= SEUIL;
+    var texte = 'Ressenti de l’équipage : atterrissage ' + (ressenti === 'doux' ? 'doux' : 'rude (compte rendu déposé)') + '. ';
+    if (depasse) {
+      texte += 'Accélération réellement enregistrée au-delà du seuil constructeur : l’évaluation prévue par l’AMM conclut à l’inspection complète après atterrissage dur, que l’équipage ait ou non déposé un compte rendu.';
+      caption.classList.add('bad');
+    } else {
+      texte += 'Accélération réellement enregistrée sous le seuil constructeur : une fois évaluée, elle ne déclenche pas l’inspection complète — mais un compte rendu de rudesse, s’il y en avait eu un, aurait de toute façon déclenché cette évaluation, jamais ignoré d’emblée.';
+      caption.classList.add('ok');
+    }
+    caption.textContent = texte;
+  }
+
+  plusBtn.addEventListener('click', function () { acc = Math.min(MAX, Math.round((acc + 0.2) * 10) / 10); render(); });
+  moinsBtn.addEventListener('click', function () { acc = Math.max(0, Math.round((acc - 0.2) * 10) / 10); render(); });
+  douxBtn.addEventListener('click', function () { ressenti = 'doux'; douxBtn.classList.add('active'); rudeBtn.classList.remove('active'); render(); });
+  rudeBtn.addEventListener('click', function () { ressenti = 'rude'; rudeBtn.classList.add('active'); douxBtn.classList.remove('active'); render(); });
+
+  render();
+})();
+</script>

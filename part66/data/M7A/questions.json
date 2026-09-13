@@ -6,11 +6,11 @@
       "sous_chapitre": "M7A.1",
       "question": "Sur un feu de carburant (liquide inflammable), quel geste faut-il proscrire ?",
       "options": [
-        "Utiliser un extincteur à poudre",
         "Utiliser un extincteur au CO2",
-        "Utiliser un extincteur à eau"
+        "Utiliser un extincteur à eau",
+        "Utiliser un extincteur à poudre"
       ],
-      "bonne": 2,
+      "bonne": 1,
       "explication": "L'eau est à proscrire sur un feu de liquide inflammable : projetée dessus, elle ne l'éteint pas mais disperse le liquide en surface, ce qui peut propager le feu au lieu de l'éteindre. Le CO2 et la poudre, eux, étouffent correctement ce type de feu en interrompant la combustion sans disperser le liquide : ce sont des choix adaptés, pas des gestes à proscrire.",
       "source": "Notions générales de sécurité en maintenance aéronautique — classes de feu et agents extincteurs"
     },
@@ -19,11 +19,11 @@
       "sous_chapitre": "M7A.1",
       "question": "Comment rechercher une fuite de fluide hydraulique haute pression ?",
       "options": [
-        "En augmentant la pression du circuit pour mieux voir la fuite",
         "Avec la main nue, en passant lentement au-dessus du circuit",
-        "Avec un morceau de carton ou de bois tenu à distance"
+        "Avec un morceau de carton ou de bois tenu à distance",
+        "En augmentant la pression du circuit pour mieux voir la fuite"
       ],
-      "bonne": 2,
+      "bonne": 1,
       "explication": "Un jet de fluide hydraulique haute pression peut être invisible et pourtant traverser la peau, provoquant une injection sous-cutanée grave : on recherche donc une fuite à distance, avec un objet comme un morceau de carton ou de bois, jamais à la main nue. Augmenter la pression du circuit pour « mieux voir » aggraverait le danger au lieu de le réduire.",
       "source": "Notions générales de sécurité en maintenance aéronautique — risques hydrauliques haute pression"
     },
@@ -32,11 +32,11 @@
       "sous_chapitre": "M7A.1",
       "question": "Pourquoi relie-t-on électriquement l'aéronef et le moyen d'avitaillement avant un transfert de carburant ?",
       "options": [
-        "Pour accélérer le débit de transfert du carburant",
         "Pour égaliser leur potentiel électrique et éviter une étincelle d'électricité statique",
-        "Pour mesurer la quantité de carburant transférée"
+        "Pour mesurer la quantité de carburant transférée",
+        "Pour accélérer le débit de transfert du carburant"
       ],
-      "bonne": 1,
+      "bonne": 0,
       "explication": "Le transfert de carburant dans une tuyauterie peut générer de l'électricité statique ; relier électriquement l'aéronef et le moyen d'avitaillement égalise leur potentiel et évite qu'une étincelle ne jaillisse à proximité des vapeurs de carburant. Cette liaison n'a aucun effet sur le débit de transfert ni sur la mesure de la quantité transférée, qui relèvent d'autres équipements.",
       "source": "Notions générales de sécurité en maintenance aéronautique — avitaillement et électricité statique"
     },
@@ -46,8 +46,8 @@
       "question": "Pourquoi le port de gants est-il déconseillé à proximité d'un outil rotatif ?",
       "options": [
         "Les gants risquent d'être happés par l'outil en rotation",
-        "Les gants réduisent uniquement le confort de préhension",
-        "Les gants ne protègent pas contre le bruit"
+        "Les gants ne protègent pas contre le bruit",
+        "Les gants réduisent uniquement le confort de préhension"
       ],
       "bonne": 0,
       "explication": "Près d'un outil rotatif, un gant peut être happé par la pièce en rotation et entraîner la main avec lui : c'est le danger principal, pas une simple question de confort. Le fait que les gants ne protègent pas contre le bruit est vrai mais hors sujet ici : ce n'est de toute façon pas leur fonction, et cela n'explique pas pourquoi ils sont déconseillés à cet endroit précis.",
@@ -58,11 +58,11 @@
       "sous_chapitre": "M7A.1",
       "question": "Pourquoi le CO2 est-il adapté à un feu d'origine électrique, contrairement à l'eau ?",
       "options": [
-        "Le CO2 est moins cher que l'eau",
         "Le CO2 refroidit davantage que l'eau",
-        "Le CO2 ne conduit pas le courant électrique, contrairement à l'eau"
+        "Le CO2 ne conduit pas le courant électrique, contrairement à l'eau",
+        "Le CO2 est moins cher que l'eau"
       ],
-      "bonne": 2,
+      "bonne": 1,
       "explication": "L'eau conduit le courant électrique et expose au risque d'électrocution si elle est projetée sur un équipement sous tension ; le CO2, gaz non conducteur, étouffe le feu sans ce risque. Le coût comparé des deux agents n'entre pas en jeu dans ce choix de sécurité, et le CO2 agit en étouffant le feu, pas en le refroidissant davantage que l'eau.",
       "source": "Notions générales de sécurité en maintenance aéronautique — feux d'origine électrique"
     },
@@ -71,11 +71,11 @@
       "sous_chapitre": "M7A.2",
       "question": "Que signifie l'acronyme FOD, utilisé en maintenance aéronautique ?",
       "options": [
+        "Foreign Object Damage — dommage causé par un corps étranger",
         "Fuel Overflow Detection — détection de débordement de carburant",
-        "Fitting Operation Diagram — schéma d'assemblage",
-        "Foreign Object Damage — dommage causé par un corps étranger"
+        "Fitting Operation Diagram — schéma d'assemblage"
       ],
-      "bonne": 2,
+      "bonne": 0,
       "explication": "FOD désigne le dommage causé par un corps étranger (outil, visserie, débris) oublié ou introduit dans une zone sensible de l'aéronef. Les deux autres développés de l'acronyme sont inventés : ils ne correspondent à aucun terme technique standard associé à ces initiales dans ce contexte.",
       "source": "Notions générales de pratiques de maintenance aéronautique — prévention du FOD"
     },
@@ -84,11 +84,11 @@
       "sous_chapitre": "M7A.2",
       "question": "Pourquoi un outil manquant en fin d'intervention n'est-il jamais considéré comme un détail à régulariser plus tard ?",
       "options": [
+        "Parce que la procédure impose de racheter un outil identique avant la clôture du chantier",
         "Parce qu'il sera de toute façon détecté automatiquement par les systèmes de surveillance de l'aéronef",
-        "Parce qu'un objet oublié dans l'aéronef peut créer un dommage qui ne se manifeste parfois que plus tard",
-        "Parce que la procédure impose de racheter un outil identique avant la clôture du chantier"
+        "Parce qu'un objet oublié dans l'aéronef peut créer un dommage qui ne se manifeste parfois que plus tard"
       ],
-      "bonne": 1,
+      "bonne": 2,
       "explication": "Un outil oublié peut provoquer un dommage FOD qui n'apparaît pas immédiatement, parfois seulement en vol : c'est cette absence de signe visible immédiat qui impose de considérer le travail comme non terminé tant que l'outil n'est pas retrouvé, avant toute autre étape. Aucun système de surveillance de l'aéronef ne détecte un objet étranger oublié dans une structure ou un compartiment : compter sur une telle détection automatique reviendrait à ignorer le risque plutôt qu'à le traiter. Le sujet n'est pas non plus de remplacer l'outil manquant par un autre : un outil racheté ne fait pas disparaître celui resté dans l'aéronef, ce qui est précisément le danger à traiter.",
       "source": "Notions générales de pratiques de maintenance aéronautique — contrôle des outils"
     },
@@ -97,8 +97,8 @@
       "sous_chapitre": "M7A.2",
       "question": "Quel est le risque d'un assemblage vissé serré à un couple insuffisant ?",
       "options": [
-        "Il précontraint excessivement le matériau",
         "Il devient impossible à démonter ultérieurement",
+        "Il précontraint excessivement le matériau",
         "Il peut se desserrer sous l'effet des vibrations en service"
       ],
       "bonne": 2,
@@ -123,11 +123,11 @@
       "sous_chapitre": "M7A.2",
       "question": "Pourquoi une clé dynamométrique doit-elle être étalonnée périodiquement ?",
       "options": [
-        "Parce que l'étalonnage n'est requis qu'après une chute de la clé, jamais autrement",
         "Parce que la couleur de la clé s'estompe avec l'usage",
-        "Parce que sa lecture peut dériver avec le temps, sans que rien ne le signale visuellement"
+        "Parce que sa lecture peut dériver avec le temps, sans que rien ne le signale visuellement",
+        "Parce que l'étalonnage n'est requis qu'après une chute de la clé, jamais autrement"
       ],
-      "bonne": 2,
+      "bonne": 1,
       "explication": "Comme tout instrument de mesure, une clé dynamométrique peut dériver avec le temps sans que rien à son aspect ne le laisse deviner : c'est précisément pour cela qu'un étalonnage périodique est nécessaire, indépendamment de toute chute. L'aspect esthétique de la clé n'a aucun rapport avec la fiabilité de sa mesure, et limiter l'étalonnage aux seuls cas de chute ignorerait la dérive normale qui peut survenir sans incident particulier.",
       "source": "Notions générales de pratiques de maintenance aéronautique — étalonnage des instruments de mesure"
     },
@@ -136,9 +136,9 @@
       "sous_chapitre": "M7A.3",
       "question": "Quelle est la différence essentielle entre un dessin d'ensemble et un dessin de définition ?",
       "options": [
-        "Le dessin d'ensemble est toujours en couleur, le dessin de définition toujours en noir et blanc",
+        "Le dessin de définition ne concerne que les schémas électriques",
         "Le dessin d'ensemble montre l'assemblage de plusieurs pièces, le dessin de définition détaille une seule pièce avec ses cotes",
-        "Le dessin de définition ne concerne que les schémas électriques"
+        "Le dessin d'ensemble est toujours en couleur, le dessin de définition toujours en noir et blanc"
       ],
       "bonne": 1,
       "explication": "Le dessin d'ensemble montre comment plusieurs pièces s'assemblent entre elles, tandis que le dessin de définition détaille une seule pièce avec toutes ses cotes et tolérances. La couleur du support n'est pas un critère qui distingue ces deux types de dessin, et le dessin de définition peut tout aussi bien décrire une pièce mécanique qu'un composant électrique : il n'est pas réservé aux schémas électriques.",
@@ -149,9 +149,9 @@
       "sous_chapitre": "M7A.3",
       "question": "Sur un schéma de câblage électrique, la position des symboles représente :",
       "options": [
-        "L'ordre chronologique de montage des composants",
+        "L'emplacement physique réel des composants dans l'aéronef",
         "Les relations fonctionnelles entre composants, indépendamment de leur position réelle",
-        "L'emplacement physique réel des composants dans l'aéronef"
+        "L'ordre chronologique de montage des composants"
       ],
       "bonne": 1,
       "explication": "Un schéma de câblage représente les relations fonctionnelles entre composants (comment ils sont reliés électriquement), pas leur emplacement physique réel dans l'aéronef ni l'ordre dans lequel ils ont été montés. Confondre schéma fonctionnel et position réelle est une erreur classique de lecture, précisément parce que rien dans le schéma n'indique où se trouve réellement chaque composant.",
@@ -163,10 +163,10 @@
       "question": "Pourquoi faut-il vérifier l'indice de révision d'un dessin avant de l'utiliser ?",
       "options": [
         "Parce que l'indice de révision indique l'échelle du dessin",
-        "Pour connaître le nom du dessinateur ayant réalisé le document",
-        "Parce qu'un dessin resté à une révision antérieure peut ne plus refléter la configuration réellement installée"
+        "Parce qu'un dessin resté à une révision antérieure peut ne plus refléter la configuration réellement installée",
+        "Pour connaître le nom du dessinateur ayant réalisé le document"
       ],
-      "bonne": 2,
+      "bonne": 1,
       "explication": "Un dessin peut être révisé pour refléter une modification de la pièce ou de l'installation ; un exemplaire resté à une révision antérieure peut donc montrer une configuration qui n'est plus celle réellement installée, sans que rien à son aspect ne le signale. Le nom du dessinateur, même lorsqu'il figure au cartouche, ne renseigne en rien sur la validité de la configuration représentée : seul l'indice de révision le fait. Et l'échelle du dessin est une information distincte de l'indice de révision : elle ne dit rien non plus de la configuration réellement installée.",
       "source": "Notions générales de pratiques de maintenance aéronautique — cartouche et indice de révision"
     },
@@ -201,11 +201,11 @@
       "sous_chapitre": "M7A.4",
       "question": "Pourquoi une tolérance est-elle définie sur une cote plutôt qu'une valeur unique ?",
       "options": [
-        "Parce que les clients préfèrent avoir le choix entre plusieurs dimensions",
+        "Parce qu'aucun processus de fabrication ne peut reproduire une cote de façon parfaitement identique d'une pièce à l'autre",
         "Parce que la tolérance permet de réduire le prix de fabrication des pièces",
-        "Parce qu'aucun processus de fabrication ne peut reproduire une cote de façon parfaitement identique d'une pièce à l'autre"
+        "Parce que les clients préfèrent avoir le choix entre plusieurs dimensions"
       ],
-      "bonne": 2,
+      "bonne": 0,
       "explication": "La tolérance existe parce qu'aucun processus de fabrication ne peut reproduire une cote de façon parfaitement identique d'une pièce à l'autre : elle définit la plage de valeurs réelles jugées acceptables. Il ne s'agit ni d'une préférence commerciale pour un choix de dimensions, ni d'un moyen de réduire les coûts de fabrication.",
       "source": "Notions générales de pratiques de maintenance aéronautique — tolérances dimensionnelles"
     },
@@ -214,11 +214,11 @@
       "sous_chapitre": "M7A.4",
       "question": "Un ajustement avec jeu (clearance fit) est adapté à :",
       "options": [
-        "Une pièce dont la cote n'a pas encore été définie par le bureau d'études",
+        "Une pièce qui doit pouvoir tourner ou coulisser librement dans son logement",
         "Une pièce qui doit rester rigoureusement fixe sans aucun mouvement relatif",
-        "Une pièce qui doit pouvoir tourner ou coulisser librement dans son logement"
+        "Une pièce dont la cote n'a pas encore été définie par le bureau d'études"
       ],
-      "bonne": 2,
+      "bonne": 0,
       "explication": "Un ajustement avec jeu laisse un espace entre les deux pièces, ce qui convient à une pièce devant tourner ou coulisser librement dans son logement. Une pièce qui doit rester rigoureusement fixe a au contraire besoin d'une tenue ferme, sans le moindre espace : un jeu à cet endroit permettrait un mouvement non désiré. Et le type d'ajustement choisi par le bureau d'études suppose que la cote de la pièce est déjà définie sur le dessin : ce n'est pas une caractéristique d'une pièce dont la cote resterait encore à fixer.",
       "source": "Notions générales de pratiques de maintenance aéronautique — types d'ajustements"
     },
@@ -253,11 +253,11 @@
       "sous_chapitre": "M7A.4",
       "question": "Pourquoi chauffer un logement (ou refroidir la pièce à insérer) facilite-t-il l'assemblage d'un ajustement avec serrage ?",
       "options": [
-        "La dilatation thermique modifie temporairement les cotes, ce qui facilite l'insertion sans effort excessif",
+        "Cette méthode remplace la nécessité de respecter la tolérance prévue par le dessin",
         "Le chauffage modifie définitivement la cote réelle de la pièce",
-        "Cette méthode remplace la nécessité de respecter la tolérance prévue par le dessin"
+        "La dilatation thermique modifie temporairement les cotes, ce qui facilite l'insertion sans effort excessif"
       ],
-      "bonne": 0,
+      "bonne": 2,
       "explication": "La dilatation thermique modifie temporairement les cotes des pièces (le logement chauffé s'agrandit, la pièce refroidie rétrécit), ce qui facilite l'insertion sans effort excessif ; une fois revenues à température ambiante, les pièces retrouvent leurs cotes réelles d'origine et le serrage prévu se rétablit. Le changement de cote n'est donc que temporaire, pas définitif : la pièce ne conserve pas la cote qu'elle avait le temps du chauffage. Et cette méthode ne dispense en rien de respecter la tolérance prévue par le dessin : elle en facilite seulement la mise en œuvre.",
       "source": "Notions générales de pratiques de maintenance aéronautique — assemblage par dilatation thermique"
     },
@@ -266,11 +266,11 @@
       "sous_chapitre": "M7A.5",
       "question": "Pourquoi un câble aéronautique est-il en général réalisé en brins multiples torsadés plutôt qu'en fil plein massif ?",
       "options": [
+        "Un fil plein massif est toujours moins cher à produire",
         "Les brins multiples résistent mieux à la fatigue provoquée par les vibrations répétées",
-        "Les brins multiples conduisent mieux le courant qu'un fil plein de même section",
-        "Un fil plein massif est toujours moins cher à produire"
+        "Les brins multiples conduisent mieux le courant qu'un fil plein de même section"
       ],
-      "bonne": 0,
+      "bonne": 1,
       "explication": "Un câble à brins multiples reste flexible et résiste beaucoup mieux à la fatigue provoquée par les vibrations répétées qu'un conducteur massif, qui finit par se fissurer aux endroits pliés de façon répétée. Le coût comparé des deux constructions et une éventuelle meilleure conductivité ne sont pas la raison de ce choix, qui repose sur la tenue mécanique en service, pas sur la conductivité électrique.",
       "source": "Notions générales de pratiques de maintenance aéronautique — câblage aéronautique"
     },
@@ -279,11 +279,11 @@
       "sous_chapitre": "M7A.5",
       "question": "En jauge AWG (American Wire Gauge) :",
       "options": [
-        "Plus le numéro de jauge est petit, plus le conducteur est gros",
         "Plus le numéro de jauge est grand, plus le conducteur est gros",
-        "Le numéro de jauge n'a aucun lien avec la section du conducteur"
+        "Le numéro de jauge n'a aucun lien avec la section du conducteur",
+        "Plus le numéro de jauge est petit, plus le conducteur est gros"
       ],
-      "bonne": 0,
+      "bonne": 2,
       "explication": "En AWG, plus le numéro de jauge est petit, plus le conducteur est gros — une relation inversée qui surprend souvent au premier abord. Affirmer l'inverse (numéro grand = conducteur gros) inverse la relation réelle, et dire que le numéro n'a aucun lien avec la section ignore justement la fonction même de cette désignation normalisée.",
       "source": "Notions générales de pratiques de maintenance aéronautique — désignation AWG des câbles"
     },
@@ -292,8 +292,8 @@
       "sous_chapitre": "M7A.5",
       "question": "Pourquoi le sertissage (crimping) est-il en général préféré au soudage pour les connexions électriques aéronautiques ?",
       "options": [
-        "Le soudage est interdit dans tous les cas par la réglementation aéronautique",
         "Le sertissage est toujours moins coûteux en outillage que le soudage",
+        "Le soudage est interdit dans tous les cas par la réglementation aéronautique",
         "Une cosse sertie tolère mieux les vibrations qu'une soudure, rigide juste à côté d'un câble resté flexible"
       ],
       "bonne": 2,
@@ -331,8 +331,8 @@
       "sous_chapitre": "M7A.6",
       "question": "Pourquoi un rivet plein nécessite-t-il un accès des deux côtés de la tôle ?",
       "options": [
-        "Parce que le rivet plein doit être chauffé simultanément des deux côtés avant la pose",
         "Parce que la réglementation impose systématiquement un contrôle visuel des deux côtés après la pose",
+        "Parce que le rivet plein doit être chauffé simultanément des deux côtés avant la pose",
         "Parce que la tête d'atelier se forme du côté opposé à la tête d'usine, sous l'effet conjugué de la riveteuse et d'un tas à river maintenu de l'autre côté"
       ],
       "bonne": 2,
@@ -345,8 +345,8 @@
       "question": "Pourquoi certains rivets en alliage d'aluminium à haute résistance doivent-ils être conservés au réfrigérateur avant leur pose ?",
       "options": [
         "Parce qu'ils durcissent naturellement avec le temps et deviennent trop durs pour être bouterollés correctement passé un certain délai",
-        "Parce que le froid rend le rivet plus malléable de façon permanente",
-        "Parce que la réfrigération est le seul moyen de nettoyer le rivet avant la pose"
+        "Parce que la réfrigération est le seul moyen de nettoyer le rivet avant la pose",
+        "Parce que le froid rend le rivet plus malléable de façon permanente"
       ],
       "bonne": 0,
       "explication": "Ces alliages durcissent naturellement avec le temps après leur traitement thermique ; passé un certain délai, ils deviennent trop durs pour être correctement bouterollés sans risquer de fissurer la tête. Le froid ne rend pas le rivet plus malléable de façon permanente : il ralentit seulement ce durcissement, temporairement, le temps que le rivet soit posé. Et la réfrigération n'a aucun rapport avec le nettoyage du rivet : elle sert uniquement à retarder son durcissement naturel.",
@@ -357,11 +357,11 @@
       "sous_chapitre": "M7A.6",
       "question": "Quand un rivet aveugle (blind rivet) est-il la seule option praticable ?",
       "options": [
-        "Lorsque l'assemblage ne permet d'accéder qu'à un seul côté de la tôle",
         "Lorsque l'assemblage doit rester démontable en service",
+        "Lorsque l'assemblage ne permet d'accéder qu'à un seul côté de la tôle",
         "Lorsque la tôle à assembler dépasse une certaine épaisseur"
       ],
-      "bonne": 0,
+      "bonne": 1,
       "explication": "Le rivet aveugle ne nécessite d'accès que d'un seul côté, grâce à son mandrin tiré depuis l'extérieur qui forme la seconde tête de l'intérieur : c'est exactement ce qui le rend indispensable là où le rivet plein, qui exige un accès des deux côtés, est impraticable. Ni le rivet plein ni le rivet aveugle ne sont conçus pour un assemblage destiné à être démonté en service : un rivet forme toujours une liaison permanente. Et l'épaisseur de la tôle n'est pas le critère qui détermine ce choix : c'est bien l'accessibilité des deux côtés qui compte.",
       "source": "Notions générales de pratiques de maintenance aéronautique — rivets pleins et rivets aveugles"
     },
@@ -370,11 +370,11 @@
       "sous_chapitre": "M7A.6",
       "question": "Le diamètre de perçage et la longueur d'un rivet pour un assemblage donné doivent être :",
       "options": [
-        "Estimés par comparaison visuelle avec un assemblage similaire déjà rencontré",
         "Calculés systématiquement à partir de l'épaisseur totale de tôle multipliée par un facteur fixe universel",
-        "Ceux spécifiés par le dessin ou l'AMM pour cet assemblage"
+        "Ceux spécifiés par le dessin ou l'AMM pour cet assemblage",
+        "Estimés par comparaison visuelle avec un assemblage similaire déjà rencontré"
       ],
-      "bonne": 2,
+      "bonne": 1,
       "explication": "Le diamètre de perçage et la longueur du rivet sont toujours ceux spécifiés par le dessin ou l'AMM pour l'assemblage concerné, jamais estimés par ressemblance avec un cas similaire : deux assemblages d'apparence proche peuvent avoir des exigences différentes. Il n'existe pas non plus de facteur universel fixe qui donnerait la bonne longueur à partir de l'épaisseur seule, indépendamment du rivet et de l'assemblage réels : c'est précisément ce genre de raccourci que la documentation permet d'éviter.",
       "source": "Notions générales de pratiques de maintenance aéronautique — préparation du perçage pour rivetage"
     },
@@ -383,11 +383,11 @@
       "sous_chapitre": "M7A.6",
       "question": "Un rivet dont la tête bouterollée est fissurée après la pose signifie généralement que :",
       "options": [
-        "Le métal a été travaillé de façon excessive lors de la pose",
         "Le rivet appartient à un lot de fabrication non conforme, indépendamment du geste de pose",
-        "Le rivet a été posé avec un trou légèrement surdimensionné"
+        "Le rivet a été posé avec un trou légèrement surdimensionné",
+        "Le métal a été travaillé de façon excessive lors de la pose"
       ],
-      "bonne": 0,
+      "bonne": 2,
       "explication": "Une fissure sur la tête bouterollée est en général le signe que le métal a été travaillé de façon excessive au moment de la pose (frappe trop violente, ou métal déjà fragilisé, par exemple par un durcissement structural trop avancé). Un trou surdimensionné produit un défaut différent : un rivet qui reste lâche dans son trou, pas une tête fissurée. Et rattacher systématiquement ce défaut au seul lot de fabrication ignore le rôle du geste de pose lui-même, qui est la cause la plus directement en lien avec ce type de défaut.",
       "source": "Notions générales de pratiques de maintenance aéronautique — contrôle visuel du rivetage"
     },
@@ -397,8 +397,8 @@
       "question": "Pourquoi une tuyauterie rigide installée à un endroit soumis à un mouvement relatif finit-elle par se fissurer ?",
       "options": [
         "La flexion répétée use le métal par fatigue, comme un câble électrique plié à répétition",
-        "La rigidité du matériau empêche toute vibration, ce qui use prématurément les raccords",
-        "Le fluide transporté devient corrosif au contact du mouvement"
+        "Le fluide transporté devient corrosif au contact du mouvement",
+        "La rigidité du matériau empêche toute vibration, ce qui use prématurément les raccords"
       ],
       "bonne": 0,
       "explication": "La flexion répétée à chaque mouvement use progressivement le métal par fatigue, exactement comme un câble électrique massif plié de façon répétée finit par se rompre. Le mouvement relatif n'a en soi aucun effet chimique sur le fluide transporté, qui ne devient pas corrosif de ce seul fait. Et la rigidité du matériau n'empêche pas la vibration : c'est au contraire l'incapacité de la tuyauterie rigide à absorber ce mouvement qui pose problème, pas une prétendue suppression de la vibration.",
@@ -409,11 +409,11 @@
       "sous_chapitre": "M7A.7",
       "question": "Avant de remplacer un flexible par un autre d'apparence similaire, il faut impérativement vérifier :",
       "options": [
-        "La compatibilité du flexible avec le fluide réellement transporté, dans l'AMM ou la liste de pièces applicable",
         "Que la couleur extérieure du flexible correspond à celle de l'ancien",
-        "Que le nouveau flexible provient du même fabricant que l'ancien"
+        "Que le nouveau flexible provient du même fabricant que l'ancien",
+        "La compatibilité du flexible avec le fluide réellement transporté, dans l'AMM ou la liste de pièces applicable"
       ],
-      "bonne": 0,
+      "bonne": 2,
       "explication": "Un flexible ou un joint peut se dégrader au contact d'un fluide pour lequel il n'a pas été conçu, même si son aspect général ressemble à celui prévu : la compatibilité avec le fluide réellement transporté doit donc toujours être vérifiée dans l'AMM ou la liste de pièces applicable. Provenir du même fabricant ne garantit rien à lui seul si la référence exacte diffère, et la couleur extérieure est une information purement visuelle, sans lien garanti avec la compatibilité chimique réelle du flexible.",
       "source": "Notions générales de pratiques de maintenance aéronautique — compatibilité des flexibles avec le fluide transporté"
     },
@@ -435,11 +435,11 @@
       "sous_chapitre": "M7A.7",
       "question": "Sur un flexible, une zone molle ou gonflée est un signe possible de :",
       "options": [
-        "Une défaillance de la couche interne, invisible depuis l'extérieur tant qu'elle n'a pas progressé",
         "Un flexible neuf pas encore rodé, sans conséquence",
-        "Un excès de pression normal en cours de fonctionnement"
+        "Un excès de pression normal en cours de fonctionnement",
+        "Une défaillance de la couche interne, invisible depuis l'extérieur tant qu'elle n'a pas progressé"
       ],
-      "bonne": 0,
+      "bonne": 2,
       "explication": "Une zone molle ou un gonflement signale souvent une défaillance de la couche interne du flexible, un défaut qui reste invisible depuis l'extérieur tant qu'il n'a pas suffisamment progressé. Ce n'est en aucun cas un phénomène normal de rodage sur un flexible neuf, ni un effet attendu d'une pression de fonctionnement normale : un flexible correctement dimensionné ne doit présenter ni gonflement ni zone molle en service normal.",
       "source": "Notions générales de pratiques de maintenance aéronautique — contrôle visuel des flexibles"
     },
@@ -449,10 +449,10 @@
       "question": "Pourquoi un flexible doit-il conserver un rayon de courbure suffisant lors de son installation ?",
       "options": [
         "Un rayon de courbure serré améliore l'étanchéité du flexible",
-        "Le rayon de courbure n'a d'incidence que sur l'esthétique du montage",
-        "Un rayon trop serré restreint le débit et crée un point de fatigue prématuré"
+        "Un rayon trop serré restreint le débit et crée un point de fatigue prématuré",
+        "Le rayon de courbure n'a d'incidence que sur l'esthétique du montage"
       ],
-      "bonne": 2,
+      "bonne": 1,
       "explication": "Un rayon de courbure trop serré restreint la section utile au passage du fluide et concentre la flexion en un point précis, ce qui crée un point de fatigue prématurée. Un pliage serré n'améliore en rien l'étanchéité, qui dépend des raccords et du flexible lui-même, pas de son rayon de courbure ; et l'effet n'est pas purement esthétique, puisqu'il affecte directement le débit et la durée de vie du flexible.",
       "source": "Notions générales de pratiques de maintenance aéronautique — installation des flexibles"
     },
@@ -462,10 +462,10 @@
       "question": "Un ressort qui a dépassé son domaine élastique et ne retrouve plus sa longueur d'origine a subi :",
       "options": [
         "Une simple perte de lubrification",
-        "Un phénomène réversible qui se corrige avec le temps au repos",
-        "Une déformation permanente (plastique)"
+        "Une déformation permanente (plastique)",
+        "Un phénomène réversible qui se corrige avec le temps au repos"
       ],
-      "bonne": 2,
+      "bonne": 1,
       "explication": "Au-delà du domaine élastique, un ressort subit une déformation permanente (plastique) : il ne retrouve plus sa forme initiale, même une fois l'effort relâché. La lubrification n'a pas de rôle déterminant pour un ressort de ce type, dont la fonction repose sur l'élasticité du métal, pas sur un frottement à lubrifier. Et ce type de déformation n'est pas réversible avec le temps : un ressort affaissé le reste, quel que soit le temps de repos accordé.",
       "source": "Notions générales de pratiques de maintenance aéronautique — domaine élastique des ressorts"
     },
@@ -474,11 +474,11 @@
       "sous_chapitre": "M7A.8",
       "question": "Pourquoi une piqûre de corrosion sur un ressort accélère-t-elle l'apparition d'une fissure de fatigue ?",
       "options": [
-        "Elle crée une concentration locale de contrainte à cet endroit précis",
+        "Elle réduit uniformément la raideur globale du ressort",
         "Elle rend le métal plus malléable sur toute sa longueur",
-        "Elle réduit uniformément la raideur globale du ressort"
+        "Elle crée une concentration locale de contrainte à cet endroit précis"
       ],
-      "bonne": 0,
+      "bonne": 2,
       "explication": "Une piqûre de corrosion, même minime, crée une concentration locale de contrainte exactement à cet endroit, ce qui accélère l'amorçage d'une fissure de fatigue à ce point précis. L'effet n'est ni uniforme sur toute la raideur du ressort, ni une malléabilité généralisée sur toute sa longueur : c'est au contraire un effet très localisé, concentré sur la zone endommagée, qui rend ce défaut d'autant plus insidieux.",
       "source": "Notions générales de pratiques de maintenance aéronautique — corrosion et fatigue des ressorts"
     },
@@ -487,9 +487,9 @@
       "sous_chapitre": "M7A.8",
       "question": "Le brinelling d'un roulement à billes est provoqué par :",
       "options": [
-        "Une rotation prolongée à très haute vitesse",
+        "Un manque de lubrification prolongé pendant la rotation",
         "Un choc ou une charge statique excessive, même sans rotation",
-        "Un manque de lubrification prolongé pendant la rotation"
+        "Une rotation prolongée à très haute vitesse"
       ],
       "bonne": 1,
       "explication": "Le brinelling résulte d'un choc ou d'une charge statique excessive, qui laisse de minuscules empreintes permanentes dans la piste de roulement à l'endroit exact où se trouvaient les billes au moment du choc — un phénomène qui peut survenir même sans aucune rotation, par exemple lors d'une manutention. Une rotation prolongée à haute vitesse ou un manque de lubrification produisent d'autres types de dommages (usure, échauffement), mais pas ce défaut précis, qui est associé à un choc ou une charge statique, pas au fonctionnement en rotation lui-même.",
@@ -501,8 +501,8 @@
       "question": "Comparé à un roulement à éléments roulants, un palier lisse est en général :",
       "options": [
         "Plus tolérant aux chocs et à la contamination, mais limité à des vitesses de rotation plus faibles",
-        "Toujours plus rapide à haute vitesse de rotation",
-        "Totalement insensible à l'usure, quelle que soit la charge appliquée"
+        "Totalement insensible à l'usure, quelle que soit la charge appliquée",
+        "Toujours plus rapide à haute vitesse de rotation"
       ],
       "bonne": 0,
       "explication": "Un palier lisse est en général plus tolérant aux chocs et à la contamination qu'un roulement à éléments roulants, mais reste limité à des vitesses de rotation plus faibles. Affirmer qu'il serait toujours plus rapide à haute vitesse inverse la réalité : c'est le roulement à éléments roulants qui convient mieux aux vitesses élevées. Et aucun palier, quel qu'il soit, n'est totalement insensible à l'usure : une charge appliquée use toujours une pièce en mouvement, à des degrés divers.",
@@ -513,11 +513,11 @@
       "sous_chapitre": "M7A.8",
       "question": "Un jeu de denture (backlash) insuffisant entre deux engrenages expose principalement au risque de :",
       "options": [
-        "Patinage de la transmission sous charge",
         "Blocage de la transmission si les pièces se dilatent sous l'effet de la température",
-        "Choc à chaque inversion de sens de rotation"
+        "Choc à chaque inversion de sens de rotation",
+        "Patinage de la transmission sous charge"
       ],
-      "bonne": 1,
+      "bonne": 0,
       "explication": "Un jeu insuffisant expose au risque de blocage si les pièces se dilatent sous l'effet de la température, faute d'espace suffisant entre les dents. Le choc à chaque inversion de sens est au contraire le risque associé à un jeu excessif, pas insuffisant. Et le patinage sous charge est un phénomène propre aux courroies ou aux chaînes mal tendues, pas au jeu de denture d'un engrenage, qui fonctionne par engrènement direct des dents plutôt que par adhérence.",
       "source": "Notions générales de pratiques de maintenance aéronautique — jeu de denture des engrenages"
     },
@@ -526,11 +526,11 @@
       "sous_chapitre": "M7A.9",
       "question": "Pourquoi le réglage de tension d'un câble de commande de vol se fait-il à l'aide d'un abaque température/tension ?",
       "options": [
-        "Parce que la tension d'un câble de commande n'a aucune incidence sur la sécurité du vol",
         "Parce que le câble et la structure ne se dilatent pas de la même façon selon la température",
-        "Parce que la réglementation impose de changer la tension chaque jour, quelle que soit la température"
+        "Parce que la réglementation impose de changer la tension chaque jour, quelle que soit la température",
+        "Parce que la tension d'un câble de commande n'a aucune incidence sur la sécurité du vol"
       ],
-      "bonne": 1,
+      "bonne": 0,
       "explication": "Le câble métallique et la structure qui le supporte ne se dilatent pas exactement de la même façon selon la température ambiante ; la tension correcte à une température donnée n'est donc pas la même qu'à une autre, d'où l'usage d'un abaque. Affirmer que la tension du câble n'a aucune incidence sur la sécurité contredit directement pourquoi ce réglage est pris aussi au sérieux. Et rien n'impose de changer la tension chaque jour indépendamment de la température : le réglage se fait lors d'une intervention, en tenant compte de la température du moment, pas selon un rythme quotidien fixe.",
       "source": "Notions générales de pratiques de maintenance aéronautique — réglage des câbles de commande"
     },
@@ -539,11 +539,11 @@
       "sous_chapitre": "M7A.9",
       "question": "Un câble de commande trop détendu expose principalement au risque de :",
       "options": [
-        "Un simple retard de transmission de la commande, sans autre conséquence sur le circuit",
         "Prendre du mou et risquer de sauter hors de sa gorge de poulie",
+        "Un simple retard de transmission de la commande, sans autre conséquence sur le circuit",
         "Se rompre immédiatement sous l'effet de son propre poids"
       ],
-      "bonne": 1,
+      "bonne": 0,
       "explication": "Un câble trop détendu prend du mou, ce qui se traduit par un jeu ressenti au poste de pilotage et augmente le risque qu'il saute hors de sa gorge de poulie — un risque structurel pour le circuit, pas un simple inconvénient de confort. Un câble ne se rompt pas sous son propre poids du simple fait d'être détendu : ce n'est pas une conséquence réaliste de ce défaut. Et réduire l'effet à un simple retard « sans autre conséquence » sous-estime le risque réel : le déraillement du câble hors de sa poulie n'a rien d'un inconvénient mineur.",
       "source": "Notions générales de pratiques de maintenance aéronautique — tension des câbles de commande"
     },
@@ -552,11 +552,11 @@
       "sous_chapitre": "M7A.9",
       "question": "Pourquoi un ridoir (turnbuckle) doit-il être freiné après réglage de la tension ?",
       "options": [
+        "Pour permettre un réglage plus rapide lors de la prochaine intervention",
         "Pour l'empêcher de se dévisser progressivement sous l'effet des vibrations en service",
-        "Parce que le freinage améliore la précision de la tension mesurée",
-        "Pour permettre un réglage plus rapide lors de la prochaine intervention"
+        "Parce que le freinage améliore la précision de la tension mesurée"
       ],
-      "bonne": 0,
+      "bonne": 1,
       "explication": "Le freinage empêche le ridoir de se dévisser progressivement sous l'effet des vibrations en service, ce qui ferait dériver la tension réglée sans qu'on s'en aperçoive. Le freinage n'a aucun effet sur la rapidité d'une intervention future : il s'agit d'une mesure de sécurité, pas de commodité. Et il n'améliore pas non plus la précision de la mesure de tension, qui a déjà été faite avant le freinage, au moment du réglage lui-même.",
       "source": "Notions générales de pratiques de maintenance aéronautique — freinage des ridoirs"
     },
@@ -566,10 +566,10 @@
       "question": "Les orifices d'inspection sur le corps d'un ridoir permettent de vérifier, sans démontage :",
       "options": [
         "Que la tension du câble correspond exactement à l'abaque",
-        "Qu'un filetage suffisant reste engagé de chaque côté",
-        "Que le câble n'a subi aucune corrosion interne"
+        "Que le câble n'a subi aucune corrosion interne",
+        "Qu'un filetage suffisant reste engagé de chaque côté"
       ],
-      "bonne": 1,
+      "bonne": 2,
       "explication": "Ces orifices permettent de vérifier visuellement qu'un filetage suffisant reste engagé de chaque côté du ridoir, un contrôle simple et rapide sans démontage. Ils ne renseignent en rien sur la tension réelle du câble, qui se mesure avec un tensiomètre et se compare à l'abaque, pas par une inspection visuelle du corps du ridoir. Et ils ne permettent pas non plus de détecter une corrosion interne du câble lui-même, invisible à cet endroit précis.",
       "source": "Notions générales de pratiques de maintenance aéronautique — inspection visuelle des ridoirs"
     },
@@ -578,8 +578,8 @@
       "sous_chapitre": "M7A.9",
       "question": "Lors de la manutention d'un roulement, pourquoi une protection contre les chocs est-elle essentielle même pour un transport de courte durée ?",
       "options": [
-        "Un roulement est en général plus fragile après sa mise en service qu'avant",
         "Le poids d'un roulement le rend automatiquement résistant aux chocs légers",
+        "Un roulement est en général plus fragile après sa mise en service qu'avant",
         "Un choc peut endommager durablement le roulement sans laisser de trace visible immédiate"
       ],
       "bonne": 2,
@@ -591,9 +591,9 @@
       "sous_chapitre": "M7A.10",
       "question": "Pourquoi repérer et documenter les pièces avant de démonter un ensemble complexe ?",
       "options": [
-        "Parce que la réglementation impose de photographier systématiquement toute intervention, quel que soit l'ensemble concerné",
+        "Parce que cela permet de réduire le temps total de l'intervention",
         "Parce que des pièces qui se ressemblent peuvent ne pas être interchangeables ou nécessiter une orientation précise au remontage",
-        "Parce que cela permet de réduire le temps total de l'intervention"
+        "Parce que la réglementation impose de photographier systématiquement toute intervention, quel que soit l'ensemble concerné"
       ],
       "bonne": 1,
       "explication": "Un repérage préalable évite de remonter à l'envers ou d'inverser des pièces qui se ressemblent fortement sans être interchangeables, ou qui exigent une orientation précise pour fonctionner correctement. Il n'existe pas d'obligation générale de photographier systématiquement toute intervention indépendamment de sa complexité : la nécessité du repérage dépend du risque de confusion réel. Et l'objectif n'est pas de gagner du temps : documenter prend du temps sur le moment, ce temps étant investi pour éviter une erreur de remontage, pas pour accélérer l'intervention.",
@@ -605,10 +605,10 @@
       "question": "La décision de réparer ou de remplacer une pièce endommagée se base sur :",
       "options": [
         "Le coût comparé de la réparation et du remplacement",
-        "L'appréciation personnelle du technicien selon son expérience",
-        "Les limites définies par le SRM ou l'AMM applicable"
+        "Les limites définies par le SRM ou l'AMM applicable",
+        "L'appréciation personnelle du technicien selon son expérience"
       ],
-      "bonne": 2,
+      "bonne": 1,
       "explication": "Cette décision se base toujours sur les limites définies par le manuel de réparation structurale (SRM) ou l'AMM applicable, qui précisent jusqu'où une réparation reste autorisée et à partir de quand le remplacement s'impose. Elle n'est jamais laissée à l'appréciation personnelle du technicien, aussi expérimenté soit-il, ni décidée sur la base d'une simple comparaison de coût : le critère déterminant est la conformité aux limites documentées, pas une évaluation économique.",
       "source": "Notions générales de pratiques de maintenance aéronautique — décision réparation/remplacement"
     },
@@ -617,11 +617,11 @@
       "sous_chapitre": "M7A.10",
       "question": "Pourquoi serre-t-on les fixations d'une bride en motif croisé et par passes progressives plutôt qu'une par une jusqu'au couple final ?",
       "options": [
-        "Pour réduire le nombre total de fixations nécessaires",
         "Parce que le motif croisé permet d'utiliser une clé dynamométrique moins précise",
-        "Pour répartir la pression de façon homogène et éviter une déformation asymétrique figée dans le joint final"
+        "Pour répartir la pression de façon homogène et éviter une déformation asymétrique figée dans le joint final",
+        "Pour réduire le nombre total de fixations nécessaires"
       ],
-      "bonne": 2,
+      "bonne": 1,
       "explication": "Le motif croisé, appliqué en plusieurs passes progressives, répartit la pression de façon homogène sur tout le pourtour de la bride et évite qu'une déformation asymétrique, créée en serrant une première fixation à fond avant les autres, ne reste figée dans le joint final. Cette méthode ne change en rien le nombre de fixations nécessaires, qui dépend de la conception de l'assemblage, pas de l'ordre de serrage. Et elle n'a aucun rapport avec la précision requise de la clé dynamométrique, qui reste la même quel que soit l'ordre de serrage choisi.",
       "source": "Notions générales de pratiques de maintenance aéronautique — ordre de serrage en motif croisé"
     },
@@ -630,11 +630,11 @@
       "sous_chapitre": "M7A.10",
       "question": "Pourquoi les données de masse et centrage d'un aéronef doivent-elles être mises à jour après une modification, même mineure ?",
       "options": [
+        "Parce que la pesée est uniquement requise après un incident grave",
         "Parce que l'équipage utilise ces données enregistrées, pas la masse réelle du jour, pour préparer chaque vol",
-        "Parce que la masse à vide d'un aéronef ne peut légalement pas varier une fois certifiée",
-        "Parce que la pesée est uniquement requise après un incident grave"
+        "Parce que la masse à vide d'un aéronef ne peut légalement pas varier une fois certifiée"
       ],
-      "bonne": 0,
+      "bonne": 1,
       "explication": "L'équipage prépare chaque vol à partir des données de masse et centrage enregistrées, pas à partir d'une pesée refaite avant chaque décollage : si ces données ne reflètent plus la réalité après une modification, un calcul fait pourtant correctement peut mener à dépasser une limite réelle sans que rien ne le signale. Rien n'empêche la masse à vide réelle d'un aéronef de varier après une modification : c'est précisément pour cela que la documentation doit être mise à jour, pas parce que la variation serait interdite. Et la pesée n'est pas réservée aux seuls incidents graves : une modification ou une réparation ordinaire peut tout autant la justifier.",
       "source": "Notions générales de pratiques de maintenance aéronautique — mise à jour des données de masse et centrage"
     },
@@ -650,6 +650,799 @@
       "bonne": 0,
       "explication": "Peser simultanément chaque point d'appui, une fois l'aéronef mis à niveau et dans une configuration définie, garantit un résultat fiable et comparable d'une pesée à l'autre. Il ne s'agit pas d'une interdiction réglementaire générale de peser en plusieurs étapes séparées, mais d'une méthode retenue pour la fiabilité du résultat. Et la mise à niveau ne modifie en rien la masse réelle de l'aéronef : elle sert uniquement de référence géométrique pour la mesure, pas à changer ce qui est pesé.",
       "source": "Notions générales de pratiques de maintenance aéronautique — méthode de pesée de l'aéronef"
+    },
+    {
+      "uid": "M7A-0051",
+      "sous_chapitre": "M7A.1",
+      "question": "Pourquoi la mesure de l'atmosphère à l'intérieur d'un réservoir de carburant doit-elle continuer pendant toute la durée du travail, pas seulement avant l'entrée ?",
+      "options": [
+        "Parce qu'une consigne générale de sécurité en atelier impose une mesure horaire dans les espaces confinés, indépendamment du risque réel évalué sur place",
+        "Parce que la combustion progressive des vapeurs de carburant présentes libère de l'oxygène supplémentaire à mesure que le travail avance",
+        "Parce que l'atmosphère à l'intérieur d'un espace confiné peut évoluer pendant l'intervention, sans que la personne à l'intérieur ne le perçoive par elle-même"
+      ],
+      "bonne": 2,
+      "explication": "Une atmosphère d'espace confiné peut se dégrader progressivement pendant l'intervention (accumulation de vapeurs, ventilation qui faiblit), sans que la personne à l'intérieur ne ressente d'alerte avant qu'il ne soit trop tard : c'est pourquoi la mesure continue, pas seulement avant l'entrée. Il n'existe pas de règle générique « toutes les heures » indépendante du risque réel, et le taux d'oxygène n'augmente pas naturellement avec le temps dans un espace confiné — il tend plutôt à se dégrader.",
+      "source": "Notions générales de sécurité en maintenance aéronautique — entrée en espace confiné (réservoir de carburant)"
+    },
+    {
+      "uid": "M7A-0052",
+      "sous_chapitre": "M7A.1",
+      "question": "Pourquoi ne peut-on pas compter sur une sensation d'alerte personnelle pour détecter un manque d'oxygène dans un réservoir de carburant ?",
+      "options": [
+        "Parce qu'une carence en oxygène ne provoque généralement aucun signe d'alerte perceptible avant la perte de connaissance",
+        "Parce qu'une odeur particulière, reconnaissable par la plupart des techniciens expérimentés, accompagne généralement une atmosphère appauvrie en oxygène",
+        "Parce que le corps humain réagit d'abord par une sensation de froid intense, un signe précurseur que la plupart des techniciens apprennent à reconnaître avant la perte de connaissance"
+      ],
+      "bonne": 0,
+      "explication": "Une atmosphère appauvrie en oxygène n'a ni odeur ni goût, et le corps humain ne donne généralement aucun signal d'alerte fiable avant la perte de connaissance elle-même — c'est précisément pour cette raison qu'on ne fait jamais reposer la sécurité sur le seul ressenti de la personne qui entre, mais sur une mesure instrumentée. Aucune sensation de froid particulière n'accompagne ce risque, et l'odeur éventuellement perçue provient des vapeurs de carburant, pas du manque d'oxygène lui-même.",
+      "source": "Notions générales de sécurité en maintenance aéronautique — entrée en espace confiné (réservoir de carburant)"
+    },
+    {
+      "uid": "M7A-0053",
+      "sous_chapitre": "M7A.1",
+      "question": "Sur un aéronef équipé d'un parachute de secours balistique, pourquoi l'interdiction de tout travail par point chaud (perçage, meulage, soudure) s'applique-t-elle à proximité de la fusée et de son circuit de mise à feu ?",
+      "options": [
+        "Parce que la chaleur peut dégrader prématurément la peinture de protection et les matériaux composites qui entourent le mécanisme, réduisant sa durée de vie avant même sa première utilisation",
+        "Parce qu'une consigne générale de sécurité impose cette interdiction sur l'ensemble des aéronefs de l'atelier, indépendamment de leur équipement",
+        "Parce que le dispositif embarque une charge pyrotechnique susceptible de se déclencher accidentellement sous l'effet d'une chaleur ou d'une étincelle"
+      ],
+      "bonne": 2,
+      "explication": "Un parachute de secours balistique éjecte le parachute au moyen d'une fusée pyrotechnique : une source de chaleur ou une étincelle à proximité de cette charge ou de son circuit de mise à feu peut provoquer un déclenchement accidentel, dangereux pour le personnel et pour la structure. Le risque de dégradation de peinture est réel mais secondaire, pas la raison de sécurité invoquée ; et cette précaution est spécifique aux aéronefs équipés de ce dispositif, pas une règle universelle sur tout aéronef.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.1 — aéronefs équipés d'un parachute de secours balistique"
+    },
+    {
+      "uid": "M7A-0054",
+      "sous_chapitre": "M7A.2",
+      "question": "Pourquoi faut-il vérifier le zéro d'un pied à coulisse ou d'un micromètre avant de l'utiliser ?",
+      "options": [
+        "Pour réduire la consommation électrique de l'affichage numérique et prolonger ainsi la durée de vie de la pile entre deux calibrations",
+        "Parce qu'un dérèglement du zéro se manifeste généralement par un choc visible sur l'instrument, facile à repérer avant la mesure",
+        "Pour détecter une éventuelle dérive de l'instrument, qui fausserait toute mesure sans que rien ne le signale autrement"
+      ],
+      "bonne": 2,
+      "explication": "Comme une clé dynamométrique, un instrument de mesure de précision peut dériver progressivement sans que rien d'extérieur ne le signale : vérifier le zéro avant emploi permet de détecter cette dérive avant qu'elle ne fausse une mesure. Un dérèglement peut apparaître sans choc visible identifiable, et le contrôle du zéro n'a aucun rapport avec l'autonomie d'une pile.",
+      "source": "Notions générales de pratiques de maintenance aéronautique — instruments de mesure de précision"
+    },
+    {
+      "uid": "M7A-0055",
+      "sous_chapitre": "M7A.2",
+      "question": "Pourquoi un micromètre est-il préféré à un pied à coulisse pour vérifier un jeu de roulement très serré ?",
+      "options": [
+        "Le pied à coulisse mesure surtout des longueurs extérieures, ce qui le rend moins adapté qu'un micromètre pour vérifier un diamètre intérieur serré",
+        "Le micromètre offre une précision de mesure plus fine que le pied à coulisse, une résolution nécessaire pour vérifier correctement une tolérance aussi étroite sans ambiguïté de lecture",
+        "Le micromètre couvre une plage de mesure plus large que le pied à coulisse, ce qui lui permet de contrôler un plus grand nombre de cotes différentes sans changer d'instrument"
+      ],
+      "bonne": 1,
+      "explication": "Le micromètre atteint une précision plus fine que le pied à coulisse (au centième voire au millième de millimètre), ce qui le rend nécessaire pour une tolérance très étroite comme un jeu de roulement serré. Le pied à coulisse mesure aussi bien un diamètre qu'une longueur ou une profondeur ; et c'est au contraire le micromètre qui couvre une plage de mesure plus restreinte que le pied à coulisse.",
+      "source": "Notions générales de pratiques de maintenance aéronautique — instruments de mesure de précision"
+    },
+    {
+      "uid": "M7A-0056",
+      "sous_chapitre": "M7A.2",
+      "question": "Que risque-t-on en branchant un multimètre réglé en mode ampèremètre directement sur une source de tension, sans charge en série ?",
+      "options": [
+        "Un court-circuit de la source à travers l'appareil, pouvant endommager le multimètre et le circuit testé",
+        "Un affichage instable ou nul sur l'écran du multimètre, le temps que l'appareil détecte automatiquement le mauvais réglage et se protège",
+        "Une mesure de tension légèrement sous-évaluée par rapport à la valeur réelle, en raison de la résistance interne plus élevée du multimètre en mode ampèremètre"
+      ],
+      "bonne": 0,
+      "explication": "Un ampèremètre présente une résistance interne très faible, prévue pour être placé en série dans un circuit : branché directement sur une source de tension sans charge, il court-circuite cette source à travers l'appareil, avec un risque d'endommager le multimètre et le circuit testé. Ce n'est ni un simple défaut d'affichage, ni une mesure faussée mais sans risque : c'est une erreur de branchement potentiellement dommageable.",
+      "source": "Notions générales de pratiques de maintenance aéronautique — matériel électrique de test"
+    },
+    {
+      "uid": "M7A-0057",
+      "sous_chapitre": "M7A.3",
+      "question": "Sous quelle forme la documentation technique de maintenance peut-elle exister, en plus du document papier ?",
+      "options": [
+        "Microfilm, microfiche ou présentation informatisée consultée sur écran, sans que le contenu ni les conventions de lecture n'en soient changés",
+        "Essentiellement sous forme de dessins techniques annotés, le texte descriptif restant réservé aux seuls manuels d'entretien séparés",
+        "Presque toujours sous forme de document papier, la traçabilité légale étant plus difficile à garantir sur un support numérique"
+      ],
+      "bonne": 0,
+      "explication": "La documentation technique de maintenance existe couramment sous forme de microfilm, de microfiche, ou de présentation informatisée consultée sur écran, sans que le contenu ni les conventions de lecture n'en soient changés. Le support papier n'est donc pas la seule forme admise, et la documentation technique ne se limite pas non plus aux seuls dessins : elle inclut tout autant du texte descriptif (procédures, manuels).",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.5 — supports de la documentation technique"
+    },
+    {
+      "uid": "M7A-0058",
+      "sous_chapitre": "M7A.3",
+      "question": "Que structure la spécification ATA 100 de l'Air Transport Association dans la documentation aéronautique ?",
+      "options": [
+        "Une organisation de la documentation par grands chapitres numérotés, reconnue dans toute l'industrie aéronautique quel que soit le constructeur",
+        "Les tolérances dimensionnelles couramment appliquées aux pièces de visserie normalisées, avant que d'autres normes comme ISO ne prennent le relais",
+        "Le format des schémas de câblage électrique recommandé par la plupart des constructeurs, sans s'appliquer aux autres types de documents techniques"
+      ],
+      "bonne": 0,
+      "explication": "La spécification ATA 100 structure la documentation aéronautique par grands chapitres numérotés, une convention reconnue dans toute l'industrie qui permet de retrouver une information de façon cohérente d'un document à l'autre. Elle ne porte pas sur les tolérances de visserie (voir plutôt les normes ISO/AN/MS/NAS/MIL) ni sur le seul format des schémas de câblage.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.5 — spécification ATA 100"
+    },
+    {
+      "uid": "M7A-0059",
+      "sous_chapitre": "M7A.5",
+      "question": "À quoi sert la liaison électrique (bonding) entre une gouverne mobile et sa structure porteuse ?",
+      "options": [
+        "Empêcher la gouverne de vibrer sous l'effet du vent relatif, un mouvement parasite que la seule fixation mécanique ne suffirait pas à absorber",
+        "Garantir l'écoulement d'un courant statique ou de défaut sans créer d'étincelle ni de différence de potentiel dangereuse",
+        "Renforcer la fixation mécanique de la gouverne sur son axe de rotation, en complément des boulons et charnières qui la retiennent"
+      ],
+      "bonne": 1,
+      "explication": "Le bonding relie électriquement deux éléments métalliques normalement isolés l'un de l'autre (une gouverne mobile et sa structure porteuse, par exemple) pour garantir l'écoulement d'un courant statique ou de défaut sans étincelle ni différence de potentiel dangereuse. Il n'a aucun rôle mécanique de fixation ni d'amortissement de vibration : c'est une liaison électrique, pas structurale.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.7 — liaison électrique (bonding)"
+    },
+    {
+      "uid": "M7A-0060",
+      "sous_chapitre": "M7A.5",
+      "question": "Pourquoi un câble coaxial exige-t-il un outillage de sertissage différent d'un câble électrique classique ?",
+      "options": [
+        "Parce que le câble coaxial transporte surtout un signal de faible puissance, ce qui rend son sertissage moins critique qu'un câble de puissance classique",
+        "Parce que son âme centrale et sa tresse de blindage doivent rester concentriques, une géométrie qu'un outillage classique ne préserve pas",
+        "Parce que le câble coaxial utilise généralement des connecteurs filetés spécifiques, moins courants dans un atelier que ceux d'un câble électrique classique"
+      ],
+      "bonne": 1,
+      "explication": "Un câble coaxial doit conserver la concentricité entre son âme centrale et sa tresse de blindage sur toute sa longueur, une géométrie précise qu'un outillage de sertissage classique ne garantit pas — d'où des connecteurs et un outillage dédiés. Le câble coaxial transporte bien un signal électrique, et il utilise au contraire des connecteurs spécifiques, pas une absence de connecteur.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.7 — câbles coaxiaux"
+    },
+    {
+      "uid": "M7A-0061",
+      "sous_chapitre": "M7A.10",
+      "question": "Pourquoi le ressuage ne détecte-t-il pas un défaut purement interne à une pièce ?",
+      "options": [
+        "Parce que le liquide pénétrant ne peut s'infiltrer, par capillarité, que dans une fissure qui débouche réellement en surface",
+        "Parce que le ressuage utilise généralement un révélateur activé par un rayonnement particulier, dont peu d'ateliers disposent",
+        "Parce que le ressuage donne de meilleurs résultats sur les matériaux ferromagnétiques, où le pénétrant adhère plus facilement à la surface"
+      ],
+      "bonne": 0,
+      "explication": "Le ressuage repose sur l'infiltration par capillarité d'un liquide pénétrant dans une fissure : ce liquide ne peut atteindre qu'un défaut qui débouche en surface, un défaut purement interne lui restant totalement inaccessible. La restriction aux matériaux ferromagnétiques concerne la magnétoscopie, pas le ressuage ; et le ressuage ne s'appuie sur aucun rayonnement particulier, seulement sur la capillarité d'un liquide pénétrant.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.18(c) — ressuage"
+    },
+    {
+      "uid": "M7A-0062",
+      "sous_chapitre": "M7A.10",
+      "question": "Pourquoi la radiographie permet-elle de détecter un défaut plus profondément interne qu'un contrôle par ressuage ou magnétoscopie ?",
+      "options": [
+        "Parce que la radiographie traverse plus facilement les pièces en matériau ferromagnétique, ce qui limite en pratique son usage aux alliages ferreux",
+        "Parce que la radiographie nécessite moins de précautions de radioprotection que les ultrasons, ce qui simplifie sa mise en œuvre en atelier",
+        "Parce que le rayonnement employé traverse l'épaisseur de la pièce, alors que les deux autres méthodes ne renseignent que sur l'état de la surface ou proche de la surface"
+      ],
+      "bonne": 2,
+      "explication": "Le rayonnement (rayons X ou gamma) employé en radiographie traverse toute l'épaisseur de la pièce et révèle un défaut interne par contraste sur l'image obtenue, alors que le ressuage et la magnétoscopie ne renseignent que sur la surface ou son proche voisinage. La radiographie ne se limite pas aux matériaux ferromagnétiques (contrairement à la magnétoscopie), et c'est elle, pas les ultrasons, qui exige des précautions de radioprotection strictes en raison du rayonnement ionisant employé.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.18(c) — radiographie"
+    },
+    {
+      "uid": "M7A-0063",
+      "sous_chapitre": "M7A.10",
+      "question": "Pour quelle raison le contrôle par ultrasons est-il particulièrement employé sur une structure composite collée ou stratifiée ?",
+      "options": [
+        "Il permet de vérifier a posteriori si les conditions de polymérisation de la résine ont été respectées durant la fabrication",
+        "Il figure parmi les rares procédés de CND couramment utilisés sur des matériaux non conducteurs de l'électricité, aux côtés du ressuage",
+        "Il peut détecter un décollement interne entre deux couches, invisible lors d'un simple contrôle visuel de la surface"
+      ],
+      "bonne": 2,
+      "explication": "Les ultrasons révèlent un décollement interne entre deux couches d'un stratifié en mesurant le temps de trajet de l'écho réfléchi sur cette discontinuité, un défaut qu'un contrôle visuel de la surface ne peut pas voir. La radiographie s'applique elle aussi à des matériaux non conducteurs comme un composite, donc les ultrasons n'en sont pas le seul procédé applicable ; et un contrôle non destructif ne dispense jamais de respecter les conditions de mise en œuvre de la résine, ce sont deux sujets distincts.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.18(c) — ultrasons"
+    },
+    {
+      "uid": "M7A-0064",
+      "sous_chapitre": "M7A.11",
+      "question": "Que représente l'abattement de pli (bend allowance) utilisé pour calculer le développé à plat d'une pièce de tôlerie ?",
+      "options": [
+        "Le diamètre du rayon de pliage utilisé pour former le pli, une valeur choisie librement par l'opérateur selon l'outillage disponible",
+        "La quantité à retirer de la longueur totale de la pièce une fois le pliage terminé, pour compenser l'excès de matière laissé par la découpe initiale",
+        "La longueur de matière consommée par le pli, mesurée le long de la fibre neutre, à ajouter aux longueurs des deux pans pour obtenir le développé total"
+      ],
+      "bonne": 2,
+      "explication": "L'abattement de pli correspond à la longueur d'arc de la fibre neutre consommée par le pli ; il s'ajoute aux longueurs des deux pans mesurés à plat pour obtenir le développé total exact, calculé à partir du rayon de pliage, de l'épaisseur de la tôle et de l'angle de pli. Ce n'est ni une quantité à retirer après coup, ni le diamètre du rayon de pliage lui-même, qui n'est qu'une des données utilisées pour le calculer.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.14.1 — abattement de pli"
+    },
+    {
+      "uid": "M7A-0065",
+      "sous_chapitre": "M7A.11",
+      "question": "Que risque un pli de tôlerie réalisé avec un rayon de pliage trop serré pour l'épaisseur et l'alliage concernés ?",
+      "options": [
+        "Une diminution progressive de la dureté du métal sur l'ensemble de la pièce, bien au-delà de la seule zone du pli",
+        "Une fissure au niveau du pli, parfois trop fine pour être repérée au premier regard sans un contrôle plus poussé",
+        "Une amélioration de la résistance à la fatigue du pli, grâce à un écrouissage plus marqué du métal à cet endroit précis"
+      ],
+      "bonne": 1,
+      "explication": "Un rayon de pliage trop serré sollicite excessivement la face extérieure du pli, ce qui peut provoquer une fissure à cet endroit précis, parfois si fine qu'elle échappe à un premier examen rapide. Ce défaut ne renforce en rien la résistance à la fatigue du pli — une fissure amorcée réduit au contraire cette résistance — et il ne touche pas la dureté de l'ensemble de la pièce mais seulement la zone du pli.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.14.1 — inspection du travail de tôlerie"
+    },
+    {
+      "uid": "M7A-0066",
+      "sous_chapitre": "M7A.11",
+      "question": "Pourquoi une préparation de surface rigoureuse (dégraissage, ponçage léger) est-elle nécessaire avant un collage ou une réparation composite ?",
+      "options": [
+        "Elle sert surtout à améliorer l'aspect esthétique de la surface finale, avant l'application d'une peinture ou d'un revêtement de protection",
+        "Sans elle, l'adhérence entre les couches ou avec la réparation reste incertaine, sans que le défaut soit visible une fois l'ensemble terminé",
+        "Elle a un effet comparable à celui des conditions de température et d'hygrométrie pendant la polymérisation, les deux facteurs jouant un rôle équivalent"
+      ],
+      "bonne": 1,
+      "explication": "Une surface mal préparée compromet l'adhérence entre les couches d'un composite ou entre une réparation et la pièce d'origine, un défaut qui reste le plus souvent invisible une fois l'ensemble refermé et terminé. Ce n'est pas une question d'esthétique, et cette préparation ne dispense en rien de respecter par ailleurs les conditions de température et d'hygrométrie prescrites pour la résine : ce sont deux exigences distinctes et cumulatives.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.14.2 — pratiques de mise en œuvre des composites"
+    },
+    {
+      "uid": "M7A-0067",
+      "sous_chapitre": "M7A.11",
+      "question": "Que risque une résine composite appliquée hors de la plage de température et d'hygrométrie prescrite par le fabricant ?",
+      "options": [
+        "Un durcissement incomplet ou irrégulier, avec des propriétés mécaniques dégradées par rapport à la fiche technique du matériau",
+        "Un durcissement plus rapide qui améliore en réalité la résistance finale de la pièce en réduisant le temps d'exposition à l'air ambiant",
+        "Un léger changement de couleur de la résine, un indicateur visuel que les techniciens expérimentés surveillent avant tout autre signe"
+      ],
+      "bonne": 0,
+      "explication": "La polymérisation d'une résine composite dépend directement de la température et de l'hygrométrie ambiantes : hors de la plage prescrite, elle peut durcir de façon incomplète ou irrégulière, avec des propriétés mécaniques dégradées par rapport à ce qu'annonce la fiche technique du matériau. Ce n'est ni un simple gain de vitesse sans conséquence, ni un défaut seulement esthétique : la résistance mécanique réelle de la pièce peut être affectée sans que rien ne le montre à l'œil nu.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.14.2 — conditions environnementales de mise en œuvre"
+    },
+    {
+      "uid": "M7A-0068",
+      "sous_chapitre": "M7A.11",
+      "question": "Pourquoi un décollement interne (délaminage) d'une pièce composite après un impact peut-il rester indétecté par un simple contrôle visuel ?",
+      "options": [
+        "Parce que le contrôle visuel reste surtout prévu pour les pièces métalliques, les composites relevant historiquement d'une inspection différente",
+        "Parce que le délaminage se produit généralement au moment de la fabrication, un impact ultérieur ne faisant qu'aggraver un défaut déjà présent",
+        "Parce que la surface extérieure peut rester intacte en apparence alors que la structure interne est endommagée"
+      ],
+      "bonne": 2,
+      "explication": "Un impact sur une pièce composite peut séparer deux couches internes du stratifié sans laisser de marque visible en surface : la pièce paraît intacte alors que sa structure interne est endommagée, d'où l'intérêt du contrôle par ultrasons dans ce cas. Le délaminage peut au contraire survenir en service, après un impact, pas seulement à la fabrication ; et le contrôle visuel s'applique aussi bien aux composites qu'aux pièces métalliques, il n'est simplement pas suffisant seul dans ce cas précis.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.14.2 — inspection des composites"
+    },
+    {
+      "uid": "M7A-0069",
+      "sous_chapitre": "M7A.11",
+      "question": "Pourquoi une pièce de fabrication additive n'est-elle pas nécessairement aussi résistante dans toutes les directions qu'une pièce équivalente usinée dans un bloc de matière homogène ?",
+      "options": [
+        "Une pièce fabriquée par impression 3D est généralement plus résistante, dans toutes les directions, qu'une pièce équivalente usinée dans un bloc de matière homogène",
+        "Sa résistance peut varier notablement selon la direction considérée, en fonction du procédé employé et de l'orientation choisie pendant la construction",
+        "La résistance d'une pièce imprimée dépend surtout de la couleur du matériau utilisé, un paramètre choisi avant le lancement de l'impression"
+      ],
+      "bonne": 1,
+      "explication": "Une pièce construite couche par couche peut présenter une résistance différente selon la direction considérée, en fonction du procédé employé et de l'orientation choisie pendant la fabrication — une caractéristique propre à ce mode de construction, contrairement à un bloc de matière homogène usiné. Ce n'est donc pas une garantie de résistance supérieure dans toutes les directions, et la couleur du matériau n'a aucun rapport avec sa résistance mécanique.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.14.3 — influence du procédé sur les propriétés mécaniques"
+    },
+    {
+      "uid": "M7A-0070",
+      "sous_chapitre": "M7A.11",
+      "question": "Quel type de défaut de production est propre à une pièce de fabrication additive plutôt qu'à une pièce usinée classiquement ?",
+      "options": [
+        "Une usure progressive du filetage due au vissage répété d'une fixation sur la pièce, en service après sa mise en place",
+        "Une corrosion galvanique entre deux métaux différents en contact, un phénomène qui peut aussi apparaître sur une pièce fabriquée par impression 3D en alliage mixte",
+        "Une porosité interne ou un défaut de fusion entre deux couches successives, directement lié à la construction couche par couche du procédé"
+      ],
+      "bonne": 2,
+      "explication": "La construction couche par couche propre à la fabrication additive peut emprisonner une porosité interne ou laisser un défaut de fusion entre deux couches successives, des défauts spécifiques à ce mode de fabrication. L'usure de filetage et la corrosion galvanique sont des défauts qui peuvent affecter n'importe quelle pièce métallique en service, indépendamment de son mode de fabrication — ils ne sont pas propres à la fabrication additive.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.14.3 — inspection et défauts de production"
+    },
+    {
+      "uid": "M7A-0072",
+      "sous_chapitre": "M7A.11",
+      "question": "Pourquoi le choix de l'orientation de fabrication d'une pièce imprimée en 3D peut-il influencer la méthode de contrôle non destructif choisie ensuite ?",
+      "options": [
+        "Parce qu'une pièce imprimée présente une résistance comparable dans toutes les directions, ce qui simplifie le choix de la méthode de contrôle à utiliser",
+        "Parce que l'orientation de fabrication détermine la couleur finale de la pièce, un critère pris en compte par certaines méthodes optiques de contrôle",
+        "Parce que les défauts de fusion entre couches successives se concentrent le long des plans de construction, ce qui oriente la recherche vers ces plans plutôt que vers un contrôle général"
+      ],
+      "bonne": 2,
+      "explication": "Les défauts de fusion entre deux couches successives se concentrent le long des plans de construction, propres à l'orientation choisie pendant l'impression : un contrôle qui cible en priorité ces plans est donc plus efficace qu'un contrôle générique de toute la pièce. L'orientation de fabrication n'a aucun rapport avec la couleur de la pièce, et la résistance d'une pièce imprimée n'est justement pas comparable dans toutes les directions (voir M7A-0069) — ce serait au contraire une raison supplémentaire de cibler le contrôle selon l'orientation retenue.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.14.3 — influence du procédé et de l'orientation"
+    },
+    {
+      "uid": "M7A-0073",
+      "sous_chapitre": "M7A.12",
+      "question": "Pourquoi le dépassement de l'angle de braquage maximal de la roulette avant pendant un remorquage est-il dangereux ?",
+      "options": [
+        "Il a surtout un effet sur la vitesse de déplacement autorisée pendant la manœuvre, sans conséquence mécanique majeure à cette allure",
+        "Il réduit surtout le confort de conduite du tracteur de remorquage, un inconvénient mineur comparé aux autres risques du remorquage",
+        "Il peut endommager gravement le système de direction ou solliciter excessivement la jambe de train au-delà de sa conception"
+      ],
+      "bonne": 2,
+      "explication": "La roulette avant de la plupart des aéronefs n'est conçue pour tourner que dans une plage d'angle limitée : la dépasser pendant un remorquage sollicite la mécanique de direction au-delà de ce qu'elle supporte, avec un risque de dommage grave au système de direction ou à la jambe de train. Ce n'est ni un effet purement lié à la vitesse, ni une simple question de confort de conduite.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.17 — remorquage et roulage"
+    },
+    {
+      "uid": "M7A-0074",
+      "sous_chapitre": "M7A.12",
+      "question": "Pourquoi des guides au sol accompagnent-ils un remorquage d'aéronef, en plus du conducteur du tracteur ?",
+      "options": [
+        "Ils permettent, en théorie, de dépasser légèrement l'angle de braquage maximal de la roulette sous leur seule surveillance visuelle",
+        "Ils surveillent le dégagement des extrémités de voilure et d'empennage, des zones que le conducteur ne peut pas voir directement",
+        "Ils sont surtout chargés de communiquer la vitesse et la trajectoire du tracteur aux autres équipes présentes sur l'aire de manœuvre"
+      ],
+      "bonne": 1,
+      "explication": "Le conducteur du tracteur ne peut pas voir directement le dégagement des extrémités de voilure et d'empennage pendant la manœuvre : des guides au sol surveillent ces zones et signalent tout risque de collision. Leur présence ne dispense en rien de respecter l'angle de braquage maximal par ailleurs, et leur rôle n'a aucun rapport avec une communication à la tour de contrôle.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.17 — remorquage et roulage"
+    },
+    {
+      "uid": "M7A-0075",
+      "sous_chapitre": "M7A.12",
+      "question": "Pourquoi la mise sur vérins d'un aéronef utilise-t-elle exclusivement les points de levage désignés par le constructeur ?",
+      "options": [
+        "Un point de structure choisi au jugé, même d'apparence robuste, pourrait ne pas supporter l'effort local concentré appliqué lors du levage",
+        "Le choix du point de levage compte surtout pour le confort de l'opération, l'aéronef correctement chargé supportant la plupart des points",
+        "Les points désignés se situent généralement à proximité du centre de gravité de l'aéronef, ce qui facilite l'équilibre pendant le levage"
+      ],
+      "bonne": 0,
+      "explication": "Seuls les points de levage désignés par le constructeur sont dimensionnés pour supporter l'effort local du levage ; un point de structure choisi au jugé, même d'apparence robuste, pourrait ne pas résister à cet effort concentré. Ces points ne coïncident pas nécessairement avec le centre de gravité, et le choix du point de levage reste déterminant même si le chargement de l'aéronef est par ailleurs correct.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.17 — levage sur vérins"
+    },
+    {
+      "uid": "M7A-0076",
+      "sous_chapitre": "M7A.12",
+      "question": "Pourquoi un aéronef doit-il être correctement chargé et équilibré avant sa mise sur vérins ?",
+      "options": [
+        "Un chargement asymétrique accélère surtout l'usure des vérins sur le long terme, un effet plus progressif que le risque de basculement immédiat",
+        "Une masse ou un chargement asymétrique peut faire basculer l'ensemble une fois levé, l'aéronef perdant l'appui stable que lui donnaient ses roues",
+        "Le chargement a surtout une incidence sur le temps de mise à niveau des vérins, une fois leur hauteur correctement réglée"
+      ],
+      "bonne": 1,
+      "explication": "Un aéronef mal chargé ou asymétrique, une fois levé sur ses appuis provisoires, perd la stabilité que lui donnait le contact avec le sol sur ses roues : un déséquilibre peut alors le faire basculer. Le réglage en hauteur des vérins ne compense pas ce risque, et les conséquences d'un chargement asymétrique vont au-delà d'une simple usure des vérins.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.17 — levage sur vérins"
+    },
+    {
+      "uid": "M7A-0077",
+      "sous_chapitre": "M7A.12",
+      "question": "Pourquoi déplace-t-on ou fait-on tourner périodiquement un aéronef pendant un stockage prolongé, plutôt que de le laisser immobile sur les mêmes points d'appui ?",
+      "options": [
+        "Pour répartir l'usure des amortisseurs du train d'atterrissage sur une période de stockage prolongée",
+        "Pour permettre un dégonflage progressif des pneus en toute sécurité, une opération plus simple à réaliser aéronef immobile",
+        "Pour éviter qu'un pneu ne développe une déformation permanente au même point de contact prolongé avec le sol"
+      ],
+      "bonne": 2,
+      "explication": "Un pneu qui reste chargé au même point de contact pendant une longue période peut développer une déformation permanente à cet endroit précis ; déplacer ou faire tourner périodiquement l'aéronef, en maintenant la pression de gonflage prescrite par le constructeur, prévient cet effet — un dégonflage, à l'inverse, aggraverait ce même risque en augmentant la déflexion au point de contact. Cette précaution n'a aucun lien avec la consommation de carburant d'un aéronef immobilisé.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.17 — stockage de l'aéronef"
+    },
+    {
+      "uid": "M7A-0078",
+      "sous_chapitre": "M7A.12",
+      "question": "Pendant un avitaillement en carburant, pourquoi interdit-on toute source de chaleur ou de flamme dans le périmètre, en plus de la liaison équipotentielle déjà réalisée ?",
+      "options": [
+        "La chaleur accélère l'évaporation du carburant, ce qui disperse rapidement les vapeurs et limite leur concentration dans le périmètre",
+        "La liaison équipotentielle traite déjà la principale source d'inflammation par électricité statique, cette interdiction visant un risque plus secondaire",
+        "Les vapeurs de carburant restent présentes dans le périmètre et peuvent s'enflammer au contact d'une source de chaleur"
+      ],
+      "bonne": 2,
+      "explication": "La liaison équipotentielle écarte spécifiquement le risque d'étincelle d'électricité statique, mais elle n'élimine pas les vapeurs de carburant présentes dans le périmètre : une source de chaleur ou de flamme distincte reste capable de les enflammer, d'où une interdiction complémentaire et non redondante. Contrairement à l'idée reçue, accélérer l'évaporation du carburant n'en réduit pas le risque d'inflammation — cela peut au contraire enrichir le mélange en vapeurs à proximité.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.17 — avitaillement et dépose de carburant"
+    },
+    {
+      "uid": "M7A-0079",
+      "sous_chapitre": "M7A.12",
+      "question": "Pourquoi les paramètres d'un groupe de parc électrique (tension, fréquence) doivent-ils être vérifiés avant raccordement à l'aéronef ?",
+      "options": [
+        "Un groupe mal réglé peut endommager les équipements électriques embarqués dès l'instant de la mise sous tension, avant qu'un défaut ne soit remarqué",
+        "Le raccordement électrique reste généralement possible même si les paramètres sont hors plage, un connecteur standard n'empêchant pas la connexion",
+        "Les paramètres du groupe de parc affectent surtout sa propre durée de vie interne, les circuits de l'aéronef disposant généralement d'une marge de tolérance suffisante"
+      ],
+      "bonne": 0,
+      "explication": "Un groupe de parc dont la tension ou la fréquence sort de la plage attendue par l'aéronef peut endommager les équipements embarqués dès la mise sous tension : c'est pourquoi ces paramètres se vérifient avant tout raccordement, selon l'ordre prescrit par l'AMM. Le raccordement physique reste possible même avec des paramètres incorrects (rien ne l'empêche mécaniquement), et l'aéronef n'est pas protégé de façon absolue contre une alimentation hors plage.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.17 — groupes de parc électriques, hydrauliques et pneumatiques"
+    },
+    {
+      "uid": "M7A-0080",
+      "sous_chapitre": "M7A.12",
+      "question": "Pourquoi le liquide et la procédure de dégivrage au sol appliqués à un aéronef dépendent-ils des conditions météorologiques du moment ?",
+      "options": [
+        "Le liquide de dégivrage reste généralement le même d'un jour à l'autre, seule sa quantité étant ajustée selon la météo du moment",
+        "Le délai d'efficacité du traitement avant le décollage varie selon le type de fluide et les conditions, sans règle unique valable en toute saison",
+        "La procédure de dégivrage dépend surtout du type d'aéronef traité, les conditions météorologiques du moment n'influençant que la quantité de liquide appliquée"
+      ],
+      "bonne": 1,
+      "explication": "Le délai pendant lequel un traitement de dégivrage/antigivrage reste efficace avant le décollage dépend à la fois du fluide employé et des conditions météorologiques réelles (température, précipitations) : il n'existe pas de règle unique valable quelle que soit la saison. Le liquide utilisé peut lui-même varier selon les conditions, pas seulement sa quantité, et les conditions extérieures pèsent sur bien plus que la seule quantité de liquide nécessaire.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.17 — dégivrage et antigivrage"
+    },
+    {
+      "uid": "M7A-0081",
+      "sous_chapitre": "M7A.12",
+      "question": "En quoi la manutention de l'aéronef complet (remorquage, calage, mise sur vérins) diffère-t-elle, dans ses enjeux de sécurité, de la manutention générique du matériel vue en atelier ?",
+      "options": [
+        "Elle engage une masse et une inertie sans commune mesure avec une pièce d'atelier, avec un risque de basculement ou de dommage structural en cas d'erreur",
+        "Elle concerne des opérations généralement bien maîtrisées par les équipes au sol, comparables en risque à la manutention d'une pièce fragile en atelier",
+        "Elle suit des précautions globalement proches de celles d'un déplacement de pièce en atelier, avec quelques ajustements mineurs propres à l'aéronef"
+      ],
+      "bonne": 0,
+      "explication": "Un aéronef pèse plusieurs tonnes voire dizaines de tonnes, avec une inertie et des conséquences d'erreur (basculement, dommage structural) sans commune mesure avec la manutention d'une pièce ou d'un équipement d'atelier. Ce n'est donc pas une opération sans risque, et elle appelle des précautions propres à son échelle — points de levage désignés, guides au sol, angle de braquage — qui n'ont pas d'équivalent direct pour une simple pièce déplacée en atelier.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.17 — manutention et stockage de l'aéronef"
+    },
+    {
+      "uid": "M7A-0082",
+      "sous_chapitre": "M7A.12",
+      "question": "Pourquoi un vent fort constitue-t-il un facteur de risque pour un aéronef remorqué ou stocké si le blocage n'a pas été correctement réalisé ?",
+      "options": [
+        "Il a surtout un effet sur la consommation de carburant lors du prochain vol, en modifiant légèrement les conditions de préparation",
+        "Il affecte surtout la précision des instruments de pesée utilisés lors d'un contrôle, plus que la stabilité générale de l'aéronef au parking",
+        "Il peut déplacer l'aéronef non correctement calé ou faire battre ses surfaces mobiles si elles n'ont pas été immobilisées au préalable"
+      ],
+      "bonne": 2,
+      "explication": "Un vent fort peut déplacer un aéronef insuffisamment calé, ou faire battre des gouvernes et surfaces mobiles laissées libres, avec un risque de dommage direct : c'est pourquoi le calage et le blocage prennent en compte les conditions environnementales. Ce risque n'a aucun rapport avec la consommation de carburant du prochain vol, et il concerne bien la stabilité physique de l'aéronef, pas seulement la précision d'un instrument de pesée.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.17 — effets des conditions environnementales"
+    },
+    {
+      "uid": "M7A-0083",
+      "sous_chapitre": "M7A.13",
+      "question": "Pourquoi un impact de foudre peut-il être plus difficile à détecter visuellement sur une structure composite que sur une structure métallique ?",
+      "options": [
+        "L'énergie peut se concentrer et provoquer un décollement interne, sans marque extérieure évidente, contrairement à une fusion ou un perçage souvent visibles sur métal",
+        "La foudre atteint plus rarement une structure en matériau composite, sa moindre conductivité limitant l'attraction du point d'impact",
+        "Le composite conduit l'électricité de façon comparable au métal, ce qui dissipe l'essentiel de l'énergie sans dommage notable"
+      ],
+      "bonne": 0,
+      "explication": "Un composite, moins conducteur qu'un métal, peut concentrer davantage l'énergie d'un impact de foudre et développer un décollement interne (voir M7A.11) sans marque extérieure évidente, alors qu'une structure métallique laisse plus souvent une fusion ou un perçage visibles au point d'impact. Le composite est en réalité moins conducteur que le métal, pas meilleur conducteur, et un impact de foudre peut tout à fait toucher une structure composite comme une structure métallique.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.19(a) — inspections après impact de foudre"
+    },
+    {
+      "uid": "M7A-0084",
+      "sous_chapitre": "M7A.13",
+      "question": "Pourquoi une pénétration HIRF peut-elle affecter un aéronef sans laisser de dommage physique visible ?",
+      "options": [
+        "Le HIRF a généralement un effet mesurable limité aux communications radio, sans conséquence sur les autres systèmes de l'aéronef",
+        "Le HIRF endommage généralement d'abord la structure externe visible, l'électronique n'étant affectée que dans un second temps",
+        "Le risque principal porte sur une perturbation ou un endommagement caché de l'électronique embarquée, pas sur un dommage mécanique de structure"
+      ],
+      "bonne": 2,
+      "explication": "Le HIRF est un rayonnement électromagnétique externe suffisamment puissant pour perturber ou endommager l'électronique embarquée, sans nécessairement toucher la structure mécanique de l'aéronef : c'est cet effet caché sur les systèmes, pas un dommage de structure, qui justifie une inspection spécifique. Le HIRF a bien un effet mesurable possible sur les systèmes, et il n'endommage pas systématiquement la structure externe avant d'affecter l'électronique — il peut agir sans aucune trace structurale.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.19(a) — inspections après pénétration HIRF"
+    },
+    {
+      "uid": "M7A-0085",
+      "sous_chapitre": "M7A.13",
+      "question": "Après un impact de foudre avéré, sur quels deux volets porte l'inspection prescrite par l'AMM ?",
+      "options": [
+        "Principalement un test de fonctionnement des instruments de navigation, l'examen structural n'étant réalisé qu'en cas de doute visuel",
+        "Essentiellement un contrôle visuel de la peinture extérieure de l'aéronef, aux endroits où l'impact semble s'être produit",
+        "Un examen structural aux points d'entrée et de sortie identifiés, complété par une vérification fonctionnelle des systèmes électroniques concernés"
+      ],
+      "bonne": 2,
+      "explication": "L'inspection après un impact de foudre combine un examen structural aux points d'entrée et de sortie identifiés ou probables, et une vérification fonctionnelle des systèmes électroniques susceptibles d'avoir été affectés — les deux volets sont nécessaires, même en l'absence de dommage visible sur l'un des deux. Un simple contrôle de peinture ou un test limité aux seuls instruments de navigation, sans l'autre volet, ne couvrirait pas l'ensemble du risque identifié.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.19(a) — inspections après impact de foudre et HIRF"
+    },
+    {
+      "uid": "M7A-0086",
+      "sous_chapitre": "M7A.13",
+      "question": "Comment détermine-t-on qu'un atterrissage doit être qualifié d'atterrissage dur, déclenchant une inspection spécifique ?",
+      "options": [
+        "Par un seuil objectif de taux de descente ou d'accélération verticale défini par le constructeur, pas par une impression subjective de l'équipage",
+        "Par le ressenti de l'équipage au moment du contact avec le sol, complété si besoin par les commentaires des passagers",
+        "Par la durée totale du vol qui a précédé l'atterrissage, un vol long sollicitant davantage la structure au moment du contact"
+      ],
+      "bonne": 0,
+      "explication": "Un atterrissage dur se définit par un seuil objectif — taux de descente ou accélération verticale — fixé par le constructeur, mesuré ou estimé à partir de données de vol, et non par une impression subjective ressentie en cabine. La durée du vol qui précède l'atterrissage n'a aucun rapport avec ce critère, qui porte uniquement sur les conditions du contact avec le sol lui-même.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.19(b) — inspections après atterrissage dur"
+    },
+    {
+      "uid": "M7A-0087",
+      "sous_chapitre": "M7A.13",
+      "question": "Qu'advient-il d'un compte rendu d'atterrissage rude fait par l'équipage, si les paramètres réellement enregistrés se révèlent finalement sous le seuil constructeur ?",
+      "options": [
+        "Le compte rendu a tout de même déclenché l'évaluation prévue par l'AMM, qui a permis de conclure que l'inspection complète n'était pas nécessaire",
+        "Le compte rendu impose généralement l'inspection complète dès son dépôt, avant même que les paramètres réels n'aient été évalués",
+        "Le compte rendu reste consigné dans le dossier de l'aéronef sans déclencher d'évaluation particulière, sauf récidive sur un vol ultérieur"
+      ],
+      "bonne": 0,
+      "explication": "Un compte rendu d'atterrissage rude déclenche toujours l'évaluation prévue par l'AMM : ce n'est qu'à l'issue de cette évaluation, si les paramètres réellement enregistrés restent sous le seuil constructeur, que l'inspection complète se révèle non nécessaire — le compte rendu n'est jamais ignoré d'emblée, et son existence seule n'impose pas non plus systématiquement l'inspection complète indépendamment du résultat de l'évaluation.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.19(b) — inspections après atterrissage dur"
+    },
+    {
+      "uid": "M7A-0088",
+      "sous_chapitre": "M7A.13",
+      "question": "En quoi la sollicitation structurale d'une turbulence sévère traversée en vol diffère-t-elle de celle d'un atterrissage dur ?",
+      "options": [
+        "L'effort est réparti sur la voilure et le fuselage sous forme de charges répétées, plutôt que concentré au niveau du train au moment du contact au sol",
+        "La turbulence sollicite la structure de l'aéronef de façon nettement plus limitée qu'un atterrissage dur, sans charge réellement significative",
+        "La turbulence sollicite surtout le train d'atterrissage, de façon assez proche de ce qui se produit lors d'un atterrissage dur"
+      ],
+      "bonne": 0,
+      "explication": "Une turbulence sévère répartit l'effort sur la voilure et le fuselage sous forme de charges répétées pendant toute sa durée, alors qu'un atterrissage dur concentre l'effort au niveau du train au moment précis du contact avec le sol : les deux événements sollicitent donc la structure de façon différente. La turbulence sollicite bien la structure, et ce n'est pas le train d'atterrissage qui en est la zone principalement concernée.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.19(b) — inspections après turbulence sévère"
+    },
+    {
+      "uid": "M7A-0089",
+      "sous_chapitre": "M7A.13",
+      "question": "Pourquoi l'étendue de l'inspection après un événement anormal (foudre, atterrissage dur, turbulence) est-elle toujours définie par l'AMM du type d'aéronef, plutôt que par le jugement du technicien sur place ?",
+      "options": [
+        "Parce que l'AMM réserve ce type d'inspection à un personnel spécifiquement qualifié, distinct du technicien réalisant l'entretien courant",
+        "Parce que le jugement du technicien reste généralement plus précis qu'une procédure écrite à l'avance, celle-ci ne pouvant prévoir tous les cas",
+        "Parce qu'un dommage caché peut se situer au-delà de la zone qui semble visiblement affectée, un jugement au cas par cas risquant de la sous-estimer"
+      ],
+      "bonne": 2,
+      "explication": "Un dommage lié à un événement anormal peut se situer au-delà de ce qui paraît visiblement affecté : une étendue d'inspection définie à l'avance par l'AMM, sur la base de l'expérience du constructeur, évite de sous-estimer cette zone par un jugement improvisé sur place. L'AMM ne fait évidemment pas obstacle à l'inspection elle-même, et un jugement au cas par cas n'est pas plus fiable qu'une procédure établie à l'avance pour ce type de situation.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.19 — étendue des inspections après événement anormal"
+    },
+    {
+      "uid": "M7A-0090",
+      "sous_chapitre": "M7A.13",
+      "question": "Après un passage en turbulence sévère avérée, sur quels éléments porte typiquement l'inspection prescrite ?",
+      "options": [
+        "Principalement le système de climatisation de la cabine, sensible aux variations de pression pendant la turbulence",
+        "Principalement les pneus et les freins du train d'atterrissage, davantage sollicités qu'en vol stabilisé",
+        "La structure de voilure et d'empennage, ainsi que la fixation des éléments lourds embarqués comme les moteurs"
+      ],
+      "bonne": 2,
+      "explication": "Une turbulence sévère sollicite principalement la voilure et l'empennage par des charges répétées, ainsi que la fixation des éléments lourds embarqués (moteurs, réservoirs) : c'est sur ces zones que porte typiquement l'inspection qui suit. Le train d'atterrissage est surtout concerné par un atterrissage dur, pas par une turbulence en vol, et le système de climatisation n'a aucun rapport avec ce type de sollicitation structurale.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.19(b) — inspections après turbulence sévère"
+    },
+    {
+      "uid": "M7A-0091",
+      "sous_chapitre": "M7A.14",
+      "question": "Pourquoi l'intervalle entre deux tâches de maintenance planifiées n'est-il jamais choisi arbitrairement ?",
+      "options": [
+        "Il reste globalement proche d'une tâche à l'autre, les systèmes d'un même aéronef partageant des contraintes similaires",
+        "Il est calculé pour rester dans une marge de sécurité entre l'apparition possible d'un défaut et sa détection",
+        "Il dépend en partie de la disponibilité du personnel qualifié au moment prévu, ajustée selon le planning de l'atelier"
+      ],
+      "bonne": 1,
+      "explication": "L'intervalle d'une tâche planifiée est calculé pour garder une marge de sécurité entre le moment où un défaut pourrait apparaître et le moment où l'inspection suivante le détecterait : un intervalle trop long laisserait un défaut se développer au-delà de cette marge. Il ne dépend pas de la seule disponibilité du personnel un jour donné, et il varie au contraire selon le système et la tâche concernés, pas de façon uniforme.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.20 — planification de maintenance"
+    },
+    {
+      "uid": "M7A-0092",
+      "sous_chapitre": "M7A.14",
+      "question": "Pourquoi une modification de la configuration d'un aéronef, même mineure en apparence, suit-elle une procédure d'approbation avant réalisation ?",
+      "options": [
+        "La procédure d'approbation sert surtout à des fins administratives et de traçabilité commerciale, avec un lien indirect avec la sécurité",
+        "Une modification non maîtrisée peut affecter la navigabilité d'une façon qui n'est pas immédiatement visible, par exemple sur le centrage",
+        "Les modifications visibles de l'extérieur nécessitent généralement une approbation préalable plus stricte que les modifications internes"
+      ],
+      "bonne": 1,
+      "explication": "Une modification, même minime, peut affecter la navigabilité de façon non immédiatement visible — un ajout de masse mal pris en compte dans le centrage (voir M7A.10), par exemple — d'où une procédure d'approbation avant réalisation. Cette procédure n'a donc rien de purement administratif : elle vise directement la sécurité, et elle s'applique aussi à des modifications qui ne sont pas visibles de l'extérieur.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.20 — procédures de modification"
+    },
+    {
+      "uid": "M7A-0093",
+      "sous_chapitre": "M7A.14",
+      "question": "Pourquoi une pièce dont la traçabilité vers son certificat d'origine a été perdue ne peut-elle pas être montée sur un aéronef en toute confiance ?",
+      "options": [
+        "Personne ne peut alors établir avec certitude si elle est réellement conforme aux exigences applicables à ce type de pièce",
+        "Une pièce sans certificat d'origine peut généralement être remplacée par une pièce jugée équivalente après un examen visuel rapide",
+        "La traçabilité concerne surtout le prix d'achat et l'origine commerciale de la pièce, plus que sa conformité technique réelle"
+      ],
+      "bonne": 0,
+      "explication": "Sans traçabilité vers son certificat d'origine, plus personne ne peut établir avec certitude qu'une pièce est bien conforme aux exigences applicables — c'est cette incertitude, pas une question commerciale, qui interdit de la monter en toute confiance. La traçabilité concerne la conformité technique de la pièce, pas son prix, et l'absence de certificat ne se règle pas simplement en substituant une pièce « équivalente » sans vérification documentée.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.20 — procédures de magasin"
+    },
+    {
+      "uid": "M7A-0094",
+      "sous_chapitre": "M7A.14",
+      "question": "Que signifie concrètement la signature d'une certification de remise en service (CRS) par une personne habilitée ?",
+      "options": [
+        "Elle atteste surtout que le travail facturé a bien été réalisé et réglé par le client concerné",
+        "Elle atteste formellement que le travail a été réalisé conformément aux données approuvées applicables à cette intervention précise",
+        "Elle transfère progressivement la responsabilité de l'intervention vers l'équipage, qui devra ensuite exploiter l'aéronef en connaissance de cause"
+      ],
+      "bonne": 1,
+      "explication": "Signer une CRS engage la responsabilité de la personne ou de l'organisme qui la signe : elle atteste que le travail a été réalisé conformément aux données approuvées applicables, pas seulement qu'il « semble » correct. Elle n'a aucun rapport avec le règlement financier de la prestation, et elle ne transfère certainement pas la responsabilité de l'intervention vers l'équipage, qui n'a pas réalisé le travail.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.20 — certification et remise en service"
+    },
+    {
+      "uid": "M7A-0095",
+      "sous_chapitre": "M7A.14",
+      "question": "Que risque une rupture dans l'interface entre l'exploitation et la maintenance, par exemple un défaut reporté par l'équipage mais jamais transmis à la maintenance ?",
+      "options": [
+        "Une information de sécurité importante peut disparaître entre deux étapes du processus, sans qu'aucune des deux parties n'ait commis d'erreur technique individuelle",
+        "Le défaut est généralement détecté lors de la prochaine visite périodique prévue, indépendamment de la transmission initiale de l'information",
+        "Cette situation a une conséquence limitée tant que l'équipage conserve une trace du défaut sur un document personnel"
+      ],
+      "bonne": 0,
+      "explication": "Un défaut reporté mais jamais transmis à la maintenance peut disparaître entre deux étapes du processus, sans qu'aucune des deux parties (équipage, maintenance) n'ait individuellement commis d'erreur technique : c'est la rupture de l'interface elle-même qui est en cause. Un document personnel non transmis à la maintenance ne règle rien, et rien ne garantit qu'une visite périodique ultérieure détectera nécessairement ce même défaut avant qu'il n'ait de conséquence.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.20 — interface avec l'exploitation de l'aéronef"
+    },
+    {
+      "uid": "M7A-0096",
+      "sous_chapitre": "M7A.14",
+      "question": "Quelle différence distingue le contrôle qualité (quality control) de l'assurance qualité (quality assurance) au sein d'un organisme de maintenance ?",
+      "options": [
+        "Les deux fonctions désignent une activité très proche, la distinction entre les deux noms restant surtout historique dans l'organisme",
+        "Le contrôle qualité vérifie le respect quotidien des procédures, tandis que l'assurance qualité audite périodiquement le système et l'organisation dans son ensemble",
+        "Le contrôle qualité s'exerce surtout sur la documentation produite, tandis que l'assurance qualité porte davantage sur l'outillage utilisé"
+      ],
+      "bonne": 1,
+      "explication": "Le contrôle qualité vérifie que les procédures et les standards de l'organisme sont effectivement respectés au quotidien, tandis que l'assurance qualité prend du recul et audite périodiquement le système et l'organisation dans leur ensemble — deux échelles de vérification différentes, pas la même activité renommée. La distinction ne porte pas non plus sur un partage documentation/outillage entre les deux fonctions.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.20 — inspection de maintenance, contrôle qualité, assurance qualité"
+    },
+    {
+      "uid": "M7A-0097",
+      "sous_chapitre": "M7A.14",
+      "question": "Pourquoi une pièce à vie limitée (LLP) doit-elle être retirée du service à une limite absolue de cycles ou d'heures, plutôt que selon son état constaté à l'inspection ?",
+      "options": [
+        "Les pièces à vie limitée restent généralement difficiles à inspecter visuellement, leur usure interne échappant souvent à un simple examen",
+        "Une fissure de fatigue peut, une fois amorcée sur ce type de pièce fortement sollicitée, progresser trop rapidement pour être fiablement détectée à temps par une inspection périodique",
+        "La limite absolue reste en partie une convention commerciale, ajustée surtout selon la politique de garantie du fabricant"
+      ],
+      "bonne": 1,
+      "explication": "Sur une pièce fortement sollicitée, une fissure de fatigue peut progresser trop rapidement, une fois amorcée, pour qu'une inspection périodique la détecte fiablement à temps : retirer la pièce à une limite absolue de cycles ou d'heures, avant qu'une fissure n'ait statistiquement une chance sérieuse de s'amorcer, reste la seule garantie fiable. Ces pièces peuvent tout à fait être inspectées visuellement par ailleurs, et la limite répond bien à un risque réel de fatigue du matériau, pas à une convention commerciale.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.20 — contrôle des pièces à vie limitée"
+    },
+    {
+      "uid": "M7A-0098",
+      "sous_chapitre": "M7A.14",
+      "question": "Pourquoi le suivi du nombre de cycles ou d'heures d'une pièce à vie limitée doit-il rester complet même si cette pièce a été montée sur plusieurs aéronefs successifs ?",
+      "options": [
+        "Le compteur de cycles d'une pièce à vie limitée repart généralement à un niveau réduit à chaque changement d'aéronef",
+        "Le dernier aéronef sur lequel la pièce a été montée compte surtout pour le calcul de sa limite de vie restante",
+        "Une pièce dont l'historique d'utilisation est incomplet ne peut pas être remise en service en toute confiance, même si elle semble en bon état"
+      ],
+      "bonne": 2,
+      "explication": "La limite de vie d'une pièce porte sur l'ensemble de son usage réel, cumulé sur tous les aéronefs sur lesquels elle a pu être montée successivement : un historique incomplet empêche de savoir avec certitude où elle en est réellement par rapport à sa limite, même si elle paraît en bon état. Le compteur ne repart jamais à zéro à un changement d'aéronef, et l'usage sur les aéronefs précédents compte tout autant que celui sur le dernier.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.20 — contrôle des pièces à vie limitée"
+    },
+    {
+      "uid": "M7A-0099",
+      "sous_chapitre": "M7A.14",
+      "question": "Au-delà des échéances techniques (heures, cycles), que doit aussi anticiper une bonne planification de maintenance ?",
+      "options": [
+        "Les besoins en pièces détachées, en personnel qualifié disponible et en immobilisation de l'aéronef pendant l'intervention",
+        "Essentiellement le nombre d'heures de vol prévues pour le mois suivant, sans lien direct avec les ressources matérielles",
+        "Le montant prévisionnel de la facture finale qui sera adressée au client une fois l'intervention terminée"
+      ],
+      "bonne": 0,
+      "explication": "Une bonne planification anticipe aussi les besoins en pièces, en personnel qualifié et en immobilisation de l'aéronef, pas seulement les échéances techniques elles-mêmes : sans cette anticipation, une intervention pourtant planifiée à temps peut être retardée faute de moyens disponibles. Le nombre d'heures de vol futures et la facturation ne relèvent pas de la planification de maintenance elle-même.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.20 — planification de maintenance"
+    },
+    {
+      "uid": "M7A-0100",
+      "sous_chapitre": "M7A.15",
+      "question": "Que doit permettre de comprendre un rapport de travail à une personne qualifiée qui n'a pas assisté à l'intervention ?",
+      "options": [
+        "Précisément ce qui a été fait, sur quel équipement, selon quelle référence documentaire, et avec quel résultat",
+        "Le nom de la personne ayant réalisé l'intervention, une information jugée suffisante pour identifier qui contacter en cas de question",
+        "Essentiellement la durée totale de l'intervention, un indicateur utile pour planifier les interventions suivantes"
+      ],
+      "bonne": 0,
+      "explication": "Un rapport de travail doit permettre à toute personne qualifiée de comprendre précisément ce qui a été fait, sur quel équipement, selon quelle référence documentaire, et avec quel résultat — une mention générale du type « travail terminé » ne suffit pas. La seule durée de l'intervention, ou le seul nom de l'intervenant sans description du travail, ne permettent à personne de vérifier après coup ce qui a réellement été réalisé.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.21 — éléments d'un rapport de travail"
+    },
+    {
+      "uid": "M7A-0101",
+      "sous_chapitre": "M7A.15",
+      "question": "Pourquoi un rapport de dépannage documente-t-il le raisonnement suivi, pas seulement la cause finalement retenue ?",
+      "options": [
+        "Parce que la cause finale d'une panne suffit généralement en pratique, le raisonnement intermédiaire restant secondaire",
+        "Parce que le raisonnement suivi complète utilement la mention de la pièce finalement remplacée, sans qu'il soit central au rapport",
+        "Pour permettre de capitaliser sur le travail déjà fait si une panne similaire se reproduit, y compris pour écarter plus vite des causes déjà exclues"
+      ],
+      "bonne": 2,
+      "explication": "Documenter le raisonnement — symptômes, vérifications effectuées, causes exclues ou confirmées — permet de capitaliser sur le travail déjà fait si une panne similaire se reproduit, plutôt que de repartir de zéro. La cause finale doit au contraire toujours être documentée, et le raisonnement s'ajoute à cette information, il ne dispense pas de mentionner la pièce finalement remplacée.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.21 — éléments d'un rapport de dépannage"
+    },
+    {
+      "uid": "M7A-0102",
+      "sous_chapitre": "M7A.15",
+      "question": "Pourquoi la transmission d'une consigne de relève de poste est-elle particulièrement sensible sur une intervention interrompue en cours de route ?",
+      "options": [
+        "La consigne de relève concerne surtout les interventions déjà terminées avant le changement d'équipe, à des fins d'archivage",
+        "Une intervention interrompue reste généralement visible sur le panneau concerné, ce qui limite le besoin d'une transmission détaillée",
+        "L'équipe suivante ne peut pas deviner par elle-même l'état intermédiaire d'un système partiellement démonté ou isolé"
+      ],
+      "bonne": 2,
+      "explication": "Un système partiellement démonté, un panneau retiré ou un circuit isolé représentent un état intermédiaire que l'équipe suivante ne peut pas deviner par elle-même : sans transmission claire, elle pourrait considérer à tort ce système comme normal. C'est précisément l'inverse d'une intervention déjà terminée, et aucun voyant automatique ne remplace cette transmission humaine de l'information.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.21 — consignes de relève de poste"
+    },
+    {
+      "uid": "M7A-0103",
+      "sous_chapitre": "M7A.15",
+      "question": "Que signifie la qualité de « clarté » appliquée à une communication de maintenance ?",
+      "options": [
+        "L'absence d'ambiguïté possible sur ce qui est décrit, par exemple en identifiant précisément un équipement plutôt que par une désignation approximative",
+        "Le fait de privilégier une transmission orale directe, jugée généralement plus claire qu'un rapport écrit détaillé",
+        "Le fait de limiter la communication au minimum de mots possible, un objectif proche de la concision plus que de la clarté elle-même"
+      ],
+      "bonne": 0,
+      "explication": "La clarté élimine toute ambiguïté sur ce qui est décrit — identifier précisément un équipement plutôt que par une désignation approximative, par exemple — sans lien avec le support employé. Réduire le message au strict minimum au point d'omettre une information utile relève d'un défaut de concision mal comprise, pas de clarté ; et la clarté ne dépend pas du choix entre communication écrite ou orale.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.21 — communication claire, complète et concise"
+    },
+    {
+      "uid": "M7A-0104",
+      "sous_chapitre": "M7A.15",
+      "question": "Pourquoi une communication de maintenance doit-elle rester complète tout en restant concise, deux exigences qui pourraient sembler contradictoires ?",
+      "options": [
+        "La concision impose généralement de privilégier une transmission orale, tandis que l'exhaustivité impose plutôt un support écrit détaillé",
+        "Ces deux qualités s'équilibrent difficilement en pratique : un rapport concis reste rarement aussi complet qu'un rapport détaillé",
+        "L'exhaustivité porte sur les informations nécessaires à l'action, tandis que la concision élimine seulement le détail superflu qui noierait cette information utile"
+      ],
+      "bonne": 2,
+      "explication": "L'exhaustivité porte sur les informations réellement nécessaires à la personne qui doit agir, tandis que la concision retire seulement le détail superflu qui noierait cette information utile — les deux qualités portent donc sur des aspects différents et se complètent, plutôt que de s'exclure. Un rapport concis peut très bien rester complet, et aucune des deux qualités n'impose un support (oral ou écrit) particulier.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.21 — communication claire, complète et concise"
+    },
+    {
+      "uid": "M7A-0105",
+      "sous_chapitre": "M7A.15",
+      "question": "Pourquoi un rapport surchargé de détails non pertinents peut-il être aussi risqué qu'un rapport trop pauvre en information ?",
+      "options": [
+        "Un rapport trop long est généralement relu plus rapidement en diagonale par la personne suivante, qui risque d'en manquer une partie",
+        "Un rapport trop détaillé contient rarement une information réellement nouvelle par rapport à un rapport plus synthétique",
+        "L'information essentielle devient plus difficile à repérer au milieu de détails superflus"
+      ],
+      "bonne": 2,
+      "explication": "Un excès de détails superflus noie l'information réellement utile, la rendant plus difficile à repérer pour la personne qui doit ensuite s'appuyer sur ce rapport — un risque comparable, dans son effet final, à celui d'un rapport trop pauvre. Aucun mécanisme de rejet automatique n'existe pour un rapport « trop long », et un rapport détaillé peut par ailleurs très bien contenir une information utile, simplement mal mise en valeur.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.21 — communication claire, complète et concise"
+    },
+    {
+      "uid": "M7A-0106",
+      "sous_chapitre": "M7A.15",
+      "question": "Pourquoi une information qui paraît évidente à la personne qui rédige un rapport de maintenance doit-elle quand même y figurer explicitement ?",
+      "options": [
+        "Parce qu'une information, même sans lien direct avec l'intervention, gagne généralement à figurer dans un rapport complet",
+        "Parce qu'elle n'est pas nécessairement évidente pour une personne qui n'a pas suivi l'intervention depuis le début",
+        "Parce qu'un rapport n'est généralement considéré comme complet qu'à partir d'une certaine longueur minimale attendue par l'organisme"
+      ],
+      "bonne": 1,
+      "explication": "Une information évidente pour le rédacteur, qui a suivi l'intervention du début à la fin, ne l'est pas nécessairement pour une personne qui découvre le rapport sans ce contexte : c'est cette différence de point de vue qui justifie de l'écrire explicitement plutôt que de la considérer comme sous-entendue. L'exhaustivité ne consiste pas à tout inclure sans distinction, ni à atteindre une longueur minimale : elle porte sur les informations réellement nécessaires à l'action.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.21 — éléments d'un rapport de travail"
+    },
+    {
+      "uid": "M7A-0107",
+      "sous_chapitre": "M7A.15",
+      "question": "En quoi une documentation défaillante peut-elle transformer un travail de maintenance techniquement correct en un risque pour la suite ?",
+      "options": [
+        "La personne suivante ne dispose plus de l'information nécessaire pour poursuivre le travail ou éviter de refaire une vérification déjà réalisée",
+        "Une documentation défaillante pose surtout problème si elle contient une erreur technique explicite, plus que par une simple omission d'information",
+        "Une documentation défaillante a une conséquence limitée tant que l'intervention elle-même a été bien réalisée sur le fond"
+      ],
+      "bonne": 0,
+      "explication": "Même un travail techniquement irréprochable perd une partie de sa valeur si la personne suivante ne dispose pas de l'information nécessaire pour poursuivre le travail, comprendre une décision déjà prise, ou éviter de refaire une vérification déjà réalisée : la documentation prolonge la qualité du geste technique. Ce n'est donc pas une simple formalité sans conséquence, et une simple omission d'information peut être tout aussi problématique qu'une erreur technique explicite dans le texte.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.21 — documentation et communication"
+    },
+    {
+      "uid": "M7A-0108",
+      "sous_chapitre": "M7A.1",
+      "question": "Pourquoi prévoit-on systématiquement un surveillant extérieur, en contact permanent avec la personne à l'intérieur, lors d'une entrée dans un réservoir de carburant ?",
+      "options": [
+        "Pour réduire le temps nécessaire à la ventilation du réservoir avant que la personne n'y pénètre",
+        "Pour relever à sa place la quantité de carburant restant dans le réservoir, une tâche annexe confiée au surveillant",
+        "Pour pouvoir déclencher une extraction si la personne à l'intérieur montre un signe de détresse ou cesse de répondre"
+      ],
+      "bonne": 2,
+      "explication": "Le surveillant extérieur reste en contact permanent avec la personne à l'intérieur pour pouvoir déclencher une extraction dès le premier signe de détresse ou d'absence de réponse — un rôle essentiel puisque les dangers de l'espace confiné ne provoquent pas toujours de signe d'alerte perceptible par la personne elle-même. Ce rôle n'a aucun rapport avec la mesure de carburant, et il s'ajoute à la ventilation, il ne la remplace pas.",
+      "source": "Notions générales de sécurité en maintenance aéronautique — entrée en espace confiné (réservoir de carburant)"
+    },
+    {
+      "uid": "M7A-0109",
+      "sous_chapitre": "M7A.1",
+      "question": "Pourquoi l'outillage utilisé lors d'une intervention dans un réservoir de carburant doit-il être non étincelant ?",
+      "options": [
+        "Parce qu'une consigne générale d'atelier impose cet outillage pour la plupart des interventions, sans lien particulier avec le carburant",
+        "Parce qu'une atmosphère chargée en vapeurs de carburant peut s'enflammer au contact de la moindre étincelle produite par un outil",
+        "Parce qu'un outil non étincelant résiste généralement mieux à la corrosion provoquée par le contact prolongé avec le carburant"
+      ],
+      "bonne": 1,
+      "explication": "Une étincelle produite par un outil ordinaire peut suffire à enflammer une atmosphère chargée en vapeurs de carburant à l'intérieur d'un espace confiné : l'outillage non étincelant élimine cette source d'ignition. Ce n'est pas une question de résistance à la corrosion, et cette exigence est spécifique aux zones à atmosphère potentiellement explosive, pas une règle générale d'atelier sans lien avec le risque réel.",
+      "source": "Notions générales de sécurité en maintenance aéronautique — entrée en espace confiné (réservoir de carburant)"
+    },
+    {
+      "uid": "M7A-0110",
+      "sous_chapitre": "M7A.10",
+      "question": "Pourquoi la magnétoscopie ne peut-elle pas être employée pour contrôler une pièce en alliage d'aluminium ?",
+      "options": [
+        "Parce que l'aluminium n'est pas un matériau ferromagnétique, condition nécessaire pour que la méthode fonctionne",
+        "Parce que l'aluminium réagit à l'aimantation de façon trop intense, ce qui fausse fréquemment la lecture obtenue par cette méthode",
+        "Parce que l'aluminium est généralement trop mou pour supporter l'aimantation nécessaire à une lecture fiable de la méthode"
+      ],
+      "bonne": 0,
+      "explication": "La magnétoscopie exige un matériau ferromagnétique pour que le champ magnétique appliqué puisse être perturbé localement par une fissure et attirer les particules magnétiques : l'aluminium n'étant pas ferromagnétique, la méthode ne peut tout simplement pas s'y appliquer. Ce n'est ni une question de dureté du matériau, ni une réaction excessive à l'aimantation — l'aluminium ne réagit pas du tout à ce principe.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.18(c) — magnétoscopie"
+    },
+    {
+      "uid": "M7A-0111",
+      "sous_chapitre": "M7A.10",
+      "question": "Sur quel principe repose la détection d'un défaut par courants de Foucault ?",
+      "options": [
+        "Une bobine électrique alimentée en courant alternatif génère des courants induits dans la pièce conductrice ; un défaut proche de la surface perturbe localement ces courants, un écart mesurable au niveau de la bobine elle-même",
+        "Une onde acoustique de haute fréquence traverse la pièce et rebondit sur toute discontinuité interne, sa position étant déduite du délai de retour du signal",
+        "Un colorant liquide s'infiltre progressivement dans une fissure ouverte, avant d'être mis en évidence par un produit révélateur appliqué en surface"
+      ],
+      "bonne": 0,
+      "explication": "Les courants de Foucault reposent sur l'induction électromagnétique : une bobine alimentée en courant alternatif génère des courants induits dans une pièce conductrice, et un défaut proche de la surface perturbe localement ces courants de façon mesurable. L'infiltration d'un colorant dans une fissure décrit le ressuage, et la réflexion d'une onde acoustique décrit les ultrasons — deux principes physiques différents de l'induction électromagnétique.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.18(c) — courants de Foucault"
+    },
+    {
+      "uid": "M7A-0112",
+      "sous_chapitre": "M7A.10",
+      "question": "Que permet la borescopie, à la différence des autres méthodes de contrôle non destructif ?",
+      "options": [
+        "Observer directement, à l'aide d'une sonde optique, l'intérieur d'une cavité normalement inaccessible comme celle d'un moteur, sans avoir à le démonter",
+        "Repérer un défaut logé profondément dans l'épaisseur de la pièce grâce à un rayonnement capable de la traverser entièrement",
+        "Mettre en évidence une fissure fine débouchant en surface, grâce à l'infiltration progressive d'un colorant liquide"
+      ],
+      "bonne": 0,
+      "explication": "La borescopie utilise une sonde optique rigide ou flexible pour observer littéralement l'intérieur d'une cavité fermée à travers un orifice d'inspection dédié, sans démontage — une observation directe, à la différence des autres méthodes qui détectent un défaut par un phénomène physique indirect. Le rayonnement qui traverse l'épaisseur de la pièce décrit la radiographie, et l'infiltration d'un colorant liquide décrit le ressuage.",
+      "source": "EASA Easy Access Rules for Continuing Airworthiness (Règlement (UE) 1321/2014), Appendix I to Part-66, Module 7, item 7.18(c) — borescopie"
     }
   ]
 }

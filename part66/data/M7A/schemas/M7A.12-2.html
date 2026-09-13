@@ -1,0 +1,82 @@
+<div id="schema-m7a12b-wrap" style="font-family: inherit; max-width: 680px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m7a12b-wrap .m7a12b-btn { margin:4px 6px 4px 0; padding:6px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.88em; text-align:left; display:block; width:100%; }
+#schema-m7a12b-wrap .m7a12b-btn:hover { background:#e8e8e8; }
+#schema-m7a12b-wrap .m7a12b-btn.active { background:#333; color:#fff; border-color:#333; }
+#schema-m7a12b-wrap .m7a12b-result { margin-top:14px; padding:12px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:3.8em; }
+#schema-m7a12b-wrap .m7a12b-result.ok { border-left-color:#3a9d3a; background:rgba(58,157,58,0.10); }
+#schema-m7a12b-wrap .m7a12b-result.bad { border-left-color:#c0392b; background:rgba(192,57,43,0.10); }
+#schema-m7a12b-wrap .m7a12b-cols { display:flex; gap:20px; flex-wrap:wrap; margin-top:10px; }
+#schema-m7a12b-wrap .m7a12b-col { min-width:250px; flex:1; }
+#schema-m7a12b-wrap .m7a12b-label { font-weight:bold; margin-bottom:4px; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> choisis une opération au sol, puis un ordre d'exécution — et regarde si l'ordre choisi est celui qui préserve la sécurité ou celui qui l'expose.</p>
+
+<div class="m7a12b-cols">
+  <div class="m7a12b-col">
+    <div class="m7a12b-label">Opération au sol</div>
+    <div id="m7a12b-op">
+      <button class="m7a12b-btn active" data-op="avit">Avitaillement en carburant</button>
+      <button class="m7a12b-btn" data-op="gpu">Raccordement d'un groupe de parc électrique</button>
+    </div>
+  </div>
+  <div class="m7a12b-col">
+    <div class="m7a12b-label">Ordre d'exécution</div>
+    <div id="m7a12b-ordre">
+      <button class="m7a12b-btn active" data-ordre="a">Ordre A</button>
+      <button class="m7a12b-btn" data-ordre="b">Ordre B</button>
+    </div>
+  </div>
+</div>
+
+<div class="m7a12b-result ok" id="m7a12b-result">✅ Avitaillement, ordre A : réaliser la liaison équipotentielle entre l'aéronef et le moyen d'avitaillement, PUIS brancher et démarrer le transfert de carburant. Le potentiel électrique est déjà égalisé avant tout contact du tuyau : aucune étincelle d'électricité statique n'est possible au moment du branchement.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m7a12b-wrap');
+  if (!wrap) { return; }
+  var opBtns = wrap.querySelectorAll('#m7a12b-op .m7a12b-btn');
+  var ordreBtns = wrap.querySelectorAll('#m7a12b-ordre .m7a12b-btn');
+  var result = wrap.querySelector('#m7a12b-result');
+
+  var table = {
+    avit: {
+      a: { ok: true, texte: 'Avitaillement, ordre A : réaliser la liaison équipotentielle entre l’aéronef et le moyen d’avitaillement, PUIS brancher et démarrer le transfert de carburant. Le potentiel électrique est déjà égalisé avant tout contact du tuyau : aucune étincelle d’électricité statique n’est possible au moment du branchement.' },
+      b: { ok: false, texte: 'Avitaillement, ordre B : brancher le tuyau d’avitaillement, PUIS réaliser la liaison équipotentielle. C’est l’inverse de la procédure : au moment du branchement du tuyau, les deux potentiels électriques ne sont pas encore égalisés, exactement le moment où une étincelle d’électricité statique peut jaillir près des vapeurs de carburant.' }
+    },
+    gpu: {
+      a: { ok: true, texte: 'Groupe de parc, ordre A : vérifier la tension et la fréquence du groupe, PUIS le raccorder à l’aéronef en suivant l’ordre de connexion prescrit par l’AMM. Les paramètres sont validés avant toute mise sous tension des équipements embarqués.' },
+      b: { ok: false, texte: 'Groupe de parc, ordre B : raccorder d’abord le groupe à l’aéronef, PUIS vérifier ses paramètres une fois sous tension. Si le groupe est mal réglé, les équipements embarqués sont déjà exposés à la mise sous tension avant même que la vérification n’ait lieu — l’inverse de la procédure prescrite par l’AMM.' }
+    }
+  };
+
+  var op = 'avit';
+  var ordre = 'a';
+
+  function render() {
+    var res = table[op][ordre];
+    result.classList.remove('ok', 'bad');
+    if (res.ok) { result.classList.add('ok'); result.textContent = '✅ ' + res.texte; }
+    else { result.classList.add('bad'); result.textContent = '❌ ' + res.texte; }
+  }
+
+  opBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      op = b.getAttribute('data-op');
+      opBtns.forEach(function (x) { x.classList.toggle('active', x === b); });
+      render();
+    });
+  });
+  ordreBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      ordre = b.getAttribute('data-ordre');
+      ordreBtns.forEach(function (x) { x.classList.toggle('active', x === b); });
+      render();
+    });
+  });
+
+  render();
+})();
+</script>

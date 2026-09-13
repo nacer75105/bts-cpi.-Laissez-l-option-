@@ -1,0 +1,55 @@
+<div id="schema-m7a15-wrap" style="font-family: inherit; max-width: 680px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m7a15-wrap .m7a15-btn { display:block; width:100%; text-align:left; margin:5px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.88em; }
+#schema-m7a15-wrap .m7a15-btn:hover { background:#e8e8e8; }
+#schema-m7a15-wrap .m7a15-btn.active { background:#333; color:#fff; border-color:#333; }
+#schema-m7a15-wrap .m7a15-result { margin-top:10px; padding:12px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:4.4em; white-space:pre-line; }
+#schema-m7a15-wrap .m7a15-result.ok { border-left-color:#3a9d3a; background:rgba(58,157,58,0.10); }
+#schema-m7a15-wrap .m7a15-result.bad { border-left-color:#c0392b; background:rgba(192,57,43,0.10); }
+</style>
+
+<p><strong>Essaie toi-même :</strong> choisis un exemple de consigne de relève de poste sur une même intervention (recherche de fuite hydraulique en cours), et regarde en quoi elle respecte ou non les trois qualités attendues : claire, complète, concise.</p>
+
+<div id="m7a15-choix">
+  <button class="m7a15-btn active" data-ex="vague">Exemple A — « Circuit hydraulique isolé, voir avec moi. »</button>
+  <button class="m7a15-btn" data-ex="longue">Exemple B — plusieurs paragraphes reprenant tout l'historique de maintenance de l'aéronef depuis six mois, noyant la recherche de fuite en cours au milieu du texte</button>
+  <button class="m7a15-btn" data-ex="bonne">Exemple C — « Circuit hydraulique n°2 isolé pour recherche de fuite (repère identifié en zone X). Contrôles A et B déjà faits, négatifs. Reste à vérifier le raccord Y avant remise en pression. »</button>
+</div>
+
+<div class="m7a15-result bad" id="m7a15-result">❌ Exemple A.
+Clarté : insuffisante — « voir avec moi » ne précise rien si la personne n'est plus disponible.
+Exhaustivité : insuffisante — aucune information sur ce qui a déjà été vérifié ni sur ce qu'il reste à faire.
+Concision : trop courte au point d'omettre l'essentiel — la brièveté n'est pas une qualité en soi si elle sacrifie l'information nécessaire.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m7a15-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('.m7a15-btn');
+  var result = wrap.querySelector('#m7a15-result');
+
+  var data = {
+    vague: { ok: false, texte: "❌ Exemple A.\nClarté : insuffisante — « voir avec moi » ne précise rien si la personne n'est plus disponible.\nExhaustivité : insuffisante — aucune information sur ce qui a déjà été vérifié ni sur ce qu'il reste à faire.\nConcision : trop courte au point d'omettre l'essentiel — la brièveté n'est pas une qualité en soi si elle sacrifie l'information nécessaire." },
+    longue: { ok: false, texte: "❌ Exemple B.\nClarté : diluée — l'information sur la fuite en cours se perd au milieu d'un historique sans rapport direct avec la tâche à poursuivre.\nExhaustivité : en apparence complète, mais l'excès de détails superflus rend l'information réellement utile difficile à repérer.\nConcision : absente — reprendre tout l'historique n'apporte rien à la poursuite de cette recherche de fuite précise." },
+    bonne: { ok: true, texte: "✅ Exemple C.\nClarté : le circuit et la zone concernés sont identifiés sans ambiguïté.\nExhaustivité : ce qui a déjà été vérifié (contrôles A et B) et ce qu'il reste à faire (raccord Y) sont tous deux présents.\nConcision : aucun détail superflu, sans historique inutile à la poursuite de cette recherche de fuite précise." }
+  };
+
+  function render(ex) {
+    var d = data[ex];
+    result.classList.remove('ok', 'bad');
+    result.classList.add(d.ok ? 'ok' : 'bad');
+    result.textContent = d.texte;
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var ex = b.getAttribute('data-ex');
+      btns.forEach(function (x) { x.classList.toggle('active', x === b); });
+      render(ex);
+    });
+  });
+
+  render('vague');
+})();
+</script>

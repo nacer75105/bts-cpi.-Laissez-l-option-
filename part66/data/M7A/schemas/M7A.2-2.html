@@ -1,0 +1,98 @@
+<div id="schema-m7a2b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m7a2b-wrap .m7a2b-btn { margin:4px 6px 4px 0; padding:6px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.9em; }
+#schema-m7a2b-wrap .m7a2b-btn:hover { background:#e8e8e8; }
+#schema-m7a2b-wrap .m7a2b-btn.active { background:#333; color:#fff; border-color:#333; }
+#schema-m7a2b-wrap .m7a2b-slider { width:100%; max-width:460px; margin:10px 0; }
+#schema-m7a2b-wrap .m7a2b-track { position:relative; width:100%; max-width:460px; height:14px; }
+#schema-m7a2b-wrap .m7a2b-zone { position:absolute; top:0; bottom:0; background:rgba(58,157,58,0.35); border-radius:3px; }
+#schema-m7a2b-wrap .m7a2b-rowlabel { font-size:0.78em; color:#666; margin:2px 0 10px; }
+#schema-m7a2b-wrap .m7a2b-value { font-weight:bold; margin-bottom:4px; }
+#schema-m7a2b-wrap .m7a2b-caption { margin-top:12px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:3.6em; }
+#schema-m7a2b-wrap .m7a2b-caption.ok { border-left-color:#3a9d3a; background:rgba(58,157,58,0.10); }
+#schema-m7a2b-wrap .m7a2b-caption.bad { border-left-color:#c0392b; background:rgba(192,57,43,0.10); }
+#schema-m7a2b-wrap .m7a2b-caption.warn { border-left-color:#e0a800; background:rgba(224,168,0,0.10); }
+</style>
+
+<p><strong>Essaie toi-même :</strong> déplace le curseur pour simuler la cote réelle d'une pièce (valeurs d'illustration), puis compare ce qu'affiche un pied à coulisse et un micromètre pour cette même cote, près d'une tolérance étroite.</p>
+
+<div class="m7a2b-value">Cote réelle de la pièce (illustration, invisible pour l'instrument) : <span id="m7a2b-reel">10,00</span> mm</div>
+<input type="range" id="m7a2b-slider" class="m7a2b-slider" min="985" max="1015" step="1" value="1000">
+
+<div class="m7a2b-track">
+  <div class="m7a2b-zone" id="m7a2b-zone"></div>
+</div>
+<div class="m7a2b-rowlabel">Zone verte : tolérance spécifiée par l'AMM pour cette pièce (illustration : 9,98 à 10,02 mm)</div>
+
+<div>
+  <button class="m7a2b-btn active" data-instr="coulisse">Mesurer au pied à coulisse (résolution illustration : 0,05 mm)</button>
+  <button class="m7a2b-btn" data-instr="micro">Mesurer au micromètre (résolution illustration : 0,01 mm)</button>
+</div>
+
+<div class="m7a2b-caption ok" id="m7a2b-caption">Cote réelle 10,00 mm, mesurée au pied à coulisse : lecture 10,00 mm. Dans cette position, la lecture confirme sans ambiguïté que la pièce est dans la tolérance.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m7a2b-wrap');
+  if (!wrap) { return; }
+  var slider = wrap.querySelector('#m7a2b-slider');
+  var reelSpan = wrap.querySelector('#m7a2b-reel');
+  var zone = wrap.querySelector('#m7a2b-zone');
+  var caption = wrap.querySelector('#m7a2b-caption');
+  var instrBtns = wrap.querySelectorAll('.m7a2b-btn');
+
+  var MIN = 985, MAX = 1015; // centièmes de mm : 9.85 à 10.15
+  var ZONE_MIN = 998, ZONE_MAX = 1002; // tolérance illustration
+  var instrument = 'coulisse';
+
+  function pct(v) { return ((v - MIN) / (MAX - MIN)) * 100; }
+
+  function arrondi(valCent, resolutionCent) {
+    return Math.round(valCent / resolutionCent) * resolutionCent;
+  }
+
+  function fr(valCent) {
+    // formatage décimal français (virgule), toujours 2 décimales
+    return (valCent / 100).toFixed(2).replace('.', ',');
+  }
+
+  function render() {
+    var reel = parseInt(slider.value, 10);
+    reelSpan.textContent = fr(reel);
+    zone.style.left = pct(ZONE_MIN) + '%';
+    zone.style.width = (pct(ZONE_MAX) - pct(ZONE_MIN)) + '%';
+
+    var resolution = instrument === 'coulisse' ? 5 : 1; // centièmes de mm : 0,05 ou 0,01
+    var lu = arrondi(reel, resolution);
+    var lecture = fr(lu);
+
+    var reelDansTolerance = reel >= ZONE_MIN && reel <= ZONE_MAX;
+    var luDansTolerance = lu >= ZONE_MIN && lu <= ZONE_MAX;
+
+    caption.classList.remove('ok', 'bad', 'warn');
+    var nomInstr = instrument === 'coulisse' ? 'pied à coulisse' : 'micromètre';
+    var texte = 'Cote réelle ' + fr(reel) + ' mm, mesurée au ' + nomInstr + ' : lecture ' + lecture + ' mm. ';
+
+    if (reelDansTolerance === luDansTolerance) {
+      texte += 'Dans cette position, la lecture confirme sans ambiguïté que la pièce est ' + (reelDansTolerance ? 'dans la tolérance' : 'hors tolérance') + '.';
+      caption.classList.add('ok');
+    } else {
+      texte += 'Ici, la résolution de l’instrument ne suffit pas à trancher : la cote réelle est ' + (reelDansTolerance ? 'dans' : 'hors de') + ' la tolérance, mais la lecture arrondie donnerait l’impression contraire. C’est exactement pourquoi un micromètre, plus fin, est préféré au pied à coulisse pour vérifier une tolérance aussi étroite.';
+      caption.classList.add('bad');
+    }
+    caption.textContent = texte;
+  }
+
+  slider.addEventListener('input', render);
+  instrBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      instrument = b.getAttribute('data-instr');
+      instrBtns.forEach(function (x) { x.classList.toggle('active', x === b); });
+      render();
+    });
+  });
+
+  render();
+})();
+</script>

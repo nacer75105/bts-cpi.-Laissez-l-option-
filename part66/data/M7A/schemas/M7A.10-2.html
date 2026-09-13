@@ -1,0 +1,148 @@
+<div id="schema-m7a10b-wrap" style="font-family: inherit; max-width: 720px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m7a10b-wrap .m7a10b-btn { margin:3px 6px 3px 0; padding:6px 10px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.86em; text-align:left; display:block; width:100%; }
+#schema-m7a10b-wrap .m7a10b-btn:hover { background:#e8e8e8; }
+#schema-m7a10b-wrap .m7a10b-btn.active { background:#333; color:#fff; border-color:#333; }
+#schema-m7a10b-wrap .m7a10b-result { margin-top:14px; padding:12px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:3.8em; }
+#schema-m7a10b-wrap .m7a10b-result.ok { border-left-color:#3a9d3a; background:rgba(58,157,58,0.10); }
+#schema-m7a10b-wrap .m7a10b-result.bad { border-left-color:#c0392b; background:rgba(192,57,43,0.10); }
+#schema-m7a10b-wrap .m7a10b-result.warn { border-left-color:#e0a800; background:rgba(224,168,0,0.10); }
+#schema-m7a10b-wrap .m7a10b-cols { display:flex; gap:20px; flex-wrap:wrap; margin-top:10px; }
+#schema-m7a10b-wrap .m7a10b-col { min-width:250px; flex:1; }
+#schema-m7a10b-wrap .m7a10b-label { font-weight:bold; margin-bottom:4px; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> choisis un défaut à rechercher, puis une méthode de contrôle non destructif — et regarde si elle est adaptée à ce cas précis.</p>
+
+<div class="m7a10b-cols">
+  <div class="m7a10b-col">
+    <div class="m7a10b-label">Défaut à rechercher</div>
+    <div id="m7a10b-def">
+      <button class="m7a10b-btn active" data-def="alu">Fissure fine débouchante sur une pièce en aluminium (non ferromagnétique)</button>
+      <button class="m7a10b-btn" data-def="acier">Fissure fine, à peine sous la surface, sur une pièce en acier (ferromagnétique)</button>
+      <button class="m7a10b-btn" data-def="corrosion">Corrosion suspectée sous une couche de peinture</button>
+      <button class="m7a10b-btn" data-def="composite">Décollement interne suspecté dans un panneau composite stratifié</button>
+      <button class="m7a10b-btn" data-def="fonderie">Cavité interne profonde dans une pièce de fonderie épaisse</button>
+      <button class="m7a10b-btn" data-def="moteur">Intérieur d'un moteur, accessible seulement par un orifice d'inspection</button>
+    </div>
+  </div>
+  <div class="m7a10b-col">
+    <div class="m7a10b-label">Méthode choisie</div>
+    <div id="m7a10b-meth">
+      <button class="m7a10b-btn" data-meth="ressuage">Ressuage</button>
+      <button class="m7a10b-btn" data-meth="magneto">Magnétoscopie</button>
+      <button class="m7a10b-btn active" data-meth="foucault">Courants de Foucault</button>
+      <button class="m7a10b-btn" data-meth="ultrasons">Ultrasons</button>
+      <button class="m7a10b-btn" data-meth="radio">Radiographie</button>
+      <button class="m7a10b-btn" data-meth="boroscope">Borescopie</button>
+    </div>
+  </div>
+</div>
+
+<div class="m7a10b-result warn" id="m7a10b-result">⚠️ Défaut : fissure fine débouchante sur une pièce en aluminium (non ferromagnétique). Méthode : les courants de Foucault. Les courants de Foucault peuvent détecter une fissure surfacique sur un conducteur comme l'aluminium, mais le ressuage reste la méthode la plus simple pour un défaut purement débouchant en surface.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m7a10b-wrap');
+  if (!wrap) { return; }
+  var defBtns = wrap.querySelectorAll('#m7a10b-def .m7a10b-btn');
+  var methBtns = wrap.querySelectorAll('#m7a10b-meth .m7a10b-btn');
+  var result = wrap.querySelector('#m7a10b-result');
+
+  var nomsDef = {
+    alu: 'fissure fine débouchante sur une pièce en aluminium (non ferromagnétique)',
+    acier: 'fissure fine, à peine sous la surface, sur une pièce en acier (ferromagnétique)',
+    corrosion: 'corrosion suspectée sous une couche de peinture',
+    composite: 'décollement interne suspecté dans un panneau composite stratifié',
+    fonderie: 'cavité interne profonde dans une pièce de fonderie épaisse',
+    moteur: 'intérieur d’un moteur, accessible seulement par un orifice d’inspection'
+  };
+  var nomsMeth = {
+    ressuage: 'le ressuage', magneto: 'la magnétoscopie', foucault: 'les courants de Foucault',
+    ultrasons: 'les ultrasons', radio: 'la radiographie', boroscope: 'la borescopie'
+  };
+
+  // table[def][meth] = { ok: true/false/'partiel', texte }
+  var table = {
+    alu: {
+      ressuage: { ok: true, texte: 'Le pénétrant s’infiltre par capillarité dans la fissure débouchante ; l’aluminium, non poreux, s’y prête bien. C’est la méthode la plus simple pour ce cas.' },
+      magneto: { ok: false, texte: 'La magnétoscopie exige un matériau ferromagnétique : l’aluminium n’en est pas un, la méthode ne fonctionne pas ici.' },
+      foucault: { ok: 'partiel', texte: 'Les courants de Foucault peuvent détecter une fissure surfacique sur un conducteur comme l’aluminium, mais le ressuage reste la méthode la plus simple pour un défaut purement débouchant en surface.' },
+      ultrasons: { ok: 'partiel', texte: 'Les ultrasons peuvent en principe révéler une discontinuité, mais ils sont surtout utiles pour un défaut interne ou une pièce épaisse : un moyen disproportionné pour une simple fissure de surface.' },
+      radio: { ok: 'partiel', texte: 'La radiographie pourrait montrer la fissure, mais elle est surtout adaptée à un défaut interne profond ; ses précautions de radioprotection en font un choix disproportionné ici.' },
+      boroscope: { ok: false, texte: 'La borescopie sert à voir l’intérieur d’une cavité fermée : elle n’apporte rien pour inspecter une surface directement accessible.' }
+    },
+    acier: {
+      ressuage: { ok: 'partiel', texte: 'Le ressuage fonctionne si la fissure débouche réellement en surface, mais une fissure « à peine sous la surface » peut lui échapper : la magnétoscopie, plus sensible à ce cas sur un matériau ferromagnétique, est le choix le plus sûr.' },
+      magneto: { ok: true, texte: 'Sur un matériau ferromagnétique, la magnétoscopie révèle une fissure même à peine sous la surface, en perturbant localement le champ magnétique : c’est la méthode la mieux adaptée ici.' },
+      foucault: { ok: 'partiel', texte: 'Les courants de Foucault peuvent détecter ce type de défaut sur un conducteur, mais la magnétoscopie reste plus sensible et plus simple sur un matériau ferromagnétique comme l’acier.' },
+      ultrasons: { ok: 'partiel', texte: 'Les ultrasons peuvent détecter une discontinuité, mais ils sont surtout utiles pour un défaut interne plus profond qu’une fissure quasi surfacique.' },
+      radio: { ok: 'partiel', texte: 'La radiographie révèle plutôt un défaut interne profond ; pour une fissure quasi surfacique sur un matériau ferromagnétique, la magnétoscopie est plus simple et plus sensible.' },
+      boroscope: { ok: false, texte: 'La borescopie ne révèle rien ici : la pièce est directement accessible, il ne s’agit pas de voir l’intérieur d’une cavité fermée.' }
+    },
+    corrosion: {
+      ressuage: { ok: false, texte: 'Le pénétrant ne peut pas traverser une couche de peinture pour atteindre le métal sous-jacent : le ressuage ne convient pas sans décapage préalable.' },
+      magneto: { ok: 'partiel', texte: 'La magnétoscopie peut s’appliquer si le métal est ferromagnétique et la peinture fine, mais elle n’est pas la méthode la plus directe pour évaluer une perte de matière par corrosion.' },
+      foucault: { ok: true, texte: 'Les courants de Foucault détectent une variation locale de conductivité ou d’épaisseur liée à la corrosion, sans avoir à retirer la peinture : c’est la méthode la mieux adaptée ici.' },
+      ultrasons: { ok: 'partiel', texte: 'Les ultrasons peuvent mesurer une perte d’épaisseur due à la corrosion, une alternative plausible aux courants de Foucault selon l’accès disponible.' },
+      radio: { ok: 'partiel', texte: 'La radiographie pourrait révéler une corrosion importante, mais c’est un moyen disproportionné pour ce cas, mieux traité par les courants de Foucault.' },
+      boroscope: { ok: false, texte: 'La borescopie ne permet pas de voir sous une couche de peinture opaque : elle ne convient pas à ce cas.' }
+    },
+    composite: {
+      ressuage: { ok: false, texte: 'Le décollement est un défaut interne entre deux couches : aucune fissure ne débouche en surface pour que le pénétrant puisse s’y infiltrer.' },
+      magneto: { ok: false, texte: 'Un composite n’est pas un matériau ferromagnétique : la magnétoscopie ne peut pas s’y appliquer.' },
+      foucault: { ok: false, texte: 'Les courants de Foucault exigent un matériau suffisamment conducteur ; un composite à matrice non métallique n’y répond en général pas.' },
+      ultrasons: { ok: true, texte: 'Les ultrasons détectent un décollement interne en mesurant le temps de trajet de l’écho réfléchi sur cette discontinuité : c’est la méthode de référence pour ce type de défaut composite.' },
+      radio: { ok: 'partiel', texte: 'La radiographie peut parfois révéler un décollement important, mais elle est en général moins sensible que les ultrasons pour ce type de défaut composite.' },
+      boroscope: { ok: false, texte: 'Le décollement est interne au stratifié, sans cavité accessible à observer avec une sonde optique.' }
+    },
+    fonderie: {
+      ressuage: { ok: false, texte: 'Une cavité profondément interne n’a aucune raison de déboucher en surface : le ressuage ne peut pas l’atteindre.' },
+      magneto: { ok: false, texte: 'La magnétoscopie ne révèle qu’un défaut en surface ou juste sous la surface, pas une cavité profondément interne.' },
+      foucault: { ok: false, texte: 'La profondeur de pénétration des courants de Foucault reste limitée : une cavité profondément interne leur échappe.' },
+      ultrasons: { ok: 'partiel', texte: 'Les ultrasons peuvent détecter une cavité interne, mais l’interprétation reste plus complexe sur une géométrie de fonderie épaisse et irrégulière que sur une radiographie directe.' },
+      radio: { ok: true, texte: 'Le rayonnement traverse toute l’épaisseur de la pièce et révèle une cavité interne par contraste sur l’image obtenue : c’est la méthode de référence pour ce cas.' },
+      boroscope: { ok: false, texte: 'Une pièce de fonderie pleine n’offre aucune cavité accessible où introduire une sonde optique.' }
+    },
+    moteur: {
+      ressuage: { ok: false, texte: 'Aucun accès direct à la surface interne du moteur n’est possible sans démontage : le ressuage ne peut pas s’y appliquer.' },
+      magneto: { ok: false, texte: 'La magnétoscopie exige un accès direct à la surface à examiner, impossible ici sans démontage.' },
+      foucault: { ok: false, texte: 'Les courants de Foucault exigent d’approcher une sonde de la surface à examiner, ce que l’orifice d’inspection seul ne permet pas.' },
+      ultrasons: { ok: false, texte: 'Un palpeur à ultrasons doit être couplé à la surface à examiner, un accès qu’un simple orifice d’inspection ne permet pas ici.' },
+      radio: { ok: 'partiel', texte: 'La radiographie pourrait théoriquement imager à travers le carter, mais c’est complexe et peu pratique comparé à une observation directe par l’orifice d’inspection.' },
+      boroscope: { ok: true, texte: 'La borescopie permet de voir directement l’intérieur du moteur à travers l’orifice d’inspection dédié, sans aucun démontage : c’est la méthode adaptée à cet accès.' }
+    }
+  };
+
+  var def = 'alu';
+  var meth = 'foucault';
+
+  function render() {
+    var res = table[def][meth];
+    result.classList.remove('ok', 'bad', 'warn');
+    var intro = 'Défaut : ' + nomsDef[def] + '. Méthode : ' + nomsMeth[meth] + '. ';
+    if (res.ok === true) { result.classList.add('ok'); intro = '✅ ' + intro; }
+    else if (res.ok === false) { result.classList.add('bad'); intro = '❌ ' + intro; }
+    else { result.classList.add('warn'); intro = '⚠️ ' + intro; }
+    result.textContent = intro + res.texte;
+  }
+
+  defBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      def = b.getAttribute('data-def');
+      defBtns.forEach(function (x) { x.classList.toggle('active', x === b); });
+      render();
+    });
+  });
+  methBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      meth = b.getAttribute('data-meth');
+      methBtns.forEach(function (x) { x.classList.toggle('active', x === b); });
+      render();
+    });
+  });
+
+  render();
+})();
+</script>

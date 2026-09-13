@@ -1,0 +1,85 @@
+<div id="schema-m7a11-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m7a11-wrap .m7a11-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.92em; }
+#schema-m7a11-wrap .m7a11-btn:hover { background:#e8e8e8; }
+#schema-m7a11-wrap .m7a11-btn.active { background:#333; color:#fff; border-color:#333; }
+#schema-m7a11-wrap .m7a11-track { position:relative; width:100%; max-width:460px; height:26px; background:#e2e2e2; border-radius:6px; margin:12px 0 4px; overflow:hidden; }
+#schema-m7a11-wrap .m7a11-zone { position:absolute; top:0; bottom:0; background:rgba(58,157,58,0.35); }
+#schema-m7a11-wrap .m7a11-marker { position:absolute; top:0; bottom:0; width:4px; background:#c0392b; }
+#schema-m7a11-wrap .m7a11-rowlabel { font-size:0.78em; color:#666; margin:2px 0 10px; }
+#schema-m7a11-wrap .m7a11-value { font-weight:bold; margin-bottom:4px; }
+#schema-m7a11-wrap .m7a11-caption { margin-top:12px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:3.6em; }
+#schema-m7a11-wrap .m7a11-caption.ok { border-left-color:#3a9d3a; background:rgba(58,157,58,0.10); }
+#schema-m7a11-wrap .m7a11-caption.bad { border-left-color:#c0392b; background:rgba(192,57,43,0.10); }
+</style>
+
+<p><strong>Essaie toi-même :</strong> le développé à plat d'une pièce pliée à 90° doit atteindre une cote finale précise (zone verte, illustration) une fois pliée. Regarde ce que donne le tracé selon qu'il ajoute ou non l'abattement de pli à la somme des deux pans.</p>
+
+<div class="m7a11-value">Cote finale obtenue après pliage (illustration) : <span id="m7a11-cote">98.4</span> mm</div>
+<div class="m7a11-track">
+  <div class="m7a11-zone" id="m7a11-zone"></div>
+  <div class="m7a11-marker" id="m7a11-marker"></div>
+</div>
+<div class="m7a11-rowlabel">Zone verte : cote cible tolérée par le dessin (illustration : 99,5 à 100,5 mm) — le repère rouge indique la cote réellement obtenue</div>
+
+<div>
+  <button class="m7a11-btn active" id="m7a11-sans">Développé = pans additionnés seuls (sans abattement)</button>
+  <button class="m7a11-btn" id="m7a11-avec">Développé = pans + abattement de pli calculé</button>
+</div>
+
+<div class="m7a11-caption bad" id="m7a11-caption">Sans l'abattement de pli, le développé tracé ne compte que les deux pans, sans ajouter la longueur de matière consommée par l'arc du pli : la pièce obtenue après pliage est plus courte que la cote cible, hors de la tolérance du dessin.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m7a11-wrap');
+  if (!wrap) { return; }
+  var cote = wrap.querySelector('#m7a11-cote');
+  var zone = wrap.querySelector('#m7a11-zone');
+  var marker = wrap.querySelector('#m7a11-marker');
+  var caption = wrap.querySelector('#m7a11-caption');
+  var sansBtn = wrap.querySelector('#m7a11-sans');
+  var avecBtn = wrap.querySelector('#m7a11-avec');
+
+  var MIN = 97, MAX = 103; // mm, illustration
+  var ZONE_MIN = 99.5, ZONE_MAX = 100.5;
+  var COTE_CIBLE = 100.0;
+  var ABATTEMENT = 1.6; // longueur d'arc de la fibre neutre, illustration
+
+  var avecAbattement = false;
+
+  function pct(v) { return ((v - MIN) / (MAX - MIN)) * 100; }
+
+  function render() {
+    var obtenue = avecAbattement ? COTE_CIBLE : COTE_CIBLE - ABATTEMENT;
+    cote.textContent = obtenue.toFixed(1);
+    zone.style.left = pct(ZONE_MIN) + '%';
+    zone.style.width = (pct(ZONE_MAX) - pct(ZONE_MIN)) + '%';
+    marker.style.left = pct(obtenue) + '%';
+
+    caption.classList.remove('ok', 'bad');
+    var texte;
+    if (avecAbattement) {
+      texte = 'Avec l’abattement de pli ajouté aux deux pans, le développé compte la longueur de matière réellement consommée par l’arc du pli : la cote finale obtenue correspond à la cote cible du dessin.';
+      caption.classList.add('ok');
+    } else {
+      texte = 'Sans l’abattement de pli, le développé tracé ne compte que les deux pans, sans ajouter la longueur de matière consommée par l’arc du pli : la pièce obtenue après pliage est plus courte que la cote cible, hors de la tolérance du dessin.';
+      caption.classList.add('bad');
+    }
+    caption.textContent = texte;
+  }
+
+  sansBtn.addEventListener('click', function () {
+    avecAbattement = false;
+    sansBtn.classList.add('active'); avecBtn.classList.remove('active');
+    render();
+  });
+  avecBtn.addEventListener('click', function () {
+    avecAbattement = true;
+    avecBtn.classList.add('active'); sansBtn.classList.remove('active');
+    render();
+  });
+
+  render();
+})();
+</script>

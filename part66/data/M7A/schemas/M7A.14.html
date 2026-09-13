@@ -1,0 +1,87 @@
+<div id="schema-m7a14-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m7a14-wrap .m7a14-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.95em; }
+#schema-m7a14-wrap .m7a14-btn:hover { background:#e8e8e8; }
+#schema-m7a14-wrap .m7a14-btn.active { background:#333; color:#fff; border-color:#333; }
+#schema-m7a14-wrap .m7a14-track { position:relative; width:100%; max-width:460px; height:26px; background:#e2e2e2; border-radius:6px; margin:12px 0 4px; overflow:hidden; }
+#schema-m7a14-wrap .m7a14-bar { height:100%; width:0%; background:#3a9d3a; transition:width .15s, background .15s; }
+#schema-m7a14-wrap .m7a14-limite { position:absolute; top:0; bottom:0; width:3px; background:#c0392b; }
+#schema-m7a14-wrap .m7a14-rowlabel { font-size:0.78em; color:#666; margin:2px 0 10px; }
+#schema-m7a14-wrap .m7a14-value { font-weight:bold; margin-bottom:4px; }
+#schema-m7a14-wrap .m7a14-caption { margin-top:12px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:4em; }
+#schema-m7a14-wrap .m7a14-caption.ok { border-left-color:#3a9d3a; background:rgba(58,157,58,0.10); }
+#schema-m7a14-wrap .m7a14-caption.bad { border-left-color:#c0392b; background:rgba(192,57,43,0.10); }
+</style>
+
+<p><strong>Essaie toi-même :</strong> accumule des cycles sur une pièce à vie limitée (illustration), puis change son état visuel apparent — la limite de cycles est un plafond, pas une autorisation de rester en service quel que soit l'état constaté.</p>
+
+<div class="m7a14-value">Cycles accumulés, cumulés sur tous les aéronefs successifs (illustration) : <span id="m7a14-cycles">400</span> / <span id="m7a14-limite-txt">1000</span></div>
+<div class="m7a14-track">
+  <div class="m7a14-bar" id="m7a14-bar"></div>
+  <div class="m7a14-limite" id="m7a14-limite"></div>
+</div>
+<div class="m7a14-rowlabel">Trait rouge : limite de vie absolue fixée pour cette pièce (illustration : 1000 cycles)</div>
+
+<div>
+  <button class="m7a14-btn" id="m7a14-moins">− 100 cycles</button>
+  <button class="m7a14-btn" id="m7a14-plus">+ 100 cycles</button>
+</div>
+
+<div style="margin-top:10px;">
+  <button class="m7a14-btn active" data-etat="bon" id="m7a14-bon">État visuel apparent : bon</button>
+  <button class="m7a14-btn" data-etat="douteux" id="m7a14-douteux">État visuel apparent : douteux</button>
+</div>
+
+<div class="m7a14-caption ok" id="m7a14-caption">État visuel apparent : bon. Sous la limite de vie, avec un état visuel jugé bon : la pièce reste en service. La limite de cycles reste toutefois un plafond qui s'appliquera même si l'état demeure bon à ce moment-là.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m7a14-wrap');
+  if (!wrap) { return; }
+  var cyclesSpan = wrap.querySelector('#m7a14-cycles');
+  var bar = wrap.querySelector('#m7a14-bar');
+  var limiteMark = wrap.querySelector('#m7a14-limite');
+  var caption = wrap.querySelector('#m7a14-caption');
+  var moinsBtn = wrap.querySelector('#m7a14-moins');
+  var plusBtn = wrap.querySelector('#m7a14-plus');
+  var bonBtn = wrap.querySelector('#m7a14-bon');
+  var douteuxBtn = wrap.querySelector('#m7a14-douteux');
+
+  var MAX = 1300;
+  var LIMITE = 1000;
+  var cycles = 400;
+  var etat = 'bon';
+
+  function pct(v) { return Math.max(0, Math.min(100, (v / MAX) * 100)); }
+
+  function render() {
+    cyclesSpan.textContent = cycles;
+    bar.style.width = pct(cycles) + '%';
+    bar.style.background = cycles >= LIMITE ? '#c0392b' : (etat === 'douteux' ? '#e0a800' : '#3a9d3a');
+    limiteMark.style.left = pct(LIMITE) + '%';
+
+    caption.classList.remove('ok', 'bad');
+    var atteinte = cycles >= LIMITE;
+    var texte = 'État visuel apparent : ' + (etat === 'bon' ? 'bon' : 'douteux') + '. ';
+    if (atteinte) {
+      texte += 'Limite de vie atteinte : la pièce doit être retirée du service, même si son état visuel apparent reste bon — une inspection ne peut pas se substituer à cette limite absolue.';
+      caption.classList.add('bad');
+    } else if (etat === 'douteux') {
+      texte += 'Même sous la limite de vie, un état visuel douteux impose un retrait ou une investigation immédiate : la limite de cycles est un plafond, pas une autorisation de rester en service quel que soit l’état constaté.';
+      caption.classList.add('bad');
+    } else {
+      texte += 'Sous la limite de vie, avec un état visuel jugé bon : la pièce reste en service. La limite de cycles reste toutefois un plafond qui s’appliquera même si l’état demeure bon à ce moment-là.';
+      caption.classList.add('ok');
+    }
+    caption.textContent = texte;
+  }
+
+  plusBtn.addEventListener('click', function () { cycles = Math.min(MAX, cycles + 100); render(); });
+  moinsBtn.addEventListener('click', function () { cycles = Math.max(0, cycles - 100); render(); });
+  bonBtn.addEventListener('click', function () { etat = 'bon'; bonBtn.classList.add('active'); douteuxBtn.classList.remove('active'); render(); });
+  douteuxBtn.addEventListener('click', function () { etat = 'douteux'; douteuxBtn.classList.add('active'); bonBtn.classList.remove('active'); render(); });
+
+  render();
+})();
+</script>

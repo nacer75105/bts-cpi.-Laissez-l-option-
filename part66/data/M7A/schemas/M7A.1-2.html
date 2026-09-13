@@ -1,0 +1,88 @@
+<div id="schema-m7a1b-wrap" style="font-family: inherit; max-width: 680px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m7a1b-wrap .m7a1b-btn { margin:4px 6px 4px 0; padding:6px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.9em; text-align:left; }
+#schema-m7a1b-wrap .m7a1b-btn:hover { background:#e8e8e8; }
+#schema-m7a1b-wrap .m7a1b-btn.active { background:#333; color:#fff; border-color:#333; }
+#schema-m7a1b-wrap .m7a1b-result { margin-top:14px; padding:12px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:3.6em; }
+#schema-m7a1b-wrap .m7a1b-result.ok { border-left-color:#3a9d3a; background:rgba(58,157,58,0.10); }
+#schema-m7a1b-wrap .m7a1b-result.bad { border-left-color:#c0392b; background:rgba(192,57,43,0.10); }
+#schema-m7a1b-wrap .m7a1b-cols { display:flex; gap:24px; flex-wrap:wrap; margin-top:10px; }
+#schema-m7a1b-wrap .m7a1b-col { min-width:220px; }
+#schema-m7a1b-wrap .m7a1b-label { font-weight:bold; margin-bottom:4px; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> choisis une situation, puis une action envisagée — et regarde si elle est adaptée ou si elle expose à un risque grave.</p>
+
+<div class="m7a1b-cols">
+  <div class="m7a1b-col">
+    <div class="m7a1b-label">Situation</div>
+    <div id="m7a1b-sit">
+      <button class="m7a1b-btn active" data-sit="reservoir">Entrée dans un réservoir de carburant (espace confiné)</button><br>
+      <button class="m7a1b-btn" data-sit="brs">Intervention sur un aéronef à parachute de secours balistique</button>
+    </div>
+  </div>
+  <div class="m7a1b-col">
+    <div class="m7a1b-label">Action envisagée</div>
+    <div id="m7a1b-act">
+      <button class="m7a1b-btn" data-act="direct">Agir directement, sans vérification préalable</button><br>
+      <button class="m7a1b-btn active" data-act="prudent">Mesurer l'atmosphère et ventiler / identifier le dispositif et suivre la procédure constructeur</button><br>
+      <button class="m7a1b-btn" data-act="chaud">Réaliser un travail par point chaud (meulage, soudure) à proximité</button>
+    </div>
+  </div>
+</div>
+
+<div class="m7a1b-result ok" id="m7a1b-result">✅ Situation : l'entrée dans un réservoir de carburant. Bonne pratique : mesurer l'atmosphère avant l'entrée et en continu pendant le travail, ventiler, et prévoir un surveillant extérieur capable de déclencher une extraction — la sécurité ne repose jamais sur le seul ressenti de la personne à l'intérieur.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m7a1b-wrap');
+  if (!wrap) { return; }
+  var sitBtns = wrap.querySelectorAll('#m7a1b-sit .m7a1b-btn');
+  var actBtns = wrap.querySelectorAll('#m7a1b-act .m7a1b-btn');
+  var result = wrap.querySelector('#m7a1b-result');
+
+  var sit = 'reservoir';
+  var act = 'prudent';
+
+  var nomsSit = { reservoir: 'l’entrée dans un réservoir de carburant', brs: 'une intervention sur un aéronef à parachute de secours balistique' };
+
+  function evalue() {
+    if (sit === 'reservoir') {
+      if (act === 'direct') return { ok: false, texte: 'Entrer sans mesurer l’atmosphère ni ventiler expose à un risque d’asphyxie (manque d’oxygène non perceptible) ou d’explosion (vapeurs inflammables), sans aucun signe d’alerte avant qu’il ne soit trop tard.' };
+      if (act === 'prudent') return { ok: true, texte: 'Bonne pratique : mesurer l’atmosphère avant l’entrée et en continu pendant le travail, ventiler, et prévoir un surveillant extérieur capable de déclencher une extraction — la sécurité ne repose jamais sur le seul ressenti de la personne à l’intérieur.' };
+      return { ok: false, texte: 'Un travail par point chaud dans ou à proximité d’un réservoir de carburant, même vidangé, peut enflammer des vapeurs résiduelles restées piégées dans l’espace confiné.' };
+    }
+    // brs
+    if (act === 'direct') return { ok: false, texte: 'Intervenir sans identifier le dispositif ni respecter la procédure du constructeur expose à un déclenchement accidentel de la charge pyrotechnique, dangereux pour le personnel et pour la structure.' };
+    if (act === 'prudent') return { ok: true, texte: 'Bonne pratique : identifier la présence du parachute de secours balistique, respecter le périmètre de sécurité et les précautions du constructeur (mise en sécurité éventuelle) avant toute intervention à proximité.' };
+    return { ok: false, texte: 'Un travail par point chaud (perçage, meulage, soudure) près de la fusée ou de son circuit de mise à feu peut provoquer un déclenchement accidentel de la charge pyrotechnique.' };
+  }
+
+  function render() {
+    var res = evalue();
+    result.classList.remove('ok', 'bad');
+    var intro = 'Situation : ' + nomsSit[sit] + '. ';
+    if (res.ok) { result.classList.add('ok'); intro = '✅ ' + intro; }
+    else { result.classList.add('bad'); intro = '❌ ' + intro; }
+    result.textContent = intro + res.texte;
+  }
+
+  sitBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      sit = b.getAttribute('data-sit');
+      sitBtns.forEach(function (x) { x.classList.toggle('active', x === b); });
+      render();
+    });
+  });
+  actBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      act = b.getAttribute('data-act');
+      actBtns.forEach(function (x) { x.classList.toggle('active', x === b); });
+      render();
+    });
+  });
+
+  render();
+})();
+</script>

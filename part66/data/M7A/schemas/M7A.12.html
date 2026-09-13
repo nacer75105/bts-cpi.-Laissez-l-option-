@@ -1,0 +1,73 @@
+<div id="schema-m7a12-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m7a12-wrap .m7a12-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:1em; }
+#schema-m7a12-wrap .m7a12-btn:hover { background:#e8e8e8; }
+#schema-m7a12-wrap .m7a12-track { position:relative; width:100%; max-width:460px; height:26px; background:#e2e2e2; border-radius:6px; margin:12px 0 4px; overflow:hidden; }
+#schema-m7a12-wrap .m7a12-zone { position:absolute; top:0; bottom:0; background:rgba(192,57,43,0.30); }
+#schema-m7a12-wrap .m7a12-bar { height:100%; width:0%; background:#3a9d3a; transition:width .15s, background .15s; }
+#schema-m7a12-wrap .m7a12-rowlabel { font-size:0.78em; color:#666; margin:2px 0 10px; }
+#schema-m7a12-wrap .m7a12-value { font-weight:bold; margin-bottom:4px; }
+#schema-m7a12-wrap .m7a12-caption { margin-top:12px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:3.4em; }
+#schema-m7a12-wrap .m7a12-caption.ok { border-left-color:#3a9d3a; background:rgba(58,157,58,0.10); }
+#schema-m7a12-wrap .m7a12-caption.bad { border-left-color:#c0392b; background:rgba(192,57,43,0.10); }
+</style>
+
+<p><strong>Essaie toi-même :</strong> augmente l'angle de braquage de la roulette avant pendant un remorquage (valeurs d'illustration) et regarde ce qui se passe au-delà de la limite autorisée.</p>
+
+<div class="m7a12-value">Angle de braquage (illustration) : <span id="m7a12-angle">20</span>°</div>
+<div class="m7a12-track">
+  <div class="m7a12-zone" id="m7a12-zone"></div>
+  <div class="m7a12-bar" id="m7a12-bar"></div>
+</div>
+<div class="m7a12-rowlabel">Zone rouge : au-delà de la limite de braquage autorisée pour cet aéronef (illustration : 60°)</div>
+
+<div>
+  <button class="m7a12-btn" id="m7a12-moins">− Réduire l'angle</button>
+  <button class="m7a12-btn" id="m7a12-plus">+ Augmenter l'angle</button>
+</div>
+
+<div class="m7a12-caption ok" id="m7a12-caption">Angle de braquage dans la limite autorisée : le remorquage peut se poursuivre, sous réserve des autres précautions (guides au sol sur les extrémités de voilure et d'empennage, vitesse adaptée, liaison permanente avec l'équipe).</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m7a12-wrap');
+  if (!wrap) { return; }
+  var angleSpan = wrap.querySelector('#m7a12-angle');
+  var bar = wrap.querySelector('#m7a12-bar');
+  var zone = wrap.querySelector('#m7a12-zone');
+  var caption = wrap.querySelector('#m7a12-caption');
+  var moinsBtn = wrap.querySelector('#m7a12-moins');
+  var plusBtn = wrap.querySelector('#m7a12-plus');
+
+  var MAX = 90;
+  var LIMITE = 60;
+  var angle = 20;
+
+  function pct(v) { return Math.max(0, Math.min(100, (v / MAX) * 100)); }
+
+  function render() {
+    angleSpan.textContent = angle;
+    bar.style.width = pct(angle) + '%';
+    bar.style.background = angle > LIMITE ? '#c0392b' : '#3a9d3a';
+    zone.style.left = pct(LIMITE) + '%';
+    zone.style.width = (100 - pct(LIMITE)) + '%';
+
+    caption.classList.remove('ok', 'bad');
+    var texte;
+    if (angle > LIMITE) {
+      texte = 'Angle de braquage au-delà de la limite autorisée : risque d’endommager gravement le système de direction ou la jambe de train. Le remorquage doit rester dans la plage autorisée, jamais forcé au-delà.';
+      caption.classList.add('bad');
+    } else {
+      texte = 'Angle de braquage dans la limite autorisée : le remorquage peut se poursuivre, sous réserve des autres précautions (guides au sol sur les extrémités de voilure et d’empennage, vitesse adaptée, liaison permanente avec l’équipe).';
+      caption.classList.add('ok');
+    }
+    caption.textContent = texte;
+  }
+
+  plusBtn.addEventListener('click', function () { angle = Math.min(MAX, angle + 5); render(); });
+  moinsBtn.addEventListener('click', function () { angle = Math.max(0, angle - 5); render(); });
+
+  render();
+})();
+</script>

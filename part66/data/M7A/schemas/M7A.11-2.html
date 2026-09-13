@@ -1,0 +1,96 @@
+<div id="schema-m7a11b-wrap" style="font-family: inherit; max-width: 680px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m7a11b-wrap .m7a11b-btn { margin:4px 6px 4px 0; padding:6px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.88em; text-align:left; display:block; width:100%; }
+#schema-m7a11b-wrap .m7a11b-btn:hover { background:#e8e8e8; }
+#schema-m7a11b-wrap .m7a11b-btn.active { background:#333; color:#fff; border-color:#333; }
+#schema-m7a11b-wrap .m7a11b-result { margin-top:14px; padding:12px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:3.6em; }
+#schema-m7a11b-wrap .m7a11b-result.ok { border-left-color:#3a9d3a; background:rgba(58,157,58,0.10); }
+#schema-m7a11b-wrap .m7a11b-result.bad { border-left-color:#c0392b; background:rgba(192,57,43,0.10); }
+#schema-m7a11b-wrap .m7a11b-cols { display:flex; gap:20px; flex-wrap:wrap; margin-top:10px; }
+#schema-m7a11b-wrap .m7a11b-col { min-width:230px; flex:1; }
+#schema-m7a11b-wrap .m7a11b-label { font-weight:bold; margin-bottom:4px; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> choisis un procédé, puis un défaut redouté — et regarde s'il s'agit du défaut caractéristique de ce procédé ou d'une confusion avec un autre.</p>
+
+<div class="m7a11b-cols">
+  <div class="m7a11b-col">
+    <div class="m7a11b-label">Procédé</div>
+    <div id="m7a11b-proc">
+      <button class="m7a11b-btn active" data-proc="tolerie">Tôlerie (pliage/formage)</button>
+      <button class="m7a11b-btn" data-proc="composite">Composite stratifié collé</button>
+      <button class="m7a11b-btn" data-proc="additif">Fabrication additive (impression 3D)</button>
+    </div>
+  </div>
+  <div class="m7a11b-col">
+    <div class="m7a11b-label">Défaut redouté</div>
+    <div id="m7a11b-def">
+      <button class="m7a11b-btn active" data-def="fissure">Fissure au niveau du pli</button>
+      <button class="m7a11b-btn" data-def="decollement">Décollement interne entre deux couches</button>
+      <button class="m7a11b-btn" data-def="porosite">Porosité ou défaut de fusion entre couches</button>
+    </div>
+  </div>
+</div>
+
+<div class="m7a11b-result ok" id="m7a11b-result">✅ Procédé : tôlerie. Défaut : fissure au niveau du pli. C'est bien le défaut caractéristique d'un rayon de pliage trop serré pour l'épaisseur et l'alliage concernés.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m7a11b-wrap');
+  if (!wrap) { return; }
+  var procBtns = wrap.querySelectorAll('#m7a11b-proc .m7a11b-btn');
+  var defBtns = wrap.querySelectorAll('#m7a11b-def .m7a11b-btn');
+  var result = wrap.querySelector('#m7a11b-result');
+
+  var nomsProc = { tolerie: 'tôlerie', composite: 'composite stratifié collé', additif: 'fabrication additive (impression 3D)' };
+  var nomsDef = { fissure: 'fissure au niveau du pli', decollement: 'décollement interne entre deux couches', porosite: 'porosité ou défaut de fusion entre couches' };
+
+  var table = {
+    tolerie: {
+      fissure: { ok: true, texte: 'C’est bien le défaut caractéristique d’un rayon de pliage trop serré pour l’épaisseur et l’alliage concernés.' },
+      decollement: { ok: false, texte: 'Le décollement entre deux couches concerne un stratifié composite, pas une pièce de tôlerie formée d’une seule épaisseur de métal.' },
+      porosite: { ok: false, texte: 'La porosité interne est un défaut de production propre à la fabrication additive, sans équivalent direct sur une tôle pliée.' }
+    },
+    composite: {
+      fissure: { ok: false, texte: 'La notion de pli au sens du pliage d’une tôle ne s’applique pas à un stratifié composite collé.' },
+      decollement: { ok: true, texte: 'C’est bien le défaut caractéristique d’un composite stratifié : une séparation entre deux couches internes, souvent invisible en surface, en particulier après un impact.' },
+      porosite: { ok: false, texte: 'La porosité par défaut de fusion entre couches successives est propre à la fabrication additive, un procédé de construction très différent de la mise en œuvre d’un composite stratifié.' }
+    },
+    additif: {
+      fissure: { ok: false, texte: 'Une fissure de pliage suppose une pièce pliée à partir d’une tôle : ce n’est pas le mode de fabrication d’une pièce imprimée.' },
+      decollement: { ok: false, texte: 'Le décollement entre couches d’un stratifié composite collé est un défaut différent de celui d’une pièce construite couche par couche par fabrication additive.' },
+      porosite: { ok: true, texte: 'C’est bien le défaut de production caractéristique de la fabrication additive : une cavité emprisonnée ou un défaut de fusion entre deux couches successives pendant la construction.' }
+    }
+  };
+
+  var proc = 'tolerie';
+  var def = 'fissure';
+
+  function render() {
+    var res = table[proc][def];
+    result.classList.remove('ok', 'bad');
+    var intro = 'Procédé : ' + nomsProc[proc] + '. Défaut : ' + nomsDef[def] + '. ';
+    if (res.ok) { result.classList.add('ok'); intro = '✅ ' + intro; }
+    else { result.classList.add('bad'); intro = '❌ ' + intro; }
+    result.textContent = intro + res.texte;
+  }
+
+  procBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      proc = b.getAttribute('data-proc');
+      procBtns.forEach(function (x) { x.classList.toggle('active', x === b); });
+      render();
+    });
+  });
+  defBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      def = b.getAttribute('data-def');
+      defBtns.forEach(function (x) { x.classList.toggle('active', x === b); });
+      render();
+    });
+  });
+
+  render();
+})();
+</script>

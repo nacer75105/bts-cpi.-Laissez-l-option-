@@ -185,10 +185,12 @@ synchronisation, givre, entretien, stockage) :
 Par ordre approximatif d'impact (item niveau 3 absent > item niveau 2
 absent en bloc > superficiel) : ~~**M10** (10.4 niveau 3 absent, plus tout
 le paysage réglementaire post-2023/989 jamais intégré)~~ **comblé le
-2026-09-13** (voir section dédiée) et **M7A** (3
+2026-09-13** (voir section dédiée) et ~~**M7A** (3
 items entiers absents sur un total de seulement 21, dont un impact
-pratique direct — sécurité fosse carburant, outillage de mesure) semblent
-les chantiers les plus rentables à reprendre en premier. **M11A**, malgré
+pratique direct — sécurité fosse carburant, outillage de mesure)~~
+**comblé le 2026-09-14** (voir section dédiée « M7A — comblement des
+manques du syllabus ») semblaient les chantiers les plus rentables à
+reprendre en premier, tous deux traités. **M11A**, malgré
 son volume de manques bruts, a un cœur technique déjà solide — les
 manques y sont plus concentrés sur du contenu périphérique (confort
 cabine, avionique récente) que sur la sécurité de vol directe, à
@@ -1598,6 +1600,178 @@ len(questions))`), donc l'examen blanc reste utilisable, mais il tire
 alors moins de questions que l'épreuve réelle sur ces deux modules — à
 traiter en écrivant des questions supplémentaires, chantier séparé de
 celui d'aujourd'hui.
+
+## M7A — comblement des manques du syllabus (2026-09-14)
+
+Chantier demandé explicitement pour combler les manques identifiés par l'audit
+de couverture documenté plus haut dans ce fichier (section « M7A — Pratiques
+de maintenance » de l'audit du 2026-09-13) : sécurité fosse à
+carburant/espace confiné, aéronefs à parachute de secours balistique,
+instruments de mesure de précision et matériel électrique de test, tôlerie/
+composites/fabrication additive, manutention et stockage de l'aéronef
+(remorquage, calage, avitaillement, groupes de parc), événements anormaux,
+procédures de maintenance, documentation/communication, et les 5 méthodes de
+CND jamais nommées (7.18 superficiel).
+
+**Étape 0 (extraction et vérification du syllabus officiel)** : les 4
+documents EASA téléchargés lors du chantier M10 précédent étaient encore
+présents dans un dossier temporaire d'une session antérieure — récupérés
+sans nouveau téléchargement. Le texte AMC1 détaillé du Module 7 (items 7.1 à
+7.21, prose par sous-thème) a été relu intégralement dans `easa_2025.txt`
+(p. 596-598, Appendix I to Part-66, révision septembre 2025), avec double
+vérification des niveaux 1/2/3 par item contre le tableau compact
+(`module7_table.txt`, plus fiable que l'extraction AMC1 sur ce point précis —
+l'extraction automatisée y désaligne parfois les colonnes, comme déjà noté
+pour M11A). Les 10 fiches existantes ont été comparées au texte : aucune
+erreur de fond trouvée sur le contenu déjà écrit (contrairement à M10/M17A,
+l'essentiel du Module 7 est de la mécanique/électricité générale, pas des
+citations réglementaires fragiles), seulement deux manques mineurs de
+couverture (ATA 100/normes en M7A.3, bonding/coaxial en M7A.5), comblés en
+même temps que le reste.
+
+### Contenu ajouté
+
+- **3 fiches étendues** : M7A.1 (fosse carburant/espace confiné + parachute
+  de secours balistique, item 7.1 niveau 3), M7A.2 (instruments de précision
+  + matériel de test électrique, item 7.3 niveau 3), M7A.10 (5 méthodes de
+  CND + borescopie nommées et expliquées, item 7.18(c) niveau 2 — la
+  conclusion de la fiche a aussi été réécrite pour ouvrir vers les nouvelles
+  fiches au lieu de clore le module).
+- **5 fiches nouvelles** : M7A.11 (tôlerie/composites/fabrication additive,
+  item 7.14, niveaux 2/2/1), M7A.12 (manutention et stockage de l'aéronef —
+  remorquage, calage/blocage, mise sur vérins, stockage, avitaillement/
+  dépose carburant, groupes de parc, dégivrage, item 7.17 niveau 2), M7A.13
+  (événements anormaux — foudre/HIRF, atterrissage dur, turbulence sévère,
+  item 7.19 niveau 2), M7A.14 (procédures de maintenance — planification,
+  modification, magasin, CRS, interface exploitation, QC/QA, pièces à vie
+  limitée, item 7.20 niveau 2), M7A.15 (documentation et communication —
+  rapports de travail/dépannage, relève de poste, clair/complet/concis, item
+  7.21 niveau 2). Module M7A : 10 → 15 fiches.
+- 10 nouveaux schémas HTML/CSS/JS (`M7A.1-2`, `M7A.2-2`, `M7A.10-2`,
+  `M7A.11`, `M7A.11-2`, `M7A.12`, `M7A.12-2`, `M7A.13`, `M7A.14`, `M7A.15`),
+  aucun `<svg>`, aucune génération de DOM à l'exécution (sweep vérifié).
+- 57 nouvelles questions (M7A-0051 à M7A-0112, un uid supprimé en cours de
+  relecture — voir plus bas), plus 5 questions supplémentaires ajoutées pour
+  combler des trous de couverture signalés par la relecture (magnétoscopie,
+  courants de Foucault, borescopie, surveillant extérieur, outillage non
+  étincelant). Banque M7A : 50 → 111 questions. **Conséquence notable** :
+  la banque couvre pour la première fois le tirage officiel de l'examen (80
+  questions), ce qui n'était pas le cas à 50.
+- Randomisation complète de l'ordre des options sur les 111 questions
+  (existantes + nouvelles), même principe que le correctif du 2026-09-13 sur
+  5 modules : aucun cycle de période 1 (5+ identiques consécutives), 2 ou 3
+  (répété 3 fois), distribution finale exactement égale (37/37/37).
+
+### Relecture `relecteur-part66` — 6 BLOQUANT trouvés et corrigés
+
+- **Abattement de pli (bend allowance) physiquement inversé** (fiche
+  M7A.11, questions M7A-0064/M7A-0065, schéma `M7A.11.html`) : la version
+  initiale décrivait l'abattement de pli comme une quantité à **retirer**
+  du tracé (confusion avec la déduction de pli/*bend deduction*) et
+  attribuait l'écart de développé à l'étirement de la face extérieure du
+  pli, alors que la fibre neutre conserve sa longueur — l'écart est
+  géométrique (l'arc du pli occupe moins de développé qu'un angle vif
+  théorique), pas dû à un étirement. Réécrit : l'abattement de pli
+  **s'ajoute** aux longueurs des deux pans ; sans lui, la pièce obtenue est
+  **plus courte**, pas plus longue.
+- **Ressuage présenté à tort comme applicable aux composites**
+  (M7A-0063) : la fiche M7A.10 réserve elle-même le ressuage à un matériau
+  « non poreux » ; corrigé en citant la radiographie comme second procédé
+  applicable aux non-conducteurs.
+- **Dégonflage des pneus au stockage** (fiche M7A.12, M7A-0077) : la
+  version initiale recommandait de dégonfler partiellement les pneus pour
+  éviter le *flat-spotting* — c'est l'inverse de la pratique réelle
+  (rotation/déplacement périodique + maintien, voire légère majoration, de
+  la pression ; un dégonflage aggrave la déformation en augmentant la
+  déflexion au point de contact). Fiche et question corrigées.
+- **Seuil d'atterrissage dur trop absolu** (fiche M7A.13, M7A-0087, schéma
+  `M7A.13.html`) : la version initiale affirmait qu'aucune inspection
+  n'était requise si le seuil mesuré n'était pas dépassé, « quel que soit
+  le ressenti en cabine » — occultant qu'un compte rendu d'atterrissage
+  rude par l'équipage déclenche toujours l'évaluation prévue par l'AMM (le
+  ressenti n'est jamais ignoré d'emblée ; c'est l'évaluation, pas le
+  silence de l'équipage, qui peut conclure à l'absence d'inspection
+  complète). Fiche, question et schéma corrigés.
+- **Contresens sur les pièces à vie limitée** (schéma `M7A.14.html`) : la
+  version initiale affichait « l'état visuel n'entre pas en compte tant
+  que la limite n'est pas atteinte » — faux et dangereux, la limite de vie
+  étant un plafond et non une autorisation de service quel que soit l'état
+  constaté. Un bouton « état douteux » sans effet sur le verdict aggravait
+  le problème. Corrigé : un état visuel douteux impose retrait/investigation
+  indépendamment du compteur de cycles.
+- **Bouton sans retour visuel** (`M7A.13.html`) : la classe CSS `.active`
+  manquait pour les boutons « ressenti équipage », rendant la sélection
+  invisible à l'écran (même symptôme que les « boutons inertes » déjà
+  documentés plus loin dans ce fichier pour M5.1/M5.5/M15.1-2, cause
+  différente ici — CSS manquant, pas génération de DOM). Corrigé.
+
+Dette mineure également corrigée suite à cette relecture : précaution
+manquante sur la mise sur vérins (abri du vent, bagues de blocage des
+vérins) en M7A.12 ; résolution du pied à coulisse surestimée en M7A.2 (et
+alignée dans le schéma `M7A.2-2.html`, avec formatage décimal en virgule
+française) ; question M7A-0071 (ébavurage) supprimée car hors-sujet dans
+M7A.11 et déjà couverte par M7A.6/item 7.8 ; question méta-syllabus
+(M7A-0072, « quel item est niveau 1 vs 2 ») remplacée par une question de
+contenu réel sur la fabrication additive ; recouvrements entre questions
+voisines corrigés (M7A-0096/M7A-0099, M7A-0105/M7A-0106) ; distracteur
+absurde remplacé (M7A-0057) ; schéma `M7A.12-2.html` reconstruit (le choix
+binaire initial « ignorer vs respecter la procédure » n'était pas
+discriminant, remplacé par un choix d'ordre d'exécution réellement
+plausible dans les deux sens).
+
+### Test adversarial `eleve-adversaire` — plateau accepté (même diagnostic que M15)
+
+**Round 1** (111 questions, dont 61 nouvelles) : **111/111 (100 %)**. Motif
+identifié : sur les 61 nouvelles, la bonne réponse était presque toujours la
+plus longue et nuancée (« peut », « généralement »), les distracteurs courts
+et truffés de mots absolus (« jamais », « toujours », « uniquement »,
+« systématiquement »), avec des gabarits récurrents toujours faux
+(« Uniquement… », « remplace la nécessité de… », distracteurs
+auto-disqualifiants du type « sans conséquence ») et des fuites croisées
+dans le bloc CND/fabrication additive.
+
+**Réécriture round 1** : les 61 questions ont été intégralement réécrites
+(longueurs rapprochées, mots absolus supprimés des distracteurs, gabarits
+retirés, formulations CND/fabrication additive paraphrasées pour réduire les
+échos littéraux), puis les positions re-randomisées.
+
+**Round 2** (même 111 questions, après réécriture) : **111/111 (100 %),
+inchangé.** Diagnostic de l'agent, sans ambiguïté : la réécriture a
+**déplacé** le gabarit plutôt que de le supprimer. Les mots absolus ont été
+remplacés par des adverbes minimisants (« surtout », « généralement »,
+« principalement », « conséquence limitée »...) — sur 38 lignes d'options
+portant un tel marqueur dans le fichier, **aucune n'est une bonne réponse**.
+Effet de bord non anticipé : allonger les distracteurs pour égaliser les
+longueurs les a rendus plus bavards, donc plus faciles à prendre en défaut ;
+et des énoncés reformulés de façon plus affirmative (« en quoi X
+diffère-t-il ») ont créé une prémisse que les distracteurs contredisent,
+un nouvel indice absent des questions neutres d'origine. Le bloc CND
+(M7A-0110 à M7A-0112) reste en plus recyclable : les distracteurs y sont les
+définitions correctes d'autres méthodes déjà données comme réponses en
+M7A-0061/M7A-0062/M7A-0063 — la même limite de « taxonomie fermée » que
+celle documentée pour M10 (une dizaine de notions closes réutilisées comme
+distracteurs les unes des autres), ici sur les 5-6 méthodes de CND.
+
+**Décision de l'utilisateur (2026-09-14), après consultation explicite** :
+accepter ce plateau comme dette documentée, **sur le même principe que
+celui déjà retenu pour M15** (voir section dédiée plus bas) — un
+distracteur rédigé pour « paraître faux » se repère par la construction de
+la phrase, indépendamment du vocabulaire précis employé ; le corriger en
+profondeur demanderait de réécrire les trois options de chaque question
+avec la même densité de justification et le même registre grammatical, un
+chantier de reconstruction plutôt que de reformulation, plus lourd et plus
+risqué (chaque round de retouche de contenu a jusqu'ici produit de nouvelles
+erreurs factuelles à corriger — 6 BLOQUANT sur le seul premier jet de ce
+chantier). **Aucune 3ᵉ itération sans demande explicite.** La justesse
+factuelle du contenu (fiches, questions, schémas) reste validée par la
+relecture de fond ; c'est uniquement la résistance des questions à une
+devinette sans connaissance du domaine qui reste un chantier ouvert, comme
+pour M15.
+
+### Reste à faire avant commit
+
+Test en local par l'utilisateur (consigne explicite de ce chantier : pas de
+push avant ce test). Aucune autre relecture prévue sauf demande explicite.
 
 ## M17A — construction en cours (Lot 1 : M17A.1-M17A.5)
 
