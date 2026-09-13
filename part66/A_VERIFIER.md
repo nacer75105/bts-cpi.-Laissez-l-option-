@@ -1007,6 +1007,136 @@ Restent, en dette mineure assumée :
   au feu du flexible), mais reste résumée par rapport à la réalité du
   sujet.
 
+### Réforme du syllabus « Module 7 » (12 juin 2024) — dette documentée, non traitée
+
+Recherche menée le 2026-09-13 (chantier « sujets de rédaction M7A + niveau
+syllabus »), source : EASA *Easy Access Rules for Continuing Airworthiness
+(Regulation (EU) No 1321/2014)*, révision **septembre 2025** (la plus
+récente disponible), téléchargée directement depuis
+https://www.easa.europa.eu/en/downloads/95788/en — 1265 pages, extraction
+`pdftotext -table` sur les pages 573-575 (Module 7) et 632-634 (nombre de
+questions par module).
+
+**Constat : nos 10 fiches M7A suivent l'ancienne structure « Module 7A /
+Module 7B »**, remplacée par le règlement **(UE) 2023/989** (applicable
+depuis le **12 juin 2024**), qui a fusionné 7A et 7B en un seul « Module 7 »
+et renuméroté ses items internes (7.1 à 7.21, avec 7.4 et 7.15
+« Reserved »). Conséquences concrètes pour notre contenu :
+
+- Les 3 lacunes déjà notées ci-dessus (matériaux composites, soudage/
+  brasage, contrôle non destructif) doivent être **réévaluées à la
+  lumière de la réforme**, pas simplement comblées telles quelles :
+  - le **soudage, brasage et bonding** (ancien 7.15 dans la structure
+    2020) est désormais **« (Reserved) »** dans le Module 7 actuel — ce
+    n'est donc probablement plus une lacune à combler, sous réserve de
+    confirmer que « Reserved » signifie bien « retiré du syllabus » et
+    non « renvoyé à un autre module » ;
+  - le **contrôle non destructif** est maintenant un alinéa du groupe
+    7.18(c) *Disassembly, Inspection, Repair and Assembly Techniques*,
+    donc potentiellement déjà dans le périmètre visé de la fiche M7A.10
+    (« Démontage, inspection, réparation, remontage »), à vérifier
+    précisément ;
+  - les **matériaux composites** restent un vrai point non couvert
+    (item 7.14.2 *Composite and non-metallic*, niveau B1 = 2).
+- **Deux items ajoutés par la réforme n'ont aucun équivalent dans nos 10
+  fiches** : **7.14.3 Fabrication additive** (*additive manufacturing*,
+  niveau B1 = 1) et **7.21 Documentation & communication** (niveau B1 =
+  2). Ce sont des ajouts récents du syllabus, pas des oublis d'une
+  construction antérieure — à traiter comme une extension du module, pas
+  une correction.
+
+**Non traité dans cette session** (décision explicite de l'utilisateur :
+prioriser la correction du format d'examen ci-dessous et les sujets de
+rédaction ; cette réforme est documentée pour une reprise ultérieure, pas
+corrigée maintenant). Avant toute extension du module sur ces deux points,
+revérifier aussi que les 10 fiches existantes correspondent bien aux bons
+items numérotés du Module 7 actuel (mapping fait par déduction thématique
+lors de cette recherche, à valider fiche par fiche — voir aussi le mapping
+niveau 1/2/3 plus bas dans ce fichier une fois renseigné).
+
+### Niveaux de connaissance (1/2/3) — sourcés et renseignés le 2026-09-13
+
+Champ `"niveau"` (1, 2 ou 3) ajouté à chaque fiche de
+`part66/data/M7A/fiches.json`, affiché dans l'onglet Cours
+(`part66/ui.py`, `_page_cours`) avec une légende expliquant les 3
+niveaux. Validé par l'utilisateur avant écriture : *« La source EASA
+Easy Access Rules est la référence de la profession, ça suffit »*.
+
+**Source** : même document que ci-dessus (EASA *Easy Access Rules for
+Continuing Airworthiness*, révision septembre 2025), Appendix I, Module
+7 « Maintenance Practices », colonne catégorie B1 (identique à B3 dans
+ce document — une seule colonne numérique sert aux deux). Définitions
+génériques des niveaux extraites verbatim de la section 1 du même
+Appendix I.
+
+**Mapping retenu** (déduction thématique de ce projet, pas une
+nomenclature officielle — voir la réforme de juin 2024 ci-dessus, qui
+peut avoir déplacé certains items) :
+
+| Fiche M7A | Item(s) Module 7 | Niveau B1 |
+|---|---|---|
+| M7A.1 Sécurité en atelier | 7.1 | 3 |
+| M7A.2 Pratiques d'atelier et outillage | 7.2, 7.3 | 3 |
+| M7A.3 Dessins techniques, schémas et normes | 7.5 | 2 |
+| M7A.4 Ajustements et tolérances | 7.6 | 2 |
+| M7A.5 Câbles et connecteurs électriques | 7.7 (EWIS) | 3 |
+| M7A.6 Rivetage | 7.8 | 2 |
+| M7A.7 Tuyauteries et flexibles | 7.9 | 2 |
+| M7A.8 Ressorts, roulements et transmissions | 7.10, 7.11, 7.12 | 2 |
+| M7A.9 Câbles de commande et manutention | 7.13, 7.17 | 2 |
+| M7A.10 Démontage/inspection/réparation/pesée | 7.16, 7.18 | 2, **sauf 7.18(a) type de défauts/inspection visuelle = 3** |
+
+M7A.10 est affichée avec ce cas mixte explicite (champ `niveau_note`
+dans `fiches.json`, affiché sous la légende principale dans l'appli) :
+un simple badge « Niveau 2 » aurait été trompeur pour cette fiche.
+
+**Réserves conservées** (l'utilisateur a validé la source comme
+suffisante ; ces points restent notés pour référence future, pas pour
+bloquer l'usage actuel) :
+- Cette publication EASA est la consolidation de référence de la
+  profession, mais reste juridiquement une compilation non-officielle
+  (le texte contraignant est EUR-Lex, non récupéré en seconde source
+  faute d'un outil de récupération adapté à sa taille).
+- Extraction automatisée (`pdftotext -table`), pas de vérification
+  visuelle pixel par pixel du tableau original (aucun outil de rendu de
+  page PDF disponible dans cet environnement).
+- La correspondance fiche ↔ item officiel 7.x est une inférence
+  thématique de ce projet, pas une donnée du document lui-même.
+
+**Autres modules** : le mécanisme d'affichage (`_page_cours`, légende
+comprise) fonctionne pour n'importe quel module dont les fiches
+porteraient un champ `"niveau"`, mais seul M7A en a été doté pour
+l'instant. Les autres modules (M5, M10, M11A, M15, M17A) n'affichent
+aucun niveau tant que la même recherche sourcée n'aura pas été menée et
+validée pour chacun.
+
+### Format d'examen (nb. de questions / durée) — corrigé le 2026-09-13
+
+`part66/logic.py` (dict `MODULES`) donnait, pour les 6 modules construits,
+des valeurs non sourcées (souvent des estimations ou des valeurs recopiées
+d'un module à l'autre). Corrigées sur la même source que ci-dessus
+(section « Number of questions per module », colonne catégorie B1 ou
+B1.1 selon le module) :
+
+| Module | Ancienne valeur (fausse) | Valeur officielle (B1/B1.1) |
+|---|---|---|
+| M10 | 32 questions / 40 min | **44 / 55** |
+| M5  | 20 questions / 25 min | **40 / 50** |
+| M7A | 25 questions / 30 min | **80 / 100** (+ 2 questions rédactionnelles de 20 min chacune, non simulées par l'examen blanc QCM) |
+| M11A | 140 questions / 175 min | **140 / 175** — déjà correcte, désormais confirmée par la source officielle |
+| M15 | 25 questions / 30 min | **92 / 115** |
+| M17A | 25 questions / 30 min | **32 / 40** |
+
+**Point additionnel trouvé en vérifiant ces chiffres, non corrigé ici** :
+la taille réelle de la banque de questions ne couvre pas encore le tirage
+officiel sur 2 modules — M7A (50 questions disponibles pour un tirage de
+80) et M10 (37 disponibles pour un tirage de 44). `construire_examen_blanc`
+(logic.py) gère déjà ce cas sans planter (`nb = min(nb_questions_examen,
+len(questions))`), donc l'examen blanc reste utilisable, mais il tire
+alors moins de questions que l'épreuve réelle sur ces deux modules — à
+traiter en écrivant des questions supplémentaires, chantier séparé de
+celui d'aujourd'hui.
+
 ## M17A — construction en cours (Lot 1 : M17A.1-M17A.5)
 
 Module M17A (« Hélices »), calibré selon le nouveau standard ci-dessous

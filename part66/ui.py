@@ -63,12 +63,14 @@ def page_part66():
         st.info("Aucun module n'est disponible pour l'instant.")
         return
 
-    onglet_accueil, onglet_cours, onglet_progression, onglet_examen = st.tabs(
-        ["🏠 Accueil", "📖 Cours", "📊 Progression", "⏱️ Examen blanc"])
+    onglet_accueil, onglet_cours, onglet_redaction, onglet_progression, onglet_examen = st.tabs(
+        ["🏠 Accueil", "📖 Cours", "✍️ Rédaction", "📊 Progression", "⏱️ Examen blanc"])
     with onglet_accueil:
         _page_accueil(P, module)
     with onglet_cours:
         _page_cours(P, module)
+    with onglet_redaction:
+        _page_redaction(module)
     with onglet_progression:
         _page_progression(P, module)
     with onglet_examen:
@@ -195,17 +197,75 @@ def _rendu_bilan(P, sess):
 # Cours
 # ---------------------------------------------------------------------------
 
+_NIVEAU_LEGENDE = """\
+**Niveau 1 — notions générales** : tu dois reconnaître et décrire
+simplement le sujet, avec des mots courants et des exemples — pas
+besoin de savoir l'appliquer en détail.
+
+**Niveau 2 — connaissance générale** : tu dois comprendre la théorie du
+sujet, en donner une description avec des exemples typiques, lire des
+schémas qui le concernent, et l'appliquer en suivant une procédure
+détaillée.
+
+**Niveau 3 — connaissance détaillée** : le niveau le plus exigeant. Tu
+dois maîtriser la théorie en profondeur, savoir comment ce sujet
+s'articule avec d'autres, et être capable d'interpréter un résultat
+concret (une mesure, un symptôme) pour décider de la bonne action.
+
+Plus le niveau est élevé, plus la fiche mérite de temps de révision et
+d'entraînement — c'est indicatif, mais ça aide à doser ton effort.
+(Source : Part-66 Appendix I, EASA *Easy Access Rules for Continuing
+Airworthiness*.)
+"""
+
+
 def _page_cours(P, module):
     fiches = logic.charger_fiches(module)
     if not fiches:
         st.info("Pas encore de fiches pour ce module.")
         return
+    if any("niveau" in fiche for fiche in fiches):
+        with st.expander("ℹ️ Niveaux de connaissance (1/2/3) — ce que ça change pour réviser"):
+            st.markdown(_NIVEAU_LEGENDE)
     for fiche in fiches:
         with st.expander(f"{fiche['id']} — {fiche['titre']}", key=f"p66_expander_{module}_{fiche['id']}"):
-            st.caption(f"{fiche['sous_chapitre']} · ⏱ {fiche.get('duree_min', '?')} min")
+            legende = f"{fiche['sous_chapitre']} · ⏱ {fiche.get('duree_min', '?')} min"
+            if "niveau" in fiche and not fiche.get("niveau_note"):
+                legende += f" · Niveau {fiche['niveau']}"
+            st.caption(legende)
+            if fiche.get("niveau_note"):
+                st.caption(f"⚠️ {fiche['niveau_note']}")
             st.markdown(fiche["contenu_md"])
             for schema in logic.charger_schemas(module, fiche["id"]):
                 st.html(schema, unsafe_allow_javascript=True)
+
+
+# ---------------------------------------------------------------------------
+# Rédaction — sujets type examen (essays), pas de notation automatique
+# ---------------------------------------------------------------------------
+
+def _page_redaction(module):
+    essais = logic.charger_essais(module)
+    if not essais:
+        st.info(
+            "Ce module n'a pas d'épreuve rédactionnelle à l'examen "
+            "(seul le Module 7 — M7A — en comporte une pour l'instant).")
+        return
+    st.caption(
+        "Rédige ta réponse sur papier, chronomètre en main — c'est ce que tu "
+        "feras à l'examen. Le temps indiqué sous chaque sujet est celui du "
+        "format réel de l'épreuve. Ne déroule le corrigé qu'une fois ta copie "
+        "terminée : il n'y a pas de notation automatique ici, c'est à toi de "
+        "comparer ton travail au corrigé.")
+    for essai in essais:
+        with st.expander(f"{essai['uid']} — {essai['titre']}", key=f"p66_essai_{module}_{essai['uid']}"):
+            st.caption(f"{essai['sous_chapitre']} · ⏱ {essai.get('temps_indicatif_min', '?')} min")
+            st.markdown(f"**Sujet :** {essai['enonce']}")
+            with st.expander("Voir le corrigé"):
+                st.markdown(essai["corrige_md"])
+                if essai.get("erreurs_frequentes"):
+                    st.warning("**Erreurs fréquentes à éviter sur ce sujet :**\n\n"
+                               + "\n".join(f"- {e}" for e in essai["erreurs_frequentes"]))
 
 
 # ---------------------------------------------------------------------------

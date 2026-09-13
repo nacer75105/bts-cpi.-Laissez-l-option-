@@ -27,21 +27,31 @@ NB_BLANCS_CONSECUTIFS_REQUIS = 3
 # Modules du programme B1.1. M10 et M5 sont construits ; les titres des
 # autres modules sont des libellés d'affichage à confirmer avant de les
 # construire (voir part66/A_VERIFIER.md).
+#
+# nb_questions_examen / duree_examen_min : format QCM de l'examen réel,
+# catégorie B1 (ou B1.1 selon le module), sourcé le 2026-09-13 sur EASA
+# "Easy Access Rules for Continuing Airworthiness (Regulation (EU) No
+# 1321/2014)", révision septembre 2025, Appendix II — Basic examination standard, section 2
+# "Number of questions per module" (voir part66/A_VERIFIER.md pour le
+# détail par module). Corrige des valeurs précédentes non sourcées.
+# Le Module 7 (M7A) comporte en plus 2 questions rédactionnelles de
+# 20 min chacune, non simulées par l'examen blanc QCM (voir l'onglet
+# Rédaction, dédié à cet entraînement, pas de notation automatique).
 MODULES = {
     "M10": {"titre": "Législation aéronautique", "disponible": True,
-             "nb_questions_examen": 32, "duree_examen_min": 40},
+             "nb_questions_examen": 44, "duree_examen_min": 55},
     "M5": {"titre": "Techniques numériques / systèmes d'instruments électroniques",
            "disponible": True,
-           "nb_questions_examen": 20, "duree_examen_min": 25},
+           "nb_questions_examen": 40, "duree_examen_min": 50},
     "M7A": {"titre": "Pratiques de maintenance", "disponible": True,
-             "nb_questions_examen": 25, "duree_examen_min": 30},
+             "nb_questions_examen": 80, "duree_examen_min": 100},
     "M11A": {"titre": "Aérodynamique, structures et systèmes — avion à turbine",
               "disponible": True,  # module complet (25 fiches), relu et validé par l'utilisateur (lots 1-5, tests locaux inclus) le 2026-09-13
-              "nb_questions_examen": 140, "duree_examen_min": 175},  # TODO : 175 min = 75 s/question x 140, à confirmer sur l'Appendix VIII officiel
+              "nb_questions_examen": 140, "duree_examen_min": 175},  # confirmé exact par la source officielle le 2026-09-13
     "M15": {"titre": "Turbomachines à gaz", "disponible": True,  # module complet (14 fiches), relu et validé par l'utilisateur (lots 1-3, tests locaux inclus) le 2026-09-11
-             "nb_questions_examen": 25, "duree_examen_min": 30},  # TODO : valeurs provisoires non vérifiées (alignées sur M17A), à confirmer avec l'utilisateur une fois le module M15 complet (14 fiches)
+             "nb_questions_examen": 92, "duree_examen_min": 115},
     "M17A": {"titre": "Hélices", "disponible": True,  # module complet (14 fiches), relu et validé par l'utilisateur (lots 1-3, tests locaux inclus) le 2026-09-11
-             "nb_questions_examen": 25, "duree_examen_min": 30},
+             "nb_questions_examen": 32, "duree_examen_min": 40},
 }
 
 
@@ -68,6 +78,17 @@ def charger_schemas(module, fiche_id):
         if chemin.exists():
             chemins.append(chemin)
     return chemins
+
+
+def charger_essais(module):
+    """Sujets de rédaction (essays) : énoncé, corrigé développé, erreurs
+    fréquentes, temps indicatif. Pas de notation automatique — l'élève
+    compare son propre travail (rédigé sur papier) au corrigé."""
+    chemin = _fichier_module(module, "essais.json")
+    if not os.path.exists(chemin):
+        return []
+    with open(chemin, "r", encoding="utf-8") as f:
+        return json.load(f)["essais"]
 
 
 def charger_questions(module):

@@ -4,13 +4,15 @@
   "fiches": [
     {
       "id": "M7A.1",
+      "niveau": 3,
       "sous_chapitre": "Sécurité en atelier et sur l'aéronef",
       "titre": "Sécurité en atelier et sur l'aéronef : risques, EPI et incendie",
       "duree_min": 14,
-      "contenu_md": "**Pourquoi commencer un module entier consacré aux pratiques de maintenance par la sécurité, avant même de parler d'un seul outil ?** Parce qu'un geste de maintenance mal exécuté peut, au pire, abîmer une pièce — mais un geste réalisé sans respecter les règles de sécurité peut blesser gravement, voire tuer, le technicien lui-même ou une personne à proximité. Contrairement à une erreur de méthode, purement technique, une erreur de sécurité n'est pas toujours réversible. C'est pour cette raison que la sécurité en atelier et sur l'aéronef précède, dans ce module comme dans la réalité d'un hangar, toute autre notion pratique.\n\n**Un atelier de maintenance aéronautique combine des risques que l'on retrouve dans n'importe quel atelier industriel, et d'autres propres à l'aéronef lui-même.** Parmi les risques génériques : l'électricité (outils électroportatifs, bancs d'essai), les produits chimiques (dégraissants, peintures, décapants), le bruit (outils pneumatiques, moteurs en essai), la manutention de charges lourdes, et le travail en hauteur (sur un fuselage, une aile, un stabilisateur). Chacun appelle un équipement de protection individuelle (EPI) adapté — protections auditives à proximité d'un moteur en essai, protection oculaire lors d'un perçage ou d'un meulage, gants adaptés à la nature exacte du produit manipulé — sachant que le mauvais choix d'EPI peut lui-même créer un danger : des gants, par exemple, sont à proscrire à proximité d'un outil rotatif, où ils risquent d'être happés.\n\n**Aux risques génériques s'ajoutent des dangers spécifiques à l'aéronef, qui n'existent dans aucun autre atelier :** le carburant et ses vapeurs (inflammables, et générateurs d'électricité statique lors du transfert de liquide dans une tuyauterie — d'où la nécessité de relier électriquement l'aéronef et le moyen d'avitaillement avant tout transfert, pour égaliser leur potentiel électrique et éviter qu'une étincelle ne jaillisse au moment de connecter le tuyau) ; le fluide hydraulique sous haute pression, capable de provoquer une injection sous-cutanée grave à travers la peau, même à travers une fuite invisible à l'œil nu ; les batteries, qui dégagent de l'hydrogène (gaz inflammable) en charge et contiennent un électrolyte corrosif ; les zones dangereuses autour d'un moteur en fonctionnement (zone d'aspiration à l'avant, souffle chaud et puissant à l'arrière) ; et les surfaces de vol qui peuvent se déplacer de façon inattendue si un système reste sous pression ou sous tension pendant une intervention.\n\n**Exemple concret, pour bien fixer une idée souvent mal comprise au début** : une fuite de fluide hydraulique haute pression peut être si fine qu'elle est quasiment invisible — on pourrait être tenté de la chercher à la main, comme on chercherait un courant d'air. C'est précisément le geste à ne jamais faire : à la pression de service d'un circuit hydraulique d'aéronef, un jet aussi fin qu'une aiguille peut traverser la peau et injecter du fluide sous les tissus, une blessure grave qui peut sembler bénigne au premier regard. La bonne pratique consiste à rechercher une fuite avec un morceau de carton ou de bois tenu à distance, jamais avec la main nue.\n\n**Le risque incendie mérite une attention particulière, car toutes les méthodes d'extinction ne conviennent pas à tous les types de feu.** On distingue classiquement les feux de matériaux solides (bois, tissus, certains plastiques), les feux de liquides inflammables (carburant, huile, solvants) et les feux d'origine électrique. Utiliser le mauvais type d'extincteur peut aggraver la situation plutôt que l'éteindre : l'eau, par exemple, disperse un liquide inflammable en surface au lieu de l'étouffer, et conduit le courant électrique si elle est projetée sur un équipement sous tension — deux raisons pour lesquelles l'eau n'est jamais utilisée sur un feu de liquide inflammable ou un feu électrique. Des agents extincteurs comme le CO2 ou la poudre, qui agissent en étouffant le feu ou en interrompant sa réaction chimique plutôt qu'en refroidissant par l'eau, sont mieux adaptés à ces cas — mais le choix précis de l'agent et de l'extincteur à utiliser dans un hangar donné relève des consignes de sécurité du site et de la documentation constructeur, pas d'une règle générale à appliquer sans vérification.\n\n**Enfin, connaître les risques ne suffit pas si l'on ne sait pas réagir en cas d'incident** : chaque atelier définit des consignes d'urgence (déclenchement de l'alarme, point de rassemblement, personnes à prévenir) qu'un technicien doit connaître avant même de commencer à travailler, pas découvrir au moment où un incident survient.\n\nÀ retenir : un atelier aéronautique cumule des risques génériques (électricité, produits chimiques, bruit, hauteur) et des risques propres à l'aéronef (carburant, hydraulique haute pression, batteries, zones moteur) ; l'EPI doit être choisi pour le risque réel, pas de façon systématique ; et le type d'agent extincteur doit correspondre à la nature du feu, sous peine d'aggraver la situation.\n\nUne fois ces risques connus et les bons réflexes de sécurité acquis, la question suivante est très concrète : comment organiser son poste de travail et ses outils pour travailler efficacement, sans introduire de nouveaux risques — en particulier celui de laisser un objet oublié dans l'aéronef. C'est l'objet de la fiche suivante."
+      "contenu_md": "**Pourquoi commencer un module entier consacré aux pratiques de maintenance par la sécurité, avant même de parler d'un seul outil ?** Parce qu'un geste de maintenance mal exécuté peut, au pire, abîmer une pièce — mais un geste réalisé sans respecter les règles de sécurité peut blesser gravement, voire tuer, le technicien lui-même ou une personne à proximité. Contrairement à une erreur de méthode, purement technique, une erreur de sécurité n'est pas toujours réversible. C'est pour cette raison que la sécurité en atelier et sur l'aéronef précède, dans ce module comme dans la réalité d'un hangar, toute autre notion pratique.\n\n**Un atelier de maintenance aéronautique combine des risques que l'on retrouve dans n'importe quel atelier industriel, et d'autres propres à l'aéronef lui-même.** Parmi les risques génériques : l'électricité (outils électroportatifs, bancs d'essai), les produits chimiques (dégraissants, peintures, décapants), le bruit (outils pneumatiques, moteurs en essai), la manutention de charges lourdes, et le travail en hauteur (sur un fuselage, une aile, un stabilisateur). Chacun appelle un équipement de protection individuelle (EPI) adapté — protections auditives à proximité d'un moteur en essai, protection oculaire lors d'un perçage ou d'un meulage, gants adaptés à la nature exacte du produit manipulé — sachant que le mauvais choix d'EPI peut lui-même créer un danger : des gants, par exemple, sont à proscrire à proximité d'un outil rotatif, où ils risquent d'être happés.\n\n**Aux risques génériques s'ajoutent des dangers spécifiques à l'aéronef, qui n'existent dans aucun autre atelier :** le carburant et ses vapeurs (inflammables, et générateurs d'électricité statique lors du transfert de liquide dans une tuyauterie — d'où la nécessité de relier électriquement l'aéronef et le moyen d'avitaillement avant tout transfert, pour égaliser leur potentiel électrique et éviter qu'une étincelle ne jaillisse au moment de connecter le tuyau) ; le fluide hydraulique sous haute pression, capable de provoquer une injection sous-cutanée grave à travers la peau, même à travers une fuite invisible à l'œil nu ; les batteries, qui dégagent de l'hydrogène (gaz inflammable) en charge et contiennent un électrolyte corrosif ; les zones dangereuses autour d'un moteur en fonctionnement (zone d'aspiration à l'avant, souffle chaud et puissant à l'arrière) ; et les surfaces de vol qui peuvent se déplacer de façon inattendue si un système reste sous pression ou sous tension pendant une intervention.\n\n**Exemple concret, pour bien fixer une idée souvent mal comprise au début** : une fuite de fluide hydraulique haute pression peut être si fine qu'elle est quasiment invisible — on pourrait être tenté de la chercher à la main, comme on chercherait un courant d'air. C'est précisément le geste à ne jamais faire : à la pression de service d'un circuit hydraulique d'aéronef, un jet aussi fin qu'une aiguille peut traverser la peau et injecter du fluide sous les tissus, une blessure grave qui peut sembler bénigne au premier regard. La bonne pratique consiste à rechercher une fuite avec un morceau de carton ou de bois tenu à distance, jamais avec la main nue. Précisément parce qu'elle peut sembler anodine, une injection de fluide hydraulique sous la peau est une urgence médicale : il faut se rendre immédiatement aux soins médicaux en précisant qu'il s'agit d'une injection de fluide sous pression, même si la plaie visible ne semble pas le justifier.\n\n**Le risque incendie mérite une attention particulière, car toutes les méthodes d'extinction ne conviennent pas à tous les types de feu.** On distingue classiquement les feux de matériaux solides (bois, tissus, certains plastiques), les feux de liquides inflammables (carburant, huile, solvants) et les feux d'origine électrique. Utiliser le mauvais type d'extincteur peut aggraver la situation plutôt que l'éteindre : l'eau, par exemple, disperse un liquide inflammable en surface au lieu de l'étouffer, et conduit le courant électrique si elle est projetée sur un équipement sous tension — deux raisons pour lesquelles l'eau n'est jamais utilisée sur un feu de liquide inflammable ou un feu électrique. Des agents extincteurs comme le CO2 ou la poudre, qui agissent en étouffant le feu ou en interrompant sa réaction chimique plutôt qu'en refroidissant par l'eau, sont mieux adaptés à ces cas — mais le choix précis de l'agent et de l'extincteur à utiliser dans un hangar donné relève des consignes de sécurité du site et de la documentation constructeur, pas d'une règle générale à appliquer sans vérification.\n\n**Enfin, connaître les risques ne suffit pas si l'on ne sait pas réagir en cas d'incident** : chaque atelier définit des consignes d'urgence (déclenchement de l'alarme, point de rassemblement, personnes à prévenir) qu'un technicien doit connaître avant même de commencer à travailler, pas découvrir au moment où un incident survient.\n\nÀ retenir : un atelier aéronautique cumule des risques génériques (électricité, produits chimiques, bruit, hauteur) et des risques propres à l'aéronef (carburant, hydraulique haute pression, batteries, zones moteur) ; l'EPI doit être choisi pour le risque réel, pas de façon systématique ; et le type d'agent extincteur doit correspondre à la nature du feu, sous peine d'aggraver la situation.\n\nUne fois ces risques connus et les bons réflexes de sécurité acquis, la question suivante est très concrète : comment organiser son poste de travail et ses outils pour travailler efficacement, sans introduire de nouveaux risques — en particulier celui de laisser un objet oublié dans l'aéronef. C'est l'objet de la fiche suivante."
     },
     {
       "id": "M7A.2",
+      "niveau": 3,
       "sous_chapitre": "Pratiques d'atelier et outillage",
       "titre": "Pratiques d'atelier : FOD, contrôle des outils et couple de serrage",
       "duree_min": 10,
@@ -18,6 +20,7 @@
     },
     {
       "id": "M7A.3",
+      "niveau": 2,
       "sous_chapitre": "Dessins techniques, schémas et normes",
       "titre": "Lire un dessin technique : vues, symboles et schémas de câblage",
       "duree_min": 10,
@@ -25,6 +28,7 @@
     },
     {
       "id": "M7A.4",
+      "niveau": 2,
       "sous_chapitre": "Ajustements et tolérances",
       "titre": "Ajustements et tolérances : jeu, serrage et pourquoi rien n'est jamais fabriqué à la cote exacte",
       "duree_min": 10,
@@ -32,6 +36,7 @@
     },
     {
       "id": "M7A.5",
+      "niveau": 3,
       "sous_chapitre": "Câbles et connecteurs électriques",
       "titre": "Câbles électriques et connecteurs : sertissage, identification et contrôle",
       "duree_min": 10,
@@ -39,6 +44,7 @@
     },
     {
       "id": "M7A.6",
+      "niveau": 2,
       "sous_chapitre": "Rivetage",
       "titre": "Rivetage : types de rivets, perçage et pose",
       "duree_min": 11,
@@ -46,6 +52,7 @@
     },
     {
       "id": "M7A.7",
+      "niveau": 2,
       "sous_chapitre": "Tuyauteries et flexibles",
       "titre": "Tuyauteries rigides et flexibles : identification, raccords et inspection",
       "duree_min": 10,
@@ -53,6 +60,7 @@
     },
     {
       "id": "M7A.8",
+      "niveau": 2,
       "sous_chapitre": "Ressorts, roulements et transmissions",
       "titre": "Ressorts, roulements et transmissions : rôle, types et défauts",
       "duree_min": 11,
@@ -60,6 +68,7 @@
     },
     {
       "id": "M7A.9",
+      "niveau": 2,
       "sous_chapitre": "Câbles de commande et manutention du matériel",
       "titre": "Câbles de commande et manutention : tension, poulies et gestes de levage",
       "duree_min": 11,
@@ -67,6 +76,8 @@
     },
     {
       "id": "M7A.10",
+      "niveau": 2,
+      "niveau_note": "Niveau 2, sauf l'identification des types de défauts et l'inspection visuelle, exigées en niveau 3",
       "sous_chapitre": "Démontage, inspection, réparation, remontage et pesée",
       "titre": "Démontage, inspection, réparation, remontage : méthode et pesée de l'aéronef",
       "duree_min": 13,
