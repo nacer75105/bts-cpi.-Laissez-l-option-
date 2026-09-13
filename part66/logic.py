@@ -50,7 +50,7 @@ MODULES = {
               "nb_questions_examen": 140, "duree_examen_min": 175},  # confirmé exact par la source officielle le 2026-09-13
     "M15": {"titre": "Turbomachines à gaz", "disponible": True,  # module complet (14 fiches), relu et validé par l'utilisateur (lots 1-3, tests locaux inclus) le 2026-09-11
              "nb_questions_examen": 92, "duree_examen_min": 115},
-    "M17A": {"titre": "Hélices", "disponible": True,  # module complet (14 fiches), relu et validé par l'utilisateur (lots 1-3, tests locaux inclus) le 2026-09-11
+    "M17A": {"titre": "Hélices", "disponible": True,  # module complet (14 fiches), relu et validé par l'utilisateur (lots 1-3, tests locaux inclus) le 2026-09-11 ; +1 fiche mémo (M17A.15, sans question ni schéma, voir A_VERIFIER.md) le 2026-09-13
              "nb_questions_examen": 32, "duree_examen_min": 40},
 }
 

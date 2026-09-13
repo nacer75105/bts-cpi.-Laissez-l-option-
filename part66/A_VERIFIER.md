@@ -1376,6 +1376,111 @@ non corrigés individuellement) ; un léger recouvrement conceptuel
 persiste entre certaines questions de la fiche M17A.14 (stockage),
 comme pour les lots précédents.
 
+### M17A — enrichissement à partir d'une fiche externe non sourcée (2026-09-13)
+
+L'utilisateur a déposé un fichier `fiche-m17a-externe.md` (racine du
+projet), une fiche M17A produite par un autre assistant, non sourcée,
+contenant au moins une erreur déjà démontrée (elle annonce ~20
+questions pour l'examen M17A ; la source officielle EASA vérifiée le
+même jour donne 32 questions/40 min pour B1.1/B1.2/B3 — voir plus haut
+dans ce fichier). Une analyse comparative point par point (vrais
+manques, divergences de fond, affirmations non sourcées, éléments
+pédagogiques réutilisables) a été produite, montrée à l'utilisateur
+avant toute écriture, puis reprise sélectivement sur décision explicite.
+
+**Repris et intégré dans les 14 fiches existantes**, reformulé à notre
+standard (vulgarisation, « pourquoi » avant « comment »), jamais copié
+tel quel : prop strike et règles de réparation (sans chiffre de
+tolérance ni règle universelle — expliqués sur le principe, renvoi
+systématique au motoriste/constructeur, conformément au critère 2bis),
+dédrapeautage, autofeather, sécurités du pas reverse (*squat switch*,
+butée de petit pas), hélice à action double, tiroir distributeur et
+pompe de gavage, balais et bagues collectrices du dégivrage électrique,
+tapotement (*coin tap*) pour le délaminage composite, désactivation du
+synchrophaseur au décollage/atterrissage, grille anti-foudre sur pale
+composite, station de pale, vocabulaire intrados/extrados/*shank*,
+règles de reprofilage (sens de l'envergure, quantité comparable sur
+toutes les pales). Un tableau récapitulatif des trois états du
+régulateur (on-speed/over-speed/under-speed) a été ajouté à M17A.8, et
+une nouvelle fiche **M17A.15 — Mémo express**, condensé de rappels
+avant examen couvrant tout le module, a été ajoutée à la fin.
+
+**Délibérément écarté** : la fiche externe affirme, de façon
+catégorique et avec des marques citées (Hartzell/McCauley), qu'une
+hélice monomoteur va toujours au pas gros (jamais au drapeau) sur perte
+de pression d'huile, et qu'une hélice bimoteur va toujours au drapeau.
+Notre fiche M17A.7 reste volontairement plus prudente sur ce point
+(« un comportement de repli délibérément sûr... reste une
+caractéristique de conception à confirmer dans la documentation de
+chaque installation plutôt qu'à supposer universelle »). La
+distinction externe est plausible et même probablement plus utile
+pédagogiquement, mais elle n'est pas sourcée : **conservée en l'état,
+non durcie**, tant qu'une source fiable ne confirme pas qu'il s'agit
+d'une règle générale plutôt que d'une convention de conception
+répandue mais non universelle.
+
+**Autres points de la fiche externe, non repris**, réserves déjà
+listées dans l'analyse comparative montrée à l'utilisateur : formule
+« vitesse de rotation = 2πrN » (unité de N ambiguë, tr/min vs tr/s) ;
+acier comme quatrième famille de matériau de pale (pertinence actuelle
+non confirmée) ; statistique de prévalence du dégivrage cyclique
+(« quasi-totalité des hélices ») ; position de stockage alu/bois
+présentée comme règle générale plutôt que propre au constructeur ;
+terminologie « face = toujours arrière » reprise avec un degré de
+confiance moindre que les autres ajouts, faute de source citée.
+
+**Relecture `relecteur-part66` de ces ajouts (2026-09-13) : 6 BLOQUANT
+et 7 points à revoir corrigés avant commit.** Bloquants : la pompe de
+gavage (M17A.8) était décrite en amont du régulateur au lieu d'un
+composant intégré à celui-ci ; l'exemple de synthèse de M17A.10
+contredisait la règle de désactivation du synchrophaseur au décollage
+qui venait d'être ajoutée juste au-dessus (déplacé en croisière) ; le
+mémo M17A.15 présentait à tort l'autofeather comme « l'équivalent »
+du dispositif de survitesse, alors que M17A.9 dit explicitement que ce
+n'est pas la même fonction (déclenchement par perte de couple, pas par
+survitesse) ; le même mémo citait une taxonomie « à quatre familles »
+de pas (fixe/réglable au sol/variable/vitesse constante) que ne
+couvrent ni M17A.5 ni M17A.6, la vitesse constante étant un cas du pas
+variable détaillé en M17A.8, pas une famille parallèle ; les sécurités
+du pas reverse (M17A.7) étaient présentées de façon trop catégorique
+(« la plus courante », « butée mécanique », synonyme *beta stop* non
+sourcé) pour un point de sécurité — dé-catégorisé, renvoyé à l'AMM de
+chaque installation ; la ligne « reprofilage » du mémo durcissait la
+règle de M17A.4 en supprimant la clause de limite documentaire et de
+procédure approuvée, transformant une bonne pratique encadrée en
+instruction sèche sur des pales saines.
+
+Corrections mineures (cohérence/vocabulaire) : ajout d'une réserve
+dans M17A.13 notant qu'un déséquilibre résiduel peut subsister même en
+suivant la nouvelle règle de M17A.4 (retirer une quantité comparable
+sur chaque pale) ; glose de « hélice tractive » ajoutée en M17A.1 là où
+le terme est utilisé avant sa définition complète plus bas dans la
+fiche ; condition d'armement ajoutée à la description de l'autofeather
+en M17A.9 ; renvoi croisé ajouté en M17A.12 vers l'essai moteur
+(run-up) de M17A.9 ; mémo M17A.15 aligné sur le vocabulaire réel du
+module (« orientation efficace par rapport à l'air », pas « angle
+d'attaque », terme jamais défini dans les 14 fiches) et sur la
+prudence de M17A.7 (« certains turbopropulseurs », pas « gros
+turbopropulseurs »).
+
+**Point signalé par la relecture et non traité aujourd'hui** :
+`M17A.11` décrit les éléments chauffants du dégivrage électrique comme
+« intégrés » au bord d'attaque, alors qu'il s'agit le plus souvent de
+tapis (*boots*) collés en surface — imprécision préexistante,
+antérieure à l'ajout balais/bagues collectrices d'aujourd'hui, qui la
+rend seulement plus visible. À corriger lors d'un prochain passage sur
+M17A.11, pas traité dans ce chantier.
+
+**Dette assumée sur M17A.15 (nouvelle fiche « Mémo express »)** : à la
+différence des 14 autres fiches du module, elle ne porte ni question
+ni schéma associés (`charger_schemas` renvoie une liste vide sans
+plantage ; elle n'apparaît donc pas dans le suivi de progression par
+sous-chapitre, qui se construit à partir de `questions.json`). C'est
+volontaire — un condensé de rappels n'a pas vocation à être interrogé
+comme les autres fiches — mais ça l'écarte du standard habituel du
+module (8-10 questions/fiche, 2 schémas/fiche), à assumer explicitement
+plutôt qu'à corriger.
+
 ## M15 — module complet (« Turbomachines à gaz »)
 
 Plan validé avec l'utilisateur le 2026-09-11 : 14 fiches (M15.1 à
