@@ -6,11 +6,11 @@
       "sous_chapitre": "M17A.1",
       "question": "Quel est le rôle fondamental de l'hélice sur un avion à hélice ?",
       "options": [
-        "Transformer la rotation et le couple du moteur en une force de traction",
         "Refroidir le moteur en faisant circuler de l'air autour de lui",
+        "Transformer la rotation et le couple du moteur en une force de traction",
         "Produire une portance supplémentaire qui s'ajoute à celle des ailes"
       ],
-      "bonne": 0,
+      "bonne": 1,
       "explication": "L'hélice existe pour transformer un mouvement de rotation (fourni par le moteur) en une force qui pousse l'avion en ligne droite : la traction. Le refroidissement du moteur peut être amélioré par le flux d'air généré par l'hélice, mais ce n'est qu'un effet secondaire, pas sa fonction. Quant à la portance, elle est produite par les ailes, pas par l'hélice : une pale d'hélice réoriente la force aérodynamique vers l'avant (traction) plutôt que vers le haut (portance).",
       "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
     },
@@ -20,10 +20,10 @@
       "question": "Pourquoi peut-on dire qu'une pale d'hélice fonctionne comme une petite aile ?",
       "options": [
         "Parce qu'elle est toujours fabriquée dans le même matériau qu'une aile d'avion",
-        "Parce qu'elle a un profil aérodynamique et génère une force aérodynamique par son déplacement dans l'air",
-        "Parce qu'elle produit une portance dirigée vers le haut, exactement comme une aile"
+        "Parce qu'elle produit une portance dirigée vers le haut, exactement comme une aile",
+        "Parce qu'elle a un profil aérodynamique et génère une force aérodynamique par son déplacement dans l'air"
       ],
-      "bonne": 1,
+      "bonne": 2,
       "explication": "Une pale a un profil incurvé (bord d'attaque, bord de fuite) qui, en se déplaçant dans l'air, génère une force aérodynamique — le même mécanisme physique de base qu'une aile. Le matériau n'est pas le critère de comparaison : une pale et une aile peuvent être fabriquées dans des matériaux différents ou identiques, cela n'a rien à voir avec le principe aérodynamique. Et contrairement à l'aile, la force produite par la pale n'est pas orientée vers le haut : la rotation la réoriente vers l'avant, en traction.",
       "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
     },
@@ -32,11 +32,11 @@
       "sous_chapitre": "M17A.1",
       "question": "Si l'air se comportait comme un solide, par exemple du bois, qu'est-ce que le pas de l'hélice représenterait ?",
       "options": [
-        "La distance que l'hélice avancerait à chaque tour complet",
         "Le nombre de tours nécessaires pour que l'avion atteigne sa vitesse maximale",
-        "La force totale de traction produite par l'hélice à un instant donné"
+        "La force totale de traction produite par l'hélice à un instant donné",
+        "La distance que l'hélice avancerait à chaque tour complet"
       ],
-      "bonne": 0,
+      "bonne": 2,
       "explication": "Le pas de l'hélice reprend l'image d'une vis enfoncée dans du bois, qui avance d'une distance fixe à chaque tour selon l'inclinaison de son filetage : c'est cette distance théorique par tour que représente le pas. Ce n'est ni un nombre de tours nécessaire pour atteindre une vitesse donnée, ni une force de traction — deux notions différentes, sans rapport direct avec cette distance théorique.",
       "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
     },
@@ -45,11 +45,11 @@
       "sous_chapitre": "M17A.1",
       "question": "Qu'est-ce que le couple délivré par un moteur d'avion ?",
       "options": [
-        "La force de rotation transmise par l'arbre moteur",
+        "La quantité totale d'énergie consommée par le moteur pendant le vol",
         "La vitesse à laquelle l'arbre moteur tourne, exprimée en tours par minute",
-        "La quantité totale d'énergie consommée par le moteur pendant le vol"
+        "La force de rotation transmise par l'arbre moteur"
       ],
-      "bonne": 0,
+      "bonne": 2,
       "explication": "Le couple est la force de rotation transmise par l'arbre — l'exemple donné dans la fiche est celui d'un boulon serré à la main : plus on pousse fort sur la clé, plus le couple appliqué est grand. La vitesse de rotation en tr/min, c'est le régime, une notion différente bien que liée à travers la notion de puissance. La consommation d'énergie totale n'est pas non plus ce que mesure le couple.",
       "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
     },
@@ -71,11 +71,11 @@
       "sous_chapitre": "M17A.1",
       "question": "Quelle est la différence entre une hélice tractive et une hélice propulsive ?",
       "options": [
+        "La tractive équipe uniquement les avions à pas fixe, la propulsive uniquement les avions à pas variable",
         "La tractive est montée à l'avant du moteur et tire l'avion, la propulsive est montée à l'arrière et le pousse",
-        "La tractive utilise un principe aérodynamique différent de la propulsive",
-        "La tractive équipe uniquement les avions à pas fixe, la propulsive uniquement les avions à pas variable"
+        "La tractive utilise un principe aérodynamique différent de la propulsive"
       ],
-      "bonne": 0,
+      "bonne": 1,
       "explication": "Seule la position change : une hélice tractive, à l'avant, tire l'appareil ; une hélice propulsive, à l'arrière, le pousse. Le principe aérodynamique de génération de la traction reste rigoureusement identique dans les deux cas — ce n'est pas un mécanisme différent. Et le choix pas fixe/pas variable (détaillé en M17A.5) est indépendant de la position tractive ou propulsive : on trouve les deux configurations avec l'un ou l'autre type de pas.",
       "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
     },
@@ -85,10 +85,10 @@
       "question": "Sur une pale d'hélice, quel bord rencontre l'air en premier lors de la rotation ?",
       "options": [
         "Le bord de fuite",
-        "Le bord d'attaque",
-        "Cela dépend du sens de rotation de l'hélice, qui varie selon les modèles"
+        "Cela dépend du sens de rotation de l'hélice, qui varie selon les modèles",
+        "Le bord d'attaque"
       ],
-      "bonne": 1,
+      "bonne": 2,
       "explication": "Le bord d'attaque est le bord épais et arrondi du profil de la pale, monté face au sens de rotation : c'est donc physiquement le premier point de la pale à traverser l'air à chaque tour, quel que soit le sens de rotation retenu par le constructeur (il varie effectivement selon les modèles). Le bord de fuite, plus fin, est l'opposé, par lequel l'air repart après avoir suivi le profil de la pale.",
       "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
     },
@@ -97,9 +97,9 @@
       "sous_chapitre": "M17A.1",
       "question": "Pourquoi la vitesse de l'air rencontrée par un point d'une pale n'est-elle pas due uniquement à la rotation de l'hélice ?",
       "options": [
-        "Parce que le vent atmosphérique s'ajoute toujours à la vitesse de rotation",
+        "Parce que la vitesse de rotation de l'hélice varie en permanence même à régime stabilisé",
         "Parce que l'avancement de l'avion se combine à la rotation pour donner une vitesse d'air résultante",
-        "Parce que la vitesse de rotation de l'hélice varie en permanence même à régime stabilisé"
+        "Parce que le vent atmosphérique s'ajoute toujours à la vitesse de rotation"
       ],
       "bonne": 1,
       "explication": "La fiche explique que deux mouvements se combinent : la rotation de la pale autour du moyeu, et l'avancement de l'avion lui-même vers l'avant. C'est cette combinaison qui donne, en chaque point de la pale, une vitesse et une direction d'air résultantes différentes de la seule vitesse de rotation — un point qui explique le vrillage, détaillé en M17A.3. Le vent atmosphérique n'est pas le facteur en cause ici, et le régime n'est pas supposé varier en vol stabilisé.",
@@ -110,11 +110,11 @@
       "sous_chapitre": "M17A.1",
       "question": "Quelle différence essentielle sépare un ventilateur de bureau d'une hélice d'avion, bien qu'ils partagent le même principe physique de base ?",
       "options": [
-        "Le ventilateur utilise un profil de pale radicalement différent, ce qui change le principe physique en jeu",
         "L'hélice doit produire une force suffisante pour vaincre la traînée de tout l'avion et le faire accélérer, pas seulement déplacer de l'air localement",
+        "Le ventilateur utilise un profil de pale radicalement différent, ce qui change le principe physique en jeu",
         "Le sens de rotation du ventilateur est toujours opposé à celui d'une hélice d'avion"
       ],
-      "bonne": 1,
+      "bonne": 0,
       "explication": "Un ventilateur et une hélice d'avion partagent le même principe physique de base (des pales profilées en rotation) : ce n'est donc pas le profil qui change fondamentalement entre les deux. La vraie différence est que l'hélice doit produire une force suffisante pour vaincre la traînée de tout l'appareil et le faire accélérer, alors qu'un ventilateur, posé sur une table fixe, ne fait que déplacer de l'air localement sans vaincre ni son propre poids ni celui d'autre chose. Le sens de rotation n'est pas non plus un critère de comparaison pertinent entre les deux objets.",
       "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
     },
@@ -123,11 +123,11 @@
       "sous_chapitre": "M17A.2",
       "question": "Quelle force tend à arracher une pale d'hélice de son moyeu, radialement vers l'extérieur ?",
       "options": [
-        "La force centrifuge",
+        "La traînée de rotation",
         "La torsion aérodynamique",
-        "La traînée de rotation"
+        "La force centrifuge"
       ],
-      "bonne": 0,
+      "bonne": 2,
       "explication": "La force centrifuge est la seule des trois à agir radialement, en tirant la pale vers l'extérieur, loin du moyeu — comme un seau d'eau qu'on fait tourner au bout du bras. La torsion aérodynamique (détaillée plus loin dans cette même fiche) fait pivoter la pale sur son axe longitudinal, sans l'arracher radialement. La traînée de rotation, elle, s'oppose au mouvement de rotation lui-même : elle agit dans le sens contraire de la rotation, ce qui n'est pas non plus une force radiale.",
       "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
     },
@@ -136,8 +136,8 @@
       "sous_chapitre": "M17A.2",
       "question": "Comment la force centrifuge subie par une pale évolue-t-elle avec le régime de rotation ?",
       "options": [
-        "Elle reste constante, quel que soit le régime",
         "Elle augmente, mais moins vite que le régime lui-même",
+        "Elle reste constante, quel que soit le régime",
         "Elle augmente très rapidement avec le régime, selon le carré de la vitesse de rotation"
       ],
       "bonne": 2,
@@ -150,8 +150,8 @@
       "question": "Quel rôle joue la puissance délivrée par le moteur vis-à-vis de la traînée de rotation d'une hélice en vol ?",
       "options": [
         "Elle la compense en permanence pour maintenir le régime souhaité",
-        "Elle n'a aucune interaction avec cette traînée, qui ne dépend que de la vitesse de l'avion",
-        "Elle l'annule totalement et définitivement dès que l'hélice atteint son régime de croisière"
+        "Elle l'annule totalement et définitivement dès que l'hélice atteint son régime de croisière",
+        "Elle n'a aucune interaction avec cette traînée, qui ne dépend que de la vitesse de l'avion"
       ],
       "bonne": 0,
       "explication": "Le moteur doit vaincre en permanence la traînée de rotation pour maintenir le régime de l'hélice ; réduire fortement la puissance fait baisser le régime sous l'effet de cette résistance non compensée. Cette traînée ne dépend donc pas seulement de la vitesse de l'avion : c'est aussi une résistance au mouvement de rotation lui-même, ressentie par exemple quand on essaie de faire tourner une hélice à la main, moteur coupé, au sol. Et elle ne disparaît jamais totalement, à aucun régime : le moteur continue de la compenser en continu, même en croisière stabilisée.",
@@ -162,11 +162,11 @@
       "sous_chapitre": "M17A.2",
       "question": "Sur une pale d'hélice, à quoi correspond la force de flexion décrite dans la fiche ?",
       "options": [
-        "À la tendance de la pale à se courber sous l'effet de la traction, qui ne s'applique pas au même endroit que la fixation au moyeu",
+        "À la tendance de la pale à se rétracter légèrement vers le moyeu à haut régime",
         "À la tendance de la pale à se dilater sous l'effet de l'échauffement du moteur",
-        "À la tendance de la pale à se rétracter légèrement vers le moyeu à haut régime"
+        "À la tendance de la pale à se courber sous l'effet de la traction, qui ne s'applique pas au même endroit que la fixation au moyeu"
       ],
-      "bonne": 0,
+      "bonne": 2,
       "explication": "La flexion vient du fait que la force de traction générée par la pale ne s'applique pas au point de fixation au moyeu : elle pousse l'ensemble de la pale vers l'avant, ce qui la courbe, un peu comme un plongeoir sous le poids d'une personne. Il ne s'agit ni d'un effet thermique (dilatation), ni d'un mouvement de rétraction vers le moyeu — c'est justement la force centrifuge, une autre force, qui tire la pale vers l'extérieur.",
       "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
     },
@@ -176,8 +176,8 @@
       "question": "Qu'est-ce que le couple de torsion aérodynamique, tel que décrit pour une pale d'hélice ?",
       "options": [
         "Un moment produit par la répartition des pressions de l'air, qui tend à faire pivoter la pale vers un pas plus gros",
-        "La déformation permanente d'une pale après un impact avec un corps étranger",
-        "L'usure progressive du revêtement de bord d'attaque sous l'effet du sable et de la poussière"
+        "L'usure progressive du revêtement de bord d'attaque sous l'effet du sable et de la poussière",
+        "La déformation permanente d'une pale après un impact avec un corps étranger"
       ],
       "bonne": 0,
       "explication": "Le couple de torsion aérodynamique est un moment (une force qui tend à faire tourner un objet autour d'un axe), produit par la répartition des pressions de l'air sur le profil de la pale, dont le centre se situe légèrement en avant de l'axe de calage : il pousse la pale vers un pas plus gros. Le couple de torsion centrifuge, un autre effet distinct lié à la seule rotation de la pale, est détaillé plus haut dans cette même fiche. Ce n'est ni une déformation liée à un impact, ni une usure par abrasion : ces deux phénomènes relèvent plutôt de l'entretien et de l'inspection (fiche M17A.12), pas des forces en vol normal.",
@@ -188,11 +188,11 @@
       "sous_chapitre": "M17A.2",
       "question": "Quel est l'effet du couple de torsion centrifuge sur une pale d'hélice à pas variable ?",
       "options": [
+        "Il annule exactement le couple de torsion aérodynamique, à n'importe quel régime",
         "Il tend à faire pivoter la pale vers un pas plus fin, et c'est en général le plus intense des deux couples de torsion",
-        "Il tend à faire pivoter la pale vers un pas plus gros, tout comme le couple de torsion aérodynamique",
-        "Il annule exactement le couple de torsion aérodynamique, à n'importe quel régime"
+        "Il tend à faire pivoter la pale vers un pas plus gros, tout comme le couple de torsion aérodynamique"
       ],
-      "bonne": 0,
+      "bonne": 1,
       "explication": "Le couple de torsion centrifuge pousse la pale vers un pas plus fin, et il est en général le plus intense des deux moments de torsion, croissant avec le régime à peu près comme la force centrifuge elle-même. C'est l'inverse du couple de torsion aérodynamique, qui pousse vers un pas plus gros : les deux ne s'annulent pas exactement l'un l'autre à tout régime. C'est justement pour compenser ce déséquilibre que les systèmes de régulation (fiches M17A.7 et M17A.8) doivent agir activement.",
       "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
     },
@@ -201,9 +201,9 @@
       "sous_chapitre": "M17A.2",
       "question": "D'où viennent les charges cycliques qui peuvent faire vibrer une pale à chaque tour ?",
       "options": [
-        "De la seule action du vent atmosphérique sur la pale, indépendamment de sa rotation",
+        "Du frottement de la pale contre l'air ambiant, quelle que soit sa position en rotation",
         "Du poids de la pale qui agit différemment selon sa position, et d'un air rencontré jamais parfaitement uniforme",
-        "Du frottement de la pale contre l'air ambiant, quelle que soit sa position en rotation"
+        "De la seule action du vent atmosphérique sur la pale, indépendamment de sa rotation"
       ],
       "bonne": 1,
       "explication": "Deux sources principales expliquent ces charges cycliques : le poids de la pale, qui agit tantôt vers le haut, tantôt vers le bas selon sa position en rotation, et l'air rencontré, jamais parfaitement uniforme (sillage du fuselage, turbulence, irrégularités du moteur). Le vent atmosphérique n'est pas la cause en jeu ici, et le frottement de l'air seul, sans tenir compte de la position de la pale, n'explique pas non plus ce caractère cyclique : ce qui varie à chaque tour, c'est bien la position de la pale elle-même.",
@@ -214,11 +214,11 @@
       "sous_chapitre": "M17A.2",
       "question": "Quel est le principal effet, à long terme, d'une vibration répétée sur le matériau d'une pale d'hélice ?",
       "options": [
-        "Une fatigue progressive, pouvant conduire à une fissure",
         "Une déformation progressive du vrillage, sans effet sur la solidité de la pale",
-        "Une amélioration progressive de sa résistance, à mesure qu'il est sollicité"
+        "Une amélioration progressive de sa résistance, à mesure qu'il est sollicité",
+        "Une fatigue progressive, pouvant conduire à une fissure"
       ],
-      "bonne": 0,
+      "bonne": 2,
       "explication": "Une vibration répétée, même modeste, use progressivement le matériau par un phénomène de fatigue, qui peut conduire à l'apparition d'une fissure — c'est justement ce que recherche l'inspection régulière décrite en fiche M17A.12. Le vrillage, lui, est une caractéristique géométrique fixée à la fabrication (fiche M17A.3) : la vibration ne le déforme pas progressivement sans laisser d'autre trace. Et le matériau ne se renforce pas non plus avec les sollicitations répétées : c'est l'inverse qui se produit, une usure progressive plutôt qu'une amélioration.",
       "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
     },
@@ -227,8 +227,8 @@
       "sous_chapitre": "M17A.2",
       "question": "Que faut-il faire concernant les plages de régime à éviter en utilisation prolongée signalées par certains constructeurs moteur ?",
       "options": [
-        "Les ignorer, puisqu'elles ne concernent que les très anciens moteurs",
         "Appliquer une valeur générale valable pour tous les moteurs à pistons",
+        "Les ignorer, puisqu'elles ne concernent que les très anciens moteurs",
         "Vérifier la documentation du constructeur propre à l'installation moteur-hélice concernée"
       ],
       "bonne": 2,
@@ -253,11 +253,11 @@
       "sous_chapitre": "M17A.3",
       "question": "Qu'est-ce qui limite, en pratique, la possibilité d'agrandir indéfiniment le diamètre d'une hélice ?",
       "options": [
+        "Le nombre de pales déjà montées sur l'hélice, qui fixe à lui seul un diamètre maximal indépassable",
         "Uniquement le poids total que peut supporter le moteur",
-        "La garde au sol disponible et la vitesse atteinte par l'extrémité des pales",
-        "Le nombre de pales déjà montées sur l'hélice, qui fixe à lui seul un diamètre maximal indépassable"
+        "La garde au sol disponible et la vitesse atteinte par l'extrémité des pales"
       ],
-      "bonne": 1,
+      "bonne": 2,
       "explication": "Deux limites entrent en jeu : la garde au sol (la pale ne doit jamais risquer de toucher le sol) et la vitesse atteinte par l'extrémité de la pale, qui cumule vitesse de rotation et vitesse d'avancement — au-delà d'un certain seuil propre à chaque installation, l'efficacité se dégrade et le bruit augmente. Le poids supporté par le moteur n'est pas le facteur cité. Et le nombre de pales n'impose pas, à lui seul, un diamètre maximal : c'est plutôt l'inverse qui se produit en pratique — un diamètre déjà limité par la vitesse d'extrémité pousse parfois à ajouter des pales plutôt qu'à agrandir encore le disque, comme le détaille la fiche M17A.5.",
       "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
     },
@@ -266,11 +266,11 @@
       "sous_chapitre": "M17A.3",
       "question": "Comment est défini l'angle de calage d'une pale d'hélice ?",
       "options": [
-        "L'angle entre la corde de la pale et le plan de rotation de l'hélice",
         "L'angle entre le bord d'attaque et le bord de fuite, mesuré au moyeu",
+        "L'angle entre la corde de la pale et le plan de rotation de l'hélice",
         "L'angle entre l'axe du moteur et la trajectoire de vol de l'avion"
       ],
-      "bonne": 0,
+      "bonne": 1,
       "explication": "L'angle de calage est l'angle formé entre la corde de la pale (la ligne droite reliant bord d'attaque et bord de fuite) et le plan de rotation de l'hélice. Le bord d'attaque et le bord de fuite ne forment pas un angle entre eux : ils délimitent la corde. Et l'angle entre l'axe moteur et la trajectoire de vol est une notion étrangère à la géométrie de la pale elle-même.",
       "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
     },
@@ -284,7 +284,7 @@
         "À l'absence totale de résistance ressentie en pédalant, quel que soit le braquet"
       ],
       "bonne": 1,
-      "explication": "Un gros pas se compare à un grand braquet à vélo : on avance davantage à chaque tour de pédale, mais il faut plus de force pour lancer le mouvement. Le petit braquet, à l'inverse, correspond à un petit pas — facile à faire tourner, mais qui avance peu par tour. La troisième option ne correspond à aucun des deux cas : il y a toujours une résistance liée au pas choisi.",
+      "explication": "Un gros pas se compare à un grand braquet à vélo : on avance davantage à chaque tour de pédale, mais il faut plus de force pour lancer le mouvement. Le petit braquet, à l'inverse, correspond à un petit pas — facile à faire tourner, mais qui avance peu par tour. L'idée d'une absence totale de résistance, quel que soit le braquet, ne correspond à aucun des deux cas : il y a toujours une résistance liée au pas choisi.",
       "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
     },
     {
@@ -292,11 +292,11 @@
       "sous_chapitre": "M17A.3",
       "question": "Quelle est la différence entre le pas géométrique et le pas effectif d'une hélice ?",
       "options": [
-        "Le pas géométrique est mesuré au sol, le pas effectif uniquement en vol de croisière",
+        "Le pas géométrique est l'avancement théorique par tour sans glissement, le pas effectif est l'avancement réellement parcouru par l'avion",
         "Le pas géométrique dépend de l'angle de calage seul, le pas effectif dépend uniquement du régime moteur",
-        "Le pas géométrique est l'avancement théorique par tour sans glissement, le pas effectif est l'avancement réellement parcouru par l'avion"
+        "Le pas géométrique est mesuré au sol, le pas effectif uniquement en vol de croisière"
       ],
-      "bonne": 2,
+      "bonne": 0,
       "explication": "Le pas géométrique est une valeur purement calculée à partir de l'angle de calage et du rayon considéré, comme si l'hélice « vissait » dans un solide sans glissement. Le pas effectif est la distance réellement parcourue par l'avion pour un tour d'hélice, toujours inférieure au pas géométrique à cause du glissement dans l'air. Aucun des deux n'est défini par un lieu de mesure (sol/croisière) ni par le seul régime moteur.",
       "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
     },
@@ -306,8 +306,8 @@
       "question": "Pourquoi le pas effectif est-il toujours inférieur au pas géométrique ?",
       "options": [
         "Parce que l'air, contrairement au bois, cède sous la pale plutôt que de la retenir fermement",
-        "Parce que le moteur ne peut jamais atteindre son régime maximal en vol",
-        "Parce que l'angle de calage diminue automatiquement à chaque tour d'hélice"
+        "Parce que l'angle de calage diminue automatiquement à chaque tour d'hélice",
+        "Parce que le moteur ne peut jamais atteindre son régime maximal en vol"
       ],
       "bonne": 0,
       "explication": "Le glissement existe parce que l'air n'est pas un solide : il cède sous la pale plutôt que de la retenir fermement comme le ferait du bois, contrairement à l'image de la vis. Ce n'est pas une question de régime moteur maximal, ni d'un changement automatique de l'angle de calage à chaque tour — l'angle de calage reste ce qu'il est réglé, à un instant donné.",
@@ -318,11 +318,11 @@
       "sous_chapitre": "M17A.3",
       "question": "Dans quelle condition de vol le glissement d'une hélice est-il le plus important ?",
       "options": [
-        "Au point fixe, avion immobile au sol malgré la rotation de l'hélice",
         "En croisière stabilisée à vitesse constante",
+        "Au point fixe, avion immobile au sol malgré la rotation de l'hélice",
         "Le glissement est rigoureusement identique dans toutes les conditions de vol"
       ],
-      "bonne": 0,
+      "bonne": 1,
       "explication": "Au point fixe, l'avion n'avance pas du tout malgré la rotation de l'hélice : l'écart entre pas géométrique et pas effectif est donc maximal. En croisière stabilisée, cet écart est nettement plus réduit, l'avion progressant alors à une vitesse stabilisée, plus proche des conditions pour lesquelles l'hélice est optimisée. Le glissement n'est donc pas identique dans toutes les conditions de vol.",
       "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
     },
@@ -331,11 +331,11 @@
       "sous_chapitre": "M17A.3",
       "question": "Pourquoi une pale d'hélice est-elle vrillée (l'angle de calage varie du pied vers l'extrémité) plutôt que plate sur toute sa longueur ?",
       "options": [
-        "Pour réduire la masse totale de la pale et limiter la force centrifuge",
         "Parce qu'un point proche du moyeu et un point proche de l'extrémité se déplacent à des vitesses de rotation très différentes",
-        "Pour faciliter la fabrication en usine, quelle que soit la vitesse de rotation"
+        "Pour faciliter la fabrication en usine, quelle que soit la vitesse de rotation",
+        "Pour réduire la masse totale de la pale et limiter la force centrifuge"
       ],
-      "bonne": 1,
+      "bonne": 0,
       "explication": "Pour un même régime, un point proche du moyeu parcourt un petit cercle (vitesse faible), un point proche de l'extrémité un cercle bien plus grand dans le même temps (vitesse élevée) — comme les chevaux d'un manège. Le vrillage adapte l'angle de calage le long de la pale pour conserver une orientation efficace face à l'air réellement rencontré à chaque rayon. Ce n'est ni un choix de masse, ni une facilité de fabrication : une pale plate serait au contraire plus simple à produire, mais inefficace sur une grande partie de sa longueur.",
       "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
     },
@@ -344,11 +344,11 @@
       "sous_chapitre": "M17A.3",
       "question": "Pourquoi un gros pas convient-il bien à un vol de croisière stabilisé ?",
       "options": [
-        "Parce qu'il permet d'avancer davantage par tour d'hélice à un régime moteur qui reste modéré",
+        "Parce qu'il supprime le glissement de l'hélice, rendant le pas effectif égal au pas géométrique",
         "Parce qu'il empêche totalement le moteur de dépasser son régime de ralenti",
-        "Parce qu'il supprime le glissement de l'hélice, rendant le pas effectif égal au pas géométrique"
+        "Parce qu'il permet d'avancer davantage par tour d'hélice à un régime moteur qui reste modéré"
       ],
-      "bonne": 0,
+      "bonne": 2,
       "explication": "Un gros pas fait avancer l'avion davantage à chaque tour d'hélice, ce qui permet de maintenir un régime moteur modéré tout en conservant une bonne vitesse d'avancement en croisière — l'inverse du petit pas, mieux adapté au décollage. Il n'empêche pas le moteur de dépasser le ralenti : un moteur en croisière tourne bien au-delà du régime de ralenti. Et il ne supprime jamais le glissement, présent à un degré ou un autre dans toutes les conditions de vol (voir M17A.3).",
       "source": "Notions générales d'aérodynamique et de mécanique du vol — hélice"
     },
@@ -357,11 +357,11 @@
       "sous_chapitre": "M17A.4",
       "question": "Comment une pale d'hélice en bois est-elle généralement construite ?",
       "options": [
+        "Moulée à partir de sciure de bois compressée",
         "Taillée dans une seule pièce massive de bois",
-        "Laminée, c'est-à-dire construite en collant plusieurs fines couches de bois superposées",
-        "Moulée à partir de sciure de bois compressée"
+        "Laminée, c'est-à-dire construite en collant plusieurs fines couches de bois superposées"
       ],
-      "bonne": 1,
+      "bonne": 2,
       "explication": "Une pale en bois est laminée : plusieurs fines couches de bois sont collées ensemble, un peu comme du contreplaqué — une méthode de fabrication bien précise, dont l'intérêt est développé juste après dans cette même fiche. Une pièce massive taillée d'un seul bloc ne bénéficie pas de cette construction en couches. Le moulage à partir de sciure compressée, de son côté, ne correspond à aucune méthode de fabrication de pale en bois.",
       "source": "Notions générales de construction aéronautique — matériaux de pale d'hélice"
     },
@@ -371,10 +371,10 @@
       "question": "Quel est l'intérêt principal de laminer une pale en bois plutôt que de la tailler dans une seule pièce massive ?",
       "options": [
         "Cela rend la pale totalement insensible à l'humidité",
-        "Cela répartit les défauts naturels du bois sur plusieurs couches, limitant les risques de fissure et de déformation",
-        "Cela permet de supprimer entièrement le revêtement de bord d'attaque"
+        "Cela permet de supprimer entièrement le revêtement de bord d'attaque",
+        "Cela répartit les défauts naturels du bois sur plusieurs couches, limitant les risques de fissure et de déformation"
       ],
-      "bonne": 1,
+      "bonne": 2,
       "explication": "Le laminage répartit les défauts naturels du bois (nœuds, fil irrégulier) sur plusieurs couches indépendantes, ce qui limite fortement les risques de fissure et de déformation dans le temps. Une pale en bois, même laminée, reste sensible à l'humidité — c'est justement une de ses limites citées dans la fiche. Et le laminage ne dispense pas du revêtement protecteur de bord d'attaque, toujours nécessaire contre l'érosion et les impacts.",
       "source": "Notions générales de construction aéronautique — matériaux de pale d'hélice"
     },
@@ -383,11 +383,11 @@
       "sous_chapitre": "M17A.4",
       "question": "Quelle est la principale vulnérabilité d'une pale métallique, différente de celle d'une pale en bois ?",
       "options": [
-        "Le gonflement et le décollement des couches internes, comme sur une pale en bois exposée à l'eau",
         "La corrosion, si le traitement de surface protecteur est endommagé ou négligé",
-        "L'absorption excessive des vibrations, qui fragilise la structure"
+        "L'absorption excessive des vibrations, qui fragilise la structure",
+        "Le gonflement et le décollement des couches internes, comme sur une pale en bois exposée à l'eau"
       ],
-      "bonne": 1,
+      "bonne": 0,
       "explication": "Une pale métallique ne réagit pas à l'humidité comme le bois : elle ne gonfle pas et ne se délamine pas. Sa vulnérabilité est ailleurs, et l'humidité y joue justement un rôle central : la corrosion, si le traitement de surface protecteur est endommagé ou négligé. L'absorption des vibrations n'est pas un facteur de fragilisation dans la fiche : c'est au contraire une qualité recherchée, plus marquée sur le bois que sur le métal.",
       "source": "Notions générales de construction aéronautique — matériaux de pale d'hélice"
     },
@@ -396,11 +396,11 @@
       "sous_chapitre": "M17A.4",
       "question": "Pourquoi une simple entaille sur le bord d'attaque d'une pale métallique est-elle prise au sérieux, même si elle paraît minime ?",
       "options": [
-        "Parce qu'elle peut amorcer une fissure de fatigue sous l'effet des charges cycliques subies en vol",
         "Parce qu'elle réduit immédiatement et fortement le diamètre effectif de l'hélice",
+        "Parce qu'elle peut amorcer une fissure de fatigue sous l'effet des charges cycliques subies en vol",
         "Parce qu'elle rend automatiquement la pale plus lourde"
       ],
-      "bonne": 0,
+      "bonne": 1,
       "explication": "Même une entaille minime peut amorcer une fissure de fatigue sous l'effet des charges cycliques vues en M17A.2 — c'est pour cette raison que l'inspection visuelle régulière porte une attention particulière à toute marque sur le bord d'attaque. Une entaille ne change pas le diamètre de l'hélice de façon mesurable, et elle n'alourdit pas la pale : au contraire, elle enlève une infime quantité de matière.",
       "source": "Notions générales de construction aéronautique — matériaux de pale d'hélice"
     },
@@ -409,11 +409,11 @@
       "sous_chapitre": "M17A.4",
       "question": "Comment est construite une pale composite ?",
       "options": [
-        "Des fibres de renfort noyées dans une résine, souvent autour d'une âme intérieure légère",
         "Un bloc unique de résine coulée, sans aucun renfort interne",
+        "Des fibres de renfort noyées dans une résine, souvent autour d'une âme intérieure légère",
         "Une plaque de métal recouverte d'une fine couche de peinture composite"
       ],
-      "bonne": 0,
+      "bonne": 1,
       "explication": "Une pale composite associe des fibres de renfort (verre, carbone ou kevlar selon les modèles) noyées dans une résine, souvent autour d'une âme intérieure légère qui donne du volume sans ajouter de masse excessive. Ce n'est ni un simple bloc de résine sans renfort, ni du métal recouvert de peinture — ces descriptions ne correspondent à aucune pale composite réelle.",
       "source": "Notions générales de construction aéronautique — matériaux de pale d'hélice"
     },
@@ -422,11 +422,11 @@
       "sous_chapitre": "M17A.4",
       "question": "Quel avantage principal le composite offre-t-il par rapport au bois et au métal ?",
       "options": [
-        "Un coût de fabrication systématiquement inférieur à celui du bois",
         "Le meilleur rapport résistance/masse des trois familles, avec une excellente tenue à la fatigue",
-        "Une insensibilité totale à tout type de dommage, y compris interne"
+        "Une insensibilité totale à tout type de dommage, y compris interne",
+        "Un coût de fabrication systématiquement inférieur à celui du bois"
       ],
-      "bonne": 1,
+      "bonne": 0,
       "explication": "Le composite offre le meilleur rapport résistance/masse des trois familles et une excellente tenue à la fatigue, en plus de permettre des formes aérodynamiques complexes. Rien n'indique un coût systématiquement inférieur au bois. Et le composite n'est pas insensible à tout dommage : une autre particularité de ce matériau, développée juste après dans cette fiche, nuance cette impression de robustesse totale.",
       "source": "Notions générales de construction aéronautique — matériaux de pale d'hélice"
     },
@@ -435,11 +435,11 @@
       "sous_chapitre": "M17A.4",
       "question": "Quelle particularité du composite, propre à ce matériau, est à retenir pour l'inspection (développée en fiche M17A.12) ?",
       "options": [
-        "Un dommage interne (délaminage) peut rester invisible lors d'une simple inspection visuelle de surface",
+        "Le composite change de couleur de façon visible dès qu'un dommage interne apparaît",
         "Le composite ne nécessite aucune inspection, contrairement au bois et au métal",
-        "Le composite change de couleur de façon visible dès qu'un dommage interne apparaît"
+        "Un dommage interne (délaminage) peut rester invisible lors d'une simple inspection visuelle de surface"
       ],
-      "bonne": 0,
+      "bonne": 2,
       "explication": "Un délaminage (décollement entre les couches internes) peut rester invisible en surface, ce qui motive des méthodes de contrôle plus poussées que la seule observation à l'œil nu. Le composite nécessite bien une inspection, comme les deux autres matériaux — ce n'est pas une exception. Et rien n'indique un changement de couleur automatique et visible en cas de dommage interne.",
       "source": "Notions générales de construction aéronautique — matériaux de pale d'hélice"
     },
@@ -462,8 +462,8 @@
       "question": "Sur une hélice à pas variable, quelle exigence supplémentaire le système de retenue du pied de pale doit-il satisfaire, en plus de résister à la force centrifuge ?",
       "options": [
         "Permettre à la pale de pivoter librement sur son axe longitudinal",
-        "Permettre à la pale de se déplacer légèrement en traînée, dans le plan de rotation",
-        "Permettre à la pale de se libérer automatiquement du moyeu en cas de dépassement du régime maximal autorisé"
+        "Permettre à la pale de se libérer automatiquement du moyeu en cas de dépassement du régime maximal autorisé",
+        "Permettre à la pale de se déplacer légèrement en traînée, dans le plan de rotation"
       ],
       "bonne": 0,
       "explication": "Sur une hélice à pas variable, le système de retenue doit à la fois tenir fermement la pale radialement (contre la force centrifuge) et la laisser pivoter librement sur son propre axe longitudinal, pour permettre le changement d'angle de calage — un axe distinct du plan de rotation lui-même. Une pale d'hélice ne dispose pas d'une articulation de traînée dans ce plan, contrairement à une pale de rotor d'hélicoptère articulé : elle reste rigidement solidaire du moyeu dans cette direction. Et aucune pale n'est conçue pour se libérer automatiquement du moyeu : dépasser le régime maximal autorisé est une situation à éviter absolument, pas un mécanisme de sécurité prévu par la conception.",
@@ -487,12 +487,12 @@
       "sous_chapitre": "M17A.5",
       "question": "En reprenant l'analogie du vélo, à quoi correspond une hélice à pas fixe ?",
       "options": [
+        "À un vélo sans pédales, qui n'avance que grâce à la gravité",
         "À un vélo à plusieurs vitesses, toujours dans le rapport idéal",
-        "À un vélo à un seul braquet, simple mais jamais dans le rapport idéal pour toutes les situations",
-        "À un vélo sans pédales, qui n'avance que grâce à la gravité"
+        "À un vélo à un seul braquet, simple mais jamais dans le rapport idéal pour toutes les situations"
       ],
-      "bonne": 1,
-      "explication": "Une hélice à pas fixe est comparée à un vélo à un seul braquet : simple et léger, mais qui n'est jamais dans le rapport idéal à la fois pour démarrer et pour rouler vite. C'est au contraire l'hélice à pas variable qui se compare à un vélo à plusieurs vitesses. La troisième option ne correspond à aucune des deux analogies utilisées dans la fiche.",
+      "bonne": 2,
+      "explication": "Une hélice à pas fixe est comparée à un vélo à un seul braquet : simple et léger, mais qui n'est jamais dans le rapport idéal à la fois pour démarrer et pour rouler vite. C'est au contraire l'hélice à pas variable qui se compare à un vélo à plusieurs vitesses. L'analogie du vélo sans pédales, qui n'avance que grâce à la gravité, ne correspond à aucune des deux analogies utilisées dans la fiche.",
       "source": "Notions générales de construction aéronautique — hélice à pas variable"
     },
     {
@@ -513,11 +513,11 @@
       "sous_chapitre": "M17A.5",
       "question": "Quel rôle secondaire, en plus de son rôle principal, le spinner peut-il jouer sur beaucoup d'installations à pas variable ?",
       "options": [
-        "Il offre souvent l'espace nécessaire pour loger de petites masses d'équilibrage",
         "Il assure à lui seul l'étanchéité du mécanisme de changement de pas",
-        "Il sert de seul point de fixation de l'hélice sur l'arbre moteur"
+        "Il sert de seul point de fixation de l'hélice sur l'arbre moteur",
+        "Il offre souvent l'espace nécessaire pour loger de petites masses d'équilibrage"
       ],
-      "bonne": 0,
+      "bonne": 2,
       "explication": "Sur beaucoup d'installations à pas variable, le spinner offre l'espace nécessaire pour loger de petites masses d'équilibrage, ajoutées lors d'une opération d'équilibrage dynamique (fiche M17A.13) pour réduire les vibrations résiduelles. Il n'assure pas à lui seul l'étanchéité du mécanisme de changement de pas, qui dépend du système de retenue et de ses propres joints. Et il ne sert pas de point de fixation de l'hélice sur l'arbre moteur : c'est le moyeu qui joue ce rôle.",
       "source": "Notions générales de construction aéronautique — hélice à pas variable"
     },
@@ -527,8 +527,8 @@
       "question": "Quel est l'inconvénient d'ajouter des pales supplémentaires à une hélice, évoqué dans la fiche ?",
       "options": [
         "Chaque pale ajoutée pénalise légèrement le rendement des pales voisines, dont une partie traverse le sillage de la pale précédente",
-        "Chaque pale ajoutée réduit automatiquement la force centrifuge globale de l'hélice",
-        "Chaque pale ajoutée supprime totalement le besoin d'un moyeu résistant"
+        "Chaque pale ajoutée supprime totalement le besoin d'un moyeu résistant",
+        "Chaque pale ajoutée réduit automatiquement la force centrifuge globale de l'hélice"
       ],
       "bonne": 0,
       "explication": "Chaque pale ajoutée augmente la masse totale (et donc la force centrifuge globale, pas l'inverse) et le coût, et pénalise légèrement le rendement aérodynamique des pales voisines, chacune traversant en partie le sillage déjà perturbé par la pale qui la précède. Le besoin d'un moyeu résistant, lui, ne fait qu'augmenter avec le nombre de pales, puisqu'il doit transmettre les forces cumulées de toutes les pales.",
@@ -539,11 +539,11 @@
       "sous_chapitre": "M17A.5",
       "question": "Quel est le rôle principal du cône avant (spinner) d'une hélice tractive ?",
       "options": [
-        "Réduire la traînée que produirait un moyeu nu, aux formes anguleuses, exposé directement au vent relatif",
+        "Réguler automatiquement le régime moteur à la place du régulateur d'hélice",
         "Assurer à lui seul la fixation des pales sur le moyeu",
-        "Réguler automatiquement le régime moteur à la place du régulateur d'hélice"
+        "Réduire la traînée que produirait un moyeu nu, aux formes anguleuses, exposé directement au vent relatif"
       ],
-      "bonne": 0,
+      "bonne": 2,
       "explication": "Le spinner réduit la traînée que produirait un moyeu nu et anguleux, et canalise souvent l'air de refroidissement vers le moteur sur beaucoup d'installations. Il n'intervient pas dans la fixation des pales elle-même, qui repose sur le système de retenue du pied de pale décrit plus haut dans la fiche. Et la régulation du régime relève du régulateur d'hélice, un système entièrement différent, présenté à partir de la fiche M17A.8.",
       "source": "Notions générales de construction aéronautique — hélice à pas variable"
     },
@@ -552,11 +552,11 @@
       "sous_chapitre": "M17A.5",
       "question": "Quelle hélice équipe le plus souvent un avion d'entraînement simple, léger et peu puissant ?",
       "options": [
-        "Une hélice tripale ou quadripale à pas variable, en composite",
         "Une hélice bipale à pas fixe, en bois ou en métal",
-        "Une hélice bipale à pas variable, mais sans aucun système de régulation automatique"
+        "Une hélice bipale à pas variable, mais sans aucun système de régulation automatique",
+        "Une hélice tripale ou quadripale à pas variable, en composite"
       ],
-      "bonne": 1,
+      "bonne": 0,
       "explication": "Un avion d'entraînement simple est le plus souvent équipé d'une hélice bipale à pas fixe, en bois ou en métal — la solution la plus simple pour un usage peu exigeant. L'hélice tripale ou quadripale à pas variable équipe plutôt les avions plus performants dits « complexes ». Et une hélice à pas variable sans aucune régulation automatique ne correspond pas à une installation courante : le pas variable est presque toujours associé à un régulateur, comme vu plus haut dans cette fiche.",
       "source": "Notions générales de construction aéronautique — hélice à pas variable"
     },
@@ -579,8 +579,8 @@
       "question": "Comment fonctionne une commande de pas mécanique ?",
       "options": [
         "Un système de câbles ou de biellettes relie directement un levier de cockpit au mécanisme de calage, sans calcul automatique",
-        "Une pression d'huile pousse un piston relié au pied de chaque pale",
-        "Un moteur électrique entraîne un engrenage qui fait pivoter la pale"
+        "Un moteur électrique entraîne un engrenage qui fait pivoter la pale",
+        "Une pression d'huile pousse un piston relié au pied de chaque pale"
       ],
       "bonne": 0,
       "explication": "La commande mécanique relie directement, par câbles ou biellettes, un levier de cockpit au mécanisme de calage : la position du levier détermine l'angle obtenu, sans automatisme. La pression d'huile contre un piston décrit la commande hydraulique, et le moteur électrique piloté par calculateur décrit la commande électrique — deux familles distinctes.",
@@ -591,9 +591,9 @@
       "sous_chapitre": "M17A.6",
       "question": "Quelle est la famille de commande de pas la plus répandue sur les avions légers à moteur à pistons ?",
       "options": [
-        "La commande mécanique",
+        "La commande électrique",
         "La commande hydraulique",
-        "La commande électrique"
+        "La commande mécanique"
       ],
       "bonne": 1,
       "explication": "La commande hydraulique est de très loin la plus répandue sur ce type d'appareil : une pression d'huile pousse un piston relié au pied de chaque pale, contre des forces de rappel comme les contrepoids. La commande mécanique reste rare sur les installations modernes, et la commande électrique, plus récente, demeure minoritaire sur la flotte légère existante.",
@@ -605,10 +605,10 @@
       "question": "D'où vient généralement la pression d'huile utilisée par une commande de pas hydraulique ?",
       "options": [
         "D'un compresseur d'air dédié, indépendant du moteur",
-        "De l'huile du moteur lui-même, ou parfois d'un circuit hydraulique dédié",
-        "D'une batterie électrique qui alimente une pompe hydraulique de secours uniquement"
+        "D'une batterie électrique qui alimente une pompe hydraulique de secours uniquement",
+        "De l'huile du moteur lui-même, ou parfois d'un circuit hydraulique dédié"
       ],
-      "bonne": 1,
+      "bonne": 2,
       "explication": "La pression utilisée est le plus souvent celle de l'huile du moteur lui-même, parfois celle d'un circuit hydraulique dédié à l'hélice. Aucun compresseur d'air n'est en jeu ici (ce ne serait pas une commande hydraulique mais pneumatique, une famille non présentée dans ce module), et l'huile ne provient pas d'une batterie électrique.",
       "source": "Notions générales de construction aéronautique — commande de pas d'hélice"
     },
@@ -630,11 +630,11 @@
       "sous_chapitre": "M17A.6",
       "question": "En quoi la commande hydraulique se rapproche-t-elle d'un mitigeur thermostatique plutôt que d'un simple robinet manuel ?",
       "options": [
-        "Elle régule automatiquement par un mécanisme physique interne, sans intervention continue du pilote ni calcul électronique",
         "Elle nécessite un réglage manuel permanent du pilote, comme un robinet classique",
-        "Elle dépend entièrement d'un calculateur électronique pour fonctionner"
+        "Elle dépend entièrement d'un calculateur électronique pour fonctionner",
+        "Elle régule automatiquement par un mécanisme physique interne, sans intervention continue du pilote ni calcul électronique"
       ],
-      "bonne": 0,
+      "bonne": 2,
       "explication": "Comme un mitigeur thermostatique, la commande hydraulique régule automatiquement (l'équilibre entre pression d'huile et contrepoids) par un mécanisme purement physique, sans réglage manuel continu ni calcul électronique — c'est justement ce qui la distingue de la commande mécanique (réglage manuel constant) et de la commande électrique (pilotée par un calculateur).",
       "source": "Notions générales de construction aéronautique — commande de pas d'hélice"
     },
@@ -657,8 +657,8 @@
       "question": "Pourquoi un pas variable ne peut-il pas rester mécaniquement passif, livré à lui-même ?",
       "options": [
         "Parce que les deux couples de torsion vus en M17A.2 agissent en permanence sur la pale, simultanément et en sens opposés",
-        "Parce que le vrillage de la pale change continuellement en cours de vol",
-        "Parce que la corrosion menace en permanence les pales métalliques"
+        "Parce que la corrosion menace en permanence les pales métalliques",
+        "Parce que le vrillage de la pale change continuellement en cours de vol"
       ],
       "bonne": 0,
       "explication": "La pale reste sollicitée en permanence par deux couples de torsion opposés (rappel M17A.2) : le couple de torsion centrifuge, qui pousse vers un pas plus fin, et le couple de torsion aérodynamique, qui pousse vers un pas plus gros — sans mécanisme de maintien actif, rien ne garderait la pale au réglage voulu. Le vrillage est une caractéristique géométrique fixée à la fabrication, qui ne change pas en vol (M17A.3) ; la corrosion est une vulnérabilité du métal (M17A.4), sans rapport avec ce point précis.",
@@ -669,11 +669,11 @@
       "sous_chapitre": "M17A.7",
       "question": "Comment le piston du mécanisme hydraulique de calage est-il relié aux pales ?",
       "options": [
-        "Par un système de manivelles ou de crémaillères qui transforme son déplacement en rotation des pales",
         "Par un simple aimant qui attire la pale vers un pas plus fin",
+        "Par un système de manivelles ou de crémaillères qui transforme son déplacement en rotation des pales",
         "Les pales ne sont pas reliées au piston : elles pivotent uniquement sous l'effet de la force centrifuge"
       ],
-      "bonne": 0,
+      "bonne": 1,
       "explication": "Le piston est relié mécaniquement au pied de chaque pale par un système de manivelles ou de crémaillères, dont les détails précis varient selon les constructeurs : son déplacement se traduit directement par une rotation des pales sur leur axe de calage. Il n'y a pas d'aimant en jeu, et les pales ne pivotent pas seules sous le seul effet de la force centrifuge — c'est justement l'équilibre entre huile et contrepoids qui détermine l'angle.",
       "source": "Notions générales de construction aéronautique — mécanisme hydraulique de calage"
     },
@@ -682,11 +682,11 @@
       "sous_chapitre": "M17A.7",
       "question": "Quel principe physique, déjà vu en M17A.2, explique pourquoi les contrepoids peuvent créer un couple de rappel sans consommer d'énergie supplémentaire ?",
       "options": [
-        "La force centrifuge, déjà présente dès que l'hélice tourne",
         "La traînée aérodynamique de rotation",
-        "Le couple de torsion aérodynamique du profil de la pale"
+        "Le couple de torsion aérodynamique du profil de la pale",
+        "La force centrifuge, déjà présente dès que l'hélice tourne"
       ],
-      "bonne": 0,
+      "bonne": 2,
       "explication": "Les contrepoids exploitent la force centrifuge, déjà présente dès que l'hélice tourne (rappel M17A.2 : elle pousse toute masse en rotation à s'éloigner de l'axe) : positionnés intelligemment, ils créent un couple de rappel sans avoir besoin d'une source d'énergie dédiée. La traînée de rotation est une autre force, qui s'oppose à la rotation elle-même, pas au calage. Le couple de torsion aérodynamique existe bien lui aussi (M17A.2), mais il agit sur la pale elle-même par la répartition des pressions de l'air sur son profil, pas par des masses ajoutées exploitant la force centrifuge comme le font les contrepoids.",
       "source": "Notions générales de construction aéronautique — mécanisme hydraulique de calage"
     },
@@ -695,8 +695,8 @@
       "sous_chapitre": "M17A.7",
       "question": "Que se passe-t-il en cas de perte totale de pression d'huile de calage, d'après la fiche ?",
       "options": [
-        "La pale dérive systématiquement vers un pas fin, sur toutes les installations sans exception",
         "La pale dérive systématiquement vers le drapeau, sur toutes les installations sans exception",
+        "La pale dérive systématiquement vers un pas fin, sur toutes les installations sans exception",
         "Le comportement dépend de la conception retenue par le constructeur, à vérifier dans la documentation de chaque installation"
       ],
       "bonne": 2,
@@ -709,8 +709,8 @@
       "question": "Qu'est-ce que la mise en drapeau d'une pale d'hélice ?",
       "options": [
         "Un angle de calage très important, presque parallèle à l'axe de vol, qui minimise la surface présentée à l'écoulement d'air",
-        "Un angle de calage négatif, utilisé au sol pour aider au freinage",
-        "Un angle de calage qui maximise la traction produite par l'hélice"
+        "Un angle de calage qui maximise la traction produite par l'hélice",
+        "Un angle de calage négatif, utilisé au sol pour aider au freinage"
       ],
       "bonne": 0,
       "explication": "La mise en drapeau amène la pale à un angle très important, presque parallèle à l'axe de vol, ce qui minimise la surface présentée à l'écoulement d'air et réduit fortement la traînée. L'angle négatif utilisé au sol pour freiner, c'est le pas reverse — l'inverse conceptuellement. Et la mise en drapeau ne cherche jamais à maximiser la traction : c'est justement le contraire, minimiser la résistance d'une hélice qui ne produit plus de traction utile (moteur en panne).",
@@ -721,9 +721,9 @@
       "sous_chapitre": "M17A.7",
       "question": "Comment la fiche nomme-t-elle le phénomène de rotation d'une hélice sous le seul effet du vent relatif, moteur non entraîné ?",
       "options": [
-        "Le synchrophasage",
+        "Le drapeau",
         "Le moulinet",
-        "Le drapeau"
+        "Le synchrophasage"
       ],
       "bonne": 1,
       "explication": "Ce phénomène de rotation forcée par le vent, quand le moteur n'entraîne plus l'hélice, porte le nom de moulinet. Le synchrophasage est une notion totalement différente, liée à la synchronisation de plusieurs hélices (fiche M17A.10). Le drapeau est la position de calage qui, justement, cherche à limiter ce moulinet, pas le nom du phénomène lui-même.",
@@ -748,8 +748,8 @@
       "question": "À quoi sert le pas reverse ?",
       "options": [
         "À produire une poussée vers l'arrière au sol, après l'atterrissage, pour aider au freinage",
-        "À réduire la traînée d'une hélice en panne en vol",
-        "À synchroniser le régime de plusieurs hélices entre elles"
+        "À synchroniser le régime de plusieurs hélices entre elles",
+        "À réduire la traînée d'une hélice en panne en vol"
       ],
       "bonne": 0,
       "explication": "Le pas reverse inverse le sens de la traction produite, utilisé au sol après l'atterrissage pour aider au freinage en complément des freins de roues — jamais en vol. Réduire la traînée d'une hélice en panne, c'est le rôle de la mise en drapeau, une fonction différente. Et la synchronisation entre hélices est le sujet de la fiche M17A.10, sans rapport avec le pas reverse.",
@@ -761,10 +761,10 @@
       "question": "Sur un avion bimoteur dont un moteur tombe en panne, que fait l'hélice de l'autre moteur, resté en fonctionnement ?",
       "options": [
         "Elle est automatiquement mise en drapeau elle aussi, par sécurité",
-        "Elle continue d'être réglée normalement par son propre mécanisme hydraulique et son propre régulateur, indépendamment du moteur en panne",
-        "Elle passe automatiquement en pas reverse pour compenser la perte de puissance"
+        "Elle passe automatiquement en pas reverse pour compenser la perte de puissance",
+        "Elle continue d'être réglée normalement par son propre mécanisme hydraulique et son propre régulateur, indépendamment du moteur en panne"
       ],
-      "bonne": 1,
+      "bonne": 2,
       "explication": "L'hélice du moteur resté en fonctionnement continue d'être réglée par son propre mécanisme hydraulique et son propre régulateur, de façon indépendante — les deux hélices d'un bimoteur fonctionnent séparément, sauf synchrophaseur activé (M17A.10). Elle n'est pas mise en drapeau (elle produit encore de la traction utile), et le pas reverse est réservé au sol après l'atterrissage, jamais utilisé en vol pour compenser une panne.",
       "source": "Notions générales de construction aéronautique — mécanisme hydraulique de calage"
     },
@@ -787,8 +787,8 @@
       "question": "Que fait le régulateur si le régime réel de l'hélice dépasse la consigne choisie par le pilote ?",
       "options": [
         "Il réduit la pression d'huile, ce qui laisse les contrepoids l'emporter vers un pas plus gros et freine le moteur",
-        "Il augmente la pression d'huile, ce qui ramène la pale vers un pas plus fin et accélère le moteur",
-        "Il coupe l'arrivée d'huile de calage jusqu'à ce que le moteur s'arrête"
+        "Il coupe l'arrivée d'huile de calage jusqu'à ce que le moteur s'arrête",
+        "Il augmente la pression d'huile, ce qui ramène la pale vers un pas plus fin et accélère le moteur"
       ],
       "bonne": 0,
       "explication": "Si le régime dépasse la consigne, le régulateur réduit la pression d'huile : les contrepoids l'emportent alors davantage et poussent la pale vers un pas plus gros, qui « mord » davantage dans l'air à chaque tour, freinant le moteur et ramenant le régime vers la consigne. L'option inverse (plus de pression, pas fin, accélération) décrit au contraire la réaction à un régime trop bas. Et le régulateur ne coupe jamais l'huile jusqu'à l'arrêt du moteur : il corrige en continu, sans viser un arrêt.",
@@ -812,11 +812,11 @@
       "sous_chapitre": "M17A.8",
       "question": "À quoi correspond le régime de consigne, choisi par le pilote, dans le mécanisme du régulateur ?",
       "options": [
+        "Au régime maximal autorisé par le constructeur, fixe et non réglable",
         "À la tension d'un ressort réglable, qui s'oppose à l'écartement des masselottes",
-        "À la pression d'huile maximale que le circuit peut délivrer",
-        "Au régime maximal autorisé par le constructeur, fixe et non réglable"
+        "À la pression d'huile maximale que le circuit peut délivrer"
       ],
-      "bonne": 0,
+      "bonne": 1,
       "explication": "Le régime de consigne correspond à la tension d'un ressort réglable par le pilote, qui s'oppose à l'écartement des masselottes sous l'effet de la force centrifuge : l'équilibre entre les deux détermine si le régulateur ouvre ou ferme le passage vers plus de pression d'huile. Ce n'est ni la pression maximale du circuit, ni le régime maximal autorisé (une limite fixe, indépendante du réglage du pilote, vue en M17A.9).",
       "source": "Notions générales de construction aéronautique — régulateur d'hélice"
     },
@@ -839,8 +839,8 @@
       "question": "Si un avion en montée rencontre un fort courant ascendant qui perturbe momentanément le régime, que fait le régulateur ?",
       "options": [
         "Il détecte l'écart de régime dès qu'il apparaît et ajuste la pression d'huile pour ramener le régime vers la consigne",
-        "Il attend que le pilote signale manuellement le changement de conditions avant d'agir",
-        "Il coupe temporairement la régulation, le temps que les conditions de vol se stabilisent"
+        "Il coupe temporairement la régulation, le temps que les conditions de vol se stabilisent",
+        "Il attend que le pilote signale manuellement le changement de conditions avant d'agir"
       ],
       "bonne": 0,
       "explication": "Le régulateur détecte l'écart dès qu'il apparaît et corrige aussitôt, sans attendre d'intervention du pilote — c'est tout l'intérêt d'une correction automatique et continue. Il n'attend donc aucun signal manuel, et il ne coupe jamais la régulation : c'est justement l'inverse, une correction permanente, qui caractérise son fonctionnement.",
@@ -865,8 +865,8 @@
       "question": "Comment le pilote choisit-il le régime de consigne d'une hélice à vitesse constante ?",
       "options": [
         "Via une commande dédiée, distincte de la manette des gaz",
-        "En agissant directement sur les masselottes du régulateur, accessibles depuis le cockpit",
-        "Le régime de consigne est fixé une fois pour toutes en usine, non modifiable par le pilote"
+        "Le régime de consigne est fixé une fois pour toutes en usine, non modifiable par le pilote",
+        "En agissant directement sur les masselottes du régulateur, accessibles depuis le cockpit"
       ],
       "bonne": 0,
       "explication": "Le régime de consigne est choisi par le pilote via une commande dédiée, distincte de la manette des gaz qui règle la puissance délivrée par le moteur — les deux commandes sont indépendantes, chacune avec son propre rôle. Les masselottes ne sont pas accessibles depuis le cockpit : elles font partie du mécanisme interne du régulateur, entraîné par l'hélice elle-même. Et le régime de consigne n'est pas figé en usine : le pilote peut l'ajuster en vol selon la phase de vol.",
@@ -877,11 +877,11 @@
       "sous_chapitre": "M17A.8",
       "question": "Qu'est-ce qui distingue une hélice à pas fixe d'une hélice à vitesse constante, du point de vue de la réaction à la manette des gaz ?",
       "options": [
-        "Sur le pas fixe, pousser les gaz fait directement monter le régime, faute de régulateur pour l'en empêcher",
         "Sur le pas fixe, pousser les gaz n'a aucun effet, le régime étant toujours figé",
+        "Sur le pas fixe, pousser les gaz fait directement monter le régime, faute de régulateur pour l'en empêcher",
         "Il n'y a aucune différence : les deux réagissent de façon identique à la manette des gaz"
       ],
-      "bonne": 0,
+      "bonne": 1,
       "explication": "Sans régulateur, une hélice à pas fixe voit son régime monter directement avec la puissance ajoutée à la manette des gaz — rien n'absorbe cette puissance supplémentaire en ajustant le pas. Le régime n'est donc pas figé sur un pas fixe : il varie librement avec la puissance, contrairement à une hélice à vitesse constante où le régulateur le maintient stable.",
       "source": "Notions générales de construction aéronautique — régulateur d'hélice"
     },
@@ -917,8 +917,8 @@
       "question": "Comment le dispositif de survitesse se distingue-t-il du régulateur normal ?",
       "options": [
         "Il est conçu et installé séparément, pour rester capable d'agir même si le régulateur normal a complètement cessé de fonctionner",
-        "Il remplace entièrement le régulateur normal dès le décollage",
-        "Il fonctionne uniquement quand le moteur est à l'arrêt, au sol"
+        "Il fonctionne uniquement quand le moteur est à l'arrêt, au sol",
+        "Il remplace entièrement le régulateur normal dès le décollage"
       ],
       "bonne": 0,
       "explication": "Le dispositif de survitesse est conçu et installé séparément du régulateur normal, précisément pour rester opérationnel même si ce dernier tombe en panne — c'est le principe même d'une protection indépendante. Il ne remplace jamais le régulateur normal au quotidien, et il agit en vol, pas seulement moteur à l'arrêt au sol.",
@@ -929,11 +929,11 @@
       "sous_chapitre": "M17A.9",
       "question": "Quand le dispositif de survitesse intervient-il ?",
       "options": [
+        "Uniquement lors de la mise en drapeau volontaire d'une hélice",
         "En permanence, en parallèle du régulateur normal",
-        "Uniquement si le régime dépasse le seuil pour lequel il est réglé, propre à chaque installation",
-        "Uniquement lors de la mise en drapeau volontaire d'une hélice"
+        "Uniquement si le régime dépasse le seuil pour lequel il est réglé, propre à chaque installation"
       ],
-      "bonne": 1,
+      "bonne": 2,
       "explication": "Le dispositif de survitesse reste inactif tant que le régime est dans la plage normale ; il n'intervient que si le régime dépasse le seuil pour lequel il est réglé, un seuil propre à chaque installation et fixé par le constructeur. Il n'agit donc pas en permanence (ce serait redondant avec le régulateur normal), et il n'a aucun rapport direct avec la mise en drapeau volontaire, une action différente vue en M17A.7.",
       "source": "Notions générales de construction aéronautique — protection en survitesse"
     },
@@ -942,11 +942,11 @@
       "sous_chapitre": "M17A.9",
       "question": "Le dispositif de survitesse fonctionne-t-il selon le même principe que le régulateur normal (mesurer, comparer, corriger) ?",
       "options": [
+        "Non, il ne mesure jamais le régime : il se contente de couper le moteur au hasard par sécurité",
         "Oui, mais il régule en continu la température plutôt que le régime",
-        "Oui pour le principe (une pièce sensible au régime comparée à une référence), mais installé séparément pour rester actif même si le régulateur normal a cessé de fonctionner",
-        "Non, il ne mesure jamais le régime : il se contente de couper le moteur au hasard par sécurité"
+        "Oui pour le principe (une pièce sensible au régime comparée à une référence), mais installé séparément pour rester actif même si le régulateur normal a cessé de fonctionner"
       ],
-      "bonne": 1,
+      "bonne": 2,
       "explication": "Le dispositif de survitesse reprend le même principe de base que le régulateur normal — une pièce sensible au régime, comparée à une valeur de référence — mais il est conçu et installé séparément, précisément pour rester capable d'agir même si le régulateur normal a complètement cessé de fonctionner. Il ne régule aucune température (c'est le régime qui est en jeu ici, pas un four), et il mesure bien le régime en continu : rien n'est laissé au hasard dans son déclenchement.",
       "source": "Notions générales de construction aéronautique — protection en survitesse"
     },
@@ -968,11 +968,11 @@
       "sous_chapitre": "M17A.9",
       "question": "Un pilote qui respecte les limites de régime publiées pour son appareil devrait-il, en usage normal, solliciter le dispositif de survitesse ?",
       "options": [
-        "Oui, à chaque vol, car c'est un réglage de fonctionnement courant",
         "Non, il reste une protection de dernier recours, comparable à une soupape de sécurité qui ne doit jamais s'activer en usage normal",
-        "Oui, mais uniquement lors de la phase de décollage"
+        "Oui, mais uniquement lors de la phase de décollage",
+        "Oui, à chaque vol, car c'est un réglage de fonctionnement courant"
       ],
-      "bonne": 1,
+      "bonne": 0,
       "explication": "La fiche est explicite : un pilote respectant les limites publiées ne devrait, en usage normal, jamais solliciter le dispositif de survitesse, comparé à une soupape de sécurité qui ne doit jamais s'activer dans un usage normal et correctement entretenu. Ce n'est donc ni un réglage de fonctionnement courant, ni une action attendue systématiquement au décollage.",
       "source": "Notions générales de construction aéronautique — protection en survitesse"
     },
@@ -981,11 +981,11 @@
       "sous_chapitre": "M17A.9",
       "question": "Que doit-on faire après qu'un régime de survitesse a été constaté ou seulement suspecté, même si le dispositif de survitesse a bien fonctionné ?",
       "options": [
-        "Une inspection spécifique de l'hélice, conformément aux instructions du constructeur, avant de la considérer comme apte à un nouveau vol",
         "Rien de particulier : le fonctionnement correct du dispositif de survitesse suffit à garantir qu'aucun dommage n'a eu lieu",
-        "Remplacer systématiquement le régulateur normal, même s'il n'est pour rien dans l'incident"
+        "Remplacer systématiquement le régulateur normal, même s'il n'est pour rien dans l'incident",
+        "Une inspection spécifique de l'hélice, conformément aux instructions du constructeur, avant de la considérer comme apte à un nouveau vol"
       ],
-      "bonne": 0,
+      "bonne": 2,
       "explication": "Même si le dispositif de survitesse a rempli son rôle, l'hélice a pu être sollicitée au-delà de ce pour quoi elle est habituellement conçue, ne serait-ce que brièvement : une inspection spécifique, conforme aux instructions du constructeur de l'hélice, est requise avant de la considérer comme apte à un nouveau vol. Un dispositif de survitesse qui s'est déclenché correctement limite les dégâts, il n'en garantit pas l'absence. Et rien ne justifie de remplacer systématiquement le régulateur normal, qui n'est pas nécessairement en cause dans l'épisode de survitesse.",
       "source": "Notions générales de construction aéronautique — protection en survitesse"
     },
@@ -1008,8 +1008,8 @@
       "question": "Qu'est-ce que le phénomène de battements évoqué dans la fiche ?",
       "options": [
         "Un effet acoustique où le volume perçu monte et descend de façon cyclique, produit par la combinaison de deux sons de fréquences très proches mais non identiques",
-        "Une vibration violente et ponctuelle causée par un choc sur une pale",
-        "Le bruit produit par la mise en drapeau d'une hélice"
+        "Le bruit produit par la mise en drapeau d'une hélice",
+        "Une vibration violente et ponctuelle causée par un choc sur une pale"
       ],
       "bonne": 0,
       "explication": "Les battements sont un effet acoustique bien connu : deux sons de fréquences très proches mais non identiques se combinent, faisant monter et descendre le volume perçu de façon cyclique, comme deux métronomes presque synchronisés. Ce n'est ni une vibration ponctuelle causée par un choc, ni un bruit spécifique à la mise en drapeau, une opération sans rapport direct avec ce phénomène.",
@@ -1020,11 +1020,11 @@
       "sous_chapitre": "M17A.10",
       "question": "En quoi consiste la synchronisation manuelle, la première réponse au problème des battements présentée dans la fiche ?",
       "options": [
-        "Le pilote ajuste finement le régime de consigne d'un moteur, en écoutant les battements, jusqu'à les faire disparaître",
         "Un calculateur électronique ajuste automatiquement et en continu le régime de chaque moteur",
+        "Le pilote ajuste finement le régime de consigne d'un moteur, en écoutant les battements, jusqu'à les faire disparaître",
         "Les deux moteurs sont mécaniquement reliés par un arbre commun qui impose le même régime"
       ],
-      "bonne": 0,
+      "bonne": 1,
       "explication": "La synchronisation manuelle consiste, pour le pilote, à ajuster finement le régime de consigne d'un des moteurs en écoutant les battements, jusqu'à les faire disparaître ou les ralentir fortement — une technique ancienne et entièrement manuelle. Le calculateur électronique automatique décrit le synchrophaseur, une réponse différente et plus moderne. Aucun arbre mécanique commun n'existe entre les moteurs d'un avion multimoteur classique.",
       "source": "Notions générales de construction aéronautique — synchronisation d'hélices"
     },
@@ -1033,11 +1033,11 @@
       "sous_chapitre": "M17A.10",
       "question": "Qu'est-ce qu'un synchrophaseur ?",
       "options": [
-        "Un dispositif électronique qui compare en continu le régime des moteurs entre eux et agit automatiquement pour réduire l'écart",
         "Un bouton qui coupe simultanément tous les moteurs en cas d'urgence",
-        "Un capteur qui mesure uniquement la température des gaz d'échappement"
+        "Un capteur qui mesure uniquement la température des gaz d'échappement",
+        "Un dispositif électronique qui compare en continu le régime des moteurs entre eux et agit automatiquement pour réduire l'écart"
       ],
-      "bonne": 0,
+      "bonne": 2,
       "explication": "Le synchrophaseur compare en continu le régime des moteurs entre eux, un moteur étant désigné comme référence, et ajuste automatiquement le régime des autres via leurs régulateurs respectifs. Il n'a aucun rapport avec une coupure moteur d'urgence, ni avec une mesure de température des gaz d'échappement.",
       "source": "Notions générales de construction aéronautique — synchronisation d'hélices"
     },
@@ -1046,11 +1046,11 @@
       "sous_chapitre": "M17A.10",
       "question": "Qu'est-ce qui distingue un synchrophaseur avancé d'un simple synchroniseur de régime ?",
       "options": [
+        "Il remplace complètement les régulateurs individuels de chaque moteur",
         "Il ajuste aussi la phase, c'est-à-dire la position angulaire relative des pales entre les moteurs, pas seulement leur régime",
-        "Il fonctionne uniquement au sol, jamais en vol",
-        "Il remplace complètement les régulateurs individuels de chaque moteur"
+        "Il fonctionne uniquement au sol, jamais en vol"
       ],
-      "bonne": 0,
+      "bonne": 1,
       "explication": "C'est précisément l'ajustement de la phase — la position angulaire relative des pales, pas seulement l'égalité de régime — qui donne son nom au synchrophaseur et le distingue d'un simple synchroniseur de régime. Il fonctionne en vol, pas seulement au sol, et il ne remplace jamais les régulateurs individuels : il ajuste seulement la consigne qui leur est transmise.",
       "source": "Notions générales de construction aéronautique — synchronisation d'hélices"
     },
@@ -1060,8 +1060,8 @@
       "question": "Si le synchrophaseur d'un avion qui en est équipé restait inopérant ou désactivé, quelles conséquences cela aurait-il ?",
       "options": [
         "Essentiellement un inconfort acoustique et vibratoire, chaque moteur restant par ailleurs correctement piloté",
-        "Les moteurs s'arrêteraient l'un après l'autre, faute de synchronisation",
-        "Le régime de chaque moteur deviendrait totalement incontrôlable"
+        "Le régime de chaque moteur deviendrait totalement incontrôlable",
+        "Les moteurs s'arrêteraient l'un après l'autre, faute de synchronisation"
       ],
       "bonne": 0,
       "explication": "Un synchrophaseur inopérant ou désactivé n'empêche pas les moteurs de fonctionner correctement : c'est essentiellement le confort acoustique et vibratoire qui en pâtit. Les moteurs ne s'arrêtent pas pour autant, et le régime de chacun reste maîtrisé — il continue de dépendre d'un autre organe, présenté dans une fiche précédente, qui n'a aucun lien de fonctionnement avec le synchrophaseur.",
@@ -1072,9 +1072,9 @@
       "sous_chapitre": "M17A.10",
       "question": "Le synchrophaseur remplace-t-il le rôle du régulateur de chaque moteur ?",
       "options": [
-        "Oui, il prend entièrement le contrôle de la pression d'huile de calage",
+        "Oui, mais uniquement pour le moteur désigné comme maître",
         "Non, il ajuste seulement légèrement la consigne transmise à chaque régulateur esclave, sans remplacer leur fonction",
-        "Oui, mais uniquement pour le moteur désigné comme maître"
+        "Oui, il prend entièrement le contrôle de la pression d'huile de calage"
       ],
       "bonne": 1,
       "explication": "Le synchrophaseur ne remplace aucun régulateur : il se contente d'ajuster légèrement la consigne transmise à chaque régulateur esclave, pour qu'elle colle à celle du moteur maître. Chaque régulateur continue, de son côté, à gérer lui-même la pression d'huile de calage — y compris celui du moteur maître, qui n'est pas davantage remplacé que les autres.",
@@ -1085,11 +1085,11 @@
       "sous_chapitre": "M17A.10",
       "question": "Au-delà de la gêne sonore, pourquoi les battements entre hélices désynchronisées sont-ils un problème à prendre au sérieux sur la durée ?",
       "options": [
-        "Ils traduisent une vibration de la cellule de l'avion, qui use plus vite certains équipements si elle se répète en permanence",
         "Ils réduisent la portance produite par les ailes, quelle que soit la phase de vol",
-        "Ils empêchent tout réglage ultérieur du régime par les régulateurs concernés"
+        "Ils empêchent tout réglage ultérieur du régime par les régulateurs concernés",
+        "Ils traduisent une vibration de la cellule de l'avion, qui use plus vite certains équipements si elle se répète en permanence"
       ],
-      "bonne": 0,
+      "bonne": 2,
       "explication": "Le phénomène de battements traduit une vibration de la cellule de l'avion, qui use plus vite certains équipements avec le temps si elle se répète en permanence — un enjeu de durabilité, pas seulement de confort immédiat. Les battements n'ont aucun effet sur la portance des ailes, un phénomène aérodynamique distinct ; et ils n'empêchent en rien chaque régulateur de continuer à remplir son propre rôle, indépendamment l'un de l'autre.",
       "source": "Notions générales de construction aéronautique — synchronisation d'hélices"
     },
@@ -1099,8 +1099,8 @@
       "question": "Pourquoi une accumulation de givre sur une seule pale d'une hélice pose-t-elle un problème d'équilibrage ?",
       "options": [
         "Parce que le givre se dépose rarement de façon identique sur chaque pale, rendant certaines plus lourdes que d'autres",
-        "Parce que le givre rend automatiquement toutes les pales plus légères de façon identique",
-        "Parce que le givre n'a aucun effet sur la masse d'une pale, seulement sur sa couleur"
+        "Parce que le givre n'a aucun effet sur la masse d'une pale, seulement sur sa couleur",
+        "Parce que le givre rend automatiquement toutes les pales plus légères de façon identique"
       ],
       "bonne": 0,
       "explication": "Le givre ne se dépose jamais de façon parfaitement identique sur chaque pale : une pale plus givrée qu'une autre devient plus lourde qu'elle, ce qui introduit un déséquilibre de masse entre les pales — le type de problème que l'équilibrage (fiche M17A.13) cherche justement à éviter. Le givre ajoute de la masse, il ne rend jamais les pales plus légères, et son effet dépasse largement une simple question d'aspect visuel.",
@@ -1111,11 +1111,11 @@
       "sous_chapitre": "M17A.11",
       "question": "Pourquoi une pale givrée produit-elle moins de traction pour un régime donné ?",
       "options": [
-        "Parce que le givre augmente directement le régime du moteur",
         "Parce que le givre modifie le profil de la pale, dont la forme est responsable de la production de traction",
-        "Parce que le givre empêche toute rotation de l'hélice"
+        "Parce que le givre empêche toute rotation de l'hélice",
+        "Parce que le givre augmente directement le régime du moteur"
       ],
-      "bonne": 1,
+      "bonne": 0,
       "explication": "Le givre modifie le profil de la pale, or c'est justement ce profil qui est responsable de la production de traction (rappel M17A.1) : une forme dégradée produit moins de traction pour le même régime. Le givre n'a pas d'effet direct sur le régime du moteur lui-même, et il ne bloque pas la rotation de l'hélice tant qu'il ne s'agit que d'une couche de givre sur les pales.",
       "source": "Notions générales de construction aéronautique — dégivrage d'hélice"
     },
@@ -1137,11 +1137,11 @@
       "sous_chapitre": "M17A.11",
       "question": "Pourquoi un système de dégivrage électrothermique chauffe-t-il selon un cycle plutôt qu'en continu ?",
       "options": [
-        "Faire fondre juste la fine couche de glace en contact avec la pale suffit à rompre l'adhérence ; la force centrifuge projette ensuite le reste du givre",
         "Le chauffage continu endommagerait immédiatement et systématiquement la structure de la pale",
-        "Un chauffage cyclique est obligatoire par réglementation, quel que soit le principe physique en jeu"
+        "Un chauffage cyclique est obligatoire par réglementation, quel que soit le principe physique en jeu",
+        "Faire fondre juste la fine couche de glace en contact avec la pale suffit à rompre l'adhérence ; la force centrifuge projette ensuite le reste du givre"
       ],
-      "bonne": 0,
+      "bonne": 2,
       "explication": "Chauffer juste assez pour rompre l'adhérence entre le givre et la pale suffit : la force centrifuge (rappel M17A.2) projette ensuite le reste du givre déjà décollé, sans qu'il soit nécessaire de faire fondre toute la couche accumulée — un chauffage continu consommerait beaucoup plus d'énergie pour un résultat comparable. Un chauffage continu ne présente pas de risque particulier pour la structure de la pale elle-même : c'est une question d'efficacité énergétique face à la consommation électrique disponible à bord, pas une contrainte de sécurité structurelle imposée de l'extérieur.",
       "source": "Notions générales de construction aéronautique — dégivrage d'hélice"
     },
@@ -1150,11 +1150,11 @@
       "sous_chapitre": "M17A.11",
       "question": "Comment un système antigivrage par fluide achemine-t-il le liquide vers chaque pale ?",
       "options": [
-        "Chaque pale embarque son propre réservoir individuel de fluide, indépendant des autres",
         "Un anneau répartiteur central distribue le fluide, puis la force centrifuge l'étale le long du bord d'attaque de chaque pale",
+        "Chaque pale embarque son propre réservoir individuel de fluide, indépendant des autres",
         "Le fluide est directement mélangé au carburant du moteur avant la combustion"
       ],
-      "bonne": 1,
+      "bonne": 0,
       "explication": "Le fluide est pompé vers un anneau répartiteur au centre de l'hélice, acheminé le long du bord d'attaque de chaque pale, puis étalé sur toute la longueur par la force centrifuge. Il n'y a pas de réservoir individuel par pale : un seul réservoir central alimente l'ensemble via le répartiteur. Et le fluide antigivrage n'a aucun rapport avec le carburant du moteur : ce sont deux circuits entièrement distincts.",
       "source": "Notions générales de construction aéronautique — dégivrage d'hélice"
     },
@@ -1163,8 +1163,8 @@
       "sous_chapitre": "M17A.11",
       "question": "Quel est le principal facteur limitant l'autonomie d'un système antigivrage par fluide, contrairement à un système électrothermique ?",
       "options": [
-        "La température extérieure, qui doit obligatoirement rester positive",
         "La vitesse de rotation de l'hélice, qui doit rester inférieure à un seuil fixe",
+        "La température extérieure, qui doit obligatoirement rester positive",
         "La quantité de liquide disponible dans le réservoir, qui s'épuise avec l'usage"
       ],
       "bonne": 2,
@@ -1176,11 +1176,11 @@
       "sous_chapitre": "M17A.11",
       "question": "Qu'ont en commun le dégivrage électrothermique et l'antigivrage par fluide, malgré leurs principes physiques différents ?",
       "options": [
-        "Ils poursuivent le même objectif : empêcher une accumulation dangereuse de givre sur les pales",
+        "Ils sont tous deux obligatoires sur toute hélice à pas variable",
         "Ils utilisent tous deux exactement la même source d'énergie",
-        "Ils sont tous deux obligatoires sur toute hélice à pas variable"
+        "Ils poursuivent le même objectif : empêcher une accumulation dangereuse de givre sur les pales"
       ],
-      "bonne": 0,
+      "bonne": 2,
       "explication": "Les deux familles poursuivent le même objectif — empêcher le givre de s'accumuler dangereusement sur les pales — mais chacune y parvient par un moyen physique qui lui est propre, détaillé plus haut dans cette même fiche. Elles ne partagent donc pas la même source d'énergie, et rien n'indique qu'un système de dégivrage soit obligatoire sur toute hélice à pas variable : beaucoup d'installations légères n'en sont pas équipées, selon leur domaine d'utilisation prévu.",
       "source": "Notions générales de construction aéronautique — dégivrage d'hélice"
     },
@@ -1189,11 +1189,11 @@
       "sous_chapitre": "M17A.11",
       "question": "Au-delà de la perte d'efficacité et du déséquilibre de masse, quel troisième risque le givre fait-il peser sur un avion ?",
       "options": [
+        "Le givre rend impossible toute mise en drapeau de l'hélice",
         "Le givre peut inverser le sens de rotation de l'hélice",
-        "Un morceau de glace qui se détache brutalement et de façon asymétrique peut provoquer une vibration soudaine ou endommager d'autres parties de l'avion",
-        "Le givre rend impossible toute mise en drapeau de l'hélice"
+        "Un morceau de glace qui se détache brutalement et de façon asymétrique peut provoquer une vibration soudaine ou endommager d'autres parties de l'avion"
       ],
-      "bonne": 1,
+      "bonne": 2,
       "explication": "Un détachement brutal et asymétrique de givre peut provoquer une vibration soudaine, ou projeter de la glace sur d'autres parties de l'avion (fuselage, empennage) qu'elle peut endommager. Le givre n'inverse jamais le sens de rotation de l'hélice, et il n'empêche pas non plus la mise en drapeau : cette fonction dépend du mécanisme de calage (fiche M17A.7), qui agit sur l'angle de la pale indépendamment de la présence de givre sur sa surface.",
       "source": "Notions générales de construction aéronautique — dégivrage d'hélice"
     },
@@ -1202,8 +1202,8 @@
       "sous_chapitre": "M17A.12",
       "question": "Pourquoi l'inspection régulière d'une hélice est-elle irremplaçable, plutôt qu'une simple précaution parmi d'autres ?",
       "options": [
-        "Parce que la réglementation l'exige, indépendamment de toute considération technique",
         "Parce que le pilote ressent immédiatement en vol le moindre dommage sur une pale",
+        "Parce que la réglementation l'exige, indépendamment de toute considération technique",
         "Parce qu'une grande partie des dommages qui la menacent ne perturbent en rien son fonctionnement apparent au moment où ils apparaissent"
       ],
       "bonne": 2,
@@ -1215,11 +1215,11 @@
       "sous_chapitre": "M17A.12",
       "question": "Pourquoi le bord d'attaque d'une pale demande-t-il une attention particulière lors de l'inspection ?",
       "options": [
-        "C'est la partie la plus directement exposée à l'air, à la pluie, au sable et aux corps étrangers projetés",
         "C'est la seule partie de la pale qui subit la force centrifuge",
+        "C'est la partie la plus directement exposée à l'air, à la pluie, au sable et aux corps étrangers projetés",
         "C'est la partie la plus éloignée de tout risque de corrosion"
       ],
-      "bonne": 0,
+      "bonne": 1,
       "explication": "Le bord d'attaque est la partie la plus directement exposée à l'air et aux éléments (pluie, sable, grêle, corps étrangers), ce qui en fait le siège privilégié de l'érosion et des entailles par impact. La force centrifuge s'applique à toute la pale, pas seulement au bord d'attaque (rappel M17A.2) ; et le bord d'attaque n'est en rien à l'abri de la corrosion, bien au contraire, puisqu'il est le plus exposé aux éléments qui la favorisent.",
       "source": "Notions générales de construction aéronautique — inspection d'hélice"
     },
@@ -1228,11 +1228,11 @@
       "sous_chapitre": "M17A.12",
       "question": "Pourquoi l'extrémité de la pale est-elle une zone particulièrement surveillée lors de l'inspection ?",
       "options": [
-        "Elle ne subit jamais aucune contrainte aérodynamique, contrairement au reste de la pale",
         "Elle se déplace à la vitesse la plus élevée de toute la pale, ce qui l'expose aux contraintes et chocs les plus importants",
+        "Elle ne subit jamais aucune contrainte aérodynamique, contrairement au reste de la pale",
         "Elle est la seule partie de la pale fabriquée dans un matériau différent du reste"
       ],
-      "bonne": 1,
+      "bonne": 0,
       "explication": "L'extrémité de la pale se déplace à la vitesse la plus élevée de toute sa longueur (rappel du vrillage et de la vitesse de rotation croissante vus en M17A.3), ce qui l'expose aux contraintes aérodynamiques et aux chocs à haute énergie les plus importants. Elle subit au contraire les contraintes les plus fortes, pas l'absence de contrainte, et rien n'indique qu'elle serait fabriquée dans un matériau différent du reste de la pale.",
       "source": "Notions générales de construction aéronautique — inspection d'hélice"
     },
@@ -1241,11 +1241,11 @@
       "sous_chapitre": "M17A.12",
       "question": "Pourquoi le pied de pale et sa zone de fixation méritent-ils une vigilance particulière lors de l'inspection ?",
       "options": [
-        "C'est la seule zone de la pale où le vrillage s'applique",
+        "C'est là que se concentre la force centrifuge de la pale entière, transmise au système de retenue",
         "C'est la seule zone protégée par un revêtement anti-érosion dédié",
-        "C'est là que se concentre la force centrifuge de la pale entière, transmise au système de retenue"
+        "C'est la seule zone de la pale où le vrillage s'applique"
       ],
-      "bonne": 2,
+      "bonne": 0,
       "explication": "Le pied de pale concentre la force centrifuge de la pale entière, transmise au système de retenue décrit en fiche M17A.5 : une fissure à cet endroit, bien que plus rare, aurait des conséquences particulièrement graves. Le revêtement anti-érosion protège en priorité le bord d'attaque (rappel M17A.4), pas spécifiquement le pied de pale ; et le vrillage s'applique sur toute la longueur de la pale (fiche M17A.3), pas seulement au pied.",
       "source": "Notions générales de construction aéronautique — inspection d'hélice"
     },
@@ -1267,11 +1267,11 @@
       "sous_chapitre": "M17A.12",
       "question": "Qu'est-ce que le tracking (suivi de trajectoire) d'une hélice ?",
       "options": [
+        "L'enregistrement du nombre total d'heures de vol effectuées par l'hélice",
         "Le suivi électronique en temps réel de la position du régulateur de survitesse",
-        "La vérification que toutes les pales suivent exactement le même plan de rotation, sans qu'aucune ne dévie par rapport aux autres",
-        "L'enregistrement du nombre total d'heures de vol effectuées par l'hélice"
+        "La vérification que toutes les pales suivent exactement le même plan de rotation, sans qu'aucune ne dévie par rapport aux autres"
       ],
-      "bonne": 1,
+      "bonne": 2,
       "explication": "Le tracking vérifie que toutes les pales suivent le même plan de rotation, sans qu'aucune ne dévie légèrement en avant ou en arrière par rapport aux autres — un peu comme vérifier que toutes les dents d'un peigne sont alignées. Il n'a aucun rapport avec le dispositif de survitesse (fiche M17A.9), ni avec un simple comptage d'heures de vol, qui est une donnée administrative distincte.",
       "source": "Notions générales de construction aéronautique — inspection d'hélice"
     },
@@ -1280,8 +1280,8 @@
       "sous_chapitre": "M17A.12",
       "question": "Quelle conséquence un défaut de tracking, même minime, peut-il produire en vol ?",
       "options": [
-        "Une augmentation permanente et irréversible du diamètre de l'hélice",
         "Une inversion immédiate et automatique du sens de rotation de l'hélice",
+        "Une augmentation permanente et irréversible du diamètre de l'hélice",
         "Une vibration caractéristique, en lien avec le problème d'équilibrage entre pales détaillé dans la fiche suivante"
       ],
       "bonne": 2,
@@ -1293,11 +1293,11 @@
       "sous_chapitre": "M17A.12",
       "question": "Sur quoi repose la décision de réparer ou de déposer une pale après la découverte d'une marque suspecte lors de l'inspection ?",
       "options": [
-        "Une procédure documentée, dans les limites précises fixées par le manuel du constructeur, jamais une appréciation visuelle isolée",
+        "Un vote collectif de l'ensemble de l'équipe de maintenance présente ce jour-là",
         "L'intuition et l'expérience personnelle du technicien, sans référence à un document particulier",
-        "Un vote collectif de l'ensemble de l'équipe de maintenance présente ce jour-là"
+        "Une procédure documentée, dans les limites précises fixées par le manuel du constructeur, jamais une appréciation visuelle isolée"
       ],
-      "bonne": 0,
+      "bonne": 2,
       "explication": "La décision ne repose jamais sur une appréciation visuelle isolée : elle suit une procédure documentée, dans les limites précises fixées par le manuel du constructeur — exactement le principe déjà détaillé pour une pale métallique en fiche M17A.4. Ni l'intuition personnelle d'un technicien, aussi expérimenté soit-il, ni un vote collectif informel ne remplacent cette procédure documentée.",
       "source": "Notions générales de construction aéronautique — inspection d'hélice"
     },
@@ -1307,10 +1307,10 @@
       "question": "En quoi le déséquilibre de masse entre pales, traité par l'équilibrage, est-il différent de la vibration décrite en fiche M17A.2 ?",
       "options": [
         "Il s'agit exactement du même phénomène physique, décrit deux fois avec des mots différents",
-        "Il vient d'une différence de masse entre pales (fabrication, réparation, givre inégal), alors que la vibration de M17A.2 vient de charges cycliques inévitables présentes même sur une hélice parfaitement homogène",
-        "Le déséquilibre de masse ne peut jamais se produire sur une hélice correctement fabriquée"
+        "Le déséquilibre de masse ne peut jamais se produire sur une hélice correctement fabriquée",
+        "Il vient d'une différence de masse entre pales (fabrication, réparation, givre inégal), alors que la vibration de M17A.2 vient de charges cycliques inévitables présentes même sur une hélice parfaitement homogène"
       ],
-      "bonne": 1,
+      "bonne": 2,
       "explication": "Le déséquilibre de masse entre pales — venant d'une différence de fabrication, d'une réparation asymétrique ou d'une accumulation de givre inégale — est une source de vibration distincte des charges cycliques inévitables (poids qui varie selon la position, air jamais parfaitement uniforme) déjà vues en M17A.2, présentes même sur une hélice parfaitement homogène. Ce ne sont donc pas deux descriptions du même phénomène, et un déséquilibre de masse peut tout à fait apparaître même sur une hélice bien fabriquée, par exemple après une réparation ou un givrage inégal.",
       "source": "Notions générales de construction aéronautique — équilibrage d'hélice"
     },
@@ -1320,10 +1320,10 @@
       "question": "Comment se manifeste un déséquilibre de masse lors d'un équilibrage statique ?",
       "options": [
         "L'hélice change progressivement de couleur au point le plus lourd",
-        "L'hélice se met à tourner de plus en plus vite, sans intervention extérieure",
-        "L'ensemble monté sur son axe ne reste pas immobile dans n'importe quelle position : le point le plus lourd descend toujours vers le bas"
+        "L'ensemble monté sur son axe ne reste pas immobile dans n'importe quelle position : le point le plus lourd descend toujours vers le bas",
+        "L'hélice se met à tourner de plus en plus vite, sans intervention extérieure"
       ],
-      "bonne": 2,
+      "bonne": 1,
       "explication": "Si une pale est plus lourde qu'une autre, l'ensemble ne reste pas immobile dans n'importe quelle position : le point le plus lourd finit toujours par descendre vers le bas sous l'effet de son propre poids, comme une roue de vélo mal équilibrée. Un déséquilibre statique ne fait jamais accélérer spontanément la rotation de l'hélice (aucune énergie n'est ajoutée par ce phénomène), et il ne change évidemment rien à la couleur de la pale.",
       "source": "Notions générales de construction aéronautique — équilibrage d'hélice"
     },
@@ -1332,11 +1332,11 @@
       "sous_chapitre": "M17A.13",
       "question": "Comment corrige-t-on un déséquilibre détecté lors d'un équilibrage statique ?",
       "options": [
+        "En augmentant la vitesse de rotation jusqu'à ce que le déséquilibre disparaisse de lui-même",
         "En ajoutant de petites masses du côté le plus léger, aux points prévus à cet effet par le constructeur",
-        "En retirant de la matière sur toutes les pales de façon identique",
-        "En augmentant la vitesse de rotation jusqu'à ce que le déséquilibre disparaisse de lui-même"
+        "En retirant de la matière sur toutes les pales de façon identique"
       ],
-      "bonne": 0,
+      "bonne": 1,
       "explication": "On ajoute de petites masses du côté le plus léger, aux points prévus à cet effet par le constructeur, jusqu'à obtenir un équilibre neutre à toute position. Retirer de la matière de façon identique sur toutes les pales ne corrigerait aucun déséquilibre relatif entre elles ; et augmenter la vitesse de rotation ne fait pas disparaître un déséquilibre de masse, qui reste présent quel que soit le régime.",
       "source": "Notions générales de construction aéronautique — équilibrage d'hélice"
     },
@@ -1346,10 +1346,10 @@
       "question": "Où et comment se pratique concrètement un équilibrage dynamique ?",
       "options": [
         "Hélice démontée, posée sur un établi, sans aucun appareil de mesure",
-        "Hélice montée sur l'avion, moteur en fonctionnement, à l'aide d'un appareil de mesure de vibration fixé temporairement sur le moteur ou son support",
-        "Hélice montée sur l'avion, moteur à l'arrêt, par simple observation visuelle"
+        "Hélice montée sur l'avion, moteur à l'arrêt, par simple observation visuelle",
+        "Hélice montée sur l'avion, moteur en fonctionnement, à l'aide d'un appareil de mesure de vibration fixé temporairement sur le moteur ou son support"
       ],
-      "bonne": 1,
+      "bonne": 2,
       "explication": "L'équilibrage dynamique se pratique hélice montée sur l'avion, moteur en fonctionnement, à l'aide d'un appareil de mesure de vibration fixé temporairement sur le moteur ou son support — c'est cette mise en situation réelle qui permet de détecter des effets invisibles à l'arrêt. Une hélice démontée sur un établi sans appareil de mesure, ou un simple examen visuel moteur à l'arrêt, décrivent tout autre chose qu'un équilibrage dynamique.",
       "source": "Notions générales de construction aéronautique — équilibrage d'hélice"
     },
@@ -1359,10 +1359,10 @@
       "question": "Pourquoi l'équilibrage statique et l'équilibrage dynamique sont-ils qualifiés de complémentaires plutôt que redondants ?",
       "options": [
         "Parce que l'un corrige les déséquilibres de masse et l'autre corrige exclusivement les problèmes de corrosion",
-        "Parce qu'il est réglementairement obligatoire de réaliser les deux à chaque fois, sans justification technique",
-        "Chacun détecte un type de déséquilibre que l'autre ne voit pas : le statique est rapide mais approximatif, le dynamique plus précis mais plus contraignant à mettre en œuvre"
+        "Chacun détecte un type de déséquilibre que l'autre ne voit pas : le statique est rapide mais approximatif, le dynamique plus précis mais plus contraignant à mettre en œuvre",
+        "Parce qu'il est réglementairement obligatoire de réaliser les deux à chaque fois, sans justification technique"
       ],
-      "bonne": 2,
+      "bonne": 1,
       "explication": "L'équilibrage statique est rapide et simple mais reste une approximation, ne mesurant jamais la vibration en conditions réelles ; l'équilibrage dynamique est plus précis, capturant des effets invisibles à l'arrêt, mais nécessite un appareillage dédié et une hélice déjà montée. Cette complémentarité est justifiée techniquement, pas seulement par une exigence réglementaire arbitraire ; et la corrosion, un tout autre sujet (fiche M17A.4), n'a aucun rapport avec l'équilibrage dynamique.",
       "source": "Notions générales de construction aéronautique — équilibrage d'hélice"
     },
@@ -1371,11 +1371,11 @@
       "sous_chapitre": "M17A.13",
       "question": "Quelle conséquence un déséquilibre de masse non corrigé peut-il avoir, au-delà du simple inconfort des occupants ?",
       "options": [
-        "Une accélération de la fatigue de pièces qui n'ont pourtant rien à voir directement avec l'hélice elle-même",
         "Une augmentation immédiate et automatique de la puissance délivrée par le moteur",
-        "Une réduction permanente du diamètre de l'hélice"
+        "Une réduction permanente du diamètre de l'hélice",
+        "Une accélération de la fatigue de pièces qui n'ont pourtant rien à voir directement avec l'hélice elle-même"
       ],
-      "bonne": 0,
+      "bonne": 2,
       "explication": "La vibration supplémentaire produite par un déséquilibre non corrigé se transmet au moteur, à ses supports et à la cellule de l'avion, accélérant au fil du temps la fatigue de pièces sans rapport direct avec l'hélice elle-même (rappel du mécanisme de fatigue vu en M17A.2) — bien au-delà d'une simple question de confort. Un déséquilibre de masse n'augmente jamais la puissance délivrée par le moteur, et il ne change strictement rien au diamètre de l'hélice, une grandeur géométrique fixe.",
       "source": "Notions générales de construction aéronautique — équilibrage d'hélice"
     },
@@ -1398,10 +1398,10 @@
       "question": "L'équilibrage d'une hélice est-il une opération à réaliser une seule fois, à la construction, puis à ne plus jamais revérifier ?",
       "options": [
         "Non, il doit être refait automatiquement avant chaque vol, quelles que soient les circonstances",
-        "Oui, un équilibrage réalisé en usine reste valable pendant toute la durée de vie de l'hélice, sans exception",
-        "Non : toute intervention susceptible de changer la répartition de masse entre pales (réparation, remplacement d'une pale, accessoire ajouté) justifie une nouvelle vérification"
+        "Non : toute intervention susceptible de changer la répartition de masse entre pales (réparation, remplacement d'une pale, accessoire ajouté) justifie une nouvelle vérification",
+        "Oui, un équilibrage réalisé en usine reste valable pendant toute la durée de vie de l'hélice, sans exception"
       ],
-      "bonne": 2,
+      "bonne": 1,
       "explication": "Toute intervention susceptible de changer, même légèrement, la répartition de masse entre pales — une réparation par limage, un remplacement de pale isolée, un accessoire ajouté au moyeu ou au spinner — justifie de vérifier à nouveau l'équilibrage plutôt que de le supposer valable. Ce n'est donc pas une opération figée à vie dès la sortie d'usine, mais ce n'est pas non plus une vérification systématique avant chaque vol : elle est requise après une intervention pertinente, pas en routine permanente.",
       "source": "Notions générales de construction aéronautique — équilibrage d'hélice"
     },
@@ -1411,8 +1411,8 @@
       "question": "Pourquoi une hélice immobile, déposée ou peu utilisée, reste-t-elle vulnérable à certaines menaces déjà vues dans ce module ?",
       "options": [
         "Parce que l'humidité ambiante continue d'agir sur elle, qu'elle tourne ou non, favorisant corrosion et dégradation du bois",
-        "Parce qu'une hélice immobile subit une force centrifuge plus importante qu'en vol",
-        "Parce que l'immobilité fabrique de nouveaux types de dommages qui n'existent pas en vol"
+        "Parce que l'immobilité fabrique de nouveaux types de dommages qui n'existent pas en vol",
+        "Parce qu'une hélice immobile subit une force centrifuge plus importante qu'en vol"
       ],
       "bonne": 0,
       "explication": "L'humidité ambiante continue d'agir sur l'hélice, qu'elle tourne ou non : elle favorise la corrosion du métal et le gonflement du bois (rappel M17A.4), deux phénomènes qui n'ont pas besoin de rotation pour progresser. Une hélice immobile ne subit aucune force centrifuge, bien au contraire (elle n'apparaît qu'en rotation, M17A.2), et l'immobilité ne fabrique aucun dommage nouveau : elle laisse simplement le temps à des phénomènes lents déjà connus de s'installer.",
@@ -1424,10 +1424,10 @@
       "question": "Pourquoi nettoyer une hélice avant un stockage prolongé, plutôt que de la stocker telle quelle ?",
       "options": [
         "Le nettoyage n'a aucun effet réel sur la conservation de l'hélice, c'est une étape purement esthétique",
-        "Poussière, saleté et résidus retiendraient l'humidité contre la surface, aggravant le risque de corrosion ou de dégradation",
-        "Le nettoyage remplace entièrement le besoin d'une protection anticorrosion"
+        "Le nettoyage remplace entièrement le besoin d'une protection anticorrosion",
+        "Poussière, saleté et résidus retiendraient l'humidité contre la surface, aggravant le risque de corrosion ou de dégradation"
       ],
-      "bonne": 1,
+      "bonne": 2,
       "explication": "Poussière, saleté et résidus divers, laissés en place, retiendraient l'humidité contre la surface au lieu de la laisser s'évaporer, aggravant précisément le risque de corrosion ou de dégradation qu'on cherche à éviter. Ce n'est donc pas une étape purement esthétique, et elle ne remplace pas la protection anticorrosion : les deux étapes sont complémentaires, pas interchangeables.",
       "source": "Notions générales de construction aéronautique — stockage d'hélice"
     },
@@ -1436,11 +1436,11 @@
       "sous_chapitre": "M17A.14",
       "question": "Quel type d'environnement de stockage favorise le moins la condensation sur une hélice ?",
       "options": [
-        "La condensation ne dépend en rien de l'environnement de stockage",
         "Un local où la température varie fréquemment et fortement au cours de la journée",
-        "Un local sec, à l'abri de variations importantes de température"
+        "Un local sec, à l'abri de variations importantes de température",
+        "La condensation ne dépend en rien de l'environnement de stockage"
       ],
-      "bonne": 2,
+      "bonne": 1,
       "explication": "Un local sec, à l'abri de variations importantes de température, limite la condensation — cette eau qui se dépose sur une surface froide lorsque l'air humide qui l'entoure se refroidit brusquement, comme sur un verre de boisson fraîche par temps chaud et humide. Des variations fréquentes et fortes de température favorisent au contraire ce phénomène, et l'environnement de stockage a bien une influence directe sur son apparition.",
       "source": "Notions générales de construction aéronautique — stockage d'hélice"
     },
@@ -1449,11 +1449,11 @@
       "sous_chapitre": "M17A.14",
       "question": "Pourquoi peut-on dire que le temps qui passe, à lui seul, ne fabrique aucun dommage nouveau sur une hélice stockée ?",
       "options": [
-        "Il laisse simplement le temps à des phénomènes lents déjà connus (corrosion, absorption d'humidité) de s'installer, sans qu'aucun vol ne vienne les révéler avant qu'ils ne deviennent importants",
         "Les dommages de stockage sont exclusivement d'origine mécanique, et une hélice immobile ne subit aucune contrainte mécanique",
-        "La corrosion et l'humidité n'agissent que pendant le vol, jamais au sol"
+        "La corrosion et l'humidité n'agissent que pendant le vol, jamais au sol",
+        "Il laisse simplement le temps à des phénomènes lents déjà connus (corrosion, absorption d'humidité) de s'installer, sans qu'aucun vol ne vienne les révéler avant qu'ils ne deviennent importants"
       ],
-      "bonne": 0,
+      "bonne": 2,
       "explication": "Une hélice stockée n'est pas exposée à un dommage d'un genre nouveau du simple fait du temps qui passe : elle reste vulnérable aux mêmes phénomènes lents déjà présents en vol (corrosion, absorption d'humidité), qui ont simplement le temps de s'installer sans qu'aucun vol ne vienne les révéler avant qu'ils ne deviennent importants. Les dommages qui menacent une hélice au repos ne sont pas d'origine mécanique : ce sont précisément des phénomènes physico-chimiques (corrosion, absorption d'humidité) qui ne demandent aucune contrainte mécanique pour progresser ; et corrosion comme humidité agissent aussi bien au sol qu'en vol, pas exclusivement en vol.",
       "source": "Notions générales de construction aéronautique — stockage d'hélice"
     },
@@ -1462,11 +1462,11 @@
       "sous_chapitre": "M17A.14",
       "question": "Pourquoi la remise en service d'une hélice après un stockage prolongé ne se limite-t-elle pas à un simple contrôle visuel rapide ?",
       "options": [
-        "Un contrôle visuel rapide est en réalité totalement suffisant, la mention d'une inspection spécifique est une précaution excessive",
         "Une préparation au stockage qui a fonctionné correctement ne garantit pas, à elle seule, l'absence de tout dommage accumulé pendant l'inactivité",
+        "Un contrôle visuel rapide est en réalité totalement suffisant, la mention d'une inspection spécifique est une précaution excessive",
         "La remise en service ne concerne que la partie électronique de l'avion, jamais l'hélice elle-même"
       ],
-      "bonne": 1,
+      "bonne": 0,
       "explication": "Le principe est le même qu'après un régime de survitesse correctement maîtrisé (fiche M17A.9) : une protection ou une précaution qui a fonctionné correctement ne garantit pas, à elle seule, l'absence de tout dommage. Seule une inspection spécifique, conforme aux instructions du constructeur, permet de confirmer l'aptitude au vol après une période d'inactivité. Ce n'est donc pas une précaution excessive, et l'hélice elle-même est bien concernée au premier chef, pas seulement l'électronique de l'avion.",
       "source": "Notions générales de construction aéronautique — stockage d'hélice"
     },
@@ -1475,8 +1475,8 @@
       "sous_chapitre": "M17A.14",
       "question": "Pourquoi une corrosion qui se forme à un point de contact du mécanisme resté immobile pendant un stockage prolongé est-elle particulièrement difficile à détecter ?",
       "options": [
-        "Parce qu'elle change immédiatement et visiblement la couleur de l'ensemble de l'hélice",
         "Parce qu'elle ne se forme jamais sur un point de contact, uniquement sur les surfaces les plus exposées",
+        "Parce qu'elle change immédiatement et visiblement la couleur de l'ensemble de l'hélice",
         "Parce qu'elle reste localisée à l'intérieur du mécanisme, invisible depuis l'extérieur sans inspection spécifique"
       ],
       "bonne": 2,
@@ -1489,8 +1489,8 @@
       "question": "Pourquoi conditionner une hélice dans un emballage ou une housse adaptée avant un stockage prolongé ?",
       "options": [
         "Pour la protéger de la poussière, de l'humidité ambiante et des chocs accidentels pendant toute la durée du stockage",
-        "Pour améliorer son équilibrage statique sans avoir à ajouter de masses",
-        "Pour remplacer entièrement le besoin d'un nettoyage préalable"
+        "Pour remplacer entièrement le besoin d'un nettoyage préalable",
+        "Pour améliorer son équilibrage statique sans avoir à ajouter de masses"
       ],
       "bonne": 0,
       "explication": "Un emballage ou une housse adaptée protège l'hélice de la poussière, de l'humidité ambiante et des chocs accidentels pendant toute la durée du stockage — un principe déjà rencontré à propos de l'emballage antistatique de composants électroniques sensibles (fiche M5.6), transposé ici à un autre type de risque. Le conditionnement n'a aucun effet sur l'équilibrage de l'hélice, une opération mécanique distincte (fiche M17A.13), et il ne remplace pas le nettoyage préalable : les deux étapes sont complémentaires.",
@@ -1501,11 +1501,11 @@
       "sous_chapitre": "M17A.14",
       "question": "Pourquoi consigner la date de mise en stockage et la nature de la protection appliquée à une hélice ?",
       "options": [
-        "Cette consignation n'a aucune utilité pratique, c'est une simple formalité administrative",
         "Pour permettre, des mois ou des années plus tard, de vérifier ce qui a réellement été fait plutôt que de le deviner",
-        "Uniquement pour calculer automatiquement le prix de revente de l'hélice"
+        "Uniquement pour calculer automatiquement le prix de revente de l'hélice",
+        "Cette consignation n'a aucune utilité pratique, c'est une simple formalité administrative"
       ],
-      "bonne": 1,
+      "bonne": 0,
       "explication": "Une hélice stockée sans aucune trace écrite de sa préparation expose la personne qui la remet en service à devoir deviner ce qui a réellement été fait, plutôt que de le vérifier dans un document — la traçabilité permet de lever ce doute, comme pour l'inspection décrite en fiche M17A.12. Ce n'est donc pas une simple formalité sans utilité pratique, et elle n'a aucun rapport avec un calcul de prix de revente, une question commerciale étrangère à la sécurité du vol.",
       "source": "Notions générales de construction aéronautique — stockage d'hélice"
     }

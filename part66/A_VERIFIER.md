@@ -249,6 +249,88 @@ génération des distracteurs (valeurs numériques tirées aléatoirement
 plutôt que dérivées mécaniquement de la bonne réponse) — hors périmètre de
 cette session.
 
+## Positions des bonnes réponses corrigées sur 5 modules (2026-09-13)
+
+Le même bug que celui trouvé et corrigé sur M10 (cycle mécanique
+0→1→2→0→1→2 sur l'index `bonne`, exploitable à 100 % par une règle
+`(n-1) mod 3` sans aucune connaissance du domaine) a été recherché et
+confirmé présent, sous forme de cycles locaux redémarrant par
+sous-chapitre, dans les 5 modules à choix multiples du projet : **M5**
+(44 questions), **M7A** (50), **M11A** (225), **M15** (124) et **M17A**
+(116). M17A présentait en plus un déséquilibre global sévère (64/37/15
+sur les trois index).
+
+Correctif appliqué : randomisation réelle de l'ordre des options (script
+Python, `random.shuffle` par question, avec vérification systématique
+après coup : aucun cycle sur tout le fichier, aucune tuile locale de
+période 2 ou 3 répétée 3 fois, aucune série de 5 réponses identiques
+consécutives, distribution globale des trois index à ±25 % de
+l'équidistribution). **Seul l'ordre des options et l'index `bonne` ont
+changé** : `question`, le texte de chaque option (comme ensemble),
+`explication`, `source`, `sous_chapitre` et `uid` sont strictement
+identiques à l'original sur les 5 modules — vérifié par comparaison
+champ à champ avec la version précédente de chaque fichier.
+
+Distributions finales mesurées (index 0/1/2) : M5 = 11/17/16 (n=44),
+M7A = 18/13/19 (n=50), M11A = 90/74/61 (n=225), M15 = 48/37/39 (n=124),
+M17A = 44/29/43 (n=116).
+
+**Point de vigilance pour toute réécriture future de contenu sur ces
+modules** : une explication ne doit jamais désigner un distracteur par
+sa position (« la première option », « l'option ci-dessus »...) plutôt
+que par son contenu — une permutation ultérieure des options rendrait
+alors l'explication fausse sans toucher au texte des options elles-mêmes.
+C'est exactement le défaut trouvé et corrigé sur M10-0002 lors du travail
+sur M10 (2026-09-13, voir plus haut). Une relecture `relecteur-part66`
+ciblée sur ce seul point a été demandée sur les 5 modules après cette
+correction de position.
+
+## Module M15 — dette connue : gabarit de rédaction systémique (2026-09-13)
+
+Contexte : après la correction de position ci-dessus, une relecture
+`eleve-adversaire` des 124 questions de M15 a mesuré une devinabilité de
+100 % par le contenu seul (indépendamment de la position, déjà saine).
+Contrairement à M10, l'agent a établi que ce n'est **pas** un plafond de
+domaine : trois questions (**M15-0011**, **M15-0014**, **M15-0065**) ont
+résisté à toute tentative de devinette sans connaissance technique,
+prouvant que l'espace de distracteurs plausibles existe bien dans ce
+module — il est simplement inutilisé ailleurs.
+
+Une tentative de correction a été lancée (remplacement des marqueurs
+absolus dans les distracteurs — « aucun », « jamais », « uniquement »,
+« purement », « en réalité »... —, cassage du motif « les deux
+distracteurs nient la prémisse de l'énoncé », rééquilibrage des
+longueurs, suppression des échos littéraux énoncé → bonne réponse) puis
+**annulée sur décision de l'utilisateur** avant d'être menée à terme :
+elle avait déjà commencé à modifier le texte de 99 questions sur 124
+quand le score n'était descendu qu'à 97,6 % (contre 100 % initialement).
+Le fichier a été restauré au contenu original (seule la position reste
+corrigée, comme pour les 4 autres modules ci-dessus).
+
+**Diagnostic du gabarit systémique**, tel qu'observé par l'agent qui a
+mené la tentative de correction avant d'être arrêté : sur la quasi-
+totalité des 124 questions, **la bonne réponse est rédigée pour
+paraître vraie** (elle explique un mécanisme, avec une clause causale du
+type « … ce qui … », « … malgré … », « … par exemple … ») **et les deux
+distracteurs sont rédigés pour paraître faux** (affirmations sèches, sans
+justification). Ce déséquilibre de registre reste lisible même après
+avoir supprimé tous les mots absolus explicites : il transparaît par la
+longueur, le registre grammatical, et le simple fait qu'une bonne
+réponse justifiée se distingue structurellement d'un distracteur qui ne
+l'est pas.
+
+**Ce que ça implique pour une correction future** : substituer des mots
+dans la structure actuelle (ce qui a été tenté ici, et qui avait
+suffisamment bien marché sur M10 pour justifier l'essai) ne suffit pas
+sur M15 — deux passages de retouche de distracteurs n'y ont fait bouger
+le score que de ~2 points. Il faudrait réécrire les 124 questions selon
+une méthode différente : les trois options rédigées avec la **même
+densité de justification et le même registre grammatical**, sur le
+modèle de M15-0011/0014/0065 qui résistent déjà. C'est un chantier plus
+lourd qu'une passe de retouche de distracteurs, non entrepris à ce jour
+faute de budget dans cette session — à reprendre si une nouvelle
+itération sur M15 est décidée.
+
 ## Questions supprimées du lot (round de correction du 2026-09-09)
 
 Trois questions ont été retirées définitivement de `questions.json` plutôt

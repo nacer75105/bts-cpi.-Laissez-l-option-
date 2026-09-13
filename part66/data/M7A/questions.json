@@ -6,11 +6,11 @@
       "sous_chapitre": "M7A.1",
       "question": "Sur un feu de carburant (liquide inflammable), quel geste faut-il proscrire ?",
       "options": [
-        "Utiliser un extincteur à eau",
+        "Utiliser un extincteur à poudre",
         "Utiliser un extincteur au CO2",
-        "Utiliser un extincteur à poudre"
+        "Utiliser un extincteur à eau"
       ],
-      "bonne": 0,
+      "bonne": 2,
       "explication": "L'eau est à proscrire sur un feu de liquide inflammable : projetée dessus, elle ne l'éteint pas mais disperse le liquide en surface, ce qui peut propager le feu au lieu de l'éteindre. Le CO2 et la poudre, eux, étouffent correctement ce type de feu en interrompant la combustion sans disperser le liquide : ce sont des choix adaptés, pas des gestes à proscrire.",
       "source": "Notions générales de sécurité en maintenance aéronautique — classes de feu et agents extincteurs"
     },
@@ -19,11 +19,11 @@
       "sous_chapitre": "M7A.1",
       "question": "Comment rechercher une fuite de fluide hydraulique haute pression ?",
       "options": [
+        "En augmentant la pression du circuit pour mieux voir la fuite",
         "Avec la main nue, en passant lentement au-dessus du circuit",
-        "Avec un morceau de carton ou de bois tenu à distance",
-        "En augmentant la pression du circuit pour mieux voir la fuite"
+        "Avec un morceau de carton ou de bois tenu à distance"
       ],
-      "bonne": 1,
+      "bonne": 2,
       "explication": "Un jet de fluide hydraulique haute pression peut être invisible et pourtant traverser la peau, provoquant une injection sous-cutanée grave : on recherche donc une fuite à distance, avec un objet comme un morceau de carton ou de bois, jamais à la main nue. Augmenter la pression du circuit pour « mieux voir » aggraverait le danger au lieu de le réduire.",
       "source": "Notions générales de sécurité en maintenance aéronautique — risques hydrauliques haute pression"
     },
@@ -33,10 +33,10 @@
       "question": "Pourquoi relie-t-on électriquement l'aéronef et le moyen d'avitaillement avant un transfert de carburant ?",
       "options": [
         "Pour accélérer le débit de transfert du carburant",
-        "Pour mesurer la quantité de carburant transférée",
-        "Pour égaliser leur potentiel électrique et éviter une étincelle d'électricité statique"
+        "Pour égaliser leur potentiel électrique et éviter une étincelle d'électricité statique",
+        "Pour mesurer la quantité de carburant transférée"
       ],
-      "bonne": 2,
+      "bonne": 1,
       "explication": "Le transfert de carburant dans une tuyauterie peut générer de l'électricité statique ; relier électriquement l'aéronef et le moyen d'avitaillement égalise leur potentiel et évite qu'une étincelle ne jaillisse à proximité des vapeurs de carburant. Cette liaison n'a aucun effet sur le débit de transfert ni sur la mesure de la quantité transférée, qui relèvent d'autres équipements.",
       "source": "Notions générales de sécurité en maintenance aéronautique — avitaillement et électricité statique"
     },
@@ -59,10 +59,10 @@
       "question": "Pourquoi le CO2 est-il adapté à un feu d'origine électrique, contrairement à l'eau ?",
       "options": [
         "Le CO2 est moins cher que l'eau",
-        "Le CO2 ne conduit pas le courant électrique, contrairement à l'eau",
-        "Le CO2 refroidit davantage que l'eau"
+        "Le CO2 refroidit davantage que l'eau",
+        "Le CO2 ne conduit pas le courant électrique, contrairement à l'eau"
       ],
-      "bonne": 1,
+      "bonne": 2,
       "explication": "L'eau conduit le courant électrique et expose au risque d'électrocution si elle est projetée sur un équipement sous tension ; le CO2, gaz non conducteur, étouffe le feu sans ce risque. Le coût comparé des deux agents n'entre pas en jeu dans ce choix de sécurité, et le CO2 agit en étouffant le feu, pas en le refroidissant davantage que l'eau.",
       "source": "Notions générales de sécurité en maintenance aéronautique — feux d'origine électrique"
     },
@@ -97,11 +97,11 @@
       "sous_chapitre": "M7A.2",
       "question": "Quel est le risque d'un assemblage vissé serré à un couple insuffisant ?",
       "options": [
+        "Il précontraint excessivement le matériau",
         "Il devient impossible à démonter ultérieurement",
-        "Il peut se desserrer sous l'effet des vibrations en service",
-        "Il précontraint excessivement le matériau"
+        "Il peut se desserrer sous l'effet des vibrations en service"
       ],
-      "bonne": 1,
+      "bonne": 2,
       "explication": "Un serrage insuffisant laisse l'assemblage vulnérable au desserrage progressif sous l'effet des vibrations en service. L'impossibilité de démonter ultérieurement et la précontrainte excessive du matériau sont au contraire des risques associés à un serrage trop important, pas à un serrage insuffisant.",
       "source": "Notions générales de pratiques de maintenance aéronautique — couple de serrage"
     },
@@ -110,11 +110,11 @@
       "sous_chapitre": "M7A.2",
       "question": "Que peut-on dire de l'utilisation d'un adaptateur déporté (par exemple une clé à œil ouverte) monté sur une clé dynamométrique, sans correction du réglage ?",
       "options": [
-        "Une rallonge droite, dans l'axe de la clé, produirait exactement le même effet sur le couple transmis",
+        "Le couple réellement appliqué à la vis peut être différent de la valeur affichée par la clé, selon l'orientation de l'adaptateur",
         "Le couple réellement appliqué à la vis reste rigoureusement identique à la valeur affichée, quel que soit l'accessoire utilisé",
-        "Le couple réellement appliqué à la vis peut être différent de la valeur affichée par la clé, selon l'orientation de l'adaptateur"
+        "Une rallonge droite, dans l'axe de la clé, produirait exactement le même effet sur le couple transmis"
       ],
-      "bonne": 2,
+      "bonne": 0,
       "explication": "Un adaptateur déporté par rapport à l'axe de la clé modifie le bras de levier effectif : selon son orientation, le couple réellement transmis à la vis peut être supérieur ou inférieur à la valeur affichée sur la clé, d'où la nécessité d'une correction calculée selon la méthode du fabricant ou de l'AMM. Affirmer que le couple reste identique ignore cet effet mécanique réel. Et une rallonge droite, dans l'axe de la clé, n'a au contraire aucun effet sur le bras de levier : contrairement à un adaptateur déporté, elle ne modifie pas le couple transmis — les deux accessoires ne se comportent donc pas du tout de la même façon.",
       "source": "Notions générales de pratiques de maintenance aéronautique — utilisation de la clé dynamométrique"
     },
@@ -123,11 +123,11 @@
       "sous_chapitre": "M7A.2",
       "question": "Pourquoi une clé dynamométrique doit-elle être étalonnée périodiquement ?",
       "options": [
-        "Parce que sa lecture peut dériver avec le temps, sans que rien ne le signale visuellement",
+        "Parce que l'étalonnage n'est requis qu'après une chute de la clé, jamais autrement",
         "Parce que la couleur de la clé s'estompe avec l'usage",
-        "Parce que l'étalonnage n'est requis qu'après une chute de la clé, jamais autrement"
+        "Parce que sa lecture peut dériver avec le temps, sans que rien ne le signale visuellement"
       ],
-      "bonne": 0,
+      "bonne": 2,
       "explication": "Comme tout instrument de mesure, une clé dynamométrique peut dériver avec le temps sans que rien à son aspect ne le laisse deviner : c'est précisément pour cela qu'un étalonnage périodique est nécessaire, indépendamment de toute chute. L'aspect esthétique de la clé n'a aucun rapport avec la fiabilité de sa mesure, et limiter l'étalonnage aux seuls cas de chute ignorerait la dérive normale qui peut survenir sans incident particulier.",
       "source": "Notions générales de pratiques de maintenance aéronautique — étalonnage des instruments de mesure"
     },
@@ -149,11 +149,11 @@
       "sous_chapitre": "M7A.3",
       "question": "Sur un schéma de câblage électrique, la position des symboles représente :",
       "options": [
-        "L'emplacement physique réel des composants dans l'aéronef",
         "L'ordre chronologique de montage des composants",
-        "Les relations fonctionnelles entre composants, indépendamment de leur position réelle"
+        "Les relations fonctionnelles entre composants, indépendamment de leur position réelle",
+        "L'emplacement physique réel des composants dans l'aéronef"
       ],
-      "bonne": 2,
+      "bonne": 1,
       "explication": "Un schéma de câblage représente les relations fonctionnelles entre composants (comment ils sont reliés électriquement), pas leur emplacement physique réel dans l'aéronef ni l'ordre dans lequel ils ont été montés. Confondre schéma fonctionnel et position réelle est une erreur classique de lecture, précisément parce que rien dans le schéma n'indique où se trouve réellement chaque composant.",
       "source": "Notions générales de pratiques de maintenance aéronautique — lecture de schémas de câblage"
     },
@@ -162,11 +162,11 @@
       "sous_chapitre": "M7A.3",
       "question": "Pourquoi faut-il vérifier l'indice de révision d'un dessin avant de l'utiliser ?",
       "options": [
-        "Parce qu'un dessin resté à une révision antérieure peut ne plus refléter la configuration réellement installée",
+        "Parce que l'indice de révision indique l'échelle du dessin",
         "Pour connaître le nom du dessinateur ayant réalisé le document",
-        "Parce que l'indice de révision indique l'échelle du dessin"
+        "Parce qu'un dessin resté à une révision antérieure peut ne plus refléter la configuration réellement installée"
       ],
-      "bonne": 0,
+      "bonne": 2,
       "explication": "Un dessin peut être révisé pour refléter une modification de la pièce ou de l'installation ; un exemplaire resté à une révision antérieure peut donc montrer une configuration qui n'est plus celle réellement installée, sans que rien à son aspect ne le signale. Le nom du dessinateur, même lorsqu'il figure au cartouche, ne renseigne en rien sur la validité de la configuration représentée : seul l'indice de révision le fait. Et l'échelle du dessin est une information distincte de l'indice de révision : elle ne dit rien non plus de la configuration réellement installée.",
       "source": "Notions générales de pratiques de maintenance aéronautique — cartouche et indice de révision"
     },
@@ -175,11 +175,11 @@
       "sous_chapitre": "M7A.3",
       "question": "Sur un dessin technique, un trait interrompu (pointillé) représente en général :",
       "options": [
-        "Un axe de symétrie ou de rotation",
         "Une arête cachée, non visible sous l'angle de la vue",
+        "Un axe de symétrie ou de rotation",
         "Une cote à vérifier en priorité"
       ],
-      "bonne": 1,
+      "bonne": 0,
       "explication": "Un trait interrompu (pointillé) représente en général une arête cachée, non visible sous l'angle de la vue représentée. L'axe de symétrie ou de rotation se représente par un trait mixte (tirets longs et points), un type de trait différent ; et la nature du trait n'indique en rien une priorité de vérification d'une cote.",
       "source": "Notions générales de pratiques de maintenance aéronautique — conventions de traits sur les dessins techniques"
     },
@@ -188,11 +188,11 @@
       "sous_chapitre": "M7A.3",
       "question": "Avant d'interpréter les vues d'un dessin technique, il faut vérifier :",
       "options": [
-        "L'échelle indiquée dans le cartouche",
         "Le nom du logiciel de CAO utilisé pour produire le dessin",
-        "Le symbole de projection porté dans le cartouche, car plusieurs conventions existent"
+        "Le symbole de projection porté dans le cartouche, car plusieurs conventions existent",
+        "L'échelle indiquée dans le cartouche"
       ],
-      "bonne": 2,
+      "bonne": 1,
       "explication": "Plusieurs conventions de projection orthogonale existent et ne placent pas les vues au même endroit les unes par rapport aux autres ; le symbole de projection du cartouche indique laquelle a été utilisée sur ce document précis, une vérification indispensable avant de lire les vues. L'échelle est elle aussi une information du cartouche, mais elle indique un rapport de taille, pas la disposition des vues : la connaître ne renseigne en rien sur la convention de projection utilisée. Le logiciel utilisé pour produire le dessin n'a, lui, aucune incidence sur la façon dont les vues doivent être lues.",
       "source": "Notions générales de pratiques de maintenance aéronautique — conventions de projection"
     },
@@ -201,11 +201,11 @@
       "sous_chapitre": "M7A.4",
       "question": "Pourquoi une tolérance est-elle définie sur une cote plutôt qu'une valeur unique ?",
       "options": [
-        "Parce qu'aucun processus de fabrication ne peut reproduire une cote de façon parfaitement identique d'une pièce à l'autre",
         "Parce que les clients préfèrent avoir le choix entre plusieurs dimensions",
-        "Parce que la tolérance permet de réduire le prix de fabrication des pièces"
+        "Parce que la tolérance permet de réduire le prix de fabrication des pièces",
+        "Parce qu'aucun processus de fabrication ne peut reproduire une cote de façon parfaitement identique d'une pièce à l'autre"
       ],
-      "bonne": 0,
+      "bonne": 2,
       "explication": "La tolérance existe parce qu'aucun processus de fabrication ne peut reproduire une cote de façon parfaitement identique d'une pièce à l'autre : elle définit la plage de valeurs réelles jugées acceptables. Il ne s'agit ni d'une préférence commerciale pour un choix de dimensions, ni d'un moyen de réduire les coûts de fabrication.",
       "source": "Notions générales de pratiques de maintenance aéronautique — tolérances dimensionnelles"
     },
@@ -214,11 +214,11 @@
       "sous_chapitre": "M7A.4",
       "question": "Un ajustement avec jeu (clearance fit) est adapté à :",
       "options": [
+        "Une pièce dont la cote n'a pas encore été définie par le bureau d'études",
         "Une pièce qui doit rester rigoureusement fixe sans aucun mouvement relatif",
-        "Une pièce qui doit pouvoir tourner ou coulisser librement dans son logement",
-        "Une pièce dont la cote n'a pas encore été définie par le bureau d'études"
+        "Une pièce qui doit pouvoir tourner ou coulisser librement dans son logement"
       ],
-      "bonne": 1,
+      "bonne": 2,
       "explication": "Un ajustement avec jeu laisse un espace entre les deux pièces, ce qui convient à une pièce devant tourner ou coulisser librement dans son logement. Une pièce qui doit rester rigoureusement fixe a au contraire besoin d'une tenue ferme, sans le moindre espace : un jeu à cet endroit permettrait un mouvement non désiré. Et le type d'ajustement choisi par le bureau d'études suppose que la cote de la pièce est déjà définie sur le dessin : ce n'est pas une caractéristique d'une pièce dont la cote resterait encore à fixer.",
       "source": "Notions générales de pratiques de maintenance aéronautique — types d'ajustements"
     },
@@ -227,8 +227,8 @@
       "sous_chapitre": "M7A.4",
       "question": "Dans un ajustement avec serrage (interference fit) :",
       "options": [
-        "L'alésage est toujours plus grand que l'arbre",
         "Le jeu ou le serrage obtenu ne dépend que de la température des pièces au moment du montage",
+        "L'alésage est toujours plus grand que l'arbre",
         "L'arbre est toujours plus grand que l'alésage"
       ],
       "bonne": 2,
@@ -240,11 +240,11 @@
       "sous_chapitre": "M7A.4",
       "question": "Comment vérifie-t-on la conformité d'un ajustement en maintenance ?",
       "options": [
+        "En vérifiant uniquement que la pièce provient du même lot de fabrication que celle qu'elle remplace",
         "En comparant la pièce déposée à une pièce neuve conservée en magasin comme référence",
-        "En mesurant les cotes réelles et en les comparant aux tolérances de la documentation applicable",
-        "En vérifiant uniquement que la pièce provient du même lot de fabrication que celle qu'elle remplace"
+        "En mesurant les cotes réelles et en les comparant aux tolérances de la documentation applicable"
       ],
-      "bonne": 1,
+      "bonne": 2,
       "explication": "La conformité d'un ajustement se vérifie toujours par une mesure objective des cotes réelles, comparée aux tolérances spécifiées dans la documentation applicable. Comparer à une pièce de référence en magasin ne suffit pas : cette pièce de référence peut elle-même se situer n'importe où dans sa propre plage de tolérance, sans être identique à la pièce déposée. Vérifier seulement le lot de fabrication ne garantit rien non plus : deux pièces d'un même lot restent chacune soumises à la même plage de tolérance, pas à une cote unique identique.",
       "source": "Notions générales de pratiques de maintenance aéronautique — contrôle des ajustements"
     },
@@ -253,11 +253,11 @@
       "sous_chapitre": "M7A.4",
       "question": "Pourquoi chauffer un logement (ou refroidir la pièce à insérer) facilite-t-il l'assemblage d'un ajustement avec serrage ?",
       "options": [
-        "Le chauffage modifie définitivement la cote réelle de la pièce",
         "La dilatation thermique modifie temporairement les cotes, ce qui facilite l'insertion sans effort excessif",
+        "Le chauffage modifie définitivement la cote réelle de la pièce",
         "Cette méthode remplace la nécessité de respecter la tolérance prévue par le dessin"
       ],
-      "bonne": 1,
+      "bonne": 0,
       "explication": "La dilatation thermique modifie temporairement les cotes des pièces (le logement chauffé s'agrandit, la pièce refroidie rétrécit), ce qui facilite l'insertion sans effort excessif ; une fois revenues à température ambiante, les pièces retrouvent leurs cotes réelles d'origine et le serrage prévu se rétablit. Le changement de cote n'est donc que temporaire, pas définitif : la pièce ne conserve pas la cote qu'elle avait le temps du chauffage. Et cette méthode ne dispense en rien de respecter la tolérance prévue par le dessin : elle en facilite seulement la mise en œuvre.",
       "source": "Notions générales de pratiques de maintenance aéronautique — assemblage par dilatation thermique"
     },
@@ -266,11 +266,11 @@
       "sous_chapitre": "M7A.5",
       "question": "Pourquoi un câble aéronautique est-il en général réalisé en brins multiples torsadés plutôt qu'en fil plein massif ?",
       "options": [
-        "Un fil plein massif est toujours moins cher à produire",
+        "Les brins multiples résistent mieux à la fatigue provoquée par les vibrations répétées",
         "Les brins multiples conduisent mieux le courant qu'un fil plein de même section",
-        "Les brins multiples résistent mieux à la fatigue provoquée par les vibrations répétées"
+        "Un fil plein massif est toujours moins cher à produire"
       ],
-      "bonne": 2,
+      "bonne": 0,
       "explication": "Un câble à brins multiples reste flexible et résiste beaucoup mieux à la fatigue provoquée par les vibrations répétées qu'un conducteur massif, qui finit par se fissurer aux endroits pliés de façon répétée. Le coût comparé des deux constructions et une éventuelle meilleure conductivité ne sont pas la raison de ce choix, qui repose sur la tenue mécanique en service, pas sur la conductivité électrique.",
       "source": "Notions générales de pratiques de maintenance aéronautique — câblage aéronautique"
     },
@@ -292,11 +292,11 @@
       "sous_chapitre": "M7A.5",
       "question": "Pourquoi le sertissage (crimping) est-il en général préféré au soudage pour les connexions électriques aéronautiques ?",
       "options": [
+        "Le soudage est interdit dans tous les cas par la réglementation aéronautique",
         "Le sertissage est toujours moins coûteux en outillage que le soudage",
-        "Une cosse sertie tolère mieux les vibrations qu'une soudure, rigide juste à côté d'un câble resté flexible",
-        "Le soudage est interdit dans tous les cas par la réglementation aéronautique"
+        "Une cosse sertie tolère mieux les vibrations qu'une soudure, rigide juste à côté d'un câble resté flexible"
       ],
-      "bonne": 1,
+      "bonne": 2,
       "explication": "Une cosse correctement sertie forme une liaison mécanique tolérante aux vibrations, alors qu'une soudure est rigide exactement à la frontière avec le câble resté flexible juste à côté, ce qui concentre la contrainte de flexion à cet endroit. Le soudage n'est pas interdit dans tous les cas : certaines applications le prévoient explicitement ; et le coût de l'outillage n'est pas la raison technique de cette préférence.",
       "source": "Notions générales de pratiques de maintenance aéronautique — sertissage et soudage des connexions"
     },
@@ -305,11 +305,11 @@
       "sous_chapitre": "M7A.5",
       "question": "Lors du contrôle visuel d'un sertissage, un dénudage trop long est problématique car :",
       "options": [
-        "Il réduit la résistance électrique du conducteur",
         "Il empêche tout simplement la cosse de se fermer sur le câble",
-        "Du cuivre nu dépasse de la cosse, avec un risque de court-circuit sur un élément voisin"
+        "Du cuivre nu dépasse de la cosse, avec un risque de court-circuit sur un élément voisin",
+        "Il réduit la résistance électrique du conducteur"
       ],
-      "bonne": 2,
+      "bonne": 1,
       "explication": "Un dénudage trop long laisse dépasser du cuivre nu hors de la cosse, avec un risque de court-circuit contre un élément voisin dans le faisceau. Ce défaut n'a pas d'effet sur la résistance électrique propre du conducteur, et il n'empêche pas physiquement la cosse de se fermer : le problème est ce qui dépasse à l'extérieur de la cosse, pas la fermeture elle-même.",
       "source": "Notions générales de pratiques de maintenance aéronautique — contrôle visuel du sertissage"
     },
@@ -319,8 +319,8 @@
       "question": "Pourquoi le code imprimé sur l'isolant d'un câble est-il plus fiable que sa seule couleur pour l'identifier dans un faisceau dense ?",
       "options": [
         "Parce que plusieurs câbles d'un même faisceau peuvent partager la même couleur, alors que le code reste unique à ce câble",
-        "Parce que la couleur d'un câble change avec le temps",
-        "Parce que la réglementation interdit l'usage de couleurs sur les câbles aéronautiques"
+        "Parce que la réglementation interdit l'usage de couleurs sur les câbles aéronautiques",
+        "Parce que la couleur d'un câble change avec le temps"
       ],
       "bonne": 0,
       "explication": "Sur un faisceau qui rassemble un grand nombre de câbles, les couleurs finissent nécessairement par se répéter, alors que le code imprimé reste unique à ce câble précis et permet de le retrouver sans ambiguïté dans le schéma de câblage. La couleur d'un câble ne change pas dans le temps en usage normal, et les couleurs restent bien utilisées sur les câbles aéronautiques : ce n'est pas leur usage qui est en cause, mais leur caractère non unique à grande échelle.",
@@ -332,10 +332,10 @@
       "question": "Pourquoi un rivet plein nécessite-t-il un accès des deux côtés de la tôle ?",
       "options": [
         "Parce que le rivet plein doit être chauffé simultanément des deux côtés avant la pose",
-        "Parce que la tête d'atelier se forme du côté opposé à la tête d'usine, sous l'effet conjugué de la riveteuse et d'un tas à river maintenu de l'autre côté",
-        "Parce que la réglementation impose systématiquement un contrôle visuel des deux côtés après la pose"
+        "Parce que la réglementation impose systématiquement un contrôle visuel des deux côtés après la pose",
+        "Parce que la tête d'atelier se forme du côté opposé à la tête d'usine, sous l'effet conjugué de la riveteuse et d'un tas à river maintenu de l'autre côté"
       ],
-      "bonne": 1,
+      "bonne": 2,
       "explication": "Un rivet plein exige un accès des deux côtés parce que sa seconde tête (la tête d'atelier) se forme du côté opposé à la tête déjà présente : la riveteuse frappe du côté de la tête d'usine pendant qu'un tas à river (bucking bar) est maintenu fermement contre l'extrémité de la tige, de l'autre côté — c'est la réaction de cet appui qui forme la tête d'atelier. Aucun chauffage n'est nécessaire pour poser un rivet de ce type : ce n'est pas une opération à chaud. Et le contrôle visuel se fait après la pose parce que les deux têtes existent déjà physiquement à ce moment-là : ce n'est pas lui qui impose l'accès des deux côtés, c'est la pose elle-même.",
       "source": "Notions générales de pratiques de maintenance aéronautique — rivetage"
     },
@@ -357,11 +357,11 @@
       "sous_chapitre": "M7A.6",
       "question": "Quand un rivet aveugle (blind rivet) est-il la seule option praticable ?",
       "options": [
+        "Lorsque l'assemblage ne permet d'accéder qu'à un seul côté de la tôle",
         "Lorsque l'assemblage doit rester démontable en service",
-        "Lorsque la tôle à assembler dépasse une certaine épaisseur",
-        "Lorsque l'assemblage ne permet d'accéder qu'à un seul côté de la tôle"
+        "Lorsque la tôle à assembler dépasse une certaine épaisseur"
       ],
-      "bonne": 2,
+      "bonne": 0,
       "explication": "Le rivet aveugle ne nécessite d'accès que d'un seul côté, grâce à son mandrin tiré depuis l'extérieur qui forme la seconde tête de l'intérieur : c'est exactement ce qui le rend indispensable là où le rivet plein, qui exige un accès des deux côtés, est impraticable. Ni le rivet plein ni le rivet aveugle ne sont conçus pour un assemblage destiné à être démonté en service : un rivet forme toujours une liaison permanente. Et l'épaisseur de la tôle n'est pas le critère qui détermine ce choix : c'est bien l'accessibilité des deux côtés qui compte.",
       "source": "Notions générales de pratiques de maintenance aéronautique — rivets pleins et rivets aveugles"
     },
@@ -371,10 +371,10 @@
       "question": "Le diamètre de perçage et la longueur d'un rivet pour un assemblage donné doivent être :",
       "options": [
         "Estimés par comparaison visuelle avec un assemblage similaire déjà rencontré",
-        "Ceux spécifiés par le dessin ou l'AMM pour cet assemblage",
-        "Calculés systématiquement à partir de l'épaisseur totale de tôle multipliée par un facteur fixe universel"
+        "Calculés systématiquement à partir de l'épaisseur totale de tôle multipliée par un facteur fixe universel",
+        "Ceux spécifiés par le dessin ou l'AMM pour cet assemblage"
       ],
-      "bonne": 1,
+      "bonne": 2,
       "explication": "Le diamètre de perçage et la longueur du rivet sont toujours ceux spécifiés par le dessin ou l'AMM pour l'assemblage concerné, jamais estimés par ressemblance avec un cas similaire : deux assemblages d'apparence proche peuvent avoir des exigences différentes. Il n'existe pas non plus de facteur universel fixe qui donnerait la bonne longueur à partir de l'épaisseur seule, indépendamment du rivet et de l'assemblage réels : c'est précisément ce genre de raccourci que la documentation permet d'éviter.",
       "source": "Notions générales de pratiques de maintenance aéronautique — préparation du perçage pour rivetage"
     },
@@ -384,8 +384,8 @@
       "question": "Un rivet dont la tête bouterollée est fissurée après la pose signifie généralement que :",
       "options": [
         "Le métal a été travaillé de façon excessive lors de la pose",
-        "Le rivet a été posé avec un trou légèrement surdimensionné",
-        "Le rivet appartient à un lot de fabrication non conforme, indépendamment du geste de pose"
+        "Le rivet appartient à un lot de fabrication non conforme, indépendamment du geste de pose",
+        "Le rivet a été posé avec un trou légèrement surdimensionné"
       ],
       "bonne": 0,
       "explication": "Une fissure sur la tête bouterollée est en général le signe que le métal a été travaillé de façon excessive au moment de la pose (frappe trop violente, ou métal déjà fragilisé, par exemple par un durcissement structural trop avancé). Un trou surdimensionné produit un défaut différent : un rivet qui reste lâche dans son trou, pas une tête fissurée. Et rattacher systématiquement ce défaut au seul lot de fabrication ignore le rôle du geste de pose lui-même, qui est la cause la plus directement en lien avec ce type de défaut.",
@@ -396,11 +396,11 @@
       "sous_chapitre": "M7A.7",
       "question": "Pourquoi une tuyauterie rigide installée à un endroit soumis à un mouvement relatif finit-elle par se fissurer ?",
       "options": [
-        "Le fluide transporté devient corrosif au contact du mouvement",
+        "La flexion répétée use le métal par fatigue, comme un câble électrique plié à répétition",
         "La rigidité du matériau empêche toute vibration, ce qui use prématurément les raccords",
-        "La flexion répétée use le métal par fatigue, comme un câble électrique plié à répétition"
+        "Le fluide transporté devient corrosif au contact du mouvement"
       ],
-      "bonne": 2,
+      "bonne": 0,
       "explication": "La flexion répétée à chaque mouvement use progressivement le métal par fatigue, exactement comme un câble électrique massif plié de façon répétée finit par se rompre. Le mouvement relatif n'a en soi aucun effet chimique sur le fluide transporté, qui ne devient pas corrosif de ce seul fait. Et la rigidité du matériau n'empêche pas la vibration : c'est au contraire l'incapacité de la tuyauterie rigide à absorber ce mouvement qui pose problème, pas une prétendue suppression de la vibration.",
       "source": "Notions générales de pratiques de maintenance aéronautique — fatigue des tuyauteries rigides"
     },
@@ -410,8 +410,8 @@
       "question": "Avant de remplacer un flexible par un autre d'apparence similaire, il faut impérativement vérifier :",
       "options": [
         "La compatibilité du flexible avec le fluide réellement transporté, dans l'AMM ou la liste de pièces applicable",
-        "Que le nouveau flexible provient du même fabricant que l'ancien",
-        "Que la couleur extérieure du flexible correspond à celle de l'ancien"
+        "Que la couleur extérieure du flexible correspond à celle de l'ancien",
+        "Que le nouveau flexible provient du même fabricant que l'ancien"
       ],
       "bonne": 0,
       "explication": "Un flexible ou un joint peut se dégrader au contact d'un fluide pour lequel il n'a pas été conçu, même si son aspect général ressemble à celui prévu : la compatibilité avec le fluide réellement transporté doit donc toujours être vérifiée dans l'AMM ou la liste de pièces applicable. Provenir du même fabricant ne garantit rien à lui seul si la référence exacte diffère, et la couleur extérieure est une information purement visuelle, sans lien garanti avec la compatibilité chimique réelle du flexible.",
@@ -422,9 +422,9 @@
       "sous_chapitre": "M7A.7",
       "question": "Le marquage imprimé le long d'une tuyauterie ou d'un flexible indique notamment :",
       "options": [
-        "La date exacte du dernier contrôle effectué sur cette pièce",
+        "Le nom du technicien ayant installé la pièce",
         "Le type de fluide prévu, la pression de service et le fabricant",
-        "Le nom du technicien ayant installé la pièce"
+        "La date exacte du dernier contrôle effectué sur cette pièce"
       ],
       "bonne": 1,
       "explication": "Ce marquage indique le type de fluide prévu, la pression de service et le fabricant, ce qui permet d'identifier la tuyauterie ou le flexible avec certitude, même au milieu d'un ensemble de pièces d'apparence proche. La date du dernier contrôle relève du suivi de maintenance de l'aéronef, pas d'un marquage imprimé sur la pièce elle-même ; et le nom du technicien qui a réalisé l'installation ne figure pas sur ce marquage, qui concerne la pièce, pas l'intervention.",
@@ -435,11 +435,11 @@
       "sous_chapitre": "M7A.7",
       "question": "Sur un flexible, une zone molle ou gonflée est un signe possible de :",
       "options": [
+        "Une défaillance de la couche interne, invisible depuis l'extérieur tant qu'elle n'a pas progressé",
         "Un flexible neuf pas encore rodé, sans conséquence",
-        "Un excès de pression normal en cours de fonctionnement",
-        "Une défaillance de la couche interne, invisible depuis l'extérieur tant qu'elle n'a pas progressé"
+        "Un excès de pression normal en cours de fonctionnement"
       ],
-      "bonne": 2,
+      "bonne": 0,
       "explication": "Une zone molle ou un gonflement signale souvent une défaillance de la couche interne du flexible, un défaut qui reste invisible depuis l'extérieur tant qu'il n'a pas suffisamment progressé. Ce n'est en aucun cas un phénomène normal de rodage sur un flexible neuf, ni un effet attendu d'une pression de fonctionnement normale : un flexible correctement dimensionné ne doit présenter ni gonflement ni zone molle en service normal.",
       "source": "Notions générales de pratiques de maintenance aéronautique — contrôle visuel des flexibles"
     },
@@ -448,11 +448,11 @@
       "sous_chapitre": "M7A.7",
       "question": "Pourquoi un flexible doit-il conserver un rayon de courbure suffisant lors de son installation ?",
       "options": [
-        "Un rayon trop serré restreint le débit et crée un point de fatigue prématuré",
         "Un rayon de courbure serré améliore l'étanchéité du flexible",
-        "Le rayon de courbure n'a d'incidence que sur l'esthétique du montage"
+        "Le rayon de courbure n'a d'incidence que sur l'esthétique du montage",
+        "Un rayon trop serré restreint le débit et crée un point de fatigue prématuré"
       ],
-      "bonne": 0,
+      "bonne": 2,
       "explication": "Un rayon de courbure trop serré restreint la section utile au passage du fluide et concentre la flexion en un point précis, ce qui crée un point de fatigue prématurée. Un pliage serré n'améliore en rien l'étanchéité, qui dépend des raccords et du flexible lui-même, pas de son rayon de courbure ; et l'effet n'est pas purement esthétique, puisqu'il affecte directement le débit et la durée de vie du flexible.",
       "source": "Notions générales de pratiques de maintenance aéronautique — installation des flexibles"
     },
@@ -462,10 +462,10 @@
       "question": "Un ressort qui a dépassé son domaine élastique et ne retrouve plus sa longueur d'origine a subi :",
       "options": [
         "Une simple perte de lubrification",
-        "Une déformation permanente (plastique)",
-        "Un phénomène réversible qui se corrige avec le temps au repos"
+        "Un phénomène réversible qui se corrige avec le temps au repos",
+        "Une déformation permanente (plastique)"
       ],
-      "bonne": 1,
+      "bonne": 2,
       "explication": "Au-delà du domaine élastique, un ressort subit une déformation permanente (plastique) : il ne retrouve plus sa forme initiale, même une fois l'effort relâché. La lubrification n'a pas de rôle déterminant pour un ressort de ce type, dont la fonction repose sur l'élasticité du métal, pas sur un frottement à lubrifier. Et ce type de déformation n'est pas réversible avec le temps : un ressort affaissé le reste, quel que soit le temps de repos accordé.",
       "source": "Notions générales de pratiques de maintenance aéronautique — domaine élastique des ressorts"
     },
@@ -474,11 +474,11 @@
       "sous_chapitre": "M7A.8",
       "question": "Pourquoi une piqûre de corrosion sur un ressort accélère-t-elle l'apparition d'une fissure de fatigue ?",
       "options": [
-        "Elle réduit uniformément la raideur globale du ressort",
+        "Elle crée une concentration locale de contrainte à cet endroit précis",
         "Elle rend le métal plus malléable sur toute sa longueur",
-        "Elle crée une concentration locale de contrainte à cet endroit précis"
+        "Elle réduit uniformément la raideur globale du ressort"
       ],
-      "bonne": 2,
+      "bonne": 0,
       "explication": "Une piqûre de corrosion, même minime, crée une concentration locale de contrainte exactement à cet endroit, ce qui accélère l'amorçage d'une fissure de fatigue à ce point précis. L'effet n'est ni uniforme sur toute la raideur du ressort, ni une malléabilité généralisée sur toute sa longueur : c'est au contraire un effet très localisé, concentré sur la zone endommagée, qui rend ce défaut d'autant plus insidieux.",
       "source": "Notions générales de pratiques de maintenance aéronautique — corrosion et fatigue des ressorts"
     },
@@ -487,11 +487,11 @@
       "sous_chapitre": "M7A.8",
       "question": "Le brinelling d'un roulement à billes est provoqué par :",
       "options": [
-        "Un choc ou une charge statique excessive, même sans rotation",
         "Une rotation prolongée à très haute vitesse",
+        "Un choc ou une charge statique excessive, même sans rotation",
         "Un manque de lubrification prolongé pendant la rotation"
       ],
-      "bonne": 0,
+      "bonne": 1,
       "explication": "Le brinelling résulte d'un choc ou d'une charge statique excessive, qui laisse de minuscules empreintes permanentes dans la piste de roulement à l'endroit exact où se trouvaient les billes au moment du choc — un phénomène qui peut survenir même sans aucune rotation, par exemple lors d'une manutention. Une rotation prolongée à haute vitesse ou un manque de lubrification produisent d'autres types de dommages (usure, échauffement), mais pas ce défaut précis, qui est associé à un choc ou une charge statique, pas au fonctionnement en rotation lui-même.",
       "source": "Notions générales de pratiques de maintenance aéronautique — brinelling des roulements"
     },
@@ -500,11 +500,11 @@
       "sous_chapitre": "M7A.8",
       "question": "Comparé à un roulement à éléments roulants, un palier lisse est en général :",
       "options": [
+        "Plus tolérant aux chocs et à la contamination, mais limité à des vitesses de rotation plus faibles",
         "Toujours plus rapide à haute vitesse de rotation",
-        "Totalement insensible à l'usure, quelle que soit la charge appliquée",
-        "Plus tolérant aux chocs et à la contamination, mais limité à des vitesses de rotation plus faibles"
+        "Totalement insensible à l'usure, quelle que soit la charge appliquée"
       ],
-      "bonne": 2,
+      "bonne": 0,
       "explication": "Un palier lisse est en général plus tolérant aux chocs et à la contamination qu'un roulement à éléments roulants, mais reste limité à des vitesses de rotation plus faibles. Affirmer qu'il serait toujours plus rapide à haute vitesse inverse la réalité : c'est le roulement à éléments roulants qui convient mieux aux vitesses élevées. Et aucun palier, quel qu'il soit, n'est totalement insensible à l'usure : une charge appliquée use toujours une pièce en mouvement, à des degrés divers.",
       "source": "Notions générales de pratiques de maintenance aéronautique — roulements et paliers lisses"
     },
@@ -513,9 +513,9 @@
       "sous_chapitre": "M7A.8",
       "question": "Un jeu de denture (backlash) insuffisant entre deux engrenages expose principalement au risque de :",
       "options": [
-        "Choc à chaque inversion de sens de rotation",
+        "Patinage de la transmission sous charge",
         "Blocage de la transmission si les pièces se dilatent sous l'effet de la température",
-        "Patinage de la transmission sous charge"
+        "Choc à chaque inversion de sens de rotation"
       ],
       "bonne": 1,
       "explication": "Un jeu insuffisant expose au risque de blocage si les pièces se dilatent sous l'effet de la température, faute d'espace suffisant entre les dents. Le choc à chaque inversion de sens est au contraire le risque associé à un jeu excessif, pas insuffisant. Et le patinage sous charge est un phénomène propre aux courroies ou aux chaînes mal tendues, pas au jeu de denture d'un engrenage, qui fonctionne par engrènement direct des dents plutôt que par adhérence.",
@@ -526,11 +526,11 @@
       "sous_chapitre": "M7A.9",
       "question": "Pourquoi le réglage de tension d'un câble de commande de vol se fait-il à l'aide d'un abaque température/tension ?",
       "options": [
-        "Parce que le câble et la structure ne se dilatent pas de la même façon selon la température",
         "Parce que la tension d'un câble de commande n'a aucune incidence sur la sécurité du vol",
+        "Parce que le câble et la structure ne se dilatent pas de la même façon selon la température",
         "Parce que la réglementation impose de changer la tension chaque jour, quelle que soit la température"
       ],
-      "bonne": 0,
+      "bonne": 1,
       "explication": "Le câble métallique et la structure qui le supporte ne se dilatent pas exactement de la même façon selon la température ambiante ; la tension correcte à une température donnée n'est donc pas la même qu'à une autre, d'où l'usage d'un abaque. Affirmer que la tension du câble n'a aucune incidence sur la sécurité contredit directement pourquoi ce réglage est pris aussi au sérieux. Et rien n'impose de changer la tension chaque jour indépendamment de la température : le réglage se fait lors d'une intervention, en tenant compte de la température du moment, pas selon un rythme quotidien fixe.",
       "source": "Notions générales de pratiques de maintenance aéronautique — réglage des câbles de commande"
     },
@@ -539,9 +539,9 @@
       "sous_chapitre": "M7A.9",
       "question": "Un câble de commande trop détendu expose principalement au risque de :",
       "options": [
-        "Se rompre immédiatement sous l'effet de son propre poids",
+        "Un simple retard de transmission de la commande, sans autre conséquence sur le circuit",
         "Prendre du mou et risquer de sauter hors de sa gorge de poulie",
-        "Un simple retard de transmission de la commande, sans autre conséquence sur le circuit"
+        "Se rompre immédiatement sous l'effet de son propre poids"
       ],
       "bonne": 1,
       "explication": "Un câble trop détendu prend du mou, ce qui se traduit par un jeu ressenti au poste de pilotage et augmente le risque qu'il saute hors de sa gorge de poulie — un risque structurel pour le circuit, pas un simple inconvénient de confort. Un câble ne se rompt pas sous son propre poids du simple fait d'être détendu : ce n'est pas une conséquence réaliste de ce défaut. Et réduire l'effet à un simple retard « sans autre conséquence » sous-estime le risque réel : le déraillement du câble hors de sa poulie n'a rien d'un inconvénient mineur.",
@@ -552,11 +552,11 @@
       "sous_chapitre": "M7A.9",
       "question": "Pourquoi un ridoir (turnbuckle) doit-il être freiné après réglage de la tension ?",
       "options": [
-        "Pour permettre un réglage plus rapide lors de la prochaine intervention",
+        "Pour l'empêcher de se dévisser progressivement sous l'effet des vibrations en service",
         "Parce que le freinage améliore la précision de la tension mesurée",
-        "Pour l'empêcher de se dévisser progressivement sous l'effet des vibrations en service"
+        "Pour permettre un réglage plus rapide lors de la prochaine intervention"
       ],
-      "bonne": 2,
+      "bonne": 0,
       "explication": "Le freinage empêche le ridoir de se dévisser progressivement sous l'effet des vibrations en service, ce qui ferait dériver la tension réglée sans qu'on s'en aperçoive. Le freinage n'a aucun effet sur la rapidité d'une intervention future : il s'agit d'une mesure de sécurité, pas de commodité. Et il n'améliore pas non plus la précision de la mesure de tension, qui a déjà été faite avant le freinage, au moment du réglage lui-même.",
       "source": "Notions générales de pratiques de maintenance aéronautique — freinage des ridoirs"
     },
@@ -565,11 +565,11 @@
       "sous_chapitre": "M7A.9",
       "question": "Les orifices d'inspection sur le corps d'un ridoir permettent de vérifier, sans démontage :",
       "options": [
-        "Qu'un filetage suffisant reste engagé de chaque côté",
         "Que la tension du câble correspond exactement à l'abaque",
+        "Qu'un filetage suffisant reste engagé de chaque côté",
         "Que le câble n'a subi aucune corrosion interne"
       ],
-      "bonne": 0,
+      "bonne": 1,
       "explication": "Ces orifices permettent de vérifier visuellement qu'un filetage suffisant reste engagé de chaque côté du ridoir, un contrôle simple et rapide sans démontage. Ils ne renseignent en rien sur la tension réelle du câble, qui se mesure avec un tensiomètre et se compare à l'abaque, pas par une inspection visuelle du corps du ridoir. Et ils ne permettent pas non plus de détecter une corrosion interne du câble lui-même, invisible à cet endroit précis.",
       "source": "Notions générales de pratiques de maintenance aéronautique — inspection visuelle des ridoirs"
     },
@@ -604,11 +604,11 @@
       "sous_chapitre": "M7A.10",
       "question": "La décision de réparer ou de remplacer une pièce endommagée se base sur :",
       "options": [
-        "Les limites définies par le SRM ou l'AMM applicable",
+        "Le coût comparé de la réparation et du remplacement",
         "L'appréciation personnelle du technicien selon son expérience",
-        "Le coût comparé de la réparation et du remplacement"
+        "Les limites définies par le SRM ou l'AMM applicable"
       ],
-      "bonne": 0,
+      "bonne": 2,
       "explication": "Cette décision se base toujours sur les limites définies par le manuel de réparation structurale (SRM) ou l'AMM applicable, qui précisent jusqu'où une réparation reste autorisée et à partir de quand le remplacement s'impose. Elle n'est jamais laissée à l'appréciation personnelle du technicien, aussi expérimenté soit-il, ni décidée sur la base d'une simple comparaison de coût : le critère déterminant est la conformité aux limites documentées, pas une évaluation économique.",
       "source": "Notions générales de pratiques de maintenance aéronautique — décision réparation/remplacement"
     },
@@ -630,11 +630,11 @@
       "sous_chapitre": "M7A.10",
       "question": "Pourquoi les données de masse et centrage d'un aéronef doivent-elles être mises à jour après une modification, même mineure ?",
       "options": [
-        "Parce que la masse à vide d'un aéronef ne peut légalement pas varier une fois certifiée",
         "Parce que l'équipage utilise ces données enregistrées, pas la masse réelle du jour, pour préparer chaque vol",
+        "Parce que la masse à vide d'un aéronef ne peut légalement pas varier une fois certifiée",
         "Parce que la pesée est uniquement requise après un incident grave"
       ],
-      "bonne": 1,
+      "bonne": 0,
       "explication": "L'équipage prépare chaque vol à partir des données de masse et centrage enregistrées, pas à partir d'une pesée refaite avant chaque décollage : si ces données ne reflètent plus la réalité après une modification, un calcul fait pourtant correctement peut mener à dépasser une limite réelle sans que rien ne le signale. Rien n'empêche la masse à vide réelle d'un aéronef de varier après une modification : c'est précisément pour cela que la documentation doit être mise à jour, pas parce que la variation serait interdite. Et la pesée n'est pas réservée aux seuls incidents graves : une modification ou une réparation ordinaire peut tout autant la justifier.",
       "source": "Notions générales de pratiques de maintenance aéronautique — mise à jour des données de masse et centrage"
     },
