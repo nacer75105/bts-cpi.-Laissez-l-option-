@@ -1,0 +1,72 @@
+<div id="schema-m1117-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1117-wrap .m1117-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m1117-wrap .m1117-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1117-wrap .m1117-diagram { position:relative; height:150px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; display:flex; align-items:flex-end; justify-content:center; gap:60px; padding:14px; }
+#schema-m1117-wrap .m1117-col { display:flex; flex-direction:column; align-items:center; }
+#schema-m1117-wrap .m1117-tank { width:60px; height:100px; border:2px solid #4a76a8; border-radius:4px; background:#fff; position:relative; display:flex; align-items:flex-end; overflow:hidden; }
+#schema-m1117-wrap .m1117-fuel { width:100%; background:#7fa8d9; transition: height 0.3s; }
+#schema-m1117-wrap .m1117-label { font-size:0.66em; color:#555; text-align:center; margin-top:6px; }
+#schema-m1117-wrap .m1117-transfer { position:absolute; left:50%; top:60px; width:80px; height:10px; margin-left:-40px; border-radius:5px; background:#ccc; transition: background 0.2s; }
+#schema-m1117-wrap .m1117-transfer.active { background:#e0a800; }
+#schema-m1117-wrap .m1117-transfer-label { position:absolute; left:50%; top:36px; transform:translateX(-50%); font-size:0.62em; color:#555; text-align:center; width:120px; }
+#schema-m1117-wrap .m1117-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Transfert de carburant :</strong> comparez deux réservoirs équilibrés et un rééquilibrage en cours.</p>
+
+<button class="m1117-btn active" id="m1117-btn-equilibre">Réservoirs équilibrés</button>
+<button class="m1117-btn" id="m1117-btn-transfert">Transfert en cours (rééquilibrage)</button>
+
+<div class="m1117-diagram">
+  <div class="m1117-col">
+    <div class="m1117-tank"><div class="m1117-fuel" id="m1117-fuel-g" style="height:60%;"></div></div>
+    <div class="m1117-label">Réservoir gauche</div>
+  </div>
+  <div class="m1117-transfer" id="m1117-transfer"></div>
+  <div class="m1117-transfer-label" id="m1117-transfer-label">Pompe et valve de transfert (inactives)</div>
+  <div class="m1117-col">
+    <div class="m1117-tank"><div class="m1117-fuel" id="m1117-fuel-d" style="height:60%;"></div></div>
+    <div class="m1117-label">Réservoir droit</div>
+  </div>
+</div>
+
+<div class="m1117-caption" id="m1117-caption">Ce schéma compare deux réservoirs équilibrés et un rééquilibrage en cours. Vue actuelle — équilibrés : les deux réservoirs contiennent une quantité comparable de carburant, la pompe de transfert reste inactive. Cliquez sur « Transfert en cours » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1117-wrap');
+  if (!wrap) { return; }
+  var btnEquilibre = wrap.querySelector('#m1117-btn-equilibre');
+  var btnTransfert = wrap.querySelector('#m1117-btn-transfert');
+  var fuelG = wrap.querySelector('#m1117-fuel-g');
+  var fuelD = wrap.querySelector('#m1117-fuel-d');
+  var transfer = wrap.querySelector('#m1117-transfer');
+  var transferLabel = wrap.querySelector('#m1117-transfer-label');
+  var caption = wrap.querySelector('#m1117-caption');
+
+  function showEquilibre() {
+    btnEquilibre.className = 'm1117-btn active';
+    btnTransfert.className = 'm1117-btn';
+    fuelG.style.height = '60%';
+    fuelD.style.height = '60%';
+    transfer.classList.remove('active');
+    transferLabel.textContent = 'Pompe et valve de transfert (inactives)';
+    caption.textContent = "Ce schéma compare deux réservoirs équilibrés et un rééquilibrage en cours. Vue actuelle — équilibrés : les deux réservoirs contiennent une quantité comparable de carburant, la pompe de transfert reste inactive. Cliquez sur « Transfert en cours » pour comparer.";
+  }
+
+  function showTransfert() {
+    btnEquilibre.className = 'm1117-btn';
+    btnTransfert.className = 'm1117-btn active';
+    fuelG.style.height = '35%';
+    fuelD.style.height = '75%';
+    transfer.classList.add('active');
+    transferLabel.textContent = 'Pompe et valve de transfert (actives)';
+    caption.textContent = "Transfert en cours : le réservoir gauche, plus consommé, cède du carburant au réservoir droit via la pompe et la valve de transfert, pour rétablir l'équilibre entre les deux ailes (rappel M11A.2 : stabilité). Cliquez sur « Réservoirs équilibrés » pour revenir à l'autre vue.";
+  }
+
+  btnEquilibre.addEventListener('click', showEquilibre);
+  btnTransfert.addEventListener('click', showTransfert);
+})();
+</script>

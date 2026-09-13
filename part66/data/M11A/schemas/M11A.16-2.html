@@ -1,0 +1,73 @@
+<div id="schema-m1116b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1116b-wrap .m1116b-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m1116b-wrap .m1116b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1116b-wrap .m1116b-diagram { position:relative; min-height:130px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; display:flex; align-items:flex-end; justify-content:center; gap:36px; padding:14px; }
+#schema-m1116b-wrap .m1116b-col { display:flex; flex-direction:column; align-items:center; }
+#schema-m1116b-wrap .m1116b-bar-wrap { width:34px; height:80px; border:1.5px solid #888; border-radius:4px; background:#fff; position:relative; display:flex; align-items:flex-end; }
+#schema-m1116b-wrap .m1116b-bar { width:100%; background:#bfe3f5; border-top:2px solid #7fb8d9; transition: height 0.2s; }
+#schema-m1116b-wrap .m1116b-label { font-size:0.64em; color:#555; text-align:center; margin-top:6px; max-width:100px; }
+#schema-m1116b-wrap .m1116b-arrow { font-size:1.3em; color:#888; align-self:center; margin-bottom:36px; }
+#schema-m1116b-wrap .m1116b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Anti-givrage continu ou dégivrage par cycles :</strong> comparez l'évolution de l'épaisseur de givre selon la stratégie.</p>
+
+<button class="m1116b-btn active" id="m1116b-btn-anti">Anti-givrage (continu)</button>
+<button class="m1116b-btn" id="m1116b-btn-de">Dégivrage (par cycles)</button>
+
+<div class="m1116b-diagram">
+  <div class="m1116b-col">
+    <div class="m1116b-bar-wrap"><div class="m1116b-bar" id="m1116b-bar-continu" style="height:6%;"></div></div>
+    <div class="m1116b-label" id="m1116b-label-continu">Givre : niveau quasi nul, maintenu en continu</div>
+  </div>
+  <div class="m1116b-col" id="m1116b-col-avant" style="display:none;">
+    <div class="m1116b-bar-wrap"><div class="m1116b-bar" id="m1116b-bar-avant" style="height:85%;"></div></div>
+    <div class="m1116b-label">Juste avant un cycle</div>
+  </div>
+  <div class="m1116b-arrow" id="m1116b-arrow" style="display:none;">→</div>
+  <div class="m1116b-col" id="m1116b-col-apres" style="display:none;">
+    <div class="m1116b-bar-wrap"><div class="m1116b-bar" id="m1116b-bar-apres" style="height:10%;"></div></div>
+    <div class="m1116b-label">Juste après un cycle</div>
+  </div>
+</div>
+
+<div class="m1116b-caption" id="m1116b-caption">Ce schéma compare l'évolution de l'épaisseur de givre selon la stratégie de protection. Vue actuelle — anti-givrage : la surface reste en permanence au-dessus de la température de congélation, le givre ne s'y forme quasiment jamais. Cliquez sur « Dégivrage » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1116b-wrap');
+  if (!wrap) { return; }
+  var btnAnti = wrap.querySelector('#m1116b-btn-anti');
+  var btnDe = wrap.querySelector('#m1116b-btn-de');
+  var colContinu = wrap.querySelector('#m1116b-bar-continu').parentElement.parentElement;
+  var colAvant = wrap.querySelector('#m1116b-col-avant');
+  var colApres = wrap.querySelector('#m1116b-col-apres');
+  var arrow = wrap.querySelector('#m1116b-arrow');
+  var caption = wrap.querySelector('#m1116b-caption');
+
+  function showAnti() {
+    btnAnti.className = 'm1116b-btn active';
+    btnDe.className = 'm1116b-btn';
+    colContinu.style.display = 'flex';
+    colAvant.style.display = 'none';
+    colApres.style.display = 'none';
+    arrow.style.display = 'none';
+    caption.textContent = "Ce schéma compare l'évolution de l'épaisseur de givre selon la stratégie de protection. Vue actuelle — anti-givrage : la surface reste en permanence au-dessus de la température de congélation, le givre ne s'y forme quasiment jamais. Cliquez sur « Dégivrage » pour comparer.";
+  }
+
+  function showDe() {
+    btnAnti.className = 'm1116b-btn';
+    btnDe.className = 'm1116b-btn active';
+    colContinu.style.display = 'none';
+    colAvant.style.display = 'flex';
+    colApres.style.display = 'flex';
+    arrow.style.display = 'block';
+    caption.textContent = "Dégivrage : contrairement à l'anti-givrage continu, cette stratégie laisse le givre s'accumuler entre deux cycles, puis l'élimine d'un coup (par exemple en gonflant et dégonflant une surface souple) — l'épaisseur de givre oscille donc dans le temps plutôt que de rester quasi nulle en permanence. Cliquez sur « Anti-givrage » pour revenir à l'autre vue.";
+  }
+
+  btnAnti.addEventListener('click', showAnti);
+  btnDe.addEventListener('click', showDe);
+})();
+</script>

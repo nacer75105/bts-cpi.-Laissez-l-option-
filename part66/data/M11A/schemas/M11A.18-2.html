@@ -1,0 +1,63 @@
+<div id="schema-m1118b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1118b-wrap .m1118b-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m1118b-wrap .m1118b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1118b-wrap .m1118b-chain { position:relative; min-height:110px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; display:flex; align-items:center; justify-content:center; gap:4px; flex-wrap:wrap; padding:10px; }
+#schema-m1118b-wrap .m1118b-box { padding:8px 9px; border-radius:6px; border:1.5px solid #4a76a8; background:#7fa8d9; color:#fff; font-size:0.66em; text-align:center; }
+#schema-m1118b-wrap .m1118b-arrow { font-size:1.1em; color:#888; }
+#schema-m1118b-wrap .m1118b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Alimentation du bus DC :</strong> comparez la source générateur (via TRU) et la source batterie (directe).</p>
+
+<button class="m1118b-btn active" id="m1118b-btn-gen">Source : générateur (AC)</button>
+<button class="m1118b-btn" id="m1118b-btn-bat">Source : batterie (DC)</button>
+
+<div class="m1118b-chain">
+  <div class="m1118b-box" id="m1118b-b1">Générateur (courant alternatif)</div>
+  <div class="m1118b-arrow" id="m1118b-a1">→</div>
+  <div class="m1118b-box" id="m1118b-b2">TRU (redresseur)</div>
+  <div class="m1118b-arrow" id="m1118b-a2">→</div>
+  <div class="m1118b-box">Bus DC (courant continu)</div>
+</div>
+
+<div class="m1118b-caption" id="m1118b-caption">Ce schéma compare la source générateur et la source batterie pour le bus DC. Vue actuelle — source générateur : le courant alternatif produit par le générateur traverse le TRU, qui le convertit en courant continu pour le bus DC. Cliquez sur « Source : batterie » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1118b-wrap');
+  if (!wrap) { return; }
+  var btnGen = wrap.querySelector('#m1118b-btn-gen');
+  var btnBat = wrap.querySelector('#m1118b-btn-bat');
+  var b1 = wrap.querySelector('#m1118b-b1');
+  var a1 = wrap.querySelector('#m1118b-a1');
+  var b2 = wrap.querySelector('#m1118b-b2');
+  var a2 = wrap.querySelector('#m1118b-a2');
+  var caption = wrap.querySelector('#m1118b-caption');
+
+  function showGen() {
+    btnGen.className = 'm1118b-btn active';
+    btnBat.className = 'm1118b-btn';
+    b1.textContent = 'Générateur (courant alternatif)';
+    a1.style.display = 'inline';
+    b2.style.display = 'block';
+    b2.textContent = 'TRU (redresseur)';
+    a2.style.display = 'inline';
+    caption.textContent = "Ce schéma compare la source générateur et la source batterie pour le bus DC. Vue actuelle — source générateur : le courant alternatif produit par le générateur traverse le TRU, qui le convertit en courant continu pour le bus DC. Cliquez sur « Source : batterie » pour comparer.";
+  }
+
+  function showBat() {
+    btnGen.className = 'm1118b-btn';
+    btnBat.className = 'm1118b-btn active';
+    b1.textContent = 'Batterie (courant continu)';
+    a1.style.display = 'inline';
+    b2.style.display = 'none';
+    a2.style.display = 'none';
+    caption.textContent = "Source batterie : la batterie stocke déjà son électricité en courant continu (rappel M11A.18) ; elle alimente donc directement le bus DC, sans passer par le TRU, dont le rôle de conversion alternatif→continu ne concerne que la source générateur. Cliquez sur « Source : générateur » pour revenir à l'autre vue.";
+  }
+
+  btnGen.addEventListener('click', showGen);
+  btnBat.addEventListener('click', showBat);
+})();
+</script>

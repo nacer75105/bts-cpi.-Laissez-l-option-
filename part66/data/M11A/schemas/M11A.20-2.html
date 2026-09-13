@@ -1,0 +1,73 @@
+<div id="schema-m1120b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1120b-wrap .m1120b-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m1120b-wrap .m1120b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1120b-wrap .m1120b-diagram { position:relative; min-height:150px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; display:flex; flex-direction:column; gap:10px; padding:14px; justify-content:center; }
+#schema-m1120b-wrap .m1120b-row { display:flex; align-items:center; justify-content:center; gap:8px; }
+#schema-m1120b-wrap .m1120b-box { padding:8px 9px; border-radius:6px; border:1.5px solid #4a76a8; background:#7fa8d9; color:#fff; font-size:0.64em; text-align:center; transition: background 0.2s, border-color 0.2s, opacity 0.2s; }
+#schema-m1120b-wrap .m1120b-box.off { background:#ccc; border-color:#999; color:#666; opacity:0.6; }
+#schema-m1120b-wrap .m1120b-arrow { font-size:1.05em; color:#888; }
+#schema-m1120b-wrap .m1120b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Indépendance des instruments de secours :</strong> comparez le système principal opérationnel et sa panne.</p>
+
+<button class="m1120b-btn active" id="m1120b-btn-normal">Système principal opérationnel</button>
+<button class="m1120b-btn" id="m1120b-btn-panne">Panne du système principal</button>
+
+<div class="m1120b-diagram">
+  <div class="m1120b-row">
+    <div class="m1120b-box" id="m1120b-bus-principal">Bus électrique principal : actif</div>
+    <div class="m1120b-arrow">→</div>
+    <div class="m1120b-box" id="m1120b-efis">Écran principal (EFIS) : affiché</div>
+  </div>
+  <div class="m1120b-row">
+    <div class="m1120b-box" id="m1120b-batterie-secours">Batterie de secours dédiée : en veille</div>
+    <div class="m1120b-arrow">→</div>
+    <div class="m1120b-box" id="m1120b-standby">Instruments de secours : disponibles, non sollicités</div>
+  </div>
+</div>
+
+<div class="m1120b-caption" id="m1120b-caption">Ce schéma compare le système principal opérationnel et sa panne. Vue actuelle — opérationnel : l'écran principal (EFIS) affiche les indications à partir du bus électrique principal ; les instruments de secours, alimentés séparément, restent disponibles mais non sollicités. Cliquez sur « Panne du système principal » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1120b-wrap');
+  if (!wrap) { return; }
+  var btnNormal = wrap.querySelector('#m1120b-btn-normal');
+  var btnPanne = wrap.querySelector('#m1120b-btn-panne');
+  var busPrincipal = wrap.querySelector('#m1120b-bus-principal');
+  var efis = wrap.querySelector('#m1120b-efis');
+  var batterieSecours = wrap.querySelector('#m1120b-batterie-secours');
+  var standby = wrap.querySelector('#m1120b-standby');
+  var caption = wrap.querySelector('#m1120b-caption');
+
+  function showNormal() {
+    btnNormal.className = 'm1120b-btn active';
+    btnPanne.className = 'm1120b-btn';
+    busPrincipal.textContent = 'Bus électrique principal : actif';
+    busPrincipal.classList.remove('off');
+    efis.textContent = 'Écran principal (EFIS) : affiché';
+    efis.classList.remove('off');
+    batterieSecours.textContent = 'Batterie de secours dédiée : en veille';
+    standby.textContent = 'Instruments de secours : disponibles, non sollicités';
+    caption.textContent = "Ce schéma compare le système principal opérationnel et sa panne. Vue actuelle — opérationnel : l'écran principal (EFIS) affiche les indications à partir du bus électrique principal ; les instruments de secours, alimentés séparément, restent disponibles mais non sollicités. Cliquez sur « Panne du système principal » pour comparer.";
+  }
+
+  function showPanne() {
+    btnNormal.className = 'm1120b-btn';
+    btnPanne.className = 'm1120b-btn active';
+    busPrincipal.textContent = 'Bus électrique principal : en défaut';
+    busPrincipal.classList.add('off');
+    efis.textContent = 'Écran principal (EFIS) : indisponible';
+    efis.classList.add('off');
+    batterieSecours.textContent = 'Batterie de secours dédiée : en fonctionnement';
+    standby.textContent = 'Instruments de secours : actifs, seule indication disponible';
+    caption.textContent = "Panne du système principal : le bus électrique principal et l'écran EFIS qu'il alimente sont indisponibles, mais les instruments de secours, raccordés à leur propre batterie dédiée et à leurs propres prises Pitot et statique, continuent de fournir vitesse, altitude et assiette à l'équipage. Cliquez sur « Système principal opérationnel » pour revenir à l'autre vue.";
+  }
+
+  btnNormal.addEventListener('click', showNormal);
+  btnPanne.addEventListener('click', showPanne);
+})();
+</script>

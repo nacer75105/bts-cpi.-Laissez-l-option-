@@ -1,0 +1,64 @@
+<div id="schema-m1119-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1119-wrap .m1119-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m1119-wrap .m1119-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1119-wrap .m1119-diagram { position:relative; min-height:150px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; display:flex; align-items:flex-end; justify-content:center; gap:20px; padding:14px; }
+#schema-m1119-wrap .m1119-col { display:flex; flex-direction:column; align-items:center; }
+#schema-m1119-wrap .m1119-bar-wrap { width:44px; height:90px; border:1.5px solid #888; border-radius:4px; background:#fff; position:relative; display:flex; align-items:flex-end; }
+#schema-m1119-wrap .m1119-bar { width:100%; background:#7fa8d9; transition: height 0.3s, background 0.3s; }
+#schema-m1119-wrap .m1119-bar.essentiel { background:#5aa06a; }
+#schema-m1119-wrap .m1119-bar.dim { background:#ccc; }
+#schema-m1119-wrap .m1119-label { font-size:0.62em; color:#555; text-align:center; margin-top:6px; max-width:90px; }
+#schema-m1119-wrap .m1119-axis { position:absolute; top:6px; left:10px; font-size:0.6em; color:#888; }
+#schema-m1119-wrap .m1119-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Hiérarchie des bus électriques :</strong> comparez le fonctionnement normal et un délestage.</p>
+
+<button class="m1119-btn active" id="m1119-btn-normal">Fonctionnement normal</button>
+<button class="m1119-btn" id="m1119-btn-delestage">Délestage (ressource réduite)</button>
+
+<div class="m1119-diagram">
+  <div class="m1119-axis">Hauteur de barre = niveau d'alimentation du bus</div>
+  <div class="m1119-col"><div class="m1119-bar-wrap"><div class="m1119-bar essentiel" id="m1119-bar-essentiel" style="height:90%;"></div></div><div class="m1119-label">Bus essentiel</div></div>
+  <div class="m1119-col"><div class="m1119-bar-wrap"><div class="m1119-bar" id="m1119-bar-p1" style="height:80%;"></div></div><div class="m1119-label">Bus principal 1</div></div>
+  <div class="m1119-col"><div class="m1119-bar-wrap"><div class="m1119-bar" id="m1119-bar-p2" style="height:80%;"></div></div><div class="m1119-label">Bus principal 2</div></div>
+  <div class="m1119-col"><div class="m1119-bar-wrap"><div class="m1119-bar" id="m1119-bar-confort" style="height:70%;"></div></div><div class="m1119-label">Bus confort passager</div></div>
+</div>
+
+<div class="m1119-caption" id="m1119-caption">Ce schéma compare le fonctionnement normal et un délestage électrique. Vue actuelle — normal : toutes les barres sont alimentées, y compris le bus confort passager, les sources électriques suffisant à couvrir l'ensemble des besoins. Cliquez sur « Délestage » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1119-wrap');
+  if (!wrap) { return; }
+  var btnNormal = wrap.querySelector('#m1119-btn-normal');
+  var btnDelestage = wrap.querySelector('#m1119-btn-delestage');
+  var barP1 = wrap.querySelector('#m1119-bar-p1');
+  var barP2 = wrap.querySelector('#m1119-bar-p2');
+  var barConfort = wrap.querySelector('#m1119-bar-confort');
+  var caption = wrap.querySelector('#m1119-caption');
+
+  function showNormal() {
+    btnNormal.className = 'm1119-btn active';
+    btnDelestage.className = 'm1119-btn';
+    barP1.style.height = '80%'; barP1.classList.remove('dim');
+    barP2.style.height = '80%'; barP2.classList.remove('dim');
+    barConfort.style.height = '70%'; barConfort.classList.remove('dim');
+    caption.textContent = "Ce schéma compare le fonctionnement normal et un délestage électrique. Vue actuelle — normal : toutes les barres sont alimentées, y compris le bus confort passager, les sources électriques suffisant à couvrir l'ensemble des besoins. Cliquez sur « Délestage » pour comparer.";
+  }
+
+  function showDelestage() {
+    btnNormal.className = 'm1119-btn';
+    btnDelestage.className = 'm1119-btn active';
+    barP1.style.height = '40%'; barP1.classList.add('dim');
+    barP2.style.height = '0%'; barP2.classList.add('dim');
+    barConfort.style.height = '0%'; barConfort.classList.add('dim');
+    caption.textContent = "Délestage : avec une ressource électrique réduite, l'alimentation des équipements les moins essentiels (confort passager, puis une partie des bus principaux) est coupée en priorité, pour concentrer la puissance restante sur le bus essentiel, qui reste pleinement alimenté. Cliquez sur « Fonctionnement normal » pour revenir à l'autre vue.";
+  }
+
+  btnNormal.addEventListener('click', showNormal);
+  btnDelestage.addEventListener('click', showDelestage);
+})();
+</script>

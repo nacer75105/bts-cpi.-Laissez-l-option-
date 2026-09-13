@@ -1281,6 +1281,82 @@ valider par l'utilisateur avant de passer `disponible` à `True`** (même
 étape que les lots précédents — voir le retour utilisateur du lot 1 sur les
 légendes permanentes, qui n'était apparu qu'au test réel en navigateur).
 
+### Lot 4 (M11A.16-M11A.20, 5 fiches, 45 questions, 10 schémas) — relu, 2 rounds de correction
+
+Protection contre le givre et la pluie, circuit carburant de la cellule
+(réservoirs, transfert, jaugeage), génération électrique, réseau/
+distribution/protection électrique, instruments de vol. Lot rédigé après
+une coupure de connexion qui a interrompu la session juste avant l'écriture
+des fichiers (aucun fichier du lot 4 n'existait encore à la reprise) —
+repris de zéro sur la base du plan déjà établi.
+
+Relu par `relecteur-part66` en 3 rounds (1 relecture complète + 2
+vérifications ciblées) : le premier round a trouvé 4 BLOQUANT — la sonde
+Pitot décrite comme mesurant la « pression dynamique » au lieu de la
+« pression totale » (fiche M11A.20, M11A-0173, M11A-0175, caption de
+`M11A.20.html`), le terme « cavitation » employé à tort pour la
+vaporisation du carburant en conduite (en réalité un bouchon de vapeur/
+vapor lock, fiche M11A.17, M11A-0149, M11A-0150), le schéma
+`M11A.17-2.html` représentant deux pompes d'alimentation montées en série
+alors que la fiche parle de pompes indépendantes (donc en parallèle), et
+les 45 questions du lot ayant toutes `"bonne": 0` (violation du standard
+du projet qui demande une répartition dès la rédaction). Un premier
+correctif a résolu 3 de ces 4 points mais introduit une régression sur le
+quatrième (la correction Pitot avait remplacé l'erreur de terminologie par
+une sur-généralisation — « les trois instruments exploitent les deux
+pressions », contredite par le développement de la fiche elle-même qui dit
+l'inverse pour l'altimètre et le variomètre) et laissé passer une
+occurrence résiduelle dans un distracteur (M11A-0174) ainsi qu'une
+contradiction nouvelle entre la fiche M11A.18 (nouvellement corrigée pour
+distinguer CSD et IDG) et M11A-0155 (qui citait encore l'IDG comme exemple
+de « dispositif d'entraînement »). Un second correctif a résolu ces quatre
+points ; un troisième round de vérification n'a trouvé aucun BLOQUANT
+restant.
+
+Points À REVOIR traités dans la foulée des deux rounds de correction :
+plusieurs distracteurs absurdes ou auto-réfutés renforcés
+(M11A-0141, 0143, 0146, 0153, 0167, 0168, 0171, 0177) ; deux questions
+retravaillées pour ne plus se chevaucher (M11A-0149/M11A-0150) ; un renvoi
+croisé pointant la mauvaise fiche corrigé (M11A.17 renvoyait à M11A.4 au
+lieu de M11A.5 pour les longerons/nervures de la voilure) ; le mécanisme de
+réduction de la flexion de l'aile par le carburant en voilure reformulé
+(l'ancienne formulation, « poids réparti près du centre de portance »,
+restait physiquement approximative) ; la distinction avion à hélice/avion
+à turbine remplacée par turbopropulseur/avion à réaction pour la
+comparaison boots pneumatiques vs anti-givrage continu (un turbopropulseur
+est aussi un avion à turbine) ; la phrase de la fiche M11A.17 qui évitait
+de nommer le risque d'inflammabilité des vapeurs de carburant reformulée
+pour le nommer explicitement, sans détail de procédure ; deux divergences
+caption/libellé statique-JS corrigées (`M11A.17.html`, `M11A.20-2.html`,
+même classe de bug que celle documentée dans `C:\Users\pc\CLAUDE.md`) ;
+libellés de `M11A.19-2.html` renommés pour désigner les bons éléments
+(un segment de câble plutôt que « le bus » ou « l'équipement » eux-mêmes) ;
+un repère permanent ajouté sur `M11A.19.html` pour préciser ce que
+représente la hauteur des barres. Une régression JavaScript (apostrophe
+non échappée dans une chaîne à guillemets simples, introduite par un
+correctif de libellé sur `M11A.19-2.html`) a été détectée par un contrôle
+de syntaxe systématique (Node `new Function()` sur le contenu de chaque
+`<script>`) et corrigée avant le round de vérification suivant — ce
+contrôle de syntaxe est désormais recommandé après toute modification de
+libellé dans un schéma existant.
+
+Restent, en dette mineure assumée :
+- M11A-0150 — le critère de vaporisation du carburant est simplifié en
+  « pression du carburant maintenue au-dessus de la pression atmosphérique
+  environnante » ; le critère physique réel est la tension de vapeur du
+  carburant à sa température, un point plus fin qu'il n'a pas paru utile
+  de développer au niveau B1.1.
+- Léger recouvrement entre M11A-0146 (pourquoi la voilure humide existe :
+  poids + structure) et M11A-0153 (mécanisme précis de réduction de la
+  flexion) — pas un doublon strict, la frontière entre les deux s'est
+  resserrée après reformulation.
+- `schemas/M11A.16.html` — le libellé « Givre » masqué par `opacity: 0`
+  plutôt que `display: none` en vue anti-givrage : invisible à l'écran
+  mais techniquement présent et sélectionnable dans le DOM. Cosmétique.
+
+**Lot 4 relu et corrigé le 2026-09-13 ; reste à tester en local et faire
+valider par l'utilisateur avant de passer `disponible` à `True`.**
+
 ## M5.1 / M5.5 / M15.1-2 — bug résolu : génération de DOM à l'exécution
 (investigation menée le 2026-09-11, cause identifiée et corrigée)
 

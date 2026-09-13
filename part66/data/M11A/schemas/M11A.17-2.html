@@ -1,0 +1,75 @@
+<div id="schema-m1117b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1117b-wrap .m1117b-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m1117b-wrap .m1117b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1117b-wrap .m1117b-diagram { position:relative; min-height:150px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; display:flex; flex-direction:column; align-items:center; gap:6px; padding:14px; }
+#schema-m1117b-wrap .m1117b-row { display:flex; align-items:center; justify-content:center; gap:40px; }
+#schema-m1117b-wrap .m1117b-pump { width:150px; padding:10px 6px; border-radius:6px; border:2px solid #4a76a8; background:#7fa8d9; color:#fff; text-align:center; font-size:0.66em; transition: background 0.2s, border-color 0.2s; }
+#schema-m1117b-wrap .m1117b-pump.fail { background:#c0392b; border-color:#8e2a1f; }
+#schema-m1117b-wrap .m1117b-arrow { font-size:1.2em; color:#888; }
+#schema-m1117b-wrap .m1117b-label { font-size:0.62em; color:#555; text-align:center; margin-top:4px; }
+#schema-m1117b-wrap .m1117b-col { display:flex; flex-direction:column; align-items:center; }
+#schema-m1117b-wrap .m1117b-dest { margin-top:4px; padding:10px 12px; border-radius:6px; border:2px solid #3d7a4d; background:#5aa06a; color:#fff; text-align:center; font-size:0.66em; }
+#schema-m1117b-wrap .m1117b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Redondance des pompes d'alimentation :</strong> deux pompes en parallèle sur le même réservoir — comparez fonctionnement normal et panne d'une pompe.</p>
+
+<button class="m1117b-btn active" id="m1117b-btn-normal">Pompe principale opérationnelle</button>
+<button class="m1117b-btn" id="m1117b-btn-panne">Pompe principale en panne</button>
+
+<div class="m1117b-diagram">
+  <div class="m1117b-row">
+    <div class="m1117b-col">
+      <div class="m1117b-pump" id="m1117b-pump-principale">Pompe principale : en fonctionnement</div>
+      <div class="m1117b-label">Pompe immergée principale</div>
+    </div>
+    <div class="m1117b-col">
+      <div class="m1117b-pump" id="m1117b-pump-secours" style="background:#999; border-color:#777;">Pompe de secours : en veille</div>
+      <div class="m1117b-label">Pompe immergée de secours (montée en parallèle, même réservoir)</div>
+    </div>
+  </div>
+  <div class="m1117b-arrow">↓ ↓</div>
+  <div class="m1117b-dest">Alimentation moteur : assurée</div>
+  <div class="m1117b-label">Vers le circuit moteur (M15.8)</div>
+</div>
+
+<div class="m1117b-caption" id="m1117b-caption">Ce schéma compare le fonctionnement normal et la panne d'une pompe principale. Vue actuelle — opérationnelle : la pompe principale assure seule la pression positive nécessaire, la pompe de secours, montée en parallèle sur le même réservoir, reste en veille sans intervenir. Cliquez sur « Pompe principale en panne » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1117b-wrap');
+  if (!wrap) { return; }
+  var btnNormal = wrap.querySelector('#m1117b-btn-normal');
+  var btnPanne = wrap.querySelector('#m1117b-btn-panne');
+  var pumpPrincipale = wrap.querySelector('#m1117b-pump-principale');
+  var pumpSecours = wrap.querySelector('#m1117b-pump-secours');
+  var caption = wrap.querySelector('#m1117b-caption');
+
+  function showNormal() {
+    btnNormal.className = 'm1117b-btn active';
+    btnPanne.className = 'm1117b-btn';
+    pumpPrincipale.textContent = 'Pompe principale : en fonctionnement';
+    pumpPrincipale.classList.remove('fail');
+    pumpSecours.textContent = 'Pompe de secours : en veille';
+    pumpSecours.style.background = '#999';
+    pumpSecours.style.borderColor = '#777';
+    caption.textContent = "Ce schéma compare le fonctionnement normal et la panne d'une pompe principale. Vue actuelle — opérationnelle : la pompe principale assure seule la pression positive nécessaire, la pompe de secours, montée en parallèle sur le même réservoir, reste en veille sans intervenir. Cliquez sur « Pompe principale en panne » pour comparer.";
+  }
+
+  function showPanne() {
+    btnNormal.className = 'm1117b-btn';
+    btnPanne.className = 'm1117b-btn active';
+    pumpPrincipale.textContent = 'Pompe principale : en panne';
+    pumpPrincipale.classList.add('fail');
+    pumpSecours.textContent = 'Pompe de secours : prend le relais';
+    pumpSecours.style.background = '#7fa8d9';
+    pumpSecours.style.borderColor = '#4a76a8';
+    caption.textContent = "Pompe principale en panne : la pompe de secours, montée en parallèle sur le même réservoir et jusque-là en veille, prend seule le relais et continue d'assurer la pression positive vers le moteur, sur le même principe de redondance déjà rencontré pour l'hydraulique (rappel M11A.10). Cliquez sur « Pompe principale opérationnelle » pour revenir à l'autre vue.";
+  }
+
+  btnNormal.addEventListener('click', showNormal);
+  btnPanne.addEventListener('click', showPanne);
+})();
+</script>

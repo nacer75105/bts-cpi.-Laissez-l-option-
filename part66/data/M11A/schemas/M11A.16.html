@@ -1,0 +1,64 @@
+<div id="schema-m1116-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1116-wrap .m1116-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m1116-wrap .m1116-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1116-wrap .m1116-diagram { position:relative; height:130px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; display:flex; align-items:center; justify-content:center; }
+#schema-m1116-wrap .m1116-skin { position:relative; width:220px; height:70px; border:3px solid #555; border-top-left-radius:70px; border-bottom-left-radius:70px; border-top-right-radius:8px; border-bottom-right-radius:8px; background:#e9e9e9; }
+#schema-m1116-wrap .m1116-duct { position:absolute; left:14px; top:26px; width:150px; height:18px; border-radius:9px; background:#c9c9c9; border:1.5px solid #888; transition: background 0.2s; }
+#schema-m1116-wrap .m1116-duct.hot { background:#e0763a; border-color:#a84f22; }
+#schema-m1116-wrap .m1116-ice { position:absolute; left:-4px; top:-6px; width:28px; height:82px; border-radius:14px; background:#bfe3f5; border:2px solid #7fb8d9; opacity:1; transition: opacity 0.2s; }
+#schema-m1116-wrap .m1116-label { position:absolute; font-size:0.64em; color:#555; }
+#schema-m1116-wrap .m1116-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Anti-givrage du bord d'attaque :</strong> comparez une surface non protégée et une surface réchauffée par air prélevé.</p>
+
+<button class="m1116-btn active" id="m1116-btn-inactif">Sans protection</button>
+<button class="m1116-btn" id="m1116-btn-actif">Anti-givrage actif (air chaud)</button>
+
+<div class="m1116-diagram">
+  <div class="m1116-skin" id="m1116-skin">
+    <div class="m1116-ice" id="m1116-ice"></div>
+    <div class="m1116-label" id="m1116-ice-label" style="left:-6px; top:82px;">Givre</div>
+    <div class="m1116-duct" id="m1116-duct"></div>
+    <div class="m1116-label" id="m1116-duct-label" style="left:20px; top:6px;">Conduite d'air prélevé (interne)</div>
+    <div class="m1116-label" style="right:6px; bottom:2px;">Bord d'attaque (coupe)</div>
+  </div>
+</div>
+
+<div class="m1116-caption" id="m1116-caption">Ce schéma compare une surface non protégée et une surface anti-givrée. Vue actuelle — sans protection : une couche de givre se forme sur le bord d'attaque, aucun air chaud ne circulant dans la conduite interne. Cliquez sur « Anti-givrage actif » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1116-wrap');
+  if (!wrap) { return; }
+  var btnInactif = wrap.querySelector('#m1116-btn-inactif');
+  var btnActif = wrap.querySelector('#m1116-btn-actif');
+  var duct = wrap.querySelector('#m1116-duct');
+  var ice = wrap.querySelector('#m1116-ice');
+  var iceLabel = wrap.querySelector('#m1116-ice-label');
+  var caption = wrap.querySelector('#m1116-caption');
+
+  function showInactif() {
+    btnInactif.className = 'm1116-btn active';
+    btnActif.className = 'm1116-btn';
+    duct.classList.remove('hot');
+    ice.style.opacity = '1';
+    iceLabel.style.opacity = '1';
+    caption.textContent = "Ce schéma compare une surface non protégée et une surface anti-givrée. Vue actuelle — sans protection : une couche de givre se forme sur le bord d'attaque, aucun air chaud ne circulant dans la conduite interne. Cliquez sur « Anti-givrage actif » pour comparer.";
+  }
+
+  function showActif() {
+    btnInactif.className = 'm1116-btn';
+    btnActif.className = 'm1116-btn active';
+    duct.classList.add('hot');
+    ice.style.opacity = '0';
+    iceLabel.style.opacity = '0';
+    caption.textContent = "Anti-givrage actif : l'air prélevé chaud (rappel M11A.13) circule en continu dans la conduite interne et réchauffe la paroi extérieure par contact, empêchant toute formation de givre sur le bord d'attaque. Cliquez sur « Sans protection » pour revenir à l'autre vue.";
+  }
+
+  btnInactif.addEventListener('click', showInactif);
+  btnActif.addEventListener('click', showActif);
+})();
+</script>

@@ -1,0 +1,77 @@
+<div id="schema-m1118-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1118-wrap .m1118-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m1118-wrap .m1118-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1118-wrap .m1118-diagram { position:relative; min-height:130px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; display:flex; align-items:center; justify-content:center; gap:14px; padding:14px; flex-wrap:wrap; }
+#schema-m1118-wrap .m1118-src { width:100px; padding:10px 6px; border-radius:6px; border:2px solid #4a76a8; background:#7fa8d9; color:#fff; text-align:center; font-size:0.66em; transition: background 0.2s, border-color 0.2s, opacity 0.2s; }
+#schema-m1118-wrap .m1118-src.off { background:#ccc; border-color:#999; color:#666; }
+#schema-m1118-wrap .m1118-src.rescue { background:#e0a800; border-color:#a87a00; }
+#schema-m1118-wrap .m1118-label { font-size:0.62em; color:#555; text-align:center; margin-top:4px; }
+#schema-m1118-wrap .m1118-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Sources électriques de l'avion :</strong> comparez la génération normale et la perte totale des générateurs.</p>
+
+<button class="m1118-btn active" id="m1118-btn-normal">Génération normale</button>
+<button class="m1118-btn" id="m1118-btn-perte">Perte totale des générateurs</button>
+
+<div class="m1118-diagram">
+  <div><div class="m1118-src" id="m1118-gen-g">Générateur moteur gauche : actif</div><div class="m1118-label">Générateur moteur gauche</div></div>
+  <div><div class="m1118-src" id="m1118-gen-d">Générateur moteur droit : actif</div><div class="m1118-label">Générateur moteur droit</div></div>
+  <div><div class="m1118-src off" id="m1118-apu">APU : en secours (arrêté)</div><div class="m1118-label">Générateur APU</div></div>
+  <div><div class="m1118-src off" id="m1118-batterie">Batterie : en veille</div><div class="m1118-label">Batterie</div></div>
+  <div><div class="m1118-src off" id="m1118-rat">RAT : non déployée</div><div class="m1118-label">Éolienne de secours (RAT)</div></div>
+</div>
+
+<div class="m1118-caption" id="m1118-caption">Ce schéma compare la génération normale et une perte totale des générateurs. Vue actuelle — génération normale : les deux générateurs moteur alimentent l'avion, l'APU reste disponible en secours, la batterie et la RAT restent inactives. Cliquez sur « Perte totale des générateurs » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1118-wrap');
+  if (!wrap) { return; }
+  var btnNormal = wrap.querySelector('#m1118-btn-normal');
+  var btnPerte = wrap.querySelector('#m1118-btn-perte');
+  var genG = wrap.querySelector('#m1118-gen-g');
+  var genD = wrap.querySelector('#m1118-gen-d');
+  var apu = wrap.querySelector('#m1118-apu');
+  var batterie = wrap.querySelector('#m1118-batterie');
+  var rat = wrap.querySelector('#m1118-rat');
+  var caption = wrap.querySelector('#m1118-caption');
+
+  function showNormal() {
+    btnNormal.className = 'm1118-btn active';
+    btnPerte.className = 'm1118-btn';
+    genG.textContent = 'Générateur moteur gauche : actif';
+    genG.classList.remove('off');
+    genD.textContent = 'Générateur moteur droit : actif';
+    genD.classList.remove('off');
+    apu.textContent = 'APU : en secours (arrêté)';
+    apu.className = 'm1118-src off';
+    batterie.textContent = 'Batterie : en veille';
+    batterie.className = 'm1118-src off';
+    rat.textContent = 'RAT : non déployée';
+    rat.className = 'm1118-src off';
+    caption.textContent = "Ce schéma compare la génération normale et une perte totale des générateurs. Vue actuelle — génération normale : les deux générateurs moteur alimentent l'avion, l'APU reste disponible en secours, la batterie et la RAT restent inactives. Cliquez sur « Perte totale des générateurs » pour comparer.";
+  }
+
+  function showPerte() {
+    btnNormal.className = 'm1118-btn';
+    btnPerte.className = 'm1118-btn active';
+    genG.textContent = 'Générateur moteur gauche : perdu';
+    genG.classList.add('off');
+    genD.textContent = 'Générateur moteur droit : perdu';
+    genD.classList.add('off');
+    apu.textContent = 'APU : indisponible (supposé)';
+    apu.className = 'm1118-src off';
+    batterie.textContent = 'Batterie : en soutien';
+    batterie.className = 'm1118-src rescue';
+    rat.textContent = 'RAT : déployée, en fonctionnement';
+    rat.className = 'm1118-src rescue';
+    caption.textContent = "Perte totale des générateurs : dans cette situation improbable où les générateurs moteur et l'APU seraient indisponibles, l'éolienne de secours (RAT) se déploie automatiquement dans le flux d'air et fournit, avec la batterie, une puissance réduite mais suffisante aux équipements les plus essentiels. Cliquez sur « Génération normale » pour revenir à l'autre vue.";
+  }
+
+  btnNormal.addEventListener('click', showNormal);
+  btnPerte.addEventListener('click', showPerte);
+})();
+</script>

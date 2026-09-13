@@ -1755,6 +1755,591 @@
       "bonne": 2,
       "explication": "Une enveloppe étanche est nécessaire mais ne suffit pas : il faut aussi un moyen de contrôler précisément la pression à l'intérieur de cette enveloppe (la valve de contrôle de sortie et les valves de sécurité), ce qui est le rôle du système de pressurisation proprement dit. Un simple renforcement local de l'étanchéité ne remplace donc pas ce système de contrôle, et l'étanchéité joue bien un rôle indispensable en complément de ce système, pas à sa place.",
       "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0137",
+      "sous_chapitre": "M11A.16",
+      "question": "Pourquoi le givre réduit-il la portance produite par une aile ?",
+      "options": [
+        "En rugosifiant et en irrégularisant la surface du profil, il perturbe l'écoulement de l'air, réduisant la portance et augmentant la traînée",
+        "Le givre réduit la portance uniquement parce qu'il alourdit l'aile, sans aucun effet sur l'écoulement de l'air à sa surface",
+        "Le givre n'a en réalité aucun effet mesurable sur la portance tant qu'il ne recouvre pas une grande partie de la surface de l'aile"
+      ],
+      "bonne": 0,
+      "explication": "En rugosifiant et en irrégularisant la surface du profil (rappel M11A.1 : la portance dépend de sa forme lisse et précise), le givre perturbe l'écoulement de l'air, réduisant la portance et augmentant la traînée. Ce n'est donc pas seulement une question de poids supplémentaire, et l'effet sur l'écoulement se manifeste dès une fine couche, pas seulement au-delà d'une surface importante.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0138",
+      "sous_chapitre": "M11A.16",
+      "question": "Pourquoi les entrées d'air moteur (nacelles) sont-elles une zone particulièrement critique pour la protection contre le givre ?",
+      "options": [
+        "Le givre s'y forme systématiquement plus vite qu'ailleurs sur l'avion, pour des raisons purement climatiques locales",
+        "Un morceau de givre qui se détacherait pourrait être ingéré par le moteur et l'endommager",
+        "Cette zone n'est protégée par aucun autre système de l'avion, contrairement au reste de la cellule"
+      ],
+      "bonne": 1,
+      "explication": "Un morceau de givre détaché de l'entrée d'air pourrait être ingéré par le moteur et l'endommager, une conséquence plus grave que la seule perte locale de portance. Rien n'indique que le givre s'y forme plus vite qu'ailleurs, et cette zone est au contraire l'une des plus systématiquement protégées de la cellule, précisément en raison de cette criticité.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0139",
+      "sous_chapitre": "M11A.16",
+      "question": "Sur un avion à turbine, quelle source d'énergie protège principalement les bords d'attaque de la voilure et les nacelles moteur contre le givre ?",
+      "options": [
+        "Une résistance électrique dédiée, comparable à celle utilisée pour les sondes Pitot",
+        "Un système de boots pneumatiques gonflables, la solution la plus répandue sur ce type d'avion",
+        "L'air prélevé chaud (bleed air), acheminé à l'intérieur du bord d'attaque ou de la nacelle"
+      ],
+      "bonne": 2,
+      "explication": "L'air prélevé chaud (rappel M11A.13), acheminé à l'intérieur du bord d'attaque ou de la nacelle, réchauffe la paroi extérieure par contact. Les résistances électriques protègent plutôt les éléments plus petits (sondes, pare-brise), et les boots pneumatiques sont une technique plus répandue sur les avions à hélice que sur ce type d'avion, qui privilégie l'anti-givrage continu par air chaud pour ses grandes surfaces.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0140",
+      "sous_chapitre": "M11A.16",
+      "question": "Pourquoi les sondes Pitot et les prises de pression statique sont-elles réchauffées électriquement plutôt que par de l'air prélevé ?",
+      "options": [
+        "Elles sont trop petites et trop dispersées sur la cellule pour justifier une conduite d'air chaud dédiée à chacune",
+        "L'air prélevé est en réalité trop froid pour réchauffer efficacement une petite sonde",
+        "L'air prélevé n'est disponible qu'au sol, moteurs arrêtés, jamais une fois l'avion en vol"
+      ],
+      "bonne": 0,
+      "explication": "Ces éléments sont trop petits et trop dispersés pour justifier une conduite d'air chaud dédiée ; une résistance électrique intégrée suffit. L'air prélevé est au contraire chaud (rappel M11A.13), ce n'est donc pas une question de température insuffisante, et il reste disponible en vol tant qu'un moteur ou l'APU fonctionne.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0141",
+      "sous_chapitre": "M11A.16",
+      "question": "Quel est le rôle du revêtement hydrophobe appliqué sur le pare-brise, en complément des essuie-glaces ?",
+      "options": [
+        "Réchauffer légèrement la surface du pare-brise pour accélérer l'évaporation de l'eau, un rôle habituellement assuré par la résistance électrique",
+        "Favoriser l'écoulement de l'eau sous l'effet du vent relatif plutôt que sa formation en gouttes qui gêneraient la visibilité",
+        "Empêcher la formation de givre sur le pare-brise, un rôle indépendant de celui des essuie-glaces"
+      ],
+      "bonne": 1,
+      "explication": "Le revêtement hydrophobe favorise l'écoulement de l'eau sous l'effet du vent relatif, en complément des essuie-glaces plutôt qu'à leur place. Ce n'est pas lui qui réchauffe le pare-brise (rôle de la résistance électrique, une fonction distincte), et ce n'est pas non plus lui qui protège contre le givre.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0142",
+      "sous_chapitre": "M11A.16",
+      "question": "Comment fonctionne le détecteur de givrage dédié qui alerte l'équipage des conditions givrantes ?",
+      "options": [
+        "Une caméra qui filme en continu les bords d'attaque et transmet l'image au poste de pilotage",
+        "Une mesure de la seule température extérieure, qui alerte dès qu'elle descend sous le point de congélation",
+        "Une sonde vibrante dont la fréquence de vibration change lorsqu'une fine couche de givre s'y dépose"
+      ],
+      "bonne": 2,
+      "explication": "Le détecteur de givrage est une sonde vibrante dont la fréquence change lorsque le givre s'y dépose réellement, détectant ainsi sa formation effective plutôt qu'une simple caméra ou une seule mesure de température extérieure (une température froide ne suffit pas à elle seule à indiquer que du givre se forme réellement, l'humidité de l'air jouant aussi un rôle).",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0143",
+      "sous_chapitre": "M11A.16",
+      "question": "Pourquoi une inspection visuelle régulière des sondes protégées contre le givre reste-t-elle utile, même en dehors de toute condition givrante ?",
+      "options": [
+        "Un résidu ou une obstruction partielle, même sans givre, pourrait déjà fausser une mesure",
+        "Cette inspection sert uniquement à vérifier que le détecteur de givrage dédié fonctionne correctement, un contrôle qui ne concerne pas les sondes elles-mêmes",
+        "Cette inspection fait double emploi avec le contrôle fonctionnel périodique des résistances électriques, qui suffirait à lui seul"
+      ],
+      "bonne": 0,
+      "explication": "Un résidu ou une obstruction partielle, même sans givre, pourrait déjà fausser une mesure de pression. Cette inspection porte sur les sondes elles-mêmes, pas sur le seul détecteur de givrage (un système distinct), et elle ne fait pas double emploi avec le contrôle fonctionnel des résistances : l'un vérifie la propreté, l'autre le chauffage, deux points distincts.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0144",
+      "sous_chapitre": "M11A.16",
+      "question": "Quelle différence sépare l'anti-givrage du dégivrage ?",
+      "options": [
+        "Anti-givrage et dégivrage désignent en réalité exactement le même principe, sous deux noms différents",
+        "L'anti-givrage prévient en continu la formation du givre, le dégivrage l'élimine par cycles après qu'il se soit formé",
+        "Le dégivrage fonctionne uniquement au sol, l'anti-givrage uniquement une fois l'avion en vol"
+      ],
+      "bonne": 1,
+      "explication": "L'anti-givrage prévient en continu la formation du givre (maintenir la surface au-dessus de la température de congélation), tandis que le dégivrage l'élimine par cycles une fois formé (par exemple en gonflant et dégonflant une surface souple). Ce ne sont donc pas deux noms pour le même principe, et aucun des deux n'est réservé au seul sol ou au seul vol.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0145",
+      "sous_chapitre": "M11A.16",
+      "question": "Dans l'exemple de l'avion qui traverse un nuage givrant décrit dans la fiche, quels systèmes interviennent simultanément ?",
+      "options": [
+        "Seul le détecteur de givrage réagit, les autres systèmes ne s'activant qu'une fois le givre déjà visible sur le pare-brise",
+        "Uniquement les essuie-glaces et le revêtement hydrophobe interviennent, le givre relevant d'un système entièrement distinct et sans lien avec eux",
+        "Le détecteur de givrage alerte, l'anti-givrage à air chaud protège les bords d'attaque et les nacelles, et les résistances électriques protègent les sondes et le pare-brise"
+      ],
+      "bonne": 2,
+      "explication": "Selon l'exemple de la fiche, le détecteur de givrage alerte dès les premiers signes pendant que l'anti-givrage à air chaud (bords d'attaque, nacelles) et les résistances électriques (sondes, pare-brise) protègent simultanément leurs zones respectives. Les autres systèmes ne dépendent donc pas de l'apparition visible du givre, et essuie-glaces/revêtement hydrophobe concernent la pluie, un phénomène distinct traité en parallèle plutôt qu'à la place de l'anti-givrage.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0146",
+      "sous_chapitre": "M11A.17",
+      "question": "Pourquoi la voilure d'un avion de transport sert-elle elle-même de réservoir de carburant (voilure humide) plutôt que d'y loger un réservoir séparé ?",
+      "options": [
+        "Cette solution exploite un volume déjà présent dans la structure sans ajouter le poids d'une enveloppe de réservoir séparée, et rapproche le poids du carburant du centre de portance",
+        "Un réservoir séparé permettrait de transporter davantage de carburant que la voilure humide, à volume de voilure égal",
+        "Cette solution ne sert qu'à faciliter l'inspection visuelle du niveau de carburant, sans lien avec le poids de la structure"
+      ],
+      "bonne": 0,
+      "explication": "La voilure humide exploite un volume déjà présent dans la structure (rappel M11A.5) sans le poids d'une enveloppe séparée, et rapproche le poids du carburant du centre de portance. Un réservoir séparé n'offrirait pas une plus grande capacité à volume égal (l'espace disponible resterait le même), et le bénéfice principal concerne le poids et la structure, pas la seule facilité d'inspection.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0147",
+      "sous_chapitre": "M11A.17",
+      "question": "Pourquoi répartit-on le carburant dans plusieurs réservoirs distincts plutôt que dans un seul grand réservoir ?",
+      "options": [
+        "Un seul grand réservoir serait techniquement incapable de contenir la quantité de carburant nécessaire à un avion de transport",
+        "Cette répartition limite les conséquences d'une contamination ou d'une fuite localisée à un seul réservoir plutôt qu'à la totalité du carburant embarqué",
+        "Cette répartition ne sert qu'à faciliter le jaugeage, sans lien avec la sécurité en cas de fuite ou de contamination"
+      ],
+      "bonne": 1,
+      "explication": "Répartir le carburant dans plusieurs réservoirs limite les conséquences d'une contamination ou d'une fuite localisée à un seul réservoir. Un réservoir unique resterait techniquement réalisable en volume, et le bénéfice de sécurité (limiter l'impact d'une fuite ou d'une contamination) dépasse largement la seule facilité de jaugeage.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0148",
+      "sous_chapitre": "M11A.17",
+      "question": "Pourquoi le transfert de carburant entre réservoirs est-il nécessaire en cours de vol ?",
+      "options": [
+        "Uniquement pour refroidir le carburant d'un réservoir qui deviendrait trop chaud en vol",
+        "Un moteur ne peut jamais puiser dans le réservoir de l'aile opposée, quelle que soit la situation, rendant ce transfert obligatoire dès le décollage",
+        "Pour rééquilibrer la quantité entre les ailes et, sur certains avions, ajuster la position du centre de gravité"
+      ],
+      "bonne": 2,
+      "explication": "Le transfert rééquilibre la quantité entre les ailes (une asymétrie perturberait la stabilité, rappel M11A.2) et peut ajuster le centre de gravité sur certains avions. La fiche ne mentionne aucun rôle de refroidissement, et un moteur peut au contraire être alimenté depuis un réservoir qui n'est pas le sien en cas de besoin, ce n'est donc pas impossible.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0149",
+      "sous_chapitre": "M11A.17",
+      "question": "Quel est le rôle des pompes d'alimentation immergées installées dans chaque réservoir ?",
+      "options": [
+        "Mettre le carburant en pression pour le pousser vers le moteur, avec une pression positive qui évite un bouchon de vapeur en altitude",
+        "Mesurer uniquement la quantité de carburant restante, un rôle par ailleurs déjà assuré par le jaugeage",
+        "Elles ne sont utiles qu'au sol, avant le démarrage des moteurs, et restent inactives une fois l'avion en vol"
+      ],
+      "bonne": 0,
+      "explication": "Les pompes d'alimentation immergées mettent le carburant en pression et le poussent vers le moteur, une pression positive qui évite un bouchon de vapeur en altitude. Elles ne mesurent pas la quantité (rôle du jaugeage, un système distinct), et elles restent actives en vol, où leur rôle est justement le plus critique.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0150",
+      "sous_chapitre": "M11A.17",
+      "question": "Pourquoi le carburant risquerait-il de se vaporiser localement dans les conduites si la pression y devenait trop faible en altitude ?",
+      "options": [
+        "Sans pression positive, l'air extérieur s'introduirait par les évents du réservoir et contaminerait le carburant restant",
+        "La pression atmosphérique environnante, plus faible en altitude, favorise ce changement d'état si la pression du carburant dans la conduite n'est pas maintenue au-dessus d'elle",
+        "La pression du carburant n'a en réalité aucune importance en altitude, seule sa température compte"
+      ],
+      "bonne": 1,
+      "explication": "Une pression atmosphérique environnante plus faible en altitude favorise la vaporisation locale du carburant (un bouchon de vapeur) si sa pression dans la conduite n'est pas maintenue suffisamment au-dessus d'elle — d'où le rôle des pompes d'alimentation (rappel de la fiche). Les évents, eux, ont pour rôle de laisser l'air circuler pour équilibrer la pression du réservoir, pas de provoquer une contamination ; et la pression du carburant joue bien un rôle propre, indépendant de la seule température.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0151",
+      "sous_chapitre": "M11A.17",
+      "question": "Quel est le rôle du système de jaugeage (FQIS, Fuel Quantity Indication System) ?",
+      "options": [
+        "Réguler automatiquement le transfert de carburant entre réservoirs, sans aucune indication affichée à l'équipage",
+        "Mesurer uniquement la température du carburant dans chaque réservoir, sans indication de quantité",
+        "Mesurer la quantité de carburant réellement présente dans chaque réservoir et l'afficher à l'équipage"
+      ],
+      "bonne": 2,
+      "explication": "Le jaugeage mesure la quantité de carburant présente dans chaque réservoir et l'affiche à l'équipage (rappel M15.11 : principe des indications). Il ne régule pas lui-même le transfert (un système distinct, activé séparément) et sa fonction porte sur la quantité, pas sur la température.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0152",
+      "sous_chapitre": "M11A.17",
+      "question": "Pourquoi un réservoir de carburant n'est-il jamais une enveloppe totalement fermée ?",
+      "options": [
+        "Un système d'évents compense les variations de volume et de pression liées à la température, à l'altitude et au niveau de carburant",
+        "Une enveloppe totalement fermée serait techniquement impossible à fabriquer pour un réservoir de cette taille",
+        "Les évents ne servent qu'à évacuer les vapeurs de carburant, sans aucun lien avec la pression interne du réservoir"
+      ],
+      "bonne": 0,
+      "explication": "Les évents compensent les variations de volume et de pression liées à la température, à l'altitude et au niveau de carburant qui diminue en vol. Une enveloppe fermée resterait techniquement réalisable (ce n'est pas la raison), mais elle risquerait de se déformer sous l'effet de ces variations de pression, précisément ce que les évents évitent.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0153",
+      "sous_chapitre": "M11A.17",
+      "question": "Pourquoi le carburant stocké dans la voilure contribue-t-il à réduire la flexion subie par l'aile en vol ?",
+      "options": [
+        "Il réduit la traînée aérodynamique de la voilure, ce qui diminue indirectement la charge que l'aile doit supporter",
+        "Réparti tout le long de l'envergure, son poids s'oppose localement à la portance générée par l'aile à cet endroit, plutôt que de devoir être porté depuis l'emplanture comme le serait un poids logé dans le fuselage",
+        "Cette répartition n'a aucun lien avec la flexion de l'aile ; elle sert uniquement à équilibrer le centre de gravité longitudinal de l'avion"
+      ],
+      "bonne": 1,
+      "explication": "Réparti tout le long de l'envergure, le poids du carburant s'oppose localement à la portance générée par l'aile à cet endroit, plutôt que de devoir être porté depuis l'emplanture comme le serait un poids logé dans le fuselage (rappel M11A.5) — cela réduit la flexion à l'emplanture. Ce mécanisme est structural, pas aérodynamique : le carburant stocké dans la voilure ne change rien à la traînée de l'aile ; et l'ajustement du centre de gravité est un bénéfice distinct, associé au transfert vers un réservoir central plutôt qu'au seul stockage en voilure.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0154",
+      "sous_chapitre": "M11A.17",
+      "question": "Dans l'exemple de l'avion en croisière dont le moteur droit consomme plus vite que prévu décrit dans la fiche, que fait le système de transfert ?",
+      "options": [
+        "Il arrête automatiquement le moteur droit pour égaliser la consommation avec le moteur gauche",
+        "Il ne fait rien tant que l'un des deux réservoirs n'est pas complètement vide",
+        "Il déplace du carburant du réservoir gauche vers le réservoir droit pour rétablir l'équilibre, sur activation selon la procédure du constructeur"
+      ],
+      "bonne": 2,
+      "explication": "Selon l'exemple de la fiche, le transfert déplace du carburant du réservoir gauche vers le réservoir droit pour rétablir l'équilibre. Il n'arrête aucun moteur (ce n'est pas son rôle), et il intervient dès que l'asymétrie est constatée, pas seulement à réservoir complètement vide.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0155",
+      "sous_chapitre": "M11A.18",
+      "question": "Pourquoi un dispositif d'entraînement à vitesse constante (le CSD, Constant Speed Drive) est-il intercalé entre le moteur et le générateur électrique ?",
+      "options": [
+        "Pour absorber les variations de régime moteur et ne transmettre au générateur qu'une vitesse stable, garantissant une fréquence électrique stable",
+        "Pour augmenter la puissance électrique produite par le générateur, indépendamment de toute question de fréquence",
+        "Pour permettre au générateur de continuer à fonctionner moteur arrêté, en le déconnectant mécaniquement de celui-ci"
+      ],
+      "bonne": 0,
+      "explication": "Le CSD absorbe les variations de régime moteur (rappel M15.10) pour ne transmettre au générateur qu'une vitesse stable, garantissant une fréquence électrique stable — l'ensemble CSD et générateur ainsi assemblé est souvent appelé IDG. Son rôle n'est pas d'augmenter la puissance produite, et il ne permet pas au générateur de fonctionner moteur arrêté : il reste entraîné par ce même moteur, seule sa vitesse de rotation est stabilisée.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0156",
+      "sous_chapitre": "M11A.18",
+      "question": "Quel rôle joue l'APU dans la génération électrique de l'avion ?",
+      "options": [
+        "Il ne joue aucun rôle électrique, son seul rôle étant de fournir de l'air prélevé (rappel M11A.13)",
+        "Il entraîne son propre générateur, utilisable au sol avant le démarrage des moteurs ou en secours en vol",
+        "Il remplace en permanence les générateurs moteur dès qu'il est en fonctionnement, ceux-ci devenant alors inutiles"
+      ],
+      "bonne": 1,
+      "explication": "L'APU entraîne son propre générateur, utilisable au sol avant le démarrage des moteurs ou en secours en vol. Il joue donc bien un rôle électrique, en plus de son rôle pneumatique (rappel M11A.13), sans pour autant remplacer en permanence les générateurs moteur, qui restent la source principale une fois les moteurs en fonctionnement.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0157",
+      "sous_chapitre": "M11A.18",
+      "question": "Pourquoi la capacité d'une batterie reste-t-elle insuffisante pour alimenter l'avion durablement ?",
+      "options": [
+        "Une batterie ne peut techniquement fournir de l'électricité qu'au sol, jamais une fois l'avion en vol",
+        "Une batterie fournit en réalité une puissance illimitée, mais uniquement en courant alternatif, incompatible avec la plupart des équipements",
+        "Elle stocke une réserve chimique limitée, prévue pour un démarrage ou une transition, pas pour une alimentation continue comme un générateur entraîné par un moteur"
+      ],
+      "bonne": 2,
+      "explication": "Une batterie stocke une réserve chimique limitée, prévue pour un démarrage ou une transition, pas pour une alimentation continue. Elle fonctionne aussi bien en vol qu'au sol (elle sert notamment de source de secours en vol), et elle fournit du courant continu en quantité limitée, pas une puissance illimitée en alternatif.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0158",
+      "sous_chapitre": "M11A.18",
+      "question": "Que se passe-t-il si l'avion perd la totalité de ses générateurs moteur et APU en vol ?",
+      "options": [
+        "Une éolienne de secours (RAT) se déploie automatiquement dans le flux d'air et entraîne un générateur dédié pour les équipements essentiels",
+        "L'avion perd immédiatement toute source d'électricité, aucun moyen de secours n'existant pour cette situation",
+        "Les batteries suffisent alors à elles seules à alimenter durablement l'ensemble des équipements de l'avion jusqu'à l'atterrissage"
+      ],
+      "bonne": 0,
+      "explication": "Une éolienne de secours (RAT) se déploie automatiquement et entraîne un générateur dédié pour les équipements essentiels, en complément de la batterie. Ce n'est donc pas une perte totale sans recours, et les batteries seules ne suffiraient pas durablement : c'est justement pourquoi la RAT existe.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0159",
+      "sous_chapitre": "M11A.18",
+      "question": "Pourquoi les générateurs principaux produisent-ils du courant alternatif plutôt que du courant continu ?",
+      "options": [
+        "Le courant continu serait techniquement impossible à produire par un générateur entraîné par un moteur",
+        "Le courant alternatif est plus simple à produire et à transporter efficacement en grande quantité",
+        "Le choix entre alternatif et continu ne dépend que du poids du câblage, sans aucun lien avec le générateur lui-même"
+      ],
+      "bonne": 1,
+      "explication": "Le courant alternatif est plus simple à produire et à transporter efficacement en grande quantité. Un générateur pourrait techniquement produire du courant continu (ce n'est pas une impossibilité), et le choix dépend bien du générateur et de ses caractéristiques, pas seulement du poids du câblage.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0160",
+      "sous_chapitre": "M11A.18",
+      "question": "Quel est le rôle du redresseur (TRU, Transformer Rectifier Unit) dans le réseau électrique ?",
+      "options": [
+        "Convertir le courant continu des batteries en courant alternatif pour l'ensemble du réseau électrique",
+        "Augmenter la fréquence du courant alternatif produit par les générateurs, sans changer sa nature",
+        "Convertir une partie du courant alternatif produit par les générateurs en courant continu, pour les équipements qui en ont besoin et pour charger les batteries"
+      ],
+      "bonne": 2,
+      "explication": "Le TRU convertit une partie du courant alternatif en courant continu, pour les équipements qui en ont besoin et pour charger les batteries. Il ne fonctionne pas dans le sens inverse (continu vers alternatif), et son rôle n'est pas d'agir sur la fréquence, mais sur la nature même du courant.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0161",
+      "sous_chapitre": "M11A.18",
+      "question": "Pourquoi un avion bimoteur dispose-t-il déjà d'un premier niveau de redondance électrique dès sa conception normale ?",
+      "options": [
+        "Chaque moteur entraîne son propre générateur indépendant, donnant deux sources principales distinctes",
+        "Chaque moteur dispose de deux générateurs identiques montés en parallèle sur le même arbre",
+        "L'APU remplace systématiquement l'un des deux générateurs moteur en vol, dès le décollage"
+      ],
+      "bonne": 0,
+      "explication": "Chaque moteur entraîne son propre générateur indépendant (rappel M11A.10 : même principe de redondance qu'en hydraulique), donnant déjà deux sources principales distinctes. Sur la conception de référence de cette fiche, chaque moteur entraîne un seul générateur principal (certains appareils ajoutent un générateur de secours par moteur, une variante non détaillée ici), et l'APU ne remplace pas systématiquement un générateur moteur en vol : il reste un moyen complémentaire, pas une substitution permanente.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0162",
+      "sous_chapitre": "M11A.18",
+      "question": "Pourquoi une source électrique extérieure au sol (groupe de parc) est-elle utile, alors que l'APU peut déjà fournir de l'électricité au sol ?",
+      "options": [
+        "Elle est en réalité obligatoire, l'APU ne pouvant jamais fournir d'électricité au sol",
+        "Elle évite de faire fonctionner l'APU uniquement pour disposer d'électricité pendant les opérations au sol",
+        "Elle remplace l'APU en vol dès que l'avion quitte le tarmac, jusqu'à l'atterrissage"
+      ],
+      "bonne": 1,
+      "explication": "Le groupe de parc évite de faire fonctionner l'APU uniquement pour disposer d'électricité au sol. L'APU peut bien fournir de l'électricité au sol (ce n'est pas impossible), et le groupe de parc reste une solution au sol : il ne joue aucun rôle en vol.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0163",
+      "sous_chapitre": "M11A.18",
+      "question": "Dans l'exemple de la perte inattendue du générateur du moteur gauche en croisière décrit dans la fiche, que se passe-t-il ?",
+      "options": [
+        "La RAT se déploie immédiatement, la perte d'un seul générateur étant déjà considérée comme une perte totale des sources normales",
+        "L'avion doit immédiatement descendre à une altitude plus basse, la génération électrique dépendant directement de l'altitude de vol",
+        "Le réseau électrique bascule automatiquement pour que le générateur droit restant alimente seul l'ensemble des équipements essentiels, sans déploiement de la RAT"
+      ],
+      "bonne": 2,
+      "explication": "Selon l'exemple de la fiche, le générateur droit restant alimente seul les équipements essentiels, sans déploiement de la RAT (réservée à une perte totale de toutes les sources normales). La génération électrique ne dépend pas directement de l'altitude de vol, aucune descente n'étant impliquée par ce seul événement.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0164",
+      "sous_chapitre": "M11A.19",
+      "question": "Pourquoi un avion dispose-t-il de plusieurs bus électriques distincts plutôt que d'un seul bus unique ?",
+      "options": [
+        "Chaque bus est associé à une source différente, et des contacteurs permettent de relier deux bus entre eux si une source vient à manquer",
+        "Un bus unique serait techniquement incapable de supporter la puissance totale demandée par l'ensemble de l'avion",
+        "Cette séparation ne sert qu'à faciliter l'inspection visuelle du câblage, sans lien avec la disponibilité des sources"
+      ],
+      "bonne": 0,
+      "explication": "Chaque bus est associé à une source différente (rappel M11A.18), et des contacteurs permettent de relier deux bus entre eux si une source vient à manquer. Un bus unique resterait techniquement capable de supporter la puissance (ce n'est pas une impossibilité technique), et l'intérêt de la séparation porte sur la disponibilité des sources, pas sur la seule inspection visuelle.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0165",
+      "sous_chapitre": "M11A.19",
+      "question": "Qu'est-ce qui distingue un bus qualifié d'« essentiel » des autres bus de l'avion ?",
+      "options": [
+        "Il alimente uniquement les équipements de confort passager, à l'inverse des autres bus réservés aux instruments de vol",
+        "Il regroupe les équipements dont la perte compromettrait la sécurité du vol, avec un raccordement prioritaire à la source disponible la plus fiable",
+        "Il fonctionne en permanence à une tension différente de celle des autres bus, incompatible avec leurs équipements"
+      ],
+      "bonne": 1,
+      "explication": "Le bus essentiel regroupe les équipements dont la perte compromettrait la sécurité du vol, avec un raccordement prioritaire à la source la plus fiable disponible. Ce n'est donc pas le confort passager qui y est raccordé (c'est l'inverse), et rien n'indique une tension incompatible avec le reste du réseau.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0166",
+      "sous_chapitre": "M11A.19",
+      "question": "Que se passe-t-il lors d'un délestage électrique ?",
+      "options": [
+        "Tous les bus de l'avion, y compris le bus essentiel, sont coupés simultanément jusqu'à ce qu'une nouvelle source soit trouvée",
+        "La puissance totale disponible augmente automatiquement pour continuer à alimenter tous les équipements sans exception",
+        "L'alimentation des équipements les moins essentiels est coupée pour concentrer la puissance restante sur le bus essentiel"
+      ],
+      "bonne": 2,
+      "explication": "Le délestage coupe l'alimentation des équipements les moins essentiels pour concentrer la puissance restante sur le bus essentiel, qui reste alimenté plutôt que coupé. Le délestage ne crée pas de puissance supplémentaire : il redistribue une puissance devenue limitée.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0167",
+      "sous_chapitre": "M11A.19",
+      "question": "Quel est le principe de fonctionnement d'un disjoncteur (circuit breaker) ?",
+      "options": [
+        "Il interrompt automatiquement le passage du courant si celui-ci dépasse la valeur pour laquelle le circuit a été dimensionné",
+        "Il augmente automatiquement la tension du circuit pour compenser toute baisse de courant détectée",
+        "Il coupe le courant uniquement de façon temporaire pendant quelques secondes, avant de se refermer automatiquement sans aucune intervention"
+      ],
+      "bonne": 0,
+      "explication": "Un disjoncteur interrompt automatiquement le passage du courant au-delà de la valeur pour laquelle le circuit est dimensionné. Il n'augmente pas la tension (ce n'est pas sa fonction), et il ne se referme pas automatiquement de lui-même : son réarmement, une fois la cause du déclenchement traitée, est un choix distinct plutôt qu'un comportement automatique.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0168",
+      "sous_chapitre": "M11A.19",
+      "question": "En quoi un disjoncteur diffère-t-il d'un fusible, tous deux placés pour protéger un circuit contre une surcharge ?",
+      "options": [
+        "Un fusible peut être réarmé indéfiniment, alors qu'un disjoncteur doit toujours être remplacé après un déclenchement",
+        "Un disjoncteur peut être réarmé une fois la cause du déclenchement traitée, alors qu'un fusible doit être remplacé après avoir agi",
+        "Un disjoncteur protège uniquement contre les courts-circuits, un fusible uniquement contre les surcharges progressives"
+      ],
+      "bonne": 1,
+      "explication": "Un disjoncteur peut être réarmé une fois la cause traitée, alors qu'un fusible doit être remplacé après avoir agi. Ce n'est pas l'inverse (un fusible ne se réarme pas indéfiniment), et les deux protègent contre le même type de défaut (surcharge ou court-circuit), leur différence portant sur le mode de remise en service, pas sur le type de défaut couvert.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0169",
+      "sous_chapitre": "M11A.19",
+      "question": "Pourquoi la règle de ségrégation des circuits impose-t-elle de séparer physiquement le cheminement des câbles de deux systèmes redondants ?",
+      "options": [
+        "Pour réduire le poids total du câblage de l'avion, en évitant les câbles trop proches les uns des autres",
+        "Cette règle ne s'applique qu'aux câbles électriques des systèmes de confort passager, jamais aux systèmes critiques",
+        "Pour qu'un même dommage localisé (frottement, choc, début d'incendie) ne puisse pas endommager les deux câbles simultanément"
+      ],
+      "bonne": 2,
+      "explication": "La ségrégation évite qu'un même dommage localisé n'endommage deux câbles redondants à la fois. Elle ne vise pas la réduction de poids (elle complique plutôt le cheminement), et elle s'applique précisément aux systèmes critiques et redondants (gouvernes, rappel M11A.7), pas aux seuls équipements de confort.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0170",
+      "sous_chapitre": "M11A.19",
+      "question": "Quel est le rôle de la liaison électrique à la masse (bonding) de la structure de l'avion ?",
+      "options": [
+        "Elle sert de retour électrique commun pour de nombreux circuits et permet d'évacuer un impact de foudre à la surface de l'avion",
+        "Elle sert uniquement à réduire le poids du câblage électrique, sans aucun rôle en cas d'impact de foudre",
+        "Elle isole électriquement chaque équipement du reste de la structure, empêchant tout contact électrique avec elle"
+      ],
+      "bonne": 0,
+      "explication": "Le bonding sert de retour électrique commun et permet d'évacuer un impact de foudre à la surface de l'avion. Il joue donc bien un rôle en cas de foudre (contrairement à ce qu'affirme la deuxième option), et il relie électriquement les pièces de structure entre elles plutôt que de les isoler les unes des autres.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0171",
+      "sous_chapitre": "M11A.19",
+      "question": "Pourquoi le câblage électrique de l'avion est-il entouré d'une gaine isolante plutôt que d'être un simple fil de cuivre nu ?",
+      "options": [
+        "Pour permettre un remplacement plus rapide du câble en cas de panne, sans lien avec sa résistance mécanique aux vibrations ou à l'usure",
+        "Pour résister aux vibrations, aux variations de température et à l'usure par frottement, évitant un court-circuit contre la structure métallique",
+        "Pour réduire les interférences électromagnétiques entre câbles adjacents"
+      ],
+      "bonne": 1,
+      "explication": "La gaine isolante protège contre les vibrations, les variations de température et l'usure par frottement (chafing), évitant un court-circuit contre la structure. Ce n'est pas une question de facilité de remplacement, et la réduction des interférences électromagnétiques relève du blindage (rappel M5.8), une fonction distincte de la seule gaine isolante.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0172",
+      "sous_chapitre": "M11A.19",
+      "question": "Dans l'exemple d'un équipement non essentiel qui présente un défaut électrique en vol décrit dans la fiche, pourquoi le bus essentiel reste-t-il alimenté normalement ?",
+      "options": [
+        "Le bus essentiel est physiquement déconnecté du reste du réseau électrique en permanence, quelle que soit la situation",
+        "Un délestage automatique a immédiatement coupé tous les autres équipements de l'avion dès la détection du défaut",
+        "Le disjoncteur dédié à l'équipement défaillant isole le défaut sans affecter le reste du bus, et la ségrégation des circuits limite tout risque de propagation"
+      ],
+      "bonne": 2,
+      "explication": "Selon l'exemple de la fiche, le disjoncteur dédié isole le défaut et la ségrégation des circuits limite tout risque de propagation, sans qu'aucun délestage ne soit nécessaire puisque les sources normales restent disponibles. Le bus essentiel reste connecté au réseau en fonctionnement normal, il n'en est pas déconnecté en permanence.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0173",
+      "sous_chapitre": "M11A.20",
+      "question": "Sur quelles mesures de pression reposent l'anémomètre, l'altimètre et le variomètre, et comment les exploitent-ils ?",
+      "options": [
+        "La pression statique, utilisée seule par l'altimètre et le variomètre ; et la pression totale mesurée par une sonde Pitot, dont la différence avec la pression statique (la pression dynamique) est exploitée par l'anémomètre",
+        "La rigidité gyroscopique d'un élément en rotation rapide, comparable à une toupie",
+        "La seule mesure de la température extérieure de l'air, sans aucun lien avec la pression"
+      ],
+      "bonne": 0,
+      "explication": "L'altimètre et le variomètre n'exploitent que la pression statique (sa valeur pour l'un, sa variation pour l'autre) ; l'anémomètre, lui, a en plus besoin de la pression totale mesurée par la sonde Pitot, pour en déduire par différence la pression dynamique. La rigidité gyroscopique est le principe des instruments d'assiette (horizon artificiel, conservateur de cap), pas de ceux-ci, et la température seule ne suffirait pas à en déduire vitesse, altitude ou vitesse verticale.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0174",
+      "sous_chapitre": "M11A.20",
+      "question": "Sur quel principe reposent l'horizon artificiel et le conservateur de cap ?",
+      "options": [
+        "La pression statique et la pression totale, comme pour l'anémomètre",
+        "La rigidité gyroscopique, qui tend à conserver l'orientation d'un axe de rotation dans l'espace",
+        "Un signal radio reçu en continu depuis une station au sol, sans aucun élément en rotation"
+      ],
+      "bonne": 1,
+      "explication": "L'horizon artificiel et le conservateur de cap exploitent la rigidité gyroscopique. Ce n'est pas le principe pression statique/pression totale, réservé à l'anémomètre (l'altimètre et le variomètre n'utilisant, eux, que la seule pression statique), et aucun signal radio externe n'est nécessaire à leur fonctionnement de base.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0175",
+      "sous_chapitre": "M11A.20",
+      "question": "Pourquoi une sonde Pitot partiellement obstruée fausserait-elle l'indication de l'anémomètre ?",
+      "options": [
+        "Une sonde Pitot obstruée n'affecte en réalité que l'altimètre, jamais l'anémomètre",
+        "Une obstruction de la sonde Pitot n'a aucun effet tant que la prise de pression statique reste propre",
+        "L'anémomètre dépend directement de la pression totale mesurée par cette sonde, comparée à la pression statique pour en déduire la pression dynamique"
+      ],
+      "bonne": 2,
+      "explication": "L'anémomètre dépend directement de la pression totale mesurée par la sonde Pitot, comparée à la pression statique pour en déduire la pression dynamique ; une obstruction fausse donc bien cette mesure. L'altimètre dépend, lui, de la pression statique (une sonde distincte), pas de la sonde Pitot, et la propreté de la prise statique ne compense pas une sonde Pitot obstruée.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0176",
+      "sous_chapitre": "M11A.20",
+      "question": "Que calcule un calculateur de données air (ADC, Air Data Computer) ?",
+      "options": [
+        "La vitesse, l'altitude et le nombre de Mach, à partir des pressions mesurées et de la température extérieure",
+        "Il convertit uniquement un signal électrique analogique en signal numérique, sans aucun calcul de vitesse ou d'altitude",
+        "Il calcule uniquement la position géographique de l'avion, indépendamment de toute mesure de pression"
+      ],
+      "bonne": 0,
+      "explication": "Le calculateur de données air calcule la vitesse, l'altitude et le nombre de Mach (rappel M11A.3) à partir des pressions mesurées et de la température extérieure. La conversion analogique-numérique est une fonction différente, qui partage seulement le même sigle par coïncidence (rappel M5.2), et la position géographique relève d'un tout autre système, hors du sujet de cette fiche.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0177",
+      "sous_chapitre": "M11A.20",
+      "question": "Pourquoi le calculateur de données air peut-il calculer le nombre de Mach (rappel M11A.3) sans capteur supplémentaire dédié à cette seule grandeur ?",
+      "options": [
+        "Le nombre de Mach nécessite un capteur entièrement dédié, indépendant des pressions statique et totale déjà mesurées pour la vitesse et l'altitude",
+        "Son calcul repose sur les mêmes mesures de pression déjà disponibles dans le calculateur, qui peut donc l'ajouter à ses résultats",
+        "Le nombre de Mach ne concerne que les avions supersoniques, jamais un avion de transport à turbine subsonique comme celui de ce module"
+      ],
+      "bonne": 1,
+      "explication": "Le calcul du nombre de Mach (rappel M11A.3) repose sur les mêmes mesures de pression déjà disponibles dans le calculateur de données air, qui peut donc l'ajouter à ses résultats sans capteur supplémentaire dédié. Ce n'est donc pas un capteur indépendant qui le mesure, et le nombre de Mach reste pertinent bien en deçà de la vitesse du son, y compris pour un avion de transport à turbine subsonique.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0178",
+      "sous_chapitre": "M11A.20",
+      "question": "Pourquoi un avion conserve-t-il des instruments de secours indépendants du système principal d'affichage ?",
+      "options": [
+        "Les instruments de secours ne servent qu'à l'entraînement des pilotes, jamais en situation réelle de panne",
+        "Ils remplacent en permanence le système principal, qui ne sert alors que de sauvegarde visuelle",
+        "Pour garantir une indication minimale de vitesse, d'altitude et d'assiette même en cas de panne du système principal ou de sa source d'énergie habituelle"
+      ],
+      "bonne": 2,
+      "explication": "Les instruments de secours garantissent une indication minimale même en cas de panne du système principal ou de sa source d'énergie (rappel M11A.18 : redondance électrique). Ils servent bien en situation réelle de panne, pas seulement à l'entraînement, et c'est le système principal qui reste utilisé en fonctionnement normal, pas l'inverse.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0179",
+      "sous_chapitre": "M11A.20",
+      "question": "Comment les instruments de secours restent-ils fonctionnels même si le circuit électrique principal de l'avion était en cause ?",
+      "options": [
+        "Ils sont alimentés par une source électrique indépendante (souvent une petite batterie dédiée) et raccordés à leurs propres prises Pitot et statique",
+        "Ils fonctionnent sans aucune source d'énergie ni aucune mesure de pression, par un mécanisme entièrement autonome",
+        "Ils partagent la même source électrique et les mêmes prises Pitot et statique que le système principal, par souci de simplicité"
+      ],
+      "bonne": 0,
+      "explication": "Les instruments de secours sont alimentés par une source électrique indépendante et raccordés à leurs propres prises Pitot et statique. Ils dépendent donc bien d'une source d'énergie et de mesures de pression (pas d'un fonctionnement totalement autonome sans l'une ni l'autre), et leur indépendance vis-à-vis du système principal serait perdue s'ils partageaient sa source et ses prises.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0180",
+      "sous_chapitre": "M11A.20",
+      "question": "Pourquoi une divergence entre l'instrument principal et l'instrument de secours doit-elle attirer l'attention de l'équipage ?",
+      "options": [
+        "Une telle divergence est normale et attendue, les deux instruments n'étant jamais censés indiquer exactement la même valeur",
+        "Elle signale généralement qu'une des deux sources est en défaut, sans indiquer d'elle-même laquelle",
+        "Elle signifie automatiquement que c'est l'instrument de secours qui est en défaut, jamais le système principal"
+      ],
+      "bonne": 1,
+      "explication": "Une divergence signale généralement qu'une des deux sources est en défaut, sans indiquer d'elle-même laquelle. Ce n'est donc pas une situation normale à ignorer, et elle ne désigne pas non plus systématiquement l'instrument de secours : le système principal peut tout aussi bien être celui qui est en défaut.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0181",
+      "sous_chapitre": "M11A.20",
+      "question": "Dans l'exemple de l'avion qui traverse une couche nuageuse en montée décrit dans la fiche, quel rôle joue l'horizon artificiel ?",
+      "options": [
+        "Il cesse de fonctionner dès que l'horizon réel n'est plus visible, faute de référence visuelle externe",
+        "Il affiche uniquement la vitesse et l'altitude de l'avion, un rôle par ailleurs déjà assuré par l'anémomètre et l'altimètre",
+        "Il continue d'indiquer précisément l'assiette de l'avion grâce à la rigidité gyroscopique, alors que l'horizon réel n'est plus visible"
+      ],
+      "bonne": 2,
+      "explication": "Selon l'exemple de la fiche, l'horizon artificiel continue d'indiquer précisément l'assiette grâce à la rigidité gyroscopique, sans dépendre d'une référence visuelle externe. Il ne cesse donc pas de fonctionner dans les nuages, et il indique l'assiette, pas la vitesse ni l'altitude, déjà couvertes par d'autres instruments.",
+      "source": "Notions générales de construction aéronautique — avion à turbine"
     }
   ]
 }

@@ -1,0 +1,68 @@
+<div id="schema-m1119b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1119b-wrap .m1119b-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m1119b-wrap .m1119b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1119b-wrap .m1119b-diagram { position:relative; min-height:120px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; display:flex; align-items:center; justify-content:center; gap:6px; padding:14px; }
+#schema-m1119b-wrap .m1119b-wire { width:90px; height:10px; border-radius:5px; background:#5aa06a; transition: background 0.2s, opacity 0.2s; }
+#schema-m1119b-wrap .m1119b-cb { width:44px; height:28px; border-radius:6px; border:2px solid #4a76a8; background:#7fa8d9; color:#fff; font-size:0.6em; display:flex; align-items:center; justify-content:center; text-align:center; transition: background 0.2s, border-color 0.2s; }
+#schema-m1119b-wrap .m1119b-cb.open { background:#c0392b; border-color:#8e2a1f; }
+#schema-m1119b-wrap .m1119b-gap { width:20px; height:2px; }
+#schema-m1119b-wrap .m1119b-label { font-size:0.6em; color:#555; text-align:center; margin-top:4px; }
+#schema-m1119b-wrap .m1119b-col { display:flex; flex-direction:column; align-items:center; }
+#schema-m1119b-wrap .m1119b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Protection d'un circuit :</strong> comparez un circuit normal et une surcharge détectée par le disjoncteur.</p>
+
+<button class="m1119b-btn active" id="m1119b-btn-normal">Circuit normal</button>
+<button class="m1119b-btn" id="m1119b-btn-surcharge">Surcharge détectée</button>
+
+<div class="m1119b-diagram">
+  <div class="m1119b-col"><div class="m1119b-wire" id="m1119b-wire1"></div><div class="m1119b-label">Câble depuis le bus</div></div>
+  <div class="m1119b-col"><div class="m1119b-cb" id="m1119b-cb">Disjoncteur : fermé</div><div class="m1119b-label">Disjoncteur</div></div>
+  <div class="m1119b-col"><div class="m1119b-wire" id="m1119b-wire2"></div><div class="m1119b-label" id="m1119b-wire2-label">Câble vers l'équipement (alimenté)</div></div>
+</div>
+
+<div class="m1119b-caption" id="m1119b-caption">Ce schéma compare un circuit normal et une surcharge détectée. Vue actuelle — normal : le disjoncteur reste fermé, le courant circule normalement du bus vers l'équipement. Cliquez sur « Surcharge détectée » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1119b-wrap');
+  if (!wrap) { return; }
+  var btnNormal = wrap.querySelector('#m1119b-btn-normal');
+  var btnSurcharge = wrap.querySelector('#m1119b-btn-surcharge');
+  var wire1 = wrap.querySelector('#m1119b-wire1');
+  var cb = wrap.querySelector('#m1119b-cb');
+  var wire2 = wrap.querySelector('#m1119b-wire2');
+  var wire2Label = wrap.querySelector('#m1119b-wire2-label');
+  var caption = wrap.querySelector('#m1119b-caption');
+
+  function showNormal() {
+    btnNormal.className = 'm1119b-btn active';
+    btnSurcharge.className = 'm1119b-btn';
+    wire1.style.background = '#5aa06a';
+    cb.textContent = 'Disjoncteur : fermé';
+    cb.classList.remove('open');
+    wire2.style.background = '#5aa06a';
+    wire2.style.opacity = '1';
+    wire2Label.textContent = "Câble vers l'équipement (alimenté)";
+    caption.textContent = "Ce schéma compare un circuit normal et une surcharge détectée. Vue actuelle — normal : le disjoncteur reste fermé, le courant circule normalement du bus vers l'équipement. Cliquez sur « Surcharge détectée » pour comparer.";
+  }
+
+  function showSurcharge() {
+    btnNormal.className = 'm1119b-btn';
+    btnSurcharge.className = 'm1119b-btn active';
+    wire1.style.background = '#5aa06a';
+    cb.textContent = 'Disjoncteur : ouvert';
+    cb.classList.add('open');
+    wire2.style.background = '#ccc';
+    wire2.style.opacity = '0.5';
+    wire2Label.textContent = 'Câble isolé (équipement non alimenté)';
+    caption.textContent = "Surcharge détectée : le disjoncteur s'ouvre automatiquement dès que le courant dépasse la valeur admissible, interrompant l'alimentation de l'équipement en défaut ; le reste du bus, en amont, continue de fonctionner normalement. Le disjoncteur pourra être réarmé une fois la cause identifiée et traitée, selon la procédure de maintenance appropriée. Cliquez sur « Circuit normal » pour revenir à l'autre vue.";
+  }
+
+  btnNormal.addEventListener('click', showNormal);
+  btnSurcharge.addEventListener('click', showSurcharge);
+})();
+</script>

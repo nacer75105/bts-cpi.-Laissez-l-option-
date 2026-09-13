@@ -1,0 +1,71 @@
+<div id="schema-m1120-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1120-wrap .m1120-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m1120-wrap .m1120-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1120-wrap .m1120-diagram { position:relative; min-height:150px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; display:flex; align-items:center; justify-content:center; gap:26px; padding:14px; flex-wrap:wrap; }
+#schema-m1120-wrap .m1120-col { display:flex; flex-direction:column; align-items:center; }
+#schema-m1120-wrap .m1120-dial { width:80px; height:80px; border-radius:50%; border:3px solid #555; background:#fff; position:relative; }
+#schema-m1120-wrap .m1120-needle { position:absolute; left:50%; top:50%; width:3px; height:32px; background:#c0392b; transform-origin: bottom center; margin-left:-1.5px; margin-top:-32px; transition: transform 0.3s; }
+#schema-m1120-wrap .m1120-hub { position:absolute; left:50%; top:50%; width:8px; height:8px; margin-left:-4px; margin-top:-4px; border-radius:50%; background:#333; }
+#schema-m1120-wrap .m1120-label { font-size:0.64em; color:#555; text-align:center; margin-top:6px; max-width:100px; }
+#schema-m1120-wrap .m1120-disclaimer { font-size:0.62em; color:#888; text-align:center; margin-top:8px; }
+#schema-m1120-wrap .m1120-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Instruments de vol de base :</strong> comparez une croisière stable et une montée.</p>
+
+<button class="m1120-btn active" id="m1120-btn-croisiere">Croisière stable</button>
+<button class="m1120-btn" id="m1120-btn-montee">Montée</button>
+
+<div class="m1120-diagram">
+  <div class="m1120-col">
+    <div class="m1120-dial"><div class="m1120-needle" id="m1120-needle-asi" style="transform: rotate(90deg);"></div><div class="m1120-hub"></div></div>
+    <div class="m1120-label">Anémomètre (vitesse)</div>
+  </div>
+  <div class="m1120-col">
+    <div class="m1120-dial"><div class="m1120-needle" id="m1120-needle-alt" style="transform: rotate(120deg);"></div><div class="m1120-hub"></div></div>
+    <div class="m1120-label">Altimètre (altitude)</div>
+  </div>
+  <div class="m1120-col">
+    <div class="m1120-dial"><div class="m1120-needle" id="m1120-needle-vsi" style="transform: rotate(0deg);"></div><div class="m1120-hub"></div></div>
+    <div class="m1120-label">Variomètre (vitesse verticale)</div>
+  </div>
+</div>
+<div class="m1120-disclaimer">Illustration schématique : angles à but pédagogique, sans valeur chiffrée réelle.</div>
+
+<div class="m1120-caption" id="m1120-caption">Ce schéma compare les indications en croisière stable et en montée. Vue actuelle — croisière stable : la vitesse reste constante, l'altitude n'évolue pas, le variomètre indique une vitesse verticale nulle. Cliquez sur « Montée » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1120-wrap');
+  if (!wrap) { return; }
+  var btnCroisiere = wrap.querySelector('#m1120-btn-croisiere');
+  var btnMontee = wrap.querySelector('#m1120-btn-montee');
+  var needleAsi = wrap.querySelector('#m1120-needle-asi');
+  var needleAlt = wrap.querySelector('#m1120-needle-alt');
+  var needleVsi = wrap.querySelector('#m1120-needle-vsi');
+  var caption = wrap.querySelector('#m1120-caption');
+
+  function showCroisiere() {
+    btnCroisiere.className = 'm1120-btn active';
+    btnMontee.className = 'm1120-btn';
+    needleAsi.style.transform = 'rotate(90deg)';
+    needleAlt.style.transform = 'rotate(120deg)';
+    needleVsi.style.transform = 'rotate(0deg)';
+    caption.textContent = "Ce schéma compare les indications en croisière stable et en montée. Vue actuelle — croisière stable : la vitesse reste constante, l'altitude n'évolue pas, le variomètre indique une vitesse verticale nulle. Cliquez sur « Montée » pour comparer.";
+  }
+
+  function showMontee() {
+    btnCroisiere.className = 'm1120-btn';
+    btnMontee.className = 'm1120-btn active';
+    needleAsi.style.transform = 'rotate(75deg)';
+    needleAlt.style.transform = 'rotate(200deg)';
+    needleVsi.style.transform = 'rotate(-60deg)';
+    caption.textContent = "Montée : l'altimètre indique une altitude qui augmente et le variomètre une vitesse verticale positive, tous deux à partir de la seule pression statique ; l'anémomètre, qui a en plus besoin de la pression totale mesurée par la sonde Pitot pour en déduire la pression dynamique, indique une vitesse relativement stable (rappel de la fiche). Cliquez sur « Croisière stable » pour revenir à l'autre vue.";
+  }
+
+  btnCroisiere.addEventListener('click', showCroisiere);
+  btnMontee.addEventListener('click', showMontee);
+})();
+</script>
