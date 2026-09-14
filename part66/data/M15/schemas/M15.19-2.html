@@ -1,0 +1,67 @@
+<div id="schema-m1519b-wrap" style="font-family: inherit; max-width: 680px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1519b-wrap .m1519b-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.9em; }
+#schema-m1519b-wrap .m1519b-btn.active { background:#333; color:#fff; border-color:#333; }
+#schema-m1519b-wrap .m1519b-row { display:flex; flex-wrap:wrap; align-items:center; gap:6px; margin-top:14px; }
+#schema-m1519b-wrap .m1519b-box { padding:10px 12px; border-radius:6px; font-size:0.82em; text-align:center; min-width:100px; }
+#schema-m1519b-wrap .m1519b-box.ok { background:#cfe8cf; border:1px solid #5a9a5a; }
+#schema-m1519b-wrap .m1519b-box.hs { background:#f5d0d0; border:1px solid #b05a5a; }
+#schema-m1519b-wrap .m1519b-box.commun { background:#e2e2e2; border:1px solid #999; }
+#schema-m1519b-wrap .m1519b-arrow { font-size:1.1em; color:#666; }
+#schema-m1519b-wrap .m1519b-caption { margin-top:16px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:4.4em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> sur un hélicoptère bimoteur, simule la panne du moteur 1 et observe le rôle de l'accouplement à roue libre.</p>
+
+<div>
+  <button class="m1519b-btn active" id="m1519b-btn-normal">Les deux moteurs fonctionnent</button>
+  <button class="m1519b-btn" id="m1519b-btn-panne1">Moteur 1 en panne</button>
+</div>
+
+<div class="m1519b-row">
+  <div class="m1519b-box ok" id="m1519b-moteur1">Moteur 1<br><span id="m1519b-etat1">+ roue libre</span></div>
+  <span class="m1519b-arrow" id="m1519b-arrow1">→</span>
+  <div class="m1519b-box commun">Boîte de<br>transmission</div>
+  <span class="m1519b-arrow">←</span>
+  <div class="m1519b-box ok" id="m1519b-moteur2">Moteur 2<br>+ roue libre</div>
+</div>
+<div class="m1519b-row">
+  <div class="m1519b-box commun" style="margin-left:auto; margin-right:auto;">Rotor</div>
+</div>
+
+<div class="m1519b-caption" id="m1519b-caption">Les deux moteurs fonctionnent : chaque roue libre transmet la puissance dans un seul sens, du moteur vers la boîte de transmission. Les deux moteurs contribuent normalement à l'entraînement du rotor.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1519b-wrap');
+  if (!wrap) { return; }
+  var btnNormal = wrap.querySelector('#m1519b-btn-normal');
+  var btnPanne1 = wrap.querySelector('#m1519b-btn-panne1');
+  var moteur1 = wrap.querySelector('#m1519b-moteur1');
+  var etat1 = wrap.querySelector('#m1519b-etat1');
+  var arrow1 = wrap.querySelector('#m1519b-arrow1');
+  var caption = wrap.querySelector('#m1519b-caption');
+
+  function showNormal() {
+    btnNormal.className = 'm1519b-btn active';
+    btnPanne1.className = 'm1519b-btn';
+    moteur1.className = 'm1519b-box ok';
+    etat1.textContent = '+ roue libre';
+    arrow1.textContent = '→';
+    caption.textContent = "Les deux moteurs fonctionnent : chaque roue libre transmet la puissance dans un seul sens, du moteur vers la boîte de transmission. Les deux moteurs contribuent normalement à l’entraînement du rotor.";
+  }
+
+  function showPanne1() {
+    btnPanne1.className = 'm1519b-btn active';
+    btnNormal.className = 'm1519b-btn';
+    moteur1.className = 'm1519b-box hs';
+    etat1.textContent = 'ARRÊTÉ';
+    arrow1.textContent = '⊘';
+    caption.textContent = "Moteur 1 en panne : sa roue libre se désolidarise automatiquement, puisqu’elle ne transmet la puissance que dans un seul sens — le rotor, entraîné par le moteur 2 restant, n’entraîne donc pas en retour le moteur arrêté (ce qui l’endommagerait et gaspillerait de la puissance). Le rotor continue de tourner, entraîné par le seul moteur 2.";
+  }
+
+  btnNormal.addEventListener('click', showNormal);
+  btnPanne1.addEventListener('click', showPanne1);
+})();
+</script>

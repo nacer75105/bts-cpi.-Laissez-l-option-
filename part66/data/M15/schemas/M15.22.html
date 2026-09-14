@@ -1,0 +1,59 @@
+<div id="schema-m1522-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1522-wrap .m1522-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.92em; }
+#schema-m1522-wrap .m1522-btn.active { background:#333; color:#fff; border-color:#333; }
+#schema-m1522-wrap .m1522-table { display:flex; gap:14px; flex-wrap:wrap; margin-top:14px; }
+#schema-m1522-wrap .m1522-item { flex:1; min-width:150px; padding:8px 10px; border-radius:6px; background:#eee; border:1px solid #bbb; font-size:0.82em; }
+#schema-m1522-wrap .m1522-item .m1522-titre { font-weight:bold; display:block; margin-bottom:4px; font-size:0.78em; color:#666; }
+#schema-m1522-wrap .m1522-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:4.2em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> compare l'état d'un moteur en service et d'un moteur en conservation, sur trois points clés.</p>
+
+<div>
+  <button class="m1522-btn active" id="m1522-btn-service">Moteur en service</button>
+  <button class="m1522-btn" id="m1522-btn-conservation">Moteur en conservation</button>
+</div>
+
+<div class="m1522-table">
+  <div class="m1522-item"><span class="m1522-titre">Huile</span><span id="m1522-huile">Huile normale de fonctionnement, en circulation continue</span></div>
+  <div class="m1522-item"><span class="m1522-titre">Ouvertures</span><span id="m1522-ouvertures">Entrée d'air et tuyère ouvertes, traversées par le flux d'air</span></div>
+  <div class="m1522-item"><span class="m1522-titre">Air interne</span><span id="m1522-air">Air ambiant, renouvelé en continu par le fonctionnement</span></div>
+</div>
+
+<div class="m1522-caption" id="m1522-caption">Moteur en service : l'huile circule en continu et protège les paliers, les ouvertures sont traversées par le flux d'air (empêchant naturellement toute intrusion), l'air interne est constamment renouvelé.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1522-wrap');
+  if (!wrap) { return; }
+  var btnService = wrap.querySelector('#m1522-btn-service');
+  var btnConservation = wrap.querySelector('#m1522-btn-conservation');
+  var huile = wrap.querySelector('#m1522-huile');
+  var ouvertures = wrap.querySelector('#m1522-ouvertures');
+  var air = wrap.querySelector('#m1522-air');
+  var caption = wrap.querySelector('#m1522-caption');
+
+  function showService() {
+    btnService.className = 'm1522-btn active';
+    btnConservation.className = 'm1522-btn';
+    huile.textContent = "Huile normale de fonctionnement, en circulation continue";
+    ouvertures.textContent = "Entrée d'air et tuyère ouvertes, traversées par le flux d'air";
+    air.textContent = "Air ambiant, renouvelé en continu par le fonctionnement";
+    caption.textContent = "Moteur en service : l’huile circule en continu et protège les paliers, les ouvertures sont traversées par le flux d’air (empêchant naturellement toute intrusion), l’air interne est constamment renouvelé.";
+  }
+
+  function showConservation() {
+    btnConservation.className = 'm1522-btn active';
+    btnService.className = 'm1522-btn';
+    huile.textContent = "Huile de conservation, immobile, anticorrosion renforcée";
+    ouvertures.textContent = "Entrée d'air et tuyère obturées par bouchons et housses étanches";
+    air.textContent = "Air interne déshydraté, parfois complété par un gaz inerte";
+    caption.textContent = "Moteur en conservation : l’huile normale est remplacée par une huile de conservation, les ouvertures sont obturées pour empêcher toute intrusion d’humidité ou d’insectes, et l’air interne est déshydraté pour limiter la condensation — un contrôle périodique reste nécessaire tant que dure le stockage.";
+  }
+
+  btnService.addEventListener('click', showService);
+  btnConservation.addEventListener('click', showConservation);
+})();
+</script>

@@ -1,0 +1,66 @@
+<div id="schema-m1521-wrap" style="font-family: inherit; max-width: 680px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1521-wrap .m1521-btn { margin:3px 6px 3px 0; padding:6px 10px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.84em; }
+#schema-m1521-wrap .m1521-btn.active { background:#333; color:#fff; border-color:#333; }
+#schema-m1521-wrap .m1521-diagram { position:relative; border:2px dashed #999; border-radius:8px; padding:20px; margin-top:16px; min-height:120px; }
+#schema-m1521-wrap .m1521-elem { position:absolute; padding:6px 8px; border-radius:6px; font-size:0.76em; background:#eee; border:1px solid #bbb; }
+#schema-m1521-wrap .m1521-elem.on { background:#fff3b0; border-color:#e0a800; font-weight:bold; }
+#schema-m1521-wrap .m1521-caption { margin-top:16px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:4.2em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> clique sur chaque élément de l'installation motrice pour voir son rôle — tous les éléments sont toujours nommés, celui que tu explores est simplement mis en évidence.</p>
+
+<div id="m1521-boutons">
+  <button class="m1521-btn active" data-e="capotage">Capotage</button>
+  <button class="m1521-btn" data-e="parefeu">Cloison pare-feu</button>
+  <button class="m1521-btn" data-e="supports">Supports moteur</button>
+  <button class="m1521-btn" data-e="antivib">Supports antivibratoires</button>
+  <button class="m1521-btn" data-e="levage">Points de levage</button>
+  <button class="m1521-btn" data-e="drains">Drains</button>
+</div>
+
+<div class="m1521-diagram">
+  <div class="m1521-elem on" id="m1521-el-capotage" style="top:8px; left:8px;">Capotage</div>
+  <div class="m1521-elem" id="m1521-el-parefeu" style="top:8px; right:8px;">Cloison pare-feu</div>
+  <div class="m1521-elem" id="m1521-el-supports" style="bottom:34px; left:8px;">Supports moteur</div>
+  <div class="m1521-elem" id="m1521-el-antivib" style="bottom:34px; right:8px;">Supports antivibratoires</div>
+  <div class="m1521-elem" id="m1521-el-levage" style="bottom:8px; left:40%;">Points de levage</div>
+  <div class="m1521-elem" id="m1521-el-drains" style="top:50%; left:40%;">Drains</div>
+</div>
+
+<div class="m1521-caption" id="m1521-caption">Capotage : enveloppe extérieure démontable ou articulée, qui donne une forme aérodynamiquement favorable, protège des éléments extérieurs, et permet un accès rapide pour l'entretien sans démonter toute la structure.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1521-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('#m1521-boutons .m1521-btn');
+  var elems = wrap.querySelectorAll('.m1521-elem');
+  var caption = wrap.querySelector('#m1521-caption');
+
+  var textes = {
+    capotage: "Capotage : enveloppe extérieure démontable ou articulée, qui donne une forme aérodynamiquement favorable, protège des éléments extérieurs, et permet un accès rapide pour l'entretien sans démonter toute la structure.",
+    parefeu: "Cloison pare-feu : sépare le compartiment moteur du reste de l'aéronef (voilure, fuselage), construite dans un matériau résistant aux flammes pour contenir un incendie le plus longtemps possible (rappel M15.13).",
+    supports: "Supports moteur : fixent mécaniquement le moteur à la structure, reprenant son poids et les efforts qu'il transmet (poussée, déséquilibre accidentel) — dimensionnés avec une marge de sécurité importante, une défaillance ici libérant un moteur entier.",
+    antivib: "Supports antivibratoires : limitent la transmission des vibrations normales du moteur vers le reste de la structure, réduisant la fatigue des éléments environnants et l'inconfort en cabine.",
+    levage: "Points de levage : points d'ancrage spécifiquement désignés par le constructeur pour soulever le moteur lors d'une dépose ou d'une pose — jamais un point choisi au jugé.",
+    drains: "Drains : évacuent tout fluide accumulé accidentellement (carburant, huile, condensation), pour éviter qu'il ne stagne dans un recoin fermé du capotage, propice à un incendie."
+  };
+
+  function render(key) {
+    elems.forEach(function (el) {
+      el.classList.toggle('on', el.id === 'm1521-el-' + key);
+    });
+    caption.textContent = textes[key];
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var key = b.getAttribute('data-e');
+      btns.forEach(function (x) { x.classList.toggle('active', x === b); });
+      render(key);
+    });
+  });
+})();
+</script>

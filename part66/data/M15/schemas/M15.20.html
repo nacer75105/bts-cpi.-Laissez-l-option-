@@ -1,0 +1,54 @@
+<div id="schema-m1520-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1520-wrap .m1520-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.92em; }
+#schema-m1520-wrap .m1520-btn.active { background:#333; color:#fff; border-color:#333; }
+#schema-m1520-wrap .m1520-services { display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; }
+#schema-m1520-wrap .m1520-service { padding:10px; border-radius:6px; text-align:center; font-size:0.85em; min-width:110px; border:1px solid #999; }
+#schema-m1520-wrap .m1520-service.dispo { background:#cfe8cf; border-color:#5a9a5a; }
+#schema-m1520-wrap .m1520-service.absent { background:#eee; border-color:#bbb; color:#999; text-decoration:line-through; }
+#schema-m1520-wrap .m1520-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:4em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> compare les services fournis par un APU classique et par un APU d'architecture tout-électrique.</p>
+
+<div>
+  <button class="m1520-btn active" id="m1520-btn-classique">APU classique</button>
+  <button class="m1520-btn" id="m1520-btn-electrique">APU tout-électrique</button>
+</div>
+
+<div class="m1520-services">
+  <div class="m1520-service dispo" id="m1520-air">Air comprimé</div>
+  <div class="m1520-service dispo" id="m1520-elec">Électricité</div>
+  <div class="m1520-service dispo" id="m1520-hydro">Pression hydraulique<br>(certaines installations)</div>
+</div>
+
+<div class="m1520-caption" id="m1520-caption">APU classique : fournit de l'air comprimé (démarrage des moteurs principaux, climatisation au sol) et de l'électricité, et parfois une pression hydraulique selon l'installation.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1520-wrap');
+  if (!wrap) { return; }
+  var btnClassique = wrap.querySelector('#m1520-btn-classique');
+  var btnElectrique = wrap.querySelector('#m1520-btn-electrique');
+  var air = wrap.querySelector('#m1520-air');
+  var caption = wrap.querySelector('#m1520-caption');
+
+  function showClassique() {
+    btnClassique.className = 'm1520-btn active';
+    btnElectrique.className = 'm1520-btn';
+    air.className = 'm1520-service dispo';
+    caption.textContent = "APU classique : fournit de l’air comprimé (démarrage des moteurs principaux, climatisation au sol) et de l’électricité, et parfois une pression hydraulique selon l’installation.";
+  }
+
+  function showElectrique() {
+    btnElectrique.className = 'm1520-btn active';
+    btnClassique.className = 'm1520-btn';
+    air.className = 'm1520-service absent';
+    caption.textContent = "APU tout-électrique : ne fournit aucun air de prélèvement, le démarrage des moteurs principaux étant assuré par un démarreur électrique plutôt que pneumatique (rappel M15.9) — sa fonction se limite à la production électrique, et parfois hydraulique selon l’installation.";
+  }
+
+  btnClassique.addEventListener('click', showClassique);
+  btnElectrique.addEventListener('click', showElectrique);
+})();
+</script>

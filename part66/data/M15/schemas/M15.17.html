@@ -1,0 +1,58 @@
+<div id="schema-m1517-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1517-wrap .m1517-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.92em; }
+#schema-m1517-wrap .m1517-btn.active { background:#333; color:#fff; border-color:#333; }
+#schema-m1517-wrap .m1517-track { position:relative; width:100%; max-width:460px; height:22px; background:#e2e2e2; border-radius:6px; margin:6px 0 4px; overflow:hidden; }
+#schema-m1517-wrap .m1517-bar { height:100%; transition:width .2s; }
+#schema-m1517-wrap .m1517-bar.fan { background:#3a9d3a; }
+#schema-m1517-wrap .m1517-bar.turbine { background:#7fa8d9; }
+#schema-m1517-wrap .m1517-rowlabel { font-size:0.78em; color:#666; margin:2px 0 12px; }
+#schema-m1517-wrap .m1517-value { font-weight:bold; margin-bottom:2px; font-size:0.9em; }
+#schema-m1517-wrap .m1517-caption { margin-top:10px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:4.4em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> compare le régime de la soufflante et celui de la turbine qui l'entraîne, avec et sans réducteur.</p>
+
+<div>
+  <button class="m1517-btn active" id="m1517-btn-classique">Turbofan classique (liaison directe)</button>
+  <button class="m1517-btn" id="m1517-btn-gtf">Turbofan à réducteur (GTF)</button>
+</div>
+
+<div class="m1517-value">Régime de la soufflante (illustration)</div>
+<div class="m1517-track"><div class="m1517-bar fan" id="m1517-bar-fan"></div></div>
+<div class="m1517-rowlabel">Une grande soufflante est plus efficace à un régime relativement faible</div>
+
+<div class="m1517-value">Régime de la turbine (illustration)</div>
+<div class="m1517-track"><div class="m1517-bar turbine" id="m1517-bar-turbine" style="width:85%;"></div></div>
+<div class="m1517-rowlabel">Une turbine, plus compacte, est plus efficace à un régime bien plus élevé</div>
+
+<div class="m1517-caption" id="m1517-caption">Turbofan classique : la soufflante et la turbine sont reliées directement, sur le même arbre — elles sont donc contraintes de tourner au même régime, un compromis qui éloigne chacune de son propre optimum.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1517-wrap');
+  if (!wrap) { return; }
+  var btnClassique = wrap.querySelector('#m1517-btn-classique');
+  var btnGtf = wrap.querySelector('#m1517-btn-gtf');
+  var barFan = wrap.querySelector('#m1517-bar-fan');
+  var caption = wrap.querySelector('#m1517-caption');
+
+  function showClassique() {
+    btnClassique.className = 'm1517-btn active';
+    btnGtf.className = 'm1517-btn';
+    barFan.style.width = '85%';
+    caption.textContent = "Turbofan classique : la soufflante et la turbine sont reliées directement, sur le même arbre — elles sont donc contraintes de tourner au même régime, un compromis qui éloigne chacune de son propre optimum.";
+  }
+
+  function showGtf() {
+    btnClassique.className = 'm1517-btn';
+    btnGtf.className = 'm1517-btn active';
+    barFan.style.width = '35%';
+    caption.textContent = "Turbofan à réducteur (GTF) : un réducteur mécanique s'intercale entre la soufflante et la turbine, permettant à la soufflante de tourner à un régime bien plus faible, plus proche de son propre optimum, pendant que la turbine continue de tourner à son régime élevé — au prix de la masse et de la complexité supplémentaires du réducteur.";
+  }
+
+  btnClassique.addEventListener('click', showClassique);
+  btnGtf.addEventListener('click', showGtf);
+})();
+</script>

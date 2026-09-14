@@ -194,9 +194,10 @@ reprendre en premier, tous deux traités. **M11A**, malgré
 son volume de manques bruts, a un cœur technique déjà solide — les
 manques y sont plus concentrés sur du contenu périphérique (confort
 cabine, avionique récente) que sur la sécurité de vol directe, à
-l'exception du groupe commandes de vol (11.9). **M15** et **M5** ont des
-manques ciblés, plus rapides à combler individuellement. **M17A** peut
-attendre.
+l'exception du groupe commandes de vol (11.9). ~~**M15** et **M5** ont des
+manques ciblés, plus rapides à combler individuellement.~~ **M15 comblé le
+2026-09-14** (voir section dédiée « M15 — comblement des manques du
+syllabus »). **M17A** peut attendre.
 
 ## M10 — comblement des manques du syllabus (2026-09-13)
 
@@ -1772,6 +1773,245 @@ pour M15.
 
 Test en local par l'utilisateur (consigne explicite de ce chantier : pas de
 push avant ce test). Aucune autre relecture prévue sauf demande explicite.
+
+## M15 — comblement des manques du syllabus (2026-09-14)
+
+Chantier demandé explicitement pour combler les manques identifiés par
+l'audit de couverture documenté plus haut dans ce fichier (section « M15 —
+Turbomachines à gaz » de l'audit du 2026-09-13) : performances moteur,
+architectures alternatives, turbopropulseurs, turbomoteurs, APU,
+installation motrice, stockage/conservation, et les points superficiels
+(cycle de Brayton jamais nommé, contrôle de l'écoulement du compresseur,
+run-up/lavage compresseur/FOD sous-développés en 15.21).
+
+**Étape 0 (extraction et vérification du syllabus officiel)** : le texte
+AMC1 détaillé du Module 15 (items 15.1 à 15.22) a été ré-extrait proprement
+depuis le PDF source (`pdftotext -table`, pages 624-626 pour la prose
+détaillée, pages 581-582 pour le tableau compact des niveaux), la première
+extraction automatisée souffrant du même désalignement de colonnes déjà
+documenté pour M11A/M7A. Les 14 fiches existantes ont été comparées au
+texte : aucune erreur de fond trouvée à ce stade (confirmant le diagnostic
+déjà posé lors du test adversarial du 2026-09-13 : le problème de M15 est
+la rédaction des questions, pas le contenu des fiches) — les erreurs
+trouvées ensuite par la relecture de fond concernaient exclusivement le
+nouveau contenu ajouté par ce chantier, voir plus bas.
+
+**Remarque de méthode transmise par l'utilisateur, à appliquer à une reprise
+future de l'audit des 6 modules** : l'audit de couverture initial (2026-09-13)
+comparait les fiches existantes au tableau compact du syllabus (intitulés
+seuls), pas au texte AMC1 détaillé — ce qui lui a fait manquer l'item 15.8
+(roulements et joints), présent uniquement dans le texte détaillé sous
+« Bearings and seals ». Une reprise de l'audit sur les 6 modules devrait
+désormais vérifier, item par item, non pas si un sujet est *mentionné* mais
+s'il est *traité au niveau exigé*, en se basant sur le texte AMC1 détaillé
+plutôt que sur les seuls intitulés du tableau compact. Non fait dans ce
+chantier (hors périmètre), à reprendre séparément.
+
+### Contenu ajouté
+
+- **4 fiches étendues** : M15.1 (cycle de Brayton nommé + comparaison des 5
+  architectures moteur, item 15.1), M15.3 (vannes de décharge, aubes de
+  stator/entrée variables, équilibrage de la soufflante, item 15.4), M15.7
+  (types de roulements — billes/rouleaux — et de joints — labyrinthe/à
+  charbon —, item 15.8, trouvé par la relecture et absent de la liste
+  initiale de l'utilisateur), M15.14 (run-up comme procédure formelle avec
+  ses zones de danger, lavage/nettoyage du compresseur, FOD nommé
+  explicitement, item 15.21 niveau 3 — le plus élevé du module).
+- **8 fiches nouvelles** : M15.15 (performances moteur — poussée brute/
+  nette, tuyère amorcée, ESHP/thrust horsepower, rendements, taux de
+  dilution, EPR, régimes certifiés, calage plat, item 15.2 niveau 2),
+  M15.16 (carburants et lubrifiants — propriétés, spécifications,
+  standard/alternatif/drop-in, additifs, sécurité, item 15.9 niveau 2),
+  M15.17 (architectures alternatives — GTF, pales à calage variable, open
+  rotor, hybride turbine-électrique, item 15.15 niveau 1), M15.18
+  (turbopropulseurs — turbine liée/libre, réducteur, contrôle intégré,
+  sécurité survitesse, item 15.16 niveau 2), M15.19 (turbomoteurs —
+  distinction explicite avec le turbopropulseur sur demande de
+  l'utilisateur : organe entraîné, réorientation de la transmission, roue
+  libre, régulation à bande de régime plus étroite, item 15.17 niveau 2),
+  M15.20 (APU — rôle, fonctionnement, protections, item 15.18 niveau 2),
+  M15.21 (installation motrice — pare-feu, capotage, supports, câblage,
+  points de levage, drains, item 15.19 niveau 2), M15.22 (stockage et
+  conservation du moteur, item 15.22 niveau 2). Module M15 : 14 → 22
+  fiches. Champ `niveau` ajouté sur les 22 fiches (absent jusque-là sur ce
+  module).
+- 15 nouveaux schémas (2 par fiche nouvelle, comme pour les 14 fiches
+  existantes du module, plus le second schéma de M15.19) : performances
+  moteur (poussée brute/nette selon la vitesse ; rendement propulsif
+  petite masse/grande vitesse vs grande masse/vitesse modérée), carburants
+  et lubrifiants (carburant standard/alternatif/drop-in ; matcher
+  additif↔problème), architectures alternatives (régimes soufflante/
+  turbine avec et sans réducteur ; fiche récapitulative des 4
+  architectures), turbopropulseurs (chaîne turbine liée vs libre ;
+  simulation de survitesse après perte de charge hélice), turbomoteurs
+  (comparaison turbopropulseur/turbomoteur déjà notée plus haut ;
+  accouplement à roue libre lors d'une panne moteur sur hélicoptère
+  bimoteur), APU (services fournis, classique vs tout-électrique ;
+  matcher situation↔importance de la protection automatique),
+  installation motrice (explorateur des 6 éléments de l'installation ;
+  matcher point désigné/point choisi au jugé), stockage et conservation
+  (comparaison moteur en service/en conservation ; matcher constat
+  d'inspection↔conséquence). Un premier passage avait laissé ces 15
+  schémas non créés après une coupure réseau en cours de chantier — trouvé
+  et comblé sur signalement de l'utilisateur, après vérification de
+  l'inventaire réel du dossier `schemas/`.
+- 78 nouvelles questions (M15-0125 à M15-0202). Banque M15 : 124 → 202
+  questions.
+- Randomisation complète de l'ordre des options sur les 202 questions,
+  même principe que les correctifs précédents : aucun cycle de période 1
+  (5+ identiques consécutives), 2 ou 3 (répété 3 fois), distribution
+  finale quasi égale (68/67/67).
+- **Critère 2bis strict, vérifié explicitement par la relecture** (balayage
+  sur les unités et sur tout entier isolé) : aucune valeur chiffrée de
+  température, pression, régime ou taux non sourcée dans les 12 fiches ni
+  les 78 questions. Une seule exception trouvée, dans un schéma
+  préexistant hors chantier (`M15.11-2.html`, deux valeurs N/EPR sans
+  mention « illustration ») — corrigée au passage (voir BLOQUANT
+  ci-dessous).
+
+### Relecture `relecteur-part66` — 10 BLOQUANT trouvés et corrigés
+
+- **Chiffres non sourcés dans un schéma préexistant** (`M15.11-2.html`) :
+  deux valeurs affichées sur un cadran (N = 91 %, EPR = 1,42) sans aucune
+  mention d'illustration — un élève risquait de les mémoriser comme des
+  valeurs de croisière réelles. Remplacées par des libellés qualitatifs
+  (« position d'aiguille illustrative, pas une valeur réelle »).
+- **Contresens sur le roulement de butée** (fiche M15.7, questions
+  M15-0195/M15-0198) : la version initiale inventait une troisième
+  catégorie de roulement (« roulement de butée » ou « à rouleaux
+  coniques », inexistante sur une ligne d'arbre de turbomachine
+  aéronautique) et minorait le rôle réel du roulement à billes, qui est en
+  pratique le palier assurant à la fois la charge radiale et le maintien
+  axial de l'arbre, le roulement à rouleaux ne reprenant qu'une charge
+  radiale. Fiche et deux questions corrigées.
+- **Tuyère amorcée mal expliquée** (fiche M15.15) : la version initiale
+  présentait l'amorçage de tuyère (*choked nozzle*) comme une simple
+  limitation du débit, sans expliquer qu'il produit au contraire un terme
+  de poussée supplémentaire (la pression de sortie restant supérieure à la
+  pression ambiante). L'élève apprenait l'inverse de la notion visée par
+  l'item 15.2 (*choked nozzle thrust*). Corrigé.
+- **Définition erronée de la « poussée résultante »** (fiche M15.15) : la
+  version initiale la présentait comme un « raffinement » flou réservé aux
+  calculs constructeur, et *thrust distribution* (explicitement listé à
+  l'item 15.2) n'était traité nulle part. Réécrit : la répartition de la
+  poussée décrit l'effort réparti organe par organe le long du moteur, et
+  la poussée résultante en est la somme algébrique, égale à la poussée
+  nette déjà définie.
+- **Confusion entre l'effet de la vitesse et celui de la densité de l'air**
+  (fiche M15.15) : la version initiale rattachait l'effet de la vitesse de
+  vol au même mécanisme de densité que l'altitude/la chaleur, contredisant
+  la traînée d'entrée d'air déjà correctement décrite plus haut dans la
+  même fiche. Corrigé en distinguant l'effet de bélier (*ram effect*,
+  propre à la vitesse) de l'effet de densité (propre à l'altitude/la
+  température).
+- **Contradiction M15.18/M15.19 sur le régime d'hélice** : la fiche M15.19
+  opposait à tort une hélice de turbopropulseur « dont le régime peut
+  varier » à un rotor de turbomoteur « à régime constant », alors que
+  M15.18 vient de décrire un régulateur à vitesse constante pour l'hélice
+  également (rappel module M17A). La vraie distinction, plus fine, porte
+  sur la largeur de la plage de régimes sélectionnables (large et
+  ajustable selon la phase de vol pour l'hélice, très étroite et quasi
+  fixe pour le rotor) — fiche et question M15-0159 corrigées.
+- **« Détente sur deux turbines » présentée comme valable dans tous les
+  cas** (fiche M15.19, question M15-0161) : faux pour l'architecture à
+  turbine liée (une seule turbine), que M15.18 vient justement de décrire
+  comme l'une des deux architectures possibles. Corrigé pour distinguer
+  les deux cas.
+- **Explication factuellement fausse sur l'additif antigel** (M15-0136) :
+  l'explication affirmait qu'un additif antigel empêche la condensation de
+  l'eau, alors qu'il empêche seulement l'eau déjà présente de former des
+  cristaux de glace — contredisant la fiche M15.16 elle-même. Corrigé.
+- **Run-up décrit sans ses zones de danger** (fiche M15.14, item 15.21,
+  niveau 3 — le plus élevé du module) : la procédure de run-up ajoutée
+  décrivait le déroulement de l'essai sans jamais mentionner le risque
+  humain principal (zone d'aspiration en amont de l'entrée d'air, zone de
+  souffle en aval de la tuyère, périmètre de sécurité, personnel qualifié)
+  — un manque d'autant plus problématique que c'est le seul item niveau 3
+  du module. Complété.
+- **Affirmation non sourçable sur des « aubes de rotor orientables »**
+  (fiche M15.3) : le calage variable des aubes de *rotor* d'un compresseur
+  n'existe pas en pratique sur turbomachine aéronautique (l'AMC parle
+  d'aubes de *stator* pivotantes, déjà traitées). Phrase supprimée.
+
+Dette mineure également corrigée suite à cette relecture : trois
+transitions périmées affirmant à tort qu'une fiche antérieure à M15.15
+« referme le module » ou en est « la toute dernière fiche » (M15.11,
+M15.13, M15.14) ; renvoi croisé inexact de M15.16 vers M15.8 (les
+additifs n'y sont pas mentionnés) ; formatage `**À retenir :**` manquant
+sur les 8 nouvelles fiches ; ouverture de M15.19 réduisant à tort le
+turbopropulseur à sa seule variante à turbine libre ; nuance ajoutée sur
+les APU tout-électriques (aucun air de prélèvement) en M15.20 ; mention du
+*fan balancing* (item 15.4, jamais traité) ajoutée à M15.3 ; plusieurs
+questions voisines reformulées pour ne plus se donner mutuellement la
+réponse (M15-0147/0154, M15-0148/0153, M15-0155/0189, M15-0156/0162) ni
+partager un distracteur devenu vrai après la correction du contenu
+(M15-0168, nuance APU tout-électrique) ; distracteurs faibles renforcés
+(M15-0134, M15-0173, M15-0180) ; deux coquilles corrigées (M15-0148,
+M15-0149).
+
+### Test adversarial `eleve-adversaire` — même plateau que M7A, dette étendue
+
+**Round unique** (202 questions, dont 78 nouvelles) : **202/202 (100 %)**,
+inchangé sur les 124 questions déjà documentées comme dette acceptée le
+2026-09-13, et **identique sur les 78 nouvelles** malgré une tentative
+explicite d'appliquer dès la rédaction la méthode recommandée par le
+diagnostic du 2026-09-13 (les trois options rédigées avec une densité de
+justification comparable, chaque option portant une clause causale
+« parce que… », pas seulement la bonne réponse).
+
+**Diagnostic de l'agent, sans ambiguïté** : la méthode a bien supprimé le
+symptôme visé (aucune option n'est plus reconnaissable à la seule absence
+de justification), mais un nouveau motif de repli est apparu — exactement
+le même phénomène que sur M7A (2026-09-14, voir plus haut), mais un cran
+plus profond. Les distracteurs, désormais tous justifiés, se trahissent
+par le **type** de justification plutôt que par son absence :
+- un registre de **quantificateurs totalisants** dans la clause causale
+  des distracteurs (« systématiquement, toujours, jamais, aucun,
+  intégralement, exclusivement, tous, quelle que soit, indépendamment
+  de ») contre un registre **partitif/nuancé** dans la bonne réponse
+  (« une partie de, généralement, souvent, peut, pas nécessairement, sur
+  certaines installations ») — à lui seul, ce contraste résoudrait environ
+  les deux tiers du nouveau lot ;
+- un **appel à la réglementation systématiquement faux** : 15 occurrences
+  du mot « réglementation »/« réglementaire » dans toute la banque (4
+  anciennes, 11 nouvelles), **0 fois dans une bonne réponse** — une règle
+  mécanique à 100 %, indépendante du sujet ;
+- des **clauses causales qui se démentent elles-mêmes**, effet pervers
+  propre à cette méthode : en voulant justifier chaque distracteur,
+  plusieurs finissent par admettre implicitement qu'ils ne répondent pas à
+  la question posée (ex. « un rôle qui revient *pourtant* principalement
+  à… », « distinct de celui de… » quand l'énoncé porte justement sur
+  « celui de… ») ;
+- 4 fuites de contenu entre questions voisines (une bonne réponse d'une
+  question redonnait, presque mot pour mot, celle d'une question adjacente
+  sur le même sous-chapitre) — **corrigées** (M15-0141/0189,
+  M15-0191/0192, M15-0195/0198, M15-0193/0194 reformulées pour ne plus se
+  répondre mutuellement) ; deux corrections ponctuelles supplémentaires
+  (clause auto-disqualifiante retirée de M15-0152, écho littéral cassé sur
+  M15-0168).
+
+**Décision** : les 4 fuites concrètes et les deux formulations
+auto-disqualifiantes ont été corrigées (correctifs ciblés, peu coûteux,
+sans risque de régression factuelle). **Le motif systémique des
+quantificateurs totalisants et de l'appel à la réglementation, en
+revanche, n'a pas été retouché** : il touche la majorité des 78 questions
+et sa correction exigerait une troisième réécriture complète du lot, avec
+le même risque déjà éprouvé deux fois cette session (nouvelles erreurs
+factuelles à chaque itération de fond — 10 BLOQUANT sur le seul premier
+jet de ce chantier) pour un gain qu'aucune des trois tentatives menées à
+ce jour sur ce projet (M15 original, M7A, M15 nouveau contenu) n'a permis
+d'obtenir. Ce plateau est documenté comme dette acceptée, dans la
+continuité de la décision déjà prise pour M7A et pour les 124 questions
+originelles de M15 : la justesse factuelle du contenu (fiches, questions,
+schémas) est validée par la relecture de fond ; seule la résistance des
+questions à une devinette sans connaissance du domaine reste un chantier
+ouvert, non repris sans demande explicite.
+
+### Reste à faire avant commit
+
+Test en local par l'utilisateur (consigne explicite de ce chantier : pas de
+push avant ce test). Aucune autre relecture ni itération adversariale
+prévue sauf demande explicite.
 
 ## M17A — construction en cours (Lot 1 : M17A.1-M17A.5)
 

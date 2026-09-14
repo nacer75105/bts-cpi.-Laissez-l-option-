@@ -1,0 +1,63 @@
+<div id="schema-m1515-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1515-wrap .m1515-btn { margin:4px 6px 4px 0; padding:6px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.9em; }
+#schema-m1515-wrap .m1515-btn.active { background:#333; color:#fff; border-color:#333; }
+#schema-m1515-wrap .m1515-track { position:relative; width:100%; max-width:460px; height:22px; background:#e2e2e2; border-radius:6px; margin:6px 0 4px; overflow:hidden; }
+#schema-m1515-wrap .m1515-bar { height:100%; width:0%; transition:width .15s; }
+#schema-m1515-wrap .m1515-bar.brute { background:#7fa8d9; }
+#schema-m1515-wrap .m1515-bar.nette { background:#3a9d3a; }
+#schema-m1515-wrap .m1515-rowlabel { font-size:0.78em; color:#666; margin:2px 0 12px; }
+#schema-m1515-wrap .m1515-value { font-weight:bold; margin-bottom:2px; font-size:0.9em; }
+#schema-m1515-wrap .m1515-caption { margin-top:10px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:4em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> fais varier la vitesse de vol (unités d'illustration) et observe l'écart entre poussée brute et poussée nette.</p>
+
+<div class="m1515-value">Poussée brute (illustration)</div>
+<div class="m1515-track"><div class="m1515-bar brute" id="m1515-bar-brute"></div></div>
+<div class="m1515-rowlabel">Poussée produite par les seuls gaz éjectés par la tuyère</div>
+
+<div class="m1515-value">Poussée nette (illustration)</div>
+<div class="m1515-track"><div class="m1515-bar nette" id="m1515-bar-nette"></div></div>
+<div class="m1515-rowlabel">Poussée brute diminuée de la traînée d'entrée d'air — celle qui propulse réellement l'avion</div>
+
+<div>
+  <button class="m1515-btn" id="m1515-moins">− Réduire la vitesse</button>
+  <button class="m1515-btn" id="m1515-plus">+ Augmenter la vitesse</button>
+</div>
+
+<div class="m1515-caption" id="m1515-caption">Vitesse de vol nulle (illustration) : l'air entrant n'a besoin d'aucun ralentissement avant le compresseur, donc aucune traînée d'entrée d'air — poussée brute et poussée nette sont ici rigoureusement identiques.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1515-wrap');
+  if (!wrap) { return; }
+  var barBrute = wrap.querySelector('#m1515-bar-brute');
+  var barNette = wrap.querySelector('#m1515-bar-nette');
+  var caption = wrap.querySelector('#m1515-caption');
+  var moinsBtn = wrap.querySelector('#m1515-moins');
+  var plusBtn = wrap.querySelector('#m1515-plus');
+
+  var MAX = 10;
+  var vitesse = 0;
+
+  function render() {
+    var brute = 50 + vitesse * 3; // effet de bélier : soutient légèrement la poussée brute
+    var nette = 50 - vitesse * 5; // traînée d'entrée d'air : pénalise davantage la poussée nette
+    barBrute.style.width = Math.min(100, brute) + '%';
+    barNette.style.width = Math.max(2, nette) + '%';
+
+    if (vitesse === 0) {
+      caption.textContent = "Vitesse de vol nulle (illustration) : l’air entrant n’a besoin d’aucun ralentissement avant le compresseur, donc aucune traînée d’entrée d’air — poussée brute et poussée nette sont ici rigoureusement identiques.";
+    } else {
+      caption.textContent = "À cette vitesse (illustration), l’effet de bélier soutient légèrement la poussée brute, mais la traînée d’entrée d’air — le coût du ralentissement de l’air avant le compresseur — pénalise davantage la poussée nette : l’écart entre les deux grandeurs se creuse avec la vitesse.";
+    }
+  }
+
+  plusBtn.addEventListener('click', function () { vitesse = Math.min(MAX, vitesse + 1); render(); });
+  moinsBtn.addEventListener('click', function () { vitesse = Math.max(0, vitesse - 1); render(); });
+
+  render();
+})();
+</script>

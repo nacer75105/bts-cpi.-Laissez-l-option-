@@ -1,0 +1,48 @@
+<div id="schema-m1517b-wrap" style="font-family: inherit; max-width: 680px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1517b-wrap .m1517b-btn { margin:3px 6px 3px 0; padding:6px 10px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.86em; text-align:left; display:block; width:100%; }
+#schema-m1517b-wrap .m1517b-btn.active { background:#333; color:#fff; border-color:#333; }
+#schema-m1517b-wrap .m1517b-result { margin-top:14px; padding:12px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:4.6em; }
+#schema-m1517b-wrap .m1517b-result.ok { border-left-color:#3a9d3a; background:rgba(58,157,58,0.10); }
+#schema-m1517b-wrap .m1517b-result.warn { border-left-color:#e0a800; background:rgba(224,168,0,0.10); }
+</style>
+
+<p><strong>Essaie toi-même :</strong> choisis une architecture alternative et regarde le compromis qu'elle propose par rapport au turbofan classique déjà connu.</p>
+
+<div id="m1517b-archi">
+  <button class="m1517b-btn active" data-a="openrotor">Open rotor (propfan)</button>
+  <button class="m1517b-btn" data-a="hybride-serie">Hybride turbine-électrique (série)</button>
+  <button class="m1517b-btn" data-a="hybride-augment">Augmentation de puissance électrique</button>
+  <button class="m1517b-btn" data-a="calagevariable">Pales de soufflante à calage variable</button>
+</div>
+
+<div class="m1517b-result ok" id="m1517b-result">✅ Open rotor (propfan). Principe : une ou deux hélices multipales non carénées remplacent la soufflante carénée d'un turbofan classique. Avantage : un taux de dilution effectif encore plus élevé, donc un meilleur rendement propulsif. Contrepartie : un niveau de bruit généralement plus élevé et des contraintes de certification/intégration plus complexes.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1517b-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('#m1517b-archi .m1517b-btn');
+  var result = wrap.querySelector('#m1517b-result');
+
+  var data = {
+    openrotor: "Open rotor (propfan). Principe : une ou deux hélices multipales non carénées remplacent la soufflante carénée d'un turbofan classique. Avantage : un taux de dilution effectif encore plus élevé, donc un meilleur rendement propulsif. Contrepartie : un niveau de bruit généralement plus élevé et des contraintes de certification/intégration plus complexes.",
+    "hybride-serie": "Hybride turbine-électrique, architecture série. Principe : la turbine n'entraîne plus directement une hélice ou une soufflante, mais un générateur électrique, qui alimente à son tour un ou plusieurs moteurs électriques distincts. Avantage : répartir la production de puissance entre plusieurs sources. Contrepartie : une chaîne de conversion d'énergie plus longue, encore en développement sur avion commercial.",
+    "hybride-augment": "Augmentation de puissance électrique. Principe : un moteur électrique complémentaire, alimenté par batterie, assiste ponctuellement la turbine pendant les phases les plus exigeantes (décollage). Avantage : dimensionner la turbine pour un besoin moyen plutôt que pour le pic de puissance. Contrepartie : la masse et l'autonomie limitée de la batterie embarquée.",
+    calagevariable: "Pales de soufflante à calage variable. Principe : les pales peuvent pivoter légèrement, comme les aubes de stator du compresseur (rappel M15.3) ou une hélice à pas variable (module M17A). Avantage : une efficacité maintenue sur une plage de régimes plus large qu'une soufflante à pales fixes. Contrepartie : un mécanisme d'actionnement supplémentaire à entretenir."
+  };
+
+  function render(a) {
+    result.textContent = '✅ ' + data[a];
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var a = b.getAttribute('data-a');
+      btns.forEach(function (x) { x.classList.toggle('active', x === b); });
+      render(a);
+    });
+  });
+})();
+</script>

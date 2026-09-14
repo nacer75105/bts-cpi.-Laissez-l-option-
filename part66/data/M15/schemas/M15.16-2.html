@@ -1,0 +1,90 @@
+<div id="schema-m1516b-wrap" style="font-family: inherit; max-width: 680px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1516b-wrap .m1516b-btn { margin:3px 6px 3px 0; padding:6px 10px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.86em; text-align:left; display:block; width:100%; }
+#schema-m1516b-wrap .m1516b-btn.active { background:#333; color:#fff; border-color:#333; }
+#schema-m1516b-wrap .m1516b-result { margin-top:14px; padding:12px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:3.8em; }
+#schema-m1516b-wrap .m1516b-result.ok { border-left-color:#3a9d3a; background:rgba(58,157,58,0.10); }
+#schema-m1516b-wrap .m1516b-result.bad { border-left-color:#c0392b; background:rgba(192,57,43,0.10); }
+#schema-m1516b-wrap .m1516b-cols { display:flex; gap:20px; flex-wrap:wrap; margin-top:10px; }
+#schema-m1516b-wrap .m1516b-col { min-width:230px; flex:1; }
+#schema-m1516b-wrap .m1516b-label { font-weight:bold; margin-bottom:4px; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> choisis un additif, puis un problème à résoudre — et regarde s'il s'agit bien du rôle de cet additif.</p>
+
+<div class="m1516b-cols">
+  <div class="m1516b-col">
+    <div class="m1516b-label">Additif</div>
+    <div id="m1516b-additif">
+      <button class="m1516b-btn active" data-add="antigel">Antigel</button>
+      <button class="m1516b-btn" data-add="anticorrosion">Anti-corrosion</button>
+      <button class="m1516b-btn" data-add="antistatique">Antistatique</button>
+      <button class="m1516b-btn" data-add="antimousse">Anti-mousse</button>
+    </div>
+  </div>
+  <div class="m1516b-col">
+    <div class="m1516b-label">Problème à résoudre</div>
+    <div id="m1516b-probleme">
+      <button class="m1516b-btn active" data-pb="glace">Cristaux de glace dans le carburant</button>
+      <button class="m1516b-btn" data-pb="rouille">Corrosion des surfaces métalliques</button>
+      <button class="m1516b-btn" data-pb="etincelle">Étincelle d'électricité statique</button>
+      <button class="m1516b-btn" data-pb="bulles">Bulles d'air dans l'huile</button>
+    </div>
+  </div>
+</div>
+
+<div class="m1516b-result ok" id="m1516b-result">✅ Additif antigel, problème : cristaux de glace. C'est exactement son rôle : limiter la formation de cristaux de glace à partir de l'eau déjà présente dans le carburant.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1516b-wrap');
+  if (!wrap) { return; }
+  var addBtns = wrap.querySelectorAll('#m1516b-additif .m1516b-btn');
+  var pbBtns = wrap.querySelectorAll('#m1516b-probleme .m1516b-btn');
+  var result = wrap.querySelector('#m1516b-result');
+
+  var roles = { antigel: 'glace', anticorrosion: 'rouille', antistatique: 'etincelle', antimousse: 'bulles' };
+  var nomsAdd = { antigel: 'antigel', anticorrosion: 'anti-corrosion', antistatique: 'antistatique', antimousse: 'anti-mousse' };
+  var nomsPb = { glace: 'cristaux de glace', rouille: 'corrosion des surfaces métalliques', etincelle: "étincelle d'électricité statique", bulles: "bulles d'air dans l'huile" };
+  var textesOk = {
+    antigel: "C'est exactement son rôle : limiter la formation de cristaux de glace à partir de l'eau déjà présente dans le carburant.",
+    anticorrosion: "C'est exactement son rôle : protéger les surfaces métalliques en contact prolongé avec le fluide.",
+    antistatique: "C'est exactement son rôle : favoriser la dissipation de l'électricité statique générée par l'écoulement du carburant.",
+    antimousse: "C'est exactement son rôle : limiter la formation de bulles d'air qui réduiraient l'efficacité de la lubrification et du transfert de chaleur."
+  };
+
+  var additif = 'antigel';
+  var probleme = 'glace';
+
+  function render() {
+    var correct = roles[additif] === probleme;
+    result.classList.remove('ok', 'bad');
+    var intro = 'Additif ' + nomsAdd[additif] + ', problème : ' + nomsPb[probleme] + '. ';
+    if (correct) {
+      result.classList.add('ok');
+      result.textContent = '✅ ' + intro + textesOk[additif];
+    } else {
+      result.classList.add('bad');
+      result.textContent = '❌ ' + intro + "Ce n'est pas le rôle de cet additif : " + nomsAdd[additif] + ' répond plutôt au problème « ' + nomsPb[roles[additif]] + ' ».';
+    }
+  }
+
+  addBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      additif = b.getAttribute('data-add');
+      addBtns.forEach(function (x) { x.classList.toggle('active', x === b); });
+      render();
+    });
+  });
+  pbBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      probleme = b.getAttribute('data-pb');
+      pbBtns.forEach(function (x) { x.classList.toggle('active', x === b); });
+      render();
+    });
+  });
+
+  render();
+})();
+</script>

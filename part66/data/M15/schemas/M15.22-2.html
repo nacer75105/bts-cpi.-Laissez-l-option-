@@ -1,0 +1,49 @@
+<div id="schema-m1522b-wrap" style="font-family: inherit; max-width: 680px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1522b-wrap .m1522b-btn { margin:3px 6px 3px 0; padding:6px 10px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.86em; text-align:left; display:block; width:100%; }
+#schema-m1522b-wrap .m1522b-btn.active { background:#333; color:#fff; border-color:#333; }
+#schema-m1522b-wrap .m1522b-result { margin-top:14px; padding:12px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:4.4em; }
+#schema-m1522b-wrap .m1522b-result.ok { border-left-color:#3a9d3a; background:rgba(58,157,58,0.10); }
+#schema-m1522b-wrap .m1522b-result.bad { border-left-color:#c0392b; background:rgba(192,57,43,0.10); }
+</style>
+
+<p><strong>Essaie toi-même :</strong> choisis un constat fait lors d'une inspection périodique d'un moteur en conservation, et regarde la conséquence correcte.</p>
+
+<div id="m1522b-constats">
+  <button class="m1522b-btn active" data-c="intact">Housses et bouchons intacts, agent déshydratant efficace</button>
+  <button class="m1522b-btn" data-c="housse">Housse endommagée, découverte lors de l'inspection</button>
+  <button class="m1522b-btn" data-c="bouchon">Un bouchon manquant sur une ouverture</button>
+</div>
+
+<div class="m1522b-result ok" id="m1522b-result">✅ Protection intacte. Rien à reprendre : la conservation continue de courir normalement jusqu'à la prochaine inspection périodique définie par le constructeur.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1522b-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('#m1522b-constats .m1522b-btn');
+  var result = wrap.querySelector('#m1522b-result');
+
+  var data = {
+    intact: { ok: true, texte: "Protection intacte. Rien à reprendre : la conservation continue de courir normalement jusqu'à la prochaine inspection périodique définie par le constructeur." },
+    housse: { ok: false, texte: "Protection compromise. La durée de protection effective n'est plus garantie : la conservation doit être reprise depuis le début, pas simplement complétée par une housse neuve." },
+    bouchon: { ok: false, texte: "Protection compromise, même sur un seul point d'ouverture. De l'humidité, de la poussière ou un insecte a pu s'y introduire sans qu'on sache depuis quand : la conservation doit être reprise depuis le début." }
+  };
+
+  function render(c) {
+    var res = data[c];
+    result.classList.remove('ok', 'bad');
+    if (res.ok) { result.classList.add('ok'); result.textContent = '✅ ' + res.texte; }
+    else { result.classList.add('bad'); result.textContent = '❌ ' + res.texte; }
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var c = b.getAttribute('data-c');
+      btns.forEach(function (x) { x.classList.toggle('active', x === b); });
+      render(c);
+    });
+  });
+})();
+</script>

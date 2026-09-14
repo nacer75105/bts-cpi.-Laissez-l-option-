@@ -1,0 +1,58 @@
+<div id="schema-m1515b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1515b-wrap .m1515b-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.92em; }
+#schema-m1515b-wrap .m1515b-btn.active { background:#333; color:#fff; border-color:#333; }
+#schema-m1515b-wrap .m1515b-track { position:relative; width:100%; max-width:460px; height:22px; background:#e2e2e2; border-radius:6px; margin:6px 0 4px; overflow:hidden; }
+#schema-m1515b-wrap .m1515b-bar { height:100%; transition:width .2s; }
+#schema-m1515b-wrap .m1515b-bar.utile { background:#3a9d3a; }
+#schema-m1515b-wrap .m1515b-bar.gaspillee { background:#c0392b; }
+#schema-m1515b-wrap .m1515b-rowlabel { font-size:0.78em; color:#666; margin:2px 0 12px; }
+#schema-m1515b-wrap .m1515b-value { font-weight:bold; margin-bottom:2px; font-size:0.9em; }
+#schema-m1515b-wrap .m1515b-caption { margin-top:10px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:4.6em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> compare deux façons d'obtenir la même poussée totale — accélérer une petite masse d'air très fort (turboréacteur pur) ou une grande masse d'air modérément (taux de dilution élevé) — et regarde ce qu'il advient de l'énergie une fois la poussée produite.</p>
+
+<div>
+  <button class="m1515b-btn active" id="m1515b-btn-pur">Turboréacteur pur (petite masse, grande vitesse)</button>
+  <button class="m1515b-btn" id="m1515b-btn-dilution">Taux de dilution élevé (grande masse, vitesse modérée)</button>
+</div>
+
+<div class="m1515b-value">Poussée produite (illustration — identique dans les deux cas)</div>
+<div class="m1515b-track"><div class="m1515b-bar utile" id="m1515b-bar-poussee" style="width:60%;"></div></div>
+<div class="m1515b-rowlabel">Même poussée totale dans les deux configurations</div>
+
+<div class="m1515b-value">Énergie cinétique résiduelle gaspillée dans le jet (illustration)</div>
+<div class="m1515b-track"><div class="m1515b-bar gaspillee" id="m1515b-bar-gaspillage"></div></div>
+<div class="m1515b-rowlabel">Énergie qui ne contribue plus à la poussée une fois le gaz déjà éjecté</div>
+
+<div class="m1515b-caption" id="m1515b-caption">Turboréacteur pur : pour produire cette poussée, une petite masse d'air est éjectée à très grande vitesse — le jet conserve, une fois éjecté, une énergie cinétique résiduelle importante, gaspillée puisqu'elle ne contribue plus à la poussée. C'est cette énergie perdue qui explique un rendement propulsif plus faible.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1515b-wrap');
+  if (!wrap) { return; }
+  var btnPur = wrap.querySelector('#m1515b-btn-pur');
+  var btnDilution = wrap.querySelector('#m1515b-btn-dilution');
+  var barGaspillage = wrap.querySelector('#m1515b-bar-gaspillage');
+  var caption = wrap.querySelector('#m1515b-caption');
+
+  function showPur() {
+    btnPur.className = 'm1515b-btn active';
+    btnDilution.className = 'm1515b-btn';
+    barGaspillage.style.width = '80%';
+    caption.textContent = "Turboréacteur pur : pour produire cette poussée, une petite masse d’air est éjectée à très grande vitesse — le jet conserve, une fois éjecté, une énergie cinétique résiduelle importante, gaspillée puisqu’elle ne contribue plus à la poussée. C’est cette énergie perdue qui explique un rendement propulsif plus faible.";
+  }
+
+  function showDilution() {
+    btnPur.className = 'm1515b-btn';
+    btnDilution.className = 'm1515b-btn active';
+    barGaspillage.style.width = '25%';
+    caption.textContent = "Taux de dilution élevé : la même poussée est obtenue en accélérant une grande masse d’air à une vitesse plus modérée — le jet éjecté conserve une énergie cinétique résiduelle bien moindre, donc moins d’énergie gaspillée. C’est ce mécanisme qui améliore le rendement propulsif aux vitesses subsoniques usuelles (rappel M15.1).";
+  }
+
+  btnPur.addEventListener('click', showPur);
+  btnDilution.addEventListener('click', showDilution);
+})();
+</script>

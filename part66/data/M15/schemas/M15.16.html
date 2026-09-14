@@ -1,0 +1,93 @@
+<div id="schema-m1516-wrap" style="font-family: inherit; max-width: 680px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1516-wrap .m1516-btn { margin:3px 6px 3px 0; padding:6px 10px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.86em; text-align:left; display:block; width:100%; }
+#schema-m1516-wrap .m1516-btn.active { background:#333; color:#fff; border-color:#333; }
+#schema-m1516-wrap .m1516-result { margin-top:14px; padding:12px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:4.2em; }
+#schema-m1516-wrap .m1516-result.ok { border-left-color:#3a9d3a; background:rgba(58,157,58,0.10); }
+#schema-m1516-wrap .m1516-result.bad { border-left-color:#c0392b; background:rgba(192,57,43,0.10); }
+#schema-m1516-wrap .m1516-result.warn { border-left-color:#e0a800; background:rgba(224,168,0,0.10); }
+#schema-m1516-wrap .m1516-cols { display:flex; gap:20px; flex-wrap:wrap; margin-top:10px; }
+#schema-m1516-wrap .m1516-col { min-width:230px; flex:1; }
+#schema-m1516-wrap .m1516-label { font-weight:bold; margin-bottom:4px; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> choisis un type de carburant, puis une intention d'usage — et regarde s'il convient sans réserve, avec restriction, ou pas du tout.</p>
+
+<div class="m1516-cols">
+  <div class="m1516-col">
+    <div class="m1516-label">Type de carburant</div>
+    <div id="m1516-type">
+      <button class="m1516-btn active" data-type="standard">Carburant standard</button>
+      <button class="m1516-btn" data-type="dropin">Carburant alternatif « drop-in »</button>
+      <button class="m1516-btn" data-type="alt">Carburant alternatif non drop-in</button>
+    </div>
+  </div>
+  <div class="m1516-col">
+    <div class="m1516-label">Intention d'usage</div>
+    <div id="m1516-usage">
+      <button class="m1516-btn active" data-usage="sans">Utiliser sans aucune modification ni restriction</button>
+      <button class="m1516-btn" data-usage="melange">Mélanger avec le carburant de référence dans le même réservoir</button>
+    </div>
+  </div>
+</div>
+
+<div class="m1516-result ok" id="m1516-result">✅ Carburant standard, utilisé sans aucune modification. C'est le carburant de référence lui-même : aucune restriction particulière ne s'applique, au-delà des précautions générales déjà vues (M7A.1, M7A.12).</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1516-wrap');
+  if (!wrap) { return; }
+  var typeBtns = wrap.querySelectorAll('#m1516-type .m1516-btn');
+  var usageBtns = wrap.querySelectorAll('#m1516-usage .m1516-btn');
+  var result = wrap.querySelector('#m1516-result');
+
+  var table = {
+    standard: {
+      sans: { ok: true, texte: "C'est le carburant de référence lui-même : aucune restriction particulière ne s'applique, au-delà des précautions générales déjà vues (M7A.1, M7A.12)." },
+      melange: { ok: true, texte: "Mélanger du carburant standard avec lui-même ne pose évidemment aucun problème de compatibilité." }
+    },
+    dropin: {
+      sans: { ok: true, texte: "Un carburant drop-in est conçu précisément pour cet usage : ses propriétés sont assez proches du carburant de référence pour être utilisé sans modification du moteur ni de sa documentation." },
+      melange: { ok: true, texte: "Le mélange avec le carburant de référence est justement l'un des usages prévus pour un carburant drop-in, sans restriction particulière." }
+    },
+    alt: {
+      sans: { ok: 'partiel', texte: "Un carburant alternatif qui n'est pas drop-in peut exiger des restrictions ou des procédures particulières : une vérification dans la documentation applicable reste nécessaire avant tout usage sans réserve." },
+      melange: { ok: false, texte: "Un carburant alternatif non drop-in n'a pas démontré la même interchangeabilité qu'un carburant drop-in : le mélanger sans vérification explicite de sa compatibilité expose à un risque non maîtrisé." }
+    }
+  };
+
+  var type = 'standard';
+  var usage = 'sans';
+
+  var nomsType = { standard: 'carburant standard', dropin: "carburant alternatif « drop-in »", alt: 'carburant alternatif non drop-in' };
+  var nomsUsage = { sans: 'utilisé sans aucune modification', melange: 'mélangé avec le carburant de référence' };
+
+  function render() {
+    var res = table[type][usage];
+    result.classList.remove('ok', 'bad', 'warn');
+    var intro = nomsType[type].charAt(0).toUpperCase() + nomsType[type].slice(1) + ', ' + nomsUsage[usage] + '. ';
+    if (res.ok === true) { result.classList.add('ok'); intro = '✅ ' + intro; }
+    else if (res.ok === false) { result.classList.add('bad'); intro = '❌ ' + intro; }
+    else { result.classList.add('warn'); intro = '⚠️ ' + intro; }
+    result.textContent = intro + res.texte;
+  }
+
+  typeBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      type = b.getAttribute('data-type');
+      typeBtns.forEach(function (x) { x.classList.toggle('active', x === b); });
+      render();
+    });
+  });
+  usageBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      usage = b.getAttribute('data-usage');
+      usageBtns.forEach(function (x) { x.classList.toggle('active', x === b); });
+      render();
+    });
+  });
+
+  render();
+})();
+</script>

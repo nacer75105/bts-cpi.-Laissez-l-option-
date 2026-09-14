@@ -1,0 +1,71 @@
+<div id="schema-m1518b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1518b-wrap .m1518b-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.92em; }
+#schema-m1518b-wrap .m1518b-btn.active { background:#333; color:#fff; border-color:#333; }
+#schema-m1518b-wrap .m1518b-track { position:relative; width:100%; max-width:460px; height:24px; background:#e2e2e2; border-radius:6px; margin:10px 0 4px; overflow:hidden; }
+#schema-m1518b-wrap .m1518b-zone { position:absolute; top:0; bottom:0; background:rgba(192,57,43,0.30); right:0; }
+#schema-m1518b-wrap .m1518b-bar { height:100%; width:0%; background:#3a9d3a; transition:width .2s, background .2s; }
+#schema-m1518b-wrap .m1518b-rowlabel { font-size:0.78em; color:#666; margin:2px 0 12px; }
+#schema-m1518b-wrap .m1518b-value { font-weight:bold; margin-bottom:2px; }
+#schema-m1518b-wrap .m1518b-caption { margin-top:10px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:4.2em; }
+#schema-m1518b-wrap .m1518b-caption.ok { border-left-color:#3a9d3a; background:rgba(58,157,58,0.10); }
+#schema-m1518b-wrap .m1518b-caption.bad { border-left-color:#c0392b; background:rgba(192,57,43,0.10); }
+</style>
+
+<p><strong>Essaie toi-même :</strong> simule une perte de charge de l'hélice (rupture du réducteur, incident sur l'hélice) et observe ce qu'il advient du régime de la turbine libre, livrée à elle-même.</p>
+
+<div class="m1518b-value">Charge appliquée par l'hélice sur la turbine libre (illustration)</div>
+<div>
+  <button class="m1518b-btn active" id="m1518b-btn-normale">Charge normale (hélice intacte)</button>
+  <button class="m1518b-btn" id="m1518b-btn-perdue">Charge perdue (rupture/incident)</button>
+</div>
+
+<div class="m1518b-value" style="margin-top:12px;">Régime de la turbine libre (illustration)</div>
+<div class="m1518b-track">
+  <div class="m1518b-zone" id="m1518b-zone"></div>
+  <div class="m1518b-bar" id="m1518b-bar"></div>
+</div>
+<div class="m1518b-rowlabel">Zone rouge : au-delà de la limite de régime déclenchant la protection contre la survitesse</div>
+
+<div class="m1518b-caption ok" id="m1518b-caption">Charge normale : l'hélice absorbe en continu l'énergie transmise par la turbine libre, qui reste à un régime stable et surveillé.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1518b-wrap');
+  if (!wrap) { return; }
+  var btnNormale = wrap.querySelector('#m1518b-btn-normale');
+  var btnPerdue = wrap.querySelector('#m1518b-btn-perdue');
+  var bar = wrap.querySelector('#m1518b-bar');
+  var zone = wrap.querySelector('#m1518b-zone');
+  var caption = wrap.querySelector('#m1518b-caption');
+
+  var SEUIL = 70;
+
+  function render(perdue) {
+    zone.style.width = (100 - SEUIL) + '%';
+    if (perdue) {
+      bar.style.width = '95%';
+      bar.style.background = '#c0392b';
+      caption.classList.remove('ok'); caption.classList.add('bad');
+      caption.textContent = "Charge perdue : plus rien ne s’oppose à l’accélération de la turbine libre, qui n’est freinée par aucune autre charge que l’hélice qu’elle entraîne (rappel M15.18). Le régime dépasse la limite : le dispositif de sécurité coupe immédiatement l’alimentation en carburant, indépendamment de la régulation normale, avant que le régime ne devienne critique.";
+    } else {
+      bar.style.width = '35%';
+      bar.style.background = '#3a9d3a';
+      caption.classList.remove('bad'); caption.classList.add('ok');
+      caption.textContent = "Charge normale : l’hélice absorbe en continu l’énergie transmise par la turbine libre, qui reste à un régime stable et surveillé.";
+    }
+  }
+
+  btnNormale.addEventListener('click', function () {
+    btnNormale.className = 'm1518b-btn active'; btnPerdue.className = 'm1518b-btn';
+    render(false);
+  });
+  btnPerdue.addEventListener('click', function () {
+    btnPerdue.className = 'm1518b-btn active'; btnNormale.className = 'm1518b-btn';
+    render(true);
+  });
+
+  render(false);
+})();
+</script>

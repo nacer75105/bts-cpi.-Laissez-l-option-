@@ -1,0 +1,67 @@
+<div id="schema-m1518-wrap" style="font-family: inherit; max-width: 680px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1518-wrap .m1518-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.92em; }
+#schema-m1518-wrap .m1518-btn.active { background:#333; color:#fff; border-color:#333; }
+#schema-m1518-wrap .m1518-chain { display:flex; flex-wrap:wrap; align-items:center; gap:4px; margin-top:16px; }
+#schema-m1518-wrap .m1518-box { padding:8px 10px; border-radius:6px; font-size:0.82em; text-align:center; min-width:90px; }
+#schema-m1518-wrap .m1518-box.commun { background:#e2e2e2; border:1px solid #999; }
+#schema-m1518-wrap .m1518-box.accent { background:#cfe8cf; border:1px solid #5a9a5a; }
+#schema-m1518-wrap .m1518-arrow { font-size:1.1em; color:#666; }
+#schema-m1518-wrap .m1518-caption { margin-top:16px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:4.2em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> compare la chaîne cinématique d'un turbopropulseur à turbine liée et à turbine libre.</p>
+
+<div>
+  <button class="m1518-btn active" id="m1518-btn-liee">Turbine liée</button>
+  <button class="m1518-btn" id="m1518-btn-libre">Turbine libre</button>
+</div>
+
+<div class="m1518-chain" id="m1518-chain-liee">
+  <div class="m1518-box commun">Compresseur</div><span class="m1518-arrow">↔</span>
+  <div class="m1518-box accent">Turbine unique<br>(même arbre)</div><span class="m1518-arrow">→</span>
+  <div class="m1518-box accent">Réducteur</div><span class="m1518-arrow">→</span>
+  <div class="m1518-box accent">Hélice<br>(régime lié)</div>
+</div>
+
+<div class="m1518-chain" id="m1518-chain-libre" style="display:none;">
+  <div class="m1518-box commun">Compresseur</div><span class="m1518-arrow">↔</span>
+  <div class="m1518-box commun">Turbine du<br>générateur de gaz</div><span class="m1518-arrow">→</span>
+  <div class="m1518-box accent">Turbine libre<br>(arbre indépendant)</div><span class="m1518-arrow">→</span>
+  <div class="m1518-box accent">Réducteur</div><span class="m1518-arrow">→</span>
+  <div class="m1518-box accent">Hélice<br>(régime propre)</div>
+</div>
+
+<div class="m1518-caption" id="m1518-caption">Turbine liée : une seule turbine entraîne, sur un même arbre, à la fois le compresseur et — via le réducteur — l'hélice. Le régime de l'hélice reste mécaniquement proportionnel à celui du compresseur : construction plus simple, souplesse de régulation réduite.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1518-wrap');
+  if (!wrap) { return; }
+  var btnLiee = wrap.querySelector('#m1518-btn-liee');
+  var btnLibre = wrap.querySelector('#m1518-btn-libre');
+  var chainLiee = wrap.querySelector('#m1518-chain-liee');
+  var chainLibre = wrap.querySelector('#m1518-chain-libre');
+  var caption = wrap.querySelector('#m1518-caption');
+
+  function showLiee() {
+    btnLiee.className = 'm1518-btn active';
+    btnLibre.className = 'm1518-btn';
+    chainLiee.style.display = 'flex';
+    chainLibre.style.display = 'none';
+    caption.textContent = "Turbine liée : une seule turbine entraîne, sur un même arbre, à la fois le compresseur et — via le réducteur — l’hélice. Le régime de l’hélice reste mécaniquement proportionnel à celui du compresseur : construction plus simple, souplesse de régulation réduite.";
+  }
+
+  function showLibre() {
+    btnLiee.className = 'm1518-btn';
+    btnLibre.className = 'm1518-btn active';
+    chainLiee.style.display = 'none';
+    chainLibre.style.display = 'flex';
+    caption.textContent = "Turbine libre : une seconde turbine, mécaniquement indépendante de celle du générateur de gaz, entraîne l’hélice via son propre réducteur à partir de l’énergie encore disponible dans les gaz. Le régime du générateur de gaz peut varier pendant que l’hélice reste régulée séparément : plus de souplesse, au prix d’un organe supplémentaire.";
+  }
+
+  btnLiee.addEventListener('click', showLiee);
+  btnLibre.addEventListener('click', showLibre);
+})();
+</script>

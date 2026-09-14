@@ -1,0 +1,73 @@
+<div id="schema-m1519-wrap" style="font-family: inherit; max-width: 680px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1519-wrap .m1519-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.92em; }
+#schema-m1519-wrap .m1519-btn.active { background:#333; color:#fff; border-color:#333; }
+#schema-m1519-wrap .m1519-chain { display:flex; flex-wrap:wrap; align-items:center; gap:4px; margin-top:16px; }
+#schema-m1519-wrap .m1519-box { padding:8px 10px; border-radius:6px; font-size:0.82em; text-align:center; min-width:90px; }
+#schema-m1519-wrap .m1519-box.commun { background:#e2e2e2; border:1px solid #999; }
+#schema-m1519-wrap .m1519-box.turboprop { background:#cfe8cf; border:1px solid #5a9a5a; }
+#schema-m1519-wrap .m1519-box.turbomoteur { background:#cfe0f5; border:1px solid #5a80b0; }
+#schema-m1519-wrap .m1519-arrow { font-size:1.1em; color:#666; }
+#schema-m1519-wrap .m1519-caption { margin-top:16px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:4.2em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> compare la chaîne cinématique d'un turbopropulseur et celle d'un turbomoteur — les deux partagent le même générateur de gaz et la même turbine libre (rappel M15.18), mais divergent complètement après elle.</p>
+
+<div>
+  <button class="m1519-btn active" id="m1519-btn-tp">Turbopropulseur</button>
+  <button class="m1519-btn" id="m1519-btn-tm">Turbomoteur</button>
+</div>
+
+<div class="m1519-chain" id="m1519-chain-tp">
+  <div class="m1519-box commun">Entrée d'air<br>M15.2</div><span class="m1519-arrow">→</span>
+  <div class="m1519-box commun">Compresseur<br>M15.3</div><span class="m1519-arrow">→</span>
+  <div class="m1519-box commun">Combustion<br>M15.4</div><span class="m1519-arrow">→</span>
+  <div class="m1519-box commun">Turbine liée<br>ou libre</div><span class="m1519-arrow">→</span>
+  <div class="m1519-box turboprop">Réducteur<br>(dans l'axe)</div><span class="m1519-arrow">→</span>
+  <div class="m1519-box turboprop">Hélice<br>(régime sélectionnable)</div>
+</div>
+
+<div class="m1519-chain" id="m1519-chain-tm" style="display:none;">
+  <div class="m1519-box commun">Entrée d'air<br>M15.2</div><span class="m1519-arrow">→</span>
+  <div class="m1519-box commun">Compresseur<br>M15.3</div><span class="m1519-arrow">→</span>
+  <div class="m1519-box commun">Combustion<br>M15.4</div><span class="m1519-arrow">→</span>
+  <div class="m1519-box commun">Générateur de gaz<br>+ turbine libre</div><span class="m1519-arrow">→</span>
+  <div class="m1519-box turbomoteur">Réducteur<br>(réoriente)</div><span class="m1519-arrow">→</span>
+  <div class="m1519-box turbomoteur">Roue libre</div><span class="m1519-arrow">→</span>
+  <div class="m1519-box turbomoteur">Boîte de<br>transmission</div><span class="m1519-arrow">→</span>
+  <div class="m1519-box turbomoteur">Rotor<br>(régime constant)</div>
+</div>
+
+<div class="m1519-caption" id="m1519-caption">Turbopropulseur : le générateur de gaz et la turbine (liée ou libre, rappel M15.18) sont rigoureusement identiques à ceux d'un turbomoteur. La divergence commence au réducteur, aligné dans l'axe du moteur, qui entraîne directement une hélice dont l'équipage peut sélectionner le régime selon la phase de vol.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1519-wrap');
+  if (!wrap) { return; }
+  var btnTp = wrap.querySelector('#m1519-btn-tp');
+  var btnTm = wrap.querySelector('#m1519-btn-tm');
+  var chainTp = wrap.querySelector('#m1519-chain-tp');
+  var chainTm = wrap.querySelector('#m1519-chain-tm');
+  var caption = wrap.querySelector('#m1519-caption');
+
+  function showTp() {
+    btnTp.className = 'm1519-btn active';
+    btnTm.className = 'm1519-btn';
+    chainTp.style.display = 'flex';
+    chainTm.style.display = 'none';
+    caption.textContent = "Turbopropulseur : le générateur de gaz et la turbine (liée ou libre, rappel M15.18) sont rigoureusement identiques à ceux d'un turbomoteur. La divergence commence au réducteur, aligné dans l'axe du moteur, qui entraîne directement une hélice dont l'équipage peut sélectionner le régime selon la phase de vol.";
+  }
+
+  function showTm() {
+    btnTp.className = 'm1519-btn';
+    btnTm.className = 'm1519-btn active';
+    chainTp.style.display = 'none';
+    chainTm.style.display = 'flex';
+    caption.textContent = "Turbomoteur : même générateur de gaz et même turbine libre qu'un turbopropulseur, mais le réducteur réoriente la transmission (rappel : puissance transmise vers le haut sur un hélicoptère), une roue libre permet à un moteur défaillant de se désolidariser, et la boîte de transmission entraîne un rotor dont le régime reste maintenu constant, dans une bande de fonctionnement plus étroite que celle d'une hélice d'avion.";
+  }
+
+  btnTp.addEventListener('click', showTp);
+  btnTm.addEventListener('click', showTm);
+})();
+</script>

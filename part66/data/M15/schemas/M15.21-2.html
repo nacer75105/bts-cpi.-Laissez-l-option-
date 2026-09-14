@@ -1,0 +1,83 @@
+<div id="schema-m1521b-wrap" style="font-family: inherit; max-width: 680px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1521b-wrap .m1521b-btn { margin:3px 6px 3px 0; padding:6px 10px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.86em; text-align:left; display:block; width:100%; }
+#schema-m1521b-wrap .m1521b-btn.active { background:#333; color:#fff; border-color:#333; }
+#schema-m1521b-wrap .m1521b-result { margin-top:14px; padding:12px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:4.4em; }
+#schema-m1521b-wrap .m1521b-result.ok { border-left-color:#3a9d3a; background:rgba(58,157,58,0.10); }
+#schema-m1521b-wrap .m1521b-result.bad { border-left-color:#c0392b; background:rgba(192,57,43,0.10); }
+#schema-m1521b-wrap .m1521b-cols { display:flex; gap:20px; flex-wrap:wrap; margin-top:10px; }
+#schema-m1521b-wrap .m1521b-col { min-width:230px; flex:1; }
+#schema-m1521b-wrap .m1521b-label { font-weight:bold; margin-bottom:4px; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> choisis une opération, puis un point d'ancrage envisagé — et regarde si le choix est sûr.</p>
+
+<div class="m1521b-cols">
+  <div class="m1521b-col">
+    <div class="m1521b-label">Opération</div>
+    <div id="m1521b-op">
+      <button class="m1521b-btn active" data-op="depose">Déposer le moteur pour révision</button>
+      <button class="m1521b-btn" data-op="fluide">Évacuer un fluide accumulé accidentellement</button>
+    </div>
+  </div>
+  <div class="m1521b-col">
+    <div class="m1521b-label">Point utilisé</div>
+    <div id="m1521b-point">
+      <button class="m1521b-btn active" data-pt="designe">Point désigné par le constructeur</button>
+      <button class="m1521b-btn" data-pt="juge">Point de structure choisi au jugé</button>
+    </div>
+  </div>
+</div>
+
+<div class="m1521b-result ok" id="m1521b-result">✅ Déposer le moteur, avec un point désigné par le constructeur. Ce point est spécifiquement dimensionné pour reprendre l'effort concentré du levage — c'est la seule pratique sûre.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1521b-wrap');
+  if (!wrap) { return; }
+  var opBtns = wrap.querySelectorAll('#m1521b-op .m1521b-btn');
+  var ptBtns = wrap.querySelectorAll('#m1521b-point .m1521b-btn');
+  var result = wrap.querySelector('#m1521b-result');
+
+  var table = {
+    depose: {
+      designe: { ok: true, texte: "Ce point est spécifiquement dimensionné pour reprendre l'effort concentré du levage — c'est la seule pratique sûre." },
+      juge: { ok: false, texte: "Un point de structure choisi au jugé, même d'apparence robuste, pourrait ne pas supporter l'effort concentré du levage (rappel M7A.12) — jamais une pratique acceptable." }
+    },
+    fluide: {
+      designe: { ok: true, texte: "Les drains, positionnés en points bas désignés, évacuent le fluide accumulé sans le laisser stagner dans un recoin fermé du capotage." },
+      juge: { ok: false, texte: "Percer ou ouvrir un point non prévu pour évacuer un fluide risquerait d'endommager une pièce structurale ou un circuit à proximité, sans garantie d'évacuation correcte." }
+    }
+  };
+
+  var op = 'depose';
+  var pt = 'designe';
+
+  function render() {
+    var res = table[op][pt];
+    result.classList.remove('ok', 'bad');
+    var intro = (op === 'depose' ? 'Déposer le moteur' : 'Évacuer un fluide accumulé') + ', avec un ' + (pt === 'designe' ? 'point désigné par le constructeur' : 'point de structure choisi au jugé') + '. ';
+    if (res.ok) { result.classList.add('ok'); intro = '✅ ' + intro; }
+    else { result.classList.add('bad'); intro = '❌ ' + intro; }
+    result.textContent = intro + res.texte;
+  }
+
+  opBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      op = b.getAttribute('data-op');
+      opBtns.forEach(function (x) { x.classList.toggle('active', x === b); });
+      render();
+    });
+  });
+  ptBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      pt = b.getAttribute('data-pt');
+      ptBtns.forEach(function (x) { x.classList.toggle('active', x === b); });
+      render();
+    });
+  });
+
+  render();
+})();
+</script>

@@ -1,0 +1,46 @@
+<div id="schema-m1520b-wrap" style="font-family: inherit; max-width: 680px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1520b-wrap .m1520b-btn { margin:3px 6px 3px 0; padding:6px 10px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.86em; text-align:left; display:block; width:100%; }
+#schema-m1520b-wrap .m1520b-btn.active { background:#333; color:#fff; border-color:#333; }
+#schema-m1520b-wrap .m1520b-result { margin-top:14px; padding:12px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:4.4em; }
+#schema-m1520b-wrap .m1520b-result.ok { border-left-color:#3a9d3a; background:rgba(58,157,58,0.10); }
+#schema-m1520b-wrap .m1520b-result.bad { border-left-color:#c0392b; background:rgba(192,57,43,0.10); }
+</style>
+
+<p><strong>Essaie toi-même :</strong> choisis une situation concernant un APU en fonctionnement, et regarde pourquoi la protection automatique compte particulièrement dans ce cas.</p>
+
+<div id="m1520b-situations">
+  <button class="m1520b-btn active" data-s="parametre">Un paramètre surveillé (régime, température) dépasse sa limite</button>
+  <button class="m1520b-btn" data-s="portes">L'APU tourne au sol, portes de l'aéronef ouvertes, passagers en embarquement</button>
+  <button class="m1520b-btn" data-s="sansequipage">L'APU tourne sans qu'aucun membre d'équipage ne surveille ses paramètres en continu</button>
+</div>
+
+<div class="m1520b-result ok" id="m1520b-result">✅ Dépassement de limite. Un dispositif d'arrêt automatique coupe l'APU dès qu'un paramètre surveillé dépasse la limite définie par le constructeur, sans attendre une action humaine — la même logique de protection déjà vue pour la survitesse d'un turbopropulseur (rappel M15.18).</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1520b-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('#m1520b-situations .m1520b-btn');
+  var result = wrap.querySelector('#m1520b-result');
+
+  var data = {
+    parametre: "Dépassement de limite. Un dispositif d'arrêt automatique coupe l'APU dès qu'un paramètre surveillé dépasse la limite définie par le constructeur, sans attendre une action humaine — la même logique de protection déjà vue pour la survitesse d'un turbopropulseur (rappel M15.18).",
+    portes: "Portes ouvertes, passagers proches. Une défaillance non maîtrisée pourrait avoir des conséquences immédiates sur le personnel au sol ou les passagers en cours d'embarquement, pas seulement sur l'aéronef lui-même — d'où l'importance d'une protection qui n'attend pas une réaction humaine pour agir.",
+    sansequipage: "Absence de surveillance humaine continue. Contrairement à un moteur principal visible et surveillé depuis le poste de pilotage en vol, l'APU fonctionne souvent sans qu'un membre d'équipage ne suive ses paramètres en continu : la protection doit donc être capable d'agir seule, sans dépendre d'une détection humaine."
+  };
+
+  function render(s) {
+    result.textContent = '✅ ' + data[s];
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var s = b.getAttribute('data-s');
+      btns.forEach(function (x) { x.classList.toggle('active', x === b); });
+      render(s);
+    });
+  });
+})();
+</script>
