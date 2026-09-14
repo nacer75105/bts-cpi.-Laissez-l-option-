@@ -1,0 +1,84 @@
+<div id="schema-m1128-wrap" style="font-family: inherit; max-width: 660px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1128-wrap .m1128-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m1128-wrap .m1128-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1128-wrap .m1128-diagram { position:relative; height:140px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; }
+#schema-m1128-wrap .m1128-tank { position:absolute; left:6%; top:30%; width:60px; height:50px; border:1.5px solid #4a76a8; border-radius:4px; background:#cfe0f2; }
+#schema-m1128-wrap .m1128-pipe { position:absolute; height:5px; background:#999; transition: background 0.2s, box-shadow 0.2s; }
+#schema-m1128-wrap .m1128-pipe.pressurized { background:#7fa8d9; box-shadow: 0 0 5px 1px rgba(127,168,217,0.7); }
+#schema-m1128-wrap .m1128-point { position:absolute; width:14px; height:14px; border-radius:3px; background:#ccc; border:1.5px solid #999; transition: background 0.2s; }
+#schema-m1128-wrap .m1128-point.active { background:#4a8c4a; border-color:#2f5c2f; }
+#schema-m1128-wrap .m1128-air { position:absolute; font-size:0.9em; opacity:0; transition: opacity 0.2s; }
+#schema-m1128-wrap .m1128-air.show { opacity:1; }
+#schema-m1128-wrap .m1128-label { position:absolute; font-size:0.64em; color:#555; }
+#schema-m1128-wrap .m1128-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Alimentation en eau potable :</strong> comparez le remplissage au sol et la distribution sous pression en vol.</p>
+
+<button class="m1128-btn active" id="m1128-btn-sol">Au sol (remplissage)</button>
+<button class="m1128-btn" id="m1128-btn-vol">En vol (sous pression)</button>
+
+<div class="m1128-diagram">
+  <div class="m1128-tank" id="m1128-tank"></div>
+  <div class="m1128-label" style="left:6%; top:8px;">R&#233;servoir d'eau potable</div>
+  <div class="m1128-air" id="m1128-air" style="left:8%; top:34%;">&#128168;</div>
+  <div class="m1128-label" id="m1128-air-label" style="left:2%; top:58%; opacity:0; transition:opacity 0.2s;">Air pr&#233;lev&#233; (circuit pneumatique)</div>
+
+  <div class="m1128-pipe" id="m1128-pipe1" style="left:19%; top:50%; width:20%;"></div>
+  <div class="m1128-pipe" id="m1128-pipe2" style="left:39%; top:30%; width:5%; height:22%;"></div>
+  <div class="m1128-pipe" id="m1128-pipe4" style="left:39%; top:50%; width:40%;"></div>
+  <div class="m1128-label" style="left:38%; top:88%;">Conduite d'eau potable</div>
+
+  <div class="m1128-point" id="m1128-galley" style="left:78%; top:20%;"></div>
+  <div class="m1128-label" style="left:70%; top:6px;">Office / galley</div>
+  <div class="m1128-point" id="m1128-lavabo" style="left:78%; top:76%;"></div>
+  <div class="m1128-label" style="left:74%; top:92%;">Lavabo toilettes</div>
+</div>
+
+<div class="m1128-caption" id="m1128-caption">Au sol, un point de servicing dédié remplit le réservoir d'eau potable avant chaque vol. Aucune pression n'est encore appliquée aux points d'utilisation. Cliquez sur « En vol » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1128-wrap');
+  if (!wrap) { return; }
+  var btnSol = wrap.querySelector('#m1128-btn-sol');
+  var btnVol = wrap.querySelector('#m1128-btn-vol');
+  var air = wrap.querySelector('#m1128-air');
+  var airLabel = wrap.querySelector('#m1128-air-label');
+  var pipes = [
+    wrap.querySelector('#m1128-pipe1'),
+    wrap.querySelector('#m1128-pipe2'),
+    wrap.querySelector('#m1128-pipe4')
+  ];
+  var galley = wrap.querySelector('#m1128-galley');
+  var lavabo = wrap.querySelector('#m1128-lavabo');
+  var caption = wrap.querySelector('#m1128-caption');
+
+  function showSol() {
+    btnSol.className = 'm1128-btn active';
+    btnVol.className = 'm1128-btn';
+    air.className = 'm1128-air';
+    airLabel.style.opacity = '0';
+    pipes.forEach(function (p) { p.className = 'm1128-pipe'; });
+    galley.className = 'm1128-point';
+    lavabo.className = 'm1128-point';
+    caption.textContent = "Au sol, un point de servicing dédié remplit le réservoir d'eau potable avant chaque vol. Aucune pression n'est encore appliquée aux points d'utilisation. Cliquez sur « En vol » pour comparer.";
+  }
+
+  function showVol() {
+    btnSol.className = 'm1128-btn';
+    btnVol.className = 'm1128-btn active';
+    air.className = 'm1128-air show';
+    airLabel.style.opacity = '1';
+    pipes.forEach(function (p) { p.className = 'm1128-pipe pressurized'; });
+    galley.className = 'm1128-point active';
+    lavabo.className = 'm1128-point active';
+    caption.textContent = "En vol, de l'air comprimé prélevé sur le circuit pneumatique (💨) met l'eau du réservoir sous pression, la poussant jusqu'aux points d'utilisation (office, lavabos) répartis dans la cabine, même au-dessus du niveau du réservoir.";
+  }
+
+  btnSol.addEventListener('click', showSol);
+  btnVol.addEventListener('click', showVol);
+})();
+</script>

@@ -3549,6 +3549,305 @@
       "bonne": 0,
       "explication": "Le VOR donne une direction (un radial) par rapport à la balise sol, tandis que le DME donne une distance par rapport à cette même balise — les deux informations, souvent combinées sur un même emplacement au sol, se complètent plutôt qu'elles ne font double emploi. Elles ne sont pas inversées, et le VOR ne mesure pas une distance.",
       "source": "Part-66 Appendix I — Module 11A, item 11.5.2"
+    },
+    {
+      "uid": "M11A-0275",
+      "sous_chapitre": "M11A.26",
+      "question": "Pourquoi la fiabilité des équipements de secours cabine (gilets, toboggans, trousses de premiers secours) fait-elle l'objet d'exigences aussi strictes ?",
+      "options": [
+        "Parce qu'un équipement de secours ne peut pas être réparé ou complété une fois l'urgence déclarée",
+        "Parce que ces équipements s'usent plus vite que les autres équipements de la cabine",
+        "Parce que leur poids doit être recalculé avant chaque vol pour la masse et centrage"
+      ],
+      "bonne": 0,
+      "explication": "Un équipement de secours ne peut pas être réparé ou complété une fois l'urgence déclarée, d'où des exigences de fiabilité et de contrôle aussi strictes que pour les systèmes de vol eux-mêmes. Il ne s'agit ni d'une usure particulièrement rapide, ni d'un recalcul de masse et centrage à chaque vol.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.7(a)"
+    },
+    {
+      "uid": "M11A-0276",
+      "sous_chapitre": "M11A.26",
+      "question": "Comment un toboggan d'évacuation se déploie-t-il généralement ?",
+      "options": [
+        "Manuellement, actionné par un membre d'équipage à l'aide d'une manivelle",
+        "Automatiquement, à l'ouverture de certaines portes en configuration armée",
+        "Automatiquement, dès que la pression cabine chute en dessous d'un seuil"
+      ],
+      "bonne": 1,
+      "explication": "Un toboggan d'évacuation se déploie automatiquement à l'ouverture de certaines portes, lorsque celles-ci sont en configuration armée. Il ne dépend ni d'une manivelle actionnée manuellement, ni d'une chute de pression cabine.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.7(a)"
+    },
+    {
+      "uid": "M11A-0277",
+      "sous_chapitre": "M11A.26",
+      "question": "À quoi sert le harnais ou la ceinture d'un siège passager ?",
+      "options": [
+        "Ajuster automatiquement la position du siège selon la configuration retenue",
+        "Répartir le poids du passager sur plusieurs rangées de sièges adjacentes",
+        "Retenir l'occupant lors d'une décélération brutale, sans se rompre ni se désolidariser du plancher"
+      ],
+      "bonne": 2,
+      "explication": "Le harnais retient l'occupant lors d'une décélération brutale (turbulence, atterrissage dur), sans se rompre ni se désolidariser du plancher. Il n'ajuste pas la position du siège (rôle des rails de fixation), et ne répartit rien sur d'autres rangées.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.7(b)"
+    },
+    {
+      "uid": "M11A-0278",
+      "sous_chapitre": "M11A.26",
+      "question": "Pourquoi l'installation d'un office (galley) impose-t-elle des dispositions constructives particulières ?",
+      "options": [
+        "Parce qu'il doit obligatoirement être positionné à l'écart de toute porte d'évacuation",
+        "Parce qu'il regroupe souvent eau, électricité et parfois des sources de chaleur dans un espace confiné et fréquenté",
+        "Parce qu'il doit être positionné exactement au centre de gravité de l'avion"
+      ],
+      "bonne": 1,
+      "explication": "Un office regroupe souvent eau, électricité et parfois des sources de chaleur dans un espace confiné et fréquenté, ce qui impose des dispositions constructives dédiées. Sa position n'a pas à coïncider exactement avec le centre de gravité, et rien n'impose de l'éloigner systématiquement des portes d'évacuation.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.7(b)"
+    },
+    {
+      "uid": "M11A-0279",
+      "sous_chapitre": "M11A.26",
+      "question": "À quoi sert l'équipement de manutention et de retenue du fret en soute ?",
+      "options": [
+        "Réchauffer le fret sensible au froid pendant le vol en altitude",
+        "Charger, positionner et immobiliser solidement les conteneurs ou palettes, pour préserver l'équilibre de l'avion",
+        "Détecter automatiquement une surcharge de la soute avant le décollage"
+      ],
+      "bonne": 1,
+      "explication": "L'équipement de manutention et de retenue du fret charge, positionne et immobilise solidement les conteneurs ou palettes, pour qu'aucun déplacement de charge ne perturbe l'équilibre de l'avion. Il ne réchauffe rien, et ne détecte pas de surcharge.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.7(b)"
+    },
+    {
+      "uid": "M11A-0280",
+      "sous_chapitre": "M11A.26",
+      "question": "Quel avantage opérationnel apporte un escalier d'embarquement intégré (airstairs) ?",
+      "options": [
+        "Remplacer la fonction des toboggans d'évacuation en cas d'urgence",
+        "Réduire la masse à vide de l'avion par rapport à une configuration sans escalier intégré",
+        "Permettre l'embarquement et le débarquement sans dépendre d'un équipement au sol fourni par l'aéroport"
+      ],
+      "bonne": 2,
+      "explication": "Un escalier intégré permet aux passagers d'embarquer et de débarquer sans dépendre d'un équipement au sol fourni par l'aéroport. Il augmente la masse à vide de l'avion (il faut le porter), et ne remplace pas la fonction des toboggans d'évacuation d'urgence.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.7(b)"
+    },
+    {
+      "uid": "M11A-0281",
+      "sous_chapitre": "M11A.26",
+      "question": "Pourquoi cette fiche ne précise-t-elle pas le nombre exact ni l'emplacement de chaque équipement de secours cabine ?",
+      "options": [
+        "Parce qu'ils sont laissés à l'appréciation individuelle de chaque membre d'équipage",
+        "Parce qu'ils relèvent de la réglementation opérationnelle et du manuel d'exploitation propre à chaque compagnie",
+        "Parce qu'ils dépendent uniquement du nombre de hublots de la cabine"
+      ],
+      "bonne": 1,
+      "explication": "Le nombre, l'emplacement et les caractéristiques précises des équipements de secours relèvent de la réglementation opérationnelle et du manuel d'exploitation propre à chaque compagnie, pas d'une appréciation individuelle ni du nombre de hublots de la cabine.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.7(a)"
+    },
+    {
+      "uid": "M11A-0282",
+      "sous_chapitre": "M11A.26",
+      "question": "Pourquoi le plan d'aménagement précis de la cabine (agencement des rangées, emplacement des offices) n'est-il pas fixé une fois pour toutes par le constructeur de l'avion ?",
+      "options": [
+        "Parce que la réglementation impose de le modifier à chaque révision majeure de l'avion",
+        "Parce qu'il relève d'un plan propre à chaque compagnie et à chaque configuration commerciale, à l'intérieur des limites fixées par le constructeur",
+        "Parce que chaque pays impose une disposition cabine différente pour les mêmes vols"
+      ],
+      "bonne": 1,
+      "explication": "Le plan d'aménagement précis relève d'un choix propre à chaque compagnie et à chaque configuration commerciale, à l'intérieur des limites structurales et réglementaires fixées par le constructeur. Il n'est imposé ni par une révision systématique, ni par une règle propre à chaque pays.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.7(b)"
+    },
+    {
+      "uid": "M11A-0283",
+      "sous_chapitre": "M11A.27",
+      "question": "Quelle est la fonction des feux de navigation d'un avion ?",
+      "options": [
+        "Indiquer aux autres aéronefs et aux observateurs la position et l'orientation de l'avion, même dans l'obscurité",
+        "Éclairer directement la trajectoire de l'avion au décollage et à l'atterrissage",
+        "Signaler que les moteurs de l'avion sont en fonctionnement"
+      ],
+      "bonne": 0,
+      "explication": "Les feux de navigation indiquent aux autres aéronefs et aux observateurs la position et l'orientation de l'avion, même dans l'obscurité. Éclairer la trajectoire est le rôle des feux d'atterrissage/roulage, et aucun feu ne signale spécifiquement le fonctionnement des moteurs.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.14"
+    },
+    {
+      "uid": "M11A-0284",
+      "sous_chapitre": "M11A.27",
+      "question": "En quoi les feux anticollision se distinguent-ils des feux de navigation ?",
+      "options": [
+        "Ils signalent la présence de l'avion de façon nettement plus visible (flashs), notamment quand les moteurs tournent",
+        "Ils remplacent les feux de navigation sur les avions les plus récents",
+        "Ils fonctionnent uniquement en vol, jamais au sol"
+      ],
+      "bonne": 0,
+      "explication": "Les feux anticollision signalent la présence de l'avion de façon nettement plus visible (flashs), notamment pendant les phases où les moteurs tournent. Ils fonctionnent aussi bien au sol qu'en vol, et ne remplacent pas les feux de navigation, qui restent distincts.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.14"
+    },
+    {
+      "uid": "M11A-0285",
+      "sous_chapitre": "M11A.27",
+      "question": "Pourquoi certains avions disposent-ils de feux dédiés à l'inspection visuelle du givrage sur l'aile ?",
+      "options": [
+        "Pour réchauffer localement le bord d'attaque et limiter la formation de givre",
+        "Pour permettre à l'équipage de vérifier visuellement l'état de la voilure de nuit, sans dépendre uniquement des indications électroniques",
+        "Pour signaler aux autres avions la présence de givre sur la voilure"
+      ],
+      "bonne": 1,
+      "explication": "Ces feux permettent à l'équipage de vérifier visuellement l'état de la voilure de nuit, sans dépendre uniquement des indications électroniques. Ils n'ont aucun effet de réchauffement (rôle des systèmes antigivrage, rappel M11A.16), et ne signalent rien aux autres avions.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.14"
+    },
+    {
+      "uid": "M11A-0286",
+      "sous_chapitre": "M11A.27",
+      "question": "Quelle contrainte particulière l'éclairage du poste de pilotage doit-il concilier ?",
+      "options": [
+        "Rester discret pour préserver la vision nocturne de l'équipage, tout en restant assez intense pour lire les instruments",
+        "Fonctionner uniquement en cas de panne de l'éclairage cabine principal",
+        "Être strictement identique en intensité à l'éclairage cabine passagers"
+      ],
+      "bonne": 0,
+      "explication": "L'éclairage du poste de pilotage doit rester discret pour préserver la vision nocturne de l'équipage, tout en restant assez intense pour lire les instruments. Il fonctionne en permanence, pas seulement en secours, et n'a pas à être identique à l'éclairage cabine.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.14"
+    },
+    {
+      "uid": "M11A-0287",
+      "sous_chapitre": "M11A.27",
+      "question": "Pourquoi l'éclairage de secours forme-t-il un ensemble à part, distinct de l'éclairage normal ?",
+      "options": [
+        "Parce qu'il fonctionne uniquement à l'aide de la lumière du jour",
+        "Parce qu'il doit continuer à fonctionner précisément quand l'éclairage normal ne le peut plus",
+        "Parce qu'il est allumé en permanence, y compris pendant tout le vol normal"
+      ],
+      "bonne": 1,
+      "explication": "L'éclairage de secours doit continuer à fonctionner précisément quand l'éclairage normal ne le peut plus (panne électrique, évacuation). Il n'est pas allumé en permanence en vol normal, et ne dépend pas de la lumière du jour.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.14"
+    },
+    {
+      "uid": "M11A-0288",
+      "sous_chapitre": "M11A.27",
+      "question": "Le système d'éclairage de secours combine généralement deux éléments : lesquels ?",
+      "options": [
+        "Un éclairage extérieur renforcé et une sirène sonore d'évacuation",
+        "Un éclairage général de cabine sur source autonome, et un balisage lumineux au niveau du plancher",
+        "Un éclairage du poste de pilotage renforcé et un éclairage des soutes renforcé"
+      ],
+      "bonne": 1,
+      "explication": "L'éclairage de secours combine généralement un éclairage général de cabine sur source autonome (batteries dédiées) et un balisage lumineux au niveau du plancher. Il ne comprend ni sirène sonore, ni renforcement spécifique du poste de pilotage ou des soutes.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.14"
+    },
+    {
+      "uid": "M11A-0289",
+      "sous_chapitre": "M11A.27",
+      "question": "D'où provient généralement l'alimentation de l'éclairage de secours, indépendamment du réseau électrique principal ?",
+      "options": [
+        "De batteries dédiées, indépendantes du réseau électrique principal",
+        "D'un raccordement automatique à une source électrique extérieure",
+        "Du même circuit hydraulique de secours que les commandes de vol"
+      ],
+      "bonne": 0,
+      "explication": "L'éclairage de secours est généralement alimenté par des batteries dédiées, indépendantes du réseau électrique principal. Il n'a aucun lien avec le circuit hydraulique, et une source extérieure au sol n'est d'aucun secours en vol.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.14"
+    },
+    {
+      "uid": "M11A-0290",
+      "sous_chapitre": "M11A.27",
+      "question": "Quel avantage les LED modernes apportent-elles par rapport aux lampes à incandescence plus anciennes pour l'éclairage cabine ?",
+      "options": [
+        "Un fonctionnement indépendant de toute source électrique de l'avion",
+        "Une intensité lumineuse fixe, non réglable, pour garantir l'uniformité entre tous les points lumineux",
+        "Un pilotage individuel ou par zone de l'intensité et de la teinte, avec une consommation et un remplacement réduits"
+      ],
+      "bonne": 2,
+      "explication": "Les LED permettent un pilotage individuel ou par zone de l'intensité et de la teinte, avec une consommation et un remplacement réduits par rapport aux lampes à incandescence. Elles restent réglables (pas fixes), et dépendent bien d'une source électrique.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.14"
+    },
+    {
+      "uid": "M11A-0291",
+      "sous_chapitre": "M11A.28",
+      "question": "Comment l'eau potable est-elle généralement mise sous pression pour atteindre les points d'utilisation de la cabine ?",
+      "options": [
+        "Par gravité uniquement, depuis un réservoir placé en point haut de l'avion",
+        "Par de l'air comprimé prélevé sur le circuit pneumatique de l'avion",
+        "Par une pompe électrique dédiée, indépendante des autres circuits"
+      ],
+      "bonne": 1,
+      "explication": "L'eau potable est généralement mise sous pression par de l'air comprimé prélevé sur le circuit pneumatique de l'avion, plutôt que par une pompe électrique dédiée ou par la seule gravité.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.17(a)"
+    },
+    {
+      "uid": "M11A-0292",
+      "sous_chapitre": "M11A.28",
+      "question": "Pourquoi le système d'eau potable est-il particulièrement sensible au gel en vol, comparé au carburant ou au fluide hydraulique ?",
+      "options": [
+        "Parce que l'eau gèle à une température bien plus proche de celles rencontrées en vol que le carburant ou le fluide hydraulique",
+        "Parce que l'eau circule dans les mêmes canalisations que le fluide hydraulique",
+        "Parce que l'eau potable n'est jamais stockée dans une zone chauffée de l'avion"
+      ],
+      "bonne": 0,
+      "explication": "L'eau gèle à une température bien plus proche de celles rencontrées en vol que le carburant ou le fluide hydraulique, tous deux formulés ou naturellement moins sensibles au gel. Elle ne partage pas les canalisations hydrauliques, et certaines zones de stockage sont chauffées.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.17(a)"
+    },
+    {
+      "uid": "M11A-0293",
+      "sous_chapitre": "M11A.28",
+      "question": "Comment un système de toilettes à dépression (vacuum) évacue-t-il le contenu de la cuvette ?",
+      "options": [
+        "Par une chasse d'eau classique, avec une quantité d'eau comparable à une installation domestique",
+        "Par un système de convoyage mécanique, sans utiliser aucune différence de pression",
+        "Par une différence de pression, exploitant l'écart entre la pression cabine et la pression extérieure, complétée par une pompe si nécessaire"
+      ],
+      "bonne": 2,
+      "explication": "Un système à dépression exploite l'écart entre la pression cabine et la pression extérieure, complété par une pompe quand cet écart est insuffisant. Il n'utilise pas de chasse d'eau classique ni de convoyage mécanique sans différence de pression.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.17(a)"
+    },
+    {
+      "uid": "M11A-0294",
+      "sous_chapitre": "M11A.28",
+      "question": "Pourquoi le réservoir de rétention des toilettes est-il vidangé par un point de servicing distinct de celui de l'eau potable ?",
+      "options": [
+        "Parce que la réglementation impose un délai minimal entre les deux opérations",
+        "Pour éviter toute confusion entre un circuit propre et un circuit de retour",
+        "Parce que les deux réservoirs se trouvent toujours à des altitudes différentes sur l'avion"
+      ],
+      "bonne": 1,
+      "explication": "Les deux points de servicing sont distincts pour éviter toute confusion entre un circuit propre (eau potable) et un circuit de retour (eaux usées). Leur position relative sur l'avion n'est pas dictée par l'altitude, et aucun délai réglementaire fixe ne sépare les deux opérations.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.17(a)"
+    },
+    {
+      "uid": "M11A-0295",
+      "sous_chapitre": "M11A.28",
+      "question": "Pourquoi les zones associées aux toilettes et aux offices font-elles l'objet d'une vigilance accrue contre la corrosion ?",
+      "options": [
+        "Parce que ces zones ne bénéficient d'aucun traitement de protection contre la corrosion",
+        "Parce qu'elles concentrent la présence répétée de liquides dans des zones structurales parfois difficiles à inspecter en profondeur",
+        "Parce que le métal utilisé dans ces zones est différent de celui du reste de la structure"
+      ],
+      "bonne": 1,
+      "explication": "Ces zones concentrent la présence répétée de liquides dans des zones structurales parfois difficiles à inspecter en profondeur, d'où des inspections et traitements spécifiquement ciblés. Le métal utilisé n'y est pas fondamentalement différent, et ces zones bénéficient bien d'un traitement de protection, renforcé plutôt qu'absent.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.17(b)"
+    },
+    {
+      "uid": "M11A-0296",
+      "sous_chapitre": "M11A.28",
+      "question": "Quel avantage présente un système de toilettes à dépression par rapport à un système à chasse d'eau classique ?",
+      "options": [
+        "Une quantité d'eau de rinçage nettement plus faible",
+        "Une absence totale de réservoir de rétention à bord",
+        "Un fonctionnement possible sans aucune différence de pression"
+      ],
+      "bonne": 0,
+      "explication": "Un système à dépression utilise une quantité d'eau de rinçage nettement plus faible qu'un système à chasse d'eau classique. Il conserve un réservoir de rétention à bord, et repose précisément sur une différence de pression pour fonctionner.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.17(a)"
+    },
+    {
+      "uid": "M11A-0298",
+      "sous_chapitre": "M11A.28",
+      "question": "Par quel moyen les canalisations d'eau potable exposées aux zones non chauffées de l'avion sont-elles protégées du gel ?",
+      "options": [
+        "Par une circulation continue d'air chaud prélevé sur le circuit pneumatique dans les canalisations elles-mêmes",
+        "Par un antigel ajouté directement à l'eau potable embarquée",
+        "Par des gaines chauffantes ou isolées"
+      ],
+      "bonne": 2,
+      "explication": "Les canalisations exposées sont équipées de gaines chauffantes ou isolées. Aucun antigel n'est ajouté à l'eau potable (elle reste destinée à la consommation), et l'air chaud du circuit pneumatique ne circule pas directement dans les canalisations d'eau.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.17(a)"
     }
   ]
 }

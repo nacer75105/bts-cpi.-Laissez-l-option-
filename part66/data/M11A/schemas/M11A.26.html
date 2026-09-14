@@ -1,0 +1,72 @@
+<div id="schema-m1126-wrap" style="font-family: inherit; max-width: 680px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1126-wrap .m1126-btn { margin:4px 6px 4px 0; padding:8px 10px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.8em; }
+#schema-m1126-wrap .m1126-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1126-wrap .m1126-row { display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; }
+#schema-m1126-wrap .m1126-zone { flex:1; min-width:130px; border:1.5px solid #999; border-radius:8px; background:#f7f7f7; padding:10px 8px; text-align:center; }
+#schema-m1126-wrap .m1126-primary { font-size:0.82em; font-weight:600; padding:5px 4px; border-radius:4px; background:#eef2f7; color:#333; transition: background 0.15s, color 0.15s; }
+#schema-m1126-wrap .m1126-primary.hi { background:#7fa8d9; color:#fff; }
+#schema-m1126-wrap .m1126-secondary { font-size:0.72em; color:#555; margin-top:6px; padding:5px 4px; border-radius:4px; background:#eef2f7; transition: background 0.15s, color 0.15s; }
+#schema-m1126-wrap .m1126-secondary.hi { background:#e0a800; color:#fff; }
+#schema-m1126-wrap .m1126-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5em; }
+</style>
+
+<p><strong>Deux lectures de la m&#234;me cabine :</strong> cliquez pour comparer l'am&#233;nagement d'exploitation normale et les &#233;quipements de secours associ&#233;s &#224; chaque zone.</p>
+
+<div>
+  <button class="m1126-btn active" id="m1126-btn-normal">Am&#233;nagement normal</button>
+  <button class="m1126-btn" id="m1126-btn-secours">&#201;quipements de secours</button>
+</div>
+
+<div class="m1126-row">
+  <div class="m1126-zone">
+    <div class="m1126-primary hi" id="m1126-p-porte">Porte</div>
+    <div class="m1126-secondary" id="m1126-s-porte">Toboggan / radeau</div>
+  </div>
+  <div class="m1126-zone">
+    <div class="m1126-primary hi" id="m1126-p-siege">Si&#232;ge (harnais)</div>
+    <div class="m1126-secondary" id="m1126-s-siege">Gilet de sauvetage</div>
+  </div>
+  <div class="m1126-zone">
+    <div class="m1126-primary hi" id="m1126-p-office">Office / galley</div>
+    <div class="m1126-secondary" id="m1126-s-office">Trousse de 1<sup>ers</sup> secours</div>
+  </div>
+  <div class="m1126-zone">
+    <div class="m1126-primary hi" id="m1126-p-soute">Soute (fret)</div>
+    <div class="m1126-secondary" id="m1126-s-soute">Rails / sangles de retenue</div>
+  </div>
+</div>
+
+<div class="m1126-caption" id="m1126-caption">Vue am&#233;nagement normal : chaque zone (porte, si&#232;ge, office, soute) est ici surlign&#233;e pour son r&#244;le d'exploitation courante. Cliquez sur &#171;&#160;&#201;quipements de secours&#160;&#187; pour voir l'&#233;quipement de secours associ&#233; &#224; chaque m&#234;me zone.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1126-wrap');
+  if (!wrap) { return; }
+  var btnNormal = wrap.querySelector('#m1126-btn-normal');
+  var btnSecours = wrap.querySelector('#m1126-btn-secours');
+  var primaries = wrap.querySelectorAll('.m1126-primary');
+  var secondaries = wrap.querySelectorAll('.m1126-secondary');
+  var caption = wrap.querySelector('#m1126-caption');
+
+  function showNormal() {
+    btnNormal.className = 'm1126-btn active';
+    btnSecours.className = 'm1126-btn';
+    primaries.forEach(function (el) { el.className = 'm1126-primary hi'; });
+    secondaries.forEach(function (el) { el.className = 'm1126-secondary'; });
+    caption.textContent = "Vue aménagement normal : chaque zone (porte, siège, office, soute) est ici surlignée pour son rôle d'exploitation courante. Cliquez sur « Équipements de secours » pour voir l'équipement de secours associé à chaque même zone.";
+  }
+
+  function showSecours() {
+    btnNormal.className = 'm1126-btn';
+    btnSecours.className = 'm1126-btn active';
+    primaries.forEach(function (el) { el.className = 'm1126-primary'; });
+    secondaries.forEach(function (el) { el.className = 'm1126-secondary hi'; });
+    caption.textContent = "Vue équipements de secours : à chaque zone est associé un équipement de secours dédié — toboggan/radeau à la porte, gilet de sauvetage à proximité du siège, trousse de premiers secours à bord, sangles de retenue en soute. Leur nombre et leur emplacement précis dépendent de l'exploitation (rappel de la fiche). Cliquez sur « Aménagement normal » pour revenir à l'autre vue.";
+  }
+
+  btnNormal.addEventListener('click', showNormal);
+  btnSecours.addEventListener('click', showSecours);
+})();
+</script>

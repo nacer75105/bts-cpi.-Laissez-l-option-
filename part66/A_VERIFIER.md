@@ -3385,8 +3385,71 @@ ELT, CVR, ADF, MLS, FDS, transpondeur en détail, radar météo,
 radioaltimètre restent non couverts) ; acceptable au niveau 1 visé,
 à compléter si un futur lot approfondit ce point.
 
-**Lot 3 committé le 2026-09-14. Reste : test local par l'utilisateur,
-puis lot 4.**
+**Lot 3 committé le 2026-09-14.**
+
+### Lot 4 (3 nouvelles fiches, M11A.26/M11A.27/M11A.28, ATA25/33/38) — relu et corrigé
+
+Module porté à 28 fiches. `M11A.26` (« Équipements et aménagements
+cabine », item 11.7) : équipements de secours (gilets, toboggans,
+trousses de premiers secours, éclairage de secours, mégaphones),
+sièges/harnais, offices, manutention/retenue du fret, airstairs.
+`M11A.27` (« Éclairage », item 11.14) : feux extérieurs (navigation,
+anticollision, atterrissage/roulage, inspection givre), éclairage
+intérieur (cabine/poste de pilotage/soutes), éclairage de secours, LED.
+`M11A.28` (« Eau et déchets », item 11.17) : eau potable (réservoir,
+pressurisation pneumatique, protection gel), toilettes à dépression,
+corrosion des zones associées. 24 nouvelles questions à la rédaction
+(M11A-0275 à M11A-0298, une supprimée en relecture — voir plus bas), 6
+nouveaux schémas (2 par fiche), niveau syllabus conforme à l'étape 0
+dès la rédaction (11.7a niveau 2, 11.7b niveau 1 avec `niveau_note`,
+11.14 et 11.17 niveau 3).
+
+**Relecture `relecteur-part66` — 3 BLOQUANT corrigés :**
+- **Divergence caption statique/JS sur 4 des 6 schémas**
+  (`M11A.27.html`, `M11A.27-2.html`, `M11A.28.html`, `M11A.28-2.html`) :
+  la caption HTML statique se terminait par une invitation à cliquer
+  que la fonction JS de l'état par défaut ne réassignait pas — exactement
+  le bug documenté dans `C:\Users\pc\CLAUDE.md`. Corrigé sur les 4
+  fichiers.
+- **Feux anticollision mal décrits** : présentés comme un seul type de
+  feu (« flashs blancs ou rouges, montés en haut et en bas du
+  fuselage »), alors qu'ils combinent deux dispositifs distincts —
+  des *beacons* rouges (fuselage) et des *strobes* blancs (extrémité de
+  voilure, parfois cône de queue). Fiche M11A.27 et schéma `M11A.27.html`
+  corrigés (le schéma affichait même une couleur ambre ne correspondant
+  à aucun des deux). Précision ajoutée au passage sur les feux
+  d'atterrissage (fixes, voilure/emplanture) vs feux de roulage
+  (orientables, jambe de train avant), auparavant confondus sous un seul
+  qualificatif « orientables ».
+- **Quantité et emplacement d'équipement de secours inventés** :
+  « un [gilet] par occupant, rangés à portée de main » contredisait la
+  phrase suivante de la même fiche, qui renvoie explicitement ce point
+  à la réglementation opérationnelle — et l'exigence « un par occupant »
+  ne s'applique de toute façon qu'à certaines opérations (vol
+  prolongé au-dessus de l'eau), pas à tout vol. Retiré de la fiche
+  M11A.26 ; emplacements « sous le siège »/« à l'office » assouplis
+  dans le schéma `M11A.26.html`.
+
+**À REVOIR traités dans la foulée** : 2 doublons stricts avec des
+questions déjà existantes du module supprimés en tant que doublons et
+reformulés sur un fait distinct (M11A-0276 : déploiement automatique du
+toboggan plutôt que sa fonction de radeau déjà testée par M11A-0217 ;
+M11A-0288 : composition du système d'éclairage de secours plutôt que le
+balisage au sol déjà testé par M11A-0214) ; redondance interne au lot
+réduite (M11A-0281 réorientée vers le principe de portée réglementaire
+plutôt que de répéter M11A-0287 ; M11A-0297, redondante avec la réponse
+de M11A-0293, supprimée plutôt que forcée sur un 8ᵉ fait artificiel —
+M11A.28 compte donc 7 questions) ; distracteurs faibles renforcés
+(M11A-0278) ; renvois croisés corrigés (M11A.26 → M11A.18 pour la
+redondance électrique, pas M11A.19 ; M11A.28 → M11A.4 et M11A.25 pour la
+corrosion, pas M11A.4 seule) ; jargon interne de chantier retiré des
+fiches (« Lot 4 », mention stale « module de 25 fiches » dans la
+clôture de M11A.25) ; libellés permanents manquants ajoutés sur les
+conduites et le pictogramme d'air de `M11A.28.html`/`M11A.28-2.html`,
+élément mort supprimé (`#m1128-pipe3`).
+
+**Lot 4 committé le 2026-09-14. Reste : test local par l'utilisateur,
+puis lot 5 (dernier lot, 4 nouvelles fiches ATA42/44/45/46).**
 
 ## M5.1 / M5.5 / M15.1-2 — bug résolu : génération de DOM à l'exécution
 (investigation menée le 2026-09-11, cause identifiée et corrigée)

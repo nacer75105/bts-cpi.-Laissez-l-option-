@@ -1,0 +1,125 @@
+<div id="schema-m1127-wrap" style="font-family: inherit; max-width: 680px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1127-wrap .m1127-btn { margin:4px 6px 4px 0; padding:7px 9px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.76em; }
+#schema-m1127-wrap .m1127-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1127-wrap .m1127-diagram { position:relative; height:180px; margin-top:14px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; }
+#schema-m1127-wrap .m1127-plane { position:absolute; left:50%; top:50%; width:8px; height:70px; background:#888; transform:translate(-50%,-50%); border-radius:4px; }
+#schema-m1127-wrap .m1127-wing { position:absolute; top:50%; width:90px; height:8px; background:#ccc; border:1.5px solid #999; }
+#schema-m1127-wrap .m1127-light { position:absolute; width:12px; height:12px; border-radius:50%; background:#ccc; border:1.5px solid #999; transition: background 0.15s, box-shadow 0.15s; }
+#schema-m1127-wrap .m1127-light.on-red { background:#cc4444; box-shadow: 0 0 8px 3px rgba(204,68,68,0.7); }
+#schema-m1127-wrap .m1127-light.on-green { background:#4a8c4a; box-shadow: 0 0 8px 3px rgba(74,140,74,0.7); }
+#schema-m1127-wrap .m1127-light.on-white { background:#eee; box-shadow: 0 0 8px 3px rgba(200,200,200,0.9); }
+#schema-m1127-wrap .m1127-strip { position:absolute; width:26px; height:6px; background:#ccc; border:1px solid #999; opacity:0.5; transition: opacity 0.15s, background 0.15s; }
+#schema-m1127-wrap .m1127-strip.on { opacity:1; background:#e0a800; box-shadow: 0 0 6px 2px rgba(224,168,0,0.6); }
+#schema-m1127-wrap .m1127-label { position:absolute; font-size:0.6em; color:#555; }
+#schema-m1127-wrap .m1127-caption { margin-top:12px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:6.5em; font-size:0.85em; }
+</style>
+
+<p><strong>Quatre familles de feux ext&#233;rieurs :</strong> cliquez pour comparer leur position et leur r&#244;le.</p>
+
+<div>
+  <button class="m1127-btn active" id="m1127-btn-nav">Navigation</button>
+  <button class="m1127-btn" id="m1127-btn-anti">Anticollision</button>
+  <button class="m1127-btn" id="m1127-btn-atter">Atterrissage / roulage</button>
+  <button class="m1127-btn" id="m1127-btn-givre">Inspection givre</button>
+</div>
+
+<div class="m1127-diagram">
+  <div class="m1127-plane"></div>
+  <div class="m1127-label" style="left:50%; top:6px; transform:translateX(-50%);">Fuselage</div>
+
+  <div class="m1127-wing" style="left:4%;"></div>
+  <div class="m1127-wing" style="right:4%;"></div>
+  <div class="m1127-light on-red" id="m1127-navL" style="left:2%; top:38%;"></div>
+  <div class="m1127-label" style="left:0%; top:30%;">Feu nav. gauche (rouge)</div>
+  <div class="m1127-light on-green" id="m1127-navR" style="right:2%; top:38%;"></div>
+  <div class="m1127-label" style="right:0%; top:30%;">Feu nav. droit (vert)</div>
+  <div class="m1127-light on-white" id="m1127-navT" style="left:50%; bottom:8%; transform:translateX(-50%);"></div>
+  <div class="m1127-label" style="left:50%; bottom:2%; transform:translateX(-50%);">Feu nav. arri&#232;re (blanc)</div>
+
+  <div class="m1127-light" id="m1127-beaconT" style="left:50%; top:14%; transform:translateX(-50%);"></div>
+  <div class="m1127-label" style="left:58%; top:14%;">Beacon (haut fuselage)</div>
+  <div class="m1127-light" id="m1127-beaconB" style="left:50%; top:78%; transform:translateX(-50%);"></div>
+  <div class="m1127-label" style="left:58%; top:78%;">Beacon (bas fuselage)</div>
+  <div class="m1127-light" id="m1127-strobeL" style="left:2%; top:58%;"></div>
+  <div class="m1127-label" style="left:0%; top:66%;">Strobe (extr&#233;mit&#233; voilure)</div>
+  <div class="m1127-light" id="m1127-strobeR" style="right:2%; top:58%;"></div>
+  <div class="m1127-label" style="right:0%; top:66%;">Strobe (extr&#233;mit&#233; voilure)</div>
+
+  <div class="m1127-light" id="m1127-atter" style="left:22%; top:50%;"></div>
+  <div class="m1127-label" style="left:12%; top:40%;">Atterrissage (voilure)</div>
+  <div class="m1127-light" id="m1127-taxi" style="left:50%; top:22%; transform:translateX(-50%);"></div>
+  <div class="m1127-label" style="left:60%; top:22%;">Roulage (nez, orientable)</div>
+
+  <div class="m1127-strip" id="m1127-givreL" style="left:8%; top:52%;"></div>
+  <div class="m1127-strip" id="m1127-givreR" style="right:8%; top:52%;"></div>
+  <div class="m1127-label" id="m1127-givre-label" style="left:6%; top:66%; opacity:0; transition:opacity 0.15s;">Feu d'inspection givre</div>
+</div>
+
+<div class="m1127-caption" id="m1127-caption">Les feux de navigation (rouge à gauche, vert à droite, blanc à l'arrière, ici allumés) indiquent la position et l'orientation de l'avion aux autres aéronefs et aux observateurs, même dans l'obscurité. Cliquez sur les autres boutons pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1127-wrap');
+  if (!wrap) { return; }
+  var btns = {
+    nav: wrap.querySelector('#m1127-btn-nav'),
+    anti: wrap.querySelector('#m1127-btn-anti'),
+    atter: wrap.querySelector('#m1127-btn-atter'),
+    givre: wrap.querySelector('#m1127-btn-givre')
+  };
+  var navL = wrap.querySelector('#m1127-navL');
+  var navR = wrap.querySelector('#m1127-navR');
+  var navT = wrap.querySelector('#m1127-navT');
+  var beaconT = wrap.querySelector('#m1127-beaconT');
+  var beaconB = wrap.querySelector('#m1127-beaconB');
+  var strobeL = wrap.querySelector('#m1127-strobeL');
+  var strobeR = wrap.querySelector('#m1127-strobeR');
+  var atter = wrap.querySelector('#m1127-atter');
+  var taxi = wrap.querySelector('#m1127-taxi');
+  var givreL = wrap.querySelector('#m1127-givreL');
+  var givreR = wrap.querySelector('#m1127-givreR');
+  var givreLabel = wrap.querySelector('#m1127-givre-label');
+  var caption = wrap.querySelector('#m1127-caption');
+  var allLights = [navL, navR, navT, beaconT, beaconB, strobeL, strobeR, atter, taxi];
+  var allStrips = [givreL, givreR];
+
+  function resetAll() {
+    allLights.forEach(function (el) { el.className = 'm1127-light'; });
+    allStrips.forEach(function (el) { el.className = 'm1127-strip'; });
+    givreLabel.style.opacity = '0';
+  }
+
+  function show(key) {
+    Object.keys(btns).forEach(function (k) { btns[k].className = 'm1127-btn' + (k === key ? ' active' : ''); });
+    resetAll();
+    if (key === 'nav') {
+      navL.className = 'm1127-light on-red';
+      navR.className = 'm1127-light on-green';
+      navT.className = 'm1127-light on-white';
+      caption.textContent = "Les feux de navigation (rouge à gauche, vert à droite, blanc à l'arrière, ici allumés) indiquent la position et l'orientation de l'avion aux autres aéronefs et aux observateurs, même dans l'obscurité. Cliquez sur les autres boutons pour comparer.";
+    } else if (key === 'anti') {
+      beaconT.className = 'm1127-light on-red';
+      beaconB.className = 'm1127-light on-red';
+      strobeL.className = 'm1127-light on-white';
+      strobeR.className = 'm1127-light on-white';
+      caption.textContent = "Les feux anticollision combinent des beacons rouges (haut/bas du fuselage, ici allumés) et des strobes blancs (extrémité de voilure, parfois cône de queue, ici allumés) : l'ensemble signale la présence de l'avion de façon nettement plus visible, notamment quand les moteurs tournent.";
+    } else if (key === 'atter') {
+      atter.className = 'm1127-light on-white';
+      taxi.className = 'm1127-light on-white';
+      caption.textContent = "Le feu d'atterrissage (le plus souvent fixe, monté en voilure ou en emplanture, ici allumé) et le feu de roulage (souvent orientable, monté sur la jambe de train avant, ici allumé) éclairent directement la trajectoire au décollage, à l'atterrissage et au roulage.";
+    } else if (key === 'givre') {
+      givreL.className = 'm1127-strip on';
+      givreR.className = 'm1127-strip on';
+      givreLabel.style.opacity = '1';
+      caption.textContent = "Les feux d'inspection du givre (ici allumés sur la voilure) permettent à l'équipage de vérifier visuellement l'état de l'aile de nuit, sans dépendre uniquement des indications électroniques.";
+    }
+  }
+
+  btns.nav.addEventListener('click', function () { show('nav'); });
+  btns.anti.addEventListener('click', function () { show('anti'); });
+  btns.atter.addEventListener('click', function () { show('atter'); });
+  btns.givre.addEventListener('click', function () { show('givre'); });
+})();
+</script>

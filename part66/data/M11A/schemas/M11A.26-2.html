@@ -1,0 +1,70 @@
+<div id="schema-m1126b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1126b-wrap .m1126b-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m1126b-wrap .m1126b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1126b-wrap .m1126b-diagram { position:relative; height:130px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; }
+#schema-m1126b-wrap .m1126b-hold { position:absolute; left:6%; right:6%; top:20%; bottom:20%; border:1.5px solid #4a76a8; border-radius:4px; }
+#schema-m1126b-wrap .m1126b-cont { position:absolute; width:70px; height:56px; background:#7fa8d9; border:1.5px solid #4a76a8; border-radius:3px; top:50%; transform:translateY(-50%); transition: left 0.25s, transform 0.25s; }
+#schema-m1126b-wrap .m1126b-strap { position:absolute; height:6px; background:#e0a800; border:1px solid #a87a00; top:50%; transform:translateY(-50%); opacity:0; transition: opacity 0.2s; }
+#schema-m1126b-wrap .m1126b-strap.show { opacity:1; }
+#schema-m1126b-wrap .m1126b-label { position:absolute; font-size:0.66em; color:#555; }
+#schema-m1126b-wrap .m1126b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Retenue du fret :</strong> comparez une charge libre et une charge immobilis&#233;e par rails et sangles.</p>
+
+<button class="m1126b-btn active" id="m1126b-btn-libre">Charge non retenue</button>
+<button class="m1126b-btn" id="m1126b-btn-retenue">Charge retenue (rails/sangles)</button>
+
+<div class="m1126b-diagram">
+  <div class="m1126b-hold"></div>
+  <div class="m1126b-label" style="left:8%; top:6px;">Soute (rails au plancher)</div>
+  <div class="m1126b-cont" id="m1126b-cont" style="left:15%;"></div>
+  <div class="m1126b-label" id="m1126b-cont-label" style="left:15%; bottom:8%;">Conteneur / palette</div>
+  <div class="m1126b-strap" id="m1126b-strap-l" style="left:6%; width:12%;"></div>
+  <div class="m1126b-strap" id="m1126b-strap-r" style="right:6%; width:12%; left:auto;"></div>
+  <div class="m1126b-label" id="m1126b-strap-label" style="right:6%; top:6px; opacity:0; transition:opacity 0.2s;">Sangles de retenue</div>
+</div>
+
+<div class="m1126b-caption" id="m1126b-caption">Sans retenue, le conteneur peut se déplacer dans la soute au moindre mouvement de l'avion (turbulence, manœuvre brutale), perturbant l'équilibre et risquant d'endommager la structure environnante. Cliquez sur « Charge retenue » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1126b-wrap');
+  if (!wrap) { return; }
+  var btnLibre = wrap.querySelector('#m1126b-btn-libre');
+  var btnRetenue = wrap.querySelector('#m1126b-btn-retenue');
+  var cont = wrap.querySelector('#m1126b-cont');
+  var contLabel = wrap.querySelector('#m1126b-cont-label');
+  var strapL = wrap.querySelector('#m1126b-strap-l');
+  var strapR = wrap.querySelector('#m1126b-strap-r');
+  var strapLabel = wrap.querySelector('#m1126b-strap-label');
+  var caption = wrap.querySelector('#m1126b-caption');
+
+  function showLibre() {
+    btnLibre.className = 'm1126b-btn active';
+    btnRetenue.className = 'm1126b-btn';
+    cont.style.left = '15%';
+    contLabel.style.left = '15%';
+    strapL.className = 'm1126b-strap';
+    strapR.className = 'm1126b-strap';
+    strapLabel.style.opacity = '0';
+    caption.textContent = "Sans retenue, le conteneur peut se déplacer dans la soute au moindre mouvement de l'avion (turbulence, manœuvre brutale), perturbant l'équilibre et risquant d'endommager la structure environnante. Cliquez sur « Charge retenue » pour comparer.";
+  }
+
+  function showRetenue() {
+    btnLibre.className = 'm1126b-btn';
+    btnRetenue.className = 'm1126b-btn active';
+    cont.style.left = '38%';
+    contLabel.style.left = '38%';
+    strapL.className = 'm1126b-strap show';
+    strapR.className = 'm1126b-strap show';
+    strapLabel.style.opacity = '1';
+    caption.textContent = "Avec les rails et sangles de retenue, le conteneur reste immobilisé au centre de la soute, quelle que soit la turbulence ou la manœuvre rencontrée — son poids reste correctement réparti tout au long du vol. Cliquez sur « Charge non retenue » pour revenir à l'autre vue.";
+  }
+
+  btnLibre.addEventListener('click', showLibre);
+  btnRetenue.addEventListener('click', showRetenue);
+})();
+</script>
