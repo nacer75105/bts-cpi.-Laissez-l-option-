@@ -4251,6 +4251,97 @@
       "bonne": 2,
       "explication": "Le système de gestion de l'information peut compléter le système de chargement de données (rappel M11A.31), en permettant de recevoir des mises à jour avant un chargement physique. L'IFE relève d'un chargement de contenu multimédia distinct (rappel M11A.30), pas de ce chargement de données techniques, et le GCU n'a aucun lien avec cette opération.",
       "source": "Part-66 Appendix I — Module 11A, item 11.21"
+    },
+    {
+      "uid": "M11A-0331",
+      "sous_chapitre": "M11A.5",
+      "question": "Quel est le rôle de la nacelle qui entoure un moteur d'avion ?",
+      "options": [
+        "Réchauffer l'air ambiant autour du moteur pour éviter la formation de givre",
+        "Filtrer l'air d'admission du moteur pour le protéger des poussières et corps étrangers",
+        "Protéger le moteur, réduire la traînée par une forme profilée et canaliser l'air qui l'entoure"
+      ],
+      "bonne": 2,
+      "explication": "La nacelle protège le moteur, réduit la traînée par sa forme profilée, et canalise l'air qui l'entoure. Elle ne filtre pas l'air d'admission (rôle d'un dispositif dédié, absent de la plupart des avions de transport), et ne joue aucun rôle dans l'atténuation des vibrations moteur (rôle des supports antivibratoires), et ne réchauffe pas l'air ambiant qui l'entoure : l'antigivrage de la lèvre d'entrée d'air par air chaud prélevé (fiche M11A.16) réchauffe la paroi elle-même, pas l'air environnant.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.3.5"
+    },
+    {
+      "uid": "M11A-0332",
+      "sous_chapitre": "M11A.5",
+      "question": "Quelles charges le pylône doit-il transmettre à la structure porteuse (voilure ou fuselage) ?",
+      "options": [
+        "La poussée produite par le moteur, son poids propre, et les charges exceptionnelles d'un arrêt brutal de rotation",
+        "Le poids du moteur, la poussée restant absorbée directement par la nacelle qui l'entoure",
+        "Les vibrations normales de fonctionnement, filtrées avant tout autre transfert de charge"
+      ],
+      "bonne": 0,
+      "explication": "Le pylône transmet à la structure porteuse la poussée du moteur, son poids propre, et les charges exceptionnelles d'un arrêt brutal de rotation. La nacelle n'a pas pour rôle de reprendre la poussée, qui transite par les supports moteur puis le pylône, et le filtrage des vibrations est un rôle distinct, assuré par les supports antivibratoires.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.3.5"
+    },
+    {
+      "uid": "M11A-0333",
+      "sous_chapitre": "M11A.5",
+      "question": "Quelle fonction spécifique assure le pare-feu (firewall), au sein de l'installation motrice ?",
+      "options": [
+        "Reprendre les efforts de poussée du moteur pour les transmettre à la voilure ou au fuselage",
+        "Résister à une température et une durée d'exposition au feu définies par la certification, pour contenir un incendie moteur dans son compartiment d'origine",
+        "Donner à l'ensemble moteur-nacelle une forme profilée qui réduit sa traînée"
+      ],
+      "bonne": 1,
+      "explication": "Le pare-feu résiste à une température et une durée d'exposition au feu définies par la certification, pour contenir un incendie moteur dans son compartiment d'origine. Donner sa forme aérodynamique à l'ensemble relève de la nacelle, et reprendre la poussée relève du pylône — deux fonctions distinctes du même ensemble moteur-nacelle.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.3.5"
+    },
+    {
+      "uid": "M11A-0334",
+      "sous_chapitre": "M11A.5",
+      "question": "Du point de vue de la cellule, par quel chemin les charges du moteur (poussée, poids) atteignent-elles finalement la structure porteuse (voilure ou fuselage) ?",
+      "options": [
+        "Du moteur vers le pylône, puis vers les supports moteur, puis vers la structure porteuse",
+        "Du moteur, via les supports moteur, vers le pylône, puis vers la structure porteuse",
+        "Du moteur vers le fuselage uniquement, quelle que soit la position réelle du moteur sur l'avion"
+      ],
+      "bonne": 1,
+      "explication": "Les charges du moteur suivent une voie de transfert de charge en plusieurs étapes : du moteur, via les supports moteur, vers le pylône, puis vers la structure porteuse (voilure ou fuselage selon la position retenue par le constructeur). Il n'existe pas de liaison directe moteur-structure sans intermédiaire, et la structure porteuse dépend bien de la position réelle du moteur.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.3.5"
+    },
+    {
+      "uid": "M11A-0335",
+      "sous_chapitre": "M11A.14",
+      "question": "Pourquoi le pare-brise du poste de pilotage dispose-t-il d'un chauffage électrique dédié, distinct du conditionnement d'air général de la cabine ?",
+      "options": [
+        "Parce que l'air conditionné ne dessert pas le poste de pilotage",
+        "Parce que c'est un besoin ponctuel et localisé (dégivrage du pare-brise), différent du confort général qu'assure le conditionnement d'air",
+        "Parce que ce chauffage remplace entièrement le pack de conditionnement d'air en cas de panne"
+      ],
+      "bonne": 1,
+      "explication": "Le dégivrage du pare-brise est un besoin ponctuel et localisé, différent du confort général de cabine qu'assure le conditionnement d'air — d'où un chauffage électrique dédié plutôt qu'une extension du même circuit. L'air conditionné dessert bien le poste de pilotage, comme les autres zones de la cabine (la fiche mentionne un réglage de température propre au cockpit) ; ce chauffage dédié ne remplace pas non plus le pack en cas de panne : les deux répondent à des besoins distincts.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.4(e)"
+    },
+    {
+      "uid": "M11A-0336",
+      "sous_chapitre": "M11A.14",
+      "question": "Comment l'air conditionné circule-t-il généralement à travers le volume de la cabine ?",
+      "options": [
+        "Du plancher vers le plafond, avant d'être extrait en partie haute",
+        "Longitudinalement, d'une extrémité à l'autre de la cabine",
+        "Verticalement, depuis des diffuseurs en partie haute jusqu'à une extraction au niveau du plancher"
+      ],
+      "bonne": 2,
+      "explication": "L'air circule verticalement, depuis des diffuseurs situés en partie haute jusqu'à une extraction au niveau du plancher. Ce schéma limite la propagation d'un contaminant d'une rangée à l'autre — une circulation longitudinale ou inversée (plancher vers plafond) ne produirait pas cet effet.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.4(e)"
+    },
+    {
+      "uid": "M11A-0337",
+      "sous_chapitre": "M11A.14",
+      "question": "Que peut-on dire de l'air délivré par la buse individuelle orientable (gasper), par rapport à l'air général diffusé dans la cabine ?",
+      "options": [
+        "Il est en général moins réchauffé, ce qui permet à chaque passager d'ajuster son propre confort sans modifier le réglage de toute la zone",
+        "Il est systématiquement plus chaud, pour compenser le refroidissement ressenti près des hublots",
+        "Il provient d'un circuit de chauffage électrique dédié, identique à celui du pare-brise du poste de pilotage"
+      ],
+      "bonne": 0,
+      "explication": "L'air du gasper est en général alimenté moins réchauffé que l'air général de la cabine, ce qui permet à chaque passager d'ajuster son propre confort sans modifier le réglage collectif de sa zone. Il n'est pas systématiquement plus chaud, et il ne relève pas du chauffage électrique dédié utilisé pour le pare-brise, qui répond à un besoin ponctuel différent.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.4(e)"
     }
   ]
 }

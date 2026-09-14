@@ -717,6 +717,212 @@ bonne réponse (paire « plus étroit / plus large », « limité à / non
 limité »), et de temps en temps inverser délibérément l'indice de
 longueur pour casser l'habitude.
 
+## Audit de couverture par niveau exigé, item par item, des 6 modules (2026-09-14)
+
+Contrairement aux audits précédents (« mentionné ou non »), cet audit
+vérifie, pour chaque item officiel du texte AMC1 détaillé, si le
+contenu réellement écrit atteint la **profondeur** exigée par son
+niveau (1/2/3), pas seulement s'il en parle. Fait module par module par
+6 agents indépendants, sur la base des mêmes fichiers texte extraits
+pour l'étape 0 du chantier M11A (`module{5,7,10,11,15,17}_detail.txt` /
+`_compact.txt`, scratchpad de session, non conservés dans le dépôt).
+**Décision de l'utilisateur** : combler les deux vraies absences
+trouvées sur M11A (voir sections dédiées ci-après), corriger l'étiquette
+de niveau de M10.6 (voir plus bas), et **documenter le reste comme
+dette connue, sans le traiter** — à reprendre uniquement sur demande
+explicite future.
+
+### M5 — dette : aucune réelle, une observation
+4 items du texte officiel (5.5b, 5.6b, 5.7, 5.8, 5.9) sont en réalité
+réservés à la catégorie B2, hors périmètre B1.1 — le projet les traite
+quand même (microprocesseurs, circuits intégrés, multiplexage), en
+bonus non pénalisant. Aucune action nécessaire.
+
+### M7A — dette
+- **7.2 (pratiques d'atelier)** : fondu dans la même fiche que 7.3
+  sans `niveau_note` distinctive. Pas confirmé si 7.2 reçoit un
+  développement propre ou n'est qu'un arrière-plan de 7.3.
+
+### M10 — dette
+- **10.3 (organismes de maintenance agréés, Part-145 et Part-CAO)** :
+  niveau 2 officiel, deux référentiels réglementaires distincts traités
+  en ~1250 caractères (fiche M10.5) — profondeur jugée limite basse
+  pour un niveau 2 qui couvre deux Parts différentes.
+- **10.7 (continuing airworthiness)** : à vérifier si la fiche nomme
+  explicitement les exigences de continuing airworthiness **propres à
+  Part 21 lui-même** (distinctes de celles de Part-M/ML/CAMO déjà
+  couvertes) — le texte AMC1 les cite comme un point séparé.
+- **10.9 (maintenance au-delà de la réglementation UE)** : la mention
+  explicite « welding, painting, NDT » du texte officiel n'est pas
+  confirmée comme nommée dans la fiche M10.12 (limite de sourçage déjà
+  assumée dans ce fichier pour EMAR 66 ; celle-ci est nouvelle).
+
+### M11A — dette (au-delà des 2 absences comblées le 2026-09-14, voir plus bas)
+- **11.2c** : les procédés de protection de surface (chromatage,
+  anodisation) ne sont jamais nommés dans M11A.4 (seule formulation
+  générique « traitements anticorrosion ») ; la notion de symétrie
+  structurale (airframe symmetry, méthodes d'alignement/contrôle) est
+  absente — le mot n'apparaît que pour le rigging des gouvernes ou
+  l'équilibrage carburant, jamais pour un contrôle structural dédié.
+- **11.5.2** : liste d'avionique nommée individuellement toujours
+  incomplète — 8 équipements sur ~15 (manquent CPDLC, ELT, CVR, ADF,
+  MLS, FDS, transpondeur/SSR en détail, radar météo, radioaltimètre,
+  INS, ARINC) ; dette déjà actée lors du Lot 3, confirmée toujours
+  réelle par cet audit.
+- **11.10b** : le ravitaillement et la dépose carburant (refuelling/
+  defuelling) ne sont pas décrits comme système propre dans M11A.17 —
+  seule mention : la liaison électrique antistatique au ravitaillement.
+
+### M15 — dette
+- **15.8 (bearings and seals)** : couvert sur le fond mais dilué dans
+  M15.7 (système d'huile), sans développement autonome sur la
+  constitution/le principe des roulements et joints eux-mêmes.
+- **15.12 (air systems)** : fragmenté entre M15.2, M15.5 et M15.21,
+  sans fiche ni paragraphe qui traite le circuit d'air moteur comme un
+  système unifié — contenu présent, vue d'ensemble absente.
+- **15.15 (alternate turbine constructions)** : niveau officiel non
+  résolu avec certitude par l'extraction (aucune valeur lisible dans le
+  compact ni le détaillé) ; la fiche M15.17 est au niveau 1, le plus
+  bas du module — à confirmer que ce n'est pas sous le niveau 2 par
+  défaut du reste du module.
+
+### M17A — dette
+Uniquement des écarts cosmétiques déjà assumés comme choix éditoriaux
+(angle d'attaque non nommé par cohérence de vocabulaire du module, arc
+rouge du compte-tours et libellés anglais précis « hub assembly »/
+« thrust face » absents). 17.7 (stockage/conservation) non relu en
+détail par le fork (confiance moyenne, pas faible). Aucune vraie
+lacune.
+
+## M11A — comblement des 2 absences réelles (2026-09-14)
+
+Suite à l'audit ci-dessus, extension de deux fiches existantes
+(pas de nouvelle fiche) :
+- **M11A.5** : ajout de 3 paragraphes sur l'item 11.3.5 (nacelles,
+  pylônes, pare-feu, ancrage moteur) — fonction de chacun, transmission
+  de charge (poussée, poids, vibrations), rôle du pare-feu contre
+  l'incendie (rappel M11A.22), rôle des supports moteur (charge +
+  filtration vibratoire), distinct du rôle du pare-feu. 4 nouvelles
+  questions (M11A-0331 à M11A-0334).
+- **M11A.14** : ajout de 2 paragraphes sur l'item 11.4(e) (chauffage
+  et ventilation cabine) — chauffage électrique dédié pour les besoins
+  ponctuels (dégivrage vitres poste de pilotage, soutes, rappel
+  M11A.16), circulation de l'air en cabine (diffuseurs en hauteur,
+  extraction au plancher, buses individuelles orientables/gasper). 3
+  nouvelles questions (M11A-0335 à M11A-0337).
+
+Aucun nouveau schéma (extension jugée suffisamment couverte par le
+texte, comme pour plusieurs extensions des lots précédents). Position
+de `bonne` tirée par script avec vérification anti-cycle dès la
+rédaction des 7 questions (distribution 3/3/1 sur un lot aussi petit,
+sans cycle). Trois rounds de relecture `relecteur-part66` (pas de test
+adversarial, conformément à la consigne permanente de ce chantier) :
+
+- **Round 1** : faux positif signalé sur l'item 11.4(e) (« n'existe
+  pas ») — l'agent de relecture n'avait pas reçu le chemin du texte
+  source et a reconstruit de mémoire une structure erronée. Vérifié
+  directement sur `module11_detail.txt` : l'item 11.4(e) « Heating and
+  ventilation systems » existe bel et bien (comme 11.3.5). Aucun
+  changement de contenu nécessaire, juste la vérification.
+- **Round 2** : un vrai bloquant (markdown bold jamais fermé dans la
+  nouvelle phrase sur la construction de la nacelle) + plusieurs points
+  à revoir : antécédent ambigu (« Sa construction » → « La construction
+  de la nacelle »), phrase de clôture de M11A.14 encore généralisée
+  sans la nuance « sur de nombreux avions », question M11A-0334
+  quasi-doublon d'une question existante `M15-0174` (supports
+  antivibratoires), traçabilité de la question M11A-0332 (« arrêt
+  brutal de rotation ») incertaine par rapport au paragraphe du
+  pylône, un distracteur faible sur M11A-0335.
+- **Round 3** : les 5 points ci-dessus corrigés (bold fermé + antécédent
+  clarifié ; paragraphe du pylône réécrit pour séparer clairement charge
+  transmise par le pylône vs vibrations filtrées par les supports
+  antivibratoires, et rendre traçable la charge d'arrêt brutal citée par
+  M11A-0332 ; phrase de clôture M11A.14 nuancée ; M11A-0334 entièrement
+  réangulée sur le chemin de transfert de charge côté cellule pour ne
+  plus recouper M15-0174 ; distracteur de M11A-0335 remplacé). Relecture
+  finale de confirmation lancée avec le chemin du texte source fourni
+  explicitement cette fois.
+- **Round 4** : 3 nouveaux bloquants trouvés (explication de M11A-0335
+  périmée après le remplacement de son distracteur au round 3 ; le
+  paragraphe soutes/pare-brise de M11A.14 affirmait un chauffage
+  électrique dédié pour les soutes, factuellement inexact — la plupart
+  sont chauffées par de l'air chaud prélevé, pas par un circuit
+  électrique indépendant ; l'explication de M11A-0331 affirmait « la
+  nacelle ne réchauffe rien elle-même », en contradiction avec
+  M11A-0139/M11A.16 sur l'antigivrage par air chaud prélevé) + 2 points
+  de précision (bruit de nacelle : « rayonné par le moteur » plutôt que
+  « perçu en cabine » — le dimensionnement acoustique vise avant tout la
+  certification bruit externe ; « filtrées » → « atténuées » pour les
+  vibrations, une suppression totale n'étant pas réaliste). Tout corrigé.
+- **Round 5** : la correction du paragraphe soutes/pare-brise n'avait
+  été répercutée que dans le corps de fiche, pas dans le « À retenir »
+  de M11A.14, qui attribuait encore un chauffage électrique aux soutes
+  (bloquant, corrigé) ; le `niveau_note` ajouté à M11A.14 au round 3
+  affirmait que l'item 11.4(e) était « le seul sous-item niveau 3 du
+  groupe 11.4 » — un agent de relecture a contesté cette lecture de la
+  table compacte de l'Appendix I (page 576), proposant une réattribution
+  différente des lignes de niveaux. **Vérification personnelle sur le
+  PDF source** (re-extraction directe de la page 576 en mode `-layout`
+  et en mode brut) : la lecture d'origine (l'item 11.4e aligné avec la
+  ligne « 1 1 3 3 -- ») est bien celle imprimée par l'extraction en
+  mode layout, qui aligne spatialement chaque ligne de niveaux avec le
+  texte de son item ; la contre-lecture proposée par l'agent repose sur
+  une règle (« aucune ligne de niveau sur les intitulés, exactement une
+  par sous-item lettré ») qui ne tient pourtant pas pour les items 11.1
+  et 11.2 du même bloc, où l'intitulé porte bien sa propre ligne. Les
+  deux lectures restent défendables sur un tableau PDF à deux colonnes
+  génuinement mal aligné à l'extraction — **dette documentée plutôt que
+  tranchée** : le `niveau_note` de M11A.14 a été neutralisé (il ne
+  revendique plus une lecture précise du tableau contestée par ailleurs)
+  sans modifier le niveau 3 déjà porté par la fiche, qui n'est pas remis
+  en cause par cette incertitude. Round 5 a aussi confirmé sans
+  ambiguïté, par la même vérification directe, que l'item 11.3.1(b)
+  (dispositif de remorquage planeur) est bien niveau 1 pour toutes les
+  catégories — l'ancienne incertitude « 1 ou 3 » du `niveau_note` de
+  M11A.5 est levée.
+- **Round 6 (final)** : les derniers points de forme relevés au round 5
+  ont été corrigés (wording « filtrage » résiduel dans l'explication de
+  M11A-0331, harmonisé en « atténuation » ; distracteur de M11A-0335
+  simplifié pour ne garder que sa clause clairement fausse ; phrase de
+  clôture de M11A.14 scindée en deux pour lever un enchaînement de « et »
+  ambigu ; formulation de la synthèse de M11A.5 assouplie). Module
+  smoke-testé (`AppTest`, 0 exception, 33 fiches chargées) après chaque
+  round. Travail jugé clos à ce stade — cf. point ci-dessous pour la
+  dette restante non traitée.
+
+**Dette connue, non traitée** : la lecture exacte de la table compacte
+des niveaux de l'Appendix I pour le groupe 11.4 (quels sous-items
+lettrés sont réellement B1.1 niveau 2 vs niveau 3) reste incertaine à
+l'extraction PDF, malgré une vérification directe sur le document
+source original (voir round 5 ci-dessus). Si ce point devait un jour
+être tranché avec certitude, il faudrait consulter une capture visuelle
+de la page 576 du PDF plutôt qu'une extraction texte, quel que soit
+l'outil d'extraction utilisé.
+
+## M10 — correction de l'étiquette de niveau de l'item 10.2 (2026-09-14)
+
+L'audit ci-dessus a signalé que le texte AMC1 de l'item 10.2
+(« Certifying staff — maintenance ») emploie **« Deep understanding »**
+— une formulation qui n'apparaît nulle part ailleurs dans les 1265
+pages du document officiel, à comparer au « General understanding »
+(niveau 2, confirmé par la définition générique des niveaux, p.568 du
+même document) utilisé pour les items voisins (10.3, 10.5, 10.7). Le
+niveau de la fiche `M10.6` (qui couvre cet item) a été relevé de **2 à
+3**, avec un `niveau_note` documentant la source de ce changement.
+
+**Le contenu actuel de M10.6 (1236 caractères) est jugé insuffisant
+pour le niveau 3** : la fiche présente les catégories de licence et
+leurs privilèges de façon générale, sans le développement attendu par
+la définition officielle du niveau 3 (« connaissance détaillée...
+capacité à combiner les éléments... interrelations avec d'autres
+sujets ») — par exemple, comment les autorisations de certification
+s'exercent concrètement selon la catégorie et le type d'organisme
+(Part-145 vs hors Part-145), ou l'articulation avec le personnel
+certificateur indépendant déjà détaillé en M10.9. **Non retravaillé
+dans l'immédiat** — l'étiquette est corrigée et le déficit documenté,
+mais l'enrichissement du contenu n'a pas été demandé pour cette
+session.
+
 ## Positions des bonnes réponses corrigées sur 5 modules (2026-09-13)
 
 Le même bug que celui trouvé et corrigé sur M10 (cycle mécanique
