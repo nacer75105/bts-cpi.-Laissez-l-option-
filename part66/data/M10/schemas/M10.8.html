@@ -1,0 +1,55 @@
+<div id="schema-m108a-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m108a-wrap .m108a-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; text-align:left; }
+#schema-m108a-wrap .m108a-btn:hover { background:#e8e8e8; }
+#schema-m108a-wrap .m108a-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m108a-wrap .m108a-row { display:flex; align-items:center; gap:10px; margin-top:12px; }
+#schema-m108a-wrap .m108a-rowlabel { width:200px; font-size:0.85em; color:#333; }
+#schema-m108a-wrap .m108a-indic { padding:6px 14px; border-radius:6px; font-weight:bold; background:#cfe2ff; color:#1a4a8a; }
+#schema-m108a-wrap .m108a-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:6em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> selon le type d'exploitation, quelle voie réglementaire s'applique avant de voler ?</p>
+
+<div style="display:flex; flex-direction:column; align-items:flex-start;">
+  <button class="m108a-btn active" data-cas="commercial">Transport commercial de passagers/fret</button>
+  <button class="m108a-btn" data-cas="complexe_nc">Aéronef complexe en opérations non commerciales</button>
+  <button class="m108a-btn" data-cas="specialise">Opérateur spécialisé commercial</button>
+</div>
+
+<div class="m108a-row">
+  <div class="m108a-rowlabel">Voie réglementaire</div>
+  <div class="m108a-indic" id="m108a-indic">AOC obligatoire</div>
+</div>
+
+<div class="m108a-caption" id="m108a-caption">Pour exploiter commercialement (transport de passagers ou de fret contre rémunération), un opérateur doit obtenir un AOC (Air Operator Certificate), délivré par l'autorité compétente. Clique sur les autres cas pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m108a-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('.m108a-btn');
+  var caption = wrap.querySelector('#m108a-caption');
+  var indic = wrap.querySelector('#m108a-indic');
+
+  var TEXTES = {
+    commercial: "Pour exploiter commercialement (transport de passagers ou de fret contre rémunération), un opérateur doit obtenir un AOC (Air Operator Certificate), délivré par l'autorité compétente. Clique sur les autres cas pour comparer.",
+    complexe_nc: "Certains exploitants d'aéronefs complexes en opérations non commerciales peuvent utiliser une auto-déclaration (self-declaration) : ils informent l'autorité compétente avant de commencer leurs opérations, sans passer par la procédure complète de délivrance d'un AOC.",
+    specialise: "Certains opérateurs spécialisés commerciaux peuvent eux aussi utiliser une auto-déclaration plutôt que la procédure complète de délivrance d'un AOC."
+  };
+  var VOIE = { commercial: "AOC obligatoire", complexe_nc: "Auto-déclaration possible", specialise: "Auto-déclaration possible" };
+
+  function render(cas) {
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-cas') === cas); });
+    caption.textContent = TEXTES[cas];
+    indic.textContent = VOIE[cas];
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { render(b.getAttribute('data-cas')); });
+  });
+
+  render('commercial');
+})();
+</script>

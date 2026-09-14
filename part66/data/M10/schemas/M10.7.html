@@ -1,0 +1,44 @@
+<div id="schema-m107a-wrap" style="font-family: inherit; max-width: 620px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m107a-wrap .m107a-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.88em; }
+#schema-m107a-wrap .m107a-btn:hover { background:#e8e8e8; }
+#schema-m107a-wrap .m107a-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m107a-wrap .m107a-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> clique sur chaque exigence de l'agrément Part-147 pour voir ce qu'elle impose concrètement.</p>
+
+<div>
+  <button class="m107a-btn active" data-exig="syllabus">Suivre le syllabus Part-66</button>
+  <button class="m107a-btn" data-exig="personnel">Instructeurs et examinateurs qualifiés</button>
+  <button class="m107a-btn" data-exig="tracabilite">Traçabilité des résultats d'examen</button>
+</div>
+
+<div class="m107a-caption" id="m107a-caption">L'organisme doit suivre les syllabus (programmes détaillés) définis dans les annexes du Part-66 pour chaque module, dont ce module 10. Clique sur les autres exigences pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m107a-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('.m107a-btn');
+  var caption = wrap.querySelector('#m107a-caption');
+
+  var TEXTES = {
+    syllabus: "L'organisme doit suivre les syllabus (programmes détaillés) définis dans les annexes du Part-66 pour chaque module, dont ce module 10. Clique sur les autres exigences pour comparer.",
+    personnel: "L'organisme doit disposer d'instructeurs et d'examinateurs qualifiés — sans eux, l'agrément ne peut pas être délivré ni maintenu.",
+    tracabilite: "L'organisme doit garantir la traçabilité des résultats d'examen : c'est cette traçabilité qui permet à l'autorité compétente de faire confiance au diplôme délivré."
+  };
+
+  function render(exig) {
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-exig') === exig); });
+    caption.textContent = TEXTES[exig];
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { render(b.getAttribute('data-exig')); });
+  });
+
+  render('syllabus');
+})();
+</script>

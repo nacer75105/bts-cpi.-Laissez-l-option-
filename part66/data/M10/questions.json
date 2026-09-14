@@ -346,11 +346,11 @@
       "options": [
         "Une licence B1 ou B2 assortie d'une expérience confirmée",
         "Une simple déclaration sur l'honneur d'expérience suffisante, sans licence préalable",
-        "Un examen d'entrée spécifique à la catégorie C, sans lien avec une licence B1/B2 antérieure"
+        "Une ancienneté de 10 ans dans l'aviation, sans exigence d'expérience en maintenance de base"
       ],
       "bonne": 0,
-      "explication": "L'accès à la catégorie C passe le plus souvent par une licence B1 ou B2 assortie d'une expérience confirmée (une voie académique alternative existe aussi, avec ses propres exigences d'expérience). Une simple déclaration sur l'honneur, sans licence ni vérification, ne suffit pas ; il n'existe pas non plus d'examen d'entrée à la catégorie C totalement indépendant d'une licence B1/B2 préalable.",
-      "source": "TODO: source à vérifier manuellement — le mot \"réservée\" (option correcte) pourrait être trop absolu : une voie académique alternative (diplôme + expérience en environnement de maintenance civile) existerait pour l'accès à la catégorie C sans passer par B1/B2 ; à confirmer dans 66.A.30 avant usage en examen. La fiche M10.6 porte la même formulation et devra être alignée si confirmé (voir part66/A_VERIFIER.md)"
+      "explication": "L'accès à la catégorie C passe le plus souvent par une licence B1 ou B2 assortie d'une expérience confirmée (une voie par diplôme de l'enseignement supérieur existe aussi, avec ses propres exigences d'expérience). Une simple déclaration sur l'honneur, sans licence ni vérification, ne suffit pas ; les deux voies exigent en outre une période minimale documentée de participation à des tâches de maintenance de base, ce qu'une simple ancienneté générale ne remplace pas.",
+      "source": "Règlement (UE) n° 1321/2014, annexe III (Part-66), 66.A.30(a)(3) et (4)"
     },
     {
       "uid": "M10-0030",
@@ -1131,6 +1131,71 @@
       "bonne": 1,
       "explication": "2023/203 est un règlement d'exécution : droit dur, directement obligatoire — pas du droit souple comme un CS, ni un accord bilatéral (un mécanisme distinct, vu en M10.2).",
       "source": "easa_2025.txt — nature des textes (règlement vs AMC/GM), cohérence avec M10.2"
+    },
+    {
+      "uid": "M10-0092",
+      "sous_chapitre": "M10.6",
+      "question": "Quelle est la différence essentielle entre la licence Part-66 et l'autorisation de certification (145.A.35) ?",
+      "options": [
+        "Ce sont deux noms pour le même document, délivré une seule fois par l'autorité compétente nationale",
+        "La licence est une qualification personnelle valable dans toute l'Union ; l'autorisation de certification est délivrée par un organisme précis et ne suit pas son titulaire s'il change d'employeur",
+        "L'autorisation de certification remplace la licence Part-66 dès qu'un organisme agréé emploie son titulaire"
+      ],
+      "bonne": 1,
+      "explication": "La licence Part-66 est une qualification personnelle reconnue dans toute l'Union, indépendante de l'employeur. L'autorisation de certification (145.A.35), elle, est délivrée par un organisme précis et ne suit pas son titulaire : un nouvel employeur doit en délivrer une nouvelle. Ce ne sont donc ni un seul et même document, ni un document qui remplacerait la licence.",
+      "source": "Règlement (UE) n° 1321/2014, annexes II et III (Part-145, 145.A.35 ; Part-66, 66.A.20)"
+    },
+    {
+      "uid": "M10-0093",
+      "sous_chapitre": "M10.6",
+      "question": "Pourquoi le privilège de la catégorie A ne peut-il pas être exercé chez un autre employeur que celui qui a délivré l'autorisation de certification ?",
+      "options": [
+        "Parce que le texte de la licence catégorie A restreint expressément son privilège aux tâches endossées sur cette autorisation et au travail effectué au sein de l'organisme qui l'a délivrée",
+        "Parce que la catégorie A n'est valable que dans le pays qui a délivré la licence",
+        "Parce qu'aucune règle ne l'interdit, mais qu'aucun organisme n'accepte en pratique une autorisation d'un concurrent"
+      ],
+      "bonne": 0,
+      "explication": "66.A.20(a)(1) restreint explicitement le privilège catégorie A aux tâches spécifiquement endossées sur l'autorisation de certification, et au travail personnellement effectué au sein de l'organisme qui l'a délivrée — une restriction inscrite dans le texte de la licence elle-même, pas une simple pratique commerciale, et sans rapport avec le pays de délivrance de la licence.",
+      "source": "Règlement (UE) n° 1321/2014, annexe III (Part-66), 66.A.20(a)(1)"
+    },
+    {
+      "uid": "M10-0094",
+      "sous_chapitre": "M10.6",
+      "question": "Parmi les conditions générales d'exercice d'une licence Part-66 (66.A.20(b)), laquelle s'applique à toutes les catégories sans exception ?",
+      "options": [
+        "Justifier de douze mois d'expérience de maintenance dans les trois années précédentes, dans le champ des privilèges de la licence",
+        "Maîtriser l'anglais aéronautique, seule langue reconnue quelle que soit la documentation technique du chantier",
+        "Communiquer dans la langue de la documentation technique utilisée, quelle qu'elle soit"
+      ],
+      "bonne": 2,
+      "explication": "66.A.20(b)(4) exige de savoir lire, écrire et communiquer dans la langue de la documentation technique et des procédures effectivement utilisées — pas spécifiquement en anglais. La durée d'expérience exigée est de six mois dans les deux années précédentes, pas douze mois sur trois ans.",
+      "source": "Règlement (UE) n° 1321/2014, annexe III (Part-66), 66.A.20(b)"
+    },
+    {
+      "uid": "M10-0095",
+      "sous_chapitre": "M10.6",
+      "question": "Pourquoi un titulaire d'une licence catégorie A ne peut-il, dans la pratique, pas exercer comme personnel certificateur indépendant (rappel M10.9) ?",
+      "options": [
+        "Parce que son seul privilège de certification dépend entièrement d'une autorisation délivrée par un organisme, qui n'existe pas en dehors de tout organisme",
+        "Parce que la catégorie A est explicitement exclue de l'Appendice VII, quelle que soit la tâche considérée",
+        "Parce que le personnel certificateur indépendant doit obligatoirement détenir une licence B1 ou B2"
+      ],
+      "bonne": 0,
+      "explication": "Le certificateur indépendant agit hors de tout organisme agréé, donc sans autorisation de certification à recevoir (ce document est délivré par un organisme, 145.A.35). Or le privilège catégorie A dépend entièrement d'une telle autorisation (66.A.20(a)(1)) : il ne peut donc pas s'exercer hors organisme. L'Appendice VII liste des tâches complexes, pas des catégories de licence, et rien n'exige une licence B1/B2 précisément pour le statut de certificateur indépendant (une licence C convient tout autant, dans les limites de l'Appendice VII).",
+      "source": "Règlement (UE) n° 1321/2014, annexes II et III (145.A.35 ; 66.A.20(a)(1))"
+    },
+    {
+      "uid": "M10-0096",
+      "sous_chapitre": "M10.6",
+      "question": "Quelles sont les deux voies d'accès prévues à la catégorie C par 66.A.30 ?",
+      "options": [
+        "Une voie unique, réservée aux seuls titulaires d'une licence B1 ou B2 depuis au moins cinq ans",
+        "Une voie par expérience B1/B2 confirmée, et une voie par diplôme de l'enseignement supérieur associé à une expérience de maintenance",
+        "Une voie par examen théorique spécifique à la catégorie C, sans lien avec une expérience pratique"
+      ],
+      "bonne": 1,
+      "explication": "66.A.30 prévoit deux voies distinctes vers la catégorie C : l'une par expérience confirmée comme B1 ou B2 (durée variable selon la sous-catégorie et le type d'aéronef, incluant une période de maintenance de base), l'autre par diplôme de l'enseignement supérieur dans une discipline technique pertinente, associé à une expérience en environnement de maintenance aéronautique. La catégorie C n'est donc pas réservée à la seule voie B1/B2, et aucune des deux voies ne repose sur un simple examen théorique sans expérience pratique.",
+      "source": "Règlement (UE) n° 1321/2014, annexe III (Part-66), 66.A.30(a)(3) et (4)"
     }
   ]
 }

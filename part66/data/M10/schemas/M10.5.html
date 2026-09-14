@@ -1,0 +1,59 @@
+<div id="schema-m105a-wrap" style="font-family: inherit; max-width: 620px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m105a-wrap .m105a-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.9em; }
+#schema-m105a-wrap .m105a-btn:hover { background:#e8e8e8; }
+#schema-m105a-wrap .m105a-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m105a-wrap .m105a-row { display:flex; align-items:center; gap:10px; margin-top:10px; }
+#schema-m105a-wrap .m105a-rowlabel { width:200px; font-size:0.85em; color:#333; }
+#schema-m105a-wrap .m105a-indic { padding:6px 14px; border-radius:6px; font-weight:bold; }
+#schema-m105a-wrap .m105a-indic.personne { background:#cfe2ff; color:#1a4a8a; }
+#schema-m105a-wrap .m105a-indic.organisme { background:#e2d6f5; color:#5a2d8f; }
+#schema-m105a-wrap .m105a-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:6em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> Part-66 et Part-145 portent sur deux choses différentes — laquelle porte sur qui, laquelle porte sur quoi ?</p>
+
+<div>
+  <button class="m105a-btn active" data-part="66">Part-66</button>
+  <button class="m105a-btn" data-part="145">Part-145</button>
+</div>
+
+<div class="m105a-row">
+  <div class="m105a-rowlabel">Porte sur...</div>
+  <div class="m105a-indic personne" id="m105a-indic">La personne</div>
+</div>
+
+<div class="m105a-caption" id="m105a-caption">Le Part-66 porte sur la personne : c'est la licence individuelle du personnel certificateur, reconnue dans toute l'Union quel que soit son employeur. Clique sur « Part-145 » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m105a-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('.m105a-btn');
+  var caption = wrap.querySelector('#m105a-caption');
+  var indic = wrap.querySelector('#m105a-indic');
+
+  var TEXTES = {
+    "66": "Le Part-66 porte sur la personne : c'est la licence individuelle du personnel certificateur, reconnue dans toute l'Union quel que soit son employeur. Clique sur « Part-145 » pour comparer.",
+    "145": "Le Part-145 porte sur l'organisme : ses installations, ses outillages, ses procédures écrites (le manuel des spécifications) et le fait qu'il emploie du personnel qualifié — pas seulement les qualifications individuelles de ses salariés."
+  };
+  var CIBLE = { "66": "personne", "145": "organisme" };
+  var LIBELLE = { personne: "La personne", organisme: "L'organisme" };
+
+  function render(part) {
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-part') === part); });
+    caption.textContent = TEXTES[part];
+    var cible = CIBLE[part];
+    indic.textContent = LIBELLE[cible];
+    indic.classList.toggle('personne', cible === 'personne');
+    indic.classList.toggle('organisme', cible === 'organisme');
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { render(b.getAttribute('data-part')); });
+  });
+
+  render('66');
+})();
+</script>

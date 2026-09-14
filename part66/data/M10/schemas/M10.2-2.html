@@ -1,0 +1,73 @@
+<div id="schema-m102b-wrap" style="font-family: inherit; max-width: 620px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m102b-wrap .m102b-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.9em; }
+#schema-m102b-wrap .m102b-btn:hover { background:#e8e8e8; }
+#schema-m102b-wrap .m102b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m102b-wrap .m102b-chain { margin-top:14px; display:flex; flex-direction:column; align-items:stretch; gap:2px; }
+#schema-m102b-wrap .m102b-box { border:2px solid #888; border-radius:8px; padding:10px 14px; background:#f4f4f4; }
+#schema-m102b-wrap .m102b-box.active { border-color:#e0a800; background:#fff3b0; }
+#schema-m102b-wrap .m102b-box-titre { font-weight:bold; }
+#schema-m102b-wrap .m102b-box-sub { font-size:0.8em; color:#555; margin-top:2px; }
+#schema-m102b-wrap .m102b-arrow { text-align:center; font-size:0.8em; color:#666; padding:2px 0; }
+#schema-m102b-wrap .m102b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:6em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> clique sur chaque acteur pour voir précisément ce qu'il fait — qui écrit la règle, qui la fait respecter sur le terrain ?</p>
+
+<div>
+  <button class="m102b-btn active" data-acteur="aesa">AESA (EASA)</button>
+  <button class="m102b-btn" data-acteur="commission">Commission européenne</button>
+  <button class="m102b-btn" data-acteur="dgac">Autorité nationale (DGAC en France)</button>
+</div>
+
+<div class="m102b-chain">
+  <div class="m102b-box active" id="m102b-box-aesa">
+    <div class="m102b-box-titre">AESA — Agence de l'Union européenne pour la sécurité aérienne</div>
+    <div class="m102b-box-sub">Rédige la réglementation technique détaillée</div>
+  </div>
+  <div class="m102b-arrow">↓ propose, la Commission adopte</div>
+  <div class="m102b-box" id="m102b-box-commission">
+    <div class="m102b-box-titre">Commission européenne</div>
+    <div class="m102b-box-sub">Adopte les textes sous forme de règlements directement applicables</div>
+  </div>
+  <div class="m102b-arrow">↓ appliqués et surveillés localement par</div>
+  <div class="m102b-box" id="m102b-box-dgac">
+    <div class="m102b-box-titre">Autorité nationale (DGAC en France)</div>
+    <div class="m102b-box-sub">Surveillance directe des acteurs : compagnies, ateliers, organismes de formation</div>
+  </div>
+</div>
+
+<div class="m102b-caption" id="m102b-caption">L'AESA rédige la réglementation technique détaillée (certification des aéronefs, entretien, licences de personnel, organismes de formation...). Clique sur les autres acteurs pour comparer leur rôle.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m102b-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('.m102b-btn');
+  var caption = wrap.querySelector('#m102b-caption');
+  var boxes = {
+    aesa: wrap.querySelector('#m102b-box-aesa'),
+    commission: wrap.querySelector('#m102b-box-commission'),
+    dgac: wrap.querySelector('#m102b-box-dgac')
+  };
+
+  var TEXTES = {
+    aesa: "L'AESA rédige la réglementation technique détaillée (certification des aéronefs, entretien, licences de personnel, organismes de formation...). Clique sur les autres acteurs pour comparer leur rôle.",
+    commission: "La Commission européenne adopte les textes rédigés par l'AESA sous forme de règlements directement applicables dans tous les États membres — c'est elle qui donne sa force juridique définitive au texte.",
+    dgac: "Dans chaque pays, une autorité nationale de l'aviation civile (en France, la DGAC) reste chargée de la surveillance directe des acteurs sur le terrain : compagnies, ateliers de maintenance, organismes de formation."
+  };
+
+  function render(acteur) {
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-acteur') === acteur); });
+    Object.keys(boxes).forEach(function (k) { boxes[k].classList.toggle('active', k === acteur); });
+    caption.textContent = TEXTES[acteur];
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { render(b.getAttribute('data-acteur')); });
+  });
+
+  render('aesa');
+})();
+</script>

@@ -1,0 +1,68 @@
+<div id="schema-m102a-wrap" style="font-family: inherit; max-width: 620px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m102a-wrap .m102a-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.9em; }
+#schema-m102a-wrap .m102a-btn:hover { background:#e8e8e8; }
+#schema-m102a-wrap .m102a-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m102a-wrap .m102a-row { display:flex; align-items:center; gap:10px; margin-top:10px; }
+#schema-m102a-wrap .m102a-rowlabel { width:230px; font-size:0.85em; color:#333; }
+#schema-m102a-wrap .m102a-indic { padding:6px 14px; border-radius:6px; font-weight:bold; }
+#schema-m102a-wrap .m102a-indic.oui { background:#d4edda; color:#1e6b2f; }
+#schema-m102a-wrap .m102a-indic.non { background:#f8d7da; color:#a11c2c; }
+#schema-m102a-wrap .m102a-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:6em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> compare le droit dur (hard law) et le droit souple (soft law) sur deux critères clés.</p>
+
+<div>
+  <button class="m102a-btn active" data-type="dur">Règlement (UE) 2018/1139 et ses règlements d'exécution</button>
+  <button class="m102a-btn" data-type="souple">AMC / GM (moyens de conformité, orientation)</button>
+</div>
+
+<div class="m102a-row">
+  <div class="m102a-rowlabel">Directement obligatoire dans tous les États membres ?</div>
+  <div class="m102a-indic oui" id="m102a-indic-obl">Oui</div>
+</div>
+<div class="m102a-row">
+  <div class="m102a-rowlabel">Un autre moyen de conformité (AltMoC) est-il possible ?</div>
+  <div class="m102a-indic non" id="m102a-indic-alt">Sans objet (le règlement lui-même n'a pas d'alternative)</div>
+</div>
+
+<div class="m102a-caption" id="m102a-caption">Le règlement (UE) 2018/1139 et ses règlements d'exécution (comme le 1321/2014) forment le droit dur (hard law) : leurs dispositions sont directement obligatoires dans tous les États membres. Clique sur « AMC / GM » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m102a-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('.m102a-btn');
+  var caption = wrap.querySelector('#m102a-caption');
+  var indicObl = wrap.querySelector('#m102a-indic-obl');
+  var indicAlt = wrap.querySelector('#m102a-indic-alt');
+
+  var TEXTES = {
+    dur: "Le règlement (UE) 2018/1139 et ses règlements d'exécution (comme le 1321/2014) forment le droit dur (hard law) : leurs dispositions sont directement obligatoires dans tous les États membres. Clique sur « AMC / GM » pour comparer.",
+    souple: "Les AMC (moyens de conformité acceptables) et les GM (documents d'orientation) forment le droit souple (soft law) : ce sont des façons reconnues de satisfaire une exigence réglementaire, mais un organisme peut aussi démontrer sa conformité par un autre moyen (un AltMoC), sous réserve de l'accord de son autorité compétente. Clique sur le règlement pour comparer."
+  };
+  var OBLIGATOIRE = { dur: true, souple: false };
+  var ALTMOC = { dur: false, souple: true };
+
+  function render(type) {
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-type') === type); });
+    caption.textContent = TEXTES[type];
+    var obl = OBLIGATOIRE[type];
+    indicObl.textContent = obl ? "Oui" : "Non (illustre/explique, sans créer d'obligation nouvelle par lui-même)";
+    indicObl.classList.toggle('oui', obl);
+    indicObl.classList.toggle('non', !obl);
+    var alt = ALTMOC[type];
+    indicAlt.textContent = alt ? "Oui, avec l'accord de l'autorité compétente" : "Sans objet (le règlement lui-même n'a pas d'alternative)";
+    indicAlt.classList.toggle('oui', alt);
+    indicAlt.classList.toggle('non', !alt);
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { render(b.getAttribute('data-type')); });
+  });
+
+  render('dur');
+})();
+</script>

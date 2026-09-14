@@ -1,0 +1,55 @@
+<div id="schema-m104a-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m104a-wrap .m104a-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.88em; text-align:left; }
+#schema-m104a-wrap .m104a-btn:hover { background:#e8e8e8; }
+#schema-m104a-wrap .m104a-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m104a-wrap .m104a-row { display:flex; align-items:center; gap:10px; margin-top:12px; }
+#schema-m104a-wrap .m104a-rowlabel { width:150px; font-size:0.85em; color:#333; }
+#schema-m104a-wrap .m104a-indic { padding:6px 14px; border-radius:6px; font-weight:bold; background:#d4edda; color:#1e6b2f; }
+#schema-m104a-wrap .m104a-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> pour chaque situation, détermine qui est responsable du maintien de la navigabilité (M.A.201).</p>
+
+<div style="display:flex; flex-direction:column; align-items:flex-start;">
+  <button class="m104a-btn active" data-cas="defaut">Cas général : aucune des situations ci-dessous</button>
+  <button class="m104a-btn" data-cas="location">L'aéronef est donné en location</button>
+  <button class="m104a-btn" data-cas="aoc">L'aéronef est exploité par un transporteur licencié (règlement (CE) 1008/2008)</button>
+</div>
+
+<div class="m104a-row">
+  <div class="m104a-rowlabel">Responsable du maintien de navigabilité</div>
+  <div class="m104a-indic" id="m104a-indic">Propriétaire</div>
+</div>
+
+<div class="m104a-caption" id="m104a-caption">Par défaut (M.A.201(a)), c'est le propriétaire de l'aéronef qui est responsable du maintien de sa navigabilité. Clique sur les autres situations pour voir quand ce n'est plus le cas.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m104a-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('.m104a-btn');
+  var caption = wrap.querySelector('#m104a-caption');
+  var indic = wrap.querySelector('#m104a-indic');
+
+  var TEXTES = {
+    defaut: "Par défaut (M.A.201(a)), c'est le propriétaire de l'aéronef qui est responsable du maintien de sa navigabilité. Clique sur les autres situations pour voir quand ce n'est plus le cas.",
+    location: "Si l'aéronef est donné en location (M.A.201(b)), la responsabilité du maintien de la navigabilité passe à l'exploitant.",
+    aoc: "Si l'aéronef est exploité par un transporteur aérien titulaire d'une licence d'exploitation au titre du règlement (CE) 1008/2008 (M.A.201(e)), la responsabilité passe également à l'exploitant."
+  };
+  var RESPONSABLE = { defaut: "Propriétaire", location: "Exploitant", aoc: "Exploitant" };
+
+  function render(cas) {
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-cas') === cas); });
+    caption.textContent = TEXTES[cas];
+    indic.textContent = RESPONSABLE[cas];
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { render(b.getAttribute('data-cas')); });
+  });
+
+  render('defaut');
+})();
+</script>

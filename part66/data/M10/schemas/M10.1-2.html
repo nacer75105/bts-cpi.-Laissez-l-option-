@@ -1,0 +1,51 @@
+<div id="schema-m101b-wrap" style="font-family: inherit; max-width: 620px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m101b-wrap .m101b-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.88em; text-align:left; }
+#schema-m101b-wrap .m101b-btn:hover { background:#e8e8e8; }
+#schema-m101b-wrap .m101b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m101b-wrap .m101b-row { display:flex; align-items:center; gap:10px; margin-top:12px; }
+#schema-m101b-wrap .m101b-rowlabel { width:230px; font-size:0.85em; color:#333; }
+#schema-m101b-wrap .m101b-indic { padding:6px 14px; border-radius:6px; font-weight:bold; background:#d4edda; color:#1e6b2f; }
+#schema-m101b-wrap .m101b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:6em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> un État peut-il légalement dépasser le niveau minimal fixé par les Annexes OACI ?</p>
+
+<div style="display:flex; flex-direction:column; align-items:flex-start;">
+  <button class="m101b-btn active" data-cas="minimal">Un État applique exactement le niveau minimal des Annexes OACI</button>
+  <button class="m101b-btn" data-cas="audela">Un groupe d'États (comme l'Union européenne) va au-delà de ce niveau minimal</button>
+</div>
+
+<div class="m101b-row">
+  <div class="m101b-rowlabel">Conforme à ses obligations OACI ?</div>
+  <div class="m101b-indic" id="m101b-indic">Oui</div>
+</div>
+
+<div class="m101b-caption" id="m101b-caption">Un État qui transpose exactement le niveau minimal fixé par les Annexes OACI respecte pleinement ses obligations internationales. Clique sur l'autre cas pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m101b-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('.m101b-btn');
+  var caption = wrap.querySelector('#m101b-caption');
+  var indic = wrap.querySelector('#m101b-indic');
+
+  var TEXTES = {
+    minimal: "Un État qui transpose exactement le niveau minimal fixé par les Annexes OACI respecte pleinement ses obligations internationales. Clique sur l'autre cas pour comparer.",
+    audela: "Chaque État (ou groupe d'États comme l'Union européenne) reste responsable de sa propre réglementation de sécurité aérienne : rien ne l'empêche d'aller au-delà du niveau minimal fixé par les Annexes OACI, tant qu'il ne descend pas en-dessous."
+  };
+
+  function render(cas) {
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-cas') === cas); });
+    caption.textContent = TEXTES[cas];
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { render(b.getAttribute('data-cas')); });
+  });
+
+  render('minimal');
+})();
+</script>

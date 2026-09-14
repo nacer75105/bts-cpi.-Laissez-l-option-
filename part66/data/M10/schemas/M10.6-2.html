@@ -1,0 +1,75 @@
+<div id="schema-m106b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m106b-wrap .m106b-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.95em; }
+#schema-m106b-wrap .m106b-btn:hover { background:#e8e8e8; }
+#schema-m106b-wrap .m106b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m106b-wrap .m106b-row { display:flex; align-items:flex-start; gap:10px; margin-top:10px; }
+#schema-m106b-wrap .m106b-rowlabel { width:150px; font-size:0.85em; color:#333; flex-shrink:0; padding-top:2px; }
+#schema-m106b-wrap .m106b-list { margin:0; padding-left:1.1em; font-size:0.9em; }
+#schema-m106b-wrap .m106b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> compare les deux voies d'accès à la catégorie C prévues par 66.A.30 — aucune des deux n'est un simple examen théorique.</p>
+
+<div>
+  <button class="m106b-btn active" data-voie="experience">Voie « expérience B1/B2 »</button>
+  <button class="m106b-btn" data-voie="diplome">Voie « diplôme »</button>
+</div>
+
+<div class="m106b-row">
+  <div class="m106b-rowlabel">Point de départ</div>
+  <div id="m106b-depart">Licence B1 ou B2 déjà détenue</div>
+</div>
+<div class="m106b-row">
+  <div class="m106b-rowlabel">Exigences</div>
+  <div style="flex:1;">
+    <ul class="m106b-list" id="m106b-liste-experience">
+      <li>Pour un CMPA : 3 ans (B1.1/B1.3/B2) ou 5 ans (B1.2/B1.4/L5) comme personnel de soutien, ou à la fois personnel de soutien et certificateur</li>
+      <li>Pour un aéronef autre que CMPA : 3 ans uniformément (B1, B2, B2L, B3 ou L)</li>
+      <li>dont 12 mois (CMPA) ou 6 mois (autre que CMPA) comme personnel de soutien en maintenance de base</li>
+    </ul>
+    <ul class="m106b-list" id="m106b-liste-diplome" style="display:none;">
+      <li>diplôme de l'enseignement supérieur (discipline technique pertinente, établissement reconnu par l'autorité compétente)</li>
+      <li>3 ans d'expérience dans un environnement de maintenance aéronautique</li>
+      <li>dont 6 mois de participation à des tâches de maintenance de base</li>
+    </ul>
+  </div>
+</div>
+
+<div class="m106b-caption" id="m106b-caption">La voie « expérience » part d'une licence B1 ou B2 déjà détenue, complétée par une expérience confirmée dont la durée dépend à la fois de la sous-catégorie et du type d'aéronef (CMPA ou non). Clique sur « diplôme » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m106b-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('.m106b-btn');
+  var caption = wrap.querySelector('#m106b-caption');
+  var depart = wrap.querySelector('#m106b-depart');
+  var listeExperience = wrap.querySelector('#m106b-liste-experience');
+  var listeDiplome = wrap.querySelector('#m106b-liste-diplome');
+
+  var TEXTES = {
+    experience: "La voie « expérience » part d'une licence B1 ou B2 déjà détenue, complétée par une expérience confirmée dont la durée dépend à la fois de la sous-catégorie et du type d'aéronef (CMPA ou non). Clique sur « diplôme » pour comparer.",
+    diplome: "La voie « diplôme » ne suppose aucune licence B1/B2 préalable : elle est ouverte au titulaire d'un diplôme de l'enseignement supérieur dans une discipline technique pertinente, sous réserve de 3 ans d'expérience dans un environnement de maintenance aéronautique, dont 6 mois de participation à des tâches de maintenance de base. Clique sur « expérience B1/B2 » pour comparer."
+  };
+  var DEPART = {
+    experience: "Licence B1 ou B2 déjà détenue",
+    diplome: "Diplôme de l'enseignement supérieur (pas de licence B1/B2 requise)"
+  };
+
+  function render(voie) {
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-voie') === voie); });
+    caption.textContent = TEXTES[voie];
+    depart.textContent = DEPART[voie];
+    listeExperience.style.display = (voie === 'experience') ? '' : 'none';
+    listeDiplome.style.display = (voie === 'diplome') ? '' : 'none';
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { render(b.getAttribute('data-voie')); });
+  });
+
+  render('experience');
+})();
+</script>

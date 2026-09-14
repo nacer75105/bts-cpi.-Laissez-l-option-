@@ -1,0 +1,58 @@
+<div id="schema-m108b-wrap" style="font-family: inherit; max-width: 660px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m108b-wrap .m108b-btn { margin:3px 5px 3px 0; padding:7px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.83em; text-align:left; }
+#schema-m108b-wrap .m108b-btn:hover { background:#e8e8e8; }
+#schema-m108b-wrap .m108b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m108b-wrap .m108b-grp-titre { font-size:0.8em; color:#555; margin:10px 0 4px; }
+#schema-m108b-wrap .m108b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:6.5em; }
+#schema-m108b-wrap .m108b-permanent { margin-top:14px; padding:10px; border:1px dashed #999; border-radius:6px; font-size:0.85em; }
+#schema-m108b-wrap .m108b-permanent-titre { font-weight:bold; margin-bottom:4px; }
+#schema-m108b-wrap .m108b-permanent ul { margin:4px 0 0; padding-left:1.2em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> selon l'état de conformité de l'aéronef, quel document de navigabilité s'applique à son bord ?</p>
+
+<div class="m108b-grp-titre">État de conformité de l'aéronef</div>
+<div style="display:flex; flex-direction:column; align-items:flex-start;">
+  <button class="m108b-btn active" data-etat="conforme">Conforme à son type certifié, apte à voler en sécurité</button>
+  <button class="m108b-btn" data-etat="restreint">Conforme à un type certifié restreint, ou à des spécifications spécifiques</button>
+  <button class="m108b-btn" data-etat="nonconforme">Pas encore pleinement conforme, mais jugé apte à un vol sûr sous conditions</button>
+</div>
+
+<div class="m108b-caption" id="m108b-caption">Le certificat de navigabilité (CofA) atteste que l'aéronef est conforme à son type certifié et apte à voler ; il est délivré par l'autorité de l'État d'immatriculation. Un CofA en vigueur est aussi la condition dont dépend la validité de l'ARC (Airworthiness Review Certificate, délivré à l'issue d'une revue de navigabilité satisfaisante, valable 1 an). Clique sur les autres états pour comparer.</div>
+
+<div class="m108b-permanent">
+  <div class="m108b-permanent-titre">Autres documents toujours à bord, indépendamment de cet état :</div>
+  <ul>
+    <li><strong>CofR</strong> (certificat d'immatriculation) — atteste la nationalité de l'aéronef</li>
+    <li><strong>Fiche de masse et centrage</strong> — doit refléter la configuration réelle</li>
+    <li><strong>Licence de la station radio</strong></li>
+  </ul>
+</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m108b-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('.m108b-btn');
+  var caption = wrap.querySelector('#m108b-caption');
+
+  var TEXTES = {
+    conforme: "Le certificat de navigabilité (CofA) atteste que l'aéronef est conforme à son type certifié et apte à voler ; il est délivré par l'autorité de l'État d'immatriculation. Un CofA en vigueur est aussi la condition dont dépend la validité de l'ARC (Airworthiness Review Certificate, délivré à l'issue d'une revue de navigabilité satisfaisante, valable 1 an). Clique sur les autres états pour comparer.",
+    restreint: "Le certificat de navigabilité restreint est délivré à un aéronef conforme à un certificat de type restreint, ou dont la conformité à des spécifications de navigabilité spécifiques assurant une sécurité adéquate a été démontrée — un cadre distinct du certificat de type classique.",
+    nonconforme: "Le Permit to Fly couvre un aéronef qui ne satisfait pas, ou pas encore, pleinement aux exigences de navigabilité applicables, mais jugé apte à un vol sûr sous conditions définies (essais, convoyage vers maintenance, exhibition...)."
+  };
+
+  function render(etat) {
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-etat') === etat); });
+    caption.textContent = TEXTES[etat];
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { render(b.getAttribute('data-etat')); });
+  });
+
+  render('conforme');
+})();
+</script>

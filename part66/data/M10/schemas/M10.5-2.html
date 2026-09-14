@@ -1,0 +1,53 @@
+<div id="schema-m105b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m105b-wrap .m105b-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; text-align:left; }
+#schema-m105b-wrap .m105b-btn:hover { background:#e8e8e8; }
+#schema-m105b-wrap .m105b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m105b-wrap .m105b-row { display:flex; align-items:center; gap:10px; margin-top:12px; }
+#schema-m105b-wrap .m105b-rowlabel { width:190px; font-size:0.85em; color:#333; }
+#schema-m105b-wrap .m105b-indic { padding:6px 14px; border-radius:6px; font-weight:bold; background:#d4edda; color:#1e6b2f; }
+#schema-m105b-wrap .m105b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:6em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> selon le type d'aéronef exploité, quel agrément d'organisme est possible ?</p>
+
+<div style="display:flex; flex-direction:column; align-items:flex-start;">
+  <button class="m105b-btn active" data-cas="cao">Aéronef non complexe, pas exploité sous certificat de transporteur aérien (AOC)</button>
+  <button class="m105b-btn" data-cas="separe">Aéronef complexe, ou exploité sous AOC</button>
+</div>
+
+<div class="m105b-row">
+  <div class="m105b-rowlabel">Agrément(s) possible(s)</div>
+  <div class="m105b-indic" id="m105b-indic">Part-CAO (combiné)</div>
+</div>
+
+<div class="m105b-caption" id="m105b-caption">Pour les aéronefs non complexes qui ne sont pas exploités sous AOC, le Part-CAO permet de cumuler entretien et gestion de navigabilité dans un seul agrément — utile pour un petit atelier, sans avoir besoin de deux agréments séparés. Clique sur l'autre situation pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m105b-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('.m105b-btn');
+  var caption = wrap.querySelector('#m105b-caption');
+  var indic = wrap.querySelector('#m105b-indic');
+
+  var TEXTES = {
+    cao: "Pour les aéronefs non complexes qui ne sont pas exploités sous AOC, le Part-CAO permet de cumuler entretien et gestion de navigabilité dans un seul agrément — utile pour un petit atelier, sans avoir besoin de deux agréments séparés. Clique sur l'autre situation pour comparer.",
+    separe: "Pour un aéronef complexe, ou exploité sous certificat de transporteur aérien (AOC), le Part-CAO n'est pas ouvert : entretien et gestion de navigabilité relèvent alors de deux agréments distincts (Part-145 pour l'entretien, et un organisme de gestion de la navigabilité — voir M10.4)."
+  };
+  var AGREMENT = { cao: "Part-CAO (combiné)", separe: "Part-145 + organisme de gestion séparé" };
+
+  function render(cas) {
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-cas') === cas); });
+    caption.textContent = TEXTES[cas];
+    indic.textContent = AGREMENT[cas];
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { render(b.getAttribute('data-cas')); });
+  });
+
+  render('cao');
+})();
+</script>

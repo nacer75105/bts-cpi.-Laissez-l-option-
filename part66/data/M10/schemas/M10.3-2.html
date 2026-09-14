@@ -1,0 +1,81 @@
+<div id="schema-m103b-wrap" style="font-family: inherit; max-width: 620px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m103b-wrap .m103b-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.9em; }
+#schema-m103b-wrap .m103b-btn:hover { background:#e8e8e8; }
+#schema-m103b-wrap .m103b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m103b-wrap .m103b-chain { margin-top:14px; display:flex; flex-direction:column; align-items:stretch; gap:2px; }
+#schema-m103b-wrap .m103b-box { border:2px solid #888; border-radius:8px; padding:9px 14px; background:#f4f4f4; }
+#schema-m103b-wrap .m103b-box.active { border-color:#e0a800; background:#fff3b0; }
+#schema-m103b-wrap .m103b-box-titre { font-weight:bold; }
+#schema-m103b-wrap .m103b-box-sub { font-size:0.8em; color:#555; margin-top:2px; }
+#schema-m103b-wrap .m103b-arrow { text-align:center; font-size:0.85em; color:#666; padding:1px 0; }
+#schema-m103b-wrap .m103b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> clique sur chaque maillon de la chaîne qui maintient un aéronef en état de navigabilité.</p>
+
+<div>
+  <button class="m103b-btn active" data-etape="entretien">Programme d'entretien</button>
+  <button class="m103b-btn" data-etape="atelier">Atelier agréé</button>
+  <button class="m103b-btn" data-etape="personnel">Personnel licencié</button>
+  <button class="m103b-btn" data-etape="formation">Organisme de formation</button>
+</div>
+
+<div class="m103b-chain">
+  <div class="m103b-box active" id="m103b-box-entretien">
+    <div class="m103b-box-titre">Programme d'entretien (Part-M)</div>
+    <div class="m103b-box-sub">Le calendrier de tâches à exécuter sur l'aéronef</div>
+  </div>
+  <div class="m103b-arrow">↓ exécuté par un</div>
+  <div class="m103b-box" id="m103b-box-atelier">
+    <div class="m103b-box-titre">Atelier agréé (Part-145)</div>
+    <div class="m103b-box-sub">L'organisme habilité à entretenir l'aéronef</div>
+  </div>
+  <div class="m103b-arrow">↓ employant du</div>
+  <div class="m103b-box" id="m103b-box-personnel">
+    <div class="m103b-box-titre">Personnel titulaire d'une licence (Part-66)</div>
+    <div class="m103b-box-sub">Licence dont la portée couvre l'aéronef et les travaux concernés</div>
+  </div>
+  <div class="m103b-arrow">↓ formé dans un</div>
+  <div class="m103b-box" id="m103b-box-formation">
+    <div class="m103b-box-titre">Organisme de formation agréé (Part-147)</div>
+    <div class="m103b-box-sub">Qui a préparé et fait passer l'examen de la licence</div>
+  </div>
+</div>
+
+<div class="m103b-caption" id="m103b-caption">Un aéronef reste en état de navigabilité grâce à un programme d'entretien (Part-M). Clique sur les autres maillons pour suivre la chaîne jusqu'à la formation du personnel.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m103b-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('.m103b-btn');
+  var caption = wrap.querySelector('#m103b-caption');
+  var boxes = {
+    entretien: wrap.querySelector('#m103b-box-entretien'),
+    atelier: wrap.querySelector('#m103b-box-atelier'),
+    personnel: wrap.querySelector('#m103b-box-personnel'),
+    formation: wrap.querySelector('#m103b-box-formation')
+  };
+
+  var TEXTES = {
+    entretien: "Un aéronef reste en état de navigabilité grâce à un programme d'entretien (Part-M). Clique sur les autres maillons pour suivre la chaîne jusqu'à la formation du personnel.",
+    atelier: "Ce programme d'entretien est exécuté par un atelier agréé (Part-145) — l'organisme habilité, avec ses installations, ses outillages et ses procédures écrites, à entretenir l'aéronef.",
+    personnel: "L'atelier agréé emploie du personnel titulaire d'une licence Part-66 : une fois autorisé à exercer au sein de cet organisme (voir M10.6), c'est ce personnel qui certifie l'entretien effectué en signant l'APRS/CRS.",
+    formation: "Ce personnel a obtenu sa licence Part-66 après une formation dans un organisme de formation agréé (Part-147), qui suit le syllabus officiel et garantit la traçabilité des résultats d'examen."
+  };
+
+  function render(etape) {
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-etape') === etape); });
+    Object.keys(boxes).forEach(function (k) { boxes[k].classList.toggle('active', k === etape); });
+    caption.textContent = TEXTES[etape];
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { render(b.getAttribute('data-etape')); });
+  });
+
+  render('entretien');
+})();
+</script>

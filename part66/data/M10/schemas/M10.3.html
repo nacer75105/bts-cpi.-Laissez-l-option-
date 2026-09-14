@@ -1,0 +1,61 @@
+<div id="schema-m103a-wrap" style="font-family: inherit; max-width: 660px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m103a-wrap .m103a-grp-titre { font-size:0.8em; color:#555; margin:10px 0 4px; }
+#schema-m103a-wrap .m103a-btn { margin:3px 5px 3px 0; padding:7px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m103a-wrap .m103a-btn:hover { background:#e8e8e8; }
+#schema-m103a-wrap .m103a-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m103a-wrap .m103a-btn.souligne { text-decoration:underline; }
+#schema-m103a-wrap .m103a-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:6.5em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> clique sur chaque annexe du règlement (UE) n° 1321/2014 pour voir son rôle exact.</p>
+
+<div class="m103a-grp-titre">Annexes « historiques » (règlement de base)</div>
+<div>
+  <button class="m103a-btn active" data-annexe="m">Part-M (annexe I)</button>
+  <button class="m103a-btn" data-annexe="145">Part-145 (annexe II)</button>
+  <button class="m103a-btn" data-annexe="66">Part-66 (annexe III)</button>
+  <button class="m103a-btn" data-annexe="147">Part-147 (annexe IV)</button>
+</div>
+
+<div class="m103a-grp-titre">Annexes ajoutées par les réformes de 2015 et 2019</div>
+<div>
+  <button class="m103a-btn" data-annexe="t">Part-T (annexe Va)</button>
+  <button class="m103a-btn" data-annexe="ml">Part-ML (annexe Vb)</button>
+  <button class="m103a-btn" data-annexe="camo">Part-CAMO (annexe Vc)</button>
+  <button class="m103a-btn" data-annexe="cao">Part-CAO (annexe Vd)</button>
+</div>
+
+<div class="m103a-caption" id="m103a-caption">Part-M (annexe I) — le maintien de la navigabilité : qui est responsable de quoi, programme d'entretien, gestion de la navigabilité. Clique sur les autres annexes pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m103a-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('.m103a-btn');
+  var caption = wrap.querySelector('#m103a-caption');
+
+  var TEXTES = {
+    m: "Part-M (annexe I) — le maintien de la navigabilité : qui est responsable de quoi, programme d'entretien, gestion de la navigabilité. Clique sur les autres annexes pour comparer.",
+    "145": "Part-145 (annexe II) — les organismes de maintenance agréés : les ateliers habilités à entretenir des aéronefs.",
+    "66": "Part-66 (annexe III) — les licences du personnel certificateur de maintenance aéronautique : c'est ce module qui prépare cette licence.",
+    "147": "Part-147 (annexe IV) — les organismes de formation agréés pour préparer la licence Part-66.",
+    t: "Part-T (annexe Va, ajoutée en 2015) — maintien de navigabilité et maintenance de certains aéronefs immatriculés dans un pays tiers mais exploités par un transporteur européen (typiquement en location).",
+    ml: "Part-ML (annexe Vb, ajoutée en 2019) — une version allégée de Part-M pour l'aviation légère.",
+    camo: "Part-CAMO (annexe Vc, ajoutée en 2019) — l'agrément d'un organisme spécialisé dans la seule gestion du maintien de navigabilité.",
+    cao: "Part-CAO (annexe Vd, ajoutée en 2019) — un agrément « combiné » entretien + gestion de navigabilité en un seul organisme, réservé aux aéronefs non complexes qui ne sont pas exploités sous certificat de transporteur aérien."
+  };
+
+  function render(annexe) {
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-annexe') === annexe); });
+    caption.textContent = TEXTES[annexe];
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { render(b.getAttribute('data-annexe')); });
+  });
+
+  render('m');
+})();
+</script>

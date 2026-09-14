@@ -1,0 +1,73 @@
+<div id="schema-m101a-wrap" style="font-family: inherit; max-width: 620px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m101a-wrap .m101a-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.9em; }
+#schema-m101a-wrap .m101a-btn:hover { background:#e8e8e8; }
+#schema-m101a-wrap .m101a-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m101a-wrap .m101a-chain { margin-top:14px; display:flex; flex-direction:column; align-items:stretch; gap:2px; }
+#schema-m101a-wrap .m101a-box { border:2px solid #888; border-radius:8px; padding:10px 14px; background:#f4f4f4; }
+#schema-m101a-wrap .m101a-box.active { border-color:#e0a800; background:#fff3b0; }
+#schema-m101a-wrap .m101a-box-titre { font-weight:bold; }
+#schema-m101a-wrap .m101a-box-sub { font-size:0.8em; color:#555; margin-top:2px; }
+#schema-m101a-wrap .m101a-arrow { text-align:center; font-size:0.8em; color:#666; padding:2px 0; }
+#schema-m101a-wrap .m101a-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:6em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> clique sur chaque niveau de la hiérarchie pour voir précisément son rôle dans la chaîne de transposition.</p>
+
+<div>
+  <button class="m101a-btn active" data-niveau="oaci">OACI</button>
+  <button class="m101a-btn" data-niveau="annexes">Annexes techniques (SARPs)</button>
+  <button class="m101a-btn" data-niveau="etats">États membres (~190 pays)</button>
+</div>
+
+<div class="m101a-chain">
+  <div class="m101a-box active" id="m101a-box-oaci">
+    <div class="m101a-box-titre">OACI — Organisation de l'aviation civile internationale</div>
+    <div class="m101a-box-sub">Institution spécialisée de l'ONU, siège à Montréal (Convention de Chicago, 1944)</div>
+  </div>
+  <div class="m101a-arrow">↓ rédige des Annexes techniques (SARPs)</div>
+  <div class="m101a-box" id="m101a-box-annexes">
+    <div class="m101a-box-titre">Annexes techniques (SARPs)</div>
+    <div class="m101a-box-sub">Standards And Recommended Practices — standards et pratiques recommandées</div>
+  </div>
+  <div class="m101a-arrow">↓ doivent être transposées par</div>
+  <div class="m101a-box" id="m101a-box-etats">
+    <div class="m101a-box-titre">États membres (~190 pays, dont la France)</div>
+    <div class="m101a-box-sub">Chacun transpose dans sa propre réglementation nationale ou régionale</div>
+  </div>
+</div>
+
+<div class="m101a-caption" id="m101a-caption">L'OACI ne fabrique pas de lois qui s'appliquent directement dans les aéroports : elle rédige des Annexes techniques (SARPs) qui fixent le cadre commun mondial. Clique sur les autres niveaux pour comparer leur rôle.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m101a-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('.m101a-btn');
+  var caption = wrap.querySelector('#m101a-caption');
+  var boxes = {
+    oaci: wrap.querySelector('#m101a-box-oaci'),
+    annexes: wrap.querySelector('#m101a-box-annexes'),
+    etats: wrap.querySelector('#m101a-box-etats')
+  };
+
+  var TEXTES = {
+    oaci: "L'OACI ne fabrique pas de lois qui s'appliquent directement dans les aéroports : elle rédige des Annexes techniques (SARPs) qui fixent le cadre commun mondial. Clique sur les autres niveaux pour comparer leur rôle.",
+    annexes: "Les Annexes techniques (SARPs — Standards And Recommended Practices) fixent des standards et des pratiques recommandées : ce sont elles qui transmettent le cadre de l'OACI vers chaque État, mais elles n'ont pas de force obligatoire directe tant qu'un État ne les a pas transposées.",
+    etats: "Ce sont les États membres (environ 190 pays, dont la France) qui doivent transposer les standards des Annexes OACI dans leur propre réglementation nationale ou régionale (pour la France, via l'Union européenne) — chaque État reste responsable de sa propre réglementation de sécurité, tant qu'elle respecte le niveau minimal fixé par les Annexes."
+  };
+
+  function render(niveau) {
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-niveau') === niveau); });
+    Object.keys(boxes).forEach(function (k) { boxes[k].classList.toggle('active', k === niveau); });
+    caption.textContent = TEXTES[niveau];
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { render(b.getAttribute('data-niveau')); });
+  });
+
+  render('oaci');
+})();
+</script>

@@ -1,0 +1,58 @@
+<div id="schema-m107b-wrap" style="font-family: inherit; max-width: 620px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m107b-wrap .m107b-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.9em; }
+#schema-m107b-wrap .m107b-btn:hover { background:#e8e8e8; }
+#schema-m107b-wrap .m107b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m107b-wrap .m107b-row { display:flex; align-items:center; gap:10px; margin-top:12px; }
+#schema-m107b-wrap .m107b-rowlabel { width:210px; font-size:0.85em; color:#333; }
+#schema-m107b-wrap .m107b-indic { padding:6px 14px; border-radius:6px; font-weight:bold; }
+#schema-m107b-wrap .m107b-indic.oui { background:#d4edda; color:#1e6b2f; }
+#schema-m107b-wrap .m107b-indic.non { background:#f8d7da; color:#a11c2c; }
+#schema-m107b-wrap .m107b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> compare un organisme de formation agréé Part-147 et un organisme de formation non agréé.</p>
+
+<div>
+  <button class="m107b-btn active" data-org="agree">Organisme agréé Part-147</button>
+  <button class="m107b-btn" data-org="nonagree">Organisme de formation non agréé</button>
+</div>
+
+<div class="m107b-row">
+  <div class="m107b-rowlabel">Diplôme reconnu pour la licence Part-66 ?</div>
+  <div class="m107b-indic oui" id="m107b-indic">Oui</div>
+</div>
+
+<div class="m107b-caption" id="m107b-caption">C'est l'agrément Part-147 qui donne sa valeur réglementaire au diplôme obtenu à l'issue de la formation, pour l'obtention de la licence Part-66. Clique sur « non agréé » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m107b-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('.m107b-btn');
+  var caption = wrap.querySelector('#m107b-caption');
+  var indic = wrap.querySelector('#m107b-indic');
+
+  var TEXTES = {
+    agree: "C'est l'agrément Part-147 qui donne sa valeur réglementaire au diplôme obtenu à l'issue de la formation, pour l'obtention de la licence Part-66. Clique sur « non agréé » pour comparer.",
+    nonagree: "Sans agrément Part-147, un organisme peut proposer un enseignement, mais celui-ci ne suffit pas, par lui-même, à valoir formation reconnue pour l'obtention d'une licence Part-66 — l'agrément est ce qui garantit le suivi du syllabus officiel et la traçabilité des résultats."
+  };
+  var RECONNU = { agree: true, nonagree: false };
+
+  function render(org) {
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-org') === org); });
+    caption.textContent = TEXTES[org];
+    var oui = RECONNU[org];
+    indic.textContent = oui ? "Oui" : "Pas par lui-même";
+    indic.classList.toggle('oui', oui);
+    indic.classList.toggle('non', !oui);
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { render(b.getAttribute('data-org')); });
+  });
+
+  render('agree');
+})();
+</script>

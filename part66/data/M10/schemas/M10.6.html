@@ -1,0 +1,62 @@
+<div id="schema-m106a-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m106a-wrap .m106a-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.9em; }
+#schema-m106a-wrap .m106a-btn:hover { background:#e8e8e8; }
+#schema-m106a-wrap .m106a-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m106a-wrap .m106a-row { display:flex; align-items:center; gap:10px; margin-top:12px; }
+#schema-m106a-wrap .m106a-rowlabel { width:210px; font-size:0.85em; color:#333; }
+#schema-m106a-wrap .m106a-indic { padding:6px 14px; border-radius:6px; font-weight:bold; }
+#schema-m106a-wrap .m106a-indic.oui { background:#f8d7da; color:#a11c2c; }
+#schema-m106a-wrap .m106a-indic.non { background:#d4edda; color:#1e6b2f; }
+#schema-m106a-wrap .m106a-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:6em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> pour chaque privilège de licence Part-66, vérifie s'il reste utilisable si son titulaire change d'organisme employeur, sans nouvelle autorisation.</p>
+
+<div>
+  <button class="m106a-btn active" data-role="a">Catégorie A</button>
+  <button class="m106a-btn" data-role="b2ligne">Catégorie B2 — ligne simple (66.A.20(a)(3)(ii))</button>
+  <button class="m106a-btn" data-role="b1">Catégorie B1 — privilège principal</button>
+  <button class="m106a-btn" data-role="c">Catégorie C — maintenance de base</button>
+</div>
+
+<div class="m106a-row">
+  <div class="m106a-rowlabel">Le texte de la licence limite-t-il ce privilège à l'organisme émetteur ?</div>
+  <div class="m106a-indic oui" id="m106a-indic">Oui</div>
+</div>
+
+<div class="m106a-caption" id="m106a-caption">Le privilège de la catégorie A (66.A.20(a)(1)) est restreint aux tâches spécifiquement endossées sur l'autorisation de certification, et au travail personnellement effectué au sein de l'organisme qui l'a délivrée : il ne se transporte pas chez un autre employeur sans nouvelle autorisation. Clique sur les autres catégories pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m106a-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('.m106a-btn');
+  var caption = wrap.querySelector('#m106a-caption');
+  var indic = wrap.querySelector('#m106a-indic');
+
+  var TEXTES = {
+    a: "Le privilège de la catégorie A (66.A.20(a)(1)) est restreint aux tâches spécifiquement endossées sur l'autorisation de certification, et au travail personnellement effectué au sein de l'organisme qui l'a délivrée : il ne se transporte pas chez un autre employeur sans nouvelle autorisation. Clique sur les autres catégories pour comparer.",
+    b2ligne: "Au-delà de son privilège principal sur l'avionique et l'électricité, un titulaire B2 peut aussi certifier de la maintenance en ligne simple — mais ce privilège additionnel est soumis exactement à la même restriction que la catégorie A (66.A.20(a)(3)(ii)) : tâches endossées sur l'autorisation, travail effectué dans l'organisme qui l'a délivrée.",
+    b1: "Le privilège principal B1 (structure, moteurs, systèmes mécaniques/électriques) n'est pas rédigé dans la licence comme dépendant d'un organisme précis. Cela n'empêche pas qu'une autorisation de certification (145.A.35) reste nécessaire pour l'exercer dans un organisme Part-145 — mais c'est une exigence organisationnelle commune à toutes les catégories, pas une restriction propre au texte de la licence B1.",
+    c: "Le privilège catégorie C (maintenance de base, sur l'aéronef entier) suit la même logique que le privilège principal B1 : la licence ne le limite pas, dans son texte, à un organisme précis. En pratique, la maintenance de base suppose presque toujours les moyens d'un organisme agréé, mais ce n'est pas une restriction légale identique à celle de la catégorie A."
+  };
+  var RATTACHE = { a: true, b2ligne: true, b1: false, c: false };
+
+  function render(role) {
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-role') === role); });
+    caption.textContent = TEXTES[role];
+    var oui = RATTACHE[role];
+    indic.textContent = oui ? "Oui" : "Non (mais autorisation 145.A.35 quand même requise dans un organisme Part-145)";
+    indic.classList.toggle('oui', oui);
+    indic.classList.toggle('non', !oui);
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { render(b.getAttribute('data-role')); });
+  });
+
+  render('a');
+})();
+</script>

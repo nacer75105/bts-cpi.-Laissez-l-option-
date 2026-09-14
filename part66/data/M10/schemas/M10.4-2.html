@@ -1,0 +1,58 @@
+<div id="schema-m104b-wrap" style="font-family: inherit; max-width: 620px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m104b-wrap .m104b-btn { margin:4px 6px 4px 0; padding:8px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.9em; }
+#schema-m104b-wrap .m104b-btn:hover { background:#e8e8e8; }
+#schema-m104b-wrap .m104b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m104b-wrap .m104b-row { display:flex; align-items:center; gap:10px; margin-top:12px; }
+#schema-m104b-wrap .m104b-rowlabel { width:200px; font-size:0.85em; color:#333; }
+#schema-m104b-wrap .m104b-indic { padding:6px 14px; border-radius:6px; font-weight:bold; }
+#schema-m104b-wrap .m104b-indic.oui { background:#d4edda; color:#1e6b2f; }
+#schema-m104b-wrap .m104b-indic.non { background:#f8d7da; color:#a11c2c; }
+#schema-m104b-wrap .m104b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> compare la consigne de navigabilité et le bulletin de service — laquelle est obligatoire ?</p>
+
+<div>
+  <button class="m104b-btn active" data-doc="cn">Consigne de navigabilité (AD/CN)</button>
+  <button class="m104b-btn" data-doc="bs">Bulletin de service du constructeur</button>
+</div>
+
+<div class="m104b-row">
+  <div class="m104b-rowlabel">Application obligatoire ?</div>
+  <div class="m104b-indic oui" id="m104b-indic">Oui</div>
+</div>
+
+<div class="m104b-caption" id="m104b-caption">Quand un défaut de sécurité est identifié sur un type d'aéronef, l'AESA peut émettre une consigne de navigabilité (Airworthiness Directive) : son application est obligatoire. Clique sur « Bulletin de service » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m104b-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('.m104b-btn');
+  var caption = wrap.querySelector('#m104b-caption');
+  var indic = wrap.querySelector('#m104b-indic');
+
+  var TEXTES = {
+    cn: "Quand un défaut de sécurité est identifié sur un type d'aéronef, l'AESA peut émettre une consigne de navigabilité (Airworthiness Directive) : son application est obligatoire. Clique sur « Bulletin de service » pour comparer.",
+    bs: "Un bulletin de service est émis par le constructeur, pas par l'AESA. Il n'est obligatoire que si une consigne de navigabilité vient le rendre tel — seul, il reste une simple recommandation."
+  };
+  var OBLIGATOIRE = { cn: true, bs: false };
+
+  function render(doc) {
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-doc') === doc); });
+    caption.textContent = TEXTES[doc];
+    var oui = OBLIGATOIRE[doc];
+    indic.textContent = oui ? "Oui" : "Non, sauf si une consigne de navigabilité le reprend";
+    indic.classList.toggle('oui', oui);
+    indic.classList.toggle('non', !oui);
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { render(b.getAttribute('data-doc')); });
+  });
+
+  render('cn');
+})();
+</script>

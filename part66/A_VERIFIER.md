@@ -3930,3 +3930,206 @@ d'un texte à citer. Seuls les points les plus spécifiquement avioniques
 (protocoles, guidance AESA...) appellent une source précise ; documente-les
 en TODO comme le reste de ce fichier plutôt que de les bloquer par défaut,
 sauf doute réel sur le fond.
+
+## M10.6 — développement au niveau 3 et relecture de fond (2026-09-14)
+
+Suite de la correction d'étiquette de niveau du 2026-09-14 (voir section
+dédiée plus haut) : le contenu de la fiche M10.6 (1236 caractères, jugé
+insuffisant pour le niveau 3) a été développé. Travail préexistant non
+committé au début de cette session (fiche, 2 schémas, 5 nouvelles
+questions M10-0092 à M10-0096, correction de la source TODO de
+M10-0029) — repris et corrigé, pas rédigé from scratch.
+
+**Contenu final** : fiche à 10336 caractères (mécanisme licence/
+autorisation de certification 145.A.35, conditions générales 66.A.20(b),
+articulation avec le personnel certificateur indépendant de M10.9, deux
+voies d'accès à la catégorie C par 66.A.30). 2 schémas HTML/CSS/JS
+(`M10.6.html`, `M10.6-2.html`, aucun `<svg>`, aucune génération de DOM à
+l'exécution — vérifié par sweep `grep -l "<svg"`). 5 nouvelles questions,
+positions de `bonne` réparties 2/2/1 sur les trois index.
+
+**Sources vérifiées directement** dans `easa_2025.txt` (texte officiel
+déjà téléchargé, retrouvé dans un dossier temporaire de session
+antérieure — pas retéléchargé) : 66.A.20 (Privileges, l. 29450-29564),
+145.A.35 (Certifying staff, l. 20891-20980), 66.A.30 (Basic experience
+requirements, l. 30018-30136), M.A.607 (l. 6153+), CAO.A.040 (l. 73198+).
+
+### Relecture `relecteur-part66` — 5 BLOQUANT trouvés et corrigés
+
+- **B1** : la fiche et `M10.6-2.html` disaient « personnel de soutien
+  **ou** certificateur » pour la voie B1/B2 d'accès à la catégorie C —
+  66.A.30(a)(3)(i) exige en réalité « personnel de soutien, **ou** à la
+  fois personnel de soutien et certificateur » (une expérience purement
+  « certificateur » seule ne compte pas). Corrigé aux deux endroits.
+- **B2** : le découpage « 3 ans B1.1/B1.3/B2, 5 ans B1.2/B1.4 » était
+  présenté comme universel, alors qu'il ne vaut que pour la catégorie C
+  à l'égard des **CMPA** (aéronefs motopropulsés complexes) — la voie
+  pour les aéronefs autres que CMPA est uniformément 3 ans (B1, B2, B2L,
+  B3 ou L), et la sous-catégorie **L5** manquait dans le lot « 5 ans ».
+  Fiche et `M10.6-2.html` réécrits pour distinguer explicitement CMPA /
+  non-CMPA.
+- **B3** : « diplôme technique reconnu » ne rend pas la condition
+  réglementaire — 66.A.30(a)(3)(iii)/(a)(4)(ii)/(a)(5) exigent un
+  **diplôme de l'enseignement supérieur** dans une discipline technique
+  pertinente, délivré par une université ou un autre établissement
+  d'enseignement supérieur reconnu par l'autorité compétente (pas un
+  diplôme technique de niveau secondaire type bac pro/BTS). Corrigé dans
+  la fiche, `M10.6-2.html` (bouton, liste, `DEPART`, `TEXTES`) et la
+  question M10-0096.
+- **B4** : la fiche attribuait à tort l'autorisation de certification
+  145.A.35 au Part-CAO au même titre qu'au Part-145. C'est une notion
+  **propre au Part-145** : ni CAO.A.040(a) ni M.A.607(a) n'imposent ce
+  document formel à leur personnel certificateur courant (seule une
+  autorisation ponctuelle dérogatoire existe dans ces deux cadres,
+  CAO.A.040(b)/(c) et M.A.607(b), pour un aéronef immobilisé hors base).
+  Conséquence directe corrigée aussi : le privilège catégorie A, qui
+  renvoie nommément à l'annexe II (Part-145) dans 66.A.20(a)(1), ne peut
+  par construction s'exercer que dans un organisme Part-145 — jamais en
+  Part-M Subpart F ni en Part-CAO. Plusieurs passages de la fiche
+  réécrits en conséquence (paragraphes 3, 4 et « Pour résumer »).
+- **B5** : les chiffres de la voie diplôme (3 ans dont 6 mois de
+  maintenance de base) et de la voie B1/B2 (12 mois pour CMPA, 6 mois
+  pour non-CMPA) manquaient, alors que le règlement les donne — défaut
+  de précision jugé disqualifiant pour une fiche relevée au niveau 3
+  (« Deep understanding »). Chiffres ajoutés fiche + `M10.6-2.html`.
+
+### Points « à revoir » traités
+
+- **R1** (caption sans invitation à l'action) : phrase « Clique sur ...
+  pour comparer » ajoutée en fin de caption, dans le HTML statique et
+  l'entrée JS correspondante, sur les deux schémas.
+- **R2** (`M10.6.html`, libellé de ligne trompeur pour B1/C) :
+  « Rattaché à un seul organisme émetteur ? » → « Le texte de la licence
+  limite-t-il ce privilège à l'organisme émetteur ? ».
+- **R3** (M10-0094, distracteurs peu plausibles) : remplacés par deux
+  distracteurs tirés des vraies sous-conditions de 66.A.20(b) (durée
+  d'expérience erronée ; langue anglaise imposée à tort plutôt que la
+  langue de la documentation technique).
+- **R4** (M10-0029, distracteur devenu ambigu après la correction de la
+  fiche sur la voie diplôme) : reformulé en « ancienneté de 10 ans dans
+  l'aviation, sans exigence d'expérience en maintenance de base ».
+- **R8** (catégories B2L/B3/L jamais mentionnées) : paragraphe ajouté en
+  tête de fiche, listant leur existence sans les détailler (licence
+  préparée par le projet = B1.1).
+- **R9** (B1 inclut la sous-catégorie A, 66.A.20(a)(2)) : nuance ajoutée
+  au paragraphe sur la dépendance à l'autorisation de certification.
+- **Positions des 5 nouvelles questions** : rééquilibrées à 2/2/1 après
+  les réordonnancements d'options entraînés par les corrections B1/B3
+  (M10-0094, M10-0096) — la distribution obtenue avant relecture
+  (2/2/1) a été préservée après corrections.
+
+### Points « à revoir » non traités (mineurs, actés)
+
+- **R5** : M10-0029 et M10-0096 portent sur le même sujet (accès
+  catégorie C) sans être un doublon strict — signalé, pas fusionné.
+- **R6** : M10-0093 et M10-0095 partagent le même fait racine
+  (restriction organisationnelle de 66.A.20(a)(1)) sous deux angles
+  différents (mobilité inter-employeurs / statut indépendant) — jugé
+  défendable pour un item niveau 3, pas retiré.
+- **R7** : biais de longueur (bonne réponse la plus longue) persiste sur
+  3 des 5 nouvelles questions (M10-0092, M10-0093, M10-0095) — corrigé
+  seulement sur M10-0094 et M10-0096 en conséquence des autres
+  corrections. Cohérent avec le plafond de devinabilité déjà documenté
+  et accepté sur le reste du module M10 (voir sections précédentes) ;
+  pas de passage `eleve-adversaire` demandé sur ce lot (consigne
+  explicite de l'utilisateur pour cette session : relecture de fond
+  uniquement).
+- **R11** : la colonne numérique de niveau (2 vs 3) de l'Appendix I
+  reste illisible dans l'extraction texte locale de `easa_2025.txt`
+  (mise en page PDF désarticulée) — le niveau 3 repose sur la
+  formulation textuelle unique « Deep understanding » (confirmée par
+  grep exhaustif sur tout le document), pas sur une lecture directe du
+  tableau numérique. Inférence déjà actée dans la section précédente ;
+  non revérifiée différemment cette session.
+
+**État à l'arrêt de cette session** : les 5 BLOQUANT et les points R1-R4,
+R8-R9 corrigés ; JSON validé (`python -m json.load`) ; sweep `<svg>`
+négatif sur les 2 schémas. Pas de nouveau passage `relecteur-part66` de
+confirmation après corrections (non redemandé) — **test local par
+l'utilisateur avant tout commit et tout push**, conformément à la
+consigne explicite de cette session.
+
+## M10.1-M10.8 — uniformisation des schémas (2026-09-14)
+
+Demande explicite : les 8 fiches M10.1-M10.8 n'avaient aucun schéma
+interactif, contrairement aux fiches M10.9-M10.13 (et à M10.6, déjà
+enrichie plus haut dans cette même session). En réalité, M10.6 avait
+déjà ses 2 schémas — **7 fiches** concernées, pas 8 : M10.1, M10.2,
+M10.3, M10.4, M10.5, M10.7, M10.8. 14 nouveaux schémas créés (2 par
+fiche), avec priorité donnée, comme demandé, à ce qui se visualise
+vraiment plutôt qu'à un habillage systématique :
+
+| Fiche | Schéma 1 | Schéma 2 |
+|---|---|---|
+| M10.1 | Hiérarchie de transposition OACI → Annexes (SARPs) → États membres | Répartition des responsabilités OACI / État membre (pouvoir de contrainte) |
+| M10.2 | **Distinction droit dur / droit souple** (règlement vs AMC/GM, AltMoC) | Chaîne de responsabilité AESA → Commission → autorité nationale (DGAC) |
+| M10.3 | **Hiérarchie des 8 annexes** du règlement 1321/2014 (4 historiques + 4 ajoutées 2015/2019) | Chaîne programme d'entretien → atelier agréé → personnel licencié → organisme de formation |
+| M10.4 | **Répartition des responsabilités** du maintien de navigabilité (propriétaire par défaut / exploitant si location ou AOC 1008/2008, M.A.201) | Distinction consigne de navigabilité (obligatoire) / bulletin de service (pas obligatoire sauf reprise) |
+| M10.5 | Distinction Part-66 (la personne) / Part-145 (l'organisme) | Décision Part-CAO combiné / Part-145+CAMO séparés selon complexité et AOC |
+| M10.7 | Checklist des 3 exigences de l'agrément Part-147 | Comparaison organisme agréé / non agréé (valeur du diplôme) |
+| M10.8 | Décision AOC obligatoire / auto-déclaration selon le type d'exploitation | **Arbre de décision des documents de bord** (CofA / CofA restreint / Permit to Fly selon l'état de conformité, + liste permanente des documents toujours exigés : ARC, CofR, bruit, masse/centrage, licence radio) |
+
+**Sourçage** : chaque schéma reformule uniquement des affirmations déjà
+présentes et déjà sourcées dans le `contenu_md` de sa fiche — aucune
+affirmation réglementaire nouvelle introduite par les schémas
+eux-mêmes, donc pas de nouvelle vérification contre `easa_2025.txt`
+jugée nécessaire pour ce chantier.
+
+**Conformité technique** : sweep `grep -l "<svg"` et
+`grep -lE "innerHTML *=|appendChild|createElement"` négatifs sur les 14
+nouveaux fichiers (et sur l'ensemble des 26 schémas du module M10).
+Vérification programmatique caption statique = texte JS de l'état par
+défaut sur les 14 fichiers — 1 divergence réelle trouvée et corrigée
+(`M10.2-2.html`, texte de la caption par défaut raccourci par rapport à
+l'entrée JS `TEXTES.aesa`) ; les autres alertes du script de vérification
+étaient des faux positifs de son regex (confirmé par grep manuel). Test
+headless `AppTest` sans exception sur les 13 fiches + 26 schémas du
+module M10 après correction.
+
+**Relecture `relecteur-part66` lancée quand même** (non redemandée
+explicitement, mais jugée utile après les 5 BLOQUANT trouvés sur M10.6
+dans la même session) : a vérifié la fidélité de chaque schéma à sa
+fiche source (pas de nouvelle recherche EASA nécessaire, les schémas ne
+faisant que reformuler le `contenu_md` déjà sourcé) et la conformité
+technique CLAUDE.md. **2 BLOQUANT trouvés et corrigés :**
+
+- **`M10.8-2.html`** : le bloc « toujours exigés à bord » incluait l'ARC
+  et le certificat de limitation de nuisances comme valables « quel que
+  soit l'état » de conformité de l'aéronef — auto-contradictoire avec la
+  phrase de la fiche M10.8 elle-même, qui précise que la validité de
+  l'ARC **dépend** du CofA (donc pas « toujours » valable, en particulier
+  sous Permit to Fly). Corrigé : ARC et certificat de nuisances retirés
+  du bloc permanent ; l'ARC repositionné dans la caption de l'état
+  « conforme » (CofA), avec sa dépendance explicite au CofA en vigueur ;
+  seuls CofR, masse/centrage et licence radio restent dans le bloc
+  permanent.
+- **`M10.3-2.html`** : le sous-titre « Habilité à certifier l'entretien
+  effectué » sur la boîte « Personnel titulaire d'une licence (Part-66) »
+  contredisait par anticipation ce que la fiche M10.6 enseigne en gras
+  dans le même module (« posséder la licence ne suffit pas à elle seule
+  à pouvoir certifier une tâche »). Corrigé : sous-titre reformulé
+  (« licence dont la portée couvre l'aéronef et les travaux concernés »)
+  et caption renvoyant explicitement à M10.6 pour l'autorisation de
+  certification.
+
+**Points « à revoir » également corrigés** : `M10.8.html` (qualificatif
+« souvent non complexe » non présent dans la fiche, retiré) ;
+`M10.5-2.html` (détail sur les deux agréments distincts, hors du
+périmètre strict de la fiche M10.5, explicitement attribué à M10.4) ;
+`M10.2.html` (indicateur AltMoC : texte statique et JS de l'état par
+défaut désormais identiques) ; `M10.4-2.html` (convention de couleur
+oui/non inversée par rapport au reste du lot, harmonisée) ;
+`M10.1-2.html` (recouvrait presque entièrement `M10.1.html` — recentré
+sur la distinction niveau minimal OACI / réglementation qui va au-delà,
+un point que la fiche M10.1 permet explicitement) ; `M10.3.html`
+(« Part-ML réservée à l'aviation légère » assouplie en « pour l'aviation
+légère », fidèle au texte de la fiche).
+
+Sweep `<svg>` et génération de DOM dynamique re-vérifiés négatifs après
+corrections ; `AppTest` headless re-exécuté sans exception sur les 13
+fiches + 26 schémas du module M10. Pas de second passage
+`relecteur-part66` de confirmation après ces corrections (jugé
+suffisant : corrections ponctuelles et vérifiables directement).
+
+**Reste à faire avant commit** : **test local par l'utilisateur avant
+tout commit et tout push**, comme pour M10.6.
