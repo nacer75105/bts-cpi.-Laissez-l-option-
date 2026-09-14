@@ -3133,6 +3133,214 @@
       "bonne": 0,
       "explication": "Un rigging incorrect peut introduire une dissymétrie entre deux gouvernes normalement identiques (par exemple les deux ailerons) ou limiter l'efficacité d'une gouverne au moment précis où elle serait le plus nécessaire — deux conséquences qui ne se voient pas à l'œil nu, d'où l'importance du contrôle des débattements après toute intervention sur la timonerie. Ni l'usure de peinture ni la pression du circuit hydraulique n'ont de lien avec le rigging des gouvernes de vol : le rigging règle une timonerie mécanique, en aval de l'actionnement hydraulique.",
       "source": "Part-66 Appendix I — Module 11A, item 11.9(d)"
+    },
+    {
+      "uid": "M11A-0243",
+      "sous_chapitre": "M11A.4",
+      "question": "Quel critère distingue une pièce structurale primaire d'une pièce secondaire ou tertiaire ?",
+      "options": [
+        "Le matériau dans lequel elle est fabriquée",
+        "Sa position géographique sur l'avion",
+        "Les conséquences de sa défaillance sur la sécurité de l'avion"
+      ],
+      "bonne": 2,
+      "explication": "Une pièce primaire, secondaire ou tertiaire se distingue par les conséquences de sa défaillance sur la sécurité de l'avion — une pièce primaire porte une charge essentielle, une secondaire contribue sans être critique isolément, une tertiaire n'a pas de rôle structural significatif. Ni le matériau ni la position géographique sur l'avion ne définissent cette classification : une pièce primaire existe aussi bien en métal qu'en composite, à l'avant comme à l'arrière de l'appareil.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.2(b)"
+    },
+    {
+      "uid": "M11A-0244",
+      "sous_chapitre": "M11A.4",
+      "question": "Qu'est-ce qui caractérise une pièce structurale tertiaire ?",
+      "options": [
+        "Elle n'a pas de rôle structural significatif (habillage, protection, confort)",
+        "Elle porte une charge essentielle à la tenue de la structure",
+        "Elle est inspectée plus fréquemment que les pièces primaires"
+      ],
+      "bonne": 0,
+      "explication": "Une pièce tertiaire n'a pas de rôle structural significatif : elle assure une fonction d'habillage, de protection ou de confort. Porter une charge essentielle décrit au contraire une pièce primaire, et la fréquence d'inspection découle de la classification (une pièce primaire est inspectée plus souvent qu'une tertiaire), ce n'est pas elle qui la définit.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.2(b)"
+    },
+    {
+      "uid": "M11A-0245",
+      "sous_chapitre": "M11A.4",
+      "question": "Sur quel principe repose la philosophie de conception fail-safe ?",
+      "options": [
+        "Une pièce est systématiquement doublée par une pièce identique de secours",
+        "Une défaillance isolée ne doit jamais devenir catastrophique, grâce à une voie de charge alternative ou une propagation détectable",
+        "Une pièce peut se voir attribuer une durée de vie différente selon l'atelier qui réalise sa maintenance"
+      ],
+      "bonne": 1,
+      "explication": "Le fail-safe conçoit la structure pour qu'une défaillance isolée ne soit jamais catastrophique, grâce à une voie de transfert de charge alternative ou à une propagation de dommage suffisamment lente pour être détectée avant rupture. Il ne repose ni sur un doublement systématique de chaque pièce par une pièce identique, ni sur une durée de vie qui dépendrait de l'atelier de maintenance — la durée de vie d'une pièce, quand elle existe, est fixée par le constructeur, pas par l'organisme qui l'entretient.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.2(b)"
+    },
+    {
+      "uid": "M11A-0246",
+      "sous_chapitre": "M11A.4",
+      "question": "En quoi la philosophie safe-life se distingue-t-elle du fail-safe ?",
+      "options": [
+        "Elle retire une pièce à une échéance calculée, sans attendre un signe de dommage",
+        "Elle attend au contraire qu'une fissure soit détectée pour agir",
+        "Elle s'applique uniquement aux pièces en matériau composite"
+      ],
+      "bonne": 0,
+      "explication": "Le safe-life attribue à une pièce une durée de vie calculée avec marge de sécurité, et la retire à cette échéance sans attendre un signe de dommage — à l'inverse des philosophies fondées sur la détection (fail-safe et tolérance aux dommages), qui comptent au contraire sur une inspection ultérieure. Cette philosophie ne se limite pas aux pièces composites : elle s'applique aussi bien aux pièces métalliques, sur le même principe que les pièces à vie limitée d'un turboréacteur ou d'une hélice.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.2(b)"
+    },
+    {
+      "uid": "M11A-0247",
+      "sous_chapitre": "M11A.4",
+      "question": "Qu'exige la tolérance aux dommages (damage-tolerance) d'une structure ?",
+      "options": [
+        "Qu'aucun dommage ne puisse jamais apparaître sur la pièce concernée",
+        "Le retrait de la pièce à une échéance fixée d'avance, sans inspection intermédiaire",
+        "Des inspections périodiques dont l'intervalle garantit la détection du dommage avant qu'il n'atteigne une taille critique"
+      ],
+      "bonne": 2,
+      "explication": "La tolérance aux dommages part du principe qu'un dommage apparaîtra inévitablement, et impose des inspections périodiques dont l'intervalle garantit sa détection avant qu'il n'atteigne une taille critique. Elle n'exige donc pas l'absence totale de dommage, ni un retrait à échéance fixe sans inspection intermédiaire — ce serait revenir à la logique du safe-life plutôt qu'à celle de la tolérance aux dommages.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.2(b)"
+    },
+    {
+      "uid": "M11A-0248",
+      "sous_chapitre": "M11A.4",
+      "question": "Pourquoi ces trois philosophies (fail-safe, safe-life, tolérance aux dommages) coexistent-elles sur un même avion plutôt qu'une seule pour toute la structure ?",
+      "options": [
+        "Parce que la réglementation impose d'utiliser les trois en proportions égales",
+        "Parce que chacune convient mieux à certaines zones selon leur mode de défaillance et leur facilité d'inspection",
+        "Parce que la tolérance aux dommages ne s'applique qu'aux structures en matériau composite"
+      ],
+      "bonne": 1,
+      "explication": "Chaque philosophie convient mieux à certaines zones structurales, selon leur mode de défaillance (progressif ou brutal) et leur facilité d'inspection : le choix relève de la conception et de la base de certification de chaque avion, et non d'une proportion réglementaire fixe. La tolérance aux dommages s'applique tout autant aux structures métalliques qu'aux structures composites, elle n'est pas réservée à l'une des deux familles de matériaux.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.2(b)"
+    },
+    {
+      "uid": "M11A-0249",
+      "sous_chapitre": "M11A.4",
+      "question": "À quoi sert le repérage de l'avion par zones et par stations ?",
+      "options": [
+        "À désigner sans ambiguïté l'emplacement exact d'une inspection, d'un dommage ou d'une réparation",
+        "À calculer automatiquement la masse et le centrage de l'avion",
+        "À identifier le fabricant de chaque pièce de la structure"
+      ],
+      "bonne": 0,
+      "explication": "Le repérage par zones et par stations permet de désigner sans ambiguïté l'emplacement exact d'une inspection, d'un dommage constaté ou d'une réparation, quel que soit l'atelier ou le pays qui rédige le rapport. Les stations servent aussi de repère de position pour exprimer les bras de levier en masse et centrage, mais elles ne calculent rien automatiquement — ce calcul reste une opération séparée ; et le repérage n'a aucun rapport avec l'identification du fabricant d'une pièce.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.2(a)"
+    },
+    {
+      "uid": "M11A-0250",
+      "sous_chapitre": "M11A.5",
+      "question": "À quoi sert un dispositif de remorquage intégré au fuselage de certains avions ?",
+      "options": [
+        "À réduire la traînée de l'avion en configuration de croisière",
+        "À faciliter le remorquage au sol de l'avion lui-même par un tracteur",
+        "À transmettre à la structure les efforts de traction propres au remorquage (planeur, banderole, cible)"
+      ],
+      "bonne": 2,
+      "explication": "Un dispositif de remorquage (crochet, point d'attache renforcé) transmet à la structure du fuselage les efforts de traction propres au remorquage d'un planeur, d'une banderole ou d'une cible d'entraînement. Il n'a aucun effet sur la traînée en croisière, et ne sert pas à remorquer l'avion lui-même au sol — un usage qui relève d'un point de tractage distinct.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.3.1(b)"
+    },
+    {
+      "uid": "M11A-0251",
+      "sous_chapitre": "M11A.5",
+      "question": "Pourquoi la zone d'attache d'un dispositif de remorquage nécessite-t-elle un renforcement structural local ?",
+      "options": [
+        "Pour compenser le poids supplémentaire du câble de remorquage",
+        "Pour que les efforts de traction transmis trouvent une voie de transfert de charge suffisamment robuste jusqu'au reste du fuselage",
+        "Pour protéger le revêtement de la corrosion propre à cette zone"
+      ],
+      "bonne": 1,
+      "explication": "Le renforcement local à l'attache de remorquage garantit que les efforts de traction transmis par le câble trouvent une voie de transfert de charge suffisamment robuste jusqu'au reste du fuselage, sans concentrer une contrainte excessive sur une zone non prévue pour cet usage. Il ne s'agit ni de compenser le poids du câble (négligeable pour la structure), ni d'une protection anticorrosion particulière.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.3.1(b)"
+    },
+    {
+      "uid": "M11A-0252",
+      "sous_chapitre": "M11A.11",
+      "question": "Au-delà de supporter le poids de l'avion, quel rôle jouent les pneus du train d'atterrissage ?",
+      "options": [
+        "Absorber une partie des irrégularités de la piste et assurer l'adhérence au freinage et à la direction",
+        "Amortir l'intégralité de l'énergie de l'atterrissage, remplaçant l'amortisseur oléopneumatique",
+        "Détecter automatiquement l'état sol/vol de l'avion"
+      ],
+      "bonne": 0,
+      "explication": "Les pneus absorbent une partie des irrégularités de la piste et assurent l'adhérence nécessaire au freinage et à la direction, en plus de supporter le poids de l'avion. Ils ne remplacent pas l'amortisseur oléopneumatique, qui reste le composant principal d'absorption de l'énergie d'atterrissage, et n'ont aucun rôle dans la détection air-sol.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.13(a)"
+    },
+    {
+      "uid": "M11A-0253",
+      "sous_chapitre": "M11A.11",
+      "question": "Pourquoi la pression d'un pneu de train d'atterrissage fait-elle l'objet d'un contrôle régulier, selon le programme d'entretien de l'avion ?",
+      "options": [
+        "Parce qu'il use plus rapidement les disques de frein par un frottement supplémentaire",
+        "Parce qu'il chauffe et s'use de façon anormale",
+        "Parce qu'il déclenche une alerte de détection air-sol erronée"
+      ],
+      "bonne": 1,
+      "explication": "Un pneu sous-gonflé chauffe et s'use de façon anormale, ce qui justifie un contrôle régulier de sa pression selon l'intervalle fixé par le programme d'entretien (le contrôle visuel de son état, lui, reste systématique avant chaque vol). Il n'use pas les disques de frein par lui-même, et n'a aucun effet sur la détection air-sol, qui repose sur un principe indépendant (la compression de l'amortisseur).",
+      "source": "Part-66 Appendix I — Module 11A, item 11.13(a)"
+    },
+    {
+      "uid": "M11A-0254",
+      "sous_chapitre": "M11A.11",
+      "question": "Comment la détection air-sol (air-ground sensing) détermine-t-elle le plus souvent que l'avion est au sol ?",
+      "options": [
+        "Par la mesure directe de l'altitude affichée à l'altimètre",
+        "Par la position de la manette des gaz au ralenti",
+        "Par un capteur qui détecte la compression de l'amortisseur sous le poids de l'avion"
+      ],
+      "bonne": 2,
+      "explication": "La détection air-sol repose le plus souvent sur un capteur qui détecte la compression de l'amortisseur oléopneumatique sous le poids de l'avion. Elle ne s'appuie ni sur l'altitude affichée à l'altimètre (qui resterait imprécise près du sol), ni sur la position de la manette des gaz, qui n'a aucun lien direct avec le contact des roues.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.13(c)"
+    },
+    {
+      "uid": "M11A-0255",
+      "sous_chapitre": "M11A.11",
+      "question": "Pourquoi la détection air-sol est-elle généralement doublée par redondance ?",
+      "options": [
+        "Parce que de nombreux systèmes de l'avion (freinage, alertes, systèmes de secours) dépendent de cette seule information",
+        "Parce qu'un capteur unique suffit largement à garantir sa fiabilité dans toutes les conditions",
+        "Parce que la réglementation l'exige uniquement sur les avions les plus lourds"
+      ],
+      "bonne": 0,
+      "explication": "De nombreux systèmes de l'avion (freinage, alertes, systèmes de secours) dépendent de cette seule information sol/vol, ce qui justifie sa redondance : un capteur unique, quelle que soit sa fiabilité individuelle, resterait un point de panne unique pour tous ces systèmes à la fois. Son usage ne dépend pas non plus de la masse de l'avion.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.13(c)"
+    },
+    {
+      "uid": "M11A-0256",
+      "sous_chapitre": "M11A.11",
+      "question": "En quoi l'autobraking se distingue-t-il de l'antidérapage (anti-skid) ?",
+      "options": [
+        "L'autobraking et l'antidérapage désignent le même système sous deux noms différents",
+        "L'autobraking déclenche lui-même le freinage une fois la logique sol confirmée, sans action du pilote ; l'antidérapage protège un freinage déjà en cours",
+        "L'antidérapage déclenche le freinage automatiquement, l'autobraking se contente de le protéger"
+      ],
+      "bonne": 1,
+      "explication": "L'autobraking déclenche lui-même le freinage une fois la logique sol confirmée par la détection air-sol (ou, en mode RTO, en cas de décollage interrompu), sans action du pilote ; l'antidérapage, lui, protège un freinage déjà en cours (manuel ou automatique) contre le blocage d'une roue. Ce sont deux systèmes distincts, complémentaires plutôt qu'identiques, et leurs rôles ne s'inversent pas.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.13(b)"
+    },
+    {
+      "uid": "M11A-0257",
+      "sous_chapitre": "M11A.11",
+      "question": "Quel avantage l'autobraking apporte-t-il à l'équipage ?",
+      "options": [
+        "Une distance de freinage systématiquement plus courte que le freinage manuel, quelles que soient les conditions",
+        "La suppression totale du besoin d'antidérapage sur l'avion",
+        "Une décélération programmée, régulière et reproductible, sans charge de travail supplémentaire à un moment critique du vol"
+      ],
+      "bonne": 2,
+      "explication": "L'autobraking apporte une décélération programmée, régulière et reproductible une fois la logique sol confirmée (ou en cas de décollage interrompu en mode RTO), sans charge de travail supplémentaire pour l'équipage à un moment critique du vol. Il ne garantit pas systématiquement une distance de freinage plus courte que le freinage manuel dans toutes les conditions, et ne supprime pas le besoin d'antidérapage, qui reste actif en parallèle.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.13(b)"
+    },
+    {
+      "uid": "M11A-0258",
+      "sous_chapitre": "M11A.11",
+      "question": "À quoi sert un tail skid (patin de queue), présent sur certains avions ?",
+      "options": [
+        "À protéger l'arrière du fuselage d'un contact avec la piste en cas d'assiette excessive au décollage ou à l'atterrissage",
+        "À amortir le contact initial des roues principales lors de l'atterrissage",
+        "À protéger la structure en cas d'affaissement du train avant au parking"
+      ],
+      "bonne": 0,
+      "explication": "Un tail skid protège l'arrière du fuselage d'un contact avec la piste en cas d'assiette excessive au décollage ou à l'atterrissage, sur les avions dont la géométrie expose cette zone à ce risque. Il n'a ni rôle d'amortissement des roues principales (assuré par l'amortisseur oléopneumatique), ni fonction de protection en cas d'affaissement du train avant au parking, un tout autre cas de figure sans rapport avec l'assiette au décollage ou à l'atterrissage.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.13(d)"
     }
   ]
 }

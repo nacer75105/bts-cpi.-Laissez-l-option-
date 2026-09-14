@@ -3020,7 +3020,11 @@ divergence de fond trouvée entre le texte officiel, l'audit du
   ces mêmes dispositifs, y compris deux ajouts pertinents non listés
   explicitement par le plan initial mais bien couverts par 11.9(b)
   (stick pusher, commande active de charge).
-- **Lot 2** (structures/train) : **11.2(a) General concepts** nomme
+- **Lot 2** (structures/train) : **11.13(a) Description** nomme
+  explicitement *Construction, shock absorbing; Tyres* — confirme que
+  les pneus relèvent bien de ce sous-item (point vérifié le 2026-09-14
+  suite à une relecture qui ne trouvait pas trace de 11.13(a) dans ce
+  fichier ; texte source dans `module11_detail.txt`, l. 320-322). **11.2(a) General concepts** nomme
   *Zonal and station identification systems* (zonage/repérage par
   station) ; **11.2(b)** nomme *Structural classification: primary,
   secondary, and tertiary* et *Fail-safe, safe-life, damage-tolerance
@@ -3274,8 +3278,66 @@ fond, non traités pour éviter un 7e round) :
   antécédent dans l'énoncé (« ce contrôle », « l'écart constaté »),
   signalant la bonne réponse comme la seule option autonome.
 
-**Lot 1 committé le 2026-09-14. Reste : test local par l'utilisateur,
-puis lot 2.**
+**Lot 1 committé le 2026-09-14.**
+
+### Lot 2 (extension M11A.4/M11A.5/M11A.11, structures et train) — relu et corrigé
+
+M11A.4 étendu (classification primaire/secondaire/tertiaire, PSE,
+fail-safe/safe-life/tolérance aux dommages, repérage par zones et
+stations) ; M11A.5 étendu (dispositifs de remorquage planeur, avec
+`niveau_note` sur l'incertitude de niveau déjà documentée à l'étape 0) ;
+M11A.11 étendu (pneus, détection air-sol, autobraking, tail skid). 16
+nouvelles questions (M11A-0243 à M11A-0258), position de `bonne`
+répartie consciemment dès la rédaction (6/5/5, séquence
+2,0,1,0,2,1,0,2,1,0,1,2,0,1,2,0, sans cycle). Aucun nouveau schéma
+(contenu jugé suffisamment couvert par le texte pour ce lot).
+
+**Relecture `relecteur-part66` (sans `eleve-adversaire`, conformément à
+la consigne permanente ci-dessus) — 4 BLOQUANT corrigés :**
+- M11A-0245 : un distracteur était présenté par l'explication comme
+  décrivant le safe-life, alors qu'il n'en décrivait pas la définition
+  réelle (safe-life = durée de vie **calculée avec marge de
+  sécurité**, pas « la plus longue durée possible ») — distracteur et
+  explication réécrits.
+- M11A-0249 : l'explication affirmait à tort qu'un repérage par
+  stations « n'a aucun rapport » avec la masse et centrage, alors que
+  les stations sont précisément le système de coordonnées dans lequel
+  s'expriment les bras de levier — corrigé pour distinguer repérage et
+  calcul.
+- M11A-0253 et la fiche M11A.11 : la pression des pneus présentée
+  comme contrôlée « avant chaque vol » comme leur état visuel — en
+  réalité un contrôle de pression suit un intervalle du programme
+  d'entretien, seul le contrôle visuel d'état est fait avant chaque
+  vol. Fiche et question corrigées pour distinguer les deux.
+- Source `item 11.13(a)` de M11A-0252/0253 signalée non vérifiable par
+  la relecture : confirmée exacte après vérification directe du texte
+  source (voir plus haut, étape 0) — aucune correction de fond
+  nécessaire, seulement la documentation de cette vérification.
+
+**9 À REVOIR traités dans la foulée** : frontière fail-safe/tolérance
+aux dommages clarifiée (M11A-0246, les deux comptent sur une détection,
+seul le safe-life n'attend pas) ; distracteurs peu plausibles remplacés
+par des confusions réellement crédibles (M11A-0247, M11A-0248,
+M11A-0253, M11A-0258) ; distracteur auto-contradictoire corrigé
+(M11A-0255, « un seul système l'utilise » ne peut pas justifier une
+redondance) ; déclenchement de l'autobraking nuancé dans la fiche et
+les questions M11A-0256/0257 (logique sol confirmée, mode RTO pour le
+décollage interrompu — la version initiale se contredisait en disant
+« dès le toucher des roues » puis citait le décollage interrompu comme
+cas d'usage) ; attribution du choix fail-safe/safe-life/tolérance aux
+dommages corrigée de « programme d'entretien » vers « conception et
+base de certification » (fiche M11A.4 et explication M11A-0248) ;
+synonyme « pièce de sécurité » remplacé par le terme consacré PSE
+(*Principal Structural Element*) pour éviter la confusion avec la
+notion réglementaire distincte de *critical part*.
+
+**Dette mineure notée pour un futur lot approfondissant 11.13** : le
+paragraphe pneus ne mentionne pas les pratiques de sécurité associées
+(roue chaude, bouchons fusibles, gonflage à l'azote) — hors périmètre
+de ce lot.
+
+**Lot 2 committé le 2026-09-14. Reste : test local par l'utilisateur,
+puis lot 3.**
 
 ## M5.1 / M5.5 / M15.1-2 — bug résolu : génération de DOM à l'exécution
 (investigation menée le 2026-09-11, cause identifiée et corrigée)
