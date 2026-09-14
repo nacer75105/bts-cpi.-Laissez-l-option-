@@ -1,0 +1,49 @@
+<div id="schema-m510b-wrap" style="font-family: inherit; max-width: 680px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m510b-wrap .m510b-btn { margin:3px 6px 3px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.86em; text-align:left; display:block; width:100%; }
+#schema-m510b-wrap .m510b-btn.active { background:#333; color:#fff; border-color:#333; }
+#schema-m510b-wrap .m510b-result { margin-top:14px; padding:12px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:4.6em; }
+#schema-m510b-wrap .m510b-result.ok { border-left-color:#3a9d3a; background:rgba(58,157,58,0.10); }
+#schema-m510b-wrap .m510b-result.warn { border-left-color:#c98a1a; background:rgba(201,138,26,0.10); }
+</style>
+
+<p><strong>Essaie toi-même :</strong> un écran LCD affiche un symptôme. Choisis le symptôme et regarde quelle panne est la plus vraisemblable.</p>
+
+<div id="m510b-symptomes">
+  <button class="m510b-btn active" data-s="noir">Écran totalement noir, mais le calculateur qui lui envoie l'image fonctionne normalement</button>
+  <button class="m510b-btn" data-s="incoherent">Image affichée incohérente ou déformée, mais l'écran reste bien éclairé</button>
+  <button class="m510b-btn" data-s="normal">Image nette, bien éclairée, conforme à ce qui est attendu</button>
+</div>
+
+<div class="m510b-result warn" id="m510b-result">⚠️ Panne la plus vraisemblable : le rétroéclairage. Le panneau à cristaux liquides et les données d'image peuvent être corrects ; c'est la source de lumière placée derrière lui qui a cessé de fonctionner, rendant l'image invisible sans qu'elle soit altérée.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m510b-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('#m510b-symptomes .m510b-btn');
+  var result = wrap.querySelector('#m510b-result');
+
+  var data = {
+    noir: { cls: 'warn', icon: '⚠️', texte: "Panne la plus vraisemblable : le rétroéclairage. Le panneau à cristaux liquides et les données d'image peuvent être corrects ; c'est la source de lumière placée derrière lui qui a cessé de fonctionner, rendant l'image invisible sans qu'elle soit altérée." },
+    incoherent: { cls: 'warn', icon: '⚠️', texte: "Panne la plus vraisemblable : le panneau à cristaux liquides lui-même, ou les données d'image qui l'alimentent — pas le rétroéclairage, puisque l'écran reste bien éclairé. C'est la construction de l'image qui est en cause, pas la lumière qui la rend visible." },
+    normal: { cls: 'ok', icon: '✅', texte: "Aucun symptôme de panne : le rétroéclairage fournit sa lumière et le panneau à cristaux liquides la module correctement selon les données d'image reçues." }
+  };
+
+  function render(s) {
+    var res = data[s];
+    result.classList.remove('ok', 'warn');
+    result.classList.add(res.cls);
+    result.textContent = res.icon + ' ' + res.texte;
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var s = b.getAttribute('data-s');
+      btns.forEach(function (x) { x.classList.toggle('active', x === b); });
+      render(s);
+    });
+  });
+})();
+</script>

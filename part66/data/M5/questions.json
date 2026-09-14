@@ -6,11 +6,11 @@
       "sous_chapitre": "M5.1",
       "question": "Converti en décimal, le nombre binaire 1010 vaut :",
       "options": [
-        "12",
         "10",
+        "12",
         "5"
       ],
-      "bonne": 1,
+      "bonne": 0,
       "explication": "1010(2) = 1×2³ + 0×2² + 1×2¹ + 0×2⁰ = 8 + 0 + 2 + 0 = 10(10). 12 correspondrait plutôt à 1100(2) (8+4), et 5 à 0101(2) (4+1) : ce sont d'autres nombres binaires, pas 1010. Il faut reprendre la décomposition bit par bit pour ne pas se tromper de valeur.",
       "source": "Notions générales d'électronique numérique — conversion binaire/décimal"
     },
@@ -19,11 +19,11 @@
       "sous_chapitre": "M5.1",
       "question": "Un octet (byte) est composé de :",
       "options": [
-        "4 bits",
         "8 bits",
-        "16 bits"
+        "16 bits",
+        "4 bits"
       ],
-      "bonne": 1,
+      "bonne": 0,
       "explication": "Un octet regroupe 8 bits, par définition. 4 bits ne représentent que la moitié de cette valeur, et 16 bits le double : ni l'un ni l'autre ne correspond à la définition de l'octet.",
       "source": "Notions générales d'électronique numérique — unités binaires"
     },
@@ -32,11 +32,11 @@
       "sous_chapitre": "M5.1",
       "question": "Le système hexadécimal utilise une base :",
       "options": [
-        "8",
         "2",
-        "16"
+        "16",
+        "8"
       ],
-      "bonne": 2,
+      "bonne": 1,
       "explication": "Le système hexadécimal utilise 16 symboles (0-9 puis A-F), d'où sa base 16. La base 8 correspond au système octal, la base 2 au système binaire.",
       "source": "Notions générales d'électronique numérique — systèmes de numération"
     },
@@ -46,10 +46,10 @@
       "question": "Un chiffre hexadécimal (un « quartet ») représente exactement :",
       "options": [
         "3 bits",
-        "8 bits",
-        "4 bits"
+        "4 bits",
+        "8 bits"
       ],
-      "bonne": 2,
+      "bonne": 1,
       "explication": "Un chiffre hexadécimal encode exactement 4 bits (un quartet) : c'est la valeur qui définit ce système de numération. 3 bits correspondent à un chiffre du système octal, et 8 bits représentent le double de la valeur recherchée.",
       "source": "Notions générales d'électronique numérique — systèmes de numération"
     },
@@ -59,8 +59,8 @@
       "question": "En hexadécimal, le chiffre « F » correspond, en décimal, à :",
       "options": [
         "15",
-        "14",
-        "16"
+        "16",
+        "14"
       ],
       "bonne": 0,
       "explication": "En hexadécimal, les chiffres vont de 0 à 9 puis de A (10) à F (15). F correspond donc à 15 en décimal, et non à 14 ou 16.",
@@ -72,10 +72,10 @@
       "question": "Un convertisseur qui transforme un signal analogique en signal numérique est appelé :",
       "options": [
         "DAC",
-        "Multiplexeur",
-        "ADC"
+        "ADC",
+        "Multiplexeur"
       ],
-      "bonne": 2,
+      "bonne": 1,
       "explication": "L'ADC (Analog-to-Digital Converter, convertisseur analogique-numérique, ou CAN en français) numérise un signal analogique : c'est cette conversion précise qui est demandée ici. Le DAC (convertisseur numérique-analogique) désigne un convertisseur différent, et un multiplexeur n'effectue aucune conversion de nature du signal.",
       "source": "Notions générales d'électronique numérique — conversion de données"
     },
@@ -97,11 +97,11 @@
       "sous_chapitre": "M5.2",
       "question": "Un signal analogique se caractérise par :",
       "options": [
+        "L'absence totale de bruit électrique",
         "Des valeurs discrètes, codées en binaire",
-        "Une variation continue de son amplitude",
-        "L'absence totale de bruit électrique"
+        "Une variation continue de son amplitude"
       ],
-      "bonne": 1,
+      "bonne": 2,
       "explication": "Un signal analogique varie de façon continue dans le temps, contrairement à un signal numérique qui ne prend que des valeurs discrètes. Aucun signal réel n'est par ailleurs totalement exempt de bruit.",
       "source": "Notions générales d'électronique numérique — conversion de données"
     },
@@ -110,9 +110,9 @@
       "sous_chapitre": "M5.2",
       "question": "Le signal d'un capteur analogique est converti en numérique avant traitement principalement parce que :",
       "options": [
-        "Cela élimine tout bruit électrique du signal",
+        "Cela réduit systématiquement sa tension de sortie",
         "Un calculateur numérique ne traite que des données numériques",
-        "Cela réduit systématiquement sa tension de sortie"
+        "Cela élimine tout bruit électrique du signal"
       ],
       "bonne": 1,
       "explication": "Un calculateur numérique traite des données codées en binaire : un signal capteur analogique doit donc être converti (ADC) avant d'être exploité par ce type de calculateur. La conversion ne réduit pas systématiquement la tension du signal, et ne supprime pas non plus le bruit électrique : un signal numérisé peut rester bruité, et la conversion elle-même introduit sa propre erreur (de quantification).",
@@ -123,11 +123,11 @@
       "sous_chapitre": "M5.2",
       "question": "L'opération qui consiste à mesurer périodiquement l'amplitude d'un signal analogique pour le numériser s'appelle :",
       "options": [
-        "L'échantillonnage",
+        "Le filtrage",
         "Le multiplexage",
-        "Le filtrage"
+        "L'échantillonnage"
       ],
-      "bonne": 0,
+      "bonne": 2,
       "explication": "L'échantillonnage mesure l'amplitude du signal analogique à intervalles réguliers, première étape de sa conversion en numérique. Le multiplexage et le filtrage sont des opérations différentes, qui ne visent pas à numériser un signal.",
       "source": "Notions générales d'électronique numérique — conversion de données"
     },
@@ -136,11 +136,11 @@
       "sous_chapitre": "M5.3",
       "question": "Une porte logique ET (AND) délivre un niveau haut (1) en sortie quand :",
       "options": [
-        "Au moins une des entrées est à l'état haut",
+        "Toutes les entrées sont à l'état haut",
         "Aucune entrée n'est à l'état haut",
-        "Toutes les entrées sont à l'état haut"
+        "Au moins une des entrées est à l'état haut"
       ],
-      "bonne": 2,
+      "bonne": 0,
       "explication": "La porte ET ne délivre un 1 en sortie que si toutes ses entrées sont à 1 : c'est la condition qui définit son fonctionnement. Une seule entrée à l'état haut, ou aucune, ne suffit pas — il faut la totalité des entrées.",
       "source": "Notions générales d'électronique numérique — algèbre de Boole et portes logiques"
     },
@@ -175,11 +175,11 @@
       "sous_chapitre": "M5.3",
       "question": "Une porte logique OU-Exclusif (XOR) délivre un niveau haut (1) en sortie quand :",
       "options": [
-        "Les deux entrées sont à l'état haut",
         "Les deux entrées sont dans des états différents",
-        "Les deux entrées sont à l'état bas"
+        "Les deux entrées sont à l'état bas",
+        "Les deux entrées sont à l'état haut"
       ],
-      "bonne": 1,
+      "bonne": 0,
       "explication": "La porte XOR délivre un 1 uniquement lorsque ses deux entrées sont différentes l'une de l'autre (une haute, une basse). Si les deux entrées sont identiques (toutes hautes ou toutes basses), sa sortie est à 0.",
       "source": "Notions générales d'électronique numérique — algèbre de Boole et portes logiques"
     },
@@ -188,8 +188,8 @@
       "sous_chapitre": "M5.3",
       "question": "En logique combinatoire, la sortie d'un circuit dépend :",
       "options": [
-        "Des entrées présentes, combinées à un signal d'horloge de synchronisation",
         "De l'état mémorisé lors du cycle précédent",
+        "Des entrées présentes, combinées à un signal d'horloge de synchronisation",
         "Uniquement des entrées présentes à l'instant considéré"
       ],
       "bonne": 2,
@@ -201,11 +201,11 @@
       "sous_chapitre": "M5.4",
       "question": "La mémoire d'un ordinateur qui perd son contenu à la mise hors tension s'appelle :",
       "options": [
+        "La ROM (mémoire morte)",
         "Un disque de stockage externe",
-        "La RAM (mémoire vive)",
-        "La ROM (mémoire morte)"
+        "La RAM (mémoire vive)"
       ],
-      "bonne": 1,
+      "bonne": 2,
       "explication": "La RAM (mémoire vive) est une mémoire volatile : elle perd son contenu dès que l'alimentation est coupée. La ROM est au contraire une mémoire non volatile, conçue pour conserver son contenu hors tension — ce n'est donc pas elle qui est recherchée ici. Un disque de stockage externe n'est pas non plus la mémoire interne du calculateur visée par la question.",
       "source": "Notions générales d'électronique numérique — structure d'un ordinateur"
     },
@@ -214,11 +214,11 @@
       "sous_chapitre": "M5.4",
       "question": "La mémoire d'un ordinateur qui conserve son contenu hors tension, et n'est en général pas destinée à être réécrite en fonctionnement normal, s'appelle :",
       "options": [
-        "La ROM (mémoire morte)",
+        "La RAM (mémoire vive)",
         "Le cache processeur",
-        "La RAM (mémoire vive)"
+        "La ROM (mémoire morte)"
       ],
-      "bonne": 0,
+      "bonne": 2,
       "explication": "La ROM (mémoire morte, non volatile) conserve son contenu même hors tension et n'est en général pas réécrite en fonctionnement normal : ce sont les deux caractéristiques recherchées ici. Le cache processeur est une mémoire rapide mais volatile, distincte de la ROM.",
       "source": "Notions générales d'électronique numérique — structure d'un ordinateur"
     },
@@ -227,11 +227,11 @@
       "sous_chapitre": "M5.4",
       "question": "L'unité qui, au sein d'un processeur, exécute les opérations arithmétiques et logiques s'appelle :",
       "options": [
+        "Un registre",
         "L'unité arithmétique et logique (UAL)",
-        "Le bus de données",
-        "Un registre"
+        "Le bus de données"
       ],
-      "bonne": 0,
+      "bonne": 1,
       "explication": "L'unité arithmétique et logique (UAL, ALU en anglais) est le bloc du processeur chargé d'exécuter les calculs et opérations logiques : c'est le rôle précis recherché ici. Un bus a un rôle de transport d'information, pas de calcul ; un registre a un rôle de stockage, pas de calcul non plus.",
       "source": "Notions générales d'électronique numérique — structure d'un ordinateur"
     },
@@ -240,11 +240,11 @@
       "sous_chapitre": "M5.4",
       "question": "Le bus qui transporte les données échangées entre le processeur, la mémoire et les périphériques s'appelle :",
       "options": [
-        "Le bus d'adresse",
         "Le bus de données",
+        "Le bus d'adresse",
         "Le bus de contrôle"
       ],
-      "bonne": 1,
+      "bonne": 0,
       "explication": "Le bus de données transporte les données elles-mêmes, échangées entre le processeur, la mémoire et les périphériques. Le bus d'adresse indique quel emplacement mémoire (ou quel périphérique) est concerné par l'échange, sans transporter la donnée elle-même ; le bus de contrôle transporte les signaux de synchronisation et de commande, pas les données.",
       "source": "Notions générales d'électronique numérique — structure d'un ordinateur"
     },
@@ -253,11 +253,11 @@
       "sous_chapitre": "M5.4",
       "question": "Le bus qui indique quel emplacement mémoire est concerné par un échange de données s'appelle :",
       "options": [
-        "Le bus d'adresse",
         "Le bus de données",
+        "Le bus d'adresse",
         "Le bus de contrôle"
       ],
-      "bonne": 0,
+      "bonne": 1,
       "explication": "Le bus d'adresse transporte l'information sur l'emplacement mémoire (ou le périphérique) concerné par un échange. Le bus de contrôle transporte plutôt les signaux de synchronisation et de commande ; le bus de données transporte les données elles-mêmes échangées, mais n'indique pas leur emplacement.",
       "source": "Notions générales d'électronique numérique — structure d'un ordinateur"
     },
@@ -266,11 +266,11 @@
       "sous_chapitre": "M5.5",
       "question": "Le cycle de base d'exécution d'une instruction par un microprocesseur est, dans l'ordre :",
       "options": [
-        "Recherche, décodage, exécution",
         "Décodage, exécution, recherche",
-        "Exécution, recherche, décodage"
+        "Exécution, recherche, décodage",
+        "Recherche, décodage, exécution"
       ],
-      "bonne": 0,
+      "bonne": 2,
       "explication": "Le cycle d'instruction d'un microprocesseur suit l'ordre recherche (fetch) → décodage (decode) → exécution (execute) : l'instruction est d'abord lue en mémoire, puis interprétée, puis seulement exécutée. Les deux autres ordres proposés sont impossibles dans la pratique : on ne peut pas décoder une instruction qu'on n'a pas encore recherchée en mémoire, ni l'exécuter avant même de savoir ce qu'elle demande de faire.",
       "source": "Notions générales d'électronique numérique — microprocesseurs"
     },
@@ -279,11 +279,11 @@
       "sous_chapitre": "M5.5",
       "question": "Dans un microprocesseur, un registre sert à :",
       "options": [
+        "Stocker temporairement une donnée ou une adresse en cours de traitement",
         "Amplifier le signal électrique d'entrée",
-        "Stocker en permanence le système d'exploitation",
-        "Stocker temporairement une donnée ou une adresse en cours de traitement"
+        "Stocker en permanence le système d'exploitation"
       ],
-      "bonne": 2,
+      "bonne": 0,
       "explication": "Un registre est une petite zone de mémoire interne au processeur, très rapide, qui stocke temporairement une donnée ou une adresse pendant le traitement d'une instruction. Ce n'est ni un support de stockage permanent, ni un composant d'amplification.",
       "source": "Notions générales d'électronique numérique — microprocesseurs"
     },
@@ -292,11 +292,11 @@
       "sous_chapitre": "M5.5",
       "question": "Le signal d'horloge d'un microprocesseur sert à :",
       "options": [
-        "Fournir l'alimentation électrique du circuit",
         "Synchroniser les différentes opérations internes",
-        "Mesurer la température du composant"
+        "Mesurer la température du composant",
+        "Fournir l'alimentation électrique du circuit"
       ],
-      "bonne": 1,
+      "bonne": 0,
       "explication": "L'horloge cadence et synchronise les opérations internes successives du microprocesseur (cycle fetch-decode-execute). Elle ne fournit pas l'alimentation électrique et ne mesure aucune grandeur physique comme la température.",
       "source": "Notions générales d'électronique numérique — microprocesseurs"
     },
@@ -305,11 +305,11 @@
       "sous_chapitre": "M5.5",
       "question": "Un microprocesseur est un circuit intégré qui contient principalement :",
       "options": [
-        "La mémoire de masse (disque dur ou équivalent) de l'ordinateur",
         "L'unité centrale de traitement (CPU) d'un calculateur",
+        "La mémoire de masse (disque dur ou équivalent) de l'ordinateur",
         "Le système d'exploitation et l'ensemble des logiciels applicatifs"
       ],
-      "bonne": 1,
+      "bonne": 0,
       "explication": "Un microprocesseur intègre sur une seule puce l'unité centrale de traitement (CPU), avec notamment son unité arithmétique et logique et ses registres. Le système d'exploitation et les logiciels sont des programmes stockés en mémoire, pas des composants du microprocesseur ; la mémoire de masse est elle aussi un composant distinct, qui stocke des données durablement mais n'exécute aucun traitement.",
       "source": "Notions générales d'électronique numérique — microprocesseurs"
     },
@@ -318,9 +318,9 @@
       "sous_chapitre": "M5.5",
       "question": "Toutes choses égales par ailleurs, plus la fréquence d'horloge d'un microprocesseur est élevée :",
       "options": [
-        "Moins il consomme d'énergie",
+        "Plus sa mémoire interne est grande",
         "Plus il peut exécuter d'opérations par seconde",
-        "Plus sa mémoire interne est grande"
+        "Moins il consomme d'énergie"
       ],
       "bonne": 1,
       "explication": "Une fréquence d'horloge plus élevée permet, toutes choses égales par ailleurs, d'exécuter davantage de cycles d'instruction par seconde. Elle augmente au contraire la consommation d'énergie du circuit (la consommation dynamique d'un circuit numérique croît avec sa fréquence de fonctionnement), et n'a aucun effet sur la taille de sa mémoire interne.",
@@ -331,11 +331,11 @@
       "sous_chapitre": "M5.6",
       "question": "Un circuit intégré (CI) regroupe, sur une seule puce :",
       "options": [
+        "Un grand nombre de composants électroniques élémentaires",
         "Une carte électronique complète, avec l'ensemble des composants d'un équipement",
-        "Un seul transistor",
-        "Un grand nombre de composants électroniques élémentaires"
+        "Un seul transistor"
       ],
-      "bonne": 2,
+      "bonne": 0,
       "explication": "Un circuit intégré rassemble sur une seule puce de silicium un grand nombre de composants élémentaires (transistors, portes logiques...), ce qui permet de miniaturiser des fonctions complexes. Il ne se limite pas à un seul transistor, mais ne constitue pas non plus à lui seul une carte électronique complète : plusieurs circuits intégrés et d'autres composants sont en général assemblés ensemble sur une carte.",
       "source": "Notions générales d'électronique numérique — circuits intégrés"
     },
@@ -345,10 +345,10 @@
       "question": "Concernant la manipulation des composants électroniques sensibles à l'électricité statique :",
       "options": [
         "Ils doivent être manipulés avec des gants en caoutchouc isolant",
-        "Ils doivent être manipulés en portant un bracelet antistatique dédié à cet usage",
-        "Aucune précaution particulière n'est nécessaire si le composant semble en bon état"
+        "Aucune précaution particulière n'est nécessaire si le composant semble en bon état",
+        "Ils doivent être manipulés en portant un bracelet antistatique dédié à cet usage"
       ],
-      "bonne": 1,
+      "bonne": 2,
       "explication": "Un bracelet antistatique conçu pour cet usage — et non un simple fil improvisé — permet d'évacuer l'électricité statique du technicien avant qu'il ne touche un composant sensible. Des gants isolants ne remplissent pas cette fonction, et l'absence de précaution expose le composant à une décharge, même s'il paraît intact. Le matériel et la procédure exacts à utiliser, y compris les précautions vis-à-vis du risque électrique du poste de travail, relèvent de la documentation du fabricant et de l'atelier.",
       "source": "Notions générales d'électronique numérique — composants sensibles à l'ESD"
     },
@@ -383,11 +383,11 @@
       "sous_chapitre": "M5.6",
       "question": "Le sigle ESD signifie :",
       "options": [
-        "Electro-Static Discharge",
+        "Electronic System Design",
         "Emergency Shutdown Device",
-        "Electronic System Design"
+        "Electro-Static Discharge"
       ],
-      "bonne": 0,
+      "bonne": 2,
       "explication": "ESD signifie Electro-Static Discharge, c'est-à-dire décharge électrostatique — exactement le phénomène décrit dans cette fiche. « Emergency Shutdown Device » n'est pas inventé au hasard (ce sigle existe réellement, mais dans l'industrie des procédés industriels, pour désigner un système d'arrêt d'urgence) : ce n'est simplement pas son sens en électronique. « Electronic System Design » sonne technique et plausible en anglais, mais ne correspond à aucun sigle standard dans ce domaine.",
       "source": "Notions générales d'électronique numérique — composants sensibles à l'ESD"
     },
@@ -396,11 +396,11 @@
       "sous_chapitre": "M5.7",
       "question": "Un bus série transmet les bits d'une donnée :",
       "options": [
+        "Tous simultanément, chacun sur sa propre ligne",
         "Les uns après les autres, sur une seule ligne",
-        "Dans un ordre aléatoire, sans structure",
-        "Tous simultanément, chacun sur sa propre ligne"
+        "Dans un ordre aléatoire, sans structure"
       ],
-      "bonne": 0,
+      "bonne": 1,
       "explication": "Un bus série transmet les bits d'une même donnée successivement, sur une seule ligne (ou paire de lignes) : c'est ce mode de transmission précis qui est demandé ici, par opposition à une transmission simultanée sur plusieurs lignes ou à un envoi sans ordre défini.",
       "source": "Notions générales d'électronique numérique — bus de données"
     },
@@ -409,11 +409,11 @@
       "sous_chapitre": "M5.7",
       "question": "Un bus parallèle transmet les bits d'une donnée :",
       "options": [
+        "Simultanément, chacun sur sa propre ligne",
         "Les uns après les autres, sur une seule ligne",
-        "Un par un, en alternant deux lignes",
-        "Simultanément, chacun sur sa propre ligne"
+        "Un par un, en alternant deux lignes"
       ],
-      "bonne": 2,
+      "bonne": 0,
       "explication": "Un bus parallèle transmet plusieurs bits en même temps, chacun sur sa propre ligne dédiée : c'est ce mode de transmission précis qui est demandé ici, par opposition à une transmission successive sur une seule ligne ou à une alternance entre deux lignes.",
       "source": "Notions générales d'électronique numérique — bus de données"
     },
@@ -422,11 +422,11 @@
       "sous_chapitre": "M5.7",
       "question": "Le bus ARINC 429, très utilisé en avionique, est caractérisé par une liaison :",
       "options": [
-        "En réseau maillé, sans émetteur dédié",
         "Unidirectionnelle, d'un émetteur vers un ou plusieurs récepteurs",
+        "En réseau maillé, sans émetteur dédié",
         "Bidirectionnelle, entre deux équipements strictement identiques"
       ],
-      "bonne": 1,
+      "bonne": 0,
       "explication": "Le bus ARINC 429 relie un seul équipement émetteur à un ou plusieurs équipements récepteurs, dans un seul sens de transmission : il n'est pas bidirectionnel sur une même liaison, contrairement à d'autres protocoles avioniques plus récents.",
       "source": "TODO: source à vérifier manuellement — caractéristiques précises du protocole ARINC 429 à confirmer sur la norme ARINC (voir part66/A_VERIFIER.md)"
     },
@@ -435,11 +435,11 @@
       "sous_chapitre": "M5.7",
       "question": "Le multiplexage consiste à :",
       "options": [
+        "Faire transiter plusieurs signaux sur un même support de transmission",
         "Convertir un signal numérique en signal analogique",
-        "Amplifier un signal unique sans le combiner à d'autres",
-        "Faire transiter plusieurs signaux sur un même support de transmission"
+        "Amplifier un signal unique sans le combiner à d'autres"
       ],
-      "bonne": 2,
+      "bonne": 0,
       "explication": "Le multiplexage regroupe plusieurs signaux ou voies d'information sur un même support physique de transmission, au lieu de dédier une ligne distincte à chacun. Il ne s'agit ni d'une conversion de signal, ni d'une simple amplification.",
       "source": "Notions générales d'électronique numérique — bus de données et multiplexage"
     },
@@ -448,11 +448,11 @@
       "sous_chapitre": "M5.8",
       "question": "Un des principaux avantages de la fibre optique par rapport à un câble électrique classique est :",
       "options": [
-        "Un poids systématiquement supérieur",
         "Une immunité totale aux dommages mécaniques (chocs, écrasement)",
-        "L'insensibilité aux interférences électromagnétiques"
+        "L'insensibilité aux interférences électromagnétiques",
+        "Un poids systématiquement supérieur"
       ],
-      "bonne": 2,
+      "bonne": 1,
       "explication": "La fibre optique ne transporte pas de courant électrique, ce qui la rend insensible aux interférences électromagnétiques (elle ne les capte ni ne les émet), contrairement à un câble électrique. Elle est en général plus légère qu'un câble électrique équivalent, mais n'est pas plus résistante aux dommages mécaniques (chocs, écrasement, pliage excessif) — c'est même souvent l'inverse.",
       "source": "Notions générales d'électronique numérique — fibre optique"
     },
@@ -462,8 +462,8 @@
       "question": "La transmission d'information par fibre optique s'effectue au moyen :",
       "options": [
         "D'impulsions lumineuses",
-        "D'ondes radio propagées dans l'air",
-        "D'un courant électrique continu"
+        "D'un courant électrique continu",
+        "D'ondes radio propagées dans l'air"
       ],
       "bonne": 0,
       "explication": "La fibre optique transmet l'information sous forme d'impulsions lumineuses guidées dans la fibre, et non par un courant électrique ou par des ondes radio propagées en espace libre.",
@@ -475,10 +475,10 @@
       "question": "Le sigle CEM (EMC en anglais) désigne :",
       "options": [
         "Le contrôle électrique manuel",
-        "La compatibilité électromagnétique",
-        "Le circuit électronique modulaire"
+        "Le circuit électronique modulaire",
+        "La compatibilité électromagnétique"
       ],
-      "bonne": 1,
+      "bonne": 2,
       "explication": "CEM signifie compatibilité électromagnétique (EMC, Electromagnetic Compatibility, en anglais) : l'aptitude d'un équipement à fonctionner sans être perturbé par son environnement électromagnétique, ni le perturber lui-même. « Circuit électronique modulaire » et « contrôle électrique manuel » sonnent techniques mais ne correspondent à aucun sigle standard réellement utilisé dans ce domaine.",
       "source": "Notions générales d'électronique numérique — environnement électromagnétique"
     },
@@ -488,10 +488,10 @@
       "question": "Le sigle HIRF désigne un risque lié :",
       "options": [
         "À une baisse anormale de la pression en cabine",
-        "À des vibrations mécaniques excessives du moteur",
-        "À un champ électromagnétique de forte intensité, externe à l'aéronef"
+        "À un champ électromagnétique de forte intensité, externe à l'aéronef",
+        "À des vibrations mécaniques excessives du moteur"
       ],
-      "bonne": 2,
+      "bonne": 1,
       "explication": "HIRF (High Intensity Radiated Field) désigne un risque lié à un champ électromagnétique externe de forte intensité, susceptible de perturber le fonctionnement des systèmes électroniques embarqués. Il ne s'agit ni d'un risque vibratoire ni d'un risque de pressurisation, qui relèvent d'autres domaines de la sécurité aéronautique.",
       "source": "TODO: source à vérifier manuellement — définition et portée exactes du risque HIRF, y compris sa distinction avec d'autres phénomènes électromagnétiques (foudre, champ magnétique terrestre), à confirmer (voir part66/A_VERIFIER.md)"
     },
@@ -513,11 +513,11 @@
       "sous_chapitre": "M5.9",
       "question": "Le terme « glass cockpit » désigne un poste de pilotage équipé principalement :",
       "options": [
-        "De parois vitrées renforcées offrant une meilleure visibilité au pilote",
         "D'instruments purement mécaniques, sans aucune électronique",
-        "D'écrans électroniques remplaçant les instruments électromécaniques traditionnels"
+        "D'écrans électroniques remplaçant les instruments électromécaniques traditionnels",
+        "De parois vitrées renforcées offrant une meilleure visibilité au pilote"
       ],
-      "bonne": 2,
+      "bonne": 1,
       "explication": "Un « glass cockpit » remplace la plupart des instruments électromécaniques traditionnels (à aiguille) par des écrans électroniques regroupant les informations de vol. Malgré la traduction littérale de « glass » (verre), l'expression ne désigne pas les parois vitrées du poste de pilotage.",
       "source": "Notions générales d'avionique — systèmes d'instruments électroniques"
     },
@@ -526,11 +526,11 @@
       "sous_chapitre": "M5.9",
       "question": "Le sigle EFIS désigne :",
       "options": [
-        "Un système de gestion de vol (FMS, Flight Management System)",
         "Un système d'instruments de vol électroniques (Electronic Flight Instrument System)",
-        "Un système de surveillance moteurs et d'alerte équipage (comme l'ECAM ou l'EICAS)"
+        "Un système de surveillance moteurs et d'alerte équipage (comme l'ECAM ou l'EICAS)",
+        "Un système de gestion de vol (FMS, Flight Management System)"
       ],
-      "bonne": 1,
+      "bonne": 0,
       "explication": "EFIS signifie Electronic Flight Instrument System : le sous-système qui affiche les paramètres de vol sur les écrans d'un poste de pilotage moderne. L'ECAM/EICAS et le FMS sont d'autres systèmes bien réels de ce même poste de pilotage, mais aux fonctions distinctes (surveillance moteurs/alertes pour l'un, gestion du plan de vol pour l'autre).",
       "source": "Notions générales d'avionique — systèmes d'instruments électroniques"
     },
@@ -539,8 +539,8 @@
       "sous_chapitre": "M5.9",
       "question": "Le logiciel embarqué d'un système avionique est identifié, comme un composant matériel, par :",
       "options": [
-        "Le seul numéro de série du calculateur qui l'héberge, sans référence logicielle propre",
         "Une simple date d'installation, sans numéro de référence formel",
+        "Le seul numéro de série du calculateur qui l'héberge, sans référence logicielle propre",
         "Un numéro de référence (part number) et une version logicielle"
       ],
       "bonne": 2,
@@ -552,11 +552,11 @@
       "sous_chapitre": "M5.9",
       "question": "Une modification d'un logiciel embarqué sur un aéronef doit :",
       "options": [
-        "Suivre une procédure approuvée et contrôlée, avec traçabilité de la version installée",
+        "Être dispensée de tout contrôle particulier si elle provient du constructeur de l'aéronef",
         "Être consignée uniquement dans le carnet de bord du pilote, sans autre procédure",
-        "Être dispensée de tout contrôle particulier si elle provient du constructeur de l'aéronef"
+        "Suivre une procédure approuvée et contrôlée, avec traçabilité de la version installée"
       ],
-      "bonne": 0,
+      "bonne": 2,
       "explication": "Une modification logicielle doit être effectuée selon des données et une procédure approuvées, et faire l'objet d'une traçabilité, quelle que soit son origine : une provenance constructeur ne dispense d'aucun contrôle. Une simple mention au carnet de bord du pilote ne remplace pas cette procédure de modification elle-même.",
       "source": "TODO: source à vérifier manuellement — cadre précis de traçabilité du logiciel embarqué (gestion de configuration logicielle) à confirmer (voir part66/A_VERIFIER.md)"
     },
@@ -565,13 +565,598 @@
       "sous_chapitre": "M5.9",
       "question": "Un écran de type PFD (Primary Flight Display) affiche typiquement :",
       "options": [
-        "Le plan de vol complet et la carte de navigation détaillée",
         "Les paramètres moteurs et la consommation de carburant",
-        "Les paramètres de vol essentiels (attitude, vitesse, altitude...)"
+        "Les paramètres de vol essentiels (attitude, vitesse, altitude...)",
+        "Le plan de vol complet et la carte de navigation détaillée"
       ],
-      "bonne": 2,
+      "bonne": 1,
       "explication": "Le PFD regroupe les paramètres de vol essentiels au pilotage (attitude, vitesse, altitude, cap...). Le plan de vol et la carte de navigation détaillée sont en général affichés sur un écran de navigation (ND) distinct, et les paramètres moteurs sur un écran dédié (ECAM/EICAS) : trois écrans réels du glass cockpit, mais à contenus différents.",
       "source": "Notions générales d'avionique — systèmes d'instruments électroniques"
+    },
+    {
+      "uid": "M5-0046",
+      "sous_chapitre": "M5.4",
+      "question": "Une PROM (Programmable Read-Only Memory) se distingue d'une ROM classique par le fait que :",
+      "options": [
+        "elle peut être programmée une seule fois après sa fabrication, alors qu'une ROM classique est gravée en usine",
+        "elle est reprogrammable indéfiniment en fonctionnement normal, contrairement à la ROM",
+        "elle perd son contenu à la mise hors tension, contrairement à la ROM"
+      ],
+      "bonne": 0,
+      "explication": "La PROM se distingue d'une ROM classique par sa programmation possible une seule fois après fabrication, contrairement à une ROM gravée définitivement en usine — c'est ce point qui la caractérise vraiment. Perdre son contenu à la mise hors tension décrit un autre type de mémoire (une mémoire volatile), pas la PROM ; et une réinscription libre et répétée en fonctionnement normal ne correspond pas non plus à son fonctionnement.",
+      "source": "Notions générales d'électronique numérique — mémoires ROM/PROM"
+    },
+    {
+      "uid": "M5-0047",
+      "sous_chapitre": "M5.4",
+      "question": "Après sa programmation initiale, une PROM se comporte, du point de vue de la conservation de son contenu hors tension, comme :",
+      "options": [
+        "une RAM : elle perd son contenu",
+        "aucune des deux : son contenu dépend de la température ambiante",
+        "une ROM : elle conserve son contenu"
+      ],
+      "bonne": 2,
+      "explication": "Une fois programmée, la PROM conserve son contenu hors tension exactement comme une ROM classique — seule la méthode de programmation diffère entre les deux, pas la conservation de leur contenu. Perdre son contenu à la mise hors tension décrit un comportement de mémoire volatile, pas celui d'une PROM ; et rien ne relie sa conservation à la température ambiante.",
+      "source": "Notions générales d'électronique numérique — mémoires ROM/PROM"
+    },
+    {
+      "uid": "M5-0048",
+      "sous_chapitre": "M5.7",
+      "question": "L'AFDX est un réseau avionique qui adapte à l'aéronautique les principes d'un réseau :",
+      "options": [
+        "téléphonique analogique",
+        "ARINC 429 renforcé",
+        "Ethernet"
+      ],
+      "bonne": 2,
+      "explication": "L'AFDX adapte à l'aéronautique les principes du réseau Ethernet grand public — un réseau commuté à commutateurs, avec un débit nettement supérieur à un bus série classique. Ce n'est pas une version renforcée d'ARINC 429, dont l'architecture (liaison dédiée point à point) reste très différente ; et ce n'est pas non plus un réseau téléphonique analogique, technologie sans rapport avec la transmission de données numériques.",
+      "source": "Notions générales d'électronique numérique — bus de données et réseaux avioniques"
+    },
+    {
+      "uid": "M5-0049",
+      "sous_chapitre": "M5.7",
+      "question": "Contrairement à ARINC 429, qui est strictement unidirectionnel, une liaison AFDX est :",
+      "options": [
+        "également unidirectionnelle, mais à plus haut débit",
+        "full-duplex : un même équipement peut émettre et recevoir simultanément",
+        "réservée exclusivement à la réception, jamais à l'émission"
+      ],
+      "bonne": 1,
+      "explication": "L'AFDX est full-duplex : un même équipement peut émettre et recevoir en même temps sur sa liaison, contrairement à ARINC 429 qui reste strictement unidirectionnel (un émetteur vers un ou plusieurs récepteurs). Les deux autres options décrivent des liaisons à sens unique, ce qui ne correspond pas à AFDX.",
+      "source": "Notions générales d'électronique numérique — bus de données et réseaux avioniques"
+    },
+    {
+      "uid": "M5-0050",
+      "sous_chapitre": "M5.7",
+      "question": "Sur un réseau AFDX, une voie virtuelle (Virtual Link) sert principalement à :",
+      "options": [
+        "garantir un débit réservé à un flux de données, indépendamment du trafic des autres flux",
+        "convertir les données numériques en signal analogique avant transmission",
+        "chiffrer les données transmises pour empêcher toute interception"
+      ],
+      "bonne": 0,
+      "explication": "Une voie virtuelle réserve à l'avance un débit garanti à un flux de données, pour qu'un trafic important d'un système non critique ne prive pas un système critique de la bande passante dont il a besoin. Il ne s'agit ni d'une conversion analogique/numérique (rôle du CAN/CNA, voir M5.2), ni d'un mécanisme de chiffrement.",
+      "source": "Notions générales d'électronique numérique — bus de données et réseaux avioniques"
+    },
+    {
+      "uid": "M5-0051",
+      "sous_chapitre": "M5.7",
+      "question": "Contrairement à une liaison ARINC 429, qui relie directement un émetteur à un ou plusieurs récepteurs, un réseau AFDX relie les équipements par l'intermédiaire de :",
+      "options": [
+        "commutateurs, comme sur un réseau informatique",
+        "un câble coaxial unique, connecté directement d'un bout à l'autre du réseau",
+        "une liaison satellite dédiée à chaque paire d'équipements"
+      ],
+      "bonne": 0,
+      "explication": "L'AFDX est un réseau commuté : des commutateurs aiguillent les données vers le bon destinataire, comme sur un réseau informatique, plutôt qu'une liaison directe dédiée entre chaque paire d'équipements comme pour ARINC 429. Un câble unique reliant directement les extrémités du réseau ne correspond pas à cette architecture, et une liaison satellite dédiée par équipement n'a pas de rapport avec l'AFDX.",
+      "source": "Notions générales d'électronique numérique — bus de données et réseaux avioniques"
+    },
+    {
+      "uid": "M5-0053",
+      "sous_chapitre": "M5.8",
+      "question": "L'EMI (ElectroMagnetic Interference) désigne :",
+      "options": [
+        "un dispositif de protection installé pour bloquer les perturbations électromagnétiques",
+        "la discipline générale de compatibilité entre un équipement et son environnement électromagnétique",
+        "la perturbation électromagnétique elle-même, qui vient gêner le fonctionnement d'un équipement"
+      ],
+      "bonne": 2,
+      "explication": "L'EMI désigne le phénomène perturbateur lui-même — l'interférence qui vient effectivement gêner un équipement. Ce n'est ni la discipline générale de compatibilité entre un équipement et son environnement électromagnétique (c'est la définition de la CEM), ni un dispositif de protection : l'EMI est une perturbation, pas un moyen de s'en protéger.",
+      "source": "Notions générales d'électronique numérique — CEM, EMI, HIRF"
+    },
+    {
+      "uid": "M5-0055",
+      "sous_chapitre": "M5.8",
+      "question": "Ce qui distingue principalement un impact de foudre du risque HIRF, c'est que la foudre correspond à :",
+      "options": [
+        "une perturbation uniquement interne à l'aéronef, sans origine externe",
+        "un champ électromagnétique rayonné externe, comme le HIRF",
+        "un courant électrique très intense qui traverse directement la structure, plutôt qu'un champ rayonné"
+      ],
+      "bonne": 2,
+      "explication": "Un impact de foudre correspond à un courant électrique très intense qui traverse directement la structure de l'aéronef, à la différence du HIRF qui est un champ électromagnétique rayonné à distance. La foudre a bien une origine externe (ce n'est pas une perturbation purement interne), mais sa nature physique — un courant conduit, pas un champ rayonné — la distingue du HIRF.",
+      "source": "Notions générales d'électronique numérique — protection foudre"
+    },
+    {
+      "uid": "M5-0056",
+      "sous_chapitre": "M5.8",
+      "question": "Sur un aéronef à structure métallique, la protection contre la foudre repose principalement sur le fait que la structure :",
+      "options": [
+        "conduit le courant de foudre le long de sa surface extérieure, un peu comme une cage de Faraday",
+        "absorbe intégralement l'énergie de la foudre sans laisser aucun courant circuler",
+        "est isolée électriquement pour empêcher tout courant de circuler"
+      ],
+      "bonne": 0,
+      "explication": "Une structure métallique bien reliée électriquement conduit une grande partie du courant de foudre le long de sa surface extérieure, un peu comme une cage de Faraday, en épargnant en bonne partie l'intérieur et les équipements. Elle n'est pas isolée (ce serait contre-productif), et elle n'absorbe pas l'énergie sans laisser circuler aucun courant : le principe est justement de le laisser circuler en surface plutôt que vers l'intérieur.",
+      "source": "Notions générales d'électronique numérique — protection foudre"
+    },
+    {
+      "uid": "M5-0057",
+      "sous_chapitre": "M5.8",
+      "question": "Sur une structure en matériaux composites, naturellement moins conductrice qu'une structure métallique, la protection foudre repose typiquement sur :",
+      "options": [
+        "l'absence totale de protection, les composites n'étant jamais exposés à la foudre",
+        "le seul blindage des câbles électriques, sans aucun traitement de la structure elle-même",
+        "un maillage conducteur dédié intégré à la structure"
+      ],
+      "bonne": 2,
+      "explication": "Un maillage conducteur dédié (bandes ou treillis métalliques intégrés à la structure) reproduit, sur une structure composite moins conductrice, la fonction de conduction en surface qu'assure naturellement une structure métallique. Les composites restent bien exposés au risque de foudre (l'idée d'une absence totale de protection serait fausse), et le blindage des seuls câbles électriques ne suffit pas à traiter ce risque au niveau de la structure elle-même.",
+      "source": "Notions générales d'électronique numérique — protection foudre"
+    },
+    {
+      "uid": "M5-0058",
+      "sous_chapitre": "M5.10",
+      "question": "Dans un écran à tube cathodique (CRT), l'image est produite par :",
+      "options": [
+        "un faisceau d'électrons qui excite une couche de phosphore",
+        "un obturateur à cristaux liquides qui laisse passer plus ou moins de lumière",
+        "des diodes électroluminescentes qui émettent chacune leur propre couleur"
+      ],
+      "bonne": 0,
+      "explication": "Un CRT projette un faisceau d'électrons sur un écran recouvert de phosphore, qui émet brièvement de la lumière là où il est frappé. Un obturateur à cristaux liquides module la lumière d'une source séparée plutôt que d'en produire lui-même (principe d'un LCD, pas d'un CRT) ; l'émission directe par des diodes décrit un usage de la LED, pas le principe du CRT.",
+      "source": "Notions générales d'électronique numérique — technologies d'affichage"
+    },
+    {
+      "uid": "M5-0059",
+      "sous_chapitre": "M5.10",
+      "question": "Un écran à tube cathodique (CRT) est nécessairement lourd et encombrant par rapport à un écran plat, principalement à cause :",
+      "options": [
+        "de la nécessité d'un système de refroidissement par liquide",
+        "du tube en verre volumineux et de la tension d'accélération élevée nécessaires à son fonctionnement",
+        "du grand nombre de câbles de données qu'il nécessite en interne"
+      ],
+      "bonne": 1,
+      "explication": "Le CRT exige un tube en verre volumineux et une tension d'accélération élevée pour le faisceau d'électrons, ce qui le rend nécessairement lourd et encombrant. Le câblage interne de données et un éventuel refroidissement liquide ne sont pas la cause principale de cet encombrement.",
+      "source": "Notions générales d'électronique numérique — technologies d'affichage"
+    },
+    {
+      "uid": "M5-0060",
+      "sous_chapitre": "M5.10",
+      "question": "Un écran à cristaux liquides (LCD), à la différence d'un CRT :",
+      "options": [
+        "émet lui-même sa propre lumière, sans avoir besoin d'aucune source séparée",
+        "ne produit pas de lumière par lui-même et a besoin d'un rétroéclairage séparé",
+        "fonctionne uniquement en noir et blanc, sans possibilité d'affichage couleur"
+      ],
+      "bonne": 1,
+      "explication": "Un LCD ne produit pas de lumière par lui-même : les cristaux liquides modulent la quantité de lumière issue d'un rétroéclairage placé derrière le panneau — c'est l'inverse d'un CRT, qui émet lui-même sa lumière par un faisceau d'électrons sur du phosphore. Un LCD a donc bien besoin de cette source séparée pour être visible ; et des filtres colorés par sous-pixel permettent par ailleurs l'affichage en couleur, contrairement à un fonctionnement limité au noir et blanc.",
+      "source": "Notions générales d'électronique numérique — technologies d'affichage"
+    },
+    {
+      "uid": "M5-0061",
+      "sous_chapitre": "M5.10",
+      "question": "Dans un pixel LCD, la tension électrique appliquée aux cristaux liquides sert principalement à :",
+      "options": [
+        "faire varier l'orientation des cristaux liquides, et donc la quantité de lumière transmise",
+        "recharger la batterie de rétroéclairage du panneau",
+        "générer directement la lumière visible affichée par ce pixel"
+      ],
+      "bonne": 0,
+      "explication": "La tension appliquée fait varier l'orientation des molécules de cristaux liquides, ce qui module la quantité de lumière du rétroéclairage transmise à travers le pixel. Les cristaux liquides ne génèrent pas eux-mêmes de lumière visible (ce serait plutôt le principe d'un CRT ou d'une LED), et il ne s'agit pas d'une fonction de recharge de batterie — notion sans rapport avec le rôle de cette tension.",
+      "source": "Notions générales d'électronique numérique — technologies d'affichage"
+    },
+    {
+      "uid": "M5-0062",
+      "sous_chapitre": "M5.10",
+      "question": "Sur les glass cockpits actuels, le rétroéclairage des écrans LCD est le plus souvent assuré par :",
+      "options": [
+        "des LED, qui ont largement remplacé les tubes fluorescents utilisés auparavant",
+        "des tubes fluorescents, seule technologie possible pour cet usage",
+        "un second panneau LCD placé juste derrière le premier"
+      ],
+      "bonne": 0,
+      "explication": "Les LED ont largement remplacé les tubes fluorescents comme source de rétroéclairage des écrans LCD modernes, étant généralement plus fiables, plus durables et moins gourmandes en énergie. Les tubes fluorescents ne sont donc pas la seule technologie possible (déjà dépassée sur les équipements récents), et un second panneau LCD ne constitue pas une source de rétroéclairage.",
+      "source": "Notions générales d'électronique numérique — technologies d'affichage"
+    },
+    {
+      "uid": "M5-0063",
+      "sous_chapitre": "M5.10",
+      "question": "Le terme « LED » peut désigner, selon le contexte, plusieurs usages dans un poste de pilotage moderne, notamment :",
+      "options": [
+        "uniquement un voyant lumineux individuel, jamais autre chose",
+        "uniquement la technologie d'écran elle-même, indépendamment de tout rétroéclairage",
+        "un voyant lumineux individuel, ou la source de rétroéclairage d'un écran LCD"
+      ],
+      "bonne": 2,
+      "explication": "Une LED désigne à la fois un composant lumineux autonome (voyant individuel) et, plus récemment, la source de rétroéclairage la plus courante des écrans LCD modernes — deux usages proches à ne pas confondre. Elle ne se limite donc pas au seul voyant individuel, et ne constitue pas non plus une technologie d'écran à elle seule sans notion de rétroéclairage.",
+      "source": "Notions générales d'électronique numérique — technologies d'affichage"
+    },
+    {
+      "uid": "M5-0064",
+      "sous_chapitre": "M5.10",
+      "question": "Un écran LCD affiche une image totalement noire, alors que le calculateur qui lui envoie les données de l'image fonctionne normalement. Cette panne provient le plus vraisemblablement :",
+      "options": [
+        "du rétroéclairage, qui a cessé de fournir la lumière nécessaire à la visibilité de l'image",
+        "d'un défaut de conversion analogique-numérique dans le capteur qui alimente l'affichage",
+        "du panneau à cristaux liquides lui-même, qui a cessé de moduler la lumière"
+      ],
+      "bonne": 0,
+      "explication": "Un LCD dépendant entièrement d'un rétroéclairage séparé pour être visible, une panne de ce rétroéclairage peut produire un écran noir alors même que le panneau à cristaux liquides et les données affichées restent corrects. Un défaut du panneau lui-même donne le plus souvent un symptôme différent (image incohérente plutôt que noire), et un défaut de conversion analogique-numérique (voir M5.2) concernerait un capteur en amont, pas l'écran.",
+      "source": "Notions générales d'électronique numérique — technologies d'affichage"
+    },
+    {
+      "uid": "M5-0066",
+      "sous_chapitre": "M5.10",
+      "question": "Contrairement à un CRT, une diode électroluminescente (LED) produit de la lumière par :",
+      "options": [
+        "un phénomène d'électroluminescence, sans faisceau d'électrons ni revêtement phosphorescent",
+        "la modulation, par des cristaux liquides, de la lumière d'un rétroéclairage placé derrière eux",
+        "un faisceau d'électrons qui vient exciter un revêtement phosphorescent"
+      ],
+      "bonne": 0,
+      "explication": "Une LED est une jonction semi-conductrice qui émet directement de la lumière par électroluminescence, sans faisceau d'électrons ni revêtement phosphorescent à exciter — un principe différent de celui d'un tube cathodique. Moduler la lumière d'un rétroéclairage par des cristaux liquides décrit le principe d'un LCD, pas celui d'une LED.",
+      "source": "Notions générales d'électronique numérique — technologies d'affichage"
+    },
+    {
+      "uid": "M5-0067",
+      "sous_chapitre": "M5.11",
+      "question": "Le BITE, intégré aux calculateurs avioniques modernes, désigne :",
+      "options": [
+        "un banc de test externe utilisé uniquement en atelier de révision",
+        "un logiciel de simulation utilisé uniquement lors de la conception d'un calculateur",
+        "la capacité d'un calculateur à surveiller son propre fonctionnement et à détecter ses propres défauts"
+      ],
+      "bonne": 2,
+      "explication": "Le BITE est intégré au calculateur lui-même et lui permet de surveiller son propre fonctionnement et de détecter ses propres défauts, sans nécessiter un banc de test externe complet. Ce n'est donc ni un équipement d'atelier séparé, ni un outil réservé à la phase de conception.",
+      "source": "Notions générales d'avionique — systèmes typiques et BITE"
+    },
+    {
+      "uid": "M5-0068",
+      "sous_chapitre": "M5.11",
+      "question": "Le principal intérêt du BITE pour un technicien de maintenance est de :",
+      "options": [
+        "garantir qu'aucune panne ne puisse jamais survenir sur l'équipement concerné",
+        "accélérer la localisation d'une panne, y compris des défauts transitoires déjà disparus en vol",
+        "remplacer entièrement la nécessité de toute documentation de dépannage"
+      ],
+      "bonne": 1,
+      "explication": "Le BITE accélère la localisation d'une panne en enregistrant un historique de défauts, y compris des défauts transitoires apparus puis disparus en vol, consultable ensuite au sol. Il ne remplace pas la documentation de dépannage (qui reste nécessaire pour interpréter ces messages), et ne garantit évidemment pas l'absence de toute panne.",
+      "source": "Notions générales d'avionique — systèmes typiques et BITE"
+    },
+    {
+      "uid": "M5-0069",
+      "sous_chapitre": "M5.11",
+      "question": "L'ACARS (Aircraft Communications Addressing and Reporting System) transporte principalement :",
+      "options": [
+        "l'ensemble du flux vidéo des caméras de surveillance cabine",
+        "des messages numériques courts (comptes rendus, données de maintenance, demandes météo...)",
+        "les communications vocales entre l'équipage et le contrôle aérien"
+      ],
+      "bonne": 1,
+      "explication": "L'ACARS est un canal de messagerie numérique, utilisé pour des messages courts comme des comptes rendus de position, des données de maintenance ou des demandes météo — pas pour la voix du contrôle aérien (qui reste un canal radio distinct), ni pour un flux vidéo.",
+      "source": "Notions générales d'avionique — systèmes typiques et BITE"
+    },
+    {
+      "uid": "M5-0070",
+      "sous_chapitre": "M5.11",
+      "question": "Dans une chaîne de commandes de vol électriques (Fly-by-Wire), le mouvement du pilote sur la commande est :",
+      "options": [
+        "transmis directement aux gouvernes par une liaison mécanique, sans intervention de calculateur",
+        "converti en signal électrique, traité par des calculateurs, puis transmis aux actionneurs des gouvernes",
+        "ignoré tant que le pilote automatique reste engagé"
+      ],
+      "bonne": 1,
+      "explication": "En Fly-by-Wire, le mouvement du pilote est converti en signal électrique, traité par des calculateurs de commandes de vol, puis envoyé aux actionneurs qui déplacent les gouvernes — remplaçant la liaison mécanique directe entre la commande et les gouvernes. Le pilote automatique engagé ne rend pas les commandes manuelles inopérantes par principe.",
+      "source": "Notions générales d'avionique — systèmes typiques et BITE"
+    },
+    {
+      "uid": "M5-0071",
+      "sous_chapitre": "M5.11",
+      "question": "Un avantage du Fly-by-Wire par rapport à une liaison mécanique traditionnelle est que les calculateurs peuvent appliquer :",
+      "options": [
+        "des protections de domaine de vol, limitant automatiquement une commande dangereuse",
+        "une suppression totale du besoin de redondance des systèmes de commande",
+        "une réduction du nombre de pilotes nécessaires dans le poste de pilotage"
+      ],
+      "bonne": 0,
+      "explication": "Les calculateurs de commandes de vol électriques peuvent appliquer des protections de domaine de vol, limitant automatiquement une commande qui amènerait l'appareil au-delà de ses marges de sécurité. Le nombre de pilotes requis dans le poste de pilotage ne dépend pas de la technologie de commande de vol utilisée ; et rien, dans le principe même du Fly-by-Wire, ne consiste à supprimer une précaution de conception existante.",
+      "source": "Notions générales d'avionique — systèmes typiques et BITE"
+    },
+    {
+      "uid": "M5-0072",
+      "sous_chapitre": "M5.11",
+      "question": "Les systèmes de commandes de vol électriques (Fly-by-Wire) reposent typiquement sur une redondance élevée parce que :",
+      "options": [
+        "les calculateurs de commandes de vol sont particulièrement peu fiables par rapport aux autres calculateurs avioniques",
+        "la réglementation impose une redondance uniquement pour les systèmes de confort cabine",
+        "cette fonction est la plus critique pour la sécurité du vol, et ne doit jamais être perdue à cause d'une seule panne"
+      ],
+      "bonne": 2,
+      "explication": "Le contrôle des gouvernes étant une fonction essentielle au pilotage, plusieurs calculateurs indépendants traitent en parallèle les mêmes commandes pour qu'une panne d'un seul calculateur ne prive jamais l'appareil du contrôle de ses gouvernes. Ce n'est pas une exigence réservée aux systèmes de confort (c'est l'inverse), et cela ne traduit pas une fiabilité intrinsèquement plus faible de ces calculateurs.",
+      "source": "Notions générales d'avionique — systèmes typiques et BITE"
+    },
+    {
+      "uid": "M5-0073",
+      "sous_chapitre": "M5.11",
+      "question": "Le FMS, calculateur central de l'avionique de navigation, centralise principalement :",
+      "options": [
+        "la navigation, la gestion du plan de vol et le calcul des performances de l'appareil",
+        "la gestion de l'éclairage et du confort de la cabine passagers",
+        "la surveillance des paramètres moteurs et les alertes équipage"
+      ],
+      "bonne": 0,
+      "explication": "Le FMS combine les informations de position, gère le plan de vol et calcule les performances de l'appareil (consommation, vitesses et altitudes optimales), en s'interfaçant avec l'autopilote et l'automanette. La surveillance moteur et les alertes relèvent d'un système distinct (ECAM/EICAS, voir M5.12), et la gestion cabine est un domaine encore différent (voir M5.13).",
+      "source": "Notions générales d'avionique — systèmes typiques et BITE"
+    },
+    {
+      "uid": "M5-0074",
+      "sous_chapitre": "M5.11",
+      "question": "Une centrale inertielle (IRS) détermine la position de l'appareil en :",
+      "options": [
+        "consultant une base de données de balises radio au sol",
+        "recevant en continu un signal de positionnement émis par des satellites",
+        "intégrant dans le temps des mesures internes d'accélération et de rotation, sans référence extérieure"
+      ],
+      "bonne": 2,
+      "explication": "L'IRS mesure en continu les accélérations et rotations de l'appareil et calcule la position par intégration mathématique de ces mesures, sans avoir besoin d'aucune information extérieure — contrairement au GNSS, qui repose sur la réception de signaux satellites (voir M5.13). Consulter une base de données de balises radio au sol décrit un principe de navigation radioélectrique différent, pas celui de l'IRS.",
+      "source": "Notions générales d'avionique — systèmes typiques et BITE"
+    },
+    {
+      "uid": "M5-0075",
+      "sous_chapitre": "M5.11",
+      "question": "La limite inhérente au principe de mesure d'une centrale inertielle (IRS) est que :",
+      "options": [
+        "elle cesse totalement de fonctionner dès que l'appareil survole un océan",
+        "elle dérive lentement dans le temps, à cause de l'accumulation de petites erreurs de mesure",
+        "elle nécessite une réception satellite continue pour effectuer le moindre calcul"
+      ],
+      "bonne": 1,
+      "explication": "Comme chaque mesure comporte une petite erreur, l'intégration de nombreuses erreurs successives fait dériver lentement la position calculée au fil du temps — une limite inhérente au principe de mesure, pas un défaut d'un exemplaire particulier. L'IRS reste autonome et ne dépend pas d'une réception satellite pour fonctionner (c'est justement sa caractéristique), et rien ne la rend inopérante au-dessus d'un océan.",
+      "source": "Notions générales d'avionique — systèmes typiques et BITE"
+    },
+    {
+      "uid": "M5-0076",
+      "sous_chapitre": "M5.11",
+      "question": "Sur un aéronef moderne, la dérive propre à la centrale inertielle (IRS) est le plus souvent corrigée en la recalant régulièrement à partir :",
+      "options": [
+        "d'une remise à zéro manuelle effectuée par le pilote à chaque palier de croisière",
+        "d'une source de position externe plus précise sur la durée, typiquement le GNSS",
+        "d'un second calculateur IRS strictement identique, sans autre source"
+      ],
+      "bonne": 1,
+      "explication": "L'IRS est le plus souvent recalée à partir d'une source externe plus précise sur la durée, typiquement le GNSS : l'IRS apporte l'autonomie, le GNSS apporte la précision à long terme, les deux se complétant. Un second IRS identique dériverait de la même façon (donc ne corrigerait rien), et il ne s'agit pas d'une remise à zéro manuelle par le pilote.",
+      "source": "Notions générales d'avionique — systèmes typiques et BITE"
+    },
+    {
+      "uid": "M5-0077",
+      "sous_chapitre": "M5.12",
+      "question": "Concernant l'EFIS et l'ECAM/EICAS, laquelle de ces affirmations est correcte ?",
+      "options": [
+        "l'EFIS et l'ECAM/EICAS assurent exactement la même fonction, sous deux noms différents",
+        "l'EFIS aide à tenir l'appareil en vol et à naviguer, alors qu'ECAM/EICAS surveille les moteurs et alerte l'équipage",
+        "l'ECAM/EICAS remplace entièrement le rôle de navigation habituellement assuré par le FMS"
+      ],
+      "bonne": 1,
+      "explication": "L'EFIS aide le pilote à tenir l'appareil en vol et à naviguer (attitude, vitesse, route), tandis que l'ECAM/EICAS surveille l'état des moteurs et des systèmes et centralise les alertes équipage — deux fonctions distinctes, pas la même fonction sous deux noms. L'ECAM/EICAS ne remplace pas non plus le rôle de navigation du FMS (voir M5.11).",
+      "source": "Notions générales d'avionique — systèmes typiques et BITE"
+    },
+    {
+      "uid": "M5-0078",
+      "sous_chapitre": "M5.12",
+      "question": "L'ECAM et l'EICAS assurent une fonction très proche, sous deux terminologies employées respectivement chez :",
+      "options": [
+        "Boeing (ECAM) et Airbus (EICAS)",
+        "un même constructeur, selon la génération d'appareil",
+        "Airbus (ECAM) et Boeing (EICAS)"
+      ],
+      "bonne": 2,
+      "explication": "L'ECAM est la terminologie employée notamment chez Airbus, et l'EICAS celle employée notamment chez Boeing, pour une fonction très proche (paramètres moteurs et alertes centralisées). Ce ne sont donc pas deux terminologies utilisées par un même constructeur selon la génération d'appareil, et l'association inverse (EICAS chez Airbus, ECAM chez Boeing) ne correspond pas à l'usage réel.",
+      "source": "Notions générales d'avionique — systèmes typiques et BITE"
+    },
+    {
+      "uid": "M5-0079",
+      "sous_chapitre": "M5.12",
+      "question": "Une page synoptique, affichée sur l'écran ECAM/EICAS dédié aux systèmes, présente :",
+      "options": [
+        "exclusivement la route de navigation programmée dans le FMS",
+        "une représentation schématique de l'état d'un système particulier de l'appareil",
+        "une longue liste de valeurs numériques brutes, sans mise en forme particulière"
+      ],
+      "bonne": 1,
+      "explication": "Une page synoptique montre schématiquement l'état d'un système particulier (hydraulique, électrique, carburant...), plutôt qu'une longue liste de valeurs numériques brutes. La route de navigation programmée relève du ND, alimenté par le FMS (voir M5.9 et M5.11), pas de cette page.",
+      "source": "Notions générales d'avionique — systèmes typiques et BITE"
+    },
+    {
+      "uid": "M5-0080",
+      "sous_chapitre": "M5.12",
+      "question": "Par rapport à un ensemble d'instruments et de voyants séparés, la centralisation des alertes sur ECAM/EICAS apporte principalement :",
+      "options": [
+        "une réduction du nombre de calculateurs de commandes de vol nécessaires",
+        "un ordre de priorité entre les pannes, souvent avec une procédure associée directement affichée",
+        "la suppression totale du besoin d'une checklist papier ou électronique de secours"
+      ],
+      "bonne": 1,
+      "explication": "La centralisation permet d'établir un ordre de priorité entre les messages d'anomalie et d'afficher souvent une procédure associée directement à l'écran, plutôt que de laisser l'équipage repérer seul un voyant isolé. Elle n'a pas d'effet sur le nombre de calculateurs de commandes de vol, et une documentation de secours peut rester nécessaire selon les procédures de la compagnie.",
+      "source": "Notions générales d'avionique — systèmes typiques et BITE"
+    },
+    {
+      "uid": "M5-0081",
+      "sous_chapitre": "M5.12",
+      "question": "Dans une architecture avionique dite fédérée :",
+      "options": [
+        "un unique calculateur redondant assure l'ensemble des fonctions critiques de l'appareil",
+        "un seul calculateur unique assure la totalité des fonctions de l'appareil",
+        "chaque fonction dispose de son propre calculateur dédié, avec son propre boîtier"
+      ],
+      "bonne": 2,
+      "explication": "Une architecture fédérée donne à chaque fonction (FMS, EFIS, ECAM/EICAS...) son propre calculateur dédié, avec son propre boîtier, sa propre alimentation et son propre câblage. Faire reposer toutes les fonctions sur un unique calculateur ne correspond ni à l'architecture fédérée ni à aucune architecture avionique réelle, et un calculateur unique pour toutes les fonctions ne correspond à aucune des architectures présentées.",
+      "source": "Notions générales d'avionique — systèmes typiques et BITE"
+    },
+    {
+      "uid": "M5-0082",
+      "sous_chapitre": "M5.12",
+      "question": "Ce qui distingue l'avionique modulaire intégrée (IMA) d'une architecture fédérée est que l'IMA :",
+      "options": [
+        "supprime totalement le besoin de tout logiciel embarqué",
+        "impose au contraire un calculateur physiquement séparé pour chaque fonction",
+        "regroupe plusieurs fonctions différentes sur un même ensemble de modules de calcul génériques partagés"
+      ],
+      "bonne": 2,
+      "explication": "L'IMA regroupe plusieurs fonctions différentes sur des modules de calcul génériques partagés, plutôt que sur du matériel dédié à chacune. Imposer un calculateur physiquement séparé pour chaque fonction décrit au contraire l'architecture fédérée, pas l'IMA ; et l'IMA repose fortement sur le logiciel embarqué (voir M5.9), pas sur sa suppression.",
+      "source": "Notions générales d'avionique — systèmes typiques et BITE"
+    },
+    {
+      "uid": "M5-0083",
+      "sous_chapitre": "M5.12",
+      "question": "En avionique modulaire intégrée (IMA), ce qui empêche une fonction moins critique de perturber une fonction plus critique hébergée sur le même module de calcul est :",
+      "options": [
+        "une séparation physique complète des calculateurs pour chaque fonction",
+        "un cloisonnement logiciel strict entre les partitions de chaque fonction",
+        "la limitation du nombre total de fonctions à deux par module, sans autre précaution"
+      ],
+      "bonne": 1,
+      "explication": "L'IMA repose sur un cloisonnement logiciel strict entre les fonctions hébergées sur un même module, chacune disposant de ressources réservées, pour qu'une fonction moins critique ne puisse ni ralentir ni perturber une fonction plus critique. Une séparation physique complète des calculateurs décrit un principe d'organisation différent, pas le cloisonnement interne à un module partagé ; et aucune limite arbitraire du nombre de fonctions par module ne remplace ce cloisonnement.",
+      "source": "Notions générales d'avionique — systèmes typiques et BITE"
+    },
+    {
+      "uid": "M5-0084",
+      "sous_chapitre": "M5.12",
+      "question": "Un intérêt de l'avionique modulaire intégrée (IMA) par rapport à une architecture fédérée est de :",
+      "options": [
+        "rendre inutile toute certification logicielle, le matériel étant désormais générique",
+        "nécessiter un calculateur dédié supplémentaire pour chaque nouvelle fonction ajoutée",
+        "réduire le nombre de boîtiers et le poids du câblage associé, tout en gardant une évolutivité par mise à jour logicielle"
+      ],
+      "bonne": 2,
+      "explication": "En regroupant plusieurs fonctions sur du matériel générique partagé, l'IMA réduit le nombre de boîtiers et le poids du câblage associé, tout en permettant de faire évoluer une fonction par une mise à jour logicielle plutôt que par un nouveau matériel dédié. Exiger un calculateur supplémentaire par nouvelle fonction décrit plutôt la logique d'une architecture fédérée ; et le logiciel embarqué reste soumis à un contrôle rigoureux (voir M5.9), pas à une absence de certification.",
+      "source": "Notions générales d'avionique — systèmes typiques et BITE"
+    },
+    {
+      "uid": "M5-0087",
+      "sous_chapitre": "M5.13",
+      "question": "Un récepteur GNSS calcule sa position en mesurant :",
+      "options": [
+        "la pression atmosphérique mesurée à l'extérieur de l'appareil",
+        "l'intensité du champ magnétique terrestre à l'endroit où il se trouve",
+        "le temps que met le signal d'au moins quatre satellites à l'atteindre"
+      ],
+      "bonne": 2,
+      "explication": "Le récepteur GNSS calcule sa position en comparant le temps de trajet du signal reçu d'au moins quatre satellites visibles simultanément. La mesure du champ magnétique terrestre et celle de la pression atmosphérique extérieure ne correspondent pas au principe du GNSS — la seconde relève plutôt des instruments de mesure de l'air (altimètre, anémomètre).",
+      "source": "Notions générales d'avionique — systèmes typiques et BITE"
+    },
+    {
+      "uid": "M5-0088",
+      "sous_chapitre": "M5.13",
+      "question": "Contrairement à la centrale inertielle (IRS), la précision d'une position calculée par GNSS :",
+      "options": [
+        "n'est disponible qu'au décollage et à l'atterrissage, jamais en croisière",
+        "reste stable dans le temps, puisqu'elle est recalculée en continu à partir d'une référence extérieure",
+        "se dégrade progressivement à mesure que le temps passe sans nouvelle référence de position"
+      ],
+      "bonne": 1,
+      "explication": "La précision du GNSS reste stable dans le temps car elle est recalculée en continu à partir des satellites, sans dépendre de la durée écoulée depuis une mesure précédente. Une précision qui décline avec le temps écoulé décrit un principe de mesure différent, et rien ne limite par ailleurs la disponibilité du GNSS aux seules phases de décollage et d'atterrissage.",
+      "source": "Notions générales d'avionique — systèmes typiques et BITE"
+    },
+    {
+      "uid": "M5-0089",
+      "sous_chapitre": "M5.13",
+      "question": "Le principal inconvénient du GNSS par rapport à la centrale inertielle (IRS) est que le GNSS :",
+      "options": [
+        "ne peut fonctionner qu'au-dessus des continents, jamais au-dessus des océans",
+        "coûte systématiquement plus cher à l'achat que n'importe quelle centrale inertielle",
+        "dépend entièrement de la réception d'un signal externe, qui peut être dégradé ou perdu"
+      ],
+      "bonne": 2,
+      "explication": "Le GNSS dépend entièrement de la réception d'un signal externe, qui peut être dégradé ou perdu en cas de signal insuffisant ou de brouillage. Le coût comparatif des équipements n'est pas la notion en jeu ici, et rien ne limite le fonctionnement du GNSS aux seules zones continentales.",
+      "source": "Notions générales d'avionique — systèmes typiques et BITE"
+    },
+    {
+      "uid": "M5-0090",
+      "sous_chapitre": "M5.13",
+      "question": "Concernant le TA et le RA du TCAS, laquelle de ces affirmations est correcte ?",
+      "options": [
+        "le TA signale un trafic à surveiller sans exiger de manœuvre, alors que le RA indique une manœuvre verticale précise",
+        "le TA exige toujours une manœuvre verticale immédiate, contrairement au RA",
+        "le TA et le RA désignent exactement la même alerte, à deux moments différents du vol"
+      ],
+      "bonne": 0,
+      "explication": "Le TA signale la présence d'un trafic à surveiller sans exiger de manœuvre immédiate, tandis que le RA, déclenché pour un risque plus pressant, indique une manœuvre verticale précise à suivre. Ce n'est donc pas le TA qui exige une manœuvre immédiate (c'est l'inverse), et les deux alertes ne sont pas identiques.",
+      "source": "Notions générales d'avionique — systèmes typiques et BITE"
+    },
+    {
+      "uid": "M5-0091",
+      "sous_chapitre": "M5.13",
+      "question": "Lorsqu'un avis de résolution (RA) du TCAS contredit temporairement une instruction du contrôle aérien, l'équipage doit :",
+      "options": [
+        "suivre l'avis de résolution du TCAS",
+        "suivre l'instruction du contrôle aérien, qui prime toujours sur le TCAS",
+        "attendre une confirmation du contrôle aérien avant d'agir dans un sens ou dans l'autre"
+      ],
+      "bonne": 0,
+      "explication": "Un avis de résolution doit être suivi par l'équipage même s'il contredit temporairement une instruction du contrôle aérien, car le TCAS réagit à une situation de proximité immédiate que le contrôleur au sol ne perçoit pas nécessairement avec la même précision ni la même réactivité. Attendre une confirmation avant d'agir irait à l'encontre du caractère immédiat de la manœuvre demandée.",
+      "source": "Notions générales d'avionique — TODO: source à vérifier manuellement (règle opérationnelle de priorité du RA)"
+    },
+    {
+      "uid": "M5-0092",
+      "sous_chapitre": "M5.13",
+      "question": "Le TCAS détecte les aéronefs environnants en :",
+      "options": [
+        "recevant une instruction du contrôle aérien au sol à chaque trafic détecté",
+        "recevant un signal GNSS spécifique émis par chaque aéronef environnant",
+        "interrogeant directement le transpondeur des autres aéronefs, indépendamment du contrôle aérien"
+      ],
+      "bonne": 2,
+      "explication": "Le TCAS interroge directement le transpondeur des aéronefs à proximité, de façon indépendante du contrôle aérien au sol. Il ne dépend donc pas d'une instruction du contrôleur pour détecter un trafic, et ne repose pas sur un signal GNSS émis par les autres appareils.",
+      "source": "Notions générales d'avionique — systèmes typiques et BITE"
+    },
+    {
+      "uid": "M5-0093",
+      "sous_chapitre": "M5.13",
+      "question": "Les systèmes cabine (Cabin Systems) regroupent typiquement :",
+      "options": [
+        "exclusivement le système de navigation par satellite utilisé par l'équipage",
+        "les calculateurs de commandes de vol et la centrale inertielle",
+        "l'éclairage cabine, l'interphone, les appels du personnel de cabine et, selon les appareils, le divertissement à bord"
+      ],
+      "bonne": 2,
+      "explication": "Les systèmes cabine regroupent l'électronique dédiée à la cabine passagers : éclairage, interphone, appels du personnel de cabine et, selon les appareils, le divertissement à bord. Les commandes de vol et la centrale inertielle relèvent de systèmes de pilotage distincts (voir M5.11), tout comme la navigation par satellite (GNSS).",
+      "source": "Notions générales d'avionique — systèmes typiques et BITE"
+    },
+    {
+      "uid": "M5-0094",
+      "sous_chapitre": "M5.13",
+      "question": "Par rapport à un calculateur de commandes de vol, un système cabine a en général :",
+      "options": [
+        "un niveau de criticité supérieur, car en contact direct avec les passagers",
+        "un niveau de criticité pour la sécurité du vol nettement plus faible",
+        "exactement le même niveau de criticité, sans aucune distinction"
+      ],
+      "bonne": 1,
+      "explication": "Un système cabine a en général un niveau de criticité pour la sécurité du vol nettement plus faible qu'un calculateur de commandes de vol : une panne d'éclairage cabine n'a pas les mêmes conséquences qu'une panne de Fly-by-Wire. Il reste cependant un équipement électronique à part entière, avec ses propres procédures de maintenance, mais son niveau de criticité n'est ni identique ni supérieur à celui des systèmes de pilotage.",
+      "source": "Notions générales d'avionique — systèmes typiques et BITE"
+    },
+    {
+      "uid": "M5-0095",
+      "sous_chapitre": "M5.13",
+      "question": "Le fait que tous les calculateurs embarqués sur un aéronef moderne n'aient pas le même niveau de criticité impose principalement de garantir que :",
+      "options": [
+        "un système moins critique ne puisse jamais perturber, même en cas de panne, un système plus critique avec lequel il partage des ressources",
+        "seuls les systèmes les plus critiques disposent d'une fonction BITE",
+        "chaque calculateur soit strictement identique aux autres pour simplifier la maintenance"
+      ],
+      "bonne": 0,
+      "explication": "Cette diversité de criticité impose de garantir qu'un système moins critique (par exemple un système d'information de confort) ne puisse jamais perturber, même en cas de panne, un système plus critique avec lequel il partagerait des ressources — un principe assuré notamment par le cloisonnement logiciel de l'avionique modulaire intégrée (voir M5.12). Elle n'implique pas que tous les calculateurs soient identiques, et le BITE (voir M5.11) n'est pas réservé aux seuls systèmes critiques.",
+      "source": "Notions générales d'avionique — systèmes typiques et BITE"
     }
   ]
 }

@@ -1,0 +1,77 @@
+<div id="schema-m513-wrap" style="font-family: inherit; max-width: 680px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m513-wrap .m513-btn { margin:3px 6px 3px 0; padding:7px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.86em; }
+#schema-m513-wrap .m513-btn.active { background:#333; color:#fff; border-color:#333; }
+#schema-m513-wrap .m513-row { display:flex; align-items:center; gap:10px; margin-top:14px; }
+#schema-m513-wrap .m513-name { width:110px; font-size:0.84em; font-weight:bold; }
+#schema-m513-wrap .m513-bar-outer { flex:1; height:20px; background:#e4e4e4; border-radius:4px; overflow:hidden; border:1px solid #bbb; }
+#schema-m513-wrap .m513-bar-inner { height:100%; background:#3a7bd5; transition:width 0.3s; }
+#schema-m513-wrap .m513-bar-inner.gnss { background:#3a9d3a; }
+#schema-m513-wrap .m513-pct { width:70px; text-align:right; font-size:0.8em; color:#555; }
+#schema-m513-wrap .m513-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:4.6em; }
+#schema-m513-wrap .m513-note { font-size:0.74em; color:#777; margin-top:4px; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> avance le temps écoulé depuis le dernier recalage et compare l'évolution de la précision de l'IRS et du GNSS. <span class="m513-note">(Barres illustratives, sans valeur chiffrée réelle.)</span></p>
+
+<div>
+  <button class="m513-btn active" id="m513-btn-t0">t0 : juste après recalage</button>
+  <button class="m513-btn" id="m513-btn-t1">t1 : un peu plus tard</button>
+  <button class="m513-btn" id="m513-btn-t2">t2 : encore plus tard</button>
+</div>
+
+<div class="m513-row">
+  <div class="m513-name">IRS (inertielle)</div>
+  <div class="m513-bar-outer"><div class="m513-bar-inner" id="m513-bar-irs" style="width:95%;"></div></div>
+  <div class="m513-pct" id="m513-pct-irs">précision haute</div>
+</div>
+<div class="m513-row">
+  <div class="m513-name">GNSS (satellite)</div>
+  <div class="m513-bar-outer"><div class="m513-bar-inner gnss" id="m513-bar-gnss" style="width:95%;"></div></div>
+  <div class="m513-pct" id="m513-pct-gnss">précision haute</div>
+</div>
+
+<div class="m513-caption" id="m513-caption">t0, juste après un recalage : les deux sources sont proches en précision. L'IRS n'a pas encore eu le temps d'accumuler d'erreur d'intégration, et le GNSS reste, comme toujours, recalculé en continu à partir des satellites.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m513-wrap');
+  if (!wrap) { return; }
+  var btnT0 = wrap.querySelector('#m513-btn-t0');
+  var btnT1 = wrap.querySelector('#m513-btn-t1');
+  var btnT2 = wrap.querySelector('#m513-btn-t2');
+  var barIrs = wrap.querySelector('#m513-bar-irs');
+  var barGnss = wrap.querySelector('#m513-bar-gnss');
+  var pctIrs = wrap.querySelector('#m513-pct-irs');
+  var pctGnss = wrap.querySelector('#m513-pct-gnss');
+  var caption = wrap.querySelector('#m513-caption');
+
+  function set(t) {
+    btnT0.classList.toggle('active', t === 't0');
+    btnT1.classList.toggle('active', t === 't1');
+    btnT2.classList.toggle('active', t === 't2');
+
+    barGnss.style.width = '95%';
+    pctGnss.textContent = 'précision haute';
+
+    if (t === 't0') {
+      barIrs.style.width = '95%';
+      pctIrs.textContent = 'précision haute';
+      caption.textContent = "t0, juste après un recalage : les deux sources sont proches en précision. L'IRS n'a pas encore eu le temps d'accumuler d'erreur d'intégration, et le GNSS reste, comme toujours, recalculé en continu à partir des satellites.";
+    } else if (t === 't1') {
+      barIrs.style.width = '60%';
+      pctIrs.textContent = 'précision en baisse';
+      caption.textContent = "t1, un peu plus tard : la précision de l'IRS commence à baisser, par accumulation de petites erreurs de mesure intégrées dans le temps (la dérive). Le GNSS, lui, reste stable : il ne dépend pas du temps écoulé depuis un recalage, seulement de la réception satellite actuelle.";
+    } else {
+      barIrs.style.width = '30%';
+      pctIrs.textContent = 'précision dégradée';
+      caption.textContent = "t2, encore plus tard sans nouveau recalage : la dérive de l'IRS s'est accumulée davantage, sa précision continue de baisser. Le GNSS reste stable — c'est précisément pour compenser cette dérive que l'IRS est en pratique recalée régulièrement à partir du GNSS (voir M5.11).";
+    }
+  }
+
+  btnT0.addEventListener('click', function () { set('t0'); });
+  btnT1.addEventListener('click', function () { set('t1'); });
+  btnT2.addEventListener('click', function () { set('t2'); });
+})();
+</script>

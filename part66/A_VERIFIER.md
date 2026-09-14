@@ -38,20 +38,23 @@ niveaux cités pour M11A s'appuient sur le tableau réglementaire compact,
 plus fiable, mais restent à confirmer visuellement avant de prioriser
 finement dessus.
 
-### M5 — Techniques numériques / systèmes d'instruments électroniques (9 fiches / 15 items officiels)
+### M5 — Techniques numériques / systèmes d'instruments électroniques (9 fiches / 15 items officiels) — **comblé le 2026-09-14**
 
-**Non couvert :**
-- **5.4** Réseau avionique/Ethernet (AFDX) — M5.7 couvre ARINC 429 mais
-  pas les réseaux modernes de type Ethernet embarqué.
-- **5.11** Principes de fonctionnement des technologies d'affichage
+~~**Non couvert :**~~
+- ~~**5.4** Réseau avionique/Ethernet (AFDX) — M5.7 couvre ARINC 429 mais
+  pas les réseaux modernes de type Ethernet embarqué.~~
+- ~~**5.11** Principes de fonctionnement des technologies d'affichage
   (CRT/LED/LCD) — M5.9 décrit le glass cockpit fonctionnellement, jamais
-  comment ces écrans fonctionnent réellement.
-- **5.15** Sur ~11 systèmes nommés par le syllabus (ACARS, FBW, FMS, IRS,
+  comment ces écrans fonctionnent réellement.~~
+- ~~**5.15** Sur ~11 systèmes nommés par le syllabus (ACARS, FBW, FMS, IRS,
   GNSS, TCAS, avionique modulaire intégrée, systèmes cabine, systèmes
-  d'information...), seuls 3 sont couverts (EFIS, ECAM, EICAS) dans M5.9.
+  d'information...), seuls 3 sont couverts (EFIS, ECAM, EICAS) dans M5.9.~~
 
-**Superficiel :** 5.14 (EMC/HIRF couverts, mais protection foudre et le
-sigle EMI distinctement nommé absents).
+~~**Superficiel :** 5.14 (EMC/HIRF couverts, mais protection foudre et le
+sigle EMI distinctement nommé absents).~~
+
+Voir la section « M5 — comblement des manques du syllabus (2026-09-14) »
+plus bas dans ce fichier pour le détail du travail effectué.
 
 ### M7A — Pratiques de maintenance (10 fiches + mémo / 21 items officiels)
 
@@ -2012,6 +2015,113 @@ ouvert, non repris sans demande explicite.
 Test en local par l'utilisateur (consigne explicite de ce chantier : pas de
 push avant ce test). Aucune autre relecture ni itération adversariale
 prévue sauf demande explicite.
+
+## M5 — comblement des manques du syllabus (2026-09-14)
+
+**Étape 0 — extraction AMC1 détaillée** : le texte AMC1 détaillé du Module 5
+(en réalité l'Appendice I à l'Annexe III du règlement (UE) 1321/2014,
+terminologie « AMC1 » conservée par cohérence avec les audits précédents
+du chantier) a été extrait via `pdftotext -table -f 591 -l 592` sur le PDF
+consolidé EASA (pages 591-592, colonne LEVEL au format A/B3/B1/B2). Les 15
+items (5.1 à 5.15) ont été lus intégralement et confrontés aux 9 fiches
+existantes, comme pour M15 (vérifier ce qui est traité au niveau exigé, pas
+seulement ce qui est mentionné).
+
+**Constat** : les 4 manques identifiés par l'audit de couverture sont
+confirmés exactement — 5.4 (bus de données : ARINC 429 couvert, AFDX/Ethernet
+absent), 5.11 (principes de fonctionnement des écrans, absent en bloc malgré
+un glass cockpit déjà décrit fonctionnellement en M5.9), 5.15 (11 systèmes
+nommés par le texte officiel, seuls EFIS/ECAM/EICAS nommés sans être
+développés), 5.14 (CEM/HIRF couverts, EMI non nommé distinctement, protection
+foudre absente). **Aucun autre item manqué n'a été trouvé** (vérification
+exhaustive des 15 items, méthode M15.8) : les items 5.5(b), 5.6(b), 5.7
+(microprocesseurs), 5.8 (circuits intégrés/encodeurs) et 5.9 (multiplexage)
+sont couverts par les fiches existantes mais ne sont en réalité **pas exigés
+au niveau B1.1** (niveau B2 uniquement dans la colonne officielle) — leur
+traitement, même partiel, n'est donc pas un manque. **Aucune erreur
+factuelle** trouvée dans les 9 fiches existantes (comme pour M15).
+
+**Contenu ajouté** : module passé de 9 à 13 fiches, 44 à 89 questions (50
+ajoutées, 5 supprimées en relecture), 11 à 19 schémas (8 nouveaux).
+- 3 fiches étendues : **M5.4** (ajout de la mémoire PROM, item 5.6a) ;
+  **M5.7** (ajout de l'AFDX/Ethernet embarqué, item 5.4 ; le multiplexage
+  déjà présent est désormais explicitement signalé hors-programme B1.1) ;
+  **M5.8** (ajout de l'EMI nommé distinctement de la CEM, et de la
+  protection foudre structure métallique/composite, item 5.14).
+- 4 nouvelles fiches, item 5.15 : **M5.10** (principes des écrans CRT/LCD/
+  LED, item 5.11) ; **M5.11** (BITE, ACARS, Fly-by-Wire, FMS, IRS) ; **M5.12**
+  (EFIS/ECAM/EICAS complétés, avionique modulaire intégrée vs architecture
+  fédérée) ; **M5.13** (GNSS, TCAS, systèmes cabine, systèmes d'information).
+- Champ `niveau` ajouté rétroactivement aux 13 fiches (les 9 existantes
+  n'en portaient aucun) ; `niveau_note` sur les fiches à double item (M5.7,
+  M5.8, M5.9) et sur M5.11/M5.12/M5.13 (item 5.15, niveau 1, source citée :
+  page 592 du document EASA, colonne B1).
+- **Demande explicite de l'utilisateur** : M5.5 (microprocesseurs, item 5.7)
+  porte désormais un `niveau_note` signalant que ce contenu est réservé à la
+  catégorie B2 et n'est pas exigé pour la licence B1.1 (conservé à titre de
+  culture générale) — affiché à l'élève via le mécanisme `niveau_note`
+  existant dans `part66/ui.py`.
+
+**Relecture `relecteur-part66` (2 rounds)** — 4 BLOQUANT trouvés et corrigés
+au round 1 : explication de l'ACARS avec un développement de sigle erroné
+(« ARINC Communications... » au lieu de « Aircraft Communications... ») ;
+tension d'accélération du CRT présentée sans le risque électrique résiduel
+associé (critère sécurité renforcé, corrigé par un ajout explicite renvoyant
+à la procédure constructeur, sur le modèle du traitement ESD de M5.6) ; 9
+explications désignant un distracteur par sa position (« la première
+option ») plutôt que par son contenu — régression par rapport à la règle
+posée le 2026-09-13 (voir section « Positions des bonnes réponses corrigées
+sur 5 modules ») — corrigées une à une ; niveaux non sourcés sur M5.11/12/13,
+corrigés par citation précise de la page et de la colonne du document EASA.
+Le round 2 (vérification ciblée) a trouvé un résidu (M5-0070, même défaut de
+référence positionnelle, hors de la liste initiale) et une régression
+introduite par une reformulation (M5-0066 : un LCD ne « reflète » pas la
+lumière d'un rétroéclairage, il la transmet/module — corrigé), tous deux
+corrigés. 5 questions redondantes ou non sourcées supprimées (M5-0052 —
+testait la catégorie syllabus d'un item, pas une connaissance ; M5-0054 —
+doublon exact de M5-0053 ; M5-0065 — donnait la réponse de M5-0062 ; M5-0085
+— affirmation comparative sur la rigueur de certification IMA jamais
+sourcée, retirée aussi de la fiche M5.12 et du schéma `M5.12.html` ;
+M5-0086 — redondante avec M5-0045 et M5-0077).
+
+**Test adversarial `eleve-adversaire` (2 rounds), sur les 45 nouvelles
+questions uniquement** (consigne explicite : ne pas retester les 44
+questions existantes, plafond déjà connu sur ce type de contenu ancien du
+module) : **100 % de réussite sans connaissance du domaine aux deux rounds**
+(seuil d'alerte 40 %), avec le même diagnostic déjà documenté pour M7A et
+M15 — un round de corrections ciblées (échos d'acronymes dans l'énoncé,
+distracteurs auto-contradictoires avec la prémisse, fuites de définitions
+entre questions voisines) n'a fait que déplacer les tells vers un autre
+registre (longueur de la bonne réponse, structure de phrase contrastive)
+sans faire baisser le score. **Nouvelle observation transversale** : sur les
+45 questions, l'index `bonne` ne tombait jamais sur la position 2 avant
+randomisation — un biais de génération mécanique, indépendant du contenu.
+
+**Décision utilisateur** : accepter la dette, comme pour M7A et M15 (les 45
+questions restent factuellement correctes et relues ; aucune réécriture
+complète supplémentaire). Consigne explicite ajoutée en conséquence dans
+`C:\Users\pc\CLAUDE.md` (section « Contrainte de génération : répartir la
+position de la bonne réponse dès l'écriture des questions ») : répartir
+consciemment l'index `bonne` entre les 3 positions dès la rédaction d'un
+nouveau lot, la randomisation de fin de chantier restant un filet de
+sécurité et non un substitut.
+
+**Randomisation finale** : script de recherche de graine sur les 89
+questions du module (et non les 45 nouvelles seules, pour rester cohérent
+avec l'ensemble du fichier) — seed retenue donnant une distribution 30/29/30
+sur les index 0/1/2, aucun cycle de période 1/2/3 détecté.
+
+**Vérification technique** : JSON valide (13 fiches, 89 questions, uids
+uniques), aucun `<svg>` dans les 19 schémas du module, aucune génération de
+DOM dynamique, libellés permanents et captions statiques vérifiés (dont la
+correction du libellé manquant sur le conteneur IMA de `M5.12.html` et de
+la divergence `<strong>` entre texte statique et JS de `M5.11-2.html`/
+`M5.12-2.html`). `AppTest` headless sur `app.py` : aucune exception, 19
+éléments `html` (schémas), correspondant exactement aux 19 fichiers
+présents sur disque.
+
+**Reste à faire avant commit** : test en local par l'utilisateur (consigne
+explicite de ce chantier : pas de push avant ce test).
 
 ## M17A — construction en cours (Lot 1 : M17A.1-M17A.5)
 

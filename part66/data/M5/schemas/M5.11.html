@@ -1,0 +1,63 @@
+<div id="schema-m511-wrap" style="font-family: inherit; max-width: 680px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m511-wrap .m511-btn { margin:3px 6px 3px 0; padding:7px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.9em; }
+#schema-m511-wrap .m511-btn.active { background:#333; color:#fff; border-color:#333; }
+#schema-m511-wrap .m511-calc { margin-top:16px; padding:12px; border:2px solid #999; border-radius:8px; background:#eee; }
+#schema-m511-wrap .m511-calc.fault { border-color:#c0392b; background:#fbe4e1; }
+#schema-m511-wrap .m511-titre { font-weight:bold; font-size:0.9em; margin-bottom:6px; }
+#schema-m511-wrap .m511-log { margin-top:8px; padding:8px; border-radius:5px; font-size:0.82em; background:#fff; border:1px dashed #999; }
+#schema-m511-wrap .m511-log.filled { border-style:solid; border-color:#c0392b; }
+#schema-m511-wrap .m511-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:4.4em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> observe ce qui se passe dans le calculateur (avec sa fonction BITE) selon qu'un défaut interne survient ou non.</p>
+
+<div>
+  <button class="m511-btn active" id="m511-btn-normal">Fonctionnement normal</button>
+  <button class="m511-btn" id="m511-btn-fault">Défaut interne survenu en vol</button>
+</div>
+
+<div class="m511-calc" id="m511-calc">
+  <div class="m511-titre">Calculateur avionique — fonction BITE intégrée</div>
+  <div>État de la fonction surveillée : <span id="m511-etat">normal</span></div>
+  <div class="m511-log" id="m511-log">Historique de pannes BITE : vide, rien à signaler.</div>
+</div>
+
+<div class="m511-caption" id="m511-caption">Fonctionnement normal : le BITE surveille en continu le calculateur sans rien détecter d'anormal — l'historique de pannes reste vide, aucun message de maintenance n'est généré.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m511-wrap');
+  if (!wrap) { return; }
+  var btnNormal = wrap.querySelector('#m511-btn-normal');
+  var btnFault = wrap.querySelector('#m511-btn-fault');
+  var calc = wrap.querySelector('#m511-calc');
+  var etat = wrap.querySelector('#m511-etat');
+  var log = wrap.querySelector('#m511-log');
+  var caption = wrap.querySelector('#m511-caption');
+
+  function showNormal() {
+    btnNormal.className = 'm511-btn active';
+    btnFault.className = 'm511-btn';
+    calc.className = 'm511-calc';
+    etat.textContent = 'normal';
+    log.className = 'm511-log';
+    log.textContent = 'Historique de pannes BITE : vide, rien à signaler.';
+    caption.textContent = "Fonctionnement normal : le BITE surveille en continu le calculateur sans rien détecter d'anormal — l'historique de pannes reste vide, aucun message de maintenance n'est généré.";
+  }
+
+  function showFault() {
+    btnFault.className = 'm511-btn active';
+    btnNormal.className = 'm511-btn';
+    calc.className = 'm511-calc fault';
+    etat.textContent = 'défaut détecté par le BITE';
+    log.className = 'm511-log filled';
+    log.textContent = "Historique de pannes BITE : 1 entrée enregistrée (horodatée), consultable au sol sans banc de test externe.";
+    caption.textContent = "Défaut interne survenu en vol : le BITE le détecte et l'enregistre dans son historique, y compris si le défaut redevient normal ensuite (défaut transitoire). Le technicien peut consulter cette entrée au sol pour localiser la panne, sans avoir besoin de tester tout le calculateur de l'extérieur.";
+  }
+
+  btnNormal.addEventListener('click', showNormal);
+  btnFault.addEventListener('click', showFault);
+})();
+</script>

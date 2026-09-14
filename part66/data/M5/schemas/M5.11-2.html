@@ -1,0 +1,47 @@
+<div id="schema-m511b-wrap" style="font-family: inherit; max-width: 700px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m511b-wrap .m511b-btn { margin:3px 6px 3px 0; padding:7px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.86em; }
+#schema-m511b-wrap .m511b-btn.active { background:#333; color:#fff; border-color:#333; }
+#schema-m511b-wrap .m511b-result { margin-top:14px; padding:12px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:4.6em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> choisis un système et regarde sa fonction principale.</p>
+
+<div>
+  <button class="m511b-btn active" data-sys="acars">ACARS</button>
+  <button class="m511b-btn" data-sys="fbw">Fly-by-Wire</button>
+  <button class="m511b-btn" data-sys="fms">FMS</button>
+  <button class="m511b-btn" data-sys="irs">IRS</button>
+</div>
+
+<div class="m511b-result" id="m511b-result">📡 ACARS — messagerie numérique sol-bord (comptes rendus, données de maintenance, demandes météo), transmise par liaison VHF, HF ou satellite selon la couverture. Ne transporte pas la voix du contrôle aérien.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m511b-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('.m511b-btn');
+  var result = wrap.querySelector('#m511b-result');
+
+  var data = {
+    acars: { icon: '📡', nom: 'ACARS', texte: "messagerie numérique sol-bord (comptes rendus, données de maintenance, demandes météo), transmise par liaison VHF, HF ou satellite selon la couverture. Ne transporte pas la voix du contrôle aérien." },
+    fbw: { icon: '🕹️', nom: 'Fly-by-Wire', texte: "convertit le mouvement des commandes du pilote en signal électrique, traité par des calculateurs redondants qui pilotent les actionneurs de gouverne et appliquent des protections de domaine de vol." },
+    fms: { icon: '🗺️', nom: 'FMS', texte: "centralise la navigation, le plan de vol et le calcul des performances (consommation, vitesses et altitudes optimales), et peut piloter l'appareil via l'autopilote et l'automanette." },
+    irs: { icon: '🧭', nom: 'IRS', texte: "détermine position, attitude, cap et vitesse par intégration de mesures internes d'accélération et de rotation, sans référence extérieure — mais dérive lentement dans le temps, corrigée en général par le GNSS." }
+  };
+
+  function render(sys) {
+    var d = data[sys];
+    result.textContent = d.icon + ' ' + d.nom + ' — ' + d.texte;
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var sys = b.getAttribute('data-sys');
+      btns.forEach(function (x) { x.classList.toggle('active', x === b); });
+      render(sys);
+    });
+  });
+})();
+</script>

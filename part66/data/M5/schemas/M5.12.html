@@ -1,0 +1,68 @@
+<div id="schema-m512-wrap" style="font-family: inherit; max-width: 700px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m512-wrap .m512-btn { margin:3px 6px 3px 0; padding:7px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.9em; }
+#schema-m512-wrap .m512-btn.active { background:#333; color:#fff; border-color:#333; }
+#schema-m512-wrap .m512-row { display:flex; gap:8px; flex-wrap:wrap; margin-top:16px; }
+#schema-m512-wrap .m512-box { padding:10px 8px; border-radius:6px; text-align:center; font-size:0.78em; min-width:78px; border:1px solid #999; background:#eee; }
+#schema-m512-wrap .m512-module { border:2px dashed #666; border-radius:8px; padding:8px; display:flex; gap:6px; }
+#schema-m512-wrap .m512-part { padding:8px 6px; border-radius:5px; text-align:center; font-size:0.74em; min-width:60px; background:#dbe9ff; border:1px solid #6a9ad6; }
+#schema-m512-wrap .m512-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:4.6em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> compare l'architecture fédérée et l'avionique modulaire intégrée (IMA).</p>
+
+<div>
+  <button class="m512-btn active" id="m512-btn-fed">Architecture fédérée</button>
+  <button class="m512-btn" id="m512-btn-ima">Avionique modulaire intégrée (IMA)</button>
+</div>
+
+<div class="m512-row" id="m512-view-fed">
+  <div class="m512-box">Boîtier FMS<span style="display:block;color:#666;">calculateur dédié</span></div>
+  <div class="m512-box">Boîtier EFIS<span style="display:block;color:#666;">calculateur dédié</span></div>
+  <div class="m512-box">Boîtier ECAM/EICAS<span style="display:block;color:#666;">calculateur dédié</span></div>
+</div>
+
+<div class="m512-row" id="m512-view-ima" style="display:none;">
+  <div style="width:100%;">
+    <div style="font-size:0.74em;color:#666;margin-bottom:4px;">Module de calcul générique partagé</div>
+    <div class="m512-module">
+    <div class="m512-part">Partition FMS</div>
+    <div class="m512-part">Partition EFIS</div>
+    <div class="m512-part">Partition ECAM/EICAS</div>
+    </div>
+  </div>
+</div>
+
+<div class="m512-caption" id="m512-caption">Architecture fédérée : chaque fonction (FMS, EFIS, ECAM/EICAS...) dispose de son propre boîtier dédié, avec sa propre alimentation et son propre câblage — autant de fonctions, autant de boîtiers séparés.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m512-wrap');
+  if (!wrap) { return; }
+  var btnFed = wrap.querySelector('#m512-btn-fed');
+  var btnIma = wrap.querySelector('#m512-btn-ima');
+  var viewFed = wrap.querySelector('#m512-view-fed');
+  var viewIma = wrap.querySelector('#m512-view-ima');
+  var caption = wrap.querySelector('#m512-caption');
+
+  function showFed() {
+    btnFed.className = 'm512-btn active';
+    btnIma.className = 'm512-btn';
+    viewFed.style.display = 'flex';
+    viewIma.style.display = 'none';
+    caption.textContent = "Architecture fédérée : chaque fonction (FMS, EFIS, ECAM/EICAS...) dispose de son propre boîtier dédié, avec sa propre alimentation et son propre câblage — autant de fonctions, autant de boîtiers séparés.";
+  }
+
+  function showIma() {
+    btnIma.className = 'm512-btn active';
+    btnFed.className = 'm512-btn';
+    viewFed.style.display = 'none';
+    viewIma.style.display = 'flex';
+    caption.textContent = "Avionique modulaire intégrée (IMA) : plusieurs fonctions partagent un même module de calcul générique, chacune dans sa propre partition logicielle cloisonnée avec ses ressources réservées — moins de boîtiers et de câblage, une fonction moins critique ne pouvant ni ralentir ni perturber une fonction plus critique du même module.";
+  }
+
+  btnFed.addEventListener('click', showFed);
+  btnIma.addEventListener('click', showIma);
+})();
+</script>

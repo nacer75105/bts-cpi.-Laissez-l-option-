@@ -1,0 +1,59 @@
+<div id="schema-m513b-wrap" style="font-family: inherit; max-width: 680px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m513b-wrap .m513b-btn { margin:3px 6px 3px 0; padding:7px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.86em; }
+#schema-m513b-wrap .m513b-btn.active { background:#333; color:#fff; border-color:#333; }
+#schema-m513b-wrap .m513b-result { margin-top:14px; padding:12px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5em; }
+#schema-m513b-wrap .m513b-result.ra { border-left-color:#c0392b; background:rgba(192,57,43,0.10); }
+#schema-m513b-wrap .m513b-result.ta { border-left-color:#c98a1a; background:rgba(201,138,26,0.10); }
+#schema-m513b-wrap .m513b-result.none { border-left-color:#3a9d3a; background:rgba(58,157,58,0.10); }
+</style>
+
+<p><strong>Essaie toi-même :</strong> choisis un niveau de proximité avec un autre aéronef détecté par le TCAS, et regarde l'alerte associée.</p>
+
+<div>
+  <button class="m513b-btn active" id="m513b-btn-loin">Trafic détecté, sans risque de proximité</button>
+  <button class="m513b-btn" id="m513b-btn-ta">Trafic à surveiller, proximité en augmentation</button>
+  <button class="m513b-btn" id="m513b-btn-ra">Risque de collision devenu pressant</button>
+</div>
+
+<div class="m513b-result none" id="m513b-result">Aucune alerte : un trafic est détecté, mais sans risque de proximité — pas d'action particulière requise.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m513b-wrap');
+  if (!wrap) { return; }
+  var btnLoin = wrap.querySelector('#m513b-btn-loin');
+  var btnTa = wrap.querySelector('#m513b-btn-ta');
+  var btnRa = wrap.querySelector('#m513b-btn-ra');
+  var result = wrap.querySelector('#m513b-result');
+
+  function showLoin() {
+    btnLoin.className = 'm513b-btn active';
+    btnTa.className = 'm513b-btn';
+    btnRa.className = 'm513b-btn';
+    result.className = 'm513b-result none';
+    result.textContent = "Aucune alerte : un trafic est détecté, mais sans risque de proximité — pas d'action particulière requise.";
+  }
+
+  function showTa() {
+    btnTa.className = 'm513b-btn active';
+    btnLoin.className = 'm513b-btn';
+    btnRa.className = 'm513b-btn';
+    result.className = 'm513b-result ta';
+    result.textContent = "Avis de trafic (TA) : le TCAS signale ce trafic à surveiller, sans exiger de manœuvre immédiate — l'équipage reste attentif à son évolution.";
+  }
+
+  function showRa() {
+    btnRa.className = 'm513b-btn active';
+    btnLoin.className = 'm513b-btn';
+    btnTa.className = 'm513b-btn';
+    result.className = 'm513b-result ra';
+    result.textContent = "Avis de résolution (RA) : le TCAS indique une manœuvre verticale précise à suivre. L'équipage doit la suivre, même si elle contredit temporairement une instruction du contrôle aérien.";
+  }
+
+  btnLoin.addEventListener('click', showLoin);
+  btnTa.addEventListener('click', showTa);
+  btnRa.addEventListener('click', showRa);
+})();
+</script>

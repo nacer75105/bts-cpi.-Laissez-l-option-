@@ -1,0 +1,47 @@
+<div id="schema-m512b-wrap" style="font-family: inherit; max-width: 680px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m512b-wrap .m512b-btn { margin:3px 6px 3px 0; padding:7px 10px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.84em; text-align:left; display:block; width:100%; }
+#schema-m512b-wrap .m512b-btn.active { background:#333; color:#fff; border-color:#333; }
+#schema-m512b-wrap .m512b-result { margin-top:14px; padding:12px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:4.6em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> choisis une information affichée au pilote, et regarde quel système l'affiche.</p>
+
+<div id="m512b-infos">
+  <button class="m512b-btn active" data-i="attitude">Attitude, vitesse, altitude de l'appareil</button>
+  <button class="m512b-btn" data-i="route">Route programmée et position sur le plan de vol</button>
+  <button class="m512b-btn" data-i="moteur">Paramètres moteurs et messages d'alerte</button>
+  <button class="m512b-btn" data-i="hydraulique">Page synoptique du circuit hydraulique</button>
+</div>
+
+<div class="m512b-result" id="m512b-result">🖥️ PFD (partie de l'EFIS) — c'est l'écran que le pilote regarde en priorité pour tenir l'appareil en vol.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m512b-wrap');
+  if (!wrap) { return; }
+  var btns = wrap.querySelectorAll('#m512b-infos .m512b-btn');
+  var result = wrap.querySelector('#m512b-result');
+
+  var data = {
+    attitude: { ecran: 'PFD (partie de l\'EFIS)', texte: "c'est l'écran que le pilote regarde en priorité pour tenir l'appareil en vol." },
+    route: { ecran: 'ND (partie de l\'EFIS)', texte: "alimenté par le FMS, il affiche où se trouve l'appareil, où il va, et par quel chemin." },
+    moteur: { ecran: 'ECAM ou EICAS (selon le constructeur)', texte: "affiche en continu les paramètres moteurs essentiels et centralise les messages d'alerte équipage." },
+    hydraulique: { ecran: 'ECAM ou EICAS (selon le constructeur)', texte: "présente, à la demande ou automatiquement en cas de panne, une page synoptique schématique de l'état du système concerné." }
+  };
+
+  function render(i) {
+    var d = data[i];
+    result.textContent = '🖥️ ' + d.ecran + ' — ' + d.texte;
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var i = b.getAttribute('data-i');
+      btns.forEach(function (x) { x.classList.toggle('active', x === b); });
+      render(i);
+    });
+  });
+})();
+</script>

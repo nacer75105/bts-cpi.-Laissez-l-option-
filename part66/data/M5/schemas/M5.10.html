@@ -1,0 +1,80 @@
+<div id="schema-m510-wrap" style="font-family: inherit; max-width: 700px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m510-wrap .m510-btn { margin:3px 6px 3px 0; padding:7px 14px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.9em; }
+#schema-m510-wrap .m510-btn.active { background:#333; color:#fff; border-color:#333; }
+#schema-m510-wrap .m510-diagram { display:flex; align-items:center; gap:10px; margin-top:16px; flex-wrap:wrap; min-height:90px; }
+#schema-m510-wrap .m510-box { position:relative; padding:14px 10px 8px; border-radius:6px; text-align:center; font-size:0.82em; min-width:90px; border:1px solid #999; background:#eee; }
+#schema-m510-wrap .m510-box.hot { background:#ffe9c2; border-color:#c98a1a; }
+#schema-m510-wrap .m510-arrow { font-size:1.3em; color:#666; }
+#schema-m510-wrap .m510-lbl { display:block; font-size:0.72em; color:#666; margin-top:4px; }
+#schema-m510-wrap .m510-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:4.4em; }
+</style>
+
+<p><strong>Essaie toi-même :</strong> choisis une technologie d'écran et observe comment la lumière visible est produite.</p>
+
+<div>
+  <button class="m510-btn active" id="m510-btn-crt">Tube cathodique (CRT)</button>
+  <button class="m510-btn" id="m510-btn-lcd">Écran à cristaux liquides (LCD)</button>
+  <button class="m510-btn" id="m510-btn-led">Diode électroluminescente (LED)</button>
+</div>
+
+<div class="m510-diagram" id="m510-diagram-crt">
+  <div class="m510-box hot">Canon à électrons<span class="m510-lbl">émet le faisceau</span></div>
+  <div class="m510-arrow">→</div>
+  <div class="m510-box hot">Faisceau d'électrons<span class="m510-lbl">balaie l'écran ligne par ligne</span></div>
+  <div class="m510-arrow">→</div>
+  <div class="m510-box hot">Couche de phosphore<span class="m510-lbl">émet la lumière visible</span></div>
+</div>
+
+<div class="m510-diagram" id="m510-diagram-lcd" style="display:none;">
+  <div class="m510-box hot">Rétroéclairage (LED)<span class="m510-lbl">source de lumière séparée</span></div>
+  <div class="m510-arrow">→</div>
+  <div class="m510-box">Cristaux liquides<span class="m510-lbl">modulent la lumière selon la tension</span></div>
+  <div class="m510-arrow">→</div>
+  <div class="m510-box">Filtre coloré<span class="m510-lbl">R/V/B par sous-pixel</span></div>
+</div>
+
+<div class="m510-diagram" id="m510-diagram-led" style="display:none;">
+  <div class="m510-box hot">Jonction semi-conductrice<span class="m510-lbl">parcourue par un courant</span></div>
+  <div class="m510-arrow">→</div>
+  <div class="m510-box hot">Électroluminescence<span class="m510-lbl">émission directe de lumière</span></div>
+  <div class="m510-arrow">→</div>
+  <div class="m510-box">Deux usages<span class="m510-lbl">voyant individuel, ou rétroéclairage d'un LCD</span></div>
+</div>
+
+<div class="m510-caption" id="m510-caption">Tube cathodique (CRT) : un canon à électrons envoie un faisceau qui balaie l'écran ligne par ligne ; là où il frappe la couche de phosphore, celle-ci émet directement de la lumière visible — le CRT produit donc lui-même sa lumière, au prix d'un tube volumineux et d'une tension élevée.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m510-wrap');
+  if (!wrap) { return; }
+  var btnCrt = wrap.querySelector('#m510-btn-crt');
+  var btnLcd = wrap.querySelector('#m510-btn-lcd');
+  var btnLed = wrap.querySelector('#m510-btn-led');
+  var diagCrt = wrap.querySelector('#m510-diagram-crt');
+  var diagLcd = wrap.querySelector('#m510-diagram-lcd');
+  var diagLed = wrap.querySelector('#m510-diagram-led');
+  var caption = wrap.querySelector('#m510-caption');
+
+  var captions = {
+    crt: "Tube cathodique (CRT) : un canon à électrons envoie un faisceau qui balaie l'écran ligne par ligne ; là où il frappe la couche de phosphore, celle-ci émet directement de la lumière visible — le CRT produit donc lui-même sa lumière, au prix d'un tube volumineux et d'une tension élevée.",
+    lcd: "Écran à cristaux liquides (LCD) : il ne produit aucune lumière par lui-même. Un rétroéclairage (aujourd'hui le plus souvent à LED) fournit la lumière ; les cristaux liquides, selon la tension appliquée, laissent passer plus ou moins cette lumière ; un filtre coloré par sous-pixel reconstitue ensuite une image en couleur.",
+    led: "Diode électroluminescente (LED) : un courant traversant une jonction semi-conductrice produit directement de la lumière par électroluminescence. Une LED sert soit de voyant lumineux individuel, soit — usage aujourd'hui dominant en avionique — de source de rétroéclairage pour un écran LCD."
+  };
+
+  function show(which) {
+    btnCrt.classList.toggle('active', which === 'crt');
+    btnLcd.classList.toggle('active', which === 'lcd');
+    btnLed.classList.toggle('active', which === 'led');
+    diagCrt.style.display = which === 'crt' ? 'flex' : 'none';
+    diagLcd.style.display = which === 'lcd' ? 'flex' : 'none';
+    diagLed.style.display = which === 'led' ? 'flex' : 'none';
+    caption.textContent = captions[which];
+  }
+
+  btnCrt.addEventListener('click', function () { show('crt'); });
+  btnLcd.addEventListener('click', function () { show('lcd'); });
+  btnLed.addEventListener('click', function () { show('led'); });
+})();
+</script>
