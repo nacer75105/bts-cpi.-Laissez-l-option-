@@ -1,0 +1,77 @@
+<div id="schema-m1130-wrap" style="font-family: inherit; max-width: 660px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1130-wrap .m1130-btn { margin:4px 6px 4px 0; padding:8px 10px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.78em; }
+#schema-m1130-wrap .m1130-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1130-wrap .m1130-diagram { position:relative; height:170px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; }
+#schema-m1130-wrap .m1130-hub { position:absolute; left:50%; top:50%; width:90px; height:44px; transform:translate(-50%,-50%); border:2px solid #4a76a8; border-radius:6px; background:#fff; display:flex; align-items:center; justify-content:center; font-size:0.68em; text-align:center; }
+#schema-m1130-wrap .m1130-node { position:absolute; width:80px; height:36px; border:1.5px solid #999; border-radius:6px; background:#eef2f7; display:flex; align-items:center; justify-content:center; font-size:0.64em; text-align:center; }
+#schema-m1130-wrap .m1130-link { position:absolute; height:3px; background:#ccc; transition: background 0.2s, box-shadow 0.2s; transform-origin: left center; }
+#schema-m1130-wrap .m1130-link.on { background:#7fa8d9; box-shadow: 0 0 5px 1px rgba(127,168,217,0.7); }
+#schema-m1130-wrap .m1130-label { position:absolute; font-size:0.6em; color:#555; }
+#schema-m1130-wrap .m1130-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:6em; font-size:0.85em; }
+</style>
+
+<p><strong>Le serveur cabine (CNS), point d'interconnexion :</strong> cliquez pour suivre un flux de données à la fois.</p>
+
+<div>
+  <button class="m1130-btn active" id="m1130-btn-ife">Flux IFE (divertissement)</button>
+  <button class="m1130-btn" id="m1130-btn-cids">Flux CIDS (annonce)</button>
+</div>
+
+<div class="m1130-diagram">
+  <div class="m1130-hub">Serveur cabine<br>(CNS)</div>
+  <div class="m1130-label" style="left:50%; top:2px; transform:translateX(-50%);">Point d'interconnexion</div>
+  <div class="m1130-label" style="left:50%; bottom:2px; transform:translateX(-50%); text-align:center;">Liaisons du r&#233;seau cabine</div>
+
+  <div class="m1130-node" id="m1130-ife" style="left:2%; top:10%;">Serveur IFE</div>
+  <div class="m1130-link on" id="m1130-link-ife" style="left:16%; top:26%; width:32%; transform:rotate(20deg);"></div>
+
+  <div class="m1130-node" id="m1130-fap" style="left:2%; bottom:10%;">Panneau agent<br>de bord (FAP)</div>
+  <div class="m1130-link" id="m1130-link-fap" style="left:16%; top:72%; width:32%; transform:rotate(-20deg);"></div>
+
+  <div class="m1130-node" id="m1130-siege" style="right:2%; top:10%;">&#201;cran si&#232;ge</div>
+  <div class="m1130-link on" id="m1130-link-siege" style="right:16%; top:26%; width:32%; transform:rotate(-20deg) scaleX(-1);"></div>
+
+  <div class="m1130-node" id="m1130-hp" style="right:2%; bottom:10%;">Haut-parleurs<br>cabine</div>
+  <div class="m1130-link" id="m1130-link-hp" style="right:16%; top:72%; width:32%; transform:rotate(20deg) scaleX(-1);"></div>
+</div>
+
+<div class="m1130-caption" id="m1130-caption">Flux IFE : le contenu (film, musique) part du serveur IFE, transite par le serveur cabine (CNS), et rejoint l'écran du siège du passager. Cliquez sur « Flux CIDS » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1130-wrap');
+  if (!wrap) { return; }
+  var btnIfe = wrap.querySelector('#m1130-btn-ife');
+  var btnCids = wrap.querySelector('#m1130-btn-cids');
+  var linkIfe = wrap.querySelector('#m1130-link-ife');
+  var linkFap = wrap.querySelector('#m1130-link-fap');
+  var linkSiege = wrap.querySelector('#m1130-link-siege');
+  var linkHp = wrap.querySelector('#m1130-link-hp');
+  var caption = wrap.querySelector('#m1130-caption');
+
+  function showIfe() {
+    btnIfe.className = 'm1130-btn active';
+    btnCids.className = 'm1130-btn';
+    linkIfe.className = 'm1130-link on';
+    linkSiege.className = 'm1130-link on';
+    linkFap.className = 'm1130-link';
+    linkHp.className = 'm1130-link';
+    caption.textContent = "Flux IFE : le contenu (film, musique) part du serveur IFE, transite par le serveur cabine (CNS), et rejoint l'écran du siège du passager. Cliquez sur « Flux CIDS » pour comparer.";
+  }
+
+  function showCids() {
+    btnIfe.className = 'm1130-btn';
+    btnCids.className = 'm1130-btn active';
+    linkIfe.className = 'm1130-link';
+    linkSiege.className = 'm1130-link';
+    linkFap.className = 'm1130-link on';
+    linkHp.className = 'm1130-link on';
+    caption.textContent = "Flux CIDS : une annonce déclenchée depuis le panneau d'un agent de bord (FAP) transite par le même serveur cabine (CNS), et rejoint les haut-parleurs de la cabine entière. Cliquez sur « Flux IFE » pour revenir à l'autre vue.";
+  }
+
+  btnIfe.addEventListener('click', showIfe);
+  btnCids.addEventListener('click', showCids);
+})();
+</script>

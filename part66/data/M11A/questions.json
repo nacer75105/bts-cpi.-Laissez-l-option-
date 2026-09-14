@@ -3848,6 +3848,409 @@
       "bonne": 2,
       "explication": "Les canalisations exposées sont équipées de gaines chauffantes ou isolées. Aucun antigel n'est ajouté à l'eau potable (elle reste destinée à la consommation), et l'air chaud du circuit pneumatique ne circule pas directement dans les canalisations d'eau.",
       "source": "Part-66 Appendix I — Module 11A, item 11.17(a)"
+    },
+    {
+      "uid": "M11A-0299",
+      "sous_chapitre": "M11A.29",
+      "question": "Qu'est-ce qui distingue l'avionique modulaire intégrée (IMA) d'une architecture à calculateurs dédiés ?",
+      "options": [
+        "L'IMA impose que chaque fonction soit réécrite dans un langage de programmation unique et commun à tout l'avion",
+        "L'IMA remplace tous les calculateurs par un seul calculateur non redondant",
+        "Plusieurs fonctions logicielles partagent une même plateforme de calcul commune, plutôt que chacune son propre calculateur"
+      ],
+      "bonne": 2,
+      "explication": "L'IMA regroupe plusieurs fonctions logicielles sur une même plateforme de calcul commune, plutôt que chacune sur son propre calculateur dédié. Elle ne repose pas sur un module unique non redondant, et reste bien un système logiciel, pas un simple circuit dédié.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.19"
+    },
+    {
+      "uid": "M11A-0300",
+      "sous_chapitre": "M11A.29",
+      "question": "Pourquoi la mutualisation de plusieurs fonctions sur une même plateforme IMA est-elle avantageuse ?",
+      "options": [
+        "Parce qu'un calculateur dédié à une seule fonction reste largement sous-utilisé le reste du temps",
+        "Parce qu'elle supprime totalement le besoin de redondance entre calculateurs",
+        "Parce qu'elle permet de réduire la vitesse de traitement nécessaire à chaque fonction"
+      ],
+      "bonne": 0,
+      "explication": "Un calculateur dédié à une seule fonction reste largement sous-utilisé le reste du temps ; l'IMA mutualise cette puissance de calcul disponible. Elle ne supprime pas le besoin de redondance (plusieurs modules IMA restent nécessaires), et ne réduit aucune exigence de vitesse de traitement.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.19"
+    },
+    {
+      "uid": "M11A-0301",
+      "sous_chapitre": "M11A.29",
+      "question": "Comment la sécurité est-elle préservée quand plusieurs fonctions partagent le même module de calcul IMA ?",
+      "options": [
+        "Chaque fonction dispose de son propre module physique totalement séparé, comme avant l'IMA",
+        "Les fonctions les plus critiques sont exécutées deux fois plus vite que les autres",
+        "Chaque fonction s'exécute dans une partition cloisonnée, qui empêche la propagation d'une défaillance vers les autres fonctions"
+      ],
+      "bonne": 2,
+      "explication": "Chaque fonction s'exécute dans une partition cloisonnée (temps de calcul et mémoire), qui empêche la propagation d'une défaillance logicielle vers les autres fonctions du même module. Ce n'est pas un retour à des modules physiques totalement séparés, et la vitesse d'exécution n'est pas le mécanisme en jeu.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.19"
+    },
+    {
+      "uid": "M11A-0302",
+      "sous_chapitre": "M11A.29",
+      "question": "Pourquoi la liste des fonctions typiquement intégrées à une plateforme IMA est-elle aussi hétérogène (freinage, ventilation, gestion carburant...) ?",
+      "options": [
+        "Parce que chaque fonction hétérogène nécessite un module IMA distinct",
+        "Parce que l'IMA est une plateforme de calcul générique, capable d'héberger n'importe quelle fonction logicielle standardisée",
+        "Parce que la réglementation impose de regrouper ces fonctions précises"
+      ],
+      "bonne": 1,
+      "explication": "L'IMA est une plateforme de calcul générique, capable d'héberger n'importe quelle fonction logicielle suffisamment standardisée, d'où son hétérogénéité. Elle ne demande pas un module distinct par fonction (c'est l'inverse de son intérêt), et rien ne dicte cette liste par règlement.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.19"
+    },
+    {
+      "uid": "M11A-0303",
+      "sous_chapitre": "M11A.29",
+      "question": "Pourquoi une plateforme IMA typique repose-t-elle généralement sur plusieurs modules interconnectés plutôt que sur un module unique ?",
+      "options": [
+        "Parce que chaque module ne peut traiter qu'un seul type de donnée (électrique, hydraulique, etc.)",
+        "Pour éviter qu'un module unique ne constitue un point de défaillance unique pour l'ensemble des fonctions hébergées",
+        "Parce qu'un seul module ne pourrait pas héberger plus d'une fonction à la fois"
+      ],
+      "bonne": 1,
+      "explication": "Plusieurs modules interconnectés évitent qu'un module unique ne devienne un point de défaillance unique pour l'ensemble des fonctions hébergées. Un module IMA héberge au contraire plusieurs fonctions à la fois, et ne se limite pas à un seul type de donnée.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.19"
+    },
+    {
+      "uid": "M11A-0304",
+      "sous_chapitre": "M11A.29",
+      "question": "Qu'est-ce que le BITE (Built-In Test Equipment), parmi les fonctions typiquement intégrées à une plateforme IMA ?",
+      "options": [
+        "Une fonction d'autosurveillance qui détecte les anomalies d'un système électrique",
+        "Un dispositif de test externe branché uniquement au sol par un technicien",
+        "Un dispositif qui coupe automatiquement l'alimentation dès qu'une anomalie électrique est détectée"
+      ],
+      "bonne": 0,
+      "explication": "Le BITE est une fonction d'autosurveillance embarquée qui détecte les anomalies d'un système électrique et signale le défaut. Il ne s'agit pas d'un appareil externe branché au sol, et il ne coupe ni ne remplace rien lui-même : il se contente de détecter et de signaler.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.19"
+    },
+    {
+      "uid": "M11A-0305",
+      "sous_chapitre": "M11A.29",
+      "question": "Quel principe déjà rencontré dans ce module le cloisonnement logiciel de l'IMA rappelle-t-il ?",
+      "options": [
+        "Le principe fail-safe des structures, qui accepte qu'une pièce puisse défaillir",
+        "La classification des pièces structurales en primaires, secondaires et tertiaires",
+        "La ségrégation physique des câbles entre systèmes redondants (rappel M11A.19)"
+      ],
+      "bonne": 2,
+      "explication": "Le cloisonnement logiciel de l'IMA joue, à l'intérieur d'un même calculateur, un rôle comparable à celui de la ségrégation physique des câbles entre systèmes redondants. La classification structurale et le fail-safe sont des principes distincts, propres aux structures, pas aux calculateurs.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.19"
+    },
+    {
+      "uid": "M11A-0306",
+      "sous_chapitre": "M11A.29",
+      "question": "Sur quoi repose le réseau qui relie les différents modules d'une plateforme IMA entre eux ?",
+      "options": [
+        "Un réseau de données dédié, reliant les modules de calcul entre eux au sein du core system",
+        "Le même bus série ARINC 429 déjà décrit pour des calculateurs isolés (rappel M11A.21), sans réseau dédié supplémentaire",
+        "Une liaison sans fil interne, sans câblage physique entre les modules"
+      ],
+      "bonne": 0,
+      "explication": "Les modules d'une plateforme IMA sont reliés par un réseau de données dédié, au sein du core system, distinct du simple bus série déjà décrit pour des calculateurs isolés (rappel M11A.21), et bien câblé physiquement plutôt que sans fil.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.19"
+    },
+    {
+      "uid": "M11A-0307",
+      "sous_chapitre": "M11A.30",
+      "question": "Comment le contenu du système de divertissement de bord (IFE) est-il généralement distribué aux passagers ?",
+      "options": [
+        "Depuis un ou plusieurs serveurs dédiés, vers un écran individuel ou l'appareil personnel du passager connecté au réseau de bord",
+        "Directement depuis le FMS, qui gère aussi le contenu multimédia de la cabine",
+        "Par une diffusion radio captée directement par chaque appareil personnel, sans serveur ni réseau de bord"
+      ],
+      "bonne": 0,
+      "explication": "Le contenu IFE est distribué depuis un ou plusieurs serveurs dédiés, vers un écran individuel ou l'appareil personnel connecté au réseau de bord. Le FMS n'a aucun rôle dans cette distribution, et aucune diffusion radio directe n'est utilisée.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.20"
+    },
+    {
+      "uid": "M11A-0308",
+      "sous_chapitre": "M11A.30",
+      "question": "À quoi sert le CIDS (Cabin Intercommunication Data System) ?",
+      "options": [
+        "Relier les postes de commande de l'équipage cabine entre eux et avec le poste de pilotage",
+        "Assurer la liaison satellite entre la cabine et le sol",
+        "Diffuser le contenu du divertissement de bord aux passagers"
+      ],
+      "bonne": 0,
+      "explication": "Le CIDS relie les postes de commande de l'équipage cabine entre eux et avec le poste de pilotage. Il ne diffuse pas le contenu IFE (rôle du serveur IFE), et n'assure pas la liaison satellite (rôle du SATCOM).",
+      "source": "Part-66 Appendix I — Module 11A, item 11.20"
+    },
+    {
+      "uid": "M11A-0309",
+      "sous_chapitre": "M11A.30",
+      "question": "Qu'est-ce qu'un FAP (Flight Attendant Panel) ?",
+      "options": [
+        "Un panneau de commande réservé exclusivement au poste de pilotage",
+        "Un panneau d'affichage réservé aux passagers pour suivre le vol",
+        "Un panneau de commande, utilisé par un agent de bord, relié au système CIDS"
+      ],
+      "bonne": 2,
+      "explication": "Un FAP est un panneau de commande utilisé par un agent de bord, relié au système CIDS. Il n'est ni réservé aux passagers, ni au poste de pilotage.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.20"
+    },
+    {
+      "uid": "M11A-0310",
+      "sous_chapitre": "M11A.30",
+      "question": "D'où provient la connexion internet parfois proposée aux passagers en vol ?",
+      "options": [
+        "D'une antenne HF dédiée, distincte de celle utilisée par l'équipage",
+        "Du même réseau VHF utilisé par l'équipage pour communiquer avec le contrôle aérien",
+        "D'un système de communication externe, souvent une liaison satellite (rappel M11A.21 : SATCOM)"
+      ],
+      "bonne": 2,
+      "explication": "La connexion internet passagers provient généralement d'un système de communication externe, souvent une liaison satellite (SATCOM). Elle n'utilise ni le réseau VHF de l'équipage, ni une antenne HF dédiée.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.20"
+    },
+    {
+      "uid": "M11A-0311",
+      "sous_chapitre": "M11A.30",
+      "question": "Quel rôle joue le serveur cabine central (CNS, Cabin Network Server) ?",
+      "options": [
+        "Interconnecter les différents sous-systèmes cabine et héberger des fonctions transversales (rapports, bases de données)",
+        "Remplacer entièrement le calculateur de gestion de vol (FMS) pour les vols en configuration passagers",
+        "Fournir uniquement l'alimentation électrique des écrans individuels de la cabine"
+      ],
+      "bonne": 0,
+      "explication": "Le CNS interconnecte les différents sous-systèmes cabine et héberge des fonctions transversales. Il ne remplace pas le FMS, et ne se limite pas à une simple alimentation électrique.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.20"
+    },
+    {
+      "uid": "M11A-0312",
+      "sous_chapitre": "M11A.30",
+      "question": "Qu'est-ce qu'une unité remplaçable en ligne (LRU, Line Replaceable Unit) ?",
+      "options": [
+        "Un équipement de secours utilisé uniquement en cas d'évacuation",
+        "Un composant fixé de façon permanente à la structure, jamais destiné à être retiré",
+        "Un équipement conçu pour être remplacé rapidement en cas de panne, sans réparation sur place"
+      ],
+      "bonne": 2,
+      "explication": "Une LRU est un équipement conçu pour être remplacé rapidement en cas de panne, sans réparation sur place. Ce n'est ni un logiciel auto-mis à jour, ni un équipement de secours d'évacuation.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.20"
+    },
+    {
+      "uid": "M11A-0313",
+      "sous_chapitre": "M11A.30",
+      "question": "Pourquoi les systèmes cabine, bien que tournés vers le confort plutôt que la sécurité directe du vol, méritent-ils tout de même une attention rigoureuse de maintenance ?",
+      "options": [
+        "Parce qu'ils sont soumis aux mêmes normes de certification que les instruments de vol, sans aucune distinction",
+        "Parce qu'un dysfonctionnement a un coût opérationnel réel, et parce que ces systèmes interconnectés doivent être entretenus avec la même rigueur que le reste de l'avion",
+        "Parce que leur défaillance interrompt systématiquement le vol en cours"
+      ],
+      "bonne": 1,
+      "explication": "Un dysfonctionnement des systèmes cabine a un coût opérationnel réel, et ces systèmes interconnectés doivent être entretenus avec la même rigueur que le reste de l'avion. Ils n'ont aucun rôle dans la sustentation, et leur défaillance n'interrompt pas systématiquement le vol.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.20"
+    },
+    {
+      "uid": "M11A-0314",
+      "sous_chapitre": "M11A.30",
+      "question": "En quoi la communication interne cabine (CIDS) se distingue-t-elle de la communication externe (souvent satellite) évoquée dans cette même fiche ?",
+      "options": [
+        "Le CIDS gère exclusivement la connexion internet des passagers, la communication externe gère les annonces internes",
+        "Le CIDS relie les équipements et postes internes à la cabine, la communication externe relie l'avion à des stations ou satellites extérieurs",
+        "Le CIDS et la communication externe désignent le même système sous deux noms différents"
+      ],
+      "bonne": 1,
+      "explication": "Le CIDS relie les équipements et postes internes à la cabine, la communication externe relie l'avion à des stations ou satellites extérieurs. Ce sont deux systèmes distincts, aux rôles non inversés.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.20"
+    },
+    {
+      "uid": "M11A-0315",
+      "sous_chapitre": "M11A.31",
+      "question": "Quel problème résout le calculateur de maintenance centralisé (CMC) ?",
+      "options": [
+        "Il remplace entièrement les inspections visuelles périodiques de la structure",
+        "Il centralise les messages de défaut remontés par l'ensemble des calculateurs de l'avion, en un point d'accès unique",
+        "Il répare automatiquement les défauts détectés sans intervention humaine"
+      ],
+      "bonne": 1,
+      "explication": "Le CMC centralise les messages de défaut de l'ensemble des calculateurs, en un point d'accès unique. Il ne répare rien lui-même, et ne remplace pas les inspections visuelles périodiques.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.18"
+    },
+    {
+      "uid": "M11A-0316",
+      "sous_chapitre": "M11A.31",
+      "question": "À quoi sert un système de chargement de données (data-loading system) ?",
+      "options": [
+        "Transférer les données de masse et centrage vers le FMS uniquement",
+        "Transférer une nouvelle version de logiciel ou une base de données mise à jour vers les calculateurs de l'avion, sans intervention individuelle sur chacun",
+        "Charger automatiquement le plan de vol depuis le sol avant chaque décollage"
+      ],
+      "bonne": 1,
+      "explication": "Le système de chargement de données transfère une nouvelle version de logiciel ou une base mise à jour vers les calculateurs, sans intervention individuelle sur chacun. Il ne se limite ni au plan de vol, ni aux seules données de masse et centrage.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.18"
+    },
+    {
+      "uid": "M11A-0317",
+      "sous_chapitre": "M11A.31",
+      "question": "Pourquoi une bibliothèque électronique embarquée remplace-t-elle avantageusement la documentation papier ?",
+      "options": [
+        "Elle est consultable sur un terminal dédié et sa mise à jour ne demande pas de remplacer physiquement chaque page dans chaque exemplaire",
+        "Elle supprime totalement le besoin de documentation technique à bord",
+        "Elle ne peut être consultée qu'au sol, jamais en vol"
+      ],
+      "bonne": 0,
+      "explication": "Une bibliothèque électronique est consultable sur un terminal dédié et se met à jour sans remplacement physique de pages. Elle ne supprime pas le besoin de documentation, et reste consultable en vol.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.18"
+    },
+    {
+      "uid": "M11A-0318",
+      "sous_chapitre": "M11A.31",
+      "question": "Que mesure la surveillance structurale (structure monitoring) embarquée, quand elle équipe un avion ?",
+      "options": [
+        "Des grandeurs révélatrices de l'état structural (déformations, vibrations, nombre de cycles de charge subis), en des points stratégiques de la structure",
+        "La quantité de carburant consommée par chaque moteur en temps réel",
+        "Uniquement la température extérieure au niveau de la structure"
+      ],
+      "bonne": 0,
+      "explication": "La surveillance structurale mesure des grandeurs révélatrices de l'état structural (déformations, vibrations, cycles de charge), en des points stratégiques. Elle ne se limite pas à la température extérieure, et ne mesure aucun poids de passager.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.18"
+    },
+    {
+      "uid": "M11A-0319",
+      "sous_chapitre": "M11A.31",
+      "question": "Quel principe déjà rencontré dans ce module la surveillance structurale prolonge-t-elle directement ?",
+      "options": [
+        "Le principe safe-life, qui retire une pièce à une échéance fixe sans attendre un signe de dommage",
+        "La tolérance aux dommages (rappel M11A.4), en s'appuyant sur des données mesurées plutôt que sur une hypothèse de conception seule",
+        "La classification des pièces en primaires, secondaires et tertiaires"
+      ],
+      "bonne": 1,
+      "explication": "La surveillance structurale prolonge directement la tolérance aux dommages, en s'appuyant sur des données mesurées. Le safe-life et la classification structurale sont deux autres principes distincts, dont le fonctionnement ne repose pas sur cette mesure continue.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.18"
+    },
+    {
+      "uid": "M11A-0320",
+      "sous_chapitre": "M11A.31",
+      "question": "En quoi ces systèmes de maintenance embarqués contribuent-ils, même indirectement, à la sécurité du vol ?",
+      "options": [
+        "Une maintenance plus rapide et mieux informée réduit le risque qu'une anomalie reste non détectée ou mal diagnostiquée",
+        "Ils suppriment le besoin de toute inspection physique de l'avion",
+        "Ils remplacent entièrement le jugement du technicien de maintenance qualifié"
+      ],
+      "bonne": 0,
+      "explication": "Une maintenance plus rapide et mieux informée réduit le risque qu'une anomalie reste non détectée ou mal diagnostiquée. Ces systèmes n'ont pas vocation à remplacer le jugement du technicien, ni à supprimer toute inspection physique.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.18"
+    },
+    {
+      "uid": "M11A-0321",
+      "sous_chapitre": "M11A.31",
+      "question": "Que complète généralement un système d'impression embarqué (printing system) ?",
+      "options": [
+        "Le calculateur de maintenance centralisé, pour imprimer automatiquement chaque message de défaut détecté",
+        "Le système de divertissement de bord, pour les passagers qui le demandent",
+        "La bibliothèque électronique, pour produire une copie papier d'un document quand cela reste utile ou requis"
+      ],
+      "bonne": 2,
+      "explication": "Le système d'impression complète la bibliothèque électronique, pour une copie papier quand nécessaire. Il n'imprime pas automatiquement chaque message du CMC, et n'a aucun lien avec le divertissement de bord.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.18"
+    },
+    {
+      "uid": "M11A-0322",
+      "sous_chapitre": "M11A.31",
+      "question": "Pourquoi le CMC est-il particulièrement utile après un vol où plusieurs calculateurs distincts ont enregistré des anomalies ?",
+      "options": [
+        "Il empêche l'avion de redécoller tant qu'aucune anomalie n'est enregistrée",
+        "Il décide automatiquement quelles pièces doivent être remplacées avant le vol suivant",
+        "Il évite au technicien d'avoir à interroger chaque calculateur individuellement pour rassembler une vue d'ensemble"
+      ],
+      "bonne": 2,
+      "explication": "Le CMC évite au technicien d'interroger chaque calculateur individuellement pour obtenir une vue d'ensemble. Il ne décide d'aucun remplacement de pièce, et ne conditionne aucune autorisation de décollage.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.18"
+    },
+    {
+      "uid": "M11A-0323",
+      "sous_chapitre": "M11A.32",
+      "question": "En quoi un système d'information se distingue-t-il des calculateurs dédiés déjà décrits dans ce module ?",
+      "options": [
+        "Il remplace entièrement les calculateurs dédiés déjà présents sur l'avion",
+        "Il organise, stocke et met à disposition des données déjà produites par d'autres systèmes, plutôt que de les produire lui-même",
+        "Il produit lui-même les données de vol les plus critiques, comme la position de l'avion"
+      ],
+      "bonne": 1,
+      "explication": "Un système d'information organise, stocke et met à disposition des données déjà produites ailleurs, plutôt que de les produire lui-même. Il ne remplace pas les calculateurs dédiés, ni ne produit la position de l'avion (rôle de l'IRS/GPS, rappel M11A.21).",
+      "source": "Part-66 Appendix I — Module 11A, item 11.21"
+    },
+    {
+      "uid": "M11A-0324",
+      "sous_chapitre": "M11A.32",
+      "question": "Pourquoi un avion distingue-t-il plusieurs domaines d'information (général, poste de pilotage, maintenance, cabine passagers) plutôt que de tout regrouper dans un seul système ?",
+      "options": [
+        "Parce que la réglementation interdit tout partage de matériel entre ces domaines",
+        "Parce que chaque domaine nécessite un langage informatique totalement différent",
+        "Pour préserver des niveaux de criticité différents entre ces domaines"
+      ],
+      "bonne": 2,
+      "explication": "Cette distinction préserve des niveaux de criticité différents entre domaines. Elle ne tient pas à un langage informatique imposé, ni à une interdiction réglementaire de tout partage matériel.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.21"
+    },
+    {
+      "uid": "M11A-0325",
+      "sous_chapitre": "M11A.32",
+      "question": "Comment les informations de maintenance recueillies en vol peuvent-elles être transmises au sol avant même l'atterrissage ?",
+      "options": [
+        "Par une liaison hydraulique dédiée, indépendante de tout moyen de communication",
+        "Via un système de gestion de l'information qui s'appuie sur les moyens de communication déjà décrits (VHF, SATCOM, rappel M11A.21)",
+        "Uniquement après l'atterrissage, via le système de chargement de données"
+      ],
+      "bonne": 1,
+      "explication": "Le système de gestion de l'information s'appuie sur les moyens de communication déjà décrits (VHF, SATCOM) pour transmettre des données avant l'atterrissage. Le chargement de données (rappel M11A.31) passe par une opération dédiée, au sol ou via une liaison filaire ou sans fil spécifique, pas par ce canal de communication en vol ; et aucune liaison hydraulique ne transporte de données.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.21"
+    },
+    {
+      "uid": "M11A-0326",
+      "sous_chapitre": "M11A.32",
+      "question": "Quel principe déjà rencontré en fiche M11A.29 (avionique modulaire intégrée) la distinction entre systèmes d'information rappelle-t-elle ?",
+      "options": [
+        "Le cloisonnement de fonctions d'origine et de criticité différentes, même lorsqu'elles partagent une infrastructure commune",
+        "Le remplacement d'un calculateur dédié par un unique calculateur partagé",
+        "La redondance de plusieurs modules physiques identiques pour une même fonction"
+      ],
+      "bonne": 0,
+      "explication": "Cette distinction rejoint le cloisonnement de fonctions d'origine et de criticité différentes, même partageant une infrastructure commune (rappel M11A.29). La redondance matérielle et le remplacement de calculateurs sont deux autres notions distinctes.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.21"
+    },
+    {
+      "uid": "M11A-0327",
+      "sous_chapitre": "M11A.32",
+      "question": "Le système d'information du poste de pilotage met à disposition de l'équipage quel type de données ?",
+      "options": [
+        "Exclusivement les messages de défaut du calculateur de maintenance centralisé",
+        "Uniquement le contenu du divertissement de bord des passagers",
+        "Des cartes, des procédures et des informations complémentaires à celles déjà affichées par les instruments de vol"
+      ],
+      "bonne": 2,
+      "explication": "Le système d'information du poste de pilotage met à disposition cartes, procédures et informations complémentaires aux instruments de vol. Il ne se limite ni au divertissement de bord, ni aux seuls messages de défaut du CMC.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.21"
+    },
+    {
+      "uid": "M11A-0328",
+      "sous_chapitre": "M11A.32",
+      "question": "Le cloisonnement entre systèmes d'information (rappel du principe de M11A.29) empêche-t-il tout partage d'infrastructure numérique entre eux ?",
+      "options": [
+        "Oui : chaque domaine dispose obligatoirement de son propre réseau physique totalement indépendant",
+        "Non : le cloisonnement ne s'applique qu'aux calculateurs de commandes de vol, jamais aux systèmes d'information",
+        "Non : l'infrastructure peut rester partiellement commune, mais chaque domaine reste séparé dans son traitement et ses conséquences en cas de défaillance"
+      ],
+      "bonne": 2,
+      "explication": "Comme pour le cloisonnement logiciel de l'IMA (rappel M11A.29), l'infrastructure numérique peut rester partiellement commune : ce qui compte, c'est que chaque domaine d'information reste séparé dans son traitement et ses conséquences en cas de défaillance. Un réseau physique totalement indépendant n'est pas exigé, et le cloisonnement ne se limite pas aux calculateurs de commandes de vol.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.21"
+    },
+    {
+      "uid": "M11A-0329",
+      "sous_chapitre": "M11A.32",
+      "question": "Quel système déjà décrit en fiche M11A.31 le système de gestion de l'information peut-il compléter, en permettant de recevoir des mises à jour de données avant un chargement physique ?",
+      "options": [
+        "Le système de divertissement de bord (IFE)",
+        "Le régulateur de tension (GCU)",
+        "Le système de chargement de données"
+      ],
+      "bonne": 2,
+      "explication": "Le système de gestion de l'information peut compléter le système de chargement de données (rappel M11A.31), en permettant de recevoir des mises à jour avant un chargement physique. L'IFE relève d'un chargement de contenu multimédia distinct (rappel M11A.30), pas de ce chargement de données techniques, et le GCU n'a aucun lien avec cette opération.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.21"
     }
   ]
 }

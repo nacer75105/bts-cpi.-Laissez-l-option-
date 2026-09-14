@@ -1,0 +1,61 @@
+<div id="schema-m1130b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1130b-wrap .m1130b-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m1130b-wrap .m1130b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1130b-wrap .m1130b-diagram { position:relative; height:130px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; }
+#schema-m1130b-wrap .m1130b-node { position:absolute; width:26%; height:34px; border:1.5px solid #999; border-radius:6px; background:#eef2f7; display:flex; align-items:center; justify-content:center; font-size:0.66em; text-align:center; }
+#schema-m1130b-wrap .m1130b-bar { position:absolute; left:6%; right:6%; top:50%; height:5px; transform:translateY(-50%); background:#7fa8d9; border-radius:3px; opacity:0; transition: opacity 0.2s; box-shadow: 0 0 5px 1px rgba(127,168,217,0.6); }
+#schema-m1130b-wrap .m1130b-bar.show { opacity:1; }
+#schema-m1130b-wrap .m1130b-label { position:absolute; font-size:0.62em; color:#555; }
+#schema-m1130b-wrap .m1130b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Avec ou sans serveur cabine central :</strong> comparez des sous-systèmes isolés et interconnectés.</p>
+
+<button class="m1130b-btn active" id="m1130b-btn-isole">Sous-syst&#232;mes isol&#233;s</button>
+<button class="m1130b-btn" id="m1130b-btn-cns">Interconnect&#233;s via CNS</button>
+
+<div class="m1130b-diagram">
+  <div class="m1130b-bar" id="m1130b-bar"></div>
+  <div class="m1130b-node" style="left:4%; top:20%;">IFE</div>
+  <div class="m1130b-node" id="m1130b-center" style="left:37%; top:20%;">?</div>
+  <div class="m1130b-node" style="right:4%; top:20%;">CIDS</div>
+  <div class="m1130b-label" id="m1130b-center-label" style="left:37%; bottom:6px;">Aucun point commun</div>
+</div>
+
+<div class="m1130b-caption" id="m1130b-caption">Sans serveur central, chaque sous-système cabine (IFE, CIDS, et les autres tels que la communication externe) fonctionnerait de façon isolée, sans partager ses données ni ses fonctions transversales (rapports, bases de données). Cliquez sur « Interconnectés via CNS » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1130b-wrap');
+  if (!wrap) { return; }
+  var btnIsole = wrap.querySelector('#m1130b-btn-isole');
+  var btnCns = wrap.querySelector('#m1130b-btn-cns');
+  var bar = wrap.querySelector('#m1130b-bar');
+  var center = wrap.querySelector('#m1130b-center');
+  var centerLabel = wrap.querySelector('#m1130b-center-label');
+  var caption = wrap.querySelector('#m1130b-caption');
+
+  function showIsole() {
+    btnIsole.className = 'm1130b-btn active';
+    btnCns.className = 'm1130b-btn';
+    bar.className = 'm1130b-bar';
+    center.textContent = '?';
+    centerLabel.textContent = 'Aucun point commun';
+    caption.textContent = "Sans serveur central, chaque sous-système cabine (IFE, CIDS, et les autres tels que la communication externe) fonctionnerait de façon isolée, sans partager ses données ni ses fonctions transversales (rapports, bases de données). Cliquez sur « Interconnectés via CNS » pour comparer.";
+  }
+
+  function showCns() {
+    btnIsole.className = 'm1130b-btn';
+    btnCns.className = 'm1130b-btn active';
+    bar.className = 'm1130b-bar show';
+    center.textContent = 'CNS';
+    centerLabel.textContent = 'Interconnexion + fonctions transversales';
+    caption.textContent = "Avec le serveur cabine (CNS), ces mêmes sous-systèmes restent chacun spécialisés, mais partagent un point d'interconnexion commun qui héberge aussi des fonctions transversales (rapports avant vol, bases de données passagers). Cliquez sur « Sous-systèmes isolés » pour revenir à l'autre vue.";
+  }
+
+  btnIsole.addEventListener('click', showIsole);
+  btnCns.addEventListener('click', showCns);
+})();
+</script>

@@ -1,0 +1,67 @@
+<div id="schema-m1131b-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1131b-wrap .m1131b-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.85em; }
+#schema-m1131b-wrap .m1131b-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1131b-wrap .m1131b-diagram { position:relative; height:120px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; }
+#schema-m1131b-wrap .m1131b-axis { position:absolute; left:6%; right:6%; top:60%; height:2px; background:#999; }
+#schema-m1131b-wrap .m1131b-tick { position:absolute; width:2px; height:14px; background:#999; top:53%; }
+#schema-m1131b-wrap .m1131b-tick-label { position:absolute; font-size:0.58em; color:#555; top:68%; }
+#schema-m1131b-wrap .m1131b-dot { position:absolute; width:8px; height:8px; border-radius:50%; background:#7fa8d9; top:34%; opacity:0; transition: opacity 0.2s; }
+#schema-m1131b-wrap .m1131b-dot.show { opacity:1; }
+#schema-m1131b-wrap .m1131b-label { position:absolute; font-size:0.64em; color:#555; }
+#schema-m1131b-wrap .m1131b-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>Inspection p&#233;riodique ou surveillance continue :</strong> comparez la fr&#233;quence des points de mesure dans le temps.</p>
+
+<button class="m1131b-btn active" id="m1131b-btn-periodique">Inspection p&#233;riodique seule</button>
+<button class="m1131b-btn" id="m1131b-btn-continue">+ Surveillance structurale</button>
+
+<div class="m1131b-diagram">
+  <div class="m1131b-label" style="left:6%; top:8px;">Temps &#8594;</div>
+  <div class="m1131b-axis"></div>
+  <div class="m1131b-tick" style="left:20%;"></div>
+  <div class="m1131b-tick-label" style="left:16%;">Inspection A</div>
+  <div class="m1131b-tick" style="left:60%;"></div>
+  <div class="m1131b-tick-label" style="left:56%;">Inspection B</div>
+
+  <div class="m1131b-dot" id="m1131b-d1" style="left:30%;"></div>
+  <div class="m1131b-dot" id="m1131b-d2" style="left:38%;"></div>
+  <div class="m1131b-dot" id="m1131b-d3" style="left:46%;"></div>
+  <div class="m1131b-dot" id="m1131b-d4" style="left:54%;"></div>
+  <div class="m1131b-label" id="m1131b-dots-label" style="left:30%; top:20%; opacity:0; transition:opacity 0.2s;">Mesures continues (capteurs)</div>
+</div>
+
+<div class="m1131b-caption" id="m1131b-caption">Sans surveillance structurale, seules les inspections planifiées (A, B) renseignent l'état de la structure : tout ce qui se passe entre les deux reste invisible jusqu'à la prochaine inspection. Cliquez sur « + Surveillance structurale » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1131b-wrap');
+  if (!wrap) { return; }
+  var btnPeriodique = wrap.querySelector('#m1131b-btn-periodique');
+  var btnContinue = wrap.querySelector('#m1131b-btn-continue');
+  var dots = ['#m1131b-d1', '#m1131b-d2', '#m1131b-d3', '#m1131b-d4'].map(function (s) { return wrap.querySelector(s); });
+  var dotsLabel = wrap.querySelector('#m1131b-dots-label');
+  var caption = wrap.querySelector('#m1131b-caption');
+
+  function showPeriodique() {
+    btnPeriodique.className = 'm1131b-btn active';
+    btnContinue.className = 'm1131b-btn';
+    dots.forEach(function (d) { d.className = 'm1131b-dot'; });
+    dotsLabel.style.opacity = '0';
+    caption.textContent = "Sans surveillance structurale, seules les inspections planifiées (A, B) renseignent l'état de la structure : tout ce qui se passe entre les deux reste invisible jusqu'à la prochaine inspection. Cliquez sur « + Surveillance structurale » pour comparer.";
+  }
+
+  function showContinue() {
+    btnPeriodique.className = 'm1131b-btn';
+    btnContinue.className = 'm1131b-btn active';
+    dots.forEach(function (d) { d.className = 'm1131b-dot show'; });
+    dotsLabel.style.opacity = '1';
+    caption.textContent = "Avec la surveillance structurale, des capteurs dédiés mesurent en continu ou périodiquement l'état de la structure entre deux inspections planifiées, permettant de détecter, voire d'anticiper, une évolution qui serait sinon restée invisible jusqu'à l'inspection suivante. Cliquez sur « Inspection périodique seule » pour revenir à l'autre vue.";
+  }
+
+  btnPeriodique.addEventListener('click', showPeriodique);
+  btnContinue.addEventListener('click', showContinue);
+})();
+</script>

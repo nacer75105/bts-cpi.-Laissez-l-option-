@@ -1,0 +1,62 @@
+<div id="schema-m1132-wrap" style="font-family: inherit; max-width: 660px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1132-wrap .m1132-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.82em; }
+#schema-m1132-wrap .m1132-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1132-wrap .m1132-diagram { position:relative; height:150px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; }
+#schema-m1132-wrap .m1132-mixed { position:absolute; left:6%; right:6%; top:35%; bottom:35%; border:1.5px solid #999; border-radius:6px; background:#eef2f7; display:flex; align-items:center; justify-content:center; font-size:0.72em; color:#333; transition: opacity 0.2s; }
+#schema-m1132-wrap .m1132-domain { position:absolute; width:22%; height:60%; top:20%; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:0.62em; text-align:center; opacity:0; transition: opacity 0.2s; }
+#schema-m1132-wrap .m1132-domain.show { opacity:1; }
+#schema-m1132-wrap .m1132-domain.general { background:#eef2f7; border:1.5px solid #999; }
+#schema-m1132-wrap .m1132-domain.cockpit { background:#cfe0f2; border:1.5px solid #4a76a8; }
+#schema-m1132-wrap .m1132-domain.maint { background:#dff0df; border:1.5px solid #4a8c4a; }
+#schema-m1132-wrap .m1132-domain.cabin { background:#f3e6cc; border:1.5px solid #a87a2f; }
+#schema-m1132-wrap .m1132-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:6em; font-size:0.85em; }
+</style>
+
+<p><strong>Un seul syst&#232;me ou quatre domaines s&#233;par&#233;s :</strong> comparez les deux organisations possibles.</p>
+
+<button class="m1132-btn active" id="m1132-btn-mixte">Syst&#232;me indiff&#233;renci&#233;</button>
+<button class="m1132-btn" id="m1132-btn-domaines">4 domaines s&#233;par&#233;s</button>
+
+<div class="m1132-diagram">
+  <div class="m1132-mixed" id="m1132-mixed">Toutes les données mélangées (général + pilotage + maintenance + cabine)</div>
+
+  <div class="m1132-domain general" id="m1132-d1" style="left:1%;">G&#233;n&#233;ral</div>
+  <div class="m1132-domain cockpit" id="m1132-d2" style="left:26%;">Poste de<br>pilotage</div>
+  <div class="m1132-domain maint" id="m1132-d3" style="left:51%;">Maintenance</div>
+  <div class="m1132-domain cabin" id="m1132-d4" style="left:76%;">Cabine<br>passagers</div>
+</div>
+
+<div class="m1132-caption" id="m1132-caption">Un système d'information indifférencié mélangerait des données de criticité très différente (une information de maintenance erronée n'a pas les mêmes conséquences qu'un contenu de divertissement cabine affecté). Cliquez sur « 4 domaines séparés » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1132-wrap');
+  if (!wrap) { return; }
+  var btnMixte = wrap.querySelector('#m1132-btn-mixte');
+  var btnDomaines = wrap.querySelector('#m1132-btn-domaines');
+  var mixed = wrap.querySelector('#m1132-mixed');
+  var domains = ['#m1132-d1', '#m1132-d2', '#m1132-d3', '#m1132-d4'].map(function (s) { return wrap.querySelector(s); });
+  var caption = wrap.querySelector('#m1132-caption');
+
+  function showMixte() {
+    btnMixte.className = 'm1132-btn active';
+    btnDomaines.className = 'm1132-btn';
+    mixed.style.opacity = '1';
+    domains.forEach(function (d) { d.className = d.className.replace(' show', ''); });
+    caption.textContent = "Un système d'information indifférencié mélangerait des données de criticité très différente (une information de maintenance erronée n'a pas les mêmes conséquences qu'un contenu de divertissement cabine affecté). Cliquez sur « 4 domaines séparés » pour comparer.";
+  }
+
+  function showDomaines() {
+    btnMixte.className = 'm1132-btn';
+    btnDomaines.className = 'm1132-btn active';
+    mixed.style.opacity = '0';
+    domains.forEach(function (d) { if (d.className.indexOf(' show') === -1) { d.className += ' show'; } });
+    caption.textContent = "En séparant ces quatre domaines (général, poste de pilotage, maintenance, cabine passagers), chacun conserve son propre niveau de criticité et ses propres conséquences en cas de défaillance, même si l'infrastructure numérique sous-jacente reste partiellement commune. Cliquez sur « Système indifférencié » pour revenir à l'autre vue.";
+  }
+
+  btnMixte.addEventListener('click', showMixte);
+  btnDomaines.addEventListener('click', showDomaines);
+})();
+</script>

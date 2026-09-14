@@ -1,0 +1,77 @@
+<div id="schema-m1131-wrap" style="font-family: inherit; max-width: 660px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m1131-wrap .m1131-btn { margin:4px 6px 4px 0; padding:8px 12px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.82em; }
+#schema-m1131-wrap .m1131-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m1131-wrap .m1131-diagram { position:relative; height:170px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; }
+#schema-m1131-wrap .m1131-calc { position:absolute; width:30%; height:28px; border:1.5px solid #999; border-radius:5px; background:#eef2f7; display:flex; align-items:center; justify-content:center; font-size:0.62em; text-align:center; left:2%; }
+#schema-m1131-wrap .m1131-cmc { position:absolute; left:40%; top:50%; width:20%; height:36px; transform:translateY(-50%); border:2px solid #4a76a8; border-radius:6px; background:#fff; display:flex; align-items:center; justify-content:center; font-size:0.7em; text-align:center; opacity:0; transition: opacity 0.2s; }
+#schema-m1131-wrap .m1131-cmc.show { opacity:1; }
+#schema-m1131-wrap .m1131-tech { position:absolute; right:2%; top:50%; width:26%; height:32px; transform:translateY(-50%); border:1.5px solid #4a8c4a; border-radius:5px; background:#dff0df; display:flex; align-items:center; justify-content:center; font-size:0.66em; text-align:center; }
+#schema-m1131-wrap .m1131-link { position:absolute; height:2px; background:#7fa8d9; transform-origin: left center; opacity:1; transition: opacity 0.2s; }
+#schema-m1131-wrap .m1131-label { position:absolute; font-size:0.6em; color:#555; }
+#schema-m1131-wrap .m1131-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:6em; font-size:0.85em; }
+</style>
+
+<p><strong>Le calculateur de maintenance centralis&#233; (CMC) :</strong> comparez l'interrogation individuelle et le point d'acc&#232;s unique.</p>
+
+<button class="m1131-btn active" id="m1131-btn-sans">Sans CMC</button>
+<button class="m1131-btn" id="m1131-btn-avec">Avec CMC</button>
+
+<div class="m1131-diagram">
+  <div class="m1131-calc" style="top:6%;">FMS</div>
+  <div class="m1131-calc" style="top:42%;">R&#233;gulateur (GCU)</div>
+  <div class="m1131-calc" style="top:78%;">Calc. commandes de vol</div>
+
+  <div class="m1131-link" id="m1131-direct1" style="left:33%; top:19%; width:65%; transform:rotate(11deg);"></div>
+  <div class="m1131-link" id="m1131-direct2" style="left:33%; top:56%; width:65%;"></div>
+  <div class="m1131-link" id="m1131-direct3" style="left:33%; top:92%; width:65%; transform:rotate(-11deg);"></div>
+
+  <div class="m1131-link" id="m1131-toCmc1" style="left:33%; top:19%; width:12%; transform:rotate(24deg); opacity:0;"></div>
+  <div class="m1131-link" id="m1131-toCmc2" style="left:33%; top:56%; width:8%; opacity:0;"></div>
+  <div class="m1131-link" id="m1131-toCmc3" style="left:33%; top:92%; width:12%; transform:rotate(-24deg); opacity:0;"></div>
+  <div class="m1131-link" id="m1131-cmcToTech" style="left:61%; top:56%; width:37%; opacity:0;"></div>
+
+  <div class="m1131-cmc" id="m1131-cmc">CMC</div>
+  <div class="m1131-tech" id="m1131-tech">Technicien</div>
+  <div class="m1131-label" id="m1131-links-label" style="left:33%; bottom:2px;">Interrogation individuelle de chaque calculateur</div>
+</div>
+
+<div class="m1131-caption" id="m1131-caption">Sans CMC, le technicien devrait interroger chaque calculateur individuellement (FMS, régulateur, commandes de vol…) pour rassembler une vue d'ensemble des défauts d'un vol. Cliquez sur « Avec CMC » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m1131-wrap');
+  if (!wrap) { return; }
+  var btnSans = wrap.querySelector('#m1131-btn-sans');
+  var btnAvec = wrap.querySelector('#m1131-btn-avec');
+  var cmc = wrap.querySelector('#m1131-cmc');
+  var directLinks = ['#m1131-direct1', '#m1131-direct2', '#m1131-direct3'].map(function (s) { return wrap.querySelector(s); });
+  var cmcLinks = ['#m1131-toCmc1', '#m1131-toCmc2', '#m1131-toCmc3', '#m1131-cmcToTech'].map(function (s) { return wrap.querySelector(s); });
+  var linksLabel = wrap.querySelector('#m1131-links-label');
+  var caption = wrap.querySelector('#m1131-caption');
+
+  function showSans() {
+    btnSans.className = 'm1131-btn active';
+    btnAvec.className = 'm1131-btn';
+    cmc.className = 'm1131-cmc';
+    directLinks.forEach(function (l) { l.style.opacity = '1'; });
+    cmcLinks.forEach(function (l) { l.style.opacity = '0'; });
+    linksLabel.textContent = 'Interrogation individuelle de chaque calculateur';
+    caption.textContent = "Sans CMC, le technicien devrait interroger chaque calculateur individuellement (FMS, régulateur, commandes de vol…) pour rassembler une vue d'ensemble des défauts d'un vol. Cliquez sur « Avec CMC » pour comparer.";
+  }
+
+  function showAvec() {
+    btnSans.className = 'm1131-btn';
+    btnAvec.className = 'm1131-btn active';
+    cmc.className = 'm1131-cmc show';
+    directLinks.forEach(function (l) { l.style.opacity = '0'; });
+    cmcLinks.forEach(function (l) { l.style.opacity = '1'; });
+    linksLabel.textContent = 'Point d\'accès unique via le CMC';
+    caption.textContent = "Avec le CMC, les messages de défaut de tous les calculateurs convergent d'abord vers lui ; le technicien consulte ensuite ce point d'accès unique, sans avoir à interroger chaque système séparément. Cliquez sur « Sans CMC » pour revenir à l'autre vue.";
+  }
+
+  btnSans.addEventListener('click', showSans);
+  btnAvec.addEventListener('click', showAvec);
+})();
+</script>

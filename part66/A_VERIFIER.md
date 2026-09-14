@@ -3448,8 +3448,76 @@ clôture de M11A.25) ; libellés permanents manquants ajoutés sur les
 conduites et le pictogramme d'air de `M11A.28.html`/`M11A.28-2.html`,
 élément mort supprimé (`#m1128-pipe3`).
 
-**Lot 4 committé le 2026-09-14. Reste : test local par l'utilisateur,
-puis lot 5 (dernier lot, 4 nouvelles fiches ATA42/44/45/46).**
+**Lot 4 committé le 2026-09-14.**
+
+### Lot 5 (4 nouvelles fiches, M11A.29/M11A.30/M11A.31/M11A.32, ATA42/44/45/46) — dernier lot, relu et corrigé
+
+Module porté à **32 fiches — chantier de comblement du syllabus M11A
+terminé**. `M11A.29` (« Avionique modulaire intégrée », item 11.19) :
+plateforme de calcul partagée (core system), cloisonnement des
+partitions, fonctions typiquement intégrées, redondance par plusieurs
+modules. `M11A.30` (« Systèmes cabine », item 11.20) : IFE, CIDS/FAP,
+communication externe, serveur cabine central (CNS), LRU. `M11A.31`
+(« Systèmes de maintenance embarqués », item 11.18) : CMC, système de
+chargement de données, bibliothèque électronique, surveillance
+structurale (prolonge la tolérance aux dommages de M11A.4). `M11A.32`
+(« Systèmes d'information », item 11.21) : quatre domaines
+d'information, transmission au sol avant atterrissage, cloisonnement
+(rappel M11A.29). Ordre de traitement 11.19 → 11.20 → 11.18 → 11.21
+(ATA45 avant ATA46) : choix éditorial assumé, comme la numérotation des
+fiches elle-même, pas une erreur de syllabus. 31 nouvelles questions à
+l'arrivée (32 à la rédaction, une supprimée en relecture pour
+redondance), 8 nouveaux schémas.
+
+**Relecture `relecteur-part66` — 4 BLOQUANT, dont 1 vérifié faux positif :**
+- **Divergence caption statique/JS sur 4 des 8 schémas**
+  (`M11A.31.html`, `M11A.31-2.html`, `M11A.32.html`, `M11A.32-2.html`) —
+  même bug que les lots précédents, corrigé sur les 4 fichiers.
+- **État par défaut incohérent sur `M11A.30.html`** : le bouton actif
+  et la caption annonçaient le flux IFE en surbrillance, mais aucun des
+  deux liens correspondants ne portait la classe `on` dans le HTML
+  statique. Corrigé.
+- **Clôture du module contradictoire** : sept fiches (M11A.1, M11A.4,
+  M11A.20, M11A.24, M11A.25 — à deux endroits distincts, M11A.27,
+  M11A.28) affirmaient encore être « la dernière fiche » ou « refermer
+  le module », dont deux (M11A.25 dans son paragraphe d'ouverture et
+  son exemple récapitulatif) qui avaient échappé à la correction déjà
+  faite sur sa seule phrase de clôture finale lors du Lot 4. Toutes
+  corrigées ; commentaire périmé de `part66/logic.py` (« module complet
+  25 fiches ») mis à jour.
+- **Acronyme CNS mis en doute** (« Cabin Network Server » vs
+  « Service ») : **vérifié faux positif** — le texte source officiel
+  extrait à l'étape 0 (`module11_detail.txt`, l. 424 et 434, toujours
+  présent dans le scratchpad de cette session) dit bien « Cabin network
+  server (CNS) ». Aucune correction nécessaire ; la relecture n'avait
+  simplement pas accès à ce fichier (Bash désactivé dans son
+  environnement pour ce lot).
+
+**À REVOIR traités dans la foulée** : « ne » explétif inversant le sens
+d'une phrase sur le chargement de données (M11A.31) ; FAP décrit comme
+un panneau par agent de bord plutôt que le panneau de l'équipage cabine
+(M11A.30) ; 2 doublons internes au lot résolus (M11A-0328 réorientée
+vers le partage d'infrastructure malgré le cloisonnement, plutôt que de
+répéter M11A-0324 ; M11A-0330, redondante avec M11A-0323, supprimée
+plutôt que forcée sur un fait artificiel — même traitement que
+M11A-0297 au Lot 4) ; distracteurs absurdes renforcés (M11A-0299,
+0304, 0312, 0313, 0318) ; question à double tournure interrogative
+malformée corrigée (M11A-0321) ; explication contredisant une autre
+fiche du module corrigée (M11A-0325, le chargement de données admet
+bien une liaison sans fil selon M11A.31) ; renvoi vers une formulation
+inexistante de M11A.21 corrigé (M11A-0306, « bus ARINC 429 point à
+point » → « bus série ARINC 429 ») ; affirmation trop absolue adoucie
+(M11A-0329, l'IFE) ; libellés permanents ajoutés sur les liaisons de
+`M11A.30.html`/`M11A.31.html` ; incohérence caption/diagramme corrigée
+sur `M11A.30-2.html` ; divergence `<br>`/`textContent` corrigée sur
+`M11A.29-2.html` ; affirmation trop absolue adoucie sur
+`M11A.32-2.html`.
+
+**Lot 5 committé le 2026-09-14 — chantier de comblement du syllabus
+M11A terminé (5/5 lots). Module à 32 fiches, relu à chaque étape.
+Reste : test local complet par l'utilisateur avant de considérer le
+module aussi validé que sa version initiale (25 fiches) l'avait été le
+2026-09-13.**
 
 ## M5.1 / M5.5 / M15.1-2 — bug résolu : génération de DOM à l'exécution
 (investigation menée le 2026-09-11, cause identifiée et corrigée)
