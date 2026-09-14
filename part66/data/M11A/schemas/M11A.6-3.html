@@ -1,0 +1,141 @@
+<div id="schema-m116c-wrap" style="font-family: inherit; max-width: 680px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m116c-wrap .m116c-btn { margin:4px 6px 4px 0; padding:7px 9px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.76em; }
+#schema-m116c-wrap .m116c-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m116c-wrap .m116c-diagram { position:relative; height:190px; margin-top:14px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; }
+#schema-m116c-wrap .m116c-plane { position:absolute; left:50%; top:50%; width:8px; height:56px; background:#888; transform:translate(-50%,-50%); border-radius:4px; }
+#schema-m116c-wrap .m116c-surf { position:absolute; border-radius:3px; transition: background 0.15s, border-color 0.15s; }
+#schema-m116c-wrap .m116c-surf.hi { background:#e0a800 !important; border-color:#a87a00 !important; }
+#schema-m116c-wrap .m116c-wing { top:50%; width:78px; height:8px; background:#7fa8d9; border:1.5px solid #4a76a8; }
+#schema-m116c-wrap .m116c-tail-h { left:50%; bottom:18%; width:60px; height:6px; background:#7fa8d9; border:1.5px solid #4a76a8; transform:translateX(-50%); }
+#schema-m116c-wrap .m116c-tail-v { left:50%; bottom:18%; width:6px; height:30px; background:#7fa8d9; border:1.5px solid #4a76a8; transform:translateX(-50%) translateY(-26px); }
+#schema-m116c-wrap .m116c-sensor { left:16%; top:38%; width:9px; height:9px; border-radius:50%; background:#7fa8d9; border:1.5px solid #4a76a8; }
+#schema-m116c-wrap .m116c-limit-arc { position:absolute; left:50%; bottom:18%; width:46px; height:23px; border:2px dashed #cc4444; border-bottom:none; border-radius:46px 46px 0 0 / 23px 23px 0 0; transform:translateX(-50%) translateY(6px); opacity:0; transition: opacity 0.15s; }
+#schema-m116c-wrap .m116c-limit-arc.show { opacity:1; }
+#schema-m116c-wrap .m116c-label { position:absolute; font-size:0.62em; color:#555; }
+#schema-m116c-wrap .m116c-badge-row { display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
+#schema-m116c-wrap .m116c-badge { flex:1; min-width:150px; padding:6px 9px; border-radius:5px; background:#eef2f7; border:1px solid #b9c4d1; font-size:0.72em; color:#333; }
+#schema-m116c-wrap .m116c-badge b { color:#1a3b5c; }
+#schema-m116c-wrap .m116c-caption { margin-top:12px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:6em; font-size:0.85em; }
+</style>
+
+<p><strong>Cinq dispositifs, cinq r&#244;les diff&#233;rents :</strong> cliquez sur chacun pour voir quelle surface il concerne, &#224; quel moment il agit, et qui (le pilote ou un automatisme) en a la charge.</p>
+
+<div>
+  <button class="m116c-btn active" id="m116c-btn-gust">Gust lock</button>
+  <button class="m116c-btn" id="m116c-btn-yaw">Yaw damper</button>
+  <button class="m116c-btn" id="m116c-btn-mach">Mach trim</button>
+  <button class="m116c-btn" id="m116c-btn-rud">Rudder limiter</button>
+  <button class="m116c-btn" id="m116c-btn-stall">Stall-warning</button>
+</div>
+
+<div class="m116c-diagram">
+  <div class="m116c-plane"></div>
+  <div class="m116c-label" style="left:50%; top:6px; transform:translateX(-50%);">Fuselage</div>
+
+  <div class="m116c-surf m116c-wing hi" id="m116c-wing-g" style="left:6%;"></div>
+  <div class="m116c-surf m116c-wing hi" id="m116c-wing-d" style="right:6%;"></div>
+  <div class="m116c-label" style="left:8%; top:34%;">Ailerons</div>
+  <div class="m116c-label" style="right:8%; top:34%;">Ailerons</div>
+
+  <div class="m116c-surf m116c-tail-h hi" id="m116c-tail-h"></div>
+  <div class="m116c-label" style="left:50%; bottom:8%; transform:translateX(-50%);">Profondeur / stabilisateur</div>
+
+  <div class="m116c-surf m116c-tail-v hi" id="m116c-tail-v"></div>
+  <div class="m116c-label" style="left:60%; bottom:42%;">Direction</div>
+  <div class="m116c-limit-arc" id="m116c-limit-arc"></div>
+  <div class="m116c-label" id="m116c-limit-label" style="left:64%; bottom:56%; opacity:0; transition:opacity 0.15s;">D&#233;battement limit&#233;</div>
+
+  <div class="m116c-surf m116c-sensor" id="m116c-sensor"></div>
+  <div class="m116c-label" style="left:2%; top:48%;">Capteur d'incidence</div>
+</div>
+
+<div class="m116c-badge-row">
+  <div class="m116c-badge"><b>Phase :</b> <span id="m116c-phase">Stationnement, au sol</span></div>
+  <div class="m116c-badge"><b>Qui agit :</b> <span id="m116c-qui">Dispositif m&#233;canique passif (verrou)</span></div>
+</div>
+
+<div class="m116c-caption" id="m116c-caption">Le gust lock bloque m&#233;caniquement les trois gouvernes principales (ailerons, profondeur, direction, ici surlign&#233;es) en position neutre pendant le stationnement, pour les prot&#233;ger du vent. Cliquez sur les autres boutons pour comparer les quatre autres dispositifs.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m116c-wrap');
+  if (!wrap) { return; }
+  var btns = {
+    gust: wrap.querySelector('#m116c-btn-gust'),
+    yaw: wrap.querySelector('#m116c-btn-yaw'),
+    mach: wrap.querySelector('#m116c-btn-mach'),
+    rud: wrap.querySelector('#m116c-btn-rud'),
+    stall: wrap.querySelector('#m116c-btn-stall')
+  };
+  var wingG = wrap.querySelector('#m116c-wing-g');
+  var wingD = wrap.querySelector('#m116c-wing-d');
+  var tailH = wrap.querySelector('#m116c-tail-h');
+  var tailV = wrap.querySelector('#m116c-tail-v');
+  var sensor = wrap.querySelector('#m116c-sensor');
+  var limitArc = wrap.querySelector('#m116c-limit-arc');
+  var limitLabel = wrap.querySelector('#m116c-limit-label');
+  var phase = wrap.querySelector('#m116c-phase');
+  var qui = wrap.querySelector('#m116c-qui');
+  var caption = wrap.querySelector('#m116c-caption');
+  var allSurf = [wingG, wingD, tailH, tailV, sensor];
+
+  var states = {
+    gust: {
+      hi: [wingG, wingD, tailH, tailV],
+      arc: false,
+      phase: 'Stationnement, au sol',
+      qui: 'Dispositif mécanique passif (verrou)',
+      caption: "Le gust lock bloque mécaniquement les trois gouvernes principales (ailerons, profondeur, direction, ici surlignées) en position neutre pendant le stationnement, pour les protéger du vent. Cliquez sur les autres boutons pour comparer les quatre autres dispositifs."
+    },
+    yaw: {
+      hi: [tailV],
+      arc: false,
+      phase: 'Vol, à toute vitesse (surtout en croisière)',
+      qui: 'Automatique (calculateur + servo, corrections superposées)',
+      caption: "Le yaw damper agit uniquement sur la gouverne de direction (ici surlignée), par petites corrections automatiques, pour amortir le roulis hollandais. Le pilote garde l'intégralité de son autorité manuelle en parallèle. Cliquez sur les autres boutons pour comparer."
+    },
+    mach: {
+      hi: [tailH],
+      arc: false,
+      phase: 'Vol à grande vitesse (Mach élevé)',
+      qui: 'Automatique (ajuste le compensateur de profondeur)',
+      caption: "Le Mach trim agit sur la profondeur / le stabilisateur (ici surligné) pour compenser le Mach tuck (tendance à piquer du nez) à mesure que la vitesse augmente. Cliquez sur les autres boutons pour comparer."
+    },
+    rud: {
+      hi: [tailV],
+      arc: true,
+      phase: 'Vol à haute vitesse',
+      qui: 'Automatique (réduit le débattement mécanique disponible)',
+      caption: "Le rudder limiter agit lui aussi sur la gouverne de direction, mais en réduisant son débattement maximal disponible (arc rouge) à mesure que la vitesse augmente, pour protéger la dérive d'un effort structural excessif — sans automatiser la commande elle-même. Cliquez sur les autres boutons pour comparer."
+    },
+    stall: {
+      hi: [],
+      arc: false,
+      phase: "Vol, approche du décrochage (incidence élevée)",
+      qui: "Alerte seulement (aucune action sur une gouverne)",
+      caption: "Le stall-warning ne surligne aucune gouverne : il repose sur un capteur d'incidence dédié (ici surligné) et se contente d'alerter le pilote (son ou vibration du manche), sans agir lui-même sur une commande — contrairement aux quatre autres dispositifs. Cliquez sur les autres boutons pour comparer."
+    }
+  };
+
+  function show(key) {
+    Object.keys(btns).forEach(function (k) { btns[k].className = 'm116c-btn' + (k === key ? ' active' : ''); });
+    allSurf.forEach(function (el) { el.className = el.className.replace(' hi', ''); });
+    var st = states[key];
+    st.hi.forEach(function (el) { el.className += ' hi'; });
+    if (key === 'stall') { sensor.className += ' hi'; }
+    limitArc.className = 'm116c-limit-arc' + (st.arc ? ' show' : '');
+    limitLabel.style.opacity = st.arc ? '1' : '0';
+    phase.textContent = st.phase;
+    qui.textContent = st.qui;
+    caption.textContent = st.caption;
+  }
+
+  btns.gust.addEventListener('click', function () { show('gust'); });
+  btns.yaw.addEventListener('click', function () { show('yaw'); });
+  btns.mach.addEventListener('click', function () { show('mach'); });
+  btns.rud.addEventListener('click', function () { show('rud'); });
+  btns.stall.addEventListener('click', function () { show('stall'); });
+})();
+</script>

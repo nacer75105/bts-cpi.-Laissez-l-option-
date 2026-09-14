@@ -69,14 +69,21 @@ def charger_fiches(module):
 
 def charger_schemas(module, fiche_id):
     """Liste des chemins (pathlib.Path) vers les schémas HTML interactifs
-    d'une fiche, dans l'ordre d'affichage : <fiche_id>.html (principe) puis
-    <fiche_id>-2.html (application/panne) s'il existe. Liste vide si aucun
-    schéma — l'illustration interactive reste optionnelle."""
+    d'une fiche, dans l'ordre d'affichage : <fiche_id>.html (principe), puis
+    <fiche_id>-2.html, -3.html, etc. (application/panne/comparaison
+    supplémentaire) tant qu'ils existent, sans limite fixe de nombre. Liste
+    vide si aucun schéma — l'illustration interactive reste optionnelle."""
     chemins = []
-    for suffixe in ("", "-2"):
-        chemin = Path(_fichier_module(module, os.path.join("schemas", f"{fiche_id}{suffixe}.html")))
-        if chemin.exists():
-            chemins.append(chemin)
+    chemin = Path(_fichier_module(module, os.path.join("schemas", f"{fiche_id}.html")))
+    if chemin.exists():
+        chemins.append(chemin)
+    n = 2
+    while True:
+        chemin = Path(_fichier_module(module, os.path.join("schemas", f"{fiche_id}-{n}.html")))
+        if not chemin.exists():
+            break
+        chemins.append(chemin)
+        n += 1
     return chemins
 
 

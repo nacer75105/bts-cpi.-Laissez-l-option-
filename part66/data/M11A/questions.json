@@ -2925,6 +2925,214 @@
       "bonne": 2,
       "explication": "Selon l'exemple de la fiche, un contrôle non destructif adapté évalue l'étendue réelle du défaut sous la surface, puis l'intervention est intégralement documentée. La pièce n'est donc pas remplacée d'emblée sans évaluation, et la documentation n'est pas optionnelle : elle garantit la traçabilité de navigabilité.",
       "source": "Notions générales de construction aéronautique — avion à turbine"
+    },
+    {
+      "uid": "M11A-0227",
+      "sous_chapitre": "M11A.6",
+      "question": "Sur un avion stationné au sol, moteurs coupés, pourquoi les gouvernes de vol risquent-elles d'être endommagées si rien ne les retient ?",
+      "options": [
+        "Parce que la variation de température entre le jour et la nuit dilate et contracte la timonerie de commande",
+        "Parce que le vent peut les faire battre librement contre leurs butées, sollicitant charnières, tringles et câbles de façon répétée",
+        "Parce que la poussière et le sable s'accumulent progressivement dans les mécanismes de commande"
+      ],
+      "bonne": 1,
+      "explication": "Sans dispositif pour les retenir, les gouvernes livrées au vent battent contre leurs butées de façon répétée, ce qui sollicite à la longue charnières, tringles et câbles — c'est précisément ce que le gust lock empêche en les immobilisant en position neutre pendant le stationnement. La dilatation thermique de la timonerie et l'accumulation de poussière sont des phénomènes d'entretien réels par ailleurs, mais ce n'est pas ce contre quoi le gust lock protège spécifiquement.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.9(a)"
+    },
+    {
+      "uid": "M11A-0228",
+      "sous_chapitre": "M11A.6",
+      "question": "Pourquoi la vérification du désengagement du gust lock fait-elle systématiquement partie des vérifications avant vol ?",
+      "options": [
+        "Parce que le poids du gust lock doit être pris en compte dans le calcul de masse et centrage avant chaque vol",
+        "Parce qu'un gust lock resté engagé peut interférer avec le système de dégivrage des gouvernes",
+        "Parce qu'un gust lock resté engagé prive le pilote d'une partie de ses commandes précisément au moment le plus critique du vol"
+      ],
+      "bonne": 2,
+      "explication": "Un gust lock resté engagé prive le pilote d'une partie de ses commandes précisément au décollage, un moment critique — d'où la vérification systématique de son désengagement avant vol. Son poids ne se recalcule pas avant chaque vol : un gust lock interne fait partie de la masse à vide de l'avion, déjà prise en compte une fois pour toutes lors de sa pesée, et un gust lock externe est retiré avant le vol et ne reste pas à bord. Il n'a par ailleurs aucun lien avec le dégivrage des gouvernes.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.9(a)"
+    },
+    {
+      "uid": "M11A-0229",
+      "sous_chapitre": "M11A.6",
+      "question": "Contre quel phénomène le yaw damper a-t-il été conçu ?",
+      "options": [
+        "Une oscillation entretenue, couplant roulis et lacet, plus marquée sur les avions à ailes en flèche",
+        "Une usure prématurée des paliers de charnière de la gouverne de direction, entraînant un jeu mécanique croissant",
+        "Une déformation progressive du fuselage arrière sous l'effet des vibrations moteur"
+      ],
+      "bonne": 0,
+      "explication": "Le yaw damper détecte et amortit automatiquement le roulis hollandais, une oscillation couplée en roulis et en lacet qui a tendance à s'entretenir d'elle-même — un phénomène présent sur toute voilure, mais que la flèche de l'aile a tendance à accentuer. Une usure de charnière ou une déformation de fuselage sont des problèmes mécaniques d'entretien, pas le phénomène aérodynamique que le yaw damper est conçu pour amortir.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.9(a)"
+    },
+    {
+      "uid": "M11A-0230",
+      "sous_chapitre": "M11A.6",
+      "question": "Comment le yaw damper détecte-t-il l'oscillation qu'il doit amortir ?",
+      "options": [
+        "Par une analyse des vibrations transmises à la structure de la dérive",
+        "Par un capteur qui mesure la vitesse de rotation de l'avion autour de l'axe de lacet",
+        "Par comparaison entre l'inclinaison mesurée en roulis et celle mesurée en lacet"
+      ],
+      "bonne": 1,
+      "explication": "Le yaw damper s'appuie sur un capteur de vitesse de lacet pour détecter l'oscillation naissante, avant d'appliquer de petites corrections automatiques sur la gouverne de direction. Il ne repose ni sur une analyse vibratoire de la structure de la dérive, ni sur une comparaison directe entre roulis et lacet mesurés séparément — c'est la vitesse de rotation en lacet elle-même qui est mesurée.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.9(a)"
+    },
+    {
+      "uid": "M11A-0231",
+      "sous_chapitre": "M11A.6",
+      "question": "Que compense automatiquement le Mach trim ?",
+      "options": [
+        "Une tendance de l'avion à piquer du nez lorsque le nombre de Mach augmente",
+        "Un déséquilibre de carburant entre les réservoirs des deux ailes",
+        "Un décalage du régime moteur nécessaire pour maintenir le Mach affiché en croisière"
+      ],
+      "bonne": 0,
+      "explication": "Le Mach trim compense le « Mach tuck », une tendance à piquer du nez à mesure que le Mach augmente, due au déplacement vers l'arrière du centre de pression en écoulement transsonique. Il agit sur l'assiette en tangage, pas sur le régime moteur ni sur le maintien du Mach affiché en croisière (rôle de l'auto-manette), et un déséquilibre de carburant entre réservoirs relève du trim d'ailerons, pas du Mach trim.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.9(a)"
+    },
+    {
+      "uid": "M11A-0232",
+      "sous_chapitre": "M11A.6",
+      "question": "À quoi le rudder limiter fait-il varier le débattement maximal disponible de la gouverne de direction ?",
+      "options": [
+        "À l'altitude de vol",
+        "Au poids réel de l'avion au moment du vol",
+        "À la vitesse de l'avion"
+      ],
+      "bonne": 2,
+      "explication": "Le rudder limiter réduit automatiquement le débattement maximal de la gouverne de direction à mesure que la vitesse augmente, car un braquage complet à haute vitesse produirait un effort latéral susceptible de dépasser la résistance structurale de la dérive. Ni l'altitude ni le poids de l'avion n'entrent dans ce mécanisme.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.9(a)"
+    },
+    {
+      "uid": "M11A-0233",
+      "sous_chapitre": "M11A.6",
+      "question": "À basse vitesse, quel débattement le rudder limiter laisse-t-il disponible sur la gouverne de direction ?",
+      "options": [
+        "Le débattement le plus réduit de toute la plage de vitesses, pour compenser la moindre portance disponible à ces vitesses",
+        "Un débattement fixe, identique à toutes les vitesses, calculé pour la charge la plus défavorable",
+        "Le débattement maximal, car le risque structural qui justifie sa réduction ne se pose pas à ces vitesses"
+      ],
+      "bonne": 2,
+      "explication": "À basse vitesse, le risque de dépasser la résistance structurale de la dérive ne se pose pas, et une pleine autorité de la gouverne de direction peut au contraire être nécessaire, par exemple pour contrer une panne moteur au décollage — le débattement disponible est donc maximal, pas réduit. Le limiteur module son action selon la vitesse ; il n'est ni fixe, ni le plus restrictif précisément quand une pleine autorité serait la plus utile.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.9(a)"
+    },
+    {
+      "uid": "M11A-0234",
+      "sous_chapitre": "M11A.6",
+      "question": "Par quels moyens un stall-warning alerte-t-il concrètement le pilote de l'approche du décrochage ?",
+      "options": [
+        "Par une réduction automatique et perceptible de la puissance affichée des moteurs",
+        "Par un signal sonore, ou par une vibration transmise au manche (stick shaker)",
+        "Par un message affiché sur l'écran de navigation"
+      ],
+      "bonne": 1,
+      "explication": "Le stall-warning alerte le pilote par un signal sonore ou par une vibration transmise au manche via un dispositif appelé stick shaker — sans agir lui-même sur la trajectoire de l'avion. Il ne passe pas par un message sur l'écran de navigation, et il n'agit pas sur la puissance moteur, qui reste entièrement à la main du pilote.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.9(a)"
+    },
+    {
+      "uid": "M11A-0235",
+      "sous_chapitre": "M11A.7",
+      "question": "Comment agit le stick pusher, dispositif de protection contre le décrochage ?",
+      "options": [
+        "Il déplace automatiquement la commande de profondeur vers une position à piquer",
+        "Il se limite à une alerte sonore renforcée, sans action mécanique sur la commande",
+        "Il déplace automatiquement les manettes de gaz vers l'avant pour augmenter la poussée"
+      ],
+      "bonne": 0,
+      "explication": "Le stick pusher déplace automatiquement la commande de profondeur vers une position à piquer dès que l'incidence approche une valeur critique, forçant l'avion à reprendre de la vitesse. Il n'agit pas sur la puissance moteur, et il se distingue justement du stall-warning par le fait qu'il agit mécaniquement plutôt que de se limiter à une alerte, même renforcée.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.9(b)"
+    },
+    {
+      "uid": "M11A-0236",
+      "sous_chapitre": "M11A.7",
+      "question": "Par rapport à un simple avertisseur de décrochage, qu'est-ce qu'un système de protection comme le stick pusher retire du dernier verrou de sécurité ?",
+      "options": [
+        "La nécessité d'un mode de secours en cas de panne du calculateur",
+        "Le temps de réaction et la possibilité d'erreur ou d'absence de réaction du pilote",
+        "La nécessité d'un capteur d'incidence dédié"
+      ],
+      "bonne": 1,
+      "explication": "Un avertissement suppose une réaction humaine, avec son temps de latence et sa possibilité d'erreur ou d'absence de réaction ; le stick pusher retire ce maillon humain du dernier verrou de sécurité. Il continue de s'appuyer sur un capteur d'incidence dédié, comme le stall-warning — ce n'est pas ce qu'il supprime ; et ajouter une action automatique ne dispense pas non plus d'un mode de secours en cas de panne, bien au contraire.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.9(b)"
+    },
+    {
+      "uid": "M11A-0237",
+      "sous_chapitre": "M11A.7",
+      "question": "À quoi sert la commande active de charge (active load control), qui utilise le calculateur de commandes de vol ?",
+      "options": [
+        "Remplacer le rôle des ailerons dans le contrôle du roulis lors des manœuvres à forte charge",
+        "Comparer en continu la charge mesurée sur chaque aile à une valeur enregistrée au sol",
+        "Redistribuer la portance le long de la voilure pour réduire le moment de flexion à l'emplanture"
+      ],
+      "bonne": 2,
+      "explication": "En rafale ou en manœuvre, le calculateur peut braquer automatiquement certaines gouvernes pour redistribuer la portance le long de la voilure, réduisant le moment de flexion à l'emplanture. Les ailerons gardent leur rôle habituel de contrôle du roulis, la commande active de charge s'y ajoutant plutôt que le remplaçant ; elle ne repose pas non plus sur une simple comparaison à une référence enregistrée au sol.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.9(b)"
+    },
+    {
+      "uid": "M11A-0238",
+      "sous_chapitre": "M11A.7",
+      "question": "Quelle conséquence a, sur la conception de la cellule, la meilleure répartition des charges apportée par la commande active de charge ?",
+      "options": [
+        "Elle dispense de prendre en compte les charges de rafale dans le dimensionnement de la voilure",
+        "Elle permet de concevoir une structure plus légère pour une même durée de vie",
+        "Elle réduit le nombre de points de fixation nécessaires entre la voilure et le fuselage"
+      ],
+      "bonne": 1,
+      "explication": "Une structure soumise à des charges de flexion mieux réparties, donc moins sévères à ses points les plus sollicités, peut être conçue plus légère pour une même durée de vie structurale. Le calcul des charges de rafale reste imposé lors du dimensionnement et de la certification de la voilure, quelle que soit la présence de ce système, et le nombre de points de fixation entre voilure et fuselage n'en dépend pas non plus.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.9(b)"
+    },
+    {
+      "uid": "M11A-0239",
+      "sous_chapitre": "M11A.7",
+      "question": "Quel est le but principal de l'équilibrage massique (mass balance) d'une gouverne de vol ?",
+      "options": [
+        "Déplacer son centre de gravité vers le bord de fuite pour améliorer sa réponse aérodynamique",
+        "Réduire autant que possible le poids total de la gouverne",
+        "Maintenir son centre de gravité proche de son axe de charnière"
+      ],
+      "bonne": 2,
+      "explication": "L'équilibrage massique répartit une masse additionnelle sur la gouverne pour que son centre de gravité reste proche de son axe de charnière, éliminant le couplage aéroélastique qui pourrait sinon conduire au flutter. Il ne vise ni à déplacer ce centre de gravité vers le bord de fuite, ni à réduire le poids total de la gouverne — au contraire, une masse est ajoutée.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.9(d)"
+    },
+    {
+      "uid": "M11A-0240",
+      "sous_chapitre": "M11A.7",
+      "question": "Quelle pratique de maintenance faut-il respecter après l'ajout de peinture, d'une réparation ou d'un accessoire sur une gouverne, du point de vue de son équilibrage massique ?",
+      "options": [
+        "Reporter ce contrôle à la prochaine visite programmée si l'ajout semble mineur",
+        "Contrôler, selon les tolérances de moment définies dans les données d'entretien, que le centre de gravité de la gouverne reste dans la plage autorisée",
+        "Corriger l'écart constaté par un réglage du trim de la gouverne concernée, sans revenir sur l'ajout lui-même"
+      ],
+      "bonne": 1,
+      "explication": "Le contrôle du moment d'équilibrage de la gouverne, selon les tolérances définies dans les données d'entretien approuvées, s'impose après tout ajout de ce type, quelle que soit son ampleur apparente — un ajout visuellement mineur peut suffire à réintroduire un déséquilibre propice au flutter. Le reporter à une visite ultérieure laisse ce risque courir dans l'intervalle, et un réglage de trim ne corrige pas davantage un défaut d'équilibrage massique : le trim modifie l'équilibre aérodynamique en vol, pas la position du centre de gravité de la gouverne.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.9(d)"
+    },
+    {
+      "uid": "M11A-0241",
+      "sous_chapitre": "M11A.7",
+      "question": "En quoi consiste le rigging d'une gouverne de vol ?",
+      "options": [
+        "Régler la timonerie de commande pour que la gouverne atteigne sa position neutre et ses débattements prévus",
+        "Réduire la traînée de la gouverne par un profilage plus fin de son bord de fuite",
+        "Vérifier périodiquement la résistance à la corrosion des câbles et tringles de commande"
+      ],
+      "bonne": 0,
+      "explication": "Le rigging règle la timonerie (câbles, tringles, butées) pour que chaque gouverne atteigne exactement sa position neutre et ses débattements prévus par le constructeur — il ne modifie pas le profil de la gouverne, et la vérification de corrosion relève d'une inspection de maintenance différente (voir M11A.25), pas du rigging.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.9(d)"
+    },
+    {
+      "uid": "M11A-0242",
+      "sous_chapitre": "M11A.7",
+      "question": "Un rigging légèrement incorrect, même avec un débattement proche de la valeur prévue, peut avoir quelle conséquence sur le comportement de l'avion ?",
+      "options": [
+        "Une dissymétrie entre deux gouvernes normalement identiques, ou une perte d'efficacité au moment où elle serait le plus nécessaire",
+        "Une usure accélérée de la peinture au niveau du bord de fuite de la gouverne",
+        "Une montée en pression anormale du circuit hydraulique correspondant"
+      ],
+      "bonne": 0,
+      "explication": "Un rigging incorrect peut introduire une dissymétrie entre deux gouvernes normalement identiques (par exemple les deux ailerons) ou limiter l'efficacité d'une gouverne au moment précis où elle serait le plus nécessaire — deux conséquences qui ne se voient pas à l'œil nu, d'où l'importance du contrôle des débattements après toute intervention sur la timonerie. Ni l'usure de peinture ni la pression du circuit hydraulique n'ont de lien avec le rigging des gouvernes de vol : le rigging règle une timonerie mécanique, en aval de l'actionnement hydraulique.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.9(d)"
     }
   ]
 }

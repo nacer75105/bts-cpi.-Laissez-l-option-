@@ -1,0 +1,79 @@
+<div id="schema-m117c-wrap" style="font-family: inherit; max-width: 640px; margin: 0.6em 0 0.2em;">
+<style>
+#schema-m117c-wrap .m117c-btn { margin:4px 6px 4px 0; padding:8px 10px; border-radius:6px; border:1px solid #888; background:#f4f4f4; color:#222; cursor:pointer; font-size:0.8em; }
+#schema-m117c-wrap .m117c-btn.active { background:#fff3b0; border-color:#e0a800; }
+#schema-m117c-wrap .m117c-diagram { position:relative; height:150px; margin-top:16px; border:1.5px dashed #999; border-radius:8px; background:#f7f7f7; }
+#schema-m117c-wrap .m117c-surf { position:absolute; left:22%; top:48%; width:220px; height:18px; background:#7fa8d9; border:1.5px solid #4a76a8; border-radius:3px; }
+#schema-m117c-wrap .m117c-hinge { position:absolute; left:22%; top:22%; width:2px; height:76px; background:#555; }
+#schema-m117c-wrap .m117c-cg { position:absolute; top:38%; width:14px; height:14px; border-radius:50%; background:#cc4444; border:2px solid #7a2222; transform:translate(-50%,-50%); transition: left 0.25s; }
+#schema-m117c-wrap .m117c-mass { position:absolute; left:24%; top:52%; width:22px; height:10px; background:#4a8c4a; border:1.5px solid #2f5c2f; border-radius:2px; opacity:0; transition: opacity 0.2s; }
+#schema-m117c-wrap .m117c-mass.show { opacity:1; }
+#schema-m117c-wrap .m117c-flutter { position:absolute; right:8%; top:30%; font-size:1.3em; opacity:0; transition: opacity 0.2s; }
+#schema-m117c-wrap .m117c-flutter.show { opacity:1; }
+#schema-m117c-wrap .m117c-label { position:absolute; font-size:0.66em; color:#555; }
+#schema-m117c-wrap .m117c-caption { margin-top:14px; padding:10px; border-left:4px solid #888; background:rgba(128,128,128,0.10); border-radius:4px; min-height:5.5em; }
+</style>
+
+<p><strong>L'&#233;quilibrage massique :</strong> comparez la position du centre de gravit&#233; de la gouverne, avec et sans masse d'&#233;quilibrage.</p>
+
+<button class="m117c-btn active" id="m117c-btn-sans">Sans &#233;quilibrage (CG recul&#233;)</button>
+<button class="m117c-btn" id="m117c-btn-avec">Avec &#233;quilibrage (CG ramen&#233;)</button>
+
+<div class="m117c-diagram">
+  <div class="m117c-hinge"></div>
+  <div class="m117c-label" style="left:14%; top:8px;">Axe de charni&#232;re</div>
+  <div class="m117c-surf"></div>
+  <div class="m117c-label" style="left:24%; top:70%;">Gouverne (coupe)</div>
+  <div class="m117c-mass" id="m117c-mass"></div>
+  <div class="m117c-label" id="m117c-mass-label" style="left:22%; top:64%; opacity:0; transition:opacity 0.2s;">Masse d'&#233;quilibrage</div>
+  <div class="m117c-cg" id="m117c-cg" style="left:66%;"></div>
+  <div class="m117c-label" id="m117c-cg-label" style="left:66%; top:14%; transform:translateX(-50%);">CG</div>
+  <div class="m117c-flutter show" id="m117c-flutter">&#8776;&#8776;&#8776;</div>
+  <div class="m117c-label" id="m117c-flutter-label" style="right:6%; top:14%; opacity:1; transition:opacity 0.2s;">Flutter possible</div>
+</div>
+
+<div class="m117c-caption" id="m117c-caption">Sans masse d'équilibrage, le centre de gravité (CG, point rouge) de la gouverne se trouve en arrière de son axe de charnière : ce couplage entre déformation et écoulement d'air peut déclencher un flutter. Cliquez sur « Avec équilibrage » pour comparer.</div>
+</div>
+
+<script>
+(function () {
+  var wrap = document.getElementById('schema-m117c-wrap');
+  if (!wrap) { return; }
+  var btnSans = wrap.querySelector('#m117c-btn-sans');
+  var btnAvec = wrap.querySelector('#m117c-btn-avec');
+  var cg = wrap.querySelector('#m117c-cg');
+  var cgLabel = wrap.querySelector('#m117c-cg-label');
+  var mass = wrap.querySelector('#m117c-mass');
+  var massLabel = wrap.querySelector('#m117c-mass-label');
+  var flutter = wrap.querySelector('#m117c-flutter');
+  var flutterLabel = wrap.querySelector('#m117c-flutter-label');
+  var caption = wrap.querySelector('#m117c-caption');
+
+  function showSans() {
+    btnSans.className = 'm117c-btn active';
+    btnAvec.className = 'm117c-btn';
+    cg.style.left = '66%';
+    cgLabel.style.left = '66%';
+    mass.className = 'm117c-mass';
+    massLabel.style.opacity = '0';
+    flutter.className = 'm117c-flutter show';
+    flutterLabel.style.opacity = '1';
+    caption.textContent = "Sans masse d'équilibrage, le centre de gravité (CG, point rouge) de la gouverne se trouve en arrière de son axe de charnière : ce couplage entre déformation et écoulement d'air peut déclencher un flutter. Cliquez sur « Avec équilibrage » pour comparer.";
+  }
+
+  function showAvec() {
+    btnSans.className = 'm117c-btn';
+    btnAvec.className = 'm117c-btn active';
+    cg.style.left = '26%';
+    cgLabel.style.left = '26%';
+    mass.className = 'm117c-mass show';
+    massLabel.style.opacity = '1';
+    flutter.className = 'm117c-flutter';
+    flutterLabel.style.opacity = '0';
+    caption.textContent = "Avec la masse d'équilibrage (bloc vert) ajoutée à l'avant de la gouverne, le centre de gravité (CG) est ramené proche de l'axe de charnière : le couplage aéroélastique disparaît. Cliquez sur « Sans équilibrage » pour revenir à l'autre vue.";
+  }
+
+  btnSans.addEventListener('click', showSans);
+  btnAvec.addEventListener('click', showAvec);
+})();
+</script>

@@ -2968,6 +2968,315 @@ complet à 25/25 fiches, 225 questions, 50 schémas. Module validé par
 l'utilisateur, test local complet inclus, le 2026-09-13 ; `disponible`
 passé à `True` dans `part66/logic.py`.**
 
+## M11A — extension du syllabus (chantier 2026-09-14, repris après coupure de courant)
+
+Chantier distinct de la construction initiale ci-dessus (module déjà
+`disponible: True`, déjà en usage) : comble les manques identifiés par
+l'audit de couverture du 2026-09-13 (section « M11A » de l'audit, plus
+haut dans ce fichier) via 5 lots — extension de M11A.6/M11A.7 (sécurité
+commandes de vol), extension structures/train, extension carburant/
+électrique/avionique, 3 fiches neuves (ATA25/33/38), 4 fiches neuves
+(ATA42/44/45/46) — plus l'ajout rétroactif du niveau syllabus (1/2/3) sur
+les 25 fiches existantes. Une coupure de courant a interrompu la session
+initiale ; à la reprise, `git status` a confirmé que le travail suivant
+avait survécu, non commité : le champ `niveau` (et `niveau_note` pour les
+4 fiches à niveau hétérogène : M11A.6, M11A.8, M11A.21, M11A.22) ajouté
+aux 25 fiches, et le Lot 1 déjà rédigé (extension de M11A.6 avec gust
+lock/yaw damper/Mach trim/rudder limiter/stall-warning, extension de
+M11A.7 avec active load control/stall-protection/équilibrage massique/
+rigging, 16 nouvelles questions M11A-0227 à M11A-0242). Aucun schéma
+neuf, aucune relecture, n'avaient encore été faits.
+
+### Étape 0 — extraction et vérification du syllabus officiel
+
+Les 4 documents EASA utilisés lors des chantiers M10/M7A/M15/M5 n'ont pas
+survécu à la coupure (dossier temporaire d'une session antérieure, absent
+de ce nouveau poste de travail) : retéléchargés cette session directement
+depuis `trafikstyrelsen.dk` (miroir officiel EASA eRules, édition Jul
+2024, révision **Regulation (EU) 2023/989** déjà intégrée — donc la même
+renumérotation du Module 11A que celle déjà utilisée par ce projet, pas
+une édition plus ancienne à renuméroter). Extraction par `pdftotext
+-layout` (`easa_full.txt`, ~1265 pages), puis lecture intégrale de deux
+sections : le texte AMC1 détaillé du Module 11A (items 11.1 à 11.21,
+prose par sous-thème, p. 604-610) et le tableau compact des niveaux par
+catégorie (p. 576-577, plus fiable pour les niveaux — même réserve
+méthodologique que celle déjà documentée en tête de ce fichier : les
+items à nombreuses sous-parties, ici 11.3/11.7/11.8/11.9/11.13/11.14,
+désalignent parfois les colonnes de niveau à l'extraction automatisée,
+dans les deux tableaux, pas seulement l'un des deux).
+
+**Confirmation intégrale des 21 items officiels (11.1 à 11.21) et de leur
+correspondance avec le plan validé et les 25 fiches existantes** — aucune
+divergence de fond trouvée entre le texte officiel, l'audit du
+2026-09-13 et le découpage en 5 lots :
+- **Lot 1** (M11A.6/M11A.7, priorité sécurité) : le texte AMC1 de l'item
+  **11.9(a) Primary and secondary flight controls** nomme explicitement
+  *gust locks and gust lock systems*, *artificial feel, yaw damper, Mach
+  trim, rudder limiter*, *stall-warning systems* ; **11.9(b) Actuation
+  and protection** nomme *active load control*, *stall-protection
+  systems* ; **11.9(d) Balancing and rigging**. Niveau B1.1 = **3** pour
+  les 4 sous-items (a/b/c/d) au tableau compact — confirme le « niveau 3 »
+  du plan. Contenu déjà rédigé avant la coupure correctement scopé sur
+  ces mêmes dispositifs, y compris deux ajouts pertinents non listés
+  explicitement par le plan initial mais bien couverts par 11.9(b)
+  (stick pusher, commande active de charge).
+- **Lot 2** (structures/train) : **11.2(a) General concepts** nomme
+  *Zonal and station identification systems* (zonage/repérage par
+  station) ; **11.2(b)** nomme *Structural classification: primary,
+  secondary, and tertiary* et *Fail-safe, safe-life, damage-tolerance
+  concepts* — niveau 2 au tableau compact (pas 3, mais item à couverture
+  actuellement nulle). **11.3.1(b) Airborne towing devices (glider,
+  banner, target)** confirmé comme item nommé — mais **niveau
+  contradictoire entre les deux tableaux** (compact : 1 pour toutes les
+  catégories p.576 ; détaillé : 3 pour B1.1/B1.2 p.605) : à traiter comme
+  niveau 1-3 incertain plutôt que d'affirmer « niveau 3 » comme le
+  faisait l'audit du 2026-09-13 sur la seule foi du tableau compact d'une
+  extraction antérieure. **11.13(b) Systems** nomme *Wheels, brakes,
+  antiskid, and autobraking* et *Steering* ; **11.13(c) Air-ground
+  sensing** ; **11.13(d) Tail protection: Skids** — niveau 3 B1.1 pour
+  les trois, cohérent avec le plan.
+- **Lot 3** (carburant/électrique/avionique) : **11.10(d) Special
+  systems** nomme *Dumping, venting, and draining* et *Inert gas
+  systems* ; **11.10(e) Balancing** nomme *Longitudinal balance fuel
+  systems* — niveau 3 B1.1. **11.6 Electrical power** nomme *Inverters,
+  transformers, rectifiers* et *Voltage regulation* — niveau **3** B1.1
+  (pas superficiel au sens du syllabus, contrairement à l'impression
+  donnée par la fiche actuelle). **11.5.2 Avionics systems** nomme
+  individuellement, niveau 1 toutes catégories : VHF, HF, SATCOM, CPDLC,
+  audio, ELT, CVR (communications, ATA23) ; VOR, ADF, ILS, MLS, FDS, DME,
+  RNAV, FMS, navigation satellite, transpondeur/radar secondaire, TCAS,
+  radar météo, radioaltimètre, INS, ARINC (navigation, ATA34) — liste
+  strictement identique à celle du plan.
+- **Lot 4** (fiches neuves ATA25/33/38) : **11.7 Equipment and
+  furnishings (ATA25)** — (a) emergency equipment niveau 2, (b) cabin and
+  cargo layout niveau 1. **11.14 Lights (ATA33)** — niveau **3** B1.1
+  (external/internal/emergency lighting), item substantiel malgré son
+  intitulé compact, pas un simple point secondaire. **11.17 Water/waste
+  (ATA38)** — (a) systems, (b) corrosion — niveau 3 B1.1.
+- **Lot 5** (fiches neuves ATA42/44/45/46) : **11.18 On-board maintenance
+  systems (ATA45)** (central maintenance computers, data-loading,
+  bibliothèque électronique, structure monitoring/damage-tolerance
+  monitoring) ; **11.19 Integrated Modular Avionics — IMA (ATA42)**
+  (cœur système, réseau, fonctions typiquement intégrées : bleed
+  management, gestion électrique, freinage, train...) ; **11.20 Cabin
+  systems (ATA44)** (CIDS, IFE, FAP, CNS) ; **11.21 Information systems
+  (ATA46)** (ATIMS, bibliothèque électronique de bord) — niveau B1.1
+  incertain entre 2 et 3 selon le tableau consulté (même réserve
+  méthodologique), mais confirmés comme items substantiels, pas
+  anecdotiques.
+
+**Deux constats supplémentaires, sans action requise sur le contenu déjà
+construit :**
+- **M11A.3 (vol à grande vitesse, compressibilité, Mach) ne correspond à
+  aucun item du Module 11A lui-même** — le texte officiel classe la
+  vitesse du son, les régimes subsonique/transsonique/supersonique, le
+  nombre de Mach critique, le tremblement de compressibilité, l'onde de
+  choc et l'effet de la flèche d'aile sous l'item **8.4 High-speed
+  airflow** du **Module 8 (Basic Aerodynamics)** — un module distinct,
+  non construit dans ce projet. Le choix éditorial déjà assumé par ce
+  projet (« découpage éditorial, pas la nomenclature officielle EASA »,
+  documenté en tête de la section M11A) couvre ce cas : le contenu reste
+  pédagogiquement pertinent en contexte M11A (nécessaire pour comprendre
+  Mach trim/rudder limiter du Lot 1), aucune correction nécessaire.
+- **Format d'examen confirmé** : Appendix I to Part-66, section « 2.
+  Number of questions per module », sous-section 2.11 (p. 633) — Category
+  B1.1 : **140 questions, 175 minutes**. Confirme exactement
+  `nb_questions_examen`/`duree_examen_min` déjà en place dans
+  `part66/logic.py`, jusqu'ici marqués TODO « non vérifiée sur
+  l'Appendix VIII officiel » (référence d'appendice elle-même corrigée :
+  c'est l'Appendix I, pas VIII, qui contient cette section).
+
+**Conclusion de l'étape 0** : le plan en 5 lots et l'audit du
+2026-09-13 sont confirmés exacts sur le fond par le texte officiel — pas
+de révision de périmètre nécessaire. Seule nuance à porter dans les
+`niveau_note` des fiches concernées par les Lots 2 et 5 : préférer une
+formulation prudente (« niveau 2 ou 3 selon la source ») plutôt qu'une
+affirmation ferme, tant qu'une extraction plus propre du document ne
+lève pas l'ambiguïté de colonnes — cohérent avec la réserve
+méthodologique déjà en tête de ce fichier.
+
+### Lot 1 (extension M11A.6/M11A.7, sécurité commandes de vol) — relu et corrigé
+
+Contenu rédigé avant la coupure (fiches M11A.6/M11A.7 étendues, 16
+questions M11A-0227 à M11A-0242), confirmé conforme au texte officiel
+par l'étape 0 ci-dessus, puis relu par `relecteur-part66`.
+
+**3 BLOQUANT trouvés et corrigés :**
+- **Renvoi croisé fabriqué** (`fiches.json`, M11A.7, paragraphe commande
+  active de charge) : « rappel M11A.2 sur les charges structurales » —
+  M11A.2 traite le décrochage/la stabilité, pas les charges ; les
+  charges structurales et l'emplanture comme zone de flexion maximale
+  sont en M11A.4 et M11A.5. Corrigé en conséquence.
+- **Seuil numérique inventé** (M11A-0240, option 0) : « tant que la
+  masse ajoutée reste inférieure à 1 % du poids de la gouverne » — les
+  données d'entretien expriment des tolérances de moment, jamais un
+  pourcentage de la masse de la gouverne. Reformulé sans chiffre
+  fabriqué, en ajoutant une phrase (fiche + explication de la question)
+  rattachant explicitement le contrôle d'équilibrage aux données
+  d'entretien approuvées plutôt qu'à une appréciation visuelle (comble
+  aussi la réserve de portée relevée par la relecture).
+- **Exclusivité fausse** (M11A-0229 et fiche M11A.6) : le roulis
+  hollandais présenté comme « propre aux ailes en flèche », alors qu'il
+  existe sur toute voilure (effet dièdre, aile haute) — la flèche
+  l'accentue, ne le cause pas seule. Reformulé dans la fiche, la
+  question, ses options et son explication.
+
+**Points À REVOIR traités dans la foulée** : les 16 questions
+harmonisées sur le style du reste de la banque (phrases interrogatives
+complètes, plus d'amorces tronquées terminées par « : ») ; le champ
+`source` renommé « Module 11A » (au lieu de « Module 11 », ambigu avec
+11B/11C) ; fuite d'indices entre M11A-0227 et les bonnes réponses de
+M11A-0229/M11A-0232 corrigée (distracteurs de 0227 reformulés, plus
+aucune reprise littérale) ; quasi-doublon M11A-0232/M11A-0233 résolu en
+réorientant entièrement M11A-0233 vers un autre fait (autorité de
+commande vs débattement disponible, plutôt que répéter pourquoi le
+débattement est réduit) ; distracteurs trop faibles renforcés sur
+M11A-0234/0235/0236 (et le chevauchement de M11A-0234 avec la question
+M11A-0012 déjà existante réduit en la recentrant sur une nuance
+distincte) ; biais de longueur de la bonne réponse rééquilibré sur
+M11A-0230/0233/0237/0239/0241/0242 ; résidu « voir plus bas » corrigé
+dans l'explication de M11A-0238 ; `duree_min` de M11A.6/M11A.7 relevé de
+16 à 22 (contenu allongé d'environ 40 %). Répartition finale de `bonne`
+sur les 16 : toujours 6/6/4, inchangée par les corrections. Vérification
+faite : le mapping des sous-items 11.9(a/b/d) utilisé par les `source`
+et par la `niveau_note` de M11A.6 est cohérent avec le texte AMC1 extrait
+à l'étape 0 (pas de contradiction avec M11A.8 comme l'avait redouté la
+relecture, une fois le texte officiel consulté directement).
+
+**Point 3 de la relecture (schémas) — 2 schémas ajoutés.** La relecture
+jugeait qu'aucun schéma n'était strictement requis par la règle du
+projet, mais recommandait d'en ajouter deux pour une raison
+pédagogique précise : `M11A.6-3.html` (comparateur à 5 boutons — gust
+lock/yaw damper/Mach trim/rudder limiter/stall-warning — montrant la
+surface concernée, la phase de vol et qui agit, pour désamorcer la
+confusion entre ces dispositifs que les questions elles-mêmes testent) et
+`M11A.7-3.html` (comparateur 2 états — position du CG d'une gouverne
+avec/sans masse d'équilibrage — le seul contenu du lot purement
+géométrique). Créés en respectant les contraintes du projet (aucun
+`<svg>`, aucune génération de DOM à l'exécution, libellé permanent par
+élément, caption statique identique au texte JS par défaut — vérifié
+explicitement après une première version où ce n'était pas le cas).
+`logic.charger_schemas()` (`part66/logic.py`) ne reconnaissait que les
+suffixes `""`/`"-2"` : généralisé pour charger `-3`, `-4`, etc. sans
+limite fixe, changement rétrocompatible qui profitera aussi aux lots
+2-5 s'ils ont besoin d'un 3ᵉ schéma. Sweep `grep -l "<svg"` et
+`innerHTML=/appendChild/createElement` sur les 52 fichiers de
+`part66/data/M11A/schemas/*.html` : aucune occurrence. Syntaxe des 2
+nouveaux scripts vérifiée par `node -e "new Function(...)"`.
+
+**Test headless (`AppTest`)** : 0 exception sur le rendu complet de
+l'onglet Cours du module M11A (25 fiches, dont M11A.6/M11A.7 avec leurs
+3 schémas chacun désormais).
+
+**Relecture de fond validée** (BLOQUANT et À REVOIR ci-dessus tous
+traités). **Suivent 6 rounds de correction pilotés par `eleve-adversaire`,
+détaillés ci-dessous — score final toujours à 100 %, plafond structurel
+documenté sur le modèle déjà établi pour M15, décision utilisateur
+requise avant de poursuivre.**
+
+### Historique des scores `eleve-adversaire` sur les 16 questions
+
+1. **Round 1 (rédaction initiale) : 16/16 (100 %).** Diagnostic :
+   échos lexicaux (nom anglais du dispositif → traduction littérale dans
+   la bonne réponse), motif « le système n'enlève rien au pilote » testé
+   4 fois d'affilée (0230/0233/0234/0235), recyclage d'options entre
+   questions du lot, mots absolus monopolisés côté distracteurs (11
+   questions sur 16), aucune bonne réponse porteuse d'un mot absolu.
+2. **Après réécriture n°1 (échos cassés, motif diversifié, absolus
+   supprimés, distracteurs faibles renforcés) : toujours 16/16 (100 %),**
+   mais pour une raison nouvelle et plus grave — un **cycle exact de
+   position 1-0-2 répété 5 fois** avait été introduit par erreur pendant
+   cette même réécriture (assignation manuelle des positions au lieu
+   d'un tirage aléatoire), en violation directe de la règle du projet.
+   Trouvé par la relecture de fond, pas par l'agent adversarial.
+3. **Après correction du cycle (tirage `random.Random` avec contrôle
+   anti-cycle/anti-série explicite) et 3 nouvelles corrections
+   factuelles trouvées par la relecture (un distracteur confondait
+   dérive et gouverne de direction, un autre était en fait vrai — un
+   stick pusher n'empêche pas la nécessité d'un mode de secours calculateur
+   — un troisième aussi — allongement réel de la distance de freinage,
+   documenté par la fiche M11A.8 du même module) : la position est
+   propre (5/6/5, aucun cycle), mais le score adversarial n'a pas bougé.
+   Nouveau diagnostic, dominant et distinct de la position : le
+   **recyclage entre questions du lot** — un distracteur nommait un
+   dispositif (rigging, Mach, équilibrage massique) qui est le sujet
+   exact d'une autre question des mêmes 16, permettant de resoudre une
+   question par élimination des « réponses qui appartiennent à une autre
+   question du lot », sans aucune connaissance du domaine. Motif
+   identifié sur 8 des 16 questions.
+4. **Après suppression des distracteurs recyclés (remplacés par des
+   mécanismes non nommés dans aucune autre question) : toujours 16/16
+   (100 %).** La relecture de fond a trouvé 3 nouveaux BLOQUANT
+   introduits par ces mêmes remplacements (un distracteur inventé était
+   en réalité une description vraie de l'effet d'emballement du Mach
+   tuck ; une explication enseignait un principe de masse et centrage
+   faux ; une explication réfutait une option qui n'existait plus après
+   une édition précédente) — tous corrigés.
+5. **Round final (après ces 3 corrections) : toujours 16/16 (100 %).**
+   Diagnostic transversal, cette fois stable et jugé structurel par
+   l'agent : sur la quasi-totalité des 16 questions, **chaque distracteur
+   relève d'un domaine différent de celui de la question** (poussière,
+   dilatation thermique, dégivrage, vibrations moteur, déformation de
+   fuselage, carburant, peinture, pression hydraulique, corrosion,
+   profilage aérodynamique — aucun n'appartient au domaine réel de la
+   question posée), ce qui revient à transformer chaque QCM à 3 options
+   en un choix à 2 options une fois le distracteur hors-sujet écarté par
+   simple pertinence, sans connaissance technique. Motif secondaire :
+   la bonne réponse porte presque toujours une clause conditionnelle,
+   une énumération ou une référence documentaire (« selon les
+   tolérances… », « car le risque… ») que les distracteurs, restés des
+   affirmations sèches, n'ont pas — une variante plus fine du biais de
+   longueur déjà neutralisé en surface.
+
+**Diagnostic final, identique dans sa nature à celui déjà documenté
+pour M15 (voir section « Module M15 — dette connue : gabarit de
+rédaction systémique » plus bas dans ce fichier) :** substituer des
+distracteurs dans la structure actuelle — ce qui a été fait sur 5 rounds
+successifs, avec un succès réel sur la position, les échos lexicaux, les
+absolus et le recyclage — ne suffit pas à faire baisser le score
+adversarial, parce que chaque correctif déplace la faille vers un motif
+différent (mots absolus → recyclage → pertinence de domaine →
+qualification de la bonne réponse) sans jamais l'éliminer. Une baisse
+réelle sous le seuil de 40 % demanderait vraisemblablement de réécrire
+les 16 questions selon une méthode différente : les trois options
+rédigées avec la **même densité de justification et le même registre
+grammatical**, et des distracteurs **du même domaine technique** que la
+bonne réponse (donc plus difficiles à écrire sans risquer, comme
+constaté deux fois dans ce chantier, qu'un distracteur « plausible et du
+même domaine » se révèle être en réalité vrai une fois vérifié contre
+une autre fiche du projet) — un chantier plus lourd qu'une passe de
+retouche, non entrepris à ce jour.
+
+**Décision de l'utilisateur (2026-09-14)** : accepter ce plateau et
+committer le Lot 1 en l'état — même arbitrage que M10/M7A/M15/M5.
+Raison donnée : les 3 distracteurs révélés vrais en cours de route
+confirment que chaque round de réécriture coûte plus en risque factuel
+qu'il ne rapporte en résistance à la triche. **Consigne permanente pour
+la suite de ce chantier (lots 2 à 5) et au-delà** : ne plus relancer
+`eleve-adversaire` sur les nouveaux lots de questions M11A — le
+résultat est connu à l'avance. `relecteur-part66` reste systématique
+(c'est la justesse du fond qui compte). Mémorisé dans le système de
+mémoire du projet.
+
+**Reste par ailleurs, en dette mineure assumée, indépendamment de cette
+décision** (À REVOIR non bloquants relevés par la dernière relecture de
+fond, non traités pour éviter un 7e round) :
+- M11A-0227 — le distracteur retenu (poussière/sable) est vrai par
+  ailleurs, écarté seulement par pertinence (pas par fausseté) ; un
+  distracteur causalement lié mais faux serait plus robuste.
+- M11A-0229 — les deux distracteurs appartiennent à la même famille
+  (dégradation mécanique), permettant de les éliminer ensemble sans
+  connaître le roulis hollandais ; l'un d'eux frôle l'absurde.
+- M11A-0230 — « inclinaison mesurée en lacet » n'est pas une grandeur
+  réelle ; le distracteur est éliminable par défaut de vocabulaire
+  plutôt que par la connaissance visée.
+- M11A-0240 — les deux distracteurs contiennent une anaphore sans
+  antécédent dans l'énoncé (« ce contrôle », « l'écart constaté »),
+  signalant la bonne réponse comme la seule option autonome.
+
+**Lot 1 committé le 2026-09-14. Reste : test local par l'utilisateur,
+puis lot 2.**
+
 ## M5.1 / M5.5 / M15.1-2 — bug résolu : génération de DOM à l'exécution
 (investigation menée le 2026-09-11, cause identifiée et corrigée)
 
