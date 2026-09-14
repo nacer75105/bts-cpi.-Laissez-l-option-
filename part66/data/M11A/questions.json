@@ -3341,6 +3341,214 @@
       "bonne": 0,
       "explication": "Un tail skid protège l'arrière du fuselage d'un contact avec la piste en cas d'assiette excessive au décollage ou à l'atterrissage, sur les avions dont la géométrie expose cette zone à ce risque. Il n'a ni rôle d'amortissement des roues principales (assuré par l'amortisseur oléopneumatique), ni fonction de protection en cas d'affaissement du train avant au parking, un tout autre cas de figure sans rapport avec l'assiette au décollage ou à l'atterrissage.",
       "source": "Part-66 Appendix I — Module 11A, item 11.13(d)"
+    },
+    {
+      "uid": "M11A-0259",
+      "sous_chapitre": "M11A.17",
+      "question": "Pourquoi un avion largue-t-il parfois du carburant en vol (fuel dumping) ?",
+      "options": [
+        "Pour rééquilibrer automatiquement la quantité de carburant entre les deux ailes",
+        "Pour réduire rapidement sa masse jusqu'à un niveau compatible avec un atterrissage en sécurité, si un retour immédiat au sol est nécessaire",
+        "Pour économiser du carburant lorsque l'avion vole plus léger que prévu"
+      ],
+      "bonne": 1,
+      "explication": "Un avion peut décoller à une masse supérieure à sa masse maximale autorisée à l'atterrissage ; si un retour immédiat au sol devient nécessaire avant que le carburant n'ait été naturellement consommé, le largage permet de réduire rapidement la masse jusqu'à un niveau compatible avec un atterrissage en sécurité. Il ne s'agit ni d'une mesure d'économie, ni d'un rééquilibrage automatique du centre de gravité — ce dernier relève du système de transfert décrit plus haut dans cette fiche.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.10(d)"
+    },
+    {
+      "uid": "M11A-0260",
+      "sous_chapitre": "M11A.17",
+      "question": "Par où le carburant largué est-il le plus souvent évacué ?",
+      "options": [
+        "Par les mêmes évents qui compensent les variations de pression du réservoir",
+        "Par le circuit d'alimentation normal des moteurs, en excès de leur consommation",
+        "Par des tuyères dédiées, le plus souvent situées au bord de fuite, en partie externe de la voilure"
+      ],
+      "bonne": 2,
+      "explication": "Le carburant largué est évacué par des tuyères dédiées, le plus souvent situées au bord de fuite, en partie externe de la voilure. Les évents ont une fonction différente (compenser les variations de pression et de volume, pas évacuer une masse importante de carburant), et le circuit d'alimentation des moteurs n'a pas vocation à rejeter du carburant en excès.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.10(d)"
+    },
+    {
+      "uid": "M11A-0261",
+      "sous_chapitre": "M11A.17",
+      "question": "En quoi le drainage d'un réservoir de carburant diffère-t-il de l'évent ?",
+      "options": [
+        "Le drainage évacue l'eau et les sédiments accumulés au point bas du réservoir ; l'évent compense les variations de pression et de volume",
+        "Le drainage et l'évent désignent la même ouverture, sous deux noms différents",
+        "Le drainage compense les variations de pression, l'évent évacue l'eau accumulée"
+      ],
+      "bonne": 0,
+      "explication": "Le drainage désigne des points bas dédiés qui permettent d'évacuer l'eau et les sédiments accumulés au fond du réservoir, tandis que l'évent compense les variations de pression et de volume liées à la température, l'altitude et le niveau de carburant. Ce sont deux ouvertures distinctes, aux rôles non interchangeables.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.10(d)"
+    },
+    {
+      "uid": "M11A-0262",
+      "sous_chapitre": "M11A.17",
+      "question": "Pourquoi une eau non purgée dans un réservoir de carburant est-elle surveillée ?",
+      "options": [
+        "Parce qu'elle fausse systématiquement l'indication du système de jaugeage",
+        "Parce qu'elle peut geler en altitude et obstruer localement l'alimentation, ou favoriser la corrosion interne du réservoir",
+        "Parce qu'elle se mélange chimiquement au carburant et en réduit la valeur énergétique"
+      ],
+      "bonne": 1,
+      "explication": "Une eau non purgée peut geler en altitude et obstruer localement l'alimentation, ou favoriser la corrosion interne du réservoir. Elle ne se mélange pas chimiquement au carburant (les deux liquides restent séparés, l'eau plus dense se déposant au fond), et elle ne fausse pas systématiquement le jaugeage.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.10(d)"
+    },
+    {
+      "uid": "M11A-0263",
+      "sous_chapitre": "M11A.17",
+      "question": "Sur quel principe repose l'inertage d'un réservoir de carburant ?",
+      "options": [
+        "Éliminer entièrement les vapeurs de carburant présentes dans cet espace",
+        "Empêcher toute source d'allumage électrique à proximité du réservoir",
+        "Réduire la proportion d'oxygène dans l'espace au-dessus du carburant, sous le seuil nécessaire à une combustion"
+      ],
+      "bonne": 2,
+      "explication": "L'inertage réduit la proportion d'oxygène disponible dans l'espace au-dessus du carburant, sous le seuil nécessaire à une combustion, quelle que soit la richesse du mélange air-vapeurs présent. Il n'élimine pas les vapeurs elles-mêmes, et n'agit pas sur les sources d'allumage électriques — deux protections différentes, qui existent par ailleurs (liaison électrique au ravitaillement, par exemple).",
+      "source": "Part-66 Appendix I — Module 11A, item 11.10(d)"
+    },
+    {
+      "uid": "M11A-0264",
+      "sous_chapitre": "M11A.17",
+      "question": "D'où provient généralement le gaz utilisé pour l'inertage d'un réservoir de carburant ?",
+      "options": [
+        "Du même circuit qui alimente les systèmes d'oxygène de secours de la cabine",
+        "D'une bouteille de gaz comprimé rechargée avant chaque vol",
+        "De l'air prélevé sur le moteur, traité à bord dans un module de séparation d'air pour en extraire un gaz appauvri en oxygène"
+      ],
+      "bonne": 2,
+      "explication": "Le gaz inerte provient généralement de l'air prélevé sur le moteur, traité à bord par un module de séparation d'air qui en extrait un gaz appauvri en oxygène, sans bouteille à recharger avant chaque vol. Il n'a aucun lien avec le circuit d'oxygène de secours de la cabine, qui produit l'effet exactement inverse (enrichir en oxygène plutôt que l'appauvrir).",
+      "source": "Part-66 Appendix I — Module 11A, item 11.10(d)"
+    },
+    {
+      "uid": "M11A-0265",
+      "sous_chapitre": "M11A.18",
+      "question": "Quelle opération réalise un onduleur (inverter) dans le réseau électrique de l'avion ?",
+      "options": [
+        "Stabiliser la tension de sortie d'un générateur",
+        "Convertir du courant continu en courant alternatif",
+        "Convertir du courant alternatif en courant continu"
+      ],
+      "bonne": 1,
+      "explication": "Un onduleur convertit du courant continu en courant alternatif — l'opération inverse du redresseur (TRU). Convertir l'alternatif en continu est précisément le rôle du TRU, et stabiliser la tension de sortie d'un générateur relève de la régulation de tension, une fonction distincte.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.6"
+    },
+    {
+      "uid": "M11A-0266",
+      "sous_chapitre": "M11A.18",
+      "question": "Dans quelle situation l'onduleur alimenté par la batterie devient-il particulièrement utile ?",
+      "options": [
+        "En cas de perte totale des générateurs à courant alternatif, pour alimenter les instruments essentiels qui ont besoin de courant alternatif",
+        "Pendant la charge normale des batteries par les générateurs en vol",
+        "Pendant le tout premier démarrage électrique de l'avion, avant tout fonctionnement moteur"
+      ],
+      "bonne": 0,
+      "explication": "L'onduleur alimente, via la batterie, les instruments essentiels qui ont spécifiquement besoin de courant alternatif en cas de perte totale des générateurs à courant alternatif. Le premier démarrage électrique utilise directement le courant continu de la batterie, sans passer par un onduleur, et la charge normale des batteries passe par le TRU, pas par l'onduleur.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.6"
+    },
+    {
+      "uid": "M11A-0267",
+      "sous_chapitre": "M11A.18",
+      "question": "À quel problème répond la régulation de tension d'un générateur électrique ?",
+      "options": [
+        "La tension produite varierait avec la vitesse d'entraînement et la charge électrique demandée, si rien ne la stabilisait",
+        "Le générateur ne pourrait pas produire plus d'électricité que ce que la batterie peut stocker",
+        "Le générateur produirait une fréquence électrique incompatible avec les équipements, sans régulation"
+      ],
+      "bonne": 0,
+      "explication": "Sans régulation, la tension produite par un générateur varierait avec sa vitesse d'entraînement et la charge électrique demandée par les équipements. Stabiliser la fréquence électrique est le rôle du CSD, vu plus haut dans cette fiche, pas de la régulation de tension ; et la capacité de stockage de la batterie ne plafonne pas la production électrique d'un générateur, qui alimente directement le réseau plutôt que la seule batterie.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.6"
+    },
+    {
+      "uid": "M11A-0268",
+      "sous_chapitre": "M11A.18",
+      "question": "Comment un régulateur de tension (GCU) maintient-il la tension de sortie d'un générateur dans une plage étroite ?",
+      "options": [
+        "En déconnectant temporairement le générateur du réseau dès que la charge varie",
+        "En ajustant en permanence l'excitation électrique du générateur selon la vitesse et la charge instantanée",
+        "En maintenant constante la vitesse d'entraînement du générateur, quel que soit le régime moteur"
+      ],
+      "bonne": 1,
+      "explication": "Le GCU ajuste en permanence l'excitation électrique du générateur pour maintenir sa tension de sortie dans une plage étroite, quelle que soit la vitesse du moteur ou la charge instantanée. Maintenir constante la vitesse d'entraînement du générateur, quel que soit le régime moteur, est le rôle du CSD, pas de la régulation de tension ; et le GCU ne déconnecte pas non plus le générateur à chaque variation de charge, ce qui priverait l'avion d'électricité en permanence.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.6"
+    },
+    {
+      "uid": "M11A-0269",
+      "sous_chapitre": "M11A.21",
+      "question": "Quel moyen de communication reste le plus utilisé avec le contrôle aérien sur la majeure partie d'un vol ?",
+      "options": [
+        "La VHF",
+        "La HF",
+        "Le SATCOM"
+      ],
+      "bonne": 0,
+      "explication": "La VHF reste le moyen de communication vocale le plus courant avec le contrôle aérien sur la majeure partie d'un vol. La HF prend le relais sur les grandes distances océaniques ou polaires, et le SATCOM offre une liaison quasi mondiale — deux moyens complémentaires, pas le moyen le plus courant au quotidien.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.5.2"
+    },
+    {
+      "uid": "M11A-0270",
+      "sous_chapitre": "M11A.21",
+      "question": "Pourquoi la portée de la VHF reste-t-elle limitée, contrairement à la HF ?",
+      "options": [
+        "Parce que sa puissance d'émission est volontairement bridée par la réglementation",
+        "Parce qu'elle partage sa bande de fréquence avec le TCAS, qui limite son usage simultané",
+        "Parce que ses ondes se propagent en vue directe, limitées par la courbure de la Terre et le relief"
+      ],
+      "bonne": 2,
+      "explication": "La VHF se propage en vue directe (ligne de vue) : sa portée est limitée par la courbure de la Terre et le relief, ce qui explique pourquoi un avion emporte aussi un moyen HF, dont les ondes se réfléchissent sur l'ionosphère et portent bien plus loin. Sa puissance d'émission n'est pas volontairement bridée pour cette raison, et elle ne partage aucune bande de fréquence avec le TCAS, qui opère sur une fréquence dédiée distincte.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.5.2"
+    },
+    {
+      "uid": "M11A-0271",
+      "sous_chapitre": "M11A.21",
+      "question": "Que fournit l'ILS (Instrument Landing System) à l'équipage ?",
+      "options": [
+        "Une trajectoire calculée à partir de points de passage, sans balise sol",
+        "Un guidage précis d'alignement et de descente pour l'approche et l'atterrissage",
+        "Une distance précise par rapport à une balise sol"
+      ],
+      "bonne": 1,
+      "explication": "L'ILS fournit un guidage précis d'alignement et de descente pour l'approche et l'atterrissage. Donner une distance par rapport à une balise est le rôle du DME, et suivre une trajectoire définie par des points de passage est le principe du RNAV — deux fonctions distinctes de celle de l'ILS.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.5.2"
+    },
+    {
+      "uid": "M11A-0272",
+      "sous_chapitre": "M11A.21",
+      "question": "Qu'est-ce qui affranchit le RNAV (area navigation) de la contrainte propre à la navigation radio classique ?",
+      "options": [
+        "Il n'oblige plus à survoler chaque balise l'une après l'autre, grâce au GPS, à l'IRS ou à des mesures combinées de balises sol",
+        "Il fonctionne exclusivement grâce au GPS, sans jamais s'appuyer sur une balise sol",
+        "Il repose sur une liaison SATCOM permanente avec le contrôle aérien au sol"
+      ],
+      "bonne": 0,
+      "explication": "Le RNAV affranchit la navigation de la géométrie des balises : plutôt que de survoler chaque balise l'une après l'autre comme l'exige la navigation radio classique, il calcule une trajectoire directe entre points de passage, à partir du GPS, de l'IRS, ou de mesures combinées de balises sol (DME/DME, VOR/DME) selon l'équipement. Il ne fonctionne donc pas exclusivement au GPS ; et le SATCOM est un moyen de communication, pas de navigation.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.5.2"
+    },
+    {
+      "uid": "M11A-0273",
+      "sous_chapitre": "M11A.21",
+      "question": "Que surveille en permanence le TCAS ?",
+      "options": [
+        "L'altitude réelle de l'avion par rapport au sol",
+        "Les autres avions équipés d'un transpondeur dans le voisinage, pour alerter d'un risque de collision",
+        "Les conditions météorologiques sur la trajectoire de vol prévue"
+      ],
+      "bonne": 1,
+      "explication": "Le TCAS surveille en permanence les autres avions équipés d'un transpondeur dans le voisinage, et alerte l'équipage d'un risque de collision. La surveillance météorologique et la mesure d'altitude par rapport au sol relèvent d'autres équipements dédiés de l'avion, distincts du TCAS.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.5.2"
+    },
+    {
+      "uid": "M11A-0274",
+      "sous_chapitre": "M11A.21",
+      "question": "Quelle différence sépare le VOR et le DME, souvent utilisés ensemble sur une même balise sol ?",
+      "options": [
+        "Le VOR donne une direction (radial) par rapport à la balise, le DME donne une distance",
+        "Le VOR et le DME mesurent tous deux uniquement une distance, sur deux fréquences différentes",
+        "Le VOR donne une distance par rapport à la balise, le DME donne une direction"
+      ],
+      "bonne": 0,
+      "explication": "Le VOR donne une direction (un radial) par rapport à la balise sol, tandis que le DME donne une distance par rapport à cette même balise — les deux informations, souvent combinées sur un même emplacement au sol, se complètent plutôt qu'elles ne font double emploi. Elles ne sont pas inversées, et le VOR ne mesure pas une distance.",
+      "source": "Part-66 Appendix I — Module 11A, item 11.5.2"
     }
   ]
 }

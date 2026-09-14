@@ -3336,8 +3336,57 @@ paragraphe pneus ne mentionne pas les pratiques de sécurité associées
 (roue chaude, bouchons fusibles, gonflage à l'azote) — hors périmètre
 de ce lot.
 
-**Lot 2 committé le 2026-09-14. Reste : test local par l'utilisateur,
-puis lot 3.**
+**Lot 2 committé le 2026-09-14.**
+
+### Lot 3 (extension M11A.17/M11A.18/M11A.21, carburant/électrique/avionique) — relu et corrigé
+
+M11A.17 étendu (largage carburant, drainage, inertage approfondi) ;
+M11A.18 étendu (onduleur, régulation de tension/GCU) ; M11A.21 étendu
+(VHF, HF, SATCOM, VOR, DME, ILS, RNAV, TCAS nommés individuellement,
+niveau 1). 16 nouvelles questions (M11A-0259 à M11A-0274), position de
+`bonne` tirée par script Python avec vérification anti-cycle dès la
+première passe (plus d'assignation manuelle — leçon du Lot 1). Aucun
+nouveau schéma.
+
+**Relecture `relecteur-part66` — 1 BLOQUANT corrigé, répété à 3
+endroits :** le RNAV était présenté comme n'utilisant jamais de balise
+sol (« sans dépendre directement d'une balise sol »), dans la fiche
+M11A.21 et dans les questions M11A-0271/M11A-0272. En réalité le RNAV
+s'appuie couramment sur des balises sol (DME/DME, VOR/DME) : ce qui le
+caractérise, c'est l'affranchissement de la géométrie des balises (plus
+besoin de les survolter l'une après l'autre), pas l'absence de balise.
+Fiche et questions reformulées en conséquence.
+
+**Points À REVOIR traités dans la foulée** : renvoi croisé fabriqué de
+l'inertage vers une triade comburant/combustible/allumage absente de
+M11A.22 — redirigé vers M11A.23 (comburant/oxygène, à venir) ; « filtre
+l'air… généralement de l'azote » remplacé par la description exacte
+(module de séparation d'air, air appauvri en oxygène) ; quasi-doublon
+M11A-0269/M11A-0270 (VHF vs HF) résolu en réorientant 0270 vers un fait
+distinct (propagation en vue directe de la VHF) ; question méta
+M11A-0274 (« pourquoi tant d'équipements ») au distracteur partiellement
+vrai remplacée par une question factuelle (distinction VOR/DME) ;
+distracteurs faibles renforcés (M11A-0267, M11A-0268) ; rôle du CSD
+corrigé dans l'explication de M11A-0268 (il maintient une vitesse
+constante, il ne « limite » rien) ; auto-renvoi vide de sens supprimé
+(M11A-0267) ; explication de M11A-0273 (TCAS) qui s'appuyait sur des
+équipements jamais introduits dans le module (radar météo,
+radioaltimètre) reformulée sans les nommer ; localisation des tuyères
+de largage assouplie (bord de fuite plutôt qu'extrémité de voilure) ;
+clause de portée ajoutée au paragraphe drainage, par cohérence avec le
+reste du module ; distracteur de M11A-0259 corrigé pour ne plus
+confondre équilibre latéral et centre de gravité longitudinal. Portée
+sécurité du largage carburant vérifiée conforme (aucun seuil, aucune
+procédure reproductible).
+
+**Dette mineure notée** : la liste d'avionique nommée par l'item 11.5.2
+reste partielle (8 équipements sur ~15 listés par l'étape 0 — CPDLC,
+ELT, CVR, ADF, MLS, FDS, transpondeur en détail, radar météo,
+radioaltimètre restent non couverts) ; acceptable au niveau 1 visé,
+à compléter si un futur lot approfondit ce point.
+
+**Lot 3 committé le 2026-09-14. Reste : test local par l'utilisateur,
+puis lot 4.**
 
 ## M5.1 / M5.5 / M15.1-2 — bug résolu : génération de DOM à l'exécution
 (investigation menée le 2026-09-11, cause identifiée et corrigée)
