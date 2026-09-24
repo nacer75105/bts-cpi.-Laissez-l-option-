@@ -45658,11 +45658,12 @@ mathématique.
 BLOC_19 = {
     "id": 19,
     "titre": "Bloc 19 — Mathématiques BTS CPI : calcul matriciel et modélisation géométrique",
-    "resume": "Les deux derniers modules du programme d'examen : le calcul matriciel et la modélisation géométrique par courbes de Bézier — exactement ce qui se cache derrière un logiciel de CAO.",
+    "resume": "⚠️ Bloc surtout HORS ÉPREUVE. Seule la fiche 19.5 (produit scalaire et produit vectoriel, module « Calcul vectoriel ») est évaluée à l'examen. Les fiches 19.1 à 19.4 (calcul matriciel, courbes de Bézier) relèvent du programme complémentaire non évalué, et la fiche 19.6 (droites, plans, distances) est hors référentiel : pour aller plus loin, une fois le reste maîtrisé.",
     "fiches": [
         {
             "id": "19.1",
-            "titre": "Calcul matriciel : opérations et déterminant",
+            "titre": "Calcul matriciel : opérations et déterminant (hors épreuve)",
+            "hors_epreuve": "Programme complémentaire du BTS CPI (référentiel 2016, S10 §III) : **non évalué à l'examen**. Fiche d'approfondissement, utile en CAO — à garder pour la fin, une fois les modules évalués maîtrisés.",
             "duree": "6 h",
             "cours": """
 
@@ -45774,7 +45775,8 @@ important qu'ici.
         },
         {
             "id": "19.2",
-            "titre": "Modélisation géométrique : courbes de Bézier et B-splines",
+            "titre": "Modélisation géométrique : courbes de Bézier et B-splines (hors épreuve)",
+            "hors_epreuve": "Programme complémentaire du BTS CPI (référentiel 2016, S10 §III) : **non évalué à l'examen**. Fiche d'approfondissement, utile en CAO — à garder pour la fin, une fois les modules évalués maîtrisés.",
             "duree": "5 h",
             "cours": """
 
@@ -45881,7 +45883,8 @@ par défaut pour les surfaces de ce type, plutôt qu'un assemblage d'arcs.
         },
         {
             "id": "19.3",
-            "titre": "Calcul matriciel : matrice inverse et système linéaire",
+            "titre": "Calcul matriciel : matrice inverse et système linéaire (hors épreuve)",
+            "hors_epreuve": "Programme complémentaire du BTS CPI (référentiel 2016, S10 §III) : **non évalué à l'examen**. Fiche d'approfondissement, utile en CAO — à garder pour la fin, une fois les modules évalués maîtrisés.",
             "duree": "5 h",
             "cours": """
 
@@ -45993,7 +45996,8 @@ suite d'étapes, quel que soit le contexte physique (poutre, treillis, mécanism
         },
         {
             "id": "19.4",
-            "titre": "Modélisation géométrique : courbe de Bézier cubique",
+            "titre": "Modélisation géométrique : courbe de Bézier cubique (hors épreuve)",
+            "hors_epreuve": "Programme complémentaire du BTS CPI (référentiel 2016, S10 §III) : **non évalué à l'examen**. Fiche d'approfondissement, utile en CAO — à garder pour la fin, une fois les modules évalués maîtrisés.",
             "duree": "4 h",
             "cours": """
 
@@ -46339,7 +46343,8 @@ bras de levier.
         },
         {
             "id": "19.6",
-            "titre": "Géométrie dans l'espace : droites, plans et distances",
+            "titre": "Géométrie dans l'espace : droites, plans et distances (hors épreuve)",
+            "hors_epreuve": "Hors référentiel du BTS CPI (S10 de 2016) : les équations de droites et de plans et la distance point-plan ne figurent dans aucun module évalué. **Non évalué à l'examen.** Seuls les outils qu'elle réutilise — produit scalaire et produit vectoriel — sont au programme, et ils sont traités en fiche 19.5.",
             "duree": "5 h",
             "cours": """### 1. Pourquoi cette fiche prolonge directement la précédente
 
@@ -60417,6 +60422,8 @@ def _afficher_fiche(bloc, fiche, fiche_id):
             f'<span class="chip chip-bloc">Bloc {str(fiche_id).split(".")[0]}</span>'
             f'<span class="chip chip-duree">⏱ {fiche.get("duree", "N/A")}</span>'
             f'{_etat}</div>', unsafe_allow_html=True)
+        if fiche.get("hors_epreuve"):
+            st.warning("🎯 **Hors épreuve, pour aller plus loin.** " + fiche["hors_epreuve"])
     with col_c:
         if st.checkbox("Fiche lue", value=deja, key=f"lu_{cle}") != deja:
             if deja:
@@ -60598,18 +60605,24 @@ MATIERES_PROGRAMME = [
          [(8, ["8.4", "8.8"]), ("bloc3", ["3.3", "3.4"])]),
     ]),
     ("Mathématiques", [
-        ("Calcul vectoriel et matriciel", "Complet",
-         "Vecteurs du plan, opérations et déterminant matriciels, matrice inverse, produit "
-         "scalaire ET vectoriel dans l'espace (3D).",
-         [(7, ["7.1", "7.5"]), (19, ["19.1", "19.3", "19.5"])]),
-        ("Analyse", "Complet",
-         "Fonctions, dérivées, calcul intégral, extremums locaux, équations différentielles "
-         "(deux cas traités).",
-         [(7, ["7.2"]), (17, ["17.1", "17.2", "17.4"]), (18, ["18.4", "18.8"])]),
-        ("Géométrie dans l'espace", "Complet",
-         "Coordonnées 3D, droites et plans, distance point-plan, test de parallélisme.",
-         [(19, ["19.5", "19.6"])]),
-        ("Statistiques et Probabilités", "Complet",
+        ("Calcul vectoriel (évalué)", "Complet",
+         "Vecteurs du plan, barycentre, produit scalaire, produit vectoriel dans l'espace "
+         "(3D) : aire, moment d'une force.",
+         [(7, ["7.1", "7.5"]), (19, ["19.5"])]),
+        ("Configurations géométriques (évalué)", "Complet",
+         "Trigonométrie du triangle, volumes, repérage d'un point, équation d'un cercle et "
+         "d'une droite.",
+         [(7, ["7.1", "7.4"])]),
+        ("Analyse (évalué)", "Complet",
+         "Fonctions, dérivées, calcul intégral, valeur moyenne, extremums locaux, équations "
+         "différentielles (deux cas traités).",
+         [(7, ["7.2"]), (17, ["17.1", "17.2", "17.4", "17.5"]), (18, ["18.4", "18.8"])]),
+        ("Hors épreuve : calcul matriciel, Bézier, droites et plans", "Complet",
+         "Programme complémentaire non évalué (matrices, courbes de Bézier) et "
+         "approfondissement hors référentiel (droites et plans dans l'espace, distance "
+         "point-plan). Ne tombe pas à l'examen.",
+         [(19, ["19.1", "19.3", "19.2", "19.4", "19.6"])]),
+        ("Statistiques et Probabilités (évalué)", "Complet",
          "Statistique descriptive et inférentielle, probabilités simples et conditionnelles, "
          "loi binomiale, espérance/écart-type, taille d'échantillon.",
          [(7, ["7.3"]), (17, ["17.3", "17.6"]), (18, ["18.1", "18.2", "18.3", "18.5", "18.6", "18.7"])]),
@@ -60988,10 +61001,13 @@ elif PAGE == PAGE_MECA:
 elif PAGE == PAGE_MATHS:
     st.title("Mathématiques")
     st.markdown(
-        '<div class="info-box">Les 11 modules du programme officiel de mathématiques du '
-        'BTS CPI (groupement C1) : fonctions, calcul intégral, équations différentielles, '
-        'statistiques, probabilités, calcul vectoriel et matriciel, géométrie dans l\'espace, '
-        'configurations et modélisation géométriques. Ce sont les mêmes fiches que dans '
+        '<div class="info-box">Les <b>9 modules évalués</b> du programme de mathématiques du '
+        'BTS CPI (référentiel 2016, S10) : fonctions d\'une variable réelle, calcul intégral, '
+        'équations différentielles, statistique descriptive, probabilités 1 et 2, statistique '
+        'inférentielle, configurations géométriques, calcul vectoriel. S\'y ajoutent, '
+        '<b>hors épreuve</b>, le programme complémentaire non évalué (calcul matriciel, courbes '
+        'de Bézier : fiches 19.1 à 19.4) et une fiche d\'approfondissement (19.6, droites et '
+        'plans dans l\'espace), toutes marquées « hors épreuve ». Ce sont les mêmes fiches que dans '
         '« Cours », réunies ici pour ne pas les chercher au milieu des chapitres '
         'techniques.</div>',
         unsafe_allow_html=True)
@@ -61004,13 +61020,14 @@ elif PAGE == PAGE_MATHS:
             "2. **7.1** (trigonométrie/vecteurs) et **17.1** (étudier une fonction)\n"
             "3. **18.1** (probabilités simples) puis **17.2** (calcul intégral)\n"
             "4. **7.4/7.5** (cercle, droite, barycentre) puis **18.2** (loi binomiale)\n"
-            "5. **17.3/17.6** (statistiques) puis **19.1** (matrices : opérations, déterminant)\n"
-            "6. **19.5/19.6** (calcul vectoriel puis géométrie dans l'espace — la suite directe "
-            "de 7.5 et 19.1, avant d'attaquer l'inverse d'une matrice)\n"
-            "7. **19.3** (matrice inverse, système linéaire) puis **18.4/18.8** (équations "
-            "différentielles)\n"
-            "8. Le reste (18.3, 18.5, 18.6/18.7, 19.2/19.4 — courbes de Bézier) — les notions "
-            "les plus abstraites, à garder pour la fin, une fois les bases solides.\n\n"
+            "5. **17.3/17.6** (statistiques) puis **19.5** (produit scalaire et produit "
+            "vectoriel, la suite directe de 7.5)\n"
+            "6. **18.4/18.8** (équations différentielles)\n"
+            "7. Le reste des fiches évaluées (18.3, 18.5, 18.6/18.7) — les notions les plus "
+            "abstraites, à garder pour la fin, une fois les bases solides.\n"
+            "8. **Hors épreuve, seulement s'il reste du temps** : 19.1/19.3 (matrices), "
+            "19.2/19.4 (courbes de Bézier), 19.6 (droites et plans dans l'espace). Elles ne "
+            "tombent pas à l'examen.\n\n"
             "**La méthode qui marche, une fiche à la fois :** ouvre une seule fiche, lis le "
             "cours, fais **seulement son atelier interactif** (pas besoin de refaire tous les "
             "exercices écrits en plus). S'il est réussi, la fiche est validée pour aujourd'hui — "
