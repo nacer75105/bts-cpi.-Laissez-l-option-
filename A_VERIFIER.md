@@ -36,3 +36,27 @@ géométrique = programme complémentaire non évalué.
   élève conteste.
 - **Onglet Méthode 7.1** : cite toujours Al-Kashi ; il est désormais présenté dans le cours
   (§5), rien à faire sauf relecture.
+
+## Bloc 18 — reste à faire
+
+- **Contenus évalués ABSENTS de l'application** (décision de l'auteur : créer des fiches ?).
+  Le S10 2016 et l'annexe I rendent évalués, sans qu'aucune fiche ne les traite :
+  - Probabilités 1 : loi uniforme, loi normale comme loi de probabilité (au-delà de la règle
+    des 3σ), approximation d'une binomiale par une loi normale, théorème de la limite centrée ;
+  - Probabilités 2 : loi exponentielle, loi de Poisson, approximation binomiale → Poisson ;
+  - Statistique inférentielle : intervalle de confiance d'une proportion, tests d'hypothèse
+    (bilatéraux, unilatéraux, comparaison de deux moyennes ou proportions) ;
+  - Équations différentielles : second ordre à coefficients constants, méthode d'Euler.
+  Le résumé du bloc 18, l'encart de la page Maths et le tableau de bord
+  (`MATIERES_PROGRAMME`, statut « Incomplet (à enrichir) ») le disent désormais.
+- **Quiz** : aucune question des banques « Mathématiques BTS CPI (examen) » et « Mathématiques
+  appliquées » ne porte sur le bloc 18 (seule la banque « probabilités et équations
+  différentielles » le couvre).
+- **Non vérifié** : fin de l'atelier at30 (champs `verification` et `a_retenir`) ; rendu
+  visuel des figures (arbre, Venn, exponentielle, intervalle de confiance) — seuls leurs textes
+  ont été corrigés.
+- **Notation** : T_amb / T_eq / y_eq / P_eq coexistent encore entre cours, méthodes et
+  ateliers at22/at30 ; les formules générales disent maintenant « y_eq = valeur d'équilibre,
+  par ex. T_amb ». Harmonisation complète à faire.
+- **18.2** : le nom exact des menus de loi binomiale dépend de la calculatrice (Casio / TI /
+  NumWorks) ; la fiche reste générique.

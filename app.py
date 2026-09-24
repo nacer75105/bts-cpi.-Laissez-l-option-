@@ -4089,17 +4089,17 @@ def probabilite_arbre():
     p.append(f"<circle r='6' fill='{ALERTE}'>"
              f"<animateMotion dur='3s' repeatCount='indefinite' path='M{x0},{y0} L280,110 L430,75'/></circle>")
     branches = [
-        (280, 110, "0,6", "Fournisseur A", ALESAGE),
-        (280, 270, "0,4", "Fournisseur B", ARBRE),
+        (280, 110, "0,7", "Fournisseur F1", ALESAGE, "0,02", "0,98"),
+        (280, 270, "0,3", "Fournisseur F2", ARBRE, "0,08", "0,92"),
     ]
-    for x1, y1, proba, label, coul in branches:
+    for x1, y1, proba, label, coul, p_def, p_bon in branches:
         p.append(f"<line x1='{x0}' y1='{y0}' x2='{x1}' y2='{y1}' stroke='{coul}' stroke-width='2'/>")
         mx, my = (x0 + x1) / 2, (y0 + y1) / 2
         p.append(_txt(mx - 10, my - 10, proba, 12, coul, "middle", True))
         p.append(_txt(x1 + 8, y1, label, 12, TRAIT, "start", True))
         for dx1, dy1, proba2, label2, coul2 in (
-            (150, -35, "0,02", "défaut", ALERTE),
-            (150, 35, "0,98", "bon", OK),
+            (150, -35, p_def, "défaut", ALERTE),
+            (150, 35, p_bon, "bon", OK),
         ):
             x2, y2 = x1 + dx1, y1 + dy1
             p.append(f"<line x1='{x1}' y1='{y1}' x2='{x2}' y2='{y2}' stroke='{FIN}' stroke-width='1.6'/>")
@@ -4169,14 +4169,14 @@ def intervalle_confiance():
     p.append(_txt(xmoy - marge, y - 60, "borne basse", 11, FIN, "middle"))
     p.append(_txt(xmoy + marge, y - 60, "borne haute", 11, FIN, "middle"))
     p.append(f"<rect x='40' y='240' width='680' height='56' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
-    p.append(_txt(56, 262, "La vraie moyenne de la production a 95 % de chances d'être dans cette fenêtre —", 12, TRAIT, "start", True))
-    p.append(_txt(56, 284, "pas certaine à 100 %, mais très probable : c'est le sens exact de « confiance ».", 12, TRAIT, "start", True))
+    p.append(_txt(56, 262, "Avant le prélèvement, la méthode a 95 % de chances de donner une fenêtre qui contient la vraie moyenne.", 12, TRAIT, "start", True))
+    p.append(_txt(56, 284, "Une fois la fenêtre calculée, on dit : la vraie moyenne y est avec une confiance de 95 %.", 12, TRAIT, "start", True))
     return _svg("".join(p), 760, 320)
 
 
 def decroissance_exponentielle():
     import math as _m
-    p = [_txt(40, 26, "Une équation différentielle y' = -k·y donne une courbe qui se rapproche d'un palier sans jamais l'atteindre :",
+    p = [_txt(40, 26, "Une équation différentielle y' = −k·(y − y_final) donne une courbe qui se rapproche d'un palier sans jamais l'atteindre :",
               12, TRAIT, "start", True)]
     ox, oy = 90, 280
     y0v, ylimv = 220, 20
@@ -4205,7 +4205,7 @@ def decroissance_exponentielle():
     p.append(_txt(xtau + 10, oy - ytau, "≈ 63 % du chemin parcouru", 11, ARBRE, "start", True))
     p.append(f"<rect x='40' y='300' width='680' height='60' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
     p.append(_txt(56, 324, "τ (tau) est la constante de temps : au bout d'une durée τ, on a déjà parcouru 63 % de l'écart", 12, TRAIT, "start", True))
-    p.append(_txt(56, 346, "total. Au bout de 5τ, la grandeur est pratiquement arrivée à sa valeur finale.", 12, TRAIT, "start", True))
+    p.append(_txt(56, 346, "total. Au bout de 3τ, 95 % du chemin est fait (99 % à 5τ) : régime quasi stabilisé.", 12, TRAIT, "start", True))
     return _svg("".join(p), 760, 380)
 
 
@@ -5410,7 +5410,7 @@ def dispersion_deux_reglages():
 
 
 def venn_deux_evenements():
-    p = [_txt(40, 24, "Deux événements indépendants : le rond commun compte deux fois si on ne le retranche pas.",
+    p = [_txt(40, 24, "Deux événements qui peuvent se produire ensemble : le rond commun compte deux fois si on ne le retranche pas.",
               12, TRAIT, "start", True)]
     p.append(f"<circle cx='300' cy='210' r='120' fill='{ALESAGE}' opacity='0.35' stroke='{ALESAGE}' stroke-width='2.4'/>")
     p.append(f"<circle cx='440' cy='210' r='120' fill='{ARBRE}' opacity='0.35' stroke='{ARBRE}' stroke-width='2.4'/>")
@@ -9228,8 +9228,8 @@ QUIZ["Mathématiques BTS CPI — probabilités et équations différentielles"] 
 
     q("Deux défauts indépendants ont pour probabilités 0,05 et 0,04. Quelle est la probabilité "
       "qu'une pièce présente les deux défauts en même temps ?",
-      ["0,09", "0,002", "0,0020", "0,20"], 2,
-      "Événements indépendants : P(A ∩ B) = P(A) × P(B) = 0,05 × 0,04 = 0,0020 — bien plus "
+      ["0,09", "0,002", "0,02", "0,20"], 1,
+      "Événements indépendants : P(A ∩ B) = P(A) × P(B) = 0,05 × 0,04 = 0,002 — bien plus "
       "faible que chaque défaut pris seul.", "Base"),
 
     q("Dans la formule de la loi binomiale P(X=k) = C(n,k) × p^k × (1−p)^(n−k), à quoi sert le "
@@ -9308,10 +9308,10 @@ QUIZ["Mathématiques BTS CPI — probabilités et équations différentielles"] 
       "fait la marge d'erreur visée. On arrondit toujours au nombre entier SUPÉRIEUR.",
       "Base"),
 
-    q("Si l'on divise par 2 la marge d'erreur visée sur un intervalle de confiance, sans "
+    q("Si l'on divise par 3 la marge d'erreur visée sur un intervalle de confiance, sans "
       "changer l'écart-type s, la taille d'échantillon n nécessaire est multipliée par :",
-      ["2", "1,41 (racine de 2)", "4", "0,5"], 2,
-      "n dépend du carré de (1/marge) : diviser la marge par 2 multiplie n par 2² = 4 — la "
+      ["3", "9", "1,73 (racine de 3)", "6"], 1,
+      "n dépend du carré de (1/marge) : diviser la marge par 3 multiplie n par 3² = 9 — la "
       "précision coûte cher en volume de contrôle.", "Intermédiaire"),
 
     q("Un vérin se met en pression selon P(t) = P_max × (1 − e^(−t/τ)), en partant de 0. Que "
@@ -44856,7 +44856,7 @@ coefficient de variation existe.
 BLOC_18 = {
     "id": 18,
     "titre": "Bloc 18 — Mathématiques BTS CPI : probabilités et équations différentielles",
-    "resume": "Les cinq modules du programme d'examen qui manquaient encore : probabilités 1 et 2, statistique inférentielle, et équations différentielles.",
+    "resume": "Quatre modules du programme d'examen : probabilités 1, probabilités 2, statistique inférentielle et équations différentielles. Ce bloc n'en couvre qu'une partie : lois exponentielle et de Poisson, loi uniforme, approximation normale, tests d'hypothèse et équations du second ordre ne sont pas encore traités.",
     "fiches": [
         {
             "id": "18.1",
@@ -44888,8 +44888,10 @@ Deux événements A et B peuvent se combiner de deux façons :
 > **A ∩ B** (« A et B ») : les deux se produisent en même temps.
 > **A ∪ B** (« A ou B ») : au moins un des deux se produit.
 
-**Formule du OU** — elle compte deux fois ce qui est commun aux deux, il faut donc le retrancher
-une fois :
+**Formule du OU — d'où vient le « − P(A ∩ B) ».** Sur 1 000 pièces, 20 ont un défaut de
+diamètre, 50 un défaut de surface, et 1 a les deux. Combien ont au moins un défaut ? Si on fait
+20 + 50 = 70, la pièce qui a les deux défauts a été comptée deux fois, une fois dans chaque tas :
+le vrai total est 70 − 1 = 69. En probabilités, c'est la même chose :
 
 > **P(A ∪ B) = P(A) + P(B) − P(A ∩ B)**
 
@@ -44900,6 +44902,15 @@ défaut de diamètre et un défaut d'état de surface, causés par deux opérati
 gamme, sont un exemple typique. Dans ce cas, et dans ce cas seulement :
 
 > **P(A ∩ B) = P(A) × P(B)** (indépendance uniquement)
+
+*Pourquoi multiplier ? Sur 1 000 pièces, 2 % ont un défaut de diamètre, soit 20 pièces. Si le
+défaut de surface n'a rien à voir avec le diamètre, ces 20 pièces ont le même risque que les
+autres d'avoir un défaut de surface, 5 % : cela donne 5 % de 20 = 1 pièce, soit 1/1 000 =
+0,02 × 0,05. On multiplie parce qu'on prend « un pourcentage d'un pourcentage ».*
+
+Cas particulier : deux événements **incompatibles** ne peuvent jamais arriver ensemble (« la cote
+est trop grande » et « la cote est trop petite » sur la même pièce). Alors P(A ∩ B) = 0, et le OU
+devient une simple addition.
 
 *Le piège classique : appliquer cette formule de multiplication à des événements qui ne sont PAS
 indépendants. Rien ne le suppose par défaut — l'énoncé doit le préciser, ou la situation doit le
@@ -44937,7 +44948,8 @@ P(A∪B) : sans ça, on la compterait deux fois, une pour chaque rond.*
 1. **Additionner P(A) et P(B) sans retrancher P(A ∩ B)** — sauf si A et B sont incompatibles
    (ne peuvent jamais se produire ensemble), auquel cas P(A ∩ B) = 0.
 2. **Multiplier P(A) et P(B) sans avoir vérifié l'indépendance.**
-3. **Confondre P(A ∪ B) et P(A ∩ B)** : le OU est presque toujours la valeur la plus grande.
+3. **Confondre P(A ∪ B) et P(A ∩ B)** : P(A ∪ B) est toujours au moins égale à P(A ∩ B), à P(A)
+   et à P(B).
 
 ### 7. À retenir
 
@@ -44957,28 +44969,29 @@ P(A∪B) : sans ça, on la compterait deux fois, une pour chaque rond.*
 """,
             "exercice": """
 Sur une ligne de production, un défaut d'usinage (événement U) a une probabilité P(U) = 0,04 ;
-un défaut de peinture (événement P), dû à un poste différent et indépendant, a une probabilité
-P(P) = 0,03.
+un défaut de peinture (événement F, comme finition), dû à un poste différent et indépendant, a
+une probabilité P(F) = 0,03.
 
-**1.** Calcule P(U ∩ P), la probabilité des deux défauts en même temps.
+**1.** Calcule P(U ∩ F), la probabilité des deux défauts en même temps.
 
-**2.** Calcule P(U ∪ P), la probabilité d'au moins un défaut.
+**2.** Calcule P(U ∪ F), la probabilité d'au moins un défaut.
 
 **3.** Calcule la probabilité qu'une pièce sorte sans aucun défaut.
 """,
             "corrige": """
-**1.** Indépendance, donc P(U ∩ P) = 0,04 × 0,03 = **0,0012**.
+**1.** Indépendance, donc P(U ∩ F) = 0,04 × 0,03 = **0,0012**.
 
-**2.** P(U ∪ P) = 0,04 + 0,03 − 0,0012 = **0,0688**.
+**2.** P(U ∪ F) = 0,04 + 0,03 − 0,0012 = **0,0688**.
 
-**3.** P(aucun défaut) = 1 − 0,0688 = **0,9312**, soit environ **93,1 %**.
+**3.** « Aucun défaut » est exactement le contraire de « au moins un défaut » (question 2), donc
+P(aucun défaut) = 1 − P(U ∪ F) = 1 − 0,0688 = **0,9312**, soit environ **93,1 %**.
 """,
             "exemple": """
 **Cas industriel — Deux contrôles en série**
 
 Une pièce passe par deux postes de contrôle indépendants. Le premier détecte un défaut avec une
 probabilité de 0,90 s'il est présent ; s'il le rate, le second le détecte avec une probabilité
-de 0,80. On admet que 5 % des pièces produites ont un défaut.
+de 0,80 (probabilité « sachant que » le premier a raté : voir fiche 18.5). On admet que 5 % des pièces produites ont un défaut.
 
 **Étape 1 — Probabilité que le défaut échappe au premier contrôle.**
 
@@ -44990,6 +45003,9 @@ de 0,80. On admet que 5 % des pièces produites ont un défaut.
 
 **Étape 3 — Probabilité qu'une pièce défectueuse échappe complètement au contrôle.**
 
+Pour qu'une mauvaise pièce arrive chez le client, il faut deux choses à la suite : qu'elle soit
+défectueuse (5 %), **puis** que les deux contrôles la ratent (2 % des pièces défectueuses). On
+prend donc 2 % de 5 % :
 P(pièce défectueuse) × P(échappe aux deux) = 0,05 × 0,02 = **0,001**, soit **1 pièce sur 1000**.
 
 **Ce que le calcul apprend.** Aucun contrôle n'est parfait, mais **enchaîner deux contrôles
@@ -45000,11 +45016,11 @@ passer une pièce défectueuse.
         },
         {
             "id": "18.2",
-            "titre": "Probabilités 2 : la loi binomiale et l'échantillonnage",
+            "titre": "Probabilités 1 : la loi binomiale et l'échantillonnage",
             "duree": "5 h",
             "cours": """
 
-### 1. Le lien avec la fiche 18.1
+### 1. Ce qui change par rapport aux fiches 7.3 et 18.1
 
 La fiche 7.3 a introduit la **loi normale**, qui décrit une mesure continue (un diamètre, une
 longueur). La loi binomiale, elle, décrit autre chose : **compter combien de pièces défectueuses
@@ -45014,7 +45030,8 @@ on trouve dans un échantillon**, un nombre entier, pas une mesure continue.
 
 > Une **épreuve de Bernoulli** n'a que deux issues : succès (probabilité p) ou échec
 > (probabilité 1 − p). En contrôle qualité, « succès » désigne conventionnellement l'événement
-> qu'on compte — souvent « la pièce est défectueuse ».
+> qu'on compte — souvent « la pièce est défectueuse ». Attention : « succès » n'a rien de
+> positif ici, c'est juste le nom de ce qu'on compte, même quand c'est une pièce ratée.
 
 Si on répète cette épreuve **n fois de façon indépendante**, avec la même probabilité p à chaque
 fois (c'est exactement le prélèvement d'un échantillon de n pièces dans une grande production),
@@ -45022,17 +45039,33 @@ le nombre X de succès obtenus suit une **loi binomiale**, notée **X ∼ B(n ; 
 
 ### 3. La formule de la loi binomiale
 
+**Construisons-la sur 3 pièces.** On note D une pièce défectueuse (p = 0,05) et B une pièce bonne
+(0,95). Probabilité d'avoir exactement 1 pièce défectueuse sur 3 ? La suite D-B-B a pour
+probabilité 0,05 × 0,95 × 0,95 (pièces indépendantes, on multiplie, fiche 18.1). Mais la pièce
+défectueuse peut aussi être la 2ᵉ (B-D-B) ou la 3ᵉ (B-B-D) : 3 suites de même probabilité. Au
+total : 3 × 0,05¹ × 0,95². Le « 3 » compte les places possibles de la pièce défectueuse, c'est
+C(3,1) ; « 0,05¹ » vient de la pièce défectueuse, « 0,95² » des pièces bonnes. La formule
+générale fait exactement la même chose :
+
 > **P(X = k) = C(n,k) × p^k × (1 − p)^(n−k)**
 
 où **C(n,k)**, le coefficient binomial (« n choisir k »), compte le nombre de façons de placer
 les k succès parmi les n épreuves — votre calculatrice le donne directement (touche nCr).
+
+*À l'examen, la formule explicite n'est pas exigée : on calcule P(X = k) et P(X ≤ k)
+directement avec le menu des lois de probabilité de la calculatrice. La formule sert à
+comprendre ce que la calculatrice fait.*
 
 [[FIG:loi_binomiale_histo]]
 
 ### 4. Espérance et écart-type
 
 > **E(X) = n × p** — le nombre moyen de succès attendu.
-> **σ(X) = √(n × p × (1 − p))** — la dispersion autour de cette moyenne.
+> **σ(X) = √(n × p × (1 − p))** — la dispersion autour de cette moyenne (formule admise,
+> détaillée en fiche 18.6).
+
+*E(X) = 0,5 ne veut pas dire « une demi-pièce » : sur 100 échantillons de 10 pièces, on trouvera
+environ 50 pièces défectueuses au total. C'est 10 × 5 % : le bon sens, mis en formule.*
 
 ### 5. Exemple entièrement déroulé — un plan d'échantillonnage
 
@@ -45049,6 +45082,8 @@ P(X = 1) = C(10,1) × 0,05¹ × 0,95⁹ = 10 × 0,05 × 0,6302 = **0,3151**, soi
 
 **Étape 3 — Probabilité d'accepter le lot.**
 
+« Au plus 1 », c'est « 0 ou 1 » : ces deux cas ne peuvent pas arriver ensemble (incompatibles,
+fiche 18.1), donc on additionne sans rien retrancher.
 P(X ≤ 1) = P(X = 0) + P(X = 1) = 0,5987 + 0,3151 = **0,9139**, soit **91,4 %**.
 
 **Étape 4 — Espérance et écart-type.**
@@ -45098,7 +45133,9 @@ défectueuse ».
 **4.** Calcule E(X), le nombre moyen de pièces défectueuses attendu par échantillon.
 """,
             "corrige": """
-**1.** P(X = 0) = 0,90⁵ = **0,5905**, soit **59,05 %**.
+**1.** Ici 1 − p = 1 − 0,10 = 0,90. P(X = 0) = C(5,0) × 0,10⁰ × 0,90⁵ = 1 × 1 × 0,90⁵ =
+**0,5905**, soit **59,05 %**. *(C(5,0) = 1 : une seule façon de ne placer aucune pièce
+défectueuse ; et tout nombre à la puissance 0 vaut 1.)*
 
 **2.** P(X = 1) = 5 × 0,10 × 0,90⁴ = 5 × 0,10 × 0,6561 = **0,3281**, soit **32,81 %**.
 
@@ -45112,13 +45149,15 @@ défectueuse ».
 Un service qualité compare deux plans de contrôle pour un taux de défaut p = 0,08, avec pour
 critère d'acceptation « 0 défectueuse dans l'échantillon » :
 
+Accepter = 0 pièce défectueuse = P(X = 0) = (1 − 0,08)ⁿ = 0,92ⁿ.
+
 **Plan A**, n = 5 : P(accepter) = 0,92⁵ = **0,6591**, soit **65,9 %**.
 
 **Plan B**, n = 20 : P(accepter) = 0,92²⁰ ≈ **0,1887**, soit **18,9 %**.
 
 **Ce que le calcul apprend.** Le même taux de défaut réel donne des probabilités d'acceptation
 très différentes selon la taille de l'échantillon : un petit échantillon (Plan A) est **plus
-indulgent**, un grand échantillon (Plan B) **détecte le problème presque systématiquement**. Ce
+indulgent**, un grand échantillon (Plan B) **refuse ce lot dans plus de 4 cas sur 5** (81 %). Ce
 n'est pas un hasard si les plans d'échantillonnage normalisés (comme la norme NF ISO 2859)
 imposent une taille minimale selon les enjeux — un contrôle trop léger peut laisser passer un
 lot réellement défaillant avec une probabilité confortable pour lui, pas pour le client.
@@ -45132,8 +45171,9 @@ lot réellement défaillant avec une probabilité confortable pour lui, pas pour
 
 ### 1. Ce que la fiche 7.3 supposait déjà connu
 
-La fiche 7.3 a calculé Cp et Cpk à partir d'une moyenne x̄ et d'un écart-type σ, **comme s'ils
-étaient parfaitement connus**. En réalité, on ne les connaît jamais pour toute la production —
+La fiche 7.3 a calculé Cp et Cpk (les indicateurs qui disent si le procédé tient dans la
+tolérance) à partir d'une moyenne x̄ et d'un écart-type σ, **comme s'ils étaient parfaitement
+connus**. En réalité, on ne les connaît jamais pour toute la production —
 seulement sur l'**échantillon** qu'on a mesuré. La statistique inférentielle répond à la
 question qui en découle : à quel point peut-on faire confiance à cette estimation ?
 
@@ -45152,26 +45192,34 @@ population — mais un nombre unique ne dit rien sur la marge d'erreur de cette 
 Plutôt qu'un seul nombre, on donne une **fourchette** qui a de fortes chances de contenir la
 vraie moyenne :
 
-> **IC95% = [x̄ − 1,96 × s/√n ; x̄ + 1,96 × s/√n]**
+> **IC95% = [x̄ − 1,96 × σ/√n ; x̄ + 1,96 × σ/√n]**
 
-où **s** est l'écart-type mesuré sur l'échantillon, et **n** sa taille. Le nombre **1,96** vient
-de la loi normale (fiche 7.3) — c'est la valeur qui laisse 95 % de la surface sous la courbe en
-cloche entre −1,96σ et +1,96σ.
+où **σ** est l'écart-type **connu** du procédé (historique de production), et **n** la taille de
+l'échantillon. S'il est inconnu, on le remplace par l'écart-type **s** estimé sur l'échantillon
+(touche sx de la calculatrice, division par n − 1), mais **seulement pour un grand échantillon
+(n ≥ 30)**. Le nombre **1,96** vient de la loi normale (fiche 7.3) — c'est la valeur qui laisse
+95 % de la surface sous la courbe en cloche entre −1,96σ et +1,96σ.
+
+*Pourquoi diviser par √n ? Une pièce seule peut tomber loin de la cible. Mais dans la moyenne de
+36 pièces, les pièces un peu trop grandes et un peu trop petites se compensent : la moyenne bouge
+beaucoup moins qu'une pièce isolée. Sa dispersion vaut σ/√n — 6 fois moins que celle des pièces
+pour n = 36. C'est pour cela que l'intervalle de la moyenne est bien plus étroit que la plage
+±3σ des pièces.*
 
 [[FIG:intervalle_confiance]]
 
-*Deux leviers pour réduire la marge d'erreur : diminuer la dispersion s (améliorer le procédé),
+*Deux leviers pour réduire la marge d'erreur : diminuer la dispersion σ (améliorer le procédé),
 ou augmenter n (mesurer plus de pièces) — mais n est sous une racine carrée : **quadrupler
 l'échantillon ne divise la marge que par 2**, pas par 4.*
 
 ### 4. Exemple entièrement déroulé
 
-Sur un échantillon de **n = 36** pièces, la moyenne mesurée d'un diamètre est **x̄ = 50,02 mm**,
-avec un écart-type **s = 0,15 mm**.
+Sur un échantillon de **n = 36** pièces, la moyenne mesurée d'un diamètre est **x̄ = 50,02 mm** ;
+l'écart-type du procédé vaut **σ = 0,15 mm** (grand échantillon : on peut utiliser celui mesuré).
 
 **Étape 1 — Calculer la marge d'erreur.**
 
-marge = 1,96 × s/√n = 1,96 × 0,15/√36 = 1,96 × 0,15/6 = 1,96 × 0,025 = **0,049 mm**
+marge = 1,96 × σ/√n = 1,96 × 0,15/√36 = 1,96 × 0,15/6 = 1,96 × 0,025 = **0,049 mm**
 
 **Étape 2 — Construire l'intervalle.**
 
@@ -45180,6 +45228,11 @@ IC95% = [50,02 − 0,049 ; 50,02 + 0,049] = **[49,971 ; 50,069] mm**
 **Interprétation, à formuler avec précision** : on a 95 % de confiance que la moyenne réelle de
 toute la production se situe entre 49,971 et 50,069 mm — **pas** que 95 % des pièces sont dans
 cet intervalle (c'est le rôle de la fiche 7.3 et de la règle des 3σ, une question différente).
+
+**Utiliser l'intervalle pour décider.** On le compare à l'exigence du cahier des charges :
+(1) l'IC est entièrement dans l'exigence → conforme, avec 95 % de confiance ; (2) l'IC est
+entièrement en dehors → non conforme ; (3) l'IC déborde → on ne peut pas conclure, il faut
+mesurer plus de pièces (fiche 18.7).
 
 ### 5. Les erreurs classiques
 
@@ -45192,20 +45245,21 @@ cet intervalle (c'est le rôle de la fiche 7.3 et de la règle des 3σ, une ques
 
 ### 6. À retenir
 
-- **IC95% = x̄ ± 1,96 × s/√n.**
+- **IC95% = x̄ ± 1,96 × σ/√n** (σ connu, ou estimé par s si n ≥ 30).
 - Un échantillon plus grand réduit la marge, mais **seulement en racine carrée**.
 - L'intervalle de confiance porte sur la **moyenne de la population**, pas sur les pièces
   individuelles — à ne pas confondre avec le Cp/Cpk de la fiche 7.3.
             """,
             "formules": """
 
-**Intervalle de confiance à 95% de la moyenne** — IC95% = x̄ ± 1,96 × s/√n
+**Intervalle de confiance à 95% de la moyenne** — IC95% = x̄ ± 1,96 × σ/√n
+(σ connu ; sinon s estimé sur l'échantillon, seulement si n ≥ 30)
 
 **Marge d'erreur** — diminue en 1/√n : quadrupler n divise la marge par 2 seulement
 """,
             "exercice": """
-Sur un échantillon de **n = 25** pièces, la moyenne mesurée est **x̄ = 12,50 mm**, avec un
-écart-type **s = 0,10 mm**.
+Sur un échantillon de **n = 25** pièces, la moyenne mesurée est **x̄ = 12,50 mm**. L'écart-type
+du procédé est **connu** grâce à l'historique de production : **σ = 0,10 mm**.
 
 **1.** Calcule la marge d'erreur à 95 %.
 
@@ -45225,7 +45279,8 @@ on peut conclure, avec 95 % de confiance, que **le procédé respecte l'exigence
             "exemple": """
 **Cas industriel — Une marge trop large pour conclure**
 
-Un contrôle rapide, sur seulement **n = 4** pièces, donne x̄ = 30,00 mm, s = 0,12 mm.
+Un contrôle rapide, sur seulement **n = 4** pièces, donne x̄ = 30,00 mm ; l'écart-type du
+procédé, connu par l'historique, est σ = 0,12 mm.
 
 **Étape 1 — Marge d'erreur.**
 
@@ -45254,7 +45309,13 @@ Une équation différentielle relie une grandeur à **sa propre vitesse de varia
 dire à sa dérivée. Résoudre l'équation, c'est retrouver la fonction complète à partir de cette
 seule relation.
 
-### 2. Le cas du programme : y' = −k·y + b (premier ordre, coefficients constants)
+*Image d'atelier : une pièce à 180 °C posée dans un atelier à 20 °C refroidit **vite** au début,
+parce que l'écart est énorme, puis **de plus en plus lentement** à mesure qu'elle approche 20 °C.
+La vitesse de refroidissement (en °C par minute) dépend donc de la température elle-même : c'est
+ça, une équation différentielle. La dérivée T'(t) est cette vitesse. Le même modèle décrit la
+charge d'un condensateur ou la montée en vitesse d'un moteur.*
+
+### 2. Le cas le plus fréquent en atelier : le retour à l'équilibre (premier ordre, coefficients constants)
 
 La forme la plus utile en contexte industriel décrit un phénomène qui **tend vers un équilibre**
 à une vitesse proportionnelle à l'écart qui reste — un refroidissement, une charge électrique,
@@ -45263,16 +45324,24 @@ une pression qui se stabilise.
 > **Équation** : T'(t) = −k × (T(t) − T_amb)
 > **Solution** : T(t) = T_amb + (T₀ − T_amb) × e^(−t/τ), avec τ = 1/k
 
-où **T_amb** est la valeur d'équilibre finale, **T₀** la valeur de départ, et **τ** (tau) la
-**constante de temps** : le temps que met l'écart à se réduire d'un facteur e ≈ 2,718.
+où **T_amb** est la valeur d'équilibre finale (notée y_éq dans les formules générales), **T₀** la
+valeur de départ, **k** (en min⁻¹) règle la rapidité — plus k est grand, plus le retour est
+rapide — et **τ** (tau) la **constante de temps** : le temps que met l'écart à se réduire d'un
+facteur e ≈ 2,718. *(Si on développe, on retrouve la forme y' = −k·y + b, avec b = k × T_amb.)*
 
-*Vérification par dérivation : dérivez T(t) et vous devez retomber sur T'(t) = −(T(t) −
-T_amb)/τ — c'est exactement ce que garantit l'exponentielle décroissante.*
+**D'où vient la solution.** Les solutions de y' = −k·y sont y = C·e^(−kt). La fonction constante
+y = T_amb vérifie aussi l'équation (sa dérivée est nulle, et l'écart aussi). La solution générale
+est la somme : T(t) = T_amb + C·e^(−t/τ). La condition initiale T(0) = T₀ donne C = T₀ − T_amb.
+
+*Vérifions que ça marche. La dérivée de e^(−t/τ) est −(1/τ) × e^(−t/τ). Donc T'(t) = (T₀ − T_amb)
+× (−1/τ) × e^(−t/τ). Or (T₀ − T_amb) × e^(−t/τ), c'est exactement T(t) − T_amb. D'où
+T'(t) = −(1/τ) × (T(t) − T_amb) : c'est l'équation, avec k = 1/τ. Et à t = 0, e⁰ = 1 donc
+T(0) = T₀ : on part bien de la bonne température.*
 
 ### 3. Lire la constante de temps τ
 
 > **Après une durée τ**, l'écart initial a diminué d'environ **63 %** (il en reste 37 %, soit
-> 1/e).
+> 1/e : l'exposant vaut −1, et e^(−1) ≈ 0,37).
 > **Après 3τ**, il n'en reste plus que 5 % environ — on considère en pratique le régime stabilisé
 > atteint.
 
@@ -45280,7 +45349,7 @@ T_amb)/τ — c'est exactement ce que garantit l'exponentielle décroissante.*
 
 ### 4. Exemple entièrement déroulé — refroidissement après traitement thermique
 
-Une pièce sort d'un four de traitement thermique (fiche 8, gamme de fabrication) à
+Une pièce sort d'un four de traitement thermique (traitements thermiques : Bloc 3) à
 **T₀ = 180 °C**, dans un atelier à **T_amb = 20 °C**. La constante de temps mesurée du
 refroidissement est **τ = 15 min**.
 
@@ -45290,7 +45359,7 @@ T(t) = 20 + (180 − 20) × e^(−t/15) = 20 + 160 × e^(−t/15)
 
 **Étape 2 — Calculer la température après 15 min (t = τ).**
 
-T(15) = 20 + 160 × e^(−1) = 20 + 160 × 0,368 = 20 + 58,86 = **78,86 °C**
+T(15) = 20 + 160 × e^(−1) = 20 + 160 × 0,3679 = 20 + 58,86 = **78,86 °C**
 
 *On retrouve la règle : l'écart initial de 160 °C a bien diminué d'environ 63 % (il en reste
 58,86 °C, soit 37 % de 160).*
@@ -45304,6 +45373,9 @@ T(45) = 20 + 160 × e^(−3) = 20 + 160 × 0,0498 = 20 + 7,97 = **27,97 °C**
 **Étape 4 — Quand peut-on manipuler la pièce sans risque (T ≤ 25 °C) ?**
 
 25 = 20 + 160 × e^(−t/15) → 5 = 160 × e^(−t/15) → e^(−t/15) = 5/160 = 0,03125
+
+ln est la touche qui « défait » l'exponentielle, comme la racine carrée défait le carré :
+ln(e^a) = a. On prend ln des deux côtés de e^(−t/15) = 0,03125 :
 
 −t/15 = ln(0,03125) → t = −15 × ln(0,03125) = −15 × (−3,466) ≈ **52 min**
 
@@ -45329,6 +45401,9 @@ température en continu.
   côtés.
             """,
             "formules": """
+
+*(y = la grandeur étudiée ; y_eq = valeur d'équilibre, par ex. T_amb ; y₀ = valeur de départ,
+par ex. T₀)*
 
 **Équation** — y'(t) = −k × (y(t) − y_eq), avec τ = 1/k
 
@@ -45358,7 +45433,7 @@ une constante de temps **τ = 10 min**.
 **3.** T(30) = 18 + 72 × e^(−3) = 18 + 72 × 0,0498 = 18 + 3,59 = **21,6 °C**.
 
 **4.** 25 = 18 + 72 × e^(−t/10) → 7 = 72 × e^(−t/10) → e^(−t/10) = 7/72 = 0,0972.
-t = −10 × ln(0,0972) = −10 × (−2,331) ≈ **23,3 min**.
+On applique ln : −t/10 = ln(0,0972) = −2,331, donc t = 10 × 2,331 ≈ **23,3 min**.
 """,
             "exemple": """
 **Cas industriel — Choisir la bonne constante de temps pour un cahier des charges**
@@ -45373,7 +45448,9 @@ le procédé de refroidissement doit-il respecter ?
 
 **Étape 2 — Isoler τ.**
 
-−40/τ = ln(0,0556) = −2,890 → τ = 40 / 2,890 ≈ **13,8 min**
+−40/τ = ln(0,0556) = −2,890, donc 40/τ = 2,890, donc 40 = 2,890 × τ, donc
+τ = 40 / 2,890 ≈ **13,8 min**. τ est une **valeur maximale** : un τ plus petit veut dire un
+refroidissement plus rapide, donc c'est encore mieux.
 
 **Ce que le calcul apprend.** Le bureau des méthodes peut maintenant **spécifier une exigence
 mesurable** sur le poste de refroidissement (ventilation, position des pièces...) : sa constante
@@ -45398,7 +45475,8 @@ question : sachant qu'on est dans telle situation, quelle est la probabilité de
 ### 2. Notation et définition
 
 > **P(B | A)** se lit « probabilité de B sachant A » : la probabilité de B, une fois qu'on sait
-> déjà que A s'est produit.
+> déjà que A s'est produit. Exemple : P(défaut | M2) = 6 % veut dire qu'on ne regarde **que** les
+> pièces de la machine M2, et que 6 % d'entre elles sont défectueuses.
 >
 > **P(A ∩ B) = P(A) × P(B | A)**
 
@@ -45430,6 +45508,11 @@ Une référence est produite par deux machines : la machine M1 fournit **60 %** 
 la machine M2 fournit les **40 %** restants. Le taux de défaut est de **3 %** sur M1 et **6 %**
 sur M2 (machine plus ancienne).
 
+L'arbre, avec ses chiffres :
+
+> Départ → M1 (0,60) → défaut (0,03) / bon (0,97)
+> Départ → M2 (0,40) → défaut (0,06) / bon (0,94)
+
 **Étape 1 — Probabilité qu'une pièce vienne de M1 et soit défectueuse.**
 
 P(M1 ∩ défaut) = P(M1) × P(défaut | M1) = 0,60 × 0,03 = **0,018**
@@ -45447,6 +45530,12 @@ M1 ?** *(on retourne l'arbre : c'est le chemin M1-défaut, rapporté à tous les
 mènent à « défaut »)*
 
 P(M1 | défaut) = P(M1 ∩ défaut) / P(défaut) = 0,018 / 0,042 = **0,4286**, soit environ **43 %**
+
+*En nombres de pièces, c'est plus parlant. Sur 1 000 pièces : 600 viennent de M1, dont 3 %
+défectueuses, soit **18** ; 400 viennent de M2, dont 6 % défectueuses, soit **24**. Au bac des
+rebuts, il y a donc 42 pièces défectueuses, dont 18 viennent de M1 : 18/42 ≈ 43 %. C'est
+exactement P(M1 ∩ défaut) / P(défaut) : on ne regarde plus toutes les pièces, seulement le bac
+des pièces défectueuses.*
 
 **Ce que le calcul apprend.** M1 fournit 60 % de la production, mais seulement **43 % des
 pièces défectueuses viennent d'elle** — parce que M2, bien que minoritaire, a un taux de défaut
@@ -45479,23 +45568,23 @@ intuitive sans le calcul.
 **Formule de retournement** — P(A|B) = P(A ∩ B) / P(B)
 """,
             "exercice": """
-Une référence est produite par deux fournisseurs : le fournisseur A livre **70 %** des pièces,
-le fournisseur B livre les **30 %** restants. Le taux de défaut est de **2 %** chez A et de
-**8 %** chez B.
+Une référence est produite par deux fournisseurs : le fournisseur F1 livre **70 %** des pièces,
+le fournisseur F2 livre les **30 %** restants. Le taux de défaut est de **2 %** chez F1 et de
+**8 %** chez F2.
 
-**1.** Calcule P(A ∩ défaut) et P(B ∩ défaut).
+**1.** Calcule P(F1 ∩ défaut) et P(F2 ∩ défaut).
 
 **2.** En déduire P(défaut), la probabilité totale qu'une pièce soit défectueuse.
 
 **3.** Sachant qu'une pièce est défectueuse, calcule la probabilité qu'elle vienne du
-fournisseur B.
+fournisseur F2.
 """,
             "corrige": """
-**1.** P(A ∩ défaut) = 0,70 × 0,02 = **0,014**. P(B ∩ défaut) = 0,30 × 0,08 = **0,024**.
+**1.** P(F1 ∩ défaut) = 0,70 × 0,02 = **0,014**. P(F2 ∩ défaut) = 0,30 × 0,08 = **0,024**.
 
 **2.** P(défaut) = 0,014 + 0,024 = **0,038**, soit **3,8 %**.
 
-**3.** P(B | défaut) = 0,024 / 0,038 = **0,6316**, soit environ **63 %** — le fournisseur B,
+**3.** P(F2 | défaut) = 0,024 / 0,038 = **0,6316**, soit environ **63 %** — le fournisseur F2,
 minoritaire en volume, est pourtant à l'origine de la majorité des défauts détectés.
 """,
             "exemple": """
@@ -45504,13 +45593,13 @@ minoritaire en volume, est pourtant à l'origine de la majorité des défauts d�
 Avec les résultats de l'exercice, le service qualité doit choisir où porter un audit fournisseur
 en priorité, avec un budget limité à un seul audit cette année.
 
-**Lecture des résultats.** Le fournisseur A représente 70 % du volume mais seulement 37 % des
-défauts trouvés (1 − 63 %). Le fournisseur B représente 30 % du volume mais **63 % des
+**Lecture des résultats.** Le fournisseur F1 représente 70 % du volume mais seulement 37 % des
+défauts trouvés (1 − 63 %). Le fournisseur F2 représente 30 % du volume mais **63 % des
 défauts**.
 
 **Ce que le calcul apprend.** Le critère de décision n'est **ni le volume seul, ni le taux de
 défaut seul** : c'est la contribution réelle au nombre de pièces défectueuses, qui combine les
-deux. Ici, malgré son faible volume, le fournisseur B est la source majoritaire de non-qualité —
+deux. Ici, malgré son faible volume, le fournisseur F2 est la source majoritaire de non-qualité —
 c'est lui que l'audit doit viser en priorité, une conclusion que seul le calcul de probabilité
 conditionnelle rend visible.
 """,
@@ -45539,13 +45628,19 @@ l'écart-type suffisent** à décrire l'essentiel de la situation sans ce détai
 Comme pour une mesure continue (fiche 7.3), on peut délimiter une plage où le résultat tombera
 la plupart du temps :
 
-> **Plage usuelle** : E(X) ± 2 × σ(X) couvre la grande majorité des cas observés en pratique.
+> **Plage usuelle** : E(X) ± 2 × σ(X) couvre la grande majorité des cas observés en pratique
+> (le « 2 » est un arrondi du 1,96 de la loi normale, fiche 18.3).
 
 [[FIG:loi_binomiale_histo]]
 
-*Ce n'est pas une règle aussi précise que les 95 % exacts d'une loi normale — la loi binomiale
-n'est symétrique que si p est proche de 0,5 — mais elle donne un ordre de grandeur immédiatement
-utilisable sans calculatrice avancée.*
+*Ce n'est pas une règle aussi précise que les 95 % exacts d'une loi normale : selon n et p,
+environ 93 à 97 % des lots y tombent. Avec p petit (2 %), l'histogramme est « tassé » contre 0 :
+on ne peut pas avoir moins de 0 pièce défectueuse, mais on peut en avoir beaucoup plus que la
+moyenne, donc les deux côtés de la plage ne se comportent pas pareil. La règle donne quand même
+un ordre de grandeur immédiatement utilisable sans calculatrice avancée.*
+
+*Le nombre de pièces défectueuses est un entier : on ne retient que les entiers **contenus**
+dans la plage (on arrondit vers l'intérieur), sinon on l'élargirait à tort.*
 
 ### 4. Exemple entièrement déroulé — surveiller une ligne de production
 
@@ -45562,11 +45657,12 @@ E(X) = 200 × 0,02 = **4 pièces**
 
 **Étape 3 — Plage usuelle attendue.**
 
-E(X) − 2σ(X) ≈ 4 − 3,96 ≈ **0** ; E(X) + 2σ(X) ≈ 4 + 3,96 ≈ **8**
+E(X) − 2σ(X) ≈ 4 − 3,96 = **0,04** ; E(X) + 2σ(X) ≈ 4 + 3,96 = **7,96**
 
-Un lot **normal** contient donc entre 0 et 8 pièces défectueuses environ — un lot avec, par
-exemple, 15 défectueuses sortirait largement de cette plage et signalerait un problème sur la
-ligne, pas seulement une variation naturelle du hasard.
+Un lot **normal** contient donc **de 1 à 7** pièces défectueuses (les entiers compris dans
+[0,04 ; 7,96]). Un lot à 0 ou à 8 défectueuses est à la limite ; un lot avec, par exemple, 15
+défectueuses sortirait largement de cette plage et signalerait un problème sur la ligne, pas
+seulement une variation naturelle du hasard.
 
 **Ce que le calcul apprend.** Sans cette plage de référence, un responsable qualité verrait
 « 6 pièces défectueuses ce lot-ci, 2 le lot précédent » comme un signal alarmant. En réalité,
@@ -45577,8 +45673,7 @@ justement à ça que sert l'écart-type : distinguer le bruit habituel d'un vrai
 
 1. **Oublier le facteur (1 − p) dans la variance** et calculer seulement √(n × p).
 2. **Interpréter un léger dépassement de la plage comme automatiquement anormal** — la plage
-   E(X) ± 2σ(X) est indicative, pas une frontière stricte comme un intervalle de confiance à
-   95 % exact.
+   E(X) ± 2σ(X) est indicative : environ 93 à 97 % des lots y tombent selon n et p.
 3. **Confondre E(X), le nombre attendu, avec p, le taux** — E(X) dépend de n, p ne dépend que du
    procédé.
 
@@ -45589,7 +45684,8 @@ justement à ça que sert l'écart-type : distinguer le bruit habituel d'un vrai
 - **Plage usuelle : E(X) ± 2σ(X)**, un repère pratique pour repérer un lot anormal sans calcul
   complexe.
 - Plus n est grand, plus σ(X)/E(X) diminue en proportion : **un grand échantillon donne un
-  résultat plus stable**, relativement à sa moyenne.
+  résultat plus stable**, relativement à sa moyenne. Exemple avec p = 2 % : pour n = 200, E = 4 et
+  σ ≈ 2 (écart de 50 % de la moyenne) ; pour n = 2 000, E = 40 et σ ≈ 6,3 (seulement 16 %).
             """,
             "formules": """
 
@@ -45616,7 +45712,8 @@ Une ligne produit des lots de **n = 150** pièces, avec un taux de défaut habit
 
 **2.** σ(X) = √(150 × 0,04 × 0,96) = √5,76 = **2,4 pièces**.
 
-**3.** Plage = [6 − 4,8 ; 6 + 4,8] = **[1,2 ; 10,8]**, soit en pratique entre 1 et 11 pièces.
+**3.** Plage = [6 − 4,8 ; 6 + 4,8] = **[1,2 ; 10,8]**, soit, en nombre entier de pièces,
+**de 2 à 10** défectueuses (on ne garde que les entiers contenus dans la plage).
 
 **4.** 14 défectueuses **dépasse la borne haute** (10,8) : ce lot sort de la plage usuelle, un
 contrôle de la ligne est justifié.
@@ -45626,17 +45723,18 @@ contrôle de la ligne est justifié.
 
 Deux fournisseurs proposent la même pièce, pour un lot de n = 100 :
 
-**Fournisseur X** : p = 0,05. E(X) = 5, σ(X) = √(100×0,05×0,95) ≈ **2,18**. Plage ≈ [0,6 ; 9,4].
+Deux fournisseurs livrent la même pièce, en lots de tailles différentes :
 
-**Fournisseur Y** : p = 0,05 également, mais un procédé plus régulier ramène l'incertitude
-pratique observée à σ(X) ≈ **1,0** (mesuré sur l'historique, hors du modèle binomial pur).
+**Fournisseur X** : lots de n = 100, p = 0,05. E(X) = 5, σ(X) = √(100 × 0,05 × 0,95) ≈ **2,18**.
+Plage ≈ [0,64 ; 9,36], soit de 1 à 9 défectueuses par lot.
 
-**Ce que le calcul apprend.** Les deux fournisseurs ont **la même moyenne attendue** (5
-défectueuses), donc le même coût de non-qualité en moyenne. Mais le fournisseur X, plus
-dispersé, expose à des lots occasionnels bien pires que la moyenne (jusqu'à 9-10 défectueuses),
-alors que le fournisseur Y reste plus prévisible. **À moyenne égale, la régularité (l'écart-type
-le plus faible) est souvent le critère qui départage deux fournisseurs** — un point que la seule
-lecture de p ne révèle jamais.
+**Fournisseur Y** : lots de n = 50, p = 0,10. E(X) = 5, σ(X) = √(50 × 0,10 × 0,90) ≈ **2,12**.
+
+**Ce que le calcul apprend.** Les deux fournisseurs livrent **en moyenne 5 pièces défectueuses
+par lot**, avec des dispersions voisines : ce n'est donc ni la moyenne par lot ni l'écart-type
+qui les départage. C'est le **taux p** : 10 % de pièces défectueuses chez Y contre 5 % chez X,
+c'est-à-dire la qualité de chaque pièce. Comparer E(X) sans regarder n peut tromper — deux lots
+de Y (100 pièces) contiendront en moyenne 10 défectueuses, contre 5 pour un lot de X.
 """,
         },
         {
@@ -45653,7 +45751,11 @@ faut-il contrôler** pour obtenir une marge d'erreur donnée ?
 
 ### 2. Isoler n dans la formule de la marge
 
-En partant de marge = 1,96 × s / √n, on isole n par un calcul algébrique simple :
+En partant de marge = 1,96 × s / √n, on isole n :
+
+- on multiplie par √n : marge × √n = 1,96 × s ;
+- on divise par la marge : √n = 1,96 × s / marge ;
+- on élève au carré pour enlever la racine :
 
 > **n = (1,96 × s / marge visée)²**
 
@@ -45691,7 +45793,8 @@ très légèrement 0,03 mm — d'où l'obligation d'arrondir vers le haut.)*
 
 **Ce que le calcul apprend.** Le lien entre précision et effort de mesure n'est **pas
 linéaire** : diviser la marge visée par 2 (donc doubler l'exigence de précision) multiplie n
-par 4, pas par 2 — un budget de contrôle qualité doit intégrer ce coût croissant très
+par 4, pas par 2 — parce que la marge est au dénominateur **et** au carré dans la formule :
+(1/2)² = 1/4. Un budget de contrôle qualité doit intégrer ce coût croissant très
 rapidement avec l'exigence.
 
 ### 5. Les erreurs classiques
@@ -45706,14 +45809,14 @@ rapidement avec l'exigence.
 
 - **n = (1,96 × s / marge visée)²**, toujours arrondi **au nombre entier supérieur**.
 - Diviser la marge visée par k multiplie n par **k²** — la précision coûte cher en volume de
-  contrôle.
+  contrôle. On multiplie le n **brut** (avant arrondi), puis on arrondit au plafond.
 - Il faut une estimation préalable de s (étude pilote ou historique) avant de pouvoir calculer n.
             """,
             "formules": """
 
 **Taille d'échantillon nécessaire** — n = (1,96 × s / marge visée)², arrondi au plafond
 
-**Conséquence** — diviser la marge par k multiplie n par k²
+**Conséquence** — diviser la marge par k multiplie n par k² (appliquer à n brut, puis arrondir)
 """,
             "exercice": """
 Un procédé a un écart-type connu **s = 0,08 mm**. Le service qualité veut une marge d'erreur à
@@ -45731,8 +45834,9 @@ complet, combien de fois plus de pièces faudra-t-il contrôler par rapport à l
 
 **2.** Arrondi au plafond : **62 pièces**.
 
-**3.** La marge est divisée par 2 (de 0,02 à 0,01) : n est multiplié par **2² = 4** — il faudra
-environ **248 pièces** (4 × 62), sans avoir besoin de refaire le calcul en détail.
+**3.** La marge est divisée par 2 (de 0,02 à 0,01) : n est multiplié par **2² = 4**, soit
+**4 fois plus de pièces**. En nombre : 4 × 61,47 ≈ 245,9, arrondi au plafond, **246 pièces**
+(on multiplie le n brut, pas le n déjà arrondi : 4 × 62 = 248 serait légèrement trop).
 """,
             "exemple": """
 **Cas industriel — Le coût caché d'une exigence de précision**
@@ -45740,10 +45844,11 @@ environ **248 pièces** (4 × 62), sans avoir besoin de refaire le calcul en dé
 Un client final impose une marge d'erreur de 0,01 mm sur une cote critique, contre 0,04 mm
 habituellement utilisés en interne, pour un procédé d'écart-type s = 0,12 mm.
 
-**Taille habituelle (marge 0,04 mm).** n = (1,96 × 0,12 / 0,04)² = 5,88² ≈ **35 pièces**.
+**Taille habituelle (marge 0,04 mm).** n = (1,96 × 0,12 / 0,04)² = 5,88² = 34,57, arrondi au
+plafond : **35 pièces**.
 
 **Taille exigée par le client (marge 0,01 mm).** Le rapport des marges est 4 (0,04 / 0,01) ;
-n est donc multiplié par 4² = 16 : n ≈ 35 × 16 = **560 pièces**.
+n est donc multiplié par 4² = 16 : n = 34,57 × 16 = 553,19, arrondi au plafond : **554 pièces**.
 
 **Ce que le calcul apprend.** Une exigence de précision qui semble « quatre fois plus stricte »
 au premier regard entraîne en réalité un contrôle **seize fois plus lourd** en nombre de
@@ -45771,7 +45876,9 @@ constitue. C'est exactement la même équation, avec un point de départ différ
 > **Solution** : y(t) = y_eq + (y₀ − y_eq) × e^(−t/τ), avec τ = 1/k.
 
 Si **y₀ < y_eq** (on part en dessous de l'équilibre), le terme (y₀ − y_eq) est **négatif** : la
-courbe part de y₀ et **monte** progressivement vers y_eq, au lieu de descendre. La formule est
+courbe part de y₀ et **monte** progressivement vers y_eq, au lieu de descendre. Relisez la formule
+comme y(t) = y_eq − (ce qui manque encore) : au départ, il manque (y_eq − y₀) ; ce manque fond
+avec l'exponentielle, donc la grandeur se rapproche de y_eq par en dessous. La formule est
 rigoureusement la même que celle de la fiche 18.4 — c'est simplement le signe de l'écart de
 départ qui change le sens du phénomène.
 
@@ -45787,7 +45894,8 @@ départ qui change le sens du phénomène.
 ### 4. Exemple entièrement déroulé — mise en pression d'un vérin pneumatique
 
 Un vérin pneumatique se met en pression depuis **P₀ = 0 bar** vers une pression d'alimentation
-**P_max = 6 bar**, avec une constante de temps mesurée **τ = 2 s**.
+**P_max = 6 bar**, avec une constante de temps mesurée **τ = 2 s**. Ici la grandeur y est la
+pression P (rien à voir avec le P des probabilités), avec y₀ = P₀ = 0 bar et y_eq = P_max = 6 bar.
 
 **Étape 1 — Écrire la loi.**
 
@@ -45805,7 +45913,8 @@ P(6) = 6 × (1 − e^(−3)) = 6 × (1 − 0,0498) = 6 × 0,9502 = **5,70 bar**
 
 **Étape 4 — À quel instant la pression atteint-elle 5,5 bar ?**
 
-5,5 = 6 × (1 − e^(−t/2)) → 1 − e^(−t/2) = 0,9167 → e^(−t/2) = 0,0833
+5,5 = 6 × (1 − e^(−t/2)) → on divise par 6 : 1 − e^(−t/2) = 5,5/6 = 0,9167 → e^(−t/2) =
+1 − 0,9167 = 0,0833
 
 −t/2 = ln(0,0833) = −2,485 → t = 2 × 2,485 ≈ **4,97 s**, soit environ **5 secondes**
 
@@ -45816,9 +45925,9 @@ cycle automatique, plutôt que d'ajouter une marge de sécurité arbitraire.
 
 ### 5. Les erreurs classiques
 
-1. **Garder le signe « moins » de la fiche 18.4** alors que le phénomène monte — c'est
-   automatique si on applique correctement (y₀ − y_eq), qui devient négatif tout seul quand
-   y₀ < y_eq.
+1. **Mettre un exposant positif (e^(+t/τ)) sous prétexte que la grandeur monte** — c'est faux :
+   l'exposant reste toujours −t/τ. C'est le facteur (y₀ − y_eq), négatif tout seul quand
+   y₀ < y_eq, qui fait monter la courbe.
 2. **Oublier que P_max n'est jamais atteint exactement** (seulement approché) — au bout d'un
    temps « infini » en théorie, on considère 3τ suffisant en pratique.
 3. **Confondre la constante de temps d'une montée avec celle d'une descente** sur un même
@@ -45837,32 +45946,34 @@ cycle automatique, plutôt que d'ajouter une marge de sécurité arbitraire.
 
 **Solution générale (montée ou descente)** — y(t) = y_eq + (y₀ − y_eq) × e^(−t/τ)
 
-**Cas d'une montée (y₀ < y_eq)** — y(t) = y_eq × (1 − e^(−t/τ)) si y₀ = 0
+**Montée depuis zéro (y₀ = 0)** — y(t) = y_eq × (1 − e^(−t/τ))
 
 **Repères inchangés** — après τ : 63 % du chemin fait · après 3τ : régime quasi stabilisé (95%)
 """,
             "exercice": """
-Un réservoir hydraulique se vidange depuis **P₀ = 8 bar** vers une pression finale
-**P_eq = 0 bar**, avec une constante de temps **τ = 4 s**.
+Un compresseur remplit un réservoir de **P₀ = 2 bar** jusqu'à une pression d'équilibre
+**P_eq = 10 bar**, avec une constante de temps **τ = 5 s**.
 
-**1.** Écris la loi P(t) pour cette vidange.
+**1.** Écris la loi P(t) pour cette mise en pression.
 
-**2.** Calcule la pression après 4 s (t = τ).
+**2.** Calcule la pression après 5 s (t = τ).
 
-**3.** Calcule la pression après 12 s (t = 3τ).
+**3.** Calcule la pression après 15 s (t = 3τ).
 
-**4.** À quel instant la pression atteint-elle 1 bar ? (utilise ln, comme dans l'exemple du
+**4.** À quel instant la pression atteint-elle 9 bar ? (utilise ln, comme dans l'exemple du
 cours)
 """,
             "corrige": """
-**1.** P(t) = 0 + (8 − 0) × e^(−t/4) = **8 × e^(−t/4)**.
+**1.** P(t) = 10 + (2 − 10) × e^(−t/5) = **10 − 8 × e^(−t/5)**. Le facteur (2 − 10) = −8 est
+négatif : la pression monte.
 
-**2.** P(4) = 8 × e^(−1) = 8 × 0,368 = **2,94 bar**.
+**2.** P(5) = 10 − 8 × e^(−1) = 10 − 8 × 0,3679 = 10 − 2,94 = **7,06 bar**.
+*Contrôle : l'écart initial de 8 bar a diminué de 63 % (il reste 2,94 bar à parcourir).*
 
-**3.** P(12) = 8 × e^(−3) = 8 × 0,0498 = **0,398 bar**, soit environ **0,4 bar**.
+**3.** P(15) = 10 − 8 × e^(−3) = 10 − 8 × 0,0498 = 10 − 0,40 = **9,60 bar** (95 % du chemin).
 
-**4.** 1 = 8 × e^(−t/4) → e^(−t/4) = 0,125 → t = −4 × ln(0,125) = −4 × (−2,079) ≈
-**8,32 s**.
+**4.** 9 = 10 − 8 × e^(−t/5) → 8 × e^(−t/5) = 1 → e^(−t/5) = 0,125 → on applique ln :
+−t/5 = ln(0,125) = −2,079 → t = 5 × 2,079 ≈ **10,4 s**.
 """,
             "exemple": """
 **Cas industriel — Deux constantes de temps sur le même système**
@@ -48783,8 +48894,9 @@ _mth("18.2", "Calculer une probabilité avec la loi binomiale", [
    "contrôle par sondage.")
 
 _mth("18.3", "Construire un intervalle de confiance à 95 %", [
-    "**Calculer la marge d'erreur = 1,96 × s/√n**, avec s l'écart-type de "
-    "l'ÉCHANTILLON et n sa taille.",
+    "**Calculer la marge d'erreur = 1,96 × σ/√n**, avec σ l'écart-type connu "
+    "du procédé (ou, seulement si n ≥ 30, l'écart-type s estimé sur "
+    "l'échantillon, touche sx) et n la taille de l'échantillon.",
     "**Construire l'intervalle x̄ ± cette marge.**",
     "**Ne jamais oublier la racine carrée sur n** : quadrupler "
     "l'échantillon ne divise la marge que par 2, pas par 4.",
@@ -48796,7 +48908,8 @@ _mth("18.3", "Construire un intervalle de confiance à 95 %", [
    "moyenne de la production s'y trouve, pas que 95% des pièces y sont.")
 
 _mth("18.4", "Résoudre une équation différentielle du premier ordre", [
-    "**Reconnaître la forme** T'(t) = −k×(T(t) − T_eq) : un phénomène qui "
+    "**Reconnaître la forme** T'(t) = −k×(T(t) − T_eq), T_eq étant la valeur "
+    "d'équilibre (ici T_amb) : un phénomène qui "
     "tend vers un équilibre à une vitesse proportionnelle à l'écart "
     "restant.",
     "**Écrire directement la solution** T(t) = T_eq + (T₀ − T_eq) × "
@@ -48827,12 +48940,14 @@ _mth("18.5", "Construire et exploiter un arbre pondéré", [
 _mth("18.6", "Utiliser espérance et écart-type pour repérer un lot anormal", [
     "**Calculer E(X) = n×p** (le nombre moyen de défauts attendu par lot) "
     "et **σ(X) = √(np(1−p))**.",
-    "**Construire la plage usuelle E(X) ± 2σ(X)** — un repère pratique, pas "
-    "une frontière stricte comme un IC95% exact.",
+    "**Construire la plage usuelle E(X) ± 2σ(X)** — un repère pratique : "
+    "environ 93 à 97 % des lots y tombent selon n et p. Ne garder que les "
+    "nombres entiers contenus dans la plage.",
     "**Comparer un résultat observé à cette plage** avant de conclure à un "
     "dérèglement — une variation à l'intérieur de la plage est le bruit "
     "normal du procédé.",
-], "Lots de 200 pièces, p=2% : E(X)=4, σ(X)≈1,98, plage usuelle ≈[0;8]. Un "
+], "Lots de 200 pièces, p=2% : E(X)=4, σ(X)≈1,98, plage usuelle ≈ [0,04 ; 7,96], "
+   "soit 1 à 7 pièces. Un "
    "lot à 6 défectueuses reste dans la plage (normal), un lot à 15 en sort "
    "largement (signal à investiguer).")
 
@@ -49831,14 +49946,17 @@ def gen_proba_binomiale():
     """Probabilité ponctuelle d'une loi binomiale."""
     n = random.choice([4, 5, 6, 8, 10])
     p = random.choice([0.1, 0.2, 0.25, 0.3, 0.4, 0.5])
-    k = random.randint(0, n)
+    # Uniquement des k de probabilité ≥ 0,01 : sinon la réponse « 0 » serait acceptée
+    # par la tolérance et le corrigé afficherait 0,0000.
+    ks = [k for k in range(n + 1) if math.comb(n, k) * p ** k * (1 - p) ** (n - k) >= 0.01]
+    k = random.choice(ks)
     coeff = math.comb(n, k)
     rep = coeff * p ** k * (1 - p) ** (n - k)
     return {
         "titre": "Loi binomiale — probabilité ponctuelle",
         "enonce": (f"X suit une loi binomiale de paramètres n = {n} et p = {fr(p, 2)}. "
                    f"Calcule P(X = {k})."),
-        "rep": rep, "tol": max(0.0008, rep * 0.01), "unite": "",
+        "rep": rep, "tol": max(0.0005, rep * 0.01), "unite": "",
         "diag": [
             _diag(p ** k * (1 - p) ** (n - k),
                   f"Il manque le coefficient binomial C({n},{k}) = {coeff} : il faut compter "
@@ -51969,8 +52087,8 @@ ATELIERS = [
                 "tol": 0.05,
                 "consigne": "P(X=0) = C(8,0) × 0,05⁰ × 0,95⁸. Donnez le résultat en pourcentage.",
                 "indice": "0,95 puissance 8, sur la calculatrice.",
-                "pieges": [(5, "Vous avez calculé 0,05⁸, l'inverse de ce qui est demandé."),
-                           (60, "Vérifiez l'exposant : c'est bien 0,95 puissance 8, pas 7.")],
+                "pieges": [(5, "5 % est le taux de défaut p lui-même, pas P(X = 0)."),
+                           (69.83, "Vérifiez l'exposant : c'est 0,95 puissance 8, pas 7.")],
             },
             {
                 "type": "numerique",
@@ -52730,8 +52848,8 @@ ATELIERS = [
              "attendu": 0.196, "tol": 0.005,
              "consigne": "marge = 1,96 × s / √n.",
              "indice": "1,96 × 0,6 / √36 = 1,96 × 0,6 / 6.",
-             "pieges": [(0.033, "Vous avez oublié de multiplier par 1,96, ou divisé par n "
-                                 "au lieu de √n."),
+             "pieges": [(0.033, "Vous avez divisé par n au lieu de √n."),
+                        (0.1, "Vous avez oublié le coefficient 1,96."),
                         (1.176, "Vous avez oublié de diviser par √n = 6.")]},
             {"type": "numerique", "label": "Borne inférieure de l'intervalle, en mm",
              "unite": "mm", "attendu": 25.204, "tol": 0.01,
@@ -53083,7 +53201,9 @@ ATELIERS = [
                          "totale est déjà réalisé ?",
              "options": ["50%", "environ 95%", "100% exactement"],
              "bonne": 1,
-             "diagnostics": {0: "50% correspondrait à τ, pas à 3τ.",
+             "diagnostics": {0: "À t = τ, 63 % de la baisse est déjà faite ; 50 % est "
+                                 "atteint plus tôt, vers 0,7 τ (2,8 s ici). À 3τ, on en "
+                                 "est à 95 %.",
                               2: "L'équilibre n'est jamais atteint exactement en temps "
                                  "fini avec ce modèle — seulement approché de très près."}},
         ],
@@ -60850,18 +60970,22 @@ MATIERES_PROGRAMME = [
          "Trigonométrie du triangle, volumes, repérage d'un point, équation d'un cercle et "
          "d'une droite.",
          [(7, ["7.1", "7.4"])]),
-        ("Analyse (évalué)", "Complet",
+        ("Analyse (évalué)", "Incomplet (à enrichir)",
          "Fonctions, dérivées, calcul intégral, valeur moyenne, extremums locaux, équations "
-         "différentielles (deux cas traités).",
+         "différentielles du premier ordre (deux cas traités). Non traités : étude des "
+         "fonctions ln et exp, équations différentielles du second ordre, méthode d'Euler.",
          [(7, ["7.2"]), (17, ["17.1", "17.2", "17.4", "17.5"]), (18, ["18.4", "18.8"])]),
         ("Hors épreuve : calcul matriciel, Bézier, droites et plans", "Complet",
          "Programme complémentaire non évalué (matrices, courbes de Bézier) et "
          "approfondissement hors référentiel (droites et plans dans l'espace, distance "
          "point-plan). Ne tombe pas à l'examen.",
          [(19, ["19.1", "19.3", "19.2", "19.4", "19.6"])]),
-        ("Statistiques et Probabilités (évalué)", "Complet",
+        ("Statistiques et Probabilités (évalué)", "Incomplet (à enrichir)",
          "Statistique descriptive et inférentielle, probabilités simples et conditionnelles, "
-         "loi binomiale, espérance/écart-type, taille d'échantillon.",
+         "loi binomiale, espérance/écart-type, taille d'échantillon. Non traités : lois "
+         "exponentielle et de Poisson, loi uniforme, approximation normale, théorème de la "
+         "limite centrée, tests d'hypothèse, intervalle de confiance d'une proportion, "
+         "statistique à deux variables (ajustement affine, corrélation).",
          [(7, ["7.3"]), (17, ["17.3", "17.6"]), (18, ["18.1", "18.2", "18.3", "18.5", "18.6", "18.7"])]),
     ]),
 ]
@@ -61244,7 +61368,10 @@ elif PAGE == PAGE_MATHS:
         'inférentielle, configurations géométriques, calcul vectoriel. S\'y ajoutent, '
         '<b>hors épreuve</b>, le programme complémentaire non évalué (calcul matriciel, courbes '
         'de Bézier : fiches 19.1 à 19.4) et une fiche d\'approfondissement (19.6, droites et '
-        'plans dans l\'espace), toutes marquées « hors épreuve ». Ce sont les mêmes fiches que dans '
+        'plans dans l\'espace), toutes marquées « hors épreuve ». Attention : certaines notions '
+        'évaluées ne sont pas encore traitées ici (lois exponentielle et de Poisson, tests '
+        'd\'hypothèse, statistique à deux variables, fonctions ln et exp, équations '
+        'différentielles du second ordre) — voir le tableau de bord. Ce sont les mêmes fiches que dans '
         '« Cours », réunies ici pour ne pas les chercher au milieu des chapitres '
         'techniques.</div>',
         unsafe_allow_html=True)
