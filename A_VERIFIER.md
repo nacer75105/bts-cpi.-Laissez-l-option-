@@ -60,3 +60,24 @@ géométrique = programme complémentaire non évalué.
   par ex. T_amb ». Harmonisation complète à faire.
 - **18.2** : le nom exact des menus de loi binomiale dépend de la calculatrice (Casio / TI /
   NumWorks) ; la fiche reste générique.
+
+## Bloc 17 — reste à faire
+
+- **Contenus évalués ABSENTS** : fonctions ln et exp (limites, dérivées de ln u et eᵘ, étude
+  complète) et statistique à deux variables (nuage de points, ajustement affine par moindres
+  carrés, coefficient de corrélation) — aucune fiche ne les traite. Le résumé du bloc 17 le dit
+  désormais. Les primitives de 1/x, eˣ, u'/u, u'eᵘ ont été ajoutées au tableau de 17.2.
+- **Générateurs** (justes sur 300 tirages, mais à polir) :
+  - `gen_discriminant` : affichage « 1x² + (-8)x + (-8) » et « (0)x » ; quand a·c = 0, les deux
+    diagnostics sont filtrés et l'exercice n'en a plus. Formater les coefficients, exclure c = 0.
+  - `gen_signe_affine` : mélange de tirets ASCII « - » et de « − ».
+  - `gen_valeur_moyenne` : ne tire que des fonctions affines, alors que la fiche 17.5 montre que
+    (f(a)+f(b))/2 suffit dans ce cas ; tirer aussi des trinômes.
+- **Figures** : l'atelier at46 (tableau de signes) affiche la figure d'un tableau de variations ;
+  la fiche 17.3 n'a plus de figure (l'ancienne, une courbe de capabilité, a été remplacée par un
+  diagramme en boîte en texte) ; 17.2 et 17.5 n'affichent plus la figure « profil
+  trapézoïdal », qui ne correspondait pas au texte. Des figures dédiées (aire sous 6x − x²,
+  rectangle de même aire, boîte à moustaches) seraient un plus.
+- **Non vérifié** : rendu visuel réel des figures (seules les coordonnées ont été contrôlées, et
+  les fonctions exécutées) ; appartenance du BTS CPI à un « groupement C1 » (mention retirée,
+  aucune source dans le dépôt).

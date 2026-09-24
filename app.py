@@ -5329,7 +5329,8 @@ def lire_tableau_variations():
     p.append(f"<circle r='6' fill='{TRAIT}'>"
              f"<animateMotion dur='3.2s' repeatCount='indefinite' "
              f"path='M100,240 L360,150 L400,150 L660,240'/></circle>")
-    p.append(_txt(380, 145, "2", 13, TRAIT, "middle", True))
+    p.append(_txt(350, 145, "+∞", 13, TRAIT, "middle", True))
+    p.append(_txt(410, 145, "+∞", 13, TRAIT, "middle", True))
     p.append(_txt(100, 260, "−∞", 12, FIN, "middle"))
     p.append(_txt(660, 260, "−∞", 12, FIN, "middle"))
     p.append(f"<rect x='40' y='290' width='680' height='70' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
@@ -5348,13 +5349,24 @@ def fonction_homographique_asymptotes():
     p.append(_txt(690, oy - 48, "y = 2", 12, ARBRE, "end", True))
     p.append(f"<line x1='{ox-90}' y1='60' x2='{ox-90}' y2='380' stroke='{ALESAGE}' stroke-width='1.8' stroke-dasharray='5 4'/>")
     p.append(_txt(ox - 90, 396, "x = −3", 12, ALESAGE, "middle", True))
-    p.append(f"<path d='M{ox-260},{oy-8} Q{ox-150},{oy-30} {ox-95},{oy-260}' fill='none' stroke='{TRAIT}' stroke-width='2.4'/>")
-    p.append(f"<path d='M{ox-85},{oy+300} Q{ox-30},{oy-10} {ox+280},{oy-38}' fill='none' stroke='{TRAIT}' stroke-width='2.4'/>")
+    # Branches calculées point par point sur la vraie fonction (30 px par unité en x,
+    # 20 px par unité en y) : la gauche reste au-dessus de y = 2, la droite en dessous.
+    def _branche(a, b, n=60):
+        pts = []
+        for i in range(n + 1):
+            X = a + (b - a) * i / n
+            y = oy - 20 * (2 * X - 1) / (X + 3)
+            if 60 <= y <= 320:
+                pts.append(f"{ox + 30 * X:.0f},{y:.0f}")
+        return pts
+    _gauche, _droite = _branche(-10.5, -3.35), _branche(-2.6, 10.6)
+    p.append(f"<polyline points='{' '.join(_gauche)}' fill='none' stroke='{TRAIT}' stroke-width='2.4'/>")
+    p.append(f"<polyline points='{' '.join(_droite)}' fill='none' stroke='{TRAIT}' stroke-width='2.4'/>")
     # un point remonte la branche vers l'asymptote verticale, en boucle : il s'en
     # approche sans jamais la toucher.
     p.append(f"<circle r='6' fill='{ALERTE}'>"
              f"<animateMotion dur='2.4s' repeatCount='indefinite' "
-             f"path='M{ox-260},{oy-8} Q{ox-150},{oy-30} {ox-95},{oy-260}'/></circle>")
+             f"path='M{' L'.join(_gauche)}'/></circle>")
     p.append(f"<rect x='40' y='330' width='680' height='58' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
     p.append(_txt(56, 354, "La courbe s'approche de y = 2 sans jamais la toucher (asymptote horizontale),", 12, TRAIT, "start", True))
     p.append(_txt(56, 376, "et explose près de x = −3, où le dénominateur s'annule (asymptote verticale).", 12, TRAIT, "start", True))
@@ -5367,18 +5379,22 @@ def extremums_polynome():
     ox, oy = 380, 210
     p.append(f"<line x1='60' y1='{oy}' x2='700' y2='{oy}' stroke='{FIN}' stroke-width='1.4'/>")
     p.append(f"<line x1='{ox}' y1='40' x2='{ox}' y2='360' stroke='{FIN}' stroke-width='1.4'/>")
-    p.append(f"<path d='M100,340 C220,200 260,90 380,90 C500,90 540,300 660,60' fill='none' stroke='{TRAIT}' stroke-width='2.6'/>")
+    # Courbe calculée sur la vraie fonction (80 px par unité en x, 50 px par unité en y) :
+    # maximum en (0 ; 2), minimum en (2 ; −2).
+    _pts = [f"{ox + 80 * X:.0f},{oy - 50 * (X ** 3 - 3 * X ** 2 + 2):.0f}"
+            for X in [-1 + i * 0.05 for i in range(83)]]
+    p.append(f"<polyline points='{' '.join(_pts)}' fill='none' stroke='{TRAIT}' stroke-width='2.6'/>")
     # un point parcourt la courbe : on VOIT la pente changer de signe, exactement aux
     # deux extremums repérés ci-dessous.
     p.append(f"<circle r='6' fill='{ARBRE}'>"
              f"<animateMotion dur='4s' repeatCount='indefinite' "
-             f"path='M100,340 C220,200 260,90 380,90 C500,90 540,300 660,60'/></circle>")
-    p.append(f"<circle cx='380' cy='90' r='6' fill='{OK}'/>")
-    p.append(_txt(380, 74, "max local : f(0) = 2", 12, OK, "middle", True))
-    p.append(f"<circle cx='500' cy='300' r='6' fill='{ALERTE}'/>")
-    p.append(_txt(500, 322, "min local : f(2) = −2", 12, ALERTE, "middle", True))
-    p.append(_txt(380, 396, "0", 11, FIN, "middle"))
-    p.append(_txt(500, 396, "2", 11, FIN, "middle"))
+             f"path='M{' L'.join(_pts)}'/></circle>")
+    p.append(f"<circle cx='380' cy='110' r='6' fill='{OK}'/>")
+    p.append(_txt(380, 94, "max local : f(0) = 2", 12, OK, "middle", True))
+    p.append(f"<circle cx='540' cy='310' r='6' fill='{ALERTE}'/>")
+    p.append(_txt(552, 300, "min local : f(2) = −2", 12, ALERTE, "start", True))
+    p.append(_txt(380, 226, "0", 11, FIN, "middle"))
+    p.append(_txt(540, 226, "2", 11, FIN, "middle"))
     p.append(f"<rect x='40' y='330' width='680' height='58' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
     p.append(_txt(56, 354, "f'(x) = 3x(x−2) s'annule en x=0 et x=2 : la pente passe de + à − (maximum),", 12, TRAIT, "start", True))
     p.append(_txt(56, 376, "puis de − à + (minimum) — exactement ce que dit le tableau de signes.", 12, TRAIT, "start", True))
@@ -8124,11 +8140,13 @@ QUIZ["Méthodologie de projet et communication"] = [
       "C = P / ω, avec ω en rad/s : ω = 2πN/60. Utiliser directement N en tr/min dans cette "
       "formule donne un résultat faux d'un facteur proche de 10.", "Base"),
 
-    q("Le calcul d'écart-type d'une série de 5 mesures divise la somme des écarts au carré "
-      "par :",
+    q("Pour ESTIMER l'écart-type de toute une production à partir d'un échantillon de 5 "
+      "mesures, on divise la somme des écarts au carré par :",
       ["5", "4", "6", "25"], 1,
-      "On divise par (n−1), soit 4 pour 5 mesures — diviser par n est l'erreur la plus "
-      "fréquente, qui sous-estime légèrement la dispersion réelle.", "Piège"),
+      "Pour estimer la dispersion de la production, on divise par (n−1), soit 4 pour 5 "
+      "mesures (c'est s, touche sx) — diviser par n sous-estimerait légèrement la dispersion "
+      "réelle. Pour seulement DÉCRIRE la série elle-même (fiche 17.6), on divise par n "
+      "(c'est σ, touche σx).", "Piège"),
 
     q("Cinq mesures d'un alésage Ø30 H7 donnent une moyenne de 30,009 mm, toutes comprises "
       "entre 30,006 et 30,012 mm. Que conclure ?",
@@ -9175,14 +9193,13 @@ QUIZ["Mathématiques BTS CPI (examen)"] = [
       "La valeur moyenne est l'intégrale (l'aire) divisée par la largeur de l'intervalle — "
       "(f(a)+f(b))/2 n'est juste que si f est une droite.", "Intermédiaire"),
 
-    q("Une température part de 20 °C, monte rapidement puis reste proche de 38 °C pendant "
-      "presque tout le cycle, avant de redescendre à 20 °C à la fin. Sa valeur moyenne sur le "
-      "cycle est :",
-      ["Exactement 20 °C", "Exactement 29 °C, la moyenne des deux extrêmes", "Supérieure à "
-       "20 °C, calculée par intégrale", "Impossible à calculer sans plus d'informations"], 2,
-      "Puisque la température reste au-dessus de 20 °C presque tout le cycle avant de "
-      "redescendre, la vraie moyenne (par intégrale) est supérieure à 20 °C — la formule "
-      "(début+fin)/2 sous-estimerait fortement ce cas.", "Piège"),
+    q("La température d'un four suit T(t) = −2t² + 12t + 20 sur [0 ; 6], t en minutes : "
+      "20 °C au départ, 38 °C à t = 3, 20 °C à la fin. Sa valeur moyenne sur le cycle est :",
+      ["20 °C, la moyenne du début et de la fin", "29 °C, la moyenne des deux extrêmes",
+       "32 °C, calculée par intégrale", "38 °C, la valeur du pic"], 2,
+      "m = (1/6) × ∫ de 0 à 6 de T(t) dt = 192/6 = 32 °C. La formule (début+fin)/2 donne "
+      "20 °C et sous-estime fortement ; (20+38)/2 = 29 °C ne vaudrait que pour une montée et "
+      "une descente en ligne droite.", "Piège"),
 
     q("Le coefficient de variation (CV) sert surtout à :",
       ["Remplacer l'écart-type dans tous les calculs", "Comparer la dispersion de deux séries "
@@ -43700,7 +43717,7 @@ ici.
 BLOC_17 = {
     "id": 17,
     "titre": "Bloc 17 — Mathématiques BTS CPI : programme d'examen",
-    "resume": "Ce qui manque au Bloc 7 pour couvrir vraiment l'épreuve de mathématiques (groupement C1) : l'étude formelle d'une fonction, le calcul intégral par primitives, et la statistique descriptive complète.",
+    "resume": "Complète le bloc 7 pour l'épreuve de mathématiques : étude de fonctions rationnelles et polynomiales, calcul intégral par primitives, statistique à une variable. Restent à couvrir : fonctions ln et exp, statistique à deux variables (ajustement affine, corrélation).",
     "fiches": [
         {
             "id": "17.0",
@@ -43718,14 +43735,27 @@ ce qu'ils calculent, juste comment on les déchiffre — chaque fiche de maths r
 vous saurez lire n'importe quel tableau ou schéma du reste du programme, même sans en comprendre
 encore le calcul.
 
+**Quatre mots à connaître avant de lire un tableau :**
+- **Domaine** : l'ensemble des x pour lesquels on peut calculer f(x), comme la plage de réglage
+  d'un potentiomètre.
+- **Valeur interdite** : un x où le calcul est impossible (une division par zéro, par exemple).
+  C'est une butée où la fonction n'existe pas.
+- **Extremum** : un sommet (maximum) ou un creux (minimum) de la courbe, comme le point mort haut
+  ou le point mort bas d'un piston.
+- **Limite** : la valeur dont f(x) se rapproche quand x s'approche d'un endroit, sans forcément
+  l'atteindre. « Limite infinie » veut dire que f(x) grandit sans fin.
+
 ### 1. Le tableau de variations
 
-C'est le tableau le plus fréquent de tout le programme. Il tient toujours sur deux lignes.
+C'est le tableau le plus fréquent de tout le programme. Exemple d'atelier : la tige d'un vérin
+sort (sa position monte ↗), marque un arrêt en fin de course, puis rentre (↘) — un tableau de
+variations résume exactement ce genre de trajet. Il tient sur trois lignes : x, le signe de
+f'(x), puis les variations de f(x).
 
 ```
 x     -∞          -3           +∞
 f'(x)       +    ‖    -
-f(x)   -∞ ↗ 2  ‖  2 ↘ -∞
+f(x)   -∞ ↗ +∞  ‖  +∞ ↘ -∞
 ```
 
 **Ligne du haut (x) : les valeurs qui délimitent le tableau.** Ce sont les bornes du domaine et
@@ -43739,7 +43769,8 @@ qu'il faut vraiment calculer — les flèches de la ligne du dessous n'en sont q
 **Ligne du bas (f(x), les flèches) : ce n'est pas un calcul, c'est un dessin.** Une flèche qui
 monte (↗) correspond à un `+` juste au-dessus, une flèche qui descend (↘) à un `-`. Les nombres
 inscrits entre les flèches sont les valeurs de f aux bornes — c'est là qu'on lit un minimum, un
-maximum, ou une limite infinie.
+maximum, ou une limite infinie. À côté d'une double barre ‖ ou d'un ±∞, le nombre écrit est une
+**limite** (la valeur dont f se rapproche), pas une valeur réellement atteinte.
 
 > **Le réflexe qui débloque tout tableau de variations : lisez-le comme un trajet en voiture.**
 > Vous partez de la valeur la plus à gauche, vous suivez les flèches une par une, et vous notez
@@ -43759,10 +43790,13 @@ positive, où est-elle négative, où vaut-elle zéro ?*
 
 ```
 x        -∞        1        3        +∞
-x - 1        -    0    +    ‖    +
-3 - x        +    ‖    +    0    -
+x - 1        -    0    +    |    +
+3 - x        +    |    +    0    -
 (x-1)(3-x)   -    0    +    0    -
 ```
+
+*Dans un tableau de signes, un simple `|` sépare juste les colonnes. Seule une double barre ‖
+signale une valeur interdite.*
 
 **Chaque facteur a sa propre ligne**, avec son signe étudié séparément — c'est souvent plus
 simple d'étudier un facteur à la fois. **La dernière ligne est le produit des lignes du dessus**,
@@ -43770,9 +43804,16 @@ en appliquant la règle des signes ordinaire : deux signes identiques donnent un
 différents donnent un `-`. Un zéro sur une ligne donne un zéro sur le produit, quel que soit le
 signe de l'autre facteur à cet endroit précis.
 
-> **Erreur classique à éviter.** Multiplier les signes colonne par colonne au lieu de ligne par
-> ligne. Beaucoup d'élèves lisent le tableau horizontalement — c'est exactement l'inverse de ce
-> qu'il faut faire : chaque ligne se lit indépendamment, de gauche à droite.
+**Comment remplir la dernière ligne.** On avance **colonne par colonne**, c'est-à-dire intervalle
+par intervalle. On se place dans une colonne, par exemple entre 1 et 3 ; on lit les signes
+empilés au-dessus (`+` pour x − 1, `+` pour 3 − x) ; on les multiplie (+ × + = +) et on écrit `+`
+en bas de cette colonne. Puis on passe à la colonne suivante — comme vérifier une gamme
+d'usinage poste par poste.
+
+> **Erreur classique à éviter.** Chaque facteur s'étudie sur sa propre ligne, mais le signe du
+> produit se lit **colonne par colonne** : dans chaque intervalle, on multiplie verticalement les
+> signes des facteurs de cette colonne. Multiplier entre eux les signes d'une même ligne n'a
+> aucun sens : ils appartiennent à des intervalles différents.
 
 ### 3. Un graphique : axes et échelle avant tout calcul
 
@@ -43808,11 +43849,23 @@ qui « paraît » la plus logique. **La somme des hauteurs de tous les bâtons v
      m - marge      m      m + marge
 ```
 
-Le point au centre (●) est la valeur mesurée (une moyenne, le plus souvent). Les deux extrémités
-du segment sont les bornes de l'intervalle : la vraie valeur (celle qu'on ne connaît pas
-exactement) a de très fortes chances de se trouver quelque part entre les deux. **Plus le
-segment est court, plus la mesure est précise** — c'est le seul réflexe de lecture à retenir :
-longueur du segment = imprécision restante, rien de plus.
+Le point au centre (●) est la valeur mesurée (une moyenne, le plus souvent). La **marge** est la
+demi-longueur du segment : l'incertitude qu'on s'accorde de chaque côté de la mesure, comme le ±
+d'une cote tolérancée. Les deux extrémités du segment sont les bornes de l'intervalle. Avant le
+prélèvement, la méthode a 95 chances sur 100 de fournir un intervalle qui contient la vraie
+valeur ; une fois l'intervalle calculé, on dit que la vraie valeur s'y trouve **avec une
+confiance de 95 %**. **Plus le segment est court, plus la mesure est précise** : longueur du
+segment = imprécision restante.
+
+### 6. Écrire un intervalle
+
+- [2 ; 5] = tous les nombres de 2 à 5, bornes comprises. Le crochet est tourné vers le nombre :
+  il l'« attrape ».
+- ]2 ; 5[ = de 2 à 5, bornes exclues. Le crochet tourne le dos au nombre : il le « rejette ».
+- Côté infini, le crochet est toujours ouvert (−∞ et +∞ ne sont pas des nombres qu'on atteint).
+- Le symbole ∪ se lit « ou bien » : ]−∞ ; 2] ∪ [5 ; +∞[ = « 2 ou moins, ou bien 5 ou plus ».
+- Comme une tolérance : une cote dans [29,98 ; 30,02] accepte 29,98 et 30,02 ; une cote dans
+  ]29,98 ; 30,02[ les refuserait.
 
 ### Ce qu'il faut retenir de cette fiche
 
@@ -43886,6 +43939,11 @@ demande de savoir **étudier une fonction dans son ensemble** : où elle existe,
 devient aux bornes de son domaine, comment elle varie. C'est ce triptyque — domaine, limites,
 variations — qui manque encore.
 
+*Exemple qui motive toute la fiche : le coût d'une pièce selon la taille de la série,
+C(x) = 400/x + 15. Domaine : une série de 0 pièce n'a pas de sens, donc x > 0. Limite : jusqu'où
+le coût peut-il baisser si on produit énormément ? Variations : plus on produit, moins la pièce
+coûte-t-elle ? Ce sont les trois questions de cette fiche (cas complet dans l'onglet Exemple).*
+
 ### 2. L'ensemble de définition : où la fonction a-t-elle un sens ?
 
 Une fonction n'est pas toujours calculable partout. Deux pièges reviennent sans cesse :
@@ -43893,6 +43951,7 @@ Une fonction n'est pas toujours calculable partout. Deux pièges reviennent sans
 > **Une division par zéro est interdite.** Si f(x) contient un dénominateur, il faut exclure
 > les valeurs de x qui l'annulent.
 > **Une racine carrée exige un contenu positif ou nul.**
+> **Un logarithme exige un contenu strictement positif** : ln(u(x)) n'existe que si u(x) > 0.
 
 **Exemple entièrement déroulé.** Soit f(x) = (2x − 1) / (x + 3).
 
@@ -43906,15 +43965,22 @@ On regarde deux choses : le comportement **à l'infini**, et le comportement **p
 interdite**.
 
 **Limite en l'infini, sur le même exemple.** Quand x devient très grand, seuls les termes de
-plus haut degré comptent :
+plus haut degré comptent. Le **degré** d'un terme, c'est la puissance de x : 2x est de degré 1,
+−1 est de degré 0 (un nombre seul). Quand x devient énorme, les nombres seuls deviennent
+négligeables — vérifiez avec x = 1 000 : f(1 000) = 1 999 / 1 003 ≈ 1,993 ; avec x = 1 000 000,
+on trouve 1,999993. Le −1 et le +3 pèsent autant qu'un copeau à côté du brut :
 
 f(x) = (2x − 1)/(x + 3) ≈ 2x / x = **2** quand x → +∞ ou x → −∞
 
-La droite **y = 2** est une **asymptote horizontale** : la courbe s'en approche sans jamais la
+La droite **y = 2** est une **asymptote horizontale** (la droite dont la courbe se rapproche
+quand x tend vers ±∞) : pour cette fonction homographique, la courbe s'en approche sans jamais la
 toucher.
 
 **Limite près de la valeur interdite (x = −3).** Le numérateur ne s'annule pas en x = −3
 (il vaut 2×(−3) − 1 = −7), mais le dénominateur, lui, tend vers 0. Le quotient explose :
+
+*0⁺ se lit « zéro par le côté positif » : un nombre tout petit mais positif, comme 0,001. 0⁻ :
+tout petit mais négatif, comme −0,001.*
 
 > quand x → −3 par valeurs supérieures (x + 3 → 0⁺) : f(x) → **−∞** (car −7 / petit positif)
 > quand x → −3 par valeurs inférieures (x + 3 → 0⁻) : f(x) → **+∞** (car −7 / petit négatif)
@@ -43933,13 +43999,23 @@ l'atteindre, aussi loin qu'on aille vers +∞ ou −∞.*
 
 ### 4. Le tableau de variations : la dérivée fait le travail
 
-C'est ici que la fiche 7.2 devient directement utile — la règle **« la dérivée s'annule ou
-change de signe » → variation** s'applique exactement de la même façon.
+C'est ici que la fiche 7.2 devient directement utile — la règle **f' positive → f monte ; f'
+négative → f descend** s'applique exactement de la même façon.
 
-**Sur le même exemple, dérivons f(x) = (2x − 1)/(x + 3)** avec la règle du quotient,
-(u/v)' = (u'v − uv') / v² :
+**Nouvelle règle : dériver une fraction.** La fiche 7.2 ne dérivait que des sommes et des
+puissances. Pour une fraction f = u/v (u en haut, v en bas), on admet la règle :
 
-u = 2x − 1, u' = 2 · v = x + 3, v' = 1
+> **(u/v)' = (u'v − uv') / v²**
+
+*Moyen mnémotechnique : « dérivée du haut × bas, moins haut × dérivée du bas, le tout sur le bas
+au carré ». Pourquoi c'est pratique : v² est toujours positif, donc le signe de la dérivée se lit
+sur le seul numérateur. Méthode : écrire d'abord les quatre morceaux sur quatre lignes, puis les
+remplacer dans la formule.*
+
+**Sur le même exemple, dérivons f(x) = (2x − 1)/(x + 3) :**
+
+u = 2x − 1 → u' = 2
+v = x + 3 → v' = 1
 
 f'(x) = [2(x + 3) − (2x − 1)(1)] / (x + 3)² = [2x + 6 − 2x + 1] / (x + 3)² = **7 / (x + 3)²**
 
@@ -43955,7 +44031,10 @@ tout le domaine**.*
 | x | −∞ | | −3 | | +∞ |
 |---|---|---|---|---|---|
 | f'(x) | | + | ∥ | + | |
-| f(x) | 2 | ↗ | −∞ ∥ +∞ | ↗ | 2 |
+| f(x) | 2 | ↗ | +∞ ∥ −∞ | ↗ | 2 |
+
+*Dans la cellule de la valeur interdite, on écrit à **gauche** du ∥ la limite quand on arrive
+par la gauche, et à **droite** du ∥ la limite quand on repart par la droite.*
 
 *Lecture du tableau : sur la première branche, f part de 2 (asymptote) et grimpe jusqu'à +∞ ;
 sur la deuxième branche, f repart de −∞ et remonte jusqu'à 2. La double barre en x = −3 marque
@@ -43973,7 +44052,8 @@ que la fonction n'y est pas définie — jamais de flèche continue à travers u
 
 ### 6. À retenir
 
-- **Domaine** : exclure ce qui annule un dénominateur, ou rend une racine carrée négative.
+- **Domaine** : exclure ce qui annule un dénominateur, rend une racine carrée négative, ou rend
+  négatif ou nul le contenu d'un logarithme.
 - **Limite en l'infini** finie → asymptote horizontale. **Limite infinie** en une valeur finie →
   asymptote verticale, avec un changement de signe à surveiller de chaque côté.
 - Le **signe de f'(x)** donne le sens de variation — la même règle que dans la fiche 7.2.
@@ -43983,7 +44063,8 @@ que la fonction n'y est pas définie — jamais de flèche continue à travers u
             """,
             "formules": """
 
-**Domaine de définition** — exclure : dénominateur nul, racine carrée d'un nombre négatif
+**Domaine de définition** — exclure : dénominateur nul, racine carrée d'un nombre négatif,
+logarithme d'un nombre négatif ou nul
 
 **Fonction homographique** f(x) = (ax+b)/(cx+d) — asymptote horizontale y = a/c (limite en ±∞)
 asymptote verticale x = −d/c
@@ -44018,7 +44099,7 @@ Pour x → 5⁺ (x − 5 → 0⁺) : g(x) → **+∞**.
 Pour x → 5⁻ (x − 5 → 0⁻) : g(x) → **−∞**.
 La droite **x = 5** est une asymptote verticale.
 
-**4.** u = 3x + 2, u' = 3 · v = x − 5, v' = 1.
+**4.** u = 3x + 2 → u' = 3 ; v = x − 5 → v' = 1.
 g'(x) = [3(x − 5) − (3x + 2)(1)] / (x − 5)² = [3x − 15 − 3x − 2] / (x − 5)² = **−17 / (x − 5)²**.
 *Le numérateur est négatif cette fois : g' est donc strictement négative sur tout le domaine —
 à l'inverse de l'exemple du cours.*
@@ -44028,7 +44109,10 @@ g'(x) = [3(x − 5) − (3x + 2)(1)] / (x − 5)² = [3x − 15 − 3x − 2] / 
 | x | −∞ | | 5 | | +∞ |
 |---|---|---|---|---|---|
 | g'(x) | | − | ∥ | − | |
-| g(x) | 3 | ↘ | +∞ ∥ −∞ | ↘ | 3 |
+| g(x) | 3 | ↘ | −∞ ∥ +∞ | ↘ | 3 |
+
+*À gauche de 5, g descend de 3 vers −∞ (limite en 5⁻) ; à droite, elle repart de +∞ (limite en
+5⁺) et redescend vers 3.*
 
 *g est strictement décroissante sur chacune de ses deux branches — cohérent avec g'(x) < 0
 trouvée à la question précédente.*
@@ -44041,15 +44125,19 @@ de pièces), est modélisé par C(x) = (400 + 15x) / x, pour x > 0.
 
 **Étape 1 — Réécrire pour dériver plus facilement**
 
-C(x) = 400/x + 15, soit C(x) = 400 x⁻¹ + 15.
+C(x) = 400/x + 15, soit C(x) = 400 x⁻¹ + 15 (1/x s'écrit x⁻¹ : un exposant négatif veut dire
+« divisé par »).
 
 **Étape 2 — Dériver**
+
+La règle (x^n)' = n·x^(n−1) marche aussi avec n = −1 : (x⁻¹)' = −1 × x⁻² = −1/x². Donc :
 
 C'(x) = −400 x⁻² = **−400 / x²**
 
 *Toujours négative pour x > 0 : le coût unitaire est strictement décroissant. C'est cohérent
-avec l'intuition industrielle : plus la série est grande, plus les frais fixes (400 €, le coût
-de réglage machine) se répartissent sur un grand nombre de pièces.*
+avec l'intuition industrielle : plus la série est grande, plus les frais fixes (40 000 € de
+réglage et d'outillage, soit 400/x € par pièce quand on produit x centaines de pièces) sont
+**amortis**, c'est-à-dire répartis sur un grand nombre de pièces.*
 
 **Étape 3 — Limite quand x devient grand**
 
@@ -44087,8 +44175,17 @@ de celui des dérivées usuelles (fiche 7.2) :
 |---|---|
 | k (constante) | k × x |
 | x^n (n ≠ −1) | x^(n+1) / (n+1) |
+| 1/x (x > 0) | ln(x) |
+| eˣ | eˣ |
 | cos(x) | sin(x) |
 | sin(x) | −cos(x) |
+| u'·uⁿ (n ≠ −1) | uⁿ⁺¹ / (n+1) |
+| u'/u (u > 0) | ln(u) |
+| u'·eᵘ | eᵘ |
+
+*D'où vient la règle de x^n : on cherche une fonction qui, dérivée, donne x³. Dériver fait
+baisser l'exposant de 1, donc on part de x⁴. Mais (x⁴)' = 4x³ : il y a un 4 en trop, on divise
+par 4 : (x⁴/4)' = x³. On monte l'exposant de 1, et on divise par ce nouvel exposant.*
 
 **Vérification systématique : dérivez la primitive trouvée, vous devez retomber sur f(x).**
 Exemple : la primitive de x² est x³/3. Sa dérivée : (x³/3)' = 3x²/3 = x². ✓
@@ -44096,6 +44193,20 @@ Exemple : la primitive de x² est x³/3. Sa dérivée : (x³/3)' = 3x²/3 = x².
 ### 3. Calculer une intégrale définie : la valeur exacte d'une aire
 
 > **∫ de a à b de f(x) dx = F(b) − F(a)**, où F est n'importe quelle primitive de f.
+
+*Lecture : le signe ∫ est un S allongé, pour « Somme ». Il se lit « intégrale de a à b de f ».
+a est la borne de départ (en bas), b la borne d'arrivée (en haut) ; le « dx » indique seulement
+la variable qui avance, ici x. Cette intégrale est une **aire** si f est positive sur [a ; b]
+(sinon, les parties sous l'axe comptent négativement).*
+
+*Pourquoi une primitive donne une aire : l'image du compteur kilométrique. Sur la courbe de
+vitesse d'un chariot (fiche 7.2), l'aire sous la courbe donne la distance parcourue. Le compteur,
+lui, affiche la distance cumulée D(t), dont la dérivée est la vitesse : D est une primitive de la
+vitesse. Pour la distance parcourue entre t = a et t = b, on lit le compteur à l'arrivée et on
+retire la lecture au départ, D(b) − D(a). F(b) − F(a) fait exactement la même chose : une
+primitive est un « compteur d'aire ». (Et n'importe quelle primitive convient : deux primitives
+ne diffèrent que d'une constante, qui s'annule dans la soustraction, comme la tare d'une balance
+retirée des deux pesées.)*
 
 **Exemple entièrement déroulé.** Calculons ∫ de 0 à 3 de (x² − 2x + 3) dx.
 
@@ -44108,9 +44219,10 @@ Exemple : la primitive de x² est x³/3. Sa dérivée : (x³/3)' = 3x²/3 = x².
 
 **Étape 4 — La différence.** ∫ = F(3) − F(0) = 9 − 0 = **9**.
 
-### 4. Application directe au métier : l'aire d'un profil
+*f(x) = x² − 2x + 3 reste positive (son minimum vaut 2) : ce 9 est bien une aire. Si x est en mm
+et f(x) une hauteur en mm, c'est une surface de 9 mm².*
 
-[[FIG:profil_trapezoidal]]
+### 4. Application directe au métier : l'aire d'un profil
 
 Un profil de came, de section, ou de gorge est souvent modélisé par une courbe. L'aire sous
 cette courbe donne directement une **surface** — utile pour un calcul de masse (surface ×
@@ -44151,8 +44263,8 @@ englobant ferait 6 × 9 = 54 mm² ; la parabole occupe les deux tiers de ce rect
    F(borne du bas), jamais l'inverse.
 3. **Confondre x^(n+1)/(n+1) et x^(n-1)/(n-1)** en primitivant x^n — c'est n **+** 1 au numérateur
    et au dénominateur, pas n − 1.
-4. **Oublier qu'une primitive de x^n ne s'applique pas pour n = −1** (ce cas, la primitive de
-   1/x, n'est pas au programme du CPI).
+4. **Appliquer la formule de x^n pour n = −1** : elle ne s'applique pas. Une primitive de 1/x
+   sur ]0 ; +∞[ est ln(x) ; plus généralement, une primitive de u'/u (avec u > 0) est ln(u).
 
 ### 6. À retenir
 
@@ -44166,7 +44278,8 @@ englobant ferait 6 × 9 = 54 mm² ; la parabole occupe les deux tiers de ce rect
             """,
             "formules": """
 
-**Primitives usuelles** — k → kx · x^n → x^(n+1)/(n+1) (n≠−1) · cos(x) → sin(x) · sin(x) → −cos(x)
+**Primitives usuelles** — k → kx · x^n → x^(n+1)/(n+1) (n≠−1) · 1/x → ln x (x > 0) · eˣ → eˣ
+cos(x) → sin(x) · sin(x) → −cos(x) · u'uⁿ → uⁿ⁺¹/(n+1) · u'/u → ln u (u > 0) · u'eᵘ → eᵘ
 
 **Intégrale définie** — ∫ de a à b de f(x) dx = F(b) − F(a)
 
@@ -44193,7 +44306,10 @@ section.
 
 **3.** G'(x) = 3x² − 4x + 1 = g(x). ✓ La primitive est confirmée.
 
-**4.** Une primitive de 2x est x². F(3) − F(1) = 9 − 1 = **8**.
+**4.** Une primitive de 2x est F(x) = x² (vérification : (x²)' = 2x ✓).
+F(3) = 3² = 9. F(1) = 1² = 1 — attention : cette fois la borne basse n'est pas 0, donc F(1) ne
+vaut pas 0 et il faut vraiment la retrancher.
+∫ = F(3) − F(1) = 9 − 1 = **8**.
 
 **5.** Primitive de h(x) = 4x − x² : H(x) = 2x² − x³/3.
 H(4) = 2×16 − 64/3 = 32 − 21,33 = 10,67
@@ -44222,7 +44338,8 @@ Aire = **166,7 mm²**
 
 **Étape 3 — Volume (aire × épaisseur).**
 
-V = 166,7 × 5 = **833,3 mm³**, soit 0,833 cm³.
+V = 166,7 × 5 = **833,3 mm³**, soit 0,833 cm³ (1 cm³ = 10 × 10 × 10 = 1 000 mm³ ; on convertit
+parce que la masse volumique est donnée en g/cm³).
 
 **Étape 4 — Masse (si la pièce est en ABS, ρ = 1,05 g/cm³).**
 
@@ -44245,15 +44362,17 @@ mais une forme courbe, ce qui impose l'intégrale.
 La fiche 7.3 vous a donné la moyenne et l'écart-type, au service du calcul de capabilité (Cp).
 Ce sont deux résumés utiles, mais l'épreuve de mathématiques attend aussi le vocabulaire complet
 d'une série statistique : **médiane**, **quartiles**, et leur lecture sur un **diagramme en
-boîte** — des repères qui ne supposent pas que la série suive une loi normale, contrairement à
-la moyenne et l'écart-type.
+boîte** — des repères **robustes**, c'est-à-dire peu sensibles à une valeur aberrante,
+contrairement à la moyenne et à l'écart-type.
 
 ### 2. La médiane : la valeur du milieu
 
-> **La médiane partage une série triée en deux moitiés de même effectif.**
+> **La médiane partage une série triée en deux moitiés de même effectif** (l'effectif est le
+> nombre de valeurs : 9 pièces mesurées → effectif 9).
 
 Pour la trouver : on **trie** la série par ordre croissant, puis on prend la valeur du milieu
-(si l'effectif est impair) ou la moyenne des deux valeurs centrales (s'il est pair).
+(si l'effectif n est impair, c'est la valeur de rang (n+1)/2 : pour 9 valeurs, rang 5, avec 4
+valeurs avant et 4 après) ou la moyenne des deux valeurs centrales (s'il est pair).
 
 **Différence essentielle avec la moyenne :** la médiane n'est presque pas affectée par une
 valeur extrême (une pièce très mal usinée par erreur), alors que la moyenne, elle, en est
@@ -44269,6 +44388,10 @@ différentes, c'est le signe d'une série irrégulière ou d'une valeur aberrant
 
 > rang de Q1 = 0,25 × n, **arrondi à l'entier supérieur** si ce n'est pas un entier
 > rang de Q3 = 0,75 × n, **arrondi à l'entier supérieur** si ce n'est pas un entier
+
+*Pourquoi vers le haut : Q1 doit avoir **au moins** 25 % des valeurs en dessous ou à son niveau.
+Avec 9 valeurs, le rang 2 ne couvre que 2/9 ≈ 22 %, pas assez ; le rang 3 couvre 3/9 ≈ 33 % :
+c'est le premier qui suffit.*
 
 **Exemple entièrement déroulé.** Neuf diamètres mesurés sur un lot (mm), déjà triés :
 29,97 — 29,98 — 29,99 — 30,00 — 30,01 — 30,02 — 30,03 — 30,04 — 30,05
@@ -44287,14 +44410,20 @@ sensible à une valeur extrême isolée.*
 
 ### 4. Le diagramme en boîte : voir la dispersion d'un coup d'œil
 
-[[FIG:courbe_capabilite]]
+```
+29,97   29,99   30,01   30,03   30,05
+  |-------[=======|=======]-------|
+ min      Q1   médiane    Q3     max
+       <-- boîte = 50 % des pièces -->
+```
 
 Un diagramme en boîte (« boîte à moustaches ») place, sur un même axe :
 
 > le minimum · Q1 · la médiane · Q3 · le maximum
 
 La **boîte** va de Q1 à Q3 (elle contient donc 50 % de la série), avec un trait au niveau de la
-médiane. Les **moustaches** s'étendent jusqu'au minimum et au maximum.
+médiane. Les **moustaches** (les traits) s'étendent jusqu'au minimum et au maximum : elles
+montrent les pièces extrêmes, la boîte montre le cœur de la production.
 
 **Sur l'exemple précédent :** minimum = 29,97, Q1 = 29,99, médiane = 30,01, Q3 = 30,03,
 maximum = 30,05. La boîte est étroite (0,04 mm de large) et centrée : un lot homogène, sans
@@ -44304,8 +44433,8 @@ valeur qui s'écarte franchement des autres.
 
 1. **Oublier de trier la série** avant de chercher la médiane ou les quartiles — l'ordre brut
    des mesures (l'ordre de fabrication, par exemple) n'a rien à voir avec l'ordre statistique.
-2. **Confondre médiane et moyenne** : elles coïncident seulement si la série est parfaitement
-   symétrique.
+2. **Confondre médiane et moyenne** : une série symétrique a une moyenne égale à sa médiane ; un
+   grand écart entre les deux signale une asymétrie ou une valeur aberrante.
 3. **Arrondir le rang d'un quartile vers le bas au lieu du dessus** — la règle est toujours
    l'arrondi à l'entier **supérieur**.
 4. **Oublier que l'écart interquartile ne dépend que de Q1 et Q3**, jamais du minimum ni du
@@ -44393,8 +44522,8 @@ Réglage B : Q1 = 3ᵉ valeur = 29,97 · Q3 = 8ᵉ valeur = 30,03 · EIQ = **0,0
 pièces autour du centre (EIQ de 0,06 contre 0,04 mm) — et ses valeurs extrêmes (29,90 et 30,10)
 s'écartent bien plus que celles du réglage A (29,95 et 30,05). La médiane seule aurait fait
 croire à deux réglages équivalents ; l'écart interquartile révèle que **le réglage A est plus
-régulier**, donc préférable en production même si aucune des deux moyennes ne serait, à elle
-seule, hors tolérance.
+régulier**, donc préférable en production : avec une tolérance serrée, le réglage B sortirait
+le premier des pièces hors cote.
 """,
         },
         {
@@ -44410,6 +44539,14 @@ Une fonction **polynomiale** de degré 3 se comporte différemment : sa dérivé
 signe **deux fois**, ce qui crée un maximum local puis un minimum local (ou l'inverse). C'est le
 cas le plus fréquent d'étude de fonction à l'examen.
 
+*Vocabulaire : un **polynôme** est une somme de puissances de x multipliées par des nombres,
+comme x³ − 3x² + 2 (pas de x au dénominateur, pas de racine). Son **degré** est la plus grande
+puissance (ici 3). Un **trinôme** est un polynôme de degré 2, comme 3x² − 6x ou t² − 4t + 3.*
+
+*Image d'atelier : une came dont le profil monte jusqu'à une bosse, redescend dans un creux, puis
+remonte. Trouver la bosse et le creux, c'est trouver un maximum et un minimum locaux — comme
+chercher la flèche maximale d'une poutre ou l'instant où un effort est maximal.*
+
 ### 2. Le principe : chercher où f'(x) change de signe
 
 Contrairement à la fiche 17.1, il n'y a ici ni dénominateur ni domaine restreint : une fonction
@@ -44424,6 +44561,15 @@ signe de la dérivée.
 
 *Un produit de facteurs se lit beaucoup plus facilement qu'un trinôme brut : c'est nul quand
 l'un des deux facteurs est nul, soit x = 0 ou x = 2.*
+
+**Trois façons de factoriser f'(x) :**
+1. **Facteur commun** : dans 3x² − 6x, les deux termes contiennent 3x ; on le sort :
+   3x² − 6x = 3x(x − 2). Vérification en redéveloppant : 3x × x − 3x × 2 = 3x² − 6x ✓.
+2. **Identité a² − b² = (a − b)(a + b)** : x² − 1 = x² − 1² = (x − 1)(x + 1).
+3. **Trinôme ax² + bx + c, par le discriminant** : Δ = b² − 4ac. Si Δ > 0, les deux racines sont
+   x₁ = (−b − √Δ)/(2a) et x₂ = (−b + √Δ)/(2a), et ax² + bx + c = a(x − x₁)(x − x₂).
+   Exemple : t² − 4t + 3 donne Δ = 16 − 12 = 4, √Δ = 2, d'où t₁ = (4 − 2)/2 = 1 et
+   t₂ = (4 + 2)/2 = 3 : t² − 4t + 3 = (t − 1)(t − 3).
 
 **Étape 3 — Tableau de signes de f'(x).** Un produit 3x(x − 2) : le signe de chaque facteur,
 puis le produit.
@@ -44453,6 +44599,10 @@ négative, touche un creux en x = 2 (le minimum local, f=−2), puis remonte.*
 |---|---|---|---|---|---|---|---|
 | f'(x) | | + | 0 | − | 0 | + | |
 | f(x) | −∞ | ↗ | 2 | ↘ | −2 | ↗ | +∞ |
+
+*Aux bornes, c'est le terme de plus haut degré, x³, qui décide (même idée qu'en 17.1) : pour x
+très négatif, x³ est très négatif ((−100)³ = −1 000 000), donc f → −∞ ; pour x très grand,
+f → +∞.*
 
 ### 3. Lire un maximum et un minimum locaux sur le tableau
 
@@ -44528,9 +44678,10 @@ g(1) = 1 − 3 + 1 = **−1**. g' passe de − à + en x = 1 : c'est un **minimu
             "exemple": """
 **Cas industriel — Trajectoire d'un axe de perçage**
 
-La position verticale d'une pointe de perçage, en mm par rapport à la surface, suit la loi
-h(t) = t³ − 6t² + 9t, où t est le temps en secondes (0 ⩽ t ⩽ 4). L'outil perce vers le bas puis
-remonte : à quel instant descend-il le plus bas avant de remonter une première fois ?
+La **profondeur** d'une pointe de perçage sous la surface de la pièce (en mm, comptée
+positivement vers le bas : h = 0 veut dire pointe au ras de la pièce) suit la loi
+h(t) = t³ − 6t² + 9t, où t est le temps en secondes (0 ⩽ t ⩽ 4). À quel instant la pointe
+est-elle la plus enfoncée lors de sa première plongée ?
 
 **Étape 1 — Dériver.**
 
@@ -44548,15 +44699,17 @@ h'(t) = 3(t² − 4t + 3) = 3(t − 1)(t − 3)
 
 **Étape 4 — Valeurs remarquables.**
 
-h(1) = 1 − 6 + 9 = **4 mm** (maximum local — l'outil marque une pause en remontant légèrement)
-h(3) = 27 − 54 + 27 = **0 mm** (minimum local)
+h(1) = 1 − 6 + 9 = **4 mm** (maximum local : la pointe atteint sa profondeur la plus grande de
+la première plongée)
+h(3) = 27 − 54 + 27 = **0 mm** (minimum local : la pointe est remontée jusqu'à la surface)
 
-**Ce que le calcul apprend.** L'axe descend de 0 à 4 mm entre t = 0 et t = 1 (h croissante), puis
-remonte à peine en oscillant — en réalité ici h redescend ensuite, puisque h' redevient négative
-juste après t = 1 : le tableau montre que h décroît entre t = 1 et t = 3, où elle touche 0 mm
-(la surface), avant de remonter. Un régleur qui lit ce tableau sait, sans tracer la courbe,
-qu'il n'y a qu'un seul passage au point le plus bas (t = 3, h = 0) — utile pour synchroniser un
-autre axe avec ce moment précis du cycle.
+**Réponse : la pointe est la plus enfoncée à t = 1 s, à 4 mm de profondeur.**
+
+**Ce que le calcul apprend.** De t = 0 à t = 1, h' > 0 : la pointe s'enfonce jusqu'à 4 mm. De
+t = 1 à t = 3, h' < 0 : elle remonte jusqu'à la surface pour évacuer les copeaux. Après t = 3,
+h' > 0 : elle replonge (h(4) = 4 mm). C'est un cycle de perçage avec débourrage. Sans tracer la
+courbe, le régleur sait que le point le plus profond de la première plongée est atteint à t = 1 s
+— utile pour synchroniser un autre axe avec ce moment précis du cycle.
 """,
         },
         {
@@ -44574,21 +44727,22 @@ pendant un mouvement, une vitesse pendant un trajet.
 
 ### 2. Pourquoi on ne peut pas juste faire (début + fin) / 2
 
-Si une grandeur varie de façon linéaire, la moyenne de ses valeurs de départ et de fin suffit.
-Mais si elle **monte puis redescend** (ou l'inverse) entre ces deux instants, cette méthode
-ignore tout ce qui se passe au milieu — et peut donner un résultat complètement faux.
+Si une grandeur varie de façon **affine** (une droite), la moyenne de ses valeurs de départ et
+de fin suffit. Mais si elle **monte puis redescend** (ou l'inverse) entre ces deux instants,
+cette méthode ignore tout ce qui se passe au milieu — et peut donner un résultat complètement
+faux.
+
+*Imaginez que la courbe soit un tas de sable sur une largeur (b − a). On l'égalise au râteau :
+on obtient un rectangle de même aire. Sa hauteur est la valeur moyenne. Hauteur = aire ÷
+largeur, d'où la formule :*
 
 > **Valeur moyenne de f sur [a ; b]** : m = (1 / (b − a)) × ∫ de a à b de f(x) dx
-
-*C'est exactement l'aire sous la courbe, "aplatie" en un rectangle de même largeur (b − a) et de
-même aire : la hauteur de ce rectangle est la valeur moyenne cherchée.*
-
-[[FIG:profil_trapezoidal]]
 
 ### 3. Exemple entièrement déroulé — cycle de température d'un traitement thermique
 
 La température d'un four, en degrés Celsius, suit la loi T(t) = −2t² + 12t + 20 pendant les
-6 premières minutes d'un cycle (0 ⩽ t ⩽ 6), t en minutes.
+6 premières minutes d'un cycle (0 ⩽ t ⩽ 6), t en minutes. *(Ici la variable s'appelle t, le
+temps, au lieu de x, et on écrit dt : rien ne change dans la méthode.)*
 
 **Étape 1 — Une primitive de T(t).**
 
@@ -44609,6 +44763,9 @@ F(0) = **0**
 
 m = 192 / (6 − 0) = **32 °C**
 
+*Unités : l'intégrale est en °C × min (hauteur × largeur) ; diviser par 6 min fait retomber en
+°C.*
+
 **Ce que le calcul apprend.** T(0) = 20 °C et T(6) = 20 °C — les deux extrémités sont
 identiques, et une lecture rapide pourrait faire croire à une moyenne de 20 °C. Mais la
 température monte jusqu'à un pic de T(3) = −18 + 36 + 20 = 38 °C au milieu du cycle : la valeur
@@ -44619,8 +44776,8 @@ donné 20 °C — une erreur de 12 degrés.**
 
 1. **Oublier de diviser par (b − a)** après avoir calculé l'intégrale : ∫ seule donne une aire,
    pas une moyenne.
-2. **Utiliser (f(a) + f(b)) / 2** par réflexe, comme pour une droite — cette formule n'est juste
-   que si f est linéaire sur l'intervalle.
+2. **Utiliser (f(a) + f(b)) / 2** par réflexe, comme pour une droite — cette formule est juste si
+   f est affine sur l'intervalle ; pour une autre fonction, elle est en général fausse.
 3. **Se tromper sur la largeur de l'intervalle** quand a n'est pas nul : c'est toujours (b − a),
    jamais b seul.
 
@@ -44629,14 +44786,15 @@ donné 20 °C — une erreur de 12 degrés.**
 - **Valeur moyenne de f sur [a ; b]** = (1 / (b−a)) × ∫ de a à b de f(x) dx.
 - Elle correspond à la **hauteur du rectangle de même aire** que la courbe, sur le même
   intervalle.
-- Ne jamais remplacer ce calcul par (f(a) + f(b)) / 2 sauf si f est une droite.
+- Ne jamais remplacer ce calcul par (f(a) + f(b)) / 2, sauf si f est affine (une droite).
 
             """,
             "formules": """
 
 **Valeur moyenne de f sur [a ; b]** — m = (1 / (b − a)) × ∫ de a à b de f(x) dx
 
-**Cas particulier** — si f est linéaire (une droite), m = (f(a) + f(b)) / 2 seulement dans ce cas
+**Cas particulier** — si f est affine (une droite), m = (f(a) + f(b)) / 2 ; pour une autre
+fonction, cette formule est en général fausse
 
         """,
             "exercice": """
@@ -44669,29 +44827,32 @@ fin) / 2 ignore complètement, exactement comme dans l'exemple du cours.*
             "exemple": """
 **Cas industriel — Effort moyen sur un vérin pendant une course**
 
-Un vérin exerce un effort, en newtons, qui suit la loi F(x) = 200 + 30x − 3x², où x est la
-position en cm le long de sa course (0 ⩽ x ⩽ 8). Quel est l'effort moyen sur toute la course,
-grandeur utile pour choisir un vérin qui tiendra dans la durée sans surdimensionner inutilement
-sa consommation d'énergie ?
+Un vérin exerce un effort, en newtons, qui suit la loi E(x) = 200 + 30x − 3x², où x est la
+position en cm le long de sa course (0 ⩽ x ⩽ 8). Quel est l'effort moyen sur toute la course ?
+C'est lui qui donne l'énergie dépensée à chaque course, utile pour dimensionner l'alimentation
+en air ou en huile.
 
 **Étape 1 — Une primitive.**
 
-G(x) = 200x + 15x² − x³
+F(x) = 200x + 15x² − x³
 
-**Étape 2 — G(8) et G(0).**
+*Vérification : F'(x) = 200 + 30x − 3x² = E(x) ✓*
 
-G(8) = 1600 + 960 − 512 = **2048**
-G(0) = **0**
+**Étape 2 — F(8) et F(0).**
+
+F(8) = 1600 + 960 − 512 = **2048**
+F(0) = **0**
 
 **Étape 3 — L'effort moyen.**
 
 m = 2048 / (8 − 0) = **256 N**
 
-**Ce que le calcul apprend.** L'effort de départ, F(0) = 200 N, et l'effort de fin,
-F(8) = 200 + 240 − 192 = 248 N, sont tous deux inférieurs à la moyenne réelle de 256 N — la
-loi n'est pas linéaire, l'effort atteint un pic quelque part au milieu de la course. Choisir un
-vérin en ne regardant que les valeurs de début et de fin sous-estimerait l'effort réellement
-exigé pendant une bonne partie du cycle.
+**Ce que le calcul apprend.** L'effort de départ, E(0) = 200 N, et l'effort de fin,
+E(8) = 200 + 240 − 192 = 248 N, sont tous deux inférieurs à la moyenne réelle de 256 N — la
+loi n'est pas affine, l'effort atteint un pic de E(5) = 200 + 150 − 75 = 275 N à mi-course.
+L'effort moyen donne l'énergie dépensée par course : W = 256 N × 0,08 m ≈ 20,5 J. Le vérin, lui,
+se choisit sur le **pic** de 275 N : se fier aux seules valeurs de début et de fin le
+sous-dimensionnerait.
 """,
         },
         {
@@ -44710,7 +44871,17 @@ la même moyenne — ce que l'écart-type seul ne permet pas de faire correcteme
 ### 2. Rappel : variance et écart-type
 
 > **Variance** : V = (1/n) × Σ (xᵢ − moyenne)²
-> **Écart-type** : σ = √V
+> **Écart-type** : σ = √V (σ : lettre grecque « sigma » minuscule)
+
+*Lecture : n = nombre de mesures ; xᵢ = la i-ième mesure (x₁ la première, x₂ la deuxième…) ;
+Σ (sigma majuscule) = « additionner pour toutes les mesures ». En clair : pour chaque pièce, on
+calcule son écart à la moyenne, on le met au carré, on additionne tout, puis on divise par n.*
+
+*Attention à la convention. En statistique descriptive, on **décrit la série elle-même** : on
+divise par n, c'est σ (touche σx de la calculatrice), et c'est la formule de cette fiche. Pour
+**estimer** la dispersion de toute une production à partir d'un échantillon (statistique
+inférentielle, fiches 8.6 et 18.3), on divise par n − 1 : c'est s (touche sx). Suivez ce que
+demande l'énoncé.*
 
 *La variance est la moyenne des carrés des écarts à la moyenne. On passe au carré pour que les
 écarts positifs et négatifs ne s'annulent pas entre eux ; la racine carrée, à la fin, ramène le
@@ -44725,6 +44896,9 @@ moyenne = (19,98 + 20,00 + 20,01 + 19,99 + 20,02 + 20,00) / 6 = 120,00 / 6 = **2
 
 **Étape 2 — Les écarts à la moyenne, au carré.**
 
+Écarts : 19,98 − 20,00 = −0,02 ; 20,00 − 20,00 = 0 ; 20,01 − 20,00 = +0,01 ; −0,01 ; +0,02 ; 0.
+Au carré :
+
 (−0,02)² = 0,0004 · 0² = 0 · (0,01)² = 0,0001 · (−0,01)² = 0,0001 · (0,02)² = 0,0004 · 0² = 0
 
 **Étape 3 — La variance.**
@@ -44738,8 +44912,8 @@ V = (0,0004 + 0 + 0,0001 + 0,0001 + 0,0004 + 0) / 6 = 0,0010 / 6 ≈ **0,0001667
 [[FIG:dispersion_deux_reglages]]
 
 *Le schéma place les six mesures sur une droite graduée, autour de leur moyenne. Plus les
-points sont serrés autour du trait de moyenne, plus σ est petit — c'est exactement ce que
-mesure l'écart-type : la distance moyenne entre chaque point et le centre du nuage.*
+points sont serrés autour du trait de moyenne, plus σ est petit — l'écart-type donne un ordre de
+grandeur de l'écart typique d'une mesure à la moyenne.*
 
 ### 3. Le problème que l'écart-type seul ne résout pas
 
@@ -44749,6 +44923,10 @@ excellent sur une pièce de 200 mm, mais plus discutable sur une pièce de 2 mm.
 le rôle du coefficient de variation.
 
 > **Coefficient de variation** : CV = (σ / moyenne) × 100, exprimé en %
+
+*Le coefficient de variation est un outil complémentaire, non exigé à l'épreuve (le programme
+cite l'étendue, l'écart interquartile et l'écart-type). En mécanique, pour juger si un procédé
+est bien réglé, on rapporte plutôt σ à la **tolérance** (Cp, fiche 7.3).*
 
 **Sur l'exemple précédent :** CV = (0,0129 / 20,00) × 100 ≈ **0,065 %**.
 
@@ -44821,7 +44999,7 @@ Somme = 0,0150. V = 0,0150 / 5 = **0,0030 mm²**.
 
 **5.** L'autre réglage : CV = (0,010 / 10) × 100 = **0,10 %**. Les deux coefficients sont proches
 (0,110 % contre 0,10 %) : **l'autre réglage (pièces de 10 mm) est très légèrement plus précis**
-en proportion, alors que son écart-type brut (0,010 mm) est presque cinq fois plus petit que
+en proportion, alors que son écart-type brut (0,010 mm) est plus de cinq fois plus petit que
 celui du premier réglage (0,0548 mm) — un écart brut qui, seul, aurait été trompeur puisque les
 pièces ne font pas la même taille.
 """,
@@ -44842,11 +45020,13 @@ lignes est la mieux réglée.
 CV(ligne 1) = (0,015 / 15) × 100 = **0,10 %**
 CV(ligne 2) = (0,15 / 300) × 100 = **0,05 %**
 
-**Ce que le calcul apprend.** En proportion de la taille des pièces produites, la ligne 2 est en
-réalité **deux fois plus précise** que la ligne 1, alors que son écart-type brut donnait
-l'impression inverse. Un rapport d'audit qui comparerait les écarts-types sans les rapporter à la
-taille des pièces tirerait une conclusion fausse — c'est exactement pour éviter ce piège que le
-coefficient de variation existe.
+**Ce que le calcul apprend.** Le CV montre que la dispersion **relative à la taille** est deux
+fois plus faible sur la ligne 2, alors que l'écart-type brut donnait l'impression inverse :
+comparer des écarts-types bruts entre pièces de tailles très différentes est un piège. Mais pour
+dire laquelle des deux lignes est **la mieux réglée**, il faut rapporter σ à la **tolérance** de
+chaque pièce (Cp = IT / 6σ, fiche 7.3), pas à sa taille : les tolérances ISO ne grandissent pas
+proportionnellement à la cote (un IT7 vaut environ 18 µm à Ø15 et 52 µm à 300 mm, soit un
+rapport de 3, pas de 20). À qualité IT7 égale, c'est la ligne 1 qui serait la mieux placée.
 """,
         },
     ],
@@ -48768,9 +48948,9 @@ _mth("17.0", "Lire un tableau de variations, un tableau de signes, un graphique"
     "(+ monte, − descend), puis suivre les flèches comme un trajet, de "
     "gauche à droite — une double barre ‖ est un mur, jamais une route "
     "continue.",
-    "**Tableau de signes** : étudier chaque facteur LIGNE par ligne, puis "
-    "faire le produit des signes ligne par ligne — jamais colonne par "
-    "colonne, l'erreur la plus fréquente.",
+    "**Tableau de signes** : une ligne par facteur, puis, pour chaque "
+    "colonne (intervalle), multiplier les signes empilés verticalement — "
+    "jamais les signes d'une même ligne entre eux.",
     "**Graphique** : repérer ce que représente chaque axe et son échelle "
     "(que vaut un carreau) AVANT de lire une seule valeur.",
     "**Diagramme en bâtons de probabilité** : vérifier que la somme des "
@@ -48778,8 +48958,8 @@ _mth("17.0", "Lire un tableau de variations, un tableau de signes, un graphique"
     "probabilité.",
 ], "Tableau de signes de (x−1)(3−x) : chaque facteur (x−1) puis (3−x) "
    "étudié séparément sur sa propre ligne, puis la dernière ligne (le "
-   "produit) se lit en croisant les deux signes ligne par ligne à chaque "
-   "colonne — jamais en multipliant les colonnes entre elles.")
+   "produit) s'obtient colonne par colonne, en multipliant les deux signes "
+   "empilés dans chaque intervalle.")
 
 _mth("17.1", "Étudier une fonction : domaine, limites, tableau de variations", [
     "**Trouver le domaine** : exclure ce qui annule un dénominateur, ou "
@@ -48803,7 +48983,8 @@ _mth("17.2", "Calculer une aire par primitive et intégrale définie", [
     "**Vérifier systématiquement** : dériver la primitive trouvée, on doit "
     "retomber exactement sur f(x).",
     "**Calculer ∫ de a à b = F(b) − F(a)**, avec N'IMPORTE QUELLE primitive "
-    "de f (le résultat ne dépend pas du choix).",
+    "de f (le résultat ne dépend pas du choix : deux primitives ne diffèrent "
+    "que d'une constante, qui s'annule dans la soustraction).",
     "**Relier au métier** : l'aire sous une courbe de section donne "
     "directement une surface, utile pour une masse (surface × épaisseur × "
     "masse volumique) ou un volume de matière à enlever.",
@@ -50017,7 +50198,7 @@ def gen_valeur_moyenne():
                    f"Calcule la valeur moyenne de f sur cet intervalle."),
         "rep": moyenne, "tol": 0.05, "unite": "",
         "diag": [
-            _diag(m * (x1 + x2) / 2 + p + (x2 - x1),
+            _diag((m * (x1 + x2) / 2 + p) * (x2 - x1),
                   "Tu as oublié de diviser l'intégrale par la longueur de l'intervalle "
                   "(x2 − x1) : la valeur moyenne, c'est l'intégrale DIVISÉE par cette longueur."),
             _diag(m * x1 + p, "Tu as pris f(x1), la valeur au début de l'intervalle, pas la "
@@ -50026,7 +50207,7 @@ def gen_valeur_moyenne():
         "corr": [
             f"**La formule.** Valeur moyenne = (1 / (x2 − x1)) × ∫ f(x) dx entre {x1} et {x2}.",
             f"**Une primitive de f.** F(x) = {fr(m, 2)}x²/2 {signe_p}x.",
-            f"**L'intégrale.** F({x2}) − F({x1}).",
+            f"**L'intégrale.** F({x2}) − F({x1}) = {fr(moyenne * (x2 - x1), 3)}.",
             f"**Je divise par la longueur de l'intervalle.** {x2} − {x1} = {x2 - x1}.",
             f"**Résultat.** Valeur moyenne = **{fr(moyenne, 3)}**.",
             "*Astuce pour une fonction affine : la valeur moyenne est toujours égale à la "
@@ -52456,8 +52637,8 @@ ATELIERS = [
                          "horizontale vaut a/c.",
              "indice": "Le rapport des coefficients de x au numérateur et au dénominateur : "
                        "2/1.",
-             "pieges": [(-1, "C'est le rapport des constantes (−1/3 ≈ −0,33 arrondi), pas "
-                             "des coefficients de x.")]},
+             "pieges": [(-1 / 3, "C'est le rapport des constantes (−1/3 ≈ −0,33), pas "
+                                 "des coefficients de x.")]},
             {"type": "numerique", "label": "f'(2)", "unite": "",
              "attendu": 0.28, "tol": 0.01,
              "consigne": "f'(x) = 7/(x+3)². Remplace x par 2.",
@@ -52575,14 +52756,16 @@ ATELIERS = [
                         (12.3, "Vous avez pris seulement la 6ᵉ valeur.")]},
             {"type": "numerique", "label": "Q1 (premier quartile)", "unite": "mm",
              "attendu": 12.1, "tol": 0.01,
-             "consigne": "Q1 est la médiane de la première moitié (les 5 premières valeurs).",
-             "indice": "Médiane de 12,0 ; 12,1 ; 12,1 ; 12,2 ; 12,2 — la valeur du milieu.",
-             "pieges": [(12.0, "C'est le minimum, pas la médiane de la première moitié.")]},
+             "consigne": "Rang de Q1 = 0,25 × 10 = 2,5 → arrondi à l'entier supérieur : 3. "
+                         "Q1 est la 3ᵉ valeur de la série triée.",
+             "indice": "Série triée : 12,0 ; 12,1 ; 12,1 ; … — la 3ᵉ valeur.",
+             "pieges": [(12.0, "C'est le minimum, pas la valeur de rang 3.")]},
             {"type": "numerique", "label": "Q3 (troisième quartile)", "unite": "mm",
              "attendu": 12.4, "tol": 0.01,
-             "consigne": "Q3 est la médiane de la seconde moitié (les 5 dernières valeurs).",
-             "indice": "Médiane de 12,3 ; 12,3 ; 12,4 ; 12,5 ; 12,6.",
-             "pieges": [(12.6, "C'est le maximum, pas la médiane de la seconde moitié.")]},
+             "consigne": "Rang de Q3 = 0,75 × 10 = 7,5 → arrondi à l'entier supérieur : 8. "
+                         "Q3 est la 8ᵉ valeur de la série triée.",
+             "indice": "… ; 12,3 ; 12,3 ; 12,4 ; 12,5 ; 12,6 — la 8ᵉ valeur.",
+             "pieges": [(12.6, "C'est le maximum, pas la valeur de rang 8.")]},
             {"type": "numerique", "label": "Écart interquartile EIQ", "unite": "mm",
              "attendu": 0.3, "tol": 0.01,
              "consigne": "EIQ = Q3 − Q1.",
@@ -52592,19 +52775,20 @@ ATELIERS = [
         ],
         "corrige": {
             "enonce": "Série triée de 10 mesures, de 12,0 à 12,6 mm.",
-            "regle": "**Avec n valeurs triées, la médiane sépare la série en deux, et Q1/Q3 "
-                     "sont les médianes de chaque moitié.**",
+            "regle": "**Avec n valeurs triées, la médiane sépare la série en deux ; Q1 et Q3 "
+                     "sont les valeurs de rang 0,25·n et 0,75·n, arrondis à l'entier "
+                     "supérieur (méthode des rangs, celle du BTS).**",
             "conversions": "Aucune : toutes les valeurs sont déjà en mm.",
-            "remplacement": "Médiane = (5ᵉ + 6ᵉ)/2 ; Q1 = médiane des 5 premières ; Q3 = "
-                            "médiane des 5 dernières",
+            "remplacement": "Médiane = (5ᵉ + 6ᵉ)/2 ; Q1 = 3ᵉ valeur (rang 2,5 → 3) ; Q3 = "
+                            "8ᵉ valeur (rang 7,5 → 8)",
             "calcul": "Médiane = (12,2+12,3)/2 = **12,25 mm**\\n\\nQ1 = **12,1 mm**\\n\\n"
                       "Q3 = **12,4 mm**\\n\\nEIQ = 12,4 − 12,1 = **0,3 mm**",
             "verification": "**Contrôle d'encadrement** : Q1 ≤ médiane ≤ Q3 doit toujours "
                             "être vrai — ici 12,1 ≤ 12,25 ≤ 12,4, cohérent.",
         },
-        "a_retenir": "À retenir : médiane = milieu de la série triée ; Q1 et Q3 = médianes "
-                     "de chaque moitié ; EIQ = Q3 − Q1, une mesure de dispersion qui ignore "
-                     "les valeurs extrêmes.",
+        "a_retenir": "À retenir : médiane = milieu de la série triée ; Q1 et Q3 = valeurs "
+                     "de rang 0,25·n et 0,75·n arrondis au-dessus ; EIQ = Q3 − Q1, une "
+                     "mesure de dispersion qui ignore les valeurs extrêmes.",
     },
     {
         "id": "at24",
@@ -54254,8 +54438,9 @@ ATELIERS = [
                             "(2−1)(3−2) = 1×1 = 1, positif — cohérent avec la ligne "
                             "trouvée.",
         },
-        "a_retenir": "À retenir : un tableau de signes se lit ligne par ligne, jamais "
-                     "colonne par colonne. Un produit s'annule dès qu'un seul facteur "
+        "a_retenir": "À retenir : chaque facteur a sa ligne, mais le signe du produit se "
+                     "lit colonne par colonne, en multipliant les signes empilés dans "
+                     "chaque intervalle. Un produit s'annule dès qu'un seul facteur "
                      "s'annule, quelle que soit la valeur de l'autre.",
     },
     {
