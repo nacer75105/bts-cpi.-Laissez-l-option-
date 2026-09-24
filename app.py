@@ -1651,7 +1651,7 @@ def profil_trapezoidal():
     p.append(_txt(705, 170, "parcourue", 10, FIN, "middle"))
     p.append(f"<rect x='40' y='285' width='680' height='66' fill='#f0fdf4' stroke='{OK}' rx='6'/>")
     p.append(_txt(56, 308, "La PENTE des rampes donne l'accélération, donc l'effort : F = m × a.", 12, TRAIT, "start", True))
-    p.append(_txt(56, 328, "Raccourcir la rampe de moitié double l'effort demandé au moteur — et son prix.", 12, FIN))
+    p.append(_txt(56, 328, "Raccourcir la rampe de moitié double l'effort d'inertie (m·a) — et le prix du moteur.", 12, FIN))
     p.append(_txt(56, 346, "C'est pourquoi on allonge toujours les rampes autant que le temps de cycle le permet.", 11, OK))
     return _svg("".join(p), 760, 365)
 
@@ -4313,13 +4313,15 @@ def cercle_et_droite():
     p.append(_txt(cx + r/2, cy - 8, "R", 12, TRAIT, "middle", True))
     p.append(f"<line x1='120' y1='90' x2='560' y2='330' stroke='{ARBRE}' stroke-width='2.4'/>")
     p.append(_txt(560, 340, "droite d", 12, ARBRE, "start", True))
-    p.append(f"<rect x='440' y='60' width='280' height='150' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p.append(f"<rect x='440' y='60' width='280' height='190' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
     p.append(_txt(456, 86, "Cercle : (x−a)² + (y−b)² = R²", 12.5, TRAIT, "start", True))
     p.append(_txt(456, 112, "Un point est SUR le cercle si ses", 11.5, FIN, "start"))
     p.append(_txt(456, 130, "coordonnées vérifient exactement", 11.5, FIN, "start"))
     p.append(_txt(456, 148, "cette égalité.", 11.5, FIN, "start"))
     p.append(_txt(456, 176, "Intersection droite-cercle : on", 11.5, FIN, "start"))
     p.append(_txt(456, 194, "remplace y de la droite dans", 11.5, FIN, "start"))
+    p.append(_txt(456, 212, "celle du cercle : le discriminant", 11.5, FIN, "start"))
+    p.append(_txt(456, 230, "donne 0, 1 ou 2 points.", 11.5, FIN, "start"))
     return _svg("".join(p), 760, 370)
 
 
@@ -4725,6 +4727,7 @@ def addition_vectorielle_chasles():
     p.append(_txt(ox - 8, oy + 18, "O", 11, TRAIT, "end", True))
     p.append(f"<circle cx='{bx}' cy='{by}' r='4' fill='{TRAIT}'/>")
     p.append(_txt(bx + 10, by + 4, "B", 11, TRAIT, "start", True))
+    p.append(_txt(ax, ay - 10, "A", 11, TRAIT, "middle", True))
 
     p.append("<defs>"
              f"<marker id='fcu' viewBox='0 0 10 10' refX='9' refY='5' markerWidth='7' markerHeight='7' orient='auto'><path d='M0 0 L10 5 L0 10 Z' fill='{ALESAGE}'/></marker>"
@@ -7922,7 +7925,8 @@ QUIZ["Mathématiques appliquées"] = [
     q("Un tube acier Ø60/Ø50 de 2 m. Quelle est sa masse ? (ρ = 7,85 kg/dm³)",
       ["13,6 kg", "44 kg", "6,8 kg", "27 kg"], 0,
       "S = π(60²−50²)/4 = 864 mm² · V = 1,728 dm³ · m = 13,6 kg. Une barre pleine Ø60 pèserait "
-      "44 kg : le tube est trois fois plus léger pour une résistance à peine inférieure.", "Calcul"),
+      "44 kg : le tube est 3,3 fois plus léger et garde environ 52 % de la résistance en "
+      "flexion de la barre pleine.", "Calcul"),
 
     q("Une pièce moulée doit mesurer 240 mm après refroidissement, retrait 1 %. Le modèle fait :",
       ["237,6 mm", "242,4 mm", "240 mm", "264 mm"], 1,
@@ -9171,8 +9175,9 @@ QUIZ["Mathématiques BTS CPI (examen)"] = [
       "La valeur moyenne est l'intégrale (l'aire) divisée par la largeur de l'intervalle — "
       "(f(a)+f(b))/2 n'est juste que si f est une droite.", "Intermédiaire"),
 
-    q("Une température part de 20 °C, monte à 38 °C au milieu d'un cycle, puis redescend à "
-      "20 °C. Sa valeur moyenne sur le cycle est :",
+    q("Une température part de 20 °C, monte rapidement puis reste proche de 38 °C pendant "
+      "presque tout le cycle, avant de redescendre à 20 °C à la fin. Sa valeur moyenne sur le "
+      "cycle est :",
       ["Exactement 20 °C", "Exactement 29 °C, la moyenne des deux extrêmes", "Supérieure à "
        "20 °C, calculée par intégrale", "Impossible à calculer sans plus d'informations"], 2,
       "Puisque la température reste au-dessus de 20 °C presque tout le cycle avant de "
@@ -9202,8 +9207,9 @@ QUIZ["Mathématiques BTS CPI (examen)"] = [
       "Le barycentre G est-il plus proche de A ou de B ?",
       ["De B, la pièce la plus lourde", "De A, quelle que soit la masse", "À égale "
        "distance des deux", "De C"], 0,
-      "Gx = (2×0+3×6+1×3)/6 = 3,5, plus proche de Bx=6 (le point le plus lourd, 3 kg) "
-      "que de la moyenne simple non pondérée (0+6+3)/3 = 3.", "Intermédiaire"),
+      "G = (3,5 ; 1) : il est à ≈ 2,69 de B et à ≈ 3,64 de A, donc plus proche de B, la "
+      "pièce la plus lourde (3 kg). Sans les masses, la moyenne simple des x vaudrait 3 : "
+      "la masse de B a tiré G de son côté.", "Intermédiaire"),
 
     q("Pour calculer un barycentre de points pondérés, on divise la somme des "
       "coordonnées pondérées par :",
@@ -28513,7 +28519,7 @@ def appliquer(blocs):
 BLOC_7 = {
     "id": 7,
     "titre": "Bloc 7 — Mathématiques appliquées",
-    "resume": "Les seuls outils mathématiques réellement utilisés en conception mécanique.",
+    "resume": "Les outils mathématiques les plus utilisés en conception mécanique. Pour l'épreuve de mathématiques, compléter avec les blocs 17 et 18.",
     "fiches": [
         {
             "id": "7.1",
@@ -28526,10 +28532,10 @@ BLOC_7 = {
 Vous n'êtes pas ici pour faire des mathématiques pures : chaque outil de cette fiche sert
 **directement** un calcul que vous ferez ailleurs dans le programme. La trigonométrie sert à
 décomposer un effort incliné (fiche 4.1), les vecteurs à sommer des actions en statique
-(fiche 12.1), la géométrie à coter un plan (fiche 1.3). Cette fiche ne construit rien
+(fiche 12.1), la géométrie à coter un plan (fiche 5.2). Cette fiche ne construit rien
 d'abstrait : elle donne les gestes de calcul dont RDM et dessin technique ont besoin.
 
-### 2. Le cercle trigonométrique : ce qu'il faut vraiment retenir
+### 2. Le triangle rectangle : ce qu'il faut vraiment retenir
 
 Oubliez la mémorisation par cœur des formules : retenez le triangle rectangle, et tout en
 découle.
@@ -28537,9 +28543,17 @@ découle.
 [[FIG:decomposer_force]]
 
 Pour un angle α dans un triangle rectangle, avec **h** l'hypoténuse, **opp** le côté opposé à
-l'angle, **adj** le côté adjacent :
+l'angle, **adj** le côté adjacent. Pour les reconnaître sur une figure : l'**hypoténuse** est
+toujours le plus long côté, celui qui est en face de l'angle droit. Posez le doigt sur l'angle
+α : les deux côtés qui partent de votre doigt sont l'hypoténuse et l'**adjacent** ; le
+troisième, qui ne touche pas α, est l'**opposé**.
 
 > **sin α = opp / h** · **cos α = adj / h** · **tan α = opp / adj**
+
+*Pourquoi ces rapports ne dépendent que de l'angle : deux équerres de tailles différentes mais
+de même angle sont l'agrandissement l'une de l'autre. Tous leurs côtés sont multipliés par le
+même nombre, donc leurs rapports ne changent pas. Le rapport opp/h est une « carte d'identité »
+de l'angle, que la calculatrice a en mémoire.*
 
 **Le moyen mnémotechnique** qui évite de confondre : SOH-CAH-TOA — Sinus = Opposé/Hypoténuse,
 Cosinus = Adjacent/Hypoténuse, Tangente = Opposé/Adjacent.
@@ -28555,6 +28569,11 @@ longueur horizontale de **1 400 mm**. Quel est son angle ?
 tan α = 350 / 1400 = 0,25
 α = arctan(0,25) = **14,04°**
 
+*arctan (touche tan⁻¹ de la calculatrice) fait le chemin inverse de tan : on connaît le
+rapport, on cherche l'angle. De même, arcsin (sin⁻¹) et arccos (cos⁻¹) redonnent l'angle à
+partir d'un sinus ou d'un cosinus. Une pente en % se lit directement : 350 / 1 400 × 100 = 25 %,
+c'est tan α × 100 — et 25 % ne veut pas dire 25°.*
+
 *Contrôle de bon sens : la norme accessibilité limite les rampes à 5% (≈2,9°) pour un usage
 sans aide ; à 14°, cette rampe nécessite une assistance — un résultat cohérent avec une pente
 qu'on sent nettement à l'œil.*
@@ -28563,6 +28582,11 @@ qu'on sent nettement à l'œil.*
 
 C'est l'application la plus fréquente de toute la fiche, utilisée dès la fiche 12.1 (statique)
 et dans une bonne partie de la RDM.
+
+D'où vient la formule : dessinez la flèche F puis ses deux « ombres », Fx sur l'horizontale et
+Fy sur la verticale. Vous obtenez un triangle rectangle dont **F est l'hypoténuse**. Fx touche
+l'angle θ : c'est l'adjacent, donc cos θ = Fx / F. Fy est en face de θ : c'est l'opposé, donc
+sin θ = Fy / F. C'est SOH-CAH-TOA, avec des newtons à la place des millimètres.
 
 > **Fx = F × cos θ** (composante horizontale) · **Fy = F × sin θ** (composante verticale)
 
@@ -28576,7 +28600,7 @@ Fy = 2 200 × sin 32° = 2 200 × 0,530 = **1 165,8 N**
 
 *Contrôle de bon sens : Fx doit être plus grand que Fy puisque l'angle (32°) est plus proche de
 l'horizontale que de la verticale. C'est bien le cas. Et Fx² + Fy² doit redonner F² —
-1865,7² + 1165,8² = 4 841 638, et 2 200² = 4 840 000 : l'écart vient seulement des
+1865,7² + 1165,8² = 4 839 926, et 2 200² = 4 840 000 : l'écart vient seulement des
 arrondis.*
 
 **Ce que cette décomposition permet de faire ensuite.** Une fois Fx et Fy connues, elles
@@ -28594,17 +28618,31 @@ composantes, séparément en x et en y :
 **C'est tout l'intérêt du vecteur : il transforme un problème géométrique (des flèches dans
 tous les sens) en un problème arithmétique (des additions de nombres).**
 
+**La norme** ‖u‖ (on lit « norme de u ») est la longueur de la flèche, calculée par
+Pythagore : ‖u‖ = √(ux² + uy²).
+
 **Le produit scalaire**, utile pour trouver l'angle entre deux vecteurs ou vérifier une
-perpendicularité :
+perpendicularité. Il mesure à quel point deux flèches « travaillent dans le même sens » :
+maximal quand elles sont alignées (cos 0° = 1), nul quand elles sont à l'équerre
+(cos 90° = 0).
 
 > **u · v = ux × vx + uy × vy = ‖u‖ × ‖v‖ × cos θ**
+
+Troisième lecture, par **projection** : u · v = ‖u‖ × (longueur de l'ombre de v projetée sur
+u). L'écriture avec les coordonnées permet de le calculer sans rapporteur.
+
+**Son usage direct en mécanique : le travail d'une force.** Un vérin pousse un chariot avec
+F = 500 N, incliné de 30° par rapport au rail, sur un déplacement d = 0,4 m :
+W = F · d = 500 × 0,4 × cos 30° ≈ **173 J**. Seule la part de l'effort dans le sens du
+déplacement fait avancer le chariot — c'est exactement ce que compte le produit scalaire.
 
 *Deux vecteurs sont perpendiculaires si et seulement si leur produit scalaire est nul — c'est le
 test le plus rapide pour vérifier une orthogonalité dans un calcul, plus fiable qu'une mesure à
 l'œil sur un dessin.*
 
 **Exemple entièrement déroulé.** Un bras de levier est représenté par le vecteur u = (3 ; 4), un
-second bras par v = (5 ; 0). Quel est l'angle entre eux ?
+second bras par v = (5 ; 0), coordonnées en décimètres. Quel est l'angle entre eux (celui qu'on
+reportera sur le plan de soudure) ?
 
 ‖u‖ = √(3² + 4²) = √25 = 5
 ‖v‖ = √(5² + 0²) = 5
@@ -28621,13 +28659,36 @@ cos θ = 15 / (5 × 5) = 0,6
 **Le théorème de Thalès**, pour les proportions — utile en particulier pour les dépouilles de
 moulage (fiche 12.3) et les cônes :
 
-> Si deux droites sont parallèles, les longueurs sur des sécantes sont proportionnelles.
+> Si deux droites sont parallèles, les longueurs sur des sécantes (deux droites qui se coupent)
+> sont proportionnelles.
+
+*Exemple : un cône de dépouille mesure Ø40 à la base et Ø30 à 50 mm de hauteur. Le diamètre perd
+10 mm sur 50 mm, donc 10 × 20/50 = 4 mm sur 20 mm : à 20 mm de hauteur, il mesure Ø36.*
+
+**Al-Kashi**, pour un triangle **quelconque** (sans angle droit) — un « Pythagore corrigé » :
+
+> **a² = b² + c² − 2·b·c·cos Â**, où Â est l'angle entre les côtés b et c, et a le côté en face.
+
+Si Â = 90°, cos Â = 0 et on retrouve Pythagore. *Exemple : deux trous à 40 mm et 60 mm d'un même
+centre, écartés de 50°. Entraxe² = 40² + 60² − 2 × 40 × 60 × cos 50° ≈ 1 600 + 3 600 − 3 085 =
+2 115, donc entraxe ≈ 46 mm.*
 
 **Les coordonnées polaires**, indispensables pour coter des perçages répartis en cercle
-(fiche 1.3 et fiche 5.2, répétition circulaire) : un point se repère par un rayon r et un angle
+(fiche 5.2 et fiche 5.10, répétition circulaire) : un point se repère par un rayon r et un angle
 θ depuis une origine, plutôt que par x et y.
 
 > conversion : **x = r × cos θ** · **y = r × sin θ**
+
+*Exemple : bride à 6 trous sur un Ø100 (r = 50 mm). Le 2ᵉ trou est à θ = 60° : x = 50 × cos 60° =
+25 mm et y = 50 × sin 60° = 43,3 mm — les deux cotes que la commande numérique attend.*
+
+**Volumes et masses** (utilisés dans les exercices) : m = ρ × V. Avec ρ en kg/dm³, il faut V en
+dm³ : 1 dm³ = 100 × 100 × 100 mm³ = 1 000 000 mm³, on divise donc les mm³ par un million. La
+section d'un tube est une couronne : grand disque moins petit disque, S = π(D² − d²)/4.
+Masses volumiques usuelles : acier ≈ 7,85 kg/dm³, aluminium ≈ 2,7 kg/dm³.
+
+**Retrait** (agrandissement ou réduction) : en refroidissant, un métal coulé rétrécit d'un
+certain pourcentage. Le modèle doit donc être plus grand : cote modèle = cote finale × (1 + retrait).
 
 ### 6. Exemple de synthèse : combiner ces outils sur un cas concret
 
@@ -28647,12 +28708,23 @@ y = L × sin θ = 900 × sin 20° = 900 × 0,342 = **307,8 mm**
 
 **Étape 3 — Contrôle de bon sens**
 
-x² + y² doit redonner L² : 845,7² + 307,8² = 715 213 + 94 741 = 809 954, et 900² = 810 000 —
+x² + y² doit redonner L² : 845,7² + 307,8² = 715 208 + 94 741 = 809 949, et 900² = 810 000 —
 l'écart vient des arrondis. Le bras est bien plus étendu à l'horizontale qu'à la verticale,
 cohérent avec un angle de 20° proche de l'horizontale.
 
-*La suite de ce calcul — le moment à la base du bras — utilise ces coordonnées (x, y) et
-rejoint directement la statique de la fiche 12.1.*
+**Étape 4 — Les deux composantes de l'effort, par rapport au bras**
+
+Le poids est vertical, le bras est incliné de 20° : l'angle entre le poids et la
+perpendiculaire au bras vaut donc 20°. On décompose F selon le bras et perpendiculairement :
+
+- le long du bras : F × sin 20° = 4 414,5 × 0,342 = **1 510 N** (il comprime ou tend le bras) ;
+- perpendiculaire au bras : F × cos 20° = 4 414,5 × 0,940 = **4 148 N** (c'est elle qui fait
+  fléchir le bras).
+
+*Contrôle : 1 510² + 4 148² ≈ 4 414² — Pythagore est respecté.*
+
+*La suite de ce calcul — le moment à la base du bras, M = F × x = 4 414,5 × 0,8457 ≈ 3 733 N·m —
+utilise ces coordonnées (x, y) et rejoint directement la statique de la fiche 12.1.*
 
 ### 7. Les erreurs classiques
 
@@ -28699,14 +28771,18 @@ coordonnées polaires : x = r cos θ, y = r sin θ
 
 **3.** Calcule la masse d'une plaque d'aluminium 400 × 250 × 8 mm (ρ = 2,7 kg/dm³).
 
-**4.** Un tube acier Ø extérieur 60, Ø intérieur 50, longueur 2 m. Quelle est sa masse ?
+*Exercices 3 à 5 : volumes et réduction (voir « Volumes et masses » et « Retrait » au §5).*
+
+**4.** Un tube acier Ø extérieur 60, Ø intérieur 50, longueur 2 m (ρ acier = 7,85 kg/dm³).
+Quelle est sa masse ?
 
 **5.** Une pièce moulée doit mesurer 240 mm après refroidissement. Le retrait de la fonte est de
 1 %. Quelle dimension donner au modèle ?
 """,
             "corrige": """
 **1.** tan α = 300 / 1 200 = 0,25 → **α = arctan 0,25 = 14,0°**.
-*Vérification de bon sens : une pente de 25 %, c'est raide mais crédible.*
+*Vérification de bon sens : pente en % = 300 / 1 200 × 100 = 25 % (c'est tan α × 100) —
+raide mais crédible. Attention : 25 % ne veut pas dire 25°, l'angle vaut ici 14°.*
 
 **2.** Fx = 1 500 × cos 25° = **1 360 N** (le long de la poutre) ·
 Fy = 1 500 × sin 25° = **634 N** (perpendiculaire, celle qui fait fléchir).
@@ -28716,8 +28792,10 @@ Fy = 1 500 × sin 25° = **634 N** (perpendiculaire, celle qui fait fléchir).
 
 **4.** Section = π (60² − 50²) / 4 = π (3 600 − 2 500) / 4 = **864 mm²**.
 V = 864 × 2 000 = 1 728 000 mm³ = 1,728 dm³ → m = 1,728 × 7,85 = **13,6 kg**.
-*Une barre pleine Ø60 de même longueur pèserait 44 kg : le tube est trois fois plus léger, pour
-une résistance en flexion à peine inférieure.*
+*Une barre pleine Ø60 de même longueur pèserait 44 kg : le tube est 3,3 fois plus léger mais
+conserve environ 52 % de la résistance en flexion de la barre pleine (rapport des moments
+quadratiques (60⁴ − 50⁴)/60⁴ ≈ 0,52). Il pèse 30 % de la barre pour la moitié de sa
+résistance : c'est tout son intérêt.*
 
 **5.** Le modèle doit être **plus grand** de 1 % : 240 × 1,01 = **242,4 mm**.
 *Erreur classique : retrancher 1 % au lieu de l'ajouter. La pièce rétrécit en refroidissant,
@@ -28733,12 +28811,17 @@ de pliage 3 mm.
 80 et 50 : la matière s'étire à l'extérieur du pli et se comprime à l'intérieur. La longueur
 développée est **plus courte** que la somme des cotes.
 
-**Le calcul.** On utilise la fibre neutre, située à environ 0,4 × épaisseur depuis l'intérieur
-du pli (coefficient K = 0,4 pour l'acier doux) :
+**Le calcul.** On utilise la **fibre neutre** : pliez une gomme, le dos s'étire, le ventre
+s'écrase, et entre les deux une couche ne change pas de longueur. C'est elle qu'on « déroule »
+pour obtenir la longueur à découper. Elle est située à environ 0,4 × épaisseur depuis
+l'intérieur du pli (coefficient K = 0,4 pour l'acier doux) :
 
 - rayon de la fibre neutre : r = 3 + 0,4 × 3 = **4,2 mm**
-- longueur de l'arc à 90° : L_arc = 2π × 4,2 / 4 = **6,6 mm**
-- longueurs droites : (80 − 3 − 3) + (50 − 3 − 3) = 74 + 44 = **118 mm**
+- longueur de l'arc à 90° (un quart de tour, donc un quart de la circonférence 2πr) :
+  L_arc = 2π × 4,2 / 4 = **6,6 mm**
+- longueurs droites : les cotes 80 et 50 sont prises à l'extérieur des ailes ; on retire la
+  partie courbe, c'est-à-dire le rayon intérieur (3 mm) et l'épaisseur (3 mm) :
+  (80 − 3 − 3) + (50 − 3 − 3) = 74 + 44 = **118 mm**
 - **développé total = 118 + 6,6 = 124,6 mm**
 
 **Ce qu'il faut retenir.** On perd 5,4 mm par rapport à la somme naïve. Sur une pièce à quatre
@@ -28768,6 +28851,9 @@ En mécanique, cette seule idée sert dans trois contextes très différents :
 
 ### 2. Les règles de dérivation qu'il faut savoir par cœur
 
+*Notation : f'(x) (on lit « f prime de x ») désigne la dérivée de f ; x''(t) (« seconde ») est
+la dérivée de la dérivée. x^n veut dire x multiplié n fois par lui-même (x³ = x·x·x).*
+
 | Fonction | Dérivée |
 |---|---|
 | constante k | 0 |
@@ -28777,8 +28863,19 @@ En mécanique, cette seule idée sert dans trois contextes très différents :
 | sin(x) | cos(x) |
 | cos(x) | −sin(x) |
 
-**Exemple entièrement déroulé.** Soit x(t) = 2t³ − 5t² + 3t, la position d'un mobile en fonction
-du temps.
+*Attention : les deux dernières règles ne valent que si x est en **radians**. Dès qu'on dérive
+ou intègre une fonction trigonométrique (vibration, mouvement de came, bielle-manivelle), la
+calculatrice passe en RAD. Le mode DEG de la fiche 7.1 ne vaut que pour la géométrie du
+triangle.*
+
+*Pour sentir la règle de x^n : la dérivée est la **pente** de la courbe. Pour f(x) = x², entre
+x = 3 et x = 3,01, f passe de 9 à 9,0601 : elle monte de 0,0601 pour 0,01 d'avance, soit une
+pente ≈ 6. La règle donne 2 × 3 = 6. C'est ce calcul de pente, fait une fois pour toutes.*
+
+*Dérivées de produits, de quotients, de ln et d'exp : voir la fiche 17.1.*
+
+**Exemple entièrement déroulé.** Soit x(t) = 2t³ − 5t² + 3t (x en mètres, t en secondes), la
+position d'un mobile en fonction du temps.
 
 **Dérivée première (la vitesse) :**
 v(t) = x'(t) = 6t² − 10t + 3
@@ -28797,11 +28894,18 @@ une fois pour la vitesse, deux fois pour l'accélération.*
 
 C'est l'application la plus utile de toute la fiche pour la RDM.
 
-> **Un maximum ou un minimum d'une fonction se trouve là où sa dérivée s'annule.**
+> **Un maximum ou un minimum d'une fonction (à l'intérieur de l'intervalle étudié) se trouve là
+> où sa dérivée s'annule — à condition qu'elle y change de signe.**
 
-C'est exactement le principe derrière le diagramme du moment fléchissant (fiche 4.1) : l'effort
-tranchant T est la dérivée du moment fléchissant Mf. Là où T s'annule ou change de signe, **Mf
-est maximal** — c'est là qu'on dimensionne une pièce en flexion.
+**La méthode de l'examen** : tableau de signe de f' → tableau de variations → extremum. Si f'
+passe de − à +, c'est un minimum ; de + à −, un maximum. Le test par la dérivée seconde
+(ci-dessous) est un raccourci.
+
+C'est exactement le principe derrière le diagramme du moment fléchissant (fiche 4.3) : l'effort
+tranchant T est, au signe près, la dérivée du moment fléchissant Mf (T = ± dMf/dx selon la
+convention choisie). Là où T s'annule en changeant de signe, **Mf est maximal** — c'est là qu'on
+dimensionne une pièce en flexion. (Si la fiche 4.3 n'est pas encore vue, retenez seulement
+l'image : au sommet d'une colline, la pente est nulle.)
 
 **Exemple entièrement déroulé.** Une fonction de coût de fabrication s'écrit
 C(x) = x² − 40x + 620, où x est la série produite (en centaines de pièces) et C(x) le coût
@@ -28812,9 +28916,9 @@ C'(x) = 0 → 2x = 40 → **x = 20** (soit 2 000 pièces)
 
 C(20) = 400 − 800 + 620 = **220 €**
 
-*Contrôle de bon sens : la dérivée seconde de C(x) vaut 2, positive — donc la courbe est
-tournée vers le haut (un « U »), et le point où C' s'annule est bien un MINIMUM, pas un
-maximum.*
+*Contrôle de bon sens : C'(x) = 2x − 40 est négative avant x = 20 (le coût baisse) et positive
+après (il remonte) : on est au fond du « U », c'est bien un MINIMUM. La dérivée seconde, qui vaut
+2 (positive : la pente augmente), dit la même chose.*
 
 ### 4. Le profil de vitesse trapézoïdal : la dérivée appliquée au mouvement
 
@@ -28854,8 +28958,9 @@ Pour les formes usuelles, pas besoin de calcul savant : un profil trapézoïdal 
 triangles et rectangles, et on additionne les aires simples — c'est exactement ce qui a été fait
 à la section précédente.
 
-**En RDM**, l'intégrale du moment quadratique intervient dans le calcul de I (fiche 4.3) : c'est
-la « somme » de la contribution de chaque petite tranche de matière à la résistance en flexion —
+**En RDM**, le moment quadratique I (qui mesure la résistance d'une section à la flexion,
+fiche 4.3) est lui-même une intégrale, I = ∫ y² dS : c'est la « somme » de la contribution de
+chaque petite tranche de matière, qui compte d'autant plus qu'elle est loin de la fibre neutre —
 mais dans la pratique de première année, on utilise toujours les formules déjà intégrées
 (bh³/12, πd⁴/64), jamais le calcul intégral lui-même.
 
@@ -28882,16 +28987,17 @@ t_plateau = d / v = 0,38 / 0,6 = **0,633 s**
 
 t_total = 0,2 + 0,633 + 0,2 = **1,033 s**
 
-**Contrôle de bon sens.** Une vitesse moyenne de 0,6 m/s sur 500 mm donnerait, sans les rampes,
-0,5/0,6 = 0,833 s. Avec les rampes qui ralentissent le début et la fin, 1,033 s est cohérent :
+**Contrôle de bon sens.** Si le chariot roulait à 0,6 m/s du départ à l'arrivée, sans rampes, il
+mettrait 0,5/0,6 = 0,833 s. Avec les rampes qui ralentissent le début et la fin, 1,033 s est cohérent :
 un peu plus long, jamais plus court.
 
 ### 7. Les erreurs classiques
 
 1. **Confondre vitesse et accélération** : la vitesse est la dérivée de la position,
    l'accélération est la dérivée de la vitesse — deux dérivations, pas une.
-2. **Chercher un extremum sans vérifier le signe de la dérivée seconde** : une dérivée nulle
-   peut être un minimum, un maximum, ou un point d'inflexion.
+2. **Chercher un extremum sans vérifier le changement de signe de la dérivée** : une dérivée
+   nulle peut être un minimum, un maximum, ou un point d'inflexion (la courbe s'aplatit un
+   instant puis continue dans le même sens, comme x³ en 0).
 3. **Oublier la distance des rampes** dans un profil trapézoïdal, et ne compter que le plateau.
 4. **Confondre aire et pente** sur un graphique vitesse-temps.
 5. **Dériver une somme sans dériver chaque terme séparément.**
@@ -28900,8 +29006,8 @@ un peu plus long, jamais plus court.
 
 - Une dérivée mesure une **vitesse de changement** — position→vitesse→accélération n'en est
   qu'un exemple.
-- **Un extremum se trouve où la dérivée s'annule.** C'est le principe derrière le diagramme du
-  moment fléchissant.
+- **Un extremum se trouve où la dérivée s'annule en changeant de signe** (tableau de
+  variations). C'est le principe derrière le diagramme du moment fléchissant.
 - Profil trapézoïdal : la **pente** donne l'accélération, l'**aire** donne la distance.
 - L'intégrale est l'opération inverse de la dérivée : elle donne une aire, une distance.
 - En première année, les formules d'intégration usuelles (I d'une section) sont **déjà
@@ -28915,7 +29021,10 @@ sin' = cos · cos' = −sin
 
 **Cinématique** — v(t) = x'(t) · a(t) = v'(t) = x''(t)
 
-**Extremum** — f'(x) = 0 → extremum · f''(x) > 0 → minimum · f''(x) < 0 → maximum
+**Extremum** — en un point intérieur, un extremum impose f'(x) = 0 ; réciproquement, si f'
+s'annule **en changeant de signe** (− puis + : minimum ; + puis − : maximum), il y a un extremum.
+Raccourci : f'(x) = 0 et f''(x) > 0 → minimum · f'(x) = 0 et f''(x) < 0 → maximum
+(sin' = cos et cos' = −sin : x en **radians**)
 
 **Profil trapézoïdal** — a = Δv / Δt · distance d'une rampe = 0,5 × v_max × t_rampe
 distance totale = d_rampe1 + d_plateau + d_rampe2
@@ -28928,9 +29037,11 @@ distance totale = d_rampe1 + d_plateau + d_rampe2
 Calcule l'accélération, puis la distance parcourue pendant cette phase.
 
 **2.** Le chariot pèse 120 kg. Quel effort supplémentaire le moteur doit-il fournir pendant
-l'accélération (frottements négligés) ?
+l'accélération (frottements négligés) ? *(Rappel, fiche 8.1 : pour accélérer une masse m avec
+une accélération a, il faut un effort F = m × a, en N si m est en kg et a en m/s².)*
 
-**3.** Dérive la fonction Mf(x) = 500x − 2x² et trouve la valeur de x qui rend Mf maximal.
+**3.** Dérive la fonction Mf(x) = 500x − 2x² (x en mm, Mf en N·mm, le long d'une poutre de
+250 mm) et trouve la valeur de x qui rend Mf maximal.
 
 **4.** Quelle est la valeur de ce maximum ?
 
@@ -28939,22 +29050,27 @@ l'accélération (frottements négligés) ?
 """,
             "corrige": """
 **1.** a = Δv / Δt = 0,8 / 1,5 = **0,53 m/s²**.
-Distance : x = ½ a t² = 0,5 × 0,53 × 1,5² = **0,60 m**.
-*Vérification par l'aire du triangle : 0,8 × 1,5 / 2 = 0,6 m. Les deux méthodes concordent.*
+Distance = aire sous la courbe vitesse (méthode du cours) : un triangle de base 1,5 s et de
+hauteur 0,8 m/s, soit 0,8 × 1,5 / 2 = **0,60 m**.
+*Autre écriture : x = ½ a t² = 0,5 × 0,533 × 1,5² = 0,60 m — c'est la même aire, car la hauteur
+du triangle vaut v = a × t.*
 
 **2.** F = m a = 120 × 0,53 = **64 N**.
 *C'est l'effort d'accélération seul. En réalité, il faut y ajouter les frottements et, si le
 chariot monte, la composante du poids.*
 
-**3.** Mf'(x) = 500 − 4x. Elle s'annule pour **x = 125**.
+**3.** Mf'(x) = 500 − 4x. Elle s'annule pour **x = 125** mm, en passant de + (avant) à −
+(après) : Mf croît puis décroît, c'est bien un maximum.
 
 **4.** Mf(125) = 500 × 125 − 2 × 125² = 62 500 − 31 250 = **31 250 N·mm**.
 *La dérivée donne l'endroit du maximum ; il faut ensuite réinjecter cette valeur dans la fonction
 d'origine pour connaître le maximum lui-même. Les deux étapes sont souvent confondues.*
 
-**5.** L'aire du trapèze vaut la distance : 200 mm.
-Aire = v × (durée totale + durée du palier) / 2 = v × (1,2 + 0,6) / 2 = 0,9 v
-Donc v = 200 / 0,9 = **222 mm/s**, soit 0,22 m/s.
+**5.** L'aire sous la courbe vitesse vaut la distance : 200 mm. On découpe comme dans le cours :
+rampe 1 (triangle) ½ × v × 0,3 = 0,15 v ; palier (rectangle) v × 0,6 = 0,6 v ; rampe 2 : 0,15 v.
+Total : 0,9 v = 200, donc v = 200 / 0,9 = **222 mm/s**, soit 0,22 m/s.
+*Raccourci : aire d'un trapèze = (grande base + petite base) / 2 × hauteur = (1,2 + 0,6) / 2 × v
+= 0,9 v — même résultat.*
 *Piège classique : diviser bêtement 200 par 1,2 donnerait 167 mm/s — la vitesse moyenne, pas la
 vitesse du palier. Le moteur doit être dimensionné sur la vitesse maximale.*
 """,
@@ -28971,7 +29087,8 @@ On retient un profil trapézoïdal en tiers : 0,5 s d'accélération, 0,5 s à v
 
 **ÉTAPE 2 — Vitesse du palier**
 
-Aire du trapèze = 0,5 m : v × (1,5 + 0,5) / 2 = 0,5 → **v = 0,5 m/s**
+Aire du trapèze (grande base 1,5 s + petite base 0,5 s, divisé par 2, fois la hauteur v)
+= 0,5 m : v × (1,5 + 0,5) / 2 = 0,5 → **v = 0,5 m/s**
 
 **ÉTAPE 3 — Accélération**
 
@@ -28980,16 +29097,20 @@ a = v / t = 0,5 / 0,5 = **1 m/s²**
 **ÉTAPE 4 — Effort à fournir**
 
 - accélération : F = m a = 80 × 1 = 80 N
-- frottements du guidage (coefficient 0,01) : 80 × 9,81 × 0,01 = 8 N
+- frottements du guidage : effort de frottement = coefficient × poids = μ × m × g =
+  0,01 × 80 × 9,81 = 8 N
 - **total ≈ 88 N** pendant la phase d'accélération
 
 **ÉTAPE 5 — Puissance mécanique**
 
-P = F × v = 88 × 0,5 = 44 W, divisé par le rendement 0,9 → **49 W**
+P (W) = effort (N) × vitesse (m/s) = 88 × 0,5 = 44 W. Le **rendement 0,9** signifie que sur
+100 W fournis par le moteur, 90 W arrivent au plateau et 10 W partent en chaleur dans la vis :
+on divise donc par 0,9 → **49 W**
 
 **Ce que le cas apprend.** La puissance nécessaire est faible, mais c'est le **pic
 d'accélération** qui dimensionne le moteur, pas la vitesse de croisière. Et si l'on divisait le
-temps de montée en vitesse par deux, l'accélération — donc l'effort — doublerait.
+temps de montée en vitesse par deux (à vitesse de palier égale), l'accélération — donc l'**effort
+d'inertie m·a** — doublerait : 80 → 160 N, soit 168 N au total avec les frottements.
 
 C'est pour cette raison qu'en automatisme on cherche toujours à **allonger les rampes** autant
 que le temps de cycle le permet : le moteur, la vis et les guidages en sortent moins chargés,
@@ -29016,6 +29137,19 @@ Sur un lot de pièces mesurées, deux nombres résument (presque) tout :
 > **Moyenne x̄** = somme des valeurs / nombre de valeurs — le centre du nuage
 > **Écart-type σ** = mesure de la dispersion autour de la moyenne
 
+**Comment on obtient σ.** Pour chaque pièce, on calcule son écart à la moyenne ; on met cet écart
+au carré (pour que les écarts négatifs ne compensent pas les positifs) ; on fait la moyenne de
+ces carrés ; puis on prend la racine :
+
+> **σ = √( Σ(xᵢ − x̄)² / n )**
+
+*Exemple sur 4 arbres : 10,02 ; 9,98 ; 10,01 ; 9,99 mm. x̄ = 10,00 ; écarts ±0,02 et ±0,01 ;
+carrés 0,0004 ; 0,0004 ; 0,0001 ; 0,0001 ; moyenne des carrés 0,00025 ; σ = √0,00025 ≈
+0,016 mm. En pratique : mode STAT de la calculatrice. Elle affiche σx (division par n) et sx
+(division par n − 1, estimation à partir d'un échantillon) ; en capabilité, on mesure au moins
+50 pièces, et l'écart entre les deux devient négligeable (moins de 1 %).* σ se lit comme
+« l'écart typique » d'une pièce par rapport à la moyenne.
+
 Un écart-type petit signifie des pièces très semblables entre elles ; un écart-type grand
 signifie une dispersion importante, même si la moyenne est parfaitement centrée sur la cote
 demandée.
@@ -29027,13 +29161,19 @@ tolérance, si σ est trop grand.*
 ### 3. La loi normale : la courbe en cloche
 
 La plupart des procédés de fabrication produisent des mesures qui se répartissent selon une
-courbe en cloche, symétrique autour de la moyenne : la **loi normale**.
+courbe en cloche, symétrique autour de la moyenne : la **loi normale**. Sur 1 000 arbres tournés,
+la plupart sont tout près de la moyenne, et il y en a de moins en moins à mesure qu'on s'en
+éloigne.
 
-**La règle des trois écarts-types**, à connaître par cœur :
+**La règle des trois écarts-types**, à connaître par cœur (valeurs arrondies) :
 
-> **68 %** des pièces tombent entre x̄ − σ et x̄ + σ
-> **95 %** des pièces tombent entre x̄ − 2σ et x̄ + 2σ
+> **68 %** (68,3 %) des pièces tombent entre x̄ − σ et x̄ + σ
+> **95 %** (95,4 %) des pièces tombent entre x̄ − 2σ et x̄ + 2σ
 > **99,7 %** des pièces tombent entre x̄ − 3σ et x̄ + 3σ
+
+*À l'épreuve de mathématiques, on vous demandera la moyenne, l'écart-type et les probabilités de
+la loi normale. Le Cp et le Cpk qui suivent en sont l'application en atelier (maîtrise statistique
+des procédés).*
 
 C'est cette dernière valeur, 3σ de chaque côté (soit **6σ au total**), qui sert de référence
 dans le calcul de capabilité — parce qu'elle couvre la quasi-totalité de la production.
@@ -29042,12 +29182,19 @@ dans le calcul de capabilité — parce qu'elle couvre la quasi-totalité de la 
 
 [[FIG:courbe_capabilite]]
 
-Le **Cp** (capabilité machine) compare la largeur de la tolérance demandée à la largeur
-réellement occupée par la production :
+Le **Cp** (capabilité *procédé*, mesurée sur une production longue ; son équivalent machine, sur
+un essai court, se note Cm) compare la largeur de la tolérance demandée à la largeur réellement
+occupée par la production. **IT** (intervalle de tolérance) = cote maxi − cote mini autorisées par
+le plan. Pour Ø30 ± 0,1 : IT = 30,1 − 29,9 = 0,2 mm.
 
 > **Cp = IT / (6σ)**
 
-- **Cp ≥ 1,33** : le procédé est capable, il tient la tolérance avec une marge confortable ;
+*Image du garage : la tolérance, c'est la largeur du garage ; la production (6σ), c'est la largeur
+de la voiture. Le Cp dit si la voiture **peut** entrer.*
+
+- **Cp ≥ 1,33** : le procédé est capable, il tient la tolérance avec une marge confortable
+  (1,33 = 8σ / 6σ : la tolérance fait 8σ de large, soit un σ de marge de chaque côté au-delà
+  des ±3σ — si le procédé dérive un peu, on a encore de la place avant le rebut) ;
 - **1 ≤ Cp < 1,33** : capable, mais sans marge — à surveiller ;
 - **Cp < 1** : **incapable** — même parfaitement réglé, ce moyen de production sortira des
   pièces hors tolérance.
@@ -29068,8 +29215,17 @@ le Cp ne fait pas la différence, mais leurs risques de rebut sont très différ
 
 > **Cpk = min( (Tmax − x̄) / 3σ ; (x̄ − Tmin) / 3σ )**
 
-On prend **le plus petit** des deux résultats — celui qui correspond à la limite la plus proche
-de la moyenne réelle, donc au risque le plus grand.
+Tmax et Tmin sont les limites haute et basse du plan. On ne regarde plus toute la largeur, mais
+**un seul côté** : la distance entre la moyenne et une limite, comparée à la demi-largeur de la
+production (3σ, la moitié de 6σ). Si cette distance dépasse 3σ, la « cloche » ne déborde pas de
+ce côté. On prend **le plus petit** des deux résultats — celui qui correspond à la limite la plus
+proche de la moyenne réelle, donc au risque le plus grand.
+
+*Retour au garage : le Cpk regarde en plus où la voiture est garée, la distance au mur le plus
+proche. Une voiture étroite garée contre un mur a un bon Cp mais un mauvais Cpk : elle raye la
+carrosserie alors qu'il y avait la place.*
+
+Forme équivalente, utile en atelier : **Cpk = Cp − |x̄ − cote milieu| / (3σ)**.
 
 **Exemple entièrement déroulé, sur la même machine.** Cote cible 30,00 mm, tolérance 29,90 à
 30,10 mm (IT = 0,20, cohérent avec le calcul précédent). La moyenne mesurée est **30,03 mm**
@@ -29082,7 +29238,7 @@ Cpk = min(0,833 ; 1,548) = **0,833**
 
 **Le point capital : Cp = 1,19 (capable) mais Cpk = 0,833 (INCAPABLE).**
 
-*C'est exactement le cas industriel de la fiche 7 : un procédé physiquement assez précis, mais
+*C'est le piège typique d'un procédé physiquement assez précis, mais
 mal réglé, décalé vers la limite haute. La solution n'est pas de changer de machine — elle est
 gratuite : **recentrer le réglage**, pas la remplacer.*
 
@@ -29096,15 +29252,19 @@ gratuite : **recentrer le réglage**, pas la remplacer.*
 | Cp faible, Cpk élevé | situation impossible en pratique | Cpk ne peut jamais dépasser Cp |
 
 *Cette lecture croisée, une fois comprise, évite une dépense inutile : la plupart des dérives de
-Cpk se corrigent en une réglette de réglage, pas en un investissement machine.*
+Cpk se corrigent par une simple correction de réglage (décalage du correcteur d'outil), pas par
+un investissement machine.*
 
 ### 7. La carte de contrôle : suivre la dérive dans le temps
 
 Une fois le Cpk validé, on ne s'arrête pas là : on prélève régulièrement de petits échantillons
 en production, et on trace leur moyenne sur un graphique avec des limites de surveillance.
 
-**Le principe :** si un point sort des limites, ou si plusieurs points s'alignent d'un même
-côté, cela signale une **dérive** — un outil qui s'use, une machine qui se dérègle — avant même
+Imaginez le graphique : en abscisse l'heure du prélèvement, en ordonnée la moyenne de 5 pièces ;
+deux lignes horizontales (les limites) encadrent la cible.
+
+**Le principe :** si un point sort des limites, ou si plusieurs points (par exemple 7 de suite)
+s'alignent d'un même côté de la cible, cela signale une **dérive** — un outil qui s'use, une machine qui se dérègle — avant même
 que des pièces ne sortent hors tolérance. C'est une vérification préventive, pas seulement un
 contrôle final.
 
@@ -29158,15 +29318,15 @@ permet.
             """,
             "formules": """
 
-**Moyenne et dispersion** — x̄ = Σx / n · σ = écart-type
+**Moyenne et dispersion** — x̄ = Σx / n · σ = √( Σ(xᵢ − x̄)² / n )
 
 **Loi normale** — 68% dans ±1σ · 95% dans ±2σ · **99,7% dans ±3σ**
 
-**Capabilité machine** — Cp = IT / (6σ)
+**Capabilité procédé** — IT = cote maxi − cote mini · Cp = IT / (6σ)
 Cp ≥ 1,33 : capable confortable · 1 ≤ Cp < 1,33 : capable limite · Cp < 1 : incapable
 
-**Capabilité procédé (centrage)** — Cpk = min( (Tmax−x̄)/3σ ; (x̄−Tmin)/3σ )
-toujours Cpk ≤ Cp
+**Capabilité procédé tenant compte du centrage** — Cpk = min( (Tmax−x̄)/3σ ; (x̄−Tmin)/3σ )
+forme équivalente : Cpk = Cp − |x̄ − cote milieu| / (3σ) · toujours Cpk ≤ Cp
 
 **Diagnostic** — Cp bon + Cpk faible → RECENTRER (gratuit)
 Cp faible → machine incapable, changer de moyen ou desserrer la tolérance
@@ -29219,7 +29379,8 @@ tolérance si la fonction le permet.
 **Cas industriel — Choisir une tolérance en connaissant l'atelier**
 
 Un bureau d'études doit coter l'alésage d'un support de roulement. La fonction impose au minimum
-un **H8**. Sur un Ø50, cela représente un IT de 0,039 mm.
+un **H8** (classe de tolérance ISO d'un alésage : H = la cote mini est la cote nominale, 8 = la
+qualité de précision). Sur un Ø50, cela représente un IT de 0,039 mm.
 
 **Les données de l'atelier** (relevées sur les six derniers mois, trois moyens différents) :
 
@@ -29238,7 +29399,9 @@ un **H8**. Sur un Ø50, cela représente un IT de 0,039 mm.
    long, et environ 40 % de coût en plus sur la pièce.
 
 **Décision retenue.** Tour + alésoir, avec une carte de contrôle sur les vingt premières pièces
-de chaque série. Si le Cpk mesuré descend sous 1,33, on passe en rectification.
+de chaque série. Comme Cpk ≤ Cp = 1,30, le Cpk ne peut jamais atteindre 1,33 avec ce moyen :
+le seuil d'alerte retenu est donc **Cpk < 1,0** (production qui commence à déborder de la
+tolérance) ; dans ce cas, on passe en rectification.
 
 **Ce que le cas apprend.** La tolérance du bureau d'études et la capabilité de l'atelier ne sont
 pas deux mondes séparés. Un concepteur qui ignore ce que ses ateliers savent tenir produit des
@@ -29260,12 +29423,19 @@ C'est ce que permet l'équation.
 
 ### 2. L'équation d'un cercle
 
-Pour un cercle de centre Ω(a ; b) et de rayon R :
+Pour un cercle de centre Ω(a ; b) et de rayon R (Ω, la lettre grecque oméga, désigne le
+centre — rien à voir avec les ohms ; a et b sont ses coordonnées).
+
+**D'où vient l'équation.** Un cercle, c'est l'ensemble des points situés à la distance R du
+centre, comme la pointe d'un compas. Pour un point M(x ; y), l'écart horizontal au centre vaut
+x − a et l'écart vertical y − b. Ces deux écarts et la distance ΩM forment un triangle rectangle :
+par Pythagore (fiche 7.1), ΩM² = (x − a)² + (y − b)². Le point est sur le cercle quand ΩM = R :
 
 > **(x − a)² + (y − b)² = R²**
 
 Un point M(x ; y) appartient au cercle si, en remplaçant ses coordonnées, l'égalité est
-vérifiée exactement.
+vérifiée exactement. Si le résultat est **inférieur** à R², le point est à l'intérieur du
+cercle ; s'il est **supérieur**, à l'extérieur.
 
 **Exemple entièrement vérifié.** Le cercle de centre Ω(2 ; 1) et de rayon 5 a pour
 équation (x − 2)² + (y − 1)² = 25. Le point M(5 ; 5) appartient-il à ce cercle ?
@@ -29283,6 +29453,12 @@ Sous forme cartésienne : **ax + by + c = 0**. Un point appartient à la droite 
 remplacement de ses coordonnées annule exactement cette expression — même principe de
 vérification que pour le cercle.
 
+*Attention : ces a et b n'ont rien à voir avec le centre du cercle ci-dessus — ce sont de simples
+coefficients. C'est une autre écriture de la droite y = mx + p du lycée. Exemple : y = 2x + 1
+s'écrit 2x − y + 1 = 0 (a = 2, b = −1, c = 1). Le point (1 ; 3) est-il dessus ? 2×1 − 3 + 1 = 0 :
+oui. Le point (2 ; 4) ? 2×2 − 4 + 1 = 1 ≠ 0 : non. Usage : vérifier qu'un sommet de contour est
+bien aligné avec deux autres.*
+
 ### 4. Intersection d'une droite et d'un cercle : trois cas
 
 Une droite et un cercle peuvent :
@@ -29291,10 +29467,17 @@ Une droite et un cercle peuvent :
 - être **tangents** (un seul point de contact),
 - se croiser en **deux points**.
 
-Le nombre de points d'intersection se détermine en substituant l'expression de la droite
-dans l'équation du cercle, ce qui donne une équation du second degré (fiche 2) — son
-discriminant tranche entre les trois cas, exactement comme pour compter les racines d'un
-trinôme.
+**Exemple simple.** Cercle de centre (0 ; 0) et de rayon 5 : x² + y² = 25.
+- Droite horizontale y = 3 : x² + 9 = 25, x² = 16, x = ±4 → **deux** points, (−4 ; 3) et (4 ; 3).
+- Droite y = 5 : x² = 0 → **un seul** point, (0 ; 5) : la droite est **tangente**, elle frôle le
+  haut du cercle.
+- Droite y = 6 : x² = −11, impossible → **aucun** point.
+
+Dans le cas général, on substitue l'expression de la droite dans l'équation du cercle, ce qui
+donne une équation du second degré αx² + βx + γ = 0. Son **discriminant** Δ = β² − 4αγ joue le
+même rôle que ci-dessus : Δ > 0 → deux points, Δ = 0 → tangente, Δ < 0 → aucun point (voir la
+fiche 17.4 et l'exercice « Second degré — calculer le discriminant »). Usage métier : vérifier
+qu'une trajectoire d'outil rectiligne est bien tangente à un congé.
 
 ### 5. À retenir
 
@@ -29315,25 +29498,38 @@ On reprend le cercle de centre Ω(2 ; 1) et de rayon 5.
 **1.** Le point N(6 ; 4) appartient-il à ce cercle ?
 
 **2.** Le point P(2 ; 6) appartient-il à ce cercle ?
+
+**3.** Le point Q(4 ; 4) appartient-il à ce cercle ? S'il n'y est pas, est-il à l'intérieur
+ou à l'extérieur ?
+
+**4.** La droite d : x − 2y + 5 = 0 passe-t-elle par N(6 ; 4) ? Par K(1 ; 3) ?
 """,
             "corrige": """
 **1.** (6 − 2)² + (4 − 1)² = 4² + 3² = 16 + 9 = **25** = R² — N appartient au cercle.
 
 **2.** (2 − 2)² + (6 − 1)² = 0² + 5² = **25** = R² — P appartient aussi au cercle
 (c'est le point directement au-dessus du centre, à distance R).
+
+**3.** (4 − 2)² + (4 − 1)² = 4 + 9 = **13** ≠ 25 : Q n'est pas sur le cercle. Comme 13 < 25, il
+est **à l'intérieur** (sa distance au centre, √13 ≈ 3,6, est inférieure au rayon 5).
+
+**4.** Pour N : 6 − 2×4 + 5 = 3 ≠ 0 → N n'est **pas** sur d. Pour K : 1 − 2×3 + 5 = 0 → K est
+**sur** d.
 """,
             "exemple": """
-**Cas industriel — Vérifier un perçage sur un cercle primitif**
+**Cas industriel — Vérifier un perçage sur un cercle de perçage**
 
-Un plan de bride impose 6 perçages également répartis sur un cercle primitif de centre
-Ω(0 ; 0) et de diamètre 100 mm (rayon 50 mm). Le contrôle qualité mesure un perçage aux
-coordonnées M(43,3 ; 25) sur la pièce fabriquée.
+Un plan de bride impose 6 perçages également répartis sur un cercle de perçage (le cercle
+fictif sur lequel sont placés les centres des trous) de centre Ω(0 ; 0) et de diamètre 100 mm
+(rayon 50 mm). Le contrôle qualité mesure un perçage aux coordonnées M(43,3 ; 25) sur la
+pièce fabriquée — c'est le trou à 30° : 50 × cos 30° ≈ 43,3 et 50 × sin 30° = 25 (coordonnées
+polaires, fiche 7.1).
 
-**Vérification.** 43,3² + 25² = 1875,89 + 625 = 2500,89 ≈ 2500 = 50².
+**Vérification.** 43,3² + 25² = 1874,89 + 625 = 2499,89 ≈ 2500 = 50².
 
-**Conclusion.** L'écart (0,89 sur 2500, soit un rayon mesuré à environ 50,009 mm au lieu
-de 50 mm exactement) est négligeable devant les tolérances usuelles de perçage — la
-pièce est conforme.
+**Conclusion.** L'écart (−0,11 sur 2500, soit un rayon mesuré r = √2499,89 ≈ 49,999 mm au
+lieu de 50 mm exactement, écart −0,001 mm) est négligeable devant les tolérances usuelles de
+localisation d'un perçage — la pièce est conforme.
 
 **Ce que ça montre.** Le contrôle par équation évite d'avoir à mesurer un angle ou une
 distance au rapporteur sur le plan : deux coordonnées et un calcul suffisent à trancher,
@@ -29353,6 +29549,14 @@ Le barycentre d'un ensemble de points pondérés est le **point d'équilibre** d
 exactement le centre de gravité d'un assemblage de pièces simples, chacune représentée
 par un point (son propre centre de gravité) et une masse.
 
+Le concepteur en a besoin pour placer les anneaux de levage d'une pièce (onglet Exemple),
+vérifier qu'une machine posée sur ses pieds ne bascule pas, ou équilibrer une pièce tournante
+pour qu'elle ne vibre pas.
+
+*Image de la balançoire à bascule : un adulte de 80 kg et un enfant de 20 kg ne s'équilibrent
+que si l'adulte s'assoit 4 fois plus près du pivot. Le point d'équilibre se rapproche du plus
+lourd, en proportion de sa masse.*
+
 ### 2. La formule
 
 Pour des points P₁, P₂, ..., Pₙ de masses m₁, m₂, ..., mₙ, le barycentre G a pour
@@ -29360,9 +29564,19 @@ coordonnées :
 
 > **Gx = (Σ mᵢxᵢ) / (Σ mᵢ)** · **Gy = (Σ mᵢyᵢ) / (Σ mᵢ)**
 
+*Lecture : Σ (sigma majuscule) veut dire « somme de ». mᵢxᵢ désigne « la masse de chaque pièce
+multipliée par son x » : on fait ce produit pour chaque pièce, puis on additionne,
+Σ mᵢxᵢ = m₁x₁ + m₂x₂ + m₃x₃. Σ mᵢ est simplement la masse totale.*
+
 *Chaque coordonnée du barycentre est une moyenne des coordonnées des points, **pondérée
-par leur masse** — un point deux fois plus lourd « attire » deux fois plus le barycentre
-vers lui.*
+par leur masse** — multiplier par la masse, c'est donner à chaque pièce un « poids de vote »
+égal à sa masse, comme sur la balançoire.*
+
+*Définition vectorielle (celle du programme) : G est le point tel que
+m₁·GP₁ + m₂·GP₂ + … + mₙ·GPₙ = 0 (en vecteurs) ; les formules de Gx et Gy en découlent.
+**Barycentre partiel** : on peut remplacer deux pièces par leur propre barycentre, affecté de la
+somme de leurs masses, sans changer le résultat — c'est ainsi qu'on trouve le centre d'inertie
+d'un assemblage de sous-ensembles.*
 
 ### 3. Exemple entièrement calculé et vérifié
 
@@ -29375,9 +29589,9 @@ Gy = (2×0 + 3×0 + 1×6) / 6 = (0 + 0 + 6) / 6 = 6 / 6 = **1**
 
 **G = (3,5 ; 1).**
 
-*Contrôle de bon sens : G doit être plus proche de B (la pièce la plus lourde, 3 kg) que
-des deux autres réunies — Gx = 3,5 est effectivement plus proche de Bx = 6 que de la
-moyenne simple non pondérée (0+6+3)/3 = 3, qui aurait ignoré les masses.*
+*Contrôle de bon sens : sans tenir compte des masses, la moyenne simple des x vaudrait
+(0+6+3)/3 = 3. Avec les masses, on trouve Gx = 3,5 : G s'est décalé **vers** Bx = 6, parce que
+B est la pièce la plus lourde (3 kg). C'est bien le sens attendu.*
 
 [[FIG:barycentre_points]]
 
@@ -29391,17 +29605,23 @@ s'appliquent en même temps.
 
 > **Relation de Chasles** : $\\overrightarrow{OA} + \\overrightarrow{AB} = \\overrightarrow{OB}$
 
+*La flèche au-dessus de OA indique le vecteur « aller de O à A ». Chasles dit qu'aller de O à A
+puis de A à B revient à aller directement de O à B, comme un trajet GPS avec une étape.*
+
 **En pratique, graphiquement** : on place le deuxième vecteur bout à bout avec le premier
 (l'origine du second à la pointe du premier) — la résultante est alors le vecteur qui va du
 départ du premier à l'arrivée du second, sans repasser par le point intermédiaire.
 
 **En coordonnées**, c'est encore plus direct : si $\\vec{u}(u_x, u_y)$ et $\\vec{v}(v_x, v_y)$,
-alors $\\vec{w} = \\vec{u} + \\vec{v} = (u_x + v_x,\\ u_y + v_y)$.
+alors $\\vec{w} = \\vec{u} + \\vec{v} = (u_x + v_x,\\ u_y + v_y)$ (déjà vu en fiche 7.1 §4 : on
+additionne composante par composante).
 
-**Application directe en statique** (fiche 4, RDM) : la résultante de plusieurs forces
-appliquées en un même point s'obtient en les mettant bout à bout — un système de forces est en
-**équilibre** si et seulement si ce « polygone des forces » se referme exactement sur
-lui-même (résultante nulle).
+**Application directe en statique** (fiche 12.1) : la résultante de plusieurs forces
+appliquées en un même point s'obtient en les mettant bout à bout. Dessinez chaque force au bout
+de la précédente : c'est le « polygone des forces ». Si la dernière flèche revient pile au point
+de départ, la résultante est nulle. Une pièce soumise à des forces concourantes est en
+**équilibre** si et seulement si la somme de **toutes** les forces qu'elle subit — sans oublier
+son propre poids — est nulle.
 
 **Exemple entièrement calculé.** Deux câbles tirent une même pièce : $\\vec{u} = (150, 50)$ N et
 $\\vec{v} = (80, -30)$ N. Quelle est la force résultante ?
@@ -29410,10 +29630,12 @@ $\\vec{w} = \\vec{u} + \\vec{v} = (150+80,\\ 50-30) = (230, 20)$ N.
 
 $\\|\\vec{w}\\| = \\sqrt{230^2+20^2} ≈ 230{,}9$ N.
 
-*Contrôle de bon sens : la résultante est proche de $\\vec{u}$ en direction, cohérent puisque
-$\\vec{u}$ (norme $≈158$ N) est bien plus « horizontal » et plus fort que $\\vec{v}$ (norme
-$≈85{,}4$ N) — la composante verticale de $\\vec{v}$ ($-30$) réduit légèrement celle de $\\vec u$
-($50$), d'où $20$ N seulement en $y$ pour la résultante.*
+*Contrôle de bon sens : les deux câbles tirent vers la droite (x positifs), donc la résultante
+est forte en x (230 N). En y, l'un tire vers le haut (+50) et l'autre vers le bas (−30) : ils
+se compensent presque, d'où seulement 20 N, et une résultante quasi horizontale (angle ≈ 5°,
+entre celui de $\\vec u$, 18°, et celui de $\\vec v$, −21°). Sa norme (230,9 N) est inférieure à
+la somme des normes (158 + 85,4 ≈ 243 N), comme toujours quand les vecteurs ne sont pas
+alignés.*
 
 ### 5. À retenir
 
@@ -29422,8 +29644,8 @@ $≈85{,}4$ N) — la composante verticale de $\\vec{v}$ ($-30$) réduit légèr
 - Toujours diviser par la masse **totale**, pas par le nombre de points.
 - Relation de Chasles : $\\overrightarrow{OA}+\\overrightarrow{AB}=\\overrightarrow{OB}$ — en
   coordonnées, on additionne simplement les composantes une à une.
-- Un système de forces est en équilibre quand le polygone des forces se referme (résultante
-  nulle).
+- Une pièce est en équilibre quand le polygone de **toutes** ses forces se referme (résultante
+  nulle), poids compris.
             """,
             "formules": """
 
@@ -29451,8 +29673,9 @@ $\\vec{u} = (60, 90)$ N et $\\vec{v} = (40, 20)$ N. Calculez la force résultant
 
 **4.** Calculez la norme de cette résultante, en newtons.
 
-**5.** Un troisième câble est ajouté, exerçant $\\vec{t} = (-100, -110)$ N. L'ensemble des trois
-câbles est-il à présent en équilibre ? Justifiez par le calcul, sans mesurer d'angle.
+**5.** Un troisième câble est ajouté, exerçant $\\vec{t} = (-100, -110)$ N. La résultante des
+trois câbles est-elle nulle ? Justifiez par le calcul, sans mesurer d'angle. La pièce (8 kg,
+g = 9,81 m/s²) est-elle pour autant en équilibre ?
 """,
             "corrige": """
 ### Corrigé, en six temps
@@ -29460,7 +29683,8 @@ câbles est-il à présent en équilibre ? Justifiez par le calcul, sans mesurer
 #### 1. Ce que dit l'énoncé
 
 Un barycentre à calculer (masses et coordonnées de trois pièces), puis une résultante de forces
-par addition vectorielle, et une question d'équilibre sur un système à trois câbles.
+par addition vectorielle, et une question d'équilibre d'une pièce soumise à trois câbles et à
+son poids.
 
 #### 2. Quelle règle, et pourquoi
 
@@ -29496,15 +29720,22 @@ la plus lourde), cohérent.
 
 **4.** $\\|\\vec{w}\\| = \\sqrt{100^2+110^2} = \\sqrt{22\\,100} ≈ 148{,}7$ N.
 
-**5.** $\\vec{u}+\\vec{v}+\\vec{t} = (0, 0)$ N — la résultante est **exactement nulle** : le
-système des trois câbles **est en équilibre**. Le troisième câble a été choisi précisément pour
-annuler la résultante des deux premiers ($\\vec{t} = -\\vec{w}$).
+**5.** $\\vec{u}+\\vec{v}+\\vec{t} = (0, 0)$ N — la résultante **des trois câbles** est
+exactement nulle : le troisième câble a été choisi pour annuler la résultante des deux premiers
+($\\vec{t} = -\\vec{w}$).
+
+**Mais la pièce n'est pas en équilibre** : elle subit aussi son poids, P = 8 × 9,81 ≈ 78,5 N
+vers le bas, soit $\\vec{P} = (0, -78{,}5)$ N, que rien ne compense. La somme de toutes les
+forces vaut $(0, -78{,}5)$ N : la pièce descendrait. Pour l'équilibre, il faudrait
+$\\vec{u}+\\vec{v}+\\vec{t}+\\vec{P} = \\vec{0}$, soit $\\vec{t} = (-100, -31{,}5)$ N.
+*C'est l'erreur classique de statique : oublier le poids dans le bilan des forces.*
 
 #### 6. La vérification
 
 **Contrôle de cohérence (Q5)** : $\\vec t = (-100,-110)$ est exactement l'opposé de $\\vec w =
 (100,110)$ trouvé en question 3 — un vecteur et son opposé s'annulent toujours par addition,
-confirmant l'équilibre sans avoir besoin de mesurer un seul angle. **Contrôle sur le barycentre
+ce qui confirme que la résultante des câbles est nulle sans mesurer un seul angle (le poids,
+lui, reste à équilibrer). **Contrôle sur le barycentre
 (Q2)** : $G=(1{,}25\\,;\\,1{,}125)$ reste proche de $A=(0,0)$, la pièce la plus lourde (4 kg sur
 8 kg de masse totale, soit la moitié) — cohérent avec l'intuition physique du centre de gravité.
 """,
@@ -29513,7 +29744,7 @@ confirmant l'équilibre sans avoir besoin de mesurer un seul angle. **Contrôle 
 
 Un support soudé se compose de trois plaques : une base rectangulaire de 12 kg centrée
 en (0 ; 0), un renfort vertical de 5 kg centré en (0 ; 8), et une platine de fixation de
-3 kg centrée en (10 ; 2).
+3 kg centrée en (10 ; 2) — coordonnées en cm.
 
 **Calcul.** Masse totale = 12 + 5 + 3 = 20 kg.
 
@@ -29524,9 +29755,9 @@ Gy = (12×0 + 5×8 + 3×2) / 20 = (0 + 40 + 6)/20 = 46/20 = **2,3**
 **G = (1,5 ; 2,3).**
 
 **Ce que ça montre.** Pour lever cette pièce sans qu'elle bascule, l'élingue doit passer
-par un point situé à l'aplomb du barycentre — pas du centre géométrique de la pièce, qui
-donnerait un résultat différent et ferait pencher l'ensemble du côté de la masse la plus
-lourde (ici, la base).
+par un point situé à l'aplomb du barycentre G = (1,5 ; 2,3) cm — pas du centre géométrique de
+la pièce. Accrochée ailleurs, la pièce pivoterait jusqu'à ce que G se retrouve sous le crochet :
+elle pencherait du côté où se trouve G.
 """,
         },
     ],
@@ -47043,8 +47274,10 @@ _mth("7.2", "Optimiser une grandeur par la dérivée", [
     "**Revenir au problème concret** : arrondir à une valeur fabricable et vérifier que la "
     "contrainte est toujours respectée.",
 ], "Pour une boîte cylindrique de volume imposé, minimiser la tôle conduit à h = 2r : la "
-   "hauteur égale le diamètre. C'est la forme la plus économique — et c'est bien celle des "
-   "boîtes de conserve.")
+   "hauteur égale le diamètre. (S = 2πr² + 2πrh ; avec V imposé, h = V/(πr²), donc "
+   "S(r) = 2πr² + 2V/r ; S'(r) = 4πr − 2V/r² = 0 donne V = 2πr³, d'où h = 2r.) C'est la "
+   "forme optimale en tôle ; les boîtes réelles s'en écartent pour d'autres raisons "
+   "(sertissage, rangement, préhension).")
 
 _mth("7.3", "Juger une production par sa capabilité", [
     "**Relever l'intervalle de tolérance** du plan : IT = cote maxi − cote mini.",
@@ -47056,8 +47289,9 @@ _mth("7.3", "Juger une production par sa capabilité", [
     "**Conclure** : on demande couramment Cpk ≥ 1,33. Un Cp élevé avec un Cpk faible "
     "signale une machine précise mais **déréglée** — un simple recentrage suffit.",
 ], "IT = 0,2 mm et σ = 0,02 mm donnent Cp = 1,67 : la machine est capable. Mais si la "
-   "moyenne est décalée de 0,05 mm, Cpk tombe à 0,83 : on produit des rebuts alors que la "
-   "machine n'y est pour rien.")
+   "moyenne est décalée de 0,05 mm, il ne reste que 0,1 − 0,05 = 0,05 mm jusqu'à la "
+   "limite la plus proche, et Cpk = 0,05 / (3 × 0,02) = 0,83 : on produit des rebuts alors "
+   "que la machine n'y est pour rien.")
 
 _mth("8.1", "Appliquer le principe fondamental de la dynamique", [
     "**Isoler le solide** et le nommer : tout ce qui suit ne concerne que lui.",
@@ -48212,12 +48446,15 @@ _mth("7.5", "Calculer le barycentre d'un ensemble de points pondérés", [
     "masse.**",
     "**Calculer Gx = (Σ mᵢxᵢ) / (Σ mᵢ)** et **Gy = (Σ mᵢyᵢ) / (Σ mᵢ)** — "
     "toujours diviser par la masse TOTALE, jamais par le nombre de points.",
-    "**Vérifier par le bon sens** : le barycentre doit être plus proche de "
-    "la pièce la plus lourde que ne le serait une moyenne simple non "
-    "pondérée.",
+    "**Vérifier par le bon sens** : le barycentre doit se situer à l'intérieur "
+    "du triangle (ou du polygone) des pièces, décalé du côté des masses les "
+    "plus fortes.",
+    "**Pour une résultante de forces** : additionner les x entre eux et les y "
+    "entre eux. **Pour l'équilibre** : vérifier que la somme de toutes les "
+    "forces, poids compris, donne (0 ; 0).",
 ], "A(0;0) 2 kg, B(6;0) 3 kg, C(3;6) 1 kg, masse totale 6 kg : "
-   "Gx = (0+18+3)/6 = 3,5 — plus proche de B (le plus lourd, x=6) que la "
-   "moyenne simple non pondérée (3), cohérent avec sa masse dominante.")
+   "Gx = (0+18+3)/6 = 3,5 — décalé de la moyenne simple non pondérée (3) "
+   "vers B (le plus lourd, x=6), cohérent avec sa masse dominante.")
 
 _mth("12.3", "Choisir un procédé d'obtention de brut et compenser son retrait", [
     "**Choisir la famille selon la pièce** : fonderie (formes complexes, "
@@ -51981,7 +52218,7 @@ ATELIERS = [
              "consigne": "C'(x) = 2x − 8. Résous C'(x) = 0.",
              "indice": "2x = 8.",
              "pieges": [(8, "Vous avez résolu 2x − 8 = 8 au lieu de 2x − 8 = 0."),
-                        (2, "Vérifiez : C'(x) = 2x − 8, pas x − 8.")]},
+                        (-4, "Vous avez résolu 2x + 8 = 0 : attention au signe de −8.")]},
             {"type": "numerique", "label": "Coût minimal C(4), en centaines d'euros",
              "unite": "", "attendu": 4, "tol": 0.01,
              "consigne": "Remplace x par 4 dans C(x) = x² − 8x + 20.",
@@ -52039,7 +52276,7 @@ ATELIERS = [
              "consigne": "Cp = IT / (6 × σ).",
              "indice": "0,30 / (6 × 0,04).",
              "pieges": [(0.3, "Vous avez oublié de diviser par 6σ — c'est l'IT seule."),
-                        (7.5, "Vous avez divisé σ par IT au lieu de l'inverse.")]},
+                        (7.5, "Vous avez calculé IT/σ : il manque le facteur 6 (Cp = IT / 6σ).")]},
             {"type": "numerique", "label": "Cpk", "unite": "",
              "attendu": 1.0, "tol": 0.02,
              "consigne": "Cpk = Cp − |décalage| / (3 × σ).",
@@ -53064,10 +53301,10 @@ ATELIERS = [
             "remplacement": "Masse totale = 5+2+3 = 10 kg",
             "calcul": "Gx = (5×0+2×8+3×2)/10 = 22/10 = **2,2**\\n\\n"
                       "Gy = (5×0+2×0+3×6)/10 = 18/10 = **1,8**",
-            "verification": "**Contrôle de position** : G(2,2 ; 1,8) est plus proche de "
-                            "A (5 kg, la pièce la plus lourde) que de la moyenne "
-                            "géométrique simple (3,33 ; 2) — cohérent avec le poids "
-                            "dominant de A.",
+            "verification": "**Contrôle de position** : G(2,2 ; 1,8) est décalé de la "
+                            "moyenne arithmétique simple (3,33 ; 2) vers A (5 kg, la "
+                            "pièce la plus lourde) — cohérent avec le poids dominant "
+                            "de A.",
         },
         "a_retenir": "À retenir : diviser toujours par la masse totale, jamais par le "
                      "nombre de points — un point plus lourd déplace le barycentre "
