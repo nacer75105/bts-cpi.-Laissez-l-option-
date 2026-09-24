@@ -1,0 +1,5 @@
+[theme]
+# Tout le CSS de l'appli suppose un fond clair (sidebar #f8fafc, textes foncés).
+# Sans cette ligne, Streamlit suit le mode sombre du téléphone et écrit le texte
+# en clair sur ce fond clair : le nom des matières du menu devient invisible.
+base = "light"

@@ -50437,6 +50437,14 @@ st.markdown("""
   div[data-testid="stMetricValue"] { font-size: 1.6rem; color: #14375e; }
   div[data-testid="stMetricLabel"] { color: #64748b; }
   section[data-testid="stSidebar"] { background: #f8fafc; }
+  /* Fond clair forcé ci-dessus : le texte du menu doit être foncé, même si le
+     navigateur est en mode sombre (sinon texte clair sur fond clair). */
+  section[data-testid="stSidebar"] [data-testid="stRadioGroup"] > div,
+  section[data-testid="stSidebar"] [data-testid="stRadioOption"],
+  section[data-testid="stSidebar"] [data-testid="stRadioOption"] [data-testid="stMarkdownContainer"],
+  section[data-testid="stSidebar"] [data-testid="stRadioOption"] [data-testid="stMarkdownContainer"] p {
+      color: #1f2937 !important;
+  }
   .stButton button { border-radius: 8px; font-weight: 600; }
 
   /* ---------- MENU DE NAVIGATION LISIBLE SUR TÉLÉPHONE ----------
