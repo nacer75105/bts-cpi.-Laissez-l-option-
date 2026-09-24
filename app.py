@@ -50438,6 +50438,29 @@ st.markdown("""
   div[data-testid="stMetricLabel"] { color: #64748b; }
   section[data-testid="stSidebar"] { background: #f8fafc; }
   .stButton button { border-radius: 8px; font-weight: 600; }
+
+  /* ---------- MENU DE NAVIGATION LISIBLE SUR TÉLÉPHONE ----------
+     Sur un écran étroit, la sidebar est trop étroite et les noms des
+     matières débordent : on lui donne une largeur minimale (sans dépasser
+     85 % de l'écran) et on autorise le texte des options à passer à la ligne. */
+  @media (max-width: 640px) {
+      section[data-testid="stSidebar"][aria-expanded="true"] {
+          min-width: min(85vw, 320px) !important;
+          max-width: 85vw !important;
+      }
+  }
+  section[data-testid="stSidebar"] [role="radiogroup"] label {
+      width: 100%;
+  }
+  section[data-testid="stSidebar"] [role="radiogroup"] label > div:last-child {
+      flex: 1 1 auto; min-width: 0;
+  }
+  section[data-testid="stSidebar"] [role="radiogroup"] label p {
+      white-space: normal !important;
+      overflow: visible !important;
+      text-overflow: clip !important;
+      overflow-wrap: anywhere;
+  }
 </style>
 """, unsafe_allow_html=True)
 
