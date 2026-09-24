@@ -50440,22 +50440,34 @@ st.markdown("""
   .stButton button { border-radius: 8px; font-weight: 600; }
 
   /* ---------- MENU DE NAVIGATION LISIBLE SUR TÉLÉPHONE ----------
-     Sur un écran étroit, la sidebar est trop étroite et les noms des
-     matières débordent : on lui donne une largeur minimale (sans dépasser
-     85 % de l'écran) et on autorise le texte des options à passer à la ligne. */
+     Streamlit fixe la largeur de la sidebar en style inline (mémorisée dans le
+     navigateur) : il faut !important pour l'imposer. Les options radio sont des
+     div (stRadioOption) dans les versions récentes, des <label> dans les plus
+     anciennes : on vise les deux. */
   @media (max-width: 640px) {
       section[data-testid="stSidebar"][aria-expanded="true"] {
+          width: min(85vw, 320px) !important;
           min-width: min(85vw, 320px) !important;
           max-width: 85vw !important;
       }
   }
+  section[data-testid="stSidebar"] [data-testid="stRadioGroup"],
+  section[data-testid="stSidebar"] [role="radiogroup"] {
+      width: 100% !important;
+  }
+  section[data-testid="stSidebar"] [data-testid="stRadioOption"],
   section[data-testid="stSidebar"] [role="radiogroup"] label {
-      width: 100%;
+      width: 100% !important;
   }
-  section[data-testid="stSidebar"] [role="radiogroup"] label > div:last-child {
-      flex: 1 1 auto; min-width: 0;
+  section[data-testid="stSidebar"] [data-testid="stRadioOption"] div,
+  section[data-testid="stSidebar"] [role="radiogroup"] label div {
+      min-width: 0 !important;
+      max-width: 100% !important;
   }
+  section[data-testid="stSidebar"] [data-testid="stRadioOption"] [data-testid="stMarkdownContainer"],
+  section[data-testid="stSidebar"] [data-testid="stRadioOption"] [data-testid="stMarkdownContainer"] p,
   section[data-testid="stSidebar"] [role="radiogroup"] label p {
+      flex: 1 1 auto;
       white-space: normal !important;
       overflow: visible !important;
       text-overflow: clip !important;
