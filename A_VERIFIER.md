@@ -23,7 +23,7 @@ Plan (le référentiel ne répartit pas les modules entre 1ʳᵉ et 2ᵉ année 
 prérequis et la répartition usuelle) :
 1. ✅ 17.7 ln et exp — 2. ✅ 17.8 statistique à deux variables — 3. ✅ 18.9 loi uniforme —
 4. ✅ 18.10 loi normale et approximation binomiale — 5. ✅ 18.11 somme de variables, limite centrée —
-6. ✅ 18.12 méthode d'Euler — 7. IC d'une proportion — 8. tests sur une proportion / une moyenne —
+6. ✅ 18.12 méthode d'Euler — 7. ✅ 18.13 IC d'une proportion — 8. tests sur une proportion / une moyenne —
 9. tests de comparaison — 10. loi exponentielle — 11. loi de Poisson — 12. nombres
 complexes (forme algébrique, Δ < 0) — 13. équations différentielles du second ordre.
 
@@ -131,6 +131,33 @@ complexes (forme algébrique, Δ < 0) — 13. équations différentielles du sec
   Entraînement s'ouvrent sans erreur dans un AppTest ; outil d'audit : 0 défaut). La date 1768
   (Institutionum calculi integralis) et « Euler a choisi la lettre e » sont des connaissances, non
   recoupées par une source.
+
+### 18.13 — Intervalle de confiance d'une proportion (faite le 2026-09-25)
+
+- Référentiel (annexe I, Statistique inférentielle) : IC d'une proportion (binomiale approximable
+  par une normale), exploitation, taille d'échantillon pour une précision donnée ; commentaire
+  « On distingue confiance et probabilité » (avant le tirage : probabilité 0,95 de la procédure ;
+  après : confiance de 95 %) et « la simulation permet de mieux comprendre ».
+- Placée après 18.7 (ordre affiché … 18.11 → 18.7 → 18.13 → 18.8 → 18.12), avec méthode, figures
+  `proportion_en_cloche` et `ic_proportion_simulation` (40 intervalles simulés, graine fixe, 2
+  manquent p), atelier at145 (réception d'un lot de joints, étapes 2 à 4 avec `depend_de`),
+  générateurs `gen_ic_proportion` et `gen_taille_proportion`, 8 questions dans la banque
+  « probabilités et équations différentielles » (bonne réponse en positions 2, 0, 3, 1, 0, 2, 1, 3).
+- Retouches ailleurs : fiche 18.3 — « une fourchette qui a de fortes chances de contenir la vraie
+  moyenne » (qui contredisait la 18.13) devient « calculée par une méthode qui réussit 95 fois sur
+  100 à encadrer la vraie moyenne », avec renvoi, et nouvelle erreur classique 4 (« 95 % de
+  chances ») ; fiche 18.7 — renvoi vers la 18.13 pour une proportion ; tableau de bord.
+- Quatre tours de relecture (justesse + clarté) jusqu'à zéro réserve. Points clés arbitrés par
+  l'auteur : POURQUOI la méthode réussit environ 95 fois sur 100 (f à moins de 0,035 de p ⇔ p à
+  moins de 0,035 de f) ; F majuscule (avant le tirage, aléatoire) / f minuscule (mesuré) qui
+  incarne probabilité / confiance ; la vraie erreur de formule est √(f(1 − f))/n (et non
+  √(f(1 − f))/√n, qui est juste) ; contresens « un nouvel échantillon tombera dans l'intervalle
+  avec 95 % de chances » (≈ 83 %, variances additionnées, fiche 18.11) ; formule avec n, variante
+  n − 1 signalée (c'est le s/√n de la 18.3) ; couverture réelle ≈ 93 % (calcul exact binomial)
+  en « pour aller plus loin ».
+- **Non vérifié** : usage de n ou n − 1 dans les annales du BTS CPI (non consultées) ; atelier
+  at145 et générateurs non cliqués dans l'interface (la fiche s'ouvre sans erreur dans un
+  AppTest ; outil d'audit : 0 défaut).
 
 ### Corrigés d'ateliers : « \n\n » affiché en toutes lettres (corrigé le 2026-09-25)
 
@@ -254,8 +281,9 @@ complexes (forme algébrique, Δ < 0) — 13. équations différentielles du sec
   - Probabilités 1 : entièrement traité depuis le 2026-09-25 (18.9 loi uniforme, 18.10 loi
     normale et approximation binomiale, 18.11 aX + b, X ± Y et limite centrée) ;
   - Probabilités 2 : loi exponentielle, loi de Poisson, approximation binomiale → Poisson ;
-  - Statistique inférentielle : intervalle de confiance d'une proportion, tests d'hypothèse
-    (bilatéraux, unilatéraux, comparaison de deux moyennes ou proportions) ;
+  - Statistique inférentielle : tests d'hypothèse (bilatéraux, unilatéraux, comparaison de deux
+    moyennes ou proportions) — l'intervalle de confiance d'une proportion est traité depuis le
+    2026-09-25 (fiche 18.13) ;
   - Équations différentielles : second ordre à coefficients constants (la méthode d'Euler est
     traitée depuis le 2026-09-25, fiche 18.12).
   Le résumé du bloc 18, l'encart de la page Maths et le tableau de bord

@@ -5910,6 +5910,102 @@ def euler_charge():
     return _svg("".join(p), 760, 420)
 
 
+def proportion_en_cloche():
+    n, p = 200, 0.07
+    x0, y0, L, H = 80, 300, 600, 220  # axe des proportions de 0 à 0,16
+    X = lambda f: x0 + L * f / 0.16  # noqa: E731
+    probs = [math.comb(n, k) * p ** k * (1 - p) ** (n - k) for k in range(0, 33)]
+    pmax = max(probs)
+    Y = lambda v: y0 - H * v / pmax  # noqa: E731
+    sig = math.sqrt(p * (1 - p) / n)
+    p_ = [_txt(40, 24, "Lot à p = 7 % de défauts : proportion observée f = k/200 sur un échantillon de 200 pièces.",
+               12, TRAIT, "start", True)]
+    # zone p ± 1,96 × 0,018
+    a, b = p - 1.96 * sig, p + 1.96 * sig
+    p_.append(f"<rect x='{X(a):.1f}' y='{y0 - H - 10}' width='{X(b) - X(a):.1f}' height='{H + 10}' "
+              f"fill='{OK}' fill-opacity='0.10'/>")
+    p_.append(_txt(X(a) - 6, y0 - H / 2, "zone p ± 1,96 × 0,018 :", 11, OK, "end", True))
+    p_.append(_txt(X(a) - 6, y0 - H / 2 + 14, "environ 95 % des", 11, OK, "end", True))
+    p_.append(_txt(X(a) - 6, y0 - H / 2 + 28, "échantillons", 11, OK, "end", True))
+    # bâtons (hauteur = P(X = k)), à l'abscisse f = k/200
+    for k, v in enumerate(probs):
+        p_.append(f"<line x1='{X(k / n):.1f}' y1='{y0}' x2='{X(k / n):.1f}' y2='{Y(v):.1f}' "
+                  f"stroke='{ALESAGE}' stroke-width='5'/>")
+    # cloche N(p ; σ), mise à l'échelle des bâtons (densité × 1/200)
+    pts = []
+    for i in range(0, 321):
+        f = 0.16 * i / 320
+        d = math.exp(-((f - p) ** 2) / (2 * sig ** 2)) / (sig * math.sqrt(2 * math.pi)) / n
+        pts.append(f"{X(f):.1f},{Y(d):.1f}")
+    p_.append(f"<polyline points='{' '.join(pts)}' fill='none' stroke='{ARBRE}' stroke-width='2.5'/>")
+    p_.append(f"<line x1='{x0}' y1='{y0}' x2='{x0 + L}' y2='{y0}' stroke='{FIN}' stroke-width='1.4'/>")
+    for f in (0, 0.02, 0.04, 0.06, 0.08, 0.10, 0.12, 0.14, 0.16):
+        p_.append(_txt(X(f), y0 + 16, fr(f, 2), 11, FIN, "middle"))
+    p_.append(_txt(x0 + L, y0 + 32, "proportion observée f", 11, FIN, "end"))
+    p_.append(f"<line x1='{X(p):.1f}' y1='{y0}' x2='{X(p):.1f}' y2='{y0 - H - 12}' stroke='{ALERTE}' "
+              f"stroke-dasharray='4 3'/>")
+    p_.append(_txt(X(p), y0 - H - 16, "vrai taux p = 0,07", 11, ALERTE, "middle", True))
+    p_.append(_txt(X(0.115), Y(probs[14]) + 50, "bâtons : loi binomiale", 12, ALESAGE, "start", True))
+    p_.append(_txt(X(0.115), Y(probs[14]) + 66, "courbe : cloche N(0,07 ; 0,018)", 12, ARBRE, "start", True))
+    p_.append(f"<rect x='40' y='336' width='680' height='72' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p_.append(_txt(56, 358, "Un échantillon de 200 pièces donne rarement exactement 7 % : f varie d'un échantillon à l'autre.", 12, TRAIT, "start", True))
+    p_.append(_txt(56, 378, "Sa loi est une cloche centrée sur p, d'écart-type √(p(1 − p)/n) ≈ 0,018 (1,8 point).", 12, TRAIT, "start", True))
+    p_.append(_txt(56, 398, "Si f tombe dans la zone verte (environ 95 % des cas), la fourchette f ± 0,035 contient p.", 12, TRAIT, "start", True))
+    return _svg("".join(p_), 760, 422)
+
+
+def _intervalles_simules():
+    """40 échantillons de 200 pièces dans un lot à p = 0,07 (graine fixe : figure toujours la même)."""
+    tirages = random.Random(2027)
+    res = []
+    for _ in range(40):
+        k = sum(tirages.random() < 0.07 for _ in range(200))
+        f = k / 200
+        m = 1.96 * math.sqrt(f * (1 - f) / 200)
+        res.append((f - m, f + m))
+    return res
+
+
+def ic_proportion_simulation():
+    x0, L = 90, 560  # axe de 0 à 0,18
+    X = lambda f: x0 + L * f / 0.18  # noqa: E731
+    ivs = _intervalles_simules()
+    rates = sum(1 for a, b in ivs if not (a <= 0.07 <= b))
+    p_ = [_txt(40, 24, "Lot à p = 7 % exactement : 40 échantillons de 200 pièces, 40 intervalles de confiance à 95 %.",
+               12, TRAIT, "start", True)]
+    y_haut, pas = 50, 7
+    for i, (a, b) in enumerate(ivs):
+        y = y_haut + i * pas
+        manque = not (a <= 0.07 <= b)
+        coul = ALERTE if manque else ALESAGE
+        p_.append(f"<line x1='{X(max(a, 0)):.1f}' y1='{y}' x2='{X(b):.1f}' y2='{y}' stroke='{coul}' "
+                  f"stroke-width='{3 if manque else 2}'/>")
+        p_.append(f"<circle cx='{X((a + b) / 2):.1f}' cy='{y}' r='2' fill='{coul}'/>")
+    y_bas = y_haut + 40 * pas
+    p_.append(f"<line x1='{X(0.07):.1f}' y1='{y_haut - 8}' x2='{X(0.07):.1f}' y2='{y_bas}' "
+              f"stroke='{OK}' stroke-width='2'/>")
+    p_.append(_txt(X(0.07), y_haut - 12, "vrai taux p = 0,07 (inconnu en réalité)", 11, OK, "middle", True))
+    p_.append(f"<line x1='{x0}' y1='{y_bas + 4}' x2='{x0 + L}' y2='{y_bas + 4}' stroke='{FIN}' stroke-width='1.4'/>")
+    for f in (0, 0.03, 0.06, 0.09, 0.12, 0.15, 0.18):
+        p_.append(_txt(X(f), y_bas + 20, _fr_court(f), 11, FIN, "middle"))
+    p_.append(_txt(x0 + L, y_bas + 36, "taux de défauts", 11, FIN, "end"))
+    p_.append(_txt(x0 + L + 8, y_haut + 40, "en bleu :", 11, ALESAGE, "start", True))
+    p_.append(_txt(x0 + L + 8, y_haut + 54, f"{40 - rates} intervalles", 11, ALESAGE, "start"))
+    p_.append(_txt(x0 + L + 8, y_haut + 68, "contiennent p", 11, ALESAGE, "start"))
+    p_.append(_txt(x0 + L + 8, y_haut + 110, "en rouge :", 11, ALERTE, "start", True))
+    p_.append(_txt(x0 + L + 8, y_haut + 124, f"{rates} le manquent", 11, ALERTE, "start"))
+    p_.append(_txt(x0 + L + 8, y_haut + 180, "chaque trait :", 11, FIN, "start", True))
+    p_.append(_txt(x0 + L + 8, y_haut + 194, "un échantillon,", 11, FIN, "start"))
+    p_.append(_txt(x0 + L + 8, y_haut + 208, "son intervalle ;", 11, FIN, "start"))
+    p_.append(_txt(x0 + L + 8, y_haut + 222, "le point = sa", 11, FIN, "start"))
+    p_.append(_txt(x0 + L + 8, y_haut + 236, "proportion f", 11, FIN, "start"))
+    yb = y_bas + 48
+    p_.append(f"<rect x='40' y='{yb}' width='680' height='52' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p_.append(_txt(56, yb + 22, "Avant le tirage : la méthode donne un intervalle qui contient p environ 95 fois sur 100.", 12, TRAIT, "start", True))
+    p_.append(_txt(56, yb + 42, "Après : on n'a qu'UN trait, qui contient p ou non. D'où « confiance 95 % », pas « probabilité ».", 12, TRAIT, "start", True))
+    return _svg("".join(p_), 760, yb + 66)
+
+
 def extremums_polynome():
     p = [_txt(40, 24, "f(x) = x³ − 3x² + 2 : un maximum local puis un minimum local.",
               12, TRAIT, "start", True)]
@@ -6324,6 +6420,8 @@ FIGURES = {
     "euler_tangentes": ("Euler suit la pente donnée par l'équation sur un pas h, puis recalcule la pente là où il est", euler_tangentes),
     "euler_pas_h": ("Plus le pas est petit, plus Euler colle à la solution exacte", euler_pas_h),
     "euler_charge": ("Charge d'un condensateur : Euler monte trop vite vers l'équilibre", euler_charge),
+    "proportion_en_cloche": ("La proportion observée sur 200 pièces se répartit en cloche autour du vrai taux", proportion_en_cloche),
+    "ic_proportion_simulation": ("40 échantillons, 40 intervalles : la méthode réussit environ 95 fois sur 100", ic_proportion_simulation),
     "extremums_polynome": ("Un maximum local puis un minimum local", extremums_polynome),
     "dispersion_deux_reglages": ("Six mesures dispersées autour de leur moyenne", dispersion_deux_reglages),
     "venn_deux_evenements": ("Union et intersection de deux événements", venn_deux_evenements),
@@ -10231,6 +10329,73 @@ QUIZ["Mathématiques BTS CPI — probabilités et équations différentielles"] 
       "vérifier, et surtout de traiter les cas où la formule est difficile à obtenir (ambiante qui "
       "varie, modèle plus compliqué). Il a besoin de l'équation : c'est elle qui donne la pente. La "
       "formule exacte, elle, vaut pour tout t ≥ 0.", "Base"),
+
+    q("Sur 250 pièces contrôlées, 15 sont défectueuses. Quelle est la proportion observée f ?",
+      ["15", "0,15", "0,06", "6"], 2,
+      "f = k/n = 15/250 = 0,06, soit 6 %. On l'écrit en nombre décimal dans les calculs : 6 est le "
+      "pourcentage, 15 le nombre de défectueuses.", "Base"),
+
+    q("f = 0,1 sur n = 100 pièces. Que vaut la marge d'erreur à 95 % ?",
+      ["1,96 × √(0,1 × 0,9 / 100) ≈ 0,059", "1,96 × 0,1 × 0,9 / 100 ≈ 0,002",
+       "1,96 × √(0,1 × 0,9) ≈ 0,588", "√(0,1 × 0,9 / 100) = 0,03"], 0,
+      "marge = 1,96 × √(f(1 − f)/n) = 1,96 × √0,000 9 = 1,96 × 0,03 ≈ 0,059. Les autres oublient la "
+      "racine, le n, ou le 1,96.", "Calcul"),
+
+    q("Un intervalle de confiance à 95 % du taux de défauts vaut [0,03 ; 0,09]. Quelle phrase est "
+      "juste ?",
+      ["Il y a 95 % de chances que le vrai taux soit entre 3 % et 9 %",
+       "Un nouvel échantillon aura 95 % de chances de donner une proportion entre 3 % et 9 %",
+       "Le vrai taux est forcément entre 3 % et 9 %",
+       "Avec une confiance de 95 %, le vrai taux est entre 3 % et 9 %"], 3,
+      "Le vrai taux est fixe : une fois l'intervalle calculé, il est dedans ou non, sans hasard. Le "
+      "95 % est la fiabilité de la méthode (environ 95 intervalles sur 100 contiennent le vrai "
+      "taux) : on parle de confiance, pas de probabilité. Et l'intervalle ne prédit pas le prochain "
+      "échantillon : il est centré sur notre f, pas sur p.", "Piège"),
+
+    q("Avant de tirer l'échantillon, que vaut la probabilité que la méthode de l'intervalle de "
+      "confiance à 95 % fournisse un intervalle contenant le vrai taux p ?",
+      ["0, car p est fixe", "0,95", "1, car l'intervalle est centré sur p", "On ne peut pas le dire"], 1,
+      "Avant le tirage, l'échantillon (donc l'intervalle) est aléatoire : la méthode a une probabilité "
+      "0,95 de réussir. Après le tirage, on ne parle plus de probabilité mais de confiance. "
+      "L'intervalle est centré sur f, pas sur p.", "Intermédiaire"),
+
+    q("L'échantillon est tiré et l'intervalle calculé vaut [0,03 ; 0,09]. Que peut-on dire de la "
+      "probabilité que le vrai taux p soit dans CET intervalle ?",
+      ["Elle vaut 0 ou 1, on ne sait pas lequel : p est dedans ou non, sans hasard",
+       "Elle vaut 0,95 : la méthode garde sa fiabilité après le tirage",
+       "Elle vaut 0,95 à condition que nf ≥ 5 et n(1 − f) ≥ 5",
+       "Elle vaut 0,5 : p est soit dedans, soit dehors"], 0,
+      "p est fixe et l'intervalle est maintenant fixé : il n'y a plus rien d'aléatoire. Sa probabilité "
+      "d'être dedans vaut donc 1 (c'est certain) ou 0 (c'est impossible), et on ne sait pas lequel. Ce "
+      "n'est pas 0,5 : « dedans ou dehors » ne veut pas dire « une chance sur deux », de même qu'un "
+      "rivet déjà posé n'est pas « bon à 50 % ». Le 0,95 était "
+      "la probabilité de la méthode avant le tirage ; après, on dit « confiance de 95 % » — comme le "
+      "rivet déjà posé, bon ou non.", "Piège"),
+
+    q("Pourquoi la proportion observée F (avant le tirage) suit-elle à peu près une loi normale quand n est grand ?",
+      ["Parce que le vrai taux p varie en cloche d'un lot à l'autre",
+       "Parce que chaque pièce, notée 0 ou 1, suit elle-même une loi normale",
+       "Parce que F = X/n, et que X, qui suit B(n ; p), est approché par une cloche quand n est grand",
+       "Parce que F se rapproche de 0,5 quand n est grand"], 2,
+      "X, le nombre de défectueuses, suit B(n ; p), approchée par N(np ; √(np(1 − p))). Diviser par n "
+      "donne : F suit approximativement N(p ; √(p(1 − p)/n)). Le vrai taux p est fixe : c'est F qui "
+      "varie d'un échantillon à l'autre. Une pièce seule vaut 0 ou 1 : elle n'est pas en cloche.", "Intermédiaire"),
+
+    q("On veut une marge d'erreur de 0,05 sans aucune information sur le taux. Combien de pièces "
+      "faut-il contrôler ?",
+      ["20", "385", "1 537", "40"], 1,
+      "Pire cas p(1 − p) = 0,25 : n ≥ (1,96/0,05)² × 0,25 = 384,16, donc 385 (entier supérieur). "
+      "1 537 oublie le 0,25 ; 20 = 1,96 × 0,5/0,05 (formule de la marge non élevée au carré) ; "
+      "40 = 1,96/0,05 (ni carré, ni 0,25).", "Calcul"),
+
+    q("Une garantie fournisseur est « au plus 5 % de défauts ». L'intervalle de confiance à 95 % "
+      "obtenu est [3,2 % ; 7,4 %]. Que conclure ?",
+      ["Le fournisseur tient sa garantie",
+       "Le fournisseur ne tient pas sa garantie",
+       "La garantie est tenue à 95 %",
+       "On ne peut pas conclure : 5 % est dans l'intervalle"], 3,
+      "5 % est à l'intérieur de l'intervalle : les données sont compatibles avec un taux sous 5 % comme "
+      "au-dessus. Il faudrait contrôler plus de pièces pour trancher.", "Piège"),
 ]
 
 QUIZ["Mathématiques BTS CPI — calcul matriciel et modélisation géométrique"] = [
@@ -47305,8 +47470,9 @@ population — mais un nombre unique ne dit rien sur la marge d'erreur de cette 
 
 ### 3. L'intervalle de confiance à 95 %
 
-Plutôt qu'un seul nombre, on donne une **fourchette** qui a de fortes chances de contenir la
-vraie moyenne :
+Plutôt qu'un seul nombre, on donne une **fourchette**, calculée par une méthode qui réussit 95
+fois sur 100 à encadrer la vraie moyenne (ce que « confiance » veut dire exactement : fiche
+18.13, § 5) :
 
 > **IC95% = [x̄ − 1,96 × σ/√n ; x̄ + 1,96 × σ/√n]**
 
@@ -47358,6 +47524,8 @@ mesurer plus de pièces (fiche 18.7).
 2. **Oublier la racine carrée sur n** et diviser directement par n.
 3. **Interpréter l'IC comme « 95 % des pièces sont dedans »** au lieu de « on est confiant à 95 %
    que la vraie moyenne y est ».
+4. **Écrire « 95 % de chances que la moyenne soit dans l'intervalle »** : la vraie moyenne est
+   fixe ; c'est la méthode qui réussit 95 fois sur 100 (fiche 18.13, § 5).
 
 ### 6. À retenir
 
@@ -49109,6 +49277,8 @@ rapidement avec l'exigence.
 - Diviser la marge visée par k multiplie n par **k²** — la précision coûte cher en volume de
   contrôle. On multiplie le n **brut** (avant arrondi), puis on arrondit au plafond.
 - Il faut une estimation préalable de s (étude pilote ou historique) avant de pouvoir calculer n.
+- Pour une **proportion** (un taux de défauts), même démarche avec √(p(1 − p)) à la place de s :
+  fiche 18.13, § 6.
             """,
             "formules": """
 
@@ -49153,6 +49323,326 @@ au premier regard entraîne en réalité un contrôle **seize fois plus lourd** 
 pièces à mesurer. C'est exactement ce genre de calcul qui doit accompagner une négociation
 commerciale sur une tolérance serrée — la précision demandée a un coût qui grandit bien plus
 vite qu'elle n'y paraît.
+""",
+        },
+        {
+            "id": "18.13",
+            "titre": "Statistique inférentielle : intervalle de confiance d'une proportion",
+            "duree": "4 h",
+            "cours": """
+
+### 1. La même question que la fiche 18.3, pour une proportion
+
+La fiche 18.3 a estimé une **moyenne** (un diamètre moyen) par un intervalle de confiance. Mais en
+contrôle qualité, la question est souvent une **proportion** : quel est le **taux de pièces
+défectueuses** d'un lot ? quelle **fraction** des soudures passe le contrôle ? On ne peut pas tout
+contrôler, alors on prélève un échantillon et on compte.
+
+> **Proportion observée (estimation ponctuelle)** : f = k / n, où k est le nombre de pièces qui ont
+> le caractère étudié (par exemple défectueuses) parmi les n pièces de l'échantillon.
+> **Proportion réelle** : p, le vrai taux de tout le lot, **inconnu**.
+
+Exemple : 14 pièces défectueuses sur un échantillon de 200 donnent f = 14/200 = **0,07**, soit 7 %.
+Mais un autre échantillon de 200 pièces du même lot aurait pu donner 10, 16 ou 19 défectueuses : f
+dépend du hasard du prélèvement. **Quelle marge d'erreur faut-il mettre autour de 7 % ?** C'est
+exactement la question de la 18.3, et la réponse suit le même chemin.
+
+*Dans les calculs, on écrit toujours les proportions en nombre décimal (0,07), jamais en
+pourcentage (7) : on ne repasse en % qu'à la fin. Et on parle d'écart en **points** : un point vaut
+1 % en valeur absolue (de 7 % à 8,8 %, c'est 1,8 point de plus — pas 7 % × 1,018).*
+
+### 2. Pourquoi une proportion observée suit une cloche
+
+Le nombre X de pièces défectueuses de l'échantillon suit la loi binomiale B(n ; p) (fiche 18.2), et
+pour n grand, la fiche 18.10 l'approche par une cloche de moyenne np et d'écart-type √(np(1 − p)).
+La proportion observée, avant le tirage, est **F = X / n** (majuscule : voir juste en dessous) : on
+**divise** X par n. D'après la fiche 18.11 (aX avec a = 1/n),
+la moyenne et l'écart-type sont eux aussi divisés par n :
+
+> **F suit approximativement la loi N(p ; √(p(1 − p)/n))** : la proportion observée se répartit en
+> cloche autour de la vraie proportion p, avec un écart-type √(p(1 − p)/n).
+
+**F majuscule, f minuscule.** On écrit **F** (majuscule) pour la proportion **avant** le tirage de
+l'échantillon : elle n'est pas encore connue, elle dépend du hasard, elle suit une loi. On écrit
+**f** (minuscule) pour le nombre obtenu **après** : 0,07, un nombre fixe, sans plus aucun hasard.
+*Cette différence est
+exactement celle du § 5 entre probabilité (on parle de F, avant) et confiance (on a f, après).*
+
+*Vérifions sur l'exemple, si le vrai taux était p = 0,07 : np = 200 × 0,07 = 14 pièces, et
+√(np(1 − p)) = √(200 × 0,07 × 0,93) ≈ 3,61 pièces. Divisés par 200 : 0,07 et 0,018 0. Une
+proportion observée sur 200 pièces s'écarte donc typiquement de 1,8 point du vrai taux : de 7 %, on
+passe facilement à 5,2 % ou 8,8 %.*
+
+[[FIG:proportion_en_cloche]]
+
+**Autre regard (facultatif) : une proportion est une moyenne.** Le contrôleur de la fiche 18.10 note
+1 pour une pièce défectueuse, 0 pour une bonne. Sur 200 pièces, f = (somme des 0 et des 1)/200 :
+c'est **la moyenne de la colonne**. On retombe donc sur la 18.3 :
+- une seule pièce (un seul 0-ou-1) a pour écart-type √(p(1 − p)) : c'est la formule de la fiche 18.6
+  avec n = 1 ;
+- une moyenne de n pièces se resserre en « écart-type d'une pièce / √n » (fiche 18.3) ;
+- donc l'écart-type de F vaut √(p(1 − p))/√n = √(p(1 − p)/n). Même formule qu'au-dessus.
+
+### 3. L'intervalle de confiance d'une proportion
+
+**Pourquoi ça marche.** La figure du § 2 montre que, dans environ 95 % des échantillons, f tombe à moins
+de 1,96 × 0,018 ≈ 0,035 du vrai taux p (la zone verte). Or « f est à moins de 0,035 de p », c'est
+exactement la même chose que « p est à moins de 0,035 de f » : la distance entre deux points ne
+dépend pas du point d'où l'on mesure. Donc, si l'on trace autour de f une fourchette de
+± 1,96 écart-type, elle attrape p **chaque fois que f est tombé dans la zone verte**, c'est-à-dire
+dans environ 95 % des échantillons. *Attention : la zone verte est centrée sur p, qu'on ne connaît
+pas ; l'intervalle de confiance est centré sur f, qu'on a mesuré.*
+
+*Exemple : le vrai taux est 7 %. Si notre échantillon donne f = 0,09 (dans la zone verte, à 0,02 de
+p), son intervalle [0,050 ; 0,130] contient bien 0,07. S'il donne f = 0,12 (hors de la zone verte,
+ce qui arrive rarement), son intervalle [0,075 ; 0,165] rate 0,07 : c'est le trait rouge du haut
+dans la figure du § 5.*
+
+Il reste un obstacle : l'écart-type √(p(1 − p)/n) contient p… que l'on cherche justement. On le
+remplace par la valeur observée f. C'est permis parce que f est proche de p et que p(1 − p) varie
+peu : 0,07 × 0,93 ≈ 0,065, et 0,09 × 0,91 ≈ 0,082 ; la racine lisse encore l'écart. L'erreur commise
+sur la marge reste faible dès que n est grand.
+
+> **IC95% = [f − 1,96 × √(f(1 − f)/n) ; f + 1,96 × √(f(1 − f)/n)]**
+
+Le **1,96** est celui de la 18.3 : l'écart qui laisse 95 % de l'aire au milieu de la cloche
+(fiche 18.10). Pour un **niveau de confiance** (le pourcentage de réussite de la méthode, § 5) de
+**99 %**, on prend **2,576** (souvent arrondi à 2,58).
+
+**Conditions** (données par l'énoncé) : l'approximation par la cloche doit être légitime, comme en
+18.10. Une indication courante : n ≥ 30, n × f ≥ 5 et n × (1 − f) ≥ 5.
+
+*Certains énoncés écrivent n − 1 au lieu de n sous la racine : c'est exactement le s/√n de la
+fiche 18.3, s étant calculé (touche sx de la calculatrice) sur les 0 et les 1. Pour un grand
+échantillon, la différence est négligeable (marge 0,035 36 avec n, 0,035 45 avec n − 1 dans
+l'exemple ci-dessous) ; on suit l'énoncé.*
+
+### 4. Exemple entièrement déroulé — 14 défectueuses sur 200
+
+**Étape 1 — Proportion observée et conditions.** f = 14/200 = 0,07 ; n = 200 ≥ 30, n × f = 14 ≥ 5 et
+n × (1 − f) = 186 ≥ 5 : les conditions sont remplies.
+
+**Étape 2 — Écart-type estimé.** √(0,07 × 0,93 / 200) = √0,000 325 5 ≈ **0,018 0**.
+
+**Étape 3 — Marge d'erreur.** 1,96 × 0,018 04 ≈ **0,035 4**.
+
+**Étape 4 — Intervalle.** IC95% = [0,07 − 0,035 4 ; 0,07 + 0,035 4] = **[0,034 6 ; 0,105 4]**, soit
+de **3,5 % à 10,5 %**.
+
+**Lecture.** Avec 200 pièces contrôlées, le taux de défauts du lot est estimé entre 3,5 % et
+10,5 %, avec une confiance de 95 %. La fourchette est large : 7 % « plus ou moins 3,5 points ».
+Pour une proportion, il faut beaucoup de pièces pour être précis (§ 6).
+
+### 5. LE piège : « confiance » n'est pas « probabilité »
+
+C'est la phrase la plus souvent fausse des copies. **Ce qu'on n'a PAS le droit d'écrire :** « il y a
+95 % de chances que le taux de défauts du lot soit entre 3,5 % et 10,5 % ».
+
+**Pourquoi c'est faux.** Le vrai taux p du lot est un nombre **fixe** : il ne change pas d'un
+échantillon à l'autre, il n'a rien d'aléatoire. Une fois l'échantillon tiré, l'intervalle
+[3,5 % ; 10,5 %] est lui aussi fixé. Alors, de deux choses l'une : p est dedans, ou p n'est pas
+dedans. Il n'y a plus de hasard, donc plus de probabilité (ou, si l'on tient à en parler : elle vaut
+1 si p est dedans, 0 s'il n'y est pas) — simplement, **on ne sait pas lequel des
+deux cas est le bon**.
+
+**Ce qui est aléatoire, c'est l'échantillon, donc l'intervalle.** Avant le tirage, chaque
+échantillon possible donne son propre intervalle. La **méthode** est construite pour qu'environ
+95 % de ces intervalles contiennent le vrai p (c'est le « pourquoi ça marche » du § 3). La figure
+ci-dessous le montre : 40 échantillons de 200 pièces tirés dans un lot où p vaut exactement 7 %, et
+leurs 40 intervalles. La plupart croisent la ligne des 7 % ; 2 la manquent (en rouge). *Avec 40
+autres échantillons, on aurait pu en avoir 0, 1, 3, 4, parfois 5 ou 6 : « 95 % » est une fréquence
+sur un très
+grand nombre d'échantillons.* Dans la réalité, on n'a qu'**un** de ces intervalles, et on ne sait
+pas s'il fait partie des bons.
+
+[[FIG:ic_proportion_simulation]]
+
+*Image d'atelier : une presse pose un rivet correct 95 fois sur 100. **Avant** le coup de presse, la
+probabilité que le prochain rivet soit correct est 0,95. **Après**, le rivet est posé : il est bon ou
+il ne l'est pas, il n'est pas « bon à 95 % ». Si on ne peut pas le contrôler, on lui fait confiance
+à 95 % — parce qu'on connaît la fiabilité de la **presse**, pas parce que ce rivet aurait une
+probabilité. La presse, c'est la méthode ; le coup de presse, c'est le tirage de l'échantillon ; le
+rivet posé, c'est l'intervalle calculé ; « rivet bon », c'est « l'intervalle contient p ».*
+
+> **Avant le tirage** : la méthode a une **probabilité** de 0,95 de fournir un intervalle qui
+> contient p.
+> **Après le tirage** : p est dans l'intervalle calculé **avec une confiance de 95 %** — c'est la
+> phrase à écrire.
+
+*C'est aussi ce que veut dire la phrase de la fiche 18.3, « on a 95 % de confiance que la moyenne
+réelle se situe entre… ». Et ce n'est pas non plus « 95 % des pièces sont dans l'intervalle » :
+l'intervalle porte sur le taux du lot, pas sur les pièces.*
+
+**Autre contresens tentant : l'intervalle ne prédit pas le prochain échantillon.** « Si je contrôle
+200 autres pièces, j'ai 95 % de chances de trouver entre 3,5 % et 10,5 % » est faux : l'intervalle
+est centré sur NOTRE f, alors qu'un nouvel échantillon varie autour de p, pas autour de notre f.
+L'écart entre le nouveau f et le nôtre cumule deux hasards : celui de notre échantillon et celui du
+nouveau. Les variances s'additionnent (fiche 18.11) : si V est la variance d'une proportion
+observée, l'écart entre deux proportions a pour variance V + V = 2V, donc un écart-type √2 ≈ 1,41 fois
+plus grand. Notre marge de 1,96 écart-type ne vaut plus que 1,96/1,41 ≈ 1,39 de ces écarts-types
+élargis, ce qui ne couvre qu'environ 83 % de la cloche : en moyenne sur tous les échantillons
+possibles, un nouvel f ne tombe dans l'intervalle du premier qu'environ 83 fois sur 100.
+
+*C'est comme au tir sur cible : les prochains impacts se groupent autour du centre de la cible (p),
+pas autour de ton premier impact (f). Si ton premier tir est un peu à gauche, un cercle tracé autour
+de lui attrapera moins bien les suivants.*
+
+*Pour aller plus loin : le 95 % est lui-même approché, parce qu'on a remplacé les bâtons de la loi
+binomiale par une cloche, et p par f. Pour n = 200 et p = 7 %, le calcul exact avec la loi
+binomiale donne en réalité environ 93 % d'intervalles gagnants. C'est pour que cet écart reste
+petit que l'énoncé impose n ≥ 30, nf ≥ 5 et n(1 − f) ≥ 5. Dans les exercices, on dit 95 %.*
+
+### 6. Combien de pièces contrôler pour une précision donnée ?
+
+C'est la question de la fiche 18.7, pour une proportion. On veut une marge d'erreur au plus égale à
+e : 1,96 × √(p(1 − p))/√n ≤ e. Comme en 18.7, avec s remplacé par √(p(1 − p)) : on multiplie par √n,
+on divise par e, on élève au carré :
+1,96 × √(p(1 − p)) ≤ e × √n → 1,96 × √(p(1 − p))/e ≤ √n → (1,96/e)² × p(1 − p) ≤ n, soit :
+
+> **n ≥ (1,96 / e)² × p(1 − p)**, et on prend l'**entier supérieur** (fiche 18.7).
+
+Il faut une idée de p avant de mesurer :
+- **avec une estimation préalable** (un historique, un premier échantillon) : pour p ≈ 0,07 et une
+  marge de 2 points (e = 0,02), n = (1,96 / 0,02)² × 0,07 × 0,93 = 98² × 0,065 1 ≈ 625,2, donc
+  **626 pièces**. *Vérification comme en 18.7 : avec 626 pièces, la marge vaut 0,019 99, sous 0,02 ;
+  avec 625, elle vaudrait 0,020 004, un peu trop.*
+- **sans aucune idée** : on prend le pire cas, p = 0,5, pour lequel p(1 − p) = 0,25 est le plus grand
+  possible (0,5 × 0,5 = 0,25, alors que 0,3 × 0,7 = 0,21 et 0,1 × 0,9 = 0,09). Pour e = 0,02 :
+  n = (1,96 / 0,02)² × 0,25 = (1,96 × 0,5 / 0,02)² = (0,98 / 0,02)² = 49² = **2 401 pièces** — presque
+  quatre fois plus, faute d'information. *C'est le réflexe du concepteur : quand on ne connaît pas
+  l'effort réel, on dimensionne l'arbre pour l'effort maximal ; ici, faute d'historique, on
+  dimensionne le contrôle pour le taux le plus défavorable.* (Au pire cas, la marge vaut
+  0,98/√n ≈ 1/√n : c'est la formule f ± 1/√n que tu as peut-être vue au lycée.)
+
+### 7. Exploiter l'intervalle pour décider
+
+Comme en 18.3, on compare l'intervalle à une exigence (un taux garanti par un fournisseur, une
+limite de contrat) :
+1. l'intervalle est **entièrement au-dessus** de la limite → le taux la dépasse, avec 95 % de
+   confiance ;
+2. il est **entièrement en dessous** → le taux la respecte, avec 95 % de confiance ;
+3. il **contient** la limite → on ne peut pas conclure : il faut plus de pièces (§ 6).
+
+*Exemple : un fournisseur annonce au plus 5 % de défauts ; notre intervalle [3,5 % ; 10,5 %]
+contient 5 % : cet échantillon ne permet ni de lui donner raison, ni de lui donner tort. Le
+programme prévoit aussi une méthode, le test d'hypothèse, qui formalise cette décision de réclamer
+ou non (pas encore traitée dans l'application).*
+
+### 8. Les erreurs classiques
+
+1. **Écrire « 95 % de chances que p soit dans l'intervalle »** une fois l'intervalle calculé : p est
+   fixe ; c'est la méthode qui réussit environ 95 fois sur 100 (§ 5).
+2. **Mettre des pourcentages dans la formule** : √(7 × 93 / 200) n'a pas de sens ; on calcule avec
+   0,07 et 0,93.
+3. **Oublier la racine carrée, ou diviser par n en dehors de la racine** : √(f(1 − f))/n est faux ; il
+   faut √(f(1 − f)/n), qui vaut aussi √(f(1 − f))/√n.
+4. **Confondre k et f** : on met la proportion f = k/n dans la formule, pas le nombre k.
+5. **Oublier les conditions** (n × f ≥ 5…) : avec 1 défectueuse sur 200, la cloche n'est plus une
+   bonne approximation.
+6. **Croire que l'intervalle prédit le prochain échantillon** : il est centré sur notre f, pas sur p.
+7. **Arrondir la taille d'échantillon vers le bas** (fiche 18.7).
+""",
+            "formules": """
+
+**Proportion observée** — f = k/n (estimation ponctuelle du vrai taux p)
+
+**Loi de la proportion observée** (n grand, avant le tirage) — F suit approximativement
+N(p ; √(p(1 − p)/n))
+
+**Intervalle de confiance à 95 %** — [f − 1,96 × √(f(1 − f)/n) ; f + 1,96 × √(f(1 − f)/n)] ·
+à 99 % : 2,576 au lieu de 1,96 · conditions (données par l'énoncé) : n ≥ 30, nf ≥ 5, n(1 − f) ≥ 5
+
+**Interprétation** — avant le tirage, la méthode a une probabilité 0,95 de fournir un intervalle qui
+contient p ; après, p est dans l'intervalle calculé avec une confiance de 95 %
+
+**Taille d'échantillon** — n ≥ (1,96 / e)² × p(1 − p), entier supérieur · sans information :
+p(1 − p) = 0,25, n ≥ (0,98 / e)²
+
+        """,
+            "exemple": """
+**Cas industriel — Réception d'un lot : le fournisseur tient-il sa garantie ?**
+
+Un fournisseur de joints toriques garantit un taux de défauts **d'au plus 2 %**. À la réception
+d'un lot de 20 000 joints, le contrôle prélève **400 joints** au hasard et en trouve **16 défectueux**.
+
+*400 joints sur 20 000, ça ne fait que 2 % du lot : est-ce assez ? Oui, car la précision dépend du
+nombre de joints contrôlés, pas de la taille du lot (tant que le lot est bien plus grand que
+l'échantillon). C'est comme un prélèvement d'huile pour analyse : un flacon suffit, que le carter
+fasse 5 ou 50 litres, pourvu que l'huile soit brassée. D'où le « au hasard » : pas les 400 joints du
+dessus du carton, sortis peut-être de la même heure de production.*
+
+**Étape 1 — Proportion observée et conditions.** f = 16/400 = **0,04**, soit 4 %. n = 400 ≥ 30,
+n × f = 16 ≥ 5, n × (1 − f) = 384 ≥ 5.
+
+**Étape 2 — Marge d'erreur.** √(0,04 × 0,96 / 400) = √0,000 096 ≈ 0,009 8, puis
+1,96 × 0,009 8 ≈ **0,019 2**.
+
+**Étape 3 — Intervalle.** IC95% = [0,04 − 0,019 2 ; 0,04 + 0,019 2] = **[0,020 8 ; 0,059 2]**, soit
+de 2,1 % à 5,9 %.
+
+**Étape 4 — Décision.** L'intervalle est **entièrement au-dessus de 2 %** : avec une confiance de
+95 %, le taux de défauts du lot dépasse la garantie. Le service achats peut ouvrir une réclamation
+en s'appuyant sur un résultat chiffré, et non sur une impression.
+
+**Ce que le calcul apprend.** 4 % observés ne suffisaient pas, seuls, à accuser le fournisseur :
+avec un petit échantillon, un lot à 2 % peut donner 4 % par hasard. C'est la marge d'erreur qui
+tranche. *Avec 150 joints seulement et le même taux observé (6 défectueux), l'intervalle serait
+[0,9 % ; 7,1 %], qui contient 2 % : on n'aurait rien pu conclure.* Et la phrase juste pour le
+rapport est « avec une confiance de 95 %, le taux dépasse 2 % » — pas « il y a 95 % de chances que
+le taux dépasse 2 % ».
+""",
+            "exercice": """
+**Partie A — Construire l'intervalle**
+
+Sur une ligne de soudage, on contrôle **250 soudures** et on en trouve **20 non conformes**.
+
+**1.** Calcule la proportion observée f et vérifie les conditions n ≥ 30, nf ≥ 5, n(1 − f) ≥ 5.
+
+**2.** Donne l'intervalle de confiance à 95 % du taux de soudures non conformes.
+
+**3.** Donne l'intervalle de confiance à 99 %. Lequel est le plus large, et pourquoi ?
+
+**Partie B — Interpréter**
+
+**4.** Pour chaque phrase, dis si elle est juste ou fausse, et pourquoi :
+(a) « Il y a 95 % de chances que le vrai taux soit dans l'intervalle de la question 2. »
+(b) « Avec une confiance de 95 %, le vrai taux est dans l'intervalle de la question 2. »
+(c) « Si l'on contrôle 250 autres soudures, leur proportion de non-conformes a 95 % de chances
+d'être dans l'intervalle de la question 2. »
+(d) « Si l'on refaisait ce contrôle sur de nombreux échantillons de 250 soudures, environ 95 % des
+intervalles obtenus contiendraient le vrai taux. »
+
+**Partie C — Décider et dimensionner**
+
+**5.** Le cahier des charges tolère au plus 5 % de soudures non conformes. Peut-on conclure que la
+ligne le respecte ? qu'elle ne le respecte pas ?
+
+**6.** Combien de soudures faudrait-il contrôler pour obtenir une marge d'erreur de 1 point
+(e = 0,01), en prenant p ≈ 0,08 ? Et sans aucune information sur p ?
+""",
+            "corrige": """
+**1.** f = 20/250 = **0,08** ; n = 250 ≥ 30, nf = 20 ≥ 5, n(1 − f) = 230 ≥ 5 : conditions remplies.
+
+**2.** √(0,08 × 0,92 / 250) ≈ 0,017 16 ; marge = 1,96 × 0,017 16 ≈ 0,033 6 ;
+IC95% ≈ **[0,046 4 ; 0,113 6]**, soit de 4,6 % à 11,4 %. *(Avec n − 1 sous la racine :
+[0,046 3 ; 0,113 7], même conclusion.)*
+
+**3.** marge = 2,576 × 0,017 16 ≈ 0,044 2 ; IC99% ≈ **[0,035 8 ; 0,124 2]**. L'intervalle à 99 % est
+plus large : pour que la méthode réussisse plus souvent (99 fois sur 100 au lieu de 95), il faut
+une fourchette plus large. Plus de confiance, moins de précision.
+
+**4.** (a) **Faux** : le vrai taux est fixe ; une fois l'intervalle calculé, il est dedans ou non.
+(b) **Juste** : c'est la formulation attendue. (c) **Faux** : l'intervalle est centré sur NOTRE f,
+pas sur p ; un nouvel échantillon varie autour de p, pas autour de notre f — en moyenne, il ne tombe
+dans l'intervalle qu'environ 83 fois sur 100. (d) **Juste** : c'est ce que veut dire « la méthode
+réussit dans environ 95 % des cas ».
+
+**5.** L'intervalle [4,6 % ; 11,4 %] **contient** 5 % : on ne peut conclure ni que la ligne respecte
+l'exigence, ni qu'elle ne la respecte pas. Il faut contrôler plus de soudures.
+
+**6.** Avec p ≈ 0,08 : n ≥ (1,96 / 0,01)² × 0,08 × 0,92 = 196² × 0,073 6 ≈ 2 827,4, donc
+**2 828 soudures**. Sans information (p(1 − p) = 0,25) : n ≥ (0,98 / 0,01)² = 98² = **9 604
+soudures**.
 """,
         },
         {
@@ -52662,6 +53152,19 @@ _mth("18.7", "Calculer la taille d'échantillon nécessaire pour une précision 
    "97 pièces. Diviser la marge visée par 4 (à 0,0075 mm) multiplierait n "
    "par 16, pas par 4.")
 
+_mth("18.13", "Construire et interpréter l'intervalle de confiance d'une proportion", [
+    "**Proportion observée** : f = k/n, écrite en nombre décimal (0,07, pas 7).",
+    "**Conditions** (données par l'énoncé) : n ≥ 30, nf ≥ 5 et n(1 − f) ≥ 5.",
+    "**Marge d'erreur** : 1,96 × √(f(1 − f)/n) à 95 % (2,576 à 99 %) — n sous la racine.",
+    "**Intervalle** : [f − marge ; f + marge], puis repasser en % pour conclure.",
+    "**Interpréter** : « avec une confiance de 95 %, le vrai taux est entre … et … » — jamais "
+    "« 95 % de chances » : p est fixe, c'est la méthode qui réussit environ 95 fois sur 100.",
+    "**Décider** : intervalle entièrement d'un côté de la limite → on conclut ; limite dans "
+    "l'intervalle → on ne peut pas conclure, il faut plus de pièces : "
+    "n ≥ (1,96/e)² × p(1 − p), entier supérieur.",
+], "16 joints défectueux sur 400 : f = 0,04, marge = 1,96 × √(0,04 × 0,96/400) ≈ 0,019 2, "
+       "IC95% ≈ [2,1 % ; 5,9 %], entièrement au-dessus de la garantie de 2 % : réclamation justifiée.")
+
 _mth("18.8", "Modéliser une mise en régime (montée vers un équilibre)", [
     "**Utiliser la même solution que pour une décroissance** : y(t) = y_eq "
     "+ (y₀ − y_eq) × e^(−t/τ) — le signe de (y₀ − y_eq) décide seul si le "
@@ -54223,6 +54726,125 @@ def gen_euler_ecart():
     }
 
 
+def gen_ic_proportion():
+    """Marge ou borne de l'intervalle de confiance à 95 % d'une proportion."""
+    while True:
+        n = random.choice([200, 250, 300, 400, 500, 800])
+        k = random.randint(max(5, round(0.02 * n)), round(0.2 * n))
+        f = k / n
+        if n * f < 5 or n * (1 - f) < 5:
+            continue
+        s = math.sqrt(f * (1 - f) / n)
+        m = 1.96 * s
+        demande = random.choice(["marge", "inf", "sup"])
+        rep = {"marge": m, "inf": f - m, "sup": f + m}[demande]
+        m99 = 2.576 * s
+        cands = {
+            "sans_racine": {"marge": 1.96 * f * (1 - f) / n, "inf": f - 1.96 * f * (1 - f) / n,
+                            "sup": f + 1.96 * f * (1 - f) / n}[demande],
+            "sans_196": {"marge": s, "inf": f - s, "sup": f + s}[demande],
+            "sans_n": {"marge": 1.96 * math.sqrt(f * (1 - f)), "inf": f - 1.96 * math.sqrt(f * (1 - f)),
+                       "sup": f + 1.96 * math.sqrt(f * (1 - f))}[demande],
+            "autre_borne": {"marge": 2 * m, "inf": f + m, "sup": f - m}[demande],
+            "coef_99": {"marge": m99, "inf": f - m99, "sup": f + m99}[demande],
+            "pourcent": 100 * rep,
+        }
+        vals = list(cands.values())
+        if all(abs(v - rep) > 0.001 for v in vals) and \
+                all(abs(vals[i] - vals[j]) > 0.001 for i in range(len(vals))
+                    for j in range(i + 1, len(vals))):
+            break
+    nom = {"marge": "la marge d'erreur", "inf": "la borne inférieure",
+           "sup": "la borne supérieure"}[demande]
+    diag = [
+        _diag(cands["sans_racine"], "Tu as oublié la racine carrée sur f(1 − f)/n."),
+        _diag(cands["sans_196"], "Tu as oublié le coefficient 1,96 : la marge vaut 1,96 × l'écart-type "
+                                 "estimé."),
+        _diag(cands["sans_n"], "Tu as oublié de diviser par n sous la racine."),
+        _diag(cands["autre_borne"], "C'est la largeur totale de l'intervalle (deux marges)."
+              if demande == "marge" else "Tu as calculé l'autre borne de l'intervalle."),
+        _diag(cands["coef_99"], "2,576 est le coefficient pour 99 % ; à 95 %, c'est 1,96."),
+        _diag(cands["pourcent"], "Tu as donné le résultat en pourcentage : l'énoncé demande la "
+                                 "proportion en nombre décimal."),
+    ]
+    return {
+        "titre": "Intervalle de confiance d'une proportion",
+        "enonce": (f"Sur un échantillon de {n} pièces, on trouve {k} pièces défectueuses. Calcule "
+                   f"{nom} de l'intervalle de confiance à 95 % du taux de défauts, en proportion "
+                   f"(nombre décimal), au dix-millième (garde toutes les décimales de la calculatrice "
+                   f"dans les calculs intermédiaires)."),
+        "rep": rep, "tol": 0.0002, "unite": "",
+        "diag": diag,
+        "corr": [
+            f"**Proportion observée.** f = {k}/{n} = {_fr_court(f, 4)} ; conditions : n × f = {k} ≥ 5 "
+            f"et n × (1 − f) = {n - k} ≥ 5.",
+            f"**Écart-type estimé.** √({_fr_court(f, 4)} × {_fr_court(1 - f, 4)} / {n}) ≈ "
+            f"{fr(s, 5)}.",
+            f"**Marge.** 1,96 × {fr(s, 5)} ≈ {fr(m, 4)}.",
+            f"**Intervalle.** [{fr(f - m, 4)} ; {fr(f + m, 4)}] : {nom} vaut **{fr(rep, 4)}**.",
+            f"**Lecture.** Avec une confiance de 95 %, le taux de défauts du lot est entre "
+            f"{fr(100 * (f - m), 1)} % et {fr(100 * (f + m), 1)} %.",
+        ],
+        "indice": "IC95% = f ± 1,96 × √(f(1 − f)/n), avec f = k/n en nombre décimal.",
+    }
+
+
+def gen_taille_proportion():
+    """Taille d'échantillon pour estimer une proportion avec une marge donnée."""
+    while True:
+        e = random.choice([0.01, 0.02, 0.03, 0.04, 0.05])
+        p = random.choice([None, 0.05, 0.1, 0.2, 0.3])
+        pq = 0.25 if p is None else p * (1 - p)
+        brut = round((1.96 / e) ** 2 * pq, 6)
+        rep = math.ceil(brut)
+        if p is not None and (e >= p or rep * p < 5):
+            continue
+        cands = [math.ceil(round((1.96 / e) ** 2, 6)), math.ceil(round(1.96 / e * pq, 6)),
+                 math.ceil(round((1.96 / e) * math.sqrt(pq), 6))]
+        if brut != int(brut):
+            cands.append(math.floor(brut))
+        if p is not None:
+            cands.append(math.ceil(round((1.96 / e) ** 2 * 0.25, 6)))
+        if all(abs(v - rep) > 0.5 for v in cands) and len(set(cands)) == len(cands):
+            break
+    diag = [
+        _diag(cands[0], "Tu as oublié de multiplier par p(1 − p)."),
+        _diag(cands[1], "Tu as calculé (1,96/e) × p(1 − p) : le carré porte sur (1,96/e), avant de "
+                        "multiplier par p(1 − p)."),
+        _diag(cands[2], "Tu as obtenu √n, pas n : (1,96/e) × √(p(1 − p)) est la racine de la "
+                        "réponse, il reste à l'élever au carré."),
+    ]
+    i = 3
+    if brut != int(brut):
+        diag.append(_diag(cands[i], "Tu as arrondi vers le bas : on prend toujours l'entier "
+                                    "SUPÉRIEUR (fiche 18.7)."))
+        i += 1
+    if p is not None:
+        diag.append(_diag(cands[i], "Tu as pris le pire cas p(1 − p) = 0,25 alors qu'on dispose "
+                                    f"d'une estimation p ≈ {_fr_court(p)}."))
+    info = ("sans aucune information préalable sur le taux" if p is None
+            else f"sachant qu'un historique donne un taux voisin de {_fr_court(p)}")
+    return {
+        "titre": "Taille d'échantillon pour une proportion",
+        "enonce": (f"On veut estimer un taux de défauts avec une marge d'erreur de {_fr_court(e)} "
+                   f"({_fr_court(100 * e)} point{'s' if e > 0.01 else ''}, intervalle de confiance à "
+                   f"95 %), {info}. Combien de pièces faut-il contrôler ? (Ne pas arrondir 1,96/e "
+                   f"ni son carré en cours de calcul.)"),
+        "rep": rep, "tol": 0.5, "unite": "pièces",
+        "diag": diag,
+        "corr": [
+            ("**Pire cas.** Sans information, on prend p = 0,5 : p(1 − p) = 0,25."
+             if p is None else f"**Estimation préalable.** p(1 − p) = {_fr_court(p)} × "
+             f"{_fr_court(1 - p)} = {_fr_court(pq)}."),
+            f"**Formule.** n ≥ (1,96 / {_fr_court(e)})² × {_fr_court(pq)} "
+            f"{'=' if brut == int(brut) else '≈'} {fr(brut, 2)}.",
+            f"**Entier supérieur** : **{rep} pièces**.",
+        ],
+        "indice": "n ≥ (1,96 / e)² × p(1 − p), puis l'entier supérieur ; sans information, "
+                  "p(1 − p) = 0,25.",
+    }
+
+
 def decimales_affichage(tol):
     """Nombre de décimales pour afficher la réponse d'un générateur : assez pour que la valeur
     AFFICHÉE soit acceptée par la tolérance (10⁻ᵈ ≤ tol, donc erreur d'arrondi ≤ tol/2), et au
@@ -54294,7 +54916,8 @@ def fabriquer_exo(famille=None):
                                   gen_pente_moindres_carres, gen_proba_uniforme,
                                   gen_borne_continuite, gen_proba_normale,
                                   gen_sigma_somme, gen_sigma_affine,
-                                  gen_euler_pas, gen_euler_ecart],
+                                  gen_euler_pas, gen_euler_ecart,
+                                  gen_ic_proportion, gen_taille_proportion],
     }
     if famille and famille in catalogue:
         pool = catalogue[famille]
@@ -57835,6 +58458,100 @@ ATELIERS = [
                      "(u suivante = u + h × pente, pente recalculée à chaque pas, au point où l'on "
                      "est). Le résultat est approché, trop près de l'équilibre quand le pas est petit "
                      "devant τ ; on le rend plus précis en diminuant le pas.",
+    },
+    {
+        "id": "at145",
+        "chapitre": "Bloc 18",
+        "titre": "Réception d'un lot : intervalle de confiance d'un taux de défauts",
+        "theme": "Statistique inférentielle",
+        "fiche": "18.13",
+        "figure": "ic_proportion_simulation",
+        "vocabulaire": [
+            ("proportion observée (f)", "part des pièces de l'échantillon qui ont le caractère étudié : "
+             "f = k/n, écrite en nombre décimal."),
+            ("marge d'erreur", "demi-largeur de l'intervalle : 1,96 × √(f(1 − f)/n) à 95 %."),
+            ("niveau de confiance", "fiabilité de la MÉTHODE : environ 95 % des intervalles construits "
+             "ainsi contiennent le vrai taux. Ce n'est pas une probabilité sur l'intervalle déjà "
+             "calculé."),
+        ],
+        "enonce": "Un fournisseur garantit au plus 2 % de joints défectueux. Sur 400 joints prélevés au "
+                  "hasard dans le lot, on en trouve 16 défectueux.",
+        "etapes": [
+            {"type": "numerique", "label": "Proportion observée f", "unite": "",
+             "attendu": 16 / 400, "tol": 0.0005,
+             "consigne": "f = nombre de défectueux / nombre de joints contrôlés, en nombre décimal.",
+             "indice": "16 / 400.",
+             "pieges": [(16.0, "16 est le nombre de défectueux k ; la proportion est k/n."),
+                        (4.0, "C'est le pourcentage (4 %) : dans les calculs, écris la proportion en "
+                              "nombre décimal, 0,04."),
+                        (0.16, "Tu as divisé par 100 au lieu de 400.")]},
+            {"type": "numerique", "label": "Écart-type estimé √(f(1 − f)/n)", "unite": "",
+             "attendu": math.sqrt(0.04 * 0.96 / 400), "tol": 0.0001, "format": "%.6f",
+             "depend_de": {"etape": 1, "formule": lambda v: math.sqrt(v * (1 - v) / 400)},
+             "consigne": "Calcule √(f × (1 − f) / n).",
+             "indice": "0,04 × 0,96 = 0,038 4 ; divisé par 400 : 0,000 096 ; puis la racine.",
+             "pieges": [(0.04 * 0.96 / 400, "Tu as oublié la racine carrée."),
+                        (math.sqrt(0.04 * 0.96), "Tu as oublié de diviser par n = 400 sous la racine."),
+                        (math.sqrt(0.04 * 0.96) / 400, "Tu as divisé par 400 en dehors de la racine : "
+                                                       "n se met SOUS la racine.")]},
+            {"type": "numerique", "label": "Marge d'erreur à 95 %", "unite": "",
+             "attendu": 1.96 * math.sqrt(0.04 * 0.96 / 400), "tol": 0.0002,
+             "depend_de": {"etape": 2, "formule": lambda v: 1.96 * v},
+             "consigne": "Multiplie l'écart-type estimé par 1,96.",
+             "indice": "1,96 × 0,009 8.",
+             "pieges": [(2.576 * math.sqrt(0.04 * 0.96 / 400), "2,576 est le coefficient pour 99 % ; "
+                                                              "à 95 %, c'est 1,96."),
+                        (math.sqrt(0.04 * 0.96 / 400), "C'est l'écart-type : la marge vaut 1,96 × "
+                                                       "écart-type.")]},
+            {"type": "numerique", "label": "Borne inférieure de l'intervalle", "unite": "",
+             "attendu": 0.04 - 1.96 * math.sqrt(0.04 * 0.96 / 400), "tol": 0.0002,
+             "depend_de": {"etape": 3, "formule": lambda v: 0.04 - v},
+             "consigne": "f − marge.",
+             "indice": "0,04 − 0,019 2.",
+             "pieges": [(0.04 + 1.96 * math.sqrt(0.04 * 0.96 / 400), "C'est la borne SUPÉRIEURE, "
+                                                                     "f + marge."),
+                        (0.04 - math.sqrt(0.04 * 0.96 / 400), "Tu as retiré l'écart-type au lieu de la "
+                                                              "marge (1,96 × écart-type).")]},
+            {"type": "qcm", "label": "Décider",
+             "question": "L'intervalle vaut environ [2,1 % ; 5,9 %] et la garantie est « au plus 2 % ». "
+                         "Que conclure ?",
+             "options": ["On ne peut pas conclure : l'intervalle, large de près de 4 points, est trop "
+                         "large pour trancher",
+                         "Le lot respecte la garantie : 2 % n'est qu'à 0,1 point de la borne inférieure",
+                         "Le lot dépasse la garantie : tout l'intervalle est au-dessus de 2 %"],
+             "bonne": 2,
+             "diagnostics": {0: "L'intervalle est large, mais il est ENTIÈREMENT au-dessus de 2 % : "
+                                "c'est ce qui compte pour conclure.",
+                             1: "Proche ne suffit pas : 2 % est en dehors de l'intervalle, en dessous "
+                                "de sa borne inférieure."}},
+            {"type": "qcm", "label": "Formuler la conclusion",
+             "question": "Quelle phrase peut-on écrire dans le rapport de réception ?",
+             "options": ["Il y a 95 % de chances que le vrai taux du lot soit entre 2,1 % et 5,9 %",
+                         "Avec une confiance de 95 %, le vrai taux du lot est entre 2,1 % et 5,9 %",
+                         "Si on prélève 400 autres joints, on a 95 % de chances d'y trouver entre 2,1 % "
+                         "et 5,9 % de défectueux"],
+             "bonne": 1,
+             "diagnostics": {0: "Le vrai taux est fixe : une fois l'intervalle calculé, il est dedans "
+                                "ou non — comme le rivet déjà posé, bon ou non. Le 95 % est la "
+                                "fiabilité de la MÉTHODE, d'où le mot « confiance ».",
+                             2: "L'intervalle ne prédit pas le prochain échantillon : il est centré sur "
+                                "ton f, alors qu'un nouvel échantillon varie autour du vrai taux p, pas "
+                                "autour de ton f."}},
+        ],
+        "corrige": {
+            "enonce": "16 défectueux sur 400 joints ; garantie du fournisseur : au plus 2 %.",
+            "regle": "**IC95% = [f − 1,96 × √(f(1 − f)/n) ; f + 1,96 × √(f(1 − f)/n)], puis on compare "
+                     "l'intervalle à la limite.**",
+            "conversions": "Proportions en nombres décimaux (0,04), en % seulement pour conclure.",
+            "remplacement": "f = 16/400 ; √(0,04 × 0,96/400) ; 1,96 × 0,009 8 ; 0,04 − 0,019 2",
+            "calcul": "f = **0,04**\n\nécart-type ≈ **0,009 8**\n\nmarge ≈ **0,019 2**"
+                      "\n\nIC95% ≈ **[0,020 8 ; 0,059 2]**",
+            "verification": "**Contrôle de cohérence** : l'intervalle est centré sur f = 0,04 et reste "
+                            "entre 0 et 1 ; conditions nf = 16 ≥ 5 et n(1 − f) = 384 ≥ 5 remplies.",
+        },
+        "a_retenir": "À retenir : un intervalle ENTIÈREMENT au-dessus de la limite permet de conclure "
+                     "« avec une confiance de 95 % ». Le 95 % est la fiabilité de la méthode, pas une "
+                     "probabilité sur le vrai taux, qui est fixe.",
     },
     {
         "id": "at29",
@@ -65709,10 +66426,10 @@ MATIERES_PROGRAMME = [
          "Statistique descriptive et inférentielle, probabilités simples et conditionnelles, "
          "loi binomiale, espérance/écart-type, loi uniforme, loi normale et approximation d'une "
          "binomiale, somme de variables et théorème de la limite centrée, taille d'échantillon, "
-         "statistique à deux variables (ajustement affine, corrélation). Non traités : lois "
-         "exponentielle et de Poisson, tests d'hypothèse, intervalle de confiance d'une "
-         "proportion.",
-         [(7, ["7.3"]), (17, ["17.3", "17.6", "17.8"]), (18, ["18.1", "18.2", "18.3", "18.5", "18.6", "18.9", "18.10", "18.11", "18.7"])]),
+         "statistique à deux variables (ajustement affine, corrélation), intervalle de confiance "
+         "d'une proportion. Non traités : lois exponentielle et de Poisson, tests "
+         "d'hypothèse.",
+         [(7, ["7.3"]), (17, ["17.3", "17.6", "17.8"]), (18, ["18.1", "18.2", "18.3", "18.5", "18.6", "18.9", "18.10", "18.11", "18.7", "18.13"])]),
     ]),
 ]
 
