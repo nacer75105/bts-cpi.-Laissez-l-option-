@@ -23,7 +23,7 @@ Plan (le référentiel ne répartit pas les modules entre 1ʳᵉ et 2ᵉ année 
 prérequis et la répartition usuelle) :
 1. ✅ 17.7 ln et exp — 2. ✅ 17.8 statistique à deux variables — 3. ✅ 18.9 loi uniforme —
 4. ✅ 18.10 loi normale et approximation binomiale — 5. ✅ 18.11 somme de variables, limite centrée —
-6. ✅ 18.12 méthode d'Euler — 7. ✅ 18.13 IC d'une proportion — 8. tests sur une proportion / une moyenne —
+6. ✅ 18.12 méthode d'Euler — 7. ✅ 18.13 IC d'une proportion — 8. ✅ 18.14 tests sur une proportion / une moyenne —
 9. tests de comparaison — 10. loi exponentielle — 11. loi de Poisson — 12. nombres
 complexes (forme algébrique, Δ < 0) — 13. équations différentielles du second ordre.
 
@@ -159,6 +159,35 @@ complexes (forme algébrique, Δ < 0) — 13. équations différentielles du sec
   at145 et générateurs non cliqués dans l'interface (la fiche s'ouvre sans erreur dans un
   AppTest ; outil d'audit : 0 défaut).
 
+### 18.14 — Tests d'hypothèse sur une proportion et sur une moyenne (faite le 2026-09-26)
+
+- Référentiel (annexe I, Statistique inférentielle, Tests d'hypothèse) : tests bilatéraux et
+  unilatéraux sur une proportion (loi binomiale, puis binomiale approximable par une normale) et
+  sur une moyenne ; région de rejet et règle de décision ; choix fournis dans les cas délicats ;
+  risques de 1ʳᵉ et 2ᵉ espèce ; puissance abordée. Les tests de COMPARAISON de deux échantillons
+  restent à faire (fiche 9 du plan).
+- Placée après 18.13 (ordre affiché … 18.7 → 18.13 → 18.14 → 18.8 → 18.12), avec méthode, figures
+  `test_region_rejet` (zone où l'on garde H₀ et région critique d'un test unilatéral) et
+  `risques_alpha_beta` (α et β sur deux cloches), atelier at146 (machine à 50,00 mm, étapes 2 et 3
+  avec `depend_de`), générateurs `gen_test_moyenne` et `gen_test_proportion`, 9 questions dans la
+  banque « probabilités et équations différentielles » (bonne réponse en positions 1, 3, 0, 2, 2,
+  0, 3, 1, 2), dont une sur la puissance.
+- Notation : σ(F) = √(p₀(1 − p₀)/n) et σ(X̄) = σ/√n, graphie de la 18.11 ; la 18.13 note désormais
+  aussi σ(F) dans ses formules. (Le « σF » de la 17.8 est l'écart-type d'une force, sans rapport.)
+- Retouches ailleurs : 18.13 § 7 renvoie à la 18.14 ; 18.11 (navette) aussi ; résumé du bloc 18,
+  encart de la page Maths et tableau de bord : seuls les tests de comparaison restent non traités.
+- Trois tours de relecture (justesse + clarté) jusqu'à zéro réserve. Points arbitrés par l'auteur :
+  raisonnement à contre-courant et image du procès menée jusqu'aux deux risques (condamner un
+  innocent = α, acquitter un coupable = β) ; H₀ par défaut parce qu'elle fixe un nombre ; zone du
+  test = zone verte de la 18.13 centrée sur p₀ en bilatéral, ouverte d'un côté en unilatéral ;
+  bilatéral/unilatéral choisi d'après la question (choix a posteriori : risque réel 10 %) et
+  encadré « Protocole » au § 6 ; β calculé en imaginant une dérive (48 % pour 20,02 mm, 15 % pour
+  20,03 mm), « β dépend de la dérive supposée », puissance 85 % / 52 %, compromis α/β (β ≈ 72 % à
+  α = 1 %) et rôle de n ; petit échantillon traité par la loi binomiale exacte (rejet à partir de
+  5 défectueuses sur 50) et exercé dans l'exercice.
+- **Non vérifié** : atelier at146 et générateurs non cliqués dans l'interface (la fiche s'ouvre
+  sans erreur dans un AppTest ; outil d'audit : 0 défaut).
+
 ### Corrigés d'ateliers : « \n\n » affiché en toutes lettres (corrigé le 2026-09-25)
 
 - Constat à l'écran (page de test rendant le corrigé réel avec st.markdown, comme la page
@@ -281,9 +310,9 @@ complexes (forme algébrique, Δ < 0) — 13. équations différentielles du sec
   - Probabilités 1 : entièrement traité depuis le 2026-09-25 (18.9 loi uniforme, 18.10 loi
     normale et approximation binomiale, 18.11 aX + b, X ± Y et limite centrée) ;
   - Probabilités 2 : loi exponentielle, loi de Poisson, approximation binomiale → Poisson ;
-  - Statistique inférentielle : tests d'hypothèse (bilatéraux, unilatéraux, comparaison de deux
-    moyennes ou proportions) — l'intervalle de confiance d'une proportion est traité depuis le
-    2026-09-25 (fiche 18.13) ;
+  - Statistique inférentielle : tests de comparaison de deux moyennes ou de deux proportions —
+    l'intervalle de confiance d'une proportion (fiche 18.13) et les tests sur une proportion ou une
+    moyenne (fiche 18.14) sont traités depuis les 2026-09-25 et 2026-09-26 ;
   - Équations différentielles : second ordre à coefficients constants (la méthode d'Euler est
     traitée depuis le 2026-09-25, fiche 18.12).
   Le résumé du bloc 18, l'encart de la page Maths et le tableau de bord

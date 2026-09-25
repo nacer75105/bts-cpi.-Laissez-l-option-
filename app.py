@@ -6006,6 +6006,104 @@ def ic_proportion_simulation():
     return _svg("".join(p_), 760, yb + 66)
 
 
+def _densite(x, mu, sig):
+    return math.exp(-((x - mu) ** 2) / (2 * sig ** 2)) / (sig * math.sqrt(2 * math.pi))
+
+
+def test_region_rejet():
+    p0, sig = 0.05, math.sqrt(0.05 * 0.95 / 400)
+    seuil = p0 + 1.645 * sig
+    x0, y0, L, H = 80, 290, 600, 210  # axe de 0,01 à 0,10
+    X = lambda f: x0 + L * (f - 0.01) / 0.09  # noqa: E731
+    dmax = _densite(p0, p0, sig)
+    Y = lambda d: y0 - H * d / dmax  # noqa: E731
+    p_ = [_txt(40, 24, "H₀ : p = 0,05 (400 pièces). Si H₀ est vraie, voici comment se répartit la proportion observée F.",
+               12, TRAIT, "start", True)]
+    # zone verte (on garde H₀) : de la gauche jusqu'au seuil
+    p_.append(f"<rect x='{X(0.01):.1f}' y='{y0 - H - 16}' width='{X(seuil) - X(0.01):.1f}' height='{H + 16}' "
+              f"fill='{OK}' fill-opacity='0.08'/>")
+    # zone critique (aire à droite du seuil)
+    pts = [f"{X(seuil):.1f},{y0}"]
+    for i in range(0, 101):
+        f = seuil + (0.10 - seuil) * i / 100
+        pts.append(f"{X(f):.1f},{Y(_densite(f, p0, sig)):.1f}")
+    pts.append(f"{X(0.10):.1f},{y0}")
+    p_.append(f"<polygon points='{' '.join(pts)}' fill='{ALERTE}' fill-opacity='0.35' stroke='none'/>")
+    cloche = " ".join(f"{X(0.01 + 0.09 * i / 300):.1f},{Y(_densite(0.01 + 0.09 * i / 300, p0, sig)):.1f}"
+                      for i in range(0, 301))
+    p_.append(f"<polyline points='{cloche}' fill='none' stroke='{ALESAGE}' stroke-width='2.5'/>")
+    p_.append(f"<line x1='{x0}' y1='{y0}' x2='{x0 + L}' y2='{y0}' stroke='{FIN}' stroke-width='1.4'/>")
+    for f in (0.02, 0.04, 0.06, 0.08, 0.10):
+        p_.append(_txt(X(f), y0 + 16, fr(f, 2), 11, FIN, "middle"))
+    p_.append(_txt(x0 + L, y0 + 32, "proportion observée f", 11, FIN, "end"))
+    p_.append(f"<line x1='{X(p0):.1f}' y1='{y0}' x2='{X(p0):.1f}' y2='{y0 - H - 6}' stroke='{ALESAGE}' "
+              f"stroke-dasharray='4 3'/>")
+    p_.append(_txt(X(p0), y0 - H - 10, "p₀ = 0,05 (annoncé par H₀)", 11, ALESAGE, "middle", True))
+    p_.append(f"<line x1='{X(seuil):.1f}' y1='{y0}' x2='{X(seuil):.1f}' y2='{y0 - 150}' stroke='{ALERTE}' "
+              f"stroke-width='2'/>")
+    p_.append(_txt(X(seuil) + 6, y0 - 138, "seuil 0,067 9", 11, ALERTE, "start", True))
+    p_.append(_txt(X(seuil) + 6, y0 - 124, "= 0,05 + 1,645 × 0,010 9", 11, ALERTE, "start"))
+    p_.append(_txt(X(0.080), y0 - 40, "région critique : 5 % de l'aire", 11, ALERTE, "start", True))
+    p_.append(_txt(X(0.080), y0 - 26, "on rejette H₀", 11, ALERTE, "start"))
+    p_.append(_txt(X(0.012), y0 - 164, "zone où l'on garde H₀ : f ≤ 0,067 9", 11, OK, "start", True))
+    p_.append(_txt(X(0.012), y0 - 150, "(95 % de l'aire,", 11, OK, "start", True))
+    p_.append(_txt(X(0.012), y0 - 136, "toute à gauche du seuil)", 11, OK, "start", True))
+    for f, nom in ((0.06, "24 défectueuses : f = 0,06"), (0.075, "30 défectueuses : f = 0,075")):
+        coul = ALESAGE if f < seuil else ALERTE
+        p_.append(f"<circle cx='{X(f):.1f}' cy='{y0}' r='5' fill='{coul}'/>")
+        p_.append(_txt(X(f), y0 + 48 if f < seuil else y0 + 62, nom, 11, coul, "middle", True))
+    p_.append(f"<rect x='40' y='{y0 + 76}' width='680' height='52' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p_.append(_txt(56, y0 + 98, "Si le lot est vraiment à 5 %, f ne dépasse 0,067 9 que 5 fois sur 100 : 0,075 est une preuve contre H₀.", 12, TRAIT, "start", True))
+    p_.append(_txt(56, y0 + 118, "0,06, lui, reste dans la zone habituelle : l'écart avec 5 % peut venir du hasard du prélèvement.", 12, TRAIT, "start", True))
+    return _svg("".join(p_), 760, y0 + 142)
+
+
+def risques_alpha_beta():
+    mu0, mu1, sig = 20.0, 20.02, 0.01
+    a, b = mu0 - 1.96 * sig, mu0 + 1.96 * sig
+    x0, y0, L, H = 80, 280, 600, 200  # axe de 19,96 à 20,06
+    X = lambda x: x0 + L * (x - 19.96) / 0.10  # noqa: E731
+    dmax = _densite(mu0, mu0, sig)
+    Y = lambda d: y0 - H * d / dmax  # noqa: E731
+
+    def aire(de, a_, mu, coul, op):
+        pts = [f"{X(de):.1f},{y0}"]
+        for i in range(0, 101):
+            x = de + (a_ - de) * i / 100
+            pts.append(f"{X(x):.1f},{Y(_densite(x, mu, sig)):.1f}")
+        pts.append(f"{X(a_):.1f},{y0}")
+        return f"<polygon points='{' '.join(pts)}' fill='{coul}' fill-opacity='{op}' stroke='none'/>"
+
+    p_ = [_txt(40, 24, "Machine réglée à 20,00 mm (H₀) ou dérivée à 20,02 mm : 25 pièces, zone [19,980 4 ; 20,019 6].",
+               12, TRAIT, "start", True)]
+    p_.append(f"<rect x='{X(a):.1f}' y='{y0 - H - 14}' width='{X(b) - X(a):.1f}' height='{H + 14}' "
+              f"fill='{OK}' fill-opacity='0.08'/>")
+    p_.append(aire(19.96, a, mu0, ALERTE, 0.45))
+    p_.append(aire(b, 20.06, mu0, ALERTE, 0.45))
+    p_.append(aire(a, b, mu1, ARBRE, 0.30))
+    for mu, coul in ((mu0, ALESAGE), (mu1, ARBRE)):
+        pts = " ".join(f"{X(19.96 + 0.10 * i / 300):.1f},{Y(_densite(19.96 + 0.10 * i / 300, mu, sig)):.1f}"
+                       for i in range(0, 301))
+        p_.append(f"<polyline points='{pts}' fill='none' stroke='{coul}' stroke-width='2.5'/>")
+    p_.append(f"<line x1='{x0}' y1='{y0}' x2='{x0 + L}' y2='{y0}' stroke='{FIN}' stroke-width='1.4'/>")
+    for x in (19.97, 19.98, 19.99, 20.00, 20.01, 20.02, 20.03, 20.04, 20.05):
+        p_.append(_txt(X(x), y0 + 16, f"{x:.2f}".replace(".", ","), 11, FIN, "middle"))
+    p_.append(_txt(x0 + L, y0 + 32, "moyenne observée x̄ (mm)", 11, FIN, "end"))
+    p_.append(_txt(X(mu0) - 8, y0 - H - 20, "si H₀ vraie : μ = 20,00", 11, ALESAGE, "end", True))
+    p_.append(_txt(X(mu1) + 8, y0 - H - 20, "si dérive : μ = 20,02", 11, ARBRE, "start", True))
+    p_.append(_txt((X(a) + X(b)) / 2, y0 - H - 4, "zone où l'on garde H₀", 11, OK, "middle", True))
+    p_.append(_txt(X(19.965), y0 - 70, "α : fausse alerte", 11, ALERTE, "start", True))
+    p_.append(_txt(X(19.965), y0 - 56, "(2 × 2,5 % = 5 %)", 11, ALERTE, "start"))
+    p_.append(_txt(X(20.012), y0 - 30, "β ≈ 48 %", 12, ARBRE, "end", True))
+    p_.append(_txt(X(20.043), y0 - 70, "défaut manqué β :", 11, ARBRE, "start", True))
+    p_.append(_txt(X(20.043), y0 - 56, "aire orange dans", 11, ARBRE, "start"))
+    p_.append(_txt(X(20.043), y0 - 42, "la zone verte", 11, ARBRE, "start"))
+    p_.append(f"<rect x='40' y='{y0 + 44}' width='680' height='52' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p_.append(_txt(56, y0 + 66, "α (rouge) : la machine est bien réglée, mais x̄ sort de la zone → on l'arrête pour rien.", 12, TRAIT, "start", True))
+    p_.append(_txt(56, y0 + 86, "β (orange) : la machine a dérivé, mais x̄ reste dans la zone → on laisse passer la dérive.", 12, TRAIT, "start", True))
+    return _svg("".join(p_), 760, y0 + 110)
+
+
 def extremums_polynome():
     p = [_txt(40, 24, "f(x) = x³ − 3x² + 2 : un maximum local puis un minimum local.",
               12, TRAIT, "start", True)]
@@ -6422,6 +6520,8 @@ FIGURES = {
     "euler_charge": ("Charge d'un condensateur : Euler monte trop vite vers l'équilibre", euler_charge),
     "proportion_en_cloche": ("La proportion observée sur 200 pièces se répartit en cloche autour du vrai taux", proportion_en_cloche),
     "ic_proportion_simulation": ("40 échantillons, 40 intervalles : la méthode réussit environ 95 fois sur 100", ic_proportion_simulation),
+    "test_region_rejet": ("Test unilatéral : si H₀ est vraie, f dépasse le seuil 5 fois sur 100", test_region_rejet),
+    "risques_alpha_beta": ("Les deux risques : fausse alerte α et défaut manqué β", risques_alpha_beta),
     "extremums_polynome": ("Un maximum local puis un minimum local", extremums_polynome),
     "dispersion_deux_reglages": ("Six mesures dispersées autour de leur moyenne", dispersion_deux_reglages),
     "venn_deux_evenements": ("Union et intersection de deux événements", venn_deux_evenements),
@@ -10396,6 +10496,75 @@ QUIZ["Mathématiques BTS CPI — probabilités et équations différentielles"] 
        "On ne peut pas conclure : 5 % est dans l'intervalle"], 3,
       "5 % est à l'intérieur de l'intervalle : les données sont compatibles avec un taux sous 5 % comme "
       "au-dessus. Il faudrait contrôler plus de pièces pour trancher.", "Piège"),
+
+    q("Un fournisseur annonce 3 % de défauts ; on soupçonne que c'est plus. Quelle est l'hypothèse "
+      "nulle H₀ ?",
+      ["p > 0,03", "p = 0,03", "p < 0,03", "p ≠ 0,03"], 1,
+      "H₀ est la situation par défaut, celle qu'on suppose vraie pour calculer : le fournisseur dit "
+      "vrai, p = 0,03. Le soupçon (p > 0,03) est H₁.", "Base"),
+
+    q("Pourquoi suppose-t-on H₀ vraie pour mener le calcul ?",
+      ["Parce que H₀ est plus souvent vraie que H₁ dans un atelier bien tenu",
+       "Parce que le but du test est de démontrer que H₀ est vraie",
+       "Parce que supposer H₁ vraie donnerait toujours raison au soupçon",
+       "Parce que H₀ fixe une valeur (p = p₀) : on sait où tombent les échantillons"], 3,
+      "H₀ donne un nombre précis (p₀ ou μ₀) : on sait alors où tombent 95 % des échantillons. H₁ "
+      "(« p > p₀ ») ne fixe aucune valeur. On ne cherche pas à prouver H₀ : on regarde si les "
+      "données la rendent invraisemblable.", "Intermédiaire"),
+
+    q("Une cote doit rester à 20,00 mm : trop grande comme trop petite, la pièce est rebutée. Quel "
+      "test mener ?",
+      ["Bilatéral, H₁ : μ ≠ 20,00", "Unilatéral, H₁ : μ > 20,00",
+       "Unilatéral, H₁ : μ < 20,00", "Le choix se fait après avoir mesuré x̄"], 0,
+      "Un écart dans les deux sens est un problème : test bilatéral. Le type de test se choisit "
+      "d'après la question, AVANT de voir les données.", "Base"),
+
+    q("Test unilatéral à droite au seuil de 5 % : quel coefficient utiliser ?",
+      ["1,96", "2,576", "1,645", "2,326"], 2,
+      "Tout le risque de 5 % est d'un seul côté : P(Z > 1,645) ≈ 0,05. 1,96 partage 5 % en deux fois "
+      "2,5 % (bilatéral) ; 2,326 est le coefficient unilatéral à 1 %, 2,576 le bilatéral à 1 %.",
+      "Calcul"),
+
+    q("Dans un test sur une proportion (H₀ : p = 0,05, n = 400, f = 0,07), avec quelle valeur "
+      "calcule-t-on σ(F) ?",
+      ["√(0,07 × 0,93 / 400)", "√(0,05 × 0,95)", "√(0,05 × 0,95 / 400)", "0,05 / √400"], 2,
+      "On suppose H₀ vraie : p = 0,05. σ(F) se calcule donc avec p₀ = 0,05, pas avec f (c'est "
+      "l'intervalle de confiance de la 18.13 qui utilise f).", "Piège"),
+
+    q("On arrête une machine parce que x̄ est sorti de la zone, alors qu'elle était bien réglée. "
+      "Quelle erreur a-t-on commise ?",
+      ["Une erreur de 1ʳᵉ espèce : on a rejeté H₀ alors qu'elle était vraie",
+       "Une erreur de 2ᵉ espèce : on a laissé passer un défaut",
+       "Aucune : x̄ était bien hors de la zone, la décision est juste",
+       "Une erreur de mesure : l'instrument a donné un x̄ faux"], 0,
+      "Rejeter H₀ alors qu'elle est vraie, c'est l'erreur de 1ʳᵉ espèce (fausse alerte) ; sa "
+      "probabilité est le seuil α. L'erreur de 2ᵉ espèce, c'est garder H₀ alors qu'elle est fausse : "
+      "ici on l'a rejetée. Et un test ne prouve rien avec certitude.", "Intermédiaire"),
+
+    q("x̄ est dans la zone où l'on garde H₀ : μ = 20,00. Quelle conclusion est juste ?",
+      ["Les mesures prouvent que la machine est réglée à 20,00 mm",
+       "Il y a 95 % de chances que la machine soit bien réglée",
+       "La machine a dérivé, mais trop peu pour que cela compte",
+       "Rien ne permet d'affirmer que la machine est déréglée"], 3,
+      "Ne pas rejeter H₀ ne la prouve pas (l'acquittement n'est pas une preuve d'innocence) : une "
+      "petite dérive peut passer inaperçue (risque β). Et H₀ est vraie ou fausse, sans « chances ».",
+      "Piège"),
+
+    q("Comment diminuer à la fois le risque de fausse alerte α et le risque de défaut manqué β ?",
+      ["Diminuer α", "Augmenter la taille n de l'échantillon", "Passer en test unilatéral",
+       "Diminuer β en augmentant α"], 1,
+      "À n fixé, diminuer α élargit la zone où l'on garde H₀ et augmente β. À procédé et instrument "
+      "donnés, seul un n plus grand resserre la cloche (σ(X̄) = σ/√n) et réduit les deux risques.",
+      "Intermédiaire"),
+
+    q("Face à une dérive de 0,03 mm, un test a une puissance de 0,85. Que signifie ce nombre ?",
+      ["Si la machine est bien réglée, le test l'arrête 85 fois sur 100",
+       "Il y a 85 % de chances que la machine soit déréglée de 0,03 mm",
+       "Si la machine a dérivé de 0,03 mm, le test le repère 85 fois sur 100",
+       "Le test prend la bonne décision 85 fois sur 100, quelle que soit la machine"], 2,
+      "La puissance, c'est 1 − β : la probabilité de rejeter H₀ quand elle est fausse, pour une "
+      "dérive donnée. Ici β ≈ 15 % : cette dérive passe inaperçue 15 fois sur 100. Elle augmente avec "
+      "la taille de la dérive et avec n.", "Intermédiaire"),
 ]
 
 QUIZ["Mathématiques BTS CPI — calcul matriciel et modélisation géométrique"] = [
@@ -47137,7 +47306,7 @@ d'usure), machine par machine.
 BLOC_18 = {
     "id": 18,
     "titre": "Bloc 18 — Mathématiques BTS CPI : probabilités et équations différentielles",
-    "resume": "Quatre modules du programme d'examen : probabilités 1, probabilités 2, statistique inférentielle et équations différentielles. Ce bloc n'en couvre qu'une partie : lois exponentielle et de Poisson, tests d'hypothèse et équations du second ordre ne sont pas encore traités.",
+    "resume": "Quatre modules du programme d'examen : probabilités 1, probabilités 2, statistique inférentielle et équations différentielles. Ce bloc n'en couvre qu'une partie : lois exponentielle et de Poisson, tests de comparaison de deux échantillons et équations du second ordre ne sont pas encore traités.",
     "fiches": [
         {
             "id": "18.1",
@@ -49034,7 +49203,7 @@ moyenne de 4. Pour une loi penchée d'un côté, il faudrait plus de valeurs.)* 
   toutes les 10 min, une moyenne d'**au moins** 6,2 min n'arrive que 1,9 fois sur 100
   (P(X̄ ≥ 6,2) ≈ 0,019, *normalFRép(6.2, 10^99, 5, 0.577)*). Deux explications restent possibles :
   un hasard rare, ou une navette plus lente qu'annoncé — la seconde est bien plus plausible. *C'est
-  l'idée des tests d'hypothèse, qui viennent ensuite.*
+  l'idée des tests d'hypothèse (fiche 18.14).*
 
 ### 5. Les erreurs classiques et à retenir
 
@@ -49526,7 +49695,7 @@ limite de contrat) :
 *Exemple : un fournisseur annonce au plus 5 % de défauts ; notre intervalle [3,5 % ; 10,5 %]
 contient 5 % : cet échantillon ne permet ni de lui donner raison, ni de lui donner tort. Le
 programme prévoit aussi une méthode, le test d'hypothèse, qui formalise cette décision de réclamer
-ou non (pas encore traitée dans l'application).*
+ou non : c'est la fiche 18.14.*
 
 ### 8. Les erreurs classiques
 
@@ -49547,7 +49716,7 @@ ou non (pas encore traitée dans l'application).*
 **Proportion observée** — f = k/n (estimation ponctuelle du vrai taux p)
 
 **Loi de la proportion observée** (n grand, avant le tirage) — F suit approximativement
-N(p ; √(p(1 − p)/n))
+N(p ; σ(F)), avec σ(F) = √(p(1 − p)/n)
 
 **Intervalle de confiance à 95 %** — [f − 1,96 × √(f(1 − f)/n) ; f + 1,96 × √(f(1 − f)/n)] ·
 à 99 % : 2,576 au lieu de 1,96 · conditions (données par l'énoncé) : n ≥ 30, nf ≥ 5, n(1 − f) ≥ 5
@@ -49643,6 +49812,376 @@ l'exigence, ni qu'elle ne la respecte pas. Il faut contrôler plus de soudures.
 **6.** Avec p ≈ 0,08 : n ≥ (1,96 / 0,01)² × 0,08 × 0,92 = 196² × 0,073 6 ≈ 2 827,4, donc
 **2 828 soudures**. Sans information (p(1 − p) = 0,25) : n ≥ (0,98 / 0,01)² = 98² = **9 604
 soudures**.
+""",
+        },
+        {
+            "id": "18.14",
+            "titre": "Statistique inférentielle : tests d'hypothèse sur une proportion et sur une moyenne",
+            "duree": "5 h",
+            "cours": """
+
+### 1. Décider à partir d'un échantillon
+
+En atelier, les questions statistiques finissent par une **décision** : accepter ou refuser une
+livraison, arrêter une machine pour la régler ou la laisser tourner, réclamer auprès d'un
+fournisseur ou non. On décide sur un **échantillon**, donc avec le hasard du prélèvement : on peut
+se tromper. Un **test d'hypothèse** est une règle de décision construite pour que ces erreurs
+restent rares, et dont on connaît le risque.
+
+*Vous l'avez déjà frôlé dans la fiche 18.11 : la navette censée passer toutes les 10 min donnait
+une attente moyenne de 6,2 min sur 25 appels, au lieu des 5 min attendues. Or une moyenne d'**au
+moins** 6,2 min n'arrive que 1,9 fois sur 100 **si** la navette tient son horaire (c'est notre
+H₀). Deux explications : un hasard rare, ou une navette plus lente. C'est exactement le
+raisonnement d'un test. Retenez le « au moins » : on juge une observation avec toutes celles qui
+seraient encore plus extrêmes.*
+
+### 2. Le raisonnement à contre-courant : le procès
+
+L'intuition voudrait qu'on cherche à **prouver** ce qu'on soupçonne (« la machine est déréglée »).
+Un test fait l'inverse : il **suppose vraie** l'hypothèse qu'on voudrait réfuter, et regarde si les
+données la rendent invraisemblable.
+
+*Image : un procès. L'accusé est **présumé innocent** : c'est l'hypothèse de départ, on ne la
+démontre pas. Le procureur doit apporter des preuves **suffisamment fortes** pour que l'innocence
+devienne invraisemblable. S'il y parvient, on condamne. Sinon, on acquitte — ce qui ne prouve pas
+que l'accusé est innocent : les preuves étaient seulement insuffisantes.*
+
+*Au tribunal, la question n'est pas « l'accusé est-il coupable ? » mais « **si** l'accusé était
+innocent, ces preuves seraient-elles surprenantes ? ». À l'atelier, c'est pareil : on ne se demande
+pas « la machine est-elle déréglée ? » mais « **si** la machine était bien réglée, une telle mesure
+serait-elle surprenante ? ». Si oui, de deux choses l'une : un hasard rare, ou une machine
+déréglée. On parie sur la seconde, en sachant qu'on se trompera de temps en temps.*
+
+> **H₀ (hypothèse nulle)** : l'hypothèse « par défaut », celle qu'on garde tant qu'on n'a pas de
+> preuve contre elle — le procédé est bien réglé, le lot est conforme, le fournisseur dit vrai.
+> **H₁ (hypothèse alternative)** : ce qu'on soupçonne et qu'on veut pouvoir affirmer — la machine
+> a dérivé, le taux de défauts a augmenté.
+
+**Pourquoi H₀ est l'hypothèse par défaut.** D'abord parce que c'est la situation dans laquelle on
+continue à travailler sans rien changer : on ne démonte pas une machine sans raison. Ensuite, et
+surtout, parce que H₀ **fixe un nombre** (p = 0,05, μ = 20,00 mm) : en la supposant vraie, on sait
+calculer comment se répartissent les échantillons, exactement comme dans les fiches 18.10 et
+18.13. H₁ (« p > 0,05 ») ne fixe aucun nombre : on ne peut pas construire la règle de décision à
+partir d'elle. *(Pour calculer le risque de défaut manqué, au § 7, il faudra justement choisir une
+valeur précise de H₁.)*
+
+**La démarche en une phrase :** on suppose H₀ vraie ; on calcule quelles valeurs observées sont
+« normales » dans ce cas (celles qu'on obtient 95 fois sur 100 — 95 parce qu'on accepte de se
+tromper 5 fois sur 100 : c'est le seuil α du § 4) ; si la valeur observée tombe en dehors, on
+**rejette H₀** — les preuves sont suffisantes ; sinon, on **ne rejette pas H₀**.
+
+### 3. Le lien avec la fiche 18.13 : la zone verte, enfin traçable
+
+La fiche 18.13 a montré la **zone verte** : si le vrai taux est p, la proportion observée F (avant
+le tirage) tombe dans p ± 1,96 × σ(F), avec **σ(F) = √(p(1 − p)/n)**, environ 95 fois sur 100. En
+18.13, on ne pouvait la tracer qu'en **imaginant** une valeur de p (la figure du § 2 de la fiche
+18.13 supposait p = 0,07) : sur un vrai lot, p est inconnu. **Ici, H₀ nous donne p (c'est p₀) : on peut enfin la
+tracer**, et il ne reste qu'à regarder si le f observé tombe dedans. **Un test, c'est comparer une
+valeur mesurée à un intervalle.**
+
+*En test **bilatéral**, c'est exactement la zone verte p₀ ± 1,96 × σ(F) (même principe qu'au § 5,
+où la zone est μ₀ ± 1,96 × σ(X̄) pour une moyenne). En test **unilatéral** (§ 4), on ne surveille qu'un côté : la zone où l'on garde H₀ devient
+f ≤ p₀ + 1,645 × σ(F), ouverte vers la gauche, qui contient elle aussi 95 % de l'aire.*
+
+> **Intervalle de confiance (18.13)** : centré sur le f **mesuré**, pour **estimer** p inconnu.
+> **Test (cette fiche)** : zone construite autour du p₀ **annoncé par H₀**, pour **décider** si
+> l'on garde H₀.
+
+*Conséquence pratique : dans un test sur une proportion, σ(F) se calcule avec p₀, la valeur de H₀ —
+pas avec f. On suppose H₀ vraie : on connaît donc p, c'est p₀.*
+
+### 4. Test sur une proportion — le taux de défauts a-t-il augmenté ?
+
+Un fournisseur garantit un taux de défauts de **5 %**. On contrôle **400 pièces** d'un lot.
+
+**Étape 1 — Les hypothèses.** H₀ : p = 0,05 (le fournisseur dit vrai). H₁ : p > 0,05 (le taux a
+augmenté). *On ne teste que « plus grand » : un lot meilleur que promis ne pose aucun problème.*
+
+**Étape 2 — Le seuil de signification α.** C'est le risque qu'on accepte de courir de rejeter H₀ à
+tort (§ 7). « Signification » vient d'écart **significatif** : un écart trop grand pour être mis sur
+le dos du hasard ; α fixe à partir de quand on le juge trop grand. Choisi **avant** de regarder les
+données, souvent α = 5 %.
+
+**Étape 3 — La loi sous H₀.** Si H₀ est vraie, F suit approximativement N(p₀ ; σ(F)) (fiche 18.13),
+avec σ(F) = √(0,05 × 0,95 / 400) ≈ 0,010 9. Conditions (données par l'énoncé) : n ≥ 30,
+np₀ = 20 ≥ 5 et n(1 − p₀) = 380 ≥ 5.
+
+**Étape 4 — La région critique (ou région de rejet).** « Critique » au sens de zone d'alerte : si f
+y tombe, on déclenche l'alerte. On rejette H₀ si f est **trop grand** pour un lot à 5 %, c'est-à-dire
+s'il tombe dans les 5 % d'aire tout à droite de la cloche. L'écart qui laisse 5 % d'aire à droite
+est **1,645** *(Z est la cloche standard de la fiche 18.10, de moyenne 0 et d'écart-type 1 ; à la
+calculatrice, la loi normale inverse — invNorm(0.95) sur TI, InvN sur Casio — donne 1,645, et
+l'on vérifie P(Z ≤ 1,645) ≈ 0,95)*. Seuil : 0,05 + 1,645 × 0,010 9 ≈ **0,067 9**.
+
+> **Règle de décision** : si f > 0,067 9, on rejette H₀ ; sinon, on ne la rejette pas.
+
+*C'est la zone « ouverte vers la gauche » annoncée au § 3 : une seule borne, à droite — d'où le
+coefficient 1,645 au lieu de 1,96 (voir juste en dessous).*
+
+**Étape 5 — Décider.**
+- **30 défectueuses** : f = 30/400 = 0,075 > 0,067 9 → **on rejette H₀** : au seuil de 5 %, le taux
+  de défauts dépasse 5 %. Réclamation justifiée.
+- **24 défectueuses** : f = 0,06 ≤ 0,067 9 → **on ne rejette pas H₀** : 6 % observés restent
+  compatibles avec un lot à 5 % ; l'écart peut venir du hasard du prélèvement.
+
+[[FIG:test_region_rejet]]
+
+*Pourquoi 1,645 et pas 1,96 ? Ici, tout le risque de 5 % est placé d'un seul côté (à droite). En
+18.13, les 5 % étaient partagés en deux fois 2,5 %, un de chaque côté : d'où 1,96.*
+
+*Le même raisonnement, sur l'exemple de la fiche 18.13 (14 défectueuses sur 200, fournisseur à
+5 %) : σ(F) = √(0,05 × 0,95 / 200) ≈ 0,015 4, seuil 0,05 + 1,645 × 0,015 4 ≈ 0,075 4 ; f = 0,07 est
+en dessous → on ne rejette pas H₀. C'est la conclusion de la 18.13, où l'intervalle [3,5 % ;
+10,5 %] contenait 5 %. Les deux méthodes concordent ici, mais pas toujours dans les cas limites : le
+test utilise p₀ et un seul côté. Quand on doit décider, c'est le test qui fait foi.*
+
+**Et avec un petit échantillon ?** Test unilatéral à droite au seuil de 5 %, H₀ : p = 0,04,
+H₁ : p > 0,04, sur **n = 50** pièces. Ici np₀ = 2 < 5 : on attend 2 défectueuses en moyenne, et on
+ne peut pas descendre sous 0 ; la répartition est tassée contre zéro, dissymétrique : ce n'est plus
+une cloche. On travaille donc directement avec la loi binomiale B(50 ; 0,04) (fiche 18.2). X est le
+nombre de défectueuses parmi les 50 ; on cherche **à partir de combien de défectueuses on crie au
+loup** : un nombre qu'un lot à 4 % n'atteint que moins de 5 fois sur 100. On essaie, à la
+calculatrice (P(X ≥ k) = 1 − P(X ≤ k − 1), avec binomFRép) : « 4 ou plus » arrive 13,9 fois sur 100,
+trop souvent pour accuser ; « 5 ou plus » arrive 4,9 fois sur 100, assez rarement. **Règle : on
+rejette H₀ si l'échantillon contient 5 pièces défectueuses ou plus.**
+
+### 5. Test sur une moyenne — la machine tient-elle sa cote ?
+
+Une machine est réglée pour usiner un diamètre de **20,00 mm** ; l'écart-type d'une pièce est
+connu, **σ = 0,05 mm**. On mesure **25 pièces** : x̄ = 20,03 mm. Faut-il arrêter la machine ? *(μ
+est la vraie moyenne de toute la production, inconnue, comme p pour une proportion ; μ₀ = 20,00 est
+la valeur qu'annonce H₀.)*
+
+**Étape 1.** H₀ : μ = 20,00 (la machine est bien réglée). H₁ : μ ≠ 20,00 (elle a dérivé, **dans un
+sens ou dans l'autre** : une cote trop grande est aussi grave qu'une cote trop petite).
+
+**Étape 2.** α = 5 %, partagé en deux fois 2,5 % : coefficient **1,96**.
+
+**Étape 3.** Sous H₀, X̄ suit N(20,00 ; σ(X̄)), avec **σ(X̄) = σ/√n** (fiches 18.3 et 18.11) :
+0,05/√25 = **0,01 mm**. *Attention : σ = 0,05 est l'écart-type d'une pièce ; celui de la moyenne,
+σ(X̄), est 5 fois plus petit.*
+
+**Étape 4.** Zone où l'on garde H₀ : 20,00 ± 1,96 × 0,01 = **[19,980 4 ; 20,019 6]**. En dehors, des
+deux côtés, c'est la région critique.
+
+> **Règle de décision** : si x̄ est hors de [19,980 4 ; 20,019 6], on rejette H₀.
+
+**Étape 5.** x̄ = 20,03 est au-dessus de 20,019 6 → **on rejette H₀** : au seuil de 5 %, la machine
+est déréglée ; on la règle. *(Si σ n'est pas connu, on le remplace par l'écart-type s de
+l'échantillon, pour n ≥ 30, comme en 18.3.)*
+
+### 6. Bilatéral ou unilatéral : c'est la question posée qui décide
+
+> **Bilatéral** (H₁ : « différent de ») quand un écart **dans les deux sens** est un problème :
+> une cote qui doit rester centrée, un couple de serrage (trop faible, la vis se desserre ; trop
+> fort, elle casse). Coefficient 1,96 à 5 %, 2,576 à 1 %.
+> **Unilatéral** (H₁ : « plus grand que » ou « plus petit que ») quand **un seul sens** est un
+> problème : un taux de défauts qui augmente, une résistance inférieure à la valeur annoncée.
+> Coefficient 1,645 à 5 %, 2,326 à 1 %.
+
+Le choix se fait **avant** de voir les données, d'après la question posée — jamais d'après le
+résultat. Choisir l'unilatéral **après** avoir vu de quel côté tombe x̄, c'est se garder les deux
+côtés : on rejette H₀ dès que x̄ s'écarte de μ₀ de plus de 1,645 × σ(X̄), à droite **ou** à gauche,
+chacun avec 5 % de risque. Le vrai risque de fausse alerte vaut alors 5 % + 5 % = **10 %**, et non les 5 % annoncés.
+
+> **Protocole** : les hypothèses, le type de test et le seuil α se fixent **avant** de regarder les
+> données. Choisis après coup, ils s'ajustent au résultat. C'est parier « pile » une fois la pièce
+> retombée : α ne mesure plus le vrai risque de fausse alerte, et le test perd son sens.
+
+*À l'examen, dans les cas délicats, l'énoncé fournit les hypothèses, le type de test et le seuil.*
+
+### 7. Les deux risques d'erreur — et ce qu'ils coûtent en atelier
+
+Le tribunal connaît deux erreurs : **condamner un innocent** et **acquitter un coupable**. La
+justice choisit de rendre la première rare (« au-delà du doute raisonnable »), quitte à laisser
+filer quelques coupables. Le test fait le même choix : on fixe α petit, et on subit β.
+
+| | H₀ vraie (machine bien réglée) | H₀ fausse (machine déréglée) |
+|---|---|---|
+| **On rejette H₀** (on arrête la machine) | **Erreur de 1ʳᵉ espèce** : fausse alerte | Bonne décision |
+| **On ne rejette pas H₀** (on laisse tourner) | Bonne décision | **Erreur de 2ᵉ espèce** : défaut manqué |
+
+- **Risque de 1ʳᵉ espèce α** = probabilité de rejeter H₀ alors qu'elle est vraie (condamner un
+  innocent). **C'est le seuil** : on le choisit (5 %). *Coût en atelier : arrêter une machine bien
+  réglée pour rien, refuser un bon lot, se fâcher avec un fournisseur honnête.*
+- **Risque de 2ᵉ espèce β** = probabilité de ne pas rejeter H₀ alors qu'elle est fausse (acquitter
+  un coupable). *Coût : laisser passer une production hors cote, livrer des pièces défectueuses au
+  client, un rappel.*
+
+**β ne se choisit pas : on le calcule en imaginant une dérive précise.** C'est la remarque du § 2 :
+H₁ (« μ ≠ 20,00 ») ne fixe aucun nombre. Supposons donc la machine du § 5 passée à **μ = 20,02 mm**.
+Les moyennes x̄ se répartissent alors en cloche autour de 20,02, avec le même σ(X̄) = 0,01 (cloche
+orange de la figure). Or la zone où l'on garde H₀ s'arrête à 20,019 6, presque au sommet de cette
+cloche : environ la moitié de la cloche orange reste dans la zone. Donc **β ≈ 48 %** : une fois sur
+deux, on ne voit pas cette dérive. *(Calcul : β = P(19,980 4 ≤ X̄ ≤ 20,019 6) avec X̄ qui suit
+N(20,02 ; 0,01), soit normalFRép(19.9804, 20.0196, 20.02, 0.01) ≈ 0,484.)* Si la machine a dérivé à
+**20,03 mm**, la cloche orange se décale d'un cran vers la droite, une part bien plus petite reste
+dans la zone, et **β tombe à environ 15 %**. Même calcul pour le § 4 : si le vrai taux est 8 %, on
+suppose cette fois p = 0,08. C'est donc avec 0,08 qu'on calcule σ(F) = √(0,08 × 0,92 / 400) ≈
+0,013 6. Le test ne détecte pas ce taux environ 19 fois sur 100 (β = P(F ≤ 0,067 9), avec la
+cloche). **β dépend donc de la dérive supposée sous H₁ : plus la dérive est grande, plus β est
+petit.**
+
+[[FIG:risques_alpha_beta]]
+
+**La puissance** d'un test, **1 − β**, c'est la même chose vue de l'autre côté : au lieu de compter
+les fois où la dérive passe inaperçue, on compte celles où le test la repère. Elle dépend donc, elle
+aussi, de la dérive supposée, mais dans l'autre sens : plus la dérive est grande, plus le test est
+puissant. Pour la machine du § 5 : dérive à 20,03 mm, puissance 1 − 0,15 = **85 %** (le test la
+repère 85 fois sur 100) ; dérive à 20,02 mm, seulement **52 %**.
+
+**Le compromis.** Diminuer α (passer de 5 % à 1 %, coefficient 2,576 en bilatéral) élargit la zone
+où l'on garde H₀ : sur la figure, les bords de la zone verte s'écartent, et la zone recouvre une
+plus grande part de la cloche orange. Moins de fausses alertes, mais **plus de défauts manqués** :
+pour la dérive à 20,02 mm, β passe de 48 % à environ 72 %. À procédé et instrument de mesure donnés,
+le seul moyen de réduire les deux à la fois est d'**augmenter n** : σ(X̄) = σ/√n diminue, les deux
+cloches deviennent plus étroites et ne se chevauchent presque plus. Le bon réglage dépend des coûts :
+pour une pièce de sécurité, un défaut manqué coûte bien plus cher qu'une fausse alerte ; on accepte
+alors un α plus grand (10 %), ou mieux, on contrôle plus de pièces.
+
+### 8. Bien formuler la conclusion
+
+- **Rejet** : « au seuil de 5 %, on rejette H₀ : le taux de défauts dépasse 5 % ».
+- **Non-rejet** : « au seuil de 5 %, on ne rejette pas H₀ : les données ne permettent pas de
+  conclure que… ». Beaucoup d'énoncés écrivent « on accepte H₀ » : comprenez « on n'a pas de
+  preuve contre H₀ » — l'acquittement du procès, pas une preuve d'innocence.
+- **Jamais** « il y a 95 % de chances que H₀ soit vraie » : comme le vrai taux de la 18.13, H₀ est
+  vraie ou fausse, sans hasard. Le 5 % décrit la **règle** : si H₀ est vraie, elle déclenche une
+  fausse alerte environ 5 fois sur 100.
+
+### 9. Les erreurs classiques
+
+1. **Inverser H₀ et H₁** : H₀ est la situation par défaut, et c'est elle qui contient le signe « = ».
+2. **Calculer σ(F) avec f** au lieu de p₀ : dans un test, on suppose H₀ vraie, donc p = p₀.
+3. **Prendre σ au lieu de σ(X̄) = σ/√n** : c'est la moyenne de n pièces qu'on teste, pas une pièce.
+4. **Prendre 1,96 pour un test unilatéral** (c'est 1,645) ou 1,645 pour un bilatéral.
+5. **Choisir unilatéral ou bilatéral après avoir vu les données** (le risque réel double).
+6. **Conclure « H₀ est vraie »** quand on ne la rejette pas.
+7. **Confondre les deux risques** : α = fausse alerte (on rejette à tort), β = défaut manqué (on
+   garde à tort).
+""",
+            "formules": """
+
+**Démarche** — 1. H₀ (par défaut, avec « = ») et H₁ · 2. seuil α · 3. loi sous H₀ · 4. région
+critique · 5. décision : rejet si la valeur observée tombe dans la région critique
+
+**Écarts-types sous H₀** — proportion : σ(F) = √(p₀(1 − p₀)/n) (avec p₀, pas f) · moyenne :
+σ(X̄) = σ/√n (σ : écart-type d'une pièce ; s si σ inconnu et n ≥ 30) · petit n pour une proportion :
+loi binomiale B(n ; p₀)
+
+**Coefficients** — bilatéral : 1,96 (α = 5 %), 2,576 (α = 1 %) · unilatéral : 1,645 (α = 5 %),
+2,326 (α = 1 %)
+
+**Régions critiques (à 5 %)** — bilatéral : hors de [p₀ − 1,96 σ(F) ; p₀ + 1,96 σ(F)], ou hors de
+[μ₀ − 1,96 σ(X̄) ; μ₀ + 1,96 σ(X̄)] · unilatéral à droite : au-dessus de p₀ + 1,645 σ(F) (ou
+μ₀ + 1,645 σ(X̄)) · unilatéral à gauche : en dessous de p₀ − 1,645 σ(F) (ou μ₀ − 1,645 σ(X̄))
+
+**Risques** — α = P(rejeter H₀ | H₀ vraie) : fausse alerte, choisi · β = P(garder H₀ | H₀ fausse) :
+défaut manqué, dépend de la dérive supposée · puissance = 1 − β
+
+        """,
+            "exemple": """
+**Cas industriel — Accepter ou refuser une livraison de vis**
+
+Un fournisseur annonce une **résistance à la rupture moyenne de 400 MPa** pour des vis de classe
+de qualité donnée. Le laboratoire teste **36 vis** de la livraison : moyenne **x̄ = 396 MPa**,
+écart-type mesuré **s = 12 MPa**. Faut-il refuser la livraison ?
+
+**Étape 1 — Hypothèses.** H₀ : μ = 400 (le fournisseur tient son annonce). H₁ : μ < 400 (les vis
+sont moins résistantes). *Unilatéral à gauche : des vis plus résistantes que prévu ne posent aucun
+problème.*
+
+**Étape 2 — Seuil.** α = 5 %, coefficient unilatéral **1,645**.
+
+**Étape 3 — Loi sous H₀.** n = 36 ≥ 30 : on remplace σ par s. X̄ suit approximativement
+N(400 ; σ(X̄)), avec σ(X̄) = 12/√36 = **2 MPa**.
+
+**Étape 4 — Région critique.** x̄ < 400 − 1,645 × 2 = **396,71 MPa**.
+
+**Étape 5 — Décision.** x̄ = 396 < 396,71 → **on rejette H₀** : au seuil de 5 %, la résistance
+moyenne est inférieure à 400 MPa. On refuse la livraison.
+
+**Ce que le calcul apprend.** 4 MPa d'écart sur 400, c'est 1 % : à l'œil, on aurait pu hausser les
+épaules. Mais avec 36 vis, la moyenne ne fluctue que de 2 MPa autour de sa vraie valeur : un écart de
+4 MPa est trop grand pour être dû au hasard du prélèvement. **Les deux risques ont ici un coût
+concret** : une fausse alerte (refuser une bonne livraison) coûte un litige et un retard ; un défaut
+manqué (accepter des vis trop faibles) peut coûter une rupture en service. Pour une vis de
+sécurité, c'est le défaut manqué qu'on redoute. On pourrait accepter plus de fausses alertes
+(α = 10 %), mais ce serait refuser plus souvent de bonnes livraisons : mieux vaut exiger plus de vis
+testées, ce qui diminue β sans toucher à α. *Avec x̄ = 397 MPa, au-dessus de 396,71, on n'aurait
+pas rejeté H₀ : cela n'aurait pas prouvé que les vis tiennent 400 MPa, seulement que 36 essais ne
+suffisaient pas à montrer le contraire.*
+""",
+            "exercice": """
+**Partie A — Test sur une moyenne (bilatéral)**
+
+Une presse doit produire des rondelles d'épaisseur **μ₀ = 2,50 mm** ; l'écart-type du procédé est
+connu, **σ = 0,06 mm**. Un contrôle de **36 rondelles** donne x̄ = 2,52 mm.
+
+**1.** Écris H₀ et H₁. Pourquoi un test bilatéral ?
+
+**2.** Détermine, au seuil de 5 %, l'intervalle dans lequel x̄ doit tomber pour qu'on ne rejette pas
+H₀. Conclus.
+
+**3.** Même question au seuil de 1 % (coefficient 2,576). La conclusion change-t-elle ? Commente.
+
+**Partie B — Test sur une proportion (unilatéral)**
+
+Le taux de soudures défectueuses d'une ligne est habituellement de **4 %**. Après un changement de
+fil, on contrôle **300 soudures** et on en trouve **19 défectueuses**.
+
+**4.** Écris H₀ et H₁ pour savoir si le taux a augmenté.
+
+**5.** Vérifie les conditions, détermine la règle de décision au seuil de 5 %, puis conclus.
+
+**6.** Sur un prototype, on ne contrôle que **50 soudures** (p₀ = 0,04) et on en trouve **4
+défectueuses**. Pourquoi ne peut-on pas utiliser la cloche ? Conclus au seuil de 5 % avec la loi
+binomiale.
+
+**Partie C — Les risques**
+
+**7.** Dans la partie A, que serait une erreur de 1ʳᵉ espèce ? une erreur de 2ᵉ espèce ? Laquelle
+coûte le plus cher si les rondelles sont montées dans un frein ?
+
+**8.** Si l'on contrôlait 100 rondelles au lieu de 36, le risque de 2ᵉ espèce augmenterait-il ou
+diminuerait-il ? Pourquoi ?
+""",
+            "corrige": """
+**1.** H₀ : μ = 2,50 (presse bien réglée) ; H₁ : μ ≠ 2,50. Bilatéral : une rondelle trop épaisse
+comme trop fine est un problème.
+
+**2.** σ(X̄) = 0,06/6 = 0,01 mm ; zone : 2,50 ± 1,96 × 0,01 = **[2,480 4 ; 2,519 6]**. x̄ = 2,52 est
+au-dessus → **on rejette H₀** au seuil de 5 % : la presse est déréglée.
+
+**3.** Zone : 2,50 ± 2,576 × 0,01 = **[2,474 2 ; 2,525 8]**. x̄ = 2,52 est dedans → **on ne rejette
+pas H₀** au seuil de 1 %. Ce n'est pas contradictoire : la presse n'a pas changé, c'est l'exigence
+de preuve qui a changé (le jury « à 1 % » est plus exigeant que le jury « à 5 % »). C'est pour cela
+qu'on fixe α **avant** de regarder les mesures (§ 6, Protocole). x̄ = 2,52 est un cas limite ; mesurer plus de
+rondelles permettrait de trancher.
+
+**4.** H₀ : p = 0,04 ; H₁ : p > 0,04 (unilatéral à droite).
+
+**5.** Conditions : n = 300 ≥ 30, np₀ = 12 ≥ 5, n(1 − p₀) = 288 ≥ 5. Sous H₀ :
+σ(F) = √(0,04 × 0,96 / 300) ≈ 0,011 3 ; seuil 0,04 + 1,645 × 0,011 3 ≈ **0,058 6**. Règle : on rejette
+H₀ si f > 0,058 6. Ici f = 19/300 ≈ 0,063 3 > 0,058 6 → **on rejette H₀** : au seuil de 5 %, le taux
+de défauts a augmenté depuis le changement de fil.
+
+**6.** np₀ = 50 × 0,04 = 2 < 5 : la répartition est tassée contre zéro, ce n'est pas une cloche.
+Avec B(50 ; 0,04) : P(X ≥ 4) ≈ 0,139 > 0,05 et P(X ≥ 5) ≈ 0,049 ≤ 0,05 : on rejette H₀ à partir de 5
+défectueuses. Ici 4 < 5 → **on ne rejette pas H₀** : 4 défectueuses sur 50 ne suffisent pas à
+conclure que le taux dépasse 4 %. *Remarque : 4/50 = 8 %, le double du taux habituel, et pourtant
+on ne peut pas conclure. Avec seulement 50 soudures, le test est peu puissant : même un vrai
+doublement du taux passerait souvent inaperçu. C'est le prix d'un petit échantillon (§ 7).*
+
+**7.** **1ʳᵉ espèce** : conclure que la presse est déréglée alors qu'elle ne l'est pas (arrêt et
+réglage inutiles). **2ᵉ espèce** : conclure qu'elle est bien réglée alors qu'elle a dérivé (des
+rondelles hors cote partent en production). Dans un frein, la 2ᵉ espèce coûte le plus cher : une
+pièce hors cote peut compromettre la sécurité, alors qu'un arrêt inutile ne coûte que du temps.
+
+**8.** Il **diminuerait** : σ(X̄) passe de 0,06/6 = 0,01 à 0,06/10 = 0,006 mm, la zone où l'on garde
+H₀ se resserre, et une même dérive en sort plus souvent — le test devient plus puissant. Pour une
+dérive à 2,52 mm, par exemple, β passe d'environ 48 % (le même β que pour la machine du § 7 :
+dans les deux cas, la dérive vaut 2 fois σ(X̄)) à environ 9 %.
 """,
         },
         {
@@ -53165,6 +53704,22 @@ _mth("18.13", "Construire et interpréter l'intervalle de confiance d'une propor
 ], "16 joints défectueux sur 400 : f = 0,04, marge = 1,96 × √(0,04 × 0,96/400) ≈ 0,019 2, "
        "IC95% ≈ [2,1 % ; 5,9 %], entièrement au-dessus de la garantie de 2 % : réclamation justifiée.")
 
+_mth("18.14", "Mener un test d'hypothèse sur une proportion ou une moyenne", [
+    "**H₀ et H₁** : H₀ = la situation par défaut, avec « = » (p = p₀ ou μ = μ₀) ; H₁ = ce qu'on "
+    "soupçonne. Bilatéral (≠) si un écart dans les deux sens est un problème, unilatéral (> ou <) "
+    "sinon — choisi d'après la question, avant les données.",
+    "**Seuil α** (souvent 5 %) et son coefficient : 1,96 en bilatéral, 1,645 en unilatéral.",
+    "**Loi sous H₀** : σ(F) = √(p₀(1 − p₀)/n) pour une proportion (avec p₀, pas f) ; "
+    "σ(X̄) = σ/√n pour une moyenne.",
+    "**Région critique** : p₀ ± coefficient × σ(F), ou μ₀ ± coefficient × σ(X̄), du côté (ou des "
+    "côtés) prévu par H₁.",
+    "**Décision** : valeur observée dans la région critique → on rejette H₀ ; sinon on ne la "
+    "rejette pas — ce qui ne prouve pas H₀.",
+    "**Risques** : α = fausse alerte (choisi) ; β = défaut manqué (dépend de la dérive supposée, "
+    "diminue quand n augmente) ; puissance = 1 − β.",
+], "Machine réglée à 20,00 mm, σ = 0,05, n = 25, x̄ = 20,03 : σ(X̄) = 0,01, zone [19,980 4 ; "
+       "20,019 6], x̄ au-dessus → on rejette H₀ au seuil de 5 %, on règle la machine.")
+
 _mth("18.8", "Modéliser une mise en régime (montée vers un équilibre)", [
     "**Utiliser la même solution que pour une décroissance** : y(t) = y_eq "
     "+ (y₀ − y_eq) × e^(−t/τ) — le signe de (y₀ − y_eq) décide seul si le "
@@ -54845,6 +55400,116 @@ def gen_taille_proportion():
     }
 
 
+def gen_test_moyenne():
+    """Borne de la zone d'acceptation d'un test sur une moyenne (σ connu)."""
+    while True:
+        mu0 = random.choice([12.0, 20.0, 25.0, 40.0, 50.0, 80.0])
+        sig = random.choice([0.02, 0.03, 0.04, 0.05, 0.06, 0.08])
+        n = random.choice([16, 25, 36, 49, 64, 100])
+        bilateral = random.random() < 0.5
+        cote = random.choice(["haute", "basse"]) if bilateral else random.choice(["droite", "gauche"])
+        z = 1.96 if bilateral else 1.645
+        z_autre = 1.645 if bilateral else 1.96
+        se = sig / math.sqrt(n)
+        signe = 1 if cote in ("haute", "droite") else -1
+        rep = mu0 + signe * z * se
+        cands = [mu0 + signe * z * sig, mu0 + signe * z_autre * se, mu0 + signe * z * sig / n,
+                 mu0 - signe * z * se]
+        if all(abs(v - rep) > 0.002 for v in cands) and \
+                all(abs(cands[i] - cands[j]) > 0.002 for i in range(len(cands))
+                    for j in range(i + 1, len(cands))):
+            break
+    if bilateral:
+        question = (f"H₀ : μ = {_fr_court(mu0)} ; H₁ : μ ≠ {_fr_court(mu0)} (test bilatéral à 5 %). "
+                    f"Calcule la borne {cote} de la zone où l'on garde H₀")
+    else:
+        sens = ">" if cote == "droite" else "<"
+        derive = "l'usure de l'outil fait grossir la cote" if cote == "droite" else \
+            "l'usure de l'outil fait diminuer la cote"
+        question = (f"On ne surveille qu'une dérive dans un sens ({derive}) : H₀ : μ = "
+                    f"{_fr_court(mu0)} ; H₁ : μ {sens} {_fr_court(mu0)} (test unilatéral à 5 %). "
+                    f"Calcule le seuil de la région critique")
+    egal = "=" if abs(se - round(se, 5)) < 1e-12 else "≈"
+    return {
+        "titre": "Test d'hypothèse sur une moyenne",
+        "enonce": (f"Une machine doit produire une cote de {_fr_court(mu0)} mm ; l'écart-type d'une "
+                   f"pièce est connu, σ = {_fr_court(sig)} mm. On contrôle {n} pièces. {question}, "
+                   f"en mm, au millième."),
+        "rep": rep, "tol": 0.001, "unite": "mm",
+        "diag": [
+            _diag(cands[0], "Tu as pris σ au lieu de σ(X̄) = σ/√n : la moyenne de n pièces se "
+                            "resserre."),
+            _diag(cands[1], ("Test bilatéral : le coefficient est 1,96 (2,5 % de chaque côté), pas "
+                             "1,645.") if bilateral else ("Test unilatéral : tout le risque est d'un "
+                                                          "seul côté, le coefficient est 1,645, pas "
+                                                          "1,96.")),
+            _diag(cands[2], "Tu as divisé σ par n au lieu de √n."),
+            _diag(cands[3], "Tu as calculé l'autre borne : vérifie si l'on demande la borne haute "
+                            "ou basse." if bilateral else
+                  "Tu t'es trompé de côté : H₁ indique où se trouve la région critique (μ₀ + … si "
+                  "H₁ : μ > μ₀, μ₀ − … si H₁ : μ < μ₀)."),
+        ],
+        "corr": [
+            f"**Loi sous H₀.** X̄ suit N({_fr_court(mu0)} ; σ(X̄)), avec σ(X̄) = {_fr_court(sig)}/√{n} "
+            f"= {_fr_court(sig)}/{int(math.sqrt(n))} {egal} {fr(se, 5)} mm.",
+            f"**Coefficient** : {'1,96 (bilatéral, 2,5 % de chaque côté)' if bilateral else '1,645 (unilatéral, 5 % d’un seul côté)'}.",
+            f"**Borne** : {_fr_court(mu0)} {'+' if signe > 0 else '−'} {_fr_court(z)} × {fr(se, 5)} ≈ "
+            f"**{fr(rep, 3)} mm**.",
+        ],
+        "indice": "Sous H₀, X̄ suit N(μ₀ ; σ(X̄)) avec σ(X̄) = σ/√n ; borne = μ₀ ± coefficient × σ(X̄) "
+                  "(1,96 en bilatéral, 1,645 en unilatéral).",
+    }
+
+
+def gen_test_proportion():
+    """Seuil de la région critique d'un test unilatéral à droite sur une proportion."""
+    while True:
+        p0 = random.choice([0.02, 0.03, 0.04, 0.05, 0.08, 0.10])
+        n = random.choice([200, 250, 300, 400, 500, 800])
+        if n * p0 < 5:
+            continue
+        s0 = math.sqrt(p0 * (1 - p0) / n)
+        rep = p0 + 1.645 * s0
+        k = round(n * (p0 + random.choice([0.5, 1.2, 2.5]) * s0))
+        f = k / n
+        sf = math.sqrt(f * (1 - f) / n)
+        cands = [p0 + 1.96 * s0, p0 + 1.645 * sf, p0 + 1.645 * p0 * (1 - p0) / n,
+                 p0 + 1.645 * math.sqrt(p0 * (1 - p0))]
+        if all(abs(v - rep) > 0.0005 for v in cands) and \
+                all(abs(cands[i] - cands[j]) > 0.0005 for i in range(len(cands))
+                    for j in range(i + 1, len(cands))):
+            break
+    rejet = f > rep
+    return {
+        "titre": "Test d'hypothèse sur une proportion",
+        "enonce": (f"Le taux de défauts habituel d'une ligne est de {_fr_court(100 * p0)} % "
+                   f"(p₀ = {_fr_court(p0)}). Pour savoir s'il a augmenté, on contrôle {n} pièces et "
+                   f"on en trouve {k} défectueuses. H₀ : p = {_fr_court(p0)} ; H₁ : p > "
+                   f"{_fr_court(p0)} (unilatéral à 5 %). Calcule le seuil de la région critique, en "
+                   f"proportion (nombre décimal), au dix-millième ; le corrigé te montrera ensuite la "
+                   f"décision avec f = k/n."),
+        "rep": rep, "tol": 0.0002, "unite": "",
+        "diag": [
+            _diag(cands[0], "Test unilatéral : le coefficient est 1,645, pas 1,96."),
+            _diag(cands[1], "Tu as calculé σ(F) avec f : dans un test, on suppose H₀ vraie, donc on "
+                            "utilise p₀."),
+            _diag(cands[2], "Tu as oublié la racine carrée sur p₀(1 − p₀)/n."),
+            _diag(cands[3], "Tu as oublié de diviser par n sous la racine."),
+        ],
+        "corr": [
+            f"**Loi sous H₀.** σ(F) = √({_fr_court(p0)} × {_fr_court(1 - p0)} / {n}) ≈ {fr(s0, 6)} — "
+            "avec p₀, pas avec f.",
+            f"**Seuil** : {_fr_court(p0)} + 1,645 × {fr(s0, 6)} ≈ **{fr(rep, 4)}**.",
+            f"**Décision** : f = {k}/{n} ≈ {fr(f, 4)} "
+            + (f"> {fr(rep, 4)} → on rejette H₀ : au seuil de 5 %, le taux a augmenté."
+               if rejet else f"≤ {fr(rep, 4)} → on ne rejette pas H₀ : les données ne permettent "
+                             "pas de conclure à une augmentation."),
+        ],
+        "indice": "Seuil = p₀ + 1,645 × σ(F), avec σ(F) = √(p₀(1 − p₀)/n) calculé avec la valeur p₀ "
+                  "de H₀.",
+    }
+
+
 def decimales_affichage(tol):
     """Nombre de décimales pour afficher la réponse d'un générateur : assez pour que la valeur
     AFFICHÉE soit acceptée par la tolérance (10⁻ᵈ ≤ tol, donc erreur d'arrondi ≤ tol/2), et au
@@ -54917,7 +55582,8 @@ def fabriquer_exo(famille=None):
                                   gen_borne_continuite, gen_proba_normale,
                                   gen_sigma_somme, gen_sigma_affine,
                                   gen_euler_pas, gen_euler_ecart,
-                                  gen_ic_proportion, gen_taille_proportion],
+                                  gen_ic_proportion, gen_taille_proportion,
+                                  gen_test_moyenne, gen_test_proportion],
     }
     if famille and famille in catalogue:
         pool = catalogue[famille]
@@ -58552,6 +59218,96 @@ ATELIERS = [
         "a_retenir": "À retenir : un intervalle ENTIÈREMENT au-dessus de la limite permet de conclure "
                      "« avec une confiance de 95 % ». Le 95 % est la fiabilité de la méthode, pas une "
                      "probabilité sur le vrai taux, qui est fixe.",
+    },
+    {
+        "id": "at146",
+        "chapitre": "Bloc 18",
+        "titre": "Test d'hypothèse : la machine tient-elle sa cote ?",
+        "theme": "Statistique inférentielle",
+        "fiche": "18.14",
+        "figure": "risques_alpha_beta",
+        "vocabulaire": [
+            ("hypothèse nulle H₀", "la situation par défaut (« la machine est bien réglée »), supposée "
+             "vraie pour faire le calcul ; on ne la rejette que si les données la rendent "
+             "invraisemblable."),
+            ("région critique", "les valeurs observées qui feraient rejeter H₀ : celles qu'on n'obtient "
+             "que rarement (5 fois sur 100) si H₀ est vraie."),
+            ("risque de 1ʳᵉ espèce α", "probabilité de rejeter H₀ alors qu'elle est vraie : la fausse "
+             "alerte. C'est le seuil du test."),
+            ("risque de 2ᵉ espèce β", "probabilité de garder H₀ alors qu'elle est fausse : le défaut "
+             "manqué."),
+            ("puissance 1 − β", "probabilité de détecter une dérive réelle ; elle augmente avec la taille "
+             "de la dérive et avec n."),
+        ],
+        "enonce": "Une machine doit usiner un diamètre de 50,00 mm ; l'écart-type d'une pièce est connu, "
+                  "σ = 0,04 mm. Un contrôle de 16 pièces donne x̄ = 50,023 mm. Test bilatéral au seuil "
+                  "de 5 % : H₀ : μ = 50,00 ; H₁ : μ ≠ 50,00.",
+        "etapes": [
+            {"type": "numerique", "label": "Écart-type de la moyenne σ(X̄) = σ/√n", "unite": "mm",
+             "attendu": 0.04 / math.sqrt(16), "tol": 0.0002,
+             "consigne": "La moyenne de n pièces se resserre : divise σ par √n.",
+             "indice": "0,04 / √16 = 0,04 / 4.",
+             "pieges": [(0.04, "C'est l'écart-type d'UNE pièce : la moyenne de 16 pièces se resserre en "
+                               "σ(X̄) = σ/√n."),
+                        (0.04 / 16, "Tu as divisé par n au lieu de √n.")]},
+            {"type": "numerique", "label": "Borne haute de la zone où l'on garde H₀", "unite": "mm",
+             "attendu": 50 + 1.96 * 0.04 / math.sqrt(16), "tol": 0.0005,
+             "depend_de": {"etape": 1, "formule": lambda v: 50 + 1.96 * v},
+             "consigne": "μ₀ + 1,96 × σ(X̄) (test bilatéral à 5 %).",
+             "indice": "50,00 + 1,96 × 0,01.",
+             "pieges": [(50 + 1.645 * 0.04 / math.sqrt(16), "1,645 est le coefficient d'un test "
+                                                           "UNILATÉRAL ; ici le test est bilatéral : "
+                                                           "1,96."),
+                        (50 + 1.96 * 0.04, "Tu as pris σ au lieu de σ(X̄) = σ/√n."),
+                        (50.023 + 1.96 * 0.04 / math.sqrt(16), "La zone est centrée sur la valeur de "
+                                                              "H₀, μ₀ = 50,00, pas sur le x̄ mesuré : "
+                                                              "ça, c'est l'intervalle de confiance.")]},
+            {"type": "numerique", "label": "Borne basse de la zone", "unite": "mm",
+             "attendu": 50 - 1.96 * 0.04 / math.sqrt(16), "tol": 0.0005,
+             "depend_de": {"etape": 1, "formule": lambda v: 50 - 1.96 * v},
+             "consigne": "μ₀ − 1,96 × σ(X̄) : la zone est symétrique autour de 50,00.",
+             "indice": "50,00 − 0,019 6.",
+             "pieges": [(50 - 1.645 * 0.04 / math.sqrt(16), "Test bilatéral : 1,96, pas 1,645.")]},
+            {"type": "qcm", "label": "Décider",
+             "question": "x̄ = 50,023 mm. Compare-le à la zone que tu viens de calculer : que décide-t-on "
+                         "au seuil de 5 % ?",
+             "options": ["On ne rejette pas H₀ : 0,023 mm d'écart est trop petit pour conclure",
+                         "On rejette H₀ : x̄ est hors de la zone, la machine est déréglée",
+                         "On ne peut rien dire sans connaître le vrai réglage de la machine"],
+             "bonne": 1,
+             "diagnostics": {0: "L'écart paraît petit, mais la moyenne de 16 pièces ne fluctue que de "
+                                "0,01 mm : 0,023 mm, c'est plus de 2 écarts-types. x̄ est hors de la "
+                                "zone.",
+                             2: "C'est justement le rôle du test : on SUPPOSE le réglage de H₀ "
+                                "(50,00) et on regarde si x̄ est compatible avec lui."}},
+            {"type": "qcm", "label": "Nommer le risque",
+             "question": "On arrête la machine pour la régler. Si, en réalité, elle était parfaitement "
+                         "réglée, quelle erreur aurait-on commise ?",
+             "options": ["Une erreur de 1ʳᵉ espèce : une fausse alerte, de probabilité α = 5 %",
+                         "Une erreur de 2ᵉ espèce : un défaut manqué, de probabilité β",
+                         "Aucune erreur : un x̄ hors de la zone prouve que la machine est déréglée"],
+             "bonne": 0,
+             "diagnostics": {1: "Le défaut manqué, c'est l'inverse : GARDER H₀ alors qu'elle est "
+                                "fausse. Ici, on a rejeté H₀.",
+                             2: "Un test ne prouve rien avec certitude : si la machine est bien réglée, "
+                                "x̄ sort quand même de la zone environ 5 fois sur 100."}},
+        ],
+        "corrige": {
+            "enonce": "μ₀ = 50,00 mm, σ = 0,04 mm, n = 16, x̄ = 50,023 mm ; test bilatéral à 5 %.",
+            "regle": "**On suppose H₀ vraie : X̄ suit N(μ₀ ; σ(X̄)), avec σ(X̄) = σ/√n. On garde H₀ si x̄ "
+                     "est dans μ₀ ± 1,96 × σ(X̄), on la rejette sinon.**",
+            "conversions": "Aucune : tout est en mm.",
+            "remplacement": "σ(X̄) = 0,04/4 ; 50,00 ± 1,96 × 0,01",
+            "calcul": "σ(X̄) = **0,01 mm**\n\nzone : **[49,980 4 ; 50,019 6]**\n\nx̄ = 50,023 est "
+                      "au-dessus → **on rejette H₀** au seuil de 5 %",
+            "verification": "**Contrôle de cohérence** : la zone est centrée sur la valeur de H₀ "
+                            "(50,00), pas sur x̄ ; sa demi-largeur (0,019 6) vaut environ deux "
+                            "écarts-types de la moyenne.",
+        },
+        "a_retenir": "À retenir : un test suppose H₀ vraie et regarde si la valeur observée tombe là "
+                     "où elle tomberait 95 fois sur 100. Hors de la zone : on rejette H₀, avec un risque "
+                     "de fausse alerte α = 5 %. Dans la zone : on ne rejette pas H₀, ce qui ne la prouve "
+                     "pas (risque β de défaut manqué).",
     },
     {
         "id": "at29",
@@ -66427,9 +67183,10 @@ MATIERES_PROGRAMME = [
          "loi binomiale, espérance/écart-type, loi uniforme, loi normale et approximation d'une "
          "binomiale, somme de variables et théorème de la limite centrée, taille d'échantillon, "
          "statistique à deux variables (ajustement affine, corrélation), intervalle de confiance "
-         "d'une proportion. Non traités : lois exponentielle et de Poisson, tests "
-         "d'hypothèse.",
-         [(7, ["7.3"]), (17, ["17.3", "17.6", "17.8"]), (18, ["18.1", "18.2", "18.3", "18.5", "18.6", "18.9", "18.10", "18.11", "18.7", "18.13"])]),
+         "d'une proportion, tests d'hypothèse sur une proportion et sur une moyenne. Non "
+         "traités : lois exponentielle et de Poisson, tests de comparaison de deux "
+         "échantillons.",
+         [(7, ["7.3"]), (17, ["17.3", "17.6", "17.8"]), (18, ["18.1", "18.2", "18.3", "18.5", "18.6", "18.9", "18.10", "18.11", "18.7", "18.13", "18.14"])]),
     ]),
 ]
 
@@ -66813,7 +67570,7 @@ elif PAGE == PAGE_MATHS:
         'de Bézier : fiches 19.1 à 19.4) et une fiche d\'approfondissement (19.6, droites et '
         'plans dans l\'espace), toutes marquées « hors épreuve ». Attention : certaines notions '
         'évaluées ne sont pas encore traitées ici (lois exponentielle et de Poisson, tests '
-        'd\'hypothèse, équations '
+        'de comparaison de deux échantillons, équations '
         'différentielles du second ordre) — voir le tableau de bord. Ce sont les mêmes fiches que dans '
         '« Cours », réunies ici pour ne pas les chercher au milieu des chapitres '
         'techniques.</div>',
