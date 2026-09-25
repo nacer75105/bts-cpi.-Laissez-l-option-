@@ -5373,6 +5373,61 @@ def fonction_homographique_asymptotes():
     return _svg("".join(p), 760, 410)
 
 
+def exp_ln_courbes():
+    p = [_txt(40, 24, "y = eˣ et y = ln x : l'une défait l'autre, leurs courbes sont "
+                      "symétriques par rapport à y = x.", 12, TRAIT, "start", True)]
+    ox, oy, k = 300, 250, 40  # origine et échelle : 40 px par unité sur les deux axes
+    p.append(f"<line x1='60' y1='{oy}' x2='700' y2='{oy}' stroke='{FIN}' stroke-width='1.4'/>")
+    p.append(f"<line x1='{ox}' y1='40' x2='{ox}' y2='330' stroke='{FIN}' stroke-width='1.4'/>")
+    p.append(_txt(704, oy + 4, "x", 12, FIN))
+    p.append(_txt(ox + 6, 48, "y", 12, FIN))
+    for g in range(-5, 11):
+        if g != 0:
+            p.append(f"<line x1='{ox + k * g}' y1='{oy - 3}' x2='{ox + k * g}' y2='{oy + 3}' "
+                     f"stroke='{FIN}' stroke-width='1'/>")
+    for g in range(-2, 6):
+        if g != 0:
+            p.append(f"<line x1='{ox - 3}' y1='{oy - k * g}' x2='{ox + 3}' y2='{oy - k * g}' "
+                     f"stroke='{FIN}' stroke-width='1'/>")
+    p.append(_txt(ox + k, oy + 16, "1", 11, FIN, "middle"))
+    p.append(_txt(ox - 8, oy - k + 4, "1", 11, FIN, "end"))
+    # droite y = x, en pointillés
+    p.append(f"<line x1='{ox - k * 2}' y1='{oy + k * 2}' x2='{ox + k * 5.2:.0f}' "
+             f"y2='{oy - k * 5.2:.0f}' stroke='{FIN}' stroke-width='1.2' stroke-dasharray='5 4'/>")
+    p.append(_txt(ox + k * 5.2 + 4, oy - k * 5.2 + 14, "y = x", 12, FIN))
+
+    # courbes calculées point par point sur les vraies fonctions
+    _exp = []
+    for i in range(121):
+        X = -6 + 7.7 * i / 120
+        Y = math.exp(X)
+        if Y <= 5.3:
+            _exp.append(f"{ox + k * X:.1f},{oy - k * Y:.1f}")
+    # ln échantillonnée en X = e^s (s de −2 à ln 10) : la courbe descend jusqu'à y = −2,
+    # le long de l'asymptote x = 0, au lieu de s'arrêter trop tôt.
+    _ln = []
+    for i in range(121):
+        s = -2 + (math.log(10) + 2) * i / 120
+        X = math.exp(s)
+        _ln.append(f"{ox + k * X:.1f},{oy - k * math.log(X):.1f}")
+    p.append(f"<polyline points='{' '.join(_exp)}' fill='none' stroke='{ALESAGE}' stroke-width='2.6'/>")
+    p.append(f"<polyline points='{' '.join(_ln)}' fill='none' stroke='{ARBRE}' stroke-width='2.6'/>")
+    p.append(_txt(ox + k * 1.75, oy - k * 4.9, "y = eˣ", 13, ALESAGE, "start", True))
+    p.append(_txt(ox + k * 8.2, oy - k * 2.45, "y = ln x", 13, ARBRE, "middle", True))
+    # points correspondants (0 ; 1) et (1 ; 0)
+    p.append(f"<circle cx='{ox}' cy='{oy - k}' r='5' fill='{ALESAGE}'/>")
+    p.append(_txt(ox - 10, oy - k - 8, "(0 ; 1)", 11, ALESAGE, "end", True))
+    p.append(f"<circle cx='{ox + k}' cy='{oy}' r='5' fill='{ARBRE}'/>")
+    p.append(_txt(ox + k + 6, oy + 30, "(1 ; 0)", 11, ARBRE, "start", True))
+    # étiquettes des asymptotes
+    p.append(_txt(70, oy - 14, "exp → 0 : asymptote y = 0", 11, ALESAGE))
+    p.append(_txt(ox + 14, 326, "ln → −∞ : asymptote x = 0", 11, ARBRE))
+    p.append(f"<rect x='40' y='340' width='680' height='58' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p.append(_txt(56, 364, "eˣ est toujours positive : sa courbe reste au-dessus de l'axe des x.", 12, TRAIT, "start", True))
+    p.append(_txt(56, 386, "ln x n'existe que pour x > 0, vaut 0 en x = 1 et grimpe de plus en plus lentement.", 12, TRAIT, "start", True))
+    return _svg("".join(p), 760, 410)
+
+
 def extremums_polynome():
     p = [_txt(40, 24, "f(x) = x³ − 3x² + 2 : un maximum local puis un minimum local.",
               12, TRAIT, "start", True)]
@@ -5774,6 +5829,7 @@ FIGURES = {
     "circuit_loi_ohm": ("La loi d'Ohm sur un circuit simple", circuit_loi_ohm),
     "lire_tableau_variations": ("Lire un tableau de variations comme un trajet", lire_tableau_variations),
     "fonction_homographique_asymptotes": ("Une fonction homographique et ses deux asymptotes", fonction_homographique_asymptotes),
+    "exp_ln_courbes": ("Exponentielle et logarithme : deux courbes symétriques", exp_ln_courbes),
     "extremums_polynome": ("Un maximum local puis un minimum local", extremums_polynome),
     "dispersion_deux_reglages": ("Six mesures dispersées autour de leur moyenne", dispersion_deux_reglages),
     "venn_deux_evenements": ("Union et intersection de deux événements", venn_deux_evenements),
@@ -9234,6 +9290,50 @@ QUIZ["Mathématiques BTS CPI (examen)"] = [
        "seulement", "Rien, il ne faut pas diviser"], 1,
       "Gx = (Σmᵢxᵢ)/(Σmᵢ) : on divise toujours par la masse TOTALE, jamais par le "
       "nombre de points — sauf si toutes les masses valent 1.", "Base"),
+
+    q("Pour quelles valeurs de x l'expression ln(x − 3) est-elle définie ?",
+      ["Pour tout x réel", "Pour x ≥ 3", "Pour x > 3", "Pour x ≠ 3"], 2,
+      "Le contenu d'un logarithme doit être strictement positif : x − 3 > 0, soit x > 3. "
+      "x = 3 est exclu, car ln(0) n'existe pas.", "Base"),
+
+    q("Que vaut ln(e⁵) ?",
+      ["5", "e⁵", "ln(5)", "5e"], 0,
+      "ln défait l'exponentielle : ln(eᵃ) = a pour tout a. Donc ln(e⁵) = 5.", "Base"),
+
+    q("Une tension décroît selon u(t) = U₀ e^(−t/τ). Quelle fraction de U₀ reste-t-il au "
+      "bout de t = τ ?",
+      ["La moitié exactement", "5 % environ", "0 %, le condensateur est vide", "37 % environ"], 3,
+      "u(τ) = U₀ × e^(−1) ≈ 0,368 U₀ : il reste environ 37 %. Il faut attendre environ 3τ pour "
+      "qu'il ne reste que 5 %, et la tension n'atteint jamais exactement 0.", "Base"),
+
+    q("Quelle est la dérivée de f(t) = e^(−2t) ?",
+      ["e^(−2t)", "−2 e^(−2t)", "−2t e^(−2t−1)", "2 e^(−2t)"], 1,
+      "(e^u)' = u' e^u avec u = −2t, donc u' = −2. f'(t) = −2 e^(−2t). Oublier le facteur u' "
+      "est l'erreur la plus fréquente.", "Intermédiaire"),
+
+    q("Quelle est la dérivée de g(x) = ln(x² + 1) ?",
+      ["1/(x² + 1)", "2x ln(x² + 1)", "2x/(x² + 1)", "1/(2x)"], 2,
+      "(ln u)' = u'/u avec u = x² + 1 et u' = 2x : g'(x) = 2x/(x² + 1).", "Intermédiaire"),
+
+    q("(Complément, logarithme décimal) Deux machines identiques produisent chacune 80 dB(A). Quel est le niveau sonore quand "
+      "elles fonctionnent ensemble ?",
+      ["Environ 83 dB(A)", "160 dB(A)", "80 dB(A)", "Environ 86 dB(A)"], 0,
+      "Ce sont les intensités qui s'additionnent : doubler l'intensité ajoute 10 × log(2) ≈ 3 dB, "
+      "soit 80 + 3 = 83 dB(A). Les décibels ne s'additionnent pas, car l'échelle est "
+      "logarithmique.", "Intermédiaire"),
+
+    q("On résout e^(−t/5) ≤ 0,05. Quel est l'ensemble des solutions (t ≥ 0) ?",
+      ["t ≤ 5 ln(20), soit environ t ≤ 15", "t ≥ 5 × 0,05, soit t ≥ 0,25",
+       "t ≥ −5 ln(20), soit environ t ≥ −15", "t ≥ 5 ln(20), soit environ t ≥ 15"], 3,
+      "ln conserve le sens : −t/5 ≤ ln(0,05). En multipliant par −5 (négatif), le sens "
+      "s'inverse : t ≥ −5 ln(0,05) = 5 ln(20) ≈ 15. C'est la « règle des 3τ » avec τ = 5.",
+      "Calcul"),
+
+    q("Laquelle de ces égalités n'est PAS vraie pour tous a, b strictement positifs ?",
+      ["ln(ab) = ln a + ln b", "ln(a + b) = ln a + ln b", "ln(a²) = 2 ln a",
+       "ln(1/a) = −ln a"], 1,
+      "ln transforme un PRODUIT en somme, pas une somme en somme. Contre-exemple : "
+      "ln(1 + 1) = ln 2 ≈ 0,693, alors que ln 1 + ln 1 = 0.", "Piège"),
 ]
 
 QUIZ["Mathématiques BTS CPI — probabilités et équations différentielles"] = [
@@ -28889,7 +28989,7 @@ triangle.*
 x = 3 et x = 3,01, f passe de 9 à 9,0601 : elle monte de 0,0601 pour 0,01 d'avance, soit une
 pente ≈ 6. La règle donne 2 × 3 = 6. C'est ce calcul de pente, fait une fois pour toutes.*
 
-*Dérivées de produits, de quotients, de ln et d'exp : voir la fiche 17.1.*
+*Dérivées de quotients : voir la fiche 17.1. Dérivées de produits, de ln et d'exp : voir la fiche 17.7.*
 
 **Exemple entièrement déroulé.** Soit x(t) = 2t³ − 5t² + 3t (x en mètres, t en secondes), la
 position d'un mobile en fonction du temps.
@@ -43717,7 +43817,7 @@ ici.
 BLOC_17 = {
     "id": 17,
     "titre": "Bloc 17 — Mathématiques BTS CPI : programme d'examen",
-    "resume": "Complète le bloc 7 pour l'épreuve de mathématiques : étude de fonctions rationnelles et polynomiales, calcul intégral par primitives, statistique à une variable. Restent à couvrir : fonctions ln et exp, statistique à deux variables (ajustement affine, corrélation).",
+    "resume": "Complète le bloc 7 pour l'épreuve de mathématiques : étude de fonctions rationnelles et polynomiales, calcul intégral par primitives, statistique à une variable, fonctions exponentielle et logarithme (fiche 17.7, à lire juste après 17.1). Reste à couvrir : statistique à deux variables (ajustement affine, corrélation).",
     "fiches": [
         {
             "id": "17.0",
@@ -44149,6 +44249,547 @@ amortis.
 1 000 pièces (x = 10) coûte C(10) = 40 + 15 = 55 € pièce. Produire 10 000 pièces (x = 100)
 coûte C(100) = 4 + 15 = 19 € pièce — on se rapproche du plancher de 15 €, mais on ne l'atteint
 jamais tout à fait, exactement comme le prédit l'asymptote horizontale.
+""",
+        },
+        {
+            "id": "17.7",
+            "titre": "Fonctions exponentielle et logarithme népérien",
+            "duree": "6 h",
+            "cours": """
+
+### 1. Pourquoi cette fiche
+
+Cette fiche se lit juste après la fiche 17.1, dont elle reprend les outils (domaine, limites,
+asymptotes, tableau de variations). Les fiches 18.4 et 18.8 écrivent e^(−t/τ) et utilisent la touche ln ; la fiche 17.2 donne ln(x)
+comme primitive de 1/x. Ces deux fonctions y sont **utilisées, mais à peine présentées**. Cette
+fiche les présente en entier : d'où elles viennent, comment on calcule avec, comment on les
+dérive, et comment on étudie une fonction qui les contient.
+
+**L'idée qui motive tout : certaines grandeurs varient proportionnellement à ce qui reste.**
+Un condensateur (un petit réservoir d'électricité) se vide dans une résistance : plus il est
+chargé, plus il se vide vite. Une pièce chaude refroidit vite tant qu'elle est beaucoup plus
+chaude que l'atelier, puis de plus en plus lentement. Dans les deux cas, **à chaque intervalle de
+temps égal, la tension — ou, pour un refroidissement, l'écart entre la température de la pièce
+et celle de l'atelier (noté T − T_amb, où T_amb est la température ambiante) — perd le même
+pourcentage**, pas le même nombre de volts ou de degrés.
+
+*Exemple en chiffres. Une tension perd 20 % par seconde : 100 V, puis 80 V, puis 64 V, puis
+51,2 V… Elle perd 20 V la première seconde, mais seulement 12,8 V la troisième : on multiplie
+chaque fois par 0,8. La fonction exponentielle est la version **continue** de ce calcul : au lieu
+de baisser par à-coups à chaque seconde, comme un escalier, la tension baisse en douceur à chaque
+instant, comme une rampe.*
+
+Le logarithme répond à la question inverse, celle qu'on se pose en conception : **au bout de
+combien de temps** la tension sera-t-elle descendue sous un seuil de sécurité ? Un complément, en
+fin de fiche, montre un second usage des logarithmes : ramener des nombres immenses à une échelle
+lisible (décibels, pH).
+
+**Trois mots à connaître avant de commencer :**
+- **Exposant** : le petit nombre écrit en haut, qui dit combien de fois on multiplie. Dans 2³,
+  l'exposant est 3 : 2 × 2 × 2 = 8. Un exposant négatif veut dire « divisé par » (fiche 17.1 :
+  x⁻¹ = 1/x).
+- **Fonction réciproque** : une opération qui en défait une autre. La racine carrée défait le
+  carré : √(5²) = 5. Le logarithme est la réciproque de l'exponentielle.
+- **Constante de temps τ** (tau) : l'échelle de temps propre au phénomène, en secondes ou en
+  minutes. Plus τ est grand, plus la décharge ou le refroidissement est lent. Au bout d'un τ, il
+  reste 37 % de la valeur de départ — autrement dit 63 % sont partis : c'est le repère qu'utilisera
+la fiche 18.4.
+
+### 2. La fonction exponentielle
+
+**Définition (admise).** Il existe une seule fonction égale à sa propre dérivée et qui vaut 1 en
+0. On la note **exp**.
+
+**Pourquoi on l'écrit comme une puissance.** Revenez à l'exemple des 20 % : après t secondes, la
+tension vaut 100 × 0,8 × 0,8 × … = 100 × 0,8ᵗ. Une grandeur qu'on multiplie toujours par le même
+facteur s'écrit naturellement comme une **puissance**. On démontre que exp a exactement la
+propriété des puissances, exp(a + b) = exp(a) × exp(b) — comme 2² × 2³ = 2⁵. On l'écrit donc
+comme une puissance d'un nombre particulier : **exp(x) = eˣ**, avec **e = exp(1) ≈ 2,718**
+(touche eˣ de la calculatrice). Comme π, e est un nombre précis dont on ne peut pas écrire tous
+les chiffres. *Vérifiez : e² ≈ 7,389, et 2,718 × 2,718 ≈ 7,39.*
+
+*Pourquoi « égale à sa dérivée » traduit l'idée du paragraphe 1. La dérivée est la vitesse de
+variation. Dire f' = f, c'est dire : « la vitesse de variation est égale à la valeur
+elle-même ». Plus il y en a, plus ça grandit vite : c'est le modèle de la croissance. Pour une
+grandeur qui **diminue**, c'est le même modèle retourné : on met un signe moins et une échelle de
+temps dans l'exposant. Pour y(t) = e^(−t/τ), on verra au §5 que y' = −(1/τ) × y : la vitesse est
+toujours proportionnelle à ce qui reste, mais c'est une perte.*
+
+**Règles de calcul : ce sont celles des puissances.**
+
+| Règle | Exemple |
+|---|---|
+| e⁰ = 1 | un condensateur à t = 0 garde 100 % de sa tension |
+| e^(a+b) = eᵃ × eᵇ | e² × e³ = e⁵ |
+| e^(−a) = 1/eᵃ | e^(−1) = 1/e ≈ 0,368 |
+| e^(a−b) = eᵃ / eᵇ | e⁵ / e² = e³ |
+| (eᵃ)ⁿ = e^(na) | (e²)³ = e⁶ |
+
+**Signe : eˣ est toujours strictement positif.** Une décharge exponentielle ne fait jamais
+passer la tension en négatif : elle s'approche de 0 sans l'atteindre.
+
+**Variations : exp est strictement croissante sur ℝ** (ℝ : tous les nombres, négatifs compris),
+puisque sa dérivée, elle-même, est toujours positive.
+
+**Limites.**
+- quand x → +∞ : eˣ → **+∞** (elle grandit de plus en plus vite) ;
+- quand x → −∞ : eˣ → **0** *(e^(−10) = 1/e¹⁰ ≈ 0,000 045 : de plus en plus petit, jamais
+  négatif)*. La droite **y = 0** est une **asymptote horizontale** en −∞ (fiche 17.1 : une
+  droite dont la courbe se rapproche de plus en plus quand x tend vers −∞). Pour eˣ, la courbe ne
+  l'atteint jamais, puisque eˣ > 0.
+
+**Le tableau à connaître pour les décharges et les refroidissements :**
+
+| t | 0 | τ | 2τ | 3τ | 5τ |
+|---|---|---|---|---|---|
+| e^(−t/τ) | 1 | 0,368 | 0,135 | 0,050 | 0,007 |
+| il reste (de la tension, ou de l'écart T − T_amb) | 100 % | 37 % | 14 % | 5 % | 0,7 % |
+
+*À t = 2τ, l'exposant vaut −2τ/τ = −2, d'où e^(−2) ≈ 0,135. Chaque τ, on multiplie par le même
+facteur 0,368 : c'est le « même pourcentage perdu à chaque intervalle égal » du paragraphe 1.
+Pour un refroidissement, c'est l'**écart** avec l'atelier qui suit ce tableau, pas la température
+elle-même. La fiche 18.4 en tirera la loi T(t) = T_amb + (T₀ − T_amb) × e^(−t/τ), où T₀ est la
+température de départ.*
+
+### 3. Le logarithme népérien, fonction réciproque de exp
+
+**Le besoin.** Une tension vaut u(t) = 300 e^(−t/5) (en volts, t en secondes). Quand atteint-elle
+30 V ? On divise les deux côtés par 300 : e^(−t/5) = 30/300 = 0,1. Il reste à trouver l'exposant
+−t/5 qui donne 0,1. Aucune des opérations connues (additionner, multiplier, prendre une racine)
+ne permet de faire « descendre » l'exposant. Il faut une opération nouvelle.
+
+**Définition.** Pour tout nombre x **strictement positif**, **ln(x)** est le nombre dont
+l'exponentielle vaut x :
+
+> **ln(eᵃ) = a** pour tout a réel, et **e^(ln x) = x** pour tout x > 0.
+
+*Exemple : e² ≈ 7,389, donc ln(7,389) ≈ 2. Essayez : tapez ln(7,389) à la calculatrice, puis eˣ
+du résultat, vous retrouvez 7,389. Deux valeurs à connaître : **ln(1) = 0** (car e⁰ = 1) et
+**ln(e) = 1** (car e¹ = e). « Népérien » vient de John Napier, qui a inventé les logarithmes
+vers 1614.*
+
+**Retour au besoin.** e^(−t/5) = 0,1, donc −t/5 = ln(0,1) ≈ −2,303 (touche ln). On multiplie par
+−5 : **t ≈ 11,5 s**. *Contrôle : τ = 5 s ; à 2τ = 10 s il reste 14 %, à 3τ = 15 s il reste 5 % ;
+10 % est entre les deux, et 11,5 s aussi.*
+
+**Pourquoi ln(x) n'existe que pour x > 0.** eᵃ est toujours strictement positif. Aucun nombre a
+ne donne eᵃ = 0 ou eᵃ = −3 : ln(0) et ln(−3) n'existent pas. **Domaine de ln : ]0 ; +∞[.**
+C'est la règle déjà annoncée dans la fiche 17.1 : le contenu d'un logarithme doit être
+strictement positif.
+
+**Règles de calcul : ln transforme les produits en sommes.**
+
+| Règle | Exemple |
+|---|---|
+| ln(a × b) = ln(a) + ln(b) | ln(6) = ln(2) + ln(3) |
+| ln(a / b) = ln(a) − ln(b) | ln(20/3) = ln(20) − ln(3) |
+| ln(1/a) = −ln(a) | ln(0,5) = −ln(2) ≈ −0,693 |
+| ln(aⁿ) = n × ln(a) | ln(8) = ln(2³) = 3 ln(2) |
+
+(a et b strictement positifs.) *D'où vient la première règle : 2 ≈ e^0,693 et 3 ≈ e^1,099. Donc
+6 = 2 × 3 ≈ e^0,693 × e^1,099 = e^(0,693 + 1,099) = e^1,792, c'est-à-dire ln(6) ≈ 1,792 =
+ln(2) + ln(3). Multiplier des nombres revient à additionner leurs exposants, c'est-à-dire leurs
+ln — c'était le principe de la règle à calcul des anciens bureaux d'études.*
+
+**Signe.** ln(x) < 0 pour 0 < x < 1 ; ln(1) = 0 ; ln(x) > 0 pour x > 1. *La fraction qui reste
+dans une décharge, comme 0,1 (10 %) dans l'exemple ci-dessus, a un logarithme négatif :
+ln(0,1) ≈ −2,303.*
+
+**Variations : ln est strictement croissante sur ]0 ; +∞[**, mais de plus en plus lentement :
+ln(10) ≈ 2,3 ; ln(1 000) ≈ 6,9 ; ln(1 000 000) ≈ 13,8. Multiplier x par 1 000 n'ajoute que
+6,9 environ.
+
+**Limites.**
+- quand x → 0⁺ (x tend vers 0 en restant positif) : ln(x) → **−∞** *(ln(0,001) ≈ −6,9 ;
+  ln(0,000 001) ≈ −13,8 : plus x s'approche de 0, plus ln(x) plonge)*. La droite **x = 0** (l'axe
+  des ordonnées) est une **asymptote verticale** ;
+- quand x → +∞ : ln(x) → **+∞**, très lentement.
+
+[[FIG:exp_ln_courbes]]
+
+*Pourquoi les deux courbes sont symétriques par rapport à la droite y = x : e² ≈ 7,39, donc le
+point (2 ; 7,39) est sur la courbe de exp ; et ln(7,39) ≈ 2, donc le point (7,39 ; 2) est sur
+la courbe de ln. Les coordonnées sont échangées, et échanger x et y revient à se refléter dans la
+droite y = x. De même, (0 ; 1) devient (1 ; 0), et l'asymptote horizontale y = 0 de exp devient
+l'asymptote verticale x = 0 de ln.*
+
+### 4. Résoudre une équation ou une inéquation
+
+> **eˣ = k** (avec k > 0) ⟺ **x = ln(k)**.
+> **ln(x) = k** ⟺ **x = eᵏ**.
+
+*Le symbole ⟺ se lit « équivaut à » : les deux écritures disent exactement la même chose, on
+passe de l'une à l'autre dans les deux sens.* Si k ≤ 0, l'équation eˣ = k n'a **aucune
+solution**, car eˣ est toujours strictement positif (§2) : aucune exponentielle ne vaut 0 ni −5.
+
+**Inéquations.** exp et ln sont strictement croissantes. *Croissante veut dire : plus grand à
+l'entrée, plus grand à la sortie.* Elles **conservent donc le sens des inégalités** :
+eᵃ < eᵇ ⟺ a < b, et ln(a) < ln(b) ⟺ a < b (pour a, b > 0).
+
+**Exemple qui explique la « règle des 3τ » (utilisée dans la fiche 18.4).** À partir de quand ne reste-t-il
+plus que 5 % de la tension, c'est-à-dire e^(−t/τ) ≤ 0,05 ?
+
+1. On applique ln des deux côtés, le sens est conservé. À gauche, ln(e^(−t/τ)) = −t/τ :
+   −t/τ ≤ ln(0,05).
+2. On multiplie par −τ, un nombre **négatif** : **le sens de l'inégalité s'inverse** (comme
+   2 < 3 mais −2 > −3). t ≥ −τ × ln(0,05).
+3. Or 0,05 = 1/20, donc −ln(0,05) = ln(20) (règle ln(1/a) = −ln(a)). D'où t ≥ τ × ln(20), et
+   ln(20) ≈ 2,996 : **t ≥ 3,0 τ environ**.
+
+*La règle des 3τ n'est donc pas une recette : c'est ln(20) ≈ 3 qui la produit.*
+
+### 5. Dériver : exponentielle, logarithme, produit
+
+**Les deux dérivées de base :**
+
+> **(eˣ)' = eˣ**  (c'est sa définition)
+> **(ln x)' = 1/x**, pour x > 0  (résultat admis)
+
+*Cohérence avec le graphique : la pente de ln vaut 1/x. Elle est grande près de 0 (1/0,1 = 10)
+et devient minuscule pour x grand (1/1 000) : la courbe monte de moins en moins.*
+
+**Les formes composées** (une fonction glissée dans une autre : on calcule d'abord u, puis e ou
+ln de ce résultat) :
+
+> **(e^u)' = u' × e^u**
+> **(ln u)' = u' / u**, là où u > 0
+
+*Ici, u est une étiquette pour « ce qui est dans l'exposant » ou « ce qui est dans le ln ». Rien
+à voir avec une tension notée u(t). Pourquoi u' apparaît : si l'intérieur u varie trois fois plus
+vite que x, la fonction entière varie trois fois plus vite aussi — comme dans un réducteur à deux
+étages, où les rapports de vitesse se multiplient.*
+
+**Trois exemples entièrement déroulés.**
+
+1. f(x) = e^(3x+1) : l'intérieur est u = 3x + 1, u' = 3, donc **f'(x) = 3 e^(3x+1)**.
+2. y(t) = e^(−t/τ) : l'intérieur est u = −t/τ. Comme −t/τ = (−1/τ) × t, un nombre fois t, sa
+   dérivée est ce nombre : u' = −1/τ. Donc **y'(t) = −(1/τ) × e^(−t/τ)**, c'est-à-dire
+   y' = −(1/τ) × y. Toujours négative : la décharge ne fait que décroître. C'est ce calcul qui
+   servira, dans la fiche 18.4, à vérifier la solution d'une équation différentielle.
+3. g(x) = ln(x² + 1) : l'intérieur est u = x² + 1 (toujours positif, donc g est définie sur ℝ),
+   u' = 2x, donc **g'(x) = 2x / (x² + 1)**.
+
+*Lues à l'envers, ces règles redonnent les primitives de la fiche 17.2 : une primitive de u'e^u
+est e^u, une primitive de u'/u est ln(u).*
+
+**Dernière règle, pour le §7 : la dérivée d'un produit (admise).** Des fonctions comme
+12t × e^(−t/4) sont des produits de deux morceaux qu'on sait maintenant dériver séparément.
+Si f = u × v,
+
+> **(u × v)' = u' × v + u × v'**
+
+*Pourquoi deux termes ? Imaginez une plaque rectangulaire de côtés u et v qui se dilate. Son aire
+u × v augmente de deux façons : parce que la longueur u s'allonge (une bande de u' × v), et parce
+que la largeur v s'allonge (une bande de u × v'). La variation totale est la somme des deux
+bandes. Erreur à éviter : on ne dérive pas un produit en multipliant les dérivées. Contre-exemple :
+(x × x)' = (x²)' = 2x, alors que x' × x' = 1 × 1 = 1.*
+
+### 6. Qui l'emporte à l'infini ? (croissances comparées)
+
+Dans une étude de fonction, on tombe souvent sur un produit ou un quotient dont les deux morceaux
+tirent en sens contraire, comme t × e^(−t) : t grandit, e^(−t) tend vers 0. Qui gagne ?
+
+> **L'exponentielle l'emporte sur toute puissance de x, et toute puissance de x l'emporte sur
+> ln.** Par exemple, quand x → +∞ : eˣ / x → +∞ ; x × e^(−x) → 0 ; ln(x) / x → 0.
+
+*Vérification numérique : pour x = 20, x × e^(−x) = 20 × 0,000 000 002 ≈ 0,000 000 04. Le
+facteur e^(−20) écrase le facteur 20.* Ces résultats sont **admis**. Le programme demande que
+toute étude de branche infinie (le comportement de la courbe quand x part vers l'infini)
+comporte des indications sur la méthode à suivre : **à l'examen,
+ces résultats sont rappelés** chaque fois qu'on en a besoin.
+
+### 7. Étude complète d'une fonction avec une exponentielle
+
+**Situation.** Après un freinage d'urgence, l'élévation de température d'un frein de presse
+au-dessus de l'ambiante est modélisée par θ(t) = 12 t e^(−t/4), avec t en minutes, t ≥ 0, le
+coefficient 12 en °C/min et θ (thêta, la lettre habituelle pour une température) en °C.
+
+*Pourquoi cette forme : le facteur t fait monter la température (la chaleur du freinage arrive),
+le facteur e^(−t/4) la fait redescendre (le frein se refroidit). C'est le bras de fer du §6 :
+t gagne au début, l'exponentielle gagne à la fin.* Quand le frein est-il le plus chaud, et de
+combien ?
+
+**Domaine.** [0 ; +∞[ (le temps commence au freinage). θ(0) = 0 : pas d'échauffement à
+l'instant du freinage.
+
+**Limite en +∞.** θ(t) = 12 × t e^(−t/4). Indication (croissances comparées) :
+t e^(−t/4) → 0 quand t → +∞. Donc **θ(t) → 0** : le frein revient à la température ambiante.
+La droite y = 0 est asymptote horizontale.
+
+**Dérivée : c'est un produit** (règle du §5 : (u × v)' = u'v + uv').
+- u = 12t, donc u' = 12 ;
+- v = e^(−t/4), donc v' = −(1/4) e^(−t/4) (forme composée, intérieur −t/4).
+
+On remplace dans u'v + uv' :
+θ'(t) = 12 × e^(−t/4) + 12t × (−1/4) e^(−t/4).
+
+On simplifie le second terme : 12t × (−1/4) = −3t, donc θ'(t) = 12 e^(−t/4) − 3t e^(−t/4).
+
+Les deux termes contiennent e^(−t/4) : on le met en facteur, comme on écrirait
+12a − 3ta = a × (12 − 3t). θ'(t) = e^(−t/4) × (12 − 3t).
+
+Enfin, 12 − 3t = 3 × (4 − t), d'où **θ'(t) = 3 e^(−t/4) × (4 − t)**.
+
+*Pourquoi on se donne la peine de factoriser : l'exponentielle est toujours positive. Une fois
+isolée en facteur, le signe se lit sur le seul morceau (4 − t).*
+
+**Signe.** 3 e^(−t/4) est toujours strictement positif. **Le signe de θ' est donc celui de
+(4 − t)** : positif avant 4 min, nul en 4, négatif après.
+
+**Tableau de variations.**
+
+| t | 0 | | 4 | | +∞ |
+|---|---|---|---|---|---|
+| θ'(t) | | + | 0 | − | |
+| θ(t) | 0 | ↗ | ≈ 17,7 | ↘ | 0 |
+
+θ(4) = 12 × 4 × e^(−1) = 48 × 0,3679 ≈ **17,7 °C**.
+
+**Ce que le calcul apprend.** Le frein est le plus chaud **4 minutes après le freinage**, avec
+une élévation de 17,7 °C. C'est ce pic qu'on compare à la température maximale admissible de la
+garniture (la matière qui frotte sur le disque). Le mesurer juste après le freinage, à t = 1 min
+par exemple (θ(1) ≈ 9,3 °C), le sous-estimerait de moitié.
+
+### 8. Les erreurs classiques
+
+1. **Écrire ln(a + b) = ln(a) + ln(b).** Faux : c'est le **produit** qui devient une somme.
+   Vérifiez avec 1 + 1 : ln(2) ≈ 0,693, alors que ln(1) + ln(1) = 0.
+2. **Dériver un produit en multipliant les dérivées.** (u × v)' = u'v + uv', jamais u' × v'.
+3. **Oublier le u'** en dérivant e^u : (e^(−t/4))' = −(1/4) e^(−t/4), pas e^(−t/4).
+4. **Calculer ln d'un nombre négatif ou nul.** La calculatrice affiche une erreur : le contenu
+   d'un ln doit toujours être strictement positif.
+5. **Oublier d'inverser l'inégalité** en multipliant ou en divisant par un nombre négatif
+   (souvent −τ).
+6. **Appliquer e^(−t/τ) directement à une température.** C'est l'écart T − T_amb qui décroît
+   ainsi (fiche 18.4) : T(t) = T_amb + (T₀ − T_amb) e^(−t/τ).
+
+### 9. À retenir
+
+- **eˣ** : toujours positive, croissante, e⁰ = 1, tend vers 0 en −∞. **e^(−t/τ)** décrit tout ce
+  qui perd le même pourcentage à chaque intervalle de temps égal : une tension, ou l'écart
+  T − T_amb d'un refroidissement.
+- **ln** défait exp : ln(eᵃ) = a, e^(ln x) = x. Défini seulement pour x > 0. ln(1) = 0.
+- ln transforme les **produits en sommes** et les **puissances en facteurs**.
+- **eˣ = k ⟺ x = ln(k)** (k > 0) : c'est ce qui permet de calculer un temps de décharge.
+- **(u × v)' = u'v + uv'**, **(e^u)' = u'e^u**, **(ln u)' = u'/u**.
+- À l'infini, **l'exponentielle l'emporte sur les puissances, qui l'emportent sur ln**.
+
+> **Complément — le logarithme décimal : décibels et pH** *(à traiter si le temps le permet ;
+> rappelé par l'énoncé s'il sert à l'examen)*
+>
+> ln défait e^… ; le **logarithme décimal log** (touche log) défait 10^… : **log(x) est
+> l'exposant a tel que 10ᵃ = x.** Ainsi log(1 000) = 3 parce que 1 000 = 10³ : log « compte
+> les zéros ». Il suit les mêmes règles de calcul que ln. *(Lien entre les deux, pour
+> information : log(x) = ln(x)/ln(10). Attention : ln(100) ≈ 4,6 mais log(100) = 2.)*
+>
+> **Le bruit d'une machine.** L'intensité sonore d'une presse est de l'ordre de 10⁹ à 10¹⁰ fois
+> le plus petit son audible I₀. On la ramène à une échelle lisible avec le **niveau sonore**
+> L = 10 × log(I / I₀), en décibels. *Exemple : si I/I₀ = 100 000 000 = 10⁸, alors
+> log(I/I₀) = 8 et L = 80 dB : un nombre à 9 chiffres devient « 80 ».* Deux machines identiques
+> envoient deux fois plus d'énergie sonore : ce sont les **intensités** qui s'additionnent,
+> I + I = 2I, pas les décibels. L = 10 log(2I/I₀) = 10 log(2) + 10 log(I/I₀) ≈ 3 + 80 =
+> **83 dB**. Doubler l'intensité ajoute toujours 3 dB environ.
+>
+> *En conception : le Code du travail (art. R4431-2 et R4434-7) fixe à 85 dB(A) d'exposition moyenne sur
+> la journée le niveau à partir duquel le port de protections auditives est obligatoire (le
+> « A » signale une mesure corrigée pour correspondre à la sensibilité de l'oreille). Gagner
+> 3 dB en capotant une machine, c'est diviser l'intensité sonore par deux.*
+>
+> **Le pH d'un bain de décapage.** pH = −log[H₃O⁺], où [H₃O⁺] se lit « concentration en ions
+> H₃O⁺ » : la quantité d'ions H₃O⁺ par litre de bain (en mol/L), qui dépend de l'acide dissous. Si [H₃O⁺] = 0,01 = 10⁻²,
+> alors pH = 2. Un bain à pH 2 contient donc **10 fois plus** d'ions H₃O⁺ qu'un bain à pH 3.
+""",
+            "formules": """
+
+**Définition** — exp' = exp, exp(0) = 1 · e = exp(1) ≈ 2,718
+
+**Règles de l'exponentielle** — e^(a+b) = eᵃ·eᵇ · e^(−a) = 1/eᵃ · e^(a−b) = eᵃ/eᵇ · (eᵃ)ⁿ = e^(na)
+
+**Réciprocité** — ln(eᵃ) = a (a réel) · e^(ln x) = x (x > 0) · ln 1 = 0 · ln e = 1
+
+**Règles du logarithme** (a, b > 0) — ln(ab) = ln a + ln b · ln(a/b) = ln a − ln b ·
+ln(1/a) = −ln a · ln(aⁿ) = n ln a
+
+**Limites** — eˣ → +∞ (x → +∞) · eˣ → 0 (x → −∞) · ln x → −∞ (x → 0⁺) · ln x → +∞ (x → +∞)
+
+**Croissances comparées** (admises, rappelées par l'énoncé ; x → +∞) — eˣ/x → +∞ ·
+x e^(−x) → 0 · ln(x)/x → 0
+
+**Dérivée d'un produit** — (u × v)' = u'v + uv'  (jamais u' × v')
+
+**Dérivées** — (eˣ)' = eˣ · (ln x)' = 1/x · (e^u)' = u'e^u · (ln u)' = u'/u (u > 0)
+
+**Équations** — eˣ = k ⟺ x = ln k (k > 0) · ln x = k ⟺ x = eᵏ
+
+**Décharge, refroidissement** — y(t) = y₀ e^(−t/τ), où y est la tension, ou l'écart T − T_amb
+pour un refroidissement (fiche 18.4) · temps pour atteindre y_s : t = τ ln(y₀/y_s), forme
+équivalente à t = −τ ln(y_s/y₀) de la fiche 18.4
+
+**Logarithme décimal** (complément, rappelé par l'énoncé s'il sert) — log x = ln x / ln 10 ·
+niveau sonore L = 10 log(I/I₀) · doubler I : +3 dB
+
+        """,
+            "exemple": """
+**Cas industriel — Dimensionner la résistance de décharge d'un variateur de vitesse**
+
+Une machine-outil est pilotée par un **variateur de vitesse**, le boîtier électronique qui règle
+la vitesse du moteur. À l'intérieur, un **condensateur** de **C = 1 000 µF** reste chargé à
+**U₀ = 560 V** après la coupure de l'alimentation : un technicien qui ouvre l'armoire pourrait
+être électrocuté. La norme de sécurité électrique des machines (NF EN 60204-1, § 6.2.4) impose
+que toute tension résiduelle supérieure à 60 V retombe à **60 V ou moins en 5 secondes** au plus.
+
+*Pour qui ne fait pas d'électricité : le condensateur est un réservoir d'électricité, comme le
+réservoir d'un compresseur qui reste sous pression après l'arrêt du moteur. Sa **capacité C**,
+en farads (F), est la taille du réservoir : 1 000 µF (microfarads) = 0,001 F. On branche une
+**résistance R**, en ohms (Ω), directement entre ses deux bornes (« en parallèle ») : c'est le
+**robinet de purge**. Plus R est **petite**, plus le robinet est ouvert, plus la décharge est
+rapide. Le produit R × C est la constante de temps τ : gros réservoir ou robinet peu ouvert,
+décharge lente.*
+
+Après la coupure, la tension suit u(t) = U₀ × e^(−t/(RC)), avec t en secondes, R en ohms, C en
+farads. **Quelle résistance R choisir ?**
+
+**Étape 1 — Traduire la norme en inéquation**
+
+On veut u(5) ≤ 60, soit 560 × e^(−5/(RC)) ≤ 60, soit e^(−5/(RC)) ≤ 60/560 = 3/28.
+
+**Étape 2 — Faire descendre l'exposant avec ln**
+
+ln est croissante, le sens est conservé : −5/(RC) ≤ ln(3/28).
+
+On multiplie par −1, le sens s'inverse : 5/(RC) ≥ −ln(3/28). Or −ln(3/28) = ln(28/3), puisque
+28/3 est l'inverse de 3/28. Donc 5/(RC) ≥ ln(28/3) ≈ 2,234.
+
+On multiplie les deux côtés par RC, qui est positif, donc le sens est conservé :
+5 ≥ ln(28/3) × RC. On divise par ln(28/3) ≈ 2,2336 : **RC ≤ 5 / ln(28/3) ≈ 2,239 s**.
+
+**Étape 3 — En déduire R**
+
+R ≤ 2,239 / 0,001 ≈ **2 239 Ω**. *R est une valeur **maximale** : une résistance plus petite
+videra le condensateur encore plus vite.* On ne trouve dans le commerce que certaines valeurs,
+dites **normalisées** (… 1,5 – 1,8 – 2,2 – 2,7 – 3,3 kΩ …). On prend celle juste en dessous :
+**R = 2,2 kΩ** (2 200 Ω).
+
+Vérification : RC = 2 200 × 0,001 = 2,2 s, et u(5) = 560 × e^(−5/2,2) ≈ 560 × 0,103 ≈
+**57,7 V ≤ 60 V**. La norme est respectée… sur le papier.
+
+**Étape 4 — Le réflexe du concepteur : la tolérance des composants**
+
+La **tolérance** est l'écart admis entre la valeur écrite sur un composant et sa valeur réelle,
+comme la tolérance d'une cote sur un plan. Celle d'un condensateur électrolytique est couramment
+de **±20 %** : un condensateur marqué 1 000 µF peut valoir jusqu'à **1 200 µF**. Avec
+R = 2,2 kΩ : RC = 2,64 s et u(5) = 560 × e^(−5/2,64) ≈ **84 V**. **La norme n'est plus
+respectée.**
+
+On refait le calcul avec C = 0,0012 F : R ≤ 2,239 / 0,0012 ≈ 1 866 Ω, donc **R = 1,8 kΩ**.
+
+Mais la résistance a, elle aussi, une tolérance : les résistances courantes sont à ±5 %. Une
+1,8 kΩ peut donc valoir 1 800 × 1,05 = 1 890 Ω : avec
+C = 1 200 µF, RC ≈ 2,27 s et u(5) ≈ **61,8 V**, de nouveau hors norme. On a deux solutions : descendre
+encore d'une valeur normalisée (1,5 kΩ), ou garder 1,8 kΩ et **resserrer la tolérance**,
+c'est-à-dire acheter une résistance plus précise, à **±1 %**, un peu plus chère. Elle vaut au plus
+1 818 Ω, d'où RC ≈ 2,18 s et
+u(5) ≈ **56,6 V ≤ 60 V**. C'est conforme **dans le pire cas des deux composants**.
+*La 1,5 kΩ à ±5 % conviendrait aussi (au pire 1 575 Ω, d'où u(5) ≈ 40 V), avec une marge plus
+large ; mais le courant et la puissance au tout premier instant de la décharge seraient plus
+forts (puissance U²/R, loi de Joule expliquée dans « Pour aller plus loin » ci-dessous :
+560²/1 500 ≈ 209 W au lieu de 174 W pour 1,8 kΩ). Les deux choix sont défendables :
+c'est au concepteur de trancher.*
+
+**Ce que le calcul apprend.** Sans ln, on ne peut pas isoler RC : c'est lui qui transforme
+« 60 V en 5 s » en une valeur de résistance. Et un calcul fait sur les valeurs nominales ne
+suffit pas : c'est le pire cas des tolérances qui décide de la conformité.
+
+*Pour aller plus loin. Une résistance traversée par un courant chauffe : la puissance qu'elle
+transforme en chaleur vaut U²/R (loi de Joule). Si elle restait branchée pendant le
+fonctionnement, elle dissiperait 560²/1 800 ≈ 174 W en permanence dans l'armoire, l'équivalent
+d'un gros fer à souder allumé en continu. En pratique, on ne la connecte qu'à la coupure, par un
+contact.*
+""",
+            "exercice": """
+**Partie A — Décharge d'un condensateur**
+
+Après coupure, la tension aux bornes d'un condensateur vaut u(t) = 400 e^(−t/2), en volts, avec
+t en secondes.
+
+**1.** Calcule u(0), u(2) et u(6). Que représente la valeur 2 dans l'exposant ?
+
+**2.** Au bout de combien de temps la tension descend-elle à 60 V ? (arrondir à 0,1 s)
+
+**3.** Calcule u'(t), puis u'(0). Interprète le signe et la valeur de u'(0).
+
+**Partie B — Étude d'une fonction avec ln (entraînement type examen)**
+
+On illustre ici, sur une fonction simple, la règle des croissances comparées « x l'emporte sur
+ln ». On étudie f(x) = x − 2 ln(x).
+
+**4.** Quel est l'ensemble de définition de f ? Quelle est la limite de f(x) quand x → 0⁺ ?
+
+**5.** Quelle est la limite de f(x) quand x → +∞ ? *Indication : en +∞, x → +∞ mais
+−2 ln(x) → −∞ : les deux morceaux tirent en sens contraire, on ne peut pas conclure
+directement. On met x en facteur pour voir qui gagne : f(x) = x × (1 − 2 ln(x)/x), et
+ln(x)/x → 0 quand x → +∞.*
+
+**6.** Calcule f'(x), étudie son signe et dresse le tableau de variations de f.
+
+**7.** Déduis-en que f(x) > 0 pour tout x de l'ensemble de définition.
+
+**Partie C — Complément : bruit en atelier (logarithme décimal)**
+
+**8.** Une machine produit un niveau sonore de 82 dB(A). On en installe quatre identiques côte à
+côte. Quel est le niveau sonore total ? Faut-il des protections auditives pour un opérateur
+exposé toute la journée ?
+""",
+            "corrige": """
+**1.** u(0) = 400 × e⁰ = **400 V**. u(2) = 400 × e^(−1) ≈ 400 × 0,368 ≈ **147 V**.
+u(6) = 400 × e^(−3) ≈ 400 × 0,0498 ≈ **19,9 V**.
+Le 2 est la **constante de temps τ = 2 s** : en 2 s, la tension tombe à 37 % de sa valeur de
+départ ; en 6 s (3τ), il en reste 5 %.
+
+**2.** On résout 400 e^(−t/2) = 60.
+e^(−t/2) = 60/400 = 0,15.
+On applique ln : −t/2 = ln(0,15), donc t = −2 × ln(0,15) ≈ −2 × (−1,897) ≈ **3,8 s**.
+*Contrôle : 3,8 s est compris entre τ = 2 s (147 V) et 3τ = 6 s (19,9 V), et 60 V est bien
+compris entre ces deux tensions. Le résultat est cohérent.*
+
+**3.** Ici, u(t) désigne la tension et u'(t) sa dérivée. L'intérieur de l'exponentielle est
+l'exposant −t/2, de dérivée −1/2. u'(t) = 400 × (−1/2) × e^(−t/2) = **−200 e^(−t/2)**, et
+u'(0) = **−200 V/s**.
+*Le signe est négatif : la tension diminue. Au tout premier instant, elle baisse de 200 V par
+seconde. Si elle gardait cette vitesse, le condensateur serait vide en 400/200 = 2 s,
+c'est-à-dire exactement τ. Graphiquement : la tangente à l'origine (la droite qui part de
+(0 ; 400) dans la direction de la courbe à cet instant, avec la pente −200 V/s) atteint 0 V pile
+à t = τ = 2 s.*
+
+**4.** ln(x) n'existe que pour x > 0 : **Df = ]0 ; +∞[**.
+Quand x → 0⁺ : x → 0 et ln(x) → −∞, donc −2 ln(x) → +∞ (−2 fois un nombre très négatif donne un
+nombre très positif). Ainsi **f(x) → +∞**. La droite x = 0 est asymptote verticale.
+
+**5.** ln(x)/x → 0, donc 1 − 2 ln(x)/x → 1, et x → +∞. Le produit tend vers **+∞**.
+
+**6.** f'(x) = 1 − 2 × (1/x) = 1 − 2/x = **(x − 2)/x**.
+Sur ]0 ; +∞[, x > 0 : le signe de f' est celui de x − 2. f' est négative sur ]0 ; 2[, nulle en 2,
+positive sur ]2 ; +∞[.
+f(2) = 2 − 2 ln(2) ≈ 2 − 1,386 ≈ **0,614**.
+
+| x | 0 | | 2 | | +∞ |
+|---|---|---|---|---|---|
+| f'(x) | ∥ | − | 0 | + | |
+| f(x) | ∥ +∞ | ↘ | ≈ 0,614 | ↗ | +∞ |
+
+**7.** Le minimum de f sur ]0 ; +∞[ vaut f(2) ≈ 0,614, un nombre strictement positif. Toutes
+les valeurs de f sont supérieures ou égales à ce minimum, donc **f(x) > 0 pour tout x > 0**.
+*Autrement dit, x > 2 ln(x) pour tout x > 0 : x l'emporte toujours sur 2 ln(x), comme annoncé par
+les croissances comparées.*
+
+**8.** Quatre machines identiques : les intensités s'additionnent, l'intensité est multipliée
+par 4. L = 82 + 10 × log(4) ≈ 82 + 6,0 = **88 dB(A)**.
+*Justification : 10 log(4 I/I₀) = 10 log(4) + 10 log(I/I₀), grâce à la règle log(ab) = log a +
+log b.* Le niveau dépasse 85 dB(A) : pour un opérateur exposé toute la journée, **les protections
+auditives sont obligatoires**. Réduire le bruit à la source (capotage, éloignement des machines)
+est à étudier en priorité : c'est le travail du concepteur.
+*Erreur classique : 4 × 82 = 328 dB, une valeur absurde (le seuil de douleur est vers 120 dB).
+Les décibels ne s'additionnent pas.*
 """,
         },
         {
@@ -48977,6 +49618,20 @@ _mth("17.1", "Étudier une fonction : domaine, limites, tableau de variations", 
    "asymptote verticale x = −3, f'(x) = 7/(x+3)² toujours positive → f "
    "strictement croissante sur chacune de ses deux branches.")
 
+_mth("17.7", "Calculer avec exp et ln : isoler un temps, dériver, étudier", [
+    "**Isoler l'exponentielle** d'un côté de l'égalité : a × e^(…) = b devient "
+    "e^(…) = b/a. Vérifier que b/a est strictement positif, sinon il n'y a pas de solution.",
+    "**Appliquer ln des deux côtés** pour faire descendre l'exposant : ln(e^X) = X.",
+    "**Isoler t**. Si l'on multiplie ou divise par un nombre négatif (souvent −τ), "
+    "**inverser le sens** d'une inégalité.",
+    "**Pour dériver**, repérer l'intérieur u : (e^u)' = u'e^u et (ln u)' = u'/u. Ne "
+    "jamais oublier le facteur u'. Pour un produit : (uv)' = u'v + uv'.",
+    "**Pour étudier le signe** d'une dérivée qui contient e^(…), mettre l'exponentielle en "
+    "facteur : elle est toujours positive, le signe se lit sur le reste.",
+    "**Contrôler l'ordre de grandeur** avec les repères τ → 37 %, 3τ → 5 %.",
+], "u(t) = 400 e^(−t/2) atteint 60 V quand e^(−t/2) = 0,15, soit −t/2 = ln(0,15), "
+       "donc t = −2 ln(0,15) ≈ 3,8 s. C'est cohérent : entre τ = 2 s (147 V) et 3τ = 6 s (19,9 V).")
+
 _mth("17.2", "Calculer une aire par primitive et intégrale définie", [
     "**Trouver une primitive F de f**, en utilisant le tableau des "
     "primitives usuelles (lu à l'envers de celui des dérivées).",
@@ -50218,6 +50873,50 @@ def gen_valeur_moyenne():
     }
 
 
+def gen_temps_decharge():
+    """Temps pour qu'une décharge exponentielle atteigne un seuil (isoler t avec ln)."""
+    u0 = random.choice([200, 300, 400, 560])
+    tau = random.choice([0.5, 1, 2, 5])
+    # seuil : un multiple de 10 V entre 5 % et 50 % de U0, donc t entre 0,7τ et 3τ environ
+    us = random.choice([s for s in range(10, u0) if 0.05 * u0 <= s <= 0.5 * u0 and s % 10 == 0])
+    rep = tau * math.log(u0 / us)
+    expo = "−t" if tau == 1 else f"−t/{fr(tau, 1)}"
+    rapport = us / u0
+    signe_rapport = "=" if abs(rapport * 10 ** 4 - round(rapport * 10 ** 4)) < 1e-9 else "≈"
+    ln_rapport = fr(math.log(rapport), 4).replace("-", "−")
+    return {
+        "titre": "Exponentielle et ln — temps de décharge",
+        "enonce": (f"Après coupure, la tension d'un condensateur vaut u(t) = {u0} e^({expo}) "
+                   f"(u en volts, t en secondes, constante de temps τ = {fr(tau, 1)} s). "
+                   f"Au bout de combien de secondes atteint-elle {us} V ?"),
+        "rep": rep, "tol": max(0.05, rep * 0.015), "unite": "s",
+        "diag": [
+            _diag(tau * math.log(us / u0),
+                  "Un temps négatif : le rapport est inversé ou le signe moins a été oublié. "
+                  f"t = −τ × ln({us}/{u0}) = τ × ln({u0}/{us})."),
+            _diag(tau * math.log10(u0 / us),
+                  "Vous avez utilisé la touche log (logarithme décimal). Pour défaire e, il "
+                  "faut ln (logarithme népérien)."),
+            _diag(tau * u0 / us,
+                  "Il manque le logarithme : on ne peut pas isoler t sans appliquer ln pour "
+                  "faire descendre l'exposant."),
+        ],
+        "corr": [
+            f"**J'isole l'exponentielle.** {u0} e^({expo}) = {us} donne "
+            f"e^({expo}) = {us}/{u0} {signe_rapport} {fr(rapport, 4)}.",
+            f"**J'applique ln.** {expo} = ln({us}/{u0}) ≈ {ln_rapport}.",
+            f"**J'isole t.** t = −{fr(tau, 1)} × ({ln_rapport}) ≈ **{fr(rep, 2)} s**.",
+            f"*Contrôle : τ = {fr(tau, 1)} s laisse 37 % ({fr(0.368 * u0, 0)} V), 3τ laisse 5 % "
+            f"({fr(0.05 * u0, 0)} V) — {us} V est bien atteint entre les deux.*"
+            if 0.05 * u0 <= us <= 0.368 * u0 else
+            f"*Contrôle : {us} V est au-dessus de 37 % de {u0} V, donc atteint avant τ = "
+            f"{fr(tau, 1)} s.*",
+        ],
+        "indice": "Isole e^(…), applique ln des deux côtés, puis isole t. Le résultat doit être "
+                  "positif.",
+    }
+
+
 def fabriquer_exo(famille=None):
     """Tire un exercice au hasard, éventuellement dans une famille donnée."""
     catalogue = {
@@ -50227,7 +50926,7 @@ def fabriquer_exo(famille=None):
         "Matériaux et masses": [gen_masse_piece],
         "Unités et conversions": [gen_unites],
         "Mathématiques BTS CPI": [gen_signe_affine, gen_discriminant, gen_proba_binomiale,
-                                  gen_determinant_2x2, gen_valeur_moyenne],
+                                  gen_determinant_2x2, gen_valeur_moyenne, gen_temps_decharge],
     }
     if famille and famille in catalogue:
         pool = catalogue[famille]
@@ -52718,6 +53417,69 @@ ATELIERS = [
         "a_retenir": "À retenir : asymptote verticale = valeur qui annule le dénominateur ; "
                      "asymptote horizontale (fonction homographique) = rapport des "
                      "coefficients de x. Le signe de f' donne le sens de variation.",
+    },
+    {
+        "id": "at139",
+        "chapitre": "Bloc 17",
+        "titre": "Dimensionner une décharge de condensateur avec ln",
+        "theme": "Fonctions d'une variable réelle",
+        "fiche": "17.7",
+        "figure": "exp_ln_courbes",
+        "vocabulaire": [
+            ("constante de temps τ", "τ = R × C pour un circuit résistance-condensateur : au bout "
+             "de τ, il reste 37 % de la tension ; au bout de 3τ, 5 %."),
+            ("logarithme népérien ln", "la touche qui défait l'exponentielle : ln(e^a) = a. Elle "
+             "sert à faire descendre un exposant pour isoler le temps."),
+        ],
+        "enonce": "Après coupure, un condensateur se décharge selon u(t) = 400 e^(−t/2) "
+                  "(u en volts, t en secondes). On cherche quand la tension atteint 60 V.",
+        "etapes": [
+            {"type": "numerique", "label": "Tension après 2 s, u(2)", "unite": "V",
+             "attendu": 400 * math.exp(-1), "tol": 0.5,
+             "consigne": "Remplace t par 2 : l'exposant vaut −1.",
+             "indice": "400 × e^(−1), avec e^(−1) ≈ 0,368.",
+             "pieges": [(400 * math.exp(-2), "Vous avez calculé e^(−2) : l'exposant est −t/2, donc "
+                                             "−2/2 = −1 pour t = 2.")]},
+            {"type": "numerique", "label": "Valeur de e^(−t/2) quand u = 60 V", "unite": "",
+             "attendu": 0.15, "tol": 0.001,
+             "consigne": "Isole l'exponentielle : divise les deux côtés de 400 e^(−t/2) = 60 par 400.",
+             "indice": "60 / 400.",
+             "pieges": [(400 / 60, "C'est l'inverse : on divise 60 par 400, pas 400 par 60.")]},
+            {"type": "numerique", "label": "Instant où u = 60 V", "unite": "s",
+             "attendu": -2 * math.log(0.15), "tol": 0.05,
+             "consigne": "Applique ln : −t/2 = ln(0,15), puis isole t.",
+             "indice": "t = −2 × ln(0,15).",
+             "pieges": [(2 * math.log(0.15), "Le temps ne peut pas être négatif : vous avez oublié "
+                                             "le signe moins devant 2."),
+                        (-2 * math.log10(0.15), "Vous avez utilisé la touche log (décimal) au lieu "
+                                                "de ln (népérien).")]},
+            {"type": "qcm", "label": "Cohérence du résultat",
+             "question": "Le résultat trouvé (environ 3,8 s) est-il plausible ?",
+             "options": ["Non, il devrait dépasser 6 s puisque 60 V est une tension faible",
+                         "Oui : il est entre τ = 2 s (147 V) et 3τ = 6 s (19,9 V), et 60 V est "
+                         "entre 147 V et 19,9 V",
+                         "On ne peut pas le savoir sans refaire le calcul exact"],
+             "bonne": 1,
+             "diagnostics": {0: "Au bout de 6 s (3τ), il ne reste que 5 % de 400 V, soit "
+                                "19,9 V : 60 V est atteint avant.",
+                             2: "Les repères τ → 37 % et 3τ → 5 % suffisent à encadrer le résultat "
+                                "sans refaire le calcul."}},
+        ],
+        "corrige": {
+            "enonce": "u(t) = 400 e^(−t/2), on cherche t tel que u(t) = 60 V.",
+            "regle": "**On isole l'exponentielle, puis on applique ln pour faire descendre "
+                     "l'exposant : e^X = k équivaut à X = ln(k).**",
+            "conversions": "Aucune : t est déjà en secondes et u en volts.",
+            "remplacement": "400 e^(−t/2) = 60 → e^(−t/2) = 0,15 → −t/2 = ln(0,15)",
+            "calcul": "u(2) = 400 × e^(−1) ≈ **147 V**\\n\\ne^(−t/2) = 60/400 = **0,15**"
+                      "\\n\\nt = −2 × ln(0,15) ≈ −2 × (−1,897) ≈ **3,8 s**",
+            "verification": "**Contrôle de cohérence** : 3,8 s est compris entre τ = 2 s et "
+                            "3τ = 6 s, et 60 V entre 147 V et 19,9 V. Autre contrôle : "
+                            "400 × e^(−3,8/2) ≈ 400 × 0,150 = 60 V.",
+        },
+        "a_retenir": "À retenir : pour trouver un temps dans une décharge, isoler e^(…), appliquer "
+                     "ln, puis isoler t. Encadrer le résultat avec les repères τ → 37 % et "
+                     "3τ → 5 %.",
     },
     {
         "id": "at18",
@@ -61199,10 +61961,10 @@ MATIERES_PROGRAMME = [
          "d'une droite.",
          [(7, ["7.1", "7.4"])]),
         ("Analyse (évalué)", "Incomplet (à enrichir)",
-         "Fonctions, dérivées, calcul intégral, valeur moyenne, extremums locaux, équations "
-         "différentielles du premier ordre (deux cas traités). Non traités : étude des "
-         "fonctions ln et exp, équations différentielles du second ordre, méthode d'Euler.",
-         [(7, ["7.2"]), (17, ["17.1", "17.2", "17.4", "17.5"]), (18, ["18.4", "18.8"])]),
+         "Fonctions, dérivées, fonctions exponentielle et logarithme, calcul intégral, valeur "
+         "moyenne, extremums locaux, équations différentielles du premier ordre (deux cas "
+         "traités). Non traités : équations différentielles du second ordre, méthode d'Euler.",
+         [(7, ["7.2"]), (17, ["17.1", "17.7", "17.2", "17.4", "17.5"]), (18, ["18.4", "18.8"])]),
         ("Hors épreuve : calcul matriciel, Bézier, droites et plans", "Complet",
          "Programme complémentaire non évalué (matrices, courbes de Bézier) et "
          "approfondissement hors référentiel (droites et plans dans l'espace, distance "
@@ -61598,7 +62360,7 @@ elif PAGE == PAGE_MATHS:
         'de Bézier : fiches 19.1 à 19.4) et une fiche d\'approfondissement (19.6, droites et '
         'plans dans l\'espace), toutes marquées « hors épreuve ». Attention : certaines notions '
         'évaluées ne sont pas encore traitées ici (lois exponentielle et de Poisson, tests '
-        'd\'hypothèse, statistique à deux variables, fonctions ln et exp, équations '
+        'd\'hypothèse, statistique à deux variables, équations '
         'différentielles du second ordre) — voir le tableau de bord. Ce sont les mêmes fiches que dans '
         '« Cours », réunies ici pour ne pas les chercher au milieu des chapitres '
         'techniques.</div>',

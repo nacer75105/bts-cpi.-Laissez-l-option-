@@ -10,6 +10,41 @@ Périmètre de l'examen : S10 du référentiel BTS CPI 2016 (voir
 `.claude/referentiels/bts-cpi-maths/`). 9 modules évalués ; calcul matriciel et modélisation
 géométrique = programme complémentaire non évalué.
 
+## Chantier « notions manquantes » (lancé le 2026-09-25)
+
+Une fiche à la fois, dans l'ordre du programme, chacune relue par les deux agents jusqu'à
+zéro réserve avant insertion. Numérotation : nouveaux id à la suite (17.7, 17.8, 18.9 →
+18.19), jamais de renumérotation — la progression est indexée par `"{bloc}#{id}"`
+(fiches lues, notes, réponses) et la navigation retrouve les fiches par id, pas par
+position ; une fiche peut donc être placée n'importe où dans la liste de son bloc. Bloc 18
+laissé d'un seul tenant (pas de scission) pour ne pas toucher les clés.
+
+Plan (le référentiel ne répartit pas les modules entre 1ʳᵉ et 2ᵉ année ; l'ordre suit les
+prérequis et la répartition usuelle) :
+1. ✅ 17.7 ln et exp — 2. 17.8 statistique à deux variables — 3. loi uniforme —
+4. loi normale et approximation binomiale — 5. somme de variables, limite centrée —
+6. méthode d'Euler — 7. IC d'une proportion — 8. tests sur une proportion / une moyenne —
+9. tests de comparaison — 10. loi exponentielle — 11. loi de Poisson — 12. nombres
+complexes (forme algébrique, Δ < 0) — 13. équations différentielles du second ordre.
+
+### 17.7 — Fonctions exponentielle et logarithme népérien (faite le 2026-09-25)
+
+- Insérée après 17.1 (ordre affiché 17.0 → 17.1 → 17.7 → 17.2), avec méthode, figure
+  `exp_ln_courbes`, atelier at139, générateur `gen_temps_decharge`, 8 questions dans
+  « Mathématiques BTS CPI (examen) » (bonne réponse en positions 2, 0, 3, 1, 2, 0, 3, 1).
+- Quatre tours de relecture (justesse + clarté) jusqu'à zéro réserve. Corrections de fond :
+  la règle du produit (uv)' = u'v + uv' n'était enseignée NULLE PART dans l'application
+  (7.2 renvoyait à 17.1, qui ne traite que le quotient) — elle est maintenant dans 17.7 §5,
+  et le renvoi de 7.2 pointe vers 17.1 (quotients) et 17.7 (produits, ln, exp) ; le
+  refroidissement est écrit sur l'écart T − T_amb, comme en 18.4.
+- Mis à jour en même temps : résumé du bloc 17, tableau de bord (Analyse : ln et exp
+  retirés des « non traités », 17.7 ajoutée), encart de la page Maths.
+- **Non vérifié** : textes réglementaires cités de mémoire par le relecteur (NF EN 60204-1
+  § 6.2.4 : 60 V en 5 s ; Code du travail R4431-2 et R4434-7 : 85 dB(A)) ; rendu visuel réel
+  de la figure (coordonnées et chevauchements contrôlés par calcul uniquement) ; le corrigé
+  progressif et l'atelier at139 n'ont pas été cliqués dans l'interface (la fiche s'ouvre sans
+  erreur dans un AppTest Streamlit).
+
 ## Bloc 19 — marquage hors épreuve (fait)
 
 - 19.1–19.4 (matrices, Bézier) : programme complémentaire, marquées « hors épreuve ».
@@ -63,10 +98,10 @@ géométrique = programme complémentaire non évalué.
 
 ## Bloc 17 — reste à faire
 
-- **Contenus évalués ABSENTS** : fonctions ln et exp (limites, dérivées de ln u et eᵘ, étude
-  complète) et statistique à deux variables (nuage de points, ajustement affine par moindres
-  carrés, coefficient de corrélation) — aucune fiche ne les traite. Le résumé du bloc 17 le dit
-  désormais. Les primitives de 1/x, eˣ, u'/u, u'eᵘ ont été ajoutées au tableau de 17.2.
+- **Contenu évalué ABSENT** : statistique à deux variables (nuage de points, ajustement affine
+  par moindres carrés, coefficient de corrélation) — prochaine fiche du chantier (17.8). Les
+  fonctions ln et exp sont traitées depuis le 2026-09-25 (fiche 17.7). Les primitives de 1/x,
+  eˣ, u'/u, u'eᵘ ont été ajoutées au tableau de 17.2.
 - **Générateurs** (justes sur 300 tirages, mais à polir) :
   - `gen_discriminant` : affichage « 1x² + (-8)x + (-8) » et « (0)x » ; quand a·c = 0, les deux
     diagnostics sont filtrés et l'exercice n'en a plus. Formater les coefficients, exclure c = 0.
