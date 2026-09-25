@@ -51333,9 +51333,15 @@ def lire_nombre(txt):
     s = s.replace("−", "-").lstrip("+")
     if not s:
         return None
-    m = re.match(r"^(-?\d+(?:\.\d+)?)[×x*·]?10\^?\(?(-?\d+)\)?$", s, re.I)
+    # Notation « 6,02x10^23 » : le signe de multiplication est OBLIGATOIRE. Sans lui, un nombre
+    # contenant « 10 » était lu comme une puissance de 10 (« 5100 » → 5 × 10⁰ = 5, « 0,0106 » →
+    # 0 × 10⁶ = 0) : 1 890 entiers de 0 à 99 999 étaient mal lus (corrigé le 2026-09-25).
+    m = re.match(r"^(-?\d+(?:\.\d+)?)[×x*·]10\^?\(?(-?\d+)\)?$", s, re.I)
     if m:
         return float(m.group(1)) * 10 ** int(m.group(2))
+    m = re.match(r"^10\^\(?(-?\d+)\)?$", s)
+    if m:
+        return 10.0 ** int(m.group(1))
     m = re.match(r"^(-?\d+(?:\.\d+)?)/(-?\d+(?:\.\d+)?)$", s)
     if m:
         return float(m.group(1)) / float(m.group(2))
@@ -52049,12 +52055,8 @@ def gen_proba_binomiale():
     k = random.choice(ks)
     coeff = math.comb(n, k)
     rep = coeff * p ** k * (1 - p) ** (n - k)
-    return {
-        "titre": "Loi binomiale — probabilité ponctuelle",
-        "enonce": (f"X suit une loi binomiale de paramètres n = {n} et p = {fr(p, 2)}. "
-                   f"Calcule P(X = {k})."),
-        "rep": rep, "tol": max(0.0005, rep * 0.01), "unite": "",
-        "diag": [
+    tol = max(0.0005, rep * 0.01)
+    diags = [
             _diag(p ** k * (1 - p) ** (n - k),
                   f"Il manque le coefficient binomial C({n},{k}) = {coeff} : il faut compter "
                   "le nombre de façons d'obtenir k succès parmi n, pas juste multiplier les "
@@ -52062,7 +52064,16 @@ def gen_proba_binomiale():
             _diag(coeff * p ** (n - k) * (1 - p) ** k,
                   "Les exposants de p et de (1−p) sont échangés : p est élevé à la puissance "
                   "du nombre de succès k, pas l'inverse."),
-        ],
+    ]
+    return {
+        "titre": "Loi binomiale — probabilité ponctuelle",
+        "enonce": (f"X suit une loi binomiale de paramètres n = {n} et p = {fr(p, 2)}. "
+                   f"Calcule P(X = {k})."),
+        "rep": rep, "tol": tol, "unite": "",
+        # Un diagnostic égal à la bonne réponse n'explique rien (C(n,k) = 1 pour k = 0 ou n ;
+        # exposants échangés sans effet si p = 0,5 ou k = n − k) : on ne le propose pas, plutôt
+        # que de supprimer ces exercices.
+        "diag": [d for d in diags if abs(d["v"] - rep) > tol],
         "corr": [
             f"**La formule.** P(X = k) = C(n,k) × p^k × (1−p)^(n−k), avec n = {n}, "
             f"p = {fr(p, 2)}, k = {k}.",
@@ -52298,6 +52309,31 @@ def gen_proba_uniforme():
     }
 
 
+def decimales_affichage(tol):
+    """Nombre de décimales pour afficher la réponse d'un générateur : assez pour que la valeur
+    AFFICHÉE soit acceptée par la tolérance (10⁻ᵈ ≤ tol, donc erreur d'arrondi ≤ tol/2), et au
+    moins 2. Corrigé le 2026-09-25 : l'affichage fixe à 2 décimales faisait refuser la réponse
+    affichée dans 66 % des tirages de gen_proba_binomiale (tol 0,0005) et 21 % de
+    gen_proba_uniforme (tol 0,001)."""
+    if not tol or tol <= 0:
+        return 4
+    return max(2, math.ceil(-math.log10(tol) - 1e-9))
+
+
+def tirer_exercice(generateur, essais=50):
+    """Tire un exercice, en écartant les tirages où un diagnostic tombe dans la tolérance de la
+    bonne réponse : fabriquer_exo le retirerait sans rien dire, et l'erreur de l'élève ne serait
+    plus expliquée (cas relevés le 2026-09-25 sur gen_discriminant quand a·c = 0,
+    gen_determinant_2x2 quand b·c = 0, gen_proba_binomiale quand p = 0,5…)."""
+    ex = generateur()
+    for _ in range(essais - 1):
+        tol = ex.get("tol", 0.001)
+        if all(d.get("v") is None or abs(d["v"] - ex["rep"]) > tol for d in ex.get("diag", [])):
+            break
+        ex = generateur()
+    return ex
+
+
 def fabriquer_exo(famille=None):
     """Tire un exercice au hasard, éventuellement dans une famille donnée."""
     catalogue = {
@@ -52314,7 +52350,7 @@ def fabriquer_exo(famille=None):
         pool = catalogue[famille]
     else:
         pool = [g for gens in catalogue.values() for g in gens]
-    ex = random.choice(pool)()
+    ex = tirer_exercice(random.choice(pool))
 
     tol = ex.get("tol", 0.001)
     vus = []
@@ -52422,7 +52458,8 @@ def page_entrainement():
                     E["fini"] = True
 
     if E["fini"]:
-        st.markdown(f"**Réponse : {fr(ex['rep'], 2)} {ex.get('unite', '')}**")
+        st.markdown(f"**Réponse : {fr(ex['rep'], decimales_affichage(ex.get('tol', 0.001)))} "
+                    f"{ex.get('unite', '')}**")
         with st.expander("La méthode, étape par étape", expanded=True):
             for i, etape in enumerate(ex["corr"], 1):
                 st.markdown(f"**{i}.** {etape}")

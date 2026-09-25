@@ -1,17 +1,19 @@
 # -*- coding: utf-8 -*-
-"""Vérification des tolérances des ATELIERS (liste ATELIERS de app.py).
+"""Vérification des tolérances des ATELIERS et des GÉNÉRATEURS d'exercices de app.py.
 
-À relancer après toute création ou modification d'atelier :
+À relancer après toute création ou modification d'atelier ou de générateur :
 
     python outils/verifier_tolerances_ateliers.py
 
-Le contrôleur des ateliers (page Ateliers, app.py) accepte une réponse numérique quand
-|valeur − attendu| ≤ tol : `tol` est une tolérance ABSOLUE, dans l'unité de l'étape. Jusqu'au
-2026-09-25 il la lisait en relatif (|attendu| × tol), ce qui faisait compter 42 pièges sur 194
-étapes comme de bonnes réponses (commit 34e7003). Ce script garantit que cela ne revient pas.
+Le script lit app.py sans lancer Streamlit (analyse du fichier source) et compte tous les
+défauts ci-dessous dans son code de sortie : 0 si aucun défaut, sinon leur nombre.
 
-Il lit ATELIERS sans lancer Streamlit (analyse du fichier source), puis cherche, pour chaque
-étape numérique, quatre défauts, tous comptés dans le code de sortie :
+1. ATELIERS (liste ATELIERS, page Ateliers)
+-------------------------------------------
+Le contrôleur accepte une réponse numérique quand |valeur − attendu| ≤ tol : `tol` est une
+tolérance ABSOLUE, dans l'unité de l'étape. Jusqu'au 2026-09-25 il la lisait en relatif
+(|attendu| × tol), ce qui faisait compter 42 pièges sur 194 étapes comme de bonnes réponses
+(commit 34e7003). Pour chaque étape numérique :
 
   PIÈGE       un piège (valeur fausse prévisible) tombe dans la tolérance de la bonne réponse :
               l'élève qui fait CETTE erreur est déclaré juste. C'est le défaut le plus grave.
@@ -26,21 +28,40 @@ Il lit ATELIERS sans lancer Streamlit (analyse du fichier source), puis cherche,
 Il affiche aussi, pour information, les tolérances entre 5 et 10 % (à vérifier une à une, mais
 souvent normales : un entier demandé à ±0,1, une fourchette de cours).
 
-Ce que ce script ne voit pas, et qu'il faut contrôler à la main en relisant l'atelier : qu'une
+Ce que cette partie ne voit pas, et qu'il faut contrôler à la main en relisant l'atelier : qu'une
 réponse obtenue avec les arrondis intermédiaires de l'indice (par exemple 3 000/3,46 au lieu de
 3 000/√12) reste acceptée. Cas rencontré sur at141 (fiche 18.9).
 
-Code de sortie : 0 si aucun défaut, sinon le nombre de défauts.
+2. GÉNÉRATEURS (fonctions gen_*, page Entraînement)
+---------------------------------------------------
+Chaque générateur est rejoué TIRAGES fois (graines fixes), par tirer_exercice comme sur la page.
+La page accepte la réponse quand
+|valeur − rep| ≤ tol, et affiche la réponse avec decimales_affichage(tol) décimales. Jusqu'au
+2026-09-25 elle l'affichait toujours avec 2 décimales : la réponse affichée était refusée dans
+66 % des tirages de gen_proba_binomiale et 21 % de gen_proba_uniforme. Pour chaque tirage :
+
+  AFFICHÉE    la réponse telle qu'elle est affichée, recopiée par l'élève (et lue par
+              lire_nombre, comme sa saisie), est refusée par la tolérance.
+  LECTURE     lire_nombre lit mal un nombre écrit normalement (contrôle de 100 000 entiers et
+              de 20 000 décimaux formatés par fr) : jusqu'au 2026-09-25, « 5100 » était lu 5.
+  DIAG        un diagnostic (valeur d'erreur prévisible) tombe dans la tolérance de la bonne
+              réponse, même après les nouveaux tirages de tirer_exercice : fabriquer_exo le
+              retirerait en silence, et l'erreur ne serait plus expliquée.
+  PLANTAGE    le générateur lève une exception.
+
+Un générateur défectueux compte pour UN défaut (le nombre de tirages touchés est affiché).
 """
 import ast
 import io
 import math
 import os
+import random
 import re
 import sys
 
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 APP = os.path.join(RACINE, "app.py")
+TIRAGES = 2000
 
 # Tolérances larges VOULUES : (id de l'atelier, numéro d'étape) -> raison.
 VOULU = {
@@ -51,8 +72,15 @@ VOULU = {
 CONTROLEUR_ABSOLU = "if abs(_val - _att) <= max(_tol, 1e-9):"
 
 
-def charger_ateliers():
-    src = io.open(APP, encoding="utf-8").read()
+def lire_source():
+    return io.open(APP, encoding="utf-8").read()
+
+
+# ---------------------------------------------------------------------------
+# 1. Ateliers
+# ---------------------------------------------------------------------------
+
+def charger_ateliers(src):
     if CONTROLEUR_ABSOLU not in src:
         print("ATTENTION : le contrôleur des ateliers ne lit plus `tol` en absolu "
               f"(ligne attendue : {CONTROLEUR_ABSOLU!r}). Les résultats ci-dessous supposent une "
@@ -64,8 +92,8 @@ def charger_ateliers():
     raise SystemExit("liste ATELIERS introuvable dans app.py")
 
 
-def main():
-    ateliers = charger_ateliers()
+def verifier_ateliers(src):
+    ateliers = charger_ateliers(src)
     defauts, info, n_etapes = [], [], 0
     for a in ateliers:
         for i, e in enumerate(a["etapes"], 1):
@@ -92,18 +120,144 @@ def main():
             elif rel > 0.05 or cle in VOULU:
                 info.append(f"  {lieu} : ± {tol:g} sur {att:g} ({100 * rel:.0f} %)"
                             + (f" — voulu : {VOULU[cle]}" if cle in VOULU else ""))
-    print(f"{n_etapes} étapes numériques dans {len(ateliers)} ateliers.")
+    print(f"ATELIERS : {n_etapes} étapes numériques dans {len(ateliers)} ateliers.")
     if defauts:
-        print(f"\n{len(defauts)} défaut(s) :")
+        print(f"{len(defauts)} défaut(s) :")
         for d in defauts:
             print("  " + d)
     else:
         print("0 piège accepté, 0 réponse impossible à saisir, 0 tolérance aberrante.")
     if info:
-        print("\nPour information, tolérances de 5 à 10 % (ou larges voulues), à vérifier une à une :")
+        print("Pour information, tolérances de 5 à 10 % (ou larges voulues), à vérifier une à une :")
         for x in info:
             print(x)
     return len(defauts)
+
+
+# ---------------------------------------------------------------------------
+# 2. Générateurs
+# ---------------------------------------------------------------------------
+
+def espace_generateurs(src):
+    """Prépare un espace de noms où l'on définit À LA DEMANDE les fonctions et constantes de
+    niveau module de app.py dont les générateurs ont besoin, sans exécuter la page Streamlit."""
+    arbre = ast.parse(src)
+    definitions = {}
+    for n in arbre.body:
+        if isinstance(n, ast.FunctionDef):
+            definitions[n.name] = n
+        elif isinstance(n, ast.Assign):
+            for cible in n.targets:
+                if isinstance(cible, ast.Name):
+                    definitions.setdefault(cible.id, n)
+    g = {"math": math, "random": random, "re": re, "__name__": "audit"}
+    gens = [nom for nom, n in definitions.items()
+            if isinstance(n, ast.FunctionDef) and nom.startswith("gen_")]
+    return g, definitions, gens
+
+
+def definir(g, definitions, nom, profondeur=0):
+    """Exécute la définition de `nom` (fonction sans ses décorateurs, ou affectation), en
+    définissant d'abord, récursivement, les noms dont elle a besoin."""
+    if profondeur > 40:
+        raise RuntimeError(f"dépendances trop profondes autour de {nom}")
+    n = definitions[nom]
+    if isinstance(n, ast.FunctionDef):
+        n = ast.FunctionDef(name=n.name, args=n.args, body=n.body, decorator_list=[],
+                            returns=n.returns, type_comment=None, type_params=[])
+        ast.copy_location(n, definitions[nom])
+    for _ in range(40):
+        try:
+            exec(compile(ast.fix_missing_locations(ast.Module([n], [])), APP, "exec"), g)
+            return
+        except NameError as err:
+            manquant = re.search(r"name '(\w+)' is not defined", str(err))
+            if not manquant or manquant.group(1) not in definitions:
+                raise
+            definir(g, definitions, manquant.group(1), profondeur + 1)
+    raise RuntimeError(f"impossible de définir {nom}")
+
+
+def appeler(g, definitions, fonction):
+    """Appelle le générateur ; sur un nom manquant, le définit depuis app.py et réessaie."""
+    if fonction not in g:
+        definir(g, definitions, fonction)
+    for _ in range(40):
+        try:
+            return g[fonction]()
+        except NameError as err:
+            manquant = re.search(r"name '(\w+)' is not defined", str(err))
+            if not manquant or manquant.group(1) not in definitions:
+                raise
+            definir(g, definitions, manquant.group(1))
+    raise RuntimeError("trop de noms manquants")
+
+
+def verifier_generateurs(src):
+    g, definitions, gens = espace_generateurs(src)
+    for aide in ("fr", "lire_nombre", "decimales_affichage", "tirer_exercice"):
+        if aide not in definitions:
+            raise SystemExit(f"fonction {aide} introuvable dans app.py")
+        definir(g, definitions, aide)
+    fr, lire, dec, tirer = g["fr"], g["lire_nombre"], g["decimales_affichage"], g["tirer_exercice"]
+    defauts = []
+    for nom in gens:
+        affichee = diag_dans_tol = 0
+        exemple = ""
+        try:
+            appeler(g, definitions, nom)  # définit le générateur et ses dépendances
+            for graine in range(TIRAGES):
+                random.seed(graine)
+                ex = tirer(g[nom])  # exactement le tirage de fabriquer_exo
+                tol = ex.get("tol", 0.001)
+                texte = fr(ex["rep"], dec(tol))
+                v = lire(texte)
+                if v is None or abs(v - ex["rep"]) > tol:
+                    affichee += 1
+                    exemple = exemple or f"graine {graine} : affiché {texte}, réponse {ex['rep']:.6g}, tol {tol:g}"
+                for d in ex.get("diag", []):
+                    if d.get("v") is not None and abs(d["v"] - ex["rep"]) <= tol:
+                        diag_dans_tol += 1
+                        exemple = exemple or f"graine {graine} : diagnostic {d['v']:.6g} dans ± {tol:g}"
+                        break
+        except Exception as err:  # noqa: BLE001 — on veut signaler tout plantage
+            defauts.append(f"PLANTAGE    {nom} : {type(err).__name__} : {err}")
+            continue
+        if affichee:
+            defauts.append(f"AFFICHÉE    {nom} : réponse affichée refusée dans {affichee}/{TIRAGES} "
+                           f"tirages ({exemple})")
+        if diag_dans_tol:
+            defauts.append(f"DIAG        {nom} : diagnostic dans la tolérance dans "
+                           f"{diag_dans_tol}/{TIRAGES} tirages ({exemple})")
+    mal_lus = [n for n in range(100000) if lire(str(n)) != n]
+    alea = random.Random(1)
+    for _ in range(20000):
+        x = alea.uniform(-2000, 2000) * alea.choice([1, 0.01, 0.0001])
+        d = alea.randint(2, 5)
+        y = lire(fr(x, d))
+        if y is None or abs(y - x) > 0.51 * 10 ** -d:
+            mal_lus.append(fr(x, d))
+    if mal_lus:
+        defauts.append(f"LECTURE     lire_nombre lit mal {len(mal_lus)} nombres (ex. {mal_lus[:4]})")
+    print(f"GÉNÉRATEURS : {len(gens)} générateurs, {TIRAGES} tirages chacun ; lecture de 120 000 "
+          f"nombres par lire_nombre.")
+    if defauts:
+        print(f"{len(defauts)} défaut(s) :")
+        for d in defauts:
+            print("  " + d)
+    else:
+        print("0 réponse affichée refusée, 0 diagnostic dans la tolérance, 0 plantage, "
+              "0 nombre mal lu.")
+    return len(defauts)
+
+
+def main():
+    src = lire_source()
+    n = verifier_ateliers(src)
+    print()
+    n += verifier_generateurs(src)
+    print(f"\nTotal : {n} défaut(s).")
+    return n
 
 
 if __name__ == "__main__":

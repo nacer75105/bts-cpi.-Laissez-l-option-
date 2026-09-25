@@ -82,6 +82,21 @@ complexes (forme algébrique, Δ < 0) — 13. équations différentielles du sec
 - Règle pour les nouveaux ateliers : `tol` est une tolérance ABSOLUE dans l'unité de l'étape, et
   les valeurs données par l'indice (arrondis intermédiaires) doivent être acceptées.
 
+### Entraînement — réponse affichée et saisie (corrigé le 2026-09-25)
+
+- La réponse affichée après deux essais avait toujours 2 décimales : refusée par sa propre
+  tolérance dans 66 % des tirages de gen_proba_binomiale et 21 % de gen_proba_uniforme.
+  Affichage désormais au nombre de décimales qu'impose la tolérance (`decimales_affichage`).
+- `lire_nombre` lisait un nombre contenant « 10 » comme une puissance de 10 (« 5100 » → 5,
+  « 0,0106 » → 0) : 1 890 entiers de 0 à 99 999 mal lus. Le signe × est désormais obligatoire
+  dans l'écriture 6,02x10^23.
+- Diagnostics égaux à la bonne réponse (retirés en silence par fabriquer_exo) : `tirer_exercice`
+  refait le tirage ; gen_proba_binomiale ne propose plus un diagnostic égal à la réponse (les
+  exercices à p = 0,5 sont conservés).
+- L'outil `outils/verifier_tolerances_ateliers.py` contrôle aussi les 16 générateurs (réponse
+  affichée acceptée, aucun diagnostic dans la tolérance, pas de plantage) et la lecture de 120 000
+  nombres. Dernier passage : 0 défaut.
+
 ### 18.9 — Loi uniforme, première loi à densité (faite le 2026-09-25)
 
 - Insérée après 18.6 (ordre affiché … 18.6 → 18.9 → 18.7), avec méthode, figures
