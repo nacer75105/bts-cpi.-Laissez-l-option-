@@ -23,7 +23,7 @@ Plan (le référentiel ne répartit pas les modules entre 1ʳᵉ et 2ᵉ année 
 prérequis et la répartition usuelle) :
 1. ✅ 17.7 ln et exp — 2. ✅ 17.8 statistique à deux variables — 3. ✅ 18.9 loi uniforme —
 4. ✅ 18.10 loi normale et approximation binomiale — 5. ✅ 18.11 somme de variables, limite centrée —
-6. méthode d'Euler — 7. IC d'une proportion — 8. tests sur une proportion / une moyenne —
+6. ✅ 18.12 méthode d'Euler — 7. IC d'une proportion — 8. tests sur une proportion / une moyenne —
 9. tests de comparaison — 10. loi exponentielle — 11. loi de Poisson — 12. nombres
 complexes (forme algébrique, Δ < 0) — 13. équations différentielles du second ordre.
 
@@ -104,6 +104,33 @@ complexes (forme algébrique, Δ < 0) — 13. équations différentielles du sec
 - **Non vérifié** : rendu visuel réel des deux figures ; atelier at143 et générateurs non cliqués
   dans l'interface (la fiche et la page Entraînement s'ouvrent sans erreur dans un AppTest ;
   outil d'audit : 0 défaut sur 202 étapes et 20 générateurs).
+
+### 18.12 — Méthode d'Euler (faite le 2026-09-25)
+
+- Niveau vérifié dans l'annexe I (module Équations différentielles, commentaire) : « On présente
+  sur un exemple la résolution approchée d'une équation différentielle par la méthode d'Euler » —
+  pas une capacité exigible autonome. La fiche (2 h) présente la méthode sur la pièce de la 18.4
+  et sur la charge d'un condensateur, sans théorie de l'erreur ; la section tableur couvre aussi la
+  capacité « représenter à l'aide d'un logiciel la famille des courbes ».
+- Placée en fin de bloc 18 (après 18.8), avec méthode, figures `euler_tangentes`, `euler_pas_h` et
+  `euler_charge` (dédiée à l'atelier), atelier at144 (charge d'un condensateur, étapes 2 et 3
+  déclarées avec `depend_de`), générateurs `gen_euler_pas` et `gen_euler_ecart`, 8 questions dans
+  la banque « probabilités et équations différentielles » (bonne réponse en positions 1, 3, 0, 2,
+  3, 0, 2, 1). Renvois ajoutés dans le « À retenir » des fiches 18.4 et 18.8 ; tableau de bord :
+  la méthode d'Euler n'est plus dans les « non traités ».
+- Quatre tours de relecture (justesse + clarté) jusqu'à zéro réserve. Points clés arbitrés par
+  l'auteur : idée « la dérivée est une pente, on suit la tangente sur un pas h » ; après un pas, on
+  n'est PLUS sur la courbe exacte, la pente est prise où l'on est et les erreurs s'accumulent (8 °C
+  après 1 pas, 11,5 °C après 3) ; règle unique « Euler va trop vite vers l'équilibre »
+  (1 − h/τ < e^(−h/τ)), avec la nuance h > τ (il dépasse l'équilibre, −33 °C) ; « pas ÷ 2 → écart
+  ÷ 2 » illustré par de vrais facteurs 2 ; lien avec l'exponentielle en « pour aller plus loin » ;
+  ancrage : logiciels de simulation, relais temporisé vérifié (h = 0,25 s donne une conclusion
+  fausse, h = 0,1 s confirme ln 3 ≈ 1,10 s), atelier qui se réchauffe (34 °C au lieu des 28 °C
+  crus). Newton et la dichotomie ne sont cités qu'au conditionnel (aucune fiche ne les traite).
+- **Non vérifié** : atelier at144 et générateurs non cliqués dans l'interface (la fiche et la page
+  Entraînement s'ouvrent sans erreur dans un AppTest ; outil d'audit : 0 défaut). La date 1768
+  (Institutionum calculi integralis) et « Euler a choisi la lettre e » sont des connaissances, non
+  recoupées par une source.
 
 ### Diagnostics masqués et arrondis enchaînés (corrigé le 2026-09-25)
 
@@ -212,7 +239,8 @@ complexes (forme algébrique, Δ < 0) — 13. équations différentielles du sec
   - Probabilités 2 : loi exponentielle, loi de Poisson, approximation binomiale → Poisson ;
   - Statistique inférentielle : intervalle de confiance d'une proportion, tests d'hypothèse
     (bilatéraux, unilatéraux, comparaison de deux moyennes ou proportions) ;
-  - Équations différentielles : second ordre à coefficients constants, méthode d'Euler.
+  - Équations différentielles : second ordre à coefficients constants (la méthode d'Euler est
+    traitée depuis le 2026-09-25, fiche 18.12).
   Le résumé du bloc 18, l'encart de la page Maths et le tableau de bord
   (`MATIERES_PROGRAMME`, statut « Incomplet (à enrichir) ») le disent désormais.
 - **Quiz** : aucune question des banques « Mathématiques BTS CPI (examen) » et « Mathématiques

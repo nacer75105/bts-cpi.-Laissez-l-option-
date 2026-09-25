@@ -5764,6 +5764,152 @@ def moyenne_se_resserre():
     return _svg("".join(p), 760, 366)
 
 
+def euler_tangentes():
+    x0, y0, kx, ky = 80, 330, 30, 1.35  # origine, px par minute, px par °C
+    X = lambda t: x0 + kx * t  # noqa: E731
+    Y = lambda T: y0 - ky * T  # noqa: E731
+    p = [_txt(40, 24, "Pièce de la fiche 18.4 : T' = −(T − 20)/15, T(0) = 180 °C, pas h = 5 min.",
+              12, TRAIT, "start", True)]
+    # axes
+    p.append(f"<line x1='{X(0)}' y1='{Y(0)}' x2='{X(20)}' y2='{Y(0)}' stroke='{FIN}' stroke-width='1.4'/>")
+    p.append(f"<line x1='{X(0)}' y1='{Y(0)}' x2='{X(0)}' y2='{Y(195)}' stroke='{FIN}' stroke-width='1.4'/>")
+    for t in (0, 5, 10, 15, 20):
+        p.append(_txt(X(t), Y(0) + 16, str(t), 11, FIN, "middle"))
+    p.append(_txt(X(20), Y(0) + 32, "t (min)", 11, FIN, "end"))
+    for T in (20, 60, 100, 140, 180):
+        p.append(_txt(X(0) - 8, Y(T) + 4, str(T), 11, FIN, "end"))
+    p.append(_txt(X(0) - 8, Y(195) - 6, "T (°C)", 11, FIN, "start"))
+    # ambiante
+    p.append(f"<line x1='{X(0)}' y1='{Y(20)}' x2='{X(20)}' y2='{Y(20)}' stroke='{FIN}' "
+             f"stroke-dasharray='4 4'/>")
+    p.append(_txt(X(20), Y(20) - 6, "ambiante 20 °C", 11, FIN, "end"))
+    # solution exacte
+    pts = " ".join(f"{X(t / 10):.1f},{Y(20 + 160 * math.exp(-t / 150)):.1f}" for t in range(0, 201))
+    p.append(f"<polyline points='{pts}' fill='none' stroke='{OK}' stroke-width='2.5'/>")
+    p.append(_txt(X(10) + 6, Y(20 + 160 * math.exp(-10 / 15)) - 14, "solution exacte (18.4)", 12, OK,
+                  "start", True))
+    # Euler
+    T, pts_e = 180.0, [(0, 180.0)]
+    for n in range(3):
+        T = T + 5 * (-(T - 20) / 15)
+        pts_e.append((5 * (n + 1), T))
+    for (ta, Ta), (tb, Tb) in zip(pts_e, pts_e[1:]):
+        p.append(f"<line x1='{X(ta):.1f}' y1='{Y(Ta):.1f}' x2='{X(tb):.1f}' y2='{Y(Tb):.1f}' "
+                 f"stroke='{ALESAGE}' stroke-width='2.5'/>")
+    for t, T in pts_e:
+        p.append(f"<circle cx='{X(t):.1f}' cy='{Y(T):.1f}' r='4.5' fill='{ALESAGE}'/>")
+    p.append(_txt(X(15) + 8, Y(pts_e[3][1]) + 16, "Euler : 67,4 °C", 12, ALESAGE, "start", True))
+    p.append(_txt(X(15) + 8, Y(78.86) - 4, "exact : 78,9 °C", 12, OK, "start", True))
+    p.append(f"<line x1='{X(15)}' y1='{Y(78.86):.1f}' x2='{X(15)}' y2='{Y(pts_e[3][1]):.1f}' "
+             f"stroke='{ALERTE}' stroke-width='2'/>")
+    p.append(_txt(X(15) - 8, Y(pts_e[3][1]) + 16, "écart 11,5 °C", 11, ALERTE, "end", True))
+    ex5 = 20 + 160 * math.exp(-5 / 15)
+    p.append(f"<line x1='{X(5)}' y1='{Y(ex5):.1f}' x2='{X(5)}' y2='{Y(pts_e[1][1]):.1f}' "
+             f"stroke='{ALERTE}' stroke-width='2'/>")
+    p.append(_txt(X(5) + 6, Y(140), "déjà 8 °C d'écart", 11, ALERTE, "start", True))
+    # annotation du premier pas
+    p.append(_txt(X(0) + 14, Y(180) + 4, "pente au départ : −(180 − 20)/15 ≈ −10,7 °C/min", 11,
+                  ALESAGE, "start"))
+    for t in (0, 5):
+        p.append(f"<line x1='{X(t)}' y1='{Y(40) - 6}' x2='{X(t)}' y2='{Y(40) + 6}' stroke='{ARBRE}' "
+                 f"stroke-width='1.5'/>")
+    p.append(f"<line x1='{X(0)}' y1='{Y(40)}' x2='{X(5)}' y2='{Y(40)}' stroke='{ARBRE}' stroke-width='1.5'/>")
+    p.append(_txt(X(2.5), Y(40) - 8, "un pas : h = 5 min", 11, ARBRE, "middle", True))
+    p.append(f"<line x1='{X(5)}' y1='{Y(126.67) + 6:.1f}' x2='{X(5)}' y2='{Y(62):.1f}' stroke='{ALESAGE}' "
+             f"stroke-dasharray='2 3'/>")
+    p.append(_txt(X(5) + 6, Y(58), "126,67 : plus sur la courbe verte,", 11, ALESAGE, "start"))
+    p.append(_txt(X(5) + 6, Y(58) + 14, "mais l'équation donne la pente ici", 11, ALESAGE, "start"))
+    p.append(f"<rect x='40' y='372' width='680' height='52' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p.append(_txt(56, 394, "Seul le 1er segment est tangent à la courbe verte : ensuite, on part d'un point déjà faux.", 12, TRAIT, "start", True))
+    p.append(_txt(56, 414, "Les erreurs s'accumulent (8 °C après 1 pas, 11,5 °C après 3) : Euler va trop vite vers l'équilibre.", 12, TRAIT, "start", True))
+    return _svg("".join(p), 760, 438)
+
+
+def euler_pas_h():
+    x0, y0, kx, ky = 80, 320, 20, 1.3
+    X = lambda t: x0 + kx * t  # noqa: E731
+    Y = lambda T: y0 - ky * T  # noqa: E731
+    p = [_txt(40, 24, "Même pièce, jusqu'à t = 30 min : trois pas différents comparés à la solution exacte.",
+              12, TRAIT, "start", True)]
+    p.append(f"<line x1='{X(0)}' y1='{Y(0)}' x2='{X(30)}' y2='{Y(0)}' stroke='{FIN}' stroke-width='1.4'/>")
+    p.append(f"<line x1='{X(0)}' y1='{Y(0)}' x2='{X(0)}' y2='{Y(195)}' stroke='{FIN}' stroke-width='1.4'/>")
+    for t in (0, 7.5, 15, 22.5, 30):
+        p.append(_txt(X(t), Y(0) + 16, _fr_court(t), 11, FIN, "middle"))
+    p.append(_txt(X(30), Y(0) + 32, "t (min)", 11, FIN, "end"))
+    for T in (20, 60, 100, 140, 180):
+        p.append(_txt(X(0) - 8, Y(T) + 4, str(T), 11, FIN, "end"))
+    p.append(_txt(X(0) - 8, Y(195) - 6, "T (°C)", 11, FIN, "start"))
+    # repère t = 15 min
+    p.append(f"<line x1='{X(15)}' y1='{Y(0)}' x2='{X(15)}' y2='{Y(150)}' stroke='{FIN}' "
+             f"stroke-dasharray='3 4'/>")
+    p.append(_txt(X(15), Y(150) - 6, "écarts mesurés ici", 11, FIN, "middle"))
+    pts = " ".join(f"{X(t / 10):.1f},{Y(20 + 160 * math.exp(-t / 150)):.1f}" for t in range(0, 301))
+    p.append(f"<polyline points='{pts}' fill='none' stroke='{OK}' stroke-width='3'/>")
+    styles = [(7.5, ALERTE, "h = 7,5 min"), (5, ALESAGE, "h = 5 min"), (0.5, ARBRE, "h = 0,5 min")]
+    for j, (h, coul, nom) in enumerate(styles):
+        T, pts_e = 180.0, [(0, 180.0)]
+        for n in range(round(30 / h)):
+            T = T + h * (-(T - 20) / 15)
+            pts_e.append((h * (n + 1), T))
+        chaine = " ".join(f"{X(t):.1f},{Y(v):.1f}" for t, v in pts_e)
+        p.append(f"<polyline points='{chaine}' fill='none' stroke='{coul}' stroke-width='1.8' "
+                 f"stroke-dasharray='{'6 3' if h > 1 else '0'}'/>")
+        if h > 1:
+            for t, v in pts_e:
+                p.append(f"<circle cx='{X(t):.1f}' cy='{Y(v):.1f}' r='3.5' fill='{coul}'/>")
+        ecart = 20 + 160 * math.exp(-1) - (20 + 160 * (1 - h / 15) ** round(15 / h))
+        p.append(f"<line x1='{X(19)}' y1='{110 + 22 * j}' x2='{X(21)}' y2='{110 + 22 * j}' "
+                 f"stroke='{coul}' stroke-width='2.5'/>")
+        p.append(_txt(X(21.5), 114 + 22 * j, f"{nom} : écart à t = 15 min ≈ {fr(ecart, 2)} °C", 12,
+                      coul, "start", True))
+    p.append(f"<line x1='{X(19)}' y1='88' x2='{X(21)}' y2='88' stroke='{OK}' stroke-width='3'/>")
+    p.append(_txt(X(21.5), 92, "solution exacte", 12, OK, "start", True))
+    p.append(f"<rect x='40' y='354' width='680' height='52' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p.append(_txt(56, 376, "La ligne h = 0,5 min se confond presque avec la courbe verte : c'est exactement le but.", 12, TRAIT, "start", True))
+    p.append(_txt(56, 396, "De h = 7,5 à 0,5 min, l'écart à t = 15 min fond de 18,86 à 0,99 °C — mais il faut 30 pas au lieu de 2.", 12, TRAIT, "start", True))
+    return _svg("".join(p), 760, 420)
+
+
+def euler_charge():
+    x0, y0, kx, ky = 80, 320, 150, 25  # px par seconde, px par volt
+    X = lambda t: x0 + kx * t  # noqa: E731
+    Y = lambda u: y0 - ky * u  # noqa: E731
+    p = [_txt(40, 24, "Charge d'un condensateur : u' = −(u − 10)/2, u(0) = 0 V, pas h = 0,5 s.",
+              12, TRAIT, "start", True)]
+    p.append(f"<line x1='{X(0)}' y1='{Y(0)}' x2='{X(4)}' y2='{Y(0)}' stroke='{FIN}' stroke-width='1.4'/>")
+    p.append(f"<line x1='{X(0)}' y1='{Y(0)}' x2='{X(0)}' y2='{Y(10.8)}' stroke='{FIN}' stroke-width='1.4'/>")
+    for t in (0, 1, 2, 3, 4):
+        p.append(_txt(X(t), Y(0) + 16, str(t), 11, FIN, "middle"))
+    p.append(_txt(X(4), Y(0) + 32, "t (s)", 11, FIN, "end"))
+    for u in (0, 2, 4, 6, 8, 10):
+        p.append(_txt(X(0) - 8, Y(u) + 4, str(u), 11, FIN, "end"))
+    p.append(_txt(X(0) - 8, Y(10.8) - 6, "u (V)", 11, FIN, "start"))
+    p.append(f"<line x1='{X(0)}' y1='{Y(10)}' x2='{X(4)}' y2='{Y(10)}' stroke='{FIN}' "
+             f"stroke-dasharray='4 4'/>")
+    p.append(_txt(X(4), Y(10) - 6, "équilibre 10 V", 11, FIN, "end"))
+    pts = " ".join(f"{X(t / 100):.1f},{Y(10 * (1 - math.exp(-t / 200))):.1f}" for t in range(0, 401))
+    p.append(f"<polyline points='{pts}' fill='none' stroke='{OK}' stroke-width='2.5'/>")
+    u, pts_e = 0.0, [(0, 0.0)]
+    for n in range(8):
+        u = u + 0.5 * (-(u - 10) / 2)
+        pts_e.append((0.5 * (n + 1), u))
+    for (ta, ua), (tb, ub) in zip(pts_e, pts_e[1:]):
+        p.append(f"<line x1='{X(ta):.1f}' y1='{Y(ua):.1f}' x2='{X(tb):.1f}' y2='{Y(ub):.1f}' "
+                 f"stroke='{ALESAGE}' stroke-width='2.5'/>")
+    for t, v in pts_e:
+        p.append(f"<circle cx='{X(t):.1f}' cy='{Y(v):.1f}' r='4' fill='{ALESAGE}'/>")
+    p.append(_txt(X(1) - 10, Y(pts_e[2][1]) - 6, "Euler : 4,38 V", 12, ALESAGE, "end", True))
+    p.append(_txt(X(1) + 10, Y(10 * (1 - math.exp(-0.5))) + 16, "exact : 3,93 V", 12, OK, "start", True))
+    p.append(f"<line x1='{X(1)}' y1='{Y(pts_e[2][1]):.1f}' x2='{X(1)}' y2='{Y(10 * (1 - math.exp(-0.5))):.1f}' "
+             f"stroke='{ALERTE}' stroke-width='2'/>")
+    p.append(_txt(X(2.6), Y(5.2), "solution exacte (18.8)", 12, OK, "start", True))
+    p.append(_txt(X(2.6), Y(9.4), "ligne brisée d'Euler, au-dessus", 12, ALESAGE, "start", True))
+    p.append(f"<rect x='40' y='354' width='680' height='52' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p.append(_txt(56, 376, "Pour une charge qui monte en ralentissant, Euler passe AU-DESSUS de la courbe exacte.", 12, TRAIT, "start", True))
+    p.append(_txt(56, 396, "Même règle que pour la pièce qui refroidit : Euler va trop vite vers l'équilibre.", 12, TRAIT, "start", True))
+    return _svg("".join(p), 760, 420)
+
+
 def extremums_polynome():
     p = [_txt(40, 24, "f(x) = x³ − 3x² + 2 : un maximum local puis un minimum local.",
               12, TRAIT, "start", True)]
@@ -6175,6 +6321,9 @@ FIGURES = {
     "binomiale_continuite": ("Des bâtons à la cloche : chaque entier est un rectangle de largeur 1", binomiale_continuite),
     "quadrature_cotes": ("Deux dispersions indépendantes se combinent comme les côtés d'un angle droit", quadrature_cotes),
     "moyenne_se_resserre": ("La moyenne de n valeurs se resserre en σ/√n et devient une cloche", moyenne_se_resserre),
+    "euler_tangentes": ("Euler suit la pente donnée par l'équation sur un pas h, puis recalcule la pente là où il est", euler_tangentes),
+    "euler_pas_h": ("Plus le pas est petit, plus Euler colle à la solution exacte", euler_pas_h),
+    "euler_charge": ("Charge d'un condensateur : Euler monte trop vite vers l'équilibre", euler_charge),
     "extremums_polynome": ("Un maximum local puis un minimum local", extremums_polynome),
     "dispersion_deux_reglages": ("Six mesures dispersées autour de leur moyenne", dispersion_deux_reglages),
     "venn_deux_evenements": ("Union et intersection de deux événements", venn_deux_evenements),
@@ -10016,6 +10165,72 @@ QUIZ["Mathématiques BTS CPI — probabilités et équations différentielles"] 
       "Additionner les σ, c'est le pire cas : toutes les erreurs dans le même sens (la moyenne du "
       "terme 2xy à son maximum). Des erreurs indépendantes se compensent en partie, d'où la combinaison "
       "en quadrature, plus petite.", "Base"),
+
+    q("À chaque pas, comment la méthode d'Euler fait-elle avancer la valeur de la grandeur ?",
+      ["Elle calcule la valeur exacte avec l'exponentielle",
+       "Elle ajoute h × (la pente donnée par l'équation au point actuel)",
+       "Elle ajoute le pas h à la valeur actuelle",
+       "Elle ajoute h × (la pente calculée une fois pour toutes au départ)"], 1,
+      "On calcule la pente avec l'équation au point où l'on est, puis valeur suivante = valeur "
+      "actuelle + h × pente. La pente est recalculée à chaque pas : garder celle du départ "
+      "reviendrait à suivre une seule droite, la tangente initiale.", "Base"),
+
+    q("y' = −(y − 20)/10, y(0) = 70, pas h = 2. Que donne un pas d'Euler pour y(2) ?",
+      ["65", "60,94", "68", "60"], 3,
+      "Pente = −(70 − 20)/10 = −5 ; y(2) ≈ 70 + 2 × (−5) = 60. 65 : pente ajoutée sans la "
+      "multiplier par h ; 68 : on a retiré le pas h au lieu de h × pente ; 60,94 est la valeur "
+      "exacte 20 + 50 × e^(−0,2) : Euler donne une valeur approchée.", "Calcul"),
+
+    q("Que se passe-t-il quand on diminue le pas h de la méthode d'Euler ?",
+      ["Le résultat est plus précis, mais il faut plus de calculs",
+       "Le résultat est plus précis, et il faut moins de calculs",
+       "Le résultat devient exact dès que h < 1",
+       "Rien : la précision ne dépend pas du pas"], 0,
+      "Plus le pas est petit, plus la tangente reste proche de la courbe : l'écart diminue. Mais il "
+      "faut plus de pas pour couvrir la même durée. Le résultat reste approché, quel que soit h.",
+      "Base"),
+
+    q("Sur la pièce de la fiche 18.4, Euler avec h = 1 min donne un écart de 2,02 °C à t = 15 min. "
+      "Que devient environ cet écart avec h = 0,5 min ?",
+      ["Il ne change pas", "Il est divisé par 4, environ 0,5 °C",
+       "Il est divisé par 2 environ, soit 1 °C", "Il double"], 2,
+      "Pour la méthode d'Euler, diviser le pas par 2 divise l'écart à peu près par 2 : le tableur "
+      "donne 0,99 °C. Diviser par 4 serait le comportement de méthodes plus élaborées, pas "
+      "d'Euler.", "Piège"),
+
+    q("Pièce à 180 °C, atelier à 20 °C, τ = 15 min : un seul pas d'Euler de 20 min annonce "
+      "−33 °C. Que faut-il en conclure ?",
+      ["La pièce passe bien sous 0 °C avant de se réchauffer",
+       "L'équation de refroidissement est fausse",
+       "La température de l'atelier a baissé",
+       "Le pas est trop grand devant la constante de temps"], 3,
+      "Une pièce qui refroidit ne peut pas passer sous l'ambiante. Le pas (20 min) dépasse τ "
+      "(15 min) : la tangente « tire » bien au-delà de l'équilibre. Il faut un pas petit devant τ, "
+      "de l'ordre de τ/10 ou moins.", "Piège"),
+
+    q("Pour y' = −(y − y_éq)/τ, par quoi un pas d'Euler de durée h multiplie-t-il l'écart y − y_éq ?",
+      ["1 − h/τ", "e^(−h/τ)", "h/τ", "1 + h/τ"], 0,
+      "y suivante − y_éq = (y − y_éq) − h(y − y_éq)/τ = (y − y_éq)(1 − h/τ). La solution exacte, "
+      "elle, multiplie l'écart par e^(−h/τ), un peu plus grand : Euler va trop vite vers "
+      "l'équilibre. Les deux facteurs se rapprochent quand h diminue.", "Intermédiaire"),
+
+    q("Sur tableur, la colonne A contient t, la colonne B la température, et le pas est en F1. "
+      "Quelle formule mettre en B3 pour T' = −(T − 20)/15 ?",
+      ["=B2-(B2-20)/15", "=B2+$F$1", "=B2+$F$1*(-(B2-20)/15)", "=180*EXP(-A3/15)"], 2,
+      "valeur suivante = valeur actuelle + pas × pente, avec la pente calculée à partir de B2. "
+      "=B2-(B2-20)/15 ignore F1 (elle ne vaut que pour un pas de 1 min) ; =B2+$F$1 ajoute le pas "
+      "au lieu de pas × pente ; =180*EXP(-A3/15) n'est ni Euler ni la bonne formule exacte (il "
+      "manque l'ambiante : 20+160*EXP(-A3/15)).", "Intermédiaire"),
+
+    q("Pourquoi utiliser la méthode d'Euler quand on connaît déjà la formule exacte e^(−t/τ) ?",
+      ["Parce qu'elle est plus précise que la formule exacte",
+       "Pour vérifier un calcul ; et elle sert surtout quand la formule n'est pas connue",
+       "Parce qu'elle évite d'écrire l'équation différentielle",
+       "Parce que la formule exacte ne vaut que pour t plus petit que τ"], 1,
+      "Euler donne une valeur approchée : il ne bat jamais la formule exacte, mais il permet de la "
+      "vérifier, et surtout de traiter les cas où la formule est difficile à obtenir (ambiante qui "
+      "varie, modèle plus compliqué). Il a besoin de l'équation : c'est elle qui donne la pente. La "
+      "formule exacte, elle, vaut pour tout t ≥ 0.", "Base"),
 ]
 
 QUIZ["Mathématiques BTS CPI — calcul matriciel et modélisation géométrique"] = [
@@ -47300,6 +47515,8 @@ température en continu.
   (95 %).
 - Pour trouver un instant précis, on isole l'exponentielle puis on applique **ln** des deux
   côtés.
+- Quand la formule exacte n'est pas disponible (ambiante qui varie, modèle plus compliqué), la
+  **méthode d'Euler** (fiche 18.12) calcule la courbe pas à pas, à partir de la seule équation.
             """,
             "formules": """
 
@@ -49022,6 +49239,8 @@ cycle automatique, plutôt que d'ajouter une marge de sécurité arbitraire.
 - **τ et 3τ** restent les mêmes repères pratiques (63 % puis 95 % du chemin parcouru).
 - Utile pour tout phénomène de **mise en régime** : pression, vitesse, température de
   fonctionnement, charge électrique.
+- Pour vérifier ces calculs, ou traiter un cas sans formule simple, la **méthode d'Euler**
+  (fiche 18.12) reconstruit la courbe pas à pas.
             """,
             "formules": """
 
@@ -49072,6 +49291,326 @@ Montée : 3 × 2 = **6 s**. Vidange : 3 × 1 = **3 s**.
 cycle automatique complet (montée puis vidange), il faut mesurer **les deux constantes de
 temps séparément**, jamais supposer qu'elles sont identiques par symétrie du modèle
 mathématique.
+""",
+        },
+        {
+            "id": "18.12",
+            "titre": "Équations différentielles : la méthode d'Euler, résoudre pas à pas",
+            "duree": "2 h",
+            "cours": """
+
+### 1. Quand on a l'équation, mais pas (facilement) la formule
+
+Dans les fiches 18.4 et 18.8, on a **résolu exactement** l'équation du retour à l'équilibre :
+grâce à l'exponentielle (fiche 17.7), on a obtenu une **formule**, T(t) = T_amb + (T₀ − T_amb) ×
+e^(−t/τ), qui donne la température à n'importe quel instant.
+
+En atelier, on n'a pas toujours cette chance. La température ambiante peut **changer** pendant le
+refroidissement, le modèle peut être plus compliqué, ou l'on veut simplement **vérifier** un calcul
+avant de s'y fier. Dans tous ces cas, on dispose quand même de **l'équation** : elle dit, à chaque
+instant, **à quelle vitesse** la grandeur varie. La **méthode d'Euler** reconstruit la courbe à
+partir de cette seule information, **pas à pas**. *(Leonhard Euler l'a publiée en 1768 : c'est le
+même Euler que celui de la charge critique de flambement, et celui qui a choisi la lettre e pour le
+nombre de la fiche 17.7.)*
+
+C'est une **méthode numérique** : au lieu d'une formule, elle donne une **liste de valeurs
+approchées**, avec une précision que l'on choisit. C'est ainsi que travaillent les **logiciels de
+simulation** thermique ou mécanique que vous utiliserez en bureau d'études : ils découpent le temps
+en petits pas et avancent pas à pas. *(Si vous connaissez la dichotomie ou la méthode de Newton pour
+résoudre une équation f(x) = 0, c'est le même esprit : **résoudre approximativement quand on ne sait
+pas résoudre exactement**.)* Au § 7, on traitera un cas où la formule exacte devient longue à
+obtenir : c'est là qu'Euler montre tout son intérêt.
+
+*Au programme, la méthode d'Euler est présentée sur un exemple : ce qui compte est de comprendre
+l'idée et de savoir faire quelques pas à la main ou au tableur.*
+
+### 2. L'idée : la dérivée est une pente, suivons-la
+
+Rappel de la fiche 7.2 : **la dérivée est la pente de la courbe**. Pour la pièce de la fiche 18.4
+(180 °C posée dans un atelier à 20 °C, τ = 15 min), l'équation s'écrit :
+
+> **T'(t) = −(T(t) − 20) / 15**
+
+*C'est l'équation de la fiche 18.4, T' = −k × (T − T_amb), avec T_amb = 20 °C et k = 1/τ = 1/15 :
+diviser par 15, c'est multiplier par k.*
+
+Elle se lit comme une **règle de calcul de la pente** : dès qu'on connaît la température à un
+instant, on connaît la vitesse de refroidissement à cet instant. À t = 0 : T' = −(180 − 20)/15 ≈
+**−10,67 °C par minute**.
+
+*Image : un randonneur dans le brouillard ne voit pas le chemin, seulement la pente sous ses pieds.
+Il fait un petit pas dans la direction de cette pente, mesure la nouvelle pente, refait un pas, et
+ainsi de suite. Il ne suit pas exactement le chemin, mais s'il fait des pas courts, il ne s'en
+écarte pas beaucoup.*
+
+La droite qui a, en un point, **la même pente que la courbe** s'appelle la **tangente** en ce point.
+Sur un intervalle de temps court, la courbe et sa tangente se confondent presque. Or, sur une
+droite, la variation se calcule comme une distance à vitesse constante :
+**variation = pente × durée**. D'où la formule, pour un **pas** de durée h :
+
+> **valeur suivante = valeur actuelle + h × pente actuelle**
+> soit, en notant y la grandeur suivie (T pour une température, u pour une tension) :
+> y(t + h) ≈ y(t) + h × y'(t), où la pente y'(t) est donnée par l'équation.
+
+*Si vous connaissez la méthode de Newton, elle aussi suit la tangente — mais Newton cherche où la
+courbe coupe l'axe ; Euler cherche toute la courbe.*
+
+### 3. Exemple entièrement déroulé — la pièce de la fiche 18.4, pas h = 5 min
+
+On part de la **condition initiale** (la valeur de départ, connue) T(0) = 180 °C et on avance de
+5 min à chaque pas.
+
+| Pas | t (min) | T actuelle (°C) | Pente = −(T − 20)/15 (°C/min) | T suivante = T + 5 × pente | … atteinte à t = |
+|---|---|---|---|---|---|
+| 1 | 0 | 180 | −10,667 | 180 − 53,33 = **126,67** | 5 min |
+| 2 | 5 | 126,67 | −7,111 | 126,67 − 35,56 = **91,11** | 10 min |
+| 3 | 10 | 91,11 | −4,741 | 91,11 − 23,70 = **67,41** | 15 min |
+
+Euler annonce donc **T(15) ≈ 67,4 °C**. La formule exacte de la fiche 18.4 donne
+T(15) = 20 + 160 × e^(−1) ≈ **78,9 °C**. L'écart est de **11,5 °C** : l'idée fonctionne (la pièce
+refroidit, de moins en moins vite), mais un pas de 5 min est trop grossier pour être précis.
+
+[[FIG:euler_tangentes]]
+
+**Pourquoi Euler trouve trop froid, dès le premier pas.** La pente est prise **au début** du pas, là
+où la pièce est la plus chaude, donc là où elle refroidit **le plus vite**. Pendant les 5 minutes du
+pas, le vrai refroidissement ralentit, mais Euler continue à la vitesse du début : il descend trop.
+
+**Attention : seul le premier segment touche la courbe exacte.** Après le premier pas, Euler est à
+126,67 °C, alors que la vraie pièce est à 20 + 160 × e^(−1/3) ≈ 134,6 °C : on n'est **plus sur la
+courbe verte**. Pour le deuxième pas, l'équation donne la pente **au point où l'on est** (126,67 °C),
+pas au point où l'on devrait être : c'est la pente qu'aurait une pièce qui serait à 126,67 °C. Euler
+repart donc d'un point déjà faux, avec une pente calculée en ce point faux — et fait une nouvelle
+petite erreur par-dessus. **On ne revient jamais sur la courbe exacte : chaque pas ajoute sa petite
+erreur à celles des pas précédents.** C'est pourquoi l'écart grandit pendant les premiers pas
+(8,0 °C après le premier, 11,5 °C après le troisième).
+
+*Et plus tard ? L'écart finit par diminuer, sans qu'Euler revienne pour autant sur la courbe verte :
+les deux courbes s'approchent toutes les deux de 20 °C, et deux températures qui tendent vers 20 °C
+ne peuvent pas rester à 11 °C l'une de l'autre. On le voit sur la figure du § 4 : à t = 30 min, les
+pointillés sont plus près de la courbe verte qu'à t = 15 min.*
+
+C'est aussi pourquoi il faut des pas courts : chaque erreur ajoutée devient minuscule, si bien que
+même en les additionnant sur de nombreux pas, le total reste faible — 0,99 °C après 30 pas de
+0,5 min (§ 4), contre 11,5 °C après 3 pas de 5 min.
+
+> **Règle sur le sens de l'erreur (retour à l'équilibre, tous les cas de cette fiche) : Euler va
+> trop vite vers l'équilibre.** La pièce qui refroidit est trouvée trop froide ; une grandeur qui
+> monte (charge, mise en régime de la 18.8) est trouvée trop haute. Raison : la pente du début de
+> pas est la plus forte, car l'écart à l'équilibre y est le plus grand.
+> *Tant que le pas est plus petit que τ, Euler reste du bon côté de l'équilibre, simplement trop
+> près. Avec un pas plus grand que τ, il va si vite qu'il le dépasse (−33 °C, § 4).*
+
+### 4. Le rôle du pas h : plus petit, plus précis, mais plus de calculs
+
+Même calcul jusqu'à t = 15 min, avec des pas de plus en plus petits (résultats obtenus au tableur en
+quelques secondes, voir § 6) :
+
+| Pas h (min) | Nombre de pas | T(15) par Euler (°C) | Écart avec 78,86 °C |
+|---|---|---|---|
+| 7,5 | 2 | 60,00 | 18,86 |
+| 5 | 3 | 67,41 | 11,45 |
+| 2,5 | 6 | 73,58 | 5,28 |
+| 1 | 15 | 76,84 | 2,02 |
+| 0,5 | 30 | 77,87 | 0,99 |
+
+**Diviser le pas par 2 divise l'écart à peu près par 2** : de h = 5 à h = 2,5 min, l'écart passe de
+11,45 à 5,28 °C ; de h = 1 à h = 0,5 min, de 2,02 à 0,99 °C. Plus le pas est petit, plus ce
+« divisé par 2 » est juste. En échange, le nombre de calculs **double**. C'est le prix de la
+précision : à la main, trois pas suffisent pour voir l'allure ; au tableur, des centaines de pas ne
+coûtent rien.
+
+[[FIG:euler_pas_h]]
+
+**Un pas trop grand donne un résultat absurde.** Avec h = 20 min, un seul pas :
+T(20) ≈ 180 + 20 × (−10,667) ≈ **−33 °C**. Une pièce posée dans un atelier à 20 °C ne peut pas
+descendre sous 20 °C : le pas est **plus long que la constante de temps** τ = 15 min (fiche 18.4 : la
+durée caractéristique du refroidissement), et la tangente « tire » bien au-delà de l'équilibre. La
+valeur exacte est T(20) ≈ 62,2 °C.
+
+> **Repère pratique** : prendre un pas **petit devant la constante de temps** (de l'ordre de τ/10
+> ou moins), puis **vérifier en divisant le pas par 2** : si le résultat ne bouge presque plus, le
+> pas est suffisant.
+
+*Pourquoi τ/10 ? Pendant un pas de τ/10, l'écart à l'équilibre ne diminue que d'environ 10 % : la
+pente change peu pendant le pas, et la tangente reste proche de la courbe.*
+
+### 5. Pour aller plus loin : le lien avec l'exponentielle
+
+Regardons ce qu'un pas fait à l'**écart** avec l'ambiante, T − 20. Avec h = 5 et τ = 15 :
+T suivante − 20 = (T − 20) − 5 × (T − 20)/15 = (T − 20) × (1 − 5/15). À chaque pas, l'écart est
+**multiplié par 1 − h/τ = 2/3 ≈ 0,667**. Vérifions : 160 × 2/3 = 106,67, et 126,67 − 20 = 106,67.
+
+La solution exacte, elle, multiplie l'écart par **e^(−h/τ) = e^(−1/3) ≈ 0,717** toutes les 5 min.
+Le facteur d'Euler est toujours un peu **plus petit** : il réduit l'écart trop vite — c'est la règle
+« Euler va trop vite vers l'équilibre » du § 3. Avec un pas plus petit, les deux facteurs se
+rapprochent : pour h = 0,5 min, 1 − 0,5/15 ≈ 0,966 7 et e^(−0,5/15) ≈ 0,967 2.
+
+Sur 15 min avec h = 0,5 min, il y a 30 pas : l'écart de départ, 160 °C, est multiplié 30 fois de
+suite par 0,966 7, soit 160 × 0,966 7³⁰ ≈ 57,9 °C (T ≈ 77,9 °C, la valeur du tableau du § 4), contre
+160 × e^(−1) ≈ 58,9 °C exactement. *Faire tendre le pas vers 0, c'est retrouver exactement
+l'exponentielle e^(−t/τ) de la fiche 17.7 : la méthode d'Euler, avec des pas de plus en plus fins,
+redonne la solution des fiches 18.4 et 18.8.*
+
+### 6. Sur tableur
+
+La méthode se programme en deux colonnes. Le pas est écrit une seule fois, dans la cellule F1, pour
+pouvoir le changer facilement :
+
+| | A (t) | B (T) | … | F |
+|---|---|---|---|---|
+| ligne 1 | t | T | | **5** (le pas h, en min) |
+| ligne 2 | 0 | 180 | | |
+| ligne 3 | =A2+$F$1 | =B2+$F$1*(-(B2-20)/15) | | |
+
+**Lecture de B3** : B2 est la température de la ligne du dessus ; -(B2-20)/15 est la pente ; $F$1 est
+le pas h. Le **$** empêche F1 de devenir F2, F3… quand on recopie la formule vers le bas.
+
+On **recopie la ligne 3 vers le bas** : chaque ligne calcule la pente à partir de la ligne du
+dessus, puis fait un pas. Un graphique « nuage de points » des colonnes A et B trace la courbe
+d'Euler ; en ajoutant une colonne C =20+160*EXP(-A2/15), on superpose la solution exacte pour
+comparer.
+
+*En changeant la valeur de départ B2 (180, puis 150, puis 120 °C) et en superposant les graphiques,
+on obtient la **famille des courbes solutions** de l'équation : toutes tendent vers 20 °C avec la
+même constante de temps, seule la condition initiale change.*
+
+### 7. Quand la formule est plus longue à obtenir : un atelier qui se réchauffe
+
+Le matin, l'atelier se réchauffe : sa température vaut **20 + 0,2t** (en °C, t en minutes) au lieu
+de rester à 20 °C. L'équation devient T'(t) = −(T(t) − (20 + 0,2t)) / 15. Sa solution exacte existe,
+mais elle demande une **solution particulière** — une formule qui vérifie l'équation, ici
+17 + 0,2t, que l'énoncé vous fournirait. *(Elle décrit une pièce qui suivrait le réchauffement de
+l'atelier avec 3 °C de retard : 0,2 °C/min × 15 min = 3 °C.)* On lui ajoute, comme en 18.4, un terme
+C × e^(−t/15), et la condition initiale T(0) = 180 °C donne C = 180 − 17 = 163 :
+T(t) = 17 + 0,2t + 163 × e^(−t/15).
+
+Euler, lui, n'a besoin que de la pente : dans la colonne B, on remplace 20 par la température de
+l'atelier à cet instant, 20 + 0,2 × t, soit **B3 : =B2+$F$1*(-(B2-(20+0,2*A2))/15)**.
+
+Avec h = 1 min : premier pas, pente = −(180 − 20)/15 ≈ −10,667, donc T(1) ≈ 169,33 °C ; deuxième
+pas, l'ambiante vaut maintenant 20,2 °C, pente = −(169,33 − 20,2)/15 ≈ −9,942, donc
+T(2) ≈ 159,39 °C. Au tableur, on obtient **T(45) ≈ 33,3 °C** avec h = 1 min et **≈ 34,0 °C** avec
+h = 0,1 min : le résultat se stabilise vers 34 °C, et la formule exacte donne bien
+T(45) = 17 + 9 + 163 × e^(−3) ≈ 34,1 °C.
+
+**Ce que le calcul apprend.** Avec une ambiante fixe à 20 °C, on aurait trouvé 28 °C, et cru pouvoir
+prendre la pièce en main à 45 min (28 °C, sous un seuil de manipulation de 30 °C) alors qu'elle est
+encore à **34 °C**. Négliger le réchauffement de l'atelier, c'est autoriser la manipulation ou le
+contrôle dimensionnel d'une pièce encore 4 °C au-dessus du seuil fixé par la consigne.
+
+### 8. Les pièges
+
+1. **Oublier le pas h** : écrire T suivante = T + pente. La pente est en °C **par minute** ; il faut
+   la multiplier par la durée du pas pour obtenir une variation en °C.
+2. **Garder la pente du départ à chaque pas** : on suivrait une seule droite, la tangente initiale,
+   au lieu de la recalculer après chaque pas.
+3. **Prendre un pas trop grand** devant τ : résultat imprécis, voire absurde (sous l'ambiante).
+4. **Croire le résultat exact** : Euler donne une **valeur approchée** ; on la contrôle en divisant le
+   pas par 2.
+5. **Mélanger les unités** : h et τ doivent être dans la même unité (tous deux en minutes, ou en
+   secondes).
+""",
+            "formules": """
+
+**Principe** — y(t + h) ≈ y(t) + h × y'(t) : valeur suivante = valeur actuelle + pas × pente actuelle
+
+**Algorithme** — on note tₙ et yₙ l'instant et la valeur après n pas (t₀ et y₀ au départ : la
+condition initiale). À chaque pas : pente = y' donnée par l'équation au point (tₙ ; yₙ), puis
+yₙ₊₁ = yₙ + h × pente et tₙ₊₁ = tₙ + h
+
+**Retour à l'équilibre** y' = −(y − y_éq)/τ (l'équation y' = −k(y − y_éq) des fiches 18.4 et 18.8,
+avec k = 1/τ) — un pas d'Euler multiplie l'écart y − y_éq par (1 − h/τ) ; la solution exacte le
+multiplie par e^(−h/τ), un peu plus grand : Euler va trop vite vers l'équilibre
+
+**Choix du pas** — h petit devant τ (de l'ordre de τ/10 ou moins) ; diviser h par 2 divise l'écart
+à peu près par 2 ; contrôler en recommençant avec h/2
+
+**Tableur** — B3 = B2 + $F$1 × (pente calculée avec B2), recopiée vers le bas
+
+        """,
+            "exemple": """
+**Cas industriel — Vérifier la durée d'un relais temporisé**
+
+Un relais temporisé colle (ferme son contact) quand la tension d'un condensateur atteint **8 V**. Le
+condensateur (C = 100 µF) se charge sous E = 12 V à travers une résistance R = 10 kΩ. Sa constante
+de temps vaut τ = R × C = 10 000 × 0,000 1 = **1 s**, et sa tension u (en V) obéit à l'équation de la
+fiche 18.8 : u'(t) = −(u(t) − 12) / 1, avec u(0) = 0. Comme τ = 1 s, la pente s'écrit simplement
+**u' = 12 − u**.
+
+**Le calcul exact (fiches 18.8 et 17.7).** u(t) = 12 × (1 − e^(−t)). Le relais colle quand
+12 × (1 − e^(−t)) = 8, soit e^(−t) = 1/3, donc t = ln 3 ≈ **1,10 s**.
+
+**La vérification par Euler, pas h = 0,25 s.**
+
+| t (s) | u (V) | Pente = 12 − u (V/s) | u suivante = u + 0,25 × pente | … atteinte à t = |
+|---|---|---|---|---|
+| 0 | 0 | 12 | **3** | 0,25 s |
+| 0,25 | 3 | 9 | **5,25** | 0,5 s |
+| 0,5 | 5,25 | 6,75 | **6,94** | 0,75 s |
+| 0,75 | 6,94 | 5,06 | **8,20** | 1 s |
+
+Euler franchit 8 V **entre 0,75 et 1 s**, alors que le calcul exact annonçait 1,10 s. Qui a tort ?
+Ici, c'est Euler : il va trop vite vers l'équilibre (§ 3). La tension monte en ralentissant, la
+pente prise au début de chaque pas est trop forte : Euler surestime la tension, donc annonce le
+relais **trop tôt**.
+
+**On divise le pas.** Au tableur, avec h = 0,1 s : u(1,0) ≈ 7,82 V et u(1,1) ≈ 8,23 V. Euler
+franchit maintenant 8 V **entre 1,0 et 1,1 s** : il confirme le calcul exact.
+
+**Ce que le calcul apprend.** Une vérification numérique n'a de valeur que si le pas est assez fin :
+avec h = 0,25 s (un quart de la constante de temps), la conclusion était fausse. La bonne pratique
+est de **diviser le pas jusqu'à ce que la conclusion ne change plus**. Le technicien sait maintenant
+que le relais collera environ **1,1 s** après la mise sous tension, résultat confirmé par deux calculs
+différents sur le même modèle. S'il faut une autre durée, il changera R ou C.
+""",
+            "exercice": """
+**Partie A — Faire les pas à la main**
+
+On reprend la pièce de la fiche 18.4 : T'(t) = −(T(t) − 20)/15, T(0) = 180 °C (t en minutes).
+
+**1.** Avec un pas h = 7,5 min, calcule par Euler T(7,5) puis T(15).
+
+**2.** Compare T(15) à la valeur exacte 78,86 °C : quel est l'écart ?
+
+**3.** Recommence avec h = 3,75 min (4 pas). Quel est le nouvel écart ? Qu'a-t-on gagné en divisant le
+pas par 2, et à quel prix ?
+
+**Partie B — Un pas trop grand**
+
+**4.** Fais un seul pas de h = 20 min. Pourquoi le résultat est-il physiquement impossible ? Compare à
+la valeur exacte T(20) = 20 + 160 × e^(−4/3).
+
+**Partie C — Tableur et exponentielle**
+
+**5.** Écris les formules des cellules A3 et B3 pour appliquer Euler au condensateur du cas
+industriel (u' = 12 − u, u(0) = 0), le pas étant dans la cellule F1.
+
+**6.** Pour la pièce, avec h = 0,5 min, calcule le facteur 1 − h/τ par lequel un pas d'Euler multiplie
+l'écart T − 20, et compare-le à e^(−h/τ).
+""",
+            "corrige": """
+**1.** Pas 1 : pente = −(180 − 20)/15 ≈ −10,667 °C/min, donc T(7,5) ≈ 180 − 7,5 × 10,667 = **100 °C**.
+Pas 2 : pente = −(100 − 20)/15 ≈ −5,333, donc T(15) ≈ 100 − 7,5 × 5,333 = **60 °C**.
+
+**2.** Écart : 78,86 − 60 = **18,86 °C**. Euler trouve trop froid : il va trop vite vers l'équilibre.
+
+**3.** Pentes successives −10,667 ; −8 ; −6 ; −4,5 : T ≈ 180 → **140** → **110** → **87,5** →
+**70,625 °C**. Écart : 78,861 − 70,625 ≈ **8,24 °C**. En divisant le pas par 2, l'écart a été divisé
+par environ 2,3, mais il a fallu **deux fois plus de pas** (4 au lieu de 2). *(Avec des pas aussi
+gros, la règle « pas divisé par 2, écart divisé par 2 » n'est qu'approximative ; elle devient
+d'autant plus juste que le pas est petit.)*
+
+**4.** T(20) ≈ 180 + 20 × (−10,667) ≈ **−33,3 °C**, sous la température de l'atelier (20 °C) : une
+pièce qui refroidit ne peut pas passer sous l'ambiante. Le pas (20 min) est plus long que la
+constante de temps (15 min). Valeur exacte : T(20) = 20 + 160 × e^(−4/3) ≈ **62,2 °C**.
+
+**5.** A3 : **=A2+$F$1** ; B3 : **=B2+$F$1*(12-B2)**, avec A2 = 0 et B2 = 0, puis on recopie la ligne
+3 vers le bas.
+
+**6.** 1 − 0,5/15 ≈ **0,966 7** et e^(−0,5/15) ≈ **0,967 2** : les deux facteurs sont très proches,
+c'est pourquoi un pas de 0,5 min donne un écart de moins de 1 °C à t = 15 min. *Avec h = 5 min,
+0,667 contre 0,717 : l'écart est bien plus grand.*
 """,
         },
     ],
@@ -52136,6 +52675,20 @@ _mth("18.8", "Modéliser une mise en régime (montée vers un équilibre)", [
    "P(6)=5,70 bar (3τ) · atteint 5,5 bar après environ 5 s — donnée "
    "directement exploitable pour cadencer un cycle automatique.")
 
+_mth("18.12", "Appliquer la méthode d'Euler à une équation différentielle du premier ordre", [
+    "**Écrire la pente** : mettre l'équation sous la forme y' = (expression qui dépend de t et "
+    "de y). Pour un retour à l'équilibre : y' = −(y − y_éq)/τ.",
+    "**Choisir le pas h** : petit devant la constante de temps (de l'ordre de τ/10 ou moins), "
+    "dans la même unité de temps que τ.",
+    "**Partir de la condition initiale** (t₀ ; y₀), la valeur de départ connue.",
+    "**Répéter** : calculer la pente au point où l'on EST, puis y suivante = y + h × pente et "
+    "t suivant = t + h. La pente est recalculée à CHAQUE pas.",
+    "**Contrôler** : le résultat est-il physiquement plausible (pas au-delà de l'équilibre) ? "
+    "Refaire avec h/2 : si le résultat ne bouge presque plus, le pas suffit. Comparer à la "
+    "solution exacte quand elle est connue.",
+], "T' = −(T − 20)/15, T(0) = 180 °C, h = 5 min : 180 → 126,67 → 91,11 → 67,41 °C à t = 15 min, "
+       "contre 78,86 °C exactement ; avec h = 0,5 min, Euler donne 77,87 °C.")
+
 _mth("19.1", "Multiplier des matrices et calculer un déterminant", [
     "**Multiplier ligne × colonne** : le terme (i,j) du produit combine la "
     "ligne i de la première matrice avec la colonne j de la seconde.",
@@ -53558,6 +54111,118 @@ def gen_sigma_affine():
     }
 
 
+_CONTEXTES_EULER = [
+    # (description, grandeur, unité, unité de temps, (y0 possibles), (y_eq possibles))
+    ("Une pièce refroidit dans un atelier", "T", "°C", "min", (120, 150, 180, 200, 240), (15, 20, 25)),
+    ("Un condensateur se charge", "u", "V", "s", (0,), (5, 10, 12, 24)),
+    ("Un four monte en température", "T", "°C", "min", (20, 25), (200, 300, 400)),
+]
+
+
+def gen_euler_pas():
+    """Deux pas de la méthode d'Euler sur y' = −(y − y_eq)/τ."""
+    while True:
+        desc, g, u, ut, y0s, yeqs = random.choice(_CONTEXTES_EULER)
+        y0, yeq = random.choice(y0s), random.choice(yeqs)
+        tau = random.choice([2, 4, 5, 10, 15, 20])
+        h = tau * random.choice([0.1, 0.2, 0.25])
+        r = h / tau
+        y1 = y0 + h * (-(y0 - yeq) / tau)
+        rep = y1 + h * (-(y1 - yeq) / tau)
+        vals = [y1, y0 + 2 * h * (-(y0 - yeq) / tau), yeq + (y0 - yeq) * math.exp(-2 * r)]
+        if abs(h - 1) > 1e-9:
+            z1 = y0 + (-(y0 - yeq) / tau)
+            vals.append(z1 + (-(z1 - yeq) / tau))
+        if all(abs(v - rep) > 0.05 for v in vals) and \
+                all(abs(vals[i] - vals[j]) > 0.05 for i in range(len(vals))
+                    for j in range(i + 1, len(vals))):
+            break
+    diag = [
+        _diag(vals[0], "C'est la valeur après UN seul pas : il en faut deux."),
+        _diag(vals[1], "Tu as gardé la pente du départ pour le deuxième pas : elle doit être "
+                       "recalculée au point où tu es, avec la nouvelle valeur."),
+        _diag(vals[2], "C'est la valeur exacte (avec l'exponentielle) : on demande la valeur "
+                       "approchée par Euler, qui n'utilise que la pente, jamais l'exponentielle."),
+    ]
+    if len(vals) == 4:
+        diag.append(_diag(vals[3], "Tu as ajouté la pente sans la multiplier par le pas h."))
+    p0 = -(y0 - yeq) / tau
+    p1 = -(y1 - yeq) / tau
+    return {
+        "titre": "Méthode d'Euler — deux pas",
+        "enonce": (f"{desc} : {g}' = −({g} − {_fr_court(yeq)}) / {tau}, avec {g}(0) = {_fr_court(y0)} "
+                   f"{u} (temps en {ut}). Avec un pas h = {_fr_court(h)} {ut}, calcule par la méthode "
+                   f"d'Euler la valeur de {g} après deux pas (t = {_fr_court(2 * h)} {ut}), en {u}, "
+                   f"au centième (garde au moins trois décimales dans les calculs intermédiaires)."),
+        "rep": rep, "tol": 0.01, "unite": u,
+        "diag": diag,
+        "corr": [
+            f"**Pas 1.** Pente = −({_fr_court(y0)} − {_fr_court(yeq)})/{tau} = {_fr_court(p0, 3)} "
+            f"{u}/{ut} ; {g}({_fr_court(h)}) ≈ {_fr_court(y0)} + {_fr_court(h)} × "
+            f"({_fr_court(p0, 3)}) = {_fr_court(y1, 3)} {u}.",
+            f"**Pas 2.** Nouvelle pente = −({_fr_court(y1, 3)} − {_fr_court(yeq)})/{tau} = "
+            f"{_fr_court(p1, 3)} {u}/{ut} ; {g}({_fr_court(2 * h)}) ≈ {_fr_court(y1, 3)} + "
+            f"{_fr_court(h)} × ({_fr_court(p1, 3)}) = **{fr(rep, 2)} {u}**.",
+            f"*Contrôle : chaque pas multiplie l'écart à l'équilibre par 1 − h/τ = "
+            f"{_fr_court(1 - r)} ; la valeur exacte serait {fr(vals[2], 2)} {u} : Euler est plus "
+            f"près de l'équilibre, comme toujours avec un pas petit devant τ.*",
+        ],
+        "indice": "valeur suivante = valeur actuelle + h × pente, avec pente = −(valeur − "
+                  "équilibre)/τ recalculée à chaque pas.",
+    }
+
+
+def gen_euler_ecart():
+    """Écart entre un pas d'Euler et la solution exacte, pour un retour à l'équilibre."""
+    while True:
+        y0 = random.choice([100, 120, 150, 160, 180, 200])
+        yeq = random.choice([10, 20, 25])
+        tau = random.choice([5, 10, 15, 20])
+        h = random.choice([1, 2, 2.5, 5])
+        if h > tau / 2 or h / tau < 0.1:
+            continue
+        euler = yeq + (y0 - yeq) * (1 - h / tau)
+        exact = yeq + (y0 - yeq) * math.exp(-h / tau)
+        rep = exact - euler
+        vals = [euler, exact, (y0 - yeq) * math.exp(-h / tau), -rep]
+        if abs(h - 1) > 1e-9:
+            vals.append(exact - (y0 - (y0 - yeq) / tau))
+        if all(abs(v - rep) > 0.05 for v in vals) and \
+                all(abs(vals[i] - vals[j]) > 0.05 for i in range(len(vals))
+                    for j in range(i + 1, len(vals))):
+            break
+    diag = [
+        _diag(euler, "C'est la valeur donnée par Euler : on demande l'ÉCART avec la valeur exacte."),
+        _diag(exact, "C'est la valeur exacte : il reste à lui soustraire la valeur d'Euler."),
+        _diag(vals[2], f"Tu as oublié d'ajouter l'ambiante ({yeq} °C) à la valeur exacte : "
+                       f"{y0 - yeq} × e^(−t/{tau}) n'est que l'écart à l'ambiante."),
+        _diag(-rep, "Tu as calculé Euler − exact : on demande exact − Euler, positif ici, car "
+                    "Euler trouve trop froid."),
+    ]
+    if len(vals) == 5:
+        diag.append(_diag(vals[4], "Pour la valeur d'Euler, tu as ajouté la pente sans la "
+                                   "multiplier par le pas h : la pente est en °C par minute."))
+    return {
+        "titre": "Méthode d'Euler — écart avec la solution exacte",
+        "enonce": (f"Une pièce à {y0} °C refroidit dans un atelier à {yeq} °C, avec τ = {tau} min : "
+                   f"T' = −(T − {yeq})/{tau}. Fais UN pas d'Euler de h = {_fr_court(h)} min, puis "
+                   f"calcule l'écart (valeur exacte − valeur d'Euler) à t = {_fr_court(h)} min, en °C, "
+                   f"au centième (garde au moins trois décimales pour la pente et quatre pour e^(−h/τ), "
+                   f"ou toutes celles de la calculatrice). La valeur exacte est T = {yeq} + {y0 - yeq} × e^(−t/{tau})."),
+        "rep": rep, "tol": 0.01, "unite": "°C",
+        "diag": diag,
+        "corr": [
+            f"**Euler.** Pente = −({y0} − {yeq})/{tau} = {_fr_court(-(y0 - yeq) / tau, 3)} °C/min ; "
+            f"T ≈ {y0} + {_fr_court(h)} × ({_fr_court(-(y0 - yeq) / tau, 3)}) = {fr(euler, 4)} °C.",
+            f"**Exact.** T = {yeq} + {y0 - yeq} × e^(−{_fr_court(h)}/{tau}) ≈ {fr(exact, 4)} °C.",
+            f"**Écart** : {fr(exact, 4)} − {fr(euler, 4)} ≈ {fr(rep, 4)}, soit **{fr(rep, 2)} °C** au "
+            "centième. Euler trouve trop froid : il va trop vite vers l'équilibre.",
+        ],
+        "indice": "Euler : T(h) ≈ T(0) + h × pente de départ. Exact : la formule donnée. Puis la "
+                  "différence exact − Euler.",
+    }
+
+
 def decimales_affichage(tol):
     """Nombre de décimales pour afficher la réponse d'un générateur : assez pour que la valeur
     AFFICHÉE soit acceptée par la tolérance (10⁻ᵈ ≤ tol, donc erreur d'arrondi ≤ tol/2), et au
@@ -53628,7 +54293,8 @@ def fabriquer_exo(famille=None):
                                   gen_determinant_2x2, gen_valeur_moyenne, gen_temps_decharge,
                                   gen_pente_moindres_carres, gen_proba_uniforme,
                                   gen_borne_continuite, gen_proba_normale,
-                                  gen_sigma_somme, gen_sigma_affine],
+                                  gen_sigma_somme, gen_sigma_affine,
+                                  gen_euler_pas, gen_euler_ecart],
     }
     if famille and famille in catalogue:
         pool = catalogue[famille]
@@ -57080,6 +57746,95 @@ ATELIERS = [
                      "pour une grande série de pièces indépendantes et centrées, la plage réaliste est "
                      "±0,087 mm. Le pire cas garantit l'assemblage de pièces conformes ; la quadrature "
                      "est moins chère, mais suppose ses hypothèses vérifiées.",
+    },
+    {
+        "id": "at144",
+        "chapitre": "Bloc 18",
+        "titre": "Méthode d'Euler : la charge d'un condensateur, pas à pas",
+        "theme": "Équations différentielles",
+        "fiche": "18.12",
+        "figure": "euler_charge",
+        "vocabulaire": [
+            ("pas (h)", "durée dont on avance à chaque étape du calcul ; plus il est petit, plus le "
+             "résultat est précis, et plus il faut de calculs."),
+            ("condition initiale", "valeur de la grandeur au départ, à t = 0 ; c'est le premier point "
+             "d'où part Euler."),
+            ("tangente", "droite qui a, en un point, la même pente que la courbe ; sur un pas court, "
+             "elle se confond presque avec la courbe."),
+            ("méthode numérique", "méthode qui donne des valeurs approchées chiffrées (à la main, au "
+             "tableur) au lieu d'une formule exacte."),
+        ],
+        "enonce": "Un condensateur se charge sous 10 V avec une constante de temps τ = 2 s : "
+                  "u'(t) = −(u(t) − 10)/2, avec u(0) = 0 V. On applique Euler avec un pas h = 0,5 s.",
+        "etapes": [
+            {"type": "numerique", "label": "Pente au départ u'(0)", "unite": "V/s",
+             "attendu": 5.0, "tol": 0.01,
+             "consigne": "Remplace u par sa valeur de départ dans l'équation.",
+             "indice": "u'(0) = −(0 − 10)/2.",
+             "pieges": [(10.0, "Tu as oublié de diviser par τ = 2 : la pente vaut −(0 − 10)/2."),
+                        (-5.0, "Attention au signe : −(0 − 10) = +10, la tension MONTE."),
+                        (20.0, "Tu as multiplié par τ au lieu de diviser : −(0 − 10)/2 = 5.")]},
+            {"type": "numerique", "label": "Tension après un pas, u(0,5)", "unite": "V",
+             "attendu": 2.5, "tol": 0.01,
+             "depend_de": {"etape": 1, "formule": lambda v: 0.5 * v},
+             "consigne": "u suivante = u actuelle + h × pente.",
+             "indice": "0 + 0,5 × 5.",
+             "pieges": [(5.0, "Tu as ajouté la pente sans la multiplier par le pas h = 0,5 s : la pente "
+                              "est en volts PAR SECONDE."),
+                        (10.0, "10 V est la tension finale (l'équilibre), pas la tension après 0,5 s.")]},
+            {"type": "numerique", "label": "Tension après deux pas, u(1)", "unite": "V",
+             "attendu": 4.375, "tol": 0.01,
+             "depend_de": {"etape": 2, "formule": lambda v: v + 0.5 * (-(v - 10) / 2)},
+             "consigne": "Recalcule la pente au point où tu ES (u = 2,5 V), puis fais un deuxième pas.",
+             "indice": "Pente = −(2,5 − 10)/2 = 3,75 ; puis 2,5 + 0,5 × 3,75.",
+             "pieges": [(5.0, "Tu as gardé la pente du départ (5 V/s) : elle doit être recalculée avec "
+                              "la nouvelle tension, 2,5 V."),
+                        (6.25, "Tu as ajouté la nouvelle pente sans la multiplier par h = 0,5 s.")]},
+            {"type": "numerique", "label": "Valeur exacte u(1) = 10 × (1 − e^(−1/2))", "unite": "V",
+             "attendu": 10 * (1 - math.exp(-0.5)), "tol": 0.01,
+             "consigne": "Solution exacte de la fiche 18.8 : u(t) = 10 × (1 − e^(−t/2)), à t = 1 s.",
+             "indice": "e^(−0,5) ≈ 0,606 5.",
+             "pieges": [(10 * math.exp(-0.5), "6,07 V est ce qui MANQUE encore pour atteindre 10 V "
+                                              "(10 × e^(−0,5)) : la tension vaut 10 moins ce manque."),
+                        (10 * (1 - math.exp(-2)), "Tu as calculé e^(−2) : l'exposant est −t/τ = −1/2, "
+                                                   "pas −τ/t.")]},
+            {"type": "qcm", "label": "Interpréter l'écart",
+             "question": "Euler donne 4,38 V, la solution exacte 3,93 V. Pourquoi Euler surestime-t-il "
+                         "la tension ici ?",
+             "options": ["Parce que la pente est prise à la fin de chaque pas, là où la charge est la "
+                         "plus lente",
+                         "Parce que la pente est prise au milieu de chaque pas, là où la charge a sa "
+                         "vitesse moyenne",
+                         "Parce que la pente est prise au début de chaque pas, là où la charge est la "
+                         "plus rapide"],
+             "bonne": 2,
+             "diagnostics": {0: "Non : Euler utilise la pente du point où l'on se trouve, donc celle du "
+                                "DÉBUT du pas. Une pente de fin de pas, plus faible, donnerait au "
+                                "contraire une tension trop basse.",
+                             1: "Non : Euler utilise la pente du point où l'on se trouve, donc celle du "
+                                "DÉBUT du pas. Une pente prise au milieu du pas serait bien plus juste "
+                                "(c'est le principe de méthodes améliorées)."}},
+        ],
+        "corrige": {
+            "enonce": "u' = −(u − 10)/2, u(0) = 0, h = 0,5 s : deux pas d'Euler, puis la valeur exacte "
+                      "à t = 1 s.",
+            "regle": "**Un pas d'Euler : u suivante = u actuelle + h × pente, la pente étant "
+                     "recalculée à chaque pas avec l'équation, au point où l'on est.**",
+            "conversions": "Aucune : h et τ sont tous deux en secondes.",
+            "remplacement": "pente = −(0 − 10)/2 ; u(0,5) = 0 + 0,5 × 5 ; pente = −(2,5 − 10)/2 ; "
+                            "u(1) = 2,5 + 0,5 × 3,75",
+            "calcul": "u'(0) = **5 V/s**\\n\\nu(0,5) ≈ **2,5 V**\\n\\nu(1) ≈ **4,375 V** (Euler)"
+                      "\\n\\nu(1) = 10 × (1 − e^(−0,5)) ≈ **3,93 V** (exact)",
+            "verification": "**Contrôle de cohérence** : la tension reste entre 0 et 10 V, et elle monte "
+                            "de moins en moins vite (2,5 V au premier pas, 1,875 V au second) : c'est "
+                            "bien l'allure d'une charge. Euler est au-dessus de la valeur exacte : il va "
+                            "trop vite vers l'équilibre. Avec h = 0,1 s, il donnerait u(1) ≈ 4,01 V, "
+                            "plus proche de 3,93 V.",
+        },
+        "a_retenir": "À retenir : Euler avance pas à pas en suivant la pente donnée par l'équation "
+                     "(u suivante = u + h × pente, pente recalculée à chaque pas, au point où l'on "
+                     "est). Le résultat est approché, trop près de l'équilibre quand le pas est petit "
+                     "devant τ ; on le rend plus précis en diminuant le pas.",
     },
     {
         "id": "at29",
@@ -64941,8 +65696,10 @@ MATIERES_PROGRAMME = [
         ("Analyse (évalué)", "Incomplet (à enrichir)",
          "Fonctions, dérivées, fonctions exponentielle et logarithme, calcul intégral, valeur "
          "moyenne, extremums locaux, équations différentielles du premier ordre (deux cas "
-         "traités). Non traités : équations différentielles du second ordre, méthode d'Euler.",
-         [(7, ["7.2"]), (17, ["17.1", "17.7", "17.2", "17.4", "17.5"]), (18, ["18.4", "18.8"])]),
+         "traités, et méthode d'Euler). Non traités : équations différentielles du second "
+         "ordre.",
+         [(7, ["7.2"]), (17, ["17.1", "17.7", "17.2", "17.4", "17.5"]),
+          (18, ["18.4", "18.8", "18.12"])]),
         ("Hors épreuve : calcul matriciel, Bézier, droites et plans", "Complet",
          "Programme complémentaire non évalué (matrices, courbes de Bézier) et "
          "approfondissement hors référentiel (droites et plans dans l'espace, distance "
