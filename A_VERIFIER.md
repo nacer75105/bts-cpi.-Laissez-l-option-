@@ -22,7 +22,7 @@ laissé d'un seul tenant (pas de scission) pour ne pas toucher les clés.
 Plan (le référentiel ne répartit pas les modules entre 1ʳᵉ et 2ᵉ année ; l'ordre suit les
 prérequis et la répartition usuelle) :
 1. ✅ 17.7 ln et exp — 2. ✅ 17.8 statistique à deux variables — 3. ✅ 18.9 loi uniforme —
-4. ✅ 18.10 loi normale et approximation binomiale — 5. somme de variables, limite centrée —
+4. ✅ 18.10 loi normale et approximation binomiale — 5. ✅ 18.11 somme de variables, limite centrée —
 6. méthode d'Euler — 7. IC d'une proportion — 8. tests sur une proportion / une moyenne —
 9. tests de comparaison — 10. loi exponentielle — 11. loi de Poisson — 12. nombres
 complexes (forme algébrique, Δ < 0) — 13. équations différentielles du second ordre.
@@ -81,6 +81,29 @@ complexes (forme algébrique, Δ < 0) — 13. équations différentielles du sec
   qu'il liste ont été vérifiées une à une (entiers à ±0,1, at84 = fourchette du cours).
 - Règle pour les nouveaux ateliers : `tol` est une tolérance ABSOLUE dans l'unité de l'étape, et
   les valeurs données par l'indice (arrondis intermédiaires) doivent être acceptées.
+
+### 18.11 — Somme de variables et théorème de la limite centrée (faite le 2026-09-25)
+
+- Insérée après 18.10 (ordre affiché … 18.9 → 18.10 → 18.11 → 18.7), avec méthode, figures
+  `quadrature_cotes` et `moyenne_se_resserre`, atelier at143 (chaîne de cotes, étapes 2 et 3
+  déclarées avec `depend_de`), générateurs `gen_sigma_somme` et `gen_sigma_affine`, 8 questions
+  dans la banque « probabilités et équations différentielles » (bonne réponse en positions 3, 1,
+  0, 2, 1, 3, 2, 0). L'encadré de la 18.10 renvoie désormais à la 18.11 (« les vérifie »).
+- Trois tours de relecture (justesse + clarté) jusqu'à zéro réserve. Choix de l'auteur, conforme
+  au référentiel (« conjecturés par simulation, puis admis ») : la fiche VÉRIFIE les règles
+  (énumération exacte des 36 cas de deux dés) et en donne le POURQUOI — (x + y)² = x² + y² + 2xy,
+  2xy nul en moyenne pour des variables indépendantes, maximal (V = (σx + σy)², pire cas) si
+  elles se trompent ensemble ; quadrature expliquée par Pythagore — sans démonstration générale.
+- Cas industriel : la chaîne de cotes de l'exercice guidé eg6 au pire cas (±0,15 mm) et en
+  tolérancement statistique (±0,087 mm) ; le gain de 73 % sur l'IT des pièces a un prix (0,27 %
+  des assemblages hors plage) ; coefficient de sécurité 1,5 (méthode dite de Bender) chiffré.
+- Relecture : étymologie de « limite centrée » corrigée (Pólya, 1920, « central » au sens de
+  « fondamental ») ; la page Entraînement et l'outil d'audit ont été renforcés en amont (commit
+  f59acad) après que l'audit eut laissé passer deux défauts de cette fiche (diagnostics
+  confondus, arrondis enchaînés).
+- **Non vérifié** : rendu visuel réel des deux figures ; atelier at143 et générateurs non cliqués
+  dans l'interface (la fiche et la page Entraînement s'ouvrent sans erreur dans un AppTest ;
+  outil d'audit : 0 défaut sur 202 étapes et 20 générateurs).
 
 ### Diagnostics masqués et arrondis enchaînés (corrigé le 2026-09-25)
 
@@ -184,9 +207,8 @@ complexes (forme algébrique, Δ < 0) — 13. équations différentielles du sec
 
 - **Contenus évalués ABSENTS de l'application** (décision de l'auteur : créer des fiches ?).
   Le S10 2016 et l'annexe I rendent évalués, sans qu'aucune fiche ne les traite :
-  - Probabilités 1 : théorème de la limite centrée, E et V de aX + b, X + Y, X − Y (la loi
-    normale comme loi de probabilité et l'approximation binomiale → normale sont traitées depuis
-    le 2026-09-25, fiche 18.10) ;
+  - Probabilités 1 : entièrement traité depuis le 2026-09-25 (18.9 loi uniforme, 18.10 loi
+    normale et approximation binomiale, 18.11 aX + b, X ± Y et limite centrée) ;
   - Probabilités 2 : loi exponentielle, loi de Poisson, approximation binomiale → Poisson ;
   - Statistique inférentielle : intervalle de confiance d'une proportion, tests d'hypothèse
     (bilatéraux, unilatéraux, comparaison de deux moyennes ou proportions) ;

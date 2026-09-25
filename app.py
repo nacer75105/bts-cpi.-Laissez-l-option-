@@ -5701,6 +5701,69 @@ def binomiale_continuite():
     return _svg("".join(p), 760, 372)
 
 
+def quadrature_cotes():
+    p = [_txt(40, 24, "σ(alésage) = 4 µm et σ(arbre) = 3 µm : σ(jeu) = √(4² + 3²) = 5 µm, pas 7 µm.",
+              12, TRAIT, "start", True)]
+    k = 38  # px par µm
+    x0, y0 = 90, 290
+    # triangle rectangle : côté horizontal 4, côté vertical 3, hypoténuse 5
+    p.append(f"<line x1='{x0}' y1='{y0}' x2='{x0 + 4 * k}' y2='{y0}' stroke='{ALESAGE}' stroke-width='5'/>")
+    p.append(f"<line x1='{x0 + 4 * k}' y1='{y0}' x2='{x0 + 4 * k}' y2='{y0 - 3 * k}' stroke='{ARBRE}' stroke-width='5'/>")
+    p.append(f"<line x1='{x0}' y1='{y0}' x2='{x0 + 4 * k}' y2='{y0 - 3 * k}' stroke='{OK}' stroke-width='5'/>")
+    p.append(f"<rect x='{x0 + 4 * k - 14}' y='{y0 - 14}' width='14' height='14' fill='none' stroke='{FIN}'/>")
+    p.append(_txt(x0 + 2 * k, y0 + 22, "σ(alésage) = 4 µm", 12, ALESAGE, "middle", True))
+    p.append(_txt(x0 + 4 * k + 10, y0 - 1.5 * k, "σ(arbre) = 3 µm", 12, ARBRE, "start", True))
+    p.append(_txt(x0 + 2 * k - 16, y0 - 1.5 * k - 16, "σ(jeu) = 5 µm", 12, OK, "end", True))
+    p.append(_txt(x0 + 2 * k - 16, y0 - 1.5 * k, "en quadrature", 11, OK, "end"))
+    # à droite : la somme bout à bout, 7 µm
+    xs, ys = 440, 250
+    p.append(_txt(xs, 110, "Pire cas : les deux écarts dans le même sens", 12, ALERTE, "start", True))
+    p.append(f"<line x1='{xs}' y1='{ys - 100}' x2='{xs + 4 * k}' y2='{ys - 100}' stroke='{ALESAGE}' stroke-width='5'/>")
+    p.append(f"<line x1='{xs + 4 * k}' y1='{ys - 100}' x2='{xs + 7 * k}' y2='{ys - 100}' stroke='{ARBRE}' stroke-width='5'/>")
+    p.append(_txt(xs + 2 * k, ys - 108, "4", 11, ALESAGE, "middle", True))
+    p.append(_txt(xs + 5.5 * k, ys - 108, "3", 11, ARBRE, "middle", True))
+    p.append(_txt(xs + 3.5 * k, ys - 78, "4 + 3 = 7 µm", 12, ALERTE, "middle", True))
+    p.append(_txt(xs, ys - 30, "Réaliste : les écarts se compensent en partie", 12, OK, "start", True))
+    p.append(f"<line x1='{xs}' y1='{ys}' x2='{xs + 5 * k}' y2='{ys}' stroke='{OK}' stroke-width='5'/>")
+    p.append(_txt(xs + 2.5 * k, ys + 22, "√(4² + 3²) = 5 µm", 12, OK, "middle", True))
+    p.append(f"<rect x='40' y='320' width='680' height='52' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p.append(_txt(56, 342, "Deux écarts indépendants se combinent comme les côtés d'un angle droit : l'écart total est l'hypoténuse.", 12, TRAIT, "start", True))
+    p.append(_txt(56, 362, "On additionne les VARIANCES (16 + 9 = 25), puis on prend la racine — jamais les écarts-types.", 12, TRAIT, "start", True))
+    return _svg("".join(p), 760, 386)
+
+
+def moyenne_se_resserre():
+    p = [_txt(40, 24, "Attente de la navette U([0 ; 10]) : 1 attente, moyenne de 4, moyenne de 25 attentes.",
+              12, TRAIT, "start", True),
+         _txt(40, 40, "Chaque histogramme : 4 000 valeurs simulées ; axe en minutes.", 11, FIN)]
+    tirages = random.Random(2026)  # graine fixe : la figure est toujours la même
+    L, H, y0 = 200, 170, 270
+    for j, n in enumerate((1, 4, 25)):
+        x0 = 50 + j * 240
+        moy = [sum(10 * tirages.random() for _ in range(n)) / n for _ in range(4000)]
+        nb = 20
+        eff = [0] * nb
+        for m in moy:
+            k = min(nb - 1, int(m / 10 * nb))
+            eff[k] += 1
+        emax = max(eff)
+        sig = 10 / math.sqrt(12) / math.sqrt(n)
+        titre = "1 attente" if n == 1 else f"moyenne de {n}"
+        p.append(_txt(x0 + L / 2, 62, titre, 12, ALESAGE, "middle", True))
+        p.append(_txt(x0 + L / 2, 78, f"σ = {_fr_court(round(sig, 2))} min", 11, OK, "middle"))
+        p.append(f"<line x1='{x0}' y1='{y0}' x2='{x0 + L}' y2='{y0}' stroke='{FIN}' stroke-width='1.4'/>")
+        for k, c in enumerate(eff):
+            h = H * c / emax
+            p.append(f"<rect x='{x0 + k * L / nb:.1f}' y='{y0 - h:.1f}' width='{L / nb - 1:.1f}' "
+                     f"height='{h:.1f}' fill='{ALESAGE}' fill-opacity='0.35' stroke='{ALESAGE}'/>")
+        for g in (0, 5, 10):
+            p.append(_txt(x0 + L * g / 10, y0 + 16, str(g), 11, FIN, "middle"))
+    p.append(f"<rect x='40' y='300' width='680' height='52' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p.append(_txt(56, 322, "Même sur une loi plate, la moyenne de n attentes prend la forme d'une cloche centrée sur 5 min.", 12, TRAIT, "start", True))
+    p.append(_txt(56, 342, "Elle se resserre en σ/√n : 2,89 min pour 1 attente, 1,44 pour 4, 0,58 pour 25.", 12, TRAIT, "start", True))
+    return _svg("".join(p), 760, 366)
+
+
 def extremums_polynome():
     p = [_txt(40, 24, "f(x) = x³ − 3x² + 2 : un maximum local puis un minimum local.",
               12, TRAIT, "start", True)]
@@ -6110,6 +6173,8 @@ FIGURES = {
     "somme_uniformes_cloche": ("Additionner des tirages uniformes fait apparaître la cloche", somme_uniformes_cloche),
     "aire_sous_cloche": ("Probabilité = aire sous la cloche : le rebut d'un procédé décentré", aire_sous_cloche),
     "binomiale_continuite": ("Des bâtons à la cloche : chaque entier est un rectangle de largeur 1", binomiale_continuite),
+    "quadrature_cotes": ("Deux dispersions indépendantes se combinent comme les côtés d'un angle droit", quadrature_cotes),
+    "moyenne_se_resserre": ("La moyenne de n valeurs se resserre en σ/√n et devient une cloche", moyenne_se_resserre),
     "extremums_polynome": ("Un maximum local puis un minimum local", extremums_polynome),
     "dispersion_deux_reglages": ("Six mesures dispersées autour de leur moyenne", dispersion_deux_reglages),
     "venn_deux_evenements": ("Union et intersection de deux événements", venn_deux_evenements),
@@ -9900,6 +9965,57 @@ QUIZ["Mathématiques BTS CPI — probabilités et équations différentielles"] 
       ["P(Y ≥ 25,5)", "P(Y ≥ 24,5)", "P(Y ≥ 25)", "P(Y ≤ 25,5)"], 0,
       "« Plus de 25 » exclut 25 : les entiers concernés sont 26, 27… Le rectangle de 26 commence à "
       "25,5. P(Y ≥ 24,5) serait « au moins 25 ».", "Piège"),
+
+    q("X et Y sont indépendantes, σ(X) = 6 et σ(Y) = 8. Que vaut σ(X + Y) ?",
+      ["14", "100", "2", "10"], 3,
+      "On additionne les variances : 36 + 64 = 100, puis la racine : √100 = 10. 14 est la somme "
+      "des écarts-types (le pire cas), 100 la variance.", "Base"),
+
+    q("X et Y sont indépendantes, σ(X) = 6 et σ(Y) = 8. Que vaut σ(X − Y) ?",
+      ["2", "10", "√28", "−2"], 1,
+      "Pour une différence de variables indépendantes, les variances s'additionnent AUSSI : "
+      "36 + 64 = 100, σ = 10. Soustraire des variances (√28) est faux.", "Piège"),
+
+    q("σ(X) = 3. Que vaut σ(2X + 5) ?",
+      ["6", "11", "18", "36"], 0,
+      "σ(aX + b) = |a| × σ(X) = 2 × 3 = 6 : le +5 décale sans étaler. 36 serait la variance "
+      "V(2X + 5) = 4 × 9.", "Base"),
+
+    q("V(X) = 4. Que vaut V(−3X + 1) ?",
+      ["−12", "−11", "36", "13"], 2,
+      "V(aX + b) = a² × V(X) = 9 × 4 = 36 : le a passe au carré (donc le signe disparaît), le b "
+      "disparaît.", "Intermédiaire"),
+
+    q("Des pièces ont un écart-type σ = 2 mm. Quel est l'écart-type de la moyenne de 16 pièces ?",
+      ["2 mm", "0,5 mm", "0,125 mm", "8 mm"], 1,
+      "σ(X̄) = σ/√n = 2/√16 = 2/4 = 0,5 mm. 8 mm (= 2√16) serait l'écart-type de la SOMME des 16.",
+      "Intermédiaire"),
+
+    q("La masse d'une pièce ne suit pas une loi normale. Que dit le théorème de la limite centrée "
+      "sur la moyenne de 100 pièces ?",
+      ["Rien, puisque la masse n'est pas normale",
+       "Elle suit exactement la même loi qu'une pièce",
+       "Elle est toujours égale à μ",
+       "Elle suit approximativement une loi normale N(μ ; σ/10)"], 3,
+      "C'est tout l'intérêt du théorème : la moyenne de n pièces indépendantes suit à peu près "
+      "N(μ ; σ/√n), même si une pièce seule ne suit pas une loi normale. Ici √100 = 10.",
+      "Intermédiaire"),
+
+    q("Dans une chaîne de cotes de trois pièces indépendantes et centrées, chacune d'IT 0,10 mm "
+      "(IT = 6σ), quelle est la plage réaliste du jeu ?",
+      ["±0,15 mm, comme au pire cas", "±0,05 mm, la tolérance d'une seule pièce",
+       "Environ ±0,087 mm", "±0,30 mm"], 2,
+      "σ = 0,10/6 par pièce, σ(jeu) = σ√3 ≈ 0,029 mm, et ±3σ ≈ ±0,087 mm : plus étroit que le pire "
+      "cas (±0,15 mm), parce que les écarts se compensent en partie.", "Calcul"),
+
+    q("Pourquoi additionner les écarts-types surestime-t-il la dispersion d'une somme ?",
+      ["Parce que cela suppose que tous les écarts vont toujours dans le même sens",
+       "Parce que les écarts-types sont toujours négatifs",
+       "Parce qu'il faut les multiplier",
+       "Ce n'est pas une surestimation, c'est la bonne méthode"], 0,
+      "Additionner les σ, c'est le pire cas : toutes les erreurs dans le même sens (la moyenne du "
+      "terme 2xy à son maximum). Des erreurs indépendantes se compensent en partie, d'où la combinaison "
+      "en quadrature, plus petite.", "Base"),
 ]
 
 QUIZ["Mathématiques BTS CPI — calcul matriciel et modélisation géométrique"] = [
@@ -48161,7 +48277,7 @@ P(24,5 ≤ Y ≤ 30,5) ». Il faut comprendre d'où viennent ces ,5 — pour ne 
 recopiant — et savoir les retrouver.*
 
 > **Pour aller plus loin — simuler une loi normale** *(facultatif ; les deux règles utilisées
-> ici sont admises, la fiche suivante du programme les montrera)*
+> ici sont admises, la fiche 18.11 les vérifie)*
 >
 > **Deux règles pour une somme de tirages indépendants :**
 > - **les espérances s'additionnent** : chaque ALEA() vaut 0,5 en moyenne, donc la somme de douze
@@ -48338,6 +48454,368 @@ elle, on oublie la moitié gauche du rectangle de 50.
 écart-type vaut 1 (les variances s'additionnent : 12 × 1/12 = 1, donc σ = √1 = 1) : elle suit à peu
 près N(0 ; 1). Multiplier par 1,5 étire la cloche à l'écart-type 1,5, ajouter 1 000 la décale : on
 obtient à peu près N(1 000 ; 1,5).
+""",
+        },
+        {
+            "id": "18.11",
+            "titre": "Probabilités 1 : somme de variables aléatoires et théorème de la limite centrée",
+            "duree": "4 h",
+            "cours": """
+
+### 1. Ce qu'on avait admis en 18.10, on le vérifie ici
+
+L'encadré « Pour aller plus loin » de la fiche 18.10 a utilisé deux règles, **admises** : pour des
+tirages indépendants, **les espérances s'additionnent**, et **les variances s'additionnent — pas les
+écarts-types**. Cette fiche les **vérifie** sur un exemple exact (deux dés), fait comprendre
+**pourquoi** la seconde est vraie, puis s'en sert pour deux résultats d'atelier : la **tolérance d'un
+assemblage** (chaîne de cotes) et la **moyenne d'un échantillon** (le théorème de la limite centrée,
+qui fonde les fiches 18.3 et 18.7).
+
+*Comme le prévoit le programme, ces règles ne sont pas démontrées en général : on les vérifie sur
+un exemple, on comprend d'où elles viennent, puis on les admet.*
+
+**Vocabulaire :**
+- **Deux variables aléatoires indépendantes** : connaître la valeur de l'une n'apprend rien sur
+  l'autre. Deux pièces usinées sur deux machines différentes, deux tirages ALEA() successifs, deux
+  dés : indépendants. Deux cotes d'une même pièce qui dépendent de la même usure d'outil : pas
+  forcément.
+- **Variance** V(X) = σ(X)² : le carré de l'écart-type, la moyenne des carrés des écarts à la
+  moyenne (fiche 18.9). C'est elle qui s'additionne ; on revient ensuite à σ par une racine carrée.
+- **Pire cas** : le calcul de la fiche 0.7.2 et de l'exercice guidé eg6 (« aux extrêmes »). On
+  suppose toutes les pièces **en même temps** à leur limite la plus défavorable, et les tolérances
+  s'additionnent. Il garantit que l'assemblage fonctionne dès que les pièces sont conformes, mais
+  suppose une malchance qui n'arrive presque jamais.
+
+### 2. Transformer une variable : aX + b
+
+Une grandeur mesurée est souvent **convertie** : une force en tension par un capteur, des mm en µm,
+des °C en °F (T(°F) = 1,8 × T(°C) + 32). Que deviennent sa moyenne et sa dispersion si Y = aX + b ?
+
+- **Ajouter b décale** toutes les valeurs du même montant, comme changer l'origine d'une règle
+  graduée ou tarer une balance : la moyenne bouge de b, mais l'étalement reste le même. Le +32 des
+  °F ne change pas la dispersion.
+- **Multiplier par a étire** tous les écarts à la moyenne par a (ou les resserre si |a| < 1). La
+  variance, moyenne des **carrés** des écarts, est donc multipliée par a². *Exemple : un écart de
+  2 mm, multiplié par 3, devient 6 mm ; son carré passe de 4 à 36, soit 9 fois plus : a² = 9.*
+- L'écart-type est multiplié par **|a|**, la valeur absolue de a, c'est-à-dire a sans son signe
+  (|−3| = 3) : un a négatif retourne la règle graduée, mais l'étalement garde la même largeur, et un
+  écart-type n'est jamais négatif.
+
+*C'est la règle déjà utilisée en 18.9 (a + (b − a) × ALEA() : là, le coefficient multiplicateur est
+b − a et le décalage est a) et en 18.10 (μ + σ × …) : ajouter décale, multiplier étire.* D'où les trois règles :
+
+> **E(aX + b) = a × E(X) + b**   **V(aX + b) = a² × V(X)**   **σ(aX + b) = |a| × σ(X)**
+
+**Exemple — le capteur de force de la fiche 17.8.** Sa droite d'étalonnage donne u = 0,009 974 F +
+0,011 (u en mV, F en N). Si la force appliquée sur le banc a une moyenne de 350 N et un écart-type de
+20 N :
+- E(u) = 0,009 974 × 350 + 0,011 ≈ **3,502 mV** ;
+- σ(u) = 0,009 974 × 20 ≈ **0,199 5 mV** — le décalage de zéro 0,011 mV n'y joue aucun rôle.
+
+> **Le piège : V(aX + b) = a² V(X), pas a V(X) + b.** Le b disparaît, le a passe au carré.
+
+### 3. Additionner ou soustraire deux variables indépendantes
+
+*Deux dés, puis deux pièces : que vaut l'étalement d'une somme ? On regarde d'abord, on énonce la
+règle ensuite.*
+
+**Un dé seul.** Les écarts à la moyenne 3,5 valent −2,5 ; −1,5 ; −0,5 ; 0,5 ; 1,5 ; 2,5, chacun
+avec la probabilité 1/6. Leurs carrés valent 6,25 ; 2,25 ; 0,25 ; 0,25 ; 2,25 ; 6,25, de moyenne
+17,5/6 : **V(D) = 35/12 ≈ 2,917**, et σ(D) = √2,917 ≈ **1,708**.
+
+**La somme de deux dés.** On compte les 36 cases du tableau « dé 1 × dé 2 » :
+
+| somme | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| nombre de cas sur 36 | 1 | 2 | 3 | 4 | 5 | 6 | 5 | 4 | 3 | 2 | 1 |
+| écart à 7 | −5 | −4 | −3 | −2 | −1 | 0 | 1 | 2 | 3 | 4 | 5 |
+
+La moyenne vaut 7 = 3,5 + 3,5. La moyenne des carrés des écarts vaut
+2 × (25 × 1 + 16 × 2 + 9 × 3 + 4 × 4 + 1 × 5)/36 = 210/36 = **35/6 ≈ 5,833 — exactement
+35/12 + 35/12.** L'écart-type vaut √5,833 ≈ **2,415**, et non 1,708 + 1,708 = 3,416.
+
+**La différence D₁ − D₂** va de −5 à +5, avec les **mêmes** nombres de cas (1, 2, 3, 4, 5, 6, 5, 4,
+3, 2, 1) : c'est le même diagramme en bâtons que la somme, glissé de 7 à 0. Même forme, donc même
+étalement : **même variance 35/6.**
+
+**Pourquoi les écarts se compensent.** Pour que la somme de deux dés soit extrême (2 ou 12), il faut
+que **les deux** dés soient extrêmes dans le **même** sens : une seule combinaison sur 36 chacune.
+Pour tomber près de 7, beaucoup de combinaisons marchent, parce qu'un dé trop fort est souvent
+compensé par un dé trop faible.
+
+**Pourquoi ce sont les carrés qui s'additionnent.** Appelons x l'écart de la première pièce à sa
+cote moyenne, et y celui de la seconde. L'écart de l'empilage est x + y, et la variance est la
+moyenne de son carré :
+
+> (x + y)² = x² + y² + **2xy**
+
+- La moyenne de x² est V(X), celle de y² est V(Y).
+- Le terme **2xy** est celui qui compte. Quand les deux pièces sont trop épaisses, ou trop fines
+  toutes les deux, xy est positif ; quand l'une est trop épaisse et l'autre trop fine, xy est
+  négatif. Si les pièces sont **indépendantes**, ces situations se compensent : sur des centaines
+  d'empilages, **la moyenne des 2xy vaut 0** (c'est ce qu'on admet en général). Sur les deux dés, on
+  vient de le vérifier : 35/6 = 35/12 + 35/12, donc la moyenne des 2xy y vaut exactement 0.
+- Il reste : **V(X + Y) = V(X) + V(Y).**
+- Pour une différence, l'écart est x − y : (x − y)² = x² + y² − 2xy. Le terme croisé change de signe,
+  mais sa moyenne vaut toujours 0 : il reste encore **V(X − Y) = V(X) + V(Y)**.
+
+*Et si les pièces se trompaient toujours ensemble, dans le même sens et en proportion (la seconde
+trop épaisse exactement quand la première l'est) ? Le terme 2xy ne se compenserait plus : sa moyenne
+serait à son maximum, 2σ(X)σ(Y), et la même identité donnerait V = σ(X)² + 2σ(X)σ(Y) + σ(Y)² =
+(σ(X) + σ(Y))², soit σ = σ(X) + σ(Y). **Additionner les écarts-types, c'est ce cas-là : le pire
+cas.** Pièces indépendantes : 2xy moyen nul, les variances s'additionnent. Pièces qui se trompent
+ensemble : 2xy maximal, ce sont les écarts-types qui s'additionnent.*
+
+On admet donc, pour toutes les variables indépendantes :
+
+> **E(X + Y) = E(X) + E(Y)**   et   **E(X − Y) = E(X) − E(Y)** (toujours vrai)
+> Si X et Y sont **indépendantes** : **V(X + Y) = V(X) + V(Y)** et **V(X − Y) = V(X) + V(Y)**
+> donc **σ(X ± Y) = √(σ(X)² + σ(Y)²)**
+
+**Pourquoi « en quadrature ».** Le mot vient du latin *quadratus*, « carré » : on combine les écarts
+**par leurs carrés**. C'est exactement le calcul de Pythagore. Si vous marchez 3 m vers l'est puis
+4 m vers le nord, vous êtes à √(3² + 4²) = **5 m** du départ, et non à 7 m : vous ne seriez à 7 m que
+si les deux trajets allaient dans la même direction. Deux écarts indépendants sont comme deux
+directions à angle droit : avancer dans l'une n'apprend rien sur l'autre, et le terme 2xy disparaît.
+En ligne droite, (3 + 4)² = 9 + 16 + **2 × 3 × 4** = 49, soit 7 m ; à angle droit, le 2 × 3 × 4 n'y
+est plus : 9 + 16 = 25, soit 5 m. Avec σ₁ = 3 µm et σ₂ = 4 µm, l'écart total vaut √(3² + 4²) = **5 µm**, et non
+3 + 4 = 7 µm. L'hypoténuse est toujours plus courte que les deux côtés mis bout à bout.
+
+[[FIG:quadrature_cotes]]
+
+**Les cales de la fiche 18.10, chiffrées.** Empiler 12 cales qui ont chacune une petite erreur
+d'écart-type σ ne donne pas une erreur 12 fois plus grande : la variance est multipliée par 12, donc
+l'écart-type seulement par √12 ≈ 3,5. C'est exactement le calcul admis dans l'encadré de la 18.10.
+Un ALEA() a une variance de 1/12, soit un écart-type d'environ 0,29 ; douze ALEA() ont une variance
+de 12 × 1/12 = 1, donc un écart-type de **1**. En additionnant les écarts-types, on aurait trouvé
+12 × 0,29 ≈ 3,5 : **3,5 fois trop**, le même facteur √12. **Vous savez maintenant pourquoi.**
+
+**Pourquoi la différence s'étale autant que la somme.** Au montage : un arbre trop gros **réduit**
+le jeu, un arbre trop fin l'**augmente**. Dans les deux cas, l'erreur de l'arbre se retrouve dans le
+jeu : soustraire l'arbre ne retire pas son imprécision, cela change seulement le sens dans lequel
+elle agit (§2 avec a = −1 : V(−Y) = (−1)² V(Y) = V(Y)). **Un jeu (alésage − arbre) est donc aussi
+dispersé qu'un empilage (alésage + arbre).**
+
+### 4. La moyenne d'un échantillon et le théorème de la limite centrée
+
+On mesure n pièces X₁, X₂, …, Xₙ, indépendantes et **de même loi** (elles sortent du même procédé,
+avec le même réglage : même moyenne μ, même écart-type σ). Leur moyenne est X̄ = (X₁ + … + Xₙ)/n.
+
+*X̄ (X barre, majuscule) est la moyenne **avant** de mesurer : une variable aléatoire, qui
+changerait si l'on reprenait n autres pièces. x̄ (minuscule, fiches 7.3 et 18.3) est le nombre
+**obtenu** sur l'échantillon réellement mesuré.*
+
+Les règles des §2 et §3 donnent :
+- la somme a pour espérance nμ et pour variance nσ² (on applique n − 1 fois la règle du §3, une
+  variable après l'autre), donc un écart-type **σ√n** ;
+- diviser par n, c'est le §2 avec a = 1/n : l'espérance devient μ, la variance nσ²/n² = σ²/n, et
+  l'écart-type √(σ²/n) = σ/√n.
+
+> **Somme de n pièces : E = nμ, σ = σ√n**   **Moyenne : E(X̄) = μ, σ(X̄) = σ/√n**
+
+*Exemple : 4 pièces de σ = 2 mm. La somme a une variance de 4 × 4 = 16, donc un écart-type de
+4 mm (et non 8). La moyenne a un écart-type de 2/√4 = 1 mm.* C'est le σ/√n de l'intervalle de
+confiance de la fiche 18.3 : il vient d'ici. Il faut **quatre fois plus** de pièces pour diviser
+l'écart-type de la moyenne par deux (√4 = 2).
+
+Vous l'avez déjà vu en 18.10 : la somme de douze tirages uniformes prend la forme d'une cloche, et
+une loi binomiale (une somme de 0 et de 1) aussi. Ce n'est pas un hasard :
+
+> **Théorème de la limite centrée (admis).** Si X₁, …, Xₙ sont indépendantes et de même loi
+> (moyenne μ, écart-type σ), et si n est assez grand, la **somme** suit approximativement la loi
+> normale **N(nμ ; σ√n)**, **même si la loi de départ n'est pas normale.** En divisant par n (§2),
+> la **moyenne** X̄ suit approximativement **N(μ ; σ/√n)**.
+
+*Pourquoi c'est capital : le 1,96 de la fiche 18.3 vient de la loi normale (18.10). Sans ce
+théorème, l'intervalle de confiance ne vaudrait que pour des pièces en cloche ; grâce à lui, il
+vaut pour la moyenne de n'importe quelle grandeur, dès que l'échantillon est assez grand (l'énoncé
+le précise ; une indication courante est n ≥ 30, le seuil déjà rencontré en 18.3 pour remplacer σ par
+s). Le nom : « limite », parce que l'approximation devient de plus en plus exacte quand n augmente.
+L'adjectif vient de l'allemand *zentraler Grenzwertsatz* (Pólya, 1920) : « central » au sens de
+« fondamental » en probabilités ; on dit aussi « théorème central limite ».*
+
+Voici ce théorème vu sur une moyenne :
+
+[[FIG:moyenne_se_resserre]]
+
+**Exemple — la navette de la fiche 18.9.** Une attente T suit la loi uniforme sur [0 ; 10] min :
+μ = 5 min, σ = 10/√12 ≈ 2,887 min. Une seule attente est très dispersée, et sa loi est un rectangle,
+pas une cloche. Mais la **moyenne de 25 attentes** suit à peu près N(5 ; 2,887/√25) = N(5 ; 0,577).
+*(25 est en dessous de l'indication n ≥ 30, mais la loi uniforme est symétrique et sans valeurs
+extrêmes : la cloche se forme très vite — la figure le montre, elle est déjà bien dessinée dès la
+moyenne de 4. Pour une loi penchée d'un côté, il faudrait plus de valeurs.)* Ainsi :
+- P(moyenne > 6 min) ≈ **0,042** *(TI : normalFRép(6, 10^99, 5, 0.577))* ;
+- un audit trouve une attente moyenne de 6,2 min sur 25 appels. **Si** la navette passe vraiment
+  toutes les 10 min, une moyenne d'**au moins** 6,2 min n'arrive que 1,9 fois sur 100
+  (P(X̄ ≥ 6,2) ≈ 0,019, *normalFRép(6.2, 10^99, 5, 0.577)*). Deux explications restent possibles :
+  un hasard rare, ou une navette plus lente qu'annoncé — la seconde est bien plus plausible. *C'est
+  l'idée des tests d'hypothèse, qui viennent ensuite.*
+
+### 5. Les erreurs classiques et à retenir
+
+**Erreurs classiques :**
+1. **Additionner les écarts-types** : σ(X + Y) = √(σ(X)² + σ(Y)²), jamais σ(X) + σ(Y).
+2. **Soustraire les variances pour une différence** : V(X − Y) = V(X) **+** V(Y).
+3. **Garder le b ou oublier le carré** : V(aX + b) = a² V(X), pas a V(X) + b.
+4. **Oublier l'indépendance** : deux cotes qui dépendent de la même usure d'outil ne se compensent
+   pas ; leurs variances ne s'additionnent pas simplement.
+5. **Confondre somme et moyenne** : la somme de n pièces a un écart-type σ√n, la moyenne σ/√n.
+
+**À retenir :**
+- **E s'additionne toujours** ; **V s'additionne pour des variables indépendantes**, pour une somme
+  comme pour une différence ; on revient à σ par la racine. Additionner les σ, c'est le pire cas.
+- **σ(aX + b) = |a| σ(X)** : b décale, a étire.
+- **Chaîne de cotes** : les dispersions se combinent en quadrature, √(σ₁² + σ₂² + …), plus
+  favorable que le pire cas — mais pas gratuitement (cas industriel).
+- **σ(X̄) = σ/√n**, et X̄ ≈ N(μ ; σ/√n) même si X n'est pas normale (limite centrée).
+""",
+            "formules": """
+
+**Transformation affine** — E(aX + b) = aE(X) + b · V(aX + b) = a²V(X) · σ(aX + b) = |a|σ(X)
+
+**Somme et différence** — E(X ± Y) = E(X) ± E(Y) · si X, Y indépendantes :
+V(X ± Y) = V(X) + V(Y) et σ(X ± Y) = √(σ(X)² + σ(Y)²)
+
+**n variables indépendantes de même loi** — somme : E = nμ, σ = σ√n · moyenne X̄ : E = μ,
+σ(X̄) = σ/√n
+
+**Limite centrée** (admis, n assez grand) — somme ≈ N(nμ ; σ√n) et X̄ ≈ N(μ ; σ/√n), même si X
+n'est pas normale
+
+**Chaîne de cotes** — au pire cas (fiche 0.7.2) : IT_J = IT₁ + IT₂ + … · tolérancement statistique
+(pièces indépendantes, centrées, IT = 6σ) : IT_J = √(IT₁² + IT₂² + …), plage qui contient environ
+99,7 % des assemblages
+
+        """,
+            "exemple": """
+**Cas industriel — La même chaîne de cotes, au pire cas et en quadrature**
+
+On reprend le jeu axial d'une roue de l'exercice guidé eg6 : **Ja = A − B − C**, avec le carter
+A = 60 ± 0,05, la roue B = 40 ± 0,05 et le couvercle C = 19,75 ± 0,05 (en mm). Chaque cote a un
+intervalle de tolérance IT = 0,10 mm.
+
+**Étape 1 — Le pire cas (fiches 0.7.2 et 15.2)**
+
+Ja nominal = 60 − 40 − 19,75 = **0,25 mm**. Au pire cas, les IT s'additionnent : IT_J = 3 × 0,10 =
+0,30 mm, soit **Ja entre 0,10 et 0,40 mm**. Ce calcul suppose que les trois pièces sont **en même
+temps** à leurs limites les plus défavorables.
+
+**Étape 2 — Les hypothèses du calcul statistique**
+
+- Les trois pièces viennent de fabrications différentes : elles sont **indépendantes**.
+- Chaque procédé est **centré** sur sa cote nominale. *C'est indispensable : un procédé qui tire
+  toujours du même côté ne compense plus ses erreurs autour du nominal.*
+- Chaque procédé est **tout juste capable** : son IT vaut 6σ (rappel 7.3 : Cp = IT/6σ ; Cp = 1
+  signifie que la tolérance contient tout juste les ±3σ du procédé). Donc σ = 0,10/6 ≈
+  **0,016 7 mm** pour chaque pièce.
+
+**Étape 3 — L'écart-type du jeu**
+
+Ja = A − B − C : une somme et deux différences de variables indépendantes. Les variances
+s'additionnent toutes (§3) :
+σ(Ja) = √(0,016 7² + 0,016 7² + 0,016 7²) = 0,016 7 × √3 ≈ **0,028 9 mm**.
+
+**Étape 4 — La plage réaliste du jeu**
+
+On modélise chaque cote usinée par une loi normale (fiche 18.10 : une cote est la somme de
+nombreuses petites perturbations), et une somme ou une différence de variables normales indépendantes reste normale
+(admis). Ja suit donc N(0,25 ; 0,028 9). 99,7 % des assemblages sont à ±3σ(Ja) = ±0,087 mm : **Ja
+entre 0,163 et 0,337 mm**, au lieu de 0,10 à 0,40 mm au pire cas. Sous ces hypothèses, la
+probabilité que Ja sorte de la plage du pire cas (±0,15 mm) est de l'ordre de **2 sur 10 millions**
+— un ordre de grandeur théorique, qui dépend de la forme exacte des lois.
+
+**Étape 5 — Ce qu'on en fait en conception : le tolérancement statistique**
+
+**Passer des σ aux IT.** Chaque IT vaut 6σ, et l'IT du jeu vaut 6σ(Ja) : tout est multiplié par le
+même 6, ce qui ne change pas la règle (§2) : **IT_J = √(IT₁² + IT₂² + IT₃²)**. C'est la formule du
+**tolérancement statistique**. Avec trois IT égaux : IT_J = IT × √3.
+
+Si la fonction demande seulement Ja entre 0,10 et 0,40 mm (IT_J = 0,30), le calcul en quadrature
+permet des IT de pièces plus larges : IT × √3 = 0,30 donne **IT = 0,30/√3 ≈ 0,173 mm par pièce**, au
+lieu de 0,10 mm au pire cas — **73 % plus large**, donc des pièces moins chères à fabriquer.
+
+**Le prix de ce gain.** Avec IT = 0,173 mm, chaque pièce a σ = (0,30/√3)/6 = 0,05/√3 ≈ 0,028 9 mm, donc
+σ(Ja) = 0,028 9 × √3 ≈ 0,05 mm. Les limites 0,10 et 0,40 sont alors exactement à ±3σ(Ja) du nominal
+0,25 : il reste hors de la plage le complément des 99,7 %, soit environ **0,27 % des assemblages**
+(27 sur 10 000),
+contre pratiquement aucun avec les IT de 0,10 mm. Le concepteur échange des pièces moins chères
+contre un petit taux d'assemblages à reprendre. En bureau d'études, on majore souvent le résultat
+statistique par un **coefficient de sécurité** (par exemple 1,5, méthode dite de Bender) :
+IT_J = 1,5 × √(IT₁² + IT₂² + IT₃²). Sur cette chaîne, 1,5 × IT × √3 = 0,30 donne IT ≈ 0,115 mm par
+pièce : le gain tombe à environ 15 % au lieu de 73 %, mais il couvre des procédés un peu décentrés.
+On exige en plus un Cpk suffisant sur chaque cote.
+
+**Ce que le calcul apprend — et ses limites.** Le pire cas garantit que l'assemblage fonctionne dès
+que toutes les pièces sont conformes, mais il coûte cher, parce qu'il suppose que toutes les erreurs
+s'additionnent dans le même sens. Le tolérancement statistique est réaliste pour une **grande série**
+de pièces **indépendantes** et **centrées**. En petite série ou pour une pièce unique, on ne
+**connaît** pas le procédé (ni son centrage, ni son σ réel) : les hypothèses sont invérifiables, et
+l'on garde le pire cas. On le garde aussi quand un défaut est inacceptable (sécurité).
+""",
+            "exercice": """
+**Partie A — Transformer une variable (aX + b)**
+
+La droite d'étalonnage du capteur de la fiche 17.8, arrondie, est u = 0,01 F + 0,011 (u en mV, F en
+N). La force F appliquée pendant un essai a une moyenne de 350 N et un écart-type de 20 N.
+
+**1.** Calcule E(u) et σ(u). Pourquoi le 0,011 n'intervient-il pas dans σ(u) ?
+
+**2.** On convertit u en µV : u' = 1 000 u. Que deviennent l'écart-type et la variance ?
+
+**Partie B — Empiler et assembler**
+
+Trois plaques sont empilées. Leurs épaisseurs sont indépendantes : E₁ de moyenne 10 mm et
+d'écart-type 0,02 mm, E₂ de moyenne 15 mm et d'écart-type 0,03 mm, E₃ de moyenne 5 mm et
+d'écart-type 0,01 mm.
+
+**3.** Calcule la moyenne et l'écart-type de l'épaisseur totale E = E₁ + E₂ + E₃. Compare avec la
+somme des trois écarts-types.
+
+**4.** L'épaisseur totale doit être comprise entre 29,9 et 30,1 mm. En admettant que E suit une loi
+normale, quelle proportion d'empilages est hors tolérance ?
+
+**5.** Un jeu est J = D − d, où l'alésage D a un écart-type de 4 µm et l'arbre d un écart-type de
+3 µm, indépendants. Calcule σ(J).
+
+**Partie C — Somme et moyenne**
+
+Des boulons ont une masse moyenne de 12 g et un écart-type de 0,5 g. Une boîte contient 100 boulons
+pris au hasard.
+
+**6.** Calcule la moyenne et l'écart-type de la masse totale de la boîte. D'après le théorème de la
+limite centrée (n = 100), quelle est la probabilité qu'une boîte pèse moins de 1 190 g ?
+
+**7.** Calcule la moyenne et l'écart-type de la masse **moyenne** d'un boulon de la boîte. Quelle loi
+suit-elle, d'après le théorème de la limite centrée ?
+""",
+            "corrige": """
+**1.** E(u) = 0,01 × 350 + 0,011 = **3,511 mV** ; σ(u) = |0,01| × 20 = **0,2 mV**. Le 0,011 décale
+toutes les tensions du même montant (décalage de zéro) : il déplace la moyenne mais ne change pas
+l'étalement.
+
+**2.** u' = 1 000 u : σ(u') = 1 000 × 0,2 = **200 µV**, et la variance est multipliée par
+1 000² = 10⁶ : V(u') = 10⁶ × 0,04 = **40 000 µV²**. *L'écart-type suit le changement d'unité ; la
+variance, en unité au carré, suit son carré.*
+
+**3.** E(E) = 10 + 15 + 5 = **30 mm**. V(E) = 0,02² + 0,03² + 0,01² = 0,000 4 + 0,000 9 + 0,000 1 =
+0,001 4, donc σ(E) = √0,001 4 ≈ **0,037 4 mm**. La somme des écarts-types donnerait 0,06 mm : **1,6 fois
+trop**, parce qu'elle suppose que les trois plaques sont toujours trop épaisses (ou trop fines)
+ensemble.
+
+**4.** E ∼ N(30 ; 0,037 4) : P(E < 29,9 ou E > 30,1) = 1 − P(29,9 ≤ E ≤ 30,1) ≈ **0,007 5**, soit
+0,75 % des empilages. *Avec l'écart-type faux de 0,06 mm, on aurait annoncé 9,6 % : près de 13 fois
+trop.*
+
+**5.** σ(J) = √(4² + 3²) = √25 = **5 µm** (et non 4 + 3 = 7, ni 4 − 3 = 1 : pour une différence, les
+variances s'additionnent aussi).
+
+**6.** Somme de 100 boulons : moyenne 100 × 12 = **1 200 g**, écart-type 0,5 × √100 = **5 g**
+(variance 100 × 0,5² = 25). D'après la limite centrée, la masse totale suit à peu près
+N(1 200 ; 5) : P(masse < 1 190) ≈ P(Z < −2) ≈ **0,022 8**.
+
+**7.** Moyenne d'un boulon de la boîte : E = **12 g**, σ = 0,5/√100 = **0,05 g**. D'après le théorème de
+la limite centrée, elle suit à peu près **N(12 ; 0,05)**, même si la masse d'un boulon n'était pas
+normale. *La somme s'étale en σ√n, la moyenne se resserre en σ/√n.*
 """,
         },
         {
@@ -51618,6 +52096,19 @@ _mth("18.10", "Calculer avec la loi normale, et approcher une loi binomiale", [
 ], "B(100 ; 0,2) ≈ N(20 ; 4). « Au plus 25 » concerne 0, 1, …, 25 : on va jusqu'à 25,5. "
        "P(Y ≤ 25,5) ≈ 0,915 4, pour une valeur exacte de 0,912 5 (sans correction : 0,894 4).")
 
+_mth("18.11", "Calculer la dispersion d'une somme, d'une différence ou d'une moyenne", [
+    "**Vérifier l'indépendance** : les grandeurs viennent-elles de sources différentes "
+    "(pièces, machines, tirages) ? Sinon, les règles ne s'appliquent pas telles quelles.",
+    "**Espérances** : additionner ou soustraire comme la formule (E(X − Y) = E(X) − E(Y)).",
+    "**Dispersion** : passer aux VARIANCES (σ²), les ADDITIONNER toutes — pour une somme comme "
+    "pour une différence —, puis prendre la racine.",
+    "**Transformation aX + b** : σ est multiplié par |a| ; le b ne change pas la dispersion.",
+    "**Moyenne de n valeurs** : σ(X̄) = σ/√n ; pour n grand, X̄ ≈ N(μ ; σ/√n) (limite centrée).",
+    "**Contrôler** : le résultat en quadrature est au moins égal au plus grand des σ, et plus "
+    "petit que la somme des σ (le pire cas).",
+], "Jeu J = D − d avec σ(D) = 4 µm et σ(d) = 3 µm : V(J) = 16 + 9 = 25, σ(J) = 5 µm — "
+       "entre 4 µm (le plus grand σ) et 7 µm (la somme des σ).")
+
 _mth("18.7", "Calculer la taille d'échantillon nécessaire pour une précision donnée", [
     "**Isoler n dans la formule de la marge** : n = (1,96 × s / marge "
     "visée)².",
@@ -52988,6 +53479,85 @@ def gen_proba_normale():
     }
 
 
+def gen_sigma_somme():
+    """Écart-type d'une somme ou d'une différence de deux variables indépendantes."""
+    s1 = random.choice([2, 3, 4, 5, 6, 8, 10, 12])
+    s2 = random.choice([1, 2, 3, 4, 5, 6, 9])
+    difference = random.random() < 0.5
+    rep = math.sqrt(s1 ** 2 + s2 ** 2)
+    if difference:
+        contexte = (f"Le jeu J = D − d d'un ajustement : l'alésage D a un écart-type de {s1} µm, "
+                    f"l'arbre d un écart-type de {s2} µm, indépendants. Calcule σ(J) en µm")
+    else:
+        contexte = (f"Deux pièces indépendantes sont empilées : leurs hauteurs ont des écarts-types "
+                    f"de {s1} µm et {s2} µm. Calcule l'écart-type de la hauteur totale, en µm")
+    diag = [
+        _diag(s1 + s2, "Tu as additionné les écarts-types : on additionne les VARIANCES, puis on "
+                       "prend la racine."),
+        _diag(s1 ** 2 + s2 ** 2, "Tu as donné la variance : il manque la racine carrée pour revenir "
+                                 "à l'écart-type."),
+    ]
+    if difference and s1 != s2:
+        diag.append(_diag(math.sqrt(abs(s1 ** 2 - s2 ** 2)),
+                          "Tu as soustrait les variances : pour une différence de variables "
+                          "indépendantes, les variances s'additionnent aussi."))
+    return {
+        "titre": "Somme de variables — écart-type en quadrature",
+        "enonce": contexte + ", au centième.",
+        "rep": rep, "tol": 0.01, "unite": "µm",
+        "diag": diag,
+        "corr": [
+            f"**Les variances.** {s1}² = {s1 ** 2} et {s2}² = {s2 ** 2}.",
+            f"**On les additionne** — {'même pour une différence' if difference else 'pour une somme'} : "
+            f"{s1 ** 2} + {s2 ** 2} = {s1 ** 2 + s2 ** 2}.",
+            f"**On prend la racine.** σ = √{s1 ** 2 + s2 ** 2} ≈ **{fr(rep, 2)} µm**.",
+            f"*Contrôle : entre {max(s1, s2)} µm (le plus grand des deux) et {s1 + s2} µm (leur "
+            f"somme, le pire cas).*",
+        ],
+        "indice": "σ = √(σ₁² + σ₂²), pour une somme comme pour une différence.",
+    }
+
+
+def gen_sigma_affine():
+    """Écart-type de Y = aX + b (un signal de capteur)."""
+    while True:
+        sig = random.choice([2, 4, 5, 10, 20])
+        a = random.choice([-3, -2, -0.5, 0.5, 1.5, 2, 3, 10])
+        b = random.choice([-20, -5, 5, 12, 32, 100])
+        rep = abs(a) * sig
+        vals = [abs(a) * sig + b, a * a * sig] + ([a * sig] if a < 0 else [])
+        # aucun diagnostic confondu avec la réponse ni avec un autre diagnostic
+        if all(abs(v - rep) > 0.01 for v in vals) and \
+                all(abs(vals[i] - vals[j]) > 0.01 for i in range(len(vals))
+                    for j in range(i + 1, len(vals))):
+            break
+    diag = [
+        _diag(abs(a) * sig + b, f"Le b = {_fr_court(b)} ne change pas la dispersion : il décale "
+                                "toutes les valeurs du même montant."),
+        _diag(a * a * sig, "Tu as mis le carré sur l'écart-type : c'est la VARIANCE qui est "
+                           "multipliée par a² ; l'écart-type est multiplié par |a|."),
+    ]
+    if a < 0:
+        diag.append(_diag(a * sig, "Un écart-type n'est jamais négatif : σ(aX + b) = |a| × σ(X)."))
+    return {
+        "titre": "Transformation aX + b — écart-type",
+        "enonce": (f"Un capteur convertit une grandeur X (écart-type {_fr_court(sig)}) en un signal "
+                   f"Y = {_fr_court(a)} X {'+' if b >= 0 else '−'} {_fr_court(abs(b))}. "
+                   f"Calcule l'écart-type du signal σ(Y)."),
+        "rep": rep, "tol": 0.01, "unite": "",
+        "diag": diag,
+        "corr": [
+            f"**Le b décale, sans étaler.** Le {'+' if b >= 0 else '−'} {_fr_court(abs(b))} ne "
+            "change pas l'écart-type.",
+            f"**Le a {'étire' if abs(a) > 1 else 'resserre'}.** σ(Y) = |{_fr_court(a)}| × "
+            f"{_fr_court(sig)} = **{_fr_court(rep)}**.",
+            f"*Et la variance : V(Y) = a² × V(X) = {_fr_court(a * a)} × {_fr_court(sig * sig)} = "
+            f"{_fr_court(a * a * sig * sig)}.*",
+        ],
+        "indice": "σ(aX + b) = |a| × σ(X) : le b disparaît, le a se met en valeur absolue.",
+    }
+
+
 def decimales_affichage(tol):
     """Nombre de décimales pour afficher la réponse d'un générateur : assez pour que la valeur
     AFFICHÉE soit acceptée par la tolérance (10⁻ᵈ ≤ tol, donc erreur d'arrondi ≤ tol/2), et au
@@ -53057,7 +53627,8 @@ def fabriquer_exo(famille=None):
         "Mathématiques BTS CPI": [gen_signe_affine, gen_discriminant, gen_proba_binomiale,
                                   gen_determinant_2x2, gen_valeur_moyenne, gen_temps_decharge,
                                   gen_pente_moindres_carres, gen_proba_uniforme,
-                                  gen_borne_continuite, gen_proba_normale],
+                                  gen_borne_continuite, gen_proba_normale,
+                                  gen_sigma_somme, gen_sigma_affine],
     }
     if famille and famille in catalogue:
         pool = catalogue[famille]
@@ -56431,6 +57002,84 @@ ATELIERS = [
                      "qu'au-delà de 50, soit P(Y ≥ 50,5) ≈ 0,04, environ 1 lot sur 25. Méthode : même "
                      "moyenne np, même écart-type √(np(1 − p)), puis correction de continuité (lister "
                      "les entiers, prendre les bords extérieurs de leurs rectangles).",
+    },
+    {
+        "id": "at143",
+        "chapitre": "Bloc 18",
+        "titre": "Chaîne de cotes : pire cas ou quadrature ?",
+        "theme": "Probabilités",
+        "fiche": "18.11",
+        "figure": "quadrature_cotes",
+        "vocabulaire": [
+            ("en quadrature", "combiner des dispersions indépendantes par √(σ₁² + σ₂² + …), comme les "
+             "côtés d'un angle droit, au lieu de les additionner."),
+            ("pire cas", "calcul qui suppose toutes les cotes à leurs limites défavorables en même "
+             "temps : les IT s'additionnent."),
+            ("tolérancement statistique", "fixer les tolérances des pièces en combinant leurs IT en "
+             "quadrature, √(IT₁² + IT₂² + …), plutôt qu'en les additionnant : valable pour des séries "
+             "de pièces indépendantes et centrées."),
+        ],
+        "enonce": "Jeu axial Ja = A − B − C, avec A = 60 ± 0,05, B = 40 ± 0,05 et C = 19,75 ± 0,05 "
+                  "(mm), pièces indépendantes, procédés centrés et tout juste capables (IT = 6σ).",
+        "etapes": [
+            {"type": "numerique", "label": "Écart-type σ d'une pièce", "unite": "mm",
+             "attendu": 0.10 / 6, "tol": 0.0005,
+             "consigne": "L'IT d'une pièce vaut 0,10 mm et IT = 6σ.",
+             "indice": "σ = 0,10 / 6.",
+             "pieges": [(0.05, "0,05 est la demi-tolérance (le ±), pas l'écart-type : IT = 6σ."),
+                        (0.10 / 3, "Tu as divisé l'IT par 3 : c'est la demi-largeur ±3σ qui vaut "
+                                   "0,05, donc σ = 0,10/6.")]},
+            {"type": "numerique", "label": "Écart-type du jeu σ(Ja)", "unite": "mm",
+             "attendu": math.sqrt(3) * 0.10 / 6, "tol": 0.001,
+             "depend_de": {"etape": 1, "formule": lambda v: math.sqrt(3) * v},
+             "consigne": "Ja = A − B − C : additionne les TROIS variances, puis prends la racine.",
+             "indice": "√(3 × σ²) = σ × √3.",
+             "pieges": [(3 * 0.10 / 6, "Tu as additionné les écarts-types (3σ) : on additionne les "
+                                       "variances, puis on prend la racine."),
+                        (0.10 / 6, "0,016 7 est l'écart-type d'UNE pièce. Le jeu cumule les "
+                                   "dispersions des TROIS cotes : σ(Ja) = √(σ² + σ² + σ²) = σ√3."),
+                        (math.sqrt(2) * 0.10 / 6, "Tu n'as pris que deux cotes : Ja = A − B − C en "
+                                                  "compte trois."),
+                        (3 * (0.10 / 6) ** 2, "Tu as donné la variance 3σ² : prends la racine.")]},
+            {"type": "numerique", "label": "Demi-plage réaliste du jeu, 3σ(Ja)", "unite": "mm",
+             "attendu": 3 * math.sqrt(3) * 0.10 / 6, "tol": 0.002,
+             "depend_de": {"etape": 2, "formule": lambda v: 3 * v},
+             "consigne": "Chaque cote est en cloche, donc Ja aussi : 99,7 % des assemblages sont à "
+                         "±3σ(Ja) du nominal (fiche 7.3).",
+             "indice": "3 × 0,028 9.",
+             "pieges": [(0.15, "0,15 est la demi-plage du pire cas (3 × 0,05), pas celle du calcul en "
+                               "quadrature.")]},
+            {"type": "qcm", "label": "Choisir la méthode",
+             "question": "Le jeu doit rester entre 0,10 et 0,40 mm, pour une petite série de 20 "
+                         "réducteurs dont on ne connaît pas encore les procédés. Quelle méthode "
+                         "retenir ?",
+             "options": ["Le calcul en quadrature, car il donne la plage la plus étroite",
+                         "Le pire cas : on ne connaît ni le centrage ni le σ réel des procédés",
+                         "Les deux donnent la même garantie"],
+             "bonne": 1,
+             "diagnostics": {0: "La quadrature suppose des procédés connus, centrés et capables. En "
+                                "petite série, ces hypothèses sont invérifiables : on garde le pire "
+                                "cas.",
+                             2: "Non : le pire cas garantit que l'assemblage fonctionne dès que les "
+                                "pièces sont conformes ; la quadrature, seulement « presque toujours », "
+                                "et seulement si ses hypothèses sont vérifiées."}},
+        ],
+        "corrige": {
+            "enonce": "Ja = A − B − C, trois IT de 0,10 mm, pièces indépendantes centrées, IT = 6σ.",
+            "regle": "**Les variances de variables indépendantes s'additionnent, pour une somme comme "
+                     "pour une différence : σ(Ja) = √(σ² + σ² + σ²).**",
+            "conversions": "Aucune : tout est en mm.",
+            "remplacement": "σ = 0,10/6 ; σ(Ja) = σ√3 ; 3σ(Ja)",
+            "calcul": "σ ≈ **0,016 7 mm**\\n\\nσ(Ja) ≈ **0,028 9 mm**\\n\\n3σ(Ja) ≈ **0,087 mm** "
+                      "(pire cas : 0,15 mm)",
+            "verification": "**Contrôle de cohérence** : 0,028 9 est plus grand que σ d'une pièce "
+                            "(0,016 7) et plus petit que la somme des trois (0,05) : c'est toujours le "
+                            "cas en quadrature.",
+        },
+        "a_retenir": "À retenir : au pire cas les IT s'additionnent (±0,15 mm) ; en quadrature, "
+                     "pour une grande série de pièces indépendantes et centrées, la plage réaliste est "
+                     "±0,087 mm. Le pire cas garantit l'assemblage de pièces conformes ; la quadrature "
+                     "est moins chère, mais suppose ses hypothèses vérifiées.",
     },
     {
         "id": "at29",
@@ -64302,11 +64951,11 @@ MATIERES_PROGRAMME = [
         ("Statistiques et Probabilités (évalué)", "Incomplet (à enrichir)",
          "Statistique descriptive et inférentielle, probabilités simples et conditionnelles, "
          "loi binomiale, espérance/écart-type, loi uniforme, loi normale et approximation d'une "
-         "binomiale, taille d'échantillon, statistique à deux variables (ajustement affine, "
-         "corrélation). Non traités : lois exponentielle et de Poisson, théorème de la "
-         "limite centrée, "
-         "tests d'hypothèse, intervalle de confiance d'une proportion.",
-         [(7, ["7.3"]), (17, ["17.3", "17.6", "17.8"]), (18, ["18.1", "18.2", "18.3", "18.5", "18.6", "18.9", "18.10", "18.7"])]),
+         "binomiale, somme de variables et théorème de la limite centrée, taille d'échantillon, "
+         "statistique à deux variables (ajustement affine, corrélation). Non traités : lois "
+         "exponentielle et de Poisson, tests d'hypothèse, intervalle de confiance d'une "
+         "proportion.",
+         [(7, ["7.3"]), (17, ["17.3", "17.6", "17.8"]), (18, ["18.1", "18.2", "18.3", "18.5", "18.6", "18.9", "18.10", "18.11", "18.7"])]),
     ]),
 ]
 
