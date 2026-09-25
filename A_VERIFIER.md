@@ -21,7 +21,7 @@ laissé d'un seul tenant (pas de scission) pour ne pas toucher les clés.
 
 Plan (le référentiel ne répartit pas les modules entre 1ʳᵉ et 2ᵉ année ; l'ordre suit les
 prérequis et la répartition usuelle) :
-1. ✅ 17.7 ln et exp — 2. 17.8 statistique à deux variables — 3. loi uniforme —
+1. ✅ 17.7 ln et exp — 2. ✅ 17.8 statistique à deux variables — 3. loi uniforme —
 4. loi normale et approximation binomiale — 5. somme de variables, limite centrée —
 6. méthode d'Euler — 7. IC d'une proportion — 8. tests sur une proportion / une moyenne —
 9. tests de comparaison — 10. loi exponentielle — 11. loi de Poisson — 12. nombres
@@ -44,6 +44,28 @@ complexes (forme algébrique, Δ < 0) — 13. équations différentielles du sec
   de la figure (coordonnées et chevauchements contrôlés par calcul uniquement) ; le corrigé
   progressif et l'atelier at139 n'ont pas été cliqués dans l'interface (la fiche s'ouvre sans
   erreur dans un AppTest Streamlit).
+
+### 17.8 — Statistique à deux variables : ajustement affine et corrélation (faite le 2026-09-25)
+
+- Insérée en fin de bloc 17 (ordre affiché … 17.6 → 17.8 → 18.1), avec méthode, figures
+  `nuage_moindres_carres` et `linearisation_ln`, atelier at140 (étalonnage d'un capteur),
+  générateur `gen_pente_moindres_carres`, 8 questions dans « Mathématiques BTS CPI (examen) »
+  (bonne réponse en positions 1, 3, 0, 2, 3, 1, 0, 2).
+- Quatre tours de relecture (justesse + clarté) jusqu'à zéro réserve. Points de fond :
+  règle unique pour juger un modèle (écarts sans motif PUIS |r| proche de 1), appliquée à
+  chaque exemple ; réflexe « corrélation n'est pas causalité » en trois questions (quel
+  mécanisme ? qui d'autre ? quel essai ?) ; pont avec la 17.7 (multiplier par 0,6 = ajouter
+  ln 0,6 ≈ −0,51 → pas constant → droite). Les premières données du refroidissement
+  (exercice partie B) avaient des écarts en U, en contradiction avec la règle de la fiche :
+  remplacées par D = 160 ; 98 ; 59 ; 37 ; 22 (écarts de signes alternés).
+- Choix de l'auteur : « liaison » gardé (terme du référentiel), glosé « liaison statistique » ;
+  calcul à la main de cov et a gardé, marqué « entraînement, à l'examen la calculatrice ».
+- Mis à jour en même temps : résumé du bloc 17 (plus rien « à couvrir »), tableau de bord
+  (Statistiques : 17.8 ajoutée, statistique à deux variables retirée des non traités), encart
+  de la page Maths.
+- **Non vérifié** : rendu visuel réel des deux figures (chevauchements estimés avec les
+  métriques Segoe UI par le relecteur) ; corrigé progressif, atelier at140 et générateur non
+  cliqués dans l'interface (la fiche s'ouvre sans erreur dans un AppTest Streamlit).
 
 ## Bloc 19 — marquage hors épreuve (fait)
 
@@ -98,10 +120,9 @@ complexes (forme algébrique, Δ < 0) — 13. équations différentielles du sec
 
 ## Bloc 17 — reste à faire
 
-- **Contenu évalué ABSENT** : statistique à deux variables (nuage de points, ajustement affine
-  par moindres carrés, coefficient de corrélation) — prochaine fiche du chantier (17.8). Les
-  fonctions ln et exp sont traitées depuis le 2026-09-25 (fiche 17.7). Les primitives de 1/x,
-  eˣ, u'/u, u'eᵘ ont été ajoutées au tableau de 17.2.
+- **Contenus évalués** : tous traités depuis le 2026-09-25 — fonctions ln et exp (fiche 17.7),
+  statistique à deux variables (fiche 17.8). Les primitives de 1/x, eˣ, u'/u, u'eᵘ ont été
+  ajoutées au tableau de 17.2.
 - **Générateurs** (justes sur 300 tirages, mais à polir) :
   - `gen_discriminant` : affichage « 1x² + (-8)x + (-8) » et « (0)x » ; quand a·c = 0, les deux
     diagnostics sont filtrés et l'exercice n'en a plus. Formater les coefficients, exclure c = 0.

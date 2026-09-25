@@ -5428,6 +5428,92 @@ def exp_ln_courbes():
     return _svg("".join(p), 760, 410)
 
 
+_RESSORT_X = [2, 4, 6, 8, 10]
+_RESSORT_F = [10.2, 19.6, 30.4, 39.8, 50.0]
+
+
+def nuage_moindres_carres():
+    p = [_txt(40, 24, "Ressort : la droite F = 4,99 x + 0,06 et les écarts, agrandis ×10.",
+              12, TRAIT, "start", True)]
+    x0, y0, kx, ky = 90, 300, 55, 5  # origine ; 55 px par mm, 5 px par N
+    p.append(f"<line x1='{x0}' y1='{y0}' x2='{x0 + kx * 11}' y2='{y0}' stroke='{FIN}' stroke-width='1.4'/>")
+    p.append(f"<line x1='{x0}' y1='{y0}' x2='{x0}' y2='{y0 - ky * 54}' stroke='{FIN}' stroke-width='1.4'/>")
+    p.append(_txt(x0 + kx * 11 + 4, y0 + 4, "x (mm)", 12, FIN))
+    p.append(_txt(x0 + 8, y0 - ky * 54 + 10, "F (N)", 12, FIN))
+    for g in range(0, 11, 2):
+        p.append(f"<line x1='{x0 + kx * g}' y1='{y0}' x2='{x0 + kx * g}' y2='{y0 + 4}' stroke='{FIN}'/>")
+        p.append(_txt(x0 + kx * g, y0 + 18, str(g), 11, FIN, "middle"))
+    for g in range(0, 51, 10):
+        p.append(f"<line x1='{x0 - 4}' y1='{y0 - ky * g}' x2='{x0}' y2='{y0 - ky * g}' stroke='{FIN}'/>")
+        p.append(_txt(x0 - 8, y0 - ky * g + 4, str(g), 11, FIN, "end"))
+    a, b = 4.99, 0.06
+    X1, X2 = 1, 10.6
+    p.append(f"<line x1='{x0 + kx * X1:.1f}' y1='{y0 - ky * (a * X1 + b):.1f}' "
+             f"x2='{x0 + kx * X2:.1f}' y2='{y0 - ky * (a * X2 + b):.1f}' stroke='{ALESAGE}' stroke-width='2.4'/>")
+    p.append(_txt(x0 + kx * 10.7, y0 - ky * (a * 10.6 + b) - 4, "droite des moindres carrés", 12,
+                  ALESAGE, "end", True))
+    # écarts verticaux, agrandis 10 fois pour être visibles (étiquette permanente ci-dessous)
+    for X, F in zip(_RESSORT_X, _RESSORT_F):
+        e = F - (a * X + b)
+        yd = y0 - ky * (a * X + b)
+        ym = yd - ky * 10 * e
+        p.append(f"<line x1='{x0 + kx * X}' y1='{yd:.1f}' x2='{x0 + kx * X}' y2='{ym:.1f}' "
+                 f"stroke='{ARBRE}' stroke-width='2' stroke-dasharray='3 2'/>")
+        p.append(f"<circle cx='{x0 + kx * X}' cy='{ym:.1f}' r='5' fill='{TRAIT}'/>")
+    p.append(_txt(x0 + kx * 4 + 8, y0 - ky * (a * 4 + b) + 34, "écart eᵢ (agrandi ×10)", 11, ARBRE))
+    # point moyen G (6 ; 30)
+    p.append(f"<rect x='{x0 + kx * 6 - 6}' y='{y0 - ky * 30 - 6}' width='12' height='12' "
+             f"fill='none' stroke='{OK}' stroke-width='2.4'/>")
+    p.append(_txt(x0 + kx * 6 - 12, y0 - ky * 30 - 12, "G (6 ; 30)", 12, OK, "end", True))
+    p.append(f"<rect x='40' y='330' width='680' height='58' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p.append(_txt(56, 354, "La droite passe par G et rend la somme des carrés des écarts verticaux la plus petite possible.", 12, TRAIT, "start", True))
+    p.append(_txt(56, 376, "Écarts dessinés 10 fois plus grands (réels : moins de 0,5 N) : ne lisez pas les valeurs des points ici.", 12, TRAIT, "start", True))
+    return _svg("".join(p), 760, 400)
+
+
+_DECH_T = [0, 1, 2, 3, 4]
+_DECH_U = [400, 240, 150, 88, 55]
+
+
+def linearisation_ln():
+    p = [_txt(40, 24, "Décharge : le nuage (t ; u) est courbé ; le nuage (t ; ln u) est aligné.",
+              12, TRAIT, "start", True)]
+
+    def _panneau(x0, titre, ys, ymin, ymax, a, b, lib_y, lib_r, couleur, grad):
+        L, H, y0 = 280, 230, 290  # largeur, hauteur, ordonnée de l'axe des t
+        k = L / 4.4
+
+        def py(v):
+            return y0 - H * (v - ymin) / (ymax - ymin)
+        out = [_txt(x0 + L / 2, 50, titre, 12, couleur, "middle", True)]
+        out.append(f"<line x1='{x0}' y1='{y0}' x2='{x0 + L}' y2='{y0}' stroke='{FIN}' stroke-width='1.4'/>")
+        out.append(f"<line x1='{x0}' y1='{y0}' x2='{x0}' y2='{y0 - H}' stroke='{FIN}' stroke-width='1.4'/>")
+        out.append(_txt(x0 + L + 4, y0 + 4, "t (s)", 11, FIN))
+        out.append(_txt(x0 + 6, y0 - H - 4, lib_y, 11, FIN))
+        for g in range(5):
+            out.append(_txt(x0 + k * g, y0 + 16, str(g), 11, FIN, "middle"))
+        for v in grad:
+            out.append(f"<line x1='{x0 - 4}' y1='{py(v):.1f}' x2='{x0}' y2='{py(v):.1f}' stroke='{FIN}'/>")
+            out.append(_txt(x0 - 7, py(v) + 4, str(v), 10, FIN, "end"))
+        out.append(f"<line x1='{x0:.1f}' y1='{py(b):.1f}' x2='{x0 + k * 4.2:.1f}' "
+                   f"y2='{py(a * 4.2 + b):.1f}' stroke='{couleur}' stroke-width='2.2'/>")
+        for t, v in zip(_DECH_T, ys):
+            out.append(f"<circle cx='{x0 + k * t:.1f}' cy='{py(v):.1f}' r='5' fill='{TRAIT}'/>")
+        out.append(_txt(x0 + L / 2, y0 + 34, lib_r, 12, couleur, "middle", True))
+        return out
+
+    p += _panneau(60, "ajustement direct de u en t", _DECH_U, 0, 420, -84.2, 355,
+                  "u (V)", "r ≈ −0,961 : écarts en forme de U", ALERTE, [0, 100, 200, 300, 400])
+    p += _panneau(420, "ajustement de z = ln u en t", [math.log(v) for v in _DECH_U], 3.8, 6.2,
+                  -0.497, 5.988, "z = ln u", "r ≈ −0,9998 : points alignés", OK,
+                  [4, 5, 6])
+    p.append(_txt(426, 284, "l'axe vertical commence à 3,8, pas à 0", 10, FIN))
+    p.append(f"<rect x='40' y='340' width='680' height='52' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p.append(_txt(56, 362, "À gauche, la droite passe au-dessus des points du milieu et sous ceux des bouts : mauvais modèle.", 12, TRAIT, "start", True))
+    p.append(_txt(56, 382, "À droite (z = ln u, sans unité), pente −1/τ = −0,497, donc τ ≈ 2,0 s.", 12, TRAIT, "start", True))
+    return _svg("".join(p), 760, 404)
+
+
 def extremums_polynome():
     p = [_txt(40, 24, "f(x) = x³ − 3x² + 2 : un maximum local puis un minimum local.",
               12, TRAIT, "start", True)]
@@ -5830,6 +5916,8 @@ FIGURES = {
     "lire_tableau_variations": ("Lire un tableau de variations comme un trajet", lire_tableau_variations),
     "fonction_homographique_asymptotes": ("Une fonction homographique et ses deux asymptotes", fonction_homographique_asymptotes),
     "exp_ln_courbes": ("Exponentielle et logarithme : deux courbes symétriques", exp_ln_courbes),
+    "nuage_moindres_carres": ("Le point moyen G, la droite des moindres carrés et les écarts", nuage_moindres_carres),
+    "linearisation_ln": ("Linéariser une décharge avec z = ln u", linearisation_ln),
     "extremums_polynome": ("Un maximum local puis un minimum local", extremums_polynome),
     "dispersion_deux_reglages": ("Six mesures dispersées autour de leur moyenne", dispersion_deux_reglages),
     "venn_deux_evenements": ("Union et intersection de deux événements", venn_deux_evenements),
@@ -9334,6 +9422,77 @@ QUIZ["Mathématiques BTS CPI (examen)"] = [
        "ln(1/a) = −ln a"], 1,
       "ln transforme un PRODUIT en somme, pas une somme en somme. Contre-exemple : "
       "ln(1 + 1) = ln 2 ≈ 0,693, alors que ln 1 + ln 1 = 0.", "Piège"),
+
+    q("Une série à deux variables donne x = 1 ; 2 ; 3 et y = 4 ; 8 ; 9. Quelles sont les "
+      "coordonnées du point moyen G ?",
+      ["G (2 ; 8)", "G (2 ; 7)", "G (3 ; 9)", "G (6 ; 21)"], 1,
+      "x̄ = (1 + 2 + 3)/3 = 2 et ȳ = (4 + 8 + 9)/3 = 21/3 = 7. G (2 ; 7). (6 ; 21) donne les "
+      "sommes, pas les moyennes.", "Base"),
+
+    q("Un ajustement affine donne r = −0,98. Que peut-on en dire ?",
+      ["Le lien entre x et y est faible, car r est négatif",
+       "Les points ne sont pas du tout alignés",
+       "y augmente quand x augmente", "Les points sont serrés autour d'une droite décroissante"], 3,
+      "Le signe de r donne le sens (ici décroissant) et |r| = 0,98 proche de 1 indique des points "
+      "serrés autour d'une droite. Une liaison à r = −0,98 est aussi forte qu'à r = 0,98. Il faut "
+      "encore vérifier que les écarts n'ont pas de motif pour conclure que le modèle linéaire "
+      "tient.", "Base"),
+
+    q("La droite des moindres carrés de y en x est celle qui rend la plus petite possible :",
+      ["la somme des carrés des écarts verticaux yᵢ − (a xᵢ + b)",
+       "la somme des écarts verticaux yᵢ − (a xᵢ + b)",
+       "le plus grand écart entre un point et la droite",
+       "la somme des distances horizontales entre les points et la droite"], 0,
+      "On minimise Σ eᵢ², la somme des CARRÉS des écarts verticaux. Sans le carré, les écarts "
+      "positifs et négatifs s'annuleraient (leur somme vaut d'ailleurs 0 pour cette droite).",
+      "Intermédiaire"),
+
+    q("Sur 20 semaines, le nombre de pannes de broche d'un centre d'usinage et le nombre "
+      "d'heures supplémentaires de l'équipe ont un coefficient r = 0,90. Le chef d'atelier en "
+      "conclut que les heures supplémentaires fatiguent les opérateurs et provoquent les pannes. "
+      "Quelle est la meilleure réaction ?",
+      ["Il a raison : r = 0,90 le prouve",
+       "Il a tort : il faudrait r > 0,95 pour conclure",
+       "Chercher d'abord un facteur commun (la charge de travail) ou un sens inverse (les pannes "
+       "obligent à rattraper le retard en heures supplémentaires)",
+       "Refaire le calcul avec la droite de x en y"], 2,
+      "Corrélation n'est pas causalité, quelle que soit la valeur de r. Une forte charge peut "
+      "provoquer à la fois des pannes et des heures supplémentaires ; les pannes peuvent aussi "
+      "créer du retard, donc des heures supplémentaires (sens inversé). Seuls un mécanisme et un "
+      "essai contrôlé établissent une cause.", "Piège"),
+
+    q("Un capteur a été étalonné entre 0 et 500 N. Sa droite d'étalonnage donne 900 N pour une "
+      "tension lue. Que faire de cette valeur ?",
+      ["La noter telle quelle, la droite est fiable puisque r ≈ 1",
+       "La diviser par 2 pour tenir compte de la surcharge",
+       "Refaire le calcul avec la droite de x en y",
+       "La signaler comme hors plage : c'est une extrapolation non vérifiée"], 3,
+      "900 N est en dehors de la plage étalonnée : c'est une extrapolation. Un r proche de 1 ne "
+      "dit rien de ce qui se passe hors des mesures.", "Intermédiaire"),
+
+    q("Des mesures suivent a priori une loi y = k e^(−ct). Quel changement de variable permet "
+      "un ajustement affine ?",
+      ["z = y² en fonction de t", "z = ln(y) en fonction de t", "z = e^y en fonction de t",
+       "z = 1/y en fonction de ln(t)"], 1,
+      "ln(y) = ln(k) + ln(e^(−ct)) = ln(k) − ct : z = ln(y) est une fonction affine de t "
+      "(règles de ln, fiche 17.7). Multiplier y par le même facteur à chaque pas revient à ajouter "
+      "la même quantité à ln(y).", "Intermédiaire"),
+
+    q("Par quel point passe toujours la droite des moindres carrés de y en x ?",
+      ["Le point moyen G (x̄ ; ȳ)", "L'origine (0 ; 0)", "Le premier point mesuré",
+       "Le point de plus grand y"], 0,
+      "b = ȳ − a x̄ entraîne ȳ = a x̄ + b : le point moyen G est toujours sur la droite. Elle ne "
+      "passe par l'origine que si b = 0.", "Base"),
+
+    q("Deux ajustements d'une même série donnent r₁ = −0,962 (droite de y en t) et "
+      "r₂ = −0,9995 (droite de ln y en t). Lequel est le meilleur ?",
+      ["Le premier, car r₁ = −0,962 est plus grand que r₂ = −0,9995",
+       "Aucun : deux r négatifs signalent deux mauvais ajustements",
+       "Le second, car |r₂| est plus proche de 1",
+       "On ne peut pas comparer deux coefficients de corrélation"], 2,
+      "On compare |r| : 0,9995 est plus proche de 1 que 0,962. Le signe dit seulement que la "
+      "droite descend. On vérifie aussi que les écarts du second ajustement n'ont pas de motif.",
+      "Intermédiaire"),
 ]
 
 QUIZ["Mathématiques BTS CPI — probabilités et équations différentielles"] = [
@@ -43817,7 +43976,7 @@ ici.
 BLOC_17 = {
     "id": 17,
     "titre": "Bloc 17 — Mathématiques BTS CPI : programme d'examen",
-    "resume": "Complète le bloc 7 pour l'épreuve de mathématiques : étude de fonctions rationnelles et polynomiales, calcul intégral par primitives, statistique à une variable, fonctions exponentielle et logarithme (fiche 17.7, à lire juste après 17.1). Reste à couvrir : statistique à deux variables (ajustement affine, corrélation).",
+    "resume": "Complète le bloc 7 pour l'épreuve de mathématiques : étude de fonctions rationnelles et polynomiales, calcul intégral par primitives, statistique à une variable, fonctions exponentielle et logarithme (fiche 17.7, à lire juste après 17.1), statistique à deux variables (fiche 17.8 : ajustement affine, corrélation).",
     "fiches": [
         {
             "id": "17.0",
@@ -45668,6 +45827,518 @@ dire laquelle des deux lignes est **la mieux réglée**, il faut rapporter σ à
 chaque pièce (Cp = IT / 6σ, fiche 7.3), pas à sa taille : les tolérances ISO ne grandissent pas
 proportionnellement à la cote (un IT7 vaut environ 18 µm à Ø15 et 52 µm à 300 mm, soit un
 rapport de 3, pas de 20). À qualité IT7 égale, c'est la ligne 1 qui serait la mieux placée.
+""",
+        },
+        {
+            "id": "17.8",
+            "titre": "Statistique à deux variables : ajustement affine et corrélation",
+            "duree": "5 h",
+            "cours": """
+
+### 1. Pourquoi cette fiche
+
+Les fiches 17.3 et 17.6 étudiaient **une seule** grandeur mesurée sur plusieurs pièces (un
+diamètre, une longueur). En bureau d'études et en essais, on mesure très souvent **deux grandeurs
+à la fois**, pour savoir comment l'une dépend de l'autre : la force d'un ressort selon son
+écrasement, la tension de sortie d'un capteur selon la force appliquée, la longueur d'une barre
+selon sa température.
+
+**Le but : établir une loi expérimentale.** Les mesures ne tombent jamais parfaitement sur une
+droite (erreurs de lecture, jeu, bruit du capteur). On cherche **la** droite qui résume le mieux
+les points, puis on s'en sert pour calculer : c'est la **droite d'étalonnage** d'un capteur, la
+**raideur** mesurée d'un ressort, le **coefficient de dilatation** d'un matériau.
+
+Deux questions guident toute la fiche :
+1. **Quelle droite choisir ?** — la méthode des moindres carrés.
+2. **Le modèle « droite » tient-il vraiment ?** — le regard sur les écarts, puis le coefficient
+   de corrélation.
+
+**Vocabulaire :**
+- **Série statistique à deux variables** : un tableau de couples de mesures (xᵢ ; yᵢ), une
+  colonne par grandeur. xᵢ est souvent la grandeur qu'on **impose** (l'écrasement, la force
+  appliquée), yᵢ celle qu'on **mesure**.
+- **Nuage de points** : le graphique où chaque couple devient un point de coordonnées (xᵢ ; yᵢ).
+- **Ajustement affine** (affine = dont le graphique est une droite, y = ax + b) : remplacer le
+  nuage par une droite qui le résume.
+- **Ajustement de y en x** (« y en fonction de x ») : on explique y à partir de x ; les écarts se
+  mesurent **verticalement**. C'est l'ajustement de toute cette fiche. L'ajustement **de x en y**
+  ferait l'inverse, avec des écarts horizontaux.
+- **Corrélation** : le fait que deux grandeurs varient ensemble (quand l'une monte, l'autre monte
+  aussi, ou descend). On parle aussi de **liaison** entre x et y — une **liaison statistique**,
+  rien à voir avec les liaisons mécaniques (pivot, glissière).
+
+### 2. Le nuage de points et le point moyen
+
+**Exemple suivi dans tout le cours : mesurer la raideur d'un ressort de compression.** Sur un
+banc d'essai, on écrase le ressort d'une longueur x imposée et on lit la force F sur un
+dynamomètre :
+
+| x (mm) | 2 | 4 | 6 | 8 | 10 |
+|---|---|---|---|---|---|
+| F (N) | 10,2 | 19,6 | 30,4 | 39,8 | 50,0 |
+
+**Premier réflexe : tracer le nuage** (figure du §3). Les cinq points sont presque alignés : un
+ajustement affine a du sens. *Si le nuage dessinait une courbe, on ne chercherait pas une droite
+directement (§6).*
+
+**Le point moyen G** a pour coordonnées la moyenne des x et la moyenne des y :
+
+> **G (x̄ ; ȳ)** — ici x̄ = (2 + 4 + 6 + 8 + 10)/5 = **6 mm** et F̄ = 150,0/5 = **30,0 N**,
+> donc **G (6 ; 30)**.
+
+*x̄ se lit « x barre » : c'est la moyenne des x, comme dans les fiches 17.3 et 17.6. G est le
+« centre de gravité » du nuage : si chaque point était une masse égale, le nuage tiendrait en
+équilibre sur G.*
+
+### 3. La droite des moindres carrés
+
+**Le problème.** On peut tracer à la règle beaucoup de droites « à peu près bonnes ». Il faut une
+règle qui en désigne une seule, la même pour tout le monde.
+
+**L'idée.** Pour une droite y = ax + b, l'**écart** (ou **résidu**) d'un point est la distance
+verticale entre la mesure et la droite : eᵢ = yᵢ − (a xᵢ + b). *On mesure verticalement parce
+que c'est y qui porte l'erreur de mesure : x est imposé par le banc.* La **droite des moindres
+carrés** (« moindres » veut dire « les plus petits ») est celle qui rend **la somme des carrés
+des écarts, Σ eᵢ², la plus petite possible**.
+
+*Pourquoi les carrés, comme pour la variance (fiche 17.6) : sans carré, les écarts positifs et
+négatifs s'annuleraient ; avec le carré, un gros écart pèse beaucoup plus que plusieurs petits,
+et la droite ne peut pas « sacrifier » un point.*
+
+[[FIG:nuage_moindres_carres]]
+
+**D'où vient la pente : la covariance.** Regardez les écarts à la moyenne du ressort :
+
+| xᵢ − x̄ | −4 | −2 | 0 | 2 | 4 |
+|---|---|---|---|---|---|
+| Fᵢ − F̄ | −19,8 | −10,4 | 0,4 | 9,8 | 20,0 |
+| produit | 79,2 | 20,8 | 0 | 19,6 | 80,0 |
+
+Un point situé à droite de G (xᵢ − x̄ > 0) **et** au-dessus (yᵢ − ȳ > 0) donne un produit
+positif ; un point à gauche **et** en dessous aussi (moins par moins). Un nuage qui monte ne
+contient presque que ces deux sortes de points : la moyenne des produits est positive. Pour un
+nuage qui descend, elle est négative. Cette moyenne des produits s'appelle la **covariance** :
+littéralement, la façon dont x et y **varient ensemble**.
+
+> **cov(x, y) = (1/n) × Σ (xᵢ − x̄)(yᵢ − ȳ)**
+
+*C'est la variance de la fiche 17.6 appliquée à deux grandeurs au lieu d'une : cov(x, x) redonne
+V(x).*
+
+**De la covariance à la pente.** Pour le ressort, cov(x, F) = 199,6/5 = **39,92**, en N·mm (des N
+multipliés par des mm). Une raideur doit être en N **par** mm : on divise par V(x), qui est en
+mm² :
+
+> **a = cov(x, y) / V(x)**  et  **b = ȳ − a × x̄**
+
+*On démontre que cette pente est exactement celle qui rend Σ eᵢ² la plus petite possible
+(résultat admis). La formule de b dit que **la droite passe toujours par le point moyen G** :
+ȳ = a x̄ + b.*
+
+**Calcul sur le ressort.**
+- V(x) = (16 + 4 + 0 + 4 + 16)/5 = 40/5 = **8** mm²
+- a = 39,92/8 = **4,99 N/mm** ; b = 30 − 4,99 × 6 = 30 − 29,94 = **0,06 N**
+
+**Droite des moindres carrés : F = 4,99 x + 0,06.**
+
+**Ce que disent a et b.** a est la **raideur** du ressort : 4,99 N par millimètre d'écrasement.
+b ≈ 0 : sans écrasement, pas de force — cohérent avec la physique ; les 0,06 N viennent des
+erreurs de mesure.
+
+**On observe que la somme est bien minimale.** Toutes ces droites passent par G ; seule la pente
+change :
+
+| pente a | 4,90 | 4,95 | **4,99** | 5,03 | 5,08 |
+|---|---|---|---|---|---|
+| Σ eᵢ² | 0,72 | 0,46 | **0,396** | 0,46 | 0,72 |
+
+*La droite ronde F = 5x fait presque aussi bien (0,40) parce que les points sont presque
+alignés : l'intérêt de la méthode est surtout de désigner **une seule** droite, la même pour tout
+le monde.*
+
+**À la calculatrice.** *Ce calcul à la main est un entraînement pour comprendre : à l'examen, la
+calculatrice le fait.* Mode statistique à deux variables : saisir x dans une liste, F dans une
+autre, puis choisir la **régression linéaire** (ax + b). Le nom exact du menu dépend du modèle
+(Casio, TI, NumWorks). La calculatrice affiche a, b et r. *Si elle affiche à la fois σx et sx,
+pas d'inquiétude : a, b et r sont les mêmes avec l'une ou l'autre.*
+
+### 4. Se servir de la droite : interpoler, extrapoler, inverser
+
+- **Interpoler** : estimer y pour un x **à l'intérieur** de la plage mesurée. Pour x = 5 mm :
+  F = 4,99 × 5 + 0,06 ≈ **25,0 N**. C'est fiable : on est entre des points mesurés.
+- **Extrapoler** : estimer y **en dehors** de la plage. Pour x = 30 mm, la droite donne 149,8 N…
+  mais si le ressort arrive **à spires jointives** (les spires se touchent, il ne peut plus
+  s'écraser) à 22 mm, il devient un bloc rigide et la loi ne vaut plus rien. **La droite ne sait
+  rien de ce qui se passe hors des mesures.**
+- **Inverser** : partir d'un y mesuré pour retrouver x. Dans y = ax + b, on retranche b des deux
+  côtés (y − b = ax), puis on divise par a : **x = (y − b)/a**. Sur le ressort, une force lue de
+  25 N correspond à x = (25 − 0,06)/4,99 ≈ **5,0 mm**. C'est l'usage d'une **droite
+  d'étalonnage** (cas industriel).
+
+**Dans quel sens ajuster ?** On ajuste toujours la grandeur mesurée (celle qui porte l'erreur) en
+fonction de la grandeur imposée : ici F en x. Pour retrouver x à partir d'un F lu, on **inverse**
+cette droite. On ne refait pas un second ajustement « de x en F » : il mesurerait les écarts
+horizontalement et donnerait une droite différente. Les deux droites ne se confondent que si les
+points sont parfaitement alignés ; plus le nuage est dispersé, plus elles s'écartent. *(Sur le
+ressort, presque aligné, l'écart est minime : F = 4,992 x + 0,048 au lieu de 4,99 x + 0,06.)*
+
+### 5. Juger le modèle : les écarts, puis le coefficient de corrélation r
+
+**Pourquoi un nouveau nombre ?** La covariance dépend des unités : 39,92 N·mm pour le ressort,
+mais 3,992 N·cm pour exactement les mêmes points si l'on mesure x en cm. On ne peut donc pas y
+lire « bien aligné ». On la divise par les deux écarts-types (fiche 17.6), σx (écart-type des x)
+et σy (écart-type des y) : les unités disparaissent.
+
+> **r = cov(x, y) / (σx × σy)**, toujours compris entre −1 et 1 (formule pour information :
+> la calculatrice donne r)
+
+*Sur le ressort : σx = √8 ≈ 2,828 ; V(F) = (19,8² + 10,4² + 0,4² + 9,8² + 20,0²)/5 =
+996,4/5 = 199,28, donc σF ≈ 14,117 ; r = 39,92/(2,828 × 14,117) ≈ **0,9998**.*
+
+- **Le signe de r** donne le sens : r > 0, y augmente avec x ; r < 0, y diminue quand x augmente.
+- **|r|** (la valeur absolue : r sans son signe) mesure à quel point les points sont serrés autour
+  d'une droite. **|r| = 1** : ils sont exactement sur une droite, comme des perles sur un fil
+  tendu. **r proche de 0** : pas de liaison affine (une liaison courbe reste possible : regardez
+  le nuage).
+
+> **La règle pour juger si une loi linéaire tient — deux contrôles, dans cet ordre :**
+> 1. **Les écarts n'ont pas de motif** : les points sont tantôt au-dessus, tantôt en dessous de
+>    la droite, sans ordre visible (par exemple + − + − +, ou + + − + −). Ils ne doivent pas être
+>    groupés, par exemple tous au-dessus aux deux bouts et tous en dessous au milieu. C'est bien
+>    une droite, pas une courbe douce.
+>    *En pratique, pas besoin de tout calculer : trace la droite sur le nuage et regarde de quel
+>    côté tombe chaque point. Le signe de l'écart, c'est « au-dessus » ou « en dessous ».*
+> 2. **|r| est très proche de 1** : les points sont serrés autour de cette droite.
+>
+> **Un |r| proche de 1 seul ne prouve pas que le modèle est une droite** : un nuage nettement
+> courbé peut donner r = −0,96 (exemple au §6). Il n'existe pas de seuil officiel du type
+> « r > 0,9 = bon ».
+
+*Sur le ressort : écarts +0,16 ; −0,42 ; +0,40 ; −0,18 ; +0,04 N, signes alternés, sans motif ;
+puis r ≈ 0,9998. La loi linéaire tient entre 2 et 10 mm.*
+
+**À quoi sert aussi r : comparer deux ajustements** d'une même série (§6). Parmi deux modèles
+dont les écarts sont sans motif, le meilleur est celui dont |r| est le plus proche de 1.
+
+Et une seconde limite, plus importante encore : **corrélation n'est pas causalité** (§7).
+
+### 6. Quand le nuage est courbé : le changement de variable (lien avec la fiche 17.7)
+
+**Le cas typique : une décharge ou un refroidissement.** On mesure la tension d'un condensateur
+qui se décharge :
+
+| t (s) | 0 | 1 | 2 | 3 | 4 |
+|---|---|---|---|---|---|
+| u (V) | 400 | 240 | 150 | 88 | 55 |
+
+**Ajustement affine direct** : u = −84,2 t + 355, avec r ≈ −0,961. Appliquons la règle du §5.
+Contrôle 1 : les écarts valent +45 ; −30,8 ; −36,6 ; −14,4 ; +36,8 — **positifs aux bouts,
+négatifs au milieu** : un motif en U. **Le nuage est courbé, la droite est un mauvais modèle**,
+malgré un |r| de 0,961.
+
+**Pourquoi le logarithme, et pas une autre transformation.** Regardez comment u descend. Il ne
+perd pas le même nombre de volts chaque seconde (−160, −90, −62, −33). Il perd à peu près le
+même **pourcentage** : chaque seconde, u est multiplié par environ 0,6 (240/400 = 0,60 ;
+150/240 ≈ 0,63 ; 88/150 ≈ 0,59 ; 55/88 ≈ 0,63). C'est exactement la signature de l'exponentielle
+vue au §1 de la fiche 17.7 : « le même pourcentage perdu à chaque intervalle de temps égal ».
+
+Or une droite fonctionne autrement : à chaque pas, elle **ajoute** la même quantité. Il faut donc
+un outil qui transforme « multiplier par le même nombre » en « ajouter le même nombre ». C'est le
+logarithme, qui **transforme les produits en sommes** (fiche 17.7) : **multiplier u par 0,6
+revient à ajouter ln(0,6) ≈ −0,51 à ln(u).** Un pas constant, c'est une droite.
+
+**Le même raisonnement en formules**, avec la loi de décharge u = U₀ e^(−t/τ) de la fiche 17.7 :
+
+> ln(u) = ln(U₀ × e^(−t/τ))   (on prend ln des deux côtés)
+> = ln(U₀) + ln(e^(−t/τ))   (ln d'un produit = somme des ln)
+> = **ln(U₀) − (1/τ) × t**   (ln fait « redescendre » l'exposant : ln(e^(□)) = □, avec ici □ = −t/τ)
+
+Comparez avec y = ax + b : **z = ln(u)** joue le rôle de y, t celui de x ; la pente est −1/τ,
+l'ordonnée à l'origine est ln(U₀).
+
+| t (s) | 0 | 1 | 2 | 3 | 4 |
+|---|---|---|---|---|---|
+| z = ln(u) | 5,991 | 5,481 | 5,011 | 4,477 | 4,007 |
+
+*Vérifiez : z descend d'environ 0,5 à chaque seconde (−0,51 ; −0,47 ; −0,53 ; −0,47).*
+
+**Ajustement affine de z en t** (calculatrice) : z = −0,497 t + 5,988 (ici a = −0,497 et b =
+5,988), avec r ≈ −0,9998. Règle du §5 : le pas de z presque constant, vérifié juste au-dessus,
+laissait attendre des points alignés ; on le confirme sur les écarts (+0,003 ; −0,010 ; +0,018 ;
+−0,019 ; +0,008, signes alternés, sans motif, à 0,001 près selon l'arrondi), **puis** |r|
+passe de 0,961 à 0,9998. **Le modèle exponentiel est le bon.**
+
+[[FIG:linearisation_ln]]
+
+**Retour aux grandeurs physiques.**
+- pente −1/τ = −0,497, donc **τ = 1/0,497 ≈ 2,0 s** ;
+- ln(U₀) = 5,988, donc **U₀ = e^5,988 ≈ 399 V** (touche eˣ), proche des 400 V mesurés à t = 0.
+
+*On vient de **mesurer** la constante de temps τ à partir d'essais, sans connaître R ni C. C'est
+ainsi qu'on identifie τ d'un circuit, ou celle d'un refroidissement. Dans ce cas, on prend le
+logarithme de l'**écart** T − T_amb, pas de la température : c'est l'écart qui perd le même
+pourcentage à chaque intervalle (fiche 17.7). La température, elle, tend vers T_amb et non vers
+0 : son ln ne donnerait pas une droite.*
+
+*À l'examen, le changement de variable est toujours **donné** par l'énoncé (« on pose
+z = ln y »). Il faut savoir l'appliquer, puis revenir aux grandeurs d'origine.*
+
+### 7. Corrélation n'est pas causalité : le réflexe d'ingénieur
+
+Un |r| proche de 1 dit que deux grandeurs **varient ensemble**. Il ne dit **jamais** que l'une
+**provoque** l'autre.
+
+**Exemple d'atelier.** Sur un an, une usine relève chaque jour le nombre de pièces rebutées et la
+consommation de liquide de coupe : r = 0,93. Faut-il réduire le liquide de coupe pour réduire
+les rebuts ? **Non.** Les deux dépendent d'une troisième grandeur : **le nombre de pièces
+produites ce jour-là**. Plus on produit, plus on consomme de liquide… et plus on fait de rebuts,
+même à qualité égale. La bonne analyse compare le **taux** de rebut (rebuts / pièces produites).
+
+**Trois pièges à reconnaître :**
+- **Un facteur commun caché** : c'est l'exemple ci-dessus, où la cadence fait monter à la fois le
+  liquide consommé et les rebuts.
+- **La causalité à l'envers** : sur un parc de machines, celles qui reçoivent le plus
+  d'interventions de maintenance sont aussi celles qui tombent le plus en panne. La maintenance
+  casse-t-elle les machines ? Non : c'est la panne qui déclenche l'intervention. Avec x = nombre
+  d'interventions et y = nombre de pannes, c'est y qui agit sur x, pas l'inverse.
+- **La coïncidence sur peu de mesures** : avec **deux** points seulement (dont les x sont
+  différents, et les y aussi), on trouve toujours r = 1 ou r = −1, puisqu'une droite passe
+  toujours par deux points. Avec trois ou quatre points, deux grandeurs sans aucun rapport (les
+  rebuts de la semaine et le nombre de buts marqués par l'équipe de football locale) peuvent
+  donner un |r| proche de 1 par pur hasard.
+
+> **Le réflexe, en trois questions, avant d'écrire « x provoque y » :**
+> 1. **Quel mécanisme ?** Puis-je expliquer physiquement comment x agit sur y (la force déforme la
+>    jauge, la chaleur dilate la barre) ?
+> 2. **Qui d'autre ?** Une troisième grandeur (cadence, saison, température de l'atelier, équipe)
+>    pourrait-elle faire bouger x et y en même temps ? Le sens pourrait-il être inversé ?
+> 3. **Quel essai ?** Ai-je fait varier x **seul**, tout le reste restant fixe, et vu y bouger,
+>    **sur assez de mesures** (pas trois ou quatre points) ?
+>
+> Trois réponses favorables : on peut parler de cause, et r sert alors à **chiffrer** la loi.
+> Sinon, on écrit « x et y varient ensemble », jamais « x provoque y ».
+
+*Appliqué au ressort du §2 : il y a un mécanisme (l'élasticité de l'acier), aucun autre facteur
+ne change sur le banc, et l'essai est contrôlé (le banc impose x, un seul facteur varie). On a
+donc le droit de dire que l'écrasement cause la force. C'est le principe des essais sur banc — et
+des plans d'expériences, utilisés en entreprise (hors programme de mathématiques).*
+
+*Cinq points suffisent ici parce que le mécanisme est connu et l'essai contrôlé : les mesures ne
+font que confirmer et chiffrer une loi attendue. Le nombre de mesures protège de la coïncidence ;
+il ne protège jamais d'un facteur commun. Au corrigé 8, douze mois avec r = 0,91 écartent la
+coïncidence : la liaison est bien réelle (ce n'est pas le hasard), mais elle n'est pas causale :
+elle passe par un facteur commun.*
+
+### 8. Les erreurs classiques et à retenir
+
+**Erreurs classiques :**
+1. **Juger un modèle sur r seul**, sans regarder les écarts : un nuage courbé peut donner
+   |r| = 0,96.
+2. **Extrapoler loin de la plage mesurée** (spires jointives, saturation d'un capteur).
+3. **Conclure à une cause à partir de r** (§7).
+4. **Oublier de revenir aux grandeurs d'origine** après un changement de variable : c'est
+   τ = −1/pente et U₀ = e^(ordonnée à l'origine) qu'on cherche.
+5. **Juger r au signe près** : r = −0,999 est une liaison **aussi forte** que r = 0,999.
+
+**À retenir :**
+- **G (x̄ ; ȳ)** ; la droite des moindres carrés **passe par G** et minimise **Σ eᵢ²**.
+- **a = cov(x, y)/V(x)**, **b = ȳ − a x̄** — en pratique, à la calculatrice.
+- **Juger un modèle : les écarts sans motif, PUIS |r| proche de 1.** r sert aussi à **comparer
+  deux ajustements**.
+- **Changement de variable z = ln y** pour une loi qui multiplie par le même facteur à chaque
+  pas (fiche 17.7), puis retour aux grandeurs physiques.
+- **Corrélation n'est pas causalité** : quel mécanisme ? qui d'autre ? quel essai ?
+""",
+            "formules": """
+
+**Point moyen** — G (x̄ ; ȳ), avec x̄ = (1/n) Σ xᵢ et ȳ = (1/n) Σ yᵢ
+
+**Covariance** — cov(x, y) = (1/n) Σ (xᵢ − x̄)(yᵢ − ȳ)
+
+**Droite des moindres carrés (y en x)** — y = ax + b avec a = cov(x, y) / V(x) et b = ȳ − a x̄ ;
+elle passe par G et minimise Σ (yᵢ − a xᵢ − b)²
+
+**Coefficient de corrélation linéaire** — r = cov(x, y) / (σx σy), −1 ≤ r ≤ 1 (calculatrice)
+
+**Juger un modèle** — 1) écarts sans motif, 2) |r| très proche de 1 ; comparer deux ajustements :
+garder celui dont |r| est le plus proche de 1
+
+**Inverser une droite d'étalonnage** — x = (y − b) / a
+
+**Changement de variable** (donné par l'énoncé) — y = y₀ e^(−t/τ), avec y > 0 et y₀ > 0 ⟹
+z = ln y = −(1/τ) t + ln y₀ ; retour : τ = −1/pente, y₀ = e^(ordonnée à l'origine)
+
+**Réflexes** — interpoler oui, extrapoler avec prudence · corrélation ≠ causalité : quel
+mécanisme ? qui d'autre ? quel essai ?
+
+        """,
+            "exemple": """
+**Cas industriel — Établir la droite d'étalonnage d'un capteur de force**
+
+Un banc d'essai de fatigue utilise un **capteur de force** à jauges de contrainte : la force
+déforme légèrement un corps d'épreuve métallique, et des jauges collées dessus transforment
+cette déformation en une petite tension, en millivolts (mV). Avant la campagne d'essais, on
+**étalonne** le capteur : on lui applique des forces connues (F = m g, avec des masses étalons),
+et on relève la tension.
+
+| F (N) | 0 | 100 | 200 | 300 | 400 | 500 |
+|---|---|---|---|---|---|---|
+| u (mV) | 0,02 | 0,98 | 2,05 | 2,96 | 4,03 | 4,99 |
+
+*La fiche technique du fabricant annonce une **sensibilité** (la tension produite par newton
+appliqué : plus elle est grande, plus le capteur réagit fort) de 10 µV/N sur une plage de 0 à
+500 N. Comme 1 µV = un millième de mV, cela fait 0,010 mV/N.*
+
+**Étape 1 — Regarder le nuage et choisir le sens de l'ajustement**
+
+Les points semblent alignés à l'œil ; on le vérifiera à l'étape 3. La force F est **imposée**
+(masses étalons, connues très précisément) ; c'est la tension u qui porte l'erreur de mesure. On
+ajuste donc **u en fonction de F**.
+
+**Étape 2 — La droite à la calculatrice**
+
+Régression linéaire : **u = 0,009 974 F + 0,011**, avec r ≈ 0,999 8.
+Point moyen : G (250 ; 2,505) — vérification : 0,009 974 × 250 + 0,011 = 2,504 5 ≈ 2,505. ✓
+
+**Étape 3 — Juger le modèle, puis interpréter les coefficients**
+
+- **Contrôle 1, les écarts** : +0,009 ; −0,029 ; +0,044 ; −0,044 ; +0,029 ; −0,009 mV (calculés
+  avec les valeurs non arrondies de a et b ; à 0,001 mV près selon l'arrondi). Ils
+  changent de signe d'un point à l'autre, sans motif : c'est bien une droite.
+- **Contrôle 2, |r| ≈ 0,999 8** : les points sont serrés autour de cette droite. **Les deux
+  contrôles sont bons : le modèle linéaire tient sur toute la plage 0-500 N.**
+- **a = 0,009 974 mV/N, soit 9,97 µV/N** : c'est la **sensibilité** mesurée. Écart avec la valeur
+  annoncée : (9,974 − 10)/10 × 100 ≈ **−0,26 %**, un quart de pour cent : le capteur se comporte
+  comme prévu. On utilisera tout de même la valeur mesurée, plus juste pour **ce** capteur.
+- **b = 0,011 mV** : le **décalage de zéro** (la tension lue sans aucune force). On le
+  retranchera.
+
+**Étape 4 — Se servir de la droite : de la tension lue à la force**
+
+Pendant un essai, le capteur affiche 3,50 mV. On **inverse** la droite d'étalonnage :
+
+F = (u − b)/a = (3,50 − 0,011)/0,009 974 ≈ **350 N**
+
+*C'est une interpolation : 350 N est dans la plage étalonnée (0 à 500 N). Le résultat est fiable.*
+
+**Étape 5 — Ce qu'on n'a pas le droit de faire**
+
+Une surcharge fait monter la tension à 8,0 mV. La droite donnerait environ 801 N, **mais le
+capteur n'a été étalonné que jusqu'à 500 N** : au-delà, rien ne garantit la linéarité (et le
+corps d'épreuve risque même la déformation permanente). On note « **> 500 N, hors plage** » — pas
+« 801 N ».
+
+**Ce que le calcul apprend.** L'ajustement affine transforme six mesures en une **loi
+expérimentale** utilisable pendant toute la campagne d'essais. Les écarts sans motif, puis r,
+confirment que la loi linéaire tient. Et le réflexe des trois questions (§7) est satisfait : un
+mécanisme connu (la jauge suit l'élasticité du métal), aucun autre facteur ne varie, un essai
+contrôlé (seule la force change). C'est ce raisonnement, et non la valeur de r, qui autorise à
+dire que la force **cause** la tension.
+""",
+            "exercice": """
+**Partie A — Dilatation d'une barre en acier**
+
+On chauffe une barre d'acier et on mesure sa longueur L selon la température θ :
+
+| θ (°C) | 20 | 40 | 60 | 80 | 100 |
+|---|---|---|---|---|---|
+| L (mm) | 500,11 | 500,25 | 500,35 | 500,49 | 500,60 |
+
+**1.** Calcule les coordonnées du point moyen G.
+
+**2.** *(Entraînement pour comprendre ; à l'examen, a, b et r s'obtiennent à la calculatrice.)*
+Calcule à la main la covariance cov(θ, L) et la variance V(θ), puis les coefficients a et b de la
+droite des moindres carrés L = aθ + b. Vérifie à la calculatrice et relève r. Calcule les écarts
+Lᵢ − (aθᵢ + b) et juge si le modèle linéaire tient (règle du §5).
+
+**3.** Estime la longueur de la barre à 70 °C. S'agit-il d'une interpolation ou d'une
+extrapolation ?
+
+**4.** La loi de dilatation s'écrit L = L₀(1 + αθ), où L₀ est la longueur à 0 °C et α le
+coefficient de dilatation. Identifie L₀ et α à partir de a et b. Est-ce cohérent avec l'acier
+(α ≈ 12 × 10⁻⁶ par °C) ? *Indice : développe L = L₀ + L₀α × θ et compare terme à terme avec
+L = aθ + b.*
+
+**5.** Peut-on utiliser cette droite pour prévoir la longueur à 600 °C ? Justifie.
+
+**Partie B — Identifier la constante de temps d'un refroidissement**
+
+Une pièce refroidit dans l'atelier. On relève l'écart D = T − T_amb entre sa température et celle
+de l'atelier :
+
+| t (min) | 0 | 5 | 10 | 15 | 20 |
+|---|---|---|---|---|---|
+| D (°C) | 160 | 98 | 59 | 37 | 22 |
+
+On pose **z = ln(D)**.
+
+**6.** Calcule les valeurs de z (3 décimales). Comment varie z d'une mesure à la suivante ? À la
+calculatrice, donne l'équation de la droite des moindres carrés z = at + b et le coefficient r.
+Le modèle exponentiel convient-il ?
+
+**7.** Déduis-en la constante de temps τ et l'écart initial D₀ = T₀ − T_amb, où T₀ est la
+température de la pièce à t = 0, du modèle D = D₀ e^(−t/τ).
+
+**Partie C — Corrélation et causalité**
+
+**8.** Sur douze mois, un atelier relève chaque mois le nombre d'arrêts machine et la
+consommation d'électricité : r = 0,91. Un collègue propose de réduire la consommation électrique
+pour réduire les arrêts. Qu'en penses-tu ? Réponds en appliquant les trois questions du réflexe
+(§7), puis propose une meilleure analyse.
+""",
+            "corrige": """
+**1.** θ̄ = (20 + 40 + 60 + 80 + 100)/5 = **60 °C** ; L̄ = 2 501,8/5 = **500,36 mm**.
+**G (60 ; 500,36)**.
+
+**2.** Écarts : θᵢ − θ̄ = −40 ; −20 ; 0 ; 20 ; 40 et Lᵢ − L̄ = −0,25 ; −0,11 ; −0,01 ; 0,13 ; 0,24.
+Produits : 10 ; 2,2 ; 0 ; 2,6 ; 9,6, de somme 24,4. **cov(θ, L) = 24,4/5 = 4,88**.
+V(θ) = (1 600 + 400 + 0 + 400 + 1 600)/5 = **800**.
+a = 4,88/800 = **0,006 1 mm/°C** ; b = 500,36 − 0,006 1 × 60 = 500,36 − 0,366 = **499,994 mm**.
+**L = 0,006 1 θ + 499,994**, et la calculatrice donne **r ≈ 0,998 8**.
+**Juger le modèle.** Contrôle 1 : écarts −0,006 ; +0,012 ; −0,010 ; +0,008 ; −0,004 mm, signes
+alternés, sans motif. Contrôle 2 : |r| ≈ 0,998 8, très proche de 1. **La loi linéaire tient**
+entre 20 et 100 °C.
+
+**3.** L(70) = 0,006 1 × 70 + 499,994 = 0,427 + 499,994 ≈ **500,42 mm**. 70 °C est entre 20 et
+100 °C : c'est une **interpolation**, fiable.
+
+**4.** L = L₀ + L₀α × θ : l'ordonnée à l'origine est **L₀ = b ≈ 499,99 mm** et la pente est
+a = L₀α, donc **α = a/L₀ = 0,006 1/499,994 ≈ 1,22 × 10⁻⁵ par °C**, soit 12,2 × 10⁻⁶ par °C :
+**cohérent avec l'acier**.
+
+**5.** **Non.** 600 °C est très loin de la plage mesurée (20 à 100 °C) : c'est une extrapolation.
+Le coefficient α de l'acier varie avec la température, et rien ne garantit que la loi reste
+linéaire aussi loin. Il faudrait des mesures dans cette plage.
+
+**6.** z = ln(D) : **5,075 ; 4,585 ; 4,078 ; 3,611 ; 3,091**.
+z diminue d'environ 0,5 à chaque pas de 5 min (−0,490 ; −0,507 ; −0,467 ; −0,520). Ces pas ne
+grossissent pas et ne rétrécissent pas au fil du temps : **un pas presque constant**, qui laisse
+attendre des points (t ; z) alignés. C'est normal : D est multiplié à chaque pas par environ 0,61
+(98/160 ≈ 0,61 ; 59/98 ≈ 0,60 ; 37/59 ≈ 0,63 ; 22/37 ≈ 0,59), et ln transforme cette
+multiplication en un ajout constant (fiche 17.7).
+Calculatrice : **z ≈ −0,098 8 t + 5,076**, avec **r ≈ −0,999 9**. On confirme sur les écarts :
+−0,001 ; +0,003 ; −0,010 ; +0,017 ; −0,009, signes alternés, sans motif ; **puis** |r| est très
+proche de 1 : **le modèle exponentiel convient**.
+
+**7.** Le modèle donne ln(D) = ln(D₀) − t/τ. Donc la pente vaut −1/τ = −0,098 8, soit
+**τ = 1/0,098 8 ≈ 10,1 min**, et ln(D₀) = 5,076, soit **D₀ = e^5,076 ≈ 160 °C** (cohérent avec
+la première mesure).
+*Au bout de τ ≈ 10 min, il reste e^(−1) ≈ 37 % de l'écart (fiche 17.7) : 0,37 × 160 ≈ 59 °C,
+la mesure à t = 10 min.*
+
+**8.** **r = 0,91 ne prouve pas que l'électricité cause les arrêts.** Les trois questions :
+- **Quel mécanisme ?** Aucun mécanisme plausible : consommer de l'électricité ne fait pas tomber
+  une machine en panne.
+- **Qui d'autre ?** Un facteur commun explique très probablement les deux : **l'activité de
+  l'atelier**. Un mois chargé fait tourner plus de machines plus longtemps : on consomme plus
+  d'électricité, et il y a mécaniquement plus d'arrêts.
+- **Quel essai ?** Aucun : on n'a jamais fait varier la consommation seule. (Avec douze mois et
+  r = 0,91, une pure coïncidence est très improbable : la liaison est réelle (pas due au hasard),
+  mais elle passe par un facteur commun, pas par une cause directe.)
+Réduire la consommation (en produisant moins) réduirait les arrêts… sans rien améliorer.
+**Meilleure analyse** : rapporter les arrêts à l'activité (arrêts par 100 heures de
+fonctionnement), puis chercher les causes physiques des arrêts (pannes, réglages, pièces
+d'usure), machine par machine.
 """,
         },
     ],
@@ -49700,6 +50371,26 @@ _mth("17.6", "Comparer la dispersion de deux séries avec le coefficient de vari
    "100 mm, σ=0,050) sur l'écart-type brut. Mais CV(C)=0,065% et "
    "CV(D)=0,050% : proportionnellement, D est en réalité plus précis.")
 
+_mth("17.8", "Établir une loi expérimentale par ajustement affine", [
+    "**Tracer le nuage de points** avant tout calcul. S'il est courbé, appliquer le "
+    "changement de variable donné par l'énoncé (souvent z = ln y).",
+    "**Choisir le sens** : ajuster la grandeur mesurée (celle qui porte l'erreur) en "
+    "fonction de la grandeur imposée.",
+    "**Obtenir a, b et r à la calculatrice** (régression linéaire), et vérifier que la "
+    "droite passe par G (x̄ ; ȳ) : ȳ ≈ a x̄ + b.",
+    "**Juger le modèle** : d'abord les écarts sans motif, PUIS |r| très proche de 1. Pour "
+    "choisir entre deux ajustements, garder celui dont |r| est le plus proche de 1.",
+    "**Traduire a et b en grandeurs physiques** : raideur, sensibilité, décalage de zéro ; "
+    "après z = ln y, revenir aux grandeurs d'origine (τ = −1/pente, y₀ = e^(ordonnée à "
+    "l'origine)).",
+    "**N'utiliser la droite que dans la plage mesurée** (interpolation). Signaler toute "
+    "extrapolation comme hors plage.",
+    "**Ne jamais conclure à une cause à partir de r** : quel mécanisme ? qui d'autre ? "
+    "quel essai ?",
+], "Ressort : x = 2 ; 4 ; 6 ; 8 ; 10 mm et F = 10,2 ; 19,6 ; 30,4 ; 39,8 ; 50,0 N. "
+       "G (6 ; 30), F = 4,99 x + 0,06 ; écarts sans motif, puis r ≈ 0,9998 : raideur 4,99 N/mm, "
+       "valable entre 2 et 10 mm d'écrasement.")
+
 _mth("18.1", "Combiner deux événements avec union et intersection", [
     "**Vérifier l'indépendance avant de multiplier** : P(A∩B) = P(A)×P(B) "
     "seulement si A et B sont indépendants — rien ne le suppose par "
@@ -50917,6 +51608,76 @@ def gen_temps_decharge():
     }
 
 
+def _fr_court(v, d=4):
+    """Nombre à la française, sans zéros inutiles, avec le vrai signe moins."""
+    t = fr(v, d)
+    if "," in t:
+        t = t.rstrip("0").rstrip(",")
+    return t.replace("-", "−")
+
+
+def _terme(v):
+    return f"({_fr_court(v)})" if v < 0 else _fr_court(v)
+
+
+def _moins(v):
+    return f"− {_fr_court(v)}" if v >= 0 else f"+ {_fr_court(-v)}"
+
+
+def gen_pente_moindres_carres():
+    """Pente de la droite des moindres carrés sur 4 points (x = 1, 2, 3, 4)."""
+    xs = [1, 2, 3, 4]
+    a0 = random.choice([2, 3, 4, 5, -2, -3])
+    b0 = random.randint(1, 9)
+    while True:
+        ys = [a0 * x + b0 + random.choice([-1, 0, 1]) for x in xs]
+        xm = sum(xs) / 4
+        ym = sum(ys) / 4
+        cov = sum((x - xm) * (y - ym) for x, y in zip(xs, ys)) / 4
+        vx = sum((x - xm) ** 2 for x in xs) / 4
+        vy = sum((y - ym) ** 2 for y in ys) / 4
+        rep = cov / vx
+        sxy = sum(x * y for x, y in zip(xs, ys))
+        sxx = sum(x * x for x in xs)
+        faux_centre = sxy / sxx
+        faux_xy = cov / vy if vy else None
+        # on écarte les tirages où une erreur typique donnerait (presque) la bonne réponse
+        if abs(cov - rep) > 0.1 and abs(faux_centre - rep) > 0.1 and \
+                (faux_xy is None or abs(faux_xy - rep) > 0.1):
+            break
+    ecy = [y - ym for y in ys]
+    prods = [(x - xm) * e for x, e in zip(xs, ecy)]
+    tendance = "ont tendance à monter" if rep > 0 else "ont tendance à descendre"
+    corr = [
+        f"**Les moyennes.** x̄ = (1 + 2 + 3 + 4)/4 = 2,5 et "
+        f"ȳ = ({' + '.join(_terme(y) for y in ys)})/4 = {_fr_court(ym)}.",
+        f"**Les écarts aux moyennes.** xᵢ − 2,5 : −1,5 ; −0,5 ; 0,5 ; 1,5. "
+        f"yᵢ {_moins(ym)} : {' ; '.join(_fr_court(e) for e in ecy)}.",
+        f"**La covariance.** Produits des écarts : {' ; '.join(_fr_court(p) for p in prods)}. "
+        f"cov(x, y) = (somme des produits)/4 = {_fr_court(sum(prods))}/4 = {_fr_court(cov)}.",
+        "**La variance des x.** V(x) = ((−1,5)² + (−0,5)² + 0,5² + 1,5²)/4 = 5/4 = 1,25.",
+        f"**La pente.** a = cov(x, y)/V(x) = {_fr_court(cov)}/1,25 = **{_fr_court(rep)}**.",
+        f"*Contrôle : le signe de a est celui de la tendance générale — les y {tendance} quand x augmente.*",
+    ]
+    return {
+        "titre": "Ajustement affine — pente de la droite des moindres carrés",
+        "enonce": (f"Une série à deux variables donne x = 1 ; 2 ; 3 ; 4 et "
+                   f"y = {' ; '.join(_fr_court(y) for y in ys)}. Calcule la pente a de la "
+                   f"droite des moindres carrés de y en x (y en fonction de x), arrondie au "
+                   f"centième."),
+        "rep": rep, "tol": 0.01, "unite": "",
+        "diag": [
+            _diag(cov, "Tu as donné la covariance : il faut encore la diviser par la variance "
+                       "des x, V(x) = 1,25."),
+            _diag(faux_centre, "Tu as utilisé les x et y bruts au lieu de leurs écarts à la "
+                               "moyenne, xᵢ − x̄ et yᵢ − ȳ."),
+        ] + ([_diag(faux_xy, "Tu as divisé par la variance des y : pour la droite de y en x, on "
+                             "divise par la variance des x.")] if faux_xy is not None else []),
+        "corr": corr,
+        "indice": "a = cov(x, y)/V(x), avec V(x) = 1,25 pour x = 1, 2, 3, 4.",
+    }
+
+
 def fabriquer_exo(famille=None):
     """Tire un exercice au hasard, éventuellement dans une famille donnée."""
     catalogue = {
@@ -50926,7 +51687,8 @@ def fabriquer_exo(famille=None):
         "Matériaux et masses": [gen_masse_piece],
         "Unités et conversions": [gen_unites],
         "Mathématiques BTS CPI": [gen_signe_affine, gen_discriminant, gen_proba_binomiale,
-                                  gen_determinant_2x2, gen_valeur_moyenne, gen_temps_decharge],
+                                  gen_determinant_2x2, gen_valeur_moyenne, gen_temps_decharge,
+                                  gen_pente_moindres_carres],
     }
     if famille and famille in catalogue:
         pool = catalogue[famille]
@@ -53480,6 +54242,66 @@ ATELIERS = [
         "a_retenir": "À retenir : pour trouver un temps dans une décharge, isoler e^(…), appliquer "
                      "ln, puis isoler t. Encadrer le résultat avec les repères τ → 37 % et "
                      "3τ → 5 %.",
+    },
+    {
+        "id": "at140",
+        "chapitre": "Bloc 17",
+        "titre": "Étalonner un capteur de force par ajustement affine",
+        "theme": "Statistique descriptive",
+        "fiche": "17.8",
+        "vocabulaire": [
+            ("droite d'étalonnage", "la droite u = aF + b qui relie la tension lue à la force "
+             "appliquée ; on l'inverse ensuite pour passer d'une tension à une force."),
+            ("sensibilité", "la pente a de la droite d'étalonnage : la tension produite par newton "
+             "(ici en mV/N)."),
+            ("décalage de zéro", "l'ordonnée à l'origine b : la tension affichée sans aucune force. "
+             "On la retranche avant de diviser par la sensibilité."),
+        ],
+        "enonce": "Étalonnage d'un capteur de force : F = 0 ; 100 ; 200 ; 300 ; 400 ; 500 N et "
+                  "u = 0,02 ; 0,98 ; 2,05 ; 2,96 ; 4,03 ; 4,99 mV. La calculatrice donne "
+                  "u = 0,009 974 F + 0,011 et r ≈ 0,999 8 ; les écarts changent de signe d'un "
+                  "point à l'autre, sans motif.",
+        "etapes": [
+            {"type": "numerique", "label": "Tension moyenne ū", "unite": "mV",
+             "attendu": 2.505, "tol": 0.006,
+             "consigne": "Calcule la tension moyenne ū (« u barre ») : elle sert à vérifier que la "
+                         "droite passe bien par le point moyen G (250 ; ū). Additionne les six "
+                         "tensions et divise par 6.",
+             "indice": "(0,02 + 0,98 + 2,05 + 2,96 + 4,03 + 4,99) / 6.",
+             "pieges": [(15.03 / 5, "Il y a six mesures, pas cinq : divise par 6.")]},
+            {"type": "numerique", "label": "Force correspondant à une tension lue de 3,50 mV",
+             "unite": "N", "attendu": (3.50 - 0.011) / 0.009974, "tol": 0.5,
+             "consigne": "Inverse la droite d'étalonnage : F = (u − b)/a.",
+             "indice": "(3,50 − 0,011) / 0,009 974.",
+             "pieges": [(0.009974 * 3.50 + 0.011, "Tu as appliqué la droite dans le mauvais sens : "
+                                                  "elle donne u à partir de F. Ici on connaît u."),
+                        (3.50 / 0.009974, "Tu as oublié de retrancher le décalage de zéro b = 0,011 mV.")]},
+            {"type": "qcm", "label": "Tension de 8,0 mV lors d'une surcharge",
+             "question": "Pendant un essai, le capteur affiche 8,0 mV. Que noter ?",
+             "options": ["Environ 801 N, puisque la droite le donne",
+                         "« > 500 N, hors plage » : le capteur n'est étalonné que jusqu'à 500 N",
+                         "0 N : la mesure est forcément fausse"],
+             "bonne": 1,
+             "diagnostics": {0: "C'est une extrapolation : la droite n'a été vérifiée qu'entre 0 et "
+                                "500 N. Au-delà, la linéarité n'est pas garantie.",
+                             2: "La tension indique bien une force élevée ; on ne sait simplement pas "
+                                "la chiffrer hors de la plage étalonnée."}},
+        ],
+        "corrige": {
+            "enonce": "Droite d'étalonnage u = 0,009 974 F + 0,011 (u en mV, F en N), r ≈ 0,999 8.",
+            "regle": "**La droite des moindres carrés passe par le point moyen ; pour passer d'une "
+                     "tension lue à une force, on l'inverse : F = (u − b)/a.**",
+            "conversions": "Aucune : u en mV, F en N, a en mV/N.",
+            "remplacement": "ū = 15,03 / 6 ; F = (3,50 − 0,011) / 0,009 974",
+            "calcul": "ū = **2,505 mV** (et 0,009 974 × 250 + 0,011 = 2,504 5 ≈ 2,505 : G est bien "
+                      "sur la droite)\\n\\nF ≈ **350 N**",
+            "verification": "**Contrôle de cohérence** : 3,50 mV est entre 2,96 mV (300 N) et "
+                            "4,03 mV (400 N), et 350 N est bien entre 300 et 400 N. C'est une "
+                            "interpolation, donc fiable.",
+        },
+        "a_retenir": "À retenir : une droite d'étalonnage s'inverse (F = (u − b)/a) et ne s'utilise "
+                     "que dans la plage étalonnée. Hors plage, on écrit « hors plage », pas un "
+                     "nombre extrapolé.",
     },
     {
         "id": "at18",
@@ -61972,11 +62794,11 @@ MATIERES_PROGRAMME = [
          [(19, ["19.1", "19.3", "19.2", "19.4", "19.6"])]),
         ("Statistiques et Probabilités (évalué)", "Incomplet (à enrichir)",
          "Statistique descriptive et inférentielle, probabilités simples et conditionnelles, "
-         "loi binomiale, espérance/écart-type, taille d'échantillon. Non traités : lois "
-         "exponentielle et de Poisson, loi uniforme, approximation normale, théorème de la "
-         "limite centrée, tests d'hypothèse, intervalle de confiance d'une proportion, "
-         "statistique à deux variables (ajustement affine, corrélation).",
-         [(7, ["7.3"]), (17, ["17.3", "17.6"]), (18, ["18.1", "18.2", "18.3", "18.5", "18.6", "18.7"])]),
+         "loi binomiale, espérance/écart-type, taille d'échantillon, statistique à deux "
+         "variables (ajustement affine, corrélation). Non traités : lois exponentielle et "
+         "de Poisson, loi uniforme, approximation normale, théorème de la limite centrée, "
+         "tests d'hypothèse, intervalle de confiance d'une proportion.",
+         [(7, ["7.3"]), (17, ["17.3", "17.6", "17.8"]), (18, ["18.1", "18.2", "18.3", "18.5", "18.6", "18.7"])]),
     ]),
 ]
 
@@ -62360,7 +63182,7 @@ elif PAGE == PAGE_MATHS:
         'de Bézier : fiches 19.1 à 19.4) et une fiche d\'approfondissement (19.6, droites et '
         'plans dans l\'espace), toutes marquées « hors épreuve ». Attention : certaines notions '
         'évaluées ne sont pas encore traitées ici (lois exponentielle et de Poisson, tests '
-        'd\'hypothèse, statistique à deux variables, équations '
+        'd\'hypothèse, équations '
         'différentielles du second ordre) — voir le tableau de bord. Ce sont les mêmes fiches que dans '
         '« Cours », réunies ici pour ne pas les chercher au milieu des chapitres '
         'techniques.</div>',
