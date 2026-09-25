@@ -5589,6 +5589,118 @@ def aire_uniforme():
     return _svg("".join(p), 760, 388)
 
 
+def somme_uniformes_cloche():
+    p = [_txt(40, 24, "5 000 simulations : 1 tirage ALEA(), la somme de 2, la somme de 12.",
+              12, TRAIT, "start", True),
+         _txt(40, 40, "hauteur des barres : nombre de simulations par classe", 11, FIN)]
+    tirages = random.Random(2026)  # graine fixe : la figure est toujours la même
+    panneaux = [(1, "1 tirage : plat"), (2, "somme de 2 : un toit"), (12, "somme de 12 : une cloche")]
+    L, H, y0 = 200, 190, 270
+    for j, (m, titre) in enumerate(panneaux):
+        x0 = 50 + j * 240
+        sommes = [sum(tirages.random() for _ in range(m)) for _ in range(5000)]
+        lo, hi = (0, m) if m <= 2 else (3, 9)  # la somme de 12 est presque toujours entre 3 et 9
+        nb = 20
+        largeur = (hi - lo) / nb
+        eff = [0] * nb
+        for s in sommes:
+            k = int((s - lo) / largeur)
+            if 0 <= k < nb:
+                eff[k] += 1
+        emax = max(eff)
+        p.append(_txt(x0 + L / 2, 62, titre, 12, ALESAGE, "middle", True))
+        p.append(f"<line x1='{x0}' y1='{y0}' x2='{x0 + L}' y2='{y0}' stroke='{FIN}' stroke-width='1.4'/>")
+        for k, n in enumerate(eff):
+            h = H * n / emax
+            p.append(f"<rect x='{x0 + k * L / nb:.1f}' y='{y0 - h:.1f}' width='{L / nb - 1:.1f}' "
+                     f"height='{h:.1f}' fill='{ALESAGE}' fill-opacity='0.35' stroke='{ALESAGE}'/>")
+        p.append(_txt(x0, y0 + 16, _fr_court(lo), 11, FIN, "middle"))
+        p.append(_txt(x0 + L, y0 + 16, _fr_court(hi), 11, FIN, "middle"))
+        p.append(_txt(x0 + L / 2, y0 + 16, _fr_court((lo + hi) / 2), 11, FIN, "middle"))
+    p.append(_txt(50 + 2 * 240 + L / 2, y0 + 30, "(zoom sur 3 à 9 : la somme va de 0 à 12,", 10, FIN, "middle"))
+    p.append(_txt(50 + 2 * 240 + L / 2, y0 + 42, "mais tombe presque toujours ici)", 10, FIN, "middle"))
+    p.append(f"<rect x='40' y='320' width='680' height='52' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p.append(_txt(56, 342, "Plus on additionne de petites perturbations indépendantes, plus l'histogramme prend la forme d'une cloche.", 12, TRAIT, "start", True))
+    p.append(_txt(56, 362, "C'est pour cela qu'un diamètre usiné (cote + usure + dilatation + jeu…) suit la loi normale.", 12, TRAIT, "start", True))
+    return _svg("".join(p), 760, 386)
+
+
+def aire_sous_cloche():
+    mu, sig = 20.005, 0.012
+    p = [_txt(40, 24, "L'arbre du §1, X ∼ N(20,005 ; 0,012) : les aires hors de [19,97 ; 20,03] sont le rebut.",
+              12, TRAIT, "start", True)]
+    x0, y0, W, H = 70, 260, 620, 190
+    a, b = 19.955, 20.055  # fenêtre affichée, en mm
+
+    def px(x):
+        return x0 + W * (x - a) / (b - a)
+
+    def dens(x):
+        return math.exp(-((x - mu) ** 2) / (2 * sig ** 2))  # hauteur relative (sommet = 1)
+
+    pts = [(a + (b - a) * i / 200) for i in range(201)]
+    courbe = " ".join(f"{px(x):.1f},{y0 - H * dens(x):.1f}" for x in pts)
+    for lim_a, lim_b in ((a, 19.97), (20.03, b)):
+        zone = [x for x in pts if lim_a <= x <= lim_b]
+        poly = (f"{px(zone[0]):.1f},{y0} " + " ".join(f"{px(x):.1f},{y0 - H * dens(x):.1f}" for x in zone)
+                + f" {px(zone[-1]):.1f},{y0}")
+        p.append(f"<polygon points='{poly}' fill='{ALERTE}' fill-opacity='0.45'/>")
+    p.append(f"<line x1='{x0}' y1='{y0}' x2='{x0 + W}' y2='{y0}' stroke='{FIN}' stroke-width='1.4'/>")
+    p.append(f"<polyline points='{courbe}' fill='none' stroke='{ALESAGE}' stroke-width='2.4'/>")
+    for lim, lib in ((19.97, "19,97"), (20.03, "20,03")):
+        p.append(f"<line x1='{px(lim):.1f}' y1='{y0}' x2='{px(lim):.1f}' y2='{y0 - H - 10}' "
+                 f"stroke='{TRAIT}' stroke-width='1.6' stroke-dasharray='5 4'/>")
+        p.append(_txt(px(lim), y0 + 16, lib, 11, TRAIT, "middle", True))
+    p.append(f"<line x1='{px(mu):.1f}' y1='{y0}' x2='{px(mu):.1f}' y2='{y0 - H}' stroke='{ALESAGE}' stroke-dasharray='3 3'/>")
+    p.append(_txt(px(mu), y0 + 16, "μ = 20,005", 11, ALESAGE, "middle", True))
+    p.append(_txt(px(20.043), y0 - 40, "1,86 %", 12, ALERTE, "middle", True))
+    p.append(_txt(px(19.962), y0 - 40, "0,18 %", 12, ALERTE, "middle", True))
+    p.append(_txt(px(mu) + 8, y0 - 70, "97,96 %", 13, OK, "start", True))
+    p.append(_txt(px(mu) + 8, y0 - 54, "dans la tolérance", 11, OK, "start"))
+    p.append(f"<rect x='40' y='290' width='680' height='52' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p.append(_txt(56, 312, "Chaque aire colorée est une probabilité, comme le rectangle de la fiche 18.9 — donnée par la calculatrice.", 12, TRAIT, "start", True))
+    p.append(_txt(56, 332, "La cloche est décalée vers le haut : elle déborde bien plus du côté 20,03 que du côté 19,97.", 12, TRAIT, "start", True))
+    return _svg("".join(p), 760, 356)
+
+
+def binomiale_continuite():
+    n, pr = 100, 0.2
+    mu, sig = n * pr, math.sqrt(n * pr * (1 - pr))
+    p = [_txt(40, 24, "B(100 ; 0,2) : chaque entier k est un rectangle de largeur 1 ; la cloche N(20 ; 4) les suit.",
+              12, TRAIT, "start", True)]
+    x0, y0, kx, ky = 60, 270, 22, 1800  # 22 px par unité de k ; 1 800 px par unité de probabilité
+    kmin, kmax = 8, 34
+
+    def px(x):
+        return x0 + kx * (x - kmin)
+
+    for k in range(kmin, kmax + 1):
+        pk = math.comb(n, k) * pr ** k * (1 - pr) ** (n - k)
+        couleur = ARBRE if k <= 25 else ALESAGE
+        p.append(f"<rect x='{px(k - 0.5):.1f}' y='{y0 - ky * pk:.1f}' width='{kx:.1f}' "
+                 f"height='{ky * pk:.1f}' fill='{couleur}' fill-opacity='0.30' stroke='{couleur}'/>")
+    courbe = " ".join(
+        f"{px(x):.1f},{y0 - ky * math.exp(-((x - mu) ** 2) / (2 * sig ** 2)) / (sig * math.sqrt(2 * math.pi)):.1f}"
+        for x in [kmin - 0.5 + (kmax - kmin + 1) * i / 200 for i in range(201)])
+    p.append(f"<polyline points='{courbe}' fill='none' stroke='{TRAIT}' stroke-width='2.2'/>")
+    p.append(f"<line x1='{px(kmin - 0.5)}' y1='{y0}' x2='{px(kmax + 0.5)}' y2='{y0}' stroke='{FIN}' stroke-width='1.4'/>")
+    for k in (10, 15, 20, 30):
+        p.append(_txt(px(k), y0 + 16, str(k), 11, FIN, "middle"))
+    # la bande du rectangle de 25, bornée par 24,5 et 25,5
+    p.append(_txt(px(24.5), y0 + 16, "24,5", 10, ARBRE, "end"))
+    p.append(_txt(px(25.5), y0 + 16, "25,5", 10, ALERTE, "start"))
+    p.append(_txt(px(25), y0 + 30, "25", 11, FIN, "middle"))
+    p.append(f"<line x1='{px(25.5):.1f}' y1='{y0}' x2='{px(25.5):.1f}' y2='{y0 - 170}' stroke='{ALERTE}' stroke-width='2' stroke-dasharray='5 4'/>")
+    p.append(_txt(px(25.5) + 6, y0 - 158, "25,5 : bord droit", 11, ALERTE, "start", True))
+    p.append(_txt(px(25.5) + 6, y0 - 144, "du rectangle de 25", 11, ALERTE))
+    p.append(_txt(px(14), y0 - 170, "X ≤ 25 : rectangles orange", 11, ARBRE, "middle", True))
+    p.append(_txt(px(31), y0 - 90, "X ≥ 26 : rectangles bleus", 11, ALESAGE, "middle", True))
+    p.append(f"<rect x='40' y='306' width='680' height='52' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p.append(_txt(56, 328, "Le rectangle de k va de k − 0,5 à k + 0,5 : son aire vaut P(X = k).", 12, TRAIT, "start", True))
+    p.append(_txt(56, 348, "Pour P(X ≤ 25), la cloche doit couvrir jusqu'à 25,5 : c'est la correction de continuité.", 12, TRAIT, "start", True))
+    return _svg("".join(p), 760, 372)
+
+
 def extremums_polynome():
     p = [_txt(40, 24, "f(x) = x³ − 3x² + 2 : un maximum local puis un minimum local.",
               12, TRAIT, "start", True)]
@@ -5995,6 +6107,9 @@ FIGURES = {
     "linearisation_ln": ("Linéariser une décharge avec z = ln u", linearisation_ln),
     "histogramme_vers_densite": ("1 000 attentes simulées : un histogramme plat, la densité 0,1", histogramme_vers_densite),
     "aire_uniforme": ("Probabilité = aire sous la densité ; F compte l'aire", aire_uniforme),
+    "somme_uniformes_cloche": ("Additionner des tirages uniformes fait apparaître la cloche", somme_uniformes_cloche),
+    "aire_sous_cloche": ("Probabilité = aire sous la cloche : le rebut d'un procédé décentré", aire_sous_cloche),
+    "binomiale_continuite": ("Des bâtons à la cloche : chaque entier est un rectangle de largeur 1", binomiale_continuite),
     "extremums_polynome": ("Un maximum local puis un minimum local", extremums_polynome),
     "dispersion_deux_reglages": ("Six mesures dispersées autour de leur moyenne", dispersion_deux_reglages),
     "venn_deux_evenements": ("Union et intersection de deux événements", venn_deux_evenements),
@@ -9734,6 +9849,57 @@ QUIZ["Mathématiques BTS CPI — probabilités et équations différentielles"] 
       ["=8*ALEA()", "=5*ALEA()+8", "=5+3*ALEA()", "=ALEA()*(5+8)"], 2,
       "a + (b − a) × ALEA() = 5 + 3 × ALEA() : ALEA() est entre 0 et 1, × 3 étire à la longueur "
       "3, + 5 décale au bon endroit. =8*ALEA() donnerait [0 ; 8].", "Calcul"),
+
+    q("X suit la loi normale N(50 ; 4). Que vaut P(X ≤ 50) ?",
+      ["0", "0,5", "0,683", "1"], 1,
+      "La cloche est symétrique autour de sa moyenne μ = 50 : la moitié de l'aire est à gauche. "
+      "P(X ≤ 50) = 0,5.", "Base"),
+
+    q("X suit une loi normale. Que vaut P(X = 20,00) ?",
+      ["0,5", "Environ 0,4", "0", "Cela dépend de σ"], 2,
+      "Comme pour la loi uniforme (fiche 18.9), une valeur isolée est une bande de largeur nulle : "
+      "son aire, donc sa probabilité, est 0.", "Intermédiaire"),
+
+    q("On approche X ∼ B(100 ; 0,2) par une loi normale. Laquelle ?",
+      ["N(20 ; 4)", "N(20 ; 16)", "N(100 ; 0,2)", "N(0,2 ; 4)"], 0,
+      "On garde la moyenne np = 20 et l'écart-type √(np(1 − p)) = √16 = 4. 16 est la variance, "
+      "pas l'écart-type.", "Base"),
+
+    q("X ∼ B(100 ; 0,2) est approchée par Y ∼ N(20 ; 4). Avec la correction de continuité, "
+      "« au plus 25 », P(X ≤ 25) ≈ ?",
+      ["P(Y ≤ 25)", "P(Y ≤ 24,5)", "P(Y ≥ 25,5)", "P(Y ≤ 25,5)"], 3,
+      "X ≤ 25 concerne 0, 1, …, 25. Le rectangle de 25 va de 24,5 à 25,5 : on va jusqu'à 25,5. "
+      "P(Y ≤ 24,5) oublierait tout le rectangle de 25.", "Intermédiaire"),
+
+    q("Même situation. « Moins de 25 » : P(X < 25) ≈ ?",
+      ["P(Y ≤ 25,5)", "P(Y ≤ 25)", "P(Y ≤ 24,5)", "P(Y < 25)"], 2,
+      "« Moins de 25 » exclut 25 : c'est X ≤ 24, les entiers 0, 1, …, 24. Le rectangle de 24 "
+      "s'arrête à 24,5.", "Piège"),
+
+    q("Pour une variable X de loi normale, comment se lit graphiquement P(c ≤ X ≤ d) ?",
+      ["C'est l'aire sous la cloche entre c et d",
+       "C'est la hauteur de la cloche en d",
+       "C'est la différence des hauteurs en d et en c",
+       "C'est la longueur d − c"], 0,
+      "Comme pour toute loi à densité (fiche 18.9), une probabilité est une aire sous la courbe. "
+      "La hauteur de la cloche n'est pas une probabilité.", "Base"),
+
+    q("X suit N(μ ; σ). Que vaut environ P(μ − 2σ ≤ X ≤ μ + 2σ) ?",
+      ["0,683", "0,5", "0,997", "0,954"], 3,
+      "C'est l'une des aires repères de la fiche 7.3 : environ 95 % (0,954) de l'aire est à moins "
+      "de 2σ de la moyenne.", "Base"),
+
+    q("Deux procédés ont la même moyenne. Le second a un écart-type deux fois plus grand. "
+      "Comment est sa cloche ?",
+      ["Plus haute et plus étroite", "Plus basse et plus étalée",
+       "Décalée vers la droite", "Identique, seule la moyenne compte"], 1,
+      "σ règle l'étalement. L'aire totale reste 1 : si la cloche s'étale, elle doit baisser. La "
+      "moyenne ne change pas, donc le sommet reste au même endroit.", "Intermédiaire"),
+
+    q("X ∼ B(100 ; 0,2) est approchée par Y ∼ N(20 ; 4). « Plus de 25 » : P(X > 25) ≈ ?",
+      ["P(Y ≥ 25,5)", "P(Y ≥ 24,5)", "P(Y ≥ 25)", "P(Y ≤ 25,5)"], 0,
+      "« Plus de 25 » exclut 25 : les entiers concernés sont 26, 27… Le rectangle de 26 commence à "
+      "25,5. P(Y ≥ 24,5) serait « au moins 25 ».", "Piège"),
 ]
 
 QUIZ["Mathématiques BTS CPI — calcul matriciel et modélisation géométrique"] = [
@@ -46475,7 +46641,7 @@ d'usure), machine par machine.
 BLOC_18 = {
     "id": 18,
     "titre": "Bloc 18 — Mathématiques BTS CPI : probabilités et équations différentielles",
-    "resume": "Quatre modules du programme d'examen : probabilités 1, probabilités 2, statistique inférentielle et équations différentielles. Ce bloc n'en couvre qu'une partie : lois exponentielle et de Poisson, approximation normale, tests d'hypothèse et équations du second ordre ne sont pas encore traités.",
+    "resume": "Quatre modules du programme d'examen : probabilités 1, probabilités 2, statistique inférentielle et équations différentielles. Ce bloc n'en couvre qu'une partie : lois exponentielle et de Poisson, tests d'hypothèse et équations du second ordre ne sont pas encore traités.",
     "fiches": [
         {
             "id": "18.1",
@@ -47782,6 +47948,396 @@ de confiance de la fiche 18.3. 5,90 est à
   0,1 min de 6, moins de 2 × 0,11 : **rien d'anormal**.
 **Non**, rien n'indique que le modèle est faux. Avec 10 000 ou 100 000 simulations, les
 résultats se rapprocheraient encore des valeurs théoriques.
+""",
+        },
+        {
+            "id": "18.10",
+            "titre": "Probabilités 1 : la loi normale et l'approximation d'une loi binomiale",
+            "duree": "5 h",
+            "cours": """
+
+### 1. Ce que cette fiche ajoute aux fiches 7.3 et 18.9
+
+**La fiche 7.3** a présenté la courbe en cloche avec une seule règle : 68 % des pièces entre
+x̄ − σ et x̄ + σ, 95 % entre x̄ − 2σ et x̄ + 2σ, 99,7 % entre x̄ − 3σ et x̄ + 3σ. C'est suffisant
+pour le Cp et le Cpk, mais pas pour répondre à une question comme : **quelle proportion d'arbres
+dépasse 20,03 mm, si la moyenne est 20,005 mm et σ = 0,012 mm ?** 20,03 n'est pas à 1, 2 ou 3σ de
+la moyenne : la règle ne dit rien.
+
+**La fiche 18.9** a posé l'idée qui débloque tout : une probabilité est une **aire** sous la
+densité.
+
+**Cette fiche assemble les deux.** La loi normale est une loi à densité, exactement comme la loi
+uniforme : **la probabilité que X tombe entre c et d est l'aire sous la cloche entre c et d.** La
+seule différence : la cloche n'est pas un rectangle, et son aire ne se calcule pas de tête — la
+calculatrice le fait. Et comme une cloche approche très bien les bâtons d'une loi binomiale quand
+n est grand, elle sert aussi à calculer des probabilités sur le nombre de pièces défectueuses
+d'un lot (§4 et §5).
+
+**Vocabulaire :**
+- **X ∼ N(μ ; σ)** se lit « X suit la loi normale de moyenne μ (mu) et d'écart-type σ
+  (sigma) ».
+- **μ** joue le rôle du x̄ de la fiche 7.3 : x̄ est la moyenne **mesurée** sur un lot réel, μ est
+  la moyenne du **modèle**, c'est-à-dire l'espérance E(X) des fiches 18.6 et 18.9. σ est
+  l'écart-type σ(X) du modèle.
+- **Approximation** : remplacer un calcul long et exact par un calcul court et presque exact.
+
+### 2. D'où vient la cloche, et pourquoi elle est partout en atelier
+
+**La fiche 18.9 l'a annoncé : additionnez des tirages uniformes, l'histogramme se bombe.**
+
+[[FIG:somme_uniformes_cloche]]
+
+- **Un seul tirage ALEA()** : l'histogramme est plat (loi uniforme, fiche 18.9).
+- **La somme de deux tirages** : le milieu devient plus fréquent que les bords. Comme avec deux
+  dés : un 2 ne sort que par 1 + 1, alors qu'un 7 sort de six façons (1 + 6, 2 + 5, 3 + 4…). Le
+  milieu gagne.
+- **La somme de douze tirages** : l'histogramme a pris la forme d'une **cloche**. C'est, presque
+  exactement, la loi normale.
+
+**Pourquoi c'est la loi des cotes usinées.** Le diamètre d'un arbre tourné est la cote de réglage
+**plus** une foule de petites perturbations indépendantes : l'usure de l'outil, la dilatation, un
+peu de jeu, une vibration, l'erreur de lecture… Chacune est petite et tire au hasard dans un sens
+ou dans l'autre. **Peu importe la forme de chaque perturbation prise seule : leur somme prend la
+forme d'une cloche**, comme la somme des douze tirages (résultat admis). C'est pour cela que la
+fiche 7.3 trouvait une courbe en cloche sur 1 000 arbres, et pas un rectangle.
+
+**Ce que disent μ et σ sur la cloche.**
+- **μ place le sommet** : la cloche est symétrique autour de μ (autant de pièces trop grosses que
+  trop fines, à distance égale).
+- **σ règle l'étalement.** Comme l'aire totale doit toujours valoir 1, une cloche qui s'élargit
+  est **obligée** de baisser. C'est déjà le cas du rectangle de la 18.9 : 10 min de large donnent
+  une hauteur de 1/10, 20 min de large une hauteur de 1/20. Pensez à un tas de sable qu'on étale au
+  râteau : même quantité de sable, tas plus large, donc plus bas.
+
+*Pour information : la densité de la loi normale est f(x) = 1/(σ√(2π)) × e^(−(x − μ)²/(2σ²)), une
+exponentielle (fiche 17.7). Vous n'aurez jamais à la manipuler : elle n'a pas de primitive
+simple, c'est justement pour cela qu'on passe par la calculatrice.*
+
+### 3. Calculer une probabilité : l'aire sous la cloche, à la calculatrice
+
+> **P(c ≤ X ≤ d) = aire sous la cloche entre c et d**, donnée par la calculatrice ou le tableur.
+
+*La calculatrice ne fait rien de mystérieux : elle découpe la zone sous la cloche en bandes très
+fines, calcule l'aire de chacune (hauteur × largeur, comme les barres de l'histogramme de la 18.9)
+et les additionne. Même principe que pour le rectangle, avec beaucoup plus de bandes.*
+
+**À la calculatrice** (le nom exact dépend du modèle ; elle écrit les décimales avec un
+**point**) :
+- **TI** (en français) : `normalFRép(c, d, μ, σ)` — `normalcdf` sur une TI en anglais ;
+- **Casio** : menu STAT → DIST → NORM → **Ncd**, avec borne inférieure, borne supérieure, σ puis
+  μ (attention, Casio demande σ avant μ) ;
+- **NumWorks** : application Probabilités → Normale, puis l'intervalle.
+
+**Au tableur** : **LOI.NORMALE.N(x ; μ ; σ ; VRAI)** donne F(x) = P(X ≤ x), le « compteur d'aire »
+de la fiche 18.9 (toute l'aire à gauche de x). *VRAI demande cette aire accumulée ; avec FAUX, le
+tableur donnerait la **hauteur** de la cloche, qui n'est pas une probabilité (fiche 18.9, masse
+linéique).* Alors, exactement comme en 18.9 : **P(c ≤ X ≤ d) = F(d) − F(c)**.
+
+**Pour une borne infinie** (« au-dessus de d », « en dessous de c ») : la calculatrice n'a pas de
+touche ∞, on lui donne un nombre si grand qu'aucune pièce ne l'atteint, comme 10⁹⁹ (ou −10⁹⁹) :
+l'aire de la cloche au-delà est nulle en pratique. Ou on passe par le **complément**, c'est-à-dire
+tout le reste : l'aire totale vaut 1, donc **P(X > d) = 1 − P(X ≤ d)**, comme on obtient la
+longueur qui reste sur une barre de 1 m en retirant la partie déjà coupée.
+
+**Trois réflexes qui viennent de la forme de la cloche :**
+- **P(X ≤ μ) = 0,5** : la moitié de l'aire est à gauche du sommet.
+- **Symétrie** : P(X ≥ μ + a) = P(X ≤ μ − a).
+- **P(X = c) = 0**, et ≤ ou < ne change rien — comme en 18.9 : une valeur isolée est une bande de
+  largeur nulle, sans aire.
+
+**Exemple entièrement déroulé — arbres Ø20, X ∼ N(20,00 ; 0,015) en mm.**
+
+- P(X > 20,03) = 1 − P(X ≤ 20,03) ≈ 1 − 0,977 2 = **0,022 8**, soit 2,28 % des arbres au-dessus
+  de 20,03 mm. *Saisie TI : normalFRép(20.03, 10^99, 20, 0.015) donne directement 0,022 8.*
+- P(19,99 ≤ X ≤ 20,02) ≈ **0,656 3** : un intervalle quelconque, que la règle des 3σ ne savait
+  pas traiter.
+- **Contrôle avec la fiche 7.3** : P(19,97 ≤ X ≤ 20,03), c'est l'intervalle μ ± 2σ ; la
+  calculatrice donne 0,954 5, les « 95 % » de la règle. Et la moitié de ce qui reste,
+  (1 − 0,954 5)/2 ≈ 0,022 8, est au-dessus de 20,03 : c'est le résultat du premier calcul.
+
+**Lire la règle de la fiche 7.3 comme des aires.** Les 68 %, 95 % et 99,7 % sont trois aires
+particulières sous la cloche, entre μ ± σ, μ ± 2σ et μ ± 3σ. Le 1,96 de la fiche 18.3 aussi :
+c'est l'écart qui laisse exactement 95 % de l'aire au milieu (vérifiez : P(μ − 1,96σ ≤ X ≤ μ +
+1,96σ) ≈ 0,950). La calculatrice donne toutes les autres.
+
+**Et la question du §1 ?** La figure ci-dessous montre l'arbre du §1, X ∼ N(20,005 ; 0,012). Les
+aires rouges sont le rebut : P(X > 20,03) ≈ 0,018 6, soit 1,86 %, et 0,18 % en dessous de 19,97.
+Le calcul complet est dans le cas industriel.
+
+[[FIG:aire_sous_cloche]]
+
+### 4. Pourquoi une loi binomiale ressemble à une cloche
+
+**Le problème.** Un lot de n = 100 pièces, chacune défectueuse avec la probabilité p = 0,2 : le
+nombre X de défectueuses suit B(100 ; 0,2) (fiche 18.2). À la main, P(X ≤ 25), c'est additionner
+26 probabilités P(X = 0), P(X = 1)… P(X = 25). La calculatrice sait faire cette somme. Mais la
+cloche apporte ce que 26 bâtons ne donnent pas : une image résumée par **deux nombres**, la moyenne
+np et l'écart-type σ. On raisonne alors sur un nombre de pièces défectueuses exactement comme sur
+une cote usinée, avec les aires repères de la fiche 7.3. Pour B(100 ; 0,2), la moyenne vaut 20
+pièces et l'écart-type 4 (calcul plus bas). Au-delà de μ + 2σ = 20 + 2 × 4 = 28 pièces, c'est-à-dire
+pour plus de 28 pièces, il reste de l'ordre de 2 % des lots (la cloche donne 2,3 %, la moitié de
+1 − 0,954 ; la valeur exacte est 2,0 %), et cela se lit de tête.
+
+**Pourquoi une cloche ?** Imaginez le contrôleur qui voit passer les 100 pièces une par une et
+remplit une colonne : il écrit **1** pour une pièce défectueuse, **0** pour une bonne. À la fin, X
+est **le total de la colonne** : 0 + 1 + 0 + 0 + 1 + 0 + … Compter les défectueuses, c'est
+additionner 100 petits nombres tirés au hasard, indépendamment les uns des autres. C'est la même
+situation qu'au §2 : les douze ALEA(), ou les petites perturbations qui s'ajoutent au diamètre
+d'un arbre. Chaque terme vaut ici 0 ou 1 au lieu d'un nombre entre 0 et 1, mais cela ne change
+rien au résultat : **dès qu'on additionne assez de petites contributions indépendantes, la
+somme se répartit en cloche, quelle que soit la forme de chaque contribution** (résultat admis ;
+« assez » dépend de cette forme, voir la dissymétrie plus bas).
+
+[[FIG:binomiale_continuite]]
+
+> **Si X ∼ B(n ; p) avec n grand, on peut approcher X par Y ∼ N(np ; √(np(1 − p)))**
+
+*On change de lettre pour ne pas mélanger : X compte des pièces et ne prend que des entiers, Y est
+la cloche et prend toutes les valeurs.* Les paramètres ne sont pas nouveaux : ce sont
+**l'espérance np et l'écart-type √(np(1 − p)) de la loi binomiale** (fiche 18.6). On garde le même
+centre et le même étalement ; on remplace seulement les bâtons par une cloche.
+
+**B(100 ; 0,2)** : μ = 100 × 0,2 = **20** et σ = √(100 × 0,2 × 0,8) = √16 = **4**, donc
+Y ∼ N(20 ; 4).
+
+*Quand cette approximation est-elle légitime ? Les conditions ne sont pas exigées à l'examen :
+l'énoncé les donne (une indication courante : n ≥ 30, np ≥ 5 et n(1 − p) ≥ 5). Elle est d'autant
+meilleure que n est grand et que p n'est pas trop proche de 0 ou de 1 : sinon la loi binomiale est
+**dissymétrique** (penchée d'un côté). Exemple : B(100 ; 0,02) a une moyenne de 2 pièces ; ses
+bâtons sont tassés contre 0 (on ne peut pas avoir moins de 0 pièce) mais s'étirent vers 5, 6, 7…
+(fiche 18.6). Une cloche symétrique centrée sur 2 déborderait sous 0, vers un nombre négatif de
+pièces : elle approche mal ces bâtons.*
+
+### 5. LE piège : la correction de continuité
+
+**D'où vient le nom.** On passe d'une loi à bâtons (dite discrète) à une loi **continue**, la
+cloche. Il faut donc **corriger** les bornes pour que chaque entier récupère sa part d'aire.
+
+**Le problème.** X ne prend que des valeurs entières (0, 1, 2…), Y prend toutes les valeurs. Pour
+Y, P(Y = 25) = 0 (fiche 18.9 : une valeur isolée n'a pas d'aire). Pour X, P(X = 25) n'est pas
+nulle. Il faut donc décider **quelle aire de la cloche représente la valeur entière 25.**
+
+**La réponse vient directement de la fiche 18.9 : probabilité = aire.** Remplacez chaque bâton k
+par un **rectangle de largeur 1, centré sur k**, qui va de k − 0,5 à k + 0,5. Sa hauteur est
+P(X = k), sa largeur 1, donc son aire vaut exactement P(X = k). *C'est parce que la largeur vaut 1
+que la hauteur du bâton et l'aire du rectangle sont le même nombre : c'est ce qui permet de
+comparer des bâtons (dont la hauteur est une probabilité) à une cloche (dont seule l'aire en est
+une).* La valeur 25 « occupe » la bande **de 24,5 à 25,5** — et c'est cette bande que la cloche
+doit couvrir.
+
+**Les six cas, avec les mots de l'énoncé :**
+
+| ce que dit l'énoncé | événement sur X | les entiers concernés | aire sous la cloche |
+|---|---|---|---|
+| « au plus 25 » | X ≤ 25 | 0, 1, …, 25 | P(Y ≤ **25,5**) : jusqu'au bord droit du rectangle de 25 |
+| « moins de 25 » | X < 25 | 0, 1, …, 24 | P(Y ≤ **24,5**) : jusqu'au bord droit du rectangle de 24 |
+| « au moins 25 » | X ≥ 25 | 25, 26, … | P(Y ≥ **24,5**) : à partir du bord gauche du rectangle de 25 |
+| « plus de 25 » | X > 25 | 26, 27, … | P(Y ≥ **25,5**) : à partir du bord gauche du rectangle de 26 |
+| « exactement 25 » | X = 25 | 25 seul | P(**24,5** ≤ Y ≤ **25,5**) : le rectangle de 25 entier |
+| « de 25 à 30 » | 25 ≤ X ≤ 30 | 25, 26, …, 30 | P(**24,5** ≤ Y ≤ **30,5**) : du bord gauche de 25 au bord droit de 30 |
+
+> **Les deux lignes pièges : « moins de 25 » et « plus de 25 » EXCLUENT 25.** Écrivez la liste
+> des entiers : elle vous le montre tout de suite.
+
+**La méthode sûre : écrire d'abord la liste des entiers concernés, puis prendre les bords
+extérieurs de leurs rectangles.** *Bord extérieur : celui qui garde **en entier** les rectangles
+des entiers retenus — on n'en coupe jamais un en deux. Image d'atelier : des cales de 1 mm
+d'épaisseur alignées sur un réglet, chacune centrée sur sa graduation. La cale n° 25 occupe de
+24,5 à 25,5 ; la rangée des cales 0 à 25 s'arrête donc à 25,5, pas à 25.*
+
+**Ce que la correction change vraiment, sur B(100 ; 0,2) :**
+
+| | valeur exacte (binomiale) | sans correction : P(Y ≤ 25) | avec correction : P(Y ≤ 25,5) |
+|---|---|---|---|
+| P(X ≤ 25) | 0,912 5 | 0,894 4 | **0,915 4** |
+
+Sans correction, on oublie la moitié du rectangle de 25 : l'erreur est de 0,018, six fois plus
+grande qu'avec la correction (0,003). Et pour une valeur isolée : P(X = 20) exact = 0,099 3 ;
+P(19,5 ≤ Y ≤ 20,5) ≈ 0,099 5 — alors que P(Y = 20) = 0.
+
+*À l'examen, **toutes les indications sont fournies** : l'énoncé écrit par exemple « on calculera
+P(24,5 ≤ Y ≤ 30,5) ». Il faut comprendre d'où viennent ces ,5 — pour ne pas les « simplifier » en
+recopiant — et savoir les retrouver.*
+
+> **Pour aller plus loin — simuler une loi normale** *(facultatif ; les deux règles utilisées
+> ici sont admises, la fiche suivante du programme les montrera)*
+>
+> **Deux règles pour une somme de tirages indépendants :**
+> - **les espérances s'additionnent** : chaque ALEA() vaut 0,5 en moyenne, donc la somme de douze
+>   vaut 12 × 0,5 = 6 en moyenne ;
+> - **les variances s'additionnent — pas les écarts-types.** Chaque ALEA() a une variance de 1/12
+>   (fiche 18.9 : (b − a)²/12 avec b − a = 1). La somme de douze a donc une variance
+>   12 × 1/12 = 1, et un écart-type √1 = 1.
+>
+> *Pourquoi pas les écarts-types ? Parce que les écarts se compensent en partie : quand un tirage
+> est trop grand, un autre est souvent trop petit. Additionner les σ (12 × 0,29 ≈ 3,5) reviendrait
+> à supposer que les douze tirages se trompent toujours dans le même sens. Même chose en atelier :
+> empiler 12 cales qui ont chacune une petite erreur ne donne pas une erreur 12 fois plus grande,
+> les erreurs se compensent en partie.*
+>
+> **C'est pour cela qu'on en prend douze** : c'est le nombre qui donne un écart-type d'exactement
+> 1. On retire 6 pour centrer la somme sur 0 : **ALEA() + … + ALEA() − 6** (douze tirages) suit à
+> peu près N(0 ; 1). Pour obtenir N(μ ; σ), on fait comme pour la loi uniforme en 18.9 : multiplier
+> par σ **étire** la cloche, ajouter μ la **décale** : **μ + σ × (somme de douze ALEA() − 6)**.
+
+### 6. Les erreurs classiques et à retenir
+
+**Erreurs classiques :**
+1. **Mettre la variance à la place de l'écart-type** dans la calculatrice : pour B(100 ; 0,2), σ = 4,
+   pas 16.
+2. **Oublier la correction de continuité**, ou la faire dans le mauvais sens (P(X ≤ 25) ≈
+   P(Y ≤ 24,5) est faux : on perd tout le rectangle de 25).
+3. **Traiter « moins de » ou « plus de » comme « au plus » ou « au moins »** : « plus de 25 »
+   commence à 26, donc à 25,5.
+4. **Chercher P(Y = 25)** pour approcher P(X = 25) : c'est 0 ; il faut la bande de 24,5 à 25,5.
+5. **Inverser μ et σ** sur une Casio (elle demande σ avant μ).
+6. **Appliquer la loi normale à une grandeur qui n'est pas en cloche** (un temps d'attente sans
+   information est uniforme, fiche 18.9).
+
+**À retenir :**
+- **X ∼ N(μ ; σ)** : cloche symétrique autour de μ, étalement σ, aire totale 1.
+- **P(c ≤ X ≤ d) = aire sous la cloche = F(d) − F(c)**, à la calculatrice — la même idée qu'en 18.9.
+- La règle 68 / 95 / 99,7 % de la fiche 7.3 = trois aires particulières.
+- **B(n ; p) ≈ N(np ; √(np(1 − p)))** pour n grand : une somme de 0 et de 1 se répartit en cloche.
+- **Correction de continuité** : chaque entier k est la bande [k − 0,5 ; k + 0,5] ; lister les
+  entiers (attention à « moins de » et « plus de »), puis prendre les bords extérieurs.
+""",
+            "formules": """
+
+**Loi normale** — X ∼ N(μ ; σ) : E(X) = μ, σ(X) = σ · P(c ≤ X ≤ d) = aire sous la cloche =
+F(d) − F(c) (TI : normalFRép ; Casio : Ncd ; tableur : LOI.NORMALE.N(x ; μ ; σ ; VRAI))
+
+**Propriétés** — P(X ≤ μ) = 0,5 · P(X ≥ μ + a) = P(X ≤ μ − a) · P(X = c) = 0 ·
+P(X > d) = 1 − P(X ≤ d)
+
+**Aires repères** (fiche 7.3) — μ ± σ : 0,683 · μ ± 2σ : 0,954 · μ ± 3σ : 0,997 · μ ± 1,96σ : 0,950
+
+**Approximation** (n grand, conditions données par l'énoncé) — B(n ; p) ≈ N(np ; √(np(1 − p)))
+
+**Correction de continuité** — au plus k : P(Y ≤ k + 0,5) · moins de k : P(Y ≤ k − 0,5) ·
+au moins k : P(Y ≥ k − 0,5) · plus de k : P(Y ≥ k + 0,5) · exactement k :
+P(k − 0,5 ≤ Y ≤ k + 0,5) · de j à k : P(j − 0,5 ≤ Y ≤ k + 0,5)
+
+**Simulation** (pour aller plus loin) — μ + σ × (somme de 12 ALEA() − 6)
+
+        """,
+            "exemple": """
+**Cas industriel — Chiffrer le rebut d'un procédé décentré, et décider quoi corriger**
+
+Un tour produit des arbres dont le diamètre doit être compris entre **19,97 et 20,03 mm**. Le
+contrôle statistique montre une moyenne **μ = 20,005 mm** (le procédé est décalé de 5 µm vers le
+haut) et un écart-type **σ = 0,012 mm**. On modélise le diamètre par X ∼ N(20,005 ; 0,012).
+
+**Étape 1 — Le rebut par le haut**
+
+P(X > 20,03) = 1 − P(X ≤ 20,03) ≈ **0,018 6**, soit 1,86 %. *20,03 est à (20,03 − 20,005)/0,012
+≈ 2,08σ au-dessus de la moyenne : ni 2σ ni 3σ, la règle de la fiche 7.3 ne suffit pas.*
+
+**Étape 2 — Le rebut par le bas**
+
+P(X < 19,97) ≈ **0,001 8**, soit 0,18 %. *19,97 est à 2,92σ en dessous : beaucoup plus loin, donc
+beaucoup moins de pièces.*
+
+**Étape 3 — Le rebut total**
+
+1,86 % + 0,18 % ≈ **2,04 %**, soit environ **204 arbres sur 10 000**. La cloche « déborde »
+surtout du côté où elle est décalée (figure du cours).
+
+**Étape 4 — Première correction : recentrer**
+
+En réglant le tour sur μ = 20,000 mm, la cloche devient symétrique par rapport à la tolérance :
+P(X > 20,03) = P(X < 19,97) ≈ 0,006 2, soit un rebut total de **1,24 %** (124 arbres sur 10 000).
+**Le recentrage fait gagner 80 arbres sur 10 000.** C'est le Cpk de la fiche 7.3 qui le
+signalait : Cpk = 0,025/(3 × 0,012) ≈ 0,69 avant, et 0,03/(3 × 0,012) ≈ 0,83 après.
+
+*Ce que cela représente en argent — **hypothèse de travail, pour fixer les idées** : en supposant
+qu'un arbre rebuté coûte 12 € (matière et usinage perdus) et que le tour en produit 10 000 par
+mois, le rebut coûte 204 × 12 ≈ 2 450 € par mois avant, et 124 × 12 ≈ 1 490 € après recentrage :
+environ **960 € par mois gagnés par un simple réglage**. Le coût réel d'un arbre est à demander
+au service des méthodes.*
+
+**Étape 5 — Ce que le recentrage ne suffit pas à faire**
+
+Même centré, le procédé rebute 1,24 % : sa dispersion est trop grande pour la tolérance
+(Cp = IT/(6σ) = 0,06/(6 × 0,012) ≈ 0,83, inférieur à 1). Pour que les limites soient à ±3σ, il
+faudrait σ = 0,03/3 = **0,010 mm** : le rebut tomberait à **0,27 %**, les 100 − 99,7 % de la règle
+de la fiche 7.3 (Cp = 1, « capable, mais sans marge »). Pour atteindre le seuil confortable
+Cp = 1,33 de la fiche 7.3, il faudrait que la tolérance fasse 8σ de large (1,33 = 8σ/6σ), soit
+σ = 0,06/8 ≈ 0,007 5 mm : le rebut deviendrait négligeable (environ
+0,006 %). **Il faut réduire la dispersion** (outil, lubrification, rigidité du montage), pas
+seulement régler la moyenne.
+
+**Ce que le calcul apprend.** La loi normale transforme « le procédé est un peu décalé » en un
+nombre de pièces rebutées, donc en coût. Elle permet de comparer deux actions — recentrer, ou
+réduire σ — avant de les engager.
+""",
+            "exercice": """
+**Partie A — Longueur de barres sciées**
+
+Une scie automatique coupe des barres dont la longueur L suit la loi normale N(1 000 ; 1,5), en mm.
+La tolérance est de 997 à 1 003 mm.
+
+**1.** Calcule P(997 ≤ L ≤ 1 003). Retrouve ce résultat avec la règle de la fiche 7.3.
+
+**2.** Calcule P(L > 1 002), puis P(998 ≤ L ≤ 1 001).
+
+**3.** Après un choc, la scie se décale : L suit N(1 001 ; 1,5). Calcule la nouvelle proportion de
+barres hors tolérance.
+
+**Partie B — Approximer une loi binomiale**
+
+Un contrôle d'aspect porte sur des lots de n = 200 pièces ; chaque pièce présente un défaut
+d'aspect avec la probabilité p = 0,2, indépendamment des autres. X est le nombre de pièces
+défectueuses d'un lot. On admet qu'on peut approcher X par une loi normale Y.
+
+**4.** Quelle est la loi de X ? Donne les paramètres de Y.
+
+**5.** Un lot est refusé s'il contient au moins 50 pièces défectueuses. En utilisant la
+correction de continuité, on calculera P(Y ≥ 49,5). Explique d'où vient le 49,5, puis calcule
+cette probabilité.
+
+**6.** Calcule P(Y ≥ 50), sans correction. Sachant que la valeur exacte est P(X ≥ 50) ≈ 0,049 4,
+laquelle des deux approximations est la meilleure ?
+
+**7.** Par quelle probabilité sur Y approche-t-on P(X = 40) ? Calcule-la.
+
+**Partie C — Simulation (facultative : voir l'encadré « Pour aller plus loin », après le §5)**
+
+**8.** Écris une formule de tableur qui simule une longueur L de la partie A à partir de tirages
+ALEA(). Explique le rôle du « − 6 » (on admet que la somme de douze tirages a pour moyenne 6 et
+pour écart-type 1).
+""",
+            "corrige": """
+**1.** P(997 ≤ L ≤ 1 003) ≈ **0,954 5**. Les bornes sont à ±3 mm = ±2σ de la moyenne : c'est
+l'intervalle μ ± 2σ, qui contient environ 95 % des barres (fiche 7.3). ✓
+
+**2.** P(L > 1 002) = 1 − P(L ≤ 1 002) ≈ **0,091 2**.
+P(998 ≤ L ≤ 1 001) ≈ **0,656 3**.
+
+**3.** Avec L ∼ N(1 001 ; 1,5) : P(L > 1 003) ≈ 0,091 2 et P(L < 997) ≈ 0,003 8. Hors tolérance :
+**≈ 0,095, soit 9,5 %** des barres (contre 4,55 % avant le choc). *Un décalage de 1 mm, deux tiers
+de σ, double le rebut : la cloche déborde du côté du décalage.*
+
+**4.** X ∼ **B(200 ; 0,2)** : 200 pièces, deux issues, probabilité constante, indépendance
+(fiche 18.2). Paramètres de Y : μ = 200 × 0,2 = **40** et σ = √(200 × 0,2 × 0,8) = √32 ≈ **5,657**.
+Y ∼ N(40 ; 5,657).
+
+**5.** « Au moins 50 », c'est X ∈ {50, 51, 52, …}. Chaque entier k est représenté par la bande
+[k − 0,5 ; k + 0,5] ; l'entier 50 commence à **49,5**. P(X ≥ 50) ≈ P(Y ≥ 49,5) ≈ **0,046 5**.
+
+**6.** P(Y ≥ 50) ≈ **0,038 5**. Écart avec la valeur exacte 0,049 4 : 0,011 sans correction,
+**0,003 avec correction**. La correction de continuité donne la meilleure approximation : sans
+elle, on oublie la moitié gauche du rectangle de 50.
+
+**7.** P(X = 40) ≈ P(39,5 ≤ Y ≤ 40,5) ≈ **0,070 4** (la valeur exacte vaut aussi 0,070 4).
+*Ne pas écrire P(Y = 40), qui vaut 0.*
+
+**8.** **=1000+1,5*(ALEA()+ALEA()+ALEA()+ALEA()+ALEA()+ALEA()+ALEA()+ALEA()+ALEA()+ALEA()+ALEA()+ALEA()-6)**
+(douze ALEA()). La somme de douze tirages a pour moyenne 6 : retrancher 6 la centre sur 0. Son
+écart-type vaut 1 (les variances s'additionnent : 12 × 1/12 = 1, donc σ = √1 = 1) : elle suit à peu
+près N(0 ; 1). Multiplier par 1,5 étire la cloche à l'écart-type 1,5, ajouter 1 000 la décale : on
+obtient à peu près N(1 000 ; 1,5).
 """,
         },
         {
@@ -51048,6 +51604,20 @@ _mth("18.9", "Calculer une probabilité avec la loi uniforme", [
 ], "Navette toutes les 10 min, T ∼ U([0 ; 10]) : f = 0,1 ; P(2 ≤ T ≤ 5) = 3 × 0,1 = 0,3 = "
        "F(5) − F(2) = 0,5 − 0,2 ; E(T) = 5 min ; σ(T) ≈ 2,89 min.")
 
+_mth("18.10", "Calculer avec la loi normale, et approcher une loi binomiale", [
+    "**Identifier μ et σ** (écart-type, pas variance) et écrire X ∼ N(μ ; σ).",
+    "**Traduire la question** : au moins k → X ≥ k ; au plus k → X ≤ k ; plus de k → X > k ; "
+    "moins de k → X < k ; « au-dessus de d » → X > d.",
+    "**Si X est binomiale** B(n ; p) à n grand : prendre Y ∼ N(np ; √(np(1 − p))), puis "
+    "appliquer la correction de continuité — lister les entiers concernés et prendre les "
+    "bords extérieurs de leurs rectangles [k − 0,5 ; k + 0,5].",
+    "**Calculer l'aire sous la cloche à la calculatrice** (normalFRép, Ncd — attention à "
+    "l'ordre σ, μ sur Casio), ou F(d) − F(c) au tableur ; pour « au-dessus », 1 − F(d).",
+    "**Contrôler l'ordre de grandeur** avec les aires repères : 0,683 (±σ), 0,954 (±2σ), "
+    "0,997 (±3σ), et P(X ≤ μ) = 0,5.",
+], "B(100 ; 0,2) ≈ N(20 ; 4). « Au plus 25 » concerne 0, 1, …, 25 : on va jusqu'à 25,5. "
+       "P(Y ≤ 25,5) ≈ 0,915 4, pour une valeur exacte de 0,912 5 (sans correction : 0,894 4).")
+
 _mth("18.7", "Calculer la taille d'échantillon nécessaire pour une précision donnée", [
     "**Isoler n dans la formule de la marge** : n = (1,96 × s / marge "
     "visée)².",
@@ -52309,6 +52879,115 @@ def gen_proba_uniforme():
     }
 
 
+def _phi(z):
+    """Fonction de répartition de la loi normale centrée réduite : P(Z ≤ z) pour Z ∼ N(0 ; 1)."""
+    return 0.5 * (1 + math.erf(z / math.sqrt(2)))
+
+
+_MOTS_OPERATEUR = {"≤": "au plus", "<": "moins de", "≥": "au moins", ">": "plus de"}
+
+
+def gen_borne_continuite():
+    """Borne à utiliser sur la loi normale après correction de continuité."""
+    k = random.randint(12, 60)
+    op = random.choice(["≤", "<", "≥", ">"])
+    rep = {"≤": k + 0.5, "<": k - 0.5, "≥": k - 0.5, ">": k + 0.5}[op]
+    op_y = "≤" if op in ("≤", "<") else "≥"
+    if op == "≤":
+        entiers, bord = f"0, 1, …, {k}", f"le bord droit du rectangle de {k}"
+    elif op == "<":
+        entiers, bord = f"0, 1, …, {k - 1}", f"le bord droit du rectangle de {k - 1}"
+    elif op == "≥":
+        entiers, bord = f"{k}, {k + 1}, {k + 2} et au-delà", f"le bord gauche du rectangle de {k}"
+    else:
+        entiers, bord = f"{k + 1}, {k + 2}, {k + 3} et au-delà", f"le bord gauche du rectangle de {k + 1}"
+    autre = 2 * k - rep  # le « mauvais sens » : k − 0,5 au lieu de k + 0,5, et inversement
+    if op in ("≤", "≥"):
+        msg_sans = (f"Sans correction de continuité : l'entier {k} occupe la bande de "
+                    f"{_fr_court(k - 0.5)} à {_fr_court(k + 0.5)} sous la cloche, il faut la "
+                    f"garder en entier.")
+    else:
+        dernier = k - 1 if op == "<" else k + 1
+        bord_mot = "s'arrête à" if op == "<" else "commence à"
+        msg_sans = (f"Sans correction : « {_MOTS_OPERATEUR[op]} {k} » exclut {k}, c'est "
+                    f"X {'≤' if op == '<' else '≥'} {dernier}, et le rectangle de {dernier} "
+                    f"{bord_mot} {_fr_court(rep)}.")
+    diag = [
+        _diag(k, msg_sans),
+        _diag(autre, "Correction dans le mauvais sens : liste d'abord les entiers concernés, "
+                     "puis prends le bord extérieur de leurs rectangles." if op in ("≤", "≥") else
+                     f"Tu as traité « {_MOTS_OPERATEUR[op]} {k} » comme "
+                     f"« {'au plus' if op == '<' else 'au moins'} {k} » : {k} est EXCLU."),
+    ]
+    if op in ("<", ">"):
+        dernier = k - 1 if op == "<" else k + 1
+        diag.append(_diag(dernier, f"Tu as bien vu que {k} est exclu (X {'≤' if op == '<' else '≥'} "
+                                   f"{dernier}), mais tu as oublié la correction : le rectangle "
+                                   f"de {dernier} {bord_mot} {_fr_court(rep)}."))
+    return {
+        "titre": "Loi normale — correction de continuité",
+        "enonce": (f"X suit une loi binomiale, approchée par une loi normale Y. Avec la correction "
+                   f"de continuité, P(X {op} {k}) — « {_MOTS_OPERATEUR[op]} {k} » — "
+                   f"≈ P(Y {op_y} b). Quelle est la borne b ?"),
+        "rep": rep, "tol": 0.01, "unite": "",
+        "diag": diag,
+        "corr": [
+            f"**Les entiers concernés.** « {_MOTS_OPERATEUR[op]} {k} », X {op} {k}, correspond à "
+            f"{entiers}.",
+            f"**Chaque entier est un rectangle de largeur 1**, de k − 0,5 à k + 0,5. On prend "
+            f"{bord}.",
+            f"**La borne.** b = **{_fr_court(rep)}** : P(X {op} {k}) ≈ P(Y {op_y} {_fr_court(rep)}).",
+        ],
+        "indice": "Liste les entiers concernés (« moins de » et « plus de » excluent la valeur), "
+                  "puis prends le bord extérieur de leurs rectangles [k − 0,5 ; k + 0,5].",
+    }
+
+
+def gen_proba_normale():
+    """Probabilité d'un intervalle pour une loi normale (aire sous la cloche)."""
+    mu = random.choice([20, 50, 100, 250, 1000])
+    sig = random.choice([1, 2, 2.5, 4, 5])
+    while True:
+        za = random.choice([-2.5, -2, -1.5, -1.2, -1, -0.8, -0.5, 0])
+        zb = random.choice([0.5, 0.8, 1, 1.2, 1.5, 1.8, 2, 2.5])
+        c, d = mu + za * sig, mu + zb * sig
+        rep = _phi(zb) - _phi(za)
+        faux_Fd = _phi(zb)                              # F(d) sans retrancher F(c)
+        faux_var = _phi((d - mu) / sig ** 2) - _phi((c - mu) / sig ** 2)  # variance au lieu de σ
+        faux_compl = 1 - rep
+        diags = [faux_Fd, faux_compl] + ([faux_var] if sig != 1 else [])
+        if all(abs(x - rep) > 0.01 for x in diags) and \
+                all(abs(x - y) > 0.01 for i, x in enumerate(diags) for y in diags[i + 1:]):
+            break
+    diag = [
+        _diag(faux_Fd, f"Tu as donné P(X ≤ {_fr_court(d)}) : il faut retirer l'aire à gauche de "
+                       f"{_fr_court(c)}, F(d) − F(c)."),
+        _diag(faux_compl, "Tu as calculé l'aire EN DEHORS de l'intervalle : c'est le complément."),
+    ]
+    if sig != 1:
+        diag.append(_diag(faux_var, f"Tu as mis la variance σ² = {_fr_court(sig ** 2)} à la place "
+                                    f"de l'écart-type σ = {_fr_court(sig)}."))
+    return {
+        "titre": "Loi normale — aire sous la cloche",
+        "enonce": (f"X suit la loi normale N({_fr_court(mu)} ; {_fr_court(sig)}). "
+                   f"Calcule P({_fr_court(c)} ≤ X ≤ {_fr_court(d)}) (au millième)."),
+        "rep": rep, "tol": 0.002, "unite": "",
+        "diag": diag,
+        "corr": [
+            f"**L'aire sous la cloche.** P({_fr_court(c)} ≤ X ≤ {_fr_court(d)}) = F({_fr_court(d)}) − "
+            f"F({_fr_court(c)}), à la calculatrice (les décimales s'écrivent avec un point) : "
+            f"TI normalFRép({c:g}, {d:g}, {mu:g}, {sig:g}) ; Casio Ncd (σ avant μ) ; tableur "
+            f"LOI.NORMALE.N({_fr_court(d)} ; {_fr_court(mu)} ; {_fr_court(sig)} ; VRAI) − "
+            f"LOI.NORMALE.N({_fr_court(c)} ; {_fr_court(mu)} ; {_fr_court(sig)} ; VRAI).",
+            f"**Résultat.** P ≈ **{fr(rep, 3)}**.",
+            f"*Réflexe : on entre toujours l'écart-type σ = {_fr_court(sig)}, jamais la variance "
+            f"σ² = {_fr_court(sig ** 2)}.*" if sig != 1 else
+            "*Réflexe : on entre toujours l'écart-type σ, jamais la variance σ².*",
+        ],
+        "indice": "P(c ≤ X ≤ d) = F(d) − F(c) : normalFRép(c, d, μ, σ), avec l'écart-type σ.",
+    }
+
+
 def decimales_affichage(tol):
     """Nombre de décimales pour afficher la réponse d'un générateur : assez pour que la valeur
     AFFICHÉE soit acceptée par la tolérance (10⁻ᵈ ≤ tol, donc erreur d'arrondi ≤ tol/2), et au
@@ -52344,7 +53023,8 @@ def fabriquer_exo(famille=None):
         "Unités et conversions": [gen_unites],
         "Mathématiques BTS CPI": [gen_signe_affine, gen_discriminant, gen_proba_binomiale,
                                   gen_determinant_2x2, gen_valeur_moyenne, gen_temps_decharge,
-                                  gen_pente_moindres_carres, gen_proba_uniforme],
+                                  gen_pente_moindres_carres, gen_proba_uniforme,
+                                  gen_borne_continuite, gen_proba_normale],
     }
     if famille and famille in catalogue:
         pool = catalogue[famille]
@@ -55651,6 +56331,85 @@ ATELIERS = [
         "a_retenir": "À retenir : avec la loi uniforme, P = longueur favorable ÷ longueur totale ; "
                      "la hauteur de la densité n'est pas une probabilité ; une valeur exacte a une "
                      "probabilité nulle.",
+    },
+    {
+        "id": "at142",
+        "chapitre": "Bloc 18",
+        "titre": "Dimensionner un poste de reprise : loi binomiale et loi normale",
+        "theme": "Probabilités",
+        "fiche": "18.10",
+        "figure": "binomiale_continuite",
+        "vocabulaire": [
+            ("approximation normale", "remplacer B(n ; p) par la loi normale de même moyenne np et "
+             "de même écart-type √(np(1 − p)), quand n est grand."),
+            ("correction de continuité", "chaque entier k est représenté par la bande "
+             "[k − 0,5 ; k + 0,5] sous la cloche : on prend les bords extérieurs des entiers "
+             "concernés."),
+        ],
+        "enonce": "Sur une ligne de moulage, 10 % des pièces présentent une bavure à reprendre, "
+                  "indépendamment les unes des autres. Un lot compte 400 pièces : le nombre X de "
+                  "pièces à reprendre suit B(400 ; 0,1). Le poste de reprise peut traiter 47 pièces "
+                  "par lot : il est débordé s'il y a plus de 47 pièces à reprendre.",
+        "etapes": [
+            {"type": "numerique", "label": "Moyenne μ = np de la loi normale", "unite": "pièces",
+             "attendu": 40, "tol": 0.1,
+             "consigne": "μ = n × p.",
+             "indice": "400 × 0,1.",
+             "pieges": [(360, "Tu as pris la proportion de pièces sans bavure (0,9) : p est la "
+                              "probabilité d'une pièce à reprendre, 0,1.")]},
+            {"type": "numerique", "label": "Écart-type σ = √(np(1 − p))", "unite": "pièces",
+             "attendu": math.sqrt(400 * 0.1 * 0.9), "tol": 0.01,
+             "consigne": "σ = √(n × p × (1 − p)).",
+             "indice": "√(400 × 0,1 × 0,9) = √36.",
+             "pieges": [(36, "36 est la variance : l'écart-type en est la racine carrée, √36."),
+                        (20, "Tu as calculé √400 : il manque les facteurs p et (1 − p)."),
+                        (math.sqrt(40), "Tu as oublié le facteur (1 − p) = 0,9 : √(400 × 0,1) = √40.")]},
+            {"type": "qcm", "label": "Traduire « débordé » et corriger",
+             "question": "Le poste est débordé s'il y a plus de 47 pièces à reprendre. Par quelle "
+                         "probabilité sur Y ∼ N(40 ; 6) approche-t-on la probabilité d'être débordé ?",
+             "options": ["P(Y ≥ 48)", "P(Y ≥ 47,5)", "P(Y ≥ 46,5)", "P(Y ≥ 48,5)"],
+             "bonne": 1,
+             "diagnostics": {0: "Sans correction, on oublie la moitié gauche du rectangle de 48, "
+                                "qui va de 47,5 à 48,5.",
+                             2: "Tu as pris « au moins 47 » : le poste traite 47 pièces, il n'est "
+                                "débordé qu'à partir de 48, c'est-à-dire à partir de 47,5.",
+                             3: "C'est le mauvais sens : on perdrait tout le rectangle de 48. Les "
+                                "entiers concernés sont 48, 49…, qui commencent à 47,5."}},
+            {"type": "numerique", "label": "P(Y ≥ 47,5), à la calculatrice (au millième)", "unite": "",
+             "attendu": 0.5 * math.erfc(1.25 / math.sqrt(2)), "tol": 0.001,
+             "consigne": "Calcule l'aire sous la cloche N(40 ; 6) à droite de 47,5 : "
+                         "1 − P(Y ≤ 47,5). Arrondis au millième.",
+             "indice": "normalFRép(47.5, 10^99, 40, 6), ou 1 − LOI.NORMALE.N(47,5 ; 40 ; 6 ; VRAI).",
+             "pieges": [(0.5 * math.erfc((8 / 6) / math.sqrt(2)),
+                         "Tu as calculé P(Y ≥ 48), sans correction de continuité."),
+                        (0.5 * math.erfc(-1.25 / math.sqrt(2)),
+                         "Tu as calculé P(Y ≤ 47,5), la probabilité de ne PAS être débordé : il faut "
+                         "le complément."),
+                        (0.5 * math.erfc((8.5 / 6) / math.sqrt(2)),
+                         "Tu as calculé P(Y ≥ 48,5) : correction de continuité dans le mauvais "
+                         "sens."),
+                        (0.5 * math.erfc((7.5 / 36) / math.sqrt(2)),
+                         "Tu as entré la variance 36 à la place de l'écart-type σ = 6.")]},
+        ],
+        "corrige": {
+            "enonce": "X ∼ B(400 ; 0,1), approchée par Y ∼ N(40 ; 6). Débordé = plus de 47 = au moins "
+                      "48 : on cherche P(X ≥ 48).",
+            "regle": "**B(n ; p) ≈ N(np ; √(np(1 − p))) ; correction de continuité : « au moins 48 » "
+                     "commence au bord gauche du rectangle de 48, soit 47,5.**",
+            "conversions": "Aucune.",
+            "remplacement": "μ = 400 × 0,1 ; σ = √(400 × 0,1 × 0,9) ; P(Y ≥ 47,5)",
+            "calcul": "μ = **40** pièces\\n\\nσ = √36 = **6** pièces\\n\\nP(Y ≥ 47,5) ≈ **0,106**",
+            "verification": "**Contrôle de cohérence** : 47,5 est à (47,5 − 40)/6 = 1,25σ au-dessus "
+                            "de la moyenne ; au-delà de +1σ, il reste 16 % de l'aire (la moitié de "
+                            "1 − 0,683), au-delà de +2σ 2,3 % (la moitié de 1 − 0,954) : 10,6 % est "
+                            "bien entre les deux. La valeur exacte (binomiale) est 0,108 ; sans "
+                            "correction, on trouverait 0,091.",
+        },
+        "a_retenir": "À retenir : le poste sera débordé environ 1 lot sur 10. Si c'est trop, on le "
+                     "dimensionne plus grand : avec une capacité de 50 pièces, il n'est débordé "
+                     "qu'au-delà de 50, soit P(Y ≥ 50,5) ≈ 0,04, environ 1 lot sur 25. Méthode : même "
+                     "moyenne np, même écart-type √(np(1 − p)), puis correction de continuité (lister "
+                     "les entiers, prendre les bords extérieurs de leurs rectangles).",
     },
     {
         "id": "at29",
@@ -63522,11 +64281,12 @@ MATIERES_PROGRAMME = [
          [(19, ["19.1", "19.3", "19.2", "19.4", "19.6"])]),
         ("Statistiques et Probabilités (évalué)", "Incomplet (à enrichir)",
          "Statistique descriptive et inférentielle, probabilités simples et conditionnelles, "
-         "loi binomiale, espérance/écart-type, loi uniforme, taille d'échantillon, statistique "
-         "à deux variables (ajustement affine, corrélation). Non traités : lois exponentielle "
-         "et de Poisson, approximation normale, théorème de la limite centrée, "
+         "loi binomiale, espérance/écart-type, loi uniforme, loi normale et approximation d'une "
+         "binomiale, taille d'échantillon, statistique à deux variables (ajustement affine, "
+         "corrélation). Non traités : lois exponentielle et de Poisson, théorème de la "
+         "limite centrée, "
          "tests d'hypothèse, intervalle de confiance d'une proportion.",
-         [(7, ["7.3"]), (17, ["17.3", "17.6", "17.8"]), (18, ["18.1", "18.2", "18.3", "18.5", "18.6", "18.9", "18.7"])]),
+         [(7, ["7.3"]), (17, ["17.3", "17.6", "17.8"]), (18, ["18.1", "18.2", "18.3", "18.5", "18.6", "18.9", "18.10", "18.7"])]),
     ]),
 ]
 

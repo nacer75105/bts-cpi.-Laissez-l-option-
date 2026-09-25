@@ -22,7 +22,7 @@ laissé d'un seul tenant (pas de scission) pour ne pas toucher les clés.
 Plan (le référentiel ne répartit pas les modules entre 1ʳᵉ et 2ᵉ année ; l'ordre suit les
 prérequis et la répartition usuelle) :
 1. ✅ 17.7 ln et exp — 2. ✅ 17.8 statistique à deux variables — 3. ✅ 18.9 loi uniforme —
-4. loi normale et approximation binomiale — 5. somme de variables, limite centrée —
+4. ✅ 18.10 loi normale et approximation binomiale — 5. somme de variables, limite centrée —
 6. méthode d'Euler — 7. IC d'une proportion — 8. tests sur une proportion / une moyenne —
 9. tests de comparaison — 10. loi exponentielle — 11. loi de Poisson — 12. nombres
 complexes (forme algébrique, Δ < 0) — 13. équations différentielles du second ordre.
@@ -81,6 +81,30 @@ complexes (forme algébrique, Δ < 0) — 13. équations différentielles du sec
   qu'il liste ont été vérifiées une à une (entiers à ±0,1, at84 = fourchette du cours).
 - Règle pour les nouveaux ateliers : `tol` est une tolérance ABSOLUE dans l'unité de l'étape, et
   les valeurs données par l'indice (arrondis intermédiaires) doivent être acceptées.
+
+### 18.10 — Loi normale et approximation d'une loi binomiale (faite le 2026-09-25)
+
+- Insérée après 18.9 (ordre affiché … 18.6 → 18.9 → 18.10 → 18.7), avec méthode, figures
+  `somme_uniformes_cloche`, `aire_sous_cloche`, `binomiale_continuite`, atelier at142 (poste de
+  reprise, tolérances absolues, valeurs écrites avec `math` seulement pour l'outil d'audit),
+  aide `_phi` et générateurs `gen_borne_continuite`, `gen_proba_normale`, 9 questions dans la
+  banque « probabilités et équations différentielles » (bonne réponse en positions 1, 2, 0, 3, 2,
+  0, 3, 1, 0).
+- Trois tours de relecture (justesse + clarté) jusqu'à zéro réserve. Points de fond : même idée
+  « probabilité = aire » qu'en 18.9, sur une cloche ; la règle 68 / 95 / 99,7 % de la 7.3 relue
+  comme trois aires, sans la réintroduire ; correction de continuité par un tableau à six lignes
+  avec les mots de l'énoncé (« moins de » / « plus de » excluent la borne) ; binomiale en cloche
+  expliquée par le contrôleur qui écrit 1 ou 0 (X = somme de 100 contributions).
+- Choix de l'auteur : la simulation par 12 ALEA() est en encadré « Pour aller plus loin »,
+  facultatif, avec les règles d'addition des espérances et des variances ADMISES (la fiche 5 du
+  chantier les montrera) et le piège 12 × 0,29 désamorcé ; le chiffrage en euros du cas
+  industriel est présenté comme une hypothèse (12 € l'arbre).
+- Le relecteur a relevé que la TI française appelle la fonction normalFRép (normalcdf en
+  anglais) : la fiche donne les deux.
+- **Non vérifié** : rendu visuel réel des trois figures ; ordre de saisie exact sur NumWorks ;
+  atelier at142 et générateurs non cliqués dans l'interface (la fiche et la page Entraînement
+  s'ouvrent sans erreur dans un AppTest ; l'outil d'audit : 0 défaut sur 199 étapes et
+  18 générateurs).
 
 ### Entraînement — réponse affichée et saisie (corrigé le 2026-09-25)
 
@@ -148,8 +172,9 @@ complexes (forme algébrique, Δ < 0) — 13. équations différentielles du sec
 
 - **Contenus évalués ABSENTS de l'application** (décision de l'auteur : créer des fiches ?).
   Le S10 2016 et l'annexe I rendent évalués, sans qu'aucune fiche ne les traite :
-  - Probabilités 1 : loi normale comme loi de probabilité (au-delà de la règle
-    des 3σ), approximation d'une binomiale par une loi normale, théorème de la limite centrée ;
+  - Probabilités 1 : théorème de la limite centrée, E et V de aX + b, X + Y, X − Y (la loi
+    normale comme loi de probabilité et l'approximation binomiale → normale sont traitées depuis
+    le 2026-09-25, fiche 18.10) ;
   - Probabilités 2 : loi exponentielle, loi de Poisson, approximation binomiale → Poisson ;
   - Statistique inférentielle : intervalle de confiance d'une proportion, tests d'hypothèse
     (bilatéraux, unilatéraux, comparaison de deux moyennes ou proportions) ;
