@@ -54545,7 +54545,7 @@ ATELIERS = [
              "pieges": [],
              "aide": "Moyenne = (15,02 + 15,00 + 14,99 + 14,99) / 4 = 60,00 / 4 = 15,00 mm."},
             {"type": "numerique", "label": "Variance", "unite": "mm²",
-             "attendu": 0.00015, "tol": 0.00002,
+             "attendu": 0.00015, "tol": 0.000005, "format": "%.6f",
              "consigne": "Moyenne des carrés des écarts à la moyenne (15,00).",
              "indice": "Écarts : +0,02 ; 0 ; −0,01 ; −0,01. Carrés : 0,0004 ; 0 ; 0,0001 ; "
                        "0,0001. Somme divisée par 4.",
@@ -54996,7 +54996,7 @@ ATELIERS = [
                                 "P(t) se calcule directement par la formule, pas par "
                                 "différence.")]},
             {"type": "numerique", "label": "P(t=12s), en bar", "unite": "bar",
-             "attendu": 0.398, "tol": 0.02,
+             "attendu": 0.398, "tol": 0.001,
              "consigne": "12 s = 3τ. P(12) = 8 × e^(−3).",
              "indice": "8 × 0,0498.",
              "pieges": [(0.4, None)]},
@@ -56671,13 +56671,13 @@ ATELIERS = [
                               2: "La torsion vrille la pièce autour de son axe — il n'y a "
                                  "aucune vrille ici, juste un glissement de section."}},
             {"type": "numerique", "label": "Section cisaillée", "unite": "mm²", "attendu": 78.54,
-             "tol": 0.01,
+             "tol": 0.05,
              "consigne": "Calculer l'aire de la section circulaire de diamètre 10 mm.",
              "indice": "S = π × d² / 4",
              "pieges": [(10, "Vous avez donné le diamètre, pas l'aire de la section : "
                              "appliquez la formule S = π × d² / 4.")]},
             {"type": "numerique", "label": "Contrainte de cisaillement τ", "unite": "MPa",
-             "attendu": 76.4, "tol": 0.01,
+             "attendu": 76.4, "tol": 0.1,
              "consigne": "τ = T / S, avec T l'effort tranchant et S la section trouvée à "
                         "l'étape précédente.",
              "indice": "6000 / 78,54",
@@ -62283,7 +62283,7 @@ def _rendre_atelier(_at, _prefixe):
         else:
             _val = st.number_input(
                 f"Votre valeur ({_et['unite']})" if _et.get("unite") else "Votre valeur",
-                value=None, format="%.4f", step=0.001, key=_cle_in)
+                value=None, format=_et.get("format", "%.4f"), step=0.001, key=_cle_in)
             _go = st.button("Valider", type="primary", key=f"{_prefixe}_at_go_{_idx}")
             if _go and _val is None:
                 st.warning("Entrez d'abord une valeur dans le champ ci-dessus, "
@@ -62294,8 +62294,12 @@ def _rendre_atelier(_at, _prefixe):
                     st.write(_et["indice"])
             if _go and _val is not None:
                 _att = _et["attendu"]
+                # Tolérance ABSOLUE, dans l'unité de l'étape (|valeur − attendu| ≤ tol) :
+                # c'est ainsi que les ateliers ont été écrits (Re = 640 ± 1 MPa, cote ± 0,0002 mm).
+                # Une lecture relative (|attendu| × tol) acceptait 42 pièges sur 194 étapes
+                # (corrigé le 2026-09-25). Les EXERCICES_GUIDES, eux, restent en relatif (2 %).
                 _tol = _et.get("tol", 0.02)
-                if abs(_val - _att) <= max(abs(_att) * _tol, 1e-9):
+                if abs(_val - _att) <= max(_tol, 1e-9):
                     st.session_state[_cle_hist].append(
                         {"label": _et["label"],
                          "valeur": f"{_val:g} {_et.get('unite','')}".strip()})
