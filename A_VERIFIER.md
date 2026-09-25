@@ -73,10 +73,12 @@ complexes (forme algébrique, Δ < 0) — 13. équations différentielles du sec
   alors que les ateliers sont écrits en absolu : 42 pièges sur 194 étapes étaient comptés justes
   et 65 tolérances dépassaient ±10 %. Contrôleur passé en absolu ; `EXERCICES_GUIDES` (écrits
   en relatif, 2 %) inchangés. Corrigés en même temps : at30, at26 (saisie à 6 décimales), at58.
-- Audit à relancer après tout nouvel atelier (script d'audit utilisé le 2026-09-25, non versionné : pièges dans la tolérance,
-  réponse impossible à saisir avec le format de l'étape, tolérance > 10 %, tol = 0 sur une
-  valeur non entière). Dernier passage (fiche 18.9 incluse) : 196 étapes, 140 ateliers, 0 alerte.
-  Tolérances de 5 à 10 % vérifiées une à une (entiers à ±0,1, at84 = fourchette du cours).
+- **Audit à relancer après toute création ou modification d'atelier** :
+  `python outils/verifier_tolerances_ateliers.py` (code de sortie = nombre de défauts ; il cherche
+  les pièges dans la tolérance, les réponses impossibles à saisir avec le format de l'étape, les
+  tolérances > 10 % non déclarées voulues, et tol = 0 sur une valeur non entière). Dernier
+  passage (fiche 18.9 incluse) : 196 étapes, 140 ateliers, 0 défaut. Les tolérances de 5 à 10 %
+  qu'il liste ont été vérifiées une à une (entiers à ±0,1, at84 = fourchette du cours).
 - Règle pour les nouveaux ateliers : `tol` est une tolérance ABSOLUE dans l'unité de l'étape, et
   les valeurs données par l'indice (arrondis intermédiaires) doivent être acceptées.
 
