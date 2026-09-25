@@ -24,13 +24,26 @@ tolérance ABSOLUE, dans l'unité de l'étape. Jusqu'au 2026-09-25 il la lisait 
               VOULU ci-dessous : presque n'importe quelle réponse serait acceptée.
   ZÉRO        tol = 0 sur une valeur non entière : seule une saisie parfaite, souvent
               impossible, serait acceptée.
+  MASQUÉ      l'élève qui fait l'erreur d'un piège (tapée exactement, arrondie à la précision de
+              l'étape, ou à 3 ou 4 chiffres quand cela reste dans la tolérance) reçoit le message
+              d'un AUTRE piège. La page choisit le
+              piège le plus proche dans sa fenêtre de ±2 % (diagnostic_le_plus_proche) ; avant
+              le 2026-09-25 elle prenait le premier, et l'élève qui tapait 45 recevait le message
+              du piège 45,025 (at2).
+  ARRONDI     une étape déclare `"depend_de": {"etape": k, "formule": lambda v: ...}` (k = numéro
+              de l'étape dont elle réutilise le résultat) : on prend les arrondis à 2, 3 et 4
+              chiffres significatifs de la valeur attendue à l'étape k QUE CETTE ÉTAPE ACCEPTE,
+              on leur applique la formule, et le résultat doit être accepté par l'étape courante.
+              Sinon, l'élève qui a gardé un arrondi accepté plus haut est refusé plus bas (cas
+              rencontré sur at143, fiche 18.11). À déclarer sur toute étape qui réutilise un
+              résultat intermédiaire.
 
 Il affiche aussi, pour information, les tolérances entre 5 et 10 % (à vérifier une à une, mais
 souvent normales : un entier demandé à ±0,1, une fourchette de cours).
 
 Ce que cette partie ne voit pas, et qu'il faut contrôler à la main en relisant l'atelier : qu'une
-réponse obtenue avec les arrondis intermédiaires de l'indice (par exemple 3 000/3,46 au lieu de
-3 000/√12) reste acceptée. Cas rencontré sur at141 (fiche 18.9).
+réponse obtenue avec les arrondis de l'INDICE (par exemple 3 000/3,46 au lieu de 3 000/√12) reste
+acceptée (cas at141, fiche 18.9) — sauf si l'étape le déclare par depend_de.
 
 2. GÉNÉRATEURS (fonctions gen_*, page Entraînement)
 ---------------------------------------------------
@@ -47,6 +60,11 @@ La page accepte la réponse quand
   DIAG        un diagnostic (valeur d'erreur prévisible) tombe dans la tolérance de la bonne
               réponse, même après les nouveaux tirages de tirer_exercice : fabriquer_exo le
               retirerait en silence, et l'erreur ne serait plus expliquée.
+  MASQUÉ      l'élève qui fait l'erreur prévue par un diagnostic (et tape exactement sa valeur)
+              ne reçoit pas SON message. Le contrôle rejoue la page : fusionner_diagnostics
+              réunit les diagnostics confondus, diagnostic_le_plus_proche choisit le plus proche.
+              Avant le 2026-09-25, le second de deux diagnostics égaux était jeté (cas
+              gen_iso_jeu, 61 % des tirages).
   PLANTAGE    le générateur lève une exception.
 
 Un générateur défectueux compte pour UN défaut (le nombre de tirages touchés est affiché).
@@ -94,6 +112,9 @@ def charger_ateliers(src):
 
 def verifier_ateliers(src):
     ateliers = charger_ateliers(src)
+    g, definitions, _gens = espace_generateurs(src)
+    definir(g, definitions, "diagnostic_le_plus_proche")
+    plus_proche = g["diagnostic_le_plus_proche"]
     defauts, info, n_etapes = [], [], 0
     for a in ateliers:
         for i, e in enumerate(a["etapes"], 1):
@@ -113,6 +134,34 @@ def verifier_ateliers(src):
                                f"{decimales} décimales (± {tol:g})")
             if tol == 0 and not float(att).is_integer():
                 defauts.append(f"ZÉRO        {lieu} : tol = 0 sur {att:g}")
+            pieges = e.get("pieges", [])
+            candidats = [(pv, max(abs(pv) * 0.02, 1e-9), pm) for pv, pm in pieges]  # comme la page
+            dec_etape = max(0, math.ceil(-math.log10(tol) - 1e-9)) if tol > 0 else 6
+            for pv, pm in pieges:
+                # saisies plausibles de l'erreur : exacte, arrondie à la précision de l'étape, et
+                # arrondie à 3 ou 4 chiffres quand cet arrondi reste dans la tolérance de l'étape
+                saisies = [pv, round(pv, dec_etape)] + [
+                    float(f"{pv:.{c}g}") for c in (3, 4) if abs(float(f"{pv:.{c}g}") - pv) <= tol]
+                for tape in saisies:
+                    if abs(tape - pv) > max(abs(pv) * 0.02, 1e-9):
+                        continue  # saisie hors de la fenêtre de ce piège : pas une saisie de CETTE erreur
+                    recu = plus_proche(tape, candidats)
+                    if recu is not None and recu != pm:
+                        defauts.append(f"MASQUÉ      {lieu} : l'élève qui fait l'erreur {pv:g} "
+                                       f"(tape {tape:g}) reçoit le message d'un autre piège")
+                        break
+            dep = e.get("depend_de")
+            if dep:
+                prec = a["etapes"][dep["etape"] - 1]
+                att_p, tol_p = prec["attendu"], prec.get("tol", 0.02)
+                for chiffres in (2, 3, 4):
+                    v = float(f"{att_p:.{chiffres}g}")
+                    if abs(v - att_p) <= max(tol_p, 1e-9):
+                        w = dep["formule"](v)
+                        if abs(w - att) > max(tol, 1e-9):
+                            defauts.append(f"ARRONDI     {lieu} : avec {v:g} (accepté à l'étape "
+                                           f"{dep['etape']}), on obtient {w:.6g}, refusé ici "
+                                           f"(attendu {att:.6g} ± {tol:g})")
             rel = tol / abs(att) if att else 0.0
             if rel > 0.10 and cle not in VOULU:
                 defauts.append(f"LÂCHE       {lieu} : ± {tol:g} sur {att:g}, soit "
@@ -126,7 +175,8 @@ def verifier_ateliers(src):
         for d in defauts:
             print("  " + d)
     else:
-        print("0 piège accepté, 0 réponse impossible à saisir, 0 tolérance aberrante.")
+        print("0 piège accepté, 0 piège masqué, 0 réponse impossible à saisir, 0 tolérance "
+              "aberrante, 0 arrondi enchaîné refusé.")
     if info:
         print("Pour information, tolérances de 5 à 10 % (ou larges voulues), à vérifier une à une :")
         for x in info:
@@ -195,14 +245,16 @@ def appeler(g, definitions, fonction):
 
 def verifier_generateurs(src):
     g, definitions, gens = espace_generateurs(src)
-    for aide in ("fr", "lire_nombre", "decimales_affichage", "tirer_exercice"):
+    for aide in ("fr", "lire_nombre", "decimales_affichage", "tirer_exercice",
+                 "fusionner_diagnostics", "diagnostic_le_plus_proche"):
         if aide not in definitions:
             raise SystemExit(f"fonction {aide} introuvable dans app.py")
         definir(g, definitions, aide)
     fr, lire, dec, tirer = g["fr"], g["lire_nombre"], g["decimales_affichage"], g["tirer_exercice"]
+    fusionner, plus_proche = g["fusionner_diagnostics"], g["diagnostic_le_plus_proche"]
     defauts = []
     for nom in gens:
-        affichee = diag_dans_tol = 0
+        affichee = diag_dans_tol = masque = 0
         exemple = ""
         try:
             appeler(g, definitions, nom)  # définit le générateur et ses dépendances
@@ -220,11 +272,26 @@ def verifier_generateurs(src):
                         diag_dans_tol += 1
                         exemple = exemple or f"graine {graine} : diagnostic {d['v']:.6g} dans ± {tol:g}"
                         break
+                # comme la page : fusion des diagnostics confondus, puis le plus proche de la saisie
+                affiches = fusionner(ex.get("diag", []), ex["rep"], tol)
+                candidats = [(d["v"], max(tol, abs(d["v"]) * 0.005), d["m"]) for d in affiches]
+                for d in ex.get("diag", []):
+                    if d.get("v") is None or abs(d["v"] - ex["rep"]) <= tol:
+                        continue
+                    recu = plus_proche(d["v"], candidats)
+                    if recu is None or d["m"] not in recu:
+                        masque += 1
+                        exemple = exemple or (f"graine {graine} : l'erreur {d['v']:.6g} reçoit un "
+                                              f"autre message")
+                        break
         except Exception as err:  # noqa: BLE001 — on veut signaler tout plantage
             defauts.append(f"PLANTAGE    {nom} : {type(err).__name__} : {err}")
             continue
         if affichee:
             defauts.append(f"AFFICHÉE    {nom} : réponse affichée refusée dans {affichee}/{TIRAGES} "
+                           f"tirages ({exemple})")
+        if masque:
+            defauts.append(f"MASQUÉ      {nom} : deux diagnostics confondus dans {masque}/{TIRAGES} "
                            f"tirages ({exemple})")
         if diag_dans_tol:
             defauts.append(f"DIAG        {nom} : diagnostic dans la tolérance dans "
@@ -246,8 +313,8 @@ def verifier_generateurs(src):
         for d in defauts:
             print("  " + d)
     else:
-        print("0 réponse affichée refusée, 0 diagnostic dans la tolérance, 0 plantage, "
-              "0 nombre mal lu.")
+        print("0 réponse affichée refusée, 0 diagnostic dans la tolérance, 0 diagnostic masqué, "
+              "0 plantage, 0 nombre mal lu.")
     return len(defauts)
 
 

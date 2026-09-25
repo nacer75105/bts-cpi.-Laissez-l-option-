@@ -52999,6 +52999,39 @@ def decimales_affichage(tol):
     return max(2, math.ceil(-math.log10(tol) - 1e-9))
 
 
+def diagnostic_le_plus_proche(valeur, candidats):
+    """Message du candidat (valeur, fenêtre, message) le PLUS PROCHE de la valeur tapée, parmi ceux
+    dont la fenêtre la contient ; None sinon. Avant le 2026-09-25, on prenait le PREMIER candidat
+    dont la fenêtre contenait la valeur : avec la fenêtre de ±2 % des pièges d'atelier, l'élève qui
+    tapait 45 (cote nominale) recevait le message du piège 45,025 (erreur de signe)."""
+    meilleur = None
+    for v, fenetre, message in candidats:
+        ecart = abs(valeur - v)
+        if ecart <= fenetre and (meilleur is None or ecart < meilleur[0]):
+            meilleur = (ecart, message)
+    return meilleur[1] if meilleur else None
+
+
+def fusionner_diagnostics(diagnostics, rep, tol):
+    """Retire les diagnostics qui tombent dans la tolérance de la bonne réponse, et RÉUNIT ceux dont
+    les valeurs sont confondues (à tol près) : deux erreurs différentes qui donnent le même nombre
+    reçoivent un message commun, au lieu que la seconde soit jetée (corrigé le 2026-09-25)."""
+    groupes = []
+    for d in diagnostics:
+        v = d.get("v")
+        if v is None or abs(v - rep) <= tol:
+            continue
+        for g in groupes:
+            if abs(v - g["v"]) <= tol:
+                g["messages"].append(d["m"])
+                break
+        else:
+            groupes.append({"v": v, "messages": [d["m"]]})
+    return [{"v": g["v"], "m": g["messages"][0] if len(g["messages"]) == 1 else
+             "Plusieurs erreurs donnent ce résultat : " +
+             " — OU — ".join(g["messages"])} for g in groupes]
+
+
 def tirer_exercice(generateur, essais=50):
     """Tire un exercice, en écartant les tirages où un diagnostic tombe dans la tolérance de la
     bonne réponse : fabriquer_exo le retirerait sans rien dire, et l'erreur de l'élève ne serait
@@ -53033,17 +53066,7 @@ def fabriquer_exo(famille=None):
     ex = tirer_exercice(random.choice(pool))
 
     tol = ex.get("tol", 0.001)
-    vus = []
-    propres = []
-    for d in ex.get("diag", []):
-        v = d["v"]
-        if v is None or abs(v - ex["rep"]) <= tol:
-            continue
-        if any(abs(v - u) <= tol for u in vus):
-            continue
-        vus.append(v)
-        propres.append(d)
-    ex["diag"] = propres
+    ex["diag"] = fusionner_diagnostics(ex.get("diag", []), ex["rep"], tol)
     return ex
 
 
@@ -53112,11 +53135,9 @@ def page_entrainement():
                 E["serie"] += 1
                 E["fini"] = True
             else:
-                message = None
-                for d in ex.get("diag", []):
-                    if abs(v - d["v"]) <= max(ex.get("tol", 0.001), abs(d["v"]) * 0.005):
-                        message = d["m"]
-                        break
+                message = diagnostic_le_plus_proche(
+                    v, [(d["v"], max(ex.get("tol", 0.001), abs(d["v"]) * 0.005), d["m"])
+                        for d in ex.get("diag", [])])
                 if message is None:
                     r = ex["rep"]
                     if r and abs(v + r) < ex.get("tol", 0.001):
@@ -63797,10 +63818,9 @@ def _rendre_atelier(_at, _prefixe):
                     # générique (facteur 2, conversion d'unité, signe...), sinon l'aide
                     # de l'étape : jamais de "faux" sans explication.
                     _trouve = None
-                    for _piege, _msg in _et.get("pieges", []):
-                        if abs(_val - _piege) <= max(abs(_piege) * 0.02, 1e-9):
-                            _trouve = _msg
-                            break
+                    _trouve = diagnostic_le_plus_proche(
+                        _val, [(_piege, max(abs(_piege) * 0.02, 1e-9), _msg)
+                               for _piege, _msg in _et.get("pieges", [])])
                     if not _trouve:
                         _trouve = _diagnostic_erreur(_val, _att)
                     if _trouve:

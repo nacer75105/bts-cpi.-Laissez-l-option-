@@ -82,6 +82,18 @@ complexes (forme algébrique, Δ < 0) — 13. équations différentielles du sec
 - Règle pour les nouveaux ateliers : `tol` est une tolérance ABSOLUE dans l'unité de l'étape, et
   les valeurs données par l'indice (arrondis intermédiaires) doivent être acceptées.
 
+### Diagnostics masqués et arrondis enchaînés (corrigé le 2026-09-25)
+
+- Pièges d'atelier : la page prenait le PREMIER piège dont la fenêtre de ±2 % contenait la saisie ;
+  sur des cotes (at1, at2, at3), l'élève qui tapait 45 recevait le message du piège 45,025. Elle
+  prend désormais le PLUS PROCHE (`diagnostic_le_plus_proche`), comme la page Entraînement.
+- Générateurs : deux diagnostics de même valeur (7 générateurs, jusqu'à 61 % des tirages de
+  gen_iso_jeu) — le second était jeté. `fusionner_diagnostics` réunit désormais leurs messages.
+- L'outil d'audit contrôle aussi : pièges et diagnostics MASQUÉS (en rejouant la logique de la
+  page), et arrondis enchaînés d'une étape à l'autre (clé facultative `depend_de` sur une étape
+  d'atelier : `{"etape": k, "formule": lambda v: ...}`), à déclarer sur toute étape qui réutilise
+  un résultat intermédiaire. Contrôles validés en réintroduisant chaque défaut sur une copie.
+
 ### 18.10 — Loi normale et approximation d'une loi binomiale (faite le 2026-09-25)
 
 - Insérée après 18.9 (ordre affiché … 18.6 → 18.9 → 18.10 → 18.7), avec méthode, figures
