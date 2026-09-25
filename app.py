@@ -5514,6 +5514,81 @@ def linearisation_ln():
     return _svg("".join(p), 760, 404)
 
 
+def histogramme_vers_densite():
+    p = [_txt(40, 24, "1 000 attentes simulées entre 0 et 10 min, rangées par classes de 1 min.",
+              12, TRAIT, "start", True)]
+    tirages = random.Random(2026)  # graine fixe : la figure est toujours la même
+    valeurs = [10 * tirages.random() for _ in range(1000)]
+    effectifs = [sum(1 for v in valeurs if k <= v < k + 1) for k in range(10)]
+    x0, y0, kx, ky = 90, 290, 56, 1600  # 56 px par minute ; 1 600 px par unité de hauteur
+    p.append(f"<line x1='{x0}' y1='{y0}' x2='{x0 + kx * 10 + 20}' y2='{y0}' stroke='{FIN}' stroke-width='1.4'/>")
+    p.append(f"<line x1='{x0}' y1='{y0}' x2='{x0}' y2='{y0 - ky * 0.14}' stroke='{FIN}' stroke-width='1.4'/>")
+    p.append(_txt(x0 + kx * 10 + 24, y0 + 4, "t (min)", 12, FIN))
+    p.append(_txt(x0 + 8, y0 - ky * 0.14 + 10, "hauteur = fréquence ÷ largeur (ici 0,10 ÷ 1)", 11, FIN))
+    for g in range(0, 11, 2):
+        p.append(_txt(x0 + kx * g, y0 + 18, str(g), 11, FIN, "middle"))
+    for h in (0.05, 0.10):
+        p.append(f"<line x1='{x0 - 4}' y1='{y0 - ky * h:.1f}' x2='{x0}' y2='{y0 - ky * h:.1f}' stroke='{FIN}'/>")
+        p.append(_txt(x0 - 8, y0 - ky * h + 4, fr(h, 2), 11, FIN, "end"))
+    for k, n in enumerate(effectifs):
+        h = n / 1000  # classe de largeur 1 : hauteur = fréquence
+        couleur = ARBRE if 2 <= k <= 4 else ALESAGE  # les classes de 2 à 5 min sont surlignées
+        p.append(f"<rect x='{x0 + kx * k + 2}' y='{y0 - ky * h:.1f}' width='{kx - 4}' "
+                 f"height='{ky * h:.1f}' fill='{couleur}' fill-opacity='0.28' stroke='{couleur}'/>")
+        # effectif écrit à hauteur fixe, à l'intérieur de toutes les barres
+        p.append(_txt(x0 + kx * k + kx / 2, y0 - 40, str(n), 10, TRAIT, "middle"))
+    p.append(f"<line x1='{x0}' y1='{y0 - ky * 0.1}' x2='{x0 + kx * 10}' y2='{y0 - ky * 0.1}' "
+             f"stroke='{ARBRE}' stroke-width='2.4' stroke-dasharray='6 4'/>")
+    p.append(_txt(x0 + kx * 10 + 6, y0 - ky * 0.1 + 4, "densité f = 0,1", 12, ARBRE, "start", True))
+    p.append(_txt(x0 + kx * 3.5, y0 - 12, "3 barres ≈ 30 %", 11, ARBRE, "middle", True))
+    p.append(f"<rect x='40' y='318' width='680' height='58' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p.append(_txt(56, 342, "Chaque classe contient environ 100 attentes sur 1 000 (nombre écrit dans chaque barre).", 12, TRAIT, "start", True))
+    p.append(_txt(56, 364, "Aire d'une barre = fréquence de la classe ; aire totale = 1. Les barres se rangent autour de 0,1.", 12, TRAIT, "start", True))
+    return _svg("".join(p), 760, 390)
+
+
+def aire_uniforme():
+    p = [_txt(40, 24, "T ∼ U([0 ; 10]) : P(2 ≤ T ≤ 5) est une aire à gauche, un écart F(5) − F(2) à droite.",
+              12, TRAIT, "start", True)]
+    # --- panneau gauche : la densité, aire coloriée entre 2 et 5 -----------------
+    x0, y0, kx, H = 60, 270, 26, 170  # 26 px par minute ; la hauteur 0,1 est dessinée sur 170 px
+    p.append(_txt(x0 + kx * 5, 52, "densité f(t)", 12, ALESAGE, "middle", True))
+    p.append(f"<line x1='{x0}' y1='{y0}' x2='{x0 + kx * 12}' y2='{y0}' stroke='{FIN}' stroke-width='1.4'/>")
+    p.append(f"<line x1='{x0}' y1='{y0}' x2='{x0}' y2='{y0 - H - 30}' stroke='{FIN}' stroke-width='1.4'/>")
+    p.append(f"<rect x='{x0}' y='{y0 - H}' width='{kx * 10}' height='{H}' fill='none' stroke='{ALESAGE}' stroke-width='2.4'/>")
+    p.append(f"<rect x='{x0 + kx * 2}' y='{y0 - H}' width='{kx * 3}' height='{H}' fill='{ARBRE}' fill-opacity='0.35'/>")
+    p.append(_txt(x0 + kx * 3.5, y0 - H / 2 - 6, "aire", 12, ARBRE, "middle", True))
+    p.append(_txt(x0 + kx * 3.5, y0 - H / 2 + 10, "= 0,3", 12, ARBRE, "middle", True))
+    p.append(_txt(x0 - 6, y0 - H + 4, "0,1", 11, FIN, "end"))
+    for g in (0, 2, 5, 10):
+        p.append(_txt(x0 + kx * g, y0 + 16, str(g), 11, FIN, "middle"))
+    p.append(_txt(x0 + kx * 12 + 4, y0 + 4, "t", 12, FIN))
+    p.append(_txt(x0 + kx * 5, y0 + 36, "largeur 3 × hauteur 0,1 = 0,3", 12, TRAIT, "middle"))
+    # --- panneau droit : la fonction de répartition, rampe de 0 à 1 ----------------
+    x1, k1, H1 = 420, 26, 200
+    p.append(_txt(x1 + k1 * 5, 52, "répartition F(t) = P(T ≤ t)", 12, OK, "middle", True))
+    p.append(f"<line x1='{x1}' y1='{y0}' x2='{x1 + k1 * 12}' y2='{y0}' stroke='{FIN}' stroke-width='1.4'/>")
+    p.append(f"<line x1='{x1}' y1='{y0}' x2='{x1}' y2='{y0 - H1 - 10}' stroke='{FIN}' stroke-width='1.4'/>")
+    p.append(f"<polyline points='{x1},{y0} {x1 + k1 * 10},{y0 - H1} {x1 + k1 * 12},{y0 - H1}' "
+             f"fill='none' stroke='{OK}' stroke-width='2.4'/>")
+    for t, lib in ((2, "F(2) = 0,2"), (5, "F(5) = 0,5")):
+        yy = y0 - H1 * t / 10
+        p.append(f"<line x1='{x1}' y1='{yy:.1f}' x2='{x1 + k1 * t}' y2='{yy:.1f}' stroke='{FIN}' stroke-dasharray='3 3'/>")
+        p.append(f"<circle cx='{x1 + k1 * t}' cy='{yy:.1f}' r='4' fill='{OK}'/>")
+        p.append(_txt(x1 + k1 * t + 8, yy + 16, lib, 11, OK))
+    p.append(f"<line x1='{x1 - 14}' y1='{y0 - H1 * 0.2:.1f}' x2='{x1 - 14}' y2='{y0 - H1 * 0.5:.1f}' stroke='{ARBRE}' stroke-width='3'/>")
+    p.append(_txt(x1 - 18, y0 - H1 * 0.35 + 4, "0,3", 12, ARBRE, "end", True))
+    p.append(_txt(x1 - 6, y0 - H1 + 4, "1", 11, FIN, "end"))
+    for g in (0, 2, 5, 10):
+        p.append(_txt(x1 + k1 * g, y0 + 16, str(g), 11, FIN, "middle"))
+    p.append(_txt(x1 + k1 * 12 + 4, y0 + 4, "t", 12, FIN))
+    p.append(_txt(x1 + k1 * 5, y0 + 36, "F(5) − F(2) = 0,5 − 0,2 = 0,3", 12, TRAIT, "middle"))
+    p.append(f"<rect x='40' y='322' width='680' height='52' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p.append(_txt(56, 344, "À gauche, la probabilité est l'aire du rectangle coloré ; l'aire totale du grand rectangle vaut 1.", 12, TRAIT, "start", True))
+    p.append(_txt(56, 364, "À droite, F accumule cette aire de gauche à droite : c'est le « compteur d'aire » de la fiche 17.2.", 12, TRAIT, "start", True))
+    return _svg("".join(p), 760, 388)
+
+
 def extremums_polynome():
     p = [_txt(40, 24, "f(x) = x³ − 3x² + 2 : un maximum local puis un minimum local.",
               12, TRAIT, "start", True)]
@@ -5918,6 +5993,8 @@ FIGURES = {
     "exp_ln_courbes": ("Exponentielle et logarithme : deux courbes symétriques", exp_ln_courbes),
     "nuage_moindres_carres": ("Le point moyen G, la droite des moindres carrés et les écarts", nuage_moindres_carres),
     "linearisation_ln": ("Linéariser une décharge avec z = ln u", linearisation_ln),
+    "histogramme_vers_densite": ("1 000 attentes simulées : un histogramme plat, la densité 0,1", histogramme_vers_densite),
+    "aire_uniforme": ("Probabilité = aire sous la densité ; F compte l'aire", aire_uniforme),
     "extremums_polynome": ("Un maximum local puis un minimum local", extremums_polynome),
     "dispersion_deux_reglages": ("Six mesures dispersées autour de leur moyenne", dispersion_deux_reglages),
     "venn_deux_evenements": ("Union et intersection de deux événements", venn_deux_evenements),
@@ -9607,6 +9684,56 @@ QUIZ["Mathématiques BTS CPI — probabilités et équations différentielles"] 
        "plus proche de 4 bar", "Le système est resté bloqué à mi-parcours"], 1,
       "0,4 / 8 = 5 % de la valeur de départ, donc 95 % de la baisse est faite — exactement la "
       "règle du 3τ, qu'il s'agisse d'une montée ou d'une descente.", "Base"),
+
+    q("L'attente T d'une navette suit la loi uniforme sur [0 ; 10] (en minutes). "
+      "Que vaut P(T ≤ 4) ?",
+      ["0,04", "4", "0,4", "0,6"], 2,
+      "P(T ≤ 4) = (4 − 0)/10 = 0,4 : longueur favorable (4 min) ÷ longueur totale (10 min). "
+      "0,6 est P(T > 4).", "Base"),
+
+    q("X suit la loi uniforme sur [2 ; 6]. Quelle est la hauteur de sa densité ?",
+      ["0,25", "4", "1/6", "1"], 0,
+      "f(x) = 1/(b − a) = 1/(6 − 2) = 1/4 = 0,25, pour que l'aire du rectangle (4 × 0,25) "
+      "vaille 1. 1/6 oublie de retrancher a.", "Base"),
+
+    q("X suit la loi uniforme sur [0 ; 10]. Que vaut P(X = 3) ?",
+      ["0,3", "0,1", "1/3", "0"], 3,
+      "Pour une loi à densité, une valeur isolée correspond à un rectangle de largeur nulle : "
+      "son aire est 0. 0,3 est P(X ≤ 3) et 0,1 la hauteur de la densité.", "Intermédiaire"),
+
+    q("X suit la loi uniforme sur [4 ; 10]. Que vaut son espérance E(X) ?",
+      ["5", "7", "6", "3"], 1,
+      "E(X) = (a + b)/2 = (4 + 10)/2 = 7, le milieu de l'intervalle. 5 serait le milieu de "
+      "[0 ; 10], et 6 la longueur de l'intervalle.", "Base"),
+
+    q("Une erreur d'arrondi suit la loi uniforme sur [−0,005 ; 0,005] mm. Sa densité vaut 100 "
+      "sur cet intervalle. Est-ce possible ?",
+      ["Non, une densité ne dépasse jamais 1",
+       "Oui : seule l'aire est une probabilité, et 0,01 × 100 = 1",
+       "Non, il y a une erreur de calcul, la densité vaut 0,01",
+       "Oui, mais seulement pour une erreur négative"], 1,
+      "La densité n'est pas une probabilité, c'est une probabilité par unité de longueur (comme "
+      "une masse linéique). Sur un intervalle très étroit (0,01 mm), elle est très haute (100) "
+      "pour que l'aire vaille 1.", "Piège"),
+
+    q("X suit la loi uniforme sur [0 ; 20]. Que vaut sa fonction de répartition F(5) ?",
+      ["5", "0,05", "0,75", "0,25"], 3,
+      "F(5) = P(X ≤ 5) = (5 − 0)/20 = 0,25 : l'aire accumulée à gauche de 5. 0,75 est "
+      "P(X > 5).", "Intermédiaire"),
+
+    q("Pour laquelle de ces grandeurs la loi uniforme est-elle un MAUVAIS modèle ?",
+      ["Le diamètre d'arbres tournés sur un tour réglé à 20 mm",
+       "L'erreur d'arrondi d'un afficheur numérique",
+       "L'attente d'une navette qui passe à intervalles réguliers, quand on arrive au hasard",
+       "La position d'arrêt d'un plateau tournant lancé à la main"], 0,
+      "Les diamètres usinés se regroupent autour de la cote de réglage (courbe en cloche, loi "
+      "normale, fiche 7.3) : certaines valeurs sont favorisées, ce n'est pas uniforme.",
+      "Intermédiaire"),
+
+    q("Dans un tableur, quelle formule simule une valeur de loi uniforme sur [5 ; 8] ?",
+      ["=8*ALEA()", "=5*ALEA()+8", "=5+3*ALEA()", "=ALEA()*(5+8)"], 2,
+      "a + (b − a) × ALEA() = 5 + 3 × ALEA() : ALEA() est entre 0 et 1, × 3 étire à la longueur "
+      "3, + 5 décale au bon endroit. =8*ALEA() donnerait [0 ; 8].", "Calcul"),
 ]
 
 QUIZ["Mathématiques BTS CPI — calcul matriciel et modélisation géométrique"] = [
@@ -46348,7 +46475,7 @@ d'usure), machine par machine.
 BLOC_18 = {
     "id": 18,
     "titre": "Bloc 18 — Mathématiques BTS CPI : probabilités et équations différentielles",
-    "resume": "Quatre modules du programme d'examen : probabilités 1, probabilités 2, statistique inférentielle et équations différentielles. Ce bloc n'en couvre qu'une partie : lois exponentielle et de Poisson, loi uniforme, approximation normale, tests d'hypothèse et équations du second ordre ne sont pas encore traités.",
+    "resume": "Quatre modules du programme d'examen : probabilités 1, probabilités 2, statistique inférentielle et équations différentielles. Ce bloc n'en couvre qu'une partie : lois exponentielle et de Poisson, approximation normale, tests d'hypothèse et équations du second ordre ne sont pas encore traités.",
     "fiches": [
         {
             "id": "18.1",
@@ -47227,6 +47354,434 @@ par lot**, avec des dispersions voisines : ce n'est donc ni la moyenne par lot n
 qui les départage. C'est le **taux p** : 10 % de pièces défectueuses chez Y contre 5 % chez X,
 c'est-à-dire la qualité de chaque pièce. Comparer E(X) sans regarder n peut tromper — deux lots
 de Y (100 pièces) contiendront en moyenne 10 défectueuses, contre 5 pour un lot de X.
+""",
+        },
+        {
+            "id": "18.9",
+            "titre": "Probabilités 1 : la loi uniforme, première loi à densité",
+            "duree": "4 h",
+            "cours": """
+
+### 1. Pourquoi cette fiche : quand le résultat n'est plus un nombre entier
+
+Dans les fiches 18.2 et 18.6, la variable aléatoire X comptait quelque chose : un nombre de pièces
+défectueuses, 0, 1, 2, 3… On pouvait dessiner un bâton par valeur, et la hauteur du bâton était
+la probabilité. Beaucoup de grandeurs d'atelier ne comptent rien : elles **se mesurent**, et
+peuvent prendre **toutes les valeurs d'un intervalle** :
+
+- **une position au hasard sur une pièce** : l'endroit d'une inclusion le long d'une barre
+  laminée de 3 m, n'importe où entre 0 et 3 000 mm ;
+- **un temps d'attente sans information** : une navette automatique passe au poste toutes les
+  10 min, l'opérateur finit sa pièce à un instant quelconque ; il attend entre 0 et 10 min ;
+- **une erreur d'arrondi** : un pied à coulisse numérique affiche au 0,01 mm près ; l'écart entre
+  la vraie cote et la valeur affichée est quelque part entre −0,005 et +0,005 mm.
+
+**Le problème.** Avec une infinité de valeurs possibles, on ne peut plus dessiner un bâton par
+valeur. Pire : la probabilité d'obtenir **exactement** une valeur précise (attendre exactement
+3,000 000… min) est nulle — une infinité de valeurs doivent se partager les 100 % : chacune,
+prise seule, ne peut rien recevoir (le §3 le montre avec une aire). Il faut un nouvel outil, et
+c'est l'idée centrale de cette fiche :
+
+> **Pour une grandeur mesurée, une probabilité se lit comme une AIRE sous une courbe, la
+> densité.**
+
+La loi uniforme est la plus simple de ces lois : sa courbe est un simple **rectangle**. Tout ce
+qu'on y apprend (aire, densité, fonction de répartition, espérance) servira tel quel pour les
+autres lois à densité, comme la loi normale (fiche 7.3), dont la courbe en cloche n'est plus un
+rectangle mais se lit de la même façon : une probabilité est une aire sous la courbe.
+
+**Vocabulaire :**
+- **Variable aléatoire continue** : une grandeur dont la valeur dépend du hasard et peut prendre
+  toutes les valeurs d'un intervalle (un temps, une position, une erreur). On la note X ou T.
+- **Densité** : la courbe dont l'aire donne les probabilités (§2). Le mot vient de la même idée
+  que la densité d'un matériau : une quantité par unité de place, ici une probabilité par unité
+  de longueur.
+- **Uniforme** : « partout pareil » — aucune valeur de l'intervalle n'est favorisée.
+
+### 2. De l'histogramme au rectangle : pourquoi c'est l'aire qui compte
+
+**On simule 1 000 temps d'attente** de la navette (0 à 10 min), puis on les range par **classes**
+de 1 min : on compte combien d'attentes tombent entre 0 et 1 min, entre 1 et 2 min, etc. La
+**fréquence** d'une classe est la part des 1 000 attentes qui y tombent (100 sur 1 000 = 10 %).
+On dessine une barre par classe : c'est un **histogramme**.
+
+[[FIG:histogramme_vers_densite]]
+
+Chaque classe contient environ 100 valeurs sur 1 000, soit **environ 10 %**. Rien ne favorise une
+minute plutôt qu'une autre : l'histogramme est « plat ». Les barres ne sont pas exactement à 100
+(94, 122, 84…) : refaites la simulation, vous obtiendrez d'autres nombres. Ces petites variations
+d'une série à l'autre s'appellent des **fluctuations**.
+
+**Pourquoi régler l'aire, et pas la hauteur ?** Regroupons les **mêmes** 1 000 attentes avec des
+classes de largeurs différentes :
+
+| largeur des classes | attentes par classe (en moyenne) | fréquence par classe | hauteur = fréquence ÷ largeur |
+|---|---|---|---|
+| 2 min | 200 | 0,20 | 0,20 ÷ 2 = **0,10** |
+| 1 min | 100 | 0,10 | 0,10 ÷ 1 = **0,10** |
+| 0,5 min | 50 | 0,05 | 0,05 ÷ 0,5 = **0,10** |
+| 0,1 min | 10 | 0,01 | 0,01 ÷ 0,1 = **0,10** |
+
+**La fréquence d'une classe dépend de la façon dont on découpe** : 20 %, 10 %, 5 %, 1 %… Si l'on
+prenait la fréquence comme hauteur, le dessin changerait à chaque découpage. **La hauteur
+« fréquence ÷ largeur », elle, reste autour de 0,10 quel que soit le découpage** : c'est elle qui
+décrit la loi, la **densité**. Et comme hauteur = fréquence ÷ largeur, on a, en sens inverse,
+**fréquence = hauteur × largeur** (comme vitesse = distance ÷ temps donne distance = vitesse ×
+temps) : la fréquence, donc la probabilité, est l'**aire** de la barre :
+
+- l'aire d'une barre = la proportion des attentes dans cette classe ;
+- l'aire de plusieurs barres voisines = la proportion des attentes dans l'intervalle couvert
+  (entre 2 et 5 min : trois barres, environ 3 × 0,10 = 30 %) ;
+- **l'aire totale = 100 % = 1**, puisque toutes les attentes sont quelque part entre 0 et 10.
+
+*Avec des classes très fines, chaque classe ne contient plus que quelques valeurs, et les hauteurs
+fluctuent davantage autour de 0,10 (avec 1 000 attentes et des classes de 0,1 min, entre 0,03 et
+0,18). Il faut alors plus de simulations pour que le haut de l'histogramme se lisse.* À la limite,
+avec énormément de simulations et des classes très fines, le haut de l'histogramme devient une
+**ligne horizontale de hauteur 0,1** : c'est la **densité** f de la loi.
+
+**Pourquoi la hauteur vaut exactement 0,1.** L'aire totale doit valoir 1 (l'événement « la
+navette finit par passer » est certain). Le rectangle a une largeur de 10 min : sa hauteur est
+donc 1/10 = **0,1**.
+
+> **Densité de la loi uniforme sur [a ; b]** : f(x) = **1/(b − a)** pour x entre a et b, et
+> f(x) = 0 en dehors.
+
+*Attention : la densité n'est **pas** une probabilité. Pensez à la **masse linéique** d'une barre
+d'acier, écrite dans le catalogue du fournisseur : 2 kg/m. Ce 2 n'est pas une masse, c'est une
+masse **par mètre** : pour obtenir une masse, on le multiplie par une longueur (3 m de barre font
+2 × 3 = 6 kg), et un point de la barre, de longueur nulle, ne pèse rien. La densité fonctionne de
+la même façon : c'est une probabilité **par minute** (ou par mm). Seule l'**aire**,
+hauteur × largeur, est une probabilité.*
+
+### 3. Calculer une probabilité : l'aire d'un rectangle
+
+Pour X qui suit la loi uniforme sur [a ; b] — on écrit **X ∼ U([a ; b])**, qui se lit « X suit la
+loi uniforme sur l'intervalle de a à b », le U étant celui d'Uniforme (comme X ∼ B(n ; p) pour la
+loi binomiale, fiche 18.2) — et pour c ≤ d dans [a ; b] :
+
+> **P(c ≤ X ≤ d) = aire du rectangle = (d − c) × 1/(b − a) = (d − c)/(b − a)**
+
+*En mots : **longueur de l'intervalle qui nous intéresse ÷ longueur totale**.*
+
+[[FIG:aire_uniforme]]
+
+**C'est exactement l'intégrale de la fiche 17.2.** Une aire sous une courbe entre c et d s'écrit
+∫ de c à d de f(x) dx (qui se lit « intégrale de c à d de f »), et se calcule avec une primitive :
+F(d) − F(c). Ici, f(x) = 1/(b − a) est une constante ; une primitive est x/(b − a) (vérification,
+comme en 17.2 : (x/(b − a))' = 1/(b − a) ✓, puisque 1/(b − a) est une simple constante, comme le
+k de k × x). Donc
+
+∫ de c à d de 1/(b − a) dx = d/(b − a) − c/(b − a) = **(d − c)/(b − a)**.
+
+*Pour la loi uniforme, pas besoin de primitive : l'aire d'un rectangle suffit. Mais c'est la même
+opération qui donne les probabilités des lois dont la densité n'est plus un rectangle, comme la
+loi normale.*
+
+**Exemple entièrement déroulé — l'attente T de la navette, T ∼ U([0 ; 10]).**
+
+- P(T ≤ 3) = (3 − 0)/10 = **0,3** : 3 chances sur 10 d'attendre au plus 3 min.
+- P(2 ≤ T ≤ 5) = (5 − 2)/10 = **0,3** : même longueur (3 min), même probabilité, où que soit
+  l'intervalle — c'est le sens de « uniforme ».
+- P(T > 8) = (10 − 8)/10 = **0,2**.
+- P(8 ≤ T ≤ 15) = P(8 ≤ T ≤ 10) = **0,2** : au-delà de 10, la densité est nulle, il n'y a plus
+  d'aire.
+
+**Deux conséquences qui surprennent :**
+1. **P(T = 5) = 0.** Un rectangle de largeur nulle a une aire nulle, comme un point de la barre
+   ne pèse rien. Attendre *exactement* 5,000 000… min n'a aucune chance ; attendre « entre 4,9 et
+   5,1 min » en a 0,02.
+2. **≤ ou < ne change rien** : P(T < 3) = P(T ≤ 3) = 0,3, puisque le point 3 lui-même ne pèse
+   rien. (C'est le contraire de la loi binomiale, où P(X < 3) et P(X ≤ 3) diffèrent.)
+
+### 4. La fonction de répartition : l'aire accumulée à gauche
+
+> **F(x) = P(X ≤ x)** = l'aire sous la densité, à gauche de x.
+
+*Pourquoi ce nom : F dit comment les 100 % de probabilité sont **répartis** le long de l'axe. Pour
+chaque x, elle donne la part déjà « versée » à gauche de x : avant a, rien n'est encore versé
+(F = 0) ; après b, tout l'est (F = 1).*
+
+Pour X ∼ U([a ; b]) : F(x) = 0 si x < a ; **F(x) = (x − a)/(b − a)** si a ≤ x ≤ b ; F(x) = 1 si
+x > b.
+
+Pour la navette : F(t) = t/10 entre 0 et 10. Sa courbe est une **rampe** qui monte de 0 à 1
+(figure ci-dessus, à droite) : plus on attend longtemps, plus il est probable que la navette soit
+déjà passée.
+
+**Le lien avec la fiche 17.2 : F est le « compteur d'aire ».** La fiche 17.2 présentait la
+primitive comme un compteur kilométrique de l'aire. F est exactement ce compteur. En 17.2,
+n'importe quelle primitive convenait ; F est **celle qui vaut 0 en a**, comme un compteur remis à
+zéro au départ, et c'est pourquoi elle se lit directement comme une probabilité (vérifiez :
+F(x) = (x − a)/(b − a) a bien pour dérivée 1/(b − a) = f(x)). On retrouve la même formule :
+
+> **P(c ≤ X ≤ d) = F(d) − F(c)**
+
+*Navette : P(2 ≤ T ≤ 5) = F(5) − F(2) = 0,5 − 0,2 = 0,3 — le même résultat qu'au §3.*
+
+### 5. Espérance et écart-type : que se passe-t-il sur un grand nombre de fois ?
+
+Comme pour la loi binomiale (fiche 18.6), l'**espérance** E(X) est la valeur moyenne obtenue sur
+un grand nombre de répétitions, et l'**écart-type** σ(X) mesure la dispersion autour de cette
+moyenne.
+
+> **E(X) = (a + b)/2**  (le milieu de l'intervalle)
+> **V(X) = (b − a)²/12** et **σ(X) = (b − a)/√12 ≈ 0,289 × (b − a)**
+
+**D'où vient E(X) = (a + b)/2 — l'image d'atelier.** Découpez le rectangle de la densité dans une
+tôle homogène et posez-le sur un couteau : il tient en équilibre en son milieu, (a + b)/2, son
+centre de gravité. L'espérance est ce point d'équilibre. Le rectangle est symétrique : les
+attentes courtes et les attentes longues se compensent exactement.
+
+> *Par le calcul (fiche 17.5), pour ceux qui veulent le voir.* Pour une loi à bâtons (dite
+> **discrète**, comme la binomiale), l'espérance est la somme des valeurs multipliées chacune par
+> sa probabilité : x₁ × p₁ + x₂ × p₂ + … (on l'écrit Σ xᵢ × pᵢ, Σ voulant dire « somme de »). Pour
+> une loi à densité, on découpe l'intervalle en barres très fines de largeur dx : la probabilité
+> d'une barre est son aire, f(x) × dx, comme au §2. On multiplie chaque valeur x par la
+> probabilité de sa barre, comme x₁ × p₁ pour les bâtons, et la somme de tous ces produits
+> x × f(x) × dx devient une intégrale :
+> E(X) = ∫ de a à b de x × f(x) dx = ∫ de a à b de x × 1/(b − a) dx
+> = (1/(b − a)) × ∫ de a à b de x dx.
+> On reconnaît la **valeur moyenne** de la fonction x ↦ x sur [a ; b] (fiche 17.5). Pour une
+> fonction affine, elle vaut la moyenne des valeurs au début et à la fin : (a + b)/2. ✓
+
+**La variance V(X)** est la moyenne des carrés des écarts à la moyenne, et l'écart-type en est la
+racine : V = σ². On la donne parce que c'est elle qui
+sort du calcul ; on s'en sert pour obtenir σ = √V. Sa formule est **admise**. Son ordre de
+grandeur se comprend sans calcul : les valeurs s'écartent du milieu de 0 (pile au milieu) jusqu'à
+(b − a)/2 (tout au bord), et tous les écarts sont également probables, donc **l'écart moyen vaut
+(b − a)/4, soit 0,25 × (b − a)**. L'écart-type est un peu plus grand, **0,29 × (b − a)**, parce
+qu'il se calcule avec les écarts au carré, ce qui donne plus de poids aux valeurs éloignées ; le
+12 de la formule sort de ce calcul. À retenir : **σ ≈ 0,29 × la longueur, un peu plus du quart.**
+
+**Navette :** E(T) = (0 + 10)/2 = **5 min** ; σ(T) = 10/√12 ≈ **2,89 min**, un peu plus du quart
+des 10 min.
+
+*Lecture : sur des centaines d'appels, l'opérateur attend en moyenne 5 min ; l'écart typique à
+cette moyenne est d'environ 3 min (les écarts vont de 0 à 5 min, sans valeur privilégiée). La loi
+uniforme est très « étalée » : c'est normal, puisqu'on ne sait rien sur l'instant de passage.*
+
+### 6. Simuler une loi uniforme
+
+Le tableur et la calculatrice savent tirer un nombre au hasard entre 0 et 1, uniformément : c'est
+**ALEA()** dans un tableur (touche **rand**, **Ran#** ou **random** selon la calculatrice).
+
+> **a + (b − a) × ALEA()** suit la loi uniforme sur [a ; b].
+
+*Pourquoi : ALEA() tombe uniformément entre 0 et 1 ; multiplier par (b − a) étire l'intervalle à
+la bonne longueur ; ajouter a le décale au bon endroit. Navette : =10*ALEA().*
+
+**Exploiter une simulation.** Sur les 1 000 attentes simulées de la figure du §2, la moyenne vaut
+4,98 min (théorie : 5) et 191 attentes dépassent 8 min, soit 19,1 % (théorie : 20 %). Les
+résultats simulés **fluctuent** autour des valeurs théoriques, et s'en rapprochent quand on
+augmente le nombre de simulations.
+
+*Quel écart est « normal » ? Compter les attentes de plus de 8 min, c'est compter des succès sur
+1 000 essais indépendants de probabilité p = 0,2 : une loi binomiale (fiche 18.6), avec
+E = 1 000 × 0,2 = 200 et σ = √(1 000 × 0,2 × 0,8) ≈ 12,6. La plage usuelle E ± 2σ va d'environ
+175 à 225 : 191 est dedans, rien d'anormal. Pour la moyenne, c'est la règle de la fiche 18.3 :
+la moyenne de n tirages fluctue avec un écart-type σ/√n, ici 2,89/√1 000 ≈ 0,09 min ; 4,98 est à
+0,02 min de 5 : rien d'anormal non plus.*
+
+*Additionnez deux ou trois attentes simulées, et l'histogramme des sommes n'est plus plat : il se
+bombe au milieu. C'est ainsi qu'apparaît la courbe en cloche de la loi normale (fiche 7.3).*
+
+### 7. Quand la loi uniforme est-elle le bon modèle ?
+
+La loi uniforme dit : **« tous les intervalles de même longueur ont la même probabilité »**. On la
+choisit quand rien ne favorise une valeur plutôt qu'une autre :
+
+- **oui** : l'instant d'arrivée par rapport à un passage périodique (navette, convoyeur, cycle
+  d'un robot) ; l'erreur d'arrondi d'un afficheur ; la position angulaire d'une roue qui s'arrête
+  au hasard ; la position d'un défaut sur une barre, si le procédé ne favorise aucun endroit ;
+- **non** : le diamètre d'arbres tournés sur un tour réglé à 20 mm. La plupart des pièces sont
+  tout près de 20 mm, de moins en moins à mesure qu'on s'en éloigne : c'est la **loi normale**
+  (fiche 7.3), pas un rectangle.
+
+*Le réflexe : avant d'appliquer une loi, se demander si le procédé favorise certaines valeurs. Un
+histogramme de mesures réelles tranche : plat → uniforme ; en cloche → normale.*
+
+### 8. Les erreurs classiques et à retenir
+
+**Erreurs classiques :**
+1. **Prendre la hauteur de la densité pour une probabilité.** f(x) = 100 est possible (sur un
+   intervalle de largeur 0,01), comme une barre très courte peut avoir une masse linéique énorme :
+   seule l'aire est une probabilité, et elle ne dépasse jamais 1.
+2. **Oublier de retrancher a** : pour U([2 ; 6]), P(X ≤ 3) = (3 − 2)/4 = 0,25, pas 3/6.
+3. **Dépasser l'intervalle** : pour U([0 ; 10]), P(T ≤ 12) = 1, pas 1,2.
+4. **Chercher P(X = c) comme un bâton** : pour une loi à densité, P(X = c) = 0.
+5. **Appliquer la loi uniforme à une mesure en cloche** (un diamètre usiné).
+
+**À retenir :**
+- **Probabilité = aire sous la densité.** Loi uniforme : un rectangle de hauteur 1/(b − a).
+- **P(c ≤ X ≤ d) = (d − c)/(b − a)** = longueur favorable ÷ longueur totale = ∫ de c à d de f(x) dx
+  (fiche 17.2).
+- **F(x) = P(X ≤ x)**, l'aire accumulée ; **P(c ≤ X ≤ d) = F(d) − F(c)**.
+- **E(X) = (a + b)/2**, **σ(X) = (b − a)/√12 ≈ 0,29 × (b − a)**.
+- Simulation : **a + (b − a) × ALEA()**.
+""",
+            "formules": """
+
+**Densité** — f(x) = 1/(b − a) sur [a ; b], 0 ailleurs · aire totale = 1 · la densité n'est pas
+une probabilité (c'est une probabilité par unité de longueur)
+
+**Probabilité = aire** — P(c ≤ X ≤ d) = (d − c)/(b − a) = ∫ de c à d de f(x) dx (a ≤ c ≤ d ≤ b)
+
+**Valeur isolée** — P(X = c) = 0, donc P(X < c) = P(X ≤ c)
+
+**Fonction de répartition** — F(x) = P(X ≤ x) = (x − a)/(b − a) sur [a ; b] (0 avant, 1 après) ·
+P(c ≤ X ≤ d) = F(d) − F(c)
+
+**Espérance, variance, écart-type** — E(X) = (a + b)/2 · V(X) = (b − a)²/12 ·
+σ(X) = (b − a)/√12 ≈ 0,289 (b − a)
+
+**Simulation** — a + (b − a) × ALEA()
+
+**Erreur d'arrondi d'un afficheur de pas q** — e ∼ U([−q/2 ; q/2]) · σ = q/√12
+
+        """,
+            "exemple": """
+**Cas industriel — Ce que l'arrondi d'un instrument numérique coûte en précision**
+
+Un technicien contrôle des arbres de **Ø25 h7** (la lettre h indique que la cote maxi est
+exactement la cote nominale, 25,000 mm) : leur diamètre doit être compris entre
+**24,979 et 25,000 mm**. La **tolérance**, c'est-à-dire l'écart entre la cote mini et la cote
+maxi, vaut **21 µm** (1 µm = 0,001 mm, un micromètre). La norme ISO 286 appelle ce niveau de
+précision la **qualité IT7** : pour un diamètre entre 18 et 30 mm, elle fixe une tolérance de
+21 µm (plus le chiffre après IT est petit, plus la tolérance est serrée). Il hésite entre deux
+instruments numériques :
+- un **pied à coulisse** qui affiche au **0,01 mm** ;
+- un **micromètre** qui affiche au **0,001 mm**.
+
+La **résolution** d'un afficheur est le plus petit écart qu'il peut montrer : on la note q
+(q = 0,01 mm pour le pied à coulisse).
+
+**Étape 1 — Modéliser l'erreur d'arrondi**
+
+Le pied à coulisse affiche 25,00 mm. La vraie cote est quelque part entre 24,995 et 25,005 mm,
+sans qu'aucune valeur soit favorisée : l'erreur d'arrondi **e = cote vraie − cote affichée** suit
+la loi uniforme sur **[−0,005 ; +0,005]** mm, c'est-à-dire [−q/2 ; q/2].
+
+*Ce que l'arrondi peut coûter : deux arbres, l'un de 24,996 mm (**bon**), l'autre de 25,004 mm
+(**mauvais** : 4 µm de trop). Le pied à coulisse affiche **25,00** pour les deux, et 25,00 ≤
+25,000 : les
+deux arbres sont acceptés. Il ne sait pas les distinguer : l'arrondi seul peut faire accepter une
+pièce hors tolérance.*
+
+**Étape 2 — La densité : une hauteur de 100 !**
+
+f(e) = 1/(0,005 − (−0,005)) = 1/0,01 = **100** (par mm). Une densité supérieure à 1 n'a rien
+d'anormal : comme une barre très courte peut avoir une masse linéique énorme, un rectangle très
+étroit (0,01 mm) peut être très haut (100). Son aire vaut bien 0,01 × 100 = **1**.
+
+**Étape 3 — Une probabilité**
+
+Quelle est la probabilité que l'erreur d'arrondi reste inférieure à 2 µm, dans un sens ou dans
+l'autre, c'est-à-dire −0,002 ≤ e ≤ 0,002 mm ?
+
+P(−0,002 ≤ e ≤ 0,002) = (0,002 − (−0,002))/0,01 = 0,004/0,01 = **0,4**.
+
+*Seulement 4 fois sur 10 : 6 fois sur 10, l'arrondi seul décale la lecture de plus de 2 µm.*
+
+**Étape 4 — Espérance et écart-type : le chiffre des métrologues**
+
+E(e) = (−0,005 + 0,005)/2 = **0** : l'arrondi n'a **pas de biais**. (Un biais serait une erreur
+qui pousse toujours dans le même sens, comme un comparateur mal étalonné qui lirait
+systématiquement 3 µm de trop.) σ(e) = 0,01/√12 ≈ **0,002 9 mm, soit 2,9 µm**.
+
+*Ce σ = q/√12 est exactement la formule que les métrologues, les spécialistes de la mesure,
+utilisent pour chiffrer l'**incertitude due à la résolution** d'un afficheur, c'est-à-dire
+l'ordre de grandeur de
+l'erreur possible sur la lecture.*
+
+**Étape 5 — Décider**
+
+L'incertitude de l'instrument doit rester **de l'ordre d'un dixième de la tolérance (règle
+courante en contrôle)** — ici, un dixième de 21 µm, c'est **2,1 µm**. Au-delà, trop de pièces
+proches des limites sont mal jugées : des pièces
+bonnes sont refusées, des mauvaises acceptées. Avec le pied à coulisse, 2,9 µm, c'est environ
+**1/7 de la tolérance** de 21 µm : 2,9 µm > 2,1 µm, l'arrondi seul dépasse déjà ce repère, avant
+même les autres
+erreurs de l'instrument (**justesse** : l'instrument lit-il la bonne valeur en moyenne ?
+**fidélité** : redonne-t-il la même valeur si l'on remesure ? sans oublier la pression de
+contact). Avec le micromètre : σ = 0,001/√12 ≈ **0,29 µm**, soit environ 1/70 de la tolérance,
+bien en dessous de 2,1 µm.
+**Pour contrôler un IT7, on choisit le micromètre.**
+
+**Ce que le calcul apprend.** La loi uniforme transforme une évidence (« l'afficheur arrondit »)
+en un chiffre utilisable pour choisir un instrument. C'est un raisonnement de concepteur de gamme
+de contrôle : l'instrument doit être nettement plus fin que la tolérance à vérifier.
+""",
+            "exercice": """
+**Partie A — Le temps d'attente d'une navette**
+
+Une navette automatique passe au poste de montage toutes les **12 min**. L'opérateur l'appelle à
+un instant sans rapport avec son passage : son attente T suit la loi uniforme sur [0 ; 12], en
+minutes.
+
+**1.** Donne la densité de T et dessine-la. Vérifie que l'aire totale vaut 1.
+
+**2.** Calcule P(T > 8), puis P(3 ≤ T ≤ 6).
+
+**3.** Donne la fonction de répartition F(t) sur [0 ; 12], trace sa courbe, puis retrouve
+P(3 ≤ T ≤ 6) avec F.
+
+**4.** Calcule E(T) et σ(T), et interprète E(T).
+
+**5.** L'opérateur appelle la navette 25 fois pendant sa journée de travail (8 h). Quel temps
+d'attente total peut-on prévoir en moyenne sur la journée ? Le bureau des méthodes propose une
+navette qui passe toutes les 6 min : quel gain moyen par journée ?
+
+**Partie B — Choisir le bon modèle**
+
+**6.** Pour chaque grandeur, dis si la loi uniforme est un modèle raisonnable, et pourquoi :
+a) l'erreur d'arrondi d'un thermomètre numérique qui affiche au 0,1 °C ;
+b) le diamètre d'arbres tournés sur un tour réglé à 20 mm ;
+c) la position angulaire (entre 0 et 360°) à laquelle s'arrête un plateau tournant lancé à la
+main.
+
+**Partie C — Simulation**
+
+**7.** Écris une formule de tableur qui simule une attente T de la partie A. Sur 1 000
+simulations, un étudiant obtient 314 attentes supérieures à 8 min et une moyenne de 5,90 min.
+Compare aux valeurs théoriques. Faut-il en conclure que le modèle est faux ?
+""",
+            "corrige": """
+**1.** f(t) = 1/(12 − 0) = **1/12 ≈ 0,083** pour t entre 0 et 12, et 0 ailleurs. C'est un
+rectangle de largeur 12 et de hauteur 1/12 : aire = 12 × 1/12 = **1**. ✓
+
+**2.** P(T > 8) = (12 − 8)/12 = 4/12 = **1/3 ≈ 0,333**.
+P(3 ≤ T ≤ 6) = (6 − 3)/12 = 3/12 = **0,25**.
+
+**3.** F(t) = (t − 0)/12 = **t/12** sur [0 ; 12] (F(t) = 0 avant 0, 1 après 12). Sa courbe est
+une rampe qui part de (0 ; 0) et monte jusqu'à (12 ; 1), puis reste à 1.
+P(3 ≤ T ≤ 6) = F(6) − F(3) = 6/12 − 3/12 = 0,5 − 0,25 = **0,25**, comme à la question 2.
+
+**4.** E(T) = (0 + 12)/2 = **6 min** ; σ(T) = 12/√12 = √12 ≈ **3,46 min**.
+Sur un grand nombre d'appels, l'opérateur attend **en moyenne 6 min**, la moitié de la période
+de passage.
+
+**5.** 25 appels × 6 min en moyenne = **150 min**, soit 2 h 30 d'attente par journée en moyenne.
+Avec une navette toutes les 6 min : T ∼ U([0 ; 6]), E(T) = 3 min, soit 25 × 3 = 75 min. **Gain
+moyen : 75 min par journée.** *C'est l'espérance qui permet de chiffrer ce gain avant
+d'investir.*
+
+**6.** a) **Oui** : l'erreur d'arrondi est uniforme sur [−0,05 ; +0,05] °C, rien ne favorise une
+valeur. b) **Non** : les diamètres se regroupent autour de 20 mm (courbe en cloche, loi normale,
+fiche 7.3). c) **Oui** : si le lancer est quelconque, aucune position angulaire n'est favorisée ;
+la loi est uniforme sur [0 ; 360°].
+
+**7.** Formule : **=12*ALEA()**. Théorie : P(T > 8) = 1/3 ≈ 33,3 % et E(T) = 6 min.
+Simulation : 314/1 000 = 31,4 % et 5,90 min.
+- **La proportion** : compter les attentes de plus de 8 min, c'est une loi binomiale (fiche 18.6)
+  avec n = 1 000 et p = 1/3 : E ≈ 333, σ = √(1 000 × 1/3 × 2/3) ≈ 14,9, plage usuelle E ± 2σ
+  d'environ 304 à 363. **314 est dedans.**
+- **La moyenne** : sur 1 000 simulations, la moyenne fluctue autour de 6 avec un écart-type
+  σ(T)/√1 000 ≈ 3,46/31,6 ≈ 0,11 min, avec σ(T) ≈ 3,46 min (question 4), comme pour l'intervalle
+de confiance de la fiche 18.3. 5,90 est à
+  0,1 min de 6, moins de 2 × 0,11 : **rien d'anormal**.
+**Non**, rien n'indique que le modèle est faux. Avec 10 000 ou 100 000 simulations, les
+résultats se rapprocheraient encore des valeurs théoriques.
 """,
         },
         {
@@ -50478,6 +51033,21 @@ _mth("18.6", "Utiliser espérance et écart-type pour repérer un lot anormal", 
    "lot à 6 défectueuses reste dans la plage (normal), un lot à 15 en sort "
    "largement (signal à investiguer).")
 
+_mth("18.9", "Calculer une probabilité avec la loi uniforme", [
+    "**Vérifier que le modèle convient** : rien ne favorise une valeur de l'intervalle "
+    "(temps d'attente sans information, erreur d'arrondi, position quelconque).",
+    "**Repérer a et b**, les bornes de l'intervalle, et écrire la densité f(x) = 1/(b − a).",
+    "**Ramener l'intervalle demandé à [a ; b]** : ce qui dépasse n'a aucune aire (exemple : "
+    "pour U([0 ; 10]), P(8 ≤ T ≤ 15) = P(8 ≤ T ≤ 10)).",
+    "**Calculer l'aire du rectangle** : P(c ≤ X ≤ d) = (d − c)/(b − a), ou F(d) − F(c) avec "
+    "F(x) = (x − a)/(b − a).",
+    "**Contrôler** : une probabilité reste entre 0 et 1 ; P(X = c) = 0 ; ≤ et < donnent le "
+    "même résultat.",
+    "**Pour une moyenne sur un grand nombre de fois**, utiliser E(X) = (a + b)/2 et "
+    "σ(X) = (b − a)/√12 ≈ 0,29 × (b − a).",
+], "Navette toutes les 10 min, T ∼ U([0 ; 10]) : f = 0,1 ; P(2 ≤ T ≤ 5) = 3 × 0,1 = 0,3 = "
+       "F(5) − F(2) = 0,5 − 0,2 ; E(T) = 5 min ; σ(T) ≈ 2,89 min.")
+
 _mth("18.7", "Calculer la taille d'échantillon nécessaire pour une précision donnée", [
     "**Isoler n dans la formule de la marge** : n = (1,96 × s / marge "
     "visée)².",
@@ -51678,6 +52248,56 @@ def gen_pente_moindres_carres():
     }
 
 
+def gen_proba_uniforme():
+    """Probabilité d'un intervalle pour une loi uniforme."""
+    a = random.choice([0, 2, 5, 10])
+    L = random.choice([4, 5, 8, 10, 12, 20])
+    b = a + L
+    while True:
+        c = random.randint(a + 1, b - 1)
+        d = random.randint(c + 1, b)
+        rep = (d - c) / L
+        faux_long = d - c           # longueur non divisée
+        faux_F = (d - a) / L        # F(d) sans retrancher F(c)
+        diags = [faux_long, faux_F]
+        if a != 0:
+            diags += [(d - c) / b, d / L]   # divisé par b ; d divisé sans retrancher c
+        # aucune erreur typique ne doit donner (presque) la bonne réponse, ni une autre erreur
+        ok = (d - c) < L and all(abs(x - rep) > 0.02 for x in diags) and \
+            all(abs(x - y) > 0.02 for i, x in enumerate(diags) for y in diags[i + 1:])
+        if ok:
+            break
+    exact = abs(rep * 1000 - round(rep * 1000)) < 1e-9
+    corr = [
+        f"**La densité.** X ∼ U([{a} ; {b}]) : f(x) = 1/({b} − {a}) = 1/{L}.",
+        f"**L'aire du rectangle.** P({c} ≤ X ≤ {d}) = ({d} − {c}) × 1/{L} = {d - c}/{L}.",
+        f"**Résultat.** P({c} ≤ X ≤ {d}) = **{_fr_court(rep, 3)}**"
+        + ("." if exact else " (arrondi au millième)."),
+        f"*Contrôle : l'intervalle [{c} ; {d}] couvre {d - c} unités sur {L} ; la probabilité est "
+        f"bien comprise entre 0 et 1.*",
+    ]
+    diag = [
+        _diag(faux_long, "Tu as donné la longueur de l'intervalle : il faut encore la diviser par "
+                         f"la longueur totale b − a = {L}."),
+        _diag(faux_F, f"Tu as calculé P(X ≤ {d}) = F({d}) : il faut retirer F({c}) = "
+                      f"({c} − {a})/{L}, la partie avant {c}."),
+    ]
+    if a != 0:
+        diag.append(_diag((d - c) / b, f"Tu as divisé par b = {b} au lieu de la longueur "
+                                       f"b − a = {L}."))
+        diag.append(_diag(d / L, f"Tu as divisé {d} par {L} sans retrancher {c} : la longueur "
+                                 f"favorable est {d} − {c}."))
+    return {
+        "titre": "Loi uniforme — probabilité d'un intervalle",
+        "enonce": (f"X suit la loi uniforme sur [{a} ; {b}]. Calcule P({c} ≤ X ≤ {d}) "
+                   f"(arrondie au millième si besoin)."),
+        "rep": rep, "tol": 0.001, "unite": "",
+        "diag": diag,
+        "corr": corr,
+        "indice": "P(c ≤ X ≤ d) = (d − c)/(b − a) : longueur favorable ÷ longueur totale.",
+    }
+
+
 def fabriquer_exo(famille=None):
     """Tire un exercice au hasard, éventuellement dans une famille donnée."""
     catalogue = {
@@ -51688,7 +52308,7 @@ def fabriquer_exo(famille=None):
         "Unités et conversions": [gen_unites],
         "Mathématiques BTS CPI": [gen_signe_affine, gen_discriminant, gen_proba_binomiale,
                                   gen_determinant_2x2, gen_valeur_moyenne, gen_temps_decharge,
-                                  gen_pente_moindres_carres],
+                                  gen_pente_moindres_carres, gen_proba_uniforme],
     }
     if famille and famille in catalogue:
         pool = catalogue[famille]
@@ -54927,6 +55547,73 @@ ATELIERS = [
         },
         "a_retenir": "À retenir : E(X)=np, σ(X)=√(np(1−p)), plage usuelle E(X)±2σ(X) — un "
                      "repère rapide pour distinguer bruit normal et dérive réelle.",
+    },
+    {
+        "id": "at141",
+        "chapitre": "Bloc 18",
+        "titre": "Position d'une inclusion sur une barre : la loi uniforme",
+        "theme": "Probabilités",
+        "fiche": "18.9",
+        "vocabulaire": [
+            ("densité", "la courbe dont l'aire donne les probabilités ; pour la loi uniforme sur "
+             "[a ; b], un rectangle de hauteur 1/(b − a)."),
+            ("loi uniforme", "une loi où tous les intervalles de même longueur ont la même "
+             "probabilité : aucune valeur n'est favorisée."),
+            ("écart-type", "la dispersion typique autour de la moyenne ; pour la loi uniforme, "
+             "environ 0,29 × la longueur de l'intervalle."),
+        ],
+        "enonce": "Une barre laminée de 3 000 mm contient une inclusion, placée au hasard : sa "
+                  "position X (en mm, depuis une extrémité) suit la loi uniforme sur [0 ; 3 000]. "
+                  "Les 150 premiers et les 150 derniers millimètres de la barre sont des chutes : "
+                  "on les coupe et on les jette.",
+        "etapes": [
+            {"type": "qcm", "label": "Hauteur de la densité f",
+             "question": "Quelle est la hauteur du rectangle de la densité de X ?",
+             "options": ["1/3 000 ≈ 0,000 33 par mm", "3 000 par mm", "1/1 500 par mm"],
+             "bonne": 0,
+             "diagnostics": {1: "C'est l'inverse : la hauteur vaut 1 divisé par la longueur, pour "
+                                "que l'aire du rectangle (longueur × hauteur) vaille 1.",
+                             2: "La longueur de l'intervalle est 3 000 − 0 = 3 000 mm, pas la "
+                                "moitié."}},
+            {"type": "numerique", "label": "Probabilité que l'inclusion tombe dans les chutes",
+             "unite": "", "attendu": 0.1, "tol": 0.001,
+             "consigne": "Les chutes font 150 mm à chaque bout : additionne les deux longueurs, puis "
+                         "divise par la longueur totale.",
+             "indice": "(150 + 150) / 3 000.",
+             "pieges": [(0.05, "Tu n'as compté qu'une seule chute : il y en a une à chaque "
+                               "extrémité."),
+                        (0.9, "Tu as calculé la probabilité d'être dans la partie utile : les "
+                              "chutes, c'est le reste.")]},
+            {"type": "numerique", "label": "Écart-type de la position X", "unite": "mm",
+             "attendu": 3000 / math.sqrt(12), "tol": 2,
+             "consigne": "σ(X) = (b − a)/√12.",
+             "indice": "3 000 / √12, avec √12 ≈ 3,46.",
+             "pieges": [(3000 / 12, "Tu as divisé par 12 au lieu de √12 ≈ 3,46. La formule est "
+                                    "σ = (b − a)/√12 : 3 000/3,46 ≈ 866 mm.")]},
+            {"type": "qcm", "label": "Probabilité d'une position exacte",
+             "question": "Quelle est la probabilité que l'inclusion soit exactement à 1 500 mm ?",
+             "options": ["0,5, car 1 500 est le milieu", "1/3 000", "0"],
+             "bonne": 2,
+             "diagnostics": {0: "0,5 est P(X ≤ 1 500), la probabilité d'être dans la première "
+                                "moitié, pas celle d'être exactement au milieu.",
+                             1: "1/3 000 est la hauteur de la densité, pas une probabilité : "
+                                "une valeur isolée correspond à un rectangle de largeur nulle."}},
+        ],
+        "corrige": {
+            "enonce": "X ∼ U([0 ; 3 000]), chutes de 150 mm à chaque extrémité.",
+            "regle": "**Pour la loi uniforme, une probabilité est l'aire d'un rectangle : longueur "
+                     "favorable ÷ longueur totale.**",
+            "conversions": "Aucune : tout est en mm.",
+            "remplacement": "f = 1/3 000 ; P(chutes) = (150 + 150)/3 000 ; σ = 3 000/√12",
+            "calcul": "f ≈ **0,000 33 par mm** (soit environ une chance sur 3 000 par "
+                      "millimètre)\\n\\nP(chutes) = 300/3 000 = **0,1**\\n\\nσ(X) ≈ **866 mm**",
+            "verification": "**Contrôle de cohérence** : les chutes font 300 mm sur 3 000, soit un "
+                            "dixième de la barre, d'où 0,1. Et σ ≈ 0,2887 × 3 000 ≈ 866 mm : la "
+                            "position est très dispersée, puisqu'aucun endroit n'est favorisé.",
+        },
+        "a_retenir": "À retenir : avec la loi uniforme, P = longueur favorable ÷ longueur totale ; "
+                     "la hauteur de la densité n'est pas une probabilité ; une valeur exacte a une "
+                     "probabilité nulle.",
     },
     {
         "id": "at29",
@@ -62798,11 +63485,11 @@ MATIERES_PROGRAMME = [
          [(19, ["19.1", "19.3", "19.2", "19.4", "19.6"])]),
         ("Statistiques et Probabilités (évalué)", "Incomplet (à enrichir)",
          "Statistique descriptive et inférentielle, probabilités simples et conditionnelles, "
-         "loi binomiale, espérance/écart-type, taille d'échantillon, statistique à deux "
-         "variables (ajustement affine, corrélation). Non traités : lois exponentielle et "
-         "de Poisson, loi uniforme, approximation normale, théorème de la limite centrée, "
+         "loi binomiale, espérance/écart-type, loi uniforme, taille d'échantillon, statistique "
+         "à deux variables (ajustement affine, corrélation). Non traités : lois exponentielle "
+         "et de Poisson, approximation normale, théorème de la limite centrée, "
          "tests d'hypothèse, intervalle de confiance d'une proportion.",
-         [(7, ["7.3"]), (17, ["17.3", "17.6", "17.8"]), (18, ["18.1", "18.2", "18.3", "18.5", "18.6", "18.7"])]),
+         [(7, ["7.3"]), (17, ["17.3", "17.6", "17.8"]), (18, ["18.1", "18.2", "18.3", "18.5", "18.6", "18.9", "18.7"])]),
     ]),
 ]
 

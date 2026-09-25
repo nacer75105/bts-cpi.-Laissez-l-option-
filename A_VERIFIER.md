@@ -21,7 +21,7 @@ laissé d'un seul tenant (pas de scission) pour ne pas toucher les clés.
 
 Plan (le référentiel ne répartit pas les modules entre 1ʳᵉ et 2ᵉ année ; l'ordre suit les
 prérequis et la répartition usuelle) :
-1. ✅ 17.7 ln et exp — 2. ✅ 17.8 statistique à deux variables — 3. loi uniforme —
+1. ✅ 17.7 ln et exp — 2. ✅ 17.8 statistique à deux variables — 3. ✅ 18.9 loi uniforme —
 4. loi normale et approximation binomiale — 5. somme de variables, limite centrée —
 6. méthode d'Euler — 7. IC d'une proportion — 8. tests sur une proportion / une moyenne —
 9. tests de comparaison — 10. loi exponentielle — 11. loi de Poisson — 12. nombres
@@ -67,6 +67,39 @@ complexes (forme algébrique, Δ < 0) — 13. équations différentielles du sec
   métriques Segoe UI par le relecteur) ; corrigé progressif, atelier at140 et générateur non
   cliqués dans l'interface (la fiche s'ouvre sans erreur dans un AppTest Streamlit).
 
+### Ateliers — tolérance absolue (corrigé le 2026-09-25, commit 34e7003)
+
+- Le contrôleur des ateliers lisait `tol` en relatif (|valeur − attendu| ≤ |attendu| × tol),
+  alors que les ateliers sont écrits en absolu : 42 pièges sur 194 étapes étaient comptés justes
+  et 65 tolérances dépassaient ±10 %. Contrôleur passé en absolu ; `EXERCICES_GUIDES` (écrits
+  en relatif, 2 %) inchangés. Corrigés en même temps : at30, at26 (saisie à 6 décimales), at58.
+- Audit à relancer après tout nouvel atelier (script d'audit utilisé le 2026-09-25, non versionné : pièges dans la tolérance,
+  réponse impossible à saisir avec le format de l'étape, tolérance > 10 %, tol = 0 sur une
+  valeur non entière). Dernier passage (fiche 18.9 incluse) : 196 étapes, 140 ateliers, 0 alerte.
+  Tolérances de 5 à 10 % vérifiées une à une (entiers à ±0,1, at84 = fourchette du cours).
+- Règle pour les nouveaux ateliers : `tol` est une tolérance ABSOLUE dans l'unité de l'étape, et
+  les valeurs données par l'indice (arrondis intermédiaires) doivent être acceptées.
+
+### 18.9 — Loi uniforme, première loi à densité (faite le 2026-09-25)
+
+- Insérée après 18.6 (ordre affiché … 18.6 → 18.9 → 18.7), avec méthode, figures
+  `histogramme_vers_densite` et `aire_uniforme`, atelier at141 (inclusion sur une barre, en
+  tolérances absolues), générateur `gen_proba_uniforme`, 8 questions dans la banque
+  « probabilités et équations différentielles » (bonne réponse en positions 2, 0, 3, 1, 1, 3, 0, 2).
+- Trois tours de relecture (justesse + clarté) jusqu'à zéro réserve. Points de fond :
+  « probabilité = aire » démontré par un tableau des mêmes 1 000 attentes en classes de
+  2 / 1 / 0,5 / 0,1 min (la fréquence change, la hauteur fréquence ÷ largeur reste 0,10) ;
+  masse linéique pour « la densité n'est pas une probabilité » ; E(X) par le rectangle en
+  équilibre et la valeur moyenne de 17.5 ; cas industriel sur l'incertitude de résolution
+  q/√12 (règle « de l'ordre d'un dixième de la tolérance, règle courante en contrôle »).
+  Erreurs rattrapées : moyenne simulée 5,78 incompatible avec la fiche 18.3 (→ 5,90) ; renvois
+  vers des fiches inexistantes ; tolérance de l'étape σ de l'atelier refusant la valeur de
+  l'indice (3 000/3,46).
+- Mis à jour : résumé du bloc 18, tableau de bord (loi uniforme retirée des non traités,
+  18.9 ajoutée).
+- **Non vérifié** : rendu visuel réel des deux figures ; corrigé progressif, atelier at141 et
+  générateur non cliqués dans l'interface (la fiche s'ouvre sans erreur dans un AppTest).
+
 ## Bloc 19 — marquage hors épreuve (fait)
 
 - 19.1–19.4 (matrices, Bézier) : programme complémentaire, marquées « hors épreuve ».
@@ -98,7 +131,7 @@ complexes (forme algébrique, Δ < 0) — 13. équations différentielles du sec
 
 - **Contenus évalués ABSENTS de l'application** (décision de l'auteur : créer des fiches ?).
   Le S10 2016 et l'annexe I rendent évalués, sans qu'aucune fiche ne les traite :
-  - Probabilités 1 : loi uniforme, loi normale comme loi de probabilité (au-delà de la règle
+  - Probabilités 1 : loi normale comme loi de probabilité (au-delà de la règle
     des 3σ), approximation d'une binomiale par une loi normale, théorème de la limite centrée ;
   - Probabilités 2 : loi exponentielle, loi de Poisson, approximation binomiale → Poisson ;
   - Statistique inférentielle : intervalle de confiance d'une proportion, tests d'hypothèse
