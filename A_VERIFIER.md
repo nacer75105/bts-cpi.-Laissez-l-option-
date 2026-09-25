@@ -132,6 +132,23 @@ complexes (forme algébrique, Δ < 0) — 13. équations différentielles du sec
   (Institutionum calculi integralis) et « Euler a choisi la lettre e » sont des connaissances, non
   recoupées par une source.
 
+### Corrigés d'ateliers : « \n\n » affiché en toutes lettres (corrigé le 2026-09-25)
+
+- Constat à l'écran (page de test rendant le corrigé réel avec st.markdown, comme la page
+  Ateliers) : dans 45 ateliers (at1 à at144), les textes du corrigé en six temps contenaient un
+  antislash-n écrit en toutes lettres au lieu d'un vrai saut de ligne. Markdown l'affichait tel
+  quel (« σ = 2000 / 40 = 50 MPa\n\nContrainte admissible… ») et les étapes se collaient sur une
+  seule ligne. 73 chaînes, 250 occurrences, dans les champs calcul, remplacement, verification,
+  regle et conversions.
+- Correction au niveau des chaînes (ast) : seules les constantes du champ `corrige` des ateliers
+  ont été modifiées, valeurs vérifiées une à une après remplacement ; affichage revérifié à
+  l'écran (at6 et at144). Les 7 autres antislash-n de app.py sont légitimes et n'ont pas été
+  touchés : 2 expressions régulières de `decouper_corrige` et 5 commandes LaTeX (\nu, \ne).
+- L'outil d'audit signale désormais ce défaut (contrôle SAUT, ateliers et textes produits par
+  les générateurs) : sur l'ancien app.py il relève les 45 ateliers, sur le corrigé 0 défaut.
+- Règle pour les nouveaux ateliers : écrire les sauts de ligne des corrigés avec un seul
+  antislash dans le source (vrai saut de ligne), jamais deux.
+
 ### Diagnostics masqués et arrondis enchaînés (corrigé le 2026-09-25)
 
 - Pièges d'atelier : la page prenait le PREMIER piège dont la fenêtre de ±2 % contenait la saisie ;

@@ -55623,11 +55623,11 @@ ATELIERS = [
         ],
         "corrige": {
             "enonce": 'Une cote **Ø45 f7** : lettre **minuscule** donc un **arbre**, grade 7. Toutes les données de table sont fournies — rien à chercher ailleurs.',
-            "regle": "**MAJUSCULE = alésage · minuscule = arbre.**\\n\\nPuis le sens de lecture dépend de la lettre : **a à h** → la table donne l'écart **supérieur** (es), et ei = es − IT. **k à z** → la table donne l'écart **inférieur** (ei), et es = ei + IT.\\n\\nC'est logique : les premières lettres placent l'arbre **sous** le nominal (donc du jeu), les dernières **au-dessus** (donc du serrage).",
-            "conversions": "**La conversion décisive, et la plus piégeuse : µm → mm.**\\n\\nIT7 = 25 µm = **0,025 mm** · es = −25 µm = **−0,025 mm**\\n\\nÉcrire 0,25 au lieu de 0,025 fait accepter des pièces dix fois hors tolérance, sans que rien dans le nombre ne signale l'erreur.",
-            "remplacement": 'es = **−0,025 mm**\\n\\nei = es − IT = −0,025 − 0,025\\n\\ncote maxi = 45 + es · cote mini = 45 + ei',
-            "calcul": "ei = −0,025 − 0,025 = **−0,050 mm**\\n\\ncote maxi = 45 − 0,025 = **44,975 mm**\\n\\ncote mini = 45 − 0,050 = **44,950 mm**\\n\\nL'arbre est donc bon entre **44,950 et 44,975 mm**.",
-            "verification": "**Trois contrôles :**\\n\\n1. **La largeur obtenue** : 44,975 − 44,950 = 0,025 mm — c'est exactement l'IT7 annoncé. Si l'écart entre vos deux cotes ne redonne pas l'IT, il y a une erreur.\\n\\n2. **L'ordre de grandeur** : un IT de 25 µm sur Ø45 est cohérent avec le repère à retenir (IT7 ≈ 21 µm sur Ø30, un peu plus au-delà). Une zone de 0,25 mm aurait dû alerter.\\n\\n3. **La position** : les deux cotes sont **sous** 45. Pour une lettre de la plage a-h, c'est obligatoire — sinon le signe a été inversé.",
+            "regle": "**MAJUSCULE = alésage · minuscule = arbre.**\n\nPuis le sens de lecture dépend de la lettre : **a à h** → la table donne l'écart **supérieur** (es), et ei = es − IT. **k à z** → la table donne l'écart **inférieur** (ei), et es = ei + IT.\n\nC'est logique : les premières lettres placent l'arbre **sous** le nominal (donc du jeu), les dernières **au-dessus** (donc du serrage).",
+            "conversions": "**La conversion décisive, et la plus piégeuse : µm → mm.**\n\nIT7 = 25 µm = **0,025 mm** · es = −25 µm = **−0,025 mm**\n\nÉcrire 0,25 au lieu de 0,025 fait accepter des pièces dix fois hors tolérance, sans que rien dans le nombre ne signale l'erreur.",
+            "remplacement": 'es = **−0,025 mm**\n\nei = es − IT = −0,025 − 0,025\n\ncote maxi = 45 + es · cote mini = 45 + ei',
+            "calcul": "ei = −0,025 − 0,025 = **−0,050 mm**\n\ncote maxi = 45 − 0,025 = **44,975 mm**\n\ncote mini = 45 − 0,050 = **44,950 mm**\n\nL'arbre est donc bon entre **44,950 et 44,975 mm**.",
+            "verification": "**Trois contrôles :**\n\n1. **La largeur obtenue** : 44,975 − 44,950 = 0,025 mm — c'est exactement l'IT7 annoncé. Si l'écart entre vos deux cotes ne redonne pas l'IT, il y a une erreur.\n\n2. **L'ordre de grandeur** : un IT de 25 µm sur Ø45 est cohérent avec le repère à retenir (IT7 ≈ 21 µm sur Ø30, un peu plus au-delà). Une zone de 0,25 mm aurait dû alerter.\n\n3. **La position** : les deux cotes sont **sous** 45. Pour une lettre de la plage a-h, c'est obligatoire — sinon le signe a été inversé.",
         },
         "a_retenir": "À retenir : **minuscule = arbre**, majuscule = alésage. Table en **µm**, plan en **mm** (25 µm = 0,025 mm). Lettres **a-h** : la table donne es, et ei = es − IT. Contrôle final : **maxi − mini doit redonner l'IT**.",
     },
@@ -55698,11 +55698,11 @@ ATELIERS = [
         ],
         "corrige": {
             "enonce": "Un alésage **H7** et un arbre **g6**, même nominal Ø30. Toutes les données de table sont fournies. La question finale porte sur la nature de l'ajustement, qui se déduit du signe des deux jeux.",
-            "regle": '**Deux formules, et une seule difficulté : ne pas croiser les cotes du même côté.**\\n\\n> **Jeu maxi = Alésage MAXI − arbre MINI**\\n> **Jeu mini = Alésage MINI − arbre MAXI**\\n\\nLe moyen de retenir : pour le jeu **maximal**, on prend le cas le plus favorable au vide — le plus grand trou avec le plus petit axe.',
-            "conversions": "IT7 = 21 µm = **0,021 mm** · IT6 = 13 µm = **0,013 mm** · es = −7 µm = **−0,007 mm**\\n\\nLes cotes se calculent en millimètres, mais les jeux s'expriment habituellement en **micromètres** — d'où l'aller-retour entre les deux unités dans cet atelier.",
-            "remplacement": '**Alésage H7** : EI = 0 → 30,000 à 30 + 0,021\\n\\n**Arbre g6** : es = −0,007 · ei = −0,007 − 0,013\\n\\nJmax = 30,021 − 29,980 · Jmin = 30,000 − 29,993',
-            "calcul": 'Alésage : **30,000 à 30,021 mm**\\n\\nArbre : ei = −0,020 → **29,980 à 29,993 mm**\\n\\nJeu maxi = 30,021 − 29,980 = **+0,041 mm = +41 µm**\\n\\nJeu mini = 30,000 − 29,993 = **+0,007 mm = +7 µm**\\n\\nLes deux étant positifs : **ajustement AVEC JEU**, garanti entre 7 et 41 µm quelles que soient les pièces du lot.',
-            "verification": "**Le contrôle qui valide tout :**\\n\\nJmax − Jmin doit être égal à **IT alésage + IT arbre** :\\n\\n41 − 7 = 34 µm, et 21 + 13 = 34 µm ✅\\n\\nSi l'écart entre vos deux jeux ne redonne pas la somme des deux IT, c'est que vous avez croisé les cotes du même côté.\\n\\n**Contrôle de cohérence** : g est dans la plage a-h, qui donne toujours du jeu. Si vous aviez trouvé un serrage, il y aurait une erreur de signe.",
+            "regle": '**Deux formules, et une seule difficulté : ne pas croiser les cotes du même côté.**\n\n> **Jeu maxi = Alésage MAXI − arbre MINI**\n> **Jeu mini = Alésage MINI − arbre MAXI**\n\nLe moyen de retenir : pour le jeu **maximal**, on prend le cas le plus favorable au vide — le plus grand trou avec le plus petit axe.',
+            "conversions": "IT7 = 21 µm = **0,021 mm** · IT6 = 13 µm = **0,013 mm** · es = −7 µm = **−0,007 mm**\n\nLes cotes se calculent en millimètres, mais les jeux s'expriment habituellement en **micromètres** — d'où l'aller-retour entre les deux unités dans cet atelier.",
+            "remplacement": '**Alésage H7** : EI = 0 → 30,000 à 30 + 0,021\n\n**Arbre g6** : es = −0,007 · ei = −0,007 − 0,013\n\nJmax = 30,021 − 29,980 · Jmin = 30,000 − 29,993',
+            "calcul": 'Alésage : **30,000 à 30,021 mm**\n\nArbre : ei = −0,020 → **29,980 à 29,993 mm**\n\nJeu maxi = 30,021 − 29,980 = **+0,041 mm = +41 µm**\n\nJeu mini = 30,000 − 29,993 = **+0,007 mm = +7 µm**\n\nLes deux étant positifs : **ajustement AVEC JEU**, garanti entre 7 et 41 µm quelles que soient les pièces du lot.',
+            "verification": "**Le contrôle qui valide tout :**\n\nJmax − Jmin doit être égal à **IT alésage + IT arbre** :\n\n41 − 7 = 34 µm, et 21 + 13 = 34 µm ✅\n\nSi l'écart entre vos deux jeux ne redonne pas la somme des deux IT, c'est que vous avez croisé les cotes du même côté.\n\n**Contrôle de cohérence** : g est dans la plage a-h, qui donne toujours du jeu. Si vous aviez trouvé un serrage, il y aurait une erreur de signe.",
         },
         "a_retenir": "À retenir : **Jmax = Amaxi − amini** · **Jmin = Amini − amaxi**. Un résultat négatif n'est pas une erreur : c'est un **serrage**. Et le contrôle final : **Jmax − Jmin = IT alésage + IT arbre**.",
     },
@@ -55760,11 +55760,11 @@ ATELIERS = [
         ],
         "corrige": {
             "enonce": "Deux spécifications de **familles différentes** sur le même plan : une **orientation** (perpendicularité, avec référence) et une **forme** (planéité, sans référence). C'est la distinction que l'atelier teste.",
-            "regle": '**Une seule question permet de trier les familles :** ce défaut se juge-t-il tout seul, ou par rapport à quelque chose ?\\n\\n- **forme** (rectitude, planéité, circularité, cylindricité) → **JAMAIS de référence** ;\\n- **orientation, position, battement** → **toujours une référence**.\\n\\nEt le **Ø** devant la valeur transforme la zone : deux plans parallèles sans lui, un **cylindre** avec.',
-            "conversions": "Une seule conversion, mais elle revient constamment en GPS :\\n\\n**0,05 mm = 50 µm** (1 mm = 1000 µm)\\n\\nLes valeurs GPS s'écrivent en millimètres sur le plan, mais se discutent souvent en micromètres à l'atelier.",
-            "remplacement": '**⊥ | Ø0,05 | A** se décompose en trois cases :\\n\\nsymbole ⊥ = **perpendicularité** (orientation)\\n\\nvaleur **Ø0,05** = zone **cylindrique** de 0,05 mm de diamètre\\n\\nréférence **A** = la surface par rapport à laquelle on juge',
-            "calcul": "**1.** Famille **orientation** — le cadre porte une référence, ce que la forme n'admet jamais.\\n\\n**2.** Le **Ø** rend la zone **cylindrique** : l'axe de l'alésage doit tenir dans un cylindre de 0,05 mm de diamètre, perpendiculaire à A. Sans le Ø, le défaut ne serait contrôlé que dans une seule direction.\\n\\n**3.** **Non**, « planéité 0,05 A » est incorrect : la planéité est une tolérance de **forme**, qui ne prend jamais de référence. On écrit simplement « planéité 0,05 ».\\n\\n**4.** 0,05 mm = **50 µm**.",
-            "verification": "**Le contrôle par la fonction** : à chaque spécification doit correspondre une panne évitée.\\n\\n- perpendicularité de l'axe : sans elle, l'arbre entre de travers et le roulement travaille en coin ;\\n- planéité de l'appui : sans elle, le carter bascule au serrage.\\n\\n**Si vous ne pouvez pas nommer la défaillance qu'une spécification empêche, elle est probablement inutile** — et elle coûte cher au contrôle.\\n\\n**Contrôle de cohérence des valeurs** : Ø0,05 sur l'axe est plus serré que la planéité 0,05 rapportée à toute une face — c'est logique, un roulement mal orienté se détruit.",
+            "regle": '**Une seule question permet de trier les familles :** ce défaut se juge-t-il tout seul, ou par rapport à quelque chose ?\n\n- **forme** (rectitude, planéité, circularité, cylindricité) → **JAMAIS de référence** ;\n- **orientation, position, battement** → **toujours une référence**.\n\nEt le **Ø** devant la valeur transforme la zone : deux plans parallèles sans lui, un **cylindre** avec.',
+            "conversions": "Une seule conversion, mais elle revient constamment en GPS :\n\n**0,05 mm = 50 µm** (1 mm = 1000 µm)\n\nLes valeurs GPS s'écrivent en millimètres sur le plan, mais se discutent souvent en micromètres à l'atelier.",
+            "remplacement": '**⊥ | Ø0,05 | A** se décompose en trois cases :\n\nsymbole ⊥ = **perpendicularité** (orientation)\n\nvaleur **Ø0,05** = zone **cylindrique** de 0,05 mm de diamètre\n\nréférence **A** = la surface par rapport à laquelle on juge',
+            "calcul": "**1.** Famille **orientation** — le cadre porte une référence, ce que la forme n'admet jamais.\n\n**2.** Le **Ø** rend la zone **cylindrique** : l'axe de l'alésage doit tenir dans un cylindre de 0,05 mm de diamètre, perpendiculaire à A. Sans le Ø, le défaut ne serait contrôlé que dans une seule direction.\n\n**3.** **Non**, « planéité 0,05 A » est incorrect : la planéité est une tolérance de **forme**, qui ne prend jamais de référence. On écrit simplement « planéité 0,05 ».\n\n**4.** 0,05 mm = **50 µm**.",
+            "verification": "**Le contrôle par la fonction** : à chaque spécification doit correspondre une panne évitée.\n\n- perpendicularité de l'axe : sans elle, l'arbre entre de travers et le roulement travaille en coin ;\n- planéité de l'appui : sans elle, le carter bascule au serrage.\n\n**Si vous ne pouvez pas nommer la défaillance qu'une spécification empêche, elle est probablement inutile** — et elle coûte cher au contrôle.\n\n**Contrôle de cohérence des valeurs** : Ø0,05 sur l'axe est plus serré que la planéité 0,05 rapportée à toute une face — c'est logique, un roulement mal orienté se détruit.",
         },
         "a_retenir": "À retenir : **forme = sans référence**, tout le reste **avec**. Le **Ø** rend la zone cylindrique — indispensable pour l'axe d'un perçage. Et l'ordre des références A, B, C n'est jamais arbitraire : c'est la mise en position 3-2-1.",
     },
@@ -55820,11 +55820,11 @@ ATELIERS = [
         ],
         "corrige": {
             "enonce": 'Quatre zones sur **une seule pièce**, avec **quatre fonctions différentes** : porter un roulement, étancher, centrer un moyeu, ne rien toucher. La dernière question est un piège volontaire sur « plus lisse = mieux ».',
-            "regle": '**On choisit le Ra selon la FONCTION de la surface**, pas selon son importance apparente. Trois niveaux suffisent presque toujours :\\n\\n- **Ra 3,2** : ça pose, ça appuie ;\\n- **Ra 1,6** : ça frotte ;\\n- **Ra 0,8** : ça porte un roulement, ça étanche.\\n\\nEt **deux limites, symétriques** : trop rugueux use et fuit · **trop lisse (sous Ra 0,1) ne retient plus le lubrifiant**.',
-            "conversions": "Aucune conversion : Ra s'exprime directement en micromètres sur le plan.\\n\\n**Attention à ne pas le confondre** avec les micromètres des tolérances ISO : ce sont deux grandeurs différentes qui partagent la même unité. Un Ø30 H7 (21 µm de tolérance) n'a rien à voir avec un Ra 0,8 µm.",
-            "remplacement": '| Zone | Fonction | Ra |\\n|---|---|---|\\n| A | porter une bague serrée | **0,8** |\\n| B | étancher contre une lèvre | **0,8** |\\n| C | centrer un moyeu démontable | **1,6** |\\n| D | aucune | **6,3** ou brut |',
-            "calcul": "**A — Ra 0,8** : une bague montée serrée sur une surface rugueuse écrase les aspérités au montage, et le serrage calculé disparaît.\\n\\n**B — Ra 0,8, plus un chanfrein d'introduction et aucune strie hélicoïdale.** Sans chanfrein, la lèvre est coupée au montage ; des stries orientées pompent l'huile vers l'extérieur.\\n\\n**D — Ra 6,3 ou brut** : aucune fonction, donc aucun surcoût justifié.\\n\\n**La limite basse — non à Ra 0,05.** Sous Ra 0,1, la surface est trop lisse pour retenir le lubrifiant : le film se rompt et le frottement augmente.",
-            "verification": "**Le contrôle économique** : combien de surfaces exigent une rectification ? Ici trois (les deux portées A et la portée B), sur une pièce qui compte une dizaine de surfaces.\\n\\n**Si toutes les surfaces d'un plan portaient Ra 0,8**, il faudrait se demander lesquelles ont réellement une fonction — c'est le même raisonnement que les 20 % de cotes fonctionnelles de la fiche 5.2.\\n\\n**Le contrôle de cohérence** : les Ra retenus décroissent avec l'exigence (6,3 → 1,6 → 0,8) sans jamais descendre sous 0,4. La bonne valeur est toujours un **intervalle**, jamais un maximum.",
+            "regle": '**On choisit le Ra selon la FONCTION de la surface**, pas selon son importance apparente. Trois niveaux suffisent presque toujours :\n\n- **Ra 3,2** : ça pose, ça appuie ;\n- **Ra 1,6** : ça frotte ;\n- **Ra 0,8** : ça porte un roulement, ça étanche.\n\nEt **deux limites, symétriques** : trop rugueux use et fuit · **trop lisse (sous Ra 0,1) ne retient plus le lubrifiant**.',
+            "conversions": "Aucune conversion : Ra s'exprime directement en micromètres sur le plan.\n\n**Attention à ne pas le confondre** avec les micromètres des tolérances ISO : ce sont deux grandeurs différentes qui partagent la même unité. Un Ø30 H7 (21 µm de tolérance) n'a rien à voir avec un Ra 0,8 µm.",
+            "remplacement": '| Zone | Fonction | Ra |\n|---|---|---|\n| A | porter une bague serrée | **0,8** |\n| B | étancher contre une lèvre | **0,8** |\n| C | centrer un moyeu démontable | **1,6** |\n| D | aucune | **6,3** ou brut |',
+            "calcul": "**A — Ra 0,8** : une bague montée serrée sur une surface rugueuse écrase les aspérités au montage, et le serrage calculé disparaît.\n\n**B — Ra 0,8, plus un chanfrein d'introduction et aucune strie hélicoïdale.** Sans chanfrein, la lèvre est coupée au montage ; des stries orientées pompent l'huile vers l'extérieur.\n\n**D — Ra 6,3 ou brut** : aucune fonction, donc aucun surcoût justifié.\n\n**La limite basse — non à Ra 0,05.** Sous Ra 0,1, la surface est trop lisse pour retenir le lubrifiant : le film se rompt et le frottement augmente.",
+            "verification": "**Le contrôle économique** : combien de surfaces exigent une rectification ? Ici trois (les deux portées A et la portée B), sur une pièce qui compte une dizaine de surfaces.\n\n**Si toutes les surfaces d'un plan portaient Ra 0,8**, il faudrait se demander lesquelles ont réellement une fonction — c'est le même raisonnement que les 20 % de cotes fonctionnelles de la fiche 5.2.\n\n**Le contrôle de cohérence** : les Ra retenus décroissent avec l'exigence (6,3 → 1,6 → 0,8) sans jamais descendre sous 0,4. La bonne valeur est toujours un **intervalle**, jamais un maximum.",
         },
         "a_retenir": 'À retenir : **Ra 3,2** sur un appui · **Ra 0,8** seulement où ça porte, ça frotte ou ça étanche. Chaque cran change le moyen de production, donc le prix. Et **trop lisse est aussi un défaut** : sous Ra 0,1, le lubrifiant ne tient plus.',
     },
@@ -55910,20 +55910,20 @@ ATELIERS = [
             "enonce": "Barre de section **40 mm²**, tirée dans l'axe par **2000 N**, en acier "
                       "**Re = 300 MPa**, coefficient de sécurité **s = 3**.",
             "regle": "**La sollicitation** : un effort dans l'axe qui étire la pièce, c'est de "
-                     "la **traction**.\\n\\n**La contrainte** ramène toujours une force à la "
-                     "surface sur laquelle elle s'applique : σ = F / S.\\n\\n**La contrainte "
+                     "la **traction**.\n\n**La contrainte** ramène toujours une force à la "
+                     "surface sur laquelle elle s'applique : σ = F / S.\n\n**La contrainte "
                      "admissible** n'est jamais Re directement : c'est Re réduite par un "
                      "coefficient de sécurité, pour couvrir les incertitudes.",
             "conversions": "Aucune conversion d'unité ici : F est déjà en newtons, S déjà en "
                            "mm², ce qui donne directement σ en MPa (1 MPa = 1 N/mm²).",
-            "remplacement": "σ = F / S = 2000 / 40\\n\\nContrainte admissible = Re / s = 300 / 3",
-            "calcul": "σ = 2000 / 40 = **50 MPa**\\n\\nContrainte admissible = 300 / 3 = "
+            "remplacement": "σ = F / S = 2000 / 40\n\nContrainte admissible = Re / s = 300 / 3",
+            "calcul": "σ = 2000 / 40 = **50 MPa**\n\nContrainte admissible = 300 / 3 = "
                       "**100 MPa**",
-            "verification": "**Trois contrôles :**\\n\\n1. **L'ordre de grandeur** : 50 MPa "
+            "verification": "**Trois contrôles :**\n\n1. **L'ordre de grandeur** : 50 MPa "
                             "pour une petite section d'acier sous 2000 N est cohérent, ni "
-                            "absurdement faible ni proche de la rupture.\\n\\n2. **La "
+                            "absurdement faible ni proche de la rupture.\n\n2. **La "
                             "comparaison finale** : σ = 50 MPa ≤ contrainte admissible = "
-                            "100 MPa → la pièce **tient**, avec une marge de 50 MPa.\\n\\n3. "
+                            "100 MPa → la pièce **tient**, avec une marge de 50 MPa.\n\n3. "
                             "**Le sens physique** : diviser Re par un coefficient de sécurité "
                             "DIMINUE toujours le seuil admissible — si votre contrainte "
                             "admissible dépasse Re, il y a une erreur de sens.",
@@ -56033,9 +56033,9 @@ ATELIERS = [
             "calcul": "L'ordre complet : **1. débit du brut · 2. usinage d'ébauche · 3. "
                       "traitement thermique · 4. usinage de finition · 5. contrôle "
                       "intermédiaire · 6. contrôle final.**",
-            "verification": "**Deux contrôles de bon sens :**\\n\\n1. **Le traitement "
+            "verification": "**Deux contrôles de bon sens :**\n\n1. **Le traitement "
                             "thermique n'est ni au tout début ni à la toute fin** : il est "
-                            "encadré par l'ébauche et la finition.\\n\\n2. **Le contrôle final "
+                            "encadré par l'ébauche et la finition.\n\n2. **Le contrôle final "
                             "ferme toujours la gamme** : c'est la dernière vérification avant "
                             "que la pièce ne quitte l'atelier.",
         },
@@ -56112,12 +56112,12 @@ ATELIERS = [
             "conversions": "**Le sens de la conversion** : pour passer d'une unité plus grande "
                            "à une unité plus petite (mm → µm), on **multiplie** par 1 000. "
                            "0,025 mm = 25 µm · 0,065 mm = 65 µm.",
-            "remplacement": "Mesure en µm = 0,065 × 1 000\\n\\nComparaison : mesure en µm face "
+            "remplacement": "Mesure en µm = 0,065 × 1 000\n\nComparaison : mesure en µm face "
                             "à la tolérance de 80 µm.",
-            "calcul": "0,065 × 1 000 = **65 µm**\\n\\n65 µm < 80 µm.",
-            "verification": "**Deux contrôles :**\\n\\n1. **Le sens de la conversion** : "
+            "calcul": "0,065 × 1 000 = **65 µm**\n\n65 µm < 80 µm.",
+            "verification": "**Deux contrôles :**\n\n1. **Le sens de la conversion** : "
                             "multiplier par 1 000 doit donner un nombre PLUS GRAND (65 > "
-                            "0,065) — si le résultat est plus petit, le sens est inversé.\\n\\n"
+                            "0,065) — si le résultat est plus petit, le sens est inversé.\n\n"
                             "2. **La marge** : 65 µm contre une tolérance de 80 µm laisse "
                             "15 µm de marge — la pièce n'est pas juste conforme, elle l'est "
                             "avec une marge confortable.",
@@ -56422,10 +56422,10 @@ ATELIERS = [
             "conversions": "Aucune conversion d'unité : p est déjà un nombre sans dimension, "
                            "les résultats se lisent directement en probabilité, convertie en "
                            "pourcentage pour la lisibilité.",
-            "remplacement": "P(X=0) = C(8,0) × 0,05⁰ × 0,95⁸\\n\\nP(X=1) = C(8,1) × 0,05¹ × "
+            "remplacement": "P(X=0) = C(8,0) × 0,05⁰ × 0,95⁸\n\nP(X=1) = C(8,1) × 0,05¹ × "
                             "0,95⁷",
-            "calcul": "P(X=0) = 1 × 1 × 0,95⁸ = **66,34 %**\\n\\nP(X=1) = 8 × 0,05 × 0,95⁷ = "
-                      "**27,93 %**\\n\\nP(X≤1) = 66,34 + 27,93 = **94,28 %**",
+            "calcul": "P(X=0) = 1 × 1 × 0,95⁸ = **66,34 %**\n\nP(X=1) = 8 × 0,05 × 0,95⁷ = "
+                      "**27,93 %**\n\nP(X≤1) = 66,34 + 27,93 = **94,28 %**",
             "verification": "**Contrôle par l'espérance** : E(X) = n×p = 8 × 0,05 = 0,4 pièce "
                             "défectueuse en moyenne par échantillon — un nombre inférieur à 1, "
                             "cohérent avec une probabilité d'acceptation élevée (94,28 %). Si "
@@ -56527,9 +56527,9 @@ ATELIERS = [
                      "vecteur de translation aux coordonnées obtenues.",
             "conversions": "Aucune conversion d'unité : coordonnées et translation sont déjà "
                            "dans la même unité (mm, ou sans unité si le repère est abstrait).",
-            "remplacement": "R(90°) × (3, 0) = (0×3 + (−1)×0 ; 1×3 + 0×0)\\n\\nPuis "
+            "remplacement": "R(90°) × (3, 0) = (0×3 + (−1)×0 ; 1×3 + 0×0)\n\nPuis "
                             "(résultat) + (5, 0)",
-            "calcul": "R(90°) × (3, 0) = **(0, 3)**\\n\\n(0, 3) + (5, 0) = **(5, 3)**",
+            "calcul": "R(90°) × (3, 0) = **(0, 3)**\n\n(0, 3) + (5, 0) = **(5, 3)**",
             "verification": "**Contrôle par l'ordre inverse** : translater d'abord (3,0)+(5,0) "
                             "= (8,0), puis tourner R(90°)×(8,0) = (0,8) — un résultat différent "
                             "de (5,3). Ça confirme que l'ordre compte, exactement comme un "
@@ -56587,8 +56587,8 @@ ATELIERS = [
                      "mesuré depuis l'horizontale.",
             "conversions": "Aucune : l'angle est déjà en degrés, cohérent avec le mode DEG "
                            "de la calculatrice.",
-            "remplacement": "Fx = 800 × cos(35°)\\n\\nFy = 800 × sin(35°)",
-            "calcul": "Fx = **655,32 N**\\n\\nFy = **458,86 N**",
+            "remplacement": "Fx = 800 × cos(35°)\n\nFy = 800 × sin(35°)",
+            "calcul": "Fx = **655,32 N**\n\nFy = **458,86 N**",
             "verification": "**Contrôle par Pythagore** : Fx² + Fy² = 655,32² + 458,86² "
                             "≈ 429 400 + 210 600 = 640 000 ≈ 800², la force totale. Les deux "
                             "composantes recomposent bien la force de départ.",
@@ -56642,7 +56642,7 @@ ATELIERS = [
             "conversions": "Aucune : x et C(x) restent dans les unités données par l'énoncé "
                            "(centaines de pièces, centaines d'euros).",
             "remplacement": "2x − 8 = 0, puis C(4) = 4² − 8×4 + 20",
-            "calcul": "x = **4** (soit 400 pièces)\\n\\nC(4) = 16 − 32 + 20 = **4** (soit "
+            "calcul": "x = **4** (soit 400 pièces)\n\nC(4) = 16 − 32 + 20 = **4** (soit "
                       "400 €)",
             "verification": "**Contrôle par le signe de C'** : C'(3) = −2 (négatif, le coût "
                             "descend encore avant x=4), C'(5) = 2 (positif, le coût remonte "
@@ -56700,8 +56700,8 @@ ATELIERS = [
                      "IT/(6σ) ; Cpk = Cp − |décalage|/(3σ).",
             "conversions": "Toutes les grandeurs sont déjà en mm, aucune conversion "
                            "nécessaire.",
-            "remplacement": "Cp = 0,30 / (6 × 0,04)\\n\\nCpk = Cp − 0,03 / (3 × 0,04)",
-            "calcul": "Cp = 0,30 / 0,24 = **1,25**\\n\\nCpk = 1,25 − 0,25 = **1,00**",
+            "remplacement": "Cp = 0,30 / (6 × 0,04)\n\nCpk = Cp − 0,03 / (3 × 0,04)",
+            "calcul": "Cp = 0,30 / 0,24 = **1,25**\n\nCpk = 1,25 − 0,25 = **1,00**",
             "verification": "**Contrôle de cohérence** : Cpk est toujours ≤ Cp, jamais "
                             "l'inverse — ici 1,00 ≤ 1,25, cohérent. Un écart important entre "
                             "les deux (0,25 ici) signale un problème de réglage plutôt que "
@@ -56764,8 +56764,8 @@ ATELIERS = [
             "conversions": "Aucune : calcul purement algébrique.",
             "remplacement": "x + 3 = 0 ; limite en +∞ de (2x−1)/(x+3) → 2x/x = 2 ; "
                             "f'(2) = 7/(2+3)²",
-            "calcul": "Asymptote verticale : **x = −3**\\n\\nAsymptote horizontale : **y = 2**"
-                      "\\n\\nf'(2) = 7/25 = **0,28**",
+            "calcul": "Asymptote verticale : **x = −3**\n\nAsymptote horizontale : **y = 2**"
+                      "\n\nf'(2) = 7/25 = **0,28**",
             "verification": "**Contrôle de cohérence** : f'(x) = 7/(x+3)² est un carré au "
                             "dénominateur, donc toujours positif — cohérent avec une fonction "
                             "strictement croissante sur chaque intervalle, sans extremum "
@@ -56828,8 +56828,8 @@ ATELIERS = [
                      "l'exposant : e^X = k équivaut à X = ln(k).**",
             "conversions": "Aucune : t est déjà en secondes et u en volts.",
             "remplacement": "400 e^(−t/2) = 60 → e^(−t/2) = 0,15 → −t/2 = ln(0,15)",
-            "calcul": "u(2) = 400 × e^(−1) ≈ **147 V**\\n\\ne^(−t/2) = 60/400 = **0,15**"
-                      "\\n\\nt = −2 × ln(0,15) ≈ −2 × (−1,897) ≈ **3,8 s**",
+            "calcul": "u(2) = 400 × e^(−1) ≈ **147 V**\n\ne^(−t/2) = 60/400 = **0,15**"
+                      "\n\nt = −2 × ln(0,15) ≈ −2 × (−1,897) ≈ **3,8 s**",
             "verification": "**Contrôle de cohérence** : 3,8 s est compris entre τ = 2 s et "
                             "3τ = 6 s, et 60 V entre 147 V et 19,9 V. Autre contrôle : "
                             "400 × e^(−3,8/2) ≈ 400 × 0,150 = 60 V.",
@@ -56889,7 +56889,7 @@ ATELIERS = [
             "conversions": "Aucune : u en mV, F en N, a en mV/N.",
             "remplacement": "ū = 15,03 / 6 ; F = (3,50 − 0,011) / 0,009 974",
             "calcul": "ū = **2,505 mV** (et 0,009 974 × 250 + 0,011 = 2,504 5 ≈ 2,505 : G est bien "
-                      "sur la droite)\\n\\nF ≈ **350 N**",
+                      "sur la droite)\n\nF ≈ **350 N**",
             "verification": "**Contrôle de cohérence** : 3,50 mV est entre 2,96 mV (300 N) et "
                             "4,03 mV (400 N), et 350 N est bien entre 300 et 400 N. C'est une "
                             "interpolation, donc fiable.",
@@ -56944,7 +56944,7 @@ ATELIERS = [
             "conversions": "Aucune : calcul purement algébrique, résultat sans unité "
                            "physique précisée.",
             "remplacement": "F(x) = x³ − x² + x ; F(2) − F(0)",
-            "calcul": "F(2) = 8 − 4 + 2 = **6**\\n\\nF(0) = **0**\\n\\nAire = 6 − 0 = **6**",
+            "calcul": "F(2) = 8 − 4 + 2 = **6**\n\nF(0) = **0**\n\nAire = 6 − 0 = **6**",
             "verification": "**Contrôle par encadrement** : f(0)=1 et f(2)=9, donc l'aire "
                             "d'un rectangle de hauteur moyenne (1+9)/2=5 sur une largeur de 2 "
                             "donnerait environ 10 — notre 6 est plausible car f n'est pas "
@@ -57003,8 +57003,8 @@ ATELIERS = [
             "conversions": "Aucune : toutes les valeurs sont déjà en mm.",
             "remplacement": "Médiane = (5ᵉ + 6ᵉ)/2 ; Q1 = 3ᵉ valeur (rang 2,5 → 3) ; Q3 = "
                             "8ᵉ valeur (rang 7,5 → 8)",
-            "calcul": "Médiane = (12,2+12,3)/2 = **12,25 mm**\\n\\nQ1 = **12,1 mm**\\n\\n"
-                      "Q3 = **12,4 mm**\\n\\nEIQ = 12,4 − 12,1 = **0,3 mm**",
+            "calcul": "Médiane = (12,2+12,3)/2 = **12,25 mm**\n\nQ1 = **12,1 mm**\n\n"
+                      "Q3 = **12,4 mm**\n\nEIQ = 12,4 − 12,1 = **0,3 mm**",
             "verification": "**Contrôle d'encadrement** : Q1 ≤ médiane ≤ Q3 doit toujours "
                             "être vrai — ici 12,1 ≤ 12,25 ≤ 12,4, cohérent.",
         },
@@ -57062,8 +57062,8 @@ ATELIERS = [
             "conversions": "Aucune : calcul purement algébrique.",
             "remplacement": "3x² − 12 = 3(x−2)(x+2) ; h(−2) = (−2)³−12(−2) ; "
                             "h(2) = 2³−12×2",
-            "calcul": "Racines de h' : **x = −2 et x = 2**\\n\\nh(−2) = −8+24 = "
-                      "**16**\\n\\nh(2) = 8−24 = **−16**",
+            "calcul": "Racines de h' : **x = −2 et x = 2**\n\nh(−2) = −8+24 = "
+                      "**16**\n\nh(2) = 8−24 = **−16**",
             "verification": "**Contrôle de cohérence** : h'(−3)=15>0, h'(0)=−12<0, "
                             "h'(3)=15>0 — le signe passe bien de + à − en x=−2 (maximum) "
                             "puis de − à + en x=2 (minimum), exactement ce que confirment "
@@ -57110,7 +57110,7 @@ ATELIERS = [
                      "intervalle.**",
             "conversions": "Aucune : les unités (m/s) restent celles de v(t).",
             "remplacement": "F(t) = −t³/3 + 3t² ; moyenne = (F(6) − F(0)) / (6 − 0)",
-            "calcul": "F(6) = **36**\\n\\nF(0) = **0**\\n\\nMoyenne = 36 / 6 = **6 m/s**",
+            "calcul": "F(6) = **36**\n\nF(0) = **0**\n\nMoyenne = 36 / 6 = **6 m/s**",
             "verification": "**Contrôle de cohérence** : v(0) = 0 et v(6) = 0, mais la "
                             "vitesse atteint un pic de v(3) = 9 m/s au milieu — la moyenne "
                             "de 6 m/s, plus proche du pic que des extrémités, est cohérente "
@@ -57168,8 +57168,8 @@ ATELIERS = [
                            "pourcentage sans dimension.",
             "remplacement": "moyenne = 60,00/4 ; variance = 0,0006/4 ; écart-type = √variance "
                             "; CV = écart-type/moyenne × 100",
-            "calcul": "Moyenne = **15,00 mm**\\n\\nVariance = **0,00015 mm²**\\n\\n"
-                      "Écart-type = **0,01225 mm**\\n\\nCV ≈ **0,082 %**",
+            "calcul": "Moyenne = **15,00 mm**\n\nVariance = **0,00015 mm²**\n\n"
+                      "Écart-type = **0,01225 mm**\n\nCV ≈ **0,082 %**",
             "verification": "**Contrôle d'ordre de grandeur** : un CV inférieur à 1 % "
                             "signale une série très homogène par rapport à sa moyenne — "
                             "cohérent avec des écarts de quelques centièmes de mm sur une "
@@ -57273,7 +57273,7 @@ ATELIERS = [
             "regle": "**L'intervalle de confiance à 95 % s'écrit moyenne ± 1,96 × s/√n.**",
             "conversions": "Aucune : toutes les grandeurs sont déjà en mm.",
             "remplacement": "1,96 × 0,6 / √36 ; puis 25,4 ± ce résultat",
-            "calcul": "marge = 1,96 × 0,6 / 6 = **0,196 mm**\\n\\nIntervalle : "
+            "calcul": "marge = 1,96 × 0,6 / 6 = **0,196 mm**\n\nIntervalle : "
                       "[**25,204** ; **25,596**] mm",
             "verification": "**Contrôle par la taille de l'échantillon** : un échantillon "
                             "plus grand (n plus élevé) réduirait la marge, car √n augmente "
@@ -57333,7 +57333,7 @@ ATELIERS = [
                      "permanent**, ici la température ambiante.",
             "conversions": "Le temps reste en minutes, cohérent avec τ donné en minutes.",
             "remplacement": "T(60) = 20 + 830 × e^(−60/40)",
-            "calcul": "e^(−1,5) ≈ 0,2231\\n\\nT(60) = 20 + 830 × 0,2231 ≈ **205,2 °C**",
+            "calcul": "e^(−1,5) ≈ 0,2231\n\nT(60) = 20 + 830 × 0,2231 ≈ **205,2 °C**",
             "verification": "**Contrôle par les bornes** : T(60) = 205,2 °C est bien compris "
                             "entre Tenv=20 °C (la limite finale) et T0=850 °C (le départ) — "
                             "un résultat en dehors de cette fourchette serait forcément faux.",
@@ -57390,9 +57390,9 @@ ATELIERS = [
             "regle": "**Une courbe de Bézier quadratique s'obtient par B(t) = (1−t)²P0 + "
                      "2(1−t)t·P1 + t²P2**, un mélange pondéré des trois points de contrôle.",
             "conversions": "Aucune : coordonnées sans unité physique précisée.",
-            "remplacement": "x(0,25) = 0,75²×1 + 2×0,75×0,25×3 + 0,25²×6\\n\\ny(0,25) = "
+            "remplacement": "x(0,25) = 0,75²×1 + 2×0,75×0,25×3 + 0,25²×6\n\ny(0,25) = "
                             "0,75²×1 + 2×0,75×0,25×6 + 0,25²×1",
-            "calcul": "x(0,25) = 0,5625 + 1,125 + 0,375 = **2,0625**\\n\\ny(0,25) = 0,5625 + "
+            "calcul": "x(0,25) = 0,5625 + 1,125 + 0,375 = **2,0625**\n\ny(0,25) = 0,5625 + "
                       "2,25 + 0,0625 = **2,875**",
             "verification": "**Contrôle par les poids** : les trois coefficients (1−t)², "
                             "2(1−t)t, t² valent ici 0,5625 + 0,375 + 0,0625 = 1 — ils "
@@ -57458,8 +57458,8 @@ ATELIERS = [
                            "(70% → 0,70), reconvertis en % pour la réponse.",
             "remplacement": "P(A∩défaut)=0,70×0,02 ; P(B∩défaut)=0,30×0,08 ; "
                             "P(défaut)=somme des deux",
-            "calcul": "P(A∩défaut) = **1,4%**\\n\\nP(B∩défaut) = **2,4%**\\n\\n"
-                      "P(défaut) = **3,8%**\\n\\nP(B|défaut) = 2,4/3,8 ≈ **63%**",
+            "calcul": "P(A∩défaut) = **1,4%**\n\nP(B∩défaut) = **2,4%**\n\n"
+                      "P(défaut) = **3,8%**\n\nP(B|défaut) = 2,4/3,8 ≈ **63%**",
             "verification": "**Contrôle de cohérence** : P(A|défaut) + P(B|défaut) doit "
                             "toujours valoir 100% — ici 37% + 63% = 100%, confirmé.",
         },
@@ -57515,7 +57515,7 @@ ATELIERS = [
             "regle": "**E(X) = np ; σ(X) = √(np(1−p)) ; plage usuelle = E(X) ± 2σ(X).**",
             "conversions": "Aucune : n est un effectif, p une proportion sans unité.",
             "remplacement": "E(X)=150×0,04 ; σ(X)=√(150×0,04×0,96) ; plage=6±2×2,4",
-            "calcul": "E(X) = **6**\\n\\nσ(X) = **2,4**\\n\\nPlage = **[1,2 ; 10,8]**",
+            "calcul": "E(X) = **6**\n\nσ(X) = **2,4**\n\nPlage = **[1,2 ; 10,8]**",
             "verification": "**Contrôle de cohérence** : 14 defectueuses est nettement "
                             "au-dessus de 10,8 — le lot sort clairement de la plage, pas "
                             "un cas limite douteux.",
@@ -57581,7 +57581,7 @@ ATELIERS = [
             "conversions": "Aucune : tout est en mm.",
             "remplacement": "f = 1/3 000 ; P(chutes) = (150 + 150)/3 000 ; σ = 3 000/√12",
             "calcul": "f ≈ **0,000 33 par mm** (soit environ une chance sur 3 000 par "
-                      "millimètre)\\n\\nP(chutes) = 300/3 000 = **0,1**\\n\\nσ(X) ≈ **866 mm**",
+                      "millimètre)\n\nP(chutes) = 300/3 000 = **0,1**\n\nσ(X) ≈ **866 mm**",
             "verification": "**Contrôle de cohérence** : les chutes font 300 mm sur 3 000, soit un "
                             "dixième de la barre, d'où 0,1. Et σ ≈ 0,2887 × 3 000 ≈ 866 mm : la "
                             "position est très dispersée, puisqu'aucun endroit n'est favorisé.",
@@ -57656,7 +57656,7 @@ ATELIERS = [
                      "commence au bord gauche du rectangle de 48, soit 47,5.**",
             "conversions": "Aucune.",
             "remplacement": "μ = 400 × 0,1 ; σ = √(400 × 0,1 × 0,9) ; P(Y ≥ 47,5)",
-            "calcul": "μ = **40** pièces\\n\\nσ = √36 = **6** pièces\\n\\nP(Y ≥ 47,5) ≈ **0,106**",
+            "calcul": "μ = **40** pièces\n\nσ = √36 = **6** pièces\n\nP(Y ≥ 47,5) ≈ **0,106**",
             "verification": "**Contrôle de cohérence** : 47,5 est à (47,5 − 40)/6 = 1,25σ au-dessus "
                             "de la moyenne ; au-delà de +1σ, il reste 16 % de l'aire (la moitié de "
                             "1 − 0,683), au-delà de +2σ 2,3 % (la moitié de 1 − 0,954) : 10,6 % est "
@@ -57736,7 +57736,7 @@ ATELIERS = [
                      "pour une différence : σ(Ja) = √(σ² + σ² + σ²).**",
             "conversions": "Aucune : tout est en mm.",
             "remplacement": "σ = 0,10/6 ; σ(Ja) = σ√3 ; 3σ(Ja)",
-            "calcul": "σ ≈ **0,016 7 mm**\\n\\nσ(Ja) ≈ **0,028 9 mm**\\n\\n3σ(Ja) ≈ **0,087 mm** "
+            "calcul": "σ ≈ **0,016 7 mm**\n\nσ(Ja) ≈ **0,028 9 mm**\n\n3σ(Ja) ≈ **0,087 mm** "
                       "(pire cas : 0,15 mm)",
             "verification": "**Contrôle de cohérence** : 0,028 9 est plus grand que σ d'une pièce "
                             "(0,016 7) et plus petit que la somme des trois (0,05) : c'est toujours le "
@@ -57823,8 +57823,8 @@ ATELIERS = [
             "conversions": "Aucune : h et τ sont tous deux en secondes.",
             "remplacement": "pente = −(0 − 10)/2 ; u(0,5) = 0 + 0,5 × 5 ; pente = −(2,5 − 10)/2 ; "
                             "u(1) = 2,5 + 0,5 × 3,75",
-            "calcul": "u'(0) = **5 V/s**\\n\\nu(0,5) ≈ **2,5 V**\\n\\nu(1) ≈ **4,375 V** (Euler)"
-                      "\\n\\nu(1) = 10 × (1 − e^(−0,5)) ≈ **3,93 V** (exact)",
+            "calcul": "u'(0) = **5 V/s**\n\nu(0,5) ≈ **2,5 V**\n\nu(1) ≈ **4,375 V** (Euler)"
+                      "\n\nu(1) = 10 × (1 − e^(−0,5)) ≈ **3,93 V** (exact)",
             "verification": "**Contrôle de cohérence** : la tension reste entre 0 et 10 V, et elle monte "
                             "de moins en moins vite (2,5 V au premier pas, 1,875 V au second) : c'est "
                             "bien l'allure d'une charge. Euler est au-dessus de la valeur exacte : il va "
@@ -57875,7 +57875,7 @@ ATELIERS = [
                      "supérieur.**",
             "conversions": "Aucune : s et la marge sont déjà dans la même unité (mm).",
             "remplacement": "n = (1,96 × 0,08 / 0,02)²",
-            "calcul": "n brut = **61,47**\\n\\nn arrondi = **62 pièces**",
+            "calcul": "n brut = **61,47**\n\nn arrondi = **62 pièces**",
             "verification": "**Contrôle** : avec n=62, marge = 1,96×0,08/√62 ≈ 0,0199 mm, "
                             "bien sous 0,02 mm visé — confirmé.",
         },
@@ -57932,7 +57932,7 @@ ATELIERS = [
                      "(y₀−y_eq)×e^(−t/τ)**, ici y_eq=0 donc P(t) = P0 × e^(−t/τ).",
             "conversions": "Aucune : tout reste en bar et en secondes.",
             "remplacement": "P(4)=8×e^(−1) ; P(12)=8×e^(−3) ; 1=8×e^(−t/4)",
-            "calcul": "P(4) = **2,94 bar**\\n\\nP(12) = **0,398 bar**\\n\\n"
+            "calcul": "P(4) = **2,94 bar**\n\nP(12) = **0,398 bar**\n\n"
                       "t(1 bar) ≈ **8,32 s**",
             "verification": "**Contrôle de cohérence** : P(4)/P0 ≈ 0,368 (soit 1/e), "
                             "exactement la règle du τ — 63% de la baisse totale (8 bar) est "
@@ -57987,8 +57987,8 @@ ATELIERS = [
             "regle": "**A⁻¹ = (1/det A) × [[d, −b], [−c, a]]** pour A=[[a,b],[c,d]], puis "
                      "X = A⁻¹B.",
             "conversions": "Aucune : système déjà sous forme numérique directe.",
-            "remplacement": "det A = 2×3−1×1 = 5\\n\\nA⁻¹ = (1/5)×[[3,−1],[−1,2]]",
-            "calcul": "x = (1/5)×(3×7−1×11) = (1/5)×10 = **2**\\n\\n"
+            "remplacement": "det A = 2×3−1×1 = 5\n\nA⁻¹ = (1/5)×[[3,−1],[−1,2]]",
+            "calcul": "x = (1/5)×(3×7−1×11) = (1/5)×10 = **2**\n\n"
                       "y = (1/5)×(−1×7+2×11) = (1/5)×15 = **3**",
             "verification": "**Réinjection dans les deux équations** : 2×2+3 = 7 ✓ · "
                             "2+3×3 = 2+9 = 11 ✓ — les deux équations de départ sont "
@@ -58042,7 +58042,7 @@ ATELIERS = [
             "conversions": "Aucune.",
             "remplacement": "Coefficients à t=0,5 : 0,125 ; 0,375 ; 0,375 ; 0,125",
             "calcul": "x = 0,125×0+0,375×1+0,375×3+0,125×4 = 0+0,375+1,125+0,5 = **2**"
-                      "\\n\\ny = 0,125×0+0,375×3+0,375×3+0,125×0 = 1,125+1,125 = **2,25**",
+                      "\n\ny = 0,125×0+0,375×3+0,375×3+0,125×0 = 1,125+1,125 = **2,25**",
             "verification": "**Somme des coefficients** : 0,125+0,375+0,375+0,125 = 1 — "
                             "toujours vrai quel que soit t, c'est ce qui garantit que le "
                             "point calculé reste une moyenne pondérée cohérente des 4 "
@@ -58138,7 +58138,7 @@ ATELIERS = [
                      "pondérées par la masse de chaque point.",
             "conversions": "Aucune.",
             "remplacement": "Masse totale = 5+2+3 = 10 kg",
-            "calcul": "Gx = (5×0+2×8+3×2)/10 = 22/10 = **2,2**\\n\\n"
+            "calcul": "Gx = (5×0+2×8+3×2)/10 = 22/10 = **2,2**\n\n"
                       "Gy = (5×0+2×0+3×6)/10 = 18/10 = **1,8**",
             "verification": "**Contrôle de position** : G(2,2 ; 1,8) est décalé de la "
                             "moyenne arithmétique simple (3,33 ; 2) vers A (5 kg, la "
@@ -58206,7 +58206,7 @@ ATELIERS = [
             "conversions": "Aucune.",
             "remplacement": "\"It's wrong\" → toujours remplacer par la mesure et la spec "
                              "chiffrées.",
-            "calcul": "1. Décrire le défaut avec chiffres.\\n2. Demander la root cause.\\n"
+            "calcul": "1. Décrire le défaut avec chiffres.\n2. Demander la root cause.\n"
                       "3. Exiger un firm commitment, pas une intention.",
             "verification": "**Contrôle de bon sens** : une réclamation sans chiffre, ou une "
                             "réponse acceptée sans engagement précis, sont les deux erreurs "
@@ -58274,8 +58274,8 @@ ATELIERS = [
             "conversions": "Aucune.",
             "remplacement": "Chaque message CAO en anglais correspond à une action précise "
                              "à effectuer, jamais à ignorer.",
-            "calcul": "1. Ajouter la cote/relation manquante.\\n"
-                      "2. Appliquer un congé (fillet) de rayon 3 mm.\\n"
+            "calcul": "1. Ajouter la cote/relation manquante.\n"
+                      "2. Appliquer un congé (fillet) de rayon 3 mm.\n"
                       "3. Respecter les 2° de dépouille minimum.",
             "verification": "**Contrôle de bon sens** : une esquisse sous-contrainte, un "
                             "congé confondu avec un chanfrein, ou une dépouille ignorée "
@@ -58332,7 +58332,7 @@ ATELIERS = [
             "regle": "**Écart de potentiel = E°(moins négatif) − E°(plus négatif)** — plus "
                      "l'écart est grand, plus le couple galvanique est agressif.",
             "conversions": "Aucune : tout est déjà en volts.",
-            "remplacement": "Acier/laiton : 0,34 − (−0,44)\\nAcier/magnésium : "
+            "remplacement": "Acier/laiton : 0,34 − (−0,44)\nAcier/magnésium : "
                              "−0,44 − (−2,37)",
             "calcul": "Acier/laiton = **0,78 V** · Acier/magnésium = **1,93 V**",
             "verification": "**Contrôle de cohérence** : le magnésium (E°=-2,37 V) est "
@@ -58388,8 +58388,8 @@ ATELIERS = [
             "enonce": "η_variateur=0,95, η_moteur=0,88, η_pompe=0,80, P_entrée=2200 W.",
             "regle": "**η_global = η1 × η2 × η3**, puis **P_utile = P_entrée × η_global**.",
             "conversions": "Aucune : tout reste en watts.",
-            "remplacement": "η_global = 0,95 × 0,88 × 0,80\\nP_utile = 2200 × η_global",
-            "calcul": "η_global = **0,668** (66,8 %)\\n\\nP_utile = **1470 W**",
+            "remplacement": "η_global = 0,95 × 0,88 × 0,80\nP_utile = 2200 × η_global",
+            "calcul": "η_global = **0,668** (66,8 %)\n\nP_utile = **1470 W**",
             "verification": "**Contrôle d'ordre de grandeur** : plus d'un tiers de la "
                             "puissance de départ est perdu sur trois maillons — cohérent "
                             "avec la fiche, qui souligne que chaque conversion "
@@ -58510,8 +58510,8 @@ ATELIERS = [
                      "point → conclusion.**",
             "conversions": "Sans objet (pas de calcul dans cet atelier).",
             "remplacement": "Sans objet.",
-            "calcul": "1. \"This is a bearing support.\"\\n"
-                      "2. \"Could you repeat the question, please?\"\\n"
+            "calcul": "1. \"This is a bearing support.\"\n"
+                      "2. \"Could you repeat the question, please?\"\n"
                       "3. \"PRO-cess\", accent sur la 1ʳᵉ syllabe.",
             "verification": "**Relire à voix haute** chaque réponse avant l'oral réel — "
                             "c'est la seule vérification qui compte pour une épreuve orale.",
@@ -58561,7 +58561,7 @@ ATELIERS = [
                      "jamais l'un sans l'autre.",
             "conversions": "Sans objet.",
             "remplacement": "Sans objet.",
-            "calcul": "1. WARNING = danger grave, CAUTION = risque limité.\\n"
+            "calcul": "1. WARNING = danger grave, CAUTION = risque limité.\n"
                       "2. Couper ET verrouiller, dans cet ordre, avant tout retrait.",
             "verification": "**Contrôle de bon sens** : une consigne de sécurité mal "
                             "comprise reste un risque réel sur une vraie machine, pas "
@@ -58613,7 +58613,7 @@ ATELIERS = [
                      "contredire, puis **\"The trade-off is...\"** assume le compromis.",
             "conversions": "Sans objet.",
             "remplacement": "Sans objet.",
-            "calcul": "1. Reconnaître, puis expliquer — jamais nier en bloc.\\n"
+            "calcul": "1. Reconnaître, puis expliquer — jamais nier en bloc.\n"
                       "2. Options → choix → avantage → compromis → cahier des charges.",
             "verification": "**Contrôle de cohérence** : une réponse qui reconnaît un "
                             "compromis reste toujours plus crédible qu'une réponse qui "
@@ -58680,8 +58680,8 @@ ATELIERS = [
             "conversions": "Aucune.",
             "remplacement": "« Je pense que » → toujours à supprimer d'une conclusion de "
                              "synthèse, quelle que soit la nuance de l'avis.",
-            "calcul": "1. Repérer tout marqueur d'avis (\"je pense\", \"il faudrait\").\\n"
-                      "2. Le remplacer par un constat neutre.\\n"
+            "calcul": "1. Repérer tout marqueur d'avis (\"je pense\", \"il faudrait\").\n"
+                      "2. Le remplacer par un constat neutre.\n"
                       "3. Vérifier que l'introduction reste courte (3 phrases).",
             "verification": "**Contrôle de bon sens** : une conclusion qui reste correcte "
                             "même en supprimant le \"je\" est une conclusion neutre.",
@@ -58848,7 +58848,7 @@ ATELIERS = [
             "regle": "**ΔD = D × α × ΔT**, à calculer séparément pour chaque matériau.",
             "conversions": "α en /°C, D en mm, ΔT en °C — aucune conversion d'unité "
                            "nécessaire.",
-            "remplacement": "Arbre : 50 × 12×10⁻⁶ × 70\\nAlésage : 50 × 23×10⁻⁶ × 70",
+            "remplacement": "Arbre : 50 × 12×10⁻⁶ × 70\nAlésage : 50 × 23×10⁻⁶ × 70",
             "calcul": "Arbre = **0,042 mm** · Alésage = **0,081 mm**",
             "verification": "**Contrôle de cohérence** : l'écart entre les deux dilatations "
                             "(0,0805 − 0,042 = 0,0385 mm) s'ajoute au jeu initial : "
@@ -58901,7 +58901,7 @@ ATELIERS = [
             "regle": "**Cote moule = cote pièce × (1 + taux de retrait)** — on majore "
                      "toujours le moule, jamais la pièce.",
             "conversions": "1,2 % = 0,012 · 2,0 % = 0,020.",
-            "remplacement": "PA6 : 150,00 × 1,012\\nPP : 150,00 × 1,020",
+            "remplacement": "PA6 : 150,00 × 1,012\nPP : 150,00 × 1,020",
             "calcul": "PA6 = **151,80 mm** · PP = **153,00 mm**",
             "verification": "**Contrôle** : le PP a un retrait plus fort, sa cote moule est "
                             "logiquement plus grande (153,00 > 151,80 mm) — cohérent avec un "
@@ -58966,8 +58966,8 @@ ATELIERS = [
                      "applique la règle des signes à chaque colonne, verticalement.**",
             "conversions": "Sans objet (pas de calcul numérique dans cet atelier).",
             "remplacement": "Sans objet.",
-            "calcul": "1. On multiplie les signes ligne par ligne, colonne par colonne.\\n"
-                      "2. Positif × positif = positif entre 1 et 3.\\n"
+            "calcul": "1. On multiplie les signes ligne par ligne, colonne par colonne.\n"
+                      "2. Positif × positif = positif entre 1 et 3.\n"
                       "3. Le produit s'annule exactement où un facteur s'annule : x=1 et x=3.",
             "verification": "**Contrôle par une valeur test** : en x=2 (entre 1 et 3), "
                             "(2−1)(3−2) = 1×1 = 1, positif — cohérent avec la ligne "

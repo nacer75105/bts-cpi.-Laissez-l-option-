@@ -38,6 +38,15 @@ tolérance ABSOLUE, dans l'unité de l'étape. Jusqu'au 2026-09-25 il la lisait 
               rencontré sur at143, fiche 18.11). À déclarer sur toute étape qui réutilise un
               résultat intermédiaire.
 
+  SAUT        un texte de l'atelier (corrigé, énoncé, consigne, diagnostic…) contient un
+              antislash suivi de n écrit en toutes lettres (deux antislashs puis n dans le
+              source) au lieu d'un vrai saut de ligne : st.markdown l'affiche tel quel
+              (« …50 MPa, antislash, n, antislash, n, Contrainte… »), et les étapes du corrigé se
+              collent sur une ligne. Constaté à l'écran le 2026-09-25 sur 45 ateliers (73
+              chaînes, 250 occurrences), corrigé le même jour. Les textes qui contiennent du LaTeX
+              (entre dollars, où les commandes nu ou ne précédées d'un antislash sont légitimes)
+              ne sont pas contrôlés.
+
 Il affiche aussi, pour information, les tolérances entre 5 et 10 % (à vérifier une à une, mais
 souvent normales : un entier demandé à ±0,1, une fourchette de cours).
 
@@ -66,6 +75,8 @@ La page accepte la réponse quand
               Avant le 2026-09-25, le second de deux diagnostics égaux était jeté (cas
               gen_iso_jeu, 61 % des tirages).
   PLANTAGE    le générateur lève une exception.
+  SAUT        un texte produit (titre, énoncé, corrigé, diagnostic, indice) contient un antislash
+              suivi de n en toutes lettres, affiché tel quel (voir SAUT des ateliers).
 
 Un générateur défectueux compte pour UN défaut (le nombre de tirages touchés est affiché).
 """
@@ -88,6 +99,18 @@ VOULU = {
 }
 
 CONTROLEUR_ABSOLU = "if abs(_val - _att) <= max(_tol, 1e-9):"
+ANTISLASH_N = chr(92) + "n"
+
+
+def sauts_litteraux(objet, chemin=""):
+    """Chemins des textes (hors LaTeX) qui contiennent un antislash-n littéral, affiché tel quel."""
+    if isinstance(objet, str):
+        return [chemin] if ANTISLASH_N in objet and "$" not in objet else []
+    if isinstance(objet, dict):
+        return [c for k, v in objet.items() for c in sauts_litteraux(v, f"{chemin}.{k}")]
+    if isinstance(objet, (list, tuple)):
+        return [c for i, v in enumerate(objet) for c in sauts_litteraux(v, f"{chemin}[{i}]")]
+    return []
 
 
 def lire_source():
@@ -117,6 +140,11 @@ def verifier_ateliers(src):
     plus_proche = g["diagnostic_le_plus_proche"]
     defauts, info, n_etapes = [], [], 0
     for a in ateliers:
+        sauts = sauts_litteraux(a)
+        if sauts:
+            defauts.append(f"SAUT        {a['id']} : antislash-n affiché tel quel dans "
+                           f"{', '.join(c.lstrip('.') for c in sauts[:4])}"
+                           + (f" (+{len(sauts) - 4})" if len(sauts) > 4 else ""))
         for i, e in enumerate(a["etapes"], 1):
             if e.get("type", "numerique") != "numerique":
                 continue
@@ -176,7 +204,7 @@ def verifier_ateliers(src):
             print("  " + d)
     else:
         print("0 piège accepté, 0 piège masqué, 0 réponse impossible à saisir, 0 tolérance "
-              "aberrante, 0 arrondi enchaîné refusé.")
+              "aberrante, 0 arrondi enchaîné refusé, 0 antislash-n affiché tel quel.")
     if info:
         print("Pour information, tolérances de 5 à 10 % (ou larges voulues), à vérifier une à une :")
         for x in info:
@@ -254,13 +282,16 @@ def verifier_generateurs(src):
     fusionner, plus_proche = g["fusionner_diagnostics"], g["diagnostic_le_plus_proche"]
     defauts = []
     for nom in gens:
-        affichee = diag_dans_tol = masque = 0
+        affichee = diag_dans_tol = masque = saut = 0
         exemple = ""
         try:
             appeler(g, definitions, nom)  # définit le générateur et ses dépendances
             for graine in range(TIRAGES):
                 random.seed(graine)
                 ex = tirer(g[nom])  # exactement le tirage de fabriquer_exo
+                if sauts_litteraux({k: ex.get(k) for k in ("titre", "enonce", "corr", "diag",
+                                                           "indice", "unite")}):
+                    saut += 1
                 tol = ex.get("tol", 0.001)
                 texte = fr(ex["rep"], dec(tol))
                 v = lire(texte)
@@ -296,6 +327,9 @@ def verifier_generateurs(src):
         if diag_dans_tol:
             defauts.append(f"DIAG        {nom} : diagnostic dans la tolérance dans "
                            f"{diag_dans_tol}/{TIRAGES} tirages ({exemple})")
+        if saut:
+            defauts.append(f"SAUT        {nom} : antislash-n affiché tel quel dans {saut}/{TIRAGES} "
+                           f"tirages")
     mal_lus = [n for n in range(100000) if lire(str(n)) != n]
     alea = random.Random(1)
     for _ in range(20000):
@@ -314,7 +348,7 @@ def verifier_generateurs(src):
             print("  " + d)
     else:
         print("0 réponse affichée refusée, 0 diagnostic dans la tolérance, 0 diagnostic masqué, "
-              "0 plantage, 0 nombre mal lu.")
+              "0 plantage, 0 nombre mal lu, 0 antislash-n affiché tel quel.")
     return len(defauts)
 
 
