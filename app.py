@@ -66553,6 +66553,13 @@ def _lien_youtube(requete):
     return "https://www.youtube.com/results?search_query=" + quote_plus(requete)
 
 
+def _purger_cles(debut):
+    """Efface de la session toutes les clés qui commencent par « debut » (erreurs retenues d'un
+    atelier ou d'un exercice guidé, quand l'élève recule ou recommence)."""
+    for _k in [k for k in st.session_state.keys() if str(k).startswith(debut)]:
+        del st.session_state[_k]
+
+
 def _nombre_affiche(x):
     """Nombre saisi ou attendu, écrit à la française (virgule décimale, vrai signe moins), avec la
     même précision que le format g (6 chiffres significatifs), sans jamais passer en notation
@@ -66585,12 +66592,14 @@ def _rendre_atelier(_at, _prefixe):
             if st.session_state[_cle_hist]:
                 st.session_state[_cle_hist].pop()
             st.session_state[_cle_temps] = 0
+            _purger_cles(f"{_prefixe}_at_erreur_")
             st.rerun()
     with _cnav2:
         if st.button("↺ Recommencer cet atelier", key=f"{_prefixe}_at_reset"):
             st.session_state[_cle_etape] = 0
             st.session_state[_cle_hist] = []
             st.session_state[_cle_temps] = 0
+            _purger_cles(f"{_prefixe}_at_erreur_")
             st.rerun()
 
     # --- Vocabulaire traduit, avant toute chose ---
@@ -66638,6 +66647,11 @@ def _rendre_atelier(_at, _prefixe):
 
         _type = _et.get("type", "numerique")
         _cle_in = f"{_prefixe}_at_in_{_idx}"
+        # L'erreur est RETENUE en session (clé propre à l'étape) : le message et le bouton
+        # « Voir… et continuer » restent affichés au rerun déclenché par ce bouton. Créé seulement
+        # sous « if Valider », il disparaissait à ce rerun et son clic était perdu (corrigé le
+        # 2026-09-26 : l'élève restait bloqué sur l'étape).
+        _cle_err = f"{_prefixe}_at_erreur_{_idx}"
 
         if _type == "qcm":
             _rep = st.radio(_et.get("question", "Votre réponse"), _et["options"],
@@ -66652,26 +66666,31 @@ def _rendre_atelier(_at, _prefixe):
             if _go and _rep is not None:
                 _i = _et["options"].index(_rep)
                 if _i == _et["bonne"]:
+                    st.session_state.pop(_cle_err, None)
                     st.session_state[_cle_hist].append(
                         {"label": _et["label"], "valeur": _rep})
                     st.session_state[_cle_etape] += 1
                     st.rerun()
                 else:
-                    # diagnostic PROPRE A CETTE mauvaise reponse
-                    _diag = _et.get("diagnostics", {}).get(_i)
-                    st.markdown(
-                        f'<div class="ko-box"><b>Pas encore.</b> Vous avez choisi '
-                        f'« {_rep} ».</div>', unsafe_allow_html=True)
-                    if _diag:
-                        st.markdown(f'<div class="warn-box">🔍 <b>Ce qui a dû se passer —</b> '
-                                    f'{_diag}</div>', unsafe_allow_html=True)
-                    if st.button("Voir la réponse et continuer",
-                                 key=f"{_prefixe}_at_skip_{_idx}"):
-                        st.session_state[_cle_hist].append(
-                            {"label": _et["label"] + " (donnée)",
-                             "valeur": _et["options"][_et["bonne"]]})
-                        st.session_state[_cle_etape] += 1
-                        st.rerun()
+                    st.session_state[_cle_err] = _i
+            _i_err = st.session_state.get(_cle_err)
+            if _i_err is not None:
+                # diagnostic PROPRE A CETTE mauvaise reponse
+                _diag = _et.get("diagnostics", {}).get(_i_err)
+                st.markdown(
+                    f'<div class="ko-box"><b>Pas encore.</b> Vous avez choisi '
+                    f'« {_et["options"][_i_err]} ».</div>', unsafe_allow_html=True)
+                if _diag:
+                    st.markdown(f'<div class="warn-box">🔍 <b>Ce qui a dû se passer —</b> '
+                                f'{_diag}</div>', unsafe_allow_html=True)
+                if st.button("Voir la réponse et continuer",
+                             key=f"{_prefixe}_at_skip_{_idx}"):
+                    st.session_state.pop(_cle_err, None)
+                    st.session_state[_cle_hist].append(
+                        {"label": _et["label"] + " (donnée)",
+                         "valeur": _et["options"][_et["bonne"]]})
+                    st.session_state[_cle_etape] += 1
+                    st.rerun()
         else:
             _val = st.number_input(
                 f"Votre valeur ({_et['unite']})" if _et.get("unite") else "Votre valeur",
@@ -66692,37 +66711,44 @@ def _rendre_atelier(_at, _prefixe):
                 # (corrigé le 2026-09-25). Les EXERCICES_GUIDES, eux, restent en relatif (2 %).
                 _tol = _et.get("tol", 0.02)
                 if abs(_val - _att) <= max(_tol, 1e-9):
+                    st.session_state.pop(_cle_err, None)
                     st.session_state[_cle_hist].append(
                         {"label": _et["label"],
                          "valeur": f"{_nombre_affiche(_val)} {_et.get('unite','')}".strip()})
                     st.session_state[_cle_etape] += 1
                     st.rerun()
                 else:
-                    st.markdown(
-                        f'<div class="ko-box"><b>Pas encore.</b> Vous avez entré '
-                        f'<b>{_nombre_affiche(_val)}</b>, la valeur attendue est <b>{_nombre_affiche(_att)} '
-                        f'{_et.get("unite","")}</b>.</div>', unsafe_allow_html=True)
-                    # diagnostic sur valeur fausse PREVISIBLE, sinon heuristique
-                    # générique (facteur 2, conversion d'unité, signe...), sinon l'aide
-                    # de l'étape : jamais de "faux" sans explication.
-                    _trouve = None
-                    _trouve = diagnostic_le_plus_proche(
-                        _val, [(_piege, max(abs(_piege) * 0.02, 1e-9), _msg)
-                               for _piege, _msg in _et.get("pieges", [])])
-                    if not _trouve:
-                        _trouve = _diagnostic_erreur(_val, _att)
-                    if _trouve:
-                        st.markdown(f'<div class="warn-box">🔍 <b>Ce qui a dû se passer —</b> '
-                                    f'{_trouve}</div>', unsafe_allow_html=True)
-                    if _et.get("aide"):
-                        st.info(_et["aide"])
-                    if st.button("Voir la valeur et continuer",
-                                 key=f"{_prefixe}_at_skip_{_idx}"):
-                        st.session_state[_cle_hist].append(
-                            {"label": _et["label"] + " (donnée)",
-                             "valeur": f"{_nombre_affiche(_att)} {_et.get('unite','')}".strip()})
-                        st.session_state[_cle_etape] += 1
-                        st.rerun()
+                    st.session_state[_cle_err] = _val
+            _val_err = st.session_state.get(_cle_err)
+            if _val_err is not None:
+                _att = _et["attendu"]
+                _val = _val_err
+                st.markdown(
+                    f'<div class="ko-box"><b>Pas encore.</b> Vous avez entré '
+                    f'<b>{_nombre_affiche(_val)}</b>, la valeur attendue est <b>{_nombre_affiche(_att)} '
+                    f'{_et.get("unite","")}</b>.</div>', unsafe_allow_html=True)
+                # diagnostic sur valeur fausse PREVISIBLE, sinon heuristique
+                # générique (facteur 2, conversion d'unité, signe...), sinon l'aide
+                # de l'étape : jamais de "faux" sans explication.
+                _trouve = None
+                _trouve = diagnostic_le_plus_proche(
+                    _val, [(_piege, max(abs(_piege) * 0.02, 1e-9), _msg)
+                           for _piege, _msg in _et.get("pieges", [])])
+                if not _trouve:
+                    _trouve = _diagnostic_erreur(_val, _att)
+                if _trouve:
+                    st.markdown(f'<div class="warn-box">🔍 <b>Ce qui a dû se passer —</b> '
+                                f'{_trouve}</div>', unsafe_allow_html=True)
+                if _et.get("aide"):
+                    st.info(_et["aide"])
+                if st.button("Voir la valeur et continuer",
+                             key=f"{_prefixe}_at_skip_{_idx}"):
+                    st.session_state.pop(_cle_err, None)
+                    st.session_state[_cle_hist].append(
+                        {"label": _et["label"] + " (donnée)",
+                         "valeur": f"{_nombre_affiche(_att)} {_et.get('unite','')}".strip()})
+                    st.session_state[_cle_etape] += 1
+                    st.rerun()
 
     # --- Toutes les valeurs trouvées : le corrigé en six temps, un par un ---
     else:
@@ -66765,11 +66791,13 @@ def _rendre_exercice_interactif(_ex, _prefixe):
             st.session_state[_cle_etat] = max(0, st.session_state[_cle_etat] - 1)
             if st.session_state[_cle_hist]:
                 st.session_state[_cle_hist].pop()
+            _purger_cles(f"{_prefixe}_erreur_")
             st.rerun()
     with _c2:
         if st.button("↺ Recommencer cet exercice", key=f"reset_{_prefixe}"):
             st.session_state[_cle_etat] = 0
             st.session_state[_cle_hist] = []
+            _purger_cles(f"{_prefixe}_erreur_")
             st.rerun()
 
     st.write("")
@@ -66804,6 +66832,9 @@ def _rendre_exercice_interactif(_ex, _prefixe):
                 f'<div class="warn-box" style="font-style:italic">« {_et["texte"]} »</div>',
                 unsafe_allow_html=True)
 
+        # Erreur RETENUE en session, comme dans les ateliers (bouton « Voir… » imbriqué sous
+        # « Valider » : son clic était perdu ; corrigé le 2026-09-26).
+        _cle_err = f"{_prefixe}_erreur_{_etape_idx}"
         if _type_etape == "qcm":
             _cle_rep = f"{_prefixe}_qcm_{_etape_idx}"
             _rep = st.radio(_et.get("question", "Votre réponse"), _et["options"],
@@ -66820,25 +66851,30 @@ def _rendre_exercice_interactif(_ex, _prefixe):
             if _valider and _rep is not None:
                 _idx_rep = _et["options"].index(_rep)
                 if _idx_rep == _et["bonne"]:
+                    st.session_state.pop(_cle_err, None)
                     st.session_state[_cle_hist].append(
                         {"label": _et["label"], "valeur": 0, "unite": "✓ " + _rep})
                     st.session_state[_cle_etat] += 1
                     st.rerun()
                 else:
-                    st.markdown(
-                        f'<div class="ko-box"><b>❌ Pas encore</b><br>'
-                        f'Vous avez choisi « {_rep} ».</div>', unsafe_allow_html=True)
-                    st.markdown(
-                        f'<div class="warn-box">🔍 <b>Explication —</b> '
-                        f'{_et["explication"]}</div>', unsafe_allow_html=True)
-                    st.write("")
-                    if st.button("Voir la bonne réponse et continuer",
-                                 key=f"{_prefixe}_passer_{_etape_idx}"):
-                        st.session_state[_cle_hist].append(
-                            {"label": _et["label"] + " (donnée)", "valeur": 0,
-                             "unite": "✓ " + _et["options"][_et["bonne"]]})
-                        st.session_state[_cle_etat] += 1
-                        st.rerun()
+                    st.session_state[_cle_err] = _idx_rep
+            _i_err = st.session_state.get(_cle_err)
+            if _i_err is not None:
+                st.markdown(
+                    f'<div class="ko-box"><b>❌ Pas encore</b><br>'
+                    f'Vous avez choisi « {_et["options"][_i_err]} ».</div>', unsafe_allow_html=True)
+                st.markdown(
+                    f'<div class="warn-box">🔍 <b>Explication —</b> '
+                    f'{_et["explication"]}</div>', unsafe_allow_html=True)
+                st.write("")
+                if st.button("Voir la bonne réponse et continuer",
+                             key=f"{_prefixe}_passer_{_etape_idx}"):
+                    st.session_state.pop(_cle_err, None)
+                    st.session_state[_cle_hist].append(
+                        {"label": _et["label"] + " (donnée)", "valeur": 0,
+                         "unite": "✓ " + _et["options"][_et["bonne"]]})
+                    st.session_state[_cle_etat] += 1
+                    st.rerun()
 
         else:
             _cle_input = f"{_prefixe}_input_{_etape_idx}"
@@ -66862,32 +66898,39 @@ def _rendre_exercice_interactif(_ex, _prefixe):
                 _tol = _et["tol"]
                 _ok = abs(_val - _attendu) <= max(abs(_attendu) * _tol, 1e-9)
                 if _ok:
+                    st.session_state.pop(_cle_err, None)
                     st.session_state[_cle_hist].append(
                         {"label": _et["label"], "valeur": _val, "unite": _et["unite"]})
                     st.session_state[_cle_etat] += 1
                     st.rerun()
                 else:
-                    _diag = _diagnostic_erreur(_val, _attendu)
-                    st.markdown(
-                        f'<div class="ko-box"><b>❌ Pas encore</b><br>'
-                        f'Vous avez entré <b>{_nombre_affiche(_val)}</b>, la valeur attendue est '
-                        f'<b>{_nombre_affiche(_attendu)} {_et["unite"]}</b>.</div>', unsafe_allow_html=True)
-                    if _diag:
-                        st.markdown(f'<div class="warn-box">🔍 <b>Diagnostic —</b> {_diag}</div>',
-                                  unsafe_allow_html=True)
-                    st.info(f"**Formule à appliquer :** {_et['formule']}")
-                    st.write("")
-                    c_retry, c_pass = st.columns(2)
-                    with c_retry:
-                        st.caption("Corrigez votre valeur ci-dessus puis validez à nouveau.")
-                    with c_pass:
-                        if st.button("Voir la valeur correcte et continuer",
-                                     key=f"{_prefixe}_passer_{_etape_idx}"):
-                            st.session_state[_cle_hist].append(
-                                {"label": _et["label"] + " (donnée)", "valeur": _attendu,
-                                 "unite": _et["unite"]})
-                            st.session_state[_cle_etat] += 1
-                            st.rerun()
+                    st.session_state[_cle_err] = _val
+            _val_err = st.session_state.get(_cle_err)
+            if _val_err is not None:
+                _attendu = _et["attendu"]
+                _val = _val_err
+                _diag = _diagnostic_erreur(_val, _attendu)
+                st.markdown(
+                    f'<div class="ko-box"><b>❌ Pas encore</b><br>'
+                    f'Vous avez entré <b>{_nombre_affiche(_val)}</b>, la valeur attendue est '
+                    f'<b>{_nombre_affiche(_attendu)} {_et["unite"]}</b>.</div>', unsafe_allow_html=True)
+                if _diag:
+                    st.markdown(f'<div class="warn-box">🔍 <b>Diagnostic —</b> {_diag}</div>',
+                              unsafe_allow_html=True)
+                st.info(f"**Formule à appliquer :** {_et['formule']}")
+                st.write("")
+                c_retry, c_pass = st.columns(2)
+                with c_retry:
+                    st.caption("Corrigez votre valeur ci-dessus puis validez à nouveau.")
+                with c_pass:
+                    if st.button("Voir la valeur correcte et continuer",
+                                 key=f"{_prefixe}_passer_{_etape_idx}"):
+                        st.session_state.pop(_cle_err, None)
+                        st.session_state[_cle_hist].append(
+                            {"label": _et["label"] + " (donnée)", "valeur": _attendu,
+                             "unite": _et["unite"]})
+                        st.session_state[_cle_etat] += 1
+                        st.rerun()
 
     # --- Conclusion (QCM) ---
     elif _etape_idx == len(_ex["etapes"]):

@@ -79,6 +79,19 @@ La page accepte la réponse quand
               suivi de n en toutes lettres, affiché tel quel (voir SAUT des ateliers).
 
 Un générateur défectueux compte pour UN défaut (le nombre de tirages touchés est affiché).
+
+3. BOUTONS IMBRIQUÉS (analyse statique de tout app.py)
+------------------------------------------------------
+  BOUTON      un st.button(...) (ou col.button, sidebar.button…) est créé à l'intérieur d'un
+              « if » qui dépend d'un AUTRE bouton du même passage (« if st.button(…): » ou
+              « _go = st.button(…) … if _go: »). Au rerun déclenché par le clic sur le bouton
+              intérieur, le bouton extérieur vaut False : le bouton intérieur n'est pas recréé et
+              son clic est perdu. Cas réel : « Voir la valeur et continuer » des ateliers et des
+              exercices guidés, inopérant jusqu'au 2026-09-26 (l'élève restait bloqué). Remède :
+              retenir l'état en session (clé propre à l'étape) et créer le bouton sous une
+              condition sur cet état. Contrôle heuristique : il suit les noms affectés par un
+              appel .button(...) dans la même fonction ; il peut signaler un faux positif, à
+              examiner à la main.
 """
 import ast
 import io
@@ -352,11 +365,97 @@ def verifier_generateurs(src):
     return len(defauts)
 
 
+# ---------------------------------------------------------------------------
+# 3. Boutons imbriqués
+# ---------------------------------------------------------------------------
+
+def _est_bouton(noeud):
+    """Appel de la forme X.button(...) (st.button, col.button, st.sidebar.button…)."""
+    return isinstance(noeud, ast.Call) and isinstance(noeud.func, ast.Attribute) \
+        and noeud.func.attr == "button"
+
+
+def _boutons_dans(noeuds):
+    """Appels .button(...) contenus dans ces instructions (sans descendre dans les fonctions)."""
+    trouves = []
+    pile = list(noeuds)
+    while pile:
+        n = pile.pop()
+        if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef, ast.Lambda)):
+            continue
+        if _est_bouton(n):
+            trouves.append(n)
+        pile.extend(ast.iter_child_nodes(n))
+    return trouves
+
+
+# Boutons imbriqués VOULUS (inoffensifs), repérés par leur libellé -> raison.
+BOUTONS_VOULUS = {
+    "Carte suivante": "page « À revoir » : le bouton ne fait que st.rerun(), ce que produit déjà "
+                      "n'importe quel clic ; la carte a été mise à jour (srs_maj) au passage "
+                      "précédent, la suivante s'affiche donc bien",
+}
+
+
+def verifier_boutons(src):
+    arbre = ast.parse(src)
+    defauts = []
+    voulus = []
+    portees = [arbre] + [n for n in ast.walk(arbre)
+                         if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef))]
+    for portee in portees:
+        corps = portee.body
+        # noms affectés par un appel .button(...) dans cette portée
+        noms = set()
+        pile = list(corps)
+        while pile:
+            n = pile.pop()
+            if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                continue
+            if isinstance(n, ast.Assign) and _est_bouton(n.value):
+                noms.update(t.id for t in n.targets if isinstance(t, ast.Name))
+            pile.extend(ast.iter_child_nodes(n))
+        pile = list(corps)
+        while pile:
+            n = pile.pop()
+            if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                continue
+            if isinstance(n, ast.If):
+                test_bouton = any(_est_bouton(x) for x in ast.walk(n.test)) or any(
+                    isinstance(x, ast.Name) and x.id in noms for x in ast.walk(n.test))
+                if test_bouton:
+                    for b in _boutons_dans(n.body):
+                        libelle = b.args[0].value if b.args and isinstance(b.args[0], ast.Constant) \
+                            else ""
+                        if libelle in BOUTONS_VOULUS:
+                            voulus.append(f"  ligne {b.lineno}, « {libelle} » — voulu : "
+                                          f"{BOUTONS_VOULUS[libelle]}")
+                            continue
+                        defauts.append(f"BOUTON      ligne {b.lineno} : bouton créé sous le « if » "
+                                       f"de la ligne {n.lineno}, qui dépend d'un autre bouton : "
+                                       "son clic sera perdu")
+            pile.extend(ast.iter_child_nodes(n))
+    defauts = sorted(set(defauts), key=lambda d: int(re.search(r"ligne (\d+)", d).group(1)))
+    print("BOUTONS : analyse de tous les st.button de app.py.")
+    if defauts:
+        print(f"{len(defauts)} défaut(s) :")
+        for d in defauts:
+            print("  " + d)
+    else:
+        print("0 bouton créé sous un autre bouton.")
+    for v in sorted(set(voulus)):
+        print("Pour information, bouton imbriqué déclaré inoffensif :")
+        print(v)
+    return len(defauts)
+
+
 def main():
     src = lire_source()
     n = verifier_ateliers(src)
     print()
     n += verifier_generateurs(src)
+    print()
+    n += verifier_boutons(src)
     print(f"\nTotal : {n} défaut(s).")
     return n
 

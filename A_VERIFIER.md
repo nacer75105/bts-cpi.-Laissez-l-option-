@@ -199,6 +199,26 @@ complexes (forme algébrique, Δ < 0) — 13. équations différentielles du sec
   test rapide séparé du test complet. L'outil d'audit couvre déjà, lui, tous les diagnostics des
   générateurs sur 2 000 tirages (0 défaut).
 
+### Bouton « Voir la valeur / la réponse et continuer » inopérant (corrigé le 2026-09-26)
+
+- Constat dans un vrai navigateur : après une mauvaise réponse, un clic sur « Voir la valeur et
+  continuer » ne faisait PAS avancer l'étape (la page revenait sur la même étape, le message
+  d'erreur disparaissait) — l'élève en difficulté, à qui ce bouton est destiné, restait bloqué.
+  Touchés : les 145 ateliers guidés (valeur fausse et QCM faux) et les exercices guidés (« Voir
+  la bonne réponse / la valeur correcte et continuer »), ainsi que les exercices générés depuis un
+  document importé (même moteur). Cause : bouton créé seulement sous « if Valider » ; au rerun
+  déclenché par son clic, Valider vaut False, le bouton n'est pas recréé et le clic est perdu.
+- Correctif : l'erreur est retenue en session dans une clé propre à l'étape
+  (`{préfixe}_at_erreur_{étape}` pour les ateliers, `{préfixe}_erreur_{étape}` pour les exercices
+  guidés), effacée quand l'élève franchit l'étape, et toutes les clés d'erreur du préfixe sont
+  purgées par « ↺ Recommencer » et « ← Étape précédente ».
+- Vérifié dans un vrai navigateur (34 contrôles OK) : at6 (ancien) et at146, eg1, eg23 (le plus
+  récent) et eg17 (QCM) — l'étape avance, la valeur donnée apparaît dans l'historique, aucune
+  erreur fantôme à l'étape suivante ; « Recommencer » et « Étape précédente » effacent l'erreur.
+- Outil d'audit : nouveau contrôle BOUTON (analyse statique de tous les st.button de app.py) ;
+  il relevait les 4 cas corrigés et un 5ᵉ, « Carte suivante » (page À revoir), déclaré
+  inoffensif (il ne fait que st.rerun(), la carte suivante s'affiche bien) et laissé tel quel.
+
 ### Corrigés d'ateliers : « \n\n » affiché en toutes lettres (corrigé le 2026-09-25)
 
 - Constat à l'écran (page de test rendant le corrigé réel avec st.markdown, comme la page
