@@ -58,12 +58,16 @@ acceptée (cas at141, fiche 18.9) — sauf si l'étape le déclare par depend_de
 ---------------------------------------------------
 Chaque générateur est rejoué TIRAGES fois (graines fixes), par tirer_exercice comme sur la page.
 La page accepte la réponse quand
-|valeur − rep| ≤ tol, et affiche la réponse avec decimales_affichage(tol) décimales. Jusqu'au
+|valeur − rep| ≤ tol, et affiche la réponse avec decimales_reponse(ex) décimales : le champ
+"decimales" du générateur s'il existe (précision imposée par l'énoncé, ex. 0 pour « à l'heure
+près », depuis le 2026-09-26), sinon decimales_affichage(tol). Jusqu'au
 2026-09-25 elle l'affichait toujours avec 2 décimales : la réponse affichée était refusée dans
 66 % des tirages de gen_proba_binomiale et 21 % de gen_proba_uniforme. Pour chaque tirage :
 
   AFFICHÉE    la réponse telle qu'elle est affichée, recopiée par l'élève (et lue par
-              lire_nombre, comme sa saisie), est refusée par la tolérance.
+              lire_nombre, comme sa saisie), est refusée par la tolérance — y compris quand le
+              générateur impose ses décimales par le champ "decimales".
+  DÉCIMALES   le champ "decimales" d'un générateur n'est pas un entier de 0 à 6.
   LECTURE     lire_nombre lit mal un nombre écrit normalement (contrôle de 100 000 entiers et
               de 20 000 décimaux formatés par fr) : jusqu'au 2026-09-25, « 5100 » était lu 5.
   DIAG        un diagnostic (valeur d'erreur prévisible) tombe dans la tolérance de la bonne
@@ -286,16 +290,17 @@ def appeler(g, definitions, fonction):
 
 def verifier_generateurs(src):
     g, definitions, gens = espace_generateurs(src)
-    for aide in ("fr", "lire_nombre", "decimales_affichage", "tirer_exercice",
+    for aide in ("fr", "lire_nombre", "decimales_affichage", "decimales_reponse", "tirer_exercice",
                  "fusionner_diagnostics", "diagnostic_le_plus_proche"):
         if aide not in definitions:
             raise SystemExit(f"fonction {aide} introuvable dans app.py")
         definir(g, definitions, aide)
-    fr, lire, dec, tirer = g["fr"], g["lire_nombre"], g["decimales_affichage"], g["tirer_exercice"]
+    fr, lire, dec, tirer = g["fr"], g["lire_nombre"], g["decimales_reponse"], g["tirer_exercice"]
     fusionner, plus_proche = g["fusionner_diagnostics"], g["diagnostic_le_plus_proche"]
     defauts = []
+    avec_decimales = set()
     for nom in gens:
-        affichee = diag_dans_tol = masque = saut = 0
+        affichee = diag_dans_tol = masque = saut = decimales_ko = 0
         exemple = ""
         try:
             appeler(g, definitions, nom)  # définit le générateur et ses dépendances
@@ -306,7 +311,12 @@ def verifier_generateurs(src):
                                                            "indice", "unite")}):
                     saut += 1
                 tol = ex.get("tol", 0.001)
-                texte = fr(ex["rep"], dec(tol))
+                if "decimales" in ex:
+                    avec_decimales.add(nom)
+                    if not (isinstance(ex["decimales"], int) and 0 <= ex["decimales"] <= 6):
+                        decimales_ko += 1
+                        continue
+                texte = fr(ex["rep"], dec(ex))
                 v = lire(texte)
                 if v is None or abs(v - ex["rep"]) > tol:
                     affichee += 1
@@ -334,6 +344,9 @@ def verifier_generateurs(src):
         if affichee:
             defauts.append(f"AFFICHÉE    {nom} : réponse affichée refusée dans {affichee}/{TIRAGES} "
                            f"tirages ({exemple})")
+        if decimales_ko:
+            defauts.append(f"DÉCIMALES   {nom} : champ \"decimales\" invalide dans {decimales_ko}/{TIRAGES} "
+                           f"tirages")
         if masque:
             defauts.append(f"MASQUÉ      {nom} : deux diagnostics confondus dans {masque}/{TIRAGES} "
                            f"tirages ({exemple})")
@@ -354,14 +367,15 @@ def verifier_generateurs(src):
     if mal_lus:
         defauts.append(f"LECTURE     lire_nombre lit mal {len(mal_lus)} nombres (ex. {mal_lus[:4]})")
     print(f"GÉNÉRATEURS : {len(gens)} générateurs, {TIRAGES} tirages chacun ; lecture de 120 000 "
-          f"nombres par lire_nombre.")
+          f"nombres par lire_nombre ; décimales imposées par l'énoncé : "
+          f"{', '.join(sorted(avec_decimales)) or 'aucun générateur'}.")
     if defauts:
         print(f"{len(defauts)} défaut(s) :")
         for d in defauts:
             print("  " + d)
     else:
         print("0 réponse affichée refusée, 0 diagnostic dans la tolérance, 0 diagnostic masqué, "
-              "0 plantage, 0 nombre mal lu, 0 antislash-n affiché tel quel.")
+              "0 champ decimales invalide, 0 plantage, 0 nombre mal lu, 0 antislash-n affiché tel quel.")
     return len(defauts)
 
 

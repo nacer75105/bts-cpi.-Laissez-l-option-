@@ -185,8 +185,25 @@ complexes (forme algébrique, Δ < 0) — 13. équations différentielles du sec
 - Cinq tours de relecture (justesse + clarté) jusqu'à zéro réserve. Relevé tardivement (4ᵉ tour) : la
   liste « le composant s'use-t-il ? » du § 6 avait ses réponses inversées (oui → exponentielle).
 - Dette : at148 et les deux générateurs pas encore cliqués dans l'interface (outil d'audit : 0 défaut).
-- Dette transversale (commit séparé) : `decimales_affichage` impose 2 décimales même quand la
-  tolérance vaut 1 (« 5 268,03 h » alors que la consigne dit « à l'heure près »).
+- ✅ Dette transversale corrigée le 2026-09-26 (commit séparé) : la réponse affichée de
+  `gen_duree_fiabilite` sortait avec 2 décimales (« 5 268,03 h ») alors que l'énoncé dit « à l'heure
+  près ». Voir « Réponse affichée : la précision suit l'énoncé » ci-dessous.
+
+### Réponse affichée : la précision suit l'énoncé, pas la tolérance (corrigé le 2026-09-26)
+
+- Un générateur peut déclarer `"decimales": n` quand son énoncé impose une précision ; sinon la page
+  garde `decimales_affichage(tol)` (fonction `decimales_reponse`). Seul `gen_duree_fiabilite` le fait
+  (`"decimales": 0`, « à l'heure près »).
+- Piste écartée : « tolérance ≥ 1 → affichage entier ». Mesuré sur 3 000 tirages : six générateurs
+  atteignent tol ≥ 1, dont quatre par tolérance RELATIVE (grande réponse), sans consigne d'entier.
+  La règle aurait affiché 72 N·m pour 72,44 (`gen_couple_puissance`), 85 g pour 84,70
+  (`gen_masse_piece`), 64 MPa pour 63,66 (`gen_traction_sigma`).
+- L'outil d'audit lit la réponse affichée avec `decimales_reponse` (contrôle AFFICHÉE, y compris avec
+  le champ) et signale un champ invalide (contrôle DÉCIMALES) ; test par mutation : `"decimales": 0`
+  sur un générateur au millième → AFFICHÉE 2000/2000, `"decimales": 1.5` → DÉCIMALES.
+- ✅ Vérifié dans un vrai navigateur (9 contrôles OK) : `gen_duree_fiabilite` affiche « Réponse :
+  1 116 h » et « 410 h » (entiers acceptés), `gen_couple_puissance` garde « 28,65 N·m » et
+  « 18,76 N·m ».
 
 ### 18.15 — Comparer deux proportions ou deux moyennes (faite le 2026-09-26)
 

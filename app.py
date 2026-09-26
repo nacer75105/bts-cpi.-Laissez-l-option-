@@ -56791,7 +56791,7 @@ def gen_duree_fiabilite():
                    f"seront-ils tombés en panne (il n'en restera plus que {_fr_court(R * 100, 0)} % en "
                    f"marche) ? Réponds à l'heure près (garde toutes les décimales de la calculatrice dans "
                    f"les calculs intermédiaires)."),
-        "rep": rep, "tol": 1, "unite": "h",
+        "rep": rep, "tol": 1, "unite": "h", "decimales": 0,  # « à l'heure près »
         "diag": [_diag(v, m) for v, m in cands],
         "corr": [
             f"**Équation.** P(T > t) = e^(−t/{fE}) = {fR}.",
@@ -56811,6 +56811,17 @@ def decimales_affichage(tol):
     if not tol or tol <= 0:
         return 4
     return max(2, math.ceil(-math.log10(tol) - 1e-9))
+
+
+def decimales_reponse(ex):
+    """Décimales de la réponse affichée d'un générateur. Champ optionnel "decimales" : nombre de
+    décimales imposé par l'énoncé du générateur (ex. 0 pour « à l'heure près ») ; si absent,
+    decimales_affichage(tolérance) est utilisé. La précision suit la consigne, pas la tolérance :
+    une tolérance relative dépasse 1 dès que la réponse est grande, sans que l'énoncé demande un
+    entier (72,44 N·m ne doit pas s'afficher 72). Corrigé le 2026-09-26 (fiche 18.16)."""
+    if ex.get("decimales") is not None:
+        return ex["decimales"]
+    return decimales_affichage(ex.get("tol", 0.001))
 
 
 def diagnostic_le_plus_proche(valeur, candidats):
@@ -56979,7 +56990,7 @@ def page_entrainement():
                     E["fini"] = True
 
     if E["fini"]:
-        st.markdown(f"**Réponse : {fr(ex['rep'], decimales_affichage(ex.get('tol', 0.001)))} "
+        st.markdown(f"**Réponse : {fr(ex['rep'], decimales_reponse(ex))} "
                     f"{ex.get('unite', '')}**")
         with st.expander("La méthode, étape par étape", expanded=True):
             for i, etape in enumerate(ex["corr"], 1):
