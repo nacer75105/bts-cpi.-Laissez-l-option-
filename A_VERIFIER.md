@@ -180,8 +180,18 @@ complexes (forme algébrique, Δ < 0) — 13. équations différentielles du sec
   exemple de proportions trop équilibré (400/500) remplacé par 300/700, où la moyenne simple se
   distingue nettement de la proportion commune ; l'argument « soustraire les variances donnerait
   σ(D) = 0 » précisé (à effectifs égaux).
-- **Non vérifié** : atelier at147 et générateurs non cliqués dans l'interface (la fiche s'ouvre sans
-  erreur dans un AppTest ; outil d'audit : 0 défaut).
+- ✅ Vérifié le 2026-09-26 dans un vrai navigateur (Edge sans fenêtre, clics et frappes via DevTools,
+  36 contrôles OK) : at147 en entier (pièges f₁, moyenne simple, f₁/f₂ séparés, 1,645, ordre f₁ − f₂ ;
+  les deux QCM avec une mauvaise option puis la bonne ; corrigé déroulé, sans antislash-n) ;
+  `gen_comparaison_moyennes` en bilatéral (écarts-types additionnés diagnostiqués), en unilatéral
+  « plus » et « moins » (le signe opposé donne « Tu as traduit la question dans l'autre sens », ligne
+  « Côté » du corrigé affichée, seuil négatif accepté) ; `gen_comparaison_proportions` (f₁ et f₂ séparés
+  diagnostiqués, bonne réponse acceptée).
+- Formulation unilatérale : balayage de 5 000 tirages, seules « plus résistant » (1 250) et « moins
+  résistant » (1 266) sortent — jamais « aussi… que », « équivalent », « comparable » (le gabarit n'a
+  que ces deux mots). Aucune dette de formulation.
+- Dette mineure (toute l'application, page Entraînement) : la ligne « Réponse : -6,92 MPa » affiche un
+  tiret ASCII, alors que la méthode écrit « −6,92 » avec le vrai signe moins. À uniformiser au fil.
 
 ### 18.14 — Tests d'hypothèse sur une proportion et sur une moyenne (faite le 2026-09-26)
 
