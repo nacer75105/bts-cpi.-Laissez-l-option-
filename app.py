@@ -66553,6 +66553,16 @@ def _lien_youtube(requete):
     return "https://www.youtube.com/results?search_query=" + quote_plus(requete)
 
 
+def _nombre_affiche(x):
+    """Nombre saisi ou attendu, écrit à la française (virgule décimale, vrai signe moins), avec la
+    même précision que le format g (6 chiffres significatifs), sans jamais passer en notation
+    scientifique : 50.02 → « 50,02 », 9.6e-05 → « 0,000096 »."""
+    t = f"{x:g}"
+    if "e" in t:
+        t = f"{x:.12f}".rstrip("0").rstrip(".")
+    return t.replace(".", ",").replace("-", "−")
+
+
 def _rendre_atelier(_at, _prefixe):
     """Atelier pas à pas : l'élève entre CHAQUE valeur intermédiaire et
     n'accède à l'étape suivante qu'après l'avoir trouvée. Chaque mauvaise
@@ -66684,13 +66694,13 @@ def _rendre_atelier(_at, _prefixe):
                 if abs(_val - _att) <= max(_tol, 1e-9):
                     st.session_state[_cle_hist].append(
                         {"label": _et["label"],
-                         "valeur": f"{_val:g} {_et.get('unite','')}".strip()})
+                         "valeur": f"{_nombre_affiche(_val)} {_et.get('unite','')}".strip()})
                     st.session_state[_cle_etape] += 1
                     st.rerun()
                 else:
                     st.markdown(
                         f'<div class="ko-box"><b>Pas encore.</b> Vous avez entré '
-                        f'<b>{_val:g}</b>, la valeur attendue est <b>{_att:g} '
+                        f'<b>{_nombre_affiche(_val)}</b>, la valeur attendue est <b>{_nombre_affiche(_att)} '
                         f'{_et.get("unite","")}</b>.</div>', unsafe_allow_html=True)
                     # diagnostic sur valeur fausse PREVISIBLE, sinon heuristique
                     # générique (facteur 2, conversion d'unité, signe...), sinon l'aide
@@ -66710,7 +66720,7 @@ def _rendre_atelier(_at, _prefixe):
                                  key=f"{_prefixe}_at_skip_{_idx}"):
                         st.session_state[_cle_hist].append(
                             {"label": _et["label"] + " (donnée)",
-                             "valeur": f"{_att:g} {_et.get('unite','')}".strip()})
+                             "valeur": f"{_nombre_affiche(_att)} {_et.get('unite','')}".strip()})
                         st.session_state[_cle_etape] += 1
                         st.rerun()
 
@@ -66778,7 +66788,7 @@ def _rendre_exercice_interactif(_ex, _prefixe):
         if str(_h.get("unite", "")).startswith("✓"):
             _ligne_h = f'{_h["unite"]}'
         else:
-            _ligne_h = f'{_h["valeur"]:g} {_h["unite"]}'
+            _ligne_h = f'{_nombre_affiche(_h["valeur"])} {_h["unite"]}'
         st.markdown(
             f'<div class="ok-box" style="margin-bottom:8px">✅ <b>{_h["label"]}</b> = '
             f'{_ligne_h}</div>', unsafe_allow_html=True)
@@ -66860,8 +66870,8 @@ def _rendre_exercice_interactif(_ex, _prefixe):
                     _diag = _diagnostic_erreur(_val, _attendu)
                     st.markdown(
                         f'<div class="ko-box"><b>❌ Pas encore</b><br>'
-                        f'Vous avez entré <b>{_val:g}</b>, la valeur attendue est '
-                        f'<b>{_attendu:g} {_et["unite"]}</b>.</div>', unsafe_allow_html=True)
+                        f'Vous avez entré <b>{_nombre_affiche(_val)}</b>, la valeur attendue est '
+                        f'<b>{_nombre_affiche(_attendu)} {_et["unite"]}</b>.</div>', unsafe_allow_html=True)
                     if _diag:
                         st.markdown(f'<div class="warn-box">🔍 <b>Diagnostic —</b> {_diag}</div>',
                                   unsafe_allow_html=True)
