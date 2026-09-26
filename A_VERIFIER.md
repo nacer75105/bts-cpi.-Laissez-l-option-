@@ -24,7 +24,7 @@ prérequis et la répartition usuelle) :
 1. ✅ 17.7 ln et exp — 2. ✅ 17.8 statistique à deux variables — 3. ✅ 18.9 loi uniforme —
 4. ✅ 18.10 loi normale et approximation binomiale — 5. ✅ 18.11 somme de variables, limite centrée —
 6. ✅ 18.12 méthode d'Euler — 7. ✅ 18.13 IC d'une proportion — 8. ✅ 18.14 tests sur une proportion / une moyenne —
-9. ✅ 18.15 tests de comparaison — 10. loi exponentielle — 11. loi de Poisson — 12. nombres
+9. ✅ 18.15 tests de comparaison — 10. ✅ 18.16 loi exponentielle — 11. loi de Poisson — 12. nombres
 complexes (forme algébrique, Δ < 0) — 13. équations différentielles du second ordre.
 
 ### 17.7 — Fonctions exponentielle et logarithme népérien (faite le 2026-09-25)
@@ -158,6 +158,35 @@ complexes (forme algébrique, Δ < 0) — 13. équations différentielles du sec
 - **Non vérifié** : usage de n ou n − 1 dans les annales du BTS CPI (non consultées) ; atelier
   at145 et générateurs non cliqués dans l'interface (la fiche s'ouvre sans erreur dans un
   AppTest ; outil d'audit : 0 défaut).
+
+### 18.16 — Loi exponentielle, durée de vie sans usure (faite le 2026-09-26)
+
+- Référentiel (annexe I, Probabilités 2) : simuler la loi exponentielle à partir de la loi uniforme,
+  représenter la densité, calculer une probabilité, interpréter l'espérance et l'écart-type
+  (fiabilité, désintégration radioactive). E(T) = 1/λ admis (intégration par parties hors
+  programme) ; loi de Weibull signalée hors programme.
+- Placée après 18.11 (… 18.10 → 18.11 → 18.16 → 18.7 → 18.13 …), avec méthode, figures
+  `exponentielle_densite` (quatre points λ, 0,67 λ, 0,37 λ, 0,14 λ ; aires 63,2 % / 36,8 % ; E(T) et
+  médiane) et `exponentielle_simulation` (1 000 durées, graine 2026), atelier at148 (24 modules
+  d'entrées/sorties, 6 000 h par an, étapes 2 à 4 avec `depend_de`), générateurs
+  `gen_proba_exponentielle` et `gen_duree_fiabilite`, 9 questions (bonne réponse en positions 1, 3, 0,
+  2, 2, 0, 3, 1, 1).
+- Choix validés par l'auteur : densité construite comme l'histogramme des pannes (raisonnement heure
+  par heure, tableau à 6 colonnes) ; primitive notée G, F réservée à la fonction de répartition ;
+  notation P(B | A) ; E(T) rattachée à la constante de temps τ de la 18.4 (repères 37 % et 5 % à 3τ),
+  jamais aux repères 68/95 % de la loi normale ; repère E ± 2σ rattaché à la LOI (comptage binomial
+  en cloche, moyenne par la limite centrée), pas à la valeur ; cas industriel en binomiale
+  B(40 ; 0,148), stock de 10, avec pont vers la 18.17 (Poisson, stock de 11) ; pas de formule tableur
+  =-25000*LN(1-ALEA()).
+- Consigne « garde toutes les décimales de la calculatrice dans les calculs intermédiaires » dans les
+  deux générateurs, tolérances NON élargies : sans elle, un quotient d'exponentielles arrondies au
+  millième était refusé dans 11 % des tirages de `gen_proba_exponentielle` (cas « déjà âgé »). at148
+  étape 3 : « Garde au moins 4 décimales », piège 0,89 (arrondi trop tôt).
+- Cinq tours de relecture (justesse + clarté) jusqu'à zéro réserve. Relevé tardivement (4ᵉ tour) : la
+  liste « le composant s'use-t-il ? » du § 6 avait ses réponses inversées (oui → exponentielle).
+- Dette : at148 et les deux générateurs pas encore cliqués dans l'interface (outil d'audit : 0 défaut).
+- Dette transversale (commit séparé) : `decimales_affichage` impose 2 décimales même quand la
+  tolérance vaut 1 (« 5 268,03 h » alors que la consigne dit « à l'heure près »).
 
 ### 18.15 — Comparer deux proportions ou deux moyennes (faite le 2026-09-26)
 

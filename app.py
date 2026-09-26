@@ -6171,6 +6171,104 @@ def comparaison_difference():
     return _svg("".join(p_), 760, y0 + 150)
 
 
+def exponentielle_densite():
+    E = 25000.0
+    lam = 1 / E
+    x0, y0, L, H = 90, 300, 600, 200  # axe de 0 à 100 000 h
+    X = lambda t: x0 + L * t / 100000  # noqa: E731
+    Y = lambda v: y0 - H * v / lam  # noqa: E731  (f(0) = λ en haut)
+    p_ = [_txt(40, 24, "Capteurs, E(T) = 25 000 h : densité f(t) = λ e^(−λt), avec λ = 0,000 04 h⁻¹.",
+               12, TRAIT, "start", True),
+          _txt(40, 40, "Hauteur = pannes dans l'heure ÷ 100 000 capteurs, donc en h⁻¹ (par heure).", 12,
+               TRAIT, "start"),
+          _txt(40, 56, "Aire bleue = part des capteurs en panne avant 25 000 h ; aire orange = part encore en marche à 25 000 h.", 12,
+               TRAIT, "start")]
+    for de, jusqua, coul in ((0, E, ALESAGE), (E, 100000, ARBRE)):
+        pts = [f"{X(de):.1f},{y0}"]
+        for i in range(0, 201):
+            t = de + (jusqua - de) * i / 200
+            pts.append(f"{X(t):.1f},{Y(lam * math.exp(-lam * t)):.1f}")
+        pts.append(f"{X(jusqua):.1f},{y0}")
+        p_.append(f"<polygon points='{' '.join(pts)}' fill='{coul}' fill-opacity='0.22' stroke='none'/>")
+    courbe = " ".join(f"{X(100000 * i / 300):.1f},{Y(lam * math.exp(-lam * 100000 * i / 300)):.1f}"
+                      for i in range(0, 301))
+    p_.append(f"<polyline points='{courbe}' fill='none' stroke='{TRAIT}' stroke-width='2.5'/>")
+    p_.append(f"<line x1='{x0}' y1='{y0}' x2='{x0 + L + 10}' y2='{y0}' stroke='{FIN}' stroke-width='1.4'/>")
+    p_.append(f"<line x1='{x0}' y1='{y0}' x2='{x0}' y2='{y0 - H - 16}' stroke='{FIN}' stroke-width='1.4'/>")
+    p_.append(_txt(x0 - 6, y0 - H - 4, "f (h⁻¹)", 11, FIN, "end"))
+    for t in (0, 25000, 50000, 75000, 100000):
+        p_.append(_txt(X(t), y0 + 16, fr(t, 0), 11, FIN, "middle"))
+    p_.append(_txt(x0 + L + 14, y0 + 4, "t (h)", 11, FIN))
+    # repères de hauteur : λ, 0,67 λ, 0,37 λ, 0,14 λ (les quatre points du cours)
+    for t, lib in ((0, "f(0) = λ = 0,000 04 h⁻¹"), (10000, "0,67 λ"), (E, "0,37 λ"), (2 * E, "0,14 λ")):
+        yy = Y(lam * math.exp(-lam * t))
+        p_.append(f"<circle cx='{X(t):.1f}' cy='{yy:.1f}' r='4' fill='{TRAIT}'/>")
+        p_.append(_txt(X(t) + 8, yy - 6, lib, 11, TRAIT, "start", True))
+    # espérance et médiane
+    p_.append(f"<line x1='{X(E):.1f}' y1='{y0}' x2='{X(E):.1f}' y2='{y0 - H + 10}' stroke='{ALERTE}' "
+              f"stroke-width='2'/>")
+    p_.append(_txt(X(E) + 6, y0 - H + 22, "E(T) = 25 000 h", 12, ALERTE, "start", True))
+    med = math.log(2) * E
+    p_.append(f"<line x1='{X(med):.1f}' y1='{y0}' x2='{X(med):.1f}' y2='{Y(lam / 2):.1f}' stroke='{OK}' "
+              f"stroke-width='1.6' stroke-dasharray='5 4'/>")
+    p_.append(_txt(X(med) - 5, y0 - 72, "la moitié", 11, OK, "end", True))
+    p_.append(_txt(X(med) - 5, y0 - 58, "en panne à", 11, OK, "end", True))
+    p_.append(_txt(X(med) - 5, y0 - 44, "17 300 h", 11, OK, "end", True))
+    p_.append(_txt(X(11000), y0 - 16, "63,2 %", 13, ALESAGE, "middle", True))
+    p_.append(_txt(X(33000), y0 - 16, "36,8 %", 13, ARBRE, "middle", True))
+    p_.append(_txt(X(62000), y0 - 40, "longue queue →", 12, ARBRE, "start", True))
+    p_.append(f"<rect x='40' y='{y0 + 34}' width='680' height='52' rx='6' fill='{FOND}' stroke='{FIN}' "
+              f"stroke-width='1'/>")
+    p_.append(_txt(56, y0 + 56, "À t = E(T), 63,2 % des capteurs sont déjà en panne : la moyenne n'est pas le milieu.",
+                   12, TRAIT, "start", True))
+    p_.append(_txt(56, y0 + 76, "La longue queue (capteurs qui tiennent très longtemps) tire la moyenne vers la droite.",
+                   12, TRAIT, "start"))
+    return _svg("".join(p_), 760, y0 + 100)
+
+
+def exponentielle_simulation():
+    E = 25000.0
+    tirages = random.Random(2026)  # graine fixe : la figure est toujours la même
+    # 1 − random() est dans ]0 ; 1] (uniforme comme ALEA()) : le logarithme est toujours défini
+    valeurs = [-E * math.log(1 - tirages.random()) for _ in range(1000)]
+    effectifs = [sum(1 for v in valeurs if 5000 * k <= v < 5000 * (k + 1)) for k in range(20)]
+    au_dela = sum(1 for v in valeurs if v >= 100000)
+    x0, y0, kx, ky = 80, 290, 30, 1.0  # 30 px par classe de 5 000 h ; 1 px par durée simulée
+    p_ = [_txt(40, 24, "1 000 durées de vie simulées avec =-25000*LN(ALEA()), rangées par classes de 5 000 h.",
+               12, TRAIT, "start", True),
+          _txt(40, 40, "Barres : nombre de durées par classe ; courbe : nombre attendu selon la loi exponentielle.",
+               11, FIN)]
+    p_.append(f"<line x1='{x0}' y1='{y0}' x2='{x0 + kx * 20 + 10}' y2='{y0}' stroke='{FIN}' stroke-width='1.4'/>")
+    p_.append(f"<line x1='{x0}' y1='{y0}' x2='{x0}' y2='{y0 - 200}' stroke='{FIN}' stroke-width='1.4'/>")
+    for n in (50, 100, 150):
+        p_.append(f"<line x1='{x0 - 4}' y1='{y0 - ky * n}' x2='{x0}' y2='{y0 - ky * n}' stroke='{FIN}'/>")
+        p_.append(_txt(x0 - 8, y0 - ky * n + 4, str(n), 11, FIN, "end"))
+    for k, n in enumerate(effectifs):
+        p_.append(f"<rect x='{x0 + kx * k + 2}' y='{y0 - ky * n:.1f}' width='{kx - 4}' height='{ky * n:.1f}' "
+                  f"fill='{ALESAGE}' fill-opacity='0.28' stroke='{ALESAGE}'/>")
+        p_.append(_txt(x0 + kx * k + kx / 2, y0 - ky * n - 4, str(n), 9, TRAIT, "middle"))
+    attendu = " ".join(
+        f"{x0 + kx * (k + 0.5):.1f},{y0 - ky * 1000 * (math.exp(-5000 * k / E) - math.exp(-5000 * (k + 1) / E)):.1f}"
+        for k in range(20))
+    p_.append(f"<polyline points='{attendu}' fill='none' stroke='{ARBRE}' stroke-width='2.2'/>")
+    p_.append(_txt(x0 + kx * 5, y0 - 150, "nombre attendu (loi exponentielle)", 11, ARBRE, "start", True))
+    for t in (0, 25000, 50000, 75000, 100000):
+        p_.append(_txt(x0 + kx * t / 5000, y0 + 16, fr(t, 0), 11, FIN, "middle"))
+    p_.append(_txt(x0 + kx * 20 + 14, y0 + 4, "t (h)", 11, FIN))
+    p_.append(_txt(x0 + kx * 20, y0 - 60, f"+ {au_dela} durées au-delà", 11, TRAIT, "end"))
+    p_.append(_txt(x0 + kx * 20, y0 - 46, f"de 100 000 h (jusqu'à {fr(round(max(valeurs), -3), 0)} h)", 11,
+                   TRAIT, "end"))
+    moy = sum(valeurs) / len(valeurs)
+    plus = sum(1 for v in valeurs if v > E)
+    p_.append(f"<rect x='40' y='{y0 + 34}' width='680' height='52' rx='6' fill='{FOND}' stroke='{FIN}' "
+              f"stroke-width='1'/>")
+    p_.append(_txt(56, y0 + 56, f"Moyenne des 1 000 durées : {fr(round(moy), 0)} h (théorie : 25 000 h).",
+                   12, TRAIT, "start", True))
+    p_.append(_txt(56, y0 + 76, f"{plus} durées dépassent 25 000 h, soit {fr(plus / 10, 1)} % (théorie : 36,8 %).",
+                   12, TRAIT, "start"))
+    return _svg("".join(p_), 760, y0 + 100)
+
+
 def extremums_polynome():
     p = [_txt(40, 24, "f(x) = x³ − 3x² + 2 : un maximum local puis un minimum local.",
               12, TRAIT, "start", True)]
@@ -6590,6 +6688,8 @@ FIGURES = {
     "test_region_rejet": ("Test unilatéral : si H₀ est vraie, f dépasse le seuil 5 fois sur 100", test_region_rejet),
     "risques_alpha_beta": ("Les deux risques : fausse alerte α et défaut manqué β", risques_alpha_beta),
     "comparaison_difference": ("Sous H₀, la différence est centrée sur zéro : zone verte et piège des écarts-types additionnés", comparaison_difference),
+    "exponentielle_densite": ("Loi exponentielle : densité en h⁻¹ (pannes dans l'heure ÷ nombre de capteurs), moyenne au-delà du milieu", exponentielle_densite),
+    "exponentielle_simulation": ("1 000 durées de vie simulées avec =-25000*LN(ALEA())", exponentielle_simulation),
     "extremums_polynome": ("Un maximum local puis un minimum local", extremums_polynome),
     "dispersion_deux_reglages": ("Six mesures dispersées autour de leur moyenne", dispersion_deux_reglages),
     "venn_deux_evenements": ("Union et intersection de deux événements", venn_deux_evenements),
@@ -10697,6 +10797,64 @@ QUIZ["Mathématiques BTS CPI — probabilités et équations différentielles"] 
       "V(D) = V(1ᵉʳ) + V(2ᵉ) : la différence est plus dispersée que chacune des deux moyennes prise seule. "
       "Pour voir un même "
       "écart, il faut resserrer les deux cloches, donc plus de pièces des deux côtés.", "Intermédiaire"),
+
+    q("La durée de vie d'un composant suit une loi exponentielle de paramètre λ = 0,000 5 h⁻¹. Quelle est "
+      "sa durée de vie moyenne ?",
+      ["0,000 5 h", "2 000 h", "500 h", "20 000 h"], 1,
+      "E(T) = 1/λ = 1/0,000 5 = 2 000 h. λ est un taux (pannes par heure), E(T) une durée.", "Base"),
+
+    q("T suit une loi exponentielle de paramètre λ. Que vaut P(T > t), la probabilité de fonctionner "
+      "encore à l'instant t ?",
+      ["1 − e^(−λt)", "λ e^(−λt)", "e^(λt)", "e^(−λt)"], 3,
+      "P(T > t) = e^(−λt), la proportion de survivants. 1 − e^(−λt) est la probabilité de panne avant t ; "
+      "λ e^(−λt) est la densité, pas une probabilité.", "Base"),
+
+    q("Au bout d'une durée égale à la durée de vie moyenne E(T), quelle part des composants fonctionne "
+      "encore ?",
+      ["Environ 36,8 %", "50 %", "Environ 63,2 %", "0 %"], 0,
+      "P(T > E(T)) = e^(−1) ≈ 0,368. La moyenne n'est pas le milieu : la longue queue des composants qui "
+      "tiennent très longtemps la tire vers le haut ; 63,2 % sont déjà en panne.", "Piège"),
+
+    q("Un capteur (loi exponentielle) a déjà fonctionné 10 000 h sans panne. Comparée à celle d'un capteur "
+      "neuf, sa probabilité de tenir encore 2 000 h est :",
+      ["plus faible : il a vieilli", "plus grande : il a fait ses preuves", "la même",
+       "nulle s'il a dépassé la durée de vie moyenne"], 2,
+      "La loi exponentielle est sans mémoire : P(T > 12 000 | T > 10 000) = e^(−λ × 12 000)/e^(−λ × 10 000) "
+      "= e^(−λ × 2 000). Sans usure, l'âge ne change rien — le remplacement préventif ne sert à rien.",
+      "Intermédiaire"),
+
+    q("Pour une loi exponentielle de moyenne 1 000 h, que vaut l'écart-type σ(T) ?",
+      ["1 000 000 h", "√1 000 ≈ 31,6 h", "1 000 h", "500 h"], 2,
+      "σ(T) = 1/λ = E(T) = 1 000 h (c'est la variance qui vaut 1/λ², soit 1 000 000 h²). Les durées de vie "
+      "sont très dispersées.", "Intermédiaire"),
+
+    q("Quelle formule de tableur simule une durée de vie exponentielle de moyenne 2 000 h ?",
+      ["=-2000*LN(ALEA())", "=2000*ALEA()", "=-LN(2000*ALEA())", "=EXP(-2000*ALEA())"], 0,
+      "T = −E(T) × ln(ALEA()) : ln(ALEA()) est négatif, le signe moins le rend positif, et P(T > t) = "
+      "e^(−t/2 000). 2000*ALEA() donnerait une loi uniforme sur [0 ; 2 000].", "Intermédiaire"),
+
+    q("Laquelle de ces grandeurs peut-on modéliser par une loi exponentielle ?",
+      ["La durée de vie d'une plaquette de frein", "Le diamètre d'un arbre tourné",
+       "Le temps d'attente d'une navette qui passe toutes les 10 min",
+       "La durée de vie d'une carte électronique qui tombe en panne par accident, sans s'user"], 3,
+      "La loi exponentielle suppose un taux de panne constant : pas d'usure. La plaquette s'use, le "
+      "diamètre suit une loi normale, l'attente de la navette une loi uniforme (fiche 18.9).", "Base"),
+
+    q("λ = 0,000 1 h⁻¹. Au bout de combien d'heures 5 % des composants seront-ils tombés en panne (il n'en "
+      "restera plus que 95 % en marche) ?",
+      ["Environ 29 957 h", "Environ 513 h", "Environ 5,1 h", "9 500 h"], 1,
+      "e^(−λt) = 0,95 ⟺ t = −ln(0,95)/0,000 1 ≈ 513 h. 29 957 h est la durée où il n'en reste plus que 5 % "
+      "(−ln 0,05/λ).", "Calcul"),
+
+    q("Pourquoi la densité de la loi exponentielle est-elle la plus haute en t = 0 ?",
+      ["Parce que les composants neufs sont plus fragiles",
+       "Parce que chaque heure, la même proportion λ des survivants tombe en panne, et c'est au début "
+       "qu'il y a le plus de survivants",
+       "Parce que λ diminue avec le temps",
+       "Parce que la probabilité de tomber en panne exactement à t = 0 vaut λ"], 1,
+      "Le taux λ est constant ; le nombre de pannes par heure diminue seulement parce qu'il reste de moins "
+      "en moins de composants en marche. Et P(T = 0) = 0 : seule une aire est une probabilité.",
+      "Piège"),
 ]
 
 QUIZ["Mathématiques BTS CPI — calcul matriciel et modélisation géométrique"] = [
@@ -47438,7 +47596,7 @@ d'usure), machine par machine.
 BLOC_18 = {
     "id": 18,
     "titre": "Bloc 18 — Mathématiques BTS CPI : probabilités et équations différentielles",
-    "resume": "Quatre modules du programme d'examen : probabilités 1, probabilités 2, statistique inférentielle et équations différentielles. Ce bloc n'en couvre qu'une partie : lois exponentielle et de Poisson et équations du second ordre ne sont pas encore traitées.",
+    "resume": "Quatre modules du programme d'examen : probabilités 1, probabilités 2, statistique inférentielle et équations différentielles. Ce bloc n'en couvre qu'une partie : la loi de Poisson et les équations du second ordre ne sont pas encore traitées.",
     "fiches": [
         {
             "id": "18.1",
@@ -49502,6 +49660,436 @@ N(1 200 ; 5) : P(masse < 1 190) ≈ P(Z < −2) ≈ **0,022 8**.
 **7.** Moyenne d'un boulon de la boîte : E = **12 g**, σ = 0,5/√100 = **0,05 g**. D'après le théorème de
 la limite centrée, elle suit à peu près **N(12 ; 0,05)**, même si la masse d'un boulon n'était pas
 normale. *La somme s'étale en σ√n, la moyenne se resserre en σ/√n.*
+""",
+        },
+        {
+            "id": "18.16",
+            "titre": "Probabilités 2 : la loi exponentielle, durée de vie d'un composant qui ne s'use pas",
+            "duree": "4 h",
+            "cours": """
+
+### 1. Une durée de vie qu'on ne peut pas prévoir, mais qu'on peut compter
+
+Un capteur inductif de fin de course n'a aucune pièce mobile : il ne s'use pas. Il finit pourtant
+par tomber en panne — une surtension, un choc, un composant fragile —, **à un instant que rien ne
+permet de prévoir**. Sa **durée de vie** T (le temps de fonctionnement jusqu'à la panne) est une
+grandeur mesurée, qui peut prendre toutes les valeurs de 0 à l'infini : c'est une variable aléatoire
+continue, comme le temps d'attente de la navette de la fiche 18.9. On ne peut pas dire quand **un**
+capteur lâchera ; on peut dire quelle **proportion** d'un parc de capteurs lâchera avant 1 an, et
+c'est ce dont le service maintenance a besoin pour prévoir son stock de rechanges.
+
+Tout ce que la fiche 18.9 a posé sert tel quel : **une probabilité est une aire sous la densité**,
+la fonction de répartition F(t) = P(T ≤ t) est l'aire accumulée à gauche, et P(c ≤ T ≤ d) =
+F(d) − F(c). Seule la forme de la densité change : ce n'est plus un rectangle, c'est une courbe qui
+**descend**.
+
+**Vocabulaire :**
+- **Taux de panne λ** (lambda) : la proportion des composants encore en marche qui tombent en panne
+  par unité de temps. λ = 0,000 04 par heure (on écrit 0,000 04 h⁻¹) veut dire : sur 100 000
+  capteurs en marche, environ 4 tombent en panne dans l'heure qui vient.
+- **Sans usure** : le taux de panne ne dépend pas de l'âge du composant — un capteur de 3 ans a le
+  même λ qu'un neuf (§ 6).
+- **Fiabilité** à l'instant t : la probabilité de fonctionner encore à l'instant t, P(T > t).
+
+### 2. D'où vient l'exponentielle : chaque heure, la même proportion des survivants
+
+On met en service **100 000 capteurs** neufs, avec λ = 0,000 04 h⁻¹. Pendant la première heure,
+environ 4 tombent en panne (0,000 04 × 100 000) : il en reste 100 000 × (1 − 0,000 04) = 100 000 ×
+0,999 96. Pendant la deuxième heure, la **même proportion des survivants** tombe : il en reste
+100 000 × 0,999 96 × 0,999 96. **Chaque heure, on multiplie par le même nombre 0,999 96** : au bout
+de t heures, il reste 100 000 × 0,999 96ᵗ capteurs — comme un compte qui perdrait 0,004 % de son
+solde chaque heure.
+
+| heures écoulées t | 1 | 2 | 1 000 | 10 000 | 25 000 | 50 000 |
+|---|---|---|---|---|---|---|
+| capteurs encore en marche (≈) | 99 996 | 99 992 | 96 079 | 67 031 | 36 787 | 13 533 |
+| pannes dans l'heure qui suit (≈ λ × survivants) | 4 | 4 | 3,84 | 2,68 | 1,47 | 0,54 |
+
+*On saute de l'heure 2 à l'heure 1 000 pour voir la décroissance à grande échelle : d'une heure à la
+suivante, le changement est trop petit pour se voir.*
+
+**Le nombre de pannes par heure diminue, non parce que les capteurs deviennent plus solides, mais
+parce qu'il en reste moins.**
+
+*Vérification à la calculatrice : 0,999 96^10 000 ≈ 0,670 et e^(−0,000 04 × 10 000) = e^(−0,4) ≈ 0,670
+(essayez aussi t = 25 000). Les deux écritures donnent la même chose à la troisième décimale près. Le
+petit écart vient de ce qu'on a découpé le temps en heures entières ; en découpant plus finement,
+l'écart disparaît. On garde donc l'écriture avec e, plus commode.*
+
+*C'est la situation déjà rencontrée avec la pièce qui refroidit (fiche 18.4) et le condensateur qui se
+décharge (fiche 17.7) : une grandeur qui diminue à une vitesse proportionnelle à elle-même. Ici
+N′(t) = −λ N(t), donc N(t) = N₀ e^(−λt). Dans la 18.4, la constante était k = 1/τ ; ici c'est λ, et
+comme λ = 1/E(T) (§ 5), la durée moyenne E(T) va jouer le rôle de τ.*
+
+La **proportion** de survivants à l'instant t, e^(−λt), est la probabilité qu'un capteur pris au hasard
+fonctionne encore à t :
+
+> **P(T > t) = e^(−λt)** (la fiabilité) et **P(T ≤ t) = 1 − e^(−λt)** (la probabilité de panne
+> avant t)
+
+On dit alors que T suit la **loi exponentielle de paramètre λ**.
+
+**La densité, c'est l'histogramme des pannes.** Rangeons les pannes par tranches d'une heure, comme
+les attentes de la navette en 18.9 : la hauteur d'une barre est fréquence ÷ largeur = (pannes dans
+l'heure ÷ 100 000) ÷ 1 h. C'est donc un nombre **par heure** (en h⁻¹), comme λ. Avec la dernière ligne
+du tableau :
+- première heure (de t = 0 à t = 1 : 0,000 04 × 100 000 = 4 pannes, calcul du début du § 2) :
+  4/100 000 = 0,000 04 h⁻¹ = **λ**, le point le plus haut ;
+- t = 10 000 h : 2,68/100 000 ≈ **0,67 λ** ;
+- t = 25 000 h : 1,47/100 000 ≈ **0,37 λ** ;
+- t = 50 000 h : 0,54/100 000 ≈ **0,14 λ**.
+
+En général, la hauteur vaut λ × (proportion de survivants) :
+
+> **Densité : f(t) = λ e^(−λt)** pour t ≥ 0 (et 0 pour t < 0), en h⁻¹
+
+[[FIG:exponentielle_densite]]
+
+**Représenter la densité** (capacité du référentiel) : ces quatre points suffisent. La courbe part de
+λ, **descend toujours** et se rapproche de l'axe sans jamais l'atteindre : il reste toujours une petite
+chance de tenir encore plus longtemps.
+
+*Comme en 18.9, c'est hauteur × largeur qui est une probabilité : f(10 000) × 1 h ≈ 0,000 027, soit 2,7
+chances sur 100 000 qu'un capteur neuf lâche précisément pendant la 10 001ᵉ heure. La hauteur seule, en
+h⁻¹, n'est pas une probabilité.*
+
+*Pour aller plus loin — vérification avec les fiches 17.2 et 18.9. En 18.9, F est le « compteur
+d'aire » : la primitive de la densité qui vaut 0 au départ. Ici F(t) = 1 − e^(−λt) : (1) F(0) = 1 − e⁰ = 0,
+le compteur part de zéro ; (2) la dérivée de −e^(−λt) est −(−λ) e^(−λt) = λ e^(−λt) (fiche 17.7), donc
+F′(t) = f(t) ; (3) quand t devient très grand, e^(−λt) tend vers 0 et F(t) tend vers 1 : l'aire totale
+vaut 1, comme il se doit.*
+
+### 3. Calculer une probabilité
+
+> **P(T ≤ t) = 1 − e^(−λt)** · **P(T > t) = e^(−λt)** · **P(c ≤ T ≤ d) = e^(−λc) − e^(−λd)**
+
+*La troisième formule est F(d) − F(c) = (1 − e^(−λd)) − (1 − e^(−λc)) : les « 1 » s'annulent. En mots :
+e^(−λc) − e^(−λd), ce sont les survivants à c moins les survivants à d, c'est-à-dire ceux qui sont
+tombés entre les deux. Et comme en 18.9, P(T = c) = 0 : « ≤ » ou « < », c'est pareil.*
+
+**Capteurs, λ = 0,000 04 h⁻¹.** La ligne tourne **4 000 h par an**.
+- Probabilité qu'un capteur fonctionne encore au bout d'un an : P(T > 4 000) = e^(−0,000 04 × 4 000)
+  = e^(−0,16) ≈ **0,852**.
+- Probabilité qu'il tombe en panne dans l'année : 1 − 0,852 ≈ **0,148**.
+- Probabilité qu'il tombe en panne pendant la 3ᵉ ou la 4ᵉ année, c'est-à-dire entre 8 000 h et
+  16 000 h : e^(−0,32) − e^(−0,64) ≈ 0,726 − 0,527 = **0,199** — 72,6 % du parc est encore en marche à
+  8 000 h, 52,7 % à 16 000 h : 19,9 % sont tombés entre les deux.
+
+**Le produit λt n'a pas d'unité** : λ en h⁻¹ et t en heures. Si λ est donné « par 1 000 h » ou « par
+an », on convertit **avant** de multiplier — l'erreur de conversion donne un résultat faux sans
+aucun signal d'alarme. Exemple : une fiche fabricant annonce λ = 0,04 panne pour 1 000 h, soit
+0,04/1 000 = 0,000 04 h⁻¹. Si on garde 0,04 et qu'on multiplie par 4 000 h, on obtient λt = 160 et
+e^(−160) ≈ 0 : « tous les capteurs sont en panne », un résultat absurde qu'aucune touche de la
+calculatrice ne signale.
+
+*À la calculatrice : touche **eˣ** (souvent en seconde fonction de **ln**). Si vous ne calculez pas λt
+d'abord, tapez tout l'exposant entre parenthèses : e^(−0,000 04 × 4 000), et non e^(−0,000 04) × 4 000
+(la calculatrice multiplierait le résultat par 4 000).*
+
+**Le piège de la règle de trois.** « λ = 0,000 04 par heure, donc sur 4 000 h la probabilité de panne
+vaut 0,000 04 × 4 000 = 0,16. » Presque — mais pas tout à fait : 0,148 et non 0,16. Un capteur qui
+est déjà tombé en panne ne peut pas tomber en panne une seconde fois : au fil des heures, il en
+reste moins pour tomber. La règle de trois n'est une bonne approximation que pour λt petit ; sur
+20 000 h (λt = 0,8), elle donnerait 0,8 au lieu de 0,551, et sur 30 000 h, une probabilité de 1,2 —
+impossible.
+
+*λt a pourtant un sens, pour une autre question. Si l'on remplace chaque capteur en panne par un neuf,
+un même support de capteur sur la ligne verra en moyenne λt = 0,16 remplacement par an ; les 40
+supports, 40 × 0,16 = 6,4 remplacements. C'est la loi de Poisson (fiche 18.17, à venir). La probabilité
+qu'**un** capteur donné tombe en panne reste 1 − e^(−λt) = 0,148.*
+
+### 4. Trouver une durée : quand ne restera-t-il plus que 90 % des capteurs ?
+
+Le service maintenance veut savoir au bout de combien d'heures 10 % des capteurs seront tombés en
+panne (il n'en restera plus que 90 % en marche), c'est-à-dire trouver t tel que P(T > t) = 0,90. Ce
+n'est pas une formule de plus à apprendre : c'est une équation de la fiche 17.7, résolue avec ln.
+
+e^(−λt) = 0,90 ⟺ −λt = ln 0,90 ⟺ **t = −ln(0,90)/λ** = 0,105 36/0,000 04 ≈ **2 634 h**.
+
+*Le signe moins n'est pas une coquille : ln 0,90 est négatif (0,90 < 1), et −ln 0,90 est positif.
+Un résultat négatif signale qu'on a oublié ce signe.*
+
+En général, pour qu'il ne reste plus qu'une proportion **R** du parc en marche (R comme « fiabilité
+visée » : 0,90, 0,99…) : e^(−λt) = R, donc **t = −ln(R)/λ**. À R = 0,99 : t = −ln(0,99)/0,000 04 ≈
+**251 h**. Un capteur dont le fabricant annonce 25 000 h de durée de vie moyenne laisse donc 1 % du
+parc en panne dès les 251 premières heures : la moyenne ne dit rien sur les pannes précoces.
+
+### 5. Espérance et écart-type : une moyenne qui n'est pas le milieu
+
+> **E(T) = 1/λ** · **V(T) = 1/λ²** · **σ(T) = 1/λ**
+
+*Ces formules sont **admises** (les démontrer demande une technique d'intégration hors programme). On
+peut pourtant sentir E(T) = 1/λ : λ = 0,000 04 h⁻¹, c'est 4 pannes pour 100 000 heures de
+fonctionnement cumulées sur le parc, donc 1 panne toutes les 25 000 « heures-capteur » (une
+heure-capteur, c'est un capteur qui fonctionne une heure, comme les heures-homme d'un chantier :
+10 capteurs pendant 100 h, cela fait 1 000 heures-capteur). Suivez les
+100 000 capteurs jusqu'au dernier : il y aura 100 000 pannes en tout. Le taux étant le même à tout âge
+(sans usure), il y a toujours 1 panne pour 25 000 heures-capteur : le parc aura donc cumulé
+100 000 × 25 000 heures-capteur de fonctionnement, soit 25 000 h par capteur en moyenne.*
+
+**Capteurs :** E(T) = 1/0,000 04 = **25 000 h**. Inversement, **λ = 1/E(T)** : c'est souvent la durée
+moyenne que donne le fabricant, et l'on en tire λ. On peut alors écrire **P(T > t) = e^(−t/E(T))** :
+e^(−4 000/25 000) = e^(−0,16), le même calcul.
+
+**E(T) joue exactement le rôle de la constante de temps τ de la fiche 18.4.** Vous connaissez déjà
+deux repères de la 18.4 : après une durée τ, il reste 37 % de l'écart initial ; après 3τ, il en reste
+5 % environ. Mettez côte à côte la pièce qui refroidit et le parc de capteurs : les mêmes repères
+valent tels quels, en remplaçant τ par E(T).
+
+| | pièce qui refroidit (fiche 18.4) | parc de capteurs |
+|---|---|---|
+| ce qui diminue | l'écart à l'ambiante : 160 °C au départ | les capteurs en marche : 100 000 au départ |
+| pourquoi de plus en plus lentement | la vitesse est proportionnelle à l'écart qui reste | les pannes par heure sont proportionnelles aux capteurs qui restent (λ × N) |
+| formule | 160 × e^(−t/τ) | 100 000 × e^(−t/E(T)) |
+| durée caractéristique | τ = 15 min | E(T) = 25 000 h |
+| après τ, ou après E(T) : il reste 37 % | écart de 58,86 °C (pièce à 78,86 °C) | environ 36 800 capteurs |
+| après 3τ, ou après 3 E(T) : il reste 5 % | écart de 7,97 °C (pièce à 27,97 °C) | environ 5 000 capteurs |
+
+**Premier réflexe à corriger : la moyenne n'est pas le milieu.** Au bout de E(T) = 25 000 h, il ne
+reste donc que 37 % des capteurs en marche : **63 % sont déjà tombés en panne**. La moitié du parc
+est en panne dès **17 300 h** : c'est la formule du § 4 avec R = 0,5, t = −ln(0,5) × 25 000 ≈
+0,693 × 25 000 (−ln 0,5 = ln 2 ≈ 0,693). Pourquoi la moyenne est-elle si
+loin ? Prenez cinq capteurs, de durées 2 000, 5 000, 10 000, 20 000 et 88 000 h. Moyenne : 125 000/5 =
+**25 000 h**. Pourtant, **4 capteurs sur 5** sont tombés en panne avant la moyenne : c'est le seul
+« costaud » à 88 000 h qui la tire vers le haut. Sur la courbe, c'est la **longue queue** vers la droite
+qui joue ce rôle. Découpez cette courbe dans une tôle, comme le rectangle de la 18.9 : pour la faire
+tenir sur un couteau, il faut placer le couteau à 25 000 h, pas à 17 300 h. La longue queue est fine,
+mais elle est très loin, et pour l'équilibre, c'est masse × distance qui compte.
+
+**Deuxième réflexe à corriger : σ est aussi grand que la moyenne.** σ(T) = 25 000 h, autant que
+E(T). Comparez avec les diamètres usinés de la fiche 18.10 : σ = 0,012 mm pour une cote de 20 mm.
+Ici, les durées de vie sont **énormément dispersées** : un capteur peut lâcher à 100 h, son voisin
+tenir 80 000 h. Les repères « 68 % entre E − σ et E + σ, 95 % entre E − 2σ et E + 2σ » de la fiche 18.10
+sont **propres à la loi normale**, dont la cloche est symétrique autour de E. La densité exponentielle,
+elle, n'est pas symétrique : E − σ vaut 0, E − 2σ serait négatif. Ici, on ne raisonne pas « E plus ou
+moins σ » : on calcule directement avec P(T > t) = e^(−t/E(T)). *(Le repère « 5 % environ après
+3 E(T) » du tableau tombe à 75 000 h = 25 000 + 2 × 25 000, c'est-à-dire E + 2σ — mais il vient de
+e^(−3) ≈ 0,05, et non de la règle « 95 % entre E − 2σ et E + 2σ » de la loi normale, qui n'en laisserait
+que 2,5 % au-delà de E + 2σ (la moitié des 5 % restants, comme en 18.10).)*
+
+**Pour UN composant, l'espérance ne prédit rien ; pour un grand parc, elle prédit très bien** la
+proportion qui tombera en panne sur une durée donnée (voir le cas industriel).
+
+*Pour information : dans les catalogues, cette durée moyenne s'appelle souvent **MTBF** (moyenne des
+temps de bon fonctionnement). Même loi, autre domaine (cité par le référentiel) : la **désintégration**
+d'un noyau radioactif, imprévisible et sans « vieillissement » ; la durée ln 2/λ où la moitié des
+noyaux s'est désintégrée s'appelle la **demi-vie** — c'est le 17 300 h des capteurs.*
+
+### 6. Quand la loi exponentielle est-elle le bon modèle ? « Sans usure »
+
+Un capteur a déjà fonctionné **12 000 h** (3 ans) sans panne. Quelle est la probabilité qu'il tienne
+encore un an (4 000 h de plus) ? Avec la fiche 18.5 : P(A ∩ B) = P(A) × P(B | A), donc
+**P(B | A) = P(A ∩ B)/P(A)**. Ici :
+- A = « T > 12 000 » (il a déjà tenu 3 ans) ;
+- B = « T > 16 000 » (il tient encore un an).
+
+Un capteur qui a tenu 16 000 h a forcément tenu 12 000 h : l'événement « A et B » est simplement
+« T > 16 000 ». Donc
+
+P(T > 16 000 | T > 12 000) = P(T > 16 000)/P(T > 12 000) = e^(−0,64)/e^(−0,48) = e^(−0,16) ≈ **0,852**
+
+— **exactement la probabilité qu'un capteur neuf tienne un an (0,852, § 3).** *En comptant sur le parc, comme en
+18.5 : sur les 100 000 capteurs du départ, environ 61 878 sont encore en marche à 12 000 h, et environ
+52 729 à 16 000 h ; parmi les capteurs de 3 ans, 52 729/61 878 ≈ 0,852 passent l'année suivante.* En
+général, pour un composant déjà âgé de s heures à qui l'on demande t heures de plus :
+e^(−λ(s + t))/e^(−λs) = e^(−λs − λt + λs) = e^(−λt). Quand on divise deux exponentielles, on soustrait
+les exposants, et l'âge s disparaît. La loi exponentielle **ne garde aucune
+mémoire** de l'âge du composant : le taux de panne reste λ, que le capteur ait 1 jour ou 10 ans.
+
+*Image de terrain : ce qui tue un capteur, c'est une surtension ou un choc de chariot. La surtension ne
+« sait » pas depuis combien de temps le capteur est posé : un capteur de 3 ans n'est pas plus exposé
+qu'un neuf. À l'inverse, un roulement qui a tourné 3 ans a vraiment perdu de la matière sur ses
+pistes : lui garde la trace de son passé.*
+
+**Conséquence pratique :** remplacer à titre préventif un composant qui suit une loi exponentielle
+ne sert **à rien** — on remplace un composant qui a exactement les mêmes chances de tenir que le
+neuf qu'on met à sa place.
+
+**Le réflexe avant d'appliquer la loi** (comme en 18.9) : le composant s'use-t-il ?
+- **non, il ne s'use pas → loi exponentielle** : composants électroniques (capteurs, cartes, modules d'entrées/sorties,
+  relais statiques) **pendant leur vie utile** — après les défauts de jeunesse (les premières
+  semaines, où lâchent les modules mal soudés ou mal montés), avant le vieillissement —, pannes par
+  accident (surtension, choc) ; désintégration radioactive ;
+- **oui, il s'use ou fatigue → pas la loi exponentielle** : roulements, courroies, plaquettes de frein,
+  outils de coupe, ventilateurs. Leur taux de panne **augmente** avec l'âge : un roulement de 5 ans est plus
+  proche de la fin qu'un neuf, et le remplacement préventif a un sens. Ils relèvent d'autres lois
+  (loi de Weibull), hors programme.
+
+### 7. Simuler une loi exponentielle à partir d'ALEA()
+
+Le référentiel demande de savoir **simuler** la loi exponentielle à partir de la loi uniforme sur
+[0 ; 1] (fiche 18.9). Dans un tableur, pour E(T) = 25 000 h :
+
+> **T = −E(T) × ln(ALEA())**, soit **=-25000*LN(ALEA())** (ou −ln(ALEA())/λ)
+
+*Pourquoi ça marche : testons une question.* Quels tirages U = ALEA() donnent une durée de plus de
+25 000 h ?
+- −25 000 × ln U > 25 000
+- ⟺ −ln U > 1 (on divise les deux côtés par 25 000, positif : le sens ne change pas)
+- ⟺ ln U < −1 (on change les signes, donc **l'inégalité change de sens**, comme 3 > 2 donne −3 < −2)
+- ⟺ U < e^(−1) ≈ 0,368 (exp défait ln, fiche 17.7 ; elle est croissante : le sens ne change pas).
+
+Or ALEA() suit la loi uniforme sur [0 ; 1] : la probabilité de tomber entre 0 et 0,368 est la longueur
+0,368 ÷ la longueur totale 1 (fiche 18.9). **Donc 36,8 % des durées simulées dépassent 25 000 h :
+exactement la loi exponentielle.** Autre vérification : T ≤ 2 634 h correspond à U ≥ 0,90 (même chaîne
+que ci-dessus, dans l'autre sens : −25 000 ln U ≤ 2 634 ⟺ ln U ≥ −0,105 ⟺ U ≥ e^(−0,105) ≈ 0,90 ;
+entre 0,90 et 1, il y a une longueur de 0,10), soit 10 % des tirages — le résultat du § 4.
+
+*Lecture : un ALEA() proche de 1 donne une durée courte ; un ALEA() proche de 0 donne une durée très
+longue (ln 0,01 ≈ −4,6 → 115 000 h). C'est la longue queue du § 5.*
+
+*Pour aller plus loin : le même calcul avec une durée t ≥ 0 quelconque donne T > t ⟺ U < e^(−t/25 000),
+un nombre entre 0 et 1, donc P(T > t) = e^(−t/25 000) pour tout t ≥ 0.*
+
+[[FIG:exponentielle_simulation]]
+
+**Exploiter la simulation.** Sur les 1 000 durées simulées de la figure, la moyenne vaut
+**24 725 h** (théorie : 25 000 h) et **344** dépassent 25 000 h, soit 34,4 % (théorie : 36,8 %).
+L'histogramme a bien la forme de la densité : la courbe orange colle aux barres — beaucoup de pannes
+précoces, puis une longue queue.
+
+*Ces écarts sont-ils normaux ? (même méthode qu'en 18.9.) Attention, on ne regarde plus la durée T d'un
+capteur, mais un **comptage** : le nombre de durées de plus de 25 000 h parmi 1 000 tirages. Ce nombre
+suit la loi binomiale de paramètres 1 000 et 0,368 : espérance 368, écart-type
+√(1 000 × 0,368 × 0,632) ≈ 15,2. Avec 1 000 tirages, cette loi binomiale a la forme d'une cloche presque
+symétrique, comme la loi normale de la fiche 18.10 : c'est pour cela, et seulement pour cela, que le
+repère E ± 2σ s'applique à ce comptage (il ne s'applique pas à T elle-même, § 5). La plage E ± 2σ va
+d'environ 337 à 398 : 344 est dedans. Même raisonnement pour la moyenne des 1 000 durées : d'après le
+théorème de la limite centrée (fiche 18.11), elle suit à peu près une loi normale, même si T n'en suit
+pas une, avec un écart-type σ/√n = 25 000/√1 000 ≈ 790 h. 24 725 est à 275 h de 25 000, moins d'un
+écart-type. Rien d'anormal.*
+
+### 8. Les erreurs classiques et à retenir
+
+**Erreurs classiques :**
+1. **Confondre λ et E(T)** : λ est un taux (h⁻¹, petit nombre), E(T) = 1/λ une durée (h, grand
+   nombre). e^(−25 000 × 4 000) n'a aucun sens.
+2. **Inverser panne et fonctionnement** : P(T ≤ t) = 1 − e^(−λt) est la probabilité de panne AVANT t ;
+   P(T > t) = e^(−λt) celle de fonctionner encore.
+3. **La règle de trois** : P(T ≤ t) ≈ λt seulement si λt est petit ; elle peut dépasser 1.
+4. **Croire que la moitié tient jusqu'à E(T)** : seulement 36,8 % tiennent jusqu'à E(T).
+5. **Transposer les repères de la loi normale** (« 68 % entre E − σ et E + σ », « 95 % entre E − 2σ et
+   E + 2σ ») : ils supposent une courbe en cloche symétrique. Ici, on calcule avec e^(−t/E(T)).
+6. **Oublier le signe moins** dans t = −ln(R)/λ : une durée négative est un signal d'erreur.
+7. **Compter depuis la mise en service** pour un composant qui a déjà tenu s heures : sans usure,
+   seule compte la durée à venir, e^(−λt).
+8. **Mélanger les unités** de λ et de t (par heure, par 1 000 h, par an).
+9. **Appliquer la loi exponentielle à une pièce qui s'use** (roulement, courroie, ventilateur).
+
+**À retenir :**
+- **P(T > t) = e^(−λt) = e^(−t/E(T))** ; **P(T ≤ t) = 1 − e^(−λt)** ; P(c ≤ T ≤ d) = e^(−λc) − e^(−λd).
+- **Densité f(t) = λ e^(−λt)**, en h⁻¹ : l'histogramme des pannes, qui descend parce qu'il reste de
+  moins en moins de composants.
+- **E(T) = σ(T) = 1/λ** ; 63 % des composants sont en panne avant E(T).
+- Durée pour qu'il ne reste plus qu'une proportion R en marche : **t = −ln(R)/λ**.
+- **Sans mémoire** : P(T > s + t | T > s) = e^(−λt), comme pour un neuf.
+- Simulation : **=-E(T)*LN(ALEA())**.
+- *À venir, la fiche 18.17 (loi de Poisson) : combien de pannes sur une durée donnée, quand chaque
+  composant en panne est remplacé par un neuf qui peut, lui aussi, tomber en panne.*
+""",
+            "formules": """
+
+**Loi exponentielle de paramètre λ** — T ≥ 0 (durée de vie, temps d'attente) · densité
+f(t) = λ e^(−λt), en h⁻¹ · λ = taux de panne (par unité de temps), constant : sans usure
+
+**Probabilités** — P(T ≤ t) = 1 − e^(−λt) · P(T > t) = e^(−λt) (fiabilité) ·
+P(c ≤ T ≤ d) = e^(−λc) − e^(−λd) · P(T = c) = 0
+
+**Espérance et écart-type** — E(T) = 1/λ · V(T) = 1/λ² · σ(T) = 1/λ · λ = 1/E(T), donc
+P(T > t) = e^(−t/E(T)) · P(T > E(T)) = e^(−1) ≈ 0,368
+
+**Durée pour une fiabilité R** — e^(−λt) = R ⟺ t = −ln(R)/λ (équation de la fiche 17.7)
+
+**Sans mémoire** — P(T > s + t | T > s) = P(T > t) = e^(−λt)
+
+**Simulation** — T = −E(T) × ln(ALEA()) · tableur : =-E(T)*LN(ALEA()), par exemple
+=-25000*LN(ALEA()) pour E(T) = 25 000 h
+
+        """,
+            "exemple": """
+**Cas industriel — Combien de capteurs d'origine faudra-t-il remplacer dans l'année ?**
+
+Une ligne d'assemblage compte **40 capteurs inductifs** identiques, tous en service au 1ᵉʳ janvier. Le
+fabricant annonce une durée de vie moyenne de **25 000 h** ; ces capteurs, sans pièce mobile, ne s'usent
+pas : on adopte une loi exponentielle. La ligne tourne **4 000 h par an**. Le magasin veut savoir
+combien de ces 40 capteurs il faudra remplacer dans l'année, pour prévoir son stock.
+
+**Étape 1 — Le paramètre.** λ = 1/E(T) = 1/25 000 = **0,000 04 h⁻¹**.
+
+**Étape 2 — Un capteur, un an.** P(T ≤ 4 000) = 1 − e^(−0,000 04 × 4 000) = 1 − e^(−0,16) ≈ **0,148** :
+chaque capteur a environ 15 % de risque de tomber en panne dans l'année.
+
+**Étape 3 — Les 40 capteurs installés.** Les capteurs tombent en panne indépendamment les uns des
+autres : parmi les 40 installés au 1ᵉʳ janvier, le nombre X de ceux qui tomberont en panne dans
+l'année suit une loi binomiale de paramètres 40 et 0,148 (fiche 18.6). E(X) = 40 × 0,148 ≈ **5,9
+capteurs** ; σ(X) = √(40 × 0,148 × 0,852) ≈ **2,2**.
+
+**Étape 4 — La décision.** En moyenne, 6 capteurs par an ; mais le nombre réel fluctue d'une année à
+l'autre (σ ≈ 2,2). Le magasin se fixe une règle : être à court au plus une année sur vingt, c'est-à-dire
+P(X > stock) ≤ 1/20 = 0,05. On lit plutôt l'événement contraire, « le stock suffit » :
+P(X ≤ stock) ≥ 0,95. À la calculatrice (loi binomiale cumulée) : P(X ≤ 8) ≈ 0,873 ; P(X ≤ 9) ≈ 0,938 ;
+P(X ≤ 10) ≈ 0,973. Pour les 40 capteurs d'origine, le premier stock qui atteint 0,95 est **10**.
+Le magasin recommande aussi au bureau
+des méthodes de **ne pas** faire de remplacement préventif : un capteur de 3 ans a la même probabilité
+de tenir l'année suivante qu'un neuf (0,852, § 6).
+
+**Ce que le calcul apprend.** « 25 000 h de durée de vie moyenne » ressemble à « plus de 6 ans de
+tranquillité ». En réalité, 15 % des capteurs lâchent dès la première année, et 1 % dès les 251
+premières heures. *Limite du calcul : un capteur de rechange posé en cours d'année peut lui-même
+tomber en panne avant décembre. Pour compter toutes les pannes de l'année, rechanges compris, il faut
+la loi de Poisson : les rechanges tombant aussi en panne, on attend en moyenne 40 × λt = 40 × 0,16 = 6,4
+remplacements au lieu de 5,9 ; avec la même règle « une année sur vingt », et en anticipant sur la fiche
+18.17 (à venir), le stock nécessaire passe alors à 11.*
+""",
+            "exercice": """
+Un relais statique a une durée de vie T (en heures) qui suit une loi exponentielle. Le fabricant
+annonce une durée de vie moyenne de **20 000 h**.
+
+**1.** Calcule λ, en précisant son unité.
+
+**2.** Calcule la probabilité qu'un relais tombe en panne avant 5 000 h.
+
+**3.** Calcule la probabilité qu'un relais fonctionne encore au bout de 20 000 h. Un technicien dit :
+« la moitié des relais tiennent jusqu'à la durée de vie moyenne ». Qu'en penses-tu ?
+
+**4.** Calcule la probabilité qu'un relais tombe en panne entre 10 000 h et 30 000 h.
+
+**5.** Au bout de combien d'heures 10 % des relais seront-ils tombés en panne (il n'en restera plus que
+90 % en marche) ?
+
+**6.** Un relais a déjà fonctionné 15 000 h sans panne. Quelle est la probabilité qu'il fonctionne
+encore 5 000 h de plus ? Compare avec la question 2 et conclus : faut-il le remplacer à titre
+préventif ?
+
+**7.** Dans un tableur, on simule des durées de vie avec la formule =-20000*LN(ALEA()). Quelle durée
+obtient-on quand ALEA() donne 0,6 ? Et quand il donne 0,05 ? Pourquoi un petit nombre ALEA() donne-t-il
+une longue durée ?
+""",
+            "corrige": """
+**1.** λ = 1/E(T) = 1/20 000 = **0,000 05 h⁻¹** (5 pannes pour 100 000 heures de fonctionnement).
+
+**2.** P(T ≤ 5 000) = 1 − e^(−0,000 05 × 5 000) = 1 − e^(−0,25) ≈ 1 − 0,778 8 = **0,221**.
+
+**3.** P(T > 20 000) = e^(−1) ≈ **0,368**. Le technicien se trompe : seulement 36,8 % des relais tiennent
+jusqu'à la durée moyenne ; 63,2 % sont déjà en panne. La moitié est en panne dès
+t = −ln(0,5) × 20 000 = ln 2 × 20 000 ≈ 13 900 h.
+La moyenne est tirée vers le haut par les quelques relais qui tiennent très longtemps.
+
+**4.** P(10 000 ≤ T ≤ 30 000) = e^(−0,5) − e^(−1,5) ≈ 0,606 5 − 0,223 1 = **0,383**.
+
+**5.** On cherche t tel que P(T > t) = 0,90 : e^(−0,000 05 t) = 0,90, donc t = −ln(0,90)/0,000 05 ≈
+**2 107 h**.
+
+**6.** A = « T > 15 000 », B = « T > 20 000 » ; un relais qui a tenu 20 000 h a forcément tenu 15 000 h,
+donc A ∩ B = B. P(T > 20 000 | T > 15 000) = e^(−0,000 05 × 20 000)/e^(−0,000 05 × 15 000) =
+e^(−1)/e^(−0,75) = e^(−0,25) ≈ **0,779** : exactement la probabilité qu'un relais **neuf** tienne 5 000 h
+(1 − 0,221, question 2). Le relais usagé n'est pas plus fragile : le remplacer à titre préventif ne
+sert à rien.
+
+**7.** −20 000 × ln(0,6) ≈ **10 217 h** ; −20 000 × ln(0,05) ≈ **59 915 h**. Un petit ALEA() a un
+logarithme très négatif (ln 0,05 ≈ −3,0), et le signe moins le transforme en grande durée. Les
+ALEA() inférieurs à e^(−1) ≈ 0,368 (36,8 % des tirages) donnent une durée supérieure à 20 000 h : on
+retrouve la question 3.
 """,
         },
         {
@@ -54105,6 +54693,20 @@ _mth("18.11", "Calculer la dispersion d'une somme, d'une différence ou d'une mo
 ], "Jeu J = D − d avec σ(D) = 4 µm et σ(d) = 3 µm : V(J) = 16 + 9 = 25, σ(J) = 5 µm — "
        "entre 4 µm (le plus grand σ) et 7 µm (la somme des σ).")
 
+_mth("18.16", "Calculer avec la loi exponentielle (durée de vie sans usure)", [
+    "**Vérifier le modèle** : le composant ne s'use pas (électronique pendant sa vie utile, panne "
+    "par accident). S'il s'use (roulement, courroie, ventilateur), la loi exponentielle ne convient "
+    "pas.",
+    "**Trouver λ** : λ = 1/E(T), en h⁻¹ si E(T) est en heures ; convertir t dans la même unité.",
+    "**Traduire la question** : « tombe en panne avant t » → P(T ≤ t) = 1 − e^(−λt) ; « fonctionne "
+    "encore à t » → P(T > t) = e^(−λt) ; « entre c et d » → e^(−λc) − e^(−λd).",
+    "**Chercher une durée** pour qu'il ne reste plus qu'une proportion R en marche : t = −ln(R)/λ "
+    "(résultat positif).",
+    "**Composant déjà âgé** : P(T > s + t | T > s) = e^(−λt), comme pour un neuf.",
+    "**Contrôler** : une probabilité entre 0 et 1 ; P(T > E(T)) ≈ 0,368, pas 0,5.",
+], "Capteurs de moyenne 25 000 h : λ = 0,000 04 h⁻¹ ; P(T > 4 000) = e^(−0,16) ≈ 0,852 ; il n'en reste "
+       "plus que 90 % en marche à t = −ln(0,90)/0,000 04 ≈ 2 634 h.")
+
 _mth("18.7", "Calculer la taille d'échantillon nécessaire pour une précision donnée", [
     "**Isoler n dans la formule de la marge** : n = (1,96 × s / marge "
     "visée)².",
@@ -56074,6 +56676,132 @@ def gen_comparaison_proportions():
     }
 
 
+def gen_proba_exponentielle():
+    """Probabilité avec une loi exponentielle, question posée en mots (avant, après, entre, sachant)."""
+    while True:
+        E = random.choice([2000, 5000, 8000, 10000, 20000, 25000, 40000, 50000])
+        cas = random.choice(["avant", "encore", "entre", "sachant"])
+        k1, k2 = sorted(random.sample([0.1, 0.2, 0.25, 0.4, 0.5, 0.8, 1, 1.5, 2], 2))
+        t, s = round(E * k1), round(E * k2)
+        ft, fs, fst = fr(t, 0), fr(s, 0), fr(s + t, 0)
+        at, as_, ast = _fr_court(t / E), _fr_court(s / E), _fr_court((s + t) / E)
+        if cas == "avant":
+            rep = 1 - math.exp(-t / E)
+            texte = f"la probabilité qu'un composant tombe en panne avant {ft} h"
+            cands = [(math.exp(-t / E), f"C'est la probabilité de fonctionner ENCORE à {ft} h, "
+                                        f"e^(−{at}) : « tomber en panne avant {ft} h », c'est "
+                                        f"1 − e^(−{at})."),
+                     (t / E, f"Tu as fait une règle de trois, λt = {at} : elle surestime les pannes, car "
+                             f"un composant déjà en panne ne peut pas retomber en panne. Calcule "
+                             f"1 − e^(−{at})."),
+                     (math.exp(-t / E) / E, f"Tu as calculé la hauteur de la densité, λ e^(−{at}) : ce "
+                                            f"n'est pas une probabilité, seule l'aire en est une. "
+                                            f"Calcule 1 − e^(−{at}).")]
+        elif cas == "encore":
+            rep = math.exp(-t / E)
+            texte = f"la probabilité qu'un composant fonctionne encore au bout de {ft} h"
+            cands = [(1 - math.exp(-t / E), f"C'est la probabilité de panne AVANT {ft} h : « fonctionner "
+                                            f"encore », c'est e^(−{at})."),
+                     (1 - t / E, f"Tu as fait 1 − λt = 1 − {at}, une règle de trois : calcule "
+                                 f"e^(−{at})."),
+                     (0.5 if t == E else None, "La moyenne n'est pas le milieu : P(T > E(T)) = e^(−1) ≈ "
+                                                "0,368, pas 0,5.")]
+        elif cas == "entre":
+            rep = math.exp(-t / E) - math.exp(-s / E)
+            texte = f"la probabilité qu'un composant tombe en panne entre {ft} h et {fs} h"
+            cands = [(1 - math.exp(-(s - t) / E), f"Tu as calculé 1 − e^(−{_fr_court((s - t) / E)}), comme "
+                                                  f"si le composant était neuf à {ft} h. Or il est neuf "
+                                                  f"à 0 h : on compte (survivants à {ft} h) − (survivants "
+                                                  f"à {fs} h) = e^(−{at}) − e^(−{as_})."),
+                     (1 - math.exp(-s / E), f"C'est la panne avant {fs} h : il faut retirer les pannes "
+                                            f"avant {ft} h, e^(−{at}) − e^(−{as_})."),
+                     (math.exp(-s / E), f"C'est la probabilité de fonctionner encore à {fs} h : pour "
+                                        f"« entre {ft} h et {fs} h », calcule e^(−{at}) − e^(−{as_}).")]
+        else:
+            rep = math.exp(-t / E)
+            texte = (f"la probabilité qu'un composant qui a déjà fonctionné {fs} h sans panne fonctionne "
+                     f"encore {ft} h de plus")
+            cands = [(math.exp(-(s + t) / E), f"C'est e^(−{ast}), la probabilité qu'un composant NEUF "
+                                              f"tienne {fst} h. Sachant qu'il a déjà tenu {fs} h, seule "
+                                              f"compte la durée à venir : e^(−{at}) (sans mémoire)."),
+                     (1 - math.exp(-t / E), f"C'est la probabilité de panne pendant les {ft} h à venir : "
+                                            f"on demande celle de fonctionner encore, e^(−{at})."),
+                     (math.exp(-s / E), f"C'est e^(−{as_}), la probabilité d'avoir tenu les {fs} h déjà "
+                                        f"passées : on demande les {ft} h à venir, e^(−{at}).")]
+        cands = [(v, m) for v, m in cands if v is not None]
+        vals = [v for v, _ in cands]
+        if 0.02 < rep < 0.98 and all(abs(v - rep) > 0.003 for v in vals) and \
+                all(abs(vals[i] - vals[j]) > 0.003 for i in range(len(vals)) for j in range(i + 1, len(vals))):
+            break
+    if cas == "avant":
+        calc = f"P(T ≤ {ft}) = 1 − e^(−{at}) ≈ **{fr(rep, 3)}**."
+    elif cas == "encore":
+        calc = f"P(T > {ft}) = e^(−{at}) ≈ **{fr(rep, 3)}**."
+    elif cas == "entre":
+        calc = (f"P({ft} ≤ T ≤ {fs}) = e^(−{at}) − e^(−{as_}) ≈ "
+                f"{fr(math.exp(-t / E), 4)} − {fr(math.exp(-s / E), 4)} ≈ **{fr(rep, 3)}**.")
+    else:
+        calc = (f"Sans mémoire : P(T > {fst} | T > {fs}) = e^(−{ast})/e^(−{as_}) = e^(−{at}) ≈ "
+                f"**{fr(rep, 3)}**, comme pour un neuf.")
+    return {
+        "titre": "Loi exponentielle : calculer une probabilité",
+        "enonce": (f"La durée de vie T (en heures) d'un composant électronique suit une loi exponentielle ; "
+                   f"le fabricant annonce une durée de vie moyenne de {fr(E, 0)} h. Calcule {texte}. "
+                   f"Réponds au millième (garde toutes les décimales de la calculatrice dans les calculs "
+                   f"intermédiaires)."),
+        "rep": rep, "tol": 0.001, "unite": "",
+        "diag": [_diag(v, m) for v, m in cands],
+        "corr": [
+            f"**Paramètre.** λ = 1/E(T) = 1/{fr(E, 0)} h⁻¹, donc λt = t/{fr(E, 0)}.",
+            calc,
+        ],
+        "indice": "λ = 1/E(T). Avant t : 1 − e^(−λt) ; encore à t : e^(−λt) ; entre c et d : "
+                  "e^(−λc) − e^(−λd) ; déjà âgé de s heures : P(T > s + t)/P(T > s) = "
+                  "e^(−λ(s + t))/e^(−λs) = e^(−λt), car diviser deux exponentielles, c'est soustraire "
+                  "les exposants (fiche 18.16, § 6) — seule compte la durée à venir.",
+    }
+
+
+def gen_duree_fiabilite():
+    """Durée t au bout de laquelle il ne reste plus qu'une proportion R en marche : t = −ln(R)/λ."""
+    while True:
+        E = random.choice([2000, 5000, 8000, 10000, 20000, 25000, 40000, 50000])
+        R = random.choice([0.80, 0.90, 0.95, 0.99])
+        rep = -math.log(R) * E
+        fE, fR, fq = fr(E, 0), _fr_court(R), _fr_court(1 - R)
+        cands = [(-math.log(1 - R) * E, f"Tu as résolu e^(−t/{fE}) = {fq} : c'est la proportion en PANNE. "
+                                        f"Il doit en rester {_fr_court(R * 100, 0)} % en marche : "
+                                        f"e^(−t/{fE}) = {fR}."),
+                 ((1 - R) * E, f"Tu as fait une règle de trois : {_fr_court((1 - R) * 100, 0)} % de pannes × "
+                               f"E(T). Elle n'est qu'une approximation (elle oublie qu'un composant en panne "
+                               f"ne peut pas retomber en panne). Résous e^(−t/{fE}) = {fR} avec ln : "
+                               f"t = −ln({fR}) × {fE}."),
+                 (math.log(R) * E, f"Signe moins oublié : ln({fR}) est négatif, t = −ln({fR}) × {fE} est "
+                                   f"positif."),
+                 (-math.log(R) / E, f"Tu as divisé par E(T) au lieu de multiplier : t = −ln({fR})/λ = "
+                                    f"−ln({fR}) × {fE}.")]
+        vals = [v for v, _ in cands]
+        if all(abs(v - rep) > 1.5 for v in vals) and \
+                all(abs(vals[i] - vals[j]) > 1.5 for i in range(len(vals)) for j in range(i + 1, len(vals))):
+            break
+    return {
+        "titre": "Loi exponentielle : durée pour une fiabilité donnée",
+        "enonce": (f"La durée de vie d'un composant électronique suit une loi exponentielle de moyenne "
+                   f"{fE} h. Au bout de combien d'heures {_fr_court((1 - R) * 100, 0)} % des composants "
+                   f"seront-ils tombés en panne (il n'en restera plus que {_fr_court(R * 100, 0)} % en "
+                   f"marche) ? Réponds à l'heure près (garde toutes les décimales de la calculatrice dans "
+                   f"les calculs intermédiaires)."),
+        "rep": rep, "tol": 1, "unite": "h",
+        "diag": [_diag(v, m) for v, m in cands],
+        "corr": [
+            f"**Équation.** P(T > t) = e^(−t/{fE}) = {fR}.",
+            f"**ln des deux côtés.** −t/{fE} = ln({fR}) ≈ {_fr_court(math.log(R), 5)}.",
+            f"**Durée.** t = −ln({fR}) × {fE} ≈ **{fr(rep, 0)} h**.",
+        ],
+        "indice": "e^(−λt) = R ⟺ t = −ln(R)/λ = −ln(R) × E(T).",
+    }
+
+
 def decimales_affichage(tol):
     """Nombre de décimales pour afficher la réponse d'un générateur : assez pour que la valeur
     AFFICHÉE soit acceptée par la tolérance (10⁻ᵈ ≤ tol, donc erreur d'arrondi ≤ tol/2), et au
@@ -56148,7 +56876,8 @@ def fabriquer_exo(famille=None):
                                   gen_euler_pas, gen_euler_ecart,
                                   gen_ic_proportion, gen_taille_proportion,
                                   gen_test_moyenne, gen_test_proportion,
-                                  gen_comparaison_moyennes, gen_comparaison_proportions],
+                                  gen_comparaison_moyennes, gen_comparaison_proportions,
+                                  gen_proba_exponentielle, gen_duree_fiabilite],
     }
     if famille and famille in catalogue:
         pool = catalogue[famille]
@@ -59972,6 +60701,135 @@ ATELIERS = [
         "a_retenir": "À retenir : pour comparer deux proportions, on teste la différence D, centrée sur 0 "
                      "sous H₀, avec la proportion COMMUNE f = (k₁ + k₂)/(n₁ + n₂) — sous H₀ il n'y a qu'un "
                      "taux — et 1/n₁ + 1/n₂ sous la racine.",
+    },
+    {
+        "id": "at148",
+        "chapitre": "Bloc 18",
+        "titre": "Modules d'entrées/sorties d'automate : fiabilité sur un an et remplacement préventif",
+        "theme": "Probabilités",
+        "fiche": "18.16",
+        "figure": "exponentielle_densite",
+        "vocabulaire": [
+            ("taux de panne λ", "la proportion des modules encore en marche qui tombent en panne par heure ; "
+             "λ = 1/E(T)."),
+            ("fiabilité", "la probabilité de fonctionner encore à l'instant t : P(T > t) = e^(−λt)."),
+            ("sans mémoire", "sachant qu'il a tenu s heures, un composant sans usure a la même probabilité "
+             "de tenir t heures de plus qu'un neuf : P(T > s + t | T > s) = e^(−λt)."),
+        ],
+        "enonce": "Un atelier compte 24 modules d'entrées/sorties d'automate identiques, tous en service au "
+                  "1er janvier. Le fabricant annonce une durée de vie moyenne de 50 000 h ; ces modules "
+                  "électroniques, sans pièce mobile ni ventilateur, ne s'usent pas pendant leur vie utile : on "
+                  "adopte une loi exponentielle. L'atelier tourne en trois équipes, 6 000 h par an. On veut la "
+                  "probabilité qu'un module tienne un an, le nombre moyen de modules, parmi les 24 installés, "
+                  "qui tomberont en panne dans l'année (sans compter les modules de remplacement), et savoir si "
+                  "un remplacement préventif des plus anciens a un sens.",
+        "etapes": [
+            {"type": "numerique", "label": "Taux de panne λ (en h⁻¹)", "unite": "h⁻¹",
+             "attendu": 1 / 50000, "tol": 0.000001, "format": "%.6f",
+             "consigne": "λ = 1/E(T).",
+             "indice": "1 / 50 000 : cinq chiffres après la virgule.",
+             "pieges": [(50000, "Tu as recopié la durée moyenne E(T). λ est son inverse, un taux : "
+                                "λ = 1/E(T) = 1/50 000, un très petit nombre."),
+                        (0.0002, 'Il manque des zéros : 1/50 000 = 0,000 02. Compte-les : 1/50 000 = 0,2 × 0,000 1. Vérifie en multipliant : 0,000 02 × 50 000 doit donner 1.'),
+                        (0.002, 'Il manque des zéros : 1/50 000 = 0,000 02. Compte-les : 1/50 000 = 0,2 × 0,000 1. Vérifie en multipliant : 0,000 02 × 50 000 doit donner 1.'),
+                        (0.000002, "Un zéro de trop : 1/50 000 = 0,000 02. Vérifie en multipliant : "
+                                   "0,000 002 × 50 000 = 0,1, pas 1.")]},
+            {"type": "numerique", "label": "Produit λt pour un an (t = 6 000 h)", "unite": "",
+             "attendu": 6000 / 50000, "tol": 0.001,
+             "depend_de": {"etape": 1, "formule": lambda v: v * 6000},
+             "consigne": "λ × t, avec t en heures : le résultat n'a pas d'unité (c'est aussi t/E(T)).",
+             "indice": "0,000 02 × 6 000, ou 6 000/50 000.",
+             "pieges": [(50000 / 6000, "Tu as divisé E(T) par t : c'est t/E(T) = 6 000/50 000, pas "
+                                       "l'inverse."),
+                        (12, "Tu as donné λt en pourcentage : λt est un simple nombre, 0,12, sans unité."),
+                        (1.2, "Un zéro en moins dans λ : avec λ = 0,000 02, λt = 0,000 02 × 6 000 = 0,12.")]},
+            {"type": "numerique", "label": "Fiabilité sur un an : P(T > 6 000)", "unite": "",
+             "attendu": math.exp(-6000 / 50000), "tol": 0.0005,
+             "depend_de": {"etape": 2, "formule": lambda v: math.exp(-v)},
+             "consigne": "P(T > t) = e^(−λt). Garde au moins 4 décimales : ce résultat sert aux deux "
+                         "étapes suivantes.",
+             "indice": "e^(−0,12) : touche eˣ, avec le signe moins.",
+             "pieges": [(1 - 6000 / 50000, "Tu as fait 1 − λt, une règle de trois : elle surestime les "
+                                            "pannes, car un module déjà en panne ne peut pas retomber "
+                                            "en panne. La bonne formule est e^(−λt)."),
+                        (1 - math.exp(-6000 / 50000), "C'est la probabilité de panne dans l'année, "
+                                                       "P(T ≤ 6 000) : on demande ici celle de fonctionner "
+                                                       "encore, e^(−λt)."),
+                        (math.exp(6000 / 50000), "Signe moins oublié : e^(+0,12) dépasse 1, ce ne peut pas "
+                                                  "être une probabilité."),
+                        (0.89, "Arrondi trop tôt : e^(−0,12) ≈ 0,886 9. Garde au moins 4 décimales : à l'étape "
+                               "suivante, 1 − 0,89 = 0,11 au lieu de 0,113 1 fausserait le nombre de modules "
+                               "en panne.")]},
+            {"type": "numerique", "label": "Probabilité de panne dans l'année : P(T ≤ 6 000)", "unite": "",
+             "attendu": 1 - math.exp(-6000 / 50000), "tol": 0.0005,
+             "depend_de": {"etape": 3, "formule": lambda v: 1 - v},
+             "consigne": "L'événement contraire de « fonctionner encore ».",
+             "indice": "1 − 0,886 9.",
+             "pieges": [(math.exp(-6000 / 50000), "C'est la fiabilité de l'étape précédente : la panne, "
+                                                   "c'est 1 moins cette valeur."),
+                        (6000 / 50000, "Tu as repris λt = 0,12, la règle de trois : la probabilité de panne "
+                                       "est 1 − e^(−0,12), un peu moins que 0,12.")]},
+            {"type": "numerique",
+             "label": "Nombre moyen de modules, parmi les 24 installés au 1er janvier, qui tombent en panne "
+                      "dans l'année (sans compter les modules de remplacement)",
+             "unite": "modules",
+             "attendu": 24 * (1 - math.exp(-6000 / 50000)), "tol": 0.05,
+             "depend_de": {"etape": 4, "formule": lambda v: 24 * v},
+             "consigne": "Loi binomiale (fiche 18.6) : E = n × p, avec n = 24 et p la probabilité de panne.",
+             "indice": "24 × 0,113 1.",
+             "pieges": [(24 * math.exp(-6000 / 50000), "C'est le nombre moyen de modules qui "
+                                                        "FONCTIONNENT encore : on demande les pannes, "
+                                                        "24 × P(T ≤ 6 000)."),
+                        (24 * 6000 / 50000, "24 × λt = 2,88, c'est le nombre moyen de pannes dans l'année si "
+                                            "chaque module en panne est remplacé par un neuf, qui peut "
+                                            "lui aussi tomber en panne (loi de Poisson, fiche 18.17, à "
+                                            "venir). Ici on compte seulement les 24 modules d'origine : 24 × P(T ≤ 6 000).")]},
+            {"type": "qcm", "label": "Un module de 4 ans",
+             "question": "Un module a déjà fonctionné 4 ans (24 000 h) sans panne. Quelle est la "
+                         "probabilité qu'il tienne encore l'année suivante (6 000 h de plus) ?",
+             "options": ["e^(−0,6) ≈ 0,549 : on compte ses 30 000 h depuis la mise en service",
+                         "Moins de 0,887 : il a vieilli, il vaut mieux le remplacer à titre préventif",
+                         "0,887, exactement comme un module neuf"],
+             "bonne": 2,
+             "diagnostics": {0: "e^(−0,6) = P(T > 30 000) pour un module NEUF, avant de savoir qu'il a "
+                                "déjà tenu 24 000 h. Sachant qu'il a tenu : P(T > 30 000 | T > 24 000) = "
+                                "e^(−0,6)/e^(−0,48) = e^(−0,12).",
+                             1: "C'est vrai pour une pièce qui s'use (roulement, courroie, ventilateur), "
+                                "pas dans le modèle exponentiel : sans usure, le taux de panne reste λ "
+                                "quel que soit l'âge ; le remplacement préventif ne sert à rien."}},
+            {"type": "qcm", "label": "Lire la durée moyenne",
+             "question": "Le fabricant annonce E(T) = 50 000 h. Au bout de 50 000 h de fonctionnement, quelle "
+                         "part des modules fonctionne encore ?",
+             "options": ["La moitié : 50 000 h est la durée de vie moyenne",
+                         "Environ 36,8 %, car P(T > E(T)) = e^(−1)",
+                         "Aucun : ils ont atteint leur durée de vie"],
+             "bonne": 1,
+             "diagnostics": {0: "La moyenne n'est pas le milieu : quelques modules tiennent très "
+                                "longtemps et tirent la moyenne vers le haut. P(T > 50 000) = e^(−1) ≈ 0,368 ; "
+                                "la moitié est en panne dès ln 2 × 50 000 ≈ 34 700 h.",
+                             2: "E(T) est une moyenne, pas une date de fin : P(T > t) = e^(−λt) n'est jamais "
+                                "nul, et à t = E(T) il en reste e^(−1) ≈ 36,8 %."}},
+        ],
+        "corrige": {
+            "enonce": "24 modules d'entrées/sorties, E(T) = 50 000 h, loi exponentielle, 6 000 h par an.",
+            "regle": "**λ = 1/E(T) ; P(T > t) = e^(−λt) ; P(T ≤ t) = 1 − e^(−λt) ; nombre moyen de composants "
+                     "tombés en panne, parmi n en service au départ = n × P(T ≤ t) ; sans mémoire : un module "
+                     "âgé tient comme un neuf.**",
+            "conversions": "E(T) et t en heures : λ en h⁻¹, λt sans unité.",
+            "remplacement": "λ = 1/50 000 ; λt = 0,000 02 × 6 000 ; e^(−0,12) ; 1 − e^(−0,12) ; "
+                            "24 × (1 − e^(−0,12))",
+            "calcul": "λ = **0,000 02 h⁻¹**\n\nλt = **0,12**\n\nP(T > 6 000) = e^(−0,12) ≈ **0,886 9**"
+                      "\n\nP(T ≤ 6 000) ≈ **0,113 1**\n\n24 × 0,113 1 ≈ **2,71 modules** d'origine en panne, "
+                      "en moyenne, dans l'année\n\nmodule de 4 ans : **0,886 9**, comme un neuf → pas de "
+                      "remplacement préventif",
+            "verification": "**Contrôle de cohérence** : la règle de trois donnerait 0,12 de probabilité de "
+                            "panne, un peu plus que 0,113 1 — normal, elle compte comme si un module en panne "
+                            "pouvait retomber en panne ; et P(T > 50 000) = e^(−1) ≈ 0,368 < 0,5.",
+        },
+        "a_retenir": "À retenir : pour un composant sans usure, P(T > t) = e^(−λt) avec λ = 1/E(T) ; le "
+                     "nombre moyen de composants tombés en panne, parmi n en service au départ, est "
+                     "n × (1 − e^(−λt)) ; et un composant âgé a la même fiabilité qu'un neuf — le remplacement "
+                     "préventif ne sert à rien.",
     },
     {
         "id": "at29",
@@ -67898,12 +68756,13 @@ MATIERES_PROGRAMME = [
         ("Statistiques et Probabilités (évalué)", "Incomplet (à enrichir)",
          "Statistique descriptive et inférentielle, probabilités simples et conditionnelles, "
          "loi binomiale, espérance/écart-type, loi uniforme, loi normale et approximation d'une "
-         "binomiale, somme de variables et théorème de la limite centrée, taille d'échantillon, "
+         "binomiale, somme de variables et théorème de la limite centrée, loi exponentielle, "
+         "taille d'échantillon, "
          "statistique à deux variables (ajustement affine, corrélation), intervalle de confiance "
          "d'une proportion, tests d'hypothèse sur une proportion et sur une moyenne, "
-         "comparaison de deux proportions ou de deux moyennes. Non traités : lois "
-         "exponentielle et de Poisson.",
-         [(7, ["7.3"]), (17, ["17.3", "17.6", "17.8"]), (18, ["18.1", "18.2", "18.3", "18.5", "18.6", "18.9", "18.10", "18.11", "18.7", "18.13", "18.14", "18.15"])]),
+         "comparaison de deux proportions ou de deux moyennes. Non traitée : loi de "
+         "Poisson.",
+         [(7, ["7.3"]), (17, ["17.3", "17.6", "17.8"]), (18, ["18.1", "18.2", "18.3", "18.5", "18.6", "18.9", "18.10", "18.11", "18.7", "18.13", "18.14", "18.15", "18.16"])]),
     ]),
 ]
 
@@ -68286,7 +69145,7 @@ elif PAGE == PAGE_MATHS:
         '<b>hors épreuve</b>, le programme complémentaire non évalué (calcul matriciel, courbes '
         'de Bézier : fiches 19.1 à 19.4) et une fiche d\'approfondissement (19.6, droites et '
         'plans dans l\'espace), toutes marquées « hors épreuve ». Attention : certaines notions '
-        'évaluées ne sont pas encore traitées ici (lois exponentielle et de Poisson, équations '
+        'évaluées ne sont pas encore traitées ici (loi de Poisson, équations '
         'différentielles du second ordre) — voir le tableau de bord. Ce sont les mêmes fiches que dans '
         '« Cours », réunies ici pour ne pas les chercher au milieu des chapitres '
         'techniques.</div>',
