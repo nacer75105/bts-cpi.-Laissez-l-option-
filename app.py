@@ -55419,20 +55419,21 @@ def gen_test_moyenne():
                 all(abs(cands[i] - cands[j]) > 0.002 for i in range(len(cands))
                     for j in range(i + 1, len(cands))):
             break
+    m0 = f"{mu0:.2f}".replace(".", ",")  # cote nominale : « 40,00 »
     if bilateral:
-        question = (f"H₀ : μ = {_fr_court(mu0)} ; H₁ : μ ≠ {_fr_court(mu0)} (test bilatéral à 5 %). "
+        question = (f"H₀ : μ = {m0} ; H₁ : μ ≠ {m0} (test bilatéral à 5 %). "
                     f"Calcule la borne {cote} de la zone où l'on garde H₀")
     else:
         sens = ">" if cote == "droite" else "<"
         derive = "l'usure de l'outil fait grossir la cote" if cote == "droite" else \
             "l'usure de l'outil fait diminuer la cote"
         question = (f"On ne surveille qu'une dérive dans un sens ({derive}) : H₀ : μ = "
-                    f"{_fr_court(mu0)} ; H₁ : μ {sens} {_fr_court(mu0)} (test unilatéral à 5 %). "
+                    f"{m0} ; H₁ : μ {sens} {m0} (test unilatéral à 5 %). "
                     f"Calcule le seuil de la région critique")
     egal = "=" if abs(se - round(se, 5)) < 1e-12 else "≈"
     return {
         "titre": "Test d'hypothèse sur une moyenne",
-        "enonce": (f"Une machine doit produire une cote de {_fr_court(mu0)} mm ; l'écart-type d'une "
+        "enonce": (f"Une machine doit produire une cote de {m0} mm ; l'écart-type d'une "
                    f"pièce est connu, σ = {_fr_court(sig)} mm. On contrôle {n} pièces. {question}, "
                    f"en mm, au millième."),
         "rep": rep, "tol": 0.001, "unite": "mm",
@@ -55450,10 +55451,10 @@ def gen_test_moyenne():
                   "H₁ : μ > μ₀, μ₀ − … si H₁ : μ < μ₀)."),
         ],
         "corr": [
-            f"**Loi sous H₀.** X̄ suit N({_fr_court(mu0)} ; σ(X̄)), avec σ(X̄) = {_fr_court(sig)}/√{n} "
+            f"**Loi sous H₀.** X̄ suit N({m0} ; σ(X̄)), avec σ(X̄) = {_fr_court(sig)}/√{n} "
             f"= {_fr_court(sig)}/{int(math.sqrt(n))} {egal} {fr(se, 5)} mm.",
             f"**Coefficient** : {'1,96 (bilatéral, 2,5 % de chaque côté)' if bilateral else '1,645 (unilatéral, 5 % d’un seul côté)'}.",
-            f"**Borne** : {_fr_court(mu0)} {'+' if signe > 0 else '−'} {_fr_court(z)} × {fr(se, 5)} ≈ "
+            f"**Borne** : {m0} {'+' if signe > 0 else '−'} {_fr_court(z)} × {fr(se, 5)} ≈ "
             f"**{fr(rep, 3)} mm**.",
         ],
         "indice": "Sous H₀, X̄ suit N(μ₀ ; σ(X̄)) avec σ(X̄) = σ/√n ; borne = μ₀ ± coefficient × σ(X̄) "

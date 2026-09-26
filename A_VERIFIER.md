@@ -185,8 +185,19 @@ complexes (forme algébrique, Δ < 0) — 13. équations différentielles du sec
   20,03 mm), « β dépend de la dérive supposée », puissance 85 % / 52 %, compromis α/β (β ≈ 72 % à
   α = 1 %) et rôle de n ; petit échantillon traité par la loi binomiale exacte (rejet à partir de
   5 défectueuses sur 50) et exercé dans l'exercice.
-- **Non vérifié** : atelier at146 et générateurs non cliqués dans l'interface (la fiche s'ouvre
-  sans erreur dans un AppTest ; outil d'audit : 0 défaut).
+- ✅ **Vérifié dans l'interface le 2026-09-26** (dette de la 18.14 close) : atelier at146 et
+  générateurs `gen_test_moyenne` / `gen_test_proportion` parcourus dans l'application réelle, dans
+  un vrai navigateur (Edge sans fenêtre, clics souris et frappes clavier via le protocole DevTools,
+  captures d'écran) : 21 contrôles OK sur 21 — pièges et diagnostics affichés (σ au lieu de σ(X̄),
+  1,96 au lieu de 1,645), arrondis de l'indice acceptés (50,02 ; 49,98), les deux QCM avec
+  diagnostic, corrigé en six temps (vrais sauts de ligne), réponse des générateurs acceptée et
+  affichée à la même précision que la saisie. Relevé au passage et corrigé : la cote nominale de
+  `gen_test_moyenne` s'affichait « 40 mm » (désormais « 40,00 mm »). **Limite** : le parcours
+  exhaustif par AppTest (tous les pièges, toutes les options de QCM, 3 tirages × chaque diagnostic
+  des deux générateurs) n'a pas convergé en 55 min (environ 40 lancements complets de
+  l'application) et a été arrêté sans résultat ; à relancer avec une session factorisée et un
+  test rapide séparé du test complet. L'outil d'audit couvre déjà, lui, tous les diagnostics des
+  générateurs sur 2 000 tirages (0 défaut).
 
 ### Corrigés d'ateliers : « \n\n » affiché en toutes lettres (corrigé le 2026-09-25)
 
