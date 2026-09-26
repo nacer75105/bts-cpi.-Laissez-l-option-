@@ -184,7 +184,13 @@ complexes (forme algébrique, Δ < 0) — 13. équations différentielles du sec
   étape 3 : « Garde au moins 4 décimales », piège 0,89 (arrondi trop tôt).
 - Cinq tours de relecture (justesse + clarté) jusqu'à zéro réserve. Relevé tardivement (4ᵉ tour) : la
   liste « le composant s'use-t-il ? » du § 6 avait ses réponses inversées (oui → exponentielle).
-- Dette : at148 et les deux générateurs pas encore cliqués dans l'interface (outil d'audit : 0 défaut).
+- ✅ Vérifié le 2026-09-26 dans un vrai navigateur (Edge sans fenêtre, clics et frappes via DevTools) :
+  at148 en entier, 19 contrôles OK (pièges 0,0002, 8,33, règle de trois 0,88, arrondi trop tôt 0,89,
+  2,88 de Poisson ; les deux QCM, mauvaise option puis bonne ; corrigé déroulé, 2,71 modules, sans
+  antislash-n) ; `gen_proba_exponentielle` (cas « déjà âgé » : diagnostic « sans mémoire » ; cas
+  « entre » : « Or il est neuf ») et `gen_duree_fiabilite` (règle de trois diagnostiquée, « Réponse :
+  446 h » à l'heure près). Le parcours a révélé le défaut transversal des astérisques de la ligne
+  « Réponse » (corrigé à part).
 - ✅ Dette transversale corrigée le 2026-09-26 (commit séparé) : la réponse affichée de
   `gen_duree_fiabilite` sortait avec 2 décimales (« 5 268,03 h ») alors que l'énoncé dit « à l'heure
   près ». Voir « Réponse affichée : la précision suit l'énoncé » ci-dessous.
