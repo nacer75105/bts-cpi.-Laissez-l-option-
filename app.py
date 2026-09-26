@@ -6104,6 +6104,73 @@ def risques_alpha_beta():
     return _svg("".join(p_), 760, y0 + 110)
 
 
+def _densite_c(x, mu, sig):
+    return math.exp(-((x - mu) ** 2) / (2 * sig ** 2)) / (sig * math.sqrt(2 * math.pi))
+
+
+def comparaison_difference():
+    se = math.sqrt(0.020 ** 2 / 40 + 0.025 ** 2 / 50)
+    faux = 0.020 / math.sqrt(40) + 0.025 / math.sqrt(50)
+    a, b = -1.96 * se, 1.96 * se
+    af, bf = -1.96 * faux, 1.96 * faux
+    d = 0.011
+    x0, y0, L, H = 80, 300, 600, 200  # axe de −0,02 à +0,02 mm
+    X = lambda x: x0 + L * (x + 0.02) / 0.04  # noqa: E731
+    dmax = _densite_c(0, 0, se)
+    Y = lambda v: y0 - H * v / dmax  # noqa: E731
+    p_ = [_txt(40, 24, "Deux machines, H₀ : même cote moyenne. Si H₀ est vraie, la différence D = X̄₁ − X̄₂ se répartit ainsi ;",
+               12, TRAIT, "start", True),
+          _txt(40, 40, "le point rouge est la valeur observée d.", 12, TRAIT, "start", True)]
+    p_.append(f"<rect x='{X(a):.1f}' y='{y0 - H - 14}' width='{X(b) - X(a):.1f}' height='{H + 14}' "
+              f"fill='{OK}' fill-opacity='0.10'/>")
+    # zone fausse (écarts-types additionnés), en pointillés
+    ya = y0 - H - 40  # hauteur de la double flèche, au-dessus de l'étiquette de la zone verte
+    for x in (af, bf):
+        p_.append(f"<line x1='{X(x):.1f}' y1='{y0}' x2='{X(x):.1f}' y2='{ya}' stroke='{ARBRE}' "
+                  f"stroke-width='1.6' stroke-dasharray='5 4'/>")
+    # double flèche entre les deux pointillés : la zone erronée est l'INTERVALLE entre eux
+    p_.append(f"<line x1='{X(af):.1f}' y1='{ya}' x2='{X(bf):.1f}' y2='{ya}' stroke='{ARBRE}' "
+              f"stroke-width='1.6' stroke-dasharray='5 4'/>")
+    for x, sens in ((af, 1), (bf, -1)):
+        p_.append(f"<polygon points='{X(x):.1f},{ya} {X(x) + 8 * sens:.1f},{ya - 4} "
+                  f"{X(x) + 8 * sens:.1f},{ya + 4}' fill='{ARBRE}'/>")
+    p_.append(_txt(X(0), ya - 6, "↔ zone ERRONÉE (écarts-types additionnés) : ±0,013 1 — piège du § 3", 11,
+                   ARBRE, "middle", True))
+    p_.append(_txt(X(af), y0 + 16, "−0,013 1", 10, ARBRE, "middle", True))
+    p_.append(_txt(X(bf), y0 + 16, "+0,013 1", 10, ARBRE, "middle", True))
+    # queues (région critique)
+    for de, jusqua in ((-0.02, a), (b, 0.02)):
+        pts = [f"{X(de):.1f},{y0}"]
+        for i in range(0, 101):
+            x = de + (jusqua - de) * i / 100
+            pts.append(f"{X(x):.1f},{Y(_densite_c(x, 0, se)):.1f}")
+        pts.append(f"{X(jusqua):.1f},{y0}")
+        p_.append(f"<polygon points='{' '.join(pts)}' fill='{ALERTE}' fill-opacity='0.35' stroke='none'/>")
+    cloche = " ".join(f"{X(-0.02 + 0.04 * i / 300):.1f},{Y(_densite_c(-0.02 + 0.04 * i / 300, 0, se)):.1f}"
+                      for i in range(0, 301))
+    p_.append(f"<polyline points='{cloche}' fill='none' stroke='{ALESAGE}' stroke-width='2.5'/>")
+    p_.append(f"<line x1='{x0}' y1='{y0}' x2='{x0 + L}' y2='{y0}' stroke='{FIN}' stroke-width='1.4'/>")
+    for x in (-0.02, 0, 0.02):
+        p_.append(_txt(X(x), y0 + 16, (f"{x:+.2f}" if x else "0").replace(".", ",").replace("-", "−"),
+                       11, FIN, "middle"))
+    p_.append(_txt(x0 + L, y0 + 32, "différence d (mm)", 11, FIN, "end"))
+    p_.append(_txt(X(0), y0 - H - 20, "zone verte centrée sur 0 : ±1,96 × 0,004 74 = ±0,009 3", 11, OK,
+                   "middle", True))
+    p_.append(_txt(X(-0.0195), y0 - 40, "région critique", 11, ALERTE, "start", True))
+    p_.append(_txt(X(-0.0195), y0 - 26, "(2 × 2,5 %)", 11, ALERTE, "start"))
+    for x in (-0.0107, 0.0107):
+        p_.append(_txt(X(x), y0 - 22, "2,5 %", 10, ALERTE, "middle", True))
+    p_.append(f"<circle cx='{X(d):.1f}' cy='{y0}' r='5.5' fill='{ALERTE}'/>")
+    p_.append(_txt(X(d), y0 + 48, "d observé = 0,011 mm", 11, ALERTE, "middle", True))
+    p_.append(_txt(X(d), y0 + 62, "hors de la zone verte, mais dans la zone erronée", 10, ALERTE, "middle"))
+    y0 += 14
+    p_.append(f"<rect x='40' y='{y0 + 64}' width='680' height='72' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p_.append(_txt(56, y0 + 86, "d = 0,011 sort de la zone verte → on rejette H₀ : les deux machines ne donnent pas la même cote.", 12, TRAIT, "start", True))
+    p_.append(_txt(56, y0 + 106, "Les pointillés orange ne sont PAS une autre zone possible : c'est la zone erronée obtenue en", 12, ARBRE, "start", True))
+    p_.append(_txt(56, y0 + 126, "additionnant les écarts-types. d y tomberait, et l'on garderait H₀ à tort.", 12, ARBRE, "start", True))
+    return _svg("".join(p_), 760, y0 + 150)
+
+
 def extremums_polynome():
     p = [_txt(40, 24, "f(x) = x³ − 3x² + 2 : un maximum local puis un minimum local.",
               12, TRAIT, "start", True)]
@@ -6522,6 +6589,7 @@ FIGURES = {
     "ic_proportion_simulation": ("40 échantillons, 40 intervalles : la méthode réussit environ 95 fois sur 100", ic_proportion_simulation),
     "test_region_rejet": ("Test unilatéral : si H₀ est vraie, f dépasse le seuil 5 fois sur 100", test_region_rejet),
     "risques_alpha_beta": ("Les deux risques : fausse alerte α et défaut manqué β", risques_alpha_beta),
+    "comparaison_difference": ("Sous H₀, la différence est centrée sur zéro : zone verte et piège des écarts-types additionnés", comparaison_difference),
     "extremums_polynome": ("Un maximum local puis un minimum local", extremums_polynome),
     "dispersion_deux_reglages": ("Six mesures dispersées autour de leur moyenne", dispersion_deux_reglages),
     "venn_deux_evenements": ("Union et intersection de deux événements", venn_deux_evenements),
@@ -10565,6 +10633,70 @@ QUIZ["Mathématiques BTS CPI — probabilités et équations différentielles"] 
       "La puissance, c'est 1 − β : la probabilité de rejeter H₀ quand elle est fausse, pour une "
       "dérive donnée. Ici β ≈ 15 % : cette dérive passe inaperçue 15 fois sur 100. Elle augmente avec "
       "la taille de la dérive et avec n.", "Intermédiaire"),
+
+    q("On compare deux machines. Sous H₀ (même cote moyenne), autour de quelle valeur la différence "
+      "x̄₁ − x̄₂ se répartit-elle ?",
+      ["La cote nominale", "La moyenne de x̄₁ et x̄₂", "0", "L'écart-type des pièces"], 2,
+      "Si les deux machines ont la même vraie moyenne, la différence de leurs moyennes observées est "
+      "centrée sur 0 : la zone verte est centrée sur zéro.", "Base"),
+
+    q("σ(X̄₁ − X̄₂) pour deux échantillons indépendants vaut :",
+      ["√(σ₁²/n₁ + σ₂²/n₂)", "σ₁/√n₁ + σ₂/√n₂", "√(σ₁²/n₁ − σ₂²/n₂)", "√((σ₁² + σ₂²)/(n₁ + n₂))"], 0,
+      "Les variances s'additionnent, pour une différence comme pour une somme (fiche 18.11), et chacune "
+      "se divise par son propre effectif.", "Base"),
+
+    q("Fournisseur A : 10 défectueuses sur 200 ; B : 30 sur 300. Quelle proportion commune utilise-t-on "
+      "sous H₀ ?",
+      ["0,05", "0,1", "0,075", "0,08"], 3,
+      "f = (10 + 30)/(200 + 300) = 40/500 = 0,08. 0,075 est la moyenne simple de 0,05 et 0,1 : on regroupe "
+      "les pièces, pas les pourcentages.", "Calcul"),
+
+    q("Pourquoi utilise-t-on la proportion commune pour calculer σ(F₁ − F₂) ?",
+      ["Parce qu'elle donne toujours un écart-type plus petit, donc un test plus sévère",
+       "Parce que sous H₀ les deux taux sont égaux : un seul taux, estimé avec toutes les pièces",
+       "Parce que f₁ et f₂ ne sont connus qu'après le test",
+       "Parce que c'est la moyenne simple des deux proportions, qui compense leurs écarts"], 1,
+      "Calculer avec f₁ et f₂ séparés reviendrait à supposer deux taux différents (H₁) pendant qu'on "
+      "raisonne sous H₀. f₁ et f₂ sont connus, mais ce n'est pas la bonne hypothèse.", "Intermédiaire"),
+
+    q("On pose D = F_A − F_B et l'on veut montrer que A a MOINS de défauts que B. Quelle hypothèse H₁ ?",
+      ["p_A − p_B ≠ 0", "p_A − p_B > 0", "p_A = p_B", "p_A − p_B < 0"], 3,
+      "Moins de défauts pour A veut dire p_A < p_B, donc p_A − p_B < 0 avec l'ordre choisi. Avec D = F_B − "
+      "F_A, on aurait écrit > 0 : l'important est de garder le même ordre partout.", "Piège"),
+
+    q("Un élève pose H₁ : p_A − p_B < 0 mais calcule d = f_B − f_A = 0,05 et cherche la région critique "
+      "à gauche. Que se passe-t-il ?",
+      ["Il rejette H₀ à tort", "Il ne peut pas rejeter H₀, même face à un grand écart dans le sens de H₁",
+       "Rien : le signe n'a pas d'importance", "Il doit passer en bilatéral"], 1,
+      "d est positif alors que la région critique est à gauche (valeurs négatives) : il ne tombera "
+      "jamais dedans. Il faut calculer d dans le même ordre que H₁ : d = f_A − f_B = −0,05.", "Piège"),
+
+    q("Pour comparer deux proportions, où vérifie-t-on les conditions (au moins 5 défectueuses et 5 "
+      "bonnes) ?",
+      ["Dans chacun des deux échantillons", "Dans le plus grand échantillon seulement",
+       "Dans les deux échantillons réunis", "Nulle part : elles ne concernent que les moyennes"], 0,
+      "La différence n'est approchée par une cloche que si chacune des deux proportions l'est : les "
+      "conditions portent sur chaque échantillon.", "Intermédiaire"),
+
+    q("Un collègue additionne les écarts-types au lieu des variances pour σ(X̄₁ − X̄₂). Quel est l'effet "
+      "sur le test ?",
+      ["La zone devient trop étroite : il rejette H₀ trop souvent",
+       "Aucun effet",
+       "La zone devient trop large : il manque des différences réelles",
+       "Le test devient unilatéral"], 2,
+      "σ₁/√n₁ + σ₂/√n₂ est plus grand que √(σ₁²/n₁ + σ₂²/n₂) : la zone s'élargit, il rejette H₀ moins "
+      "souvent qu'il ne le devrait — des vraies différences passent inaperçues (risque β accru).",
+      "Intermédiaire"),
+
+    q("Pourquoi une comparaison de deux échantillons demande-t-elle en général plus de pièces qu'un "
+      "test contre une valeur connue ?",
+      ["Parce qu'il faut atteindre deux seuils au lieu d'un",
+       "Parce que la différence cumule deux hasards : sa variance est la somme des deux",
+       "Parce que les conditions de 5 défectueuses et 5 bonnes s'appliquent au total des deux",
+       "Parce que le coefficient passe de 1,96 à 2,576 pour une comparaison"], 1,
+      "V(D) = V(1ᵉʳ) + V(2ᵉ) : la différence est plus dispersée que chacune des deux moyennes prise seule. "
+      "Pour voir un même "
+      "écart, il faut resserrer les deux cloches, donc plus de pièces des deux côtés.", "Intermédiaire"),
 ]
 
 QUIZ["Mathématiques BTS CPI — calcul matriciel et modélisation géométrique"] = [
@@ -47306,7 +47438,7 @@ d'usure), machine par machine.
 BLOC_18 = {
     "id": 18,
     "titre": "Bloc 18 — Mathématiques BTS CPI : probabilités et équations différentielles",
-    "resume": "Quatre modules du programme d'examen : probabilités 1, probabilités 2, statistique inférentielle et équations différentielles. Ce bloc n'en couvre qu'une partie : lois exponentielle et de Poisson, tests de comparaison de deux échantillons et équations du second ordre ne sont pas encore traités.",
+    "resume": "Quatre modules du programme d'examen : probabilités 1, probabilités 2, statistique inférentielle et équations différentielles. Ce bloc n'en couvre qu'une partie : lois exponentielle et de Poisson et équations du second ordre ne sont pas encore traitées.",
     "fiches": [
         {
             "id": "18.1",
@@ -50182,6 +50314,302 @@ pièce hors cote peut compromettre la sécurité, alors qu'un arrêt inutile ne 
 H₀ se resserre, et une même dérive en sort plus souvent — le test devient plus puissant. Pour une
 dérive à 2,52 mm, par exemple, β passe d'environ 48 % (le même β que pour la machine du § 7 :
 dans les deux cas, la dérive vaut 2 fois σ(X̄)) à environ 9 %.
+""",
+        },
+        {
+            "id": "18.15",
+            "titre": "Statistique inférentielle : comparer deux proportions ou deux moyennes",
+            "duree": "4 h",
+            "cours": """
+
+### 1. Deux échantillons, une question : la différence est-elle réelle ?
+
+La fiche 18.14 comparait **un** échantillon à une valeur annoncée (le fournisseur promet 5 %, la
+machine est réglée à 20,00 mm). En atelier, on doit souvent comparer **deux** échantillons entre eux,
+sans connaître aucune des deux vraies valeurs : deux fournisseurs, deux presses, deux ateliers, la
+production avant et après un changement de matière. Les deux échantillons donnent presque toujours
+des résultats différents — la question est de savoir si l'écart est **réel** ou s'il vient seulement
+du hasard du prélèvement.
+
+C'est le même raisonnement qu'en 18.14 (le procès, § 2 de la 18.14) : on **suppose** qu'il n'y a pas de
+différence (**H₀ : p₁ = p₂**, ou **μ₁ = μ₂**) et l'on regarde si l'écart observé est trop grand pour
+être dû au hasard. Les règles du **Protocole** (§ 6 de la 18.14) valent telles quelles : hypothèses,
+type de test et seuil se fixent avant de regarder les données.
+
+*On parle d'échantillons **indépendants** : les pièces de l'un ne disent rien sur celles de l'autre
+(deux fournisseurs, deux machines). C'est ce qui permet d'additionner les variances, au § 2.*
+
+### 2. On teste la différence : sa zone verte est centrée sur zéro
+
+On ne compare pas deux choses séparément : on calcule **une seule** grandeur, la **différence**
+entre les deux échantillons, notée **D** :
+- pour deux proportions, D = F₁ − F₂ (F₁, F₂ : proportions observées avant le tirage, fiche 18.13) ;
+- pour deux moyennes, D = X̄₁ − X̄₂.
+
+*Comme en 18.13 et 18.14 : une MAJUSCULE (F, X̄, D) désigne la valeur encore au hasard, avant le
+prélèvement ; une minuscule (f, x̄, d) désigne le nombre effectivement mesuré. On raisonne sur D, on
+décide avec d.*
+
+**Si H₀ est vraie** (même vraie valeur pour les deux), D est centrée sur **zéro** : chaque
+échantillon tombe, au hasard, un peu au-dessus ou un peu en dessous de la même vraie valeur ; parfois
+x̄₁ sort plus grand, parfois x̄₂. Si l'on recommençait le prélèvement cent fois, la différence serait
+tantôt positive, tantôt négative, et en moyenne nulle. La zone où l'on garde
+H₀ est donc une **zone verte centrée sur 0**, symétrique en bilatéral : exactement la zone verte de la
+fiche 18.13, mais pour la différence, autour de la valeur que H₀ lui donne (zéro).
+
+**Son écart-type : les variances s'additionnent (fiche 18.11).** Pour deux échantillons
+indépendants, V(D) = V(1ᵉʳ) + V(2ᵉ) — pour une **différence** comme pour une somme. D'où :
+
+> **σ(X̄₁ − X̄₂) = √(σ₁²/n₁ + σ₂²/n₂)** et **σ(F₁ − F₂) = √(σ(F₁)² + σ(F₂)²)**
+
+*Pourquoi pas une soustraction ? Retrancher un hasard n'efface pas ce hasard. Si x̄₂ tombe trop bas
+par malchance, la différence monte ; s'il tombe trop haut, elle baisse : la différence est ballottée
+par les deux échantillons. Autre façon de le voir : si les deux machines avaient exactement la même
+dispersion et qu'on prélevait autant de pièces de chaque côté, soustraire les variances donnerait
+σ(D) = 0 — une différence connue d'avance, sans aucun hasard, ce qui est absurde. C'est la même chose
+que dans une chaîne de cotes : pour la cote condition J = A − B, les variances de A et de B s'ajoutent
+(fiche 18.11), pas leurs écarts-types.*
+
+*La différence est **plus dispersée** que chacune des deux moyennes (ou proportions) prise seule :
+elle cumule deux hasards. C'est pour cela qu'une comparaison demande en général plus de pièces qu'un
+test contre une valeur connue.*
+
+### 3. Comparer deux moyennes — deux machines usinent-elles la même cote ?
+
+Deux machines usinent la même cote. Machine 1 : **40 pièces**, x̄₁ = 25,012 mm, s₁ = 0,020 mm.
+Machine 2 : **50 pièces**, x̄₂ = 25,001 mm, s₂ = 0,025 mm. Donnent-elles la même cote en moyenne ?
+
+**Étape 1 — Hypothèses.** H₀ : μ₁ = μ₂ (les deux machines sont réglées pareil) ; H₁ : μ₁ ≠ μ₂
+(bilatéral : un décalage dans un sens ou dans l'autre gêne l'assemblage).
+
+**Étape 2 — Seuil.** α = 5 %, coefficient bilatéral 1,96.
+
+**Étape 3 — Loi de D sous H₀.** n₁ et n₂ ≥ 30 : on remplace σ₁ et σ₂ par s₁ et s₂ (comme en 18.3).
+σ(X̄₁ − X̄₂) = √(0,020²/40 + 0,025²/50) = √(0,000 010 + 0,000 012 5) = √0,000 022 5 ≈ **0,004 74 mm**.
+
+**Étape 4 — Zone où l'on garde H₀.** 0 ± 1,96 × 0,004 74 = **[−0,009 3 ; +0,009 3] mm**.
+
+**Étape 5 — Décision.** d = x̄₁ − x̄₂ = 25,012 − 25,001 = **0,011 mm**, hors de la zone → **on rejette
+H₀** : au seuil de 5 %, les deux machines ne donnent pas la même cote moyenne ; on règle l'une sur
+l'autre.
+
+[[FIG:comparaison_difference]]
+
+**Le piège qui inverse la conclusion : additionner les écarts-types.** Si l'on écrit
+σ = 0,020/√40 + 0,025/√50 ≈ 0,006 70, la zone devient ±0,013 1 mm : d = 0,011 y tombe, et l'on
+garderait H₀ à tort. Ce sont les **variances** qui s'additionnent, pas les écarts-types (fiche 18.11).
+Additionner les écarts-types, c'est raisonner « au pire cas », comme en cotation : on suppose que les
+deux échantillons s'écartent toujours ensemble dans le sens défavorable. En réalité, leurs écarts se
+compensent en partie : la vraie dispersion est plus petite, et c'est la racine de la somme des carrés
+qui la donne.
+
+### 4. Comparer deux proportions — la proportion commune
+
+Deux fournisseurs livrent la même pièce. Le service achats soupçonne le fournisseur B, visé par
+des réclamations clients, de livrer plus de pièces défectueuses que A. **Avant le contrôle**, il
+fixe donc un test unilatéral au seuil de 5 %. Résultats : fournisseur A, **12 défectueuses sur 300**
+(f_A = 0,04) ; fournisseur B, **63 défectueuses sur 700** (f_B = 0,09).
+
+**Le point le plus contre-intuitif de la fiche.** Pour calculer σ(F_A − F_B), il faut une valeur de
+p. Sous H₀, les deux fournisseurs ont **le même** taux de défauts : il n'y a donc qu'**un seul** p,
+inconnu. La meilleure estimation de ce taux commun utilise **toutes les pièces à la fois** :
+
+> **Proportion commune : f = (k₁ + k₂) / (n₁ + n₂)** (parfois notée p̂ dans d'autres ouvrages) —
+> ici f = (12 + 63) / (300 + 700) = 75/1 000 = **0,075**
+> **σ(F₁ − F₂) = √(f(1 − f) × (1/n₁ + 1/n₂))**
+
+(k₁, k₂ : nombres de pièces défectueuses dans chaque échantillon ; n₁, n₂ : nombres de pièces
+contrôlées. Ici, 1 = A et 2 = B.)
+
+*D'où vient cette formule ? De celle du § 2, avec σ(F)² = p(1 − p)/n (fiche 18.13). Sous H₀, les deux
+échantillons ont le même p ; on l'estime par f : σ(F₁)² + σ(F₂)² = f(1 − f)/n₁ + f(1 − f)/n₂ =
+f(1 − f) × (1/n₁ + 1/n₂). Chaque échantillon apporte son propre flou, divisé par sa propre taille.
+C'est pour cela qu'on écrit 1/n₁ + 1/n₂, et jamais 1/(n₁ + n₂) : cette dernière écriture ferait comme
+si l'on n'avait qu'un seul gros échantillon de 1 000 pièces, sans différence à mesurer.*
+
+*Image d'atelier : si H₀ est vraie, rien ne distingue les pièces de A de celles de B. C'est comme si
+l'on vidait les deux caisses dans un seul bac de 1 000 pièces et qu'on comptait les défectueuses :
+12 + 63 = 75, soit f = 75/1 000. Tester H₀, c'est se demander : « si toutes ces pièces venaient du
+même bac, serait-il surprenant qu'elles se répartissent 12 sur 300 d'un côté et 63 sur 700 de
+l'autre ? »*
+
+*Pourquoi ne pas garder f_A et f_B séparément ? Parce que ce serait supposer que les deux taux sont
+différents — c'est-à-dire supposer H₁ pendant qu'on calcule sous H₀. C'est la règle de la 18.14
+(σ(F) se calcule avec p₀, la valeur de H₀) : ici, H₀ ne donne pas de valeur, mais elle dit « un seul
+taux », et f en est l'estimation. Et pourquoi pas la moyenne simple (0,04 + 0,09)/2 = 0,065 ?
+Parce que B pèse bien plus lourd (700 pièces contre 300) : on regroupe les pièces, pas les
+pourcentages. La moyenne simple donnerait autant de poids aux 300 pièces de A qu'aux 700 de B.*
+
+**Conditions** (à l'examen, l'énoncé les rappelle) — à vérifier **sur les deux échantillons
+observés**, chacun séparément : au moins 5 pièces défectueuses et au moins 5 bonnes dans chacun. Ici
+12 et 288 pour A, 63 et 637 pour B. *On compte sur les échantillons eux-mêmes, pas avec la proportion
+commune f : f sert au calcul de σ, les conditions disent si chaque échantillon est assez fourni pour
+que sa proportion suive une cloche (fiche 18.13). En 18.14, on comptait avec p₀, la valeur de H₀ ;
+ici, H₀ ne donne aucune valeur : on compte donc directement les pièces de chaque caisse.*
+
+**Le test unilatéral prévu.** On pose D = F_B − F_A : on met en premier le fournisseur soupçonné
+d'être le pire. Ainsi « B moins bon » s'écrit H₁ : p_B − p_A > 0 (H₀ : p_A = p_B), et la région
+critique est à droite, comme en 18.14 (le § 5 explique pourquoi l'ordre compte).
+σ(F_B − F_A) = √(0,075 × 0,925 × (1/300 + 1/700)) ≈ **0,018 2** ; seuil 1,645 × 0,018 2 ≈ **0,029 9**.
+d = f_B − f_A = 0,09 − 0,04 = **0,05** > 0,029 9 → **on rejette H₀** : au seuil de 5 %, le fournisseur B
+livre plus de pièces défectueuses que A. *(σ est le même dans les deux ordres : seules des variances,
+toujours positives, entrent sous la racine ; ce sont le signe de d et le côté de la région critique qui
+dépendent de l'ordre.)*
+
+*Avec f_A et f_B séparés, on aurait trouvé σ ≈ 0,015 7 ; avec la moyenne simple, σ ≈ 0,017 0. La
+conclusion ne change pas ici, car l'écart est net. Mais ces deux méthodes seraient fausses : sous
+H₀, il n'y a qu'un taux, estimé en regroupant toutes les pièces.*
+
+### 5. Bilatéral ou unilatéral — et dans quel ordre fait-on la différence ?
+
+Comme en 18.14, c'est la question posée qui décide : « les deux machines donnent-elles la même
+cote ? » → bilatéral ; « le fournisseur B est-il **moins bon** que A ? » → unilatéral.
+
+**Le piège propre aux comparaisons : le sens de la différence.** « On veut montrer que A est
+meilleur que B » ne dit pas encore si la région critique est à droite ou à gauche : cela dépend de
+l'**ordre** dans lequel on fait la soustraction.
+- Si l'on pose D = F_A − F_B : « A meilleur » (moins de défauts) veut dire p_A − p_B < 0, donc
+  H₁ : p_A − p_B < 0, et l'on rejette H₀ si d est **très négatif** (d < −1,645 σ).
+- Si l'on pose D = F_B − F_A : la même question donne H₁ : p_B − p_A > 0, et l'on rejette si d est
+  **très positif** (d > +1,645 σ).
+
+Les deux choix sont justes et donnent la même décision — **à condition de garder le même ordre du
+début à la fin** : dans D, dans H₁ et dans le calcul de d. L'erreur classique : poser H₁ : p_A − p_B < 0,
+puis calculer d = f_B − f_A (positif) et chercher la région critique à gauche — on ne rejette alors
+jamais H₀ quand l'écart va dans le sens qu'on veut montrer, même s'il est énorme. Pire : si A était en
+réalité nettement **moins** bon que B, d = f_B − f_A serait très négatif, tomberait à gauche, et l'on
+conclurait que A est meilleur — exactement l'inverse de la réalité.
+
+> **Ordre** : (1) on pose D = X̄₁ − X̄₂ ou D = X̄₂ − X̄₁ (ou F₁ − F₂, F₂ − F₁), au choix, en toutes
+> lettres ; (2) on écrit H₀ et H₁ avec cette convention ; (3) on la garde jusqu'au bout, dans le
+> calcul de d et le côté de la région critique ; (4) astuce si tu hésites : mets en premier dans D
+> celui que tu soupçonnes d'être le plus grand (plus de défauts, cote plus forte) — H₁ s'écrit alors
+> « > 0 » et le seuil est +1,645 σ, à droite, exactement comme en 18.14 ; puis lis D à voix haute
+> (« B moins A ») en calculant d.
+
+### 6. Les risques, en bref
+
+α et β gardent leur sens de la 18.14 : α = fausse alerte (conclure à une différence qui n'existe pas :
+changer de fournisseur pour rien), β = défaut manqué (ne pas voir une vraie différence : garder le
+mauvais fournisseur). Comme la différence cumule deux hasards, β est plus grand qu'avec un seul
+échantillon de même taille : pour voir un petit écart entre deux sources, il faut contrôler beaucoup
+de pièces **des deux côtés**.
+
+### 7. Les erreurs classiques
+
+1. **Additionner les écarts-types** au lieu des variances : √(σ₁²/n₁ + σ₂²/n₂), pas σ₁/√n₁ + σ₂/√n₂.
+2. **Soustraire les variances** parce qu'on fait une différence : pour une différence aussi, elles
+   s'additionnent (fiche 18.11).
+3. **Garder f₁ et f₂ séparés** pour σ(F₁ − F₂) au lieu de la proportion commune f.
+4. **Faire la moyenne simple des deux proportions** au lieu de regrouper les pièces : (k₁ + k₂)/(n₁ + n₂).
+5. **Écrire 1/(n₁ + n₂)** au lieu de 1/n₁ + 1/n₂ dans σ(F₁ − F₂).
+6. **Changer l'ordre de la différence** entre H₁ et le calcul de d.
+7. **Ne vérifier les conditions que pour un échantillon** : il faut au moins 5 défectueuses et
+   5 bonnes dans **chacun**.
+""",
+            "formules": """
+
+**Différence** — D = F₁ − F₂ (proportions) ou D = X̄₁ − X̄₂ (moyennes) ; sous H₀ (p₁ = p₂ ou
+μ₁ = μ₂), D est centrée sur 0 · échantillons indépendants : les variances s'additionnent
+
+**Deux moyennes** — σ(X̄₁ − X̄₂) = √(σ₁²/n₁ + σ₂²/n₂) (s₁, s₂ si n₁, n₂ ≥ 30)
+
+**Deux proportions** — proportion commune f = (k₁ + k₂)/(n₁ + n₂) ·
+σ(F₁ − F₂) = √(f(1 − f) × (1/n₁ + 1/n₂)) · conditions sur chaque échantillon observé : au moins
+5 défectueuses et 5 bonnes
+
+**Zone et régions critiques (à 5 %)** — bilatéral : on garde H₀ si d ∈ [−1,96 σ ; +1,96 σ] ·
+unilatéral : seuil +1,645 σ (H₁ : différence > 0) ou −1,645 σ (H₁ : différence < 0), σ désignant
+σ(X̄₁ − X̄₂) ou σ(F₁ − F₂)
+
+**Ordre** — écrire D (« D = F_B − F_A ») avant H₁ et calculer d dans le même ordre
+
+        """,
+            "exemple": """
+**Cas industriel — Changer de fournisseur d'acier : la résistance des vis a-t-elle baissé ?**
+
+Un atelier change de fournisseur d'acier pour ses vis. **Avant les essais**, le bureau des méthodes
+fixe sa question : la résistance a-t-elle **baissé** avec le nouvel acier ? (test unilatéral au seuil
+de 5 %). Résultats du laboratoire : **50 vis de l'ancien acier**, x̄_A = 412 MPa, s_A = 15 MPa ;
+**60 vis du nouvel acier**, x̄_N = 405 MPa, s_N = 18 MPa.
+
+**Étape 1 — L'ordre de la différence, puis les hypothèses.** On pose **D = X̄_N − X̄_A** (nouveau
+moins ancien). « La résistance a baissé » veut dire μ_N < μ_A, soit une différence négative :
+H₀ : μ_N = μ_A ; H₁ : μ_N − μ_A < 0 (unilatéral à gauche).
+
+**Étape 2 — Seuil.** α = 5 %, coefficient unilatéral 1,645.
+
+**Étape 3 — Loi de D sous H₀.** Les deux échantillons dépassent 30 : on prend s_A et s_N.
+σ(X̄_N − X̄_A) = √(18²/60 + 15²/50) = √(5,4 + 4,5) = √9,9 ≈ **3,15 MPa**.
+
+**Étape 4 — Région critique.** d < −1,645 × 3,15 ≈ **−5,18 MPa**.
+
+**Étape 5 — Décision.** d = 405 − 412 = **−7 MPa** < −5,18 → **on rejette H₀** : au seuil de 5 %, les
+vis du nouvel acier sont moins résistantes.
+
+**Ce que le calcul apprend.** 7 MPa sur 412, c'est moins de 2 % : à l'œil, on aurait pu conclure à une
+simple fluctuation. Mais chaque moyenne est calculée sur 50 ou 60 vis, et l'écart dépasse nettement
+ce que le hasard des deux prélèvements produit d'ordinaire. Le bureau des méthodes peut demander au
+nouveau fournisseur un certificat matière, ou revoir le coefficient de sécurité des assemblages
+concernés. *Attention à l'ordre : avec D = X̄_A − X̄_N, on aurait écrit H₁ : μ_A − μ_N > 0 et
+comparé d = +7 au seuil +5,18 — même décision, à condition de ne pas mélanger les deux ordres.*
+""",
+            "exercice": """
+**Partie A — Deux moyennes (bilatéral)**
+
+Deux ateliers fabriquent le même arbre. Atelier 1 : **36 arbres**, x̄₁ = 30,008 mm, s₁ = 0,018 mm.
+Atelier 2 : **45 arbres**, x̄₂ = 30,002 mm, s₂ = 0,021 mm.
+
+**1.** Écris H₀ et H₁ pour savoir si les deux ateliers donnent le même diamètre moyen.
+
+**2.** Calcule σ(X̄₁ − X̄₂), puis la zone où l'on garde H₀ au seuil de 5 %. Conclus.
+
+**3.** Un collègue a calculé σ = 0,018/√36 + 0,021/√45. Quelle erreur a-t-il faite, et sa conclusion
+change-t-elle ?
+
+**Partie B — Deux proportions (unilatéral)**
+
+Le chef d'atelier soupçonne la presse 2, plus ancienne, et décide **avant le contrôle** de tester si
+elle produit **plus** de pièces non conformes que la presse 1. Résultats : presse 1, **12 pièces non
+conformes sur 300** ; presse 2, **22 pièces non conformes sur 250**.
+
+**4.** Vérifie les conditions pour chacun des deux échantillons.
+
+**5.** Choisis l'ordre de la différence (écris D = … en toutes lettres), puis H₀ et H₁.
+
+**6.** Calcule la proportion commune f, puis σ(F₂ − F₁), et conclus au seuil de 5 %.
+
+**Partie C — L'ordre de la différence**
+
+**7.** Reprends la question 6 en posant cette fois D = F₁ − F₂. Écris H₁, la région critique et la
+décision. Qu'est-ce qui change, et qu'est-ce qui ne change pas ?
+""",
+            "corrige": """
+**1.** H₀ : μ₁ = μ₂ ; H₁ : μ₁ ≠ μ₂ (bilatéral : on cherche un écart dans un sens ou dans l'autre).
+
+**2.** σ(X̄₁ − X̄₂) = √(0,018²/36 + 0,021²/45) = √(0,000 009 + 0,000 009 8) = √0,000 018 8 ≈
+**0,004 34 mm** ; zone : 0 ± 1,96 × 0,004 34 = **[−0,008 5 ; +0,008 5] mm**. d = 30,008 − 30,002 =
+0,006 mm, dans la zone → **on ne rejette pas H₀** : les données ne permettent pas de conclure que
+les deux ateliers diffèrent.
+
+**3.** Il a additionné les écarts-types (0,003 + 0,003 13 ≈ 0,006 13) au lieu des variances : sa
+zone vaudrait ±0,012 0 mm. Ici d = 0,006 est dans les deux zones, la conclusion ne change pas — mais
+sa zone est trop large : il manquerait des écarts réels (il rejetterait moins souvent H₀ qu'il ne le
+devrait).
+
+**4.** Presse 1 : 12 non conformes et 288 conformes ; presse 2 : 22 et 228. Au moins 5 dans chaque
+catégorie, pour chacun des deux échantillons : conditions remplies.
+
+**5.** Par exemple D = F₂ − F₁ (presse 2 moins presse 1). H₀ : p₁ = p₂ ; H₁ : p₂ − p₁ > 0 (unilatéral à
+droite). L'ordre inverse est tout aussi juste : c'est la question 7.
+
+**6.** f = (12 + 22)/(300 + 250) = 34/550 ≈ 0,061 8 ; σ(F₂ − F₁) = √(0,061 8 × 0,938 2 × (1/300 + 1/250))
+≈ **0,020 6** ; seuil 1,645 × 0,020 6 ≈ **0,033 9**. d = 22/250 − 12/300 = 0,088 − 0,040 = 0,048 > 0,033 9
+→ **on rejette H₀** : au seuil de 5 %, la presse 2 produit plus de non-conformes.
+
+**7.** Avec D = F₁ − F₂ : H₁ : p₁ − p₂ < 0 ; région critique d < −0,033 9 ; d = 0,040 − 0,088 = −0,048 <
+−0,033 9 → on rejette H₀. Ce qui change : le signe de d, le sens de H₁ et le côté de la région
+critique. Ce qui ne change pas : σ, la valeur du seuil (au signe près) et la décision.
 """,
         },
         {
@@ -53720,6 +54148,21 @@ _mth("18.14", "Mener un test d'hypothèse sur une proportion ou une moyenne", [
 ], "Machine réglée à 20,00 mm, σ = 0,05, n = 25, x̄ = 20,03 : σ(X̄) = 0,01, zone [19,980 4 ; "
        "20,019 6], x̄ au-dessus → on rejette H₀ au seuil de 5 %, on règle la machine.")
 
+_mth("18.15", "Comparer deux proportions ou deux moyennes (échantillons indépendants)", [
+    "**Écrire l'ordre** de la différence en toutes lettres (« D = F_B − F_A ») AVANT les "
+    "hypothèses.",
+    "**H₀** : pas de différence (p₁ = p₂ ou μ₁ = μ₂). **H₁** : ≠ (bilatéral) ou le sens voulu, "
+    "traduit avec l'ordre choisi (> 0 ou < 0).",
+    "**Conditions** : pour une proportion, au moins 5 défectueuses et 5 bonnes dans CHACUN des "
+    "deux échantillons observés (on compte sur k₁, n₁ − k₁, k₂, n₂ − k₂, pas avec la proportion "
+    "commune f) ; pour une moyenne, n₁ et n₂ ≥ 30 si l'on remplace σ par s.",
+    "**Écart-type de D** (les variances s'additionnent) : σ(X̄₁ − X̄₂) = √(σ₁²/n₁ + σ₂²/n₂) ; "
+    "σ(F₁ − F₂) = √(f(1 − f)(1/n₁ + 1/n₂)) avec la proportion commune f = (k₁ + k₂)/(n₁ + n₂).",
+    "**Zone ou seuil** : 0 ± 1,96 σ en bilatéral ; ±1,645 σ du côté de H₁ en unilatéral.",
+    "**Décision** : calculer d dans le MÊME ordre que D ; dans la région critique → on rejette H₀.",
+], "Deux machines : σ(X̄₁ − X̄₂) = √(0,020²/40 + 0,025²/50) ≈ 0,004 74 mm, zone ±0,009 3 mm, "
+       "d = 0,011 mm hors de la zone → on rejette H₀ : les deux machines ne donnent pas la même cote.")
+
 _mth("18.8", "Modéliser une mise en régime (montée vers un équilibre)", [
     "**Utiliser la même solution que pour une décroissance** : y(t) = y_eq "
     "+ (y₀ − y_eq) × e^(−t/τ) — le signe de (y₀ − y_eq) décide seul si le "
@@ -55511,6 +55954,126 @@ def gen_test_proportion():
     }
 
 
+def gen_comparaison_moyennes():
+    """Borne ou seuil d'un test de comparaison de deux moyennes (grands échantillons)."""
+    while True:
+        n1, n2 = random.choice([30, 36, 40, 50, 60, 80]), random.choice([30, 40, 45, 50, 64, 100])
+        s1, s2 = random.choice([10, 12, 15, 18, 20]), random.choice([8, 12, 14, 16, 25])
+        bilateral = random.random() < 0.5
+        se = math.sqrt(s1 ** 2 / n1 + s2 ** 2 / n2)
+        z = 1.96 if bilateral else 1.645
+        signe = 1 if bilateral else random.choice([1, -1])
+        rep = signe * z * se
+        cands = [signe * z * (s1 / math.sqrt(n1) + s2 / math.sqrt(n2)),
+                 signe * z * math.sqrt((s1 ** 2 + s2 ** 2) / (n1 + n2)),
+                 signe * (1.645 if bilateral else 1.96) * se,
+                 signe * z * math.sqrt(abs(s1 ** 2 / n1 - s2 ** 2 / n2)),
+                 -rep]
+        if bilateral:
+            cands = cands[:-1]
+        if all(abs(v - rep) > 0.05 for v in cands) and \
+                all(abs(cands[i] - cands[j]) > 0.05 for i in range(len(cands))
+                    for j in range(i + 1, len(cands))):
+            break
+    sens = ">" if signe > 0 else "<"
+    mot = "plus" if signe > 0 else "moins"
+    if bilateral:
+        contexte = ("On vérifie que deux lots de pièces sont interchangeables : leur résistance moyenne "
+                    "doit être la même, ni plus faible (casse) ni nettement plus forte (autre nuance "
+                    "d'acier, usinage différent).")
+        question = ("H₀ : μ₁ = μ₂ ; H₁ : μ₁ ≠ μ₂ (bilatéral à 5 %), avec D = X̄₁ − X̄₂. Calcule la "
+                    "borne haute de la zone où l'on garde H₀")
+    else:
+        # la question est posée EN MOTS : l'élève traduit lui-même « plus / moins résistant » en signe
+        contexte = "On compare la résistance de deux lots de pièces."
+        question = (f"On veut savoir, au seuil de 5 %, si le lot 1 est {mot} résistant que le lot 2 "
+                    f"(test unilatéral). On pose D = X̄₁ − X̄₂. Calcule le seuil de la région critique, "
+                    f"avec son signe")
+    diag = [
+        _diag(cands[0], "Tu as additionné les écarts-types : ce sont les VARIANCES qui s'additionnent, "
+                        "√(s₁²/n₁ + s₂²/n₂)."),
+        _diag(cands[1], "Tu as regroupé (s₁² + s₂²)/(n₁ + n₂) : chaque variance se divise par SON "
+                        "effectif, s₁²/n₁ + s₂²/n₂ — comme si les deux lots n'en faisaient qu'un, alors "
+                        "que chaque moyenne a son propre flou."),
+        _diag(cands[2], "Test bilatéral : le coefficient est 1,96, pas 1,645." if bilateral else
+              "Test unilatéral : le coefficient est 1,645, pas 1,96."),
+        _diag(cands[3], "Tu as soustrait les variances parce qu'on fait une différence : pour une "
+                        "différence aussi, elles s'additionnent (fiche 18.11)."),
+    ]
+    if not bilateral:
+        diag.append(_diag(cands[4], f"Tu as traduit la question dans l'autre sens : avec D = X̄₁ − X̄₂, "
+                                    f"« le lot 1 est {mot} résistant » s'écrit H₁ : μ₁ − μ₂ {sens} 0, "
+                                    f"donc le seuil est {'positif' if signe > 0 else 'négatif'}. "
+                                    "Traduis la question avec l'ordre de D, puis garde-le jusqu'au bout."))
+    return {
+        "titre": "Comparaison de deux moyennes",
+        "enonce": (f"{contexte} Lot 1 : {n1} pièces, s₁ = {s1} MPa ; lot 2 : {n2} pièces, "
+                   f"s₂ = {s2} MPa (grands échantillons : on prend s₁ et s₂ pour σ₁ et σ₂). {question}, "
+                   f"en MPa, au centième (garde toutes les décimales de la calculatrice dans les calculs "
+                   f"intermédiaires)."),
+        "rep": rep, "tol": 0.01, "unite": "MPa",
+        "diag": diag,
+        "corr": [
+            f"**Écart-type de D.** σ(X̄₁ − X̄₂) = √({s1}²/{n1} + {s2}²/{n2}) = "
+            f"√({_fr_court(s1 ** 2 / n1)} + {_fr_court(s2 ** 2 / n2)}) ≈ {fr(se, 4)} MPa.",
+        ] + ([] if bilateral else [
+            f"**Côté** : « le lot 1 est {mot} résistant » → H₁ : μ₁ − μ₂ {sens} 0 → région critique à "
+            f"{'droite' if signe > 0 else 'gauche'} → seuil {'positif' if signe > 0 else 'négatif'}.",
+        ]) + [
+            f"**Coefficient** : {'1,96 (bilatéral)' if bilateral else '1,645 (unilatéral)'}.",
+            f"**{'Borne' if bilateral else 'Seuil'}** : {'' if signe > 0 else '−'}{_fr_court(z)} × "
+            f"{fr(se, 4)} ≈ **{fr(rep, 2).replace('-', '−')} MPa**.",
+        ],
+        "indice": "σ(X̄₁ − X̄₂) = √(s₁²/n₁ + s₂²/n₂), puis coefficient × σ (1,96 en bilatéral, 1,645 en "
+                  "unilatéral) ; le signe du seuil vient de la question traduite avec l'ordre de D.",
+    }
+
+
+def gen_comparaison_proportions():
+    """Écart-type sous H₀ d'une différence de deux proportions (proportion commune)."""
+    while True:
+        n1, n2 = random.choice([200, 250, 300, 400]), random.choice([200, 300, 500, 700])
+        k1, k2 = random.randint(8, 30), random.randint(8, 40)
+        if min(k1, n1 - k1, k2, n2 - k2) < 5:
+            continue
+        f = (k1 + k2) / (n1 + n2)
+        rep = math.sqrt(f * (1 - f) * (1 / n1 + 1 / n2))
+        f1, f2 = k1 / n1, k2 / n2
+        fm = (f1 + f2) / 2
+        cands = [math.sqrt(f1 * (1 - f1) / n1 + f2 * (1 - f2) / n2),
+                 math.sqrt(f * (1 - f) / (n1 + n2)),
+                 f * (1 - f) * (1 / n1 + 1 / n2),
+                 math.sqrt(fm * (1 - fm) * (1 / n1 + 1 / n2))]
+        if all(abs(v - rep) > 0.0006 for v in cands) and \
+                all(abs(cands[i] - cands[j]) > 0.0006 for i in range(len(cands))
+                    for j in range(i + 1, len(cands))):
+            break
+    return {
+        "titre": "Comparaison de deux proportions",
+        "enonce": (f"Fournisseur 1 : {k1} pièces défectueuses sur {n1} ; fournisseur 2 : {k2} sur {n2}. "
+                   f"Pour tester H₀ : p₁ = p₂, calcule σ(F₁ − F₂) sous H₀, en proportion, au dix-millième "
+                   f"(garde toutes les décimales de la calculatrice dans les calculs intermédiaires)."),
+        "rep": rep, "tol": 0.0002, "unite": "",
+        "diag": [
+            _diag(cands[0], "Tu as gardé f₁ et f₂ séparés : sous H₀, il n'y a qu'un taux, la proportion "
+                            "commune f = (k₁ + k₂)/(n₁ + n₂)."),
+            _diag(cands[1], "Tu as divisé par n₁ + n₂ : il faut 1/n₁ + 1/n₂. Chaque échantillon apporte "
+                            "son propre flou, f(1 − f)/n₁ plus f(1 − f)/n₂."),
+            _diag(cands[2], "Tu as oublié la racine carrée."),
+            _diag(cands[3], "Tu as pris la moyenne simple de f₁ et f₂ : on regroupe les PIÈCES, "
+                            "(k₁ + k₂)/(n₁ + n₂)."),
+        ],
+        "corr": [
+            f"**Proportion commune.** f = ({k1} + {k2})/({n1} + {n2}) = {k1 + k2}/{n1 + n2} ≈ "
+            f"{fr(f, 5)}.",
+            f"**Écart-type sous H₀.** σ(F₁ − F₂) = √({fr(f, 5)} × {fr(1 - f, 5)} × (1/{n1} + 1/{n2})) ≈ "
+            f"**{fr(rep, 4)}**.",
+            f"*Conditions : {k1} et {n1 - k1}, {k2} et {n2 - k2} défectueuses et bonnes, toutes ≥ 5.*",
+        ],
+        "indice": "f = (k₁ + k₂)/(n₁ + n₂), puis σ(F₁ − F₂) = √(f(1 − f)(1/n₁ + 1/n₂)).",
+    }
+
+
 def decimales_affichage(tol):
     """Nombre de décimales pour afficher la réponse d'un générateur : assez pour que la valeur
     AFFICHÉE soit acceptée par la tolérance (10⁻ᵈ ≤ tol, donc erreur d'arrondi ≤ tol/2), et au
@@ -55584,7 +56147,8 @@ def fabriquer_exo(famille=None):
                                   gen_sigma_somme, gen_sigma_affine,
                                   gen_euler_pas, gen_euler_ecart,
                                   gen_ic_proportion, gen_taille_proportion,
-                                  gen_test_moyenne, gen_test_proportion],
+                                  gen_test_moyenne, gen_test_proportion,
+                                  gen_comparaison_moyennes, gen_comparaison_proportions],
     }
     if famille and famille in catalogue:
         pool = catalogue[famille]
@@ -59309,6 +59873,105 @@ ATELIERS = [
                      "où elle tomberait 95 fois sur 100. Hors de la zone : on rejette H₀, avec un risque "
                      "de fausse alerte α = 5 %. Dans la zone : on ne rejette pas H₀, ce qui ne la prouve "
                      "pas (risque β de défaut manqué).",
+    },
+    {
+        "id": "at147",
+        "chapitre": "Bloc 18",
+        "titre": "Comparer deux presses : la proportion commune",
+        "theme": "Statistique inférentielle",
+        "fiche": "18.15",
+        "figure": "comparaison_difference",
+        "vocabulaire": [
+            ("échantillons indépendants", "les pièces de l'un ne disent rien sur celles de l'autre (deux "
+             "presses, deux fournisseurs) : les variances de leurs proportions s'additionnent."),
+            ("proportion commune f", "(k₁ + k₂)/(n₁ + n₂) : le taux de défauts estimé en regroupant toutes "
+             "les pièces, parce que sous H₀ les deux sources ont le même taux."),
+            ("ordre de la différence", "D = F₂ − F₁ ou F₁ − F₂ : à écrire avant H₁ et à garder pour le "
+             "calcul de d."),
+        ],
+        "enonce": "Mêmes chiffres que l'exercice, partie B, mais vus par un autre service, avec une autre "
+                  "question fixée AVANT le contrôle. Le service qualité ne soupçonne aucune presse en "
+                  "particulier : il veut seulement savoir si les deux presses ont le même taux, dans un sens "
+                  "ou dans l'autre. Test BILATÉRAL, coefficient 1,96. (Sur un vrai contrôle, on ne change "
+                  "jamais de question après avoir vu les résultats : Protocole, § 6 de la 18.14. Ici, c'est un "
+                  "exercice pour voir ce que change le coefficient.) Presse 1 : 12 pièces non conformes sur "
+                  "300. Presse 2 : 22 non conformes sur 250. Seuil de 5 %, H₀ : p₁ = p₂ ; on pose "
+                  "D = F₂ − F₁.",
+        "etapes": [
+            {"type": "numerique", "label": "Proportion commune f = (k₁ + k₂)/(n₁ + n₂)", "unite": "",
+             "attendu": 34 / 550, "tol": 0.0005,
+             "consigne": "Sous H₀, un seul taux : regroupe toutes les pièces des deux presses.",
+             "indice": "(12 + 22) / (300 + 250).",
+             "pieges": [(12 / 300, "C'est f₁, la proportion de la presse 1 seule : sous H₀, on regroupe "
+                                   "les deux échantillons."),
+                        (22 / 250, "C'est f₂, la proportion de la presse 2 seule : sous H₀, on regroupe "
+                                   "les deux échantillons."),
+                        ((12 / 300 + 22 / 250) / 2, "C'est la moyenne simple des deux proportions : on "
+                                                    "regroupe les PIÈCES, (k₁ + k₂)/(n₁ + n₂), car la "
+                                                    "presse 1 a plus de pièces.")]},
+            {"type": "numerique", "label": "Écart-type σ(F₂ − F₁)", "unite": "",
+             "attendu": math.sqrt(34 / 550 * (1 - 34 / 550) * (1 / 300 + 1 / 250)), "tol": 0.0002,
+             "format": "%.6f",
+             "depend_de": {"etape": 1, "formule": lambda v: math.sqrt(v * (1 - v) * (1 / 300 + 1 / 250))},
+             "consigne": "√(f(1 − f) × (1/n₁ + 1/n₂)).",
+             "indice": "1/300 + 1/250 ≈ 0,007 333 ; 0,061 8 × 0,938 2 ≈ 0,058 0.",
+             "pieges": [(math.sqrt(12 / 300 * (1 - 12 / 300) / 300 + 22 / 250 * (1 - 22 / 250) / 250),
+                         "Tu as gardé f₁ et f₂ séparés : sous H₀, il n'y a qu'un taux, la proportion "
+                         "commune f.")]},
+            {"type": "numerique", "label": "Demi-largeur de la zone : 1,96 × σ", "unite": "",
+             "attendu": 1.96 * math.sqrt(34 / 550 * (1 - 34 / 550) * (1 / 300 + 1 / 250)), "tol": 0.0005,
+             "depend_de": {"etape": 2, "formule": lambda v: 1.96 * v},
+             "consigne": "Test bilatéral à 5 % : on garde H₀ si d est dans [−1,96 σ ; +1,96 σ].",
+             "indice": "1,96 × 0,020 6.",
+             "pieges": [(1.645 * math.sqrt(34 / 550 * (1 - 34 / 550) * (1 / 300 + 1 / 250)),
+                         "Tu as pris 1,645, le coefficient unilatéral : ici la question, fixée avant le "
+                         "contrôle, est bilatérale (dans un sens ou dans l'autre), on prend 1,96.")]},
+            {"type": "numerique", "label": "Différence observée d = f₂ − f₁", "unite": "",
+             "attendu": 22 / 250 - 12 / 300, "tol": 0.0005,
+             "consigne": "Dans l'ordre choisi : presse 2 moins presse 1.",
+             "indice": "22/250 − 12/300.",
+             "pieges": [(12 / 300 - 22 / 250, "Tu as fait f₁ − f₂ : on a posé D = F₂ − F₁, garde le même "
+                                              "ordre.")]},
+            {"type": "qcm", "label": "Décider",
+             "question": "Compare d à la zone que tu viens de calculer. Que conclure au seuil de 5 % ?",
+             "options": ["On rejette H₀ : les deux presses n'ont pas le même taux de non-conformes",
+                         "On ne rejette pas H₀ : un écart de 0,048 (4,8 points de pourcentage) reste dû au hasard",
+                         "On ne peut pas conclure sans connaître le vrai taux de chaque presse"],
+             "bonne": 0,
+             "diagnostics": {1: "d = 0,048 est au-delà de 1,96 σ ≈ 0,040 4 : l'écart sort de la zone "
+                                "verte, il est trop grand pour être attribué au hasard.",
+                             2: "C'est justement le rôle du test : on SUPPOSE les deux taux égaux (H₀) "
+                                "et on regarde si l'écart observé est compatible avec cette hypothèse."}},
+            {"type": "qcm", "label": "Pourquoi la proportion commune ?",
+             "question": "Pourquoi calcule-t-on σ(F₂ − F₁) avec la proportion commune f plutôt qu'avec f₁ "
+                         "et f₂ ?",
+             "options": ["Parce que f est toujours plus grand que f₁ et f₂, ce qui rend le test plus prudent",
+                         "Parce que la formule avec f₁ et f₂ donnerait un écart-type trop grand pour conclure",
+                         "Parce que sous H₀ les deux presses ont le même taux : on l'estime avec toutes les "
+                         "pièces"],
+             "bonne": 2,
+             "diagnostics": {0: "Non : f est entre f₁ et f₂, pas au-dessus. La raison est H₀ : un seul taux "
+                                "pour les deux presses.",
+                             1: "Non : elle donne ici un écart-type proche. Le vrai problème est qu'elle "
+                                "suppose deux taux différents, c'est-à-dire H₁ : ce n'est pas le calcul sous "
+                                "H₀."}},
+        ],
+        "corrige": {
+            "enonce": "Presse 1 : 12/300 ; presse 2 : 22/250 ; test bilatéral à 5 %, D = F₂ − F₁.",
+            "regle": "**Sous H₀ (un seul taux), f = (k₁ + k₂)/(n₁ + n₂) et σ(F₂ − F₁) = √(f(1 − f)(1/n₁ + "
+                     "1/n₂)) ; on garde H₀ si d ∈ [−1,96 σ ; +1,96 σ].**",
+            "conversions": "Proportions en nombres décimaux.",
+            "remplacement": "f = 34/550 ; σ = √(0,061 8 × 0,938 2 × (1/300 + 1/250)) ; 1,96 × σ ; "
+                            "d = 0,088 − 0,040",
+            "calcul": "f ≈ **0,061 8**\n\nσ(F₂ − F₁) ≈ **0,020 6**\n\nzone : **[−0,040 4 ; +0,040 4]**"
+                      "\n\nd = **0,048** hors de la zone → **on rejette H₀** au seuil de 5 %",
+            "verification": "**Contrôle de cohérence** : f est bien entre f₁ = 0,04 et f₂ = 0,088, plus près "
+                            "de f₁ car la presse 1 a plus de pièces ; conditions : 12 et 288, 22 et 228, "
+                            "tous ≥ 5.",
+        },
+        "a_retenir": "À retenir : pour comparer deux proportions, on teste la différence D, centrée sur 0 "
+                     "sous H₀, avec la proportion COMMUNE f = (k₁ + k₂)/(n₁ + n₂) — sous H₀ il n'y a qu'un "
+                     "taux — et 1/n₁ + 1/n₂ sous la racine.",
     },
     {
         "id": "at29",
@@ -67237,10 +67900,10 @@ MATIERES_PROGRAMME = [
          "loi binomiale, espérance/écart-type, loi uniforme, loi normale et approximation d'une "
          "binomiale, somme de variables et théorème de la limite centrée, taille d'échantillon, "
          "statistique à deux variables (ajustement affine, corrélation), intervalle de confiance "
-         "d'une proportion, tests d'hypothèse sur une proportion et sur une moyenne. Non "
-         "traités : lois exponentielle et de Poisson, tests de comparaison de deux "
-         "échantillons.",
-         [(7, ["7.3"]), (17, ["17.3", "17.6", "17.8"]), (18, ["18.1", "18.2", "18.3", "18.5", "18.6", "18.9", "18.10", "18.11", "18.7", "18.13", "18.14"])]),
+         "d'une proportion, tests d'hypothèse sur une proportion et sur une moyenne, "
+         "comparaison de deux proportions ou de deux moyennes. Non traités : lois "
+         "exponentielle et de Poisson.",
+         [(7, ["7.3"]), (17, ["17.3", "17.6", "17.8"]), (18, ["18.1", "18.2", "18.3", "18.5", "18.6", "18.9", "18.10", "18.11", "18.7", "18.13", "18.14", "18.15"])]),
     ]),
 ]
 
@@ -67623,8 +68286,7 @@ elif PAGE == PAGE_MATHS:
         '<b>hors épreuve</b>, le programme complémentaire non évalué (calcul matriciel, courbes '
         'de Bézier : fiches 19.1 à 19.4) et une fiche d\'approfondissement (19.6, droites et '
         'plans dans l\'espace), toutes marquées « hors épreuve ». Attention : certaines notions '
-        'évaluées ne sont pas encore traitées ici (lois exponentielle et de Poisson, tests '
-        'de comparaison de deux échantillons, équations '
+        'évaluées ne sont pas encore traitées ici (lois exponentielle et de Poisson, équations '
         'différentielles du second ordre) — voir le tableau de bord. Ce sont les mêmes fiches que dans '
         '« Cours », réunies ici pour ne pas les chercher au milieu des chapitres '
         'techniques.</div>',

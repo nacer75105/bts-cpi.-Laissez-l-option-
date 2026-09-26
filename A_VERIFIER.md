@@ -24,7 +24,7 @@ prérequis et la répartition usuelle) :
 1. ✅ 17.7 ln et exp — 2. ✅ 17.8 statistique à deux variables — 3. ✅ 18.9 loi uniforme —
 4. ✅ 18.10 loi normale et approximation binomiale — 5. ✅ 18.11 somme de variables, limite centrée —
 6. ✅ 18.12 méthode d'Euler — 7. ✅ 18.13 IC d'une proportion — 8. ✅ 18.14 tests sur une proportion / une moyenne —
-9. tests de comparaison — 10. loi exponentielle — 11. loi de Poisson — 12. nombres
+9. ✅ 18.15 tests de comparaison — 10. loi exponentielle — 11. loi de Poisson — 12. nombres
 complexes (forme algébrique, Δ < 0) — 13. équations différentielles du second ordre.
 
 ### 17.7 — Fonctions exponentielle et logarithme népérien (faite le 2026-09-25)
@@ -158,6 +158,30 @@ complexes (forme algébrique, Δ < 0) — 13. équations différentielles du sec
 - **Non vérifié** : usage de n ou n − 1 dans les annales du BTS CPI (non consultées) ; atelier
   at145 et générateurs non cliqués dans l'interface (la fiche s'ouvre sans erreur dans un
   AppTest ; outil d'audit : 0 défaut).
+
+### 18.15 — Comparer deux proportions ou deux moyennes (faite le 2026-09-26)
+
+- Référentiel (annexe I, Statistique inférentielle) : « tests bilatéraux et unilatéraux de
+  comparaison de deux proportions ou de deux moyennes dans le cadre de la loi normale ». Les
+  échantillons appariés ne sont pas mentionnés : non traités (décision de l'auteur).
+- Placée après 18.14 (… 18.13 → 18.14 → 18.15 → 18.8 → 18.12), avec méthode, figure
+  `comparaison_difference` (différence centrée sur 0, zone verte bilatérale, zone ERRONÉE obtenue en
+  additionnant les écarts-types, d entre les deux), atelier at147 (deux presses, proportion commune,
+  étapes 2 et 3 avec `depend_de`), générateurs `gen_comparaison_moyennes` (en unilatéral, question
+  posée en mots : l'élève traduit lui-même le sens) et `gen_comparaison_proportions`, 9 questions
+  (bonne réponse en positions 2, 0, 3, 1, 3, 1, 0, 2, 1).
+- Choix validés par l'auteur : notation f pour la proportion commune (« parfois notée p̂ ») ;
+  conditions vérifiées sur chacun des deux échantillons observés, en nombre de pièces, pas avec f ;
+  σ(X̄₁ − X̄₂) et σ(F₁ − F₂) (graphie de la 18.14) ; encadré « Ordre » (écrire D avant H₁) ;
+  pièges conceptuels dans l'atelier (proportion commune, moyenne simple, ordre, 1,645 en bilatéral
+  sur les mêmes presses que l'exercice unilatéral), pièges techniques dans les générateurs ; question
+  du test toujours fixée AVANT le contrôle (Protocole de la 18.14), y compris dans les exemples.
+- Trois tours de relecture (justesse + clarté) jusqu'à zéro réserve. Relevé au passage : un premier
+  exemple de proportions trop équilibré (400/500) remplacé par 300/700, où la moyenne simple se
+  distingue nettement de la proportion commune ; l'argument « soustraire les variances donnerait
+  σ(D) = 0 » précisé (à effectifs égaux).
+- **Non vérifié** : atelier at147 et générateurs non cliqués dans l'interface (la fiche s'ouvre sans
+  erreur dans un AppTest ; outil d'audit : 0 défaut).
 
 ### 18.14 — Tests d'hypothèse sur une proportion et sur une moyenne (faite le 2026-09-26)
 
@@ -341,9 +365,9 @@ complexes (forme algébrique, Δ < 0) — 13. équations différentielles du sec
   - Probabilités 1 : entièrement traité depuis le 2026-09-25 (18.9 loi uniforme, 18.10 loi
     normale et approximation binomiale, 18.11 aX + b, X ± Y et limite centrée) ;
   - Probabilités 2 : loi exponentielle, loi de Poisson, approximation binomiale → Poisson ;
-  - Statistique inférentielle : tests de comparaison de deux moyennes ou de deux proportions —
-    l'intervalle de confiance d'une proportion (fiche 18.13) et les tests sur une proportion ou une
-    moyenne (fiche 18.14) sont traités depuis les 2026-09-25 et 2026-09-26 ;
+  - Statistique inférentielle : entièrement traitée depuis le 2026-09-26 (18.13 intervalle de
+    confiance d'une proportion, 18.14 tests sur une proportion ou une moyenne, 18.15 tests de
+    comparaison) ;
   - Équations différentielles : second ordre à coefficients constants (la méthode d'Euler est
     traitée depuis le 2026-09-25, fiche 18.12).
   Le résumé du bloc 18, l'encart de la page Maths et le tableau de bord
