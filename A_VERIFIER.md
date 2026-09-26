@@ -189,6 +189,17 @@ complexes (forme algébrique, Δ < 0) — 13. équations différentielles du sec
   `gen_duree_fiabilite` sortait avec 2 décimales (« 5 268,03 h ») alors que l'énoncé dit « à l'heure
   près ». Voir « Réponse affichée : la précision suit l'énoncé » ci-dessous.
 
+### Ligne « Réponse » : astérisques affichés sans unité (corrigé le 2026-09-26)
+
+- Trouvé au parcours navigateur de la 18.16 : un générateur sans unité affichait
+  « **Réponse : 0,449 ** » en clair (espace avant les ** fermants : Markdown ne reconnaît pas le
+  gras). 14 générateurs touchés, presque tout le bloc 18 (probabilités, tests, intervalles).
+- Correctif : `ligne_reponse(ex)` n'ajoute l'espace et l'unité que si l'unité existe.
+- Outil d'audit : nouveau contrôle GRAS (ligne « Réponse » qui n'est pas un gras Markdown valide) ;
+  test par mutation : l'ancien code → GRAS sur 14 générateurs.
+- ✅ Vérifié dans un vrai navigateur : « Réponse : 0,126 » (sans unité), « Réponse : 2 231 h » et
+  « Réponse : 28,01 N·m » (avec unité).
+
 ### Réponse affichée : la précision suit l'énoncé, pas la tolérance (corrigé le 2026-09-26)
 
 - Un générateur peut déclarer `"decimales": n` quand son énoncé impose une précision ; sinon la page

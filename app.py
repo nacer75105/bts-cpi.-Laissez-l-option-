@@ -56824,6 +56824,15 @@ def decimales_reponse(ex):
     return decimales_affichage(ex.get("tol", 0.001))
 
 
+def ligne_reponse(ex):
+    """Ligne « Réponse » de la page Entraînement, en gras. Sans unité, pas d'espace avant les **
+    fermants : « **Réponse : 0,449 ** » n'est pas reconnu comme gras et s'affichait astérisques
+    comprises (corrigé le 2026-09-26, générateurs sans unité du bloc 18)."""
+    unite = (ex.get("unite") or "").strip()
+    valeur = fr(ex["rep"], decimales_reponse(ex))
+    return f"**Réponse : {valeur} {unite}**" if unite else f"**Réponse : {valeur}**"
+
+
 def diagnostic_le_plus_proche(valeur, candidats):
     """Message du candidat (valeur, fenêtre, message) le PLUS PROCHE de la valeur tapée, parmi ceux
     dont la fenêtre la contient ; None sinon. Avant le 2026-09-25, on prenait le PREMIER candidat
@@ -56990,8 +56999,7 @@ def page_entrainement():
                     E["fini"] = True
 
     if E["fini"]:
-        st.markdown(f"**Réponse : {fr(ex['rep'], decimales_reponse(ex))} "
-                    f"{ex.get('unite', '')}**")
+        st.markdown(ligne_reponse(ex))
         with st.expander("La méthode, étape par étape", expanded=True):
             for i, etape in enumerate(ex["corr"], 1):
                 st.markdown(f"**{i}.** {etape}")

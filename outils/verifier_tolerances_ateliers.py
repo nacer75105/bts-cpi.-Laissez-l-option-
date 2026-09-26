@@ -68,6 +68,9 @@ près », depuis le 2026-09-26), sinon decimales_affichage(tol). Jusqu'au
               lire_nombre, comme sa saisie), est refusée par la tolérance — y compris quand le
               générateur impose ses décimales par le champ "decimales".
   DÉCIMALES   le champ "decimales" d'un générateur n'est pas un entier de 0 à 6.
+  GRAS        la ligne « Réponse » (ligne_reponse) n'est pas un gras Markdown valide : espace
+              avant les ** fermants (générateur sans unité), qui s'affichaient en clair
+              (« **Réponse : 0,449 ** », corrigé le 2026-09-26).
   LECTURE     lire_nombre lit mal un nombre écrit normalement (contrôle de 100 000 entiers et
               de 20 000 décimaux formatés par fr) : jusqu'au 2026-09-25, « 5100 » était lu 5.
   DIAG        un diagnostic (valeur d'erreur prévisible) tombe dans la tolérance de la bonne
@@ -290,7 +293,7 @@ def appeler(g, definitions, fonction):
 
 def verifier_generateurs(src):
     g, definitions, gens = espace_generateurs(src)
-    for aide in ("fr", "lire_nombre", "decimales_affichage", "decimales_reponse", "tirer_exercice",
+    for aide in ("fr", "lire_nombre", "decimales_affichage", "decimales_reponse", "ligne_reponse", "tirer_exercice",
                  "fusionner_diagnostics", "diagnostic_le_plus_proche"):
         if aide not in definitions:
             raise SystemExit(f"fonction {aide} introuvable dans app.py")
@@ -300,7 +303,7 @@ def verifier_generateurs(src):
     defauts = []
     avec_decimales = set()
     for nom in gens:
-        affichee = diag_dans_tol = masque = saut = decimales_ko = 0
+        affichee = diag_dans_tol = masque = saut = decimales_ko = gras_ko = 0
         exemple = ""
         try:
             appeler(g, definitions, nom)  # définit le générateur et ses dépendances
@@ -317,6 +320,10 @@ def verifier_generateurs(src):
                         decimales_ko += 1
                         continue
                 texte = fr(ex["rep"], dec(ex))
+                ligne = g["ligne_reponse"](ex)
+                if not re.fullmatch(r"\*\*Réponse : \S(?:.*\S)?\*\*", ligne):
+                    gras_ko += 1
+                    exemple = exemple or f"graine {graine} : ligne {ligne!r}"
                 v = lire(texte)
                 if v is None or abs(v - ex["rep"]) > tol:
                     affichee += 1
@@ -343,6 +350,9 @@ def verifier_generateurs(src):
             continue
         if affichee:
             defauts.append(f"AFFICHÉE    {nom} : réponse affichée refusée dans {affichee}/{TIRAGES} "
+                           f"tirages ({exemple})")
+        if gras_ko:
+            defauts.append(f"GRAS        {nom} : ligne « Réponse » mal formée dans {gras_ko}/{TIRAGES} "
                            f"tirages ({exemple})")
         if decimales_ko:
             defauts.append(f"DÉCIMALES   {nom} : champ \"decimales\" invalide dans {decimales_ko}/{TIRAGES} "
@@ -375,7 +385,7 @@ def verifier_generateurs(src):
             print("  " + d)
     else:
         print("0 réponse affichée refusée, 0 diagnostic dans la tolérance, 0 diagnostic masqué, "
-              "0 champ decimales invalide, 0 plantage, 0 nombre mal lu, 0 antislash-n affiché tel quel.")
+              "0 champ decimales invalide, 0 ligne Réponse mal formée, 0 plantage, 0 nombre mal lu, 0 antislash-n affiché tel quel.")
     return len(defauts)
 
 
