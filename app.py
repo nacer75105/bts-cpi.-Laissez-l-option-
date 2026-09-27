@@ -10426,7 +10426,7 @@ QUIZ["Mathématiques BTS CPI — probabilités et équations différentielles"] 
       "Intermédiaire"),
 
     q("Dans un tableur, quelle formule simule une valeur de loi uniforme sur [5 ; 8] ?",
-      ["=8*ALEA()", "=5*ALEA()+8", "=5+3*ALEA()", "=ALEA()*(5+8)"], 2,
+      ["=8*ALEA()", "=5*ALEA()+8", "=5+3*ALEA()", "=ALEA()\\*(5+8)"], 2,
       "a + (b − a) × ALEA() = 5 + 3 × ALEA() : ALEA() est entre 0 et 1, × 3 étire à la longueur "
       "3, + 5 décale au bon endroit. =8*ALEA() donnerait [0 ; 8].", "Calcul"),
 
@@ -10582,9 +10582,9 @@ QUIZ["Mathématiques BTS CPI — probabilités et équations différentielles"] 
 
     q("Sur tableur, la colonne A contient t, la colonne B la température, et le pas est en F1. "
       "Quelle formule mettre en B3 pour T' = −(T − 20)/15 ?",
-      ["=B2-(B2-20)/15", "=B2+$F$1", "=B2+$F$1*(-(B2-20)/15)", "=180*EXP(-A3/15)"], 2,
+      ["=B2-(B2-20)/15", "=B2+\\$F\\$1", "=B2+\\$F\\$1\\*(-(B2-20)/15)", "=180*EXP(-A3/15)"], 2,
       "valeur suivante = valeur actuelle + pas × pente, avec la pente calculée à partir de B2. "
-      "=B2-(B2-20)/15 ignore F1 (elle ne vaut que pour un pas de 1 min) ; =B2+$F$1 ajoute le pas "
+      "=B2-(B2-20)/15 ignore F1 (elle ne vaut que pour un pas de 1 min) ; =B2+\\$F\\$1 ajoute le pas "
       "au lieu de pas × pente ; =180*EXP(-A3/15) n'est ni Euler ni la bonne formule exacte (il "
       "manque l'ambiante : 20+160*EXP(-A3/15)).", "Intermédiaire"),
 
@@ -10829,7 +10829,7 @@ QUIZ["Mathématiques BTS CPI — probabilités et équations différentielles"] 
       "sont très dispersées.", "Intermédiaire"),
 
     q("Quelle formule de tableur simule une durée de vie exponentielle de moyenne 2 000 h ?",
-      ["=-2000*LN(ALEA())", "=2000*ALEA()", "=-LN(2000*ALEA())", "=EXP(-2000*ALEA())"], 0,
+      ["=-2000\\*LN(ALEA())", "=2000*ALEA()", "=-LN(2000\\*ALEA())", "=EXP(-2000\\*ALEA())"], 0,
       "T = −E(T) × ln(ALEA()) : ln(ALEA()) est négatif, le signe moins le rend positif, et P(T > t) = "
       "e^(−t/2 000). 2000*ALEA() donnerait une loi uniforme sur [0 ; 2 000].", "Intermédiaire"),
 
@@ -49920,7 +49920,7 @@ neuf qu'on met à sa place.
 Le référentiel demande de savoir **simuler** la loi exponentielle à partir de la loi uniforme sur
 [0 ; 1] (fiche 18.9). Dans un tableur, pour E(T) = 25 000 h :
 
-> **T = −E(T) × ln(ALEA())**, soit **=-25000*LN(ALEA())** (ou −ln(ALEA())/λ)
+> **T = −E(T) × ln(ALEA())**, soit **=-25000\\*LN(ALEA())** (ou −ln(ALEA())/λ)
 
 *Pourquoi ça marche : testons une question.* Quels tirages U = ALEA() donnent une durée de plus de
 25 000 h ?
@@ -49983,7 +49983,7 @@ pas une, avec un écart-type σ/√n = 25 000/√1 000 ≈ 790 h. 24 725 est à 
 - **E(T) = σ(T) = 1/λ** ; 63 % des composants sont en panne avant E(T).
 - Durée pour qu'il ne reste plus qu'une proportion R en marche : **t = −ln(R)/λ**.
 - **Sans mémoire** : P(T > s + t | T > s) = e^(−λt), comme pour un neuf.
-- Simulation : **=-E(T)*LN(ALEA())**.
+- Simulation : **=-E(T)\\*LN(ALEA())**.
 - *À venir, la fiche 18.17 (loi de Poisson) : combien de pannes sur une durée donnée, quand chaque
   composant en panne est remplacé par un neuf qui peut, lui aussi, tomber en panne.*
 """,
@@ -50002,8 +50002,8 @@ P(T > t) = e^(−t/E(T)) · P(T > E(T)) = e^(−1) ≈ 0,368
 
 **Sans mémoire** — P(T > s + t | T > s) = P(T > t) = e^(−λt)
 
-**Simulation** — T = −E(T) × ln(ALEA()) · tableur : =-E(T)*LN(ALEA()), par exemple
-=-25000*LN(ALEA()) pour E(T) = 25 000 h
+**Simulation** — T = −E(T) × ln(ALEA()) · tableur : =-E(T)\\*LN(ALEA()), par exemple
+=-25000\\*LN(ALEA()) pour E(T) = 25 000 h
 
         """,
             "exemple": """
@@ -50061,7 +50061,7 @@ annonce une durée de vie moyenne de **20 000 h**.
 encore 5 000 h de plus ? Compare avec la question 2 et conclus : faut-il le remplacer à titre
 préventif ?
 
-**7.** Dans un tableur, on simule des durées de vie avec la formule =-20000*LN(ALEA()). Quelle durée
+**7.** Dans un tableur, on simule des durées de vie avec la formule =-20000\\*LN(ALEA()). Quelle durée
 obtient-on quand ALEA() donne 0,6 ? Et quand il donne 0,05 ? Pourquoi un petit nombre ALEA() donne-t-il
 une longue durée ?
 """,
@@ -51506,10 +51506,10 @@ pouvoir le changer facilement :
 |---|---|---|---|---|
 | ligne 1 | t | T | | **5** (le pas h, en min) |
 | ligne 2 | 0 | 180 | | |
-| ligne 3 | =A2+$F$1 | =B2+$F$1*(-(B2-20)/15) | | |
+| ligne 3 | =A2+\\$F\\$1 | =B2+\\$F\\$1\\*(-(B2-20)/15) | | |
 
-**Lecture de B3** : B2 est la température de la ligne du dessus ; -(B2-20)/15 est la pente ; $F$1 est
-le pas h. Le **$** empêche F1 de devenir F2, F3… quand on recopie la formule vers le bas.
+**Lecture de B3** : B2 est la température de la ligne du dessus ; -(B2-20)/15 est la pente ; \\$F\\$1 est
+le pas h. Le **\\$** empêche F1 de devenir F2, F3… quand on recopie la formule vers le bas.
 
 On **recopie la ligne 3 vers le bas** : chaque ligne calcule la pente à partir de la ligne du
 dessus, puis fait un pas. Un graphique « nuage de points » des colonnes A et B trace la courbe
@@ -51531,7 +51531,7 @@ C × e^(−t/15), et la condition initiale T(0) = 180 °C donne C = 180 − 17 =
 T(t) = 17 + 0,2t + 163 × e^(−t/15).
 
 Euler, lui, n'a besoin que de la pente : dans la colonne B, on remplace 20 par la température de
-l'atelier à cet instant, 20 + 0,2 × t, soit **B3 : =B2+$F$1*(-(B2-(20+0,2*A2))/15)**.
+l'atelier à cet instant, 20 + 0,2 × t, soit **B3 : =B2+\\$F\\$1\\*(-(B2-(20+0,2\\*A2))/15)**.
 
 Avec h = 1 min : premier pas, pente = −(180 − 20)/15 ≈ −10,667, donc T(1) ≈ 169,33 °C ; deuxième
 pas, l'ambiante vaut maintenant 20,2 °C, pente = −(169,33 − 20,2)/15 ≈ −9,942, donc
@@ -51571,7 +51571,7 @@ multiplie par e^(−h/τ), un peu plus grand : Euler va trop vite vers l'équili
 **Choix du pas** — h petit devant τ (de l'ordre de τ/10 ou moins) ; diviser h par 2 divise l'écart
 à peu près par 2 ; contrôler en recommençant avec h/2
 
-**Tableur** — B3 = B2 + $F$1 × (pente calculée avec B2), recopiée vers le bas
+**Tableur** — B3 = B2 + \\$F\\$1 × (pente calculée avec B2), recopiée vers le bas
 
         """,
             "exemple": """
@@ -51650,7 +51650,7 @@ d'autant plus juste que le pas est petit.)*
 pièce qui refroidit ne peut pas passer sous l'ambiante. Le pas (20 min) est plus long que la
 constante de temps (15 min). Valeur exacte : T(20) = 20 + 160 × e^(−4/3) ≈ **62,2 °C**.
 
-**5.** A3 : **=A2+$F$1** ; B3 : **=B2+$F$1*(12-B2)**, avec A2 = 0 et B2 = 0, puis on recopie la ligne
+**5.** A3 : **=A2+\\$F\\$1** ; B3 : **=B2+\\$F\\$1\\*(12-B2)**, avec A2 = 0 et B2 = 0, puis on recopie la ligne
 3 vers le bas.
 
 **6.** 1 − 0,5/15 ≈ **0,966 7** et e^(−0,5/15) ≈ **0,967 2** : les deux facteurs sont très proches,

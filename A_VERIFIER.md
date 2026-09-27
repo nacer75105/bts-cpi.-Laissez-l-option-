@@ -195,6 +195,24 @@ complexes (forme algébrique, Δ < 0) — 13. équations différentielles du sec
   `gen_duree_fiabilite` sortait avec 2 décimales (« 5 268,03 h ») alors que l'énoncé dit « à l'heure
   près ». Voir « Réponse affichée : la précision suit l'énoncé » ci-dessous.
 
+### Formules de tableur affichées faussées par le Markdown (corrigé le 2026-09-27)
+
+- Trouvé au parcours navigateur de la dette 17.7 à 18.13 ; invisible à la relecture du source.
+- `$F$1` (référence absolue) : Streamlit lit « $F$ » comme une formule LaTeX (F mathématique en
+  italique, gras cassé, « ** » visibles). Fiche 18.12 (cours, formulaire, corrigé) et une question du
+  quiz (options passées par `st.radio`, qui interprète aussi le Markdown). Écrit `\\$F\\$1` dans le
+  source.
+- `*` de multiplication : deux `*` du même paragraphe forment un italique et disparaissent. L'élève
+  lisait des formules FAUSSES : 18.12, `=B2+$F$1(-(B2-(20+0,2A2))/15)` ; 18.16 (Formulaire, retouche
+  J-A3 du 3ᵉ tour), `=-E(T)LN(ALEA()), par exemple =-25000LN(ALEA())`. Écrit `\\*` dans les formules
+  de tableur de tous les textes Markdown (13 formules). Pas dans les figures SVG (`_txt`, `_svg`) ni
+  les titres de FIGURES, affichés en HTML : l'antislash y serait visible.
+- Outil d'audit : contrôles DOLLAR et ETOILE ; test par mutation sur l'ancien app.py : 5 DOLLAR et
+  13 ETOILE.
+- ✅ Vérifié dans un vrai navigateur : toutes les formules de tableur des fiches 18.12 et 18.16 (cours,
+  formulaire, exercice) s'affichent entières, `*` compris, sans antislash ni italique. Non vu au
+  navigateur : les options du quiz corrigées (même rendu Markdown que les fiches).
+
 ### Ligne « Réponse » : astérisques affichés sans unité (corrigé le 2026-09-26)
 
 - Trouvé au parcours navigateur de la 18.16 : un générateur sans unité affichait

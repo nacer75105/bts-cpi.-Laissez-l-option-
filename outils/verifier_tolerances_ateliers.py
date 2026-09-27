@@ -99,6 +99,24 @@ Un générateur défectueux compte pour UN défaut (le nombre de tirages touché
               condition sur cet état. Contrôle heuristique : il suit les noms affectés par un
               appel .button(...) dans la même fonction ; il peut signaler un faux positif, à
               examiner à la main.
+
+4. RÉFÉRENCES DE TABLEUR (analyse statique de tous les textes de app.py)
+------------------------------------------------------------------------
+  DOLLAR      une référence absolue de tableur ($F$1, $B$12…) non échappée dans un texte : le
+              Markdown de Streamlit (st.markdown, st.radio…) lit « $F$ » comme une formule LaTeX,
+              affiche un F mathématique et casse le gras autour (« ** » visibles). Cas réel : fiche
+              18.12 et une question du quiz, trouvés au parcours navigateur du 2026-09-27. Remède :
+              écrire \\$F\\$1 dans le source (le Markdown affiche alors $F$1).
+
+5. FORMULES DE TABLEUR ET ITALIQUE (analyse statique des textes Markdown de app.py)
+-----------------------------------------------------------------------------------
+  ETOILE      un « * » de multiplication non échappé dans une formule de tableur (=B2+…*…) d'un
+              texte affiché en Markdown : deux « * » du même paragraphe forment un italique et
+              DISPARAISSENT (« =-E(T)*LN(ALEA()), par exemple =-25000*LN(ALEA()) » s'affichait
+              « =-E(T)LN(ALEA()), par exemple =-25000LN(ALEA()) », fiche 18.16 ; même chose en
+              18.12, trouvé au parcours navigateur du 2026-09-27). Remède : écrire \\* dans le
+              source. Les textes des figures SVG (_txt, _svg) et les titres de FIGURES, affichés
+              en HTML, ne sont pas concernés (l'antislash y serait visible).
 """
 import ast
 import io
@@ -473,6 +491,51 @@ def verifier_boutons(src):
     return len(defauts)
 
 
+def verifier_dollars(src):
+    """Références absolues de tableur non échappées dans les textes (lues comme du LaTeX)."""
+    rx = re.compile(r"(?<!\\)\$[A-Z]{1,3}\$\d")
+    defauts = set()
+    for n in ast.walk(ast.parse(src)):
+        if isinstance(n, ast.Constant) and isinstance(n.value, str):
+            for m in rx.finditer(n.value):
+                defauts.add((n.lineno, m.group(0)))
+    print("RÉFÉRENCES DE TABLEUR : analyse de tous les textes de app.py.")
+    if defauts:
+        print(f"{len(defauts)} défaut(s) :")
+        for ligne, ref in sorted(defauts):
+            print(f"  DOLLAR      ligne {ligne} : « {ref} » non échappé, lu comme du LaTeX")
+    else:
+        print("0 référence de tableur lue comme du LaTeX.")
+    return len(defauts)
+
+
+def verifier_etoiles(src):
+    """« * » de multiplication non échappés dans les formules de tableur des textes Markdown."""
+    formule = re.compile(r"=[-A-Z(](?:[^\s|;,]|,(?=\d))*")  # virgule décimale comprise
+    mult = re.compile(r"(?<=[\w)²])(?<!\\)\*(?=[\w(-])")
+    arbre = ast.parse(src)
+    exclus = set()
+    for n in ast.walk(arbre):
+        if isinstance(n, ast.Call) and getattr(n.func, "id", "") in ("_txt", "_svg"):
+            exclus.update(id(s) for s in ast.walk(n))
+        if isinstance(n, ast.Assign) and any(getattr(c, "id", "") == "FIGURES" for c in n.targets):
+            exclus.update(id(s) for s in ast.walk(n))
+    defauts = set()
+    for n in ast.walk(arbre):
+        if isinstance(n, ast.Constant) and isinstance(n.value, str) and id(n) not in exclus:
+            for m in formule.finditer(n.value):
+                if mult.search(m.group(0)):
+                    defauts.add((n.lineno, m.group(0)))
+    print("FORMULES DE TABLEUR : « * » de multiplication dans les textes Markdown de app.py.")
+    if defauts:
+        print(f"{len(defauts)} défaut(s) :")
+        for ligne, f in sorted(defauts):
+            print(f"  ETOILE      ligne {ligne} : « {f} » : « * » non échappé, risque d'italique")
+    else:
+        print("0 « * » de formule non échappé.")
+    return len(defauts)
+
+
 def main():
     src = lire_source()
     n = verifier_ateliers(src)
@@ -480,6 +543,10 @@ def main():
     n += verifier_generateurs(src)
     print()
     n += verifier_boutons(src)
+    print()
+    n += verifier_dollars(src)
+    print()
+    n += verifier_etoiles(src)
     print(f"\nTotal : {n} défaut(s).")
     return n
 
