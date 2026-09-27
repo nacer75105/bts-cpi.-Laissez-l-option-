@@ -294,6 +294,16 @@ complexes (forme algébrique, Δ < 0) — 13. équations différentielles du sec
     2ᵉ barre ;
   - 18.10, figure `binomiale_continuite` : graduations « 24,5 / 25 / 25,5 » serrées.
 
+### Figures : chaque SVG doit être du XML valide (contrôle ajouté le 2026-09-27)
+
+- Les figures sont affichées en <img src="data:image/svg+xml;base64,…"> : un SVG qui n'est pas du XML
+  valide donne une image VIDE (16 px de haut), sans aucune erreur. Cas réel : « Δ < 0 » écrit tel quel
+  dans les deux figures de la 18.18 (corrigé par &lt; avant son commit). Les 171 autres figures étaient
+  valides.
+- Outil d'audit : contrôle FIGURE, qui exécute chaque fonction de FIGURES et lit son SVG comme du XML.
+  Test par mutation : « Δ < 0 » remis brut → FIGURE sur exactement les deux figures ; 0 sur l'app
+  corrigée (173 figures).
+
 ### Formules de tableur affichées faussées par le Markdown (corrigé le 2026-09-27)
 
 - Trouvé au parcours navigateur de la dette 17.7 à 18.13 ; invisible à la relecture du source.

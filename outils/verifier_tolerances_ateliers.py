@@ -117,6 +117,14 @@ Un générateur défectueux compte pour UN défaut (le nombre de tirages touché
               18.12, trouvé au parcours navigateur du 2026-09-27). Remède : écrire \\* dans le
               source. Les textes des figures SVG (_txt, _svg) et les titres de FIGURES, affichés
               en HTML, ne sont pas concernés (l'antislash y serait visible).
+
+6. FIGURES (exécution de chaque fonction de FIGURES)
+----------------------------------------------------
+  FIGURE      une figure ne produit pas un SVG qui soit du XML valide. Les figures sont affichées
+              en <img src="data:image/svg+xml;base64,…"> : un SVG invalide donne une image VIDE
+              (16 px de haut), sans aucune erreur. Cas réel : « Δ < 0 » écrit tel quel dans deux
+              figures de la fiche 18.18 (le « < » ouvre une balise) ; trouvé au parcours
+              navigateur du 2026-09-27. Remède : écrire &lt; (et &amp; pour &) dans les textes.
 """
 import ast
 import io
@@ -536,6 +544,35 @@ def verifier_etoiles(src):
     return len(defauts)
 
 
+def verifier_figures(src):
+    """Chaque figure de FIGURES doit produire un SVG qui est du XML valide."""
+    import xml.etree.ElementTree as ET
+    g, definitions, _ = espace_generateurs(src)
+    arbre = ast.parse(src)
+    figures = next(n for n in arbre.body if isinstance(n, ast.Assign)
+                   and any(getattr(c, "id", "") == "FIGURES" for c in n.targets))
+    paires = [(k.value, v.elts[1].id) for k, v in zip(figures.value.keys, figures.value.values)]
+    defauts = []
+    for cle, fonction in paires:
+        try:
+            svg = appeler(g, definitions, fonction)
+            ET.fromstring(svg)
+        except ET.ParseError as err:
+            col = err.position[1]
+            defauts.append(f"FIGURE      {cle} : SVG invalide ({err}) … "
+                           f"{svg[max(0, col - 50):col + 20]!r}")
+        except Exception as err:  # noqa: BLE001 — on veut signaler tout plantage
+            defauts.append(f"FIGURE      {cle} : plantage {type(err).__name__} : {err}")
+    print(f"FIGURES : {len(paires)} figures exécutées, SVG lu comme du XML.")
+    if defauts:
+        print(f"{len(defauts)} défaut(s) :")
+        for d in defauts:
+            print("  " + d)
+    else:
+        print("0 figure invalide.")
+    return len(defauts)
+
+
 def main():
     src = lire_source()
     n = verifier_ateliers(src)
@@ -547,6 +584,8 @@ def main():
     n += verifier_dollars(src)
     print()
     n += verifier_etoiles(src)
+    print()
+    n += verifier_figures(src)
     print(f"\nTotal : {n} défaut(s).")
     return n
 
