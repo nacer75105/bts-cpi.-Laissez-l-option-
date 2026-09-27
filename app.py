@@ -6269,6 +6269,132 @@ def exponentielle_simulation():
     return _svg("".join(p_), 760, y0 + 100)
 
 
+def _poisson(m, k):
+    """P(X = k) pour la loi de Poisson de paramètre m."""
+    return math.exp(-m) * m ** k / math.factorial(k)
+
+
+def poisson_processus():
+    tirages = random.Random(3)  # graine fixe : six années représentatives (10, 6, 8, 4, 4, 7 pannes)
+    annees = []
+    for _ in range(6):
+        t, dates = 0.0, []
+        while True:
+            t += -625 * math.log(1 - tirages.random())  # attente exponentielle, moyenne 625 h
+            if t > 4000:
+                break
+            dates.append(t)
+        annees.append(dates)
+    x0, L, y0, pas = 110, 520, 92, 40
+    X = lambda t: x0 + L * t / 4000  # noqa: E731
+    p_ = [_txt(40, 24, "La ligne de 40 capteurs, six années simulées : une croix = une panne (capteur remplacé aussitôt).",
+               12, TRAIT, "start", True),
+          _txt(40, 40, "Le taux de la ligne est 40 × 0,000 04 = 0,001 6 panne par heure : une panne toutes les 625 h en moyenne.",
+               11, FIN)]
+    for i, dates in enumerate(annees):
+        y = y0 + pas * i
+        p_.append(f"<line x1='{x0}' y1='{y}' x2='{x0 + L}' y2='{y}' stroke='{FIN}' stroke-width='1.2'/>")
+        p_.append(_txt(x0 - 10, y + 4, f"année {i + 1}", 11, FIN, "end"))
+        for d in dates:
+            xx = X(d)
+            p_.append(f"<line x1='{xx - 5:.1f}' y1='{y - 5}' x2='{xx + 5:.1f}' y2='{y + 5}' stroke='{ALESAGE}' stroke-width='2'/>")
+            p_.append(f"<line x1='{xx - 5:.1f}' y1='{y + 5}' x2='{xx + 5:.1f}' y2='{y - 5}' stroke='{ALESAGE}' stroke-width='2'/>")
+        p_.append(_txt(x0 + L + 14, y + 4, f"{len(dates)} pannes", 12, ARBRE, "start", True))
+    # une attente entre deux pannes, annotée sur l'année 2
+    a, b = annees[1][1], annees[1][2]
+    y = y0 + pas
+    p_.append(f"<line x1='{X(a):.1f}' y1='{y - 14}' x2='{X(b):.1f}' y2='{y - 14}' stroke='{OK}' stroke-width='1.6'/>")
+    p_.append(f"<line x1='{X(a):.1f}' y1='{y - 18}' x2='{X(a):.1f}' y2='{y - 10}' stroke='{OK}' stroke-width='1.6'/>")
+    p_.append(f"<line x1='{X(b):.1f}' y1='{y - 18}' x2='{X(b):.1f}' y2='{y - 10}' stroke='{OK}' stroke-width='1.6'/>")
+    p_.append(_txt((X(a) + X(b)) / 2, y - 20, "attente T : loi exponentielle (18.16)", 11, OK, "middle", True))
+    ybas = y0 + pas * 5 + 22
+    for t in (0, 1000, 2000, 3000, 4000):
+        p_.append(_txt(X(t), ybas, fr(t, 0), 11, FIN, "middle"))
+    p_.append(_txt(x0 + L, ybas + 14, "t (h), une année = 4 000 h", 11, FIN, "end"))
+    p_.append(_txt(x0 + L + 14, y0 - 34, "nombre X :", 11, ARBRE, "start", True))
+    p_.append(_txt(x0 + L + 14, y0 - 21, "loi de Poisson", 11, ARBRE, "start"))
+    ycad = ybas + 26
+    p_.append(f"<rect x='40' y='{ycad}' width='680' height='52' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p_.append(_txt(56, ycad + 22, "Même phénomène, deux questions : combien de temps entre deux croix ? (exponentielle)",
+                   12, TRAIT, "start", True))
+    p_.append(_txt(56, ycad + 42, "Combien de croix dans l'année ? (Poisson de paramètre 6,4 : ici 10, 6, 8, 4, 4, 7 — moyenne 6,5).",
+                   12, TRAIT, "start"))
+    return _svg("".join(p_), 760, ycad + 66)
+
+
+def poisson_batons():
+    m = 6.4
+    x0, y0, kx, H = 80, 330, 36, 200
+    pmax = _poisson(m, 6)
+    Y = lambda v: y0 - H * v / (pmax * 1.1)  # noqa: E731
+    p_ = [_txt(40, 24, "Remplacements de capteurs sur un an : X suit la loi de Poisson de paramètre m = 6,4.",
+               12, TRAIT, "start", True),
+          _txt(40, 40, "Hauteur d'un bâton = P(X = k). Bleu : le stock de 11 suffit ; orange : à court.", 11, FIN)]
+    p_.append(f"<line x1='{x0}' y1='{y0}' x2='{x0 + kx * 16 + 10}' y2='{y0}' stroke='{FIN}' stroke-width='1.4'/>")
+    p_.append(f"<line x1='{x0}' y1='{y0}' x2='{x0}' y2='{y0 - H - 10}' stroke='{FIN}' stroke-width='1.4'/>")
+    for v in (0.05, 0.10, 0.15):
+        p_.append(f"<line x1='{x0 - 4}' y1='{Y(v):.1f}' x2='{x0}' y2='{Y(v):.1f}' stroke='{FIN}'/>")
+        p_.append(_txt(x0 - 8, Y(v) + 4, fr(v, 2), 11, FIN, "end"))
+    for k in range(0, 16):
+        xx = x0 + kx * k + kx / 2
+        coul = ALESAGE if k <= 11 else ARBRE
+        p_.append(f"<line x1='{xx:.1f}' y1='{y0}' x2='{xx:.1f}' y2='{Y(_poisson(m, k)):.1f}' stroke='{coul}' "
+                  f"stroke-width='9'/>")
+        p_.append(_txt(xx, y0 + 16, str(k), 11, FIN, "middle"))
+    p_.append(_txt(x0 + kx * 16 + 14, y0 + 16, "k", 11, FIN))
+    xm = x0 + kx * m + kx / 2
+    p_.append(f"<line x1='{xm:.1f}' y1='{y0}' x2='{xm:.1f}' y2='{y0 - H - 4}' stroke='{ALERTE}' stroke-width='1.6' "
+              f"stroke-dasharray='5 4'/>")
+    p_.append(_txt(xm + 6, y0 - H + 12, "E(X) = m = 6,4", 12, ALERTE, "start", True))
+    ys = y0 - H - 12
+    xs1, xs2 = x0 + kx * (m - 2.53) + kx / 2, x0 + kx * (m + 2.53) + kx / 2
+    p_.append(f"<line x1='{xs1:.1f}' y1='{ys}' x2='{xs2:.1f}' y2='{ys}' stroke='{OK}' stroke-width='1.6'/>")
+    p_.append(_txt((xs1 + xs2) / 2, ys - 6, "m ± σ, σ = √6,4 ≈ 2,53", 11, OK, "middle", True))
+    p_.append(_txt(x0 + kx * 1.6, y0 - 120, "P(X ≤ 11) ≈ 0,969", 12, ALESAGE, "middle", True))
+    p_.append(_txt(x0 + kx * 1.6, y0 - 106, "le stock de 11 suffit", 11, ALESAGE, "middle"))
+    p_.append(_txt(x0 + kx * 13.6, y0 - 70, "P(X ≥ 12) ≈ 0,031", 12, ARBRE, "middle", True))
+    p_.append(_txt(x0 + kx * 13.6, y0 - 56, "à court moins d'1 an sur 20", 11, ARBRE, "middle"))
+    p_.append(f"<rect x='40' y='{y0 + 34}' width='680' height='52' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p_.append(_txt(56, y0 + 56, "Des bâtons, pas une courbe : X ne prend que des valeurs entières 0, 1, 2… sans maximum.",
+                   12, TRAIT, "start", True))
+    p_.append(_txt(56, y0 + 76, "Les bâtons culminent près de m et s'étirent vers la droite ; au-delà de 15, ils sont invisibles.",
+                   12, TRAIT, "start"))
+    return _svg("".join(p_), 760, y0 + 100)
+
+
+def poisson_binomiale():
+    def panneau(ox, titre1, titre2, n, p, m, kmax, echelle):
+        out = [_txt(ox, 62, titre1, 12, TRAIT, "start", True), _txt(ox, 78, titre2, 11, FIN)]
+        y0, larg = 290, 300
+        kx = larg / (kmax + 1)
+        out.append(f"<line x1='{ox}' y1='{y0}' x2='{ox + larg}' y2='{y0}' stroke='{FIN}' stroke-width='1.4'/>")
+        for k in range(0, kmax + 1):
+            xb = ox + kx * k + kx / 2
+            vb = math.comb(n, k) * p ** k * (1 - p) ** (n - k)
+            vp = _poisson(m, k)
+            out.append(f"<line x1='{xb - 3:.1f}' y1='{y0}' x2='{xb - 3:.1f}' y2='{y0 - echelle * vb:.1f}' "
+                       f"stroke='{ALESAGE}' stroke-width='5'/>")
+            out.append(f"<line x1='{xb + 3:.1f}' y1='{y0}' x2='{xb + 3:.1f}' y2='{y0 - echelle * vp:.1f}' "
+                       f"stroke='{ARBRE}' stroke-width='5'/>")
+            if k % (1 if kmax <= 9 else 2) == 0:
+                out.append(_txt(xb, y0 + 16, str(k), 11, FIN, "middle"))
+        out.append(_txt(ox + larg, y0 + 32, "k", 11, FIN, "end"))
+        return out
+    p_ = [_txt(40, 24, "Bleu : loi binomiale exacte ; orange : loi de Poisson de même moyenne m = np.", 12, TRAIT, "start",
+               True),
+          _txt(40, 40, "Chaque paire de bâtons compare P(X = k) pour les deux lois.", 11, FIN)]
+    p_ += panneau(50, "B(2 000 ; 0,001 5) et Poisson de paramètre 3", "p très petit : les bâtons se confondent",
+                  2000, 0.0015, 3, 9, 700)
+    p_ += panneau(420, "B(20 ; 0,3) et Poisson de paramètre 6", "p = 0,3 : Poisson trop étalée (variance 6, pas 4,2)",
+                  20, 0.3, 6, 14, 700)
+    p_.append(f"<rect x='40' y='330' width='680' height='52' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p_.append(_txt(56, 352, "Événements rares (n grand, p très petit) : la loi de Poisson de paramètre np approche la binomiale.",
+                   12, TRAIT, "start", True))
+    p_.append(_txt(56, 372, "Si p n'est pas petit, la variance m de Poisson dépasse np(1 − p) : trop étalée ; si np et n(1 − p) ≥ 5 : normale (18.10).",
+                   12, TRAIT, "start"))
+    return _svg("".join(p_), 760, 396)
+
+
 def extremums_polynome():
     p = [_txt(40, 24, "f(x) = x³ − 3x² + 2 : un maximum local puis un minimum local.",
               12, TRAIT, "start", True)]
@@ -6690,6 +6816,9 @@ FIGURES = {
     "comparaison_difference": ("Sous H₀, la différence est centrée sur zéro : zone verte et piège des écarts-types additionnés", comparaison_difference),
     "exponentielle_densite": ("Loi exponentielle : densité en h⁻¹ (pannes dans l'heure ÷ nombre de capteurs), moyenne au-delà du milieu", exponentielle_densite),
     "exponentielle_simulation": ("1 000 durées de vie simulées avec =-25000*LN(ALEA())", exponentielle_simulation),
+    "poisson_processus": ("Même phénomène, deux questions : l'attente entre deux pannes (exponentielle) et le nombre de pannes dans l'année (Poisson)", poisson_processus),
+    "poisson_batons": ("Loi de Poisson de paramètre 6,4 : des bâtons ; le stock de 11 suffit dans 96,9 % des années", poisson_batons),
+    "poisson_binomiale": ("Binomiale et loi de Poisson de même moyenne : elles se confondent quand p est très petit", poisson_binomiale),
     "extremums_polynome": ("Un maximum local puis un minimum local", extremums_polynome),
     "dispersion_deux_reglages": ("Six mesures dispersées autour de leur moyenne", dispersion_deux_reglages),
     "venn_deux_evenements": ("Union et intersection de deux événements", venn_deux_evenements),
@@ -10855,6 +10984,69 @@ QUIZ["Mathématiques BTS CPI — probabilités et équations différentielles"] 
       "Le taux λ est constant ; le nombre de pannes par heure diminue seulement parce qu'il reste de moins "
       "en moins de composants en marche. Et P(T = 0) = 0 : seule une aire est une probabilité.",
       "Piège"),
+
+    q("Un poste reçoit en moyenne 12 pièces par heure, au hasard. Le nombre de pièces qui arrivent en "
+      "10 minutes suit une loi de Poisson. Quel est son paramètre ?",
+      ["120", "2", "12", "1,2"], 1,
+      "Le paramètre est le nombre moyen sur la durée étudiée : 12 par heure × 1/6 h = 2. 120 vient de 12 × 10 "
+      "sans convertir les minutes en heures.", "Base"),
+
+    q("X suit une loi de Poisson de paramètre 3. Que valent E(X) et σ(X) ?",
+      ["E(X) = 3 et σ(X) = 3", "E(X) = 3 et σ(X) = 9", "E(X) = 3 et σ(X) = √3 ≈ 1,73",
+       "E(X) = 1/3 et σ(X) = 1/3"], 2,
+      "Pour une loi de Poisson, l'espérance et la variance valent toutes deux m = 3 ; l'écart-type est la "
+      "racine de la variance, √3 ≈ 1,73.", "Base"),
+
+    q("X suit une loi de Poisson. Pour calculer la probabilité d'« au moins 4 défauts », que tape-t-on à "
+      "la calculatrice ?",
+      ["1 − P(X ≤ 4)", "P(X ≤ 4)", "P(X ≥ 3)", "1 − P(X ≤ 3)"], 3,
+      "« Au moins 4 » = 4 ou plus ; son contraire est « 3 ou moins ». 1 − P(X ≤ 4) oublierait les cas à "
+      "exactement 4 défauts : X ne prend que des valeurs entières, « ≤ » et « < » ne sont pas pareils.",
+      "Piège"),
+
+    q("Une presse tombe en panne au hasard, sans usure, en moyenne 3 fois par mois (30 jours). On "
+      "s'intéresse au temps qui s'écoule entre deux pannes. Quelle loi, et quelle moyenne ?",
+      ["Loi exponentielle : 30/3 = 10 jours en moyenne", "Loi de Poisson de paramètre 3 : 3 jours",
+       "Loi de Poisson de paramètre 3 : 10 jours", "Loi exponentielle : 3 jours en moyenne"], 0,
+      "On cherche une DURÉE : loi exponentielle, de taux λ = 3 pannes par mois, de moyenne 1/λ = 1/3 de "
+      "mois = 10 jours. La loi de Poisson répond à l'autre question : COMBIEN de pannes sur une durée "
+      "donnée (ici, m = 3 pour un mois).", "Piège"),
+
+    q("X suit une loi de Poisson de paramètre m. Que vaut P(X = 0) ?",
+      ["1 − e^(−m)", "0", "m", "e^(−m)"], 3,
+      "Aucun événement pendant la durée t, c'est « la première attente dépasse t » : P(X = 0) = P(T > t) = "
+      "e^(−λt) = e^(−m). 1 − e^(−m) est la probabilité d'au moins un événement.", "Intermédiaire"),
+
+    q("X suit la loi binomiale B(1 500 ; 0,002). Quelle approximation convient ?",
+      ["La loi de Poisson de paramètre 3", "La loi normale N(3 ; √(1 500 × 0,002 × 0,998))",
+       "La loi de Poisson de paramètre 0,002", "Aucune : n est trop grand"], 0,
+      "p est très petit et np = 3 < 5 : événements rares, loi de Poisson de paramètre m = np = 3. La "
+      "cloche n'a pas la place de se former (elle déborderait sous 0). (Pour comprendre : à l'examen, "
+      "l'énoncé précise la loi.)", "Intermédiaire"),
+
+    q("X suit la loi binomiale B(200 ; 0,4). Quelle approximation convient ?",
+      ["La loi de Poisson de paramètre 80",
+       "La loi normale de moyenne 80 et d'écart-type √48 ≈ 6,9",
+       "La loi normale de moyenne 80 et d'écart-type √80 ≈ 8,9",
+       "La loi de Poisson de paramètre 0,4"], 1,
+      "np = 80 ≥ 5 et n(1 − p) = 120 ≥ 5, et p = 0,4 n'est pas petit : c'est la loi normale (18.10), "
+      "d'écart-type √(np(1 − p)) = √48. Une loi de Poisson aurait une variance 80 au lieu de 48 : trop "
+      "étalée ; √80 serait son écart-type. (Pour comprendre : à l'examen, l'énoncé précise la loi.)", "Piège"),
+
+    q("Le nombre de pièces de rechange consommées en un mois suit une loi de Poisson de paramètre 4. "
+      "P(X ≤ 7) ≈ 0,949 et P(X ≤ 8) ≈ 0,979. Quel est le plus petit stock qui laisse à court au plus un "
+      "mois sur vingt ?",
+      ["4", "7", "8", "5"], 2,
+      "Il faut P(X ≤ stock) ≥ 0,95 : 0,949 < 0,95 pour 7, 0,979 ≥ 0,95 pour 8. Un stock de 4 (la moyenne) "
+      "laisserait à court bien plus souvent.", "Calcul"),
+
+    q("Pourquoi la loi de Poisson ne convient-elle pas pour compter les pannes d'un roulement sur 10 ans ?",
+      ["Parce que le nombre de pannes n'a pas de maximum",
+       "Parce que le roulement s'use : son taux de panne augmente avec l'âge, il n'est pas constant",
+       "Parce qu'on ne connaît pas le nombre d'essais n",
+       "Parce que 10 ans est une durée trop longue"], 1,
+      "La loi de Poisson suppose des événements indépendants à taux constant, sans usure. L'absence de "
+      "maximum et l'absence de n sont au contraire ses conditions normales.", "Base"),
 ]
 
 QUIZ["Mathématiques BTS CPI — calcul matriciel et modélisation géométrique"] = [
@@ -47596,7 +47788,7 @@ d'usure), machine par machine.
 BLOC_18 = {
     "id": 18,
     "titre": "Bloc 18 — Mathématiques BTS CPI : probabilités et équations différentielles",
-    "resume": "Quatre modules du programme d'examen : probabilités 1, probabilités 2, statistique inférentielle et équations différentielles. Ce bloc n'en couvre qu'une partie : la loi de Poisson et les équations du second ordre ne sont pas encore traitées.",
+    "resume": "Quatre modules du programme d'examen : probabilités 1, probabilités 2, statistique inférentielle et équations différentielles. Ce bloc n'en couvre qu'une partie : les équations différentielles du second ordre ne sont pas encore traitées.",
     "fiches": [
         {
             "id": "18.1",
@@ -49795,7 +49987,7 @@ impossible.
 
 *λt a pourtant un sens, pour une autre question. Si l'on remplace chaque capteur en panne par un neuf,
 un même support de capteur sur la ligne verra en moyenne λt = 0,16 remplacement par an ; les 40
-supports, 40 × 0,16 = 6,4 remplacements. C'est la loi de Poisson (fiche 18.17, à venir). La probabilité
+supports, 40 × 0,16 = 6,4 remplacements. C'est la loi de Poisson (fiche 18.17). La probabilité
 qu'**un** capteur donné tombe en panne reste 1 − e^(−λt) = 0,148.*
 
 ### 4. Trouver une durée : quand ne restera-t-il plus que 90 % des capteurs ?
@@ -49984,7 +50176,7 @@ pas une, avec un écart-type σ/√n = 25 000/√1 000 ≈ 790 h. 24 725 est à 
 - Durée pour qu'il ne reste plus qu'une proportion R en marche : **t = −ln(R)/λ**.
 - **Sans mémoire** : P(T > s + t | T > s) = e^(−λt), comme pour un neuf.
 - Simulation : **=-E(T)\\*LN(ALEA())**.
-- *À venir, la fiche 18.17 (loi de Poisson) : combien de pannes sur une durée donnée, quand chaque
+- *Suite : la fiche 18.17 (loi de Poisson) : combien de pannes sur une durée donnée, quand chaque
   composant en panne est remplacé par un neuf qui peut, lui aussi, tomber en panne.*
 """,
             "formules": """
@@ -50039,7 +50231,7 @@ premières heures. *Limite du calcul : un capteur de rechange posé en cours d'a
 tomber en panne avant décembre. Pour compter toutes les pannes de l'année, rechanges compris, il faut
 la loi de Poisson : les rechanges tombant aussi en panne, on attend en moyenne 40 × λt = 40 × 0,16 = 6,4
 remplacements au lieu de 5,9 ; avec la même règle « une année sur vingt », et en anticipant sur la fiche
-18.17 (à venir), le stock nécessaire passe alors à 11.*
+18.17, le stock nécessaire passe alors à 11.*
 """,
             "exercice": """
 Un relais statique a une durée de vie T (en heures) qui suit une loi exponentielle. Le fabricant
@@ -50090,6 +50282,403 @@ sert à rien.
 logarithme très négatif (ln 0,05 ≈ −3,0), et le signe moins le transforme en grande durée. Les
 ALEA() inférieurs à e^(−1) ≈ 0,368 (36,8 % des tirages) donnent une durée supérieure à 20 000 h : on
 retrouve la question 3.
+""",
+        },
+        {
+            "id": "18.17",
+            "titre": "Probabilités 2 : la loi de Poisson, compter des événements rares",
+            "duree": "4 h",
+            "cours": """
+
+### 1. Une question que la loi binomiale ne sait pas poser
+
+Retour à la ligne d'assemblage de la fiche 18.16 : **40 capteurs inductifs**, sans usure, de durée de
+vie moyenne 25 000 h, sur une ligne qui tourne **4 000 h par an**. La fiche 18.16 a compté, parmi les
+40 capteurs installés au 1ᵉʳ janvier, ceux qui tombent en panne dans l'année : une loi binomiale
+B(40 ; 0,148), avec un stock de 10 rechanges.
+
+Mais sur la vraie ligne, **chaque capteur en panne est remplacé aussitôt par un neuf**, qui peut lui
+aussi tomber en panne avant la fin de l'année. Sur un même support, il peut donc y avoir 0, 1, 2,
+3 remplacements… Le magasin veut savoir **combien de remplacements** il y aura sur l'année, pour tous
+les supports, afin de prévoir son stock.
+
+La loi binomiale ne convient plus : elle compte des succès parmi **n essais fixés d'avance** (au plus
+n). Ici, il n'y a pas d'essais : les pannes **arrivent au fil du temps**, et rien n'empêche d'en avoir
+une de plus. On compte des **événements sur une durée**. C'est le rôle de la **loi de Poisson**.
+
+### 2. Un même phénomène, deux questions
+
+Regardez l'axe du temps d'un support : une croix à chaque panne. Les pannes arrivent au hasard, sans
+usure, au taux λ = 0,000 04 par heure (fiche 18.16). Sur cet axe, on peut poser **deux questions** :
+
+| | la loi exponentielle (fiche 18.16) | la loi de Poisson (fiche 18.17) |
+|---|---|---|
+| la question | combien de temps **avant la prochaine** panne ? | **combien de pannes** pendant une durée t ? |
+| la variable | une durée T, en heures : toutes les valeurs ≥ 0 | un nombre X : 0, 1, 2, 3… (entier, sans maximum) |
+| le paramètre | le taux λ, en h⁻¹ | m = λ × t, sans unité : le **nombre moyen** de pannes sur la durée t (la calculatrice l'appelle λ, voir § 3) |
+| la moyenne | E(T) = 1/λ = 25 000 h | E(X) = m |
+| le dessin | une courbe (densité), probabilité = aire | des bâtons, comme la loi binomiale |
+
+**Le pont entre les deux est un seul événement, dit de deux façons.** « Aucune panne pendant la durée
+t » et « la première panne arrive après t », c'est exactement la même chose. Donc
+
+> **P(X = 0) = P(T > t) = e^(−λt) = e^(−m)**
+
+Pour un support sur un an : m = λt = 0,000 04 × 4 000 = 0,16, et P(X = 0) = e^(−0,16) ≈ **0,852** —
+c'est la probabilité « tenir un an » de la fiche 18.16, vue cette fois comme « zéro remplacement ».
+
+Et après une panne ? Le capteur neuf suit la même loi que celui qu'il remplace. Et même le capteur
+déjà en place depuis longtemps au 1ᵉʳ janvier n'est pas plus « fatigué » qu'un neuf : la loi
+exponentielle est **sans mémoire** (fiche 18.16). Où que l'on commence à regarder, l'attente jusqu'à
+la panne suivante suit donc **la même** loi exponentielle. L'axe du temps
+est une succession d'attentes exponentielles ; **compter** les pannes qui tiennent dans la durée t
+donne la loi de Poisson. C'est ainsi que le référentiel la définit : le nombre de réalisations
+pendant une durée donnée, quand le temps d'attente entre deux réalisations suit une loi
+exponentielle.
+
+**Pourquoi m = λ × t ?** Un taux fois une durée, comme une vitesse fois un temps : 0,000 04 panne par
+heure pendant 4 000 h, cela fait 0,16 panne en moyenne sur l'année (déjà vu dans l'aparté « λt a
+pourtant un sens » de la 18.16).
+
+**Changeons d'échelle : toute la ligne.** Chaque support donne en moyenne 0,000 04 panne par heure ;
+40 supports qui tournent en même temps en donnent 40 fois plus, comme 40 postes qui produisent chacun
+10 pièces par heure en sortent 400 à eux tous. La ligne tombe donc en panne au taux 40 × 0,000 04 = 0,001 6 par heure (une panne toutes les 1/0,001 6 = 625 h en
+moyenne), et sur l'année
+
+> m = 0,001 6 × 4 000 = 40 × 0,16 = **6,4 remplacements**
+
+— les 6,4 annoncés dans la fiche 18.16.
+
+**Le vérifier par simulation** (référentiel : outil informatique). Au tableur, on tire des attentes
+entre pannes avec =-625\\*LN(ALEA()) (fiche 18.16, § 7), on les cumule, et on compte celles qui
+tombent avant 4 000 h. Chaque ligne du tableur est une année simulée.
+
+[[FIG:poisson_processus]]
+
+Sur 1 000 années simulées ainsi, le nombre moyen de pannes vaut 6,49 (théorie : 6,4), et les
+fréquences de 0, 1, 2… pannes collent aux probabilités de la loi de Poisson de paramètre 6,4.
+
+**Laquelle des deux ? Faites le tri.** Même ligne, même taux (0,001 6 panne par heure). La règle : **regarder ce
+que l'on cherche**. Un nombre d'événements → loi de Poisson (la durée n'est alors qu'une donnée) ; un
+temps ou une distance → loi exponentielle.
+
+| la question du technicien | on cherche… | la loi |
+|---|---|---|
+| Combien de capteurs changera-t-on cette année ? | un nombre | Poisson, m = 6,4 |
+| Dans combien d'heures, en moyenne, la prochaine panne ? | une durée | exponentielle, moyenne 1/0,001 6 = 625 h |
+| Quelle chance d'avoir plus de 10 remplacements dans l'année ? | un nombre | Poisson : 1 − P(X ≤ 10) ≈ 0,061 (calcul au § 3) |
+| Quelle chance que la ligne tourne 1 000 h d'affilée sans panne ? | les deux marchent | P(T > 1 000) = e^(−0,001 6 × 1 000) = P(X = 0) avec m = 1,6 : e^(−1,6) ≈ 0,20 |
+
+La dernière ligne est le pont vu plus haut dans ce paragraphe (P(X = 0) = P(T > t)) : « aucune panne pendant t » se calcule aussi bien avec
+l'une qu'avec l'autre loi.
+
+### 3. La loi de Poisson : lire, représenter, calculer
+
+> **X suit la loi de Poisson de paramètre m** (m > 0) : X compte des événements qui arrivent **au
+> hasard, un par un, indépendamment les uns des autres, à taux constant**, sur une durée (ou une
+> longueur, une surface) donnée. X prend les valeurs 0, 1, 2, 3… sans maximum, et **m est le nombre
+> moyen** d'événements.
+
+*Attention au nom du paramètre : dans beaucoup d'énoncés, il s'appelle λ (« loi de Poisson de
+paramètre λ = 6,4 ») ; sur la calculatrice, λ (TI, NumWorks) ou μ (Casio). Ici on l'appelle m, pour ne pas le confondre avec le taux
+horaire λ de la fiche 18.16. Quelle que soit la lettre, c'est un nombre moyen d'événements sur la
+durée étudiée, sans unité.*
+
+**Calculer** : pas de formule à apprendre (le référentiel ne l'exige pas), c'est la calculatrice ou
+le tableur qui donne les probabilités.
+- Calculatrice : menu des lois de probabilité, loi de Poisson ; on entre m (appelé λ ou μ), puis k. Deux
+  commandes : **P(X = k)** (sur TI : poissonFdp ; sur Casio, menu DIST : Ppd) et **P(X ≤ k)** (sur TI :
+  poissonFRép ; sur Casio : Pcd). Sur NumWorks : application Probabilités, loi de Poisson.
+- Tableur : =LOI.POISSON.N(k;m;FAUX) donne P(X = k), =LOI.POISSON.N(k;m;VRAI) donne P(X ≤ k) (l'ancien
+  nom LOI.POISSON, sans .N, marche aussi).
+
+Pour les remplacements de capteurs, m = 6,4 :
+
+| k | 0 | 2 | 4 | 5 | 6 | 7 | 8 | 10 | 11 | 12 | 14 |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| P(X = k) | 0,002 | 0,034 | 0,116 | 0,149 | 0,159 | 0,145 | 0,116 | 0,053 | 0,031 | 0,016 | 0,004 |
+| P(X ≤ k) | 0,002 | 0,046 | 0,235 | 0,384 | 0,542 | 0,687 | 0,803 | 0,939 | 0,969 | 0,986 | 0,997 |
+
+**Représenter la loi** (capacité du référentiel) : un bâton de hauteur P(X = k) au-dessus de chaque
+entier k.
+
+[[FIG:poisson_batons]]
+
+Les bâtons culminent près de m (à k = 6), puis s'étirent vers la droite : 10, 12, 14 pannes restent
+possibles, de moins en moins probables, sans jamais devenir impossibles.
+
+**Traduire la question.** X ne prend que des valeurs entières : **« ≤ » et « < » ne sont plus
+pareils**, contrairement aux lois à densité (18.9, 18.16). Avec une densité, P(X = 12) est l'aire d'un
+trait, donc 0 ; ici, une année à exactement 12 pannes a la probabilité 0,016 : l'inclure ou non change le
+résultat. « Moins de 12 », c'est X ≤ 11.
+
+| on lit | on écrit | à la calculatrice |
+|---|---|---|
+| exactement 6 | P(X = 6) | P(X = 6) ≈ 0,159 |
+| au plus 10 (10 ou moins) | P(X ≤ 10) | P(X ≤ 10) ≈ 0,939 |
+| moins de 12 | P(X ≤ 11) | P(X ≤ 11) ≈ 0,969 |
+| au moins 12 (12 ou plus) | P(X ≥ 12) = 1 − P(X ≤ 11) | 1 − 0,969 ≈ 0,031 |
+| plus de 10 | P(X ≥ 11) = 1 − P(X ≤ 10) | 1 − 0,939 ≈ 0,061 |
+
+Le piège, c'est « au moins 12 » : l'événement contraire de « 12 ou plus » est « 11 ou moins », donc
+**1 − P(X ≤ 11)**, pas 1 − P(X ≤ 12) (qui oublierait les années à exactement 12 pannes).
+
+*Pour information (non exigible) : la calculatrice applique P(X = k) = e^(−m) × m^k / k!, avec
+k! = 1 × 2 × … × k et 0! = 1. Pour k = 0, on retrouve e^(−m) : le pont du § 2.*
+
+### 4. Espérance et écart-type
+
+> **E(X) = m** · **V(X) = m** · **σ(X) = √m**
+
+*Ces formules sont admises. E(X) = m se sent directement : m est défini comme le nombre moyen
+d'événements. V(X) = m, lui, se comprend avec le § 6 : pour une binomiale d'événements rares, la
+variance np(1 − p) vaut presque np, puisque 1 − p est presque 1.*
+
+**Capteurs** : E(X) = 6,4 et σ(X) = √6,4 ≈ **2,53**. Sur un grand nombre d'années, la ligne consomme
+en moyenne 6,4 capteurs par an ; d'une année à l'autre, le nombre s'écarte typiquement de 2 à 3 de
+cette moyenne (sur les 1 000 années simulées : moyenne 6,49, écart-type 2,56).
+
+**Deuxième piège** : σ = √m, pas m. La variance vaut m ; l'écart-type est sa racine, en nombre de
+pannes.
+
+*Comparez avec la fiche 18.16 : la binomiale B(40 ; 0,148), qui ne compte que les 40 capteurs
+d'origine, a pour espérance 5,9 et pour écart-type 2,2. La loi de Poisson compte aussi les pannes des
+capteurs de remplacement : 6,4 en moyenne, un peu plus.*
+
+### 5. Le stock de capteurs : la promesse de la fiche 18.16
+
+Le magasin garde sa règle : **être à court au plus une année sur vingt**, c'est-à-dire
+P(X > stock) ≤ 1/20 = 0,05. On lit plutôt l'événement contraire, « le stock suffit » :
+P(X ≤ stock) ≥ 0,95. Dans le tableau du § 3 :
+- stock de 10 : P(X ≤ 10) ≈ 0,939 < 0,95 — à court 6,1 % des années, plus d'une année sur vingt ;
+- stock de 11 : P(X ≤ 11) ≈ 0,969 ≥ 0,95 — à court 3,1 % des années, moins d'une sur vingt.
+
+Le stock nécessaire est **11** : c'est le chiffre annoncé dans la fiche 18.16. Il y a une rechange de
+plus qu'avec la binomiale (stock de 10) parce que les capteurs de remplacement peuvent eux aussi
+tomber en panne. Sur les 1 000 années simulées, 38 dépassent 11 pannes (3,8 %, théorie 3,1 %).
+
+**Troisième piège : un stock égal à la moyenne.** Avec 6 rechanges seulement, P(X > 6) = 1 − 0,542 =
+0,458 : le magasin serait à court presque **une année sur deux**. La moyenne dit ce qu'on consomme
+sur le long terme ; le stock, lui, doit couvrir les années chargées. Ordre de grandeur : la moyenne plus
+2 écarts-types, 6,4 + 2 × 2,53 ≈ 11,5. Mais c'est la loi qui tranche, avec le tableau du § 3 : 11 suffit
+déjà.
+
+### 6. Approcher une loi binomiale par une loi de Poisson : les événements rares
+
+Une caisse d'armoire électrique porte **2 000 points de soudure**. Chacun est défectueux avec la
+probabilité p = 0,001 5, indépendamment des autres. Le nombre X de soudures défectueuses d'une
+caisse suit la loi binomiale **B(2 000 ; 0,001 5)** : beaucoup d'essais, chacun très rarement un
+« succès ».
+
+Ce n'est pas nouveau : la ligne du § 2 peut se voir de la même façon. Découpez son année en 4 000 heures :
+à chaque heure, une panne ou non, avec la petite probabilité 0,001 6 (deux pannes dans la même heure
+sont si rares qu'on les néglige). Cela fait une binomiale B(4 000 ; 0,001 6), de moyenne 6,4, qu'on ne
+distingue pas de la loi de Poisson de paramètre 6,4 (P(X = 6) : 0,158 7 contre 0,158 6). Les soudures,
+c'est pareil : 2 000 occasions, une chance de défaut très petite à chacune.
+
+**Le paramètre** (capacité du référentiel) : on garde la même moyenne, **m = np** = 2 000 × 0,001 5
+= **3**.
+
+**L'illustrer au tableur** (référentiel : outil informatique) : en A2 à A12 les valeurs k = 0 à 10 ; en
+B2 =LOI.BINOMIALE.N(A2;2000;0,0015;FAUX), en C2 =LOI.POISSON.N(A2;3;FAUX), puis on recopie vers le bas.
+Extrait :
+
+| k | 0 | 1 | 2 | 3 | 5 |
+|---|---|---|---|---|---|
+| P(X = k), binomiale exacte | 0,049 7 | 0,149 2 | 0,224 1 | 0,224 2 | 0,100 8 |
+| P(X = k), loi de Poisson de paramètre 3 | 0,049 8 | 0,149 4 | 0,224 0 | 0,224 0 | 0,100 8 |
+
+Les deux lois coïncident presque au millième près. La raison : la variance de la binomiale,
+np(1 − p) = 2,995 5, vaut presque np = 3, et une loi de Poisson a justement une variance égale à sa
+moyenne. Si p n'est pas petit, 1 − p n'est plus presque 1, la variance de la binomiale devient
+nettement plus petite que np, et la loi de Poisson s'étale trop :
+
+[[FIG:poisson_binomiale]]
+
+**Quelle approximation choisir ?** Deux approximations d'une loi binomiale B(n ; p), pour deux
+situations différentes :
+
+| | approximation normale (fiche 18.10) | approximation de Poisson (fiche 18.17) |
+|---|---|---|
+| quand ? | n grand, p **pas trop petit** : beaucoup de « succès » et beaucoup d'« échecs » | n grand, p **très petit** : des événements **rares** |
+| indication courante (donnée par l'énoncé) | n ≥ 30, np ≥ 5 et n(1 − p) ≥ 5 | n ≥ 30, p ≤ 0,1 et np ≤ 10 environ |
+| loi utilisée | N(np ; √(np(1 − p))) : une cloche | loi de Poisson de paramètre m = np : des bâtons |
+| précaution | correction de continuité (± 0,5) | aucune : la loi de Poisson est déjà discrète |
+| exemple | 100 pièces, p = 0,2 : np = 20 (fiche 18.10) | 2 000 soudures, p = 0,001 5 : np = 3 |
+
+**Le réflexe : calculer np d'abord, puis regarder p.**
+1. **np petit (moins de 5)** : la loi normale est exclue. Pour les soudures, np = 3 et
+   σ = √(np(1 − p)) ≈ 1,73 : la cloche centrée sur 3 s'étale jusqu'à 3 − 2 × 1,73 ≈ −0,5 (une cloche
+   garde environ 95 % de son aire à moins de 2 écarts-types de sa moyenne, fiche 18.10). Une partie
+   tomberait sur des nombres **négatifs** de soudures défectueuses, ce qui est absurde. Avec p très
+   petit, c'est la loi de Poisson.
+2. **np et n(1 − p) au moins égaux à 5, et p pas petit** (les 100 pièces de la 18.10 : np = 20,
+   n(1 − p) = 80, p = 0,2) : la loi normale.
+3. **Entre les deux** (p très petit, mais np entre 5 et 10 environ, par exemple B(2 000 ; 0,004), où
+   np = 8) : les deux approximations restent utilisables ; avec p très petit, la loi de Poisson reste la
+   plus proche (P(X ≤ 8) : 0,592 5 exacte, 0,592 5 avec Poisson, 0,570 avec la loi normale). On suit
+   l'énoncé.
+
+*Pour comprendre : à l'examen, l'énoncé précise la loi à utiliser (les conditions d'approximation ne
+sont pas exigibles), et on doit savoir en trouver les paramètres. Le réflexe « np d'abord » sert à
+comprendre ce qu'on fait, et à repérer une loi manifestement mal choisie.*
+
+### 7. Compter sur une durée, une longueur ou une surface : d'autres situations d'atelier
+
+Tout ce qui précède vaut aussi en remplaçant le temps par une longueur ou une surface : des défauts
+répartis **au hasard, indépendamment, avec une densité constante**. Le paramètre est toujours le
+nombre moyen : **m = densité × longueur (ou surface)**.
+
+- **Tôle peinte** : 0,6 défaut par m² en moyenne ; sur un panneau de 2,5 m², m = 0,6 × 2,5 = 1,5 (cas
+  traité en entier dans le cas industriel).
+- **Arrivées à un poste** : 12 pièces par heure en moyenne ; en 10 minutes, m = 12 × 10/60 = **2**
+  (convertir d'abord : 10 min = 1/6 h ; pas 12 × 10 = 120).
+- **Distance entre deux défauts** : sur un cordon de soudure qui porte 0,04 défaut par mètre, la
+  distance d'un défaut au suivant suit une loi exponentielle de moyenne 1/0,04 = 25 m — la deuxième
+  face du même phénomène, comme au § 2.
+
+**Le contrôle par comptage** *(pour aller plus loin)* : un panneau où l'on attend m = 1,5 défaut en
+présente 6. À la calculatrice, P(X ≥ 6) = 1 − P(X ≤ 5) ≈ 0,004 5 : moins de 5 chances sur 1 000 si
+tout va bien. On soupçonne alors une cause particulière (buse encrassée, poussière dans la cabine),
+avec la même logique que les tests de la fiche 18.14.
+
+### 8. Les erreurs classiques et à retenir
+
+**Erreurs classiques :**
+1. **Prendre le taux pour paramètre** : λ = 0,000 04 par heure n'est pas m. Le paramètre est le
+   nombre moyen **sur la durée étudiée**, m = λ × t.
+2. **Oublier de convertir** : 12 pièces par heure sur 10 minutes, c'est m = 2, pas 120.
+3. **Mal traduire la question** : « au moins k » se calcule 1 − P(X ≤ k − 1), pas 1 − P(X ≤ k) ; et
+   P(X = k) et P(X ≤ k) sont deux commandes différentes de la calculatrice.
+4. **Confondre moyenne, écart-type et stock** : σ = √m (m est la variance) ; un stock égal à la moyenne
+   laisse à court presque une fois sur deux.
+5. **Choisir la mauvaise approximation** : la loi de Poisson pour des événements rares (p très petit,
+   np modéré), la loi normale quand np et n(1 − p) sont grands ; pas de correction de continuité avec
+   la loi de Poisson.
+6. **Confondre les deux faces** : regarder ce que l'on cherche. Une durée ou une distance entre deux
+   événements → loi exponentielle ; un nombre d'événements (même « pendant une durée t ») → loi de
+   Poisson.
+7. **Appliquer la loi de Poisson hors de son cadre** : des pannes qui s'accélèrent avec l'usure, des
+   défauts qui arrivent par paquets (une buse encrassée en crée dix d'un coup) ne sont ni
+   indépendants ni à taux constant.
+
+**À retenir :**
+- La loi de Poisson de paramètre m compte des événements **rares, indépendants, à taux constant**
+  sur une durée, une longueur ou une surface : **m = taux × durée**, le nombre moyen.
+- **E(X) = m, V(X) = m, σ(X) = √m.**
+- **P(X = 0) = e^(−m)** : « aucun événement pendant t » = « la première attente dépasse t » (18.16).
+- À la calculatrice : P(X = k) et P(X ≤ k) ; « au moins k » = 1 − P(X ≤ k − 1).
+- **B(n ; p) avec n grand et p très petit ≈ loi de Poisson de paramètre np** ; si p n'est pas petit,
+  c'est la loi normale (18.10).
+- Stock de capteurs de la 18.16 avec les remplacements : m = 6,4, stock de **11**.
+""",
+            "formules": """
+
+**Loi de Poisson de paramètre m** — X = nombre d'événements (rares, indépendants, à taux constant) sur
+une durée, une longueur ou une surface · valeurs 0, 1, 2… · m = taux × durée = nombre moyen · noté λ
+sur la calculatrice (μ sur Casio)
+
+**Probabilités** (calculatrice ou tableur) — P(X = k) ; P(X ≤ k) · « moins de k » : P(X ≤ k − 1) ·
+« au moins k » : 1 − P(X ≤ k − 1) · tableur : =LOI.POISSON.N(k;m;FAUX) et =LOI.POISSON.N(k;m;VRAI)
+
+**Espérance et écart-type** — E(X) = m · V(X) = m · σ(X) = √m
+
+**Lien avec la loi exponentielle** — même taux λ : durée entre deux événements → exponentielle de
+paramètre λ ; nombre sur une durée t → Poisson de paramètre m = λt · P(X = 0) = e^(−λt) = P(T > t)
+
+**Approximation d'une binomiale** — B(n ; p), n grand, p très petit ≈ Poisson de paramètre m = np
+(indication courante : n ≥ 30, p ≤ 0,1, np ≤ 10) · si n ≥ 30, np ≥ 5 et n(1 − p) ≥ 5, p pas petit : normale (18.10)
+
+*Pour information* — P(X = k) = e^(−m) × m^k / k!
+
+        """,
+            "exemple": """
+**Cas industriel — Des panneaux de porte trop souvent refusés**
+
+Une ligne de peinture traite des panneaux de porte de **2,5 m²**. Les défauts d'aspect (grains,
+coulures) apparaissent au hasard, indépendamment les uns des autres, avec une densité moyenne de
+**0,6 défaut par m²**. Le client **refuse un panneau à partir de 3 défauts**. Le service qualité veut
+connaître la part des panneaux refusés, et savoir jusqu'où réduire la densité de défauts pour
+descendre à 5 % de refus au plus.
+
+**Étape 1 — Le modèle.** Le nombre X de défauts d'un panneau suit une loi de Poisson de paramètre
+m = 0,6 × 2,5 = **1,5** (densité × surface : le nombre moyen de défauts par panneau).
+
+**Étape 2 — Les panneaux parfaits.** P(X = 0) = e^(−1,5) ≈ **0,223** : environ 22 % des panneaux
+sortent sans aucun défaut.
+
+**Étape 3 — Les panneaux refusés.** « À partir de 3 défauts », c'est X ≥ 3, dont le contraire est
+X ≤ 2 : P(X ≥ 3) = 1 − P(X ≤ 2) ≈ 1 − 0,809 = **0,191**. Près d'**un panneau sur cinq** est refusé.
+
+**Étape 4 — L'objectif de 5 %.** On cherche la densité pour laquelle P(X ≥ 3) ≤ 0,05. À la
+calculatrice, on essaie plusieurs valeurs de m = densité × 2,5 :
+
+| densité (défauts par m²) | 0,6 | 0,4 | 0,35 | 0,33 | 0,32 |
+|---|---|---|---|---|---|
+| m | 1,5 | 1 | 0,875 | 0,825 | 0,8 |
+| P(X ≥ 3) | 0,191 | 0,080 | 0,059 | 0,051 | 0,047 |
+
+Il faut descendre **sous 0,33 défaut par m²** environ (seuil exact ≈ 0,327), c'est-à-dire presque
+**diviser par deux** la densité de défauts (filtration de l'air de la cabine, nettoyage des buses).
+
+**Ce que le calcul apprend.** Avec 1,5 défaut par panneau « en moyenne », on pourrait croire que
+presque tous les panneaux passent sous la barre de 3. En réalité, la loi de Poisson s'étire vers la
+droite : près de 20 % des panneaux dépassent 2 défauts. Et pour diviser le taux de refus par
+presque 4 (de 19 % à 5 %), il suffit de diviser la densité par un peu moins de 2 : la queue de la loi
+réagit fortement au paramètre.
+""",
+            "exercice": """
+Une presse à découper tombe en panne au hasard, sans usure, en moyenne **1,2 fois par semaine**
+(une semaine = 5 jours ouvrés). On note X le nombre de pannes sur une durée donnée.
+
+**1.** Quelle loi suit le nombre de pannes en une semaine ? Donne son paramètre. Même question sur
+4 semaines.
+
+**2.** Calcule la probabilité qu'il n'y ait aucune panne dans une semaine.
+
+**3.** Calcule la probabilité d'au plus 2 pannes dans une semaine, puis d'au moins 3 pannes.
+
+**4.** Sur 4 semaines, donne l'espérance et l'écart-type du nombre de pannes. Calcule la probabilité
+d'au moins 9 pannes sur ces 4 semaines.
+
+**5.** Quelle loi suit la durée entre deux pannes ? Donne sa moyenne en jours ouvrés. Calcule de deux
+façons la probabilité de passer 2 jours ouvrés sans panne.
+
+**6.** Un lot de 500 pièces découpées contient des pièces défectueuses : chacune l'est avec la
+probabilité 0,004, indépendamment des autres. Quelle loi suit exactement le nombre de pièces
+défectueuses d'un lot ? Donne le paramètre de la loi de Poisson qui l'approche, puis calcule avec elle
+la probabilité d'avoir au plus 1 pièce défectueuse.
+
+**7.** *(Pour comprendre : à l'examen, l'énoncé précise la loi.)* Pourquoi l'approximation normale ne
+convient-elle pas à la question 6 ?
+""",
+            "corrige": """
+**1.** Pannes au hasard, sans usure, à taux constant : loi de Poisson. Paramètre = nombre moyen :
+**m = 1,2** pour une semaine ; **m = 4 × 1,2 = 4,8** pour 4 semaines.
+
+**2.** P(X = 0) = e^(−1,2) ≈ **0,301**.
+
+**3.** P(X ≤ 2) ≈ **0,880** (calculatrice). « Au moins 3 » est le contraire de « au plus 2 » :
+P(X ≥ 3) = 1 − 0,880 = **0,120**.
+
+**4.** m = 4,8 : E(X) = **4,8 pannes**, σ(X) = √4,8 ≈ **2,19 pannes**. P(X ≥ 9) = 1 − P(X ≤ 8) ≈
+1 − 0,944 = **0,056** (et non 1 − P(X ≤ 9), qui oublierait les périodes à exactement 9 pannes).
+
+**5.** Durée entre deux pannes : loi exponentielle de paramètre λ = 1,2 panne par semaine, de moyenne
+1/1,2 semaine ≈ 0,833 semaine, soit 0,833 × 5 ≈ **4,2 jours ouvrés**. 2 jours ouvrés = 0,4 semaine.
+Par la loi de Poisson : m = 1,2 × 0,4 = 0,48 et P(X = 0) = e^(−0,48) ≈ **0,619**. Par la loi
+exponentielle : P(T > 0,4) = e^(−1,2 × 0,4) = e^(−0,48) ≈ **0,619**. Même résultat : « aucune panne
+pendant 2 jours » et « la prochaine panne arrive après 2 jours » sont le même événement.
+*Attention : sur une semaine, λ et m valent tous deux 1,2 parce que la durée étudiée est exactement
+l'unité du taux ; sur 4 semaines, le taux reste λ = 1,2 par semaine, mais m = 4,8.*
+
+**6.** Exactement : loi binomiale **B(500 ; 0,004)**. Approximation : loi de Poisson de paramètre
+**m = np = 500 × 0,004 = 2**. P(X ≤ 1) ≈ **0,406** (la binomiale exacte donne 0,405 5 : l'écart est
+inférieur au millième).
+
+**7.** np = 2 < 5 : trop peu de pièces défectueuses en moyenne pour qu'une cloche se forme (elle
+déborderait nettement sous 0). p = 0,004 est très petit : les défauts sont rares, c'est le domaine de
+la loi de Poisson.
 """,
         },
         {
@@ -54707,6 +55296,26 @@ _mth("18.16", "Calculer avec la loi exponentielle (durée de vie sans usure)", [
 ], "Capteurs de moyenne 25 000 h : λ = 0,000 04 h⁻¹ ; P(T > 4 000) = e^(−0,16) ≈ 0,852 ; il n'en reste "
        "plus que 90 % en marche à t = −ln(0,90)/0,000 04 ≈ 2 634 h.")
 
+_mth("18.17", "Calculer avec la loi de Poisson (compter des événements rares)", [
+    "**D'abord, quelle loi ? Regarder ce que l'on cherche** : un nombre entier d'événements (« combien "
+    "de pannes, de défauts, de pièces ? ») → loi de Poisson, la durée n'étant qu'une donnée ; un temps "
+    "ou une distance (« au bout de combien de temps ? », « quel écart entre deux défauts ? ») → loi "
+    "exponentielle.",
+    "**Vérifier le modèle** : des événements qui arrivent au hasard, un par un, indépendamment, à taux "
+    "constant (pas d'usure, pas de défauts par paquets), comptés sur une durée, une longueur ou une "
+    "surface.",
+    "**Trouver le paramètre** : m = taux × durée (ou densité × surface), après avoir mis les unités "
+    "d'accord ; pour une binomiale d'événements rares, m = np.",
+    "**Traduire la question** : « exactement k » → P(X = k) ; « au plus k » → P(X ≤ k) ; « moins de k » → "
+    "P(X ≤ k − 1) ; « au moins k » → 1 − P(X ≤ k − 1).",
+    "**Calculer** à la calculatrice (loi de Poisson, paramètre m noté λ, ou μ sur Casio) ou au tableur "
+    "(=LOI.POISSON.N(k;m;VRAI) pour P(X ≤ k)).",
+    "**Interpréter** : E(X) = m, σ(X) = √m ; pour un stock, chercher le plus petit s tel que "
+    "P(X ≤ s) ≥ 0,95 (à court au plus une fois sur vingt), jamais s = m.",
+    "**Contrôler** : P(X = 0) = e^(−m) ; une probabilité entre 0 et 1.",
+], "Remplacements de capteurs sur un an : m = 40 × 0,000 04 × 4 000 = 6,4 ; P(X ≤ 10) ≈ 0,939 < 0,95 et "
+       "P(X ≤ 11) ≈ 0,969 : stock de 11.")
+
 _mth("18.7", "Calculer la taille d'échantillon nécessaire pour une précision donnée", [
     "**Isoler n dans la formule de la marge** : n = (1,96 × s / marge "
     "visée)².",
@@ -56802,6 +57411,152 @@ def gen_duree_fiabilite():
     }
 
 
+def _poisson_cumul(m, k):
+    """P(X ≤ k) pour la loi de Poisson de paramètre m (0 si k < 0)."""
+    return sum(math.exp(-m) * m ** i / math.factorial(i) for i in range(0, k + 1)) if k >= 0 else 0.0
+
+
+def gen_proba_poisson():
+    """Probabilité avec une loi de Poisson, question posée en mots (exactement, au plus, moins de, au moins,
+    plus de) : l'erreur visée est la traduction, pas le calcul (fait à la calculatrice)."""
+    contextes = [("pannes d'une machine en un mois", "panne", "pannes"),
+                 ("défauts d'aspect sur un panneau peint", "défaut", "défauts"),
+                 ("pièces qui arrivent à un poste en 10 minutes", "pièce", "pièces"),
+                 ("appels au service maintenance en une heure", "appel", "appels")]
+    while True:
+        m = random.choice([0.5, 0.8, 1, 1.2, 1.5, 2, 2.5, 3, 4, 5, 6, 6.4])
+        contexte, sing, plur = random.choice(contextes)
+        cas = random.choice(["exactement", "au plus", "moins de", "au moins", "plus de"])
+        kmax = int(m + 2 * math.sqrt(m)) + 1
+        k = random.randint(2 if cas in ("moins de", "plus de") else 1, max(kmax, 3))
+        pk, Fk, Fk1 = (math.exp(-m) * m ** k / math.factorial(k), _poisson_cumul(m, k),
+                       _poisson_cumul(m, k - 1))
+        mot = f"{k} {sing if k == 1 else plur}"
+        avant = f"le cas à 0 {sing}" if k == 1 else f"les cas de 0 à {k - 1} {plur}"
+        if cas == "exactement":
+            rep, ecrit, calc = pk, f"P(X = {k})", f"P(X = {k})"
+            cands = [(Fk, f"Tu as calculé P(X ≤ {k}), qui compte aussi {avant} : « exactement » se "
+                          f"calcule avec P(X = {k})."),
+                     (1 - Fk1, f"Tu as calculé P(X ≥ {k}) : « exactement {mot} », c'est P(X = {k}).")]
+        elif cas == "au plus":
+            rep, ecrit, calc = Fk, f"P(X ≤ {k})", f"P(X ≤ {k})"
+            cands = [(pk, f"Tu as calculé P(X = {k}) : « au plus {k} » compte aussi {avant} ; c'est "
+                          f"P(X ≤ {k})."),
+                     (Fk1, f"« Au plus {k} » inclut {k} lui-même : P(X ≤ {k}), pas P(X ≤ {k - 1})."),
+                     (1 - Fk, f"Tu as calculé « plus de {k} », 1 − P(X ≤ {k}) : « au plus {k} », c'est "
+                              f"P(X ≤ {k}).")]
+        elif cas == "moins de":
+            rep, ecrit, calc = Fk1, f"P(X ≤ {k - 1})", f"P(X ≤ {k - 1})"
+            cands = [(Fk, f"« Moins de {k} » exclut {k} : X ne prend que des valeurs entières, c'est "
+                          f"X ≤ {k - 1}, donc P(X ≤ {k - 1})."),
+                     (1 - Fk1, f"Tu as calculé « au moins {k} » : « moins de {k} », c'est P(X ≤ {k - 1}).")]
+        elif cas == "au moins":
+            rep, ecrit, calc = 1 - Fk1, f"P(X ≥ {k}) = 1 − P(X ≤ {k - 1})", f"1 − P(X ≤ {k - 1})"
+            contraire = f"« aucun {sing} »" if k == 1 else f"« {k - 1} ou moins »"
+            cands = [(1 - Fk, f"« Au moins {k} » inclut {k} : son contraire est {contraire}, donc "
+                              f"1 − P(X ≤ {k - 1}), pas 1 − P(X ≤ {k})."),
+                     (Fk1, f"C'est P(X ≤ {k - 1}), le contraire : il manque le « 1 − »."),
+                     (pk, f"Tu as calculé P(X = {k}) : « au moins {k} » compte aussi {k + 1}, {k + 2}…")]
+        else:
+            rep, ecrit, calc = 1 - Fk, f"P(X > {k}) = 1 − P(X ≤ {k})", f"1 − P(X ≤ {k})"
+            cands = [(1 - Fk1, f"« Plus de {k} » exclut {k} : c'est X ≥ {k + 1}, donc 1 − P(X ≤ {k}), pas "
+                               f"1 − P(X ≤ {k - 1})."),
+                     (Fk, f"C'est P(X ≤ {k}), le contraire : il manque le « 1 − ».")]
+        vals = [v for v, _ in cands]
+        if 0.02 < rep < 0.98 and all(abs(v - rep) > 0.003 for v in vals) and \
+                all(abs(vals[i] - vals[j]) > 0.003 for i in range(len(vals)) for j in range(i + 1, len(vals))):
+            break
+    fm = _fr_court(m)
+    texte = f"{cas} {mot}"
+    return {
+        "titre": "Loi de Poisson : calculer une probabilité",
+        "enonce": (f"Le nombre X de {contexte} suit une loi de Poisson de paramètre {fm}. Calcule la "
+                   f"probabilité d'avoir {texte}. Réponds au millième."),
+        "rep": rep, "tol": 0.001, "unite": "",
+        "diag": [_diag(v, msg) for v, msg in cands],
+        "corr": [
+            f"**Traduire.** « {texte} » s'écrit {ecrit}.",
+            f"**Calculer.** Calculatrice, loi de Poisson de paramètre {fm} (noté λ, ou μ sur Casio) : {calc} ≈ "
+            f"**{fr(rep, 3)}**.",
+        ],
+        "indice": "« Au plus k » : P(X ≤ k) ; « moins de k » : P(X ≤ k − 1) ; « au moins k » : "
+                  "1 − P(X ≤ k − 1) ; « plus de k » : 1 − P(X ≤ k).",
+    }
+
+
+def gen_parametre_poisson():
+    """Paramètre m d'une loi de Poisson : nombre moyen sur la durée, la surface ou le lot étudiés
+    (conversion d'unités, densité × surface, np, parc de machines)."""
+    while True:
+        cas = random.choice(["poste", "surface", "binomiale", "parc"])
+        if cas == "poste":
+            r, mn = random.choice([6, 9, 12, 15, 18, 24, 30]), random.choice([5, 10, 15, 20, 40])
+            rep = r * mn / 60
+            enonce = (f"Un poste reçoit en moyenne {r} pièces par heure, au hasard. Le nombre de pièces qui "
+                      f"arrivent en {mn} minutes suit une loi de Poisson.")
+            cands = [(r * mn, f"Tu as multiplié {r} par {mn} sans convertir : {mn} min = {mn}/60 h, donc "
+                              f"m = {r} × {mn}/60."),
+                     (r, f"{r} est le nombre moyen par HEURE : sur {mn} minutes, m = {r} × {mn}/60.")]
+            corr = [f"**Mettre les unités d'accord.** {mn} min = {mn}/60 h.",
+                    f"**Nombre moyen sur la durée.** m = {r} × {mn}/60 = **{_fr_court(rep, 2)}**."]
+        elif cas == "surface":
+            d = random.choice([0.2, 0.4, 0.5, 0.6, 0.8, 1.2])
+            lo, la = random.choice([(2, 1.25), (1.6, 1), (2.5, 1.2), (3, 0.8), (1.5, 1.5)])
+            rep = d * lo * la
+            fd = _fr_court(d)
+            enonce = (f"Une tôle peinte présente en moyenne {fd} défaut par m², répartis au hasard. On "
+                      f"contrôle un panneau de {_fr_court(lo)} m × {_fr_court(la)} m. Le nombre de défauts du "
+                      f"panneau suit une loi de Poisson.")
+            cands = [(d, f"{fd} est la densité, par m² : il faut la multiplier par la surface du panneau."),
+                     (d * (lo + la), f"Tu as multiplié par {_fr_court(lo)} + {_fr_court(la)} : la surface est "
+                                     f"{_fr_court(lo)} × {_fr_court(la)} m².")]
+            corr = [f"**Surface.** {_fr_court(lo)} × {_fr_court(la)} = {_fr_court(lo * la)} m².",
+                    f"**Nombre moyen sur le panneau.** m = {fd} × {_fr_court(lo * la)} = "
+                    f"**{_fr_court(rep, 2)}**."]
+        elif cas == "binomiale":
+            n = random.choice([500, 800, 1000, 1500, 2000, 2500, 4000])
+            p = random.choice([0.001, 0.0015, 0.002, 0.0025, 0.003, 0.004])
+            rep = n * p
+            fp = _fr_court(p)
+            enonce = (f"Un lot compte {fr(n, 0)} soudures ; chacune est défectueuse avec la probabilité {fp}, "
+                      f"indépendamment des autres. On approche la loi binomiale B({fr(n, 0)} ; {fp}) du nombre de "
+                      f"soudures défectueuses par une loi de Poisson.")
+            cands = [(p, f"{fp} est la probabilité pour UNE soudure : le paramètre est le nombre moyen de "
+                         f"défectueuses du lot, np = {fr(n, 0)} × {fp}.")]
+            corr = [f"**Même moyenne que la binomiale.** m = np = {fr(n, 0)} × {fp} = **{_fr_court(rep, 2)}**."]
+        else:
+            a = random.choice([0.5, 1, 1.5, 2, 3])
+            nb, mois = random.choice([4, 5, 8, 10, 12]), random.choice([1, 2, 3, 6])
+            rep = a * nb * mois / 12
+            fa = _fr_court(a)
+            duree = "un mois" if mois == 1 else f"{mois} mois"
+            enonce = (f"Chacune des {nb} machines d'un atelier tombe en panne au hasard, sans usure, en moyenne "
+                      f"{fa} fois par an. Le nombre de pannes de l'atelier sur {duree} suit une loi de "
+                      f"Poisson.")
+            cands = [(a * nb, f"{_fr_court(a * nb)} pannes, c'est pour une ANNÉE : sur {duree}, on multiplie encore "
+                              f"par {mois}/12."),
+                     (a * mois / 12, f"C'est le nombre moyen pour UNE machine : les {nb} machines additionnent "
+                                     f"leurs pannes, m = {fa} × {nb} × {mois}/12."),
+                     (a * nb * mois, f"Tu as multiplié par {mois} sans convertir : {mois} mois = {mois}/12 an.")]
+            corr = [f"**Taux de l'atelier.** {nb} machines × {fa} = {_fr_court(a * nb)} pannes par an.",
+                    f"**Sur la durée.** m = {_fr_court(a * nb)} × {mois}/12 = **{_fr_court(rep, 2)}**."]
+        vals = [v for v, _ in cands]
+        if 0.3 <= rep <= 15 and not (cas == "binomiale" and rep > 10) and \
+                all(abs(v - rep) > 0.02 for v in vals) and \
+                all(abs(vals[i] - vals[j]) > 0.02 for i in range(len(vals)) for j in range(i + 1, len(vals))):
+            break
+    return {
+        "titre": "Loi de Poisson : trouver le paramètre",
+        "enonce": enonce + " Quel est son paramètre ? Donne-le à 0,01 près.",
+        "rep": rep, "tol": 0.01, "unite": "",
+        "diag": [_diag(v, msg) for v, msg in cands],
+        "corr": corr,
+        "indice": "Le paramètre est le nombre moyen d'événements sur la durée (ou la surface, ou le lot) "
+                  "étudiée : taux × durée, densité × surface, ou np. Mets d'abord les unités d'accord, et calcule "
+                  "d'une traite (par exemple 18 × 5/60), sans arrondir la fraction d'heure ou d'année.",
+    }
+
+
 def decimales_affichage(tol):
     """Nombre de décimales pour afficher la réponse d'un générateur : assez pour que la valeur
     AFFICHÉE soit acceptée par la tolérance (10⁻ᵈ ≤ tol, donc erreur d'arrondi ≤ tol/2), et au
@@ -56897,7 +57652,8 @@ def fabriquer_exo(famille=None):
                                   gen_ic_proportion, gen_taille_proportion,
                                   gen_test_moyenne, gen_test_proportion,
                                   gen_comparaison_moyennes, gen_comparaison_proportions,
-                                  gen_proba_exponentielle, gen_duree_fiabilite],
+                                  gen_proba_exponentielle, gen_duree_fiabilite,
+                                  gen_proba_poisson, gen_parametre_poisson],
     }
     if famille and famille in catalogue:
         pool = catalogue[famille]
@@ -60801,8 +61557,8 @@ ATELIERS = [
                                                         "24 × P(T ≤ 6 000)."),
                         (24 * 6000 / 50000, "24 × λt = 2,88, c'est le nombre moyen de pannes dans l'année si "
                                             "chaque module en panne est remplacé par un neuf, qui peut "
-                                            "lui aussi tomber en panne (loi de Poisson, fiche 18.17, à "
-                                            "venir). Ici on compte seulement les 24 modules d'origine : 24 × P(T ≤ 6 000).")]},
+                                            "lui aussi tomber en panne (loi de Poisson, fiche 18.17). "
+                                            "Ici on compte seulement les 24 modules d'origine : 24 × P(T ≤ 6 000).")]},
             {"type": "qcm", "label": "Un module de 4 ans",
              "question": "Un module a déjà fonctionné 4 ans (24 000 h) sans panne. Quelle est la "
                          "probabilité qu'il tienne encore l'année suivante (6 000 h de plus) ?",
@@ -60849,6 +61605,121 @@ ATELIERS = [
                      "nombre moyen de composants tombés en panne, parmi n en service au départ, est "
                      "n × (1 − e^(−λt)) ; et un composant âgé a la même fiabilité qu'un neuf — le remplacement "
                      "préventif ne sert à rien.",
+    },
+    {
+        "id": "at149",
+        "chapitre": "Bloc 18",
+        "titre": "Défauts sur des cordons de soudure : compter avec la loi de Poisson",
+        "theme": "Probabilités",
+        "fiche": "18.17",
+        "vocabulaire": [
+            ("densité de défauts", "le nombre moyen de défauts par unité de longueur (ici par mètre de "
+             "cordon)."),
+            ("paramètre m", "le nombre moyen de défauts sur la longueur étudiée : m = densité × longueur ; "
+             "noté λ sur la calculatrice (μ sur Casio)."),
+            ("au moins k", "k ou plus ; son contraire est « k − 1 ou moins » : P(X ≥ k) = 1 − P(X ≤ k − 1)."),
+        ],
+        "enonce": "Un robot soude des cordons de 50 m sur des châssis. Les défauts (porosités) apparaissent "
+                  "au hasard le long du cordon, indépendamment les uns des autres, avec une densité moyenne "
+                  "de 0,04 défaut par mètre. Le contrôle qualité refuse un cordon à partir de 4 défauts. On "
+                  "note X le nombre de défauts d'un cordon, qui suit une loi de Poisson. On veut la part des "
+                  "cordons parfaits, la part des cordons refusés, et savoir quelle loi utiliser dans deux "
+                  "situations voisines.",
+        "etapes": [
+            {"type": "numerique", "label": "Paramètre m de la loi de Poisson (défauts par cordon)", "unite": "",
+             "attendu": 0.04 * 50, "tol": 0.01,
+             "consigne": "m = densité × longueur : le nombre moyen de défauts sur un cordon.",
+             "indice": "0,04 défaut par mètre, sur 50 m.",
+             "pieges": [(0.04, "0,04 est la densité, par MÈTRE : sur un cordon de 50 m, m = 0,04 × 50."),
+                        (50 / 0.04, "Tu as divisé 50 par 0,04 : c'est un nombre de mètres, pas un nombre de "
+                                    "défauts. m = 0,04 × 50."),
+                        (0.04 / 50, "Tu as divisé : la densité se MULTIPLIE par la longueur, m = 0,04 × 50.")]},
+            {"type": "numerique", "label": "Probabilité qu'un cordon soit parfait : P(X = 0)", "unite": "",
+             "attendu": math.exp(-2), "tol": 0.0005,
+             "depend_de": {"etape": 1, "formule": lambda v: math.exp(-v)},
+             "consigne": "P(X = 0) = e^(−m). Garde au moins 4 décimales.",
+             "indice": "e^(−2) : touche eˣ, avec le signe moins (ou P(X = 0) à la calculatrice).",
+             "pieges": [(1 - math.exp(-2), "C'est 1 − e^(−2), la probabilité d'AU MOINS un défaut : un cordon "
+                                           "parfait, c'est zéro défaut, P(X = 0) = e^(−2)."),
+                        (math.exp(-2) * 2 ** 2 / 2, "C'est P(X = 2), l'un des deux cas les plus fréquents (avec "
+                                                    "1 défaut) : un cordon parfait, c'est P(X = 0)."),
+                        (math.exp(2), "Signe moins oublié : e^(+2) dépasse 1, ce n'est pas une probabilité.")]},
+            {"type": "numerique", "label": "Probabilité d'au plus 3 défauts : P(X ≤ 3)", "unite": "",
+             "attendu": sum(math.exp(-2) * 2 ** i / math.factorial(i) for i in range(4)), "tol": 0.0005,
+             "depend_de": {"etape": 1, "formule": lambda v: sum(math.exp(-v) * v ** i / math.factorial(i)
+                                                                for i in range(4))},
+             "consigne": "À la calculatrice : loi de Poisson, paramètre m (noté λ, ou μ sur Casio), P(X ≤ 3). Garde au moins "
+                         "4 décimales : ce résultat sert à l'étape suivante.",
+             "indice": "Poisson cumulée : dans la case λ (μ sur Casio), entrer m = 2, et non la densité 0,04 ; "
+                       "k = 3.",
+             "pieges": [(sum(math.exp(-2) * 2 ** i / math.factorial(i) for i in range(3)),
+                         "C'est P(X ≤ 2), c'est-à-dire « moins de 3 » : « au plus 3 » inclut 3, P(X ≤ 3)."),
+                        (math.exp(-2) * 2 ** 3 / 6, "C'est P(X = 3), exactement 3 défauts : « au plus 3 » "
+                                                    "compte aussi 0, 1 et 2 défauts, P(X ≤ 3).")]},
+            {"type": "numerique", "label": "Probabilité qu'un cordon soit refusé : P(X ≥ 4)", "unite": "",
+             "attendu": 1 - sum(math.exp(-2) * 2 ** i / math.factorial(i) for i in range(4)), "tol": 0.0005,
+             "depend_de": {"etape": 3, "formule": lambda v: 1 - v},
+             "consigne": "Refusé = « à partir de 4 défauts » = au moins 4 : passe par l'événement contraire.",
+             "indice": "Le contraire de « 4 ou plus » est « 3 ou moins » : 1 − P(X ≤ 3).",
+             "pieges": [(1 - sum(math.exp(-2) * 2 ** i / math.factorial(i) for i in range(5)),
+                         "C'est 1 − P(X ≤ 4), c'est-à-dire « plus de 4 » : il oublie les cordons à exactement 4 "
+                         "défauts, qui sont refusés eux aussi. Refusé = X ≥ 4 = 1 − P(X ≤ 3)."),
+                        (1 - sum(math.exp(-2) * 2 ** i / math.factorial(i) for i in range(3)),
+                         "C'est 1 − P(X ≤ 2) = P(X ≥ 3) : un cordon à 3 défauts est accepté. Refusé = X ≥ 4 = "
+                         "1 − P(X ≤ 3).")]},
+            {"type": "numerique", "label": "Écart-type du nombre de défauts par cordon", "unite": "défauts",
+             "attendu": math.sqrt(2), "tol": 0.005,
+             "depend_de": {"etape": 1, "formule": lambda v: math.sqrt(v)},
+             "consigne": "Pour une loi de Poisson, V(X) = m et σ(X) = √m. Donne σ au centième.",
+             "indice": "√2.",
+             "pieges": [(2, "2 est la VARIANCE (et l'espérance) : l'écart-type en est la racine, √2 ≈ 1,414."),
+                        (4, "Tu as élevé au carré : c'est la variance qui vaut m = 2, l'écart-type vaut √2.")]},
+            {"type": "qcm", "label": "La distance entre deux défauts",
+             "question": "Le long d'un cordon, quelle est la distance moyenne entre deux défauts consécutifs ?",
+             "options": ["0,04 m : c'est la densité de défauts",
+                         "2 m : c'est le nombre moyen de défauts par cordon",
+                         "25 m : la distance entre deux défauts suit une loi exponentielle de moyenne 1/0,04"],
+             "bonne": 2,
+             "diagnostics": {0: "0,04 est un nombre de défauts PAR mètre, pas une distance. La distance moyenne "
+                                "entre deux défauts est son inverse : 1/0,04 = 25 m.",
+                             1: "2 est un nombre de défauts (sur 50 m), pas une distance. Deux défauts en moyenne "
+                                "sur 50 m : ils sont espacés de 25 m en moyenne, 1/0,04."}},
+            {"type": "qcm", "label": "Quelle approximation ?",
+             "question": "Sur une autre ligne, un lot compte 1 000 soudures par points ; chacune est défectueuse "
+                         "avec la probabilité 0,002, indépendamment. Quelle loi approche le nombre de soudures "
+                         "défectueuses d'un lot ? (Pour comprendre : à l'examen, l'énoncé précise la "
+                         "loi.)",
+             "options": ["La loi normale de moyenne 2 et d'écart-type √(1 000 × 0,002 × 0,998)",
+                         "La loi de Poisson de paramètre 2",
+                         "La loi de Poisson de paramètre 0,002"],
+             "bonne": 1,
+             "diagnostics": {0: "np = 2 < 5 : trop peu de défectueuses en moyenne pour qu'une cloche se forme "
+                                "(elle déborderait sous 0). p = 0,002 est très petit : événements rares, loi de "
+                                "Poisson.",
+                             2: "0,002 est la probabilité d'UNE soudure. Le paramètre est le nombre moyen de "
+                                "défectueuses du lot : m = np = 1 000 × 0,002 = 2."}},
+        ],
+        "corrige": {
+            "enonce": "Cordons de 50 m, 0,04 défaut par mètre au hasard, refus à partir de 4 défauts.",
+            "regle": "**Loi de Poisson de paramètre m = densité × longueur ; P(X = 0) = e^(−m) ; « au moins k » "
+                     "= 1 − P(X ≤ k − 1) ; E(X) = V(X) = m, σ(X) = √m ; B(n ; p) avec p très petit ≈ Poisson de "
+                     "paramètre np.**",
+            "conversions": "Densité en défauts par mètre et longueur en mètres : m est un nombre de défauts, "
+                           "sans unité.",
+            "remplacement": "m = 0,04 × 50 ; P(X = 0) = e^(−2) ; P(X ≤ 3) à la calculatrice ; "
+                            "P(X ≥ 4) = 1 − P(X ≤ 3) ; σ = √2",
+            "calcul": "m = **2 défauts** par cordon en moyenne\n\nP(X = 0) = e^(−2) ≈ **0,135 3** : 13,5 % de "
+                      "cordons parfaits\n\nP(X ≤ 3) ≈ **0,857 1**\n\nP(X ≥ 4) = 1 − 0,857 1 ≈ **0,142 9** : environ "
+                      "14 % de cordons refusés\n\nσ = √2 ≈ **1,414 défaut**\n\ndistance moyenne entre deux "
+                      "défauts : 1/0,04 = **25 m** ; lot de 1 000 soudures : loi de Poisson de paramètre **2**",
+            "verification": "**Contrôle de cohérence** : P(X = 0) + P(X ≥ 1) = 1, et 0,135 3 < 0,857 1 < 1 ; les "
+                            "cas les plus fréquents sont 1 et 2 défauts, à égalité (P(X = 1) = P(X = 2) ≈ 0,271) ; « refusé » compte "
+                            "4, 5, 6… défauts, d'où le contraire « 3 ou moins ».",
+        },
+        "a_retenir": "À retenir : pour des défauts rares, indépendants, de densité constante, le nombre de "
+                     "défauts suit une loi de Poisson de paramètre m = densité × longueur ; P(X = 0) = e^(−m) ; "
+                     "« au moins k » = 1 − P(X ≤ k − 1) ; σ = √m ; la distance entre deux défauts suit la loi "
+                     "exponentielle de moyenne 1/densité.",
     },
     {
         "id": "at29",
@@ -68772,16 +69643,16 @@ MATIERES_PROGRAMME = [
          "approfondissement hors référentiel (droites et plans dans l'espace, distance "
          "point-plan). Ne tombe pas à l'examen.",
          [(19, ["19.1", "19.3", "19.2", "19.4", "19.6"])]),
-        ("Statistiques et Probabilités (évalué)", "Incomplet (à enrichir)",
+        ("Statistiques et Probabilités (évalué)", "Complet",
          "Statistique descriptive et inférentielle, probabilités simples et conditionnelles, "
          "loi binomiale, espérance/écart-type, loi uniforme, loi normale et approximation d'une "
-         "binomiale, somme de variables et théorème de la limite centrée, loi exponentielle, "
+         "binomiale, somme de variables et théorème de la limite centrée, loi exponentielle, loi de "
+         "Poisson et approximation d'une binomiale par une loi de Poisson, "
          "taille d'échantillon, "
          "statistique à deux variables (ajustement affine, corrélation), intervalle de confiance "
          "d'une proportion, tests d'hypothèse sur une proportion et sur une moyenne, "
-         "comparaison de deux proportions ou de deux moyennes. Non traitée : loi de "
-         "Poisson.",
-         [(7, ["7.3"]), (17, ["17.3", "17.6", "17.8"]), (18, ["18.1", "18.2", "18.3", "18.5", "18.6", "18.9", "18.10", "18.11", "18.7", "18.13", "18.14", "18.15", "18.16"])]),
+         "comparaison de deux proportions ou de deux moyennes.",
+         [(7, ["7.3"]), (17, ["17.3", "17.6", "17.8"]), (18, ["18.1", "18.2", "18.3", "18.5", "18.6", "18.9", "18.10", "18.11", "18.7", "18.13", "18.14", "18.15", "18.16", "18.17"])]),
     ]),
 ]
 
@@ -69164,7 +70035,7 @@ elif PAGE == PAGE_MATHS:
         '<b>hors épreuve</b>, le programme complémentaire non évalué (calcul matriciel, courbes '
         'de Bézier : fiches 19.1 à 19.4) et une fiche d\'approfondissement (19.6, droites et '
         'plans dans l\'espace), toutes marquées « hors épreuve ». Attention : certaines notions '
-        'évaluées ne sont pas encore traitées ici (loi de Poisson, équations '
+        'évaluées ne sont pas encore traitées ici (équations '
         'différentielles du second ordre) — voir le tableau de bord. Ce sont les mêmes fiches que dans '
         '« Cours », réunies ici pour ne pas les chercher au milieu des chapitres '
         'techniques.</div>',

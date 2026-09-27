@@ -24,7 +24,7 @@ prérequis et la répartition usuelle) :
 1. ✅ 17.7 ln et exp — 2. ✅ 17.8 statistique à deux variables — 3. ✅ 18.9 loi uniforme —
 4. ✅ 18.10 loi normale et approximation binomiale — 5. ✅ 18.11 somme de variables, limite centrée —
 6. ✅ 18.12 méthode d'Euler — 7. ✅ 18.13 IC d'une proportion — 8. ✅ 18.14 tests sur une proportion / une moyenne —
-9. ✅ 18.15 tests de comparaison — 10. ✅ 18.16 loi exponentielle — 11. loi de Poisson — 12. nombres
+9. ✅ 18.15 tests de comparaison — 10. ✅ 18.16 loi exponentielle — 11. ✅ 18.17 loi de Poisson — 12. nombres
 complexes (forme algébrique, Δ < 0) — 13. équations différentielles du second ordre.
 
 ### 17.7 — Fonctions exponentielle et logarithme népérien (faite le 2026-09-25)
@@ -163,6 +163,46 @@ complexes (forme algébrique, Δ < 0) — 13. équations différentielles du sec
   at145 et générateurs non cliqués dans l'interface (la fiche s'ouvre sans erreur dans un
   AppTest ; outil d'audit : 0 défaut).
 - ✅ Interface vérifiée dans un vrai navigateur le 2026-09-27 : atelier at145 (pièges, bonnes valeurs, QCM, corrigé), gen_ic_proportion, gen_taille_proportion, figures proportion_en_cloche, ic_proportion_simulation regardées dans l'app (voir « Dette d'interface 17.7 à 18.13 »).
+
+### 18.17 — Loi de Poisson, compter des événements rares (faite le 2026-09-27)
+
+- Référentiel (annexe I, Probabilités 2) : loi de Poisson introduite comme nombre de réalisations sur
+  une durée quand l'attente entre deux réalisations suit une loi exponentielle ; représenter la loi,
+  calculer à la calculatrice ou au tableur, interpréter E et σ, déterminer le paramètre de la loi de
+  Poisson approchant une binomiale. Expression explicite « non attendue » (donnée pour information) ;
+  conditions d'approximation « non exigibles ».
+- Placée après 18.16 (… 18.11 → 18.16 → 18.17 → 18.7 …), avec méthode, figures `poisson_processus`
+  (six années simulées, graine 3 : 10, 6, 8, 4, 4, 7 pannes ; attente exponentielle et nombre de
+  Poisson sur le même axe), `poisson_batons` (m = 6,4, stock de 11) et `poisson_binomiale`
+  (B(2 000 ; 0,001 5) contre Poisson(3), B(20 ; 0,3) contre Poisson(6)), atelier at149 (cordons de
+  soudure, 0,04 défaut par mètre, étapes 2 à 5 avec `depend_de`), générateurs `gen_proba_poisson`
+  (traduction exactement / au plus / moins de / au moins / plus de) et `gen_parametre_poisson`
+  (taux × durée avec conversion, densité × surface, np limité à 10, parc de machines), 9 questions
+  (bonne réponse en positions 1, 2, 3, 0, 3, 0, 1, 2, 1).
+- Promesse de la 18.16 tenue : m = 40 × 0,16 = 6,4 remplacements, stock de 11 (P(X ≤ 10) ≈ 0,939,
+  P(X ≤ 11) ≈ 0,969) ; P(X = 0) = e^(−0,16) ≈ 0,852, la fiabilité sur un an de la 18.16. Les « à
+  venir » de la 18.16 sont retirés.
+- Choix validés par l'auteur : paramètre noté m (λ sur TI et NumWorks, μ sur Casio : expliqué dès le
+  § 2) ; les deux faces du même processus rendues explicites (tableau, pont P(X = 0) = P(T > t),
+  encadré « Laquelle des deux ? Faites le tri », question de quiz à réponse exponentielle ; critère :
+  regarder ce que l'on cherche, un nombre ou une durée) ; les deux approximations d'une binomiale
+  distinguées (tableau « Quelle approximation choisir ? », réflexe « np d'abord » en trois cas) ; les
+  4 questions de choix Poisson/normale gardées avec la mention « pour comprendre : à l'examen,
+  l'énoncé précise la loi ».
+- Chiffres de la simulation des 1 000 années (moyenne 6,49, écart-type 2,56, 38 années au-delà de 11
+  pannes) : attentes exponentielles de moyenne 625 h cumulées sur 4 000 h, `random.Random(2026)`.
+- Deux tours de relecture (justesse + clarté) : 4 bloquants au 1ᵉʳ (dont « 2 défauts, le cas le plus
+  fréquent » alors que P(X = 1) = P(X = 2) pour m = 2), aucun au 2ᵉ.
+- ✅ Vérifié le 2026-09-27 dans un vrai navigateur, 32 contrôles OK : at149 en entier (chaque piège
+  puis la bonne valeur, les deux QCM, corrigé déroulé), les deux générateurs (ligne « Réponse »
+  propre), les trois figures chargées et regardées, les six onglets sans marque de rendu ratée ;
+  formule `=-625*LN(ALEA())` affichée entière.
+- Tableau de bord : « Statistiques et Probabilités » passé à « Complet » (contenu évalué des modules
+  Statistique descriptive, Probabilités 1, Probabilités 2 hors processus aléatoires et Statistique
+  inférentielle vérifié dans les fiches).
+- Reste à faire, commits séparés : marge de 1e-9 dans les comparateurs (|1,49 − 1,5| vaut
+  0,010 000 000 000 000 009 en machine : réponse au bord de la tolérance refusée) ; notation P_A(B)
+  du référentiel à mentionner dans la 18.5.
 
 ### 18.16 — Loi exponentielle, durée de vie sans usure (faite le 2026-09-26)
 
