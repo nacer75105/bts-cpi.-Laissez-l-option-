@@ -24,7 +24,7 @@ prérequis et la répartition usuelle) :
 1. ✅ 17.7 ln et exp — 2. ✅ 17.8 statistique à deux variables — 3. ✅ 18.9 loi uniforme —
 4. ✅ 18.10 loi normale et approximation binomiale — 5. ✅ 18.11 somme de variables, limite centrée —
 6. ✅ 18.12 méthode d'Euler — 7. ✅ 18.13 IC d'une proportion — 8. ✅ 18.14 tests sur une proportion / une moyenne —
-9. ✅ 18.15 tests de comparaison — 10. ✅ 18.16 loi exponentielle — 11. ✅ 18.17 loi de Poisson — 12. nombres
+9. ✅ 18.15 tests de comparaison — 10. ✅ 18.16 loi exponentielle — 11. ✅ 18.17 loi de Poisson — 12. ✅ 18.18 nombres
 complexes (forme algébrique, Δ < 0) — 13. équations différentielles du second ordre.
 
 ### 17.7 — Fonctions exponentielle et logarithme népérien (faite le 2026-09-25)
@@ -163,6 +163,40 @@ complexes (forme algébrique, Δ < 0) — 13. équations différentielles du sec
   at145 et générateurs non cliqués dans l'interface (la fiche s'ouvre sans erreur dans un
   AppTest ; outil d'audit : 0 défaut).
 - ✅ Interface vérifiée dans un vrai navigateur le 2026-09-27 : atelier at145 (pièges, bonnes valeurs, QCM, corrigé), gen_ic_proportion, gen_taille_proportion, figures proportion_en_cloche, ic_proportion_simulation regardées dans l'app (voir « Dette d'interface 17.7 à 18.13 »).
+
+### 18.18 — Nombres complexes, prérequis du second ordre (faite le 2026-09-27)
+
+- Référentiel (annexe I, module Équations différentielles) : les complexes sont introduits « pour
+  disposer de l'équation caractéristique d'une équation différentielle linéaire du second ordre » ;
+  forme algébrique, somme, produit, conjugué ; « on se limite à l'écriture algébrique » ; résoudre une
+  équation du second degré à coefficients réels. Ni module, ni argument, ni forme trigonométrique ou
+  exponentielle, ni quotient : ils ne sont pas au programme et ne servent pas à la 18.19.
+- Placée en fin de bloc 18, après 18.12 (juste avant la future 18.19), avec méthode, figures
+  `second_degre_trois_cas` (Δ > 0, = 0, < 0 ; axe de symétrie = partie réelle) et
+  `oscillateur_trois_cas` (x″ + c x′ + 26 x = 0 pour c = 12, 2, 0 : retour sans osciller, oscillation
+  amortie, oscillation sans fin ; enveloppe ±√1,04·e^(−t)), atelier at150 (pied antivibratile,
+  25 r² + 200 r + 22 900 = 0, racines −4 ± 30i, 4,8 Hz), générateurs `gen_calcul_complexe` (somme,
+  différence, produit, z × z̄ ; affichage des termes signés par `_termes`) et `gen_racines_complexes`
+  (partie réelle ou imaginaire, a = 1, 2, 4, cas b = 0), 9 questions (bonne réponse en positions 1, 0,
+  2, 1, 3, 0, 1, 3, 2).
+- Choix validés par l'auteur : fiche annoncée comme prérequis de la 18.19 (§ 1 : du système
+  masse-ressort-amortisseur à l'équation caractéristique par x = e^(rt), même outil exponentiel qu'en
+  18.4 et 18.16) ; c reste l'amortissement (lettre des cours de mécanique), l'ambiguïté avec le c de
+  Δ = b² − 4ac étant levée par un encadré AVANT le premier calcul (Δ = c² − 4mk), les racines notées
+  α ± βi (produit α² + β² = k/m, somme −c/m) ; somme et produit des racines démontrés avant d'être
+  utilisés ; ancrage CPI : impédances (notation j), vibrations (tôle frappée : β la note, α la vitesse
+  d'extinction).
+- Deux tours de relecture (justesse + clarté) : 4 bloquants au 1ᵉʳ (double sens de c ; somme et produit
+  des racines utilisés sans être introduits ; « −2² + 3² = 13 » et « + − » dans les corrigés des
+  générateurs), aucun au 2ᵉ.
+- Trouvé au premier rendu dans l'app : les deux figures s'affichaient vides (16 px) à cause de « Δ < 0 »
+  écrit tel quel dans leur SVG ; corrigé (&lt;) et devenu un contrôle d'audit (commit séparé).
+- ✅ Vérifié le 2026-09-27 dans un vrai navigateur, 32 contrôles OK : at150 en entier (chaque piège puis
+  la bonne valeur, les deux QCM, corrigé déroulé), les deux générateurs (ligne « Réponse » propre), les
+  deux figures affichées à leur taille (436 px et 370 px) et regardées, les six onglets sans marque de
+  rendu ratée.
+- Tableau de bord : ligne « Analyse » complétée (nombres complexes) ; reste « Non traitées : équations
+  différentielles du second ordre » (fiche 18.19, annoncée « en préparation »).
 
 ### 18.17 — Loi de Poisson, compter des événements rares (faite le 2026-09-27)
 

@@ -6395,6 +6395,84 @@ def poisson_binomiale():
     return _svg("".join(p_), 760, 396)
 
 
+def second_degre_trois_cas():
+    x0, y0, kx, ky = 110, 330, 70, 18  # origine du repère ; 70 px par unité en x, 18 px en y
+    X = lambda x: x0 + kx * (x + 0.5)  # noqa: E731  (x de −0,5 à 5)
+    Y = lambda y: y0 - ky * y  # noqa: E731
+    p_ = [_txt(40, 24, "Trois trinômes de même axe x = 2 : seul change le terme constant.", 12, TRAIT, "start", True),
+          _txt(40, 40, "Une racine réelle, c'est un point où la parabole coupe l'axe des x.", 11, FIN)]
+    p_.append(f"<line x1='{X(-0.5)}' y1='{Y(0)}' x2='{X(5)}' y2='{Y(0)}' stroke='{FIN}' stroke-width='1.4'/>")
+    p_.append(f"<line x1='{X(0)}' y1='{Y(-2)}' x2='{X(0)}' y2='{Y(14)}' stroke='{FIN}' stroke-width='1.4'/>")
+    for x in range(0, 5):
+        p_.append(_txt(X(x), Y(0) + 16, str(x), 11, FIN, "middle"))
+    p_.append(_txt(X(5) + 4, Y(0) + 4, "x", 11, FIN))
+    for y in (5, 10):
+        p_.append(_txt(X(0) - 6, Y(y) + 4, str(y), 11, FIN, "end"))
+    p_.append(f"<line x1='{X(2)}' y1='{Y(-2)}' x2='{X(2)}' y2='{Y(14)}' stroke='{FIN}' stroke-width='1' "
+              f"stroke-dasharray='4 4'/>")
+    p_.append(_txt(X(2) + 4, Y(14) + 4, "axe x = 2 = −b/(2a)", 11, FIN, "start"))
+    for c, coul, lib, xl, yl in ((3, ALESAGE, "x² − 4x + 3 : Δ = 4 > 0, deux racines 1 et 3", 4.35, 2.6),
+                                  (4, OK, "x² − 4x + 4 : Δ = 0, racine double 2", 4.35, 5.4),
+                                  (13, ARBRE, "x² − 4x + 13 : Δ = −36 &lt; 0", 4.35, 11.5)):
+        pts = []
+        for i in range(0, 121):
+            x = -0.2 + 4.4 * i / 120
+            y = x * x - 4 * x + c
+            if y <= 14:
+                pts.append(f"{X(x):.1f},{Y(y):.1f}")
+        p_.append(f"<polyline points='{' '.join(pts)}' fill='none' stroke='{coul}' stroke-width='2.4'/>")
+        p_.append(_txt(X(xl), Y(yl), lib, 11, coul, "start", True))
+    for x in (1, 3):
+        p_.append(f"<circle cx='{X(x)}' cy='{Y(0)}' r='4.5' fill='{ALESAGE}'/>")
+    p_.append(f"<circle cx='{X(2)}' cy='{Y(0)}' r='4.5' fill='{OK}'/>")
+    p_.append(f"<circle cx='{X(2)}' cy='{Y(9)}' r='4' fill='{ARBRE}'/>")
+    p_.append(_txt(X(4.35), Y(10.3), "pas de racine réelle ;", 11, ARBRE, "start"))
+    p_.append(_txt(X(4.35), Y(9.3), "racines complexes 2 ± 3i", 11, ARBRE, "start", True))
+    p_.append(_txt(X(2) + 10, Y(9) + 18, "sommet (2 ; 9), et 9 = 3²", 11, ARBRE, "start"))
+    p_.append(f"<rect x='40' y='{y0 + 40}' width='680' height='52' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p_.append(_txt(56, y0 + 62, "Δ &lt; 0 : la parabole reste au-dessus de l'axe, aucune racine réelle.", 12, TRAIT, "start",
+                   True))
+    p_.append(_txt(56, y0 + 82, "Les racines complexes 2 ± 3i gardent une trace : 2 est l'axe de symétrie, 3² = 9 la hauteur du sommet (a = 1).",
+                   12, TRAIT, "start"))
+    return _svg("".join(p_), 760, y0 + 106)
+
+
+def oscillateur_trois_cas():
+    x0, y0, kx, ky = 90, 190, 150, 110  # t de 0 à 4 s ; x de −1 à 1
+    X = lambda t: x0 + kx * t  # noqa: E731
+    Y = lambda v: y0 - ky * v  # noqa: E731
+    r1, r2 = -6 + math.sqrt(10), -6 - math.sqrt(10)
+    a1 = r2 / (r2 - r1)
+    cas = [(lambda t: a1 * math.exp(r1 * t) + (1 - a1) * math.exp(r2 * t), ALESAGE),
+           (lambda t: math.exp(-t) * (math.cos(5 * t) + 0.2 * math.sin(5 * t)), ARBRE),
+           (lambda t: math.cos(math.sqrt(26) * t), OK)]
+    p_ = [_txt(40, 24, "Masse sur ressort lâchée à 1 cm de l'équilibre : x″ + c x′ + 26 x = 0 (aperçu de la fiche 18.19).",
+               12, TRAIT, "start", True),
+          _txt(40, 40, "Équation caractéristique r² + c r + 26 = 0 : ses racines annoncent le mouvement.", 11, FIN)]
+    p_.append(f"<line x1='{x0}' y1='{y0}' x2='{X(4) + 10}' y2='{y0}' stroke='{FIN}' stroke-width='1.4'/>")
+    p_.append(f"<line x1='{x0}' y1='{Y(-1.1)}' x2='{x0}' y2='{Y(1.15)}' stroke='{FIN}' stroke-width='1.4'/>")
+    for t in range(0, 5):
+        p_.append(_txt(X(t), y0 + 16, str(t), 11, FIN, "middle"))
+    p_.append(_txt(X(4) + 14, y0 + 4, "t (s)", 11, FIN))
+    for v in (-1, 1):
+        p_.append(_txt(x0 - 6, Y(v) + 4, f"{v} cm", 11, FIN, "end"))
+    for f, coul in cas:
+        pts = " ".join(f"{X(4 * i / 400):.1f},{Y(f(4 * i / 400)):.1f}" for i in range(0, 401))
+        p_.append(f"<polyline points='{pts}' fill='none' stroke='{coul}' stroke-width='2'/>")
+    for signe in (1, -1):
+        pts = " ".join(f"{X(4 * i / 200):.1f},{Y(signe * math.sqrt(1.04) * math.exp(-4 * i / 200)):.1f}"
+                       for i in range(0, 201))  # amplitude exacte √1,04 · e^(−t)
+        p_.append(f"<polyline points='{pts}' fill='none' stroke='{ARBRE}' stroke-width='1' stroke-dasharray='4 4'/>")
+    ly = 318
+    p_.append(_txt(56, ly, "c = 12 : Δ = 40 > 0, racines réelles −2,84 et −9,16 → retour sans osciller", 12, ALESAGE,
+                   "start", True))
+    p_.append(_txt(56, ly + 18, "c = 2 : Δ = −100 &lt; 0, racines −1 ± 5i → oscille (pulsation 5 rad/s) et s'amortit "
+                   "(enveloppe ±1,02 e^(−t), en pointillés)", 12, ARBRE, "start", True))
+    p_.append(_txt(56, ly + 36, "c = 0 : Δ = −104 &lt; 0, racines ± 5,10i → oscille sans fin (partie réelle nulle : aucun "
+                   "amortissement)", 12, OK, "start", True))
+    return _svg("".join(p_), 760, ly + 52)
+
+
 def extremums_polynome():
     p = [_txt(40, 24, "f(x) = x³ − 3x² + 2 : un maximum local puis un minimum local.",
               12, TRAIT, "start", True)]
@@ -6819,6 +6897,8 @@ FIGURES = {
     "poisson_processus": ("Même phénomène, deux questions : l'attente entre deux pannes (exponentielle) et le nombre de pannes dans l'année (Poisson)", poisson_processus),
     "poisson_batons": ("Loi de Poisson de paramètre 6,4 : des bâtons ; le stock de 11 suffit dans 96,9 % des années", poisson_batons),
     "poisson_binomiale": ("Binomiale et loi de Poisson de même moyenne : elles se confondent quand p est très petit", poisson_binomiale),
+    "second_degre_trois_cas": ("Δ > 0, Δ = 0, Δ < 0 : la parabole coupe l'axe deux fois, une fois, jamais", second_degre_trois_cas),
+    "oscillateur_trois_cas": ("Ce que les racines de l'équation caractéristique annoncent : retour sans osciller, oscillation amortie, oscillation sans fin", oscillateur_trois_cas),
     "extremums_polynome": ("Un maximum local puis un minimum local", extremums_polynome),
     "dispersion_deux_reglages": ("Six mesures dispersées autour de leur moyenne", dispersion_deux_reglages),
     "venn_deux_evenements": ("Union et intersection de deux événements", venn_deux_evenements),
@@ -11047,6 +11127,56 @@ QUIZ["Mathématiques BTS CPI — probabilités et équations différentielles"] 
        "Parce que 10 ans est une durée trop longue"], 1,
       "La loi de Poisson suppose des événements indépendants à taux constant, sans usure. L'absence de "
       "maximum et l'absence de n sont au contraire ses conditions normales.", "Base"),
+
+    q("Que vaut i² ?",
+      ["1", "−1", "i", "0"], 1,
+      "Par définition, i est un nombre dont le carré vaut −1 : c'est la seule règle nouvelle des nombres "
+      "complexes.", "Base"),
+
+    q("Que vaut (2 + 3i) + (1 − 5i) ?",
+      ["3 − 2i", "3 + 8i", "2 − 15i", "1 + 8i"], 0,
+      "On additionne les parties réelles (2 + 1 = 3) et les parties imaginaires (3 − 5 = −2) : 3 − 2i.",
+      "Base"),
+
+    q("Que vaut (1 + 2i)(3 − i) ?",
+      ["3 − 2i", "1 + 5i", "5 + 5i", "5 − 5i"], 2,
+      "On développe : 3 − i + 6i − 2i² = 3 + 5i − 2 × (−1) = 5 + 5i. 1 + 5i vient de l'oubli de i² = −1 "
+      "(−2i² remplacé par −2).", "Calcul"),
+
+    q("Quel est le conjugué de z = 4 − 7i ?",
+      ["−4 + 7i", "4 + 7i", "7 − 4i", "−4 − 7i"], 1,
+      "Le conjugué garde la partie réelle et change le signe de la partie imaginaire : 4 + 7i.", "Base"),
+
+    q("Pour z = 3 + 4i, que vaut z × z̄ ?",
+      ["−7", "7", "9 + 16i", "25"], 3,
+      "(3 + 4i)(3 − 4i) = 3² + 4² = 9 + 16 = 25, un réel positif. −7 vient de 3² − 4² : c'est oublier que "
+      "(4i)² = −16.", "Calcul"),
+
+    q("Quelles sont les solutions de z² + 2z + 5 = 0 ?",
+      ["−1 + 2i et −1 − 2i", "1 + 2i et 1 − 2i", "−2 + 4i et −2 − 4i", "Il n'y a pas de solution"], 0,
+      "Δ = 4 − 20 = −16 = (4i)² ; z = (−2 ± 4i)/2 = −1 ± 2i. −2 ± 4i oublie de diviser par 2a ; « pas de "
+      "solution » n'est vrai que chez les réels.", "Calcul"),
+
+    q("Une équation du second degré à coefficients réels a un discriminant Δ < 0. Ses solutions sont…",
+      ["deux réels opposés", "deux complexes conjugués", "une racine double réelle",
+       "deux complexes sans lien entre eux"], 1,
+      "z = (−b ± i√(−Δ))/(2a) : même partie réelle −b/(2a), parties imaginaires opposées : deux complexes "
+      "conjugués.", "Base"),
+
+    q("L'équation caractéristique d'un système masse-ressort-amortisseur a pour racines −2 ± 8i. Que "
+      "fait la masse, lâchée loin de l'équilibre ?",
+      ["Elle revient à l'équilibre sans osciller", "Elle oscille sans jamais s'arrêter",
+       "Elle s'éloigne de plus en plus de l'équilibre", "Elle oscille, et l'oscillation s'amortit"], 3,
+      "Racines complexes : oscillation, de pulsation 8 rad/s (partie imaginaire). Partie réelle −2 < 0 : "
+      "l'amplitude diminue comme e^(−2t). Des racines réelles négatives donneraient un retour sans "
+      "oscillation ; une partie réelle nulle, une oscillation sans fin.", "Piège"),
+
+    q("Un élève écrit : « Δ = −36, donc √Δ = −6. » Qu'en penser ?",
+      ["C'est juste", "C'est faux, et l'équation n'a alors aucune solution",
+       "C'est faux : −36 = (6i)², et les solutions s'écrivent (−b ± 6i)/(2a)", "C'est faux : √(−36) = 6"],
+      2,
+      "−6 est un réel : son carré vaut +36, pas −36. Avec i, −36 = (6i)² : les racines sont (−b ± 6i)/(2a), "
+      "deux complexes conjugués.", "Piège"),
 ]
 
 QUIZ["Mathématiques BTS CPI — calcul matriciel et modélisation géométrique"] = [
@@ -52247,6 +52377,318 @@ c'est pourquoi un pas de 0,5 min donne un écart de moins de 1 °C à t = 15 min
 0,667 contre 0,717 : l'écart est bien plus grand.*
 """,
         },
+        {
+            "id": "18.18",
+            "titre": "Nombres complexes : le prérequis des équations différentielles du second ordre",
+            "duree": "3 h",
+            "cours": """
+
+### 1. Pourquoi cette fiche : une équation qui « n'a pas de solution »… et qui décrit pourtant une vibration
+
+Cette fiche est un **outil pour la suivante**. La fiche 18.19 (en préparation) traitera les équations différentielles
+du **second ordre** : celles qui décrivent ce qui **vibre**. Une masse posée sur un ressort et un
+amortisseur — la suspension d'un véhicule, le pied antivibratile d'une machine-outil, un capteur
+monté sur une tôle — obéit à une équation du type
+
+> m x″ + c x′ + k x = 0
+
+(m la masse, c le coefficient d'amortissement, k la raideur du ressort, x l'écart à l'équilibre, x′ sa
+vitesse et x″ — la dérivée de la dérivée — son accélération).
+
+**Pourquoi une équation du second degré ?** Les fiches 18.4 (la pièce qui refroidit : l'écart 160 e^(−t/15))
+et 18.16 (la survie des capteurs : e^(−λt)) l'ont montré : ce qui évolue « en proportion de soi-même »
+s'écrit avec une exponentielle. On essaie donc x = e^(rt). Chaque dérivation fait « sortir » un r :
+x′ = r e^(rt) et x″ = r² e^(rt). En remplaçant : m r² e^(rt) + c r e^(rt) + k e^(rt) = 0. On divise par
+e^(rt), qui n'est jamais nul, et il reste une équation du second degré en r, dite **caractéristique** :
+
+> m r² + c r + k = 0
+
+*C'est le même outil — l'exponentielle — qui a décrit le refroidissement (18.4), la survie des capteurs
+(18.16), et qui décrira la vibration (18.19) : trois phénomènes physiques différents, une seule fonction.*
+
+Prenons m = 1 kg, c = 2 N·s/m et k = 26 N/m : r² + 2r + 26 = 0. Son discriminant (formule de la fiche
+17.4, avec ici 2 en « b » et 26 en « c » — le point sur les lettres est fait au § 5) vaut
+Δ = 2² − 4 × 1 × 26 = 4 − 104 = **−100**. Δ < 0 : avec les nombres réels, c'est une impasse, « pas de
+solution » (la fiche 17.4 n'a traité que Δ > 0). Pourtant la masse, elle, bouge : lâchée, elle **oscille** en s'amortissant.
+L'équation a donc quelque chose à dire — il faut seulement des nombres capables de l'écrire. Ce sont
+les **nombres complexes**, et cette fiche n'en présente que ce qui sert à la 18.19 : l'écriture a + bi,
+la somme, le produit, le conjugué, et surtout les racines d'une équation du second degré quand Δ < 0.
+
+### 2. Le nombre i et l'écriture a + bi
+
+Aucun nombre réel n'a un carré négatif (un carré est toujours ≥ 0). On ajoute donc **un nouveau
+nombre, noté i, dont le carré vaut −1** :
+
+> **i² = −1**
+
+C'est la seule règle nouvelle. Tout le reste du calcul (développer, factoriser, réduire) fonctionne
+comme d'habitude. *Même démarche que pour les nombres négatifs, jadis jugés « absurdes » : on les a
+acceptés parce qu'ils permettaient de calculer une température sous zéro ou une dette.*
+
+*Le mot « imaginaire » est un reste d'histoire : il ne veut pas dire « faux ». i ne se place pas sur la
+règle graduée des réels ; c'est un nombre d'une autre sorte, et il suffit de savoir calculer avec. La
+meilleure preuve qu'il « marche » arrive au § 5 : on remplace r par −1 + 5i dans r² + 2r + 26, on
+applique i² = −1, et on obtient exactement 0.*
+
+> Un **nombre complexe** s'écrit **z = a + bi**, avec a et b **réels** : c'est sa **forme algébrique**.
+> - a est la **partie réelle** : Re(z) = a ;
+> - b est la **partie imaginaire** : Im(z) = b (**un réel**, sans le i).
+
+Exemples : z = 3 + 2i (Re = 3, Im = 2) ; z = −1 − 5i (Re = −1, Im = −5) ; z = 4 (Re = 4, Im = 0 : les
+réels sont des complexes particuliers) ; z = 5i (Re = 0, Im = 5 : on dit **imaginaire pur**).
+
+*Deux complexes sont égaux quand ils ont même partie réelle et même partie imaginaire.*
+
+*En électricité, on écrit j au lieu de i, pour ne pas confondre avec l'intensité i du courant : vous
+rencontrerez Z = 10 + 20j Ω dans les cours d'électrotechnique. C'est le même nombre.*
+
+### 3. Calculer : somme et produit
+
+**Somme** : on additionne les parties réelles entre elles, les parties imaginaires entre elles —
+comme on regroupe les x avec les x.
+
+(3 + 2i) + (1 − 4i) = (3 + 1) + (2 − 4)i = **4 − 2i** ; (3 + 2i) − (1 − 4i) = 3 − 1 + (2 + 4)i = **2 + 6i**.
+
+**Produit** : on **développe** comme (a + b)(c + d), puis on remplace **i² par −1**.
+
+(2 + 3i)(1 − 4i) = 2 − 8i + 3i − 12i² = 2 − 5i − 12 × (−1) = 2 − 5i + 12 = **14 − 5i**.
+
+Le seul moment délicat est la fin : **−12i² devient +12**. Oublier que i² = −1 (ou le remplacer par
++1) donne 2 − 5i − 12 = −10 − 5i, faux.
+
+Deux produits utiles : (5i)² = 25 × i² = **−25** ; 3 × (2 − i) = 6 − 3i (un réel multiplie les deux
+parties).
+
+**Usage réel — l'impédance.** En courant alternatif, une résistance freine le courant « en phase » avec la
+tension : c'est la partie réelle. Une bobine et un condensateur le freinent « en décalé », dans deux sens
+opposés : ce frein décalé (la **réactance**, en ohms) se met derrière j, avec + pour la bobine et − pour le
+condensateur. Une résistance de 10 Ω s'écrit 10, une bobine de réactance 20 Ω s'écrit 20j, un
+condensateur de réactance 15 Ω s'écrit −15j. **En série, les impédances s'ajoutent** :
+Z = 10 + 20j − 15j = **10 + 5j Ω** — la bobine et le condensateur se compensent en partie.
+
+### 4. Le conjugué
+
+> Le **conjugué** de z = a + bi est **z̄ = a − bi** : on change le signe de la partie imaginaire.
+
+Exemples : le conjugué de 3 + 2i est 3 − 2i ; celui de −1 − 5i est −1 + 5i ; celui de 4 est 4.
+
+Deux résultats qui servent :
+- **z + z̄ = 2a**, un réel : (3 + 2i) + (3 − 2i) = 6. C'est pourquoi la somme de deux racines conjuguées
+  est un réel (§ 5).
+- **z × z̄ = a² + b²**, un réel positif : (3 + 2i)(3 − 2i) = 9 − 6i + 6i − 4i² = 9 + 4 = **13** = 3² + 2².
+  En général, (a + bi)(a − bi) = a² − (bi)² = a² − b² i² = **a² + b²**.
+
+Pourquoi c'est important pour la suite : les deux racines d'une équation du second degré à Δ < 0
+sont **toujours conjuguées** l'une de l'autre (§ 5) : on les écrit α + βi et α − βi (α se lit « alpha », β « bêta » :
+deux nombres réels, comme a et b). Leur produit, α² + β²,
+est un réel — ce qui permet de vérifier un calcul.
+
+### 5. Résoudre une équation du second degré quand Δ < 0
+
+On part de a z² + b z + c = 0 avec a, b, c **réels** (a ≠ 0) et **Δ = b² − 4ac**. La lettre de l'inconnue
+(x, z ou r) ne change rien au calcul.
+- Δ > 0 : deux racines réelles (−b ± √Δ)/(2a) (fiche 17.4) ;
+- Δ = 0 : une racine double −b/(2a). Exemple : z² + 6z + 9 = 0, Δ = 36 − 36 = 0, racine double −6/2 = −3 ;
+- **Δ < 0** : partons de Δ = −100. On l'écrit −100 = 100 × (−1) = 10² × i² = **(10i)²** : −100 a bien une
+  « racine carrée », 10i (et −10i). En général, on note −Δ le nombre Δ **sans son signe moins** (pour
+  Δ = −100, −Δ = 100, un positif), et **Δ = (i√(−Δ))²**, puisque (i√(−Δ))² = i² × (−Δ) = (−1) × (−Δ) = Δ. Pour
+  Δ = −100 : (10i)² = −100, on retrouve le calcul précédent. On reprend alors la formule de la fiche 17.4
+  **telle quelle**, en remplaçant √Δ, qui n'existait pas, par i√(−Δ). Les deux racines sont
+
+> **z₁ = (−b + i√(−Δ))/(2a) et z₂ = (−b − i√(−Δ))/(2a)**, deux complexes **conjugués**.
+> On les note **α ± βi** : partie réelle **α = −b/(2a)** ; parties imaginaires **± β = ± √(−Δ)/(2a)**.
+
+**Attention à la double lecture des lettres.** Dans l'équation caractéristique m r² + c r + k = 0, c désigne
+l'amortissement (pas le terme constant, qui est k). Dans Δ = b² − 4ac, on remplace b par c (l'amortissement),
+a par m et c par k : **Δ = c² − 4mk**.
+
+**Exemple de la § 1 : r² + 2r + 26 = 0** (m = 1, c = 2, k = 26). Δ = 2² − 4 × 1 × 26 = −100, −Δ = 100,
+√100 = 10 :
+
+r = (−2 ± 10i)/2 = **−1 ± 5i**.
+
+**Vérification** (toujours possible, et rassurante) : (−1 + 5i)² + 2(−1 + 5i) + 26
+= (1 − 10i + 25i²) − 2 + 10i + 26 = 1 − 10i − 25 − 2 + 10i + 26 = **0**. ✓
+
+**Autre contrôle : la somme et le produit des racines.** D'où vient-il ? Si z₁ et z₂ sont les deux
+racines, le trinôme s'écrit a(z − z₁)(z − z₂). En développant : (z − z₁)(z − z₂) = z² − z₁z − z₂z + z₁z₂
+= z² − (z₁ + z₂)z + z₁z₂, donc a(z − z₁)(z − z₂) = a z² − a(z₁ + z₂) z + a z₁z₂. On compare
+terme à terme avec a z² + b z + c : **z₁ + z₂ = −b/a** et **z₁ × z₂ = c/a**. C'est déjà vrai avec des racines
+réelles : pour x² − 4x + 3, les racines 1 et 3 ont pour somme 4 = −(−4)/1 et pour produit 3 = 3/1. Ici,
+pour les racines conjuguées −1 ± 5i : somme −1 + (−1) = −2 = −2/1 ✓ ; produit α² + β² = (−1)² + 5² = 26
+= 26/1 ✓ (§ 4). Pour l'équation caractéristique, cela s'écrit : somme = −c/m, produit = k/m.
+
+**Deuxième exemple, avec a ≠ 1 : 2z² + 4z + 20 = 0.** Δ = 16 − 160 = −144, √144 = 12 :
+z = (−4 ± 12i)/4 = **−1 ± 3i** — on divise **les deux parties** par 2a = 4.
+
+**Cas b = 0 : z² + 9 = 0.** z² = −9 = (3i)², donc **z = 3i ou z = −3i** (Δ = −36, √36 = 6,
+z = ± 6i/2).
+
+[[FIG:second_degre_trois_cas]]
+
+La figure montre ce que « Δ < 0 » veut dire : la parabole ne coupe pas l'axe des x. Pourtant, les racines
+2 ± 3i de z² − 4z + 13 = 0 (sur la figure, l'inconnue s'appelle x) s'y lisent. On écrit z² − 4z + 13 = (z − 2)² + 9 : la parabole a son sommet en
+(2 ; 9). Résoudre l'équation revient à résoudre (z − 2)² = −9 = (3i)², donc z − 2 = ± 3i, c'est-à-dire
+z = 2 ± 3i. La partie réelle 2 est l'axe de symétrie ; le carré de la partie imaginaire, 9, est la hauteur
+du sommet.
+
+**Les trois pièges :**
+1. **√(−100) n'est pas −10** : −10 est un réel, son carré vaut +100. On écrit Δ = −100 = (10i)².
+2. **Diviser les deux parties par 2a** : (−2 ± 10i)/2 = −1 ± 5i, pas −2 ± 5i. On partage une somme :
+   (−2 + 10i)/2 = −2/2 + 10i/2, comme à deux, chacun paie la moitié du plat **et** la moitié de la boisson.
+3. **Le signe de la partie réelle** : c'est −b/(2a). Pour r² + 2r + 26, b = 2 donc −1, pas +1.
+
+### 6. Ce que les racines annoncent (aperçu de la fiche 18.19)
+
+Revenons à la masse sur ressort, x″ + c x′ + 26 x = 0, lâchée à 1 cm de l'équilibre. La fiche 18.19
+montrera la règle ; voici déjà ce que les racines de r² + c r + 26 = 0 disent du mouvement :
+
+| amortissement c | Δ = c² − 104 | racines | le mouvement |
+|---|---|---|---|
+| 12 | 40 > 0 | deux réels, −2,84 et −9,16 | revient à l'équilibre **sans osciller** |
+| 2 | −100 < 0 | **−1 ± 5i** | **oscille** et s'amortit |
+| 0 | −104 < 0 | **± 5,10i** (imaginaires purs) | oscille **sans fin** |
+
+[[FIG:oscillateur_trois_cas]]
+
+La **pulsation** ω (en rad/s) mesure la vitesse à laquelle une oscillation se répète : un aller-retour
+complet correspond à 2π radians (on compte chaque aller-retour comme un tour complet de cercle, comme
+une manivelle qui ferait un tour par aller-retour du piston) ; période T = 2π/ω, fréquence f = ω/(2π) (en hertz : allers-retours par
+seconde).
+
+Pour des racines complexes α ± βi (ici α = −1 et β = 5) :
+- la **partie imaginaire β** donne la **pulsation** de l'oscillation : 5 rad/s, soit une période de
+  2π/5 ≈ 1,26 s ;
+- la **partie réelle α**, négative, règle la **vitesse d'extinction** : l'amplitude diminue comme
+  e^(αt) = e^(−t) (fiche 17.7). α < 0 : la vibration s'éteint ; α = 0 : elle ne s'éteint jamais.
+
+*Image à garder : frappez une tôle au marteau. Elle « sonne » à une note précise, puis le son s'éteint. La
+**note**, c'est β ; le **temps que met le son à mourir**, c'est α : plus α est négatif, plus vite le son
+s'éteint. La fiche 18.19 montrera d'où vient ce partage : un i dans une exponentielle fabrique un cosinus et
+un sinus, donc une oscillation.*
+
+C'est pour cela que le concepteur d'une suspension ou d'un pied antivibratile a besoin des nombres
+complexes : **le signe de Δ dit si la pièce vibre, la partie imaginaire dit à quelle fréquence, la
+partie réelle dit en combien de temps la vibration s'éteint.**
+
+### 7. Les erreurs classiques et à retenir
+
+**Erreurs classiques :**
+1. **Prendre i² = +1** (ou oublier de le remplacer) en développant un produit.
+2. **Écrire √(−100) = −10** : il faut passer par Δ = −100 = (10i)².
+3. **Ne diviser qu'une partie par 2a** : (−4 ± 12i)/4 = −1 ± 3i.
+4. **Se tromper de signe sur la partie réelle** : c'est −b/(2a).
+5. **Mettre le i dans la partie imaginaire** : Im(3 − 2i) = −2, pas −2i.
+6. **Conclure « pas de solution » quand Δ < 0** : pas de solution **réelle**, mais deux solutions
+   complexes conjuguées — celles dont la fiche 18.19 a besoin.
+7. **Confondre les lettres** : dans m r² + c r + k = 0, Δ = c² − 4mk (c est l'amortissement, k le terme
+   constant).
+
+**À retenir :**
+- **i² = −1** ; z = a + bi, Re(z) = a, Im(z) = b (deux réels).
+- Somme : parties réelles ensemble, parties imaginaires ensemble. Produit : développer, puis i² = −1.
+- Conjugué z̄ = a − bi ; **z × z̄ = a² + b²**.
+- **Δ < 0 : z = (−b ± i√(−Δ))/(2a)**, deux racines conjuguées, de partie réelle −b/(2a).
+- Équation caractéristique m r² + c r + k = 0 : **Δ = c² − 4mk** ; racines α ± βi : β = pulsation de
+  l'oscillation, α (négatif) = vitesse d'extinction (fiche 18.19).
+""",
+            "formules": """
+
+**Forme algébrique** — i² = −1 · z = a + bi, a et b réels · Re(z) = a · Im(z) = b · en électricité, j à
+la place de i
+
+**Somme** — (a + bi) + (c + di) = (a + c) + (b + d)i
+
+**Produit** — (a + bi)(c + di) = ac + adi + bci + bdi² = (ac − bd) + (ad + bc)i
+
+**Conjugué** — z̄ = a − bi · z + z̄ = 2a · z × z̄ = a² + b²
+
+**Équation a z² + b z + c = 0 (a, b, c réels)** — Δ = b² − 4ac · Δ > 0 : (−b ± √Δ)/(2a) · Δ = 0 :
+−b/(2a) · **Δ < 0 : (−b ± i√(−Δ))/(2a)**, deux racines conjuguées · contrôle : somme des racines = −b/a,
+produit = c/a
+
+**Lien avec la fiche 18.19** — équation caractéristique m r² + c r + k = 0 (c amortissement, k terme
+constant) : Δ = c² − 4mk ; racines α ± βi : β = pulsation, α (négatif) = vitesse d'extinction (e^(αt))
+
+        """,
+            "exemple": """
+**Cas industriel — Le pied antivibratile d'une machine-outil vibre-t-il ?**
+
+Une machine-outil repose sur des pieds antivibratiles (ressort + amortisseur en élastomère). On modélise
+chaque pied par une masse de **25 kg**, une raideur **k = 22 900 N/m** et un amortissement **c = 200
+N·s/m**. L'équation du § 1 (m r² + c r + k = 0) devient alors
+
+> 25 r² + 200 r + 22 900 = 0
+
+Le bureau d'études veut savoir si le pied, après un choc (une pièce lourde posée sur la table), revient
+à l'équilibre sans vibrer, et sinon à quelle fréquence et en combien de temps la vibration s'éteint.
+
+**Étape 1 — Le discriminant.** Δ = c² − 4mk = 200² − 4 × 25 × 22 900 = 40 000 − 2 290 000 = **−2 250 000** < 0 : le
+pied **vibre**.
+
+**Étape 2 — Les racines.** −Δ = 2 250 000, √(2 250 000) = **1 500**.
+r = (−200 ± 1 500i)/(2 × 25) = (−200 ± 1 500i)/50 = **−4 ± 30i**.
+
+**Étape 3 — Contrôler par la somme et le produit des racines.** Somme : −4 + (−4) = −8 = −c/m = −200/25 ✓. Produit :
+α² + β² = (−4)² + 30² = 16 + 900 = 916 = k/m = 22 900/25 ✓.
+
+**Étape 4 — Lire les racines.**
+- Partie imaginaire 30 : pulsation **30 rad/s**, soit une fréquence f = 30/(2π) ≈ **4,8 Hz** (environ 5
+  oscillations par seconde).
+- Partie réelle −4 : l'amplitude diminue comme e^(−4t). Au bout d'une seconde, il en reste
+  e^(−4) ≈ 0,018, soit **moins de 2 %** : la vibration est pratiquement éteinte en une seconde.
+
+**Ce que le calcul apprend.** Pour que le pied revienne sans osciller, il faudrait Δ ≥ 0, c'est-à-dire
+c² ≥ 4 × 25 × 22 900 = 2 290 000, soit c ≥ √2 290 000 ≈ **1 513 N·s/m** : un amortisseur environ
+7,5 fois plus fort (1 513 contre 200 N·s/m) ; le ressort, lui, ne change pas.
+Le bureau d'études garde l'élastomère actuel : une vibration à 4,8 Hz qui s'éteint en une seconde est
+acceptable pour une machine d'usinage courant — et c'est la lecture des deux parties d'un nombre
+complexe qui permet de le justifier.
+""",
+            "exercice": """
+On pose z₁ = 4 − i et z₂ = −2 + 3i.
+
+**1.** Calcule z₁ + z₂, z₁ − z₂ et z₁ × z₂. Donne la partie réelle et la partie imaginaire de z₁ × z₂.
+
+**2.** Donne le conjugué de z₁, puis calcule z₁ × z̄₁. Quelle est sa particularité ?
+
+**3.** Résous dans les complexes l'équation z² − 6z + 13 = 0.
+
+**4.** Vérifie par le calcul que 3 + 2i est bien solution de l'équation de la question 3.
+
+**5.** Résous 2z² + 2z + 5 = 0, puis z² + 16 = 0.
+
+**6.** L'équation caractéristique d'un système masse-ressort-amortisseur est r² + 6r + 34 = 0. Trouve ses
+racines. Le système oscille-t-il ? Si oui, quelle est la pulsation de l'oscillation ?
+
+**7.** Pour quelles valeurs de l'amortissement c ≥ 0 l'équation r² + c r + 25 = 0 a-t-elle des racines
+complexes non réelles (c'est-à-dire avec une partie imaginaire non nulle) ? Qu'est-ce que cela signifie pour le système ?
+""",
+            "corrige": """
+**1.** z₁ + z₂ = (4 − 2) + (−1 + 3)i = **2 + 2i** ; z₁ − z₂ = (4 + 2) + (−1 − 3)i = **6 − 4i** ;
+z₁ × z₂ = (4 − i)(−2 + 3i) = −8 + 12i + 2i − 3i², et −3i² = +3, donc z₁ × z₂ = **−5 + 14i** : partie
+réelle **−5**, partie imaginaire **14** (un réel, sans le i).
+
+**2.** z̄₁ = **4 + i** ; z₁ × z̄₁ = 4² + 1² = **17** : un **réel** positif (toujours a² + b²).
+
+**3.** Δ = (−6)² − 4 × 1 × 13 = 36 − 52 = −16 < 0 ; √16 = 4. z = (6 ± 4i)/2 = **3 + 2i ou 3 − 2i**
+(deux racines conjuguées).
+
+**4.** (3 + 2i)² = 9 + 12i + 4i² = 9 + 12i − 4 = 5 + 12i. Donc (3 + 2i)² − 6(3 + 2i) + 13 =
+5 + 12i − 18 − 12i + 13 = **0** ✓.
+
+**5.** 2z² + 2z + 5 = 0 : Δ = 4 − 40 = −36, z = (−2 ± 6i)/4 = **−0,5 ± 1,5i** (on divise les deux
+parties par 2a = 4). z² + 16 = 0 : z² = −16 = (4i)², **z = 4i ou z = −4i**.
+
+**6.** Δ = 36 − 136 = −100, √100 = 10 : r = (−6 ± 10i)/2 = **−3 ± 5i**. Δ < 0 : le système **oscille**, à
+la pulsation **5 rad/s** (partie imaginaire), et l'oscillation s'amortit comme e^(−3t) (partie
+réelle −3 < 0).
+
+**7.** Δ = c² − 4 × 1 × 25 = c² − 100 < 0 ⟺ c² < 100 ⟺ **0 ≤ c < 10** (c ≥ 0). Tant que l'amortissement reste sous 10, les
+racines sont complexes : le système **oscille** ; à partir de c = 10, il revient à l'équilibre sans
+osciller.
+""",
+        },
     ],
 }
 
@@ -55401,6 +55843,19 @@ _mth("18.12", "Appliquer la méthode d'Euler à une équation différentielle du
 ], "T' = −(T − 20)/15, T(0) = 180 °C, h = 5 min : 180 → 126,67 → 91,11 → 67,41 °C à t = 15 min, "
        "contre 78,86 °C exactement ; avec h = 0,5 min, Euler donne 77,87 °C.")
 
+_mth("18.18", "Résoudre une équation du second degré quand Δ < 0 (racines complexes)", [
+    "**Identifier a, b, c** dans a z² + b z + c = 0 (réels, a ≠ 0), avec leur signe. Pour une équation "
+    "caractéristique m r² + c r + k = 0 : Δ = c² − 4mk (c est l'amortissement, k le terme constant).",
+    "**Calculer Δ = b² − 4ac.** Si Δ ≥ 0 : racines réelles (fiche 17.4). Si Δ < 0 : continuer.",
+    "**Écrire Δ comme un carré** : Δ = (i√(−Δ))² ; par exemple −100 = (10i)². Jamais √(−100) = −10.",
+    "**Écrire les racines** : z = (−b ± i√(−Δ))/(2a), en divisant les DEUX parties par 2a ; partie "
+    "réelle −b/(2a), parties imaginaires ± √(−Δ)/(2a).",
+    "**Contrôler** : les deux racines α ± βi sont conjuguées ; leur somme 2α vaut −b/a et leur produit "
+    "α² + β² vaut c/a ; ou remplacer une racine dans l'équation (i² = −1) et trouver 0.",
+    "**Lire** (équation caractéristique, fiche 18.19, en préparation) : racines α ± βi → oscillation de "
+    "pulsation β, qui s'éteint comme e^(αt) si α < 0.",
+], "r² + 2r + 26 = 0 : Δ = −100 = (10i)², r = (−2 ± 10i)/2 = −1 ± 5i ; contrôle : (−1)² + 5² = 26 = k/m = 26/1.")
+
 _mth("19.1", "Multiplier des matrices et calculer un déterminant", [
     "**Multiplier ligne × colonne** : le terme (i,j) du produit combine la "
     "ligne i de la première matrice avec la colonne j de la seconde.",
@@ -57557,6 +58012,153 @@ def gen_parametre_poisson():
     }
 
 
+def _complexe(a, b):
+    """z = a + bi écrit à la française : 3 − 2i, −i, 5i, 4."""
+    if b == 0:
+        return _fr_court(a)
+    ib = "i" if abs(b) == 1 else f"{_fr_court(abs(b))}i"
+    if a == 0:
+        return ("−" if b < 0 else "") + ib
+    return f"{_fr_court(a)} {'−' if b < 0 else '+'} {ib}"
+
+
+def _termes(liste):
+    """Somme de termes signés, écrite sans « + − » : [(12, ""), (-4, "i"), (3, "i²")] → « 12 − 4i + 3i² »."""
+    out = ""
+    for k, (v, suffixe) in enumerate(liste):
+        coef = "" if suffixe and abs(v) == 1 else _fr_court(abs(v))
+        if k == 0:
+            out = ("−" if v < 0 else "") + coef + suffixe
+        else:
+            out += (" − " if v < 0 else " + ") + coef + suffixe
+    return out
+
+
+def gen_calcul_complexe():
+    """Somme, différence ou produit de deux complexes, ou produit par le conjugué : on demande la
+    partie réelle ou la partie imaginaire du résultat (l'erreur visée : i² = −1, et Im sans le i)."""
+    while True:
+        a, b, c, d = [random.choice([-6, -5, -4, -3, -2, -1, 1, 2, 3, 4, 5, 6]) for _ in range(4)]
+        op = random.choice(["somme", "différence", "produit", "produit", "conjugué"])
+        partie = random.choice(["réelle", "imaginaire"])
+        z1, z2 = _complexe(a, b), _complexe(c, d)
+        if op == "somme":
+            re, im = a + c, b + d
+            quoi = f"z₁ + z₂ avec z₁ = {z1} et z₂ = {z2}"
+            if partie == "réelle":
+                diags = [(a - c, "Tu as soustrait : pour une somme, on ADDITIONNE les parties réelles.")]
+            else:
+                diags = [(b - d, "Tu as soustrait : pour une somme, on ADDITIONNE les parties imaginaires.")]
+            calc = f"({_termes([(a, ''), (c, '')])}) + ({_termes([(b, ''), (d, '')])})i = {_complexe(re, im)}"
+        elif op == "différence":
+            re, im = a - c, b - d
+            quoi = f"z₁ − z₂ avec z₁ = {z1} et z₂ = {z2}"
+            if partie == "réelle":
+                diags = [(a + c, "Tu as additionné : z₁ − z₂ soustrait les parties réelles.")]
+            else:
+                diags = [(b + d, f"Le signe moins porte aussi sur la partie imaginaire de z₂ : "
+                                 f"{_fr_court(b)} − {_terme(d)}.")]
+            calc = f"({_fr_court(a)} − {_terme(c)}) + ({_fr_court(b)} − {_terme(d)})i = {_complexe(re, im)}"
+        elif op == "produit":
+            re, im = a * c - b * d, a * d + b * c
+            quoi = f"z₁ × z₂ avec z₁ = {z1} et z₂ = {z2}"
+            bi, di = _complexe(0, b), _complexe(0, d)
+            carre = f"{_termes([(b * d, 'i²')])} = {'+' if -b * d > 0 else '−'}{_fr_court(abs(b * d))}"
+            if partie == "réelle":
+                diags = [(a * c + b * d, f"Tu as pris i² = +1 : ({bi}) × ({di}) = {_termes([(b * d, 'i²')])}, "
+                                         f"et comme i² = −1, {carre}."),
+                         (a * c, f"Il manque le terme ({bi}) × ({di}) = {_termes([(b * d, 'i²')])}, qui vaut "
+                                 f"{_fr_court(-b * d)} : développe les quatre produits.")]
+            else:
+                diags = [(b * d, f"{_termes([(b * d, 'i²')])} est un RÉEL (i² = −1) : la partie imaginaire vient "
+                                 f"des termes croisés {_terme(a)} × ({di}) et ({bi}) × {_terme(c)}.")]
+            calc = (f"{_termes([(a * c, ''), (a * d, 'i'), (b * c, 'i'), (b * d, 'i²')])}, et i² = −1 donne "
+                    f"{carre}, donc {_complexe(re, im)}")
+        else:
+            re, im = a * a + b * b, 0
+            partie = "réelle"
+            quoi = f"z × z̄ avec z = {z1}"
+            diags = [(a * a - b * b, f"Tu as calculé a² − b² : ({_complexe(0, b)})² = {_termes([(b * b, 'i²')])} = "
+                                     f"{_fr_court(-b * b)}, donc z × z̄ = a² + b²."),
+                     (a * a, "Il manque b² : z × z̄ = a² + b².")]
+            calc = f"({z1})({_complexe(a, -b)}) = {_terme(a)}² + {_fr_court(abs(b))}² = {_fr_court(re)}"
+        rep = re if partie == "réelle" else im
+        vals = [v for v, _ in diags]
+        if all(abs(v - rep) > 0.5 for v in vals) and len(set(vals)) == len(vals):
+            break
+    if op == "conjugué":
+        question = (f"Calcule {quoi} (z̄ est le conjugué de z : on change le signe de sa partie imaginaire). "
+                    f"Donne le résultat (c'est un réel).")
+    else:
+        question = f"Calcule {quoi}. Donne sa partie {partie} (un nombre réel, sans le i)."
+    return {
+        "titre": "Nombres complexes : calculer",
+        "enonce": question,
+        "rep": rep, "tol": 0.01, "unite": "",
+        "diag": [_diag(v, m) for v, m in diags],
+        "corr": [f"**Calcul.** {calc}.",
+                 f"**Réponse.** Partie {partie} : **{_fr_court(rep)}**." if op != "conjugué"
+                 else f"**Réponse.** z × z̄ = **{_fr_court(rep)}**, un réel positif."],
+        "indice": "Somme : parties réelles ensemble, parties imaginaires ensemble. Produit : développe les quatre "
+                  "termes, puis remplace i² par −1. Conjugué : z × z̄ = a² + b².",
+    }
+
+
+def gen_racines_complexes():
+    """Équation du second degré à coefficients réels et Δ < 0 : partie réelle des racines ou partie
+    imaginaire positive (erreurs visées : signe de −b/(2a), oubli de diviser par 2a, √Δ pris sans i)."""
+    while True:
+        a = random.choice([1, 1, 2, 4])
+        alpha = random.choice([-4, -3, -2, -1.5, -1, -0.5, 0, 0.5, 1, 1.5, 2, 3])
+        beta = random.choice([1, 1.5, 2, 2.5, 3, 4, 5, 6])
+        b, c = -2 * a * alpha, a * (alpha ** 2 + beta ** 2)
+        if b != int(b) or c != int(c):
+            continue
+        b, c = int(b), int(c)
+        delta = b * b - 4 * a * c
+        s = math.sqrt(-delta)
+        partie = "imaginaire" if b == 0 else random.choice(["réelle", "imaginaire"])
+        if partie == "réelle":
+            rep = -b / (2 * a)
+            diags = [(b / (2 * a), f"Signe : la partie réelle est −b/(2a) = {_fr_court(-b)}/{2 * a}."),
+                     (-b, f"Il faut diviser par 2a = {2 * a} : −b/(2a).")]
+            if a != 1:
+                diags.append((-b / a, f"On divise par 2a = {2 * a}, pas par a = {a}."))
+        else:
+            rep = s / (2 * a)
+            diags = [(s, f"√(−Δ) = {_fr_court(s)} doit encore être divisé par 2a = {2 * a}."),
+                     (-delta / (2 * a), f"Il manque la racine carrée : √(−Δ) = √{fr(-delta, 0)} = {_fr_court(s)}, puis "
+                                         f"÷ {2 * a}.")]
+            if a != 1:
+                diags.append((s / a, f"On divise par 2a = {2 * a}, pas par a = {a}."))
+        vals = [v for v, _ in diags]
+        if all(abs(v - rep) > 0.05 for v in vals) and \
+                all(abs(vals[i] - vals[j]) > 0.05 for i in range(len(vals)) for j in range(i + 1, len(vals))):
+            break
+    termes = f"{'' if a == 1 else a}z²" + (f" {'+' if b > 0 else '−'} {'' if abs(b) == 1 else abs(b)}z" if b else "") + \
+        f" + {c}"
+    quoi = ("la partie réelle des deux racines" if partie == "réelle"
+            else "la partie imaginaire positive des racines (sans le i)")
+    return {
+        "titre": "Second degré : racines complexes quand Δ < 0",
+        "enonce": f"Résous dans les complexes l'équation {termes} = 0. Donne {quoi}, à 0,01 près.",
+        "rep": rep, "tol": 0.01, "unite": "",
+        "diag": [_diag(v, m) for v, m in diags],
+        "corr": ([f"**Ici b = 0.** " + (f"{a}z² = −{c}, donc z² = −{_fr_court(c / a)}" if a != 1 else f"z² = −{c}")
+                  + f" = ({_fr_court(s / (2 * a))}i)², et z = ± {_fr_court(s / (2 * a))}i. Même résultat par Δ :"]
+                 if b == 0 else []) + [
+            f"**Discriminant.** Δ = {_terme(b)}² − 4 × {a} × {c} = {_fr_court(delta)} < 0, et −Δ = {fr(-delta, 0)} = "
+            f"{_fr_court(s)}².",
+            f"**Racines.** z = ({_fr_court(-b)} ± {_fr_court(s)}i)/{2 * a} = {_complexe(-b / (2 * a), s / (2 * a))} et "
+            f"{_complexe(-b / (2 * a), -s / (2 * a))} (deux racines conjuguées ; on divise les deux parties par "
+            f"2a = {2 * a}).",
+            f"**Réponse.** Partie {partie} : **{_fr_court(rep)}**.",
+        ],
+        "indice": "Δ = b² − 4ac < 0 ; z = (−b ± i√(−Δ))/(2a) : partie réelle −b/(2a), parties imaginaires "
+                  "± √(−Δ)/(2a). Divise les deux parties par 2a.",
+    }
+
+
 def decimales_affichage(tol):
     """Nombre de décimales pour afficher la réponse d'un générateur : assez pour que la valeur
     AFFICHÉE soit acceptée par la tolérance (10⁻ᵈ ≤ tol, donc erreur d'arrondi ≤ tol/2), et au
@@ -57653,7 +58255,8 @@ def fabriquer_exo(famille=None):
                                   gen_test_moyenne, gen_test_proportion,
                                   gen_comparaison_moyennes, gen_comparaison_proportions,
                                   gen_proba_exponentielle, gen_duree_fiabilite,
-                                  gen_proba_poisson, gen_parametre_poisson],
+                                  gen_proba_poisson, gen_parametre_poisson,
+                                  gen_calcul_complexe, gen_racines_complexes],
     }
     if famille and famille in catalogue:
         pool = catalogue[famille]
@@ -61720,6 +62323,108 @@ ATELIERS = [
                      "défauts suit une loi de Poisson de paramètre m = densité × longueur ; P(X = 0) = e^(−m) ; "
                      "« au moins k » = 1 − P(X ≤ k − 1) ; σ = √m ; la distance entre deux défauts suit la loi "
                      "exponentielle de moyenne 1/densité.",
+    },
+    {
+        "id": "at150",
+        "chapitre": "Bloc 18",
+        "titre": "Pied antivibratile d'une machine-outil : racines complexes de l'équation caractéristique",
+        "theme": "Nombres complexes",
+        "fiche": "18.18",
+        "figure": "oscillateur_trois_cas",
+        "vocabulaire": [
+            ("équation caractéristique", "l'équation du second degré m r² + c r + k = 0 associée au système "
+             "masse-ressort-amortisseur (fiche 18.19) : ses racines annoncent le mouvement."),
+            ("partie réelle, partie imaginaire", "pour z = a + bi : Re(z) = a et Im(z) = b, deux nombres réels "
+             "(la partie imaginaire s'écrit sans le i)."),
+            ("pulsation", "la « vitesse » d'une oscillation, en rad/s ; la fréquence vaut f = pulsation/(2π), "
+             "en Hz."),
+        ],
+        "enonce": "Un pied antivibratile porte 25 kg de machine ; sa raideur vaut k = 22 900 N/m et son "
+                  "amortissement c = 200 N·s/m. D'après la fiche 18.18 (§ 1 : m r² + c r + k = 0), l'équation "
+                  "caractéristique du mouvement est "
+                  "25 r² + 200 r + 22 900 = 0. On veut savoir si le pied vibre après un choc, à quelle "
+                  "fréquence, et si la vibration s'éteint.",
+        "etapes": [
+            {"type": "numerique", "label": "Discriminant Δ = c² − 4mk", "unite": "",
+             "attendu": 200 ** 2 - 4 * 25 * 22900, "tol": 0.5,
+             "consigne": "m = 25 (masse), c = 200 (amortissement), k = 22 900 (raideur), donc Δ = c² − 4mk = "
+                         "200² − 4 × 25 × 22 900.",
+             "indice": "200² = 40 000 ; 4 × 25 × 22 900 = 2 290 000.",
+             "pieges": [(200 ** 2 + 4 * 25 * 22900, "Tu as additionné : Δ = c² MOINS 4mk, 40 000 − 2 290 000."),
+                        (200 ** 2 - 4 * 22900, "Tu as oublié m = 25 dans 4mk : 4 × 25 × 22 900 = 2 290 000."),
+                        (200 ** 2 - 25 * 22900, "Tu as oublié le facteur 4 : 4mk = 4 × 25 × 22 900.")]},
+            {"type": "numerique", "label": "√(−Δ)", "unite": "",
+             "attendu": 1500, "tol": 0.5,
+             "depend_de": {"etape": 1, "formule": lambda v: math.sqrt(abs(v))},
+             "consigne": "Δ < 0 : on écrit Δ = (i√(−Δ))². Calcule √(−Δ), un réel positif.",
+             "indice": "−Δ = 2 250 000 = 1 500².",
+             "pieges": [(2250000, "Tu as recopié −Δ : il faut encore prendre sa racine carrée, √2 250 000."),
+                        (-1500, "√(−Δ) est positif : 1 500. Le ± viendra dans les racines.")]},
+            {"type": "numerique", "label": "Partie réelle des deux racines", "unite": "",
+             "attendu": -200 / (2 * 25), "tol": 0.01,
+             "consigne": "Partie réelle α = −c/(2m) : le −b/(2a) du § 5, avec l'amortissement c à la place de b "
+                         "et m à la place de a.",
+             "indice": "−200/50.",
+             "pieges": [(200 / 50, "Signe : la partie réelle est −c/(2m) = −200/50 = −4."),
+                        (-200 / 25, "On divise par 2m = 50, pas par m = 25."),
+                        (-200 / 2, "On divise par 2m = 2 × 25 = 50, pas par 2."),
+                        (-200, "Il faut diviser −c par 2m = 50.")]},
+            {"type": "numerique", "label": "Partie imaginaire positive des racines (sans le i)", "unite": "",
+             "attendu": 1500 / 50, "tol": 0.01,
+             "depend_de": {"etape": 2, "formule": lambda v: v / 50},
+             "consigne": "Partie imaginaire β = √(−Δ)/(2m) : on divise aussi cette partie par 2m = 50.",
+             "indice": "1 500/50.",
+             "pieges": [(1500, "√(−Δ) doit encore être divisé par 2m = 50 : les DEUX parties se divisent."),
+                        (1500 / 25, "On divise par 2m = 50, pas par m = 25."),
+                        (1500 / 2, "On divise par 2m = 50, pas par 2.")]},
+            {"type": "numerique", "label": "Contrôle : produit des racines (−4)² + 30²", "unite": "",
+             "attendu": 16 + 900, "tol": 0.5,
+             "consigne": "Les racines −4 ± 30i (α = −4, β = 30) sont conjuguées : leur produit vaut α² + β². Il "
+                         "doit être égal à k/m = 22 900/25.",
+             "indice": "(−4)² + 30² = 16 + 900.",
+             "pieges": [(16 - 900, "Tu as calculé α² − β² : (30i)² = −900, donc (−4 + 30i)(−4 − 30i) = "
+                                   "16 − (−900) = 16 + 900."),
+                        (-4 + 30, "Il faut élever au carré : (−4)² + 30².")]},
+            {"type": "qcm", "label": "Le pied vibre-t-il ?",
+             "question": "Les racines valent −4 ± 30i. Que fait le pied après un choc ?",
+             "options": ["Il revient à l'équilibre sans vibrer",
+                         "Il vibre à la pulsation 30 rad/s, et la vibration s'éteint comme e^(−4t)",
+                         "Il vibre sans fin à la pulsation 30 rad/s"],
+             "bonne": 1,
+             "diagnostics": {0: "Un retour sans vibration demanderait Δ ≥ 0 (racines réelles). Ici Δ < 0 : "
+                                "racines complexes, donc le pied vibre.",
+                             2: "La partie réelle −4 est négative : l'amplitude diminue comme e^(−4t). Une "
+                                "vibration sans fin demanderait une partie réelle nulle."}},
+            {"type": "qcm", "label": "À quelle fréquence ?",
+             "question": "Quelle est la fréquence de la vibration, en hertz ?",
+             "options": ["30 Hz", "4 Hz",
+                         "Environ 4,8 Hz"],
+             "bonne": 2,
+             "diagnostics": {0: "30 est la PULSATION, en rad/s. La fréquence vaut f = 30/(2π) ≈ 4,8 Hz.",
+                             1: "4 est la partie réelle (au signe près) : elle règle l'amortissement, pas la "
+                                "fréquence. f = 30/(2π) ≈ 4,8 Hz."}},
+        ],
+        "corrige": {
+            "enonce": "25 r² + 200 r + 22 900 = 0 : pied antivibratile de 25 kg, k = 22 900 N/m, c = 200 N·s/m.",
+            "regle": "**Pour m r² + c r + k = 0 : Δ = c² − 4mk ; si Δ < 0, r = (−c ± i√(−Δ))/(2m), soit α ± βi avec "
+                     "α = −c/(2m) et β = √(−Δ)/(2m) ; les racines sont conjuguées, de produit α² + β² = k/m ; "
+                     "fréquence f = β/(2π).**",
+            "conversions": "Aucune : m, c, k sont les coefficients de l'équation ; la pulsation est en rad/s, "
+                           "la fréquence f = pulsation/(2π) en Hz.",
+            "remplacement": "Δ = 200² − 4 × 25 × 22 900 ; √(−Δ) = √2 250 000 ; −200/50 ; 1 500/50 ; "
+                            "(−4)² + 30²",
+            "calcul": "Δ = **−2 250 000** < 0\n\n√(−Δ) = **1 500**\n\npartie réelle = −200/50 = **−4**\n\n"
+                      "partie imaginaire = ± 1 500/50 = **± 30** : racines **−4 ± 30i**\n\ncontrôle : (−4)² + 30² = "
+                      "**916** = 22 900/25 ✓\n\nlecture : le pied vibre à 30 rad/s, soit f = 30/(2π) ≈ "
+                      "**4,8 Hz**, et l'amplitude diminue comme e^(−4t) : moins de 2 % au bout d'une seconde",
+            "verification": "**Contrôle de cohérence** : somme des racines −4 + (−4) = −8 = −c/m = −200/25 ✓ ; "
+                            "produit 916 = k/m ✓. Et pour que le pied ne vibre pas, il faudrait Δ ≥ 0, soit "
+                            "c ≥ 1 513 N·s/m environ.",
+        },
+        "a_retenir": "À retenir : quand Δ < 0, les racines d'une équation du second degré à coefficients réels "
+                     "sont (−b ± i√(−Δ))/(2a), deux complexes conjugués α ± βi ; on divise les deux parties par 2a ; "
+                     "le produit des racines, α² + β², vaut c/a (k/m pour l'équation caractéristique). Pour une équation caractéristique, la partie "
+                     "imaginaire donne la pulsation, la partie réelle l'amortissement.",
     },
     {
         "id": "at29",
@@ -69634,10 +70339,11 @@ MATIERES_PROGRAMME = [
         ("Analyse (évalué)", "Incomplet (à enrichir)",
          "Fonctions, dérivées, fonctions exponentielle et logarithme, calcul intégral, valeur "
          "moyenne, extremums locaux, équations différentielles du premier ordre (deux cas "
-         "traités, et méthode d'Euler). Non traités : équations différentielles du second "
-         "ordre.",
+         "traités, et méthode d'Euler), nombres complexes (forme algébrique, racines d'une "
+         "équation du second degré quand Δ < 0). Non traitées : équations différentielles du "
+         "second ordre.",
          [(7, ["7.2"]), (17, ["17.1", "17.7", "17.2", "17.4", "17.5"]),
-          (18, ["18.4", "18.8", "18.12"])]),
+          (18, ["18.4", "18.8", "18.12", "18.18"])]),
         ("Hors épreuve : calcul matriciel, Bézier, droites et plans", "Complet",
          "Programme complémentaire non évalué (matrices, courbes de Bézier) et "
          "approfondissement hors référentiel (droites et plans dans l'espace, distance "
