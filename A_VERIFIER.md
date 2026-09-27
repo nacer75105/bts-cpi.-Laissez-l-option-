@@ -44,6 +44,7 @@ complexes (forme algébrique, Δ < 0) — 13. équations différentielles du sec
   de la figure (coordonnées et chevauchements contrôlés par calcul uniquement) ; le corrigé
   progressif et l'atelier at139 n'ont pas été cliqués dans l'interface (la fiche s'ouvre sans
   erreur dans un AppTest Streamlit).
+- ✅ Interface vérifiée dans un vrai navigateur le 2026-09-27 : atelier at139 (pièges, bonnes valeurs, QCM, corrigé), gen_temps_decharge, figures exp_ln_courbes regardées dans l'app (voir « Dette d'interface 17.7 à 18.13 »).
 
 ### 17.8 — Statistique à deux variables : ajustement affine et corrélation (faite le 2026-09-25)
 
@@ -66,6 +67,7 @@ complexes (forme algébrique, Δ < 0) — 13. équations différentielles du sec
 - **Non vérifié** : rendu visuel réel des deux figures (chevauchements estimés avec les
   métriques Segoe UI par le relecteur) ; corrigé progressif, atelier at140 et générateur non
   cliqués dans l'interface (la fiche s'ouvre sans erreur dans un AppTest Streamlit).
+- ✅ Interface vérifiée dans un vrai navigateur le 2026-09-27 : atelier at140 (pièges, bonnes valeurs, QCM, corrigé), gen_pente_moindres_carres, figures nuage_moindres_carres, linearisation_ln regardées dans l'app (voir « Dette d'interface 17.7 à 18.13 »).
 
 ### Ateliers — tolérance absolue (corrigé le 2026-09-25, commit 34e7003)
 
@@ -104,6 +106,7 @@ complexes (forme algébrique, Δ < 0) — 13. équations différentielles du sec
 - **Non vérifié** : rendu visuel réel des deux figures ; atelier at143 et générateurs non cliqués
   dans l'interface (la fiche et la page Entraînement s'ouvrent sans erreur dans un AppTest ;
   outil d'audit : 0 défaut sur 202 étapes et 20 générateurs).
+- ✅ Interface vérifiée dans un vrai navigateur le 2026-09-27 : atelier at143 (pièges, bonnes valeurs, QCM, corrigé), gen_sigma_somme, gen_sigma_affine, figures quadrature_cotes, moyenne_se_resserre regardées dans l'app (voir « Dette d'interface 17.7 à 18.13 »).
 
 ### 18.12 — Méthode d'Euler (faite le 2026-09-25)
 
@@ -131,6 +134,7 @@ complexes (forme algébrique, Δ < 0) — 13. équations différentielles du sec
   Entraînement s'ouvrent sans erreur dans un AppTest ; outil d'audit : 0 défaut). La date 1768
   (Institutionum calculi integralis) et « Euler a choisi la lettre e » sont des connaissances, non
   recoupées par une source.
+- ✅ Interface vérifiée dans un vrai navigateur le 2026-09-27 : atelier at144 (pièges, bonnes valeurs, QCM, corrigé), gen_euler_pas, gen_euler_ecart, figures euler_tangentes, euler_pas_h regardées dans l'app (voir « Dette d'interface 17.7 à 18.13 »).
 
 ### 18.13 — Intervalle de confiance d'une proportion (faite le 2026-09-25)
 
@@ -158,6 +162,7 @@ complexes (forme algébrique, Δ < 0) — 13. équations différentielles du sec
 - **Non vérifié** : usage de n ou n − 1 dans les annales du BTS CPI (non consultées) ; atelier
   at145 et générateurs non cliqués dans l'interface (la fiche s'ouvre sans erreur dans un
   AppTest ; outil d'audit : 0 défaut).
+- ✅ Interface vérifiée dans un vrai navigateur le 2026-09-27 : atelier at145 (pièges, bonnes valeurs, QCM, corrigé), gen_ic_proportion, gen_taille_proportion, figures proportion_en_cloche, ic_proportion_simulation regardées dans l'app (voir « Dette d'interface 17.7 à 18.13 »).
 
 ### 18.16 — Loi exponentielle, durée de vie sans usure (faite le 2026-09-26)
 
@@ -194,6 +199,26 @@ complexes (forme algébrique, Δ < 0) — 13. équations différentielles du sec
 - ✅ Dette transversale corrigée le 2026-09-26 (commit séparé) : la réponse affichée de
   `gen_duree_fiabilite` sortait avec 2 décimales (« 5 268,03 h ») alors que l'énoncé dit « à l'heure
   près ». Voir « Réponse affichée : la précision suit l'énoncé » ci-dessous.
+
+### Dette d'interface 17.7 à 18.13 (close le 2026-09-27)
+
+- Passe groupée dans un vrai navigateur (Edge sans fenêtre, clics et frappes via DevTools), menée à
+  partir des données de app.py : pour chaque étape d'atelier, le premier piège (message attendu
+  vérifié) puis la bonne valeur ; pour chaque QCM, une mauvaise option (diagnostic vérifié) puis la
+  bonne ; corrigé déroulé jusqu'à « À retenir ».
+- Ateliers at139 à at145 : 99 contrôles OK, aucun défaut propre à un atelier.
+- 11 générateurs des fiches 17.7 à 18.13 : tous tirés, ligne « Réponse » propre (sans astérisques),
+  aucune marque de rendu ratée.
+- Figures : les 16 figures des fiches 17.7 à 18.13 et 18.16, et les 5 figures d'ateliers, chargées et
+  regardées une à une dans l'app (rien de tronqué, pas de chevauchement gênant).
+- Texte des 8 fiches (6 onglets chacune) balayé : « ** » visibles, antislash-n, LaTeX involontaire,
+  None, accolades. A révélé les formules de tableur faussées (corrigé à part, voir section suivante).
+- Cosmétique, non bloquant (laissé en l'état, tout reste lisible) :
+  - 18.9, figure `histogramme_vers_densite` : l'étiquette « 3 barres ≈ 30 % » passe sur le bas des
+    barres orange ;
+  - 18.16, figure `exponentielle_simulation` : la courbe orange coupe l'étiquette « 140 » de la
+    2ᵉ barre ;
+  - 18.10, figure `binomiale_continuite` : graduations « 24,5 / 25 / 25,5 » serrées.
 
 ### Formules de tableur affichées faussées par le Markdown (corrigé le 2026-09-27)
 
@@ -386,6 +411,7 @@ complexes (forme algébrique, Δ < 0) — 13. équations différentielles du sec
   atelier at142 et générateurs non cliqués dans l'interface (la fiche et la page Entraînement
   s'ouvrent sans erreur dans un AppTest ; l'outil d'audit : 0 défaut sur 199 étapes et
   18 générateurs).
+- ✅ Interface vérifiée dans un vrai navigateur le 2026-09-27 : atelier at142 (pièges, bonnes valeurs, QCM, corrigé), gen_borne_continuite, gen_proba_normale, figures somme_uniformes_cloche, aire_sous_cloche, binomiale_continuite regardées dans l'app (voir « Dette d'interface 17.7 à 18.13 »).
 
 ### Entraînement — réponse affichée et saisie (corrigé le 2026-09-25)
 
@@ -494,3 +520,5 @@ complexes (forme algébrique, Δ < 0) — 13. équations différentielles du sec
 - **Non vérifié** : rendu visuel réel des figures (seules les coordonnées ont été contrôlées, et
   les fonctions exécutées) ; appartenance du BTS CPI à un « groupement C1 » (mention retirée,
   aucune source dans le dépôt).
+- ✅ Interface vérifiée dans un vrai navigateur le 2026-09-27 : atelier at141 (pièges, bonnes valeurs, QCM, corrigé), gen_proba_uniforme, figures histogramme_vers_densite, aire_uniforme regardées dans l'app (voir « Dette d'interface 17.7 à 18.13 »).
+
