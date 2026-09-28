@@ -72306,7 +72306,7 @@ elif PAGE == PAGE_MATHS:
             "**La méthode qui marche, une fiche à la fois :** ouvre une seule fiche, lis le "
             "cours, fais **seulement son atelier interactif** (pas besoin de refaire tous les "
             "exercices écrits en plus). S'il est réussi, la fiche est validée pour aujourd'hui — "
-            "passe à la suivante, ou arrête-toi là. Comprendre les 26 fiches d'un coup n'est "
+            "passe à la suivante, ou arrête-toi là. Comprendre toutes les fiches d'un coup n'est "
             "l'objectif de personne, même pas des élèves qui n'ont aucune difficulté : ce "
             "programme est fait pour être vu sur plusieurs mois, pas plusieurs soirées.\n\n"
             "*Bloqué sur une fiche ? Le **mode révision** (menu « À revoir ») ramène "
