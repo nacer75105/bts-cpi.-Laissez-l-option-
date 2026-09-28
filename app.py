@@ -59526,9 +59526,10 @@ def decimales_reponse(ex):
 def ligne_reponse(ex):
     """Ligne « Réponse » de la page Entraînement, en gras. Sans unité, pas d'espace avant les **
     fermants : « **Réponse : 0,449 ** » n'est pas reconnu comme gras et s'affichait astérisques
-    comprises (corrigé le 2026-09-26, générateurs sans unité du bloc 18)."""
+    comprises (corrigé le 2026-09-26, générateurs sans unité du bloc 18). Un résultat négatif
+    s'écrit avec le vrai signe moins « − », pas un trait d'union (corrigé le 2026-09-29)."""
     unite = (ex.get("unite") or "").strip()
-    valeur = fr(ex["rep"], decimales_reponse(ex))
+    valeur = fr(ex["rep"], decimales_reponse(ex)).replace("-", "−")
     return f"**Réponse : {valeur} {unite}**" if unite else f"**Réponse : {valeur}**"
 
 
