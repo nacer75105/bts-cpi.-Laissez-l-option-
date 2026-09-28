@@ -125,6 +125,17 @@ Un générateur défectueux compte pour UN défaut (le nombre de tirages touché
               (16 px de haut), sans aucune erreur. Cas réel : « Δ < 0 » écrit tel quel dans deux
               figures de la fiche 18.18 (le « < » ouvre une balise) ; trouvé au parcours
               navigateur du 2026-09-27. Remède : écrire &lt; (et &amp; pour &) dans les textes.
+
+7. CONTINUATIONS (analyse lexicale de tout app.py)
+--------------------------------------------------
+  CONTINUATION une chaîne entre guillemets simples ("…" ou '…', pas les chaînes triples) contient
+              un antislash suivi d'un vrai retour à la ligne : Python le lit comme une
+              continuation, les deux lignes se COLLENT, sans espace ni saut de ligne, et sans
+              aucune erreur. Cas réel : corrigé de l'atelier at153 (fiche 17.12), où « …est
+              au-dessus » et « F(4) = … » s'affichaient « …est au-dessusF(4) = … » ; trouvé par
+              les relecteurs le 2026-09-28, invisible pour SAUT (la chaîne ne contient plus
+              d'antislash une fois lue). Remède : écrire un seul antislash suivi de n (\\n), sur
+              une seule ligne source.
 """
 import ast
 import io
@@ -573,6 +584,30 @@ def verifier_figures(src):
     return len(defauts)
 
 
+def verifier_continuations(src):
+    """Aucune chaîne non triple ne doit contenir un antislash suivi d'un vrai retour à la ligne."""
+    import tokenize
+    defauts = []
+    for jeton in tokenize.generate_tokens(io.StringIO(src).readline):
+        if jeton.type != tokenize.STRING:
+            continue
+        texte = jeton.string
+        corps = texte.lstrip("rbuRBUfF")
+        if corps[:3] in ('"""', "'''"):
+            continue
+        if chr(92) + chr(10) in texte:
+            debut = texte[:60].replace(chr(10), " ⏎ ")
+            defauts.append(f"CONTINUATION ligne {jeton.start[0]} : {debut!r}")
+    print("CONTINUATIONS : chaînes entre guillemets simples de app.py.")
+    if defauts:
+        print(f"{len(defauts)} défaut(s) :")
+        for d in defauts:
+            print("  " + d)
+    else:
+        print("0 chaîne collée par un antislash en fin de ligne.")
+    return len(defauts)
+
+
 def main():
     src = lire_source()
     n = verifier_ateliers(src)
@@ -586,6 +621,8 @@ def main():
     n += verifier_etoiles(src)
     print()
     n += verifier_figures(src)
+    print()
+    n += verifier_continuations(src)
     print(f"\nTotal : {n} défaut(s).")
     return n
 
