@@ -25,7 +25,7 @@ prérequis et la répartition usuelle) :
 4. ✅ 18.10 loi normale et approximation binomiale — 5. ✅ 18.11 somme de variables, limite centrée —
 6. ✅ 18.12 méthode d'Euler — 7. ✅ 18.13 IC d'une proportion — 8. ✅ 18.14 tests sur une proportion / une moyenne —
 9. ✅ 18.15 tests de comparaison — 10. ✅ 18.16 loi exponentielle — 11. ✅ 18.17 loi de Poisson — 12. ✅ 18.18 nombres
-complexes (forme algébrique, Δ < 0) — 13. équations différentielles du second ordre.
+complexes (forme algébrique, Δ < 0) — 13. ✅ 18.19 équations différentielles du second ordre. **Plan terminé (13/13).**
 
 ### 17.7 — Fonctions exponentielle et logarithme népérien (faite le 2026-09-25)
 
@@ -163,6 +163,68 @@ complexes (forme algébrique, Δ < 0) — 13. équations différentielles du sec
   at145 et générateurs non cliqués dans l'interface (la fiche s'ouvre sans erreur dans un
   AppTest ; outil d'audit : 0 défaut).
 - ✅ Interface vérifiée dans un vrai navigateur le 2026-09-27 : atelier at145 (pièges, bonnes valeurs, QCM, corrigé), gen_ic_proportion, gen_taille_proportion, figures proportion_en_cloche, ic_proportion_simulation regardées dans l'app (voir « Dette d'interface 17.7 à 18.13 »).
+
+### Analyse (Fonctions, Calcul intégral) : notions du référentiel non traitées (relevé du 2026-09-28)
+
+Le plan de 13 fiches est terminé, mais il ne couvrait pas tout le référentiel : la ligne « Analyse » du
+tableau de bord reste « Incomplet ». Relevé par le relecteur justesse (recherche par mots-clés dans les
+blocs 7, 17 et 18), vérifié dans le texte de l'annexe I. Liste brute, sans ordre de priorité (l'ordre de
+traitement viendra du plan complémentaire).
+
+Au programme (contenu ou capacité attendue), absent de l'app :
+- asymptote oblique (contenu « Limite infinie d'une fonction à l'infini. Cas d'une asymptote oblique ») ;
+- nombre de solutions d'une équation f(x) = k à partir du tableau de variation (capacité attendue) ;
+- procédé de recherche d'une valeur approchée d'une racine (capacité attendue ; le commentaire cite
+  balayage, dichotomie, Newton, et demande au moins un algorithme) ;
+- dérivée de x ↦ uⁿ(x) (contenu ; seule la primitive de u′uⁿ est traitée, en 17.2) ;
+- fonction racine carrée comme fonction de référence (contenu) ;
+- fonctions sinus et cosinus comme fonctions de référence, courbes (contenu ; seules les dérivées sin′ et
+  cos′ figurent, en 7.2) ;
+- propriétés de l'intégrale : relation de Chasles, linéarité, positivité (contenu) ;
+- aire entre deux courbes, {a ≤ x ≤ b et f(x) ≤ y ≤ g(x)} (capacité attendue) ;
+- primitives de t ↦ cos(ωt + φ) et t ↦ sin(ωt + φ) (contenu, « complément »).
+
+Cité en exemple dans les commentaires (non exigible) :
+- méthodes élémentaires d'approximation d'une intégrale (point-milieu, trapèzes, Monte-Carlo), avec des
+  algorithmes.
+
+### 18.19 — Équations différentielles du second ordre (faite le 2026-09-28)
+
+- Référentiel (annexe I, module Équations différentielles) : a y″ + b y′ + c y = d(t) à coefficients
+  constants, d polynôme, e^(λt), cos(ωt + φ) ou sin(ωt + φ) ; « les indications permettant d'obtenir une
+  solution particulière sont données » ; résolution à la main dans les cas simples, par calcul formel dans
+  tous les cas ; conditions initiales ; famille de courbes. La résonance est en « pour aller plus loin »,
+  non exigible (forme donnée par l'énoncé).
+- Placée en fin de bloc 18, après 18.18, avec méthode, figures `famille_second_ordre` (x(0) = 2, 1, −1,5),
+  `regime_force` (y″ + 2y′ + 5y = 10 cos t : régime imposé + partie homogène qui s'éteint) et
+  `pied_equilibre_poids` (X = 10,7 + écart qui s'éteint ; équilibre X_p = mg/k, bande ± 0,1 mm, 0,75 s),
+  atelier at151 (balance de contrôle, 2x″ + 16x′ + 320x = 0, sans figure), générateurs `gen_constantes_ci`
+  (A ou B dans les trois cas de Δ, « avec r₁ > r₂ » pour Δ > 0, diagnostic d'inversion des racines) et
+  `gen_solution_particuliere` (constante, affine, cos), 9 questions (bonne réponse en positions 1, 2, 3, 0,
+  1, 3, 0, 1, 2).
+- Choix validés par l'auteur : synthèse du bloc des équations différentielles (18.4 : une exponentielle par
+  racine réelle ; 18.8 : équilibre + écart qui s'éteint, y_p ↔ y_eq ; 18.18 : équation caractéristique,
+  α ± βi) ; notations de la 18.18 ; pas de renvoi à une fiche « systèmes 2×2 » (il n'y en a pas) : A et B
+  se trouvent l'un après l'autre ; cas industriel = le pied antivibratile de la 18.18 résolu pour de bon
+  (x(t) = e^(−4t)(2 cos 30t + 0,267 sin 30t), 0,75 s, écrasement statique 10,7 mm = X_p = mg/k).
+- Deux tours de relecture : 7 bloquants au 1ᵉʳ (dont l'ordre des racines non précisé dans
+  gen_constantes_ci, qui faisait refuser 99 % des élèves choisissant l'autre ordre ; le lien 18.4 non
+  exploité ; les 10,7 mm noyés dans une incise), 2 au 2ᵉ (dont, dans gen_solution_particuliere, un B
+  calculé à partir d'un A arrondi qui faisait refuser 6,3 % des cas cos-B : le corrigé calcule désormais
+  chaque inconnue depuis les valeurs exactes). Simulation d'un élève qui recopie les valeurs arrondies
+  affichées dans le corrigé : 0 refus sur 10 000 tirages, dans chacun des 11 cas (constante, affine K/L,
+  cos A/B ; Δ > 0, = 0, < 0 pour A et B).
+- Trouvé avant insertion : un « < » brut dans la légende de la nouvelle figure (« écart < 0,1 mm »),
+  attrapé par le contrôle d'audit FIGURE ajouté la veille.
+- ✅ Vérifié le 2026-09-28 dans un vrai navigateur, 32 contrôles OK : at151 en entier (chaque piège puis la
+  bonne valeur, les deux QCM, corrigé déroulé), les deux générateurs (ligne « Réponse » propre), les trois
+  figures affichées et regardées, les six onglets sans marque de rendu ratée ; tableau de contrôle
+  « y(0) / y′(0) » et paragraphe « Pour aller plus loin — la résonance (non exigible) » regardés à l'œil.
+- Non vérifié en exécution : la commande Xcas `desolve([...], t, y)` (Xcas absent de la machine) ; trace,
+  pas une dette bloquante.
+- Inventaires : résumé du bloc 18 (« les quatre modules sont traités »), ligne « Analyse » du tableau de bord
+  (second ordre ajouté, liste des notions non traitées, statut « Incomplet »), avertissement de la page
+  Maths remis (notions de fonctions et de calcul intégral non traitées).
 
 ### 18.18 — Nombres complexes, prérequis du second ordre (faite le 2026-09-27)
 

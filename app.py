@@ -6473,6 +6473,112 @@ def oscillateur_trois_cas():
     return _svg("".join(p_), 760, ly + 52)
 
 
+def famille_second_ordre():
+    x0, y0, kx, ky = 90, 200, 150, 60  # t de 0 à 4 s ; x de −2 à 2 cm
+    X = lambda t: x0 + kx * t  # noqa: E731
+    Y = lambda v: y0 - ky * v  # noqa: E731
+    p_ = [_txt(40, 24, "x″ + 2 x′ + 26 x = 0 : une solution pour chaque position de départ x(0), avec x′(0) = 0.",
+               12, TRAIT, "start", True),
+          _txt(40, 40, "Toutes ont la forme e^(−t)(A cos 5t + B sin 5t) ; les conditions initiales fixent A et B.", 11,
+               FIN)]
+    p_.append(f"<line x1='{x0}' y1='{y0}' x2='{X(4) + 10}' y2='{y0}' stroke='{FIN}' stroke-width='1.4'/>")
+    p_.append(f"<line x1='{x0}' y1='{Y(-2.2)}' x2='{x0}' y2='{Y(2.2)}' stroke='{FIN}' stroke-width='1.4'/>")
+    for t in range(0, 5):
+        p_.append(_txt(X(t), y0 + 16, str(t), 11, FIN, "middle"))
+    p_.append(_txt(X(4) + 14, y0 + 4, "t (s)", 11, FIN))
+    for v in (-2, -1, 1, 2):
+        p_.append(_txt(x0 - 6, Y(v) + 4, f"{v} cm", 11, FIN, "end"))
+    for rang, (depart, coul) in enumerate(((2, ALESAGE), (1, ARBRE), (-1.5, OK))):
+        pts = " ".join(f"{X(4 * i / 400):.1f},"
+                       f"{Y(depart * math.exp(-4 * i / 400) * (math.cos(20 * i / 400) + 0.2 * math.sin(20 * i / 400))):.1f}"
+                       for i in range(0, 401))
+        p_.append(f"<polyline points='{pts}' fill='none' stroke='{coul}' stroke-width='2'/>")
+        p_.append(f"<circle cx='{X(0)}' cy='{Y(depart):.1f}' r='4' fill='{coul}'/>")
+        p_.append(_txt(X(2.2), Y(2) + 4 + 18 * rang, f"x(0) = {_fr_court(depart, 1)} cm : A = {_fr_court(depart, 1)}, "
+                       f"B = {_fr_court(depart / 5, 1)}", 12, coul, "start", True))
+    p_.append(f"<rect x='40' y='{y0 + 150}' width='680' height='52' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p_.append(_txt(56, y0 + 172, "Même pulsation (5 rad/s), même extinction (e^(−t)) : c'est l'équation qui les fixe.",
+                   12, TRAIT, "start", True))
+    p_.append(_txt(56, y0 + 192, "Ce qui change d'une courbe à l'autre, c'est l'amplitude de départ : A = x(0), puis B par x′(0).",
+                   12, TRAIT, "start"))
+    return _svg("".join(p_), 760, y0 + 216)
+
+
+def regime_force():
+    x0, y0, kx, ky = 90, 190, 55, 40  # t de 0 à 10 ; y de −3 à 3
+    X = lambda t: x0 + kx * t  # noqa: E731
+    Y = lambda v: y0 - ky * v  # noqa: E731
+    total = lambda t: math.exp(-t) * (-2 * math.cos(2 * t) - 1.5 * math.sin(2 * t)) + 2 * math.cos(t) + math.sin(t)  # noqa: E731
+    part = lambda t: 2 * math.cos(t) + math.sin(t)  # noqa: E731
+    homo = lambda t: math.exp(-t) * (-2 * math.cos(2 * t) - 1.5 * math.sin(2 * t))  # noqa: E731
+    p_ = [_txt(40, 24, "y″ + 2y′ + 5y = 10 cos t, partant du repos (y(0) = 0, y′(0) = 0).", 12, TRAIT, "start", True),
+          _txt(40, 40, "Solution = solution particulière (le régime imposé) + solution de l'équation homogène (qui s'éteint).",
+               11, FIN)]
+    p_.append(f"<line x1='{x0}' y1='{y0}' x2='{X(10) + 10}' y2='{y0}' stroke='{FIN}' stroke-width='1.4'/>")
+    p_.append(f"<line x1='{x0}' y1='{Y(-3.2)}' x2='{x0}' y2='{Y(3.2)}' stroke='{FIN}' stroke-width='1.4'/>")
+    for t in range(0, 11, 2):
+        p_.append(_txt(X(t), y0 + 16, str(t), 11, FIN, "middle"))
+    p_.append(_txt(X(10) + 14, y0 + 4, "t", 11, FIN))
+    for v in (-2, 2):
+        p_.append(_txt(x0 - 6, Y(v) + 4, str(v), 11, FIN, "end"))
+    for f, coul, larg, tiret in ((part, OK, 1.8, "6 4"), (homo, ARBRE, 1.6, "3 3"), (total, ALESAGE, 2.6, "")):
+        pts = " ".join(f"{X(10 * i / 500):.1f},{Y(f(10 * i / 500)):.1f}" for i in range(0, 501))
+        dash = f" stroke-dasharray='{tiret}'" if tiret else ""
+        p_.append(f"<polyline points='{pts}' fill='none' stroke='{coul}' stroke-width='{larg}'{dash}/>")
+    ly = y0 + 150
+    p_.append(_txt(56, ly, "━ y(t), la solution cherchée : elle démarre à 0, puis se cale sur le régime imposé", 12, ALESAGE,
+                   "start", True))
+    p_.append(_txt(56, ly + 18, "┅ solution particulière 2 cos t + sin t : le régime imposé par le second membre (il dure)",
+                   12, OK, "start", True))
+    p_.append(_txt(56, ly + 36, "┄ solution de l'équation homogène e^(−t)(−2 cos 2t − 1,5 sin 2t) : elle s'éteint en quelques "
+                   "secondes", 12, ARBRE, "start", True))
+    return _svg("".join(p_), 760, ly + 52)
+
+
+def pied_equilibre_poids():
+    x0, y0, kx, ky = 90, 300, 480, 48  # t de 0 à 1,2 s ; X de 8 à 13 mm (8 mm sur l'axe horizontal)
+    X = lambda t: x0 + kx * t  # noqa: E731
+    Y = lambda v: y0 - ky * (v - 8)  # noqa: E731
+    xp, amp = 245 / 22900 * 1000, math.sqrt(4 + (8 / 30) ** 2)
+    p_ = [_txt(40, 24, "Pied antivibratile chargé : X(t) = 10,7 + e^(−4t)(2 cos 30t + 0,267 sin 30t), en mm.", 12, TRAIT,
+               "start", True),
+          _txt(40, 40, "L'équilibre sous le poids (qui dure) + un écart qui s'éteint : la lecture de la fiche 18.8.", 11,
+               FIN)]
+    # bande de mesure possible ±0,1 mm
+    p_.append(f"<rect x='{X(0)}' y='{Y(xp + 0.1):.1f}' width='{kx * 1.2}' height='{ky * 0.2:.1f}' fill='{OK}' "
+              f"fill-opacity='0.25' stroke='none'/>")
+    p_.append(f"<line x1='{x0}' y1='{y0}' x2='{X(1.2) + 10}' y2='{y0}' stroke='{FIN}' stroke-width='1.4'/>")
+    p_.append(f"<line x1='{x0}' y1='{y0}' x2='{x0}' y2='{Y(13.2)}' stroke='{FIN}' stroke-width='1.4'/>")
+    for t in (0, 0.25, 0.5, 0.75, 1.0):
+        p_.append(_txt(X(t), y0 + 16, fr(t, 2), 11, FIN, "middle"))
+    p_.append(_txt(X(1.2) + 14, y0 + 4, "t (s)", 11, FIN))
+    for v in (9, 10, 11, 12, 13):
+        p_.append(_txt(x0 - 6, Y(v) + 4, f"{v} mm", 11, FIN, "end"))
+    # position d'équilibre
+    p_.append(f"<line x1='{X(0)}' y1='{Y(xp):.1f}' x2='{X(1.2)}' y2='{Y(xp):.1f}' stroke='{OK}' stroke-width='1.8' "
+              f"stroke-dasharray='7 4'/>")
+    # enveloppe
+    for signe in (1, -1):
+        pts = " ".join(f"{X(1.2 * i / 200):.1f},{Y(xp + signe * amp * math.exp(-4.8 * i / 200)):.1f}"
+                       for i in range(0, 201))
+        p_.append(f"<polyline points='{pts}' fill='none' stroke='{ARBRE}' stroke-width='1' stroke-dasharray='3 3'/>")
+    # mouvement
+    pts = " ".join(f"{X(1.2 * i / 600):.1f},"
+                   f"{Y(xp + math.exp(-4.8 * i / 600) * (2 * math.cos(36 * i / 600) + 8 / 30 * math.sin(36 * i / 600))):.1f}"
+                   for i in range(0, 601))
+    p_.append(f"<polyline points='{pts}' fill='none' stroke='{ALESAGE}' stroke-width='2'/>")
+    # repère 0,75 s
+    p_.append(f"<line x1='{X(0.75):.1f}' y1='{y0}' x2='{X(0.75):.1f}' y2='{Y(12.2):.1f}' stroke='{ALERTE}' "
+              f"stroke-width='1.4'/>")
+    p_.append(_txt(X(0.75) + 6, Y(12.3), "t = 0,75 s : écart &lt; 0,1 mm, mesure possible", 11, ALERTE, "start", True))
+    p_.append(_txt(X(0.8), Y(xp) - 30, "position d'équilibre X_p = mg/k", 11, OK, "start", True))
+    p_.append(_txt(X(0.8), Y(xp) - 16, "= 245/22 900 m ≈ 10,7 mm (elle dure)", 11, OK, "start", True))
+    p_.append(_txt(X(0.8), Y(xp) + 26, "bande verte : 10,7 ± 0,1 mm", 11, OK, "start"))
+    p_.append(_txt(X(0.16), Y(12.9), "écart qui s'éteint : ± 2,02 e^(−4t) (pointillés)", 11, ARBRE, "start", True))
+    p_.append(_txt(X(0) + 8, Y(12.7) + 4, "départ 12,7 mm", 11, ALESAGE, "start"))
+    return _svg("".join(p_), 760, y0 + 40)
+
+
 def extremums_polynome():
     p = [_txt(40, 24, "f(x) = x³ − 3x² + 2 : un maximum local puis un minimum local.",
               12, TRAIT, "start", True)]
@@ -6899,6 +7005,9 @@ FIGURES = {
     "poisson_binomiale": ("Binomiale et loi de Poisson de même moyenne : elles se confondent quand p est très petit", poisson_binomiale),
     "second_degre_trois_cas": ("Δ > 0, Δ = 0, Δ < 0 : la parabole coupe l'axe deux fois, une fois, jamais", second_degre_trois_cas),
     "oscillateur_trois_cas": ("Ce que les racines de l'équation caractéristique annoncent : retour sans osciller, oscillation amortie, oscillation sans fin", oscillateur_trois_cas),
+    "famille_second_ordre": ("Une famille de solutions : même pulsation, même extinction, les conditions initiales fixent A et B", famille_second_ordre),
+    "pied_equilibre_poids": ("Le pied chargé : il se cale sur sa position d'équilibre X_p = mg/k, l'écart s'éteint en 0,75 s", pied_equilibre_poids),
+    "regime_force": ("Avec un second membre : la solution se cale sur le régime imposé pendant que la partie homogène s'éteint", regime_force),
     "extremums_polynome": ("Un maximum local puis un minimum local", extremums_polynome),
     "dispersion_deux_reglages": ("Six mesures dispersées autour de leur moyenne", dispersion_deux_reglages),
     "venn_deux_evenements": ("Union et intersection de deux événements", venn_deux_evenements),
@@ -11177,6 +11286,63 @@ QUIZ["Mathématiques BTS CPI — probabilités et équations différentielles"] 
       2,
       "−6 est un réel : son carré vaut +36, pas −36. Avec i, −36 = (6i)² : les racines sont (−b ± 6i)/(2a), "
       "deux complexes conjugués.", "Piège"),
+
+    q("L'équation caractéristique d'une équation différentielle a pour racines −3 et −5. Quelle est la "
+      "solution générale ?",
+      ["y = A e^(3t) + B e^(5t)", "y = A e^(−3t) + B e^(−5t)", "y = (A t + B) e^(−3t)",
+       "y = e^(−3t)(A cos 5t + B sin 5t)"], 1,
+      "Deux racines réelles r₁ et r₂ (Δ > 0) : y = A e^(r₁t) + B e^(r₂t), avec les racines telles quelles, "
+      "signe compris.", "Base"),
+
+    q("L'équation caractéristique a une racine double r₀ = −2. Quelle est la forme des solutions ?",
+      ["y = A e^(−2t)", "y = A e^(−2t) + B e^(−2t)", "y = (A t + B) e^(−2t)", "y = A cos 2t + B sin 2t"], 2,
+      "Δ = 0 : y = (A t + B) e^(r₀t). A e^(−2t) + B e^(−2t) = (A + B) e^(−2t) n'a qu'une constante utile : il "
+      "manque le facteur t.", "Piège"),
+
+    q("Les racines de l'équation caractéristique sont −1 ± 4i. Quelle est la solution générale ?",
+      ["y = e^(4t)(A cos t + B sin t)", "y = A e^(−t) + B e^(4t)", "y = e^(−t)(A cos t + B sin t)",
+       "y = e^(−t)(A cos 4t + B sin 4t)"], 3,
+      "Racines α ± βi : y = e^(αt)(A cos βt + B sin βt). La partie réelle −1 va dans l'exponentielle, la partie "
+      "imaginaire 4 dans le cosinus et le sinus.", "Base"),
+
+    q("y = e^(−t)(A cos 5t + B sin 5t) avec y(0) = 3. Que vaut A ?",
+      ["3", "0", "3/5", "On ne peut pas savoir sans y′(0)"], 0,
+      "y(0) = e^0 (A cos 0 + B sin 0) = A : donc A = 3 directement. y′(0) servira à trouver B.", "Calcul"),
+
+    q("Combien de constantes contient la solution générale d'une équation différentielle du second ordre ?",
+      ["Une", "Deux", "Trois", "Aucune"], 1,
+      "Deux (A et B) : il faut deux conditions, en général la position y(0) et la vitesse y′(0), pour fixer "
+      "une solution.", "Base"),
+
+    q("Pour y″ + 3y′ + 2y = 4, on cherche une solution particulière constante. Laquelle ?",
+      ["y_p = 4", "y_p = 4/3", "y_p = 0", "y_p = 2"], 3,
+      "Une constante a des dérivées nulles : 2 y_p = 4, donc y_p = 2. C'est l'équilibre vers lequel la "
+      "solution se stabilise.", "Calcul"),
+
+    q("Avec un second membre, dans quel ordre travaille-t-on ?",
+      ["Écrire y_p + homogène, puis appliquer y(0) et y′(0) à cette somme",
+       "Appliquer y(0) et y′(0) à l'homogène seule, puis ajouter y_p",
+       "Appliquer y(0) et y′(0) à y_p seule, puis ajouter l'homogène",
+       "Trouver y_p seule : les conditions initiales ne servent plus ici"], 0,
+      "On écrit la solution complète y = y_p + A (…) + B (…), puis on applique y(0) et y′(0) à cette "
+      "somme : y_p change les valeurs de A et B.", "Piège"),
+
+    q("Une masse sur ressort a pour solution x(t) = e^(−2t)(A cos 6t + B sin 6t). Que se passe-t-il au bout "
+      "d'un temps long ?",
+      ["x oscille de plus en plus fort", "x tend vers 0 : la vibration s'éteint",
+       "x tend vers A", "x oscille sans fin avec la même amplitude"], 1,
+      "e^(−2t) tend vers 0 (α = −2 < 0) : l'amplitude s'éteint, la masse revient à l'équilibre en oscillant "
+      "à 6 rad/s.", "Base"),
+
+    q("(Pour aller plus loin, hors examen.) Pour y″ + y = cos t, l'énoncé indique de chercher "
+      "y_p = t(A cos t + B sin t) au lieu de A cos t + B sin t. Pourquoi ?",
+      ["Pour simplifier le calcul de A et B par identification",
+       "Parce que le second membre cos t est un polynôme en t",
+       "Parce que cos t résout déjà l'équation sans second membre",
+       "Parce que Δ > 0 : les racines de r² + 1 = 0 sont réelles"], 2,
+      "Les racines de r² + 1 = 0 sont ± i : cos t et sin t résolvent déjà l'équation sans second membre. Le "
+      "second membre « frappe » à la fréquence propre : il faut le facteur t, et l'amplitude grandit sans "
+      "fin (résonance ; pour aller plus loin, non exigible).", "Piège"),
 ]
 
 QUIZ["Mathématiques BTS CPI — calcul matriciel et modélisation géométrique"] = [
@@ -47918,7 +48084,7 @@ d'usure), machine par machine.
 BLOC_18 = {
     "id": 18,
     "titre": "Bloc 18 — Mathématiques BTS CPI : probabilités et équations différentielles",
-    "resume": "Quatre modules du programme d'examen : probabilités 1, probabilités 2, statistique inférentielle et équations différentielles. Ce bloc n'en couvre qu'une partie : les équations différentielles du second ordre ne sont pas encore traitées.",
+    "resume": "Quatre modules du programme d'examen : probabilités 1, probabilités 2, statistique inférentielle et équations différentielles. Les quatre modules sont traités, jusqu'aux équations différentielles du second ordre (fiche 18.19).",
     "fiches": [
         {
             "id": "18.1",
@@ -52385,7 +52551,7 @@ c'est pourquoi un pas de 0,5 min donne un écart de moins de 1 °C à t = 15 min
 
 ### 1. Pourquoi cette fiche : une équation qui « n'a pas de solution »… et qui décrit pourtant une vibration
 
-Cette fiche est un **outil pour la suivante**. La fiche 18.19 (en préparation) traitera les équations différentielles
+Cette fiche est un **outil pour la suivante**. La fiche 18.19 traite les équations différentielles
 du **second ordre** : celles qui décrivent ce qui **vibre**. Une masse posée sur un ressort et un
 amortisseur — la suspension d'un véhicule, le pied antivibratile d'une machine-outil, un capteur
 monté sur une tôle — obéit à une équation du type
@@ -52687,6 +52853,325 @@ réelle −3 < 0).
 **7.** Δ = c² − 4 × 1 × 25 = c² − 100 < 0 ⟺ c² < 100 ⟺ **0 ≤ c < 10** (c ≥ 0). Tant que l'amortissement reste sous 10, les
 racines sont complexes : le système **oscille** ; à partir de c = 10, il revient à l'équilibre sans
 osciller.
+""",
+        },
+        {
+            "id": "18.19",
+            "titre": "Équations différentielles du second ordre : résoudre ce qui vibre",
+            "duree": "4 h",
+            "cours": """
+
+### 1. Où l'on en est : il ne manque plus que la formule de x(t)
+
+Trois fiches ont préparé celle-ci :
+- la **18.4** : y′ = −k·y a pour solutions y = C·e^(−kt). Au § 2, chaque racine réelle fournira une
+  exponentielle de ce type ;
+- la **18.8** : avec un second membre, la solution est « l'équilibre + un écart qui s'éteint »,
+  y = y_eq + (y₀ − y_eq) e^(−t/τ) ;
+- la **18.18** : pour une masse sur ressort et amortisseur, m x″ + c x′ + k x = 0, on essaie x = e^(rt)
+  et on tombe sur l'**équation caractéristique** m r² + c r + k = 0, dont les racines peuvent être
+  complexes (α ± βi).
+
+Il reste à écrire **la formule de x(t)** : de combien la masse s'écarte, à chaque instant, après le
+choc. C'est l'objet de cette fiche, qui boucle le bloc des équations différentielles.
+
+*Les lettres, comme en 18.18 : les énoncés généraux s'écrivent a y″ + b y′ + c y = d(t), avec a, b, c
+des constantes réelles (a ≠ 0) ; pour un système mécanique, on garde m (masse), c (amortissement),
+k (raideur) et x(t) : m x″ + c x′ + k x = d(t). Dans ce cas, l'équation caractéristique a pour
+discriminant Δ = c² − 4mk.*
+
+### 2. L'équation sans second membre : trois formes de solution selon Δ
+
+On commence par a y″ + b y′ + c y = 0 (dite **homogène** : second membre nul). On cherche y = e^(rt) :
+comme en 18.18, cela marche exactement quand r est racine de l'**équation caractéristique**
+a r² + b r + c = 0. Selon le signe de son discriminant Δ = b² − 4ac :
+
+> - **Δ > 0**, deux racines réelles r₁ et r₂ : **y(t) = A e^(r₁t) + B e^(r₂t)** *(deux décroissances de la
+>   18.4 superposées, chacune à son rythme)*
+> - **Δ = 0**, une racine double r₀ : **y(t) = (A t + B) e^(r₀t)**
+> - **Δ < 0**, racines α ± βi : **y(t) = e^(αt) (A cos βt + B sin βt)**
+>
+> A et B sont deux constantes réelles quelconques (deux constantes, parce qu'il y a deux dérivations : une
+> pour la position de départ, une pour la vitesse de départ, § 3).
+
+**Une seule règle pour les trois cas : chaque racine fournit une fonction, et il en faut deux.**
+- deux racines réelles : deux exponentielles, une par racine ;
+- une racine double : une seule exponentielle disponible, alors on fabrique la deuxième en la multipliant
+  par t ;
+- deux racines complexes α ± βi : α va dans l'exponentielle, β dans cos et sin.
+
+*Ces trois formes sont admises, mais chacune se vérifie :*
+- *Δ > 0 : pour y″ − 3y′ + 2y = 0 (racines 1 et 2), y = e^t donne e^t − 3e^t + 2e^t = 0 ✓.*
+- *Δ = 0 : pour y″ + 4y′ + 4y = 0 (racine double −2), y = t e^(−2t) marche aussi : y′ = (1 − 2t) e^(−2t),
+  y″ = (4t − 4) e^(−2t) ; on met e^(−2t) en facteur, et ce qui reste vaut (4t − 4) + 4(1 − 2t) + 4t = 0 ✓.*
+- *Δ < 0 : on ne cherche pas à donner un sens à e^((α + βi)t) (hors programme) ; on admet la règle de
+  partage, α dans l'exponentielle, β dans cos et sin. On la vérifie sur un ressort sans frottement,
+  y″ + 25y = 0 (racines ± 5i, α = 0, β = 5) : avec y = cos 5t, y′ = −5 sin 5t, y″ = −25 cos 5t, donc
+  y″ + 25y = 0 ✓. C'est le cosinus que la 18.18 avait annoncé (« un i dans une exponentielle fabrique un
+  cosinus et un sinus »).*
+
+Chaque forme se lit comme un mouvement :
+
+| Δ | forme de y(t) | ce qu'on voit | exemple : x″ + c x′ + 26x = 0 (18.18, § 6) |
+|---|---|---|---|
+| > 0 | A e^(r₁t) + B e^(r₂t) | retour à l'équilibre **sans osciller** (r₁, r₂ < 0) | c = 12 : r = −2,84 et −9,16 |
+| = 0 | (A t + B) e^(r₀t) | retour **le plus rapide sans osciller** (amortissement « critique » : la frontière exacte entre « oscille » et « n'oscille pas ») | c = √104 ≈ 10,2 (Δ = c² − 4 × 26 = 0), racine double −5,1 ; entre les lignes c = 12 et c = 2 de la 18.18 |
+| < 0 | e^(αt)(A cos βt + B sin βt) | **oscillation** de pulsation β, qui s'éteint comme e^(αt) si α < 0 | c = 2 : −1 ± 5i |
+
+C'est l'image de la tôle frappée (18.18) mise en formule : β donne la note, α la vitesse d'extinction.
+
+### 3. Les conditions initiales fixent A et B
+
+Une équation différentielle a une **famille** de solutions (une par choix de A et B). La solution qui
+décrit **un** mouvement précis est fixée par l'état de départ : la position y(0) et la vitesse y′(0). Deux
+conditions pour deux constantes.
+
+**Cas Δ < 0 — la masse de la 18.18.** x″ + 2x′ + 26x = 0, lâchée à 1 cm de l'équilibre et sans vitesse :
+x(0) = 1 et x′(0) = 0. Racines −1 ± 5i, donc x(t) = e^(−t)(A cos 5t + B sin 5t).
+- x(0) = e^0 (A cos 0 + B sin 0) = A, donc **A = 1**.
+- On dérive : x(t) est un **produit** u × v, avec
+  u = e^(−t), donc u′ = −e^(−t) (le −1 « sort », comme le r de e^(rt) en 18.18) ;
+  v = A cos 5t + B sin 5t, donc v′ = −5A sin 5t + 5B cos 5t : comme pour e^(u) en 17.7, le facteur
+  intérieur sort, (cos 5t)′ = −5 sin 5t et (sin 5t)′ = 5 cos 5t.
+  (uv)′ = u′v + uv′ : x′(t) = −e^(−t)(A cos 5t + B sin 5t) + e^(−t)(−5A sin 5t + 5B cos 5t).
+- À t = 0, on remplace e^0 = 1, cos 0 = 1, sin 0 = 0, **terme par terme** :
+  x′(0) = −1 × (A × 1 + B × 0) + 1 × (−5A × 0 + 5B × 1) = −A + 5B.
+  x′(0) = 0 donne −1 + 5B = 0, **B = 0,2**.
+
+> x(t) = e^(−t)(cos 5t + 0,2 sin 5t) — la courbe orange de la figure de la 18.18.
+
+**Cas Δ > 0.** y″ + 3y′ + 2y = 0, y(0) = 1, y′(0) = 0. Racines −1 et −2 : y = A e^(−t) + B e^(−2t).
+y(0) = A + B = 1 et y′(0) = −A − 2B = 0 ; de la seconde, A = −2B ; dans la première, −2B + B = 1, donc
+B = −1 et A = 2 : **y(t) = 2e^(−t) − e^(−2t)**.
+
+**Cas Δ = 0.** y″ + 4y′ + 4y = 0, y(0) = 1, y′(0) = 0. Racine double −2 : y = (A t + B) e^(−2t).
+y(0) = B = 1 ; y est le produit u × v avec u = A t + B (u′ = A) et v = e^(−2t) (v′ = −2e^(−2t)) :
+y′(t) = A e^(−2t) − 2(A t + B) e^(−2t), donc y′(0) = A − 2B = 0 et A = 2 :
+**y(t) = (2t + 1) e^(−2t)**.
+
+[[FIG:famille_second_ordre]]
+
+**Méthode pour trouver A et B** : écrire y(0) et y′(0) avec la forme générale. y(0) donne directement A
+(cas Δ < 0) ou B (cas Δ = 0), qu'on remplace dans y′(0). Pour Δ > 0, on obtient deux équations en A et B :
+on tire une inconnue de la plus simple (dans l'exemple, A = −2B) et on la remplace dans l'autre.
+
+> **Ce que donnent y(0) et y′(0), une fois la dérivée faite** (à connaître pour vérifier, pas pour sauter
+> la dérivation) :
+>
+> | cas | y(0) = | y′(0) = |
+> |---|---|---|
+> | Δ > 0 | A + B | r₁A + r₂B |
+> | Δ = 0 | B | A + r₀B |
+> | Δ < 0 | A | αA + βB |
+
+### 4. Avec un second membre : solution particulière + solution de l'homogène
+
+Quand une force extérieure agit (le poids, un balourd qui tourne, une tension imposée), l'équation a un
+**second membre** : a y″ + b y′ + c y = d(t). Le programme du BTS (le « référentiel ») limite d(t) à un
+**polynôme**, à
+**e^(λt)**, ou à **cos(ωt + φ)**, **sin(ωt + φ)**.
+
+> **Solution = une solution particulière y_p + la solution générale de l'équation homogène** (§ 2).
+
+C'est la lecture de la 18.8 : « l'équilibre (ou le régime imposé) + un écart qui s'éteint » ; y_p joue le
+rôle de y_eq, et la solution de l'homogène celui de (y₀ − y_eq) e^(−t/τ). La solution particulière se
+cherche **de la même forme que d(t)**, avec des coefficients à ajuster ; **l'énoncé donne la forme à
+chercher** (programme du BTS : « les indications permettant d'obtenir une solution particulière sont
+données »).
+
+Pourquoi la même forme ? Dériver une constante donne 0, dériver un cos donne un sin et un sin un cos,
+dériver un polynôme donne un polynôme, dériver e^(λt) redonne e^(λt), multiplié par λ : a y″ + b y′ + c y
+reste dans
+la même famille que y. Physiquement, un balourd qui tourne à 25 tr/s fait vibrer le châssis à 25 tr/s :
+le système suit le rythme qu'on lui impose.
+
+**d(t) constant.** y″ + 3y′ + 2y = 4 ; indication : chercher y_p constante. Une constante a des dérivées
+nulles : 2 y_p = 4, donc **y_p = 2**. Solution générale : y = 2 + A e^(−t) + B e^(−2t). Avec y(0) = 0 et
+y′(0) = 0 : A + B = −2 et −A − 2B = 0, donc B = 2 et A = −4 : **y(t) = 2 − 4e^(−t) + 2e^(−2t)** — une
+montée vers l'équilibre 2, comme en 18.8.
+
+**d(t) affine.** y″ + 3y′ + 2y = 4t + 2 ; indication : y_p = K t + L. y_p′ = K, y_p″ = 0, donc
+3K + 2(K t + L) = 4t + 2. Coefficient de t : 2K = 4, K = 2 ; terme constant : 3K + 2L = 2, L = −2 :
+**y_p = 2t − 2** (vérification : 3 × 2 + 2(2t − 2) = 4t + 2 ✓).
+
+**d(t) = e^(λt).** y″ + 3y′ + 2y = 6e^t ; indication : y_p = K e^t. Toutes les dérivées valent K e^t :
+K + 3K + 2K = 6, donc K = 1 et **y_p = e^t**.
+
+**d(t) = cos.** y″ + 2y′ + 5y = 10 cos t ; indication : chercher y_p = A cos t + B sin t. On calcule les
+trois termes et on les additionne :
+
+| | en cos t | en sin t |
+|---|---|---|
+| y_p″ = −A cos t − B sin t | −A | −B |
+| 2 y_p′ = 2B cos t − 2A sin t | +2B | −2A |
+| 5 y_p = 5A cos t + 5B sin t | +5A | +5B |
+| somme | 4A + 2B | 4B − 2A |
+
+On veut (4A + 2B) cos t + (4B − 2A) sin t = 10 cos t **à tout instant**. À t = 0 (cos = 1, sin = 0) :
+4A + 2B = 10. À t = π/2 (cos = 0, sin = 1) : 4B − 2A = 0. On résout : la seconde donne A = 2B, la première 10B = 10 : **B = 1,
+A = 2**, y_p = 2 cos t + sin t.
+
+[[FIG:regime_force]]
+
+La figure montre ce que dit la formule : partant du repos, la solution suit d'abord un chemin
+transitoire, puis **se cale sur le régime imposé** 2 cos t + sin t, pendant que la partie homogène
+(racines −1 ± 2i) s'éteint comme e^(−t).
+
+*Pour aller plus loin — la résonance (non exigible).* Si le second membre « frappe » à la fréquence propre
+du système sans amortissement, par exemple y″ + 25y = cos 5t (racines ± 5i, et d(t) oscille justement à
+5 rad/s), la forme « même que d(t) » ne marche plus : l'énoncé indique alors de chercher
+y_p = t (A cos 5t + B sin 5t). Partant du repos, on trouve y = (t sin 5t)/10 : **une amplitude qui
+grandit sans fin**. C'est la **résonance** : un moteur dont le balourd tourne à la fréquence propre de
+son support fait vibrer le châssis de plus en plus fort. En conception, on éloigne la fréquence de
+fonctionnement de la fréquence propre, ou on amortit.
+
+### 5. Représenter et résoudre avec un logiciel
+
+Le programme du BTS demande de **représenter la famille des courbes** des solutions et de résoudre « à la
+main dans les cas simples, à l'aide d'un logiciel de calcul formel dans tous les cas ».
+- Un logiciel de calcul formel (Xcas, GeoGebra…) résout directement : dans Xcas,
+  `desolve([y''+2*y'+26*y=0, y(0)=1, y'(0)=0], t, y)` renvoie e^(−t)(cos 5t + 0,2 sin 5t).
+- Pour voir la famille, on trace la solution pour plusieurs conditions initiales (figure du § 3) : toutes
+  ont la même pulsation et la même extinction, seule l'amplitude change (ici, toutes partent sans
+  vitesse ; avec une vitesse initiale, le décalage des oscillations change aussi).
+- Quand aucune formule n'existe (équation non linéaire, par exemple un frottement d'air qui grandit comme le
+  carré de la vitesse), on revient à une résolution approchée pas à
+  pas, dans l'esprit de la méthode d'Euler (fiche 18.12).
+
+### 6. Les erreurs classiques et à retenir
+
+**Erreurs classiques :**
+1. **Oublier une des deux constantes** : une équation du second ordre en a deux, A et B.
+2. **Se tromper de forme** : Δ = 0 demande (A t + B) e^(r₀t), pas A e^(r₀t) + B e^(r₀t) (qui n'a qu'une
+   constante utile).
+3. **Écrire cos(αt)** au lieu de cos(βt) : la partie réelle α va dans l'exponentielle, la partie
+   imaginaire β dans le cosinus et le sinus.
+4. **Utiliser les conditions initiales avant d'ajouter y_p** : on écrit d'abord la solution complète
+   (y_p + homogène), puis on applique y(0) et y′(0).
+5. **Mal dériver e^(αt) cos βt** : c'est un produit, (uv)′ = u′v + uv′, et la dérivée de cos βt est
+   −β sin βt.
+6. **Confondre les lettres** : pour m x″ + c x′ + k x = 0, Δ = c² − 4mk (18.18).
+
+**À retenir :**
+- Équation caractéristique a r² + b r + c = 0 (même coefficients que l'équation différentielle).
+- **Δ > 0** : A e^(r₁t) + B e^(r₂t) ; **Δ = 0** : (A t + B) e^(r₀t) ; **Δ < 0** : e^(αt)(A cos βt + B sin βt).
+- Avec second membre : **y = y_p + solution de l'homogène**, y_p de la même forme que d(t) (forme donnée
+  par l'énoncé).
+- Les conditions initiales y(0) et y′(0) fixent A et B, **sur la solution complète**.
+- Lecture physique : Δ < 0 et α < 0, oscillation amortie ; β = pulsation, α = vitesse d'extinction.
+""",
+            "formules": """
+
+**Équation homogène** a y″ + b y′ + c y = 0 — équation caractéristique a r² + b r + c = 0, Δ = b² − 4ac
+
+**Δ > 0** (racines r₁, r₂) — y = A e^(r₁t) + B e^(r₂t)
+
+**Δ = 0** (racine double r₀ = −b/(2a)) — y = (A t + B) e^(r₀t)
+
+**Δ < 0** (racines α ± βi) — y = e^(αt)(A cos βt + B sin βt) · α = −b/(2a), β = √(−Δ)/(2a)
+
+**Avec second membre** a y″ + b y′ + c y = d(t) — y = y_p + solution de l'homogène · y_p de la même forme
+que d(t) (polynôme, e^(λt), A cos ωt + B sin ωt), forme donnée par l'énoncé
+
+**Conditions initiales** — y(0) et y′(0), appliquées à la solution complète, fixent A et B
+
+**Mécanique** — m x″ + c x′ + k x = d(t) : Δ = c² − 4mk ; équilibre statique sous une force constante F :
+x_p = F/k (la solution particulière constante, § 4)
+
+        """,
+            "exemple": """
+**Cas industriel — Le pied antivibratile de la 18.18 : combien de temps vibre-t-il ?**
+
+On le reprend (m = 25 kg, c = 200 N·s/m, k = 22 900 N/m) : on y avait trouvé
+les racines r = −4 ± 30i et conclu « la vibration est pratiquement éteinte en une seconde » (il en reste
+2 %). Il ne restait qu'à écrire **la formule de x(t)** pour chiffrer ce délai précisément. Un choc (une pièce posée un
+peu brutalement sur la table) écarte le pied de **2 mm** de sa position d'équilibre, sans vitesse initiale. Le
+bureau d'études veut la formule du mouvement et le temps au bout duquel la vibration descend sous
+**0,1 mm** (seuil au-delà duquel une mesure de cote sur la machine est faussée).
+
+**Étape 1 — La forme.** Δ < 0, racines −4 ± 30i : x(t) = e^(−4t)(A cos 30t + B sin 30t), x en mm, **mesuré
+à partir de la position d'équilibre du pied chargé** (on verra à l'étape 5 où elle se trouve).
+
+**Étape 2 — Les conditions initiales.** x(0) = A = **2**. x′(t) = −4e^(−4t)(A cos 30t + B sin 30t) +
+e^(−4t)(−30A sin 30t + 30B cos 30t), donc x′(0) = −4A + 30B = 0, soit B = 4A/30 = 8/30 ≈ **0,267**.
+
+> x(t) = e^(−4t)(2 cos 30t + 0,267 sin 30t) mm
+
+**Étape 3 — Contrôler.** x(0) = 2 ✓ ; la pulsation 30 rad/s (fréquence 4,8 Hz) et l'extinction e^(−4t) sont
+celles annoncées en 18.18.
+
+**Étape 4 — Le temps de stabilisation.** A cos 30t + B sin 30t est une seule oscillation, dont le maximum
+vaut √(A² + B²) (résultat admis : la « longueur » d'une flèche de composantes A et B). Ici B est petit, donc
+l'amplitude reste proche de A = 2 : √(2² + 0,267²) × e^(−4t) ≈ 2,02 e^(−4t). Elle passe sous 0,1 mm quand
+e^(−4t) < 0,1/2,02 ≈ 0,049 5. On prend ln des deux côtés : −4t < ln(0,049 5) ≈ −3,0. On divise par −4, ce
+qui **retourne l'inégalité** : t > 3,0/4 ≈ **0,75 s** (0,1 mm sur 2 mm, c'est 5 % : un seuil moins sévère
+que les 2 % de la 18.18, d'où un peu moins d'une seconde).
+
+**Étape 5 — Et le poids de la machine ?** Le poids de la machine appuie en permanence (25 × 9,8 ≈ 245 N :
+la part de la machine que porte ce pied ; la pièce posée, légère à côté, ne déplace presque pas cet
+équilibre : on la néglige, comme à l'exercice 6). Si on mesure la position depuis le pied **sans aucune
+charge** (ressort au repos), on la note X en majuscule, pour ne pas la confondre avec le x des étapes 1 à
+4, mesuré depuis l'équilibre. L'équation complète est alors 25 X″ + 200 X′ + 22 900 X = 245 : un second membre **constant**. Solution particulière constante (§ 4) :
+ses dérivées sont nulles, donc 22 900 X_p = 245, X_p ≈ 0,010 7 m = **10,7 mm**. C'est l'**écrasement
+statique**, la position d'équilibre X_p = mg/k où le pied se pose quand tout est calmé.
+
+> X(t) = **10,7** + e^(−4t)(2 cos 30t + 0,267 sin 30t) mm
+
+Autrement dit, X = 10,7 + x : même mouvement, repère décalé de 10,7 mm.
+
+C'est la 18.8 mot pour mot : **l'équilibre** (10,7 mm, qui dure) **+ un écart qui s'éteint** (le terme en
+e^(−4t), celui des étapes 1 à 4). Les 2 mm et les 0,1 mm se comptent autour de 10,7 mm : le pied ne revient
+pas à zéro, il se fige à 10,7 mm.
+
+[[FIG:pied_equilibre_poids]]
+
+**Ce que le calcul apprend.** Après avoir posé une pièce, l'opérateur doit attendre environ **trois
+quarts de seconde** avant de lancer une mesure fine. Si ce délai gêne la production, il faut augmenter
+l'amortissement (un α plus négatif) — sans aller jusqu'à supprimer toute souplesse, qui protège la machine
+des chocs.
+""",
+            "exercice": """
+**1.** Résous y″ + 5y′ + 6y = 0 avec y(0) = 1 et y′(0) = 0.
+
+**2.** Résous y″ + 6y′ + 9y = 0 avec y(0) = 2 et y′(0) = 0.
+
+**3.** Résous y″ + 4y′ + 13y = 0 avec y(0) = 0 et y′(0) = 3. Le système oscille-t-il ? Avec quelle
+pulsation ?
+
+**4.** On considère y″ + 3y′ + 2y = 4. a) Vérifie que y_p = 2 est une solution particulière. b) Donne la
+solution générale. c) Trouve la solution avec y(0) = 0 et y′(0) = 0. Vers quelle valeur tend y(t) ?
+
+**5.** On considère y″ + 2y′ + 5y = 10 cos t. En cherchant y_p = A cos t + B sin t, trouve A et B.
+
+**6.** Une balance de contrôle en bout de ligne : plateau de masse m = 2 kg, amortissement c = 16 N·s/m,
+raideur k = 320 N/m. Juste après la pose d'une pièce, le plateau se trouve à 5 mm de sa position d'équilibre
+et part sans vitesse (la pièce est légère à côté du plateau : la masse qui vibre reste m = 2 kg ; c'est sa
+pose qui lance le mouvement). Écris
+l'équation caractéristique, sa solution, puis x(t). Au bout de combien de temps l'amplitude est-elle
+inférieure à 0,05 mm ?
+""",
+            "corrige": """
+**1.** r² + 5r + 6 = 0 : Δ = 1, racines −2 et −3. y = A e^(−2t) + B e^(−3t) ; y(0) = A + B = 1 ;
+y′(0) = −2A − 3B = 0. Donc A = −1,5B, puis −0,5B = 1 : **B = −2, A = 3**, y(t) = **3e^(−2t) − 2e^(−3t)**.
+
+**2.** r² + 6r + 9 = 0 : Δ = 0, racine double −3. y = (A t + B) e^(−3t) ; y(0) = B = 2 ; y′(0) = A − 3B = 0,
+donc A = 6 : y(t) = **(6t + 2) e^(−3t)**.
+
+**3.** r² + 4r + 13 = 0 : Δ = 16 − 52 = −36, racines −2 ± 3i. y = e^(−2t)(A cos 3t + B sin 3t) ; y(0) = A = 0 ;
+y′(0) = −2A + 3B = 3, donc B = 1 : y(t) = **e^(−2t) sin 3t**. Oui, il oscille, à la pulsation **3 rad/s**
+(partie imaginaire), avec une amplitude qui s'éteint comme e^(−2t).
+
+**4.** a) Une constante a des dérivées nulles : 0 + 0 + 2 × 2 = 4 ✓. b) Racines de r² + 3r + 2 : −1 et −2 ;
+**y = 2 + A e^(−t) + B e^(−2t)**. c) y(0) = 2 + A + B = 0 et y′(0) = −A − 2B = 0 : A = −2B, puis 2 − B = 0,
+B = 2, A = −4 ; y(t) = **2 − 4e^(−t) + 2e^(−2t)**, qui tend vers **2** (les exponentielles s'éteignent).
+
+**5.** y_p′ = −A sin t + B cos t, y_p″ = −A cos t − B sin t ; en remplaçant : (4A + 2B) cos t + (4B − 2A) sin t
+= 10 cos t, donc 4A + 2B = 10 et 4B − 2A = 0 : A = 2B, 10B = 10, **B = 1, A = 2**.
+
+**6.** 2r² + 16r + 320 = 0 : Δ = 16² − 4 × 2 × 320 = 256 − 2 560 = −2 304 = −48², r = (−16 ± 48i)/4 =
+**−4 ± 12i**. x = e^(−4t)(A cos 12t + B sin 12t) ; x(0) = A = 5 ; x′(0) = −4A + 12B = 0, B = 20/12 ≈ 1,67 :
+**x(t) = e^(−4t)(5 cos 12t + 1,67 sin 12t)** mm. Amplitude ≈ √(5² + 1,67²) e^(−4t) ≈ 5,27 e^(−4t) < 0,05
+⟺ t > ln(105,4)/4 ≈ **1,16 s**.
 """,
         },
     ],
@@ -55852,9 +56337,26 @@ _mth("18.18", "Résoudre une équation du second degré quand Δ < 0 (racines co
     "réelle −b/(2a), parties imaginaires ± √(−Δ)/(2a).",
     "**Contrôler** : les deux racines α ± βi sont conjuguées ; leur somme 2α vaut −b/a et leur produit "
     "α² + β² vaut c/a ; ou remplacer une racine dans l'équation (i² = −1) et trouver 0.",
-    "**Lire** (équation caractéristique, fiche 18.19, en préparation) : racines α ± βi → oscillation de "
+    "**Lire** (équation caractéristique, fiche 18.19) : racines α ± βi → oscillation de "
     "pulsation β, qui s'éteint comme e^(αt) si α < 0.",
 ], "r² + 2r + 26 = 0 : Δ = −100 = (10i)², r = (−2 ± 10i)/2 = −1 ± 5i ; contrôle : (−1)² + 5² = 26 = k/m = 26/1.")
+
+_mth("18.19", "Résoudre une équation différentielle du second ordre (avec conditions initiales)", [
+    "**Écrire l'équation caractéristique** a r² + b r + c = 0 avec les coefficients de a y″ + b y′ + c y = 0 "
+    "(pour m x″ + c x′ + k x : m r² + c r + k = 0, Δ = c² − 4mk).",
+    "**Calculer Δ et les racines**, puis écrire la forme : Δ > 0 : A e^(r₁t) + B e^(r₂t) ; Δ = 0 : "
+    "(A t + B) e^(r₀t) ; Δ < 0 : e^(αt)(A cos βt + B sin βt).",
+    "**S'il y a un second membre**, chercher y_p de la forme donnée par l'énoncé (constante, polynôme, "
+    "A cos ωt + B sin ωt…), la remplacer dans l'équation et identifier les coefficients ; solution = y_p + "
+    "homogène.",
+    "**Appliquer les conditions initiales à la solution complète** : y(0) donne directement B (Δ = 0) ou A "
+    "(Δ < 0) ; pour Δ > 0, il donne A + B. Puis y′(0) (dériver avec (uv)′ = u′v + uv′) donne l'autre.",
+    "**Contrôler** : y(0) et y′(0) retrouvés ; α < 0, la solution s'éteint ; avec une constante en second "
+    "membre, y tend vers y_p.",
+    "**Lire** : β = pulsation (fréquence β/(2π)), α = vitesse d'extinction ; temps pour passer sous un "
+    "seuil : amplitude × e^(αt) < seuil, puis ln (fiche 17.7).",
+], "x″ + 2x′ + 26x = 0, x(0) = 1, x′(0) = 0 : racines −1 ± 5i ; x = e^(−t)(A cos 5t + B sin 5t) ; A = 1 ; "
+       "−A + 5B = 0 donne B = 0,2.")
 
 _mth("19.1", "Multiplier des matrices et calculer un déterminant", [
     "**Multiplier ligne × colonne** : le terme (i,j) du produit combine la "
@@ -58159,6 +58661,200 @@ def gen_racines_complexes():
     }
 
 
+def _equation_second_ordre(b, c, second="0"):
+    """« y″ + 5y′ + 6y = 0 » écrit à la française (b et c entiers, a = 1)."""
+    texte = "y″"
+    if b:
+        texte += f" {'+' if b > 0 else '−'} {'' if abs(b) == 1 else abs(b)}y′"
+    if c:
+        texte += f" {'+' if c > 0 else '−'} {'' if abs(c) == 1 else abs(c)}y"
+    return f"{texte} = {second}"
+
+
+def _coef(v, lettre):
+    """Coefficient devant une lettre, à la française : « A », « −A », « 3A », « −2,5A »."""
+    if v == 1:
+        return lettre
+    if v == -1:
+        return f"−{lettre}"
+    return f"{_fr_court(v)}{lettre}"
+
+
+def _expo(r):
+    """e^(rt) écrit sans « 1 » inutile : e^(−t), e^(−2t)."""
+    return "e^(t)" if r == 1 else "e^(−t)" if r == -1 else f"e^({_fr_court(r)}t)"
+
+
+def gen_constantes_ci():
+    """Conditions initiales : trouver A ou B dans la solution générale (Δ > 0, Δ = 0 ou Δ < 0).
+    Erreurs visées : signe en isolant une constante, oubli d'un terme en dérivant, oubli de diviser par β."""
+    while True:
+        cas = random.choice(["positif", "nul", "négatif", "négatif"])
+        y0 = random.choice([1, 2, 3, 4, -2])
+        v0 = random.choice([0, 0, 1, 2, 3, -1, 4])
+        fy0, fv0 = _fr_court(y0), _fr_court(v0)
+        if cas == "positif":
+            r1, r2 = sorted(random.sample([-1, -2, -3, -4, -5], 2), reverse=True)  # r₁ > r₂, toutes deux < 0
+            b, c = -(r1 + r2), r1 * r2
+            forme = "y = A e^(r₁t) + B e^(r₂t), avec r₁ > r₂"
+            a_ = (v0 - r2 * y0) / (r1 - r2)
+            b_ = y0 - a_
+            quoi = random.choice(["A", "B"])
+            rep = a_ if quoi == "A" else b_
+            detail = (f"Racines {_fr_court(r1)} et {_fr_court(r2)}, donc r₁ = {_fr_court(r1)} (la plus grande) : "
+                      f"y = A {_expo(r1)} + B {_expo(r2)}. y(0) = A + B = {fy0} ; y′(0) = {_coef(r1, 'A')} "
+                      f"{_moins(-r2)}B = {fv0}. De la première, B = {fy0} − A ; on remplace dans la seconde, qui "
+                      f"ne contient plus que A.")
+            faux_isole = (v0 + r2 * y0) / (r1 - r2)
+            diags = [(y0, f"A + B = {fy0}, mais {quoi} seul ne vaut pas {fy0} : il faut aussi y′(0)."),
+                     (faux_isole if quoi == "A" else y0 - faux_isole,
+                      f"Erreur de signe en isolant A : r₁A + r₂({fy0} − A) = {fv0} donne (r₁ − r₂)A = {fv0} − r₂ × "
+                      f"{fy0}, pas {fv0} + r₂ × {fy0}."),
+                     (b_ if quoi == "A" else a_,
+                      f"Tu as associé {quoi} à l'autre racine : ici r₁ = {_fr_court(r1)} est la plus grande, et A "
+                      f"est le coefficient de {_expo(r1)}.")]
+        elif cas == "nul":
+            r0 = random.choice([-1, -2, -3, -4])
+            b, c = -2 * r0, r0 * r0
+            forme = "y = (A t + B) e^(r₀t)"
+            b_ = y0
+            a_ = v0 - r0 * y0
+            quoi = random.choice(["A", "A", "B"])
+            rep = a_ if quoi == "A" else b_
+            sr0 = f"{'−' if r0 < 0 else '+'} {'' if abs(r0) == 1 else _fr_court(abs(r0))}"
+            detail = (f"Racine double {_fr_court(r0)} : y = (A t + B) {_expo(r0)}. y(0) = B = {fy0} ; "
+                      f"y′(t) = A {_expo(r0)} {sr0}(A t + B) {_expo(r0)}, donc y′(0) = A {sr0}B = {fv0}.")
+            if quoi == "A":
+                diags = [(v0 + r0 * y0, f"Signe : y′(0) = A + ({_fr_court(r0)})B = {fv0}, donc A = {fv0} − "
+                                        f"({_fr_court(r0)}) × {fy0}."),
+                         (v0, "Il manque le terme r₀B de la dérivée : y′(t) = A e^(r₀t) + r₀(A t + B) e^(r₀t)."),
+                         (y0, f"C'est B qui vaut y(0) = {fy0} : A se trouve avec y′(0).")]
+            else:
+                diags = [(v0 - r0 * y0, "C'est A que donne y′(0) ; B vaut simplement y(0)."),
+                         (0, "À t = 0, (A t + B) vaut B : B = y(0).")]
+        else:
+            alpha = random.choice([-1, -2, -3, -4])
+            beta = random.choice([2, 3, 4, 5, 6])
+            b, c = -2 * alpha, alpha * alpha + beta * beta
+            forme = "y = e^(αt)(A cos βt + B sin βt)"
+            a_ = y0
+            b_ = (v0 - alpha * y0) / beta
+            quoi = random.choice(["A", "B", "B"])
+            rep = a_ if quoi == "A" else b_
+            detail = (f"Racines {_fr_court(alpha)} ± {beta}i : y = {_expo(alpha)}(A cos {beta}t + B sin {beta}t). "
+                      f"y(0) = A = {fy0} ; y′(0) = {_coef(alpha, 'A')} + {beta}B = {fv0}.")
+            if quoi == "A":
+                diags = [(0, "À t = 0, cos 0 = 1 et sin 0 = 0 : A = y(0)."),
+                         (b_, "Ça, c'est B (trouvé avec y′(0)) ; A vaut simplement y(0).")]
+            else:
+                diags = [((v0 + alpha * y0) / beta, f"Signe : y′(0) = ({_fr_court(alpha)})A + {beta}B = {fv0}, donc "
+                                                     f"B = ({fv0} − ({_fr_court(alpha)}) × {fy0})/{beta}."),
+                         (v0 - alpha * y0, f"Il faut encore diviser par β = {beta} : {beta}B = "
+                                           f"{_fr_court(v0 - alpha * y0)}."),
+                         (v0 / beta, "Il manque le terme αA : la dérivée de e^(αt) donne αA à t = 0.")]
+        vals = [v for v, _ in diags]
+        if all(abs(v - rep) > 0.05 for v in vals) and \
+                all(abs(vals[i] - vals[j]) > 0.05 for i in range(len(vals)) for j in range(i + 1, len(vals))):
+            break
+    return {
+        "titre": "Second ordre : conditions initiales",
+        "enonce": (f"On considère {_equation_second_ordre(b, c)}, avec y(0) = {fy0} et y′(0) = {fv0}. Sa solution "
+                   f"s'écrit {forme} (à toi de trouver les racines). Donne {quoi}, à 0,01 près."),
+        "rep": rep, "tol": 0.01, "unite": "",
+        "diag": [_diag(v, m) for v, m in diags],
+        "corr": [f"**Racines et forme.** {detail}",
+                 f"**Constantes.** A = **{_fr_court(a_, 2)}** et B = **{_fr_court(b_, 2)}**."],
+        "indice": "Écris y(0) et y′(0) avec la forme générale. À t = 0 : e^0 = 1, cos 0 = 1, sin 0 = 0. Dérive "
+                  "un produit avec (uv)′ = u′v + uv′.",
+    }
+
+
+def gen_solution_particuliere():
+    """Solution particulière de la forme donnée par l'énoncé : constante, affine, ou A cos ωt + B sin ωt.
+    Erreurs visées : oublier des termes de dérivée, se tromper de coefficient à diviser."""
+    while True:
+        b = random.choice([1, 2, 3, 4, 5, 6])
+        c = random.choice([1, 2, 3, 4, 5, 6, 8, 10])
+        if b * b - 4 * c == 0:
+            continue
+        cas = random.choice(["constante", "affine", "cos"])
+        if cas == "constante":
+            d = random.choice([2, 4, 6, 8, 10, 12, 15, 20])
+            second = str(d)
+            indication = "une constante y_p = K"
+            rep, quoi = d / c, "K"
+            diags = [(d / b, f"On divise par c = {c} (le coefficient de y), pas par b : les dérivées de K sont nulles."),
+                     (d, f"Il faut diviser par le coefficient de y : {_coef(c, 'K')} = {d}.")]
+            calc = f"K′ = K″ = 0, donc {_coef(c, 'K')} = {d} et K = **{_fr_court(rep, 2)}**."
+        elif cas == "affine":
+            p = random.choice([2, 3, 4, 6, 8, 10])
+            q = random.choice([0, 1, 2, 5, 10])
+            second = f"{p}t" + (f" + {q}" if q else "")
+            al = p / c
+            be = (q - b * al) / c
+            indication = "une fonction affine y_p = K t + L"
+            quoi = random.choice(["K", "L"])
+            rep = al if quoi == "K" else be
+            if quoi == "K":
+                diags = [(p / b, f"K se trouve avec le coefficient de t : {_coef(c, 'K')} = {p}."),
+                         (p, f"Il faut diviser par {c} : {_coef(c, 'K')} = {p}.")]
+            else:
+                diags = [(q / c, f"Il manque le terme {_coef(b, 'y_p′')} = {_coef(b, 'K')} dans le terme constant : "
+                                 f"{_coef(b, 'K')} + {_coef(c, 'L')} = {q}."),
+                         ((q + b * al) / c, f"Signe : {_coef(c, 'L')} = {q} − {_coef(b, 'K')}.")]
+            facteur = "(K t + L)" if c == 1 else f"{c}(K t + L)"
+            calc = (f"y_p′ = K, y_p″ = 0 : {_coef(b, 'K')} + {facteur} = {second}. Coefficient de t : {_coef(c, 'K')} = "
+                    f"{p}, K = {_fr_court(al, 2)} ; terme constant : {_coef(b, 'K')} + {_coef(c, 'L')} = {q}, "
+                    f"L = **{_fr_court(be, 2)}**.")
+        else:
+            w = random.choice([1, 2, 3])
+            k = random.choice([2, 5, 10, 20])
+            if c == w * w:
+                continue
+            den = (c - w * w) ** 2 + (b * w) ** 2
+            a_ = k * (c - w * w) / den
+            b_ = k * b * w / den
+            wt = "t" if w == 1 else f"{w}t"
+            second = f"{k} cos {wt}"
+            indication = f"y_p = A cos {wt} + B sin {wt}"
+            quoi = random.choice(["A", "B"])
+            rep = a_ if quoi == "A" else b_
+            if quoi == "A":
+                diags = [(k / c, "Il manque les termes des dérivées : y_p″ et y_p′ changent aussi les coefficients de "
+                                 "cos et sin."),
+                         (k / (c - w * w), f"Il manque un terme : les deux équations (cos et sin) sont couplées par le "
+                                           f"terme {_coef(b, 'y′')} ; il faut les résoudre ensemble.")]
+            else:
+                diags = [(0, "Il manque les termes des dérivées : y_p′ fait apparaître du sin à partir du cos, B n'est "
+                             "pas nul."),
+                         (k / (b * w), f"Il manque le terme {_coef(c - w * w, 'A')} dans l'équation des cos : il faut "
+                                       f"résoudre les deux équations ensemble.")]
+            calc = (f"En remplaçant : ({_coef(c - w * w, 'A')} + {_coef(b * w, 'B')}) cos {wt} + "
+                    f"({_coef(c - w * w, 'B')} − {_coef(b * w, 'A')}) sin {wt} = {k} cos {wt}. Donc "
+                    f"{_coef(c - w * w, 'A')} + {_coef(b * w, 'B')} = {k} et {_coef(c - w * w, 'B')} − "
+                    f"{_coef(b * w, 'A')} = 0. " + (
+                        f"La seconde donne B en fonction de A ; on remplace dans la première : "
+                        f"A = **{_fr_court(a_, 2)}**, puis B = **{_fr_court(b_, 2)}**." if quoi == "A" else
+                        f"La seconde donne A en fonction de B ; on remplace dans la première, qui ne contient "
+                        f"plus que B : B = {k} × {b * w}/({_fr_court(c - w * w)}² + {b * w}²) = "
+                        f"**{_fr_court(b_, 2)}**, puis A = **{_fr_court(a_, 2)}** (on calcule B sans passer par "
+                        f"un A arrondi)."))
+        vals = [v for v, _ in diags]
+        if abs(rep) > 0.02 and all(abs(v - rep) > 0.05 for v in vals) and \
+                all(abs(vals[i] - vals[j]) > 0.05 for i in range(len(vals)) for j in range(i + 1, len(vals))):
+            break
+    return {
+        "titre": "Second ordre : solution particulière",
+        "enonce": (f"On considère {_equation_second_ordre(b, c, second)}. On cherche une solution particulière de la "
+                   f"forme {indication}. Donne {quoi}, à 0,01 près."),
+        "rep": rep, "tol": 0.01, "unite": "",
+        "diag": [_diag(v, m) for v, m in diags],
+        "corr": [f"**Remplacer y_p dans l'équation.** {calc}"],
+        "indice": "Dérive y_p, remplace dans l'équation, puis identifie : même coefficient devant t (ou cos, "
+                  "sin) et même terme constant des deux côtés.",
+    }
+
+
 def decimales_affichage(tol):
     """Nombre de décimales pour afficher la réponse d'un générateur : assez pour que la valeur
     AFFICHÉE soit acceptée par la tolérance (10⁻ᵈ ≤ tol, donc erreur d'arrondi ≤ tol/2), et au
@@ -58256,7 +58952,8 @@ def fabriquer_exo(famille=None):
                                   gen_comparaison_moyennes, gen_comparaison_proportions,
                                   gen_proba_exponentielle, gen_duree_fiabilite,
                                   gen_proba_poisson, gen_parametre_poisson,
-                                  gen_calcul_complexe, gen_racines_complexes],
+                                  gen_calcul_complexe, gen_racines_complexes,
+                                  gen_constantes_ci, gen_solution_particuliere],
     }
     if famille and famille in catalogue:
         pool = catalogue[famille]
@@ -62425,6 +63122,101 @@ ATELIERS = [
                      "sont (−b ± i√(−Δ))/(2a), deux complexes conjugués α ± βi ; on divise les deux parties par 2a ; "
                      "le produit des racines, α² + β², vaut c/a (k/m pour l'équation caractéristique). Pour une équation caractéristique, la partie "
                      "imaginaire donne la pulsation, la partie réelle l'amortissement.",
+    },
+    {
+        "id": "at151",
+        "chapitre": "Bloc 18",
+        "titre": "Balance de contrôle en bout de ligne : quand le plateau est-il stable ?",
+        "theme": "Équations différentielles — second ordre",
+        "fiche": "18.19",
+        "vocabulaire": [
+            ("conditions initiales", "l'état de départ : la position x(0) et la vitesse x′(0) ; elles fixent les "
+             "deux constantes A et B."),
+            ("amplitude", "l'écart maximal autour de l'équilibre ; pour e^(αt)(A cos βt + B sin βt), elle vaut "
+             "environ √(A² + B²) × e^(αt)."),
+            ("temps de stabilisation", "le temps au bout duquel l'amplitude reste sous un seuil fixé."),
+        ],
+        "enonce": "En bout de ligne, une balance pèse chaque pièce. Son plateau (m = 2 kg) repose sur un ressort "
+                  "(k = 320 N/m) et un amortisseur (c = 16 N·s/m) : 2 x″ + 16 x′ + 320 x = 0, x en mm à partir de "
+                  "la position d'équilibre. Juste après la pose d'une pièce, le plateau se trouve à 5 mm de sa "
+                  "position d'équilibre et part sans vitesse : x(0) = 5, x′(0) = 0 (la pièce est légère à côté du "
+                  "plateau : la masse qui vibre reste m = 2 kg ; c'est sa pose qui lance le mouvement). La pesée n'est fiable que si l'écart est inférieur à 0,05 mm. On veut la "
+                  "formule de x(t) et le délai à respecter avant de lire la balance.",
+        "etapes": [
+            {"type": "numerique", "label": "Discriminant de l'équation caractéristique 2 r² + 16 r + 320 = 0",
+             "unite": "", "attendu": 16 ** 2 - 4 * 2 * 320, "tol": 0.5,
+             "consigne": "m = 2, c = 16, k = 320 : Δ = c² − 4mk.",
+             "indice": "16² = 256 ; 4 × 2 × 320 = 2 560.",
+             "pieges": [(16 ** 2 + 4 * 2 * 320, "Tu as additionné : Δ = c² MOINS 4mk."),
+                        (16 ** 2 - 4 * 320, "Tu as oublié m = 2 dans 4mk.")]},
+            {"type": "numerique", "label": "Partie imaginaire β des racines (la pulsation, en rad/s)", "unite": "rad/s",
+             "attendu": 12, "tol": 0.01,
+             "consigne": "Racines α ± βi avec α = −c/(2m) et β = √(−Δ)/(2m) (fiche 18.18).",
+             "indice": "−Δ = 2 304 = 48² ; 48/4.",
+             "pieges": [(48, "√(−Δ) = 48 doit encore être divisé par 2m = 4."),
+                        (24, "On divise par 2m = 4, pas par m = 2.")]},
+            {"type": "numerique", "label": "Constante A (en mm)", "unite": "mm",
+             "attendu": 5, "tol": 0.01,
+             "consigne": "Racines −4 ± 12i : x(t) = e^(−4t)(A cos 12t + B sin 12t). Utilise x(0) = 5.",
+             "indice": "À t = 0 : e^0 = 1, cos 0 = 1, sin 0 = 0.",
+             "pieges": [(0, "À t = 0, cos 0 = 1 et sin 0 = 0 : x(0) = A, donc A = 5."),
+                        (5 / 12, "Pas de division ici : x(0) = A directement.")]},
+            {"type": "numerique", "label": "Constante B (en mm, à 0,01 près)", "unite": "mm",
+             "attendu": 20 / 12, "tol": 0.01,
+             "depend_de": {"etape": 3, "formule": lambda v: 4 * v / 12},
+             "consigne": "x′(t) = −4e^(−4t)(A cos 12t + B sin 12t) + e^(−4t)(−12A sin 12t + 12B cos 12t), donc "
+                         "x′(0) = −4A + 12B. Utilise x′(0) = 0.",
+             "indice": "−4 × 5 + 12B = 0.",
+             "pieges": [(-20 / 12, "Signe : −4A + 12B = 0 donne 12B = +4A = 20."),
+                        (20, "Il faut encore diviser par 12 : 12B = 20."),
+                        (0, "Le terme −4A de la dérivée (dérivée de e^(−4t)) ne s'annule pas : 12B = 4A.")]},
+            {"type": "numerique", "label": "Temps de stabilisation : amplitude ≈ 5,27 e^(−4t) < 0,05 (en s)",
+             "unite": "s", "attendu": math.log(math.sqrt(25 + 400 / 144) / 0.05) / 4, "tol": 0.01,
+             "consigne": "Amplitude ≈ √(A² + B²) × e^(−4t) = 5,27 e^(−4t). Résous 5,27 e^(−4t) = 0,05 avec ln "
+                         "(fiche 17.7).",
+             "indice": "e^(−4t) = 0,05/5,27, donc t = ln(5,27/0,05)/4.",
+             "pieges": [(math.log(5 / 0.05) / 4, "Tu as pris l'amplitude 5 (seulement A) : avec B, elle vaut "
+                                                 "√(5² + 1,67²) ≈ 5,27."),
+                        (math.log(math.sqrt(25 + 400 / 144) / 0.05), "Il faut diviser par 4 : e^(−4t) donne "
+                                                                     "−4t = ln(0,05/5,27).")]},
+            {"type": "qcm", "label": "Quelle forme de solution ?",
+             "question": "Pourquoi la solution s'écrit-elle e^(−4t)(A cos 12t + B sin 12t) ?",
+             "options": ["Parce que Δ > 0 : deux racines réelles distinctes",
+                         "Parce que Δ < 0 : deux racines complexes conjuguées",
+                         "Parce que Δ = 0 : une seule racine réelle double"],
+             "bonne": 1,
+             "diagnostics": {0: "Δ = −2 304 < 0 : les racines sont complexes. Deux racines réelles donneraient "
+                                "A e^(r₁t) + B e^(r₂t), sans oscillation.",
+                             2: "Δ vaut −2 304, pas 0. Une racine double donnerait (A t + B) e^(r₀t)."}},
+            {"type": "qcm", "label": "Que conseiller ?",
+             "question": "La cadence impose de lire la balance 0,8 s après la pose. Que conseiller ?",
+             "options": ["Rien : 0,8 s suffit largement à cette cadence",
+                         "Augmenter l'amortissement c du plateau",
+                         "Augmenter la masse m du plateau"],
+             "bonne": 1,
+             "diagnostics": {0: "À 0,8 s, l'amplitude vaut encore 5,27 × e^(−3,2) ≈ 0,21 mm, au-dessus de 0,05 mm : "
+                                "la pesée serait faussée ; il faut environ 1,16 s. Plus d'amortissement rend "
+                                "α = −c/(2m) plus négatif.",
+                             2: "Une masse plus grande rend α = −c/(2m) MOINS négatif : la vibration s'éteint plus "
+                                "lentement."}},
+        ],
+        "corrige": {
+            "enonce": "2 x″ + 16 x′ + 320 x = 0, x(0) = 5 mm, x′(0) = 0 ; pesée fiable sous 0,05 mm.",
+            "regle": "**Δ < 0, racines α ± βi : x = e^(αt)(A cos βt + B sin βt) ; A = x(0) ; x′(0) = αA + βB ; "
+                     "amplitude ≈ √(A² + B²) e^(αt).**",
+            "conversions": "x en mm, t en s : A et B sont en mm, β en rad/s.",
+            "remplacement": "Δ = 16² − 4 × 2 × 320 ; β = 48/4 ; A = 5 ; −4 × 5 + 12B = 0 ; "
+                            "t = ln(5,27/0,05)/4",
+            "calcul": "Δ = **−2 304** < 0, racines **−4 ± 12i**\n\nx(t) = e^(−4t)(A cos 12t + B sin 12t)\n\n"
+                      "A = **5 mm** ; B = 20/12 ≈ **1,67 mm**\n\nx(t) = e^(−4t)(5 cos 12t + 1,67 sin 12t) mm\n\n"
+                      "amplitude ≈ 5,27 e^(−4t) < 0,05 ⟺ t > ln(105,4)/4 ≈ **1,16 s**",
+            "verification": "**Contrôle de cohérence** : x(0) = 5 ✓ ; période 2π/12 ≈ 0,52 s, donc environ deux "
+                            "oscillations avant la lecture ; à 0,5 s, amplitude 5,27 e^(−2) ≈ 0,71 mm, encore bien "
+                            "trop grande.",
+        },
+        "a_retenir": "À retenir : pour Δ < 0, x(t) = e^(αt)(A cos βt + B sin βt) ; A = x(0), puis B par x′(0) = αA + "
+                     "βB ; le temps de stabilisation se lit sur l'enveloppe √(A² + B²) e^(αt), avec ln. Pour "
+                     "stabiliser plus vite, il faut un α plus négatif, donc plus d'amortissement.",
     },
     {
         "id": "at29",
@@ -70340,10 +71132,13 @@ MATIERES_PROGRAMME = [
          "Fonctions, dérivées, fonctions exponentielle et logarithme, calcul intégral, valeur "
          "moyenne, extremums locaux, équations différentielles du premier ordre (deux cas "
          "traités, et méthode d'Euler), nombres complexes (forme algébrique, racines d'une "
-         "équation du second degré quand Δ < 0). Non traitées : équations différentielles du "
-         "second ordre.",
+         "équation du second degré quand Δ < 0), équations différentielles du second ordre (fiche "
+         "18.19). Non traités : asymptote oblique ; nombre de solutions de f(x) = k et valeur "
+         "approchée d'une racine (algorithme) ; dérivée de uⁿ ; fonction racine carrée ; courbes de "
+         "sin et cos ; propriétés de l'intégrale (Chasles, linéarité, positivité) ; aire entre deux "
+         "courbes ; primitives de cos(ωt + φ) et sin(ωt + φ) ; méthodes approchées d'intégration.",
          [(7, ["7.2"]), (17, ["17.1", "17.7", "17.2", "17.4", "17.5"]),
-          (18, ["18.4", "18.8", "18.12", "18.18"])]),
+          (18, ["18.4", "18.8", "18.12", "18.18", "18.19"])]),
         ("Hors épreuve : calcul matriciel, Bézier, droites et plans", "Complet",
          "Programme complémentaire non évalué (matrices, courbes de Bézier) et "
          "approfondissement hors référentiel (droites et plans dans l'espace, distance "
@@ -70740,9 +71535,10 @@ elif PAGE == PAGE_MATHS:
         'inférentielle, configurations géométriques, calcul vectoriel. S\'y ajoutent, '
         '<b>hors épreuve</b>, le programme complémentaire non évalué (calcul matriciel, courbes '
         'de Bézier : fiches 19.1 à 19.4) et une fiche d\'approfondissement (19.6, droites et '
-        'plans dans l\'espace), toutes marquées « hors épreuve ». Attention : certaines notions '
-        'évaluées ne sont pas encore traitées ici (équations '
-        'différentielles du second ordre) — voir le tableau de bord. Ce sont les mêmes fiches que dans '
+        'plans dans l\'espace), toutes marquées « hors épreuve ». Attention : quelques notions évaluées de fonctions et de '
+        'calcul intégral ne sont pas encore traitées ici (asymptote oblique, fonction racine carrée, '
+        'propriétés de l\'intégrale, aire entre deux courbes…) — voir le tableau de bord. Ce sont les mêmes '
+        'fiches que dans '
         '« Cours », réunies ici pour ne pas les chercher au milieu des chapitres '
         'techniques.</div>',
         unsafe_allow_html=True)
