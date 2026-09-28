@@ -6579,6 +6579,123 @@ def pied_equilibre_poids():
     return _svg("".join(p_), 760, y0 + 40)
 
 
+def sin_cos_courbes():
+    x0, y0, kx, ky = 70, 170, 50, 90  # t de 0 à 4π (≈ 12,57) ; y de −1 à 1
+    X = lambda t: x0 + kx * t  # noqa: E731
+    Y = lambda v: y0 - ky * v  # noqa: E731
+    p_ = [_txt(40, 24, "sin t (bleu) et cos t (orange), t en radians : deux vagues identiques, décalées d'un quart de "
+               "période.", 12, TRAIT, "start", True),
+          _txt(40, 40, "Elles restent entre −1 et 1 et se répètent tous les 2π ≈ 6,28.", 11, FIN)]
+    p_.append(f"<line x1='{x0}' y1='{y0}' x2='{X(4 * math.pi) + 12}' y2='{y0}' stroke='{FIN}' stroke-width='1.4'/>")
+    p_.append(f"<line x1='{x0}' y1='{Y(-1.25)}' x2='{x0}' y2='{Y(1.3)}' stroke='{FIN}' stroke-width='1.4'/>")
+    for v in (-1, 1):
+        p_.append(f"<line x1='{x0}' y1='{Y(v)}' x2='{X(4 * math.pi)}' y2='{Y(v)}' stroke='{FIN}' stroke-width='0.8' "
+                  f"stroke-dasharray='3 5'/>")
+        p_.append(_txt(x0 - 6, Y(v) + 4, str(v).replace("-", "−"), 11, FIN, "end"))
+    for k, lib in ((1, "π/2"), (2, "π"), (3, "3π/2"), (4, "2π"), (6, "3π"), (8, "4π")):
+        t = k * math.pi / 2
+        p_.append(f"<line x1='{X(t):.1f}' y1='{y0 - 3}' x2='{X(t):.1f}' y2='{y0 + 3}' stroke='{FIN}'/>")
+        p_.append(f"<line x1='{X(t):.1f}' y1='{Y(-1.25)}' x2='{X(t):.1f}' y2='{Y(-1.25) + 4}' stroke='{FIN}'/>")
+        p_.append(_txt(X(t), Y(-1.25) + 16, lib, 11, FIN, "middle"))
+    p_.append(_txt(X(4 * math.pi) + 16, y0 + 4, "t", 11, FIN))
+    for f, coul in ((math.sin, ALESAGE), (math.cos, ARBRE)):
+        pts = " ".join(f"{X(4 * math.pi * i / 400):.1f},{Y(f(4 * math.pi * i / 400)):.1f}" for i in range(0, 401))
+        p_.append(f"<polyline points='{pts}' fill='none' stroke='{coul}' stroke-width='2.2'/>")
+    p_.append(_txt(X(math.pi / 2), Y(1) - 8, "sin : max en π/2", 11, ALESAGE, "middle", True))
+    p_.append(_txt(X(2 * math.pi) + 4, Y(1) - 8, "cos : max en 0, 2π…", 11, ARBRE, "start", True))
+    # une période
+    yp = Y(-1) + 52
+    p_.append(f"<line x1='{X(0)}' y1='{yp}' x2='{X(2 * math.pi):.1f}' y2='{yp}' stroke='{OK}' stroke-width='1.6'/>")
+    p_.append(f"<line x1='{X(0)}' y1='{yp - 5}' x2='{X(0)}' y2='{yp + 5}' stroke='{OK}' stroke-width='1.6'/>")
+    p_.append(f"<line x1='{X(2 * math.pi):.1f}' y1='{yp - 5}' x2='{X(2 * math.pi):.1f}' y2='{yp + 5}' stroke='{OK}' "
+              f"stroke-width='1.6'/>")
+    p_.append(_txt(X(math.pi), yp + 16, "une période : 2π", 11, OK, "middle", True))
+    ycad = yp + 30
+    p_.append(f"<rect x='40' y='{ycad}' width='680' height='52' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p_.append(_txt(56, ycad + 22, "cos t = sin(t + π/2) : la courbe de cos est celle de sin avancée de π/2.", 12, TRAIT,
+                   "start", True))
+    p_.append(_txt(56, ycad + 42, "Valeurs à connaître : sin 0 = 0, sin(π/2) = 1, sin π = 0 ; cos 0 = 1, cos(π/2) = 0, "
+                   "cos π = −1.", 12, TRAIT, "start"))
+    return _svg("".join(p_), 760, ycad + 66)
+
+
+def parametres_sinusoide():
+    def panneau(ox, titre, f_ref, f_mod, lib_ref, lib_mod):
+        largeur, y0, ky = 210, 180, 45
+        X = lambda t: ox + largeur * t / (4 * math.pi)  # noqa: E731
+        Y = lambda v: y0 - ky * v  # noqa: E731
+        out = [_txt(ox, 68, titre, 12, TRAIT, "start", True)]
+        out.append(f"<line x1='{ox}' y1='{y0}' x2='{ox + largeur}' y2='{y0}' stroke='{FIN}' stroke-width='1.2'/>")
+        out.append(f"<line x1='{ox}' y1='{Y(-2.2)}' x2='{ox}' y2='{Y(2.2)}' stroke='{FIN}' stroke-width='1.2'/>")
+        for f, coul, larg in ((f_ref, FIN, 1.6), (f_mod, ALESAGE, 2.4)):
+            pts = " ".join(f"{X(4 * math.pi * i / 300):.1f},{Y(f(4 * math.pi * i / 300)):.1f}" for i in range(0, 301))
+            out.append(f"<polyline points='{pts}' fill='none' stroke='{coul}' stroke-width='{larg}'/>")
+        for k, lib in ((1, "π"), (2, "2π"), (4, "4π")):
+            xt = X(k * math.pi)
+            out.append(f"<line x1='{xt:.1f}' y1='{Y(-2.2)}' x2='{xt:.1f}' y2='{Y(-2.2) + 4}' stroke='{FIN}'/>")
+            out.append(_txt(xt, Y(-2.2) + 15, lib, 10, FIN, "middle"))
+        out.append(_txt(ox, y0 + 130, lib_ref, 11, FIN, "start"))
+        out.append(_txt(ox, y0 + 146, lib_mod, 11, ALESAGE, "start", True))
+        return out
+    p_ = [_txt(40, 24, "y = A cos(ωt + φ) : trois réglages, trois effets sur la courbe (gris : cos t de référence).", 12,
+               TRAIT, "start", True),
+          _txt(40, 40, "A étire en hauteur, ω resserre en largeur, φ fait glisser la courbe.", 11, FIN)]
+    p_ += panneau(45, "A = 2 : l'amplitude double", math.cos, lambda t: 2 * math.cos(t), "gris : cos t",
+                  "bleu : 2 cos t (entre −2 et 2)")
+    p_ += panneau(290, "ω = 2 : la période est divisée par 2", math.cos, lambda t: math.cos(2 * t), "gris : cos t, T = 2π",
+                  "bleu : cos 2t, T = 2π/2 = π")
+    p_ += panneau(535, "φ = −π/2 : glisse vers la droite", math.cos, lambda t: math.cos(t - math.pi / 2),
+                  "gris : cos t", "bleu : cos(t − π/2) = sin t, en retard")
+    p_.append(f"<rect x='40' y='342' width='680' height='52' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p_.append(_txt(56, 364, "Amplitude A (écart max à 0) ; période T = 2π/ω ; fréquence f = 1/T = ω/(2π) ; décalage : un",
+                   12, TRAIT, "start", True))
+    p_.append(_txt(56, 384, "maximum de A cos(ωt + φ) arrive quand ωt + φ = 0, soit à t = −φ/ω (φ négatif : en retard).", 12,
+                   TRAIT, "start"))
+    return _svg("".join(p_), 760, 408)
+
+
+def lire_sinusoide():
+    x0, y0, kx, ky = 90, 215, 7000, 55  # t de 0 à 0,085 s ; x de −2,5 à 2,5 mm
+    X = lambda t: x0 + kx * t  # noqa: E731
+    Y = lambda v: y0 - ky * v  # noqa: E731
+    w = 50 * math.pi
+    p_ = [_txt(40, 24, "Vibration d'une goulotte vibrante relevée à l'analyseur : x(t) en mm. Que lire sur la courbe ?",
+               12, TRAIT, "start", True),
+          _txt(40, 40, "A, T et t₀ se lisent sur les repères ; ω et φ se calculent (cadre du bas).", 11, FIN)]
+    p_.append(f"<line x1='{x0}' y1='{y0}' x2='{X(0.085) + 10}' y2='{y0}' stroke='{FIN}' stroke-width='1.4'/>")
+    p_.append(f"<line x1='{x0}' y1='{Y(-2.5)}' x2='{x0}' y2='{Y(2.6)}' stroke='{FIN}' stroke-width='1.4'/>")
+    for t in (0, 0.02, 0.04, 0.06, 0.08):
+        p_.append(_txt(X(t), y0 + 16, fr(t, 2), 11, FIN, "middle"))
+    p_.append(_txt(X(0.085) + 14, y0 + 4, "t (s)", 11, FIN))
+    for v in (-2, 2):
+        p_.append(f"<line x1='{x0}' y1='{Y(v)}' x2='{X(0.085)}' y2='{Y(v)}' stroke='{FIN}' stroke-width='0.8' "
+                  f"stroke-dasharray='3 5'/>")
+        p_.append(_txt(x0 - 6, Y(v) + 4, f"{str(v).replace('-', '−')} mm", 11, FIN, "end"))
+    pts = " ".join(f"{X(0.085 * i / 500):.1f},{Y(2 * math.cos(w * 0.085 * i / 500 - math.pi / 4)):.1f}"
+                   for i in range(0, 501))
+    p_.append(f"<polyline points='{pts}' fill='none' stroke='{ALESAGE}' stroke-width='2.4'/>")
+    # A
+    p_.append(f"<line x1='{X(0.005)}' y1='{y0}' x2='{X(0.005)}' y2='{Y(2)}' stroke='{ARBRE}' stroke-width='1.8'/>")
+    p_.append(_txt(X(0.005) + 5, Y(1.1), "A", 12, ARBRE, "start", True))
+    # t0 et T
+    p_.append(f"<circle cx='{X(0.005)}' cy='{Y(2)}' r='4' fill='{ALERTE}'/>")
+    p_.append(f"<circle cx='{X(0.045)}' cy='{Y(2)}' r='4' fill='{ALERTE}'/>")
+    p_.append(_txt(X(0.005), Y(2) - 10, "maximum le plus proche de 0 : t₀ = 0,005 s = T/8", 11, ALERTE, "start", True))
+    yT = Y(2) - 30
+    p_.append(f"<line x1='{X(0.005)}' y1='{yT}' x2='{X(0.045)}' y2='{yT}' stroke='{OK}' stroke-width='1.6'/>")
+    p_.append(_txt((X(0.005) + X(0.045)) / 2, yT - 6, "T = 0,045 − 0,005 = 0,04 s", 11, OK, "middle", True))
+    ycad = y0 + 160
+    p_.append(f"<rect x='40' y='{ycad}' width='680' height='92' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p_.append(_txt(56, ycad + 22, "1. A : demi-écart entre crête et creux (2 mm). 2. T : temps entre deux crêtes (0,04 s).",
+                   12, TRAIT, "start", True))
+    p_.append(_txt(56, ycad + 42, "3. ω = 2π/T = 2π/0,04 = 50π ≈ 157 rad/s. 4. φ : au maximum le plus proche de 0, ωt₀ + φ = 0,", 12, TRAIT,
+                   "start"))
+    p_.append(_txt(56, ycad + 60, "donc φ = −ω t₀ = −50π × 0,005 = −π/4 (t₀ = T/8 : 1/8 de tour de retard, 2π/8 = π/4).",
+                   12, TRAIT, "start"))
+    p_.append(_txt(56, ycad + 80, "Bilan : x(t) = 2 cos(50π t − π/4) mm.", 12, ALESAGE, "start", True))
+    return _svg("".join(p_), 760, ycad + 106)
+
+
 def extremums_polynome():
     p = [_txt(40, 24, "f(x) = x³ − 3x² + 2 : un maximum local puis un minimum local.",
               12, TRAIT, "start", True)]
@@ -6981,6 +7098,9 @@ FIGURES = {
     "lire_tableau_variations": ("Lire un tableau de variations comme un trajet", lire_tableau_variations),
     "fonction_homographique_asymptotes": ("Une fonction homographique et ses deux asymptotes", fonction_homographique_asymptotes),
     "exp_ln_courbes": ("Exponentielle et logarithme : deux courbes symétriques", exp_ln_courbes),
+    "sin_cos_courbes": ("Les courbes de sin et cos : entre −1 et 1, période 2π, décalées d'un quart de période", sin_cos_courbes),
+    "parametres_sinusoide": ("y = A cos(ωt + φ) : A étire en hauteur, ω resserre en largeur, φ fait glisser la courbe", parametres_sinusoide),
+    "lire_sinusoide": ("Lire A, T, ω et φ sur le tracé d'une vibration", lire_sinusoide),
     "nuage_moindres_carres": ("Le point moyen G, la droite des moindres carrés et les écarts", nuage_moindres_carres),
     "linearisation_ln": ("Linéariser une décharge avec z = ln u", linearisation_ln),
     "histogramme_vers_densite": ("1 000 attentes simulées : un histogramme plat, la densité 0,1", histogramme_vers_densite),
@@ -10583,6 +10703,63 @@ QUIZ["Mathématiques BTS CPI (examen)"] = [
       "On compare |r| : 0,9995 est plus proche de 1 que 0,962. Le signe dit seulement que la "
       "droite descend. On vérifie aussi que les écarts du second ajustement n'ont pas de motif.",
       "Intermédiaire"),
+
+    q("Quelle est la période de y(t) = 3 cos(4t + 1) ?",
+      ["T = 2π/4 = π/2, soit environ 1,57", "T = 4, le nombre devant t", "T = 2π × 4 = 8π, soit environ 25,1",
+       "T = 3, l'amplitude de la courbe"], 0,
+      "Pour A cos(ωt + φ), la période vaut T = 2π/ω. Ici ω = 4, donc T = 2π/4 = π/2. Le 3 est l'amplitude, "
+      "le + 1 fait seulement glisser la courbe.", "Base"),
+
+    q("Sur l'écran d'un analyseur, une vibration monte à +3 mm et descend à −3 mm. Quelle est son amplitude ?",
+      ["6 mm, l'écart total entre crête et creux", "3 mm, la moitié de l'écart entre crête et creux",
+       "1,5 mm, le quart de l'écart entre crête et creux", "0 mm, la moyenne entre crête et creux"], 1,
+      "L'amplitude A est l'écart maximal à 0 : la courbe va de −A à A, donc A = 3 mm. Les 6 mm sont "
+      "l'écart crête à crête, soit 2A.", "Base"),
+
+    q("Quelle est la dérivée de f(t) = cos(5t) ?",
+      ["f′(t) = −sin(5t)", "f′(t) = 5 sin(5t)", "f′(t) = −5 sin(5t)", "f′(t) = −(1/5) sin(5t)"], 2,
+      "(cos(ωt + φ))′ = −ω sin(ωt + φ) : le facteur intérieur ω = 5 sort, et cos′ = −sin donne le signe "
+      "moins. Oublier le 5 ou le signe sont les deux erreurs classiques.", "Base"),
+
+    q("Quelle est une primitive de g(t) = sin(2t) ?",
+      ["−(1/2) cos(2t)", "−2 cos(2t)", "(1/2) cos(2t)", "2 cos(2t)"], 0,
+      "Une primitive de sin(ωt + φ) est −(1/ω) cos(ωt + φ). Vérification : (−(1/2) cos 2t)′ = "
+      "−(1/2) × (−2 sin 2t) = sin 2t. Primitiver divise par ω, dériver multiplie.", "Intermédiaire"),
+
+    q("Une vibration s'écrit x(t) = 2 cos(100t) (x en mm, t en s). Quelle est sa vitesse maximale ?",
+      ["2 mm/s, l'amplitude elle-même", "20 000 mm/s, soit A × ω²", "0,02 mm/s, soit A ÷ ω",
+       "200 mm/s, soit A × ω"], 3,
+      "v(t) = x′(t) = −200 sin(100t) : comme sin reste entre −1 et 1, la vitesse maximale vaut "
+      "A × ω = 2 × 100 = 200 mm/s. A × ω² = 20 000 mm/s² est l'accélération maximale.", "Intermédiaire"),
+
+    q("Que vaut l'intégrale de cos t entre 0 et 2π ?",
+      ["2π, la longueur de l'intervalle", "0, les aires au-dessus et en dessous se compensent",
+       "4, l'aire des deux arches additionnées", "1, la valeur maximale de cos"], 1,
+      "Une primitive est sin t : sin(2π) − sin 0 = 0. Sur une période entière, l'aire au-dessus de l'axe "
+      "compense exactement celle en dessous : la valeur moyenne d'une sinusoïde sur une période est nulle.",
+      "Intermédiaire"),
+
+    q("Une tension alternative a une fréquence de 50 Hz. Quelle est sa pulsation ω ?",
+      ["ω = 50 rad/s, la même valeur que f", "ω = 50/(2π) ≈ 8 rad/s",
+       "ω = 2π × 50 = 100π ≈ 314 rad/s", "ω = 1/50 = 0,02 rad/s"], 2,
+      "ω = 2πf = 2π × 50 = 100π ≈ 314 rad/s. Le 0,02 s est la période T = 1/f, une durée et non une "
+      "pulsation.", "Base"),
+
+    q("Sur un tracé de x(t) = A cos(ωt + φ) avec ω = 10 rad/s (période 2π/10 ≈ 0,63 s), le maximum le plus "
+      "proche de t = 0 est à t₀ = 0,1 s. Que vaut φ ?",
+      ["φ = +1 rad, soit + ω t₀", "φ = −1 rad, soit − ω t₀", "φ = 0,1 rad, soit la valeur de t₀",
+       "φ = −0,01 rad, soit − t₀/ω"], 1,
+      "Au maximum, cos vaut 1, donc ωt₀ + φ = 0 : φ = −ω t₀ = −10 × 0,1 = −1 rad. Le maximum arrive "
+      "après 0 : la courbe est en retard, φ est négatif.", "Intermédiaire"),
+
+    q("Pourquoi faut-il régler la calculatrice en radians pour dériver ou calculer sin(ωt + φ) ?",
+      ["Les degrés donnent un résultat plus précis, mais trop long à écrire",
+       "Les radians ne servent qu'à l'affichage : le calcul est le même dans les deux unités",
+       "Les degrés sont interdits par le programme, sans autre raison",
+       "Les formules sin′ = cos et T = 2π/ω supposent l'angle ωt + φ en radians"], 3,
+      "La relation sin′ = cos (et donc toutes les dérivées et primitives de la fiche), comme T = 2π/ω, "
+      "n'est vraie qu'avec des angles en radians (t en s, ω en rad/s). Près de 0, sin 0,01 ≈ 0,01 en "
+      "radians, mais sin 0,01° ≈ 0,000 17 : en degrés, la pente n'est plus 1.", "Base"),
 ]
 
 QUIZ["Mathématiques BTS CPI — probabilités et équations différentielles"] = [
@@ -45712,7 +45889,7 @@ ici.
 BLOC_17 = {
     "id": 17,
     "titre": "Bloc 17 — Mathématiques BTS CPI : programme d'examen",
-    "resume": "Complète le bloc 7 pour l'épreuve de mathématiques : étude de fonctions rationnelles et polynomiales, calcul intégral par primitives, statistique à une variable, fonctions exponentielle et logarithme (fiche 17.7, à lire juste après 17.1), statistique à deux variables (fiche 17.8 : ajustement affine, corrélation).",
+    "resume": "Complète le bloc 7 pour l'épreuve de mathématiques : étude de fonctions rationnelles et polynomiales, calcul intégral par primitives, statistique à une variable, fonctions exponentielle et logarithme (fiche 17.7, à lire juste après 17.1), courbes, dérivées et primitives de sin et cos (fiche 17.9, après 17.7), statistique à deux variables (fiche 17.8 : ajustement affine, corrélation).",
     "fiches": [
         {
             "id": "17.0",
@@ -46685,6 +46862,320 @@ auditives sont obligatoires**. Réduire le bruit à la source (capotage, éloign
 est à étudier en priorité : c'est le travail du concepteur.
 *Erreur classique : 4 × 82 = 328 dB, une valeur absurde (le seuil de douleur est vers 120 dB).
 Les décibels ne s'additionnent pas.*
+""",
+        },
+        {
+            "id": "17.9",
+            "titre": "Trigonométrie : courbes, dérivées et primitives de sin et cos",
+            "duree": "4 h",
+            "cours": """
+
+### 1. Pourquoi : tout ce qui tourne ou vibre s'écrit avec sin et cos
+
+Un point d'une roue qui tourne, la tension du réseau électrique, une goulotte qui vibre pour faire avancer
+des pièces, la solution d'une équation du second ordre (fiche 18.19) : tous suivent une courbe en « vague »
+qui se répète. Cette vague, c'est la courbe d'un **sinus** ou d'un **cosinus**. Sur l'écran d'un analyseur de
+vibrations ou d'un oscilloscope, le technicien doit savoir **lire** cette courbe : de combien ça bouge,
+à quel rythme, avec quel décalage. C'est l'objet de cette fiche, qui ajoute ensuite les deux outils de
+calcul : dériver (pour passer du déplacement à la vitesse) et primitiver (pour faire le chemin inverse).
+
+La fiche 7.2 a déjà donné les dérivées de base, sin′ = cos et cos′ = −sin, avec l'angle en **radians**. On
+s'en sert ici sans les redémontrer.
+
+### 2. Les courbes de sin et cos
+
+Un tour complet vaut **2π radians** (≈ 6,28), comme 360°. Dans ce paragraphe, t est un **angle**.
+
+**L'image de la roue.** Imagine la valve d'une roue de rayon 1 qui tourne. Quand la roue a tourné d'un angle
+t, la **hauteur** de la valve (par rapport à l'axe) vaut sin t et sa position **horizontale** vaut cos t. La
+valve ne s'éloigne jamais de l'axe de plus d'un rayon : sin et cos restent entre −1 et 1. Après un tour
+complet, elle revient au même endroit : les courbes se répètent tous les 2π. Les valeurs à connaître :
+
+| t | 0 | π/2 | π | 3π/2 | 2π |
+|---|---|---|---|---|---|
+| sin t | 0 | 1 | 0 | −1 | 0 |
+| cos t | 1 | 0 | −1 | 0 | 1 |
+
+[[FIG:sin_cos_courbes]]
+
+Ce qu'on lit directement sur les courbes :
+- **les valeurs restent entre −1 et 1** : −1 ≤ sin t ≤ 1 et −1 ≤ cos t ≤ 1 ;
+- **la courbe se répète tous les 2π** : sin(t + 2π) = sin t et cos(t + 2π) = cos t. On dit que les
+  fonctions sont **périodiques de période 2π** ;
+- **les deux courbes ont la même forme, décalée d'un quart de tour** : cos t = sin(t + π/2). Le cosinus
+  atteint sa crête (en 0) un quart de tour **avant** le sinus (en π/2) : cos est en avance de π/2 sur sin ;
+- les zéros de sin sont 0, π, 2π… ; ceux de cos sont π/2, 3π/2… ; les maximums de sin sont à π/2,
+  π/2 + 2π… ; ceux de cos à 0, 2π…
+
+### 3. La sinusoïde des ateliers : y = A cos(ωt + φ)
+
+Dans la réalité, la vague n'est ni de hauteur 1, ni de période 2π. On l'écrit
+
+> **y(t) = A cos(ωt + φ)** (ou A sin(ωt + φ)), avec A > 0 et ω > 0.
+
+Pour lire un tracé, on préfère la forme en cos : cos vaut 1, son maximum, quand l'angle vaut 0 : un repère
+facile à trouver à l'écran.
+
+**D'où vient ωt ?** À partir d'ici, t est un **temps**, en secondes. Pense au moteur à balourd qui fait
+vibrer une goulotte : à chaque tour du balourd, la goulotte fait un aller-retour. S'il fait 25 tours par
+seconde, il tourne de 25 × 2π = 50π rad chaque seconde ; après 2 s, de 100π rad ; après t secondes, de
+**50π × t**. Ce nombre 50π, l'angle tourné par seconde, s'appelle la **pulsation ω** (en rad/s), et l'angle
+au bout de t secondes vaut **ωt**. La courbe se répète dès que le moteur a fait un tour, donc quand ωt a
+augmenté de 2π. Si T est la durée d'un tour : ω × T = 2π, donc **T = 2π/ω**. Ici, T = 2π/(50π) = 1/25 =
+**0,04 s** : c'est la période de la vibration de goulotte de la figure plus bas. Plus ω est grand, plus le
+tour est court, et plus la courbe se resserre. Dans cos(ωt + φ), t est en secondes, ω en rad/s : c'est
+l'angle ωt + φ qui est en radians.
+
+#### Ce que règle chaque nombre
+
+Chaque nombre règle un aspect de la courbe :
+
+| paramètre | nom | effet sur la courbe | se lit… |
+|---|---|---|---|
+| **A** | amplitude | étire en hauteur : y va de −A à A | demi-écart entre crête et creux |
+| **ω** | pulsation (rad/s) | resserre en largeur : **période T = 2π/ω** | ω = 2π/T, T = temps entre deux crêtes |
+| **φ** | phase à l'origine (rad) | fait glisser la courbe (un maximum quand ωt + φ = 0, car cos 0 = 1) | φ = −ω t₀, où t₀ est l'instant du maximum le plus proche de 0 (méthode détaillée plus bas) |
+
+Et la **fréquence** f = 1/T = ω/(2π), en hertz, compte les allers-retours par seconde (c'est le vocabulaire
+des fiches 18.18 et 18.19). Pour une vibration à la fréquence de rotation, 25 Hz = 25 tr/s = 1 500 tr/min.
+
+[[FIG:parametres_sinusoide]]
+
+**Exemple : le réseau électrique.** La tension d'une prise est u(t) = 325 cos(100π t) (en volts). Amplitude
+325 V : c'est la tension **crête**, la plus haute atteinte. Les « 230 V » des manuels d'électrotechnique sont
+la valeur **efficace** : la tension continue qui chaufferait autant un radiateur. Pour une sinusoïde, elle
+vaut A/√2 (démontré en électricité, admis ici) : 325/√2 ≈ 230 V. Pulsation 100π ≈ 314 rad/s ; période
+T = 2π/(100π) = **0,02 s** ; fréquence f = 1/0,02 = **50 Hz**.
+
+**Garde π exact jusqu'au bout** (50π, 100π, ou la touche π de la calculatrice). Ici, T = 2π/(100π) : les π se
+simplifient, et on trouve 0,02 s exactement. Avec 3,14 tapé à la main, la pulsation 100π deviendrait 314,0 au
+lieu de 314,16 : l'écart est petit ici, mais il grossit dès qu'on multiplie.
+
+#### Le geste du technicien : lire une sinusoïde sur un tracé
+
+Devant un analyseur, on lit les trois paramètres dans l'ordre :
+1. **A** = demi-écart entre une crête et un creux ;
+2. **T** = temps entre deux crêtes successives, puis **ω = 2π/T** ;
+3. **φ** : cos atteint son maximum, 1, quand ce qui est dans la parenthèse vaut 0 (cos 0 = 1, tableau du
+   § 2). On repère donc l'instant t₀ du **maximum le plus proche de t = 0** : en ce point ωt₀ + φ = 0, donc
+   **φ = −ω t₀**.
+
+[[FIG:lire_sinusoide]]
+
+Sur la vibration de goulotte de la figure : crête à 2 mm, donc A = 2 ; deux crêtes à 0,005 s et 0,045 s,
+donc T = 0,04 s et ω = 2π/0,04 = 50π ≈ 157 rad/s ; maximum le plus proche de 0 à t₀ = 0,005 s, donc
+φ = −50π × 0,005 = −π/4. (Prendre la crête de 0,045 s donnerait φ = −9π/4 : le même décalage à un tour près,
+mais pas la valeur attendue.) Bilan : **x(t) = 2 cos(50π t − π/4)** mm. Contrôle : x(0) = 2 cos(−π/4) ≈ 1,41,
+la valeur de départ de la courbe ✓. Mais 2 cos(+π/4) donnerait aussi 1,41 (cos(−a) = cos a) : c'est la
+dérivée (§ 4) qui tranche le signe. x′(0) = −2 × 50π × sin(−π/4) > 0 : la courbe monte, comme à l'écran ✓ ;
+avec +π/4, x′(0) serait négatif et la courbe descendrait.
+
+**Autre façon de voir φ : une fraction de tour.** Le maximum arrive t₀ = 0,005 s après t = 0, soit
+0,005/0,04 = **1/8 de période**, donc 1/8 de tour. Or 1/8 de tour = 2π/8 = π/4. La courbe est en **retard**
+d'un huitième de tour sur 2 cos(50π t), dont le maximum est en 0 : φ = −π/4.
+
+**Et si la courbe descend à t = 0 ?** Elle a passé sa crête juste avant qu'on commence à regarder : elle est
+en **avance**. Ce maximum est avant 0, donc hors de l'écran. On le retrouve en reculant d'une période à
+partir de la première crête visible, t₁ : **t₀ = t₁ − T**. Exemple : même goulotte (T = 0,04 s), mais
+première crête visible à t₁ = 0,035 s. Alors t₀ = 0,035 − 0,04 = −0,005 s et φ = −50π × (−0,005) = **+π/4** :
+x(t) = 2 cos(50π t + π/4), un huitième de tour d'avance. Même lecture en fraction de tour : la première
+crête visible arrive à 0,035/0,04 = 7/8 de période ; il manque 1/8 de tour pour boucler le tour, donc la
+courbe a 1/8 de tour d'avance : φ = +2π/8 = +π/4. Contrôle du signe : x′(0) = −2 × 50π × sin(π/4) < 0 : la
+courbe descend, comme à l'écran ✓ ; avec −π/4, x′(0) serait positif et la courbe monterait.
+
+### 4. Dériver : du déplacement à la vitesse
+
+La règle de la 7.2 s'étend à cos(ωt + φ), comme pour e^u en fiche 17.7 : **le facteur intérieur ω sort**.
+
+> **(cos(ωt + φ))′ = −ω sin(ωt + φ)** · **(sin(ωt + φ))′ = ω cos(ωt + φ)**
+
+*Vérification sur un cas simple : (cos 2t)′ = −2 sin 2t. La courbe de cos 2t va deux fois plus vite que celle
+de cos t ; sa pente est donc deux fois plus raide : c'est le facteur 2.*
+
+**Vitesse de vibration de la goulotte.** x(t) = 2 cos(50π t − π/4) mm, donc
+v(t) = x′(t) = 2 × (−50π) sin(50π t − π/4) = −100π sin(50π t − π/4) mm/s.
+Comme sin reste entre −1 et 1, la **vitesse maximale vaut A × ω = 2 × 50π ≈ 314 mm/s**. Elle est atteinte
+quand la goulotte passe par sa position moyenne (x = 0) ; aux crêtes, la vitesse est nulle : la goulotte
+fait demi-tour, comme une balançoire.
+
+En dérivant encore : a(t) = v′(t) = −100π × 50π cos(50π t − π/4). Or −100π × 50π = −2 × 50π × 50π =
+−2 × (50π)², c'est-à-dire −A ω² : a(t) = −A ω² cos(50π t − π/4). L'accélération
+maximale vaut A × ω² = 2 × (50π)² ≈ 49 300 mm/s², soit environ 49 m/s², cinq fois la pesanteur. Ici, elle
+est **voulue** : c'est elle qui fait sauter les pièces vers l'avant dans la goulotte. Sur une broche de
+machine-outil, on vise au contraire des vitesses de vibration de quelques mm/s (voir le cas industriel).
+
+**Ce que ça dit en atelier.** À amplitude égale, une vibration **deux fois plus rapide** donne une vitesse
+deux fois plus grande (facteur ω) et une accélération **quatre fois** plus grande (facteur ω²). Or la force
+qu'un roulement doit encaisser vaut F = m × a : quatre fois plus d'accélération, quatre fois plus d'effort.
+C'est pour cela qu'une petite vibration rapide peut fatiguer un roulement plus qu'une grande vibration lente.
+
+### 5. Primitiver : le chemin inverse
+
+*Prérequis : fiche 17.2 (primitives, ∫ de a à b = F(b) − F(a)) ; pour la valeur moyenne, fiche 17.5.*
+
+Une primitive se vérifie en dérivant. Puisque dériver fait sortir ω, primitiver **divise par ω** :
+
+> **Une primitive de cos(ωt + φ) est (1/ω) sin(ωt + φ)** · **une primitive de sin(ωt + φ) est
+> −(1/ω) cos(ωt + φ)**
+
+*Vérification : ((1/ω) sin(ωt + φ))′ = (1/ω) × ω cos(ωt + φ) = cos(ωt + φ) ✓. Le signe moins de la seconde
+compense celui de (cos)′ = −sin.*
+
+**Exemples.** Une primitive de cos 3t est (1/3) sin 3t ; une primitive de 6 sin(2t − 1) est
+6 × (−1/2) cos(2t − 1) = −3 cos(2t − 1).
+
+**Deux calculs d'intégrale qui reviennent souvent :**
+- **sur une période entière, l'intégrale vaut 0**. Pour sin 2t, ω = 2, donc T = 2π/2 = π : de 0 à π, c'est
+  une période entière. ∫ de 0 à π de sin 2t dt = [−(1/2) cos 2t] de 0 à π = −(1/2)(cos 2π − cos 0) = 0.
+  L'aire au-dessus de l'axe compense exactement l'aire en dessous ; la valeur moyenne (fiche 17.5) d'une
+  sinusoïde sur une période est donc **nulle** ;
+- **sur une demi-période, elle ne l'est pas** : sur une seule arche, la courbe reste du même côté de l'axe.
+  Pour sin t, T = 2π, et l'arche va de 0 à π : ∫ de 0 à π de sin t dt = [−cos t] de 0 à π = −cos π + cos 0 =
+  1 + 1 = **2**.
+
+**Usage réel — valeur moyenne d'une tension redressée double alternance.** Un pont de diodes retourne les
+alternances négatives : la tension redressée vaut |u(t)|, toujours positive. C'est la valeur moyenne au sens
+de la fiche 17.5, appliquée cette fois à une fonction positive au lieu d'une fonction alternée : les aires ne
+se compensent plus. Le calcul, étape par étape :
+1. **Choisir l'origine des temps** au début d'une arche, là où la tension vaut 0 et monte : on écrit alors
+   u(t) = 325 sin(100π t) (la même courbe que 325 cos(100π t), décalée d'un quart de période).
+2. **Durée d'une arche** : une demi-période, 0,02/2 = **0,01 s**. L'alternance négative, une fois retournée
+   par le pont, a exactement la même forme que l'arche positive : la courbe redressée est une suite d'arches
+   identiques, et sa moyenne est celle d'une arche.
+3. **Valeur moyenne** (fiche 17.5) = (1/(b − a)) × ∫ de a à b, ici (1/0,01) × ∫ de 0 à 0,01 de
+   325 sin(100π t) dt. Une primitive est −(325/(100π)) cos(100π t).
+4. **Bornes** : en t = 0,01, l'angle vaut 100π × 0,01 = π, et cos π = −1 ; en t = 0, cos 0 = 1. Donc
+   ∫ = −(325/(100π)) × (−1 − 1) = 650/(100π), et la valeur moyenne vaut (1/0,01) × 650/(100π) =
+   100 × 650/(100π) = 650/π ≈ **207 V**. Rapportée à la crête : (650/π)/325 = 2/π ≈ 0,64.
+
+**À retenir : la valeur moyenne d'une sinusoïde d'amplitude A redressée double alternance vaut 2A/π.**
+
+*Ne pas confondre : 230 V est la valeur **efficace** (l'effet de chauffe, § 3) ; 207 V est la valeur
+**moyenne** de la tension redressée (ce qu'affiche un voltmètre en position continu). Ce sont deux moyennes
+différentes, pour deux usages différents.*
+
+### 6. Les erreurs classiques et à retenir
+
+**Erreurs classiques :**
+1. **Calculer en degrés** : les formules sin′ = cos et T = 2π/ω supposent l'angle en **radians**. Pourquoi ?
+   Près de 0, la courbe de sin monte avec une pente 1 seulement en radians (sin 0,01 ≈ 0,01) ; en degrés,
+   sin 0,01° ≈ 0,000 17 : la pente n'est plus 1 et sin′ = cos devient faux. Calculatrice en mode radians.
+2. **Confondre ω, T et f** : T = 2π/ω (une durée), f = 1/T = ω/(2π) (des hertz), ω = 2πf (des rad/s).
+3. **Lire l'amplitude crête à crête** : A est la moitié de l'écart entre crête et creux.
+4. **Se tromper de signe sur φ** : au maximum, ωt₀ + φ = 0, donc φ = −ωt₀ (négatif si le maximum arrive
+   après 0).
+5. **Oublier le facteur ω en dérivant**, ou **multiplier par ω au lieu de diviser en primitivant**.
+6. **Oublier le signe moins** : (cos)′ = −sin, et une primitive de sin est −cos.
+7. **Arrondir π trop tôt** : 3,14 au lieu de la touche π décale les résultats ; π reste exact jusqu'au bout.
+
+**À retenir :**
+- sin et cos : entre −1 et 1, périodiques de période 2π, cos t = sin(t + π/2).
+- **y = A cos(ωt + φ)** : amplitude A, **période T = 2π/ω**, fréquence f = ω/(2π) ; t en s, ω en rad/s.
+- Lire un tracé : A (demi-écart), T (entre deux crêtes), ω = 2π/T, φ = −ω t₀ (t₀ : maximum le plus proche
+  de 0 ; si la courbe descend à t = 0, t₀ = première crête visible − T).
+- **(cos(ωt + φ))′ = −ω sin(ωt + φ)** ; **(sin(ωt + φ))′ = ω cos(ωt + φ)** : vitesse max Aω, accélération
+  max Aω².
+- Primitives : **(1/ω) sin(ωt + φ)** pour cos(ωt + φ) ; **−(1/ω) cos(ωt + φ)** pour sin(ωt + φ).
+- Intégrale sur une période : 0 (valeur moyenne nulle) ; redressée double alternance : moyenne 2A/π.
+""",
+            "formules": """
+
+**Valeurs** — sin 0 = 0, sin(π/2) = 1, sin π = 0 · cos 0 = 1, cos(π/2) = 0, cos π = −1 · −1 ≤ sin t, cos t ≤ 1
+· période 2π · cos t = sin(t + π/2)
+
+**Sinusoïde** — y = A cos(ωt + φ) : amplitude A · période T = 2π/ω · fréquence f = 1/T = ω/(2π) ·
+ω = 2πf · un maximum quand ωt + φ = 0, soit t = −φ/ω · φ = −ω t₀ (t₀ : maximum le plus proche de 0 ; si la courbe descend à t = 0, t₀ = 1re crête visible − T,
+et φ > 0)
+
+**Dérivées** (angle en radians) — sin′ = cos · cos′ = −sin · (cos(ωt + φ))′ = −ω sin(ωt + φ) ·
+(sin(ωt + φ))′ = ω cos(ωt + φ) · vitesse max Aω · accélération max Aω²
+
+**Primitives** — de cos(ωt + φ) : (1/ω) sin(ωt + φ) · de sin(ωt + φ) : −(1/ω) cos(ωt + φ)
+
+**Intégrale sur une période** — 0 · valeur moyenne d'une sinusoïde d'amplitude A redressée double alternance : 2A/π
+
+        """,
+            "exemple": """
+**Cas industriel — Surveiller une broche : de l'accélération au déplacement**
+
+Un accéléromètre est collé sur le carter d'une broche de fraiseuse. Il mesure une **accélération**
+sinusoïdale d'amplitude **5 m/s²**, à la fréquence de rotation de la broche, **50 Hz** :
+a(t) = 5 cos(100π t) (en m/s²). Le service maintenance suit la **vitesse** de vibration (le service a fixé
+son seuil d'alerte à **7 mm/s** en valeur crête) et veut aussi connaître le **déplacement** réel de la broche.
+
+**Étape 1 — La pulsation.** f = 50 Hz, donc ω = 2π × 50 = **100π ≈ 314 rad/s**.
+
+**Étape 2 — La vitesse, primitive de l'accélération.** Une primitive de 5 cos(100π t) est
+(5/(100π)) sin(100π t). On prend la constante nulle : une constante C ajouterait une vitesse permanente, la
+broche partirait en glissant hors de son palier, ce qui est impossible ; elle vibre autour de 0.
+v(t) = (5/(100π)) sin(100π t) ≈ 0,015 9 sin(100π t) m/s. Vitesse crête : 5/(100π) ≈ 0,015 9 m/s =
+**15,9 mm/s**.
+
+**Étape 3 — Le déplacement, primitive de la vitesse.** Une primitive de sin(100π t) est
+−(1/(100π)) cos(100π t), donc x(t) = (5/(100π)) × (−1/(100π)) cos(100π t) = −(5/(100π)²) cos(100π t)
+(constante nulle ici aussi : la broche oscille autour de sa position moyenne, sans s'en éloigner).
+Déplacement crête : 5/(100π)² ≈ 5,07 × 10⁻⁵ m ≈ **0,05 mm**.
+
+**Étape 4 — La décision.** La vitesse crête, 15,9 mm/s, dépasse le seuil de 7 mm/s : la broche est à
+surveiller de près (équilibrage, état des roulements), alors que le déplacement, 0,05 mm, paraît
+minuscule.
+
+**Ce que le calcul apprend.** Chaque primitive **divise par ω**. À 50 Hz, ω ≈ 314 : le nombre qui donne le
+déplacement (en m) est 314² ≈ 100 000 fois plus petit que celui de l'accélération (en m/s²). La même
+accélération de 5 m/s² à **5 Hz** donnerait un déplacement cent fois plus grand, 5 mm : ω est divisé par 10,
+donc ω² par 100. C'est pourquoi on juge une vibration rapide sur sa vitesse ou son accélération : son
+déplacement, trop petit, ne dit rien de l'effort subi par les roulements. Le service suit la vitesse plutôt
+que l'accélération parce que c'est la grandeur usuelle de la surveillance des machines tournantes : un même
+seuil reste pertinent sur une large plage de vitesses de rotation.
+""",
+            "exercice": """
+**1.** Sur l'écran d'un analyseur, une vibration monte à 4 mm au maximum, descend à −4 mm, et ses crêtes sont
+espacées de 0,5 s ; le maximum le plus proche de t = 0 est à t = 0,1 s. Écris x(t) sous la forme
+A cos(ωt + φ).
+
+**1 bis.** Même vibration (A = 4 mm, T = 0,5 s), mais à t = 0 la courbe descend, et la première crête visible
+est à 0,4 s. Écris x(t).
+
+**2.** Au Canada, la tension du réseau vaut u(t) = 170 cos(120π t). Donne son amplitude, sa période, sa
+fréquence et sa valeur efficace.
+
+**3.** Dérive f(t) = 3 sin(2t + π/6) et g(t) = 5 cos 4t.
+
+**4.** Donne une primitive de sin 4t, puis de 10 cos(5t + 2). Vérifie chacune en la dérivant.
+
+**5.** Calcule ∫ de 0 à π/4 de cos 2t dt, puis ∫ de 0 à π/2 de sin 4t dt. Explique le second résultat.
+
+**6.** Un pont de diodes redresse la tension canadienne u(t) = 170 sin(120π t) en double alternance : la
+tension redressée répète l'arche de u(t) entre 0 et 1/120 s. Calcule sa valeur moyenne.
+""",
+            "corrige": """
+**1.** A = 4 mm (demi-écart entre 4 et −4) ; T = 0,5 s, donc ω = 2π/0,5 = **4π ≈ 12,6 rad/s** ; au premier
+maximum (c'est bien le plus proche de 0 : le précédent est à 0,1 − 0,5 = −0,4 s), 4π × 0,1 + φ = 0, donc
+φ = −0,4π ≈ −1,26 rad (le maximum arrive 0,1/0,5 = 1/5 de période après 0 : 1/5 de tour de retard).
+**x(t) = 4 cos(4π t − 0,4π)** mm. Contrôle : x(0) = 4 cos(−0,4π) ≈ 1,24 mm, entre 0 et 4, et la courbe monte
+vers sa crête de 0,1 s ✓.
+
+**1 bis.** La courbe descend à t = 0 : le maximum le plus proche de 0 est avant 0, hors de l'écran.
+t₀ = 0,4 − 0,5 = −0,1 s ; φ = −4π × (−0,1) = **+0,4π** ≈ 1,26 rad ; **x(t) = 4 cos(4π t + 0,4π)** mm : un
+cinquième de tour d'avance. Contrôle : x(0) = 4 cos(0,4π) ≈ 1,24 mm, et x′(0) = −Aω sin(0,4π) = −4 × 4π × sin(0,4π) = −16π sin(0,4π) < 0 : la
+courbe descend ✓.
+
+**2.** Amplitude **170 V** ; T = 2π/(120π) = 1/60 ≈ **0,016 7 s** ; f = 1/T = **60 Hz** ; valeur efficace
+170/√2 ≈ **120 V** (la tension affichée au Canada).
+
+**3.** f′(t) = 3 × 2 cos(2t + π/6) = **6 cos(2t + π/6)** ; g′(t) = 5 × (−4) sin 4t = **−20 sin 4t**.
+
+**4.** Une primitive de sin 4t est **−(1/4) cos 4t** : (−(1/4) cos 4t)′ = −(1/4) × (−4 sin 4t) = sin 4t ✓. Une
+primitive de 10 cos(5t + 2) est **2 sin(5t + 2)** : (2 sin(5t + 2))′ = 2 × 5 cos(5t + 2) = 10 cos(5t + 2) ✓.
+
+**5.** ∫ de 0 à π/4 de cos 2t dt = [(1/2) sin 2t] de 0 à π/4 = (1/2)(sin(π/2) − sin 0) = **1/2**.
+∫ de 0 à π/2 de sin 4t dt = [−(1/4) cos 4t] de 0 à π/2 = −(1/4)(cos 2π − cos 0) = **0** : pour sin 4t,
+T = 2π/4 = π/2, donc de 0 à π/2, c'est exactement une période ; l'aire au-dessus de l'axe compense celle en
+dessous.
+
+**6.** Une arche dure une demi-période, 1/120 s. Valeur moyenne = 120 × ∫ de 0 à 1/120 de 170 sin(120π t) dt.
+Une primitive est −(170/(120π)) cos(120π t) ; en 1/120, l'angle vaut π : −(170/(120π))(cos π − cos 0) =
+340/(120π). Valeur moyenne : 120 × 340/(120π) = 340/π ≈ **108,2 V**, soit bien 2A/π avec A = 170.
 """,
         },
         {
@@ -56060,6 +56551,22 @@ _mth("17.6", "Comparer la dispersion de deux séries avec le coefficient de vari
    "100 mm, σ=0,050) sur l'écart-type brut. Mais CV(C)=0,065% et "
    "CV(D)=0,050% : proportionnellement, D est en réalité plus précis.")
 
+_mth("17.9", "Lire une sinusoïde, la dériver et la primitiver", [
+    "**Lire l'amplitude A** : demi-écart entre une crête et un creux (pas l'écart crête à crête).",
+    "**Lire la période T** : temps entre deux crêtes successives ; puis **ω = 2π/T** (rad/s) et f = 1/T (Hz).",
+    "**Lire la phase φ** : repérer l'instant t₀ du maximum le plus proche de t = 0 ; cos y vaut 1, donc "
+    "ωt₀ + φ = 0 et **φ = −ω t₀** (négatif si ce maximum arrive après 0 : la courbe est en retard). Si la "
+    "courbe descend à t = 0, ce maximum est hors de l'écran : t₀ = (1re crête visible) − T, et φ est positif "
+    "(avance). Contrôle : t₀/T = fraction de tour.",
+    "**Dériver** (angle ωt + φ en radians, t en s, ω en rad/s) : (cos(ωt + φ))′ = −ω sin(ωt + φ) ; (sin(ωt + φ))′ = ω cos(ωt + φ). "
+    "Vitesse maximale = A ω, accélération maximale = A ω².",
+    "**Primitiver** : de cos(ωt + φ), (1/ω) sin(ωt + φ) ; de sin(ωt + φ), −(1/ω) cos(ωt + φ). Vérifier en "
+    "dérivant.",
+    "**Contrôler** : x(0) = A cos φ doit redonner la valeur de départ de la courbe ; l'intégrale sur une "
+    "période entière vaut 0. Garder π exact (touche π) jusqu'au résultat final.",
+], "Goulotte vibrante, crête 2 mm, crêtes à 0,005 s et 0,045 s : A = 2, T = 0,04 s, ω = 50π ≈ 157 rad/s, φ = −50π × 0,005 = "
+       "−π/4 ; x(t) = 2 cos(50π t − π/4) mm, vitesse de vibration max 2 × 50π ≈ 314 mm/s.")
+
 _mth("17.8", "Établir une loi expérimentale par ajustement affine", [
     "**Tracer le nuage de points** avant tout calcul. S'il est courbé, appliquer le "
     "changement de variable donné par l'énoncé (souvent z = ln y).",
@@ -58855,6 +59362,145 @@ def gen_solution_particuliere():
     }
 
 
+def _omega_t(c, en_pi):
+    """ωt à la française : « t », « 4t », « 40π t »."""
+    if en_pi:
+        return f"{c}π t"
+    return "t" if c == 1 else f"{c}t"
+
+
+def gen_periode_frequence():
+    """Lire une sinusoïde A cos(ωt + φ) : période, fréquence ou vitesse maximale A ω.
+    Erreurs visées : confondre T, f et ω ; oublier ω en dérivant ; prendre A ω² (accélération)."""
+    while True:
+        en_pi = random.random() < 0.6
+        c = random.choice([10, 20, 40, 50, 100, 200]) if en_pi else random.choice([3, 4, 5, 8, 10, 20])
+        w = c * math.pi if en_pi else c
+        a = random.choice([2, 3, 4, 5, 8, 10])
+        fonction = random.choice(["cos", "sin"])
+        phase = random.choice(["", " + π/3", " − π/4", " + 0,5", " − 1"])
+        expr = f"x(t) = {a} {fonction}({_omega_t(c, en_pi)}{phase})"
+        quoi = random.choice(["T", "f", "v"])
+        w_txt = f"{c}π ≈ {_fr_court(w, 2)}" if en_pi else str(c)
+        if quoi == "T":
+            rep, tol, dec, unite = 2 * math.pi / w, 0.001, 3, "s"
+            question = "Donne sa période T, en secondes, à 0,001 près."
+            diags = [(w / (2 * math.pi), "Tu as calculé la fréquence f = ω/(2π). La période est l'inverse : "
+                                         "T = 2π/ω."),
+                     (1 / w, "Il manque le 2π : T = 2π/ω, pas 1/ω."),
+                     (2 * math.pi * w, "La période divise 2π par ω : T = 2π/ω.")]
+            calc = (f"ω = {c}π rad/s, donc T = 2π/({c}π) = 2/{c} = **{fr(rep, 3)} s** (les π se simplifient)."
+                    if en_pi else f"ω = {c} rad/s, donc T = 2π/{c} = **{fr(rep, 3)} s**.")
+        elif quoi == "f":
+            rep, tol, dec, unite = w / (2 * math.pi), 0.01, 2, "Hz"
+            question = "Donne sa fréquence f, en hertz, à 0,01 près."
+            diags = [(2 * math.pi / w, "Tu as calculé la période T = 2π/ω. La fréquence est son inverse : "
+                                       "f = ω/(2π)."),
+                     (w, "ω est la pulsation, en rad/s : la fréquence vaut f = ω/(2π)."),
+                     (2 * math.pi * w, "La fréquence divise ω par 2π : f = ω/(2π).")]
+            calc = (f"ω = {c}π rad/s, donc f = {c}π/(2π) = {c}/2 = **{fr(rep, 2)} Hz** (les π se simplifient)."
+                    if en_pi else f"ω = {c} rad/s, donc f = {c}/(2π) = **{fr(rep, 2)} Hz**.")
+        else:
+            rep, tol, dec, unite = a * w, 0.1, 1, "mm/s"
+            question = "x est en mm et t en s. Donne la vitesse maximale, en mm/s, à 0,1 près."
+            diags = [(a, "Tu as donné l'amplitude du déplacement : en dérivant, le facteur ω sort, la vitesse "
+                         "maximale vaut A × ω."),
+                     (a * w * w, "A × ω² est l'accélération maximale (on a dérivé deux fois). La vitesse "
+                                 "maximale vaut A × ω."),
+                     (a / w, "En dérivant, on multiplie par ω, on ne divise pas : vitesse maximale A × ω.")]
+            derivee = (f"x′(t) = −{a} × {w_txt.split(' ≈')[0]} sin(…)" if fonction == "cos"
+                       else f"x′(t) = {a} × {w_txt.split(' ≈')[0]} cos(…)")
+            produit = (f"{a} × {c}π = {fr(a * c)}π ≈ **{fr(rep, 1)} mm/s** (π gardé exact jusqu'au bout)" if en_pi
+                       else f"{a} × {c} = **{fr(rep, 1)} mm/s**")
+            calc = (f"{derivee} ; comme sin et cos restent entre −1 et 1, la vitesse maximale vaut "
+                    f"A × ω = {produit}.")
+        vals = [v for v, _ in diags]
+        if all(abs(v - rep) > 3 * tol for v in vals):
+            break
+    return {
+        "titre": "Sinusoïde : période, fréquence, vitesse maximale",
+        "enonce": f"Une vibration s'écrit {expr}. {question}" + (
+            " Simplifie les π avant de calculer." if en_pi and quoi != "v" else
+            " Garde π exact (touche π de la calculatrice) jusqu'au résultat final." if en_pi or quoi != "v"
+            else ""),
+        "rep": rep, "tol": tol, "unite": unite, "decimales": dec,
+        "diag": [_diag(v, m) for v, m in diags],
+        "corr": [f"**Lire les paramètres.** Amplitude A = {a}, pulsation ω = {w_txt} rad/s (le nombre devant t) ; "
+                 + (f"le terme {phase.strip()} (la phase) fait glisser la courbe, sans changer T, f ni l'amplitude."
+                  if phase else "la phase est nulle ici."),
+                 f"**Calculer.** {calc}"],
+        "indice": "Pour A cos(ωt + φ) : T = 2π/ω, f = ω/(2π) = 1/T ; en dérivant, le facteur ω sort, donc la "
+                  "vitesse maximale vaut A × ω.",
+    }
+
+
+def gen_primitive_trig():
+    """Intégrale de 0 à b de K cos(ωt) ou K sin(ωt), par primitive.
+    Erreurs visées : oublier 1/ω, multiplier par ω, erreur de signe sur la primitive de sin, dériver
+    au lieu de primitiver."""
+    from fractions import Fraction
+    bornes = [("π/6", math.pi / 6, 6), ("π/4", math.pi / 4, 4), ("π/3", math.pi / 3, 3), ("π/2", math.pi / 2, 2),
+              ("0,5", 0.5, None), ("1", 1.0, None)]
+    while True:
+        k = random.choice([2, 3, 4, 5, 6, 10])
+        w = random.choice([2, 3, 4, 5])
+        b_txt, b, den = random.choice(bornes)
+        if den:
+            q = Fraction(w, den)
+            angle = ("" if q.numerator == 1 else str(q.numerator)) + "π" + ("" if q.denominator == 1 else
+                                                                          f"/{q.denominator}")
+        else:
+            angle = _fr_court(w * b, 3)
+        sin_v, cos_v = math.sin(w * b), math.cos(w * b)
+        sin_t = ("= " if abs(sin_v - round(sin_v, 3)) < 1e-9 else "≈ ") + _fr_court(round(sin_v, 3) + 0.0, 3)
+        cos_t = ("= " if abs(cos_v - round(cos_v, 3)) < 1e-9 else "≈ ") + _fr_court(round(cos_v, 3) + 0.0, 3)
+        fonction = random.choice(["cos", "sin"])
+        wt = _omega_t(w, False)
+        wb = "" if w == 1 else f"{w} × "
+        facteur = "" if k == w else f"{_fr_court(k / w, 3)} × "
+        if fonction == "cos":
+            rep = k / w * math.sin(w * b)
+            prim = f"sin({wt})" if k == w else f"{_fr_court(k / w, 3)} sin({wt})"
+            diags = [(k * math.sin(w * b), f"Il manque le facteur 1/ω : une primitive de cos({wt}) est "
+                                           f"(1/{w}) sin({wt})."),
+                     (k * w * math.sin(w * b), "Primitiver divise par ω, ne multiplie pas : c'est la dérivée qui "
+                                               "fait sortir ω."),
+                     (k / w * (1 - math.cos(w * b)), "Formules échangées : une primitive de cos est sin (et non "
+                                                     "−cos, qui est une primitive de sin)."),
+                     (-k * w * math.sin(w * b), "Tu as dérivé au lieu de primitiver : (cos)′ = −sin, mais on "
+                                                "cherche F telle que F′ = cos.")]
+            calc = (f"F(t) = {prim} (vérification : F′(t) = {k} cos({wt})). "
+                    f"F({b_txt}) − F(0) = {facteur}(sin({wb}{b_txt}) − sin 0), avec {wb}{b_txt} = {angle} rad "
+                    f"et sin({angle}) {sin_t} (sin 0 = 0) : résultat **{fr(rep, 2).replace('-', '−')}**.")
+        else:
+            rep = k / w * (1 - math.cos(w * b))
+            prim = f"−cos({wt})" if k == w else f"−{_fr_court(k / w, 3)} cos({wt})"
+            diags = [(k * (1 - math.cos(w * b)), f"Il manque le facteur 1/ω : une primitive de sin({wt}) est "
+                                                 f"−(1/{w}) cos({wt})."),
+                     (-rep, "Signe : une primitive de sin est −cos (car (−cos)′ = sin)."),
+                     (k * w * (1 - math.cos(w * b)), "Primitiver divise par ω, ne multiplie pas."),
+                     (k * w * (math.cos(w * b) - 1), "Tu as dérivé au lieu de primitiver : on cherche F telle que "
+                                                     "F′ = sin.")]
+            calc = (f"F(t) = {prim} (vérification : F′(t) = {k} sin({wt})). "
+                    f"F({b_txt}) − F(0) = −{facteur}(cos({wb}{b_txt}) − cos 0), avec {wb}{b_txt} = {angle} rad "
+                    f"et cos({angle}) {cos_t} (cos 0 = 1) : résultat **{fr(rep, 2).replace('-', '−')}**.")
+        vals = [v for v, _ in diags]
+        if abs(rep) > 0.1 and all(abs(v - rep) > 0.05 for v in vals) and \
+                all(abs(vals[i] - vals[j]) > 0.05 for i in range(len(vals)) for j in range(i + 1, len(vals))):
+            break
+    return {
+        "titre": "Intégrale d'un sinus ou d'un cosinus",
+        "enonce": f"Calcule l'intégrale de 0 à {b_txt} de {k} {fonction}({wt}) dt, à 0,01 près (calculatrice en "
+                  f"radians" + (", π exact" if "π" in b_txt else "") + ", garde sin et cos avec au moins 3 "
+                  f"décimales, et {k}/{w} en fraction ou avec 3 décimales).",
+        "rep": rep, "tol": 0.01, "unite": "",
+        "diag": [_diag(v, m) for v, m in diags],
+        "corr": [f"**Primitive.** {calc}"],
+        "indice": "Une primitive de cos(ωt) est (1/ω) sin(ωt) ; une primitive de sin(ωt) est −(1/ω) cos(ωt). "
+                  "Puis F(b) − F(0), calculatrice en radians.",
+    }
+
+
 def decimales_affichage(tol):
     """Nombre de décimales pour afficher la réponse d'un générateur : assez pour que la valeur
     AFFICHÉE soit acceptée par la tolérance (10⁻ᵈ ≤ tol, donc erreur d'arrondi ≤ tol/2), et au
@@ -58953,7 +59599,8 @@ def fabriquer_exo(famille=None):
                                   gen_proba_exponentielle, gen_duree_fiabilite,
                                   gen_proba_poisson, gen_parametre_poisson,
                                   gen_calcul_complexe, gen_racines_complexes,
-                                  gen_constantes_ci, gen_solution_particuliere],
+                                  gen_constantes_ci, gen_solution_particuliere,
+                                  gen_periode_frequence, gen_primitive_trig],
     }
     if famille and famille in catalogue:
         pool = catalogue[famille]
@@ -63217,6 +63864,103 @@ ATELIERS = [
         "a_retenir": "À retenir : pour Δ < 0, x(t) = e^(αt)(A cos βt + B sin βt) ; A = x(0), puis B par x′(0) = αA + "
                      "βB ; le temps de stabilisation se lit sur l'enveloppe √(A² + B²) e^(αt), avec ln. Pour "
                      "stabiliser plus vite, il faut un α plus négatif, donc plus d'amortissement.",
+    },
+    {
+        "id": "at152",
+        "chapitre": "Bloc 17",
+        "titre": "Lire la vibration d'une goulotte vibrante sur l'écran d'un analyseur",
+        "theme": "Fonctions d'une variable réelle",
+        "fiche": "17.9",
+        "vocabulaire": [
+            ("amplitude", "l'écart maximal à 0 : la courbe va de −A à A. Ce n'est pas l'écart crête à crête, "
+             "qui vaut 2A."),
+            ("période", "le temps entre deux crêtes successives ; T = 2π/ω."),
+            ("pulsation", "ω, en rad/s, le nombre devant t dans cos(ωt + φ) : ω = 2π/T = 2πf."),
+            ("phase à l'origine", "φ, en radians : elle fait glisser la courbe ; au maximum le plus proche de t = 0, ωt₀ + φ = 0."),
+        ],
+        "enonce": "Une goulotte vibrante fait avancer des pièces vers un poste de montage : un moteur à balourd "
+                  "la fait vibrer. Un technicien relève sa vibration à l'analyseur. La courbe du "
+                  "déplacement x(t), en mm, est une sinusoïde qui monte à +2 mm et descend à −2 mm. Il lit une "
+                  "crête à t = 0,005 s, le creux suivant à t = 0,025 s et la crête suivante à t = 0,045 s. On "
+                  "veut écrire x(t) = A cos(ωt + φ), puis en déduire la vitesse de vibration maximale.",
+        "etapes": [
+            {"type": "numerique", "label": "Amplitude A (en mm)", "unite": "mm", "attendu": 2, "tol": 0.01,
+             "consigne": "L'amplitude est l'écart maximal à 0.",
+             "indice": "La courbe va de −A à A.",
+             "pieges": [(4, "4 mm est l'écart crête à crête, de −2 à +2 : l'amplitude en est la moitié."),
+                        (1, "L'amplitude est l'écart entre 0 et la crête, soit 2 mm, pas la moitié.")]},
+            {"type": "numerique", "label": "Période T (en s)", "unite": "s", "attendu": 0.04, "tol": 0.0005,
+             "consigne": "La période est le temps entre deux crêtes successives.",
+             "indice": "Crêtes à 0,005 s et 0,045 s.",
+             "pieges": [(0.02, "0,02 s est la demi-période, pas la période : c'est le temps d'une crête au creux "
+                               "suivant. La période va d'une crête à la crête suivante."),
+                        (0.045, "0,045 s est l'instant de la seconde crête, pas la durée entre les deux : "
+                                "0,045 − 0,005."),
+                        (0.005, "0,005 s est l'instant du maximum le plus proche de 0 (il servira pour φ), pas la période.")]},
+            {"type": "numerique", "label": "Pulsation ω (en rad/s, à 0,5 près)", "unite": "rad/s",
+             "attendu": 2 * math.pi / 0.04, "tol": 0.5,
+             "depend_de": {"etape": 2, "formule": lambda v: 2 * math.pi / v},
+             "consigne": "ω = 2π/T.",
+             "indice": "2π/0,04 = 50π : tape la valeur décimale (touche π), pas « 50π ».",
+             "pieges": [(1 / 0.04, "1/T = 25 est la fréquence f, en Hz. La pulsation vaut ω = 2π/T = 2πf."),
+                        (math.pi / 0.04, "Il manque un facteur 2 : ω = 2π/T."),
+                        (2 * math.pi * 0.04, "On divise 2π par T, on ne multiplie pas : ω = 2π/T.")]},
+            {"type": "numerique", "label": "Phase à l'origine φ (en rad, à 0,01 près)", "unite": "rad",
+             "attendu": -math.pi / 4, "tol": 0.01,
+             "depend_de": {"etape": 3, "formule": lambda v: -v * 0.005},
+             "consigne": "Au maximum le plus proche de 0, t₀ = 0,005 s, le cosinus vaut 1 : ωt₀ + φ = 0.",
+             "indice": "φ = −ω t₀ = −50π × 0,005 : tape la valeur décimale, en radians.",
+             "pieges": [(math.pi / 4, "Signe : ωt₀ + φ = 0 donne φ = −ωt₀. Le maximum arrive après 0, la courbe "
+                                      "est en retard : φ est négatif."),
+                        (-0.005, "−0,005 est −t₀, un temps : il faut le multiplier par ω, φ = −ω t₀."),
+                        (0.005, "0,005 s est t₀, un temps : la phase vaut φ = −ω t₀, en radians.")]},
+            {"type": "numerique", "label": "Vitesse de vibration maximale (en mm/s, à 1 près)", "unite": "mm/s",
+             "attendu": 2 * 2 * math.pi / 0.04, "tol": 1,
+             "depend_de": {"etape": 3, "formule": lambda v: 2 * v},
+             "consigne": "v(t) = x′(t) = −A ω sin(ωt + φ) ; sin reste entre −1 et 1.",
+             "indice": "Vitesse maximale = A × ω.",
+             "pieges": [(2, "2 mm est l'amplitude du déplacement : en dérivant, le facteur ω sort."),
+                        (2 * (2 * math.pi / 0.04) ** 2, "A × ω² est l'accélération maximale (en mm/s²) : on a "
+                                                         "dérivé deux fois."),
+                        (2 / (2 * math.pi / 0.04), "En dérivant, on multiplie par ω, on ne divise pas.")]},
+            {"type": "qcm", "label": "Le signe de φ",
+             "question": "Le maximum le plus proche de 0 arrive à 0,005 s, après t = 0. Que dire de la courbe ?",
+             "options": ["Elle est en avance sur 2 cos(50π t), donc φ est positif",
+                         "Le décalage est trop court pour compter, donc φ est nul",
+                         "Elle est en retard sur 2 cos(50π t), donc φ est négatif"],
+             "bonne": 2,
+             "diagnostics": {0: "2 cos(50π t) a son maximum à t = 0 ; notre courbe l'atteint plus tard : elle est "
+                                "en retard, et φ = −ω t₀ est négatif.",
+                             1: "0,005 s est court, mais c'est un huitième de période : φ = −π/4, soit un "
+                                "décalage de 45°, bien visible sur le tracé."}},
+            {"type": "qcm", "label": "Et si le moteur tournait plus vite ?",
+             "question": "Le moteur à balourd tourne deux fois plus vite : la vibration garde son amplitude de "
+                         "2 mm, mais sa pulsation double. Que devient la vitesse de vibration maximale ?",
+             "options": ["Elle reste la même, car l'amplitude n'a pas changé",
+                         "Elle double, car elle vaut A × ω",
+                         "Elle est multipliée par 4, car elle vaut A × ω²"],
+             "bonne": 1,
+             "diagnostics": {0: "La vitesse maximale vaut A × ω : à amplitude égale, elle suit ω.",
+                             2: "A × ω² est l'accélération maximale : c'est elle qui est multipliée par 4. La "
+                                "vitesse, A × ω, double."}},
+        ],
+        "corrige": {
+            "enonce": "Crêtes à ±2 mm ; crêtes à 0,005 s et 0,045 s ; x(t) = A cos(ωt + φ).",
+            "regle": "**A = demi-écart crête-creux ; T = temps entre deux crêtes ; ω = 2π/T ; φ = −ω t₀ ; "
+                     "vitesse maximale = A ω.**",
+            "conversions": "x en mm, t en s : ω en rad/s, φ en radians, vitesse en mm/s.",
+            "remplacement": "A = 2 ; T = 0,045 − 0,005 ; ω = 2π/0,04 ; φ = −50π × 0,005 ; v_max = 2 × 50π",
+            "calcul": "A = **2 mm** ; T = **0,04 s** ; ω = 50π ≈ **157,1 rad/s** ; φ = −π/4 ≈ **−0,785 rad**\n\n"
+                      "x(t) = 2 cos(50π t − π/4) mm\n\n"
+                      "v(t) = −100π sin(50π t − π/4) mm/s ; vitesse de vibration maximale = 100π ≈ **314 mm/s** (accélération "
+                      "maximale ≈ 49 m/s², voulue : elle fait sauter les pièces vers l'avant)",
+            "verification": "**Contrôle de cohérence** : x(0) = 2 cos(−π/4) ≈ 1,41 mm, entre 0 et 2, et la courbe "
+                            "monte vers sa crête de 0,005 s ✓ ; t₀/T = 1/8 de tour, soit π/4 de retard ✓ ; "
+                            "fréquence 1/0,04 = 25 Hz, soit un moteur à balourd à 1 500 tr/min.",
+        },
+        "a_retenir": "À retenir : sur un tracé, A = demi-écart crête-creux, T = temps entre deux crêtes, ω = 2π/T, "
+                     "φ = −ω t₀, avec t₀ l'instant du maximum le plus proche de t = 0 (négatif si ce maximum arrive après 0). En dérivant, ω sort : "
+                     "vitesse maximale A ω, accélération maximale A ω².",
     },
     {
         "id": "at29",
@@ -71133,11 +71877,11 @@ MATIERES_PROGRAMME = [
          "moyenne, extremums locaux, équations différentielles du premier ordre (deux cas "
          "traités, et méthode d'Euler), nombres complexes (forme algébrique, racines d'une "
          "équation du second degré quand Δ < 0), équations différentielles du second ordre (fiche "
-         "18.19). Non traités : asymptote oblique ; nombre de solutions de f(x) = k et valeur "
-         "approchée d'une racine (algorithme) ; dérivée de uⁿ ; fonction racine carrée ; courbes de "
-         "sin et cos ; propriétés de l'intégrale (Chasles, linéarité, positivité) ; aire entre deux "
-         "courbes ; primitives de cos(ωt + φ) et sin(ωt + φ) ; méthodes approchées d'intégration.",
-         [(7, ["7.2"]), (17, ["17.1", "17.7", "17.2", "17.4", "17.5"]),
+         "18.19), courbes, dérivées et primitives de sin et cos (fiche 17.9). Non traités : asymptote "
+         "oblique ; nombre de solutions de f(x) = k et valeur approchée d'une racine (algorithme) ; "
+         "dérivée de uⁿ ; fonction racine carrée ; propriétés de l'intégrale (Chasles, linéarité, "
+         "positivité) ; aire entre deux courbes ; méthodes approchées d'intégration.",
+         [(7, ["7.2"]), (17, ["17.1", "17.7", "17.9", "17.2", "17.4", "17.5"]),
           (18, ["18.4", "18.8", "18.12", "18.18", "18.19"])]),
         ("Hors épreuve : calcul matriciel, Bézier, droites et plans", "Complet",
          "Programme complémentaire non évalué (matrices, courbes de Bézier) et "

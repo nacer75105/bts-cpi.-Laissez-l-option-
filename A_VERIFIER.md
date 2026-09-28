@@ -27,6 +27,13 @@ prérequis et la répartition usuelle) :
 9. ✅ 18.15 tests de comparaison — 10. ✅ 18.16 loi exponentielle — 11. ✅ 18.17 loi de Poisson — 12. ✅ 18.18 nombres
 complexes (forme algébrique, Δ < 0) — 13. ✅ 18.19 équations différentielles du second ordre. **Plan terminé (13/13).**
 
+Plan complémentaire « Analyse » (validé le 2026-09-28, pour les notions du référentiel que le plan des 13 ne
+couvrait pas ; ordre d'écriture) : 1. ✅ 17.9 trigonométrie (courbes, dérivées et primitives de sin et cos) —
+2. 17.12 calcul intégral (Chasles, linéarité, positivité, aire entre deux courbes ; méthodes approchées en
+« pour aller plus loin ») — 3. 17.10 étude de fonction (racine carrée, dérivée de uⁿ, asymptote oblique) —
+4. 17.11 équation f(x) = k (nombre de solutions, dichotomie). Quand les quatre seront faites : ligne « Analyse »
+du tableau de bord à « Complet », avertissement de la page Maths retiré.
+
 ### 17.7 — Fonctions exponentielle et logarithme népérien (faite le 2026-09-25)
 
 - Insérée après 17.1 (ordre affiché 17.0 → 17.1 → 17.7 → 17.2), avec méthode, figure
@@ -164,6 +171,43 @@ complexes (forme algébrique, Δ < 0) — 13. ✅ 18.19 équations différentiel
   AppTest ; outil d'audit : 0 défaut).
 - ✅ Interface vérifiée dans un vrai navigateur le 2026-09-27 : atelier at145 (pièges, bonnes valeurs, QCM, corrigé), gen_ic_proportion, gen_taille_proportion, figures proportion_en_cloche, ic_proportion_simulation regardées dans l'app (voir « Dette d'interface 17.7 à 18.13 »).
 
+### 17.9 — Trigonométrie : courbes, dérivées et primitives de sin et cos (faite le 2026-09-28)
+
+- Référentiel : fonctions sinus et cosinus comme fonctions de référence (« exploiter la courbe pour retrouver
+  des propriétés »), dérivées, primitives de cos(ωt + φ) et sin(ωt + φ) (complément du module Calcul
+  intégral), valeur moyenne. La dérivée de cos(ωt + φ) n'est citée explicitement que dans le module
+  « signal », hors liste CPI : elle est gardée comme outil de vérification des primitives et prérequis de la
+  18.19 (statut évalué, avis du relecteur justesse).
+- Placée juste après la 17.7 dans BLOC_17 (pas de code de tri : l'ordre d'affichage est l'ordre de la
+  liste). Figures `sin_cos_courbes`, `parametres_sinusoide` (graduations π, 2π, 4π) et `lire_sinusoide`
+  (goulotte vibrante, x(t) = 2 cos(50π t − π/4), réponse dans le cadre du bas) ; atelier at152 (lire la
+  vibration d'une goulotte vibrante, sans figure : `lire_sinusoide` donnerait la réponse) ; générateurs
+  `gen_periode_frequence` (T, f ou vitesse maximale) et `gen_primitive_trig` (intégrale de K cos(ωt) ou
+  K sin(ωt)) ; 9 questions (bonne réponse en positions 0, 1, 2, 0, 3, 1, 2, 1, 3).
+- Choix validés par l'auteur : pas de figure pour at152 ; seuil d'alerte de 7 mm/s présenté comme choix du
+  service maintenance, en valeur crête, sans citer ISO 10816 (ses zones sont en valeur efficace) ; tension
+  redressée double alternance (2A/π) gardée au § 5, nommée et rattachée à la 17.5 ; pas de définition du
+  radian (supposée installée par la 7.2).
+- Trois tours de relecture. 1ᵉʳ tour : 5 bloquants, dont une broche vibrant à ±2 mm (314 mm/s, 5 g)
+  incompatible avec le seuil de 7 mm/s de la même fiche (l'objet devient une goulotte vibrante, où 5 g est
+  voulu ; le cas industriel garde la broche) ; une règle « le 1ᵉʳ maximum arrive quand ωt + φ = 0 » fausse
+  dès que φ > 0 ; une intégrale de 0 à π/2 de cos t présentée comme « demi-période » (c'est un quart) ; une
+  égalité fausse dans le corrigé de gen_periode_frequence. 2ᵉ tour : 2 bloquants (égalité fausse résiduelle ;
+  cas de l'avance inapplicable devant un écran, remplacé par t₀ = 1re crête visible − T, avec l'exercice
+  1 bis). 3ᵉ tour : 0 bloquant, 8 retouches (contrôle du signe de φ par x′(0), car x(0) = A cos(±φ) ne le
+  tranche pas ; « 0,64 = 2/π » corrigé en « 2/π ≈ 0,64 »…).
+- Règle de lecture de φ harmonisée partout : t₀ = instant du maximum le plus proche de t = 0.
+- π gardé exact : principe posé au § 3 et en erreur classique n° 7 ; consigne dans l'énoncé des générateurs
+  (« Simplifie les π » ou « Garde π exact »). Arrondis intermédiaires : 0 refus avec ω à 2 décimales,
+  sin/cos à 3 décimales et k/ω exact ou à 3 décimales (10 000 tirages) ; π ≈ 3,14 reste refusé à 0,1 près,
+  et l'énoncé le déconseille.
+- ✅ Vérifiée le 2026-09-28 dans un vrai navigateur, 32 contrôles OK : at152 en entier (chaque piège puis la
+  bonne valeur, les deux QCM, corrigé déroulé), les deux générateurs, les trois figures, les six onglets sans
+  marque de rendu ratée ; tableau des paramètres, cas de l'avance et § 6 regardés à l'œil.
+- Inventaires : résumé du bloc 17, ligne « Analyse » du tableau de bord (17.9 ajoutée ; courbes de sin et cos
+  et primitives de cos(ωt + φ) retirées des non-traités ; statut toujours « Incomplet »), avertissement de la
+  page Maths gardé jusqu'à la fin du plan complémentaire.
+
 ### Analyse (Fonctions, Calcul intégral) : notions du référentiel non traitées (relevé du 2026-09-28)
 
 Le plan de 13 fiches est terminé, mais il ne couvrait pas tout le référentiel : la ligne « Analyse » du
@@ -179,10 +223,10 @@ Au programme (contenu ou capacité attendue), absent de l'app :
 - dérivée de x ↦ uⁿ(x) (contenu ; seule la primitive de u′uⁿ est traitée, en 17.2) ;
 - fonction racine carrée comme fonction de référence (contenu) ;
 - fonctions sinus et cosinus comme fonctions de référence, courbes (contenu ; seules les dérivées sin′ et
-  cos′ figurent, en 7.2) ;
+  cos′ figurent, en 7.2) ; ✅ traité en 17.9 ;
 - propriétés de l'intégrale : relation de Chasles, linéarité, positivité (contenu) ;
 - aire entre deux courbes, {a ≤ x ≤ b et f(x) ≤ y ≤ g(x)} (capacité attendue) ;
-- primitives de t ↦ cos(ωt + φ) et t ↦ sin(ωt + φ) (contenu, « complément »).
+- primitives de t ↦ cos(ωt + φ) et t ↦ sin(ωt + φ) (contenu, « complément ») ; ✅ traité en 17.9.
 
 Cité en exemple dans les commentaires (non exigible) :
 - méthodes élémentaires d'approximation d'une intégrale (point-milieu, trapèzes, Monte-Carlo), avec des
