@@ -172,6 +172,24 @@ Fonctions, Calcul intégral et Équations différentielles ne reste sans fiche (
   AppTest ; outil d'audit : 0 défaut).
 - ✅ Interface vérifiée dans un vrai navigateur le 2026-09-27 : atelier at145 (pièges, bonnes valeurs, QCM, corrigé), gen_ic_proportion, gen_taille_proportion, figures proportion_en_cloche, ic_proportion_simulation regardées dans l'app (voir « Dette d'interface 17.7 à 18.13 »).
 
+### Figures à curseurs dans les fiches : pilote sur la 17.9 (2026-09-29) — À JUGER EN LIGNE
+
+- Mécanisme : repère [[DYN:cle]] dans un texte de fiche, registre DYNAMIQUES (titre, fonction, curseurs),
+  affichage par afficher_dynamique() : un st.slider (ou st.select_slider) par paramètre, puis la figure
+  redessinée en SVG par la fonction Python, comme sur la page « Schémas interactifs ». La fonction a des
+  valeurs par défaut ; l'audit (contrôle FIGURE) l'exécute avec ces valeurs puis à chaque combinaison des
+  positions extrêmes des curseurs, et vérifie que chaque repère [[FIG:…]] / [[DYN:…]] désigne une figure.
+- Pilote unique : `sinusoide_curseurs` (fiche 17.9, § 3, après la figure des trois réglages) :
+  y = A cos(ωt + φ), curseurs A (0,5 à 3), ω (0,5 à 4 rad/s), φ (−π à π par pas de π/4) ; cos t en gris
+  pour référence ; période, fréquence, maximum le plus proche de 0 (t₀ = −φ/ω) affichés.
+- Réactivité mesurée en local : figure redessinée 0,3 s environ après chaque pas de curseur. **À juger sur
+  l'application en ligne (Render, serveur gratuit, plus lent) avant d'en faire d'autres** : une figure qui
+  rame au curseur serait pire que pas de figure. Candidates si le pilote convient : droite y = k (17.11),
+  bornes de l'aire (17.12), écart à l'asymptote (17.10), loi normale μ/σ (18.10), amortissement (18.19).
+- Trouvé en testant le pilote, corrigé à part (commit fix) : sur la page Cours, les listes Bloc et Fiche
+  n'avaient pas de clé ; après un saut « Aller directement à une fiche », la moindre interaction sur la
+  fiche (curseur, bouton « Enregistrer la note ») ramenait à la première fiche du premier bloc.
+
 ### 17.11 — Équation f(x) = k : nombre de solutions et dichotomie (faite le 2026-09-29)
 
 - Référentiel (annexe I, Fonctions) : « exploiter le tableau de variation pour obtenir le nombre de solutions

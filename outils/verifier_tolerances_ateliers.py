@@ -125,6 +125,10 @@ Un générateur défectueux compte pour UN défaut (le nombre de tirages touché
               (16 px de haut), sans aucune erreur. Cas réel : « Δ < 0 » écrit tel quel dans deux
               figures de la fiche 18.18 (le « < » ouvre une balise) ; trouvé au parcours
               navigateur du 2026-09-27. Remède : écrire &lt; (et &amp; pour &) dans les textes.
+              Les figures à curseurs (registre DYNAMIQUES, repère [[DYN:cle]]) sont exécutées avec
+              leurs valeurs par défaut puis à chaque combinaison des positions extrêmes des
+              curseurs. Un repère [[FIG:cle]] ou [[DYN:cle]] qui ne désigne aucune figure est aussi
+              un défaut (il s'afficherait « Figure inconnue »).
 
 7. CONTINUATIONS (analyse lexicale de tout app.py)
 --------------------------------------------------
@@ -313,13 +317,14 @@ def definir(g, definitions, nom, profondeur=0):
     raise RuntimeError(f"impossible de définir {nom}")
 
 
-def appeler(g, definitions, fonction):
-    """Appelle le générateur ; sur un nom manquant, le définit depuis app.py et réessaie."""
+def appeler(g, definitions, fonction, **kw):
+    """Appelle le générateur (ou la figure, avec ses arguments éventuels) ; sur un nom manquant, le
+    définit depuis app.py et réessaie."""
     if fonction not in g:
         definir(g, definitions, fonction)
     for _ in range(40):
         try:
-            return g[fonction]()
+            return g[fonction](**kw)
         except NameError as err:
             manquant = re.search(r"name '(\w+)' is not defined", str(err))
             if not manquant or manquant.group(1) not in definitions:
@@ -574,7 +579,38 @@ def verifier_figures(src):
                            f"{svg[max(0, col - 50):col + 20]!r}")
         except Exception as err:  # noqa: BLE001 — on veut signaler tout plantage
             defauts.append(f"FIGURE      {cle} : plantage {type(err).__name__} : {err}")
-    print(f"FIGURES : {len(paires)} figures exécutées, SVG lu comme du XML.")
+    # Figures à curseurs (registre DYNAMIQUES) : valeurs par défaut, puis chaque combinaison des
+    # positions extrêmes des curseurs.
+    n_dyn = n_reglages = 0
+    if "DYNAMIQUES" in definitions:
+        import itertools
+        definir(g, definitions, "DYNAMIQUES")
+        for cle, (_titre, fonction, params) in g["DYNAMIQUES"].items():
+            n_dyn += 1
+            bouts = [[p["choix"][0][1], p["choix"][-1][1]] if "choix" in p else [p["min"], p["max"]]
+                     for p in params]
+            reglages = [{}] + [dict(zip([p["nom"] for p in params], combi)) for combi in itertools.product(*bouts)]
+            for kw in reglages:
+                n_reglages += 1
+                try:
+                    ET.fromstring(appeler(g, definitions, fonction.__name__, **kw))
+                except ET.ParseError as err:
+                    defauts.append(f"FIGURE      {cle} {kw or '(défaut)'} : SVG invalide ({err})")
+                except Exception as err:  # noqa: BLE001
+                    defauts.append(f"FIGURE      {cle} {kw or '(défaut)'} : plantage {type(err).__name__} : {err}")
+    # Chaque repère [[FIG:cle]] ou [[DYN:cle]] d'un texte doit désigner une figure qui existe.
+    connues = {"FIG": {k for k, _ in paires},
+               "DYN": set(g["DYNAMIQUES"]) if "DYNAMIQUES" in g else set()}
+    docstrings = {id(n.body[0].value) for n in ast.walk(arbre)
+                  if isinstance(n, (ast.Module, ast.FunctionDef, ast.ClassDef)) and n.body
+                  and isinstance(n.body[0], ast.Expr) and isinstance(n.body[0].value, ast.Constant)}
+    for n in ast.walk(arbre):
+        if isinstance(n, ast.Constant) and isinstance(n.value, str) and id(n) not in docstrings:
+            for genre, cle in re.findall(r"\[\[(FIG|DYN):([a-z0-9_]+)\]\]", n.value):
+                if cle not in connues[genre]:
+                    defauts.append(f"FIGURE      ligne {n.lineno} : repère [[{genre}:{cle}]] sans figure")
+    print(f"FIGURES : {len(paires)} figures exécutées, {n_dyn} figure(s) à curseurs dans {n_reglages} "
+          f"réglages, SVG lu comme du XML ; repères [[FIG:…]] et [[DYN:…]] contrôlés.")
     if defauts:
         print(f"{len(defauts)} défaut(s) :")
         for d in defauts:

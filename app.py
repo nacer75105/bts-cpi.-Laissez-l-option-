@@ -7829,6 +7829,102 @@ def dyn_engrenage(module, z1, z2):
 
 
 # --- Tranches de dimensions nominales pour les valeurs IT (mm) ---
+def _phase_txt(phi):
+    """Écriture d'une phase multiple de π/4 : « 0 », « π/4 », « −3π/4 », « π »…"""
+    k = round(phi / (math.pi / 4))
+    if abs(k * math.pi / 4 - phi) > 1e-6:
+        return _fr_court(phi, 2)
+    if k == 0:
+        return "0"
+    signe = "−" if k < 0 else ""
+    k = abs(k)
+    num, den = (k, 4) if k % 2 else ((k // 2, 2) if k % 4 else (k // 4, 1))
+    return signe + ("" if num == 1 else str(num)) + "π" + ("" if den == 1 else f"/{den}")
+
+
+def dyn_sinusoide(A=2.0, w=1.0, phi=0.0):
+    """A cos(ωt + φ) pilotée par trois curseurs, avec cos t en gris comme référence."""
+    x0, y0, kx, ky = 70, 220, 44, 40
+    tmax = 4 * math.pi
+    X = lambda t: x0 + kx * t  # noqa: E731
+    Y = lambda v: y0 - ky * v  # noqa: E731
+    T = 2 * math.pi / w
+    t0 = -phi / w  # maximum le plus proche de 0
+    t1 = t0 if t0 >= -1e-9 else t0 + T  # premier maximum à partir de 0
+    phase = _phase_txt(phi)
+    terme = "" if phi == 0 else (f" + {phase}" if phi > 0 else f" − {phase.lstrip('−')}")
+    wt = "t" if w == 1 else f"{_fr_court(w, 2)}t"
+    coef = "" if A == 1 else f"{_fr_court(A, 2)} "
+    p_ = [_txt(40, 24, f"y = {coef}cos({wt}{terme})", 14, ALESAGE, "start", True),
+          _txt(40, 44, f"Amplitude A = {_fr_court(A, 2)} · période T = 2π/ω ≈ {_fr_court(T, 2)} · fréquence "
+                       f"f = ω/(2π) ≈ {_fr_court(w / (2 * math.pi), 3)} · phase φ = {phase}", 12, TRAIT)]
+    # axes
+    p_.append(f"<line x1='{X(0)}' y1='{Y(0)}' x2='{X(tmax) + 12}' y2='{Y(0)}' stroke='{FIN}' stroke-width='1.3'/>")
+    p_.append(f"<line x1='{X(0)}' y1='{Y(-3.4)}' x2='{X(0)}' y2='{Y(3.4)}' stroke='{FIN}' stroke-width='1.3'/>")
+    p_.append(_txt(X(tmax) + 16, Y(0) + 4, "t", 11, FIN))
+    for k, lib in ((1, "π"), (2, "2π"), (3, "3π"), (4, "4π")):
+        p_.append(f"<line x1='{X(k * math.pi):.1f}' y1='{Y(0) - 3}' x2='{X(k * math.pi):.1f}' y2='{Y(0) + 3}' "
+                  f"stroke='{FIN}'/>")
+        p_.append(_txt(X(k * math.pi), Y(0) + 15, lib, 11, FIN, "middle"))
+    for v in (-3, -2, -1, 1, 2, 3):
+        p_.append(_txt(X(0) - 6, Y(v) + 4, str(v).replace("-", "−"), 10, FIN, "end"))
+    # amplitude : lignes ±A
+    for v in (A, -A):
+        p_.append(f"<line x1='{X(0)}' y1='{Y(v):.1f}' x2='{X(tmax)}' y2='{Y(v):.1f}' stroke='{ARBRE}' "
+                  f"stroke-width='1' stroke-dasharray='4 4'/>")
+    p_.append(_txt(X(tmax) + 6, Y(A) + 4, f"+A = {_fr_court(A, 2)}", 11, ARBRE, "start", True))
+    p_.append(_txt(X(tmax) + 6, Y(-A) + 4, f"−A", 11, ARBRE, "start", True))
+    # courbes
+    n = 600
+    ref = " ".join(f"{X(tmax * i / n):.1f},{Y(math.cos(tmax * i / n)):.1f}" for i in range(n + 1))
+    p_.append(f"<polyline points='{ref}' fill='none' stroke='{FIN}' stroke-width='1.4'/>")
+    pts = " ".join(f"{X(tmax * i / n):.1f},{Y(A * math.cos(w * tmax * i / n + phi)):.1f}" for i in range(n + 1))
+    p_.append(f"<polyline points='{pts}' fill='none' stroke='{ALESAGE}' stroke-width='2.6'/>")
+    # période : accolade entre deux maximums successifs, au-dessus de la courbe
+    if t1 + T <= tmax + 1e-9:
+        yb = Y(A) - 14
+        p_.append(f"<line x1='{X(t1):.1f}' y1='{yb:.1f}' x2='{X(t1 + T):.1f}' y2='{yb:.1f}' stroke='{OK}' "
+                  f"stroke-width='1.8'/>")
+        for tt in (t1, t1 + T):
+            p_.append(f"<line x1='{X(tt):.1f}' y1='{yb - 5:.1f}' x2='{X(tt):.1f}' y2='{yb + 5:.1f}' stroke='{OK}' "
+                      f"stroke-width='1.8'/>")
+        p_.append(_txt((X(t1) + X(t1 + T)) / 2, yb - 7, f"T ≈ {_fr_court(T, 2)}", 11, OK, "middle", True))
+    # premier maximum à partir de 0
+    p_.append(f"<circle cx='{X(t1):.1f}' cy='{Y(A):.1f}' r='5' fill='{ALERTE}'/>")
+    # cadre explicatif
+    ycad = Y(-3.4) + 26
+    if t0 >= -1e-9:
+        ligne2 = (f"Point rouge : le maximum le plus proche de 0, en t₀ = −φ/ω ≈ {_fr_court(t0, 2)} "
+                  f"(la courbe est en retard sur A cos ωt).") if t0 > 1e-9 else \
+                 "Point rouge : le maximum est en t = 0 (φ = 0, pas de décalage)."
+    else:
+        ligne2 = (f"Maximum le plus proche de 0 : t₀ = −φ/ω ≈ {_fr_court(t0, 2)}, avant 0 (courbe en avance) ; "
+                  f"point rouge : le suivant, t₀ + T ≈ {_fr_court(t1, 2)}.")
+    p_.append(f"<rect x='40' y='{ycad}' width='680' height='52' rx='6' fill='{FOND}' stroke='{FIN}' "
+              f"stroke-width='1'/>")
+    p_.append(_txt(56, ycad + 22, "Bleu : y = A cos(ωt + φ) ; gris : cos t, la référence (A = 1, ω = 1, φ = 0).", 12,
+                   TRAIT, "start", True))
+    p_.append(_txt(56, ycad + 42, ligne2, 12, TRAIT, "start"))
+    return _svg("".join(p_), 760, ycad + 66)
+
+
+# Figures à curseurs, insérées dans un texte de fiche par le repère [[DYN:cle]].
+# cle -> (titre, fonction, paramètres). Chaque paramètre est un curseur : plage (min, max, défaut, pas)
+# ou liste de choix (étiquette, valeur). La fonction s'appelle aussi SANS argument (valeurs par défaut) :
+# c'est ainsi que l'audit (contrôle FIGURE) vérifie qu'elle produit un SVG valide.
+DYNAMIQUES = {
+    "sinusoide_curseurs": (
+        "Bouge les curseurs : A étire la courbe en hauteur, ω la resserre, φ la fait glisser",
+        dyn_sinusoide,
+        [{"nom": "A", "label": "Amplitude A", "min": 0.5, "max": 3.0, "defaut": 2.0, "pas": 0.5},
+         {"nom": "w", "label": "Pulsation ω (rad/s)", "min": 0.5, "max": 4.0, "defaut": 1.0, "pas": 0.5},
+         {"nom": "phi", "label": "Phase φ (rad)",
+          "choix": [(_e, _k * math.pi / 4) for _k, _e in ((-4, "−π"), (-3, "−3π/4"), (-2, "−π/2"), (-1, "−π/4"),
+                                                          (0, "0"), (1, "π/4"), (2, "π/2"), (3, "3π/4"), (4, "π"))],
+          "defaut": "0"}]),
+}
+
+
 TRANCHES_IT = [
     (0, 3), (3, 6), (6, 10), (10, 18), (18, 30), (30, 50), (50, 80),
     (80, 120), (120, 180), (180, 250), (250, 315), (315, 400), (400, 500),
@@ -47446,6 +47542,12 @@ des fiches 18.18 et 18.19). Pour une vibration à la fréquence de rotation, 25 
 
 [[FIG:parametres_sinusoide]]
 
+**À toi de jouer.** Bouge les trois curseurs et regarde la courbe bleue : A l'étire en hauteur (entre −A et A),
+ω la resserre (la période T = 2π/ω raccourcit quand ω grandit), φ la fait glisser. Le point rouge marque un
+maximum ; le cadre donne t₀ = −φ/ω, le maximum le plus proche de 0.
+
+[[DYN:sinusoide_curseurs]]
+
 **Exemple : le réseau électrique.** La tension d'une prise est u(t) = 325 cos(100π t) (en volts). Amplitude
 325 V : c'est la tension **crête**, la plus haute atteinte. Les « 230 V » des manuels d'électrotechnique sont
 la valeur **efficace** : la tension continue qui chaufferait autant un radiateur. Pour une sinusoïde, elle
@@ -58440,17 +58542,48 @@ FICHIER_PROGRESSION = os.path.join(os.path.dirname(__file__), "progression.json"
 st.set_page_config(page_title="BTS CPI — Révisions", page_icon="⚙️", layout="wide")
 
 
+# Nombre d'affichages de chaque figure à curseurs pendant l'exécution en cours de la page : sert à
+# donner une clé unique à ses curseurs si la même figure apparaît deux fois. Remis à zéro à chaque
+# exécution du script (Streamlit relance app.py en entier à chaque interaction).
+_DYN_VUS = {}
+
+
+def afficher_dynamique(cle):
+    """Figure à curseurs (registre DYNAMIQUES) : un curseur par paramètre, puis la figure redessinée."""
+    if cle not in DYNAMIQUES:
+        st.markdown(f"<i>Figure à curseurs inconnue : {cle}</i>", unsafe_allow_html=True)
+        return
+    titre, fonction, params = DYNAMIQUES[cle]
+    rang = _DYN_VUS.get(cle, 0)
+    _DYN_VUS[cle] = rang + 1
+    valeurs = {}
+    for col, p in zip(st.columns(len(params)), params):
+        cle_widget = f"dyn_{cle}_{p['nom']}_{rang}"
+        with col:
+            if "choix" in p:
+                etiquettes = [e for e, _ in p["choix"]]
+                choisie = st.select_slider(p["label"], options=etiquettes, value=p["defaut"], key=cle_widget)
+                valeurs[p["nom"]] = dict(p["choix"])[choisie]
+            else:
+                valeurs[p["nom"]] = st.slider(p["label"], p["min"], p["max"], p["defaut"], step=p["pas"],
+                                              key=cle_widget)
+    st.markdown(html_dyn(fonction(**valeurs), titre), unsafe_allow_html=True)
+
+
 def afficher_contenu(texte):
-    """Affiche un texte de fiche en remplacant les marqueurs [[FIG:cle]] par le schema."""
+    """Affiche un texte de fiche en remplaçant les marqueurs [[FIG:cle]] par le schéma, et [[DYN:cle]] par
+    une figure à curseurs (registre DYNAMIQUES)."""
     if not texte:
         return
-    morceaux = re.split(r"\[\[FIG:([a-z0-9_]+)\]\]", texte)
-    for i, morceau in enumerate(morceaux):
-        if i % 2 == 0:
-            if morceau.strip():
-                st.markdown(morceau)
-        else:
-            st.markdown(html(morceau), unsafe_allow_html=True)
+    morceaux = re.split(r"\[\[(FIG|DYN):([a-z0-9_]+)\]\]", texte)
+    for i in range(0, len(morceaux), 3):
+        if morceaux[i].strip():
+            st.markdown(morceaux[i])
+        if i + 2 < len(morceaux):
+            if morceaux[i + 1] == "FIG":
+                st.markdown(html(morceaux[i + 2]), unsafe_allow_html=True)
+            else:
+                afficher_dynamique(morceaux[i + 2])
 
 
 # ===========================================================================
