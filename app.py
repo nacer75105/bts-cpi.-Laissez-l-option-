@@ -6854,6 +6854,89 @@ def methode_trapezes():
     return _svg("".join(p_), 760, ycad + 66)
 
 
+def racine_carree_courbe():
+    x0, y0, kx, ky = 200, 300, 55, 55
+    X = lambda x: x0 + kx * x  # noqa: E731
+    Y = lambda v: y0 - ky * v  # noqa: E731
+    p_ = [_txt(40, 24, "La fonction racine carrée : définie pour x ≥ 0, croissante, de plus en plus lentement.", 12,
+               TRAIT, "start", True),
+          _txt(40, 40, "Sa courbe est la symétrique de celle de x² (x ≥ 0) par rapport à la droite y = x : √ défait le carré.",
+               11, FIN)]
+    p_ += _axes(X, Y, 9.6, -0.2, 4.6, (1, 2, 3, 4, 5, 6, 7, 8, 9), (1, 2, 3, 4))
+    p_.append(f"<line x1='{X(0)}' y1='{Y(0)}' x2='{X(4.4)}' y2='{Y(4.4)}' stroke='{FIN}' stroke-width='1' "
+              f"stroke-dasharray='4 4'/>")
+    p_.append(_txt(X(4.4) + 4, Y(4.4) + 4, "y = x", 11, FIN, "start"))
+    p_.append(_courbe(X, Y, lambda x: x * x, 0, 2.12, ARBRE, 1.8))
+    p_.append(_txt(X(2.12) + 6, Y(4.4) + 10, "y = x² (x ≥ 0)", 11, ARBRE, "start", True))
+    p_.append(_courbe(X, Y, math.sqrt, 0, 9.4, ALESAGE, 2.6, 400))
+    p_.append(_txt(X(8.2), Y(3.55), "y = √x", 12, ALESAGE, "middle", True))
+    for v in (1, 4, 9):
+        p_.append(f"<circle cx='{X(v)}' cy='{Y(math.sqrt(v))}' r='4' fill='{ALESAGE}'/>")
+        p_.append(_txt(X(v) + 6, Y(math.sqrt(v)) + 16, f"√{v} = {int(math.sqrt(v))}", 11, ALESAGE, "start"))
+    # tangente en x = 4 : pente 1/4
+    p_.append(f"<line x1='{X(1.6)}' y1='{Y(2 + (1.6 - 4) / 4):.1f}' x2='{X(6.8)}' y2='{Y(2 + (6.8 - 4) / 4):.1f}' "
+              f"stroke='{ALERTE}' stroke-width='1.6'/>")
+    p_.append(_txt(X(4.6), Y(1.2), "en rouge, tangente en x = 4 :", 11, ALERTE, "start", True))
+    p_.append(_txt(X(4.6), Y(1.2) + 14, "pente 1/(2√4) = 1/4", 11, ALERTE, "start", True))
+    # tangente verticale en 0
+    p_.append(f"<line x1='{X(0) + 3}' y1='{Y(0)}' x2='{X(0) + 3}' y2='{Y(1.2)}' stroke='{ALERTE}' stroke-width='1.6' "
+              f"stroke-dasharray='3 3'/>")
+    p_.append(_txt(X(0) - 30, Y(0.9), "en x = 0 :", 11, ALERTE, "end", True))
+    p_.append(_txt(X(0) - 30, Y(0.9) + 14, "tangente verticale", 11, ALERTE, "end", True))
+    ycad = y0 + 34
+    p_.append(f"<rect x='40' y='{ycad}' width='680' height='52' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p_.append(_txt(56, ycad + 22, "Dérivée : (√x)′ = 1/(2√x) pour x > 0. Plus x est grand, plus la pente est faible "
+                   "(1/4 en x = 4, 1/6 en x = 9).", 12, TRAIT, "start", True))
+    p_.append(_txt(56, ycad + 42, "En x = 0, 1/(2√x) n'existe pas : la courbe part verticalement, √x n'est pas "
+                   "dérivable en 0.", 12, TRAIT, "start"))
+    return _svg("".join(p_), 760, ycad + 66)
+
+
+def asymptote_oblique():
+    x0, y0, kx, ky = 230, 290, 46, 11
+    X = lambda x: x0 + kx * x  # noqa: E731
+    Y = lambda v: y0 - ky * v  # noqa: E731
+    f = lambda x: 2 * x - 1 + 3 / (x + 2)  # noqa: E731
+    d = lambda x: 2 * x - 1  # noqa: E731
+    p_ = [_txt(40, 24, "Asymptote oblique : pour x grand, la courbe colle à une droite qui monte, y = 2x − 1.", 12,
+               TRAIT, "start", True),
+          _txt(40, 40, "f(x) = 2x − 1 + 3/(x + 2) : l'écart f(x) − (2x − 1) = 3/(x + 2) tend vers 0 quand x tend "
+               "vers +∞.", 11, FIN)]
+    p_.append(f"<line x1='{X(-3.4)}' y1='{Y(0)}' x2='{X(10.4)}' y2='{Y(0)}' stroke='{FIN}' stroke-width='1.4'/>")
+    p_.append(f"<line x1='{X(0)}' y1='{Y(-7)}' x2='{X(0)}' y2='{Y(20)}' stroke='{FIN}' stroke-width='1.4'/>")
+    p_.append(_txt(X(10.4) + 4, Y(0) + 4, "x", 11, FIN))
+    for v in (-2, 2, 4, 6, 8, 10):
+        p_.append(f"<line x1='{X(v)}' y1='{Y(0) - 3}' x2='{X(v)}' y2='{Y(0) + 3}' stroke='{FIN}'/>")
+        p_.append(_txt(X(v), Y(0) + 15, str(v).replace("-", "−"), 11, FIN, "middle"))
+    for v in (5, 10, 15):
+        p_.append(_txt(X(0) - 6, Y(v) + 4, str(v), 11, FIN, "end"))
+    # asymptote verticale x = −2
+    p_.append(f"<line x1='{X(-2)}' y1='{Y(-7)}' x2='{X(-2)}' y2='{Y(20)}' stroke='{OK}' stroke-width='1.4' "
+              f"stroke-dasharray='5 4'/>")
+    p_.append(_txt(X(-2) - 6, Y(18), "asymptote verticale", 11, OK, "end", True))
+    p_.append(_txt(X(-2) - 6, Y(18) + 14, "x = −2", 11, OK, "end", True))
+    # asymptote oblique
+    p_.append(f"<line x1='{X(-3)}' y1='{Y(d(-3))}' x2='{X(10.3)}' y2='{Y(d(10.3)):.1f}' stroke='{ARBRE}' "
+              f"stroke-width='1.8' stroke-dasharray='7 4'/>")
+    p_.append(_txt(X(4.2), Y(14), "asymptote oblique", 11, ARBRE, "end", True))
+    p_.append(_txt(X(4.2), Y(14) + 14, "y = 2x − 1", 11, ARBRE, "end", True))
+    # courbe (branche x > −2)
+    p_.append(_courbe(X, Y, f, -1.72, 10.3, ALESAGE, 2.4, 400))
+    p_.append(_txt(X(-1.72) + 8, Y(f(-1.72)) + 12, "y = f(x)", 12, ALESAGE, "start", True))
+    # écarts
+    for xe, lib, yl in ((1, "écart en x = 1 : 1", 0.45), (7, "écart en x = 7 : ≈ 0,33", 10.6)):
+        p_.append(f"<line x1='{X(xe)}' y1='{Y(d(xe))}' x2='{X(xe)}' y2='{Y(f(xe)):.1f}' stroke='{ALERTE}' "
+                  f"stroke-width='2.4'/>")
+        p_.append(_txt(X(xe) + 8, Y(yl), lib, 11, ALERTE, "start", True))
+    ycad = y0 + 94
+    p_.append(f"<rect x='40' y='{ycad}' width='680' height='52' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p_.append(_txt(56, ycad + 22, "L'écart vaut 1 en x = 1, 0,33 en x = 7, 0,03 en x = 100 : il tend vers 0, la courbe "
+                   "rejoint la droite.", 12, TRAIT, "start", True))
+    p_.append(_txt(56, ycad + 42, "Il est positif (3/(x + 2) > 0) : la courbe reste AU-DESSUS de son asymptote.", 12,
+                   TRAIT, "start"))
+    return _svg("".join(p_), 760, ycad + 66)
+
+
 def extremums_polynome():
     p = [_txt(40, 24, "f(x) = x³ − 3x² + 2 : un maximum local puis un minimum local.",
               12, TRAIT, "start", True)]
@@ -7263,6 +7346,8 @@ FIGURES = {
     "courbes_qui_se_croisent": ("Deux courbes qui se croisent : on coupe l'intégrale au croisement", courbes_qui_se_croisent),
     "chasles_integrale": ("Relation de Chasles : un profil en deux morceaux, deux intégrales qui s'additionnent", chasles_integrale),
     "methode_trapezes": ("Pour aller plus loin : la méthode des trapèzes sur des points mesurés", methode_trapezes),
+    "racine_carree_courbe": ("La fonction racine carrée : définie pour x ≥ 0, croissante de plus en plus lentement, tangente verticale en 0", racine_carree_courbe),
+    "asymptote_oblique": ("Asymptote oblique : l'écart entre la courbe et la droite tend vers 0", asymptote_oblique),
     "nuage_moindres_carres": ("Le point moyen G, la droite des moindres carrés et les écarts", nuage_moindres_carres),
     "linearisation_ln": ("Linéariser une décharge avec z = ln u", linearisation_ln),
     "histogramme_vers_densite": ("1 000 attentes simulées : un histogramme plat, la densité 0,1", histogramme_vers_densite),
@@ -10985,6 +11070,59 @@ QUIZ["Mathématiques BTS CPI (examen)"] = [
        "Rien : il faut d'abord trouver une primitive"], 1,
       "Positivité : si f ≤ g sur [a ; b], alors ∫ f ≤ ∫ g. Donc ∫ de 0 à 1 de x² dx ≤ 1/2, et elle est "
       "positive car x² ≥ 0. Elle vaut 1/3, bien entre 0 et 1/2.", "Intermédiaire"),
+
+    q("Quel est le domaine de définition de f(x) = √(x − 5) ?",
+      ["ℝ tout entier", "]5 ; +∞[, en excluant 5", "[5 ; +∞[, car il faut x − 5 ≥ 0", "[0 ; +∞["], 2,
+      "Une racine carrée exige un contenu positif ou nul : x − 5 ≥ 0, soit x ≥ 5. La valeur 5 est permise "
+      "(√0 = 0). [0 ; +∞[ est le domaine de √x, pas de √(x − 5).", "Base"),
+
+    q("Quelle est la dérivée de √x, pour x > 0 ?",
+      ["1/(2√x)", "1/√x", "2√x", "√x/2"], 0,
+      "(√x)′ = 1/(2√x). On le retrouve en dérivant √x × √x = x avec la règle du produit : 2√x × (√x)′ = 1. "
+      "Elle n'existe pas en x = 0.", "Base"),
+
+    q("Une cuve se vide par un orifice à la vitesse v = √(2gh). Si la hauteur de liquide h est multipliée par 4, "
+      "que devient la vitesse ?",
+      ["Elle est multipliée par 4", "Elle est multipliée par 2", "Elle est multipliée par 16",
+       "Elle ne change pas"], 1,
+      "√(4h) = √4 × √h = 2√h : la vitesse est multipliée par 2 seulement. La racine carrée « amortit » les "
+      "variations : il faut quadrupler la hauteur pour doubler la vitesse.", "Intermédiaire"),
+
+    q("Quelle est la dérivée de f(x) = (3x − 1)⁴ ?",
+      ["4(3x − 1)³", "12(3x − 1)⁴", "3(3x − 1)³", "12(3x − 1)³"], 3,
+      "(uⁿ)′ = n u′ uⁿ⁻¹ avec u = 3x − 1, u′ = 3, n = 4 : 4 × 3 × (3x − 1)³ = 12(3x − 1)³. Oublier u′ donne "
+      "4(3x − 1)³ ; oublier de baisser l'exposant donne 12(3x − 1)⁴.", "Base"),
+
+    q("Quelle est la dérivée de g(x) = (x² + 1)³ ?",
+      ["3(x² + 1)²", "6x(x² + 1)²", "6x(x² + 1)³", "3(2x)²"], 1,
+      "u = x² + 1, u′ = 2x, n = 3 : (u³)′ = 3 × 2x × (x² + 1)² = 6x(x² + 1)². La forme factorisée donne "
+      "directement le signe : celui de 6x.", "Intermédiaire"),
+
+    q("Que signifie « la droite y = 2x − 1 est asymptote oblique à la courbe de f en +∞ » ?",
+      ["f(x) − (2x − 1) tend vers 0 quand x tend vers +∞", "f(x) tend vers 2x − 1 quand x tend vers 0",
+       "La courbe coupe la droite en un seul point", "f(x) tend vers une limite finie en +∞"], 0,
+      "L'écart vertical entre la courbe et la droite devient aussi petit qu'on veut quand x grandit. Une limite "
+      "finie en +∞ donnerait une asymptote horizontale (fiche 17.1).", "Base"),
+
+    q("f(x) = 3x + 2 + 5/(x − 4) pour x > 4. Quelle est l'asymptote oblique en +∞, et où est la courbe ?",
+      ["y = 3x + 2, la courbe est en dessous", "y = 3x, la courbe est au-dessus",
+       "y = 3x + 2, la courbe est au-dessus", "y = 5x − 4, la courbe est au-dessus"], 2,
+      "L'écart f(x) − (3x + 2) = 5/(x − 4) tend vers 0 : asymptote y = 3x + 2. Pour x > 4, 5/(x − 4) > 0 : "
+      "la courbe est au-dessus.", "Intermédiaire"),
+
+    q("Pour trouver la pente a d'une asymptote oblique quand on ne connaît que f(x), on calcule la limite en "
+      "+∞ de :",
+      ["f(x)", "f(x) − x", "f′(x) en x = 0", "f(x)/x"], 3,
+      "Si f(x) ≈ ax + b pour x grand, alors f(x)/x ≈ a + b/x tend vers a. La limite de f(x) elle-même est "
+      "infinie ; b s'obtient ensuite comme la limite de f(x) − ax.", "Piège"),
+
+    q("Pourquoi √x n'est-elle pas dérivable en x = 0, alors qu'elle y est définie ?",
+      ["Parce que √0 n'existe pas",
+       "Parce que 1/(2√x) demande de diviser par 0 : la courbe part verticalement",
+       "Parce que la fonction décroît en 0",
+       "Parce que √x est négative près de 0"], 1,
+      "√0 = 0 existe, mais la pente 1/(2√x) grandit sans limite quand x s'approche de 0 : la tangente devient "
+      "verticale. Définie ne veut pas dire dérivable.", "Intermédiaire"),
 ]
 
 QUIZ["Mathématiques BTS CPI — probabilités et équations différentielles"] = [
@@ -46114,7 +46252,7 @@ ici.
 BLOC_17 = {
     "id": 17,
     "titre": "Bloc 17 — Mathématiques BTS CPI : programme d'examen",
-    "resume": "Complète le bloc 7 pour l'épreuve de mathématiques : étude de fonctions rationnelles et polynomiales, calcul intégral par primitives, statistique à une variable, fonctions exponentielle et logarithme (fiche 17.7, à lire juste après 17.1), courbes, dérivées et primitives de sin et cos (fiche 17.9, après 17.7), propriétés de l'intégrale et aire entre deux courbes (fiche 17.12, après 17.2), statistique à deux variables (fiche 17.8 : ajustement affine, corrélation).",
+    "resume": "Complète le bloc 7 pour l'épreuve de mathématiques : étude de fonctions rationnelles et polynomiales, calcul intégral par primitives, statistique à une variable, fonctions exponentielle et logarithme (fiche 17.7, à lire juste après 17.1), courbes, dérivées et primitives de sin et cos (fiche 17.9, après 17.7), propriétés de l'intégrale et aire entre deux courbes (fiche 17.12, après 17.2), racine carrée, dérivée de uⁿ et asymptote oblique (fiche 17.10, après 17.4), statistique à deux variables (fiche 17.8 : ajustement affine, corrélation).",
     "fiches": [
         {
             "id": "17.0",
@@ -48265,6 +48403,282 @@ t = 1 à t = 3, h' < 0 : elle remonte jusqu'à la surface pour évacuer les cope
 h' > 0 : elle replonge (h(4) = 4 mm). C'est un cycle de perçage avec débourrage. Sans tracer la
 courbe, le régleur sait que le point le plus profond de la première plongée est atteint à t = 1 s
 — utile pour synchroniser un autre axe avec ce moment précis du cycle.
+""",
+        },
+        {
+            "id": "17.10",
+            "titre": "Étude de fonction : racine carrée, dérivée de uⁿ, asymptote oblique",
+            "duree": "4 h",
+            "cours": """
+
+### 1. Ce que cette fiche ajoute
+
+Les fiches 17.1 et 17.4 ont installé l'étude de fonction : **domaine**, **limites**, **asymptotes
+horizontales et verticales**, **tableau de variations** avec la dérivée. On ne les refait pas ici. Cette
+fiche ajoute trois outils du programme qui manquaient :
+- une nouvelle fonction de référence, la **racine carrée**, qui décrit en atelier une vitesse d'écoulement
+  ou une période d'oscillation ;
+- une règle de dérivation, **(uⁿ)′**, pour dériver une puissance d'une expression sans la développer ;
+- un nouveau type d'asymptote, l'**asymptote oblique** : une droite qui monte (ou descend), dont la courbe
+  s'approche à l'infini.
+
+*Notation : f′ et f' désignent la même chose, la dérivée de f.*
+
+### 2. La fonction racine carrée
+
+**Définition.** Pour x ≥ 0, √x est le nombre **positif** dont le carré vaut x : √9 = 3 car 3² = 9. Mais
+(−3)² = 9 aussi : pour qu'il n'y ait qu'une seule réponse, on convient que √ désigne **toujours la valeur
+positive**, comme une longueur ou une cote.
+Elle n'existe pas pour x < 0 (aucun carré n'est négatif) : son domaine est **[0 ; +∞[**, la règle de la fiche
+17.1 (« une racine carrée exige un contenu positif ou nul »).
+
+**Sa courbe.** Valeurs à connaître : √0 = 0, √1 = 1, √4 = 2, √9 = 3, √100 = 10. La fonction est
+**croissante**, et tend vers +∞ en +∞, mais **de plus en plus lentement** : il faut aller jusqu'à x = 100 pour
+atteindre 10. Sa courbe est la **symétrique** de celle de y = x² (pour x ≥ 0) par rapport à la droite y = x :
+on échange x et y, le point (2 ; 4) de la parabole devient le point (4 ; 2) de y = √x, et (3 ; 9) devient
+(9 ; 3). La racine carrée **défait** le carré, comme dévisser défait visser : √(3²) = 3.
+
+**Une règle de calcul utile.** Pour a ≥ 0 et b ≥ 0, **√(a × b) = √a × √b**. Vérification : √(4 × 9) = √36 = 6, et
+√4 × √9 = 2 × 3 = 6 ✓. Conséquence : **√(4h) = 2√h** : quadrupler ce qui est sous la racine ne fait que doubler
+le résultat. Attention, ça ne marche **pas** avec une somme : √(9 + 16) = √25 = 5, alors que √9 + √16 = 7.
+
+[[FIG:racine_carree_courbe]]
+
+**Sa dérivée.** Pour x > 0 :
+
+> **(√x)′ = 1/(2√x)**
+
+*Pourquoi : √x × √x = x. À gauche, c'est un produit : la règle du produit (fiche 17.7) donne sa dérivée,
+(√x)′ × √x + √x × (√x)′. À droite, x a pour dérivée 1. Les deux côtés sont égaux, donc leurs dérivées aussi :
+2√x × (√x)′ = 1, d'où (√x)′ = 1/(2√x).*
+
+Ce que dit cette dérivée :
+- elle est **positive** : la fonction est croissante ;
+- elle **diminue** quand x grandit (1/2 en x = 1, 1/4 en x = 4, 1/6 en x = 9) : chaque pas de plus rapporte
+  moins, c'est le « de plus en plus lentement » de la courbe ;
+- elle **n'existe pas en x = 0** (division par 0) : la courbe part verticalement de l'origine. Près de 0, la
+  pente 1/(2√x) vaut 5 en x = 0,01, puis 50 en x = 0,0001 : plus on approche de 0, plus elle est raide, sans
+  limite. √x est définie en 0, mais pas dérivable en 0.
+
+**En atelier : ce qui varie comme une racine carrée.**
+- **Vitesse d'écoulement** d'un liquide par un orifice au bas d'une cuve (loi de Torricelli) :
+  v = √(2gh), où g ≈ 9,81 m/s² est l'accélération de la pesanteur et h la hauteur de liquide (en m). Doubler la
+  hauteur ne double pas la vitesse : elle est multipliée par √2 ≈ 1,41.
+- **Période d'un pendule** (ou d'une charge suspendue à un câble qui se balance) : T = 2π√(L/g), loi de
+  physique admise ici ; ce qui compte, c'est que L est sous une racine. Pour doubler la période, il faut
+  **quadrupler** la longueur L, car √(4L) = √4 × √L = 2√L.
+
+*Exemple : v(h) = √(2 × 9,81 × h) = √19,62 × √h ≈ 4,43√h (m/s, h en m), par la règle √(a × b) = √a × √b. Pour
+h = 2 m, v ≈ 4,43 × 1,414 ≈ **6,26 m/s**. La dérivée v′(h) = 4,43/(2√h) vaut 4,43/(2 × 1,414) ≈ **1,57** en
+h = 2, en m/s par mètre de hauteur : pour 1 cm = 0,01 m de liquide en plus, 1,57 × 0,01 ≈ 0,016 m/s, soit
+environ 1,6 cm/s de vitesse en plus.*
+
+### 3. La dérivée de uⁿ
+
+Dériver (3x − 1)⁴ en développant d'abord serait long et source d'erreurs. La règle directe :
+
+> **(uⁿ)′ = n × u′ × uⁿ⁻¹** (n = 1, 2, 3, 4…)
+
+*Pourquoi, sur n = 2 : (u²)′ = (u × u)′ = u′ × u + u × u′ = 2u′u (règle du produit, fiche 17.7). Pour n = 3 :
+(u³)′ = (u² × u)′ = (2u′u) × u + u² × u′ = 2u′u² + u′u² = **3u′u²** : le 3 est bien descendu, et l'exposant est
+passé à 2. On recommence de même pour n = 4, 5…*
+
+**Le geste, le même qu'en 17.7 (e^u) et 17.9 (cos(ωt + φ))** : on dérive « l'extérieur » (la puissance :
+l'exposant descend, il diminue de 1), puis on multiplie par la dérivée de « l'intérieur » u. Comme un
+démontage : on traite l'enveloppe (la puissance), puis la pièce qu'elle contient (u), sans oublier aucune des
+deux.
+
+**Exemples.**
+- f(x) = (3x − 1)⁴ : u = 3x − 1, u′ = 3, donc f′(x) = 4 × 3 × (3x − 1)³ = **12(3x − 1)³**.
+- g(x) = (x² + 1)³ : u = x² + 1, u′ = 2x, donc g′(x) = 3 × 2x × (x² + 1)² = **6x(x² + 1)²**.
+- Contrôle sur g en x = 1 : g′(1) = 6 × 1 × 2² = 24 ; en développant avec (A + B)³ = A³ + 3A²B + 3AB² + B³
+  (A = x², B = 1), g(x) = x⁶ + 3x⁴ + 3x² + 1 et
+  g′(x) = 6x⁵ + 12x³ + 6x, qui vaut aussi 24 en x = 1 ✓.
+
+**Pour les variations** (fiche 17.4), la forme factorisée est un cadeau : le signe de 6x(x² + 1)² est celui de
+6x, car (x² + 1)² > 0. g décroît pour x < 0 et croît pour x > 0 : minimum g(0) = 1.
+
+**Les limites de u(x)ⁿ** (utiles pour compléter un tableau de variations, fiche 17.1). Si u(x) tend vers +∞,
+u(x)ⁿ aussi. Si u(x) tend vers −∞, tout dépend de la parité de n : (−10)² = 100 mais (−10)³ = −1 000. Un nombre
+pair de signes moins se compensent deux à deux, un nombre impair en laisse un : u(x)ⁿ tend vers +∞ si n est
+pair, vers −∞ si n est impair. Exemple : (1 − x²)⁴ tend vers +∞ en +∞, car 1 − x² tend
+vers −∞ et 4 est pair ; (1 − x)³ tend vers −∞ en +∞.
+
+**En atelier.** La rigidité en flexion d'une tôle varie comme le **cube** de son épaisseur e : une règle posée
+à plat plie facilement, deux règles collées (épaisseur doublée) sont 2³ = 8 fois plus raides. Une tôle qui
+s'use a une épaisseur e(t) = 5 − 0,1t mm après t mois. R(t) = (5 − 0,1t)³ dit combien de fois elle est plus
+raide qu'une tôle de 1 mm : au départ, R(0) = 5³ = 125 fois. R′(t) = 3 × (−0,1) × (5 − 0,1t)² = −0,3(5 − 0,1t)²,
+et R′(0) = −0,3 × 25 = −7,5 par mois. **Au départ**, la tôle perd donc 7,5/125 = **6 % de sa rigidité par
+mois**, alors qu'elle ne perd que 0,1/5 = 2 % de son épaisseur.
+
+*Pourquoi 3 fois plus.* Divisons la perte par la rigidité, pour l'avoir en proportion :
+R′/R = 3 × (−0,1) × (5 − 0,1t)²/(5 − 0,1t)³. On simplifie (5 − 0,1t)² en haut et en bas :
+R′/R = 3 × [−0,1/(5 − 0,1t)]. Le crochet est la perte relative d'épaisseur e′/e. La rigidité perd donc, en
+proportion, 3 fois plus vite que l'épaisseur : le 3 est l'exposant qui « descend ».
+
+### 4. L'asymptote oblique : la nouveauté
+
+La fiche 17.1 a vu deux cas : une limite finie à l'infini donne une asymptote **horizontale** ; une limite
+infinie en un point donne une asymptote **verticale**. Troisième cas : f(x) tend vers l'infini quand x tend
+vers l'infini, mais **en suivant une droite qui monte** (ou descend).
+
+> **La droite y = ax + b est asymptote oblique à la courbe de f en +∞ si f(x) − (ax + b) tend vers 0 quand x
+> tend vers +∞** (même définition en −∞).
+
+**L'image.** Coupe f(x) en deux morceaux : f(x) = (2x − 1) + 3/(x + 2), c'est-à-dire **une droite, plus un petit
+supplément**. Ce supplément, c'est 3 divisé par un nombre qui grandit sans cesse, comme un coût fixe de 3 €
+réparti sur un lot de plus en plus gros : 1 € par pièce pour 3 pièces, 0,03 € pour 100 pièces (c'est
+la situation de l'atelier « Taille des lots de fabrication » associé à cette fiche : 200 € de lancement
+répartis sur q pièces, soit 200/q €). Il finit par ne plus compter, et il ne reste que la droite. Sur le
+dessin, l'écart vertical entre courbe et droite rétrécit comme l'approche d'une fraise en finition : il n'est
+jamais tout à fait nul, mais il ne se voit plus.
+
+[[FIG:asymptote_oblique]]
+
+**La méthode quand f s'écrit ax + b + r(x).** C'est le cas le plus fréquent : à l'examen, l'énoncé donne cette
+forme ou indique la méthode à suivre.
+1. Écrire **f(x) = ax + b + r(x)** (ou vérifier l'égalité proposée par l'énoncé).
+2. Montrer que **r(x) tend vers 0** : alors y = ax + b est asymptote oblique.
+3. **Position** : le signe de f(x) − (ax + b) = r(x) dit si la courbe est au-dessus (r > 0) ou en dessous
+   (r < 0) de la droite, car f(x) = droite + r(x) : ajouter un nombre positif à la hauteur de la droite place
+   plus haut qu'elle, ajouter un nombre négatif place plus bas.
+
+*Exemple de la figure : f(x) = 2x − 1 + 3/(x + 2) pour x > −2 (en x = −2, on diviserait par 0 : c'est
+l'asymptote verticale en pointillés verts, vue en 17.1). Ici r(x) = 3/(x + 2). Quand x tend vers +∞,
+x + 2 aussi, donc 3/(x + 2) tend vers 0 : **y = 2x − 1 est asymptote oblique**. L'écart vaut 1 en x = 1,
+0,33 en x = 7, 0,03 en x = 100. Et 3/(x + 2) > 0 pour x > −2 : la courbe est **au-dessus** de son asymptote.*
+
+**La méthode générale, quand f n'est donnée que par sa formule.** On trouve a, puis b, par deux limites :
+- **a = limite de f(x)/x** en +∞ (la pente de la droite que la courbe suit) ;
+- **b = limite de f(x) − ax** en +∞ (le décalage vertical).
+
+*Pourquoi : si f(x) ≈ ax + b pour x grand, on divise par x : (ax + b)/x = ax/x + b/x = a + b/x. Or b/x tend
+vers 0 (un nombre fixe divisé par un nombre qui grandit) : il reste a. Ensuite, f(x) − ax ≈ ax + b − ax = b.*
+
+*Même exemple, mais présenté comme une seule fraction. On met 2x − 1 + 3/(x + 2) au même dénominateur x + 2 :
+f(x) = [(2x − 1)(x + 2) + 3]/(x + 2). En développant, (2x − 1)(x + 2) = 2x² + 4x − x − 2 = 2x² + 3x − 2, et + 3
+donne 2x² + 3x + 1. Donc f(x) = (2x² + 3x + 1)/(x + 2). Faisons maintenant comme si l'énoncé ne donnait que
+cette forme :*
+- *diviser par x revient à multiplier le dénominateur par x : (x + 2) × x = x² + 2x, donc
+  f(x)/x = (2x² + 3x + 1)/(x² + 2x). En +∞, on garde le terme de plus haut degré en haut et en bas (fiche 17.1) :
+  2x²/x² = 2, donc **a = 2** ;*
+- *pour retrancher 2x, on l'écrit sur le même dénominateur : 2x = (2x² + 4x)/(x + 2). Donc
+  f(x) − 2x = (2x² + 3x + 1 − 2x² − 4x)/(x + 2) = (1 − x)/(x + 2), qui tend vers −x/x = −1 : **b = −1**.*
+- *On retrouve y = 2x − 1.*
+
+**Quand il n'y a pas d'asymptote oblique.** Pour qu'il y en ait une, il faut que les **deux** limites soient
+finies. Sinon, pas d'asymptote :
+- si f(x)/x tend vers l'infini, la courbe monte plus vite que toute droite. Par exemple x²/x = x tend vers
+  +∞ : pas d'asymptote pour x² (ni pour eˣ) ;
+- si a est fini mais que f(x) − ax tend vers l'infini. Exemple : f(x) = x + √x. On a f(x)/x = 1 + √x/x =
+  1 + 1/√x, qui tend vers 1, donc a = 1 ; mais f(x) − x = √x tend vers +∞ : la courbe s'éloigne sans fin de
+  y = x.
+- Si a = 0, la droite trouvée est horizontale : c'est l'asymptote horizontale de la fiche 17.1, un cas
+  particulier.
+
+### 5. Les erreurs classiques et à retenir
+
+**Erreurs classiques :**
+1. **Oublier le domaine de √** : √(x − 3) n'existe que pour x ≥ 3.
+2. **Écrire (√x)′ = 1/√x** ou oublier que la dérivée n'existe pas en 0 : c'est 1/(2√x), pour x > 0. Et
+   √(a + b) n'est pas √a + √b : la règle √(a × b) = √a × √b vaut pour un produit seulement.
+3. **Oublier u′ dans (uⁿ)′** : (3x − 1)⁴ ne se dérive pas en 4(3x − 1)³ ; il manque le facteur 3.
+4. **Oublier de baisser l'exposant** : (u³)′ = 3u′u², pas 3u′u³.
+5. **Confondre asymptote oblique et tangente** : l'asymptote est la droite que la courbe suit à l'infini, pas en
+   un point.
+6. **Prendre a = limite de f(x)** : c'est la limite de f(x)/x qui donne la pente ; celle de f(x) est infinie.
+7. **Conclure sans montrer que l'écart tend vers 0** : une droite n'est asymptote que si f(x) − (ax + b) → 0.
+
+**À retenir :**
+- **√x** : définie pour x ≥ 0, croissante, (√x)′ = 1/(2√x) pour x > 0, tangente verticale en 0 ; v = √(2gh),
+  T = 2π√(L/g).
+- **(uⁿ)′ = n u′ uⁿ⁻¹** : l'exposant descend et diminue de 1, on multiplie par u′.
+- **Asymptote oblique y = ax + b** : f(x) − (ax + b) → 0 à l'infini. Si f = ax + b + r(x) avec r → 0, c'est
+  gagné ; sinon a = lim f(x)/x, b = lim (f(x) − ax). Position : signe de f(x) − (ax + b).
+""",
+            "formules": """
+
+**Racine carrée** — √x ≥ 0 et (√x)² = x, pour x ≥ 0 · domaine [0 ; +∞[ · (√x)′ = 1/(2√x) pour x > 0 ·
+pas dérivable en 0 (tangente verticale) · v = √(2gh) · T = 2π√(L/g)
+
+**Dérivée d'une puissance** — (uⁿ)′ = n × u′ × uⁿ⁻¹ (n entier ≥ 1) · ((ax + b)ⁿ)′ = n a (ax + b)ⁿ⁻¹
+
+**Asymptote oblique** — y = ax + b asymptote en ±∞ ⟺ f(x) − (ax + b) → 0 · si f(x) = ax + b + r(x) avec
+r(x) → 0 : asymptote y = ax + b, position selon le signe de r(x) · sinon a = lim f(x)/x, b = lim (f(x) − ax)
+
+        """,
+            "exemple": """
+**Cas industriel — Vidanger une cuve de dégraissage**
+
+Une cuve de dégraissage se vide par une vanne en fond de cuve. Tant que la vanne est ouverte, le liquide sort
+à la vitesse de Torricelli v = √(2gh), où h est la hauteur de liquide au-dessus de la vanne (g = 9,81 m/s²).
+La cuve est remplie sur **h = 1,8 m**. La vanne a une section utile de **12 cm²**. Le technicien veut le débit au
+départ, comprendre pourquoi la vidange ralentit, et savoir de combien le débit baisse quand le niveau descend.
+
+**Étape 1 — La vitesse au départ.** v = √(2 × 9,81 × 1,8) = √35,316 ≈ **5,94 m/s**.
+
+**Étape 2 — Le débit au départ.** En une seconde, le liquide qui sort forme un « cylindre » dont la base est la
+section de la vanne et la longueur v : son volume, section × vitesse, est le débit. 1 cm = 10⁻² m, donc
+1 cm² = 10⁻⁴ m² et 12 cm² = 12 × 10⁻⁴ m². Débit = 12 × 10⁻⁴ m² × 5,94 m/s ≈ 7,13 × 10⁻³ m³/s, soit **7,1 L/s**
+(1 m³ = 1 000 L). C'est un débit **théorique** : en pratique, le jet se resserre juste après la vanne (on parle
+de contraction de la veine liquide) et le débit réel vaut environ 60 à 65 % de cette valeur ; le raisonnement sur la variation avec √h reste
+le même.
+
+**Étape 3 — À mi-hauteur.** Pour h = 0,9 m : v = √(2 × 9,81 × 0,9) ≈ 4,20 m/s. La hauteur est divisée par 2, la
+vitesse seulement par √2 ≈ 1,41 (5,94/4,20 = 1,41). Le débit tombe à 12 × 10⁻⁴ × 4,20 ≈ **5,0 L/s**.
+
+**Étape 4 — La sensibilité au niveau (la dérivée).** v(h) = √19,62 × √h ≈ 4,43√h, donc
+v′(h) = 4,43/(2√h). En h = 1,8 m : v′ ≈ 4,43/(2 × 1,342) ≈ **1,65** m/s par mètre ; en h = 0,2 m :
+v′ ≈ 4,43/(2 × 0,447) ≈ **4,95** m/s par mètre. Au départ, 1 cm de niveau en moins fait perdre environ
+1,7 cm/s de vitesse ; près du fond, il en fait perdre 5 cm/s, trois fois plus.
+
+**Ce que le calcul apprend.** Deux choses à ne pas mélanger.
+1. **La vitesse de sortie diminue à mesure que la cuve se vide** (5,94 m/s plein, 4,20 m/s à mi-hauteur) : le
+   liquide sort de moins en moins vite, donc la vidange ralentit.
+2. **Pour chaque centimètre de niveau perdu**, cette vitesse chute peu au début et beaucoup près du fond :
+   c'est la pente 1/(2√h), qui grandit quand h approche de 0.
+
+Résultat : les derniers centimètres sortent en un filet très lent, et ce sont eux qui prennent le plus de
+temps. On ne peut donc pas estimer la durée de vidange en divisant le volume par le débit de départ : on la
+sous-estimerait nettement.
+""",
+            "exercice": """
+**1.** Donne le domaine de f(x) = √(x − 3), puis calcule f(7) et f(12).
+
+**2.** Soit g(x) = 4√x. Calcule g′(x), puis g′(4). Pourquoi g′(0) n'existe-t-il pas ?
+
+**3.** Dérive f(x) = (2x + 5)³ et h(x) = (1 − x²)⁴.
+
+**4.** Étudie les variations de f(x) = (x² − 4)² sur ℝ : calcule f′(x) avec la règle de uⁿ, puis dresse son
+tableau de signes et de variations, et donne ses extremums.
+
+**5.** Soit f(x) = x + 2 + 4/(x − 1) pour x > 1. Montre que la droite y = x + 2 est asymptote oblique en +∞,
+puis donne la position de la courbe par rapport à elle. Calcule l'écart en x = 5 et en x = 41.
+
+**6.** Soit f(x) = (x² + x + 3)/x pour x > 0. Trouve l'asymptote oblique en +∞ par la méthode générale (a, puis
+b), puis vérifie en écrivant f(x) sous la forme ax + b + r(x).
+""",
+            "corrige": """
+**1.** √(x − 3) exige x − 3 ≥ 0 : domaine **[3 ; +∞[**. f(7) = √4 = **2** ; f(12) = √9 = **3**.
+
+**2.** g′(x) = 4 × 1/(2√x) = **2/√x** (pour x > 0). g′(4) = 2/2 = **1**. En x = 0, on diviserait par √0 = 0 :
+la dérivée n'existe pas, la courbe part verticalement.
+
+**3.** f′(x) = 3 × 2 × (2x + 5)² = **6(2x + 5)²**. h′(x) = 4 × (−2x) × (1 − x²)³ = **−8x(1 − x²)³**.
+
+**4.** u = x² − 4, u′ = 2x : f′(x) = 2 × 2x × (x² − 4) = **4x(x² − 4)**. Elle s'annule en x = −2, 0 et 2.
+Signe (4x, puis x² − 4) : sur ]−∞ ; −2[, − × + = − ; sur ]−2 ; 0[, − × − = + ; sur ]0 ; 2[, + × − = − ; sur
+]2 ; +∞[, + × + = +. f décroît, croît, décroît, croît : minimums **f(−2) = f(2) = 0**, maximum local
+**f(0) = 16**. Aux bouts : u = x² − 4 tend vers +∞ en −∞ comme en +∞, donc f = u² tend vers **+∞** des deux
+côtés. Tableau : +∞ ↘ 0 (x = −2) ↗ 16 (x = 0) ↘ 0 (x = 2) ↗ +∞.
+
+**5.** f(x) − (x + 2) = 4/(x − 1). Quand x tend vers +∞, x − 1 aussi, donc 4/(x − 1) tend vers 0 : **y = x + 2 est
+asymptote oblique**. Pour x > 1, 4/(x − 1) > 0 : la courbe est **au-dessus**. Écart en x = 5 : 4/4 = **1** ; en
+x = 41 : 4/40 = **0,1**.
+
+**6.** f(x)/x = (x² + x + 3)/x² tend vers x²/x² = 1 : **a = 1**. f(x) − x = (x² + x + 3 − x²)/x = (x + 3)/x, qui
+tend vers 1 : **b = 1**. Asymptote **y = x + 1**. Vérification : (x² + x + 3)/x = x + 1 + 3/x, et 3/x tend vers
+0 ✓ (courbe au-dessus pour x > 0).
 """,
         },
         {
@@ -57068,6 +57482,20 @@ _mth("17.4", "Trouver les extremums locaux d'une fonction polynomiale", [
    "de + à − en x=0 → maximum local f(0)=2 ; f' passe de − à + en x=2 → "
    "minimum local f(2)=−2.")
 
+_mth("17.10", "Dériver uⁿ et √x, trouver une asymptote oblique", [
+    "**Racine carrée** : domaine = là où le contenu est ≥ 0 ; (√x)′ = 1/(2√x) pour x > 0 seulement "
+    "(tangente verticale en 0).",
+    "**Puissance d'une expression** : repérer u et n, calculer u′, puis (uⁿ)′ = n × u′ × uⁿ⁻¹. Garder la "
+    "forme factorisée : son signe se lit facteur par facteur.",
+    "**Asymptote oblique, forme donnée** : écrire f(x) = ax + b + r(x), montrer que r(x) → 0 ; la droite "
+    "y = ax + b est asymptote.",
+    "**Asymptote oblique, formule seule** : a = limite de f(x)/x, puis b = limite de f(x) − ax (pour une "
+    "fraction en +∞ : ne garder que le terme de plus haut degré en haut et en bas, fiche 17.1). Il faut que les "
+    "deux limites soient finies.",
+    "**Position** : signe de f(x) − (ax + b) : positif, la courbe est au-dessus ; négatif, en dessous.",
+], "f(x) = 2x − 1 + 3/(x + 2), x > −2 : 3/(x + 2) → 0 en +∞, asymptote y = 2x − 1 ; 3/(x + 2) > 0, courbe "
+       "au-dessus. Et ((3x − 1)⁴)′ = 4 × 3 × (3x − 1)³ = 12(3x − 1)³.")
+
 _mth("17.5", "Calculer la valeur moyenne d'une fonction sur un intervalle", [
     "**Ne jamais utiliser (f(a) + f(b)) / 2** sauf si f est une droite — "
     "cette formule ignore tout ce qui se passe entre a et b.",
@@ -60195,6 +60623,138 @@ def gen_chasles_linearite():
     }
 
 
+def gen_derivee_puissance():
+    """Nombre dérivé d'une puissance d'une expression ((ax + b)ⁿ ou (x² + c)ⁿ) ou de k√x.
+    Erreurs visées : oublier u′, oublier de baisser l'exposant, oublier le 2 de 1/(2√x)."""
+    while True:
+        cas = random.choice(["affine", "carre", "racine"])
+        if cas == "affine":
+            n = random.choice([2, 3, 4])
+            a = random.choice([2, 3, -2])
+            b = random.choice([-3, -1, 1, 2, 5])
+            x0 = random.choice([-1, 0, 1, 2])
+            u0 = a * x0 + b
+            if u0 == 0 or abs(u0) > 5:
+                continue
+            f_txt = f"({_termes([(a, 'x'), (b, '')])})" + {2: "²", 3: "³", 4: "⁴"}[n]
+            rep = n * a * u0 ** (n - 1)
+            diags = [(n * u0 ** (n - 1), f"Il manque u′ : la dérivée de l'intérieur {_termes([(a, 'x'), (b, '')])} "
+                                         f"vaut {_fr_court(a)}, on multiplie par elle."),
+                     (n * a * u0 ** n, "L'exposant doit baisser de 1 : (uⁿ)′ = n u′ uⁿ⁻¹."),
+                     (a * u0 ** (n - 1), f"L'exposant {n} descend devant : (uⁿ)′ = n × u′ × uⁿ⁻¹.")]
+            e = {1: "", 2: "²", 3: "³"}[n - 1]
+            calc = (f"u = {_termes([(a, 'x'), (b, '')])}, u′ = {_fr_court(a)}, n = {n} : f′(x) = {n} × {_terme(a)} × "
+                    f"u{e}. En x = {_fr_court(x0)}, u = {_fr_court(u0)} : f′({_fr_court(x0)}) = {n} × {_terme(a)} "
+                    f"× {_terme(u0)}{e} = **{_fr_court(rep)}**.")
+        elif cas == "carre":
+            n = random.choice([2, 3])
+            c = random.choice([-4, -1, 1, 2, 3])
+            x0 = random.choice([-2, -1, 1, 2])
+            u0 = x0 * x0 + c
+            if u0 == 0 or abs(u0) > 7:
+                continue
+            f_txt = f"({_termes([(1, 'x²'), (c, '')])})" + {2: "²", 3: "³"}[n]
+            rep = n * 2 * x0 * u0 ** (n - 1)
+            diags = [(n * u0 ** (n - 1), "Il manque u′ : la dérivée de x² + c est 2x, on multiplie par elle."),
+                     (n * 2 * x0 * u0 ** n, "L'exposant doit baisser de 1 : (uⁿ)′ = n u′ uⁿ⁻¹."),
+                     (2 * x0 * u0 ** (n - 1), f"L'exposant {n} descend devant : (uⁿ)′ = n × u′ × uⁿ⁻¹.")]
+            e = {1: "", 2: "²"}[n - 1]
+            calc = (f"u = {_termes([(1, 'x²'), (c, '')])}, u′ = 2x, n = {n} : f′(x) = {n} × 2x × u{e}. En "
+                    f"x = {_fr_court(x0)}, u = {_fr_court(u0)} : f′({_fr_court(x0)}) = {n} × {_terme(2 * x0)} × "
+                    f"{_terme(u0)}{e} = **{_fr_court(rep)}**.")
+        else:
+            k = random.choice([2, 3, 5, 6, 10])
+            x0 = random.choice([1, 4, 9, 16, 25])
+            r0 = int(math.sqrt(x0))
+            f_txt = f"{k}√x"
+            rep = k / (2 * r0)
+            diags = [(k / r0, "(√x)′ = 1/(2√x) : il manque le 2 au dénominateur."),
+                     (k * 2 * r0, "C'est 1/(2√x), pas 2√x : la dérivée de √x est une fraction."),
+                     (k * r0 / 2, "La dérivée de √x est 1/(2√x), pas √x/2.")]
+            calc = (f"(√x)′ = 1/(2√x), donc f′(x) = {k}/(2√x). En x = {x0}, √{x0} = {r0} : "
+                    f"f′({x0}) = {k}/(2 × {r0}) = **{fr(rep, 2)}**.")
+        vals = [v for v, _ in diags]
+        if rep != 0 and all(abs(v - rep) > 0.05 for v in vals) and \
+                all(abs(vals[i] - vals[j]) > 0.05 for i in range(len(vals)) for j in range(i + 1, len(vals))):
+            break
+    return {
+        "titre": "Dérivée d'une puissance ou d'une racine",
+        "enonce": f"Soit f(x) = {f_txt}. Calcule f′({_fr_court(x0)}), à 0,01 près.",
+        "rep": rep, "tol": 0.01, "unite": "",
+        "diag": [_diag(v, m_) for v, m_ in diags],
+        "corr": [f"**Dériver.** {calc}"],
+        "indice": "(uⁿ)′ = n × u′ × uⁿ⁻¹ : l'exposant descend et baisse de 1, puis on multiplie par la dérivée de "
+                  "l'intérieur. (√x)′ = 1/(2√x).",
+    }
+
+
+def gen_asymptote_oblique():
+    """Asymptote oblique d'une fonction rationnelle (p x² + q x + r)/(x − c) : on demande b ; ou écart entre la
+    courbe et l'asymptote pour f(x) = ax + b + k/(x − c). Erreurs visées : oublier le terme p c, erreur de signe,
+    confondre l'écart avec f(x) ou avec la valeur de la droite."""
+    while True:
+        cas = random.choice(["b", "b", "ecart"])
+        c = random.choice([-3, -2, -1, 1, 2, 3])
+        if cas == "b":
+            p = random.choice([1, 2, 3])
+            q = random.choice([-4, -2, -1, 1, 2, 3, 5])
+            r = random.choice([-3, -1, 1, 2, 4])
+            b = q + p * c
+            if r + c * (q + p * c) == 0:
+                continue  # le numérateur est divisible par x − c : la « courbe » serait la droite elle-même
+            num = _termes([(p, "x²"), (q, "x"), (r, "")])
+            den = _termes([(1, "x"), (-c, "")])
+            enonce = (f"Soit f(x) = ({num})/({den}) pour x > {_fr_court(c)}. Sa courbe admet en +∞ une asymptote "
+                      f"oblique y = {_coef(p, 'x')} + b. Donne b (calcule la limite de f(x) − {_coef(p, 'x')}).")
+            rep = b
+            diags = [(q, f"Il manque le terme venu du dénominateur : f(x) − {_coef(p, 'x')} = "
+                         f"({_termes([(q + p * c, 'x'), (r, '')])})/({den}), qui tend vers {_fr_court(q + p * c)}."),
+                     (q - p * c, f"Signe : en retranchant {_coef(p, 'x')} × ({den}), le terme en x change de "
+                                 f"{_fr_court(q)}x à {_fr_court(q + p * c)}x ; il faut développer "
+                                 f"{_coef(p, 'x')}({den}) avec soin."),
+                     (r, "Le terme constant du numérateur ne donne pas b : on calcule la limite de f(x) − ax.")]
+            calc = (f"**a** = limite de f(x)/x = limite de ({num})/({_termes([(1, 'x²'), (-c, 'x')])}) = {_fr_court(p)} "
+                    f"(termes de plus haut degré). **b** : f(x) − {_coef(p, 'x')} = "
+                    f"({num} − {_coef(p, 'x')}({den}))/({den}) = ({_termes([(q + p * c, 'x'), (r, '')])})/({den}), "
+                    f"qui tend vers {_fr_court(q + p * c)} : b = **{_fr_court(rep)}**.")
+            decimales = 0
+        else:
+            a = random.choice([1, 2, 3, -1])
+            b0 = random.choice([-2, -1, 1, 3, 4])
+            k = random.choice([-6, -4, -2, 2, 3, 5, 8])
+            x0 = c + random.choice([2, 4, 5, 10])
+            f_txt = f"{_termes([(a, 'x'), (b0, '')])} + {_fr_court(k)}/({_termes([(1, 'x'), (-c, '')])})" if k > 0 \
+                else f"{_termes([(a, 'x'), (b0, '')])} − {_fr_court(-k)}/({_termes([(1, 'x'), (-c, '')])})"
+            enonce = (f"Soit f(x) = {f_txt} pour x > {_fr_court(c)}. Calcule l'écart f(x) − "
+                      f"({_termes([(a, 'x'), (b0, '')])}) entre la courbe et son asymptote oblique en x = "
+                      f"{_fr_court(x0)}, à 0,01 près (un écart négatif signifie que la courbe est en dessous).")
+            rep = k / (x0 - c)
+            droite = a * x0 + b0
+            diags = [(droite + rep, "C'est f(x) : l'écart est f(x) moins la valeur de la droite."),
+                     (droite, "C'est la valeur de la droite en ce point ; l'écart est f(x) − (ax + b)."),
+                     (-rep, "Signe : l'écart f(x) − (ax + b) vaut exactement le terme restant, avec son signe.")]
+            calc = (f"f(x) − ({_termes([(a, 'x'), (b0, '')])}) = {_fr_court(k)}/({_termes([(1, 'x'), (-c, '')])}). "
+                    f"En x = {_fr_court(x0)} : {_fr_court(k)}/{_fr_court(x0 - c)} = **{fr(rep, 2).replace('-', '−')}**"
+                    + (" : la courbe est au-dessus de l'asymptote." if rep > 0 else
+                       " : la courbe est en dessous de l'asymptote."))
+            decimales = None
+        vals = [v for v, _ in diags]
+        if rep != 0 and all(abs(v - rep) > 0.05 for v in vals) and \
+                all(abs(vals[i] - vals[j]) > 0.05 for i in range(len(vals)) for j in range(i + 1, len(vals))):
+            break
+    ex = {
+        "titre": "Asymptote oblique",
+        "enonce": enonce,
+        "rep": rep, "tol": 0.01, "unite": "",
+        "diag": [_diag(v, m_) for v, m_ in diags],
+        "corr": [calc],
+        "indice": "a = limite de f(x)/x, puis b = limite de f(x) − ax ; l'écart à l'asymptote est f(x) − (ax + b).",
+    }
+    if decimales is not None:
+        ex["decimales"] = decimales
+    return ex
+
+
 def decimales_affichage(tol):
     """Nombre de décimales pour afficher la réponse d'un générateur : assez pour que la valeur
     AFFICHÉE soit acceptée par la tolérance (10⁻ᵈ ≤ tol, donc erreur d'arrondi ≤ tol/2), et au
@@ -60296,7 +60856,8 @@ def fabriquer_exo(famille=None):
                                   gen_calcul_complexe, gen_racines_complexes,
                                   gen_constantes_ci, gen_solution_particuliere,
                                   gen_periode_frequence, gen_primitive_trig,
-                                  gen_aire_entre_courbes, gen_chasles_linearite],
+                                  gen_aire_entre_courbes, gen_chasles_linearite,
+                                  gen_derivee_puissance, gen_asymptote_oblique],
     }
     if famille and famille in catalogue:
         pool = catalogue[famille]
@@ -64766,6 +65327,105 @@ ATELIERS = [
         "a_retenir": "À retenir : l'aire entre deux courbes est ∫ de a à b de (haut − bas) dx ; les bornes sont "
                      "les points où les courbes se coupent ; on teste une valeur pour trouver la courbe du haut ; "
                      "une aire négative signale une soustraction à l'envers.",
+    },
+    {
+        "id": "at154",
+        "chapitre": "Bloc 17",
+        "titre": "Taille des lots de fabrication : asymptote oblique et lot optimal",
+        "theme": "Fonctions d'une variable réelle",
+        "fiche": "17.10",
+        "vocabulaire": [
+            ("asymptote oblique", "une droite y = ax + b que la courbe suit à l'infini : l'écart f(q) − (aq + b) "
+             "tend vers 0."),
+            ("coût de lancement", "le coût fixe de chaque série (réglage de la machine, premières pièces) : "
+             "réparti sur les q pièces du lot, il pèse 200/q euros par pièce."),
+            ("coût de stockage", "plus le lot est gros, plus les pièces attendent en stock : ce coût par pièce "
+             "grandit avec q."),
+        ],
+        "enonce": "Un atelier fabrique une pièce par lots de q pièces. Le coût de revient d'une pièce, en euros, "
+                  "vaut C(q) = 0,5q + 10 + 200/q (q > 0) : 10 € de matière et d'usinage, 0,5q € de stockage (un "
+                  "gros lot attend longtemps en stock), et 200 € de lancement de série répartis sur les q pièces. "
+                  "On veut comprendre l'allure de C et choisir la taille de lot la moins chère.",
+        "etapes": [
+            {"type": "numerique", "label": "Coût d'une pièce pour des lots de 10 pièces (en €)", "unite": "€",
+             "attendu": 35, "tol": 0.01,
+             "consigne": "Calcule C(10) = 0,5 × 10 + 10 + 200/10.",
+             "indice": "5 + 10 + 20.",
+             "pieges": [(15, "Il manque le lancement : 200/10 = 20 € par pièce."),
+                        (2015, "Le lancement est réparti sur le lot : 200/10, pas 200 × 10.")]},
+            {"type": "numerique", "label": "Pente a de l'asymptote oblique", "unite": "",
+             "attendu": 0.5, "tol": 0.01,
+             "consigne": "C(q) = 0,5q + 10 + 200/q. Quand q tend vers +∞, 200/q tend vers 0 : la courbe suit une "
+                         "droite y = aq + b. Donne a.",
+             "indice": "La droite est ce qui reste quand on enlève le terme qui tend vers 0.",
+             "pieges": [(10, "10 est l'ordonnée à l'origine b ; la pente est le coefficient de q."),
+                        (200, "200/q tend vers 0 : ce terme disparaît à l'infini, il ne donne pas la pente.")]},
+            {"type": "numerique", "label": "Ordonnée à l'origine b de l'asymptote oblique (en €)", "unite": "€",
+             "attendu": 10, "tol": 0.01,
+             "consigne": "Asymptote y = 0,5q + b : donne b.",
+             "indice": "C(q) − 0,5q = 10 + 200/q, qui tend vers…",
+             "pieges": [(0.5, "0,5 est la pente a ; b est le terme constant."),
+                        (210, "200/q tend vers 0 quand q tend vers +∞ : il ne s'ajoute pas à b.")]},
+            {"type": "numerique", "label": "Écart entre la courbe et l'asymptote pour des lots de 100 pièces (en €)",
+             "unite": "€", "attendu": 2, "tol": 0.01,
+             "consigne": "Écart = C(100) − (0,5 × 100 + 10).",
+             "indice": "L'écart est le terme qui tend vers 0 : 200/q.",
+             "pieges": [(62, "62 € est C(100) lui-même ; l'écart est C(100) moins la valeur de la droite."),
+                        (60, "60 € est la valeur de la droite ; l'écart est C(100) − 60."),
+                        (-2, "Signe : C(100) − 60 = 62 − 60 = +2 ; la courbe est au-dessus.")]},
+            {"type": "qcm", "label": "Position de la courbe",
+             "question": "Pour q > 0, où est la courbe de C par rapport à son asymptote oblique ?",
+             "options": ["En dessous, car le coût de stockage augmente",
+                         "Elle la coupe en q = 20, le lot optimal",
+                         "Au-dessus, car l'écart 200/q est positif"],
+             "bonne": 2,
+             "diagnostics": {0: "La position se lit sur le signe de l'écart C(q) − (0,5q + 10) = 200/q, positif "
+                                "pour q > 0 : la courbe est au-dessus.",
+                             1: "Elles ne se coupent jamais : l'écart 200/q ne s'annule pas. En q = 20, c'est le "
+                                "minimum de C, pas un point commun."}},
+            {"type": "numerique", "label": "Taille de lot optimale q* (en pièces)", "unite": "pièces",
+             "attendu": 20, "tol": 0.01,
+             "consigne": "C′(q) = 0,5 − 200/q². Résous C′(q) = 0 pour q > 0.",
+             "indice": "0,5 = 200/q², donc q² = 400.",
+             "pieges": [(400, "400 est q² : il reste à prendre la racine carrée."),
+                        (math.sqrt(200), "q² = 200/0,5 = 400, pas 200 : on divise par 0,5."),
+                        (10, "q² = 200/0,5 = 400 : on divise par 0,5, on ne multiplie pas (200 × 0,5 = 100 "
+                             "donnerait q = 10).")]},
+            {"type": "numerique", "label": "Coût d'une pièce au lot optimal (en €)", "unite": "€",
+             "attendu": 30, "tol": 0.01,
+             "depend_de": {"etape": 6, "formule": lambda v: 0.5 * v + 10 + 200 / v},
+             "consigne": "Calcule C(q*).",
+             "indice": "0,5 × 20 + 10 + 200/20.",
+             "pieges": [(20, "Il manque les 10 € de matière et d'usinage."),
+                        (20.5, "0,5 × 20 = 10, et non 0,5 : on multiplie par q.")]},
+            {"type": "qcm", "label": "Lire l'asymptote",
+             "question": "Que dit l'asymptote oblique sur les très gros lots ?",
+             "options": ["Le coût par pièce tend vers 10 €, le prix de la matière",
+                         "Le coût par pièce suit presque la droite 0,5q + 10 : le stockage domine, le lancement "
+                         "ne compte plus",
+                         "Le coût par pièce tend vers 0, car 200/q tend vers 0"],
+             "bonne": 1,
+             "diagnostics": {0: "Le terme 0,5q grandit sans limite : le coût tend vers +∞, en suivant la droite "
+                                "0,5q + 10. Seul le lancement 200/q disparaît.",
+                             2: "Seul le lancement 200/q tend vers 0 ; le stockage 0,5q, lui, grandit : le coût "
+                                "suit la droite 0,5q + 10."}},
+        ],
+        "corrige": {
+            "enonce": "C(q) = 0,5q + 10 + 200/q (€ par pièce), q > 0.",
+            "regle": "**f(q) = aq + b + r(q) avec r(q) → 0 : asymptote oblique y = aq + b, position selon le "
+                     "signe de r(q) ; minimum là où la dérivée s'annule.**",
+            "conversions": "Aucune : q en pièces, C en € par pièce.",
+            "remplacement": "C(10) = 5 + 10 + 20 ; r(q) = 200/q ; C(100) − 60 ; 0,5 − 200/q² = 0 ; C(20)",
+            "calcul": "C(10) = **35 €**\n\nAsymptote oblique **y = 0,5q + 10** (a = 0,5, b = 10), car 200/q → 0 ; "
+                      "écart en q = 100 : 200/100 = **2 €**, courbe au-dessus\n\n"
+                      "C′(q) = 0,5 − 200/q² = 0 donne q² = 400, **q* = 20 pièces**, C(20) = 10 + 10 + 10 = **30 €**",
+            "verification": "**Contrôle de cohérence** : au lot optimal, stockage (0,5 × 20 = 10 €) et lancement "
+                            "(200/20 = 10 €) sont égaux, un résultat classique de la gestion des lots ; "
+                            "C(10) = 35 € et C(100) = 62 € sont bien plus chers que 30 € ✓.",
+        },
+        "a_retenir": "À retenir : si f(x) = ax + b + r(x) avec r(x) → 0, la droite y = ax + b est asymptote oblique ; "
+                     "le signe de r(x) donne la position ; l'écart f(x) − (ax + b) mesure ce qui disparaît à "
+                     "l'infini (ici, le coût de lancement réparti sur le lot).",
     },
     {
         "id": "at29",
@@ -72683,10 +73343,10 @@ MATIERES_PROGRAMME = [
          "traités, et méthode d'Euler), nombres complexes (forme algébrique, racines d'une "
          "équation du second degré quand Δ < 0), équations différentielles du second ordre (fiche "
          "18.19), courbes, dérivées et primitives de sin et cos (fiche 17.9), propriétés de l'intégrale "
-         "et aire entre deux courbes (fiche 17.12, méthodes approchées en « pour aller plus loin »). "
-         "Non traités : asymptote oblique ; nombre de solutions de f(x) = k et valeur approchée "
-         "d'une racine (algorithme) ; dérivée de uⁿ ; fonction racine carrée.",
-         [(7, ["7.2"]), (17, ["17.1", "17.7", "17.9", "17.2", "17.12", "17.4", "17.5"]),
+         "et aire entre deux courbes (fiche 17.12, méthodes approchées en « pour aller plus loin »), "
+         "fonction racine carrée, dérivée de uⁿ et asymptote oblique (fiche 17.10). Non traités : "
+         "nombre de solutions de f(x) = k et valeur approchée d'une racine (algorithme).",
+         [(7, ["7.2"]), (17, ["17.1", "17.7", "17.9", "17.2", "17.12", "17.4", "17.10", "17.5"]),
           (18, ["18.4", "18.8", "18.12", "18.18", "18.19"])]),
         ("Hors épreuve : calcul matriciel, Bézier, droites et plans", "Complet",
          "Programme complémentaire non évalué (matrices, courbes de Bézier) et "
@@ -73084,9 +73744,9 @@ elif PAGE == PAGE_MATHS:
         'inférentielle, configurations géométriques, calcul vectoriel. S\'y ajoutent, '
         '<b>hors épreuve</b>, le programme complémentaire non évalué (calcul matriciel, courbes '
         'de Bézier : fiches 19.1 à 19.4) et une fiche d\'approfondissement (19.6, droites et '
-        'plans dans l\'espace), toutes marquées « hors épreuve ». Attention : quelques notions évaluées sur les '
-        'fonctions ne sont pas encore traitées ici (asymptote oblique, fonction racine carrée, '
-        'dérivée de uⁿ, nombre de solutions de f(x) = k…) — voir le tableau de bord. Ce sont les mêmes '
+        'plans dans l\'espace), toutes marquées « hors épreuve ». Attention : une notion évaluée sur les '
+        'fonctions n\'est pas encore traitée ici (nombre de solutions de f(x) = k et valeur '
+        'approchée d\'une racine) — voir le tableau de bord. Ce sont les mêmes '
         'fiches que dans '
         '« Cours », réunies ici pour ne pas les chercher au milieu des chapitres '
         'techniques.</div>',

@@ -30,7 +30,7 @@ complexes (forme algébrique, Δ < 0) — 13. ✅ 18.19 équations différentiel
 Plan complémentaire « Analyse » (validé le 2026-09-28, pour les notions du référentiel que le plan des 13 ne
 couvrait pas ; ordre d'écriture) : 1. ✅ 17.9 trigonométrie (courbes, dérivées et primitives de sin et cos) —
 2. ✅ 17.12 calcul intégral (Chasles, linéarité, positivité, aire entre deux courbes ; méthodes approchées en
-« pour aller plus loin ») — 3. 17.10 étude de fonction (racine carrée, dérivée de uⁿ, asymptote oblique) —
+« pour aller plus loin ») — 3. ✅ 17.10 étude de fonction (racine carrée, dérivée de uⁿ, asymptote oblique) —
 4. 17.11 équation f(x) = k (nombre de solutions, dichotomie). Quand les quatre seront faites : ligne « Analyse »
 du tableau de bord à « Complet », avertissement de la page Maths retiré.
 
@@ -170,6 +170,24 @@ du tableau de bord à « Complet », avertissement de la page Maths retiré.
   at145 et générateurs non cliqués dans l'interface (la fiche s'ouvre sans erreur dans un
   AppTest ; outil d'audit : 0 défaut).
 - ✅ Interface vérifiée dans un vrai navigateur le 2026-09-27 : atelier at145 (pièges, bonnes valeurs, QCM, corrigé), gen_ic_proportion, gen_taille_proportion, figures proportion_en_cloche, ic_proportion_simulation regardées dans l'app (voir « Dette d'interface 17.7 à 18.13 »).
+
+### 17.10 — Étude de fonction : racine carrée, dérivée de uⁿ, asymptote oblique (faite le 2026-09-29)
+
+- Référentiel (annexe I, Fonctions) : fonction racine carrée (fonction de référence) ; dérivée de x ↦ uⁿ(x)
+  (n entier naturel non nul) et limites de uⁿ ; « limite infinie à l'infini, cas d'une asymptote oblique »
+  (le commentaire exige des indications de méthode : la fiche part de f = ax + b + r(x), puis donne la méthode
+  générale a = lim f(x)/x, b = lim (f(x) − ax)). La dérivée de √u n'est pas au programme : non traitée.
+- Placée après la 17.4, qu'elle complète avec la 17.1 sans les reprendre. Figures `racine_carree_courbe`
+  (symétrique de x², tangente de pente 1/4 en 4, tangente verticale en 0) et `asymptote_oblique` (écarts
+  chiffrés) ; cas industriel : vidange d'une cuve (Torricelli, débit théorique) ; atelier at154 : coût par
+  pièce selon la taille de lot, C(q) = 0,5q + 10 + 200/q (asymptote oblique, lot optimal q = √400 = 20) ;
+  générateurs `gen_derivee_puissance` ((ax + b)ⁿ, (x² + c)ⁿ, k√x) et `gen_asymptote_oblique` (b d'une fonction
+  rationnelle, écart à l'asymptote) ; 9 questions (bonne réponse en positions 2, 0, 1, 3, 1, 0, 2, 3, 1).
+- Deux tours de relecture. 1ᵉʳ tour : 6 bloquants, dont deux pièges de at154 dont la valeur ou le message ne
+  correspondait pas à l'erreur visée (2 010 au lieu de 2 015 pour 200 × 10), la règle √(ab) = √a √b utilisée
+  sans être énoncée, et la conclusion du cas industriel qui se lisait comme une contradiction (vitesse qui
+  baisse dans le temps contre perte par centimètre de niveau). Générateur : 2,7 % de tirages dégénérés (la
+  « courbe » était la droite elle-même), exclus.
 
 ### 17.12 — Calcul intégral : propriétés de l'intégrale et aire entre deux courbes (faite le 2026-09-29)
 
