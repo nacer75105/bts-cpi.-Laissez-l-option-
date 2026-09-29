@@ -186,6 +186,12 @@ Fonctions, Calcul intégral et Équations différentielles ne reste sans fiche (
   l'application en ligne (Render, serveur gratuit, plus lent) avant d'en faire d'autres** : une figure qui
   rame au curseur serait pire que pas de figure. Candidates si le pilote convient : droite y = k (17.11),
   bornes de l'aire (17.12), écart à l'asymptote (17.10), loi normale μ/σ (18.10), amortissement (18.19).
+- Réactivité jugée en ligne (Render gratuit) : environ 1 s par cran. Décision de l'auteur : garder la
+  sinusoïde, n'ajouter que des figures « par crans » où l'on s'arrête pour lire (pas de balayage continu).
+  Deuxième figure : `droite_k_curseur` (17.11), la droite y = k déplacée par crans de 0,5 de −4 à 5 sur
+  x³ − 3x² + 2, nombre de solutions et décompte par intervalle + extremums (0,68 s par cran en local, page
+  plus lourde que la 17.9). Écartée pour l'instant : l'amortissement de la 18.19 (son intérêt est le
+  balayage continu), gardé en figures statiques. À voir : aire (17.12), loi normale (18.10).
 - Trouvé en testant le pilote, corrigé à part (commit fix) : sur la page Cours, les listes Bloc et Fiche
   n'avaient pas de clé ; après un saut « Aller directement à une fiche », la moindre interaction sur la
   fiche (curseur, bouton « Enregistrer la note ») ramenait à la première fiche du premier bloc.

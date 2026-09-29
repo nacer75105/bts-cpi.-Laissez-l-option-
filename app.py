@@ -7908,6 +7908,76 @@ def dyn_sinusoide(A=2.0, w=1.0, phi=0.0):
     return _svg("".join(p_), 760, ycad + 66)
 
 
+def dyn_droite_k(k=0.0):
+    """Nombre de solutions de x³ − 3x² + 2 = k : la droite y = k se déplace, on compte les croisements.
+    Comptage du cours (17.11) : une solution sur chaque intervalle ouvert où k est STRICTEMENT entre les valeurs
+    aux bouts, plus une par extremum où f vaut exactement k."""
+    f = lambda x: x ** 3 - 3 * x * x + 2  # noqa: E731
+    x0, y0, kx, ky = 250, 210, 95, 20
+    X = lambda x: x0 + kx * x  # noqa: E731
+    Y = lambda v: y0 - ky * v  # noqa: E731
+
+    def racine(a, b):
+        for _ in range(60):
+            m = (a + b) / 2
+            if (f(a) - k) * (f(m) - k) <= 0:
+                b = m
+            else:
+                a = m
+        return (a + b) / 2
+
+    # intervalles ouverts du tableau : ]−∞ ; 0[ (de −∞ à 2), ]0 ; 2[ (de 2 à −2), ]2 ; +∞[ (de −2 à +∞)
+    morceaux = [("]−∞ ; 0[", k < 2, lambda: racine(-10, 0)),
+                ("]0 ; 2[", -2 < k < 2, lambda: racine(0, 2)),
+                ("]2 ; +∞[", k > -2, lambda: racine(2, 10))]
+    sols = [r() for _, dedans, r in morceaux if dedans]
+    detail = [f"{nom} → {1 if dedans else 0}" for nom, dedans, _ in morceaux]
+    touches = []
+    if abs(k - 2) < 1e-9:
+        sols.append(0.0)
+        touches.append("sommet x = 0 : +1")
+    if abs(k + 2) < 1e-9:
+        sols.append(2.0)
+        touches.append("creux x = 2 : +1")
+    sols.sort()
+    n = len(sols)
+    liste = " ; ".join(_fr_court(xs, 2) for xs in sols)
+    p_ = [_txt(40, 24, f"y = {_fr_court(k, 1)} : {n} solution{'s' if n > 1 else ''} de x³ − 3x² + 2 = {_fr_court(k, 1)}"
+                       f"  (x ≈ {liste})", 14, ALERTE, "start", True),
+          _txt(40, 44, "Tableau : −∞ ↗ 2 (en x = 0) ↘ −2 (en x = 2) ↗ +∞. Déplace la droite et compte les points "
+                       "rouges.", 12, TRAIT)]
+    p_.append(f"<line x1='{X(-1.45)}' y1='{Y(0)}' x2='{X(3.5)}' y2='{Y(0)}' stroke='{FIN}' stroke-width='1.2'/>")
+    p_.append(f"<line x1='{X(0)}' y1='{Y(-5.4)}' x2='{X(0)}' y2='{Y(6.6)}' stroke='{FIN}' stroke-width='1.2'/>")
+    for v in (-1, 1, 2, 3):
+        p_.append(f"<line x1='{X(v)}' y1='{Y(0) - 3}' x2='{X(v)}' y2='{Y(0) + 3}' stroke='{FIN}'/>")
+        p_.append(_txt(X(v) + 4, Y(0) + 14, str(v).replace("-", "−"), 10, FIN, "start"))
+    for v in (-4, -2, 2, 4, 6):
+        p_.append(_txt(X(0) - 6, Y(v) + 4, str(v).replace("-", "−"), 10, FIN, "end"))
+    n_pts = 300
+    pts = " ".join(f"{X(-1.32 + 4.74 * i / n_pts):.1f},{Y(f(-1.32 + 4.74 * i / n_pts)):.1f}" for i in range(n_pts + 1))
+    p_.append(f"<polyline points='{pts}' fill='none' stroke='{ALESAGE}' stroke-width='2.4'/>")
+    p_.append(_txt(X(3.1), Y(6.3), "y = x³ − 3x² + 2", 12, ALESAGE, "end", True))
+    # extremums
+    for xe, ye, lib, dy in ((0, 2, "maximum local 2", -10), (2, -2, "minimum local −2", 18)):
+        p_.append(f"<circle cx='{X(xe)}' cy='{Y(ye)}' r='3.5' fill='{ALESAGE}'/>")
+        p_.append(_txt(X(xe) + (8 if xe == 0 else 0), Y(ye) + dy, lib, 11, ALESAGE, "start" if xe == 0 else "middle"))
+    # la droite y = k et les solutions
+    p_.append(f"<line x1='{X(-1.45)}' y1='{Y(k):.1f}' x2='{X(3.5)}' y2='{Y(k):.1f}' stroke='{ALERTE}' "
+              f"stroke-width='1.8' stroke-dasharray='7 4'/>")
+    p_.append(_txt(X(3.5) + 6, Y(k) + 4, f"y = {_fr_court(k, 1)}", 12, ALERTE, "start", True))
+    for xs in sols:
+        p_.append(f"<circle cx='{X(xs):.1f}' cy='{Y(k):.1f}' r='5.5' fill='{ALERTE}'/>")
+    ycad = Y(-5.4) + 16
+    p_.append(f"<rect x='40' y='{ycad}' width='680' height='52' rx='6' fill='{FOND}' stroke='{FIN}' "
+              f"stroke-width='1'/>")
+    p_.append(_txt(56, ycad + 22, "Par intervalle (k strictement entre les valeurs aux bouts) : "
+                   + "  |  ".join(detail), 12, TRAIT, "start", True))
+    p_.append(_txt(56, ycad + 42, ("Plus " + " ; ".join(touches) + " (la droite touche la courbe sans la traverser). "
+                                   if touches else "Aucun extremum ne vaut exactement k. ")
+                   + f"Total : {n} solution{'s' if n > 1 else ''}.", 12, TRAIT, "start"))
+    return _svg("".join(p_), 760, ycad + 66)
+
+
 # Figures à curseurs, insérées dans un texte de fiche par le repère [[DYN:cle]].
 # cle -> (titre, fonction, paramètres). Chaque paramètre est un curseur : plage (min, max, défaut, pas)
 # ou liste de choix (étiquette, valeur). La fonction s'appelle aussi SANS argument (valeurs par défaut) :
@@ -7922,6 +7992,10 @@ DYNAMIQUES = {
           "choix": [(_e, _k * math.pi / 4) for _k, _e in ((-4, "−π"), (-3, "−3π/4"), (-2, "−π/2"), (-1, "−π/4"),
                                                           (0, "0"), (1, "π/4"), (2, "π/2"), (3, "3π/4"), (4, "π"))],
           "defaut": "0"}]),
+    "droite_k_curseur": (
+        "Déplace la droite y = k par crans : à chaque hauteur, compte les points rouges",
+        dyn_droite_k,
+        [{"nom": "k", "label": "Hauteur k de la droite y = k", "min": -4.0, "max": 5.0, "defaut": 0.0, "pas": 0.5}]),
 }
 
 
@@ -48984,6 +49058,12 @@ vient l'effleurer au sommet puis redescend, comme la pointe d'un comparateur qui
 haut d'une came.*
 
 [[FIG:nombre_solutions]]
+
+**À toi de jouer.** Déplace la droite y = k par crans de 0,5 avec le curseur. À chaque hauteur, compte d'abord
+sur le tableau (−∞ ↗ 2 ↘ −2 ↗ +∞) combien de solutions tu attends, puis vérifie sur la figure. Arrête-toi en
+particulier sur k = 2 et k = −2 : la droite touche la courbe à un extremum, qui compte une seule fois.
+
+[[DYN:droite_k_curseur]]
 
 Le tableau donne aussi **l'intervalle** de chaque solution : c'est le point de départ de l'étape suivante.
 
