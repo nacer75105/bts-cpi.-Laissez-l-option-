@@ -6937,6 +6937,85 @@ def asymptote_oblique():
     return _svg("".join(p_), 760, ycad + 66)
 
 
+def nombre_solutions():
+    x0, y0, kx, ky = 250, 200, 95, 20
+    X = lambda x: x0 + kx * x  # noqa: E731
+    Y = lambda v: y0 - ky * v  # noqa: E731
+    f = lambda x: x ** 3 - 3 * x * x + 2  # noqa: E731
+    p_ = [_txt(40, 24, "Nombre de solutions de f(x) = k : combien de fois la courbe croise la droite horizontale y = k.",
+               12, TRAIT, "start", True),
+          _txt(40, 40, "f(x) = x³ − 3x² + 2 (fiche 17.4) : elle monte jusqu'à 2 (en x = 0), descend jusqu'à −2 (en x = 2), "
+               "puis remonte.", 11, FIN)]
+    p_.append(f"<line x1='{X(-1.45)}' y1='{Y(0)}' x2='{X(3.5)}' y2='{Y(0)}' stroke='{FIN}' stroke-width='1.2'/>")
+    p_.append(f"<line x1='{X(0)}' y1='{Y(-5.6)}' x2='{X(0)}' y2='{Y(7)}' stroke='{FIN}' stroke-width='1.2'/>")
+    p_.append(_txt(X(2), Y(-2) + 13, "minimum local −2 (x = 2)", 11, ALESAGE, "middle", True))
+    p_.append(_txt(X(0) + 8, Y(2) - 10, "maximum local 2 (x = 0)", 11, ALESAGE, "start", True))
+    for v in (-1, 1, 2, 3):
+        p_.append(f"<line x1='{X(v)}' y1='{Y(0) - 3}' x2='{X(v)}' y2='{Y(0) + 3}' stroke='{FIN}'/>")
+        p_.append(_txt(X(v) + 4, Y(0) + 14, str(v).replace("-", "−"), 10, FIN, "start"))
+    p_.append(_courbe(X, Y, f, -1.32, 3.42, ALESAGE, 2.4, 300))
+    p_.append(_txt(X(3.1), Y(6.6), "y = f(x)", 12, ALESAGE, "end", True))
+    droites = ((5, [3.2790], "y = 5 : 1 solution", OK),
+               (2, [0.0, 3.0], "y = 2 : 2 solutions", ARBRE),
+               (0, [-0.7321, 1.0, 2.7321], "y = 0 : 3 solutions", ALERTE),
+               (-3, [-1.1038], "y = −3 : 1 solution", TRAIT))
+    for k, sols, lib, coul in droites:
+        p_.append(f"<line x1='{X(-1.45)}' y1='{Y(k)}' x2='{X(3.5)}' y2='{Y(k)}' stroke='{coul}' stroke-width='1.2' "
+                  f"stroke-dasharray='6 4'/>")
+        for s_ in sols:
+            p_.append(f"<circle cx='{X(s_):.1f}' cy='{Y(k)}' r='4.5' fill='{coul}'/>")
+        p_.append(_txt(X(3.5) + 8, Y(k) + 4, lib, 11, coul, "start", True))
+    ycad = Y(-5.6) + 16
+    p_.append(f"<rect x='40' y='{ycad}' width='680' height='72' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p_.append(_txt(56, ycad + 22, "Sur chaque intervalle ouvert où f est strictement monotone : une solution si k est "
+                   "strictement entre les valeurs aux bouts.", 12, TRAIT, "start", True))
+    p_.append(_txt(56, ycad + 42, "Puis + 1 par extremum où f vaut exactement k. Pour y = 2 : le sommet x = 0, plus "
+                   "x = 3, soit 2 solutions.", 12, TRAIT, "start"))
+    p_.append(_txt(56, ycad + 62, "On lit tout cela sur le tableau de variations, sans calculer les solutions.", 12,
+                   TRAIT, "start"))
+    return _svg("".join(p_), 760, ycad + 86)
+
+
+def dichotomie_etapes():
+    x0, y0, kx, ky = 110, 150, 270, 28
+    X = lambda x: x0 + kx * (x - 2)  # noqa: E731
+    Y = lambda v: y0 - ky * v  # noqa: E731
+    f = lambda x: x ** 3 - 3 * x * x + 2  # noqa: E731
+    p_ = [_txt(40, 24, "La dichotomie : on coupe l'intervalle en deux et on garde la moitié où f change de signe.", 12,
+               TRAIT, "start", True),
+          _txt(40, 40, "Solution de x³ − 3x² + 2 = 0 entre 2 et 3 : f(2) = −2 &lt; 0 et f(3) = 2 &gt; 0.", 11, FIN)]
+    p_.append(f"<line x1='{X(2)}' y1='{Y(0)}' x2='{X(3) + 12}' y2='{Y(0)}' stroke='{FIN}' stroke-width='1.2'/>")
+    for v in (2, 2.25, 2.5, 2.75, 3):
+        p_.append(f"<line x1='{X(v)}' y1='{Y(0) - 3}' x2='{X(v)}' y2='{Y(0) + 3}' stroke='{FIN}'/>")
+        if v in (2, 2.5):
+            p_.append(_txt(X(v), Y(0) + 14, fr(v, 1).replace(",0", ""), 10, FIN, "middle"))
+    p_.append(_courbe(X, Y, f, 2, 3, ALESAGE, 2.4, 200))
+    p_.append(_txt(X(3) + 6, Y(2) + 4, "y = f(x)", 12, ALESAGE, "start", True))
+    p_.append(_txt(X(2) - 6, Y(-2) + 4, "f(2) = −2", 11, ALESAGE, "end", True))
+    p_.append(f"<circle cx='{X(2.7321):.1f}' cy='{Y(0)}' r='5' fill='{ALERTE}'/>")
+    p_.append(_txt(X(2.7321) - 8, Y(0) - 10, "solution α ≈ 2,732", 11, ALERTE, "end", True))
+    etapes = ((2, 3, "départ : [2 ; 3], largeur 1"),
+              (2.5, 3, "étape 1 : m = 2,5, f(m) ≈ −1,13 &lt; 0 → [2,5 ; 3]"),
+              (2.5, 2.75, "étape 2 : m = 2,75, f(m) ≈ 0,11 &gt; 0 → [2,5 ; 2,75]"),
+              (2.625, 2.75, "étape 3 : m = 2,625, f(m) ≈ −0,58 &lt; 0 → [2,625 ; 2,75]"),
+              (2.6875, 2.75, "étape 4 : m = 2,6875, f(m) ≈ −0,26 &lt; 0 → [2,6875 ; 2,75]"))
+    yb = Y(-2) + 34
+    for i, (a, b, lib) in enumerate(etapes):
+        yy = yb + 26 * i
+        p_.append(f"<line x1='{X(a):.1f}' y1='{yy}' x2='{X(b):.1f}' y2='{yy}' stroke='{OK}' stroke-width='5'/>")
+        p_.append(_txt(X(3) + 16, yy + 4, lib, 11, TRAIT, "start"))
+        if i < 4:
+            p_.append(_txt(X(a), yy - 5, fr(a, 4).rstrip("0").rstrip(","), 9, FIN, "middle"))
+            p_.append(_txt(X(b), yy - 5, fr(b, 4).rstrip("0").rstrip(","), 9, FIN, "middle"))
+    ycad = yb + 26 * len(etapes) + 4
+    p_.append(f"<rect x='40' y='{ycad}' width='680' height='52' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p_.append(_txt(56, ycad + 22, "Chaque étape divise la largeur par 2 : après n étapes, elle vaut 1/2ⁿ. Après 7 "
+                   "étapes : 1/128 &lt; 0,01.", 12, TRAIT, "start", True))
+    p_.append(_txt(56, ycad + 42, "On garde toujours la moitié dont les deux bouts donnent des signes opposés : α y "
+                   "reste enfermée.", 12, TRAIT, "start"))
+    return _svg("".join(p_), 760, ycad + 66)
+
+
 def extremums_polynome():
     p = [_txt(40, 24, "f(x) = x³ − 3x² + 2 : un maximum local puis un minimum local.",
               12, TRAIT, "start", True)]
@@ -7348,6 +7427,8 @@ FIGURES = {
     "methode_trapezes": ("Pour aller plus loin : la méthode des trapèzes sur des points mesurés", methode_trapezes),
     "racine_carree_courbe": ("La fonction racine carrée : définie pour x ≥ 0, croissante de plus en plus lentement, tangente verticale en 0", racine_carree_courbe),
     "asymptote_oblique": ("Asymptote oblique : l'écart entre la courbe et la droite tend vers 0", asymptote_oblique),
+    "nombre_solutions": ("Nombre de solutions de f(x) = k : combien de fois la courbe croise la droite y = k", nombre_solutions),
+    "dichotomie_etapes": ("La dichotomie : l'intervalle est coupé en deux à chaque étape", dichotomie_etapes),
     "nuage_moindres_carres": ("Le point moyen G, la droite des moindres carrés et les écarts", nuage_moindres_carres),
     "linearisation_ln": ("Linéariser une décharge avec z = ln u", linearisation_ln),
     "histogramme_vers_densite": ("1 000 attentes simulées : un histogramme plat, la densité 0,1", histogramme_vers_densite),
@@ -11123,6 +11204,67 @@ QUIZ["Mathématiques BTS CPI (examen)"] = [
        "Parce que √x est négative près de 0"], 1,
       "√0 = 0 existe, mais la pente 1/(2√x) grandit sans limite quand x s'approche de 0 : la tangente devient "
       "verticale. Définie ne veut pas dire dérivable.", "Intermédiaire"),
+
+    q("Le tableau de variations de f est : −∞ ↗ 3 (en x = 1) ↘ −1 (en x = 4) ↗ +∞. Combien de solutions a "
+      "l'équation f(x) = 0 ?",
+      ["Une seule, car f ne s'annule qu'une fois", "Deux, une par changement de sens", "Trois, une sur chaque intervalle",
+       "Aucune, car 0 n'est pas une valeur du tableau"], 2,
+      "0 est entre −∞ et 3 (une solution avant 1), entre 3 et −1 (une entre 1 et 4), entre −1 et +∞ (une après 4) : "
+      "trois solutions, une par intervalle où f est strictement monotone.", "Base"),
+
+    q("Même tableau : −∞ ↗ 3 (en x = 1) ↘ −1 (en x = 4) ↗ +∞. Combien de solutions a f(x) = 5 ?",
+      ["Une, sur ]4 ; +∞[", "Trois, une sur chaque intervalle", "Aucune, car 5 dépasse le maximum 3",
+       "Deux, de part et d'autre du maximum"], 0,
+      "5 dépasse le maximum local 3 : il n'est pas atteint sur ]−∞ ; 1[ ni sur ]1 ; 4[. Sur ]4 ; +∞[, f monte de −1 "
+      "à +∞ et passe par 5 une fois : une seule solution. Un maximum local n'est pas le maximum de f.", "Piège"),
+
+    q("Pourquoi l'équation f(x) = k a-t-elle au plus une solution sur un intervalle où f est strictement "
+      "croissante ?",
+      ["Parce que f est dérivable sur l'intervalle", "Parce que la courbe, qui ne fait que monter, ne peut "
+       "croiser la droite y = k qu'une fois", "Parce que k est forcément positif",
+       "Parce que l'intervalle est borné"], 1,
+      "Si f ne fait que monter, une fois la droite y = k franchie, la courbe reste au-dessus : pas de second "
+      "croisement. La continuité assure, elle, qu'il y en a au moins un si k est entre les valeurs aux bouts.",
+      "Intermédiaire"),
+
+    q("Pour appliquer la dichotomie à f(x) = 0 sur [a ; b], que faut-il vérifier au départ ?",
+      ["Que f(a) et f(b) sont tous les deux positifs", "Que b − a est plus petit que la précision voulue",
+       "Que f(a) = f(b)", "Que f(a) et f(b) sont de signes opposés"], 3,
+      "La courbe doit passer d'un côté à l'autre de l'axe entre a et b : f(a) et f(b) de signes opposés (et une "
+      "seule solution dans [a ; b], ce que dit le tableau de variations).", "Base"),
+
+    q("f(2) < 0 et f(3) > 0 ; au milieu, f(2,5) < 0. Quel intervalle garde-t-on ?",
+      ["[2 ; 2,5]", "[2,5 ; 3]", "[2 ; 3], rien ne change", "[2,5 ; 2,75]"], 1,
+      "f(2,5) a le même signe que f(2) : la solution n'est pas entre 2 et 2,5. Le changement de signe est entre "
+      "2,5 et 3 : on garde [2,5 ; 3].", "Base"),
+
+    q("On part d'un intervalle de largeur 1. Quelle est sa largeur après 5 étapes de dichotomie ?",
+      ["1/32 ≈ 0,031", "1/5 = 0,2", "1/10 = 0,1", "1/25 = 0,04"], 0,
+      "Chaque étape divise la largeur par 2 : après 5 étapes, 1/2⁵ = 1/32 ≈ 0,031. La largeur n'est pas divisée "
+      "par le nombre d'étapes.", "Intermédiaire"),
+
+    q("Combien d'étapes de dichotomie faut-il, sur un intervalle de largeur 1, pour une précision de 0,01 ?",
+      ["100 étapes", "2 étapes", "7 étapes", "10 étapes"], 2,
+      "Il faut 1/2ⁿ ≤ 0,01, soit 2ⁿ ≥ 100 : 2⁶ = 64 ne suffit pas, 2⁷ = 128 suffit. Sept étapes.", "Intermédiaire"),
+
+    q("Pour résoudre f(x) = 7 par dichotomie, de quel signe regarde-t-on le changement ?",
+      ["De f(x), comme pour f(x) = 0", "De f′(x), la dérivée", "De x − 7",
+       "De f(x) − 7"], 3,
+      "f(x) = 7 revient à f(x) − 7 = 0 : on regarde le signe de f(m) − 7. Regarder le signe de f(m) chercherait "
+      "la solution de f(x) = 0, une autre équation.", "Piège"),
+
+    q("Tableau de variations : −∞ ↗ 3 (en x = 1) ↘ −1 (en x = 4) ↗ +∞. Combien de solutions a f(x) = 3 ?",
+      ["Une seule : 3 n'est atteint qu'au maximum", "Deux : le sommet x = 1, plus une sur ]4 ; +∞[",
+       "Trois : une sur chaque intervalle", "Quatre : le sommet compte pour les deux intervalles qu'il borde"], 1,
+      "Sur les intervalles ouverts ]−∞ ; 1[ et ]1 ; 4[, f reste sous 3 : aucune solution. Le sommet x = 1 est une "
+      "solution, comptée une seule fois. Sur ]4 ; +∞[, f monte de −1 à +∞ et passe par 3 : une de plus. Total : "
+      "deux.", "Piège"),
+
+    q("Pourquoi utilise-t-on un algorithme comme la dichotomie pour x³ − 3x² + 2 = 5 ?",
+      ["Parce qu'il n'y a pas de formule simple pour la résoudre", "Parce que l'équation n'a pas de solution",
+       "Parce que la calculatrice ne sait pas calculer x³", "Parce que la solution est un nombre entier"], 0,
+      "Il n'existe pas de formule usuelle pour une équation de degré 3 comme celle-ci. Le tableau dit combien il y "
+      "a de solutions et où ; l'algorithme les encadre à la précision voulue.", "Base"),
 ]
 
 QUIZ["Mathématiques BTS CPI — probabilités et équations différentielles"] = [
@@ -46252,7 +46394,7 @@ ici.
 BLOC_17 = {
     "id": 17,
     "titre": "Bloc 17 — Mathématiques BTS CPI : programme d'examen",
-    "resume": "Complète le bloc 7 pour l'épreuve de mathématiques : étude de fonctions rationnelles et polynomiales, calcul intégral par primitives, statistique à une variable, fonctions exponentielle et logarithme (fiche 17.7, à lire juste après 17.1), courbes, dérivées et primitives de sin et cos (fiche 17.9, après 17.7), propriétés de l'intégrale et aire entre deux courbes (fiche 17.12, après 17.2), racine carrée, dérivée de uⁿ et asymptote oblique (fiche 17.10, après 17.4), statistique à deux variables (fiche 17.8 : ajustement affine, corrélation).",
+    "resume": "Complète le bloc 7 pour l'épreuve de mathématiques : étude de fonctions rationnelles et polynomiales, calcul intégral par primitives, statistique à une variable, fonctions exponentielle et logarithme (fiche 17.7, à lire juste après 17.1), courbes, dérivées et primitives de sin et cos (fiche 17.9, après 17.7), propriétés de l'intégrale et aire entre deux courbes (fiche 17.12, après 17.2), racine carrée, dérivée de uⁿ et asymptote oblique (fiche 17.10, après 17.4), équation f(x) = k et dichotomie (fiche 17.11), statistique à deux variables (fiche 17.8 : ajustement affine, corrélation).",
     "fiches": [
         {
             "id": "17.0",
@@ -48679,6 +48821,273 @@ x = 41 : 4/40 = **0,1**.
 **6.** f(x)/x = (x² + x + 3)/x² tend vers x²/x² = 1 : **a = 1**. f(x) − x = (x² + x + 3 − x²)/x = (x + 3)/x, qui
 tend vers 1 : **b = 1**. Asymptote **y = x + 1**. Vérification : (x² + x + 3)/x = x + 1 + 3/x, et 3/x tend vers
 0 ✓ (courbe au-dessus pour x > 0).
+""",
+        },
+        {
+            "id": "17.11",
+            "titre": "Équation f(x) = k : nombre de solutions et valeur approchée par dichotomie",
+            "duree": "4 h",
+            "cours": """
+
+### 1. Pourquoi : des équations sans formule
+
+En conception, on doit souvent trouver **la cote qui donne un résultat voulu** : la profondeur d'une boîte
+pour un volume donné, le rayon d'un réservoir pour une contenance donnée. On écrit une équation f(x) = k…
+et il n'y a **pas de formule** simple pour la résoudre (x³ − 3x² + 2 = 5, x(30 − 2x)² = 1 500, eˣ + x = 3). On pose
+alors deux questions, dans cet ordre :
+1. **Combien** y a-t-il de solutions, et dans quels intervalles ? Réponse : on **lit** le tableau de
+   variations (fiches 17.1 et 17.4), sans rien calculer de nouveau.
+2. **Où** est chaque solution, à la précision voulue ? Réponse : un **algorithme**, la **dichotomie** (du grec
+   « couper en deux »), qui encadre la solution par moitiés successives.
+
+### 2. Combien de solutions : lire le tableau de variations
+
+Résoudre f(x) = k, c'est chercher les abscisses où la courbe de f **croise la droite horizontale y = k**.
+Le tableau de variations dit tout :
+
+> **Sur un intervalle ouvert où f est continue (courbe tracée sans lever le crayon) et strictement monotone
+> (toujours croissante, ou toujours décroissante), l'équation f(x) = k a exactement une solution si k est
+> strictement compris entre les valeurs (ou les limites) de f aux deux bouts, et aucune sinon.**
+> **Sur tout le tableau, on additionne les intervalles, puis on ajoute une solution pour chaque extremum où f
+> vaut exactement k.**
+
+*Pourquoi : la courbe part d'un côté de la droite y = k et arrive de l'autre ; sans saut, elle doit la croiser
+(c'est le théorème des valeurs intermédiaires) ; et comme elle ne fait que monter (ou que descendre), elle ne
+peut pas la croiser deux fois.*
+
+**Exemple.** f(x) = x³ − 3x² + 2, la fonction de la fiche 17.4. f′(x) = 3x² − 6x = 3x(x − 2) : f monte jusqu'à
+f(0) = 2 (maximum local), descend jusqu'à f(2) = −2 (minimum local), puis remonte vers +∞.
+
+| x | −∞ | | 0 | | 2 | | +∞ |
+|---|---|---|---|---|---|---|---|
+| f(x) | −∞ | ↗ | 2 | ↘ | −2 | ↗ | +∞ |
+
+On compte, intervalle par intervalle, si k est atteint :
+- **k = 0** : 0 est entre −∞ et 2 (une solution sur ]−∞ ; 0[), entre 2 et −2 (une sur ]0 ; 2[), entre −2 et
+  +∞ (une sur ]2 ; +∞[) : **3 solutions** ;
+- **k = 5** : 5 n'est atteint que sur le dernier intervalle (de −2 à +∞) : **1 solution**, plus grande que 2 ;
+- **k = −3** : seulement sur le premier intervalle (de −∞ à 2) : **1 solution**, négative ;
+- **k = 2** : la valeur exacte du maximum, un cas particulier.
+
+**Cas particulier : k vaut exactement un maximum ou un minimum.** Les intervalles du tableau sont ouverts : le
+point x = 0 lui-même n'appartient ni à ]−∞ ; 0[, ni à ]0 ; 2[. On compte donc en deux temps :
+1. sur chaque intervalle ouvert, une solution si k est **strictement** entre les valeurs aux bouts ;
+2. **plus une solution** pour chaque extremum où f vaut exactement k.
+
+Pour k = 2 : 0 (sur ]−∞ ; 0[, f reste sous 2) + **1** (le sommet x = 0) + 0 (sur ]0 ; 2[, f reste sous 2) + 1
+(sur ]2 ; +∞[, f passe par 2, en x = 3 : 27 − 27 + 2 = 2) = **2 solutions**. *Pourquoi une seule fois pour le
+sommet : x = 0 est un seul point, même s'il est au bout de deux intervalles, comme un raccord entre deux tronçons
+de tuyauterie qu'on ne compte qu'une fois dans la nomenclature. Et la courbe ne traverse pas la droite : elle
+vient l'effleurer au sommet puis redescend, comme la pointe d'un comparateur qui atteint juste la cote au point
+haut d'une came.*
+
+[[FIG:nombre_solutions]]
+
+Le tableau donne aussi **l'intervalle** de chaque solution : c'est le point de départ de l'étape suivante.
+
+### 3. Où est la solution : la dichotomie
+
+**Pourquoi regarder f(x) − k.** Résoudre f(x) = k, c'est résoudre f(x) − k = 0. Le signe de f(x) − k dit de
+quel côté de la droite y = k est la courbe : positif, au-dessus ; négatif, en dessous. Chercher la solution,
+c'est chercher où la courbe **change de côté**.
+
+**L'idée.** On a un intervalle [a ; b] qui contient **une seule** solution, qu'on nomme α (lettre grecque
+« alpha »), et f(a) − k, f(b) − k sont de **signes opposés**. On coupe l'intervalle en deux en son milieu
+m = (a + b)/2, et on regarde **le changement de signe** :
+- si f(a) − k et f(m) − k sont de **signes opposés** (leur produit est négatif), la courbe change de côté entre
+  a et m : la solution est dans la moitié gauche, on remplace b par m ;
+- sinon, elle ne change pas de côté entre a et m ; comme elle est forcément de l'autre côté en b, le passage se
+  fait entre m et b : on remplace a par m.
+
+On recommence. À chaque étape, la largeur de l'intervalle est **divisée par 2**, et α y reste enfermée. C'est
+le jeu du « plus grand, plus petit », ou la recherche d'une coupure dans un câble de 40 m : on teste la
+continuité au milieu ; si le courant passe jusqu'à 20 m, la coupure est après, et on recommence sur les 20 m
+restants.
+
+*Attention au raccourci « si f(m) − k > 0, alors a ← m » : il ne marche que pour une fonction qui descend, et
+il perd la solution pour une fonction qui monte (exercice 4). Le test du changement de signe marche dans les
+deux cas.*
+
+[[FIG:dichotomie_etapes]]
+
+**Exemple.** La solution de x³ − 3x² + 2 = 0 comprise entre 2 et 3 (f(2) = −2 < 0, f(3) = 2 > 0) :
+
+| étape | a | b | m | f(m) | on garde |
+|---|---|---|---|---|---|
+| 1 | 2 | 3 | 2,5 | −1,125 < 0 | [2,5 ; 3] |
+| 2 | 2,5 | 3 | 2,75 | 0,109 > 0 | [2,5 ; 2,75] |
+| 3 | 2,5 | 2,75 | 2,625 | −0,584 < 0 | [2,625 ; 2,75] |
+| 4 | 2,625 | 2,75 | 2,6875 | −0,257 < 0 | [2,6875 ; 2,75] |
+| 5 | 2,6875 | 2,75 | 2,71875 | −0,079 < 0 | [2,71875 ; 2,75] |
+| 6 | 2,71875 | 2,75 | 2,734375 | 0,014 > 0 | [2,71875 ; 2,734375] |
+| 7 | 2,71875 | 2,734375 | 2,7265625 | −0,033 < 0 | [2,7265625 ; 2,734375] |
+
+Après 7 étapes, la largeur vaut 1/2⁷ = 1/128 ≈ 0,008 : 2,7266 < α < 2,7344. Les deux bornes s'arrondissent
+toutes les deux à 2,73 : on peut écrire **α ≈ 2,73** à 0,01 près (la valeur exacte est 1 + √3 ≈ 2,732). Si les
+deux bornes ne donnaient pas le même arrondi, il faudrait faire une étape de plus.
+
+**Combien d'étapes ?** En partant d'une largeur L, après n étapes la largeur vaut L/2ⁿ. Pour une précision p,
+il faut L/2ⁿ ≤ p ; on multiplie les deux côtés par 2ⁿ, puis on divise par p : **2ⁿ ≥ L/p**. Avec L = 1 :
+7 étapes pour 0,01 (2⁷ = 128 ≥ 100), 10 étapes pour 0,001 (2¹⁰ = 1 024 ≥ 1 000). Chaque décimale en plus
+coûte 3 ou 4 étapes : une décimale de plus, c'est une largeur divisée par 10 ; trois divisions par 2 font 8, ce
+n'est pas assez ; quatre font 16, c'est suffisant. D'où 7 étapes pour 0,01, 10 pour 0,001, 14 pour 0,0001.
+
+**L'algorithme**, écrit comme une recette, puis en Python. Dans la recette, « m ← (a + b)/2 » se lit « m prend
+la valeur (a + b)/2 ».
+
+```
+entrées : f, k, a, b (f(a) − k et f(b) − k de signes opposés), précision p
+tant que b − a > p :
+    m ← (a + b)/2
+    si f(a) − k et f(m) − k sont de signes opposés : b ← m
+    sinon : a ← m
+sortie : l'encadrement a ≤ α ≤ b
+```
+
+Le même, en Python (« ← » s'écrit « = ») :
+
+```python
+def f(x):
+    return x**3 - 3*x**2 + 2              # x**3 veut dire x³
+
+def dichotomie(f, k, a, b, p):           # f : la fonction donnée (celle du dessus)
+    while b - a > p:                      # tant que l'intervalle est trop large
+        m = (a + b) / 2                   # le milieu
+        if (f(a) - k) * (f(m) - k) < 0:   # signes opposés en a et en m (produit négatif) :
+            b = m                         #   la courbe change de côté entre a et m
+        else:                             # même signe (ou f(m) = k pile : m devient la borne a) :
+            a = m                         #   le changement de côté est entre m et b
+    return a, b                           # les deux bornes de l'encadrement
+
+print(dichotomie(f, 0, 2, 3, 0.01))       # affiche (2.7265625, 2.734375)
+```
+
+*Le test « (f(a) − k) × (f(m) − k) < 0 » est vrai exactement quand les deux nombres sont de signes opposés : un
+positif fois un négatif donne un négatif. Il marche que la fonction monte ou descende. Le programme affiche
+l'encadrement du tableau après 7 étapes ; Python écrit les deux bornes entre parenthèses, avec un point à la
+place de la virgule. Un tableur fait le même travail, une ligne par étape.*
+
+**Et les autres méthodes ?** Le **balayage** (on calcule f pour x = 2 ; 2,1 ; 2,2… et on repère le changement
+de signe) est plus simple à comprendre mais plus lent ; la **méthode de Newton** (on remplace la courbe par sa tangente et
+on regarde où cette droite coupe y = k) est beaucoup plus rapide mais demande la dérivée. La dichotomie est la plus sûre : elle ne peut pas « perdre » la
+solution.
+
+### 4. Les erreurs classiques et à retenir
+
+**Erreurs classiques :**
+1. **Compter les solutions sans le tableau** : on ne devine pas, on vérifie sur chaque intervalle si k est
+   atteint.
+2. **Oublier la condition « strictement monotone »** : sur un intervalle où f monte puis descend, il peut y
+   avoir zéro, une ou deux solutions : il faut découper l'intervalle au changement de sens.
+3. **Mal compter une solution à un extremum** : k = 2, atteint exactement au maximum x = 0, compte une fois
+   (ni zéro, ni deux) : c'est le « + 1 par extremum ».
+4. **Garder la mauvaise moitié** : on garde celle dont les deux bouts donnent des **signes opposés**. Le
+   raccourci « f(m) − k > 0 donc a ← m » ne marche que pour une fonction décroissante.
+5. **Oublier k** : pour f(x) = k, on regarde le signe de f(m) − k, pas celui de f(m).
+6. **Confondre le nombre d'étapes et la précision** : après n étapes, la largeur est L/2ⁿ, pas L/n.
+
+**À retenir :**
+- **Combien** : sur chaque intervalle ouvert du tableau où f est continue et strictement monotone, f(x) = k a
+  une solution si k est strictement entre les valeurs aux bouts, zéro sinon ; plus une par extremum où f vaut
+  exactement k.
+- **Où** : dichotomie. Milieu m ; si f(a) − k et f(m) − k sont de signes opposés, b ← m, sinon a ← m ; la
+  largeur est divisée par 2 à chaque étape : L/2ⁿ après n étapes.
+- **Précision p** : n étapes avec 2ⁿ ≥ L/p (7 étapes pour 0,01 sur une largeur 1).
+""",
+            "formules": """
+
+**Nombre de solutions** — sur un intervalle ouvert où f est continue et strictement monotone, f(x) = k a une
+seule solution si k est strictement entre les valeurs de f aux bouts, aucune sinon · on additionne les
+intervalles du tableau, plus 1 par extremum où f vaut exactement k
+
+**Dichotomie** — m = (a + b)/2 · si (f(a) − k) × (f(m) − k) < 0 (signes opposés) : b ← m, sinon a ← m ·
+largeur après n étapes : (b − a)/2ⁿ · précision p : 2ⁿ ≥ (b − a)/p
+
+        """,
+            "exemple": """
+**Cas industriel — Une boîte pliée de 1,5 litre**
+
+Un atelier fabrique des bacs sans couvercle à partir d'une tôle carrée de 30 cm de côté : on découpe un carré
+de côté x dans chaque coin, puis on relève les bords. Le bac a une base carrée de côté 30 − 2x et une hauteur
+x (cm), donc un volume V(x) = x(30 − 2x)² (cm³), pour 0 < x < 15. Le client veut un bac de **1 500 cm³**
+(1,5 L). Quelle hauteur x choisir ?
+
+**Étape 1 — Les variations.** V est un produit u × v avec u = x et v = (30 − 2x)² : u′ = 1, et
+v′ = 2 × (−2) × (30 − 2x) (dérivée de u², fiche 17.10). V′ = u′v + uv′ = (30 − 2x)² − 4x(30 − 2x) ; on met
+(30 − 2x) en facteur : V′(x) = (30 − 2x)(30 − 2x − 4x) = (30 − 2x)(30 − 6x). Sur ]0 ; 15[,
+30 − 2x > 0 : V′ a le signe de 30 − 6x. V croît jusqu'à x = 5, où V(5) = 5 × 20² = **2 000 cm³**, puis
+décroît jusqu'à V(15) = 0.
+
+**Étape 2 — Combien de solutions.** 1 500 est entre V(0) = 0 et V(5) = 2 000 : **une solution sur ]0 ; 5[**.
+1 500 est entre 2 000 et V(15) = 0 : **une solution sur ]5 ; 15[**. Deux bacs possibles : un bac plat et large,
+un bac haut et étroit.
+
+**Étape 3 — La dichotomie sur ]0 ; 5[.** On étudie V(x) − 1 500 : V(0) − 1 500 < 0, V(5) − 1 500 > 0.
+m = 2,5 : V(2,5) = 2,5 × 25² = 1 562,5, trop grand → [0 ; 2,5]. m = 1,25 : 945,3, trop petit → [1,25 ; 2,5].
+m = 1,875 : 1 292, trop petit → [1,875 ; 2,5]. m = 2,1875 : 1 436,4, trop petit → [2,1875 ; 2,5].
+m = 2,34375 : 1 501,7, trop grand → [2,1875 ; 2,34375]… En poursuivant jusqu'à une largeur de 0,01 (9 étapes,
+car 5/2⁹ ≈ 0,0098) : 2,334 < x < 2,344. Ces bornes ne donnent pas le même arrondi au centième ; on vérifie donc
+directement : les nombres qui s'arrondissent à 2,34 sont ceux de 2,335 à 2,345, et
+V(2,335) ≈ 1 498,2 < 1 500 < V(2,345) ≈ 1 502,2 : V − 1 500 change de signe entre les deux, donc la solution est entre 2,335 et 2,345, **x ≈ 2,34 cm** (base
+25,3 cm).
+
+**Étape 4 — L'autre solution.** La même dichotomie sur [5 ; 15] (V décroît : la recherche du changement de
+signe marche sans rien changer) donne 8,26 environ ; contrôle de l'arrondi : V(8,255) ≈ 1 502,2 > 1 500 >
+V(8,265) ≈ 1 499,6, donc **x ≈ 8,26 cm** (base 13,5 cm).
+
+**Étape 5 — La décision.** Les deux bacs contiennent 1,5 L. Le bac de 2,34 cm de haut a une grande surface au
+sol, utile pour ranger des pièces à plat ; celui de 8,26 cm est plus compact. Le calcul ne choisit pas : il
+donne les deux cotes possibles, et c'est l'usage qui tranche. Le tableau de variations a évité d'en oublier
+une.
+""",
+            "exercice": """
+**1.** Une fonction f a le tableau de variations suivant : −∞ ↗ 4 (en x = −1) ↘ −2 (en x = 3) ↗ +∞. Combien
+de solutions ont les équations f(x) = 0 ; f(x) = 4 ; f(x) = 5 ; f(x) = −3 ?
+
+**2.** Soit f(x) = x³ + x − 3. Montre que f est strictement croissante, puis que f(x) = 0 a une seule solution
+α, comprise entre 1 et 2. Fais 3 étapes de dichotomie et donne l'encadrement obtenu.
+
+**3.** On encadre une solution par dichotomie en partant d'un intervalle de largeur 1. Combien d'étapes faut-il
+pour une précision de 0,001 ?
+
+**4.** Un élève écrit un raccourci : il remplace le test du changement de signe par « si f(m) − k > 0 : a ← m,
+sinon b ← m ». Que se passe-t-il avec une fonction décroissante ? Et avec une fonction croissante ? Teste son
+raccourci sur x³ − 3x² + 2 = 0, en partant de [2 ; 3], à 0,001 près.
+
+**5.** Soit g(x) = eˣ + x − 3. Montre que g(x) = 0 a une seule solution, comprise entre 0 et 1, puis fais 2
+étapes de dichotomie.
+
+**6.** Une tôle carrée de 20 cm donne un bac de volume W(x) = x(20 − 2x)², pour 0 < x < 10. Combien de hauteurs
+x donnent 500 cm³ ? Vérifie que x = 5 en est une, puis encadre l'autre entre deux entiers.
+""",
+            "corrige": """
+**1.** f(x) = 0 : 0 est atteint sur chacun des trois intervalles : **3 solutions**. f(x) = 4 : la valeur du
+maximum, atteinte en x = −1, puis recoupée sur ]3 ; +∞[ : **2 solutions**. f(x) = 5 : seulement sur ]3 ; +∞[ :
+**1 solution**. f(x) = −3 : seulement sur ]−∞ ; −1[ : **1 solution**.
+
+**2.** f′(x) = 3x² + 1 > 0 : f est strictement croissante. f(1) = −1 < 0 et f(2) = 7 > 0 : une seule solution
+α dans ]1 ; 2[. Étape 1 : m = 1,5, f(1,5) = 1,875 > 0 → [1 ; 1,5]. Étape 2 : m = 1,25, f(1,25) ≈ 0,203 > 0 →
+[1 ; 1,25]. Étape 3 : m = 1,125, f(1,125) ≈ −0,451 < 0 → **[1,125 ; 1,25]** (α ≈ 1,213).
+
+**3.** Il faut 1/2ⁿ ≤ 0,001, soit 2ⁿ ≥ 1 000 : 2⁹ = 512 ne suffit pas, 2¹⁰ = 1 024 suffit : **10 étapes**.
+
+**4.** Avec une fonction **décroissante**, le raccourci tombe juste : f(a) − k est positif, donc « f(m) − k > 0 »
+veut dire « même signe qu'en a », et la solution est bien à droite de m. Exemple exécuté : e^(−x) = 0,5 sur
+[0 ; 2] à 0,001 près donne [0,6924 ; 0,6934], qui contient ln 2 ≈ 0,6931 ✓.
+Avec une fonction **croissante**, il échoue : f(a) − k est négatif, donc quand f(m) − k > 0, la courbe a déjà
+changé de côté entre a et m ; la solution est à **gauche** de m, mais le raccourci remplace a. Et à l'inverse,
+quand f(m) − k < 0, la solution est à droite de m, mais le raccourci remplace b : c'est ce qui se passe dès la
+première étape ici. Sur x³ − 3x² + 2 = 0 depuis [2 ; 3] : m = 2,5, f(2,5) = −1,125 < 0, b ← 2,5 ; m = 2,25,
+f < 0, b ← 2,25… Le programme, poursuivi jusqu'à une largeur de 0,001, finit sur [2 ; 2,001], alors que f(2) = −2 : la solution 2,732 est **perdue**. Le test du changement de signe,
+(f(a) − k) × (f(m) − k) < 0, marche dans les deux cas : c'est pour cela que le cours l'utilise.
+
+**5.** g′(x) = eˣ + 1 > 0 : g est strictement croissante. g(0) = 1 + 0 − 3 = −2 < 0 et g(1) = e − 2 ≈ 0,718 > 0 :
+une seule solution dans ]0 ; 1[. Étape 1 : g(0,5) ≈ −0,851 < 0 → [0,5 ; 1]. Étape 2 : g(0,75) ≈ −0,133 < 0 →
+**[0,75 ; 1]** (la solution vaut environ 0,792).
+
+**6.** W′(x) = (20 − 2x)(20 − 6x) : W croît jusqu'à x = 10/3, où W ≈ 592,6 cm³, puis décroît jusqu'à W(10) = 0.
+500 est atteint une fois sur ]0 ; 10/3[ et une fois sur ]10/3 ; 10[ : **2 hauteurs**. W(5) = 5 × 10² = 500 ✓.
+W(1) = 324 < 500 et W(2) = 512 > 500 : l'autre solution est entre **1 et 2** (elle vaut environ 1,91).
 """,
         },
         {
@@ -57496,6 +57905,21 @@ _mth("17.10", "Dériver uⁿ et √x, trouver une asymptote oblique", [
 ], "f(x) = 2x − 1 + 3/(x + 2), x > −2 : 3/(x + 2) → 0 en +∞, asymptote y = 2x − 1 ; 3/(x + 2) > 0, courbe "
        "au-dessus. Et ((3x − 1)⁴)′ = 4 × 3 × (3x − 1)³ = 12(3x − 1)³.")
 
+_mth("17.11", "Compter les solutions de f(x) = k, puis en encadrer une par dichotomie", [
+    "**Dresser (ou relire) le tableau de variations** de f (fiches 17.1, 17.4) : intervalles où f est "
+    "strictement monotone, valeurs aux bouts.",
+    "**Compter** : sur chaque intervalle ouvert, une solution si k est strictement entre les deux valeurs, "
+    "aucune sinon ; puis ajouter 1 pour chaque extremum où f vaut exactement k (ce point n'appartient à aucun "
+    "des intervalles ouverts).",
+    "**Choisir un intervalle [a ; b]** qui contient une seule solution, avec f(a) − k et f(b) − k de signes "
+    "opposés.",
+    "**Dichotomie** : m = (a + b)/2 ; si f(a) − k et f(m) − k sont de signes opposés (produit négatif), "
+    "b ← m, sinon a ← m ; recommencer jusqu'à la précision voulue. Ce test du changement de signe marche que "
+    "f monte ou descende.",
+    "**Nombre d'étapes** : la largeur vaut (b − a)/2ⁿ après n étapes ; il faut 2ⁿ ≥ (b − a)/précision.",
+], "x³ − 3x² + 2 = 0 : tableau −∞ ↗ 2 ↘ −2 ↗ +∞, trois solutions ; celle de ]2 ; 3[ : m = 2,5 (f < 0) → "
+       "[2,5 ; 3], m = 2,75 (f > 0) → [2,5 ; 2,75]… après 7 étapes, α ≈ 2,73.")
+
 _mth("17.5", "Calculer la valeur moyenne d'une fonction sur un intervalle", [
     "**Ne jamais utiliser (f(a) + f(b)) / 2** sauf si f est une droite — "
     "cette formule ignore tout ce qui se passe entre a et b.",
@@ -60755,6 +61179,160 @@ def gen_asymptote_oblique():
     return ex
 
 
+def gen_nombre_solutions():
+    """Nombre de solutions de f(x) = k lu sur un tableau de variations à trois intervalles.
+    Erreurs visées : ne compter qu'un intervalle, confondre maximum local et maximum, compter deux fois une
+    valeur atteinte à un extremum."""
+    while True:
+        x1 = random.choice([-3, -2, -1, 0, 1])
+        x2 = x1 + random.choice([2, 3, 4])
+        haut = random.choice([2, 3, 4, 5, 6])
+        bas = haut - random.choice([3, 4, 5, 6, 7])
+        sens = random.choice(["monte", "descend"])
+        cas = random.choice(["au-dessus", "max", "entre", "min", "en dessous"])
+        if sens == "monte":
+            tableau = f"−∞ ↗ {_fr_court(haut)} (en x = {_fr_court(x1)}) ↘ {_fr_court(bas)} (en x = {_fr_court(x2)}) ↗ +∞"
+            k = {"au-dessus": haut + random.choice([1, 2, 3]), "max": haut,
+                 "entre": random.choice([v for v in range(bas + 1, haut)]), "min": bas,
+                 "en dessous": bas - random.choice([1, 2, 3])}[cas]
+        else:
+            tableau = f"+∞ ↘ {_fr_court(bas)} (en x = {_fr_court(x1)}) ↗ {_fr_court(haut)} (en x = {_fr_court(x2)}) ↘ −∞"
+            k = {"au-dessus": haut + random.choice([1, 2, 3]), "max": haut,
+                 "entre": random.choice([v for v in range(bas + 1, haut)]), "min": bas,
+                 "en dessous": bas - random.choice([1, 2, 3])}[cas]
+        rep = {"au-dessus": 1, "max": 2, "entre": 3, "min": 2, "en dessous": 1}[cas]
+        messages = {
+            ("entre", 1): "Tu n'as regardé qu'un intervalle : k est atteint sur chacun des trois intervalles.",
+            ("entre", 2): "Il y a trois intervalles où f est strictement monotone, et k est atteint sur chacun.",
+            ("entre", 0): "k est compris entre les deux extremums : il est atteint sur chaque intervalle.",
+            ("au-dessus", 3): "k dépasse le maximum local : il n'est atteint que sur l'intervalle où f va jusqu'à "
+                              "+∞.",
+            ("au-dessus", 2): "k dépasse le maximum local : un seul intervalle l'atteint.",
+            ("au-dessus", 0): "f va jusqu'à +∞ sur un intervalle : toute valeur k assez grande y est atteinte une fois.",
+            ("en dessous", 3): "k est sous le minimum local : il n'est atteint que sur l'intervalle où f va jusqu'à "
+                               "−∞.",
+            ("en dessous", 2): "k est sous le minimum local : un seul intervalle l'atteint.",
+            ("en dessous", 0): "f va jusqu'à −∞ sur un intervalle : toute valeur k assez petite y est atteinte une fois.",
+            ("max", 3): "k est la valeur exacte du maximum local : la courbe touche la droite en ce point sans la "
+                        "traverser. C'est UNE solution, pas deux ; plus une autre sur l'intervalle dont le bout du tableau porte +∞.",
+            ("max", 1): "Le maximum lui-même est une solution (f vaut k en ce point), et la courbe recoupe la droite "
+                        "sur l'intervalle dont le bout du tableau porte +∞.",
+            ("max", 0): "f atteint exactement k en son maximum local : c'est déjà une solution.",
+            ("min", 3): "k est la valeur exacte du minimum local : la courbe touche la droite en ce point, UNE "
+                        "solution ; plus une autre sur l'intervalle dont le bout du tableau porte −∞.",
+            ("min", 1): "Le minimum lui-même est une solution, et la courbe recoupe la droite sur l'intervalle qui va "
+                        "jusqu'à −∞.",
+            ("min", 0): "f atteint exactement k en son minimum local : c'est déjà une solution.",
+        }
+        diags = [(v, messages[(cas, v)]) for v in (0, 1, 2, 3) if v != rep]
+        break
+    explication = {
+        "au-dessus": f"k = {_fr_court(k)} est plus grand que le maximum local {_fr_court(haut)} : seul l'intervalle "
+                     "où f va jusqu'à +∞ l'atteint, une fois.",
+        "max": f"k = {_fr_court(k)} est la valeur du maximum local : la courbe touche y = k en ce point (une "
+               "solution) et la recoupe une fois sur l'intervalle dont le bout du tableau porte +∞.",
+        "entre": f"k = {_fr_court(k)} est strictement entre {_fr_court(bas)} et {_fr_court(haut)} : il est atteint une "
+                 "fois sur chacun des trois intervalles.",
+        "min": f"k = {_fr_court(k)} est la valeur du minimum local : la courbe touche y = k en ce point (une "
+               "solution) et la recoupe une fois sur l'intervalle dont le bout du tableau porte −∞.",
+        "en dessous": f"k = {_fr_court(k)} est plus petit que le minimum local {_fr_court(bas)} : seul l'intervalle "
+                      "où f va jusqu'à −∞ l'atteint, une fois.",
+    }[cas]
+    return {
+        "titre": "Nombre de solutions de f(x) = k",
+        "enonce": f"Une fonction f continue a pour tableau de variations : {tableau}. Combien de solutions a "
+                  f"l'équation f(x) = {_fr_court(k)} ?",
+        "rep": rep, "tol": 0.01, "unite": "", "decimales": 0,
+        "diag": [_diag(v, m_) for v, m_ in diags],
+        "corr": [f"**Intervalle par intervalle.** {explication} Total : **{rep}** solution" + ("s." if rep > 1 else ".")],
+        "indice": "Sur chaque intervalle ouvert où f est strictement monotone, f(x) = k a une solution si k est "
+                  "strictement entre les valeurs aux deux bouts, aucune sinon ; puis ajouter 1 pour chaque extremum "
+                  "où f vaut exactement k.",
+    }
+
+
+def gen_dichotomie():
+    """Dichotomie : borne gauche ou droite après 3 étapes pour x³ + p x − q = 0, ou nombre d'étapes pour une
+    précision.
+    Erreurs visées : une étape de trop ou de moins, confondre les bornes, diviser par n au lieu de 2ⁿ."""
+    sup = str.maketrans("0123456789", "⁰¹²³⁴⁵⁶⁷⁸⁹")
+    while True:
+        cas = random.choice(["borne", "borne", "etapes"])
+        if cas == "borne":
+            p = random.choice([1, 2, 3, 4])
+            q = random.choice([3, 5, 7, 9, 11, 13])
+            f = lambda x: x ** 3 + p * x - q  # noqa: E731
+            a = next(n for n in range(0, 10) if f(n) <= 0 < f(n + 1))
+            b = a + 1
+            if f(a) == 0:
+                continue
+            bornes = [(a, b)]
+            for _ in range(4):
+                m = (bornes[-1][0] + bornes[-1][1]) / 2
+                if f(bornes[-1][0]) * f(m) < 0:
+                    bornes.append((bornes[-1][0], m))
+                else:
+                    bornes.append((m, bornes[-1][1]))
+            cote = random.choice([0, 1])
+            nom_cote, autre = ("gauche", "droite") if cote == 0 else ("droite", "gauche")
+            rep = bornes[3][cote]
+            candidats = [(bornes[3][1 - cote], f"C'est la borne {autre} : on demande la borne {nom_cote} de "
+                                               f"l'encadrement."),
+                         (bornes[2][cote], "Tu t'es arrêté après 2 étapes ; il en faut 3."),
+                         (bornes[4][cote], "Tu as fait une étape de trop : 4 au lieu de 3.")]
+            diags = [(v, m_) for v, m_ in candidats if abs(v - rep) > 3 * 0.0005]
+            if len(diags) < 2:
+                continue
+            lignes = []
+            for i in range(1, 4):
+                ga, gb = bornes[i - 1]
+                m = (ga + gb) / 2
+                signe = "> 0" if f(m) > 0 else "< 0"
+                lignes.append(f"étape {i} : m = {_fr_court(m, 4)}, f(m) ≈ {_fr_court(f(m), 3)} {signe} → "
+                              f"[{_fr_court(bornes[i][0], 4)} ; {_fr_court(bornes[i][1], 4)}]")
+            enonce = (f"On cherche la solution de x³ + {_coef(p, 'x')} − {q} = 0 entre {a} et {b} (f({a}) < 0, "
+                      f"f({b}) > 0). Fais 3 étapes de dichotomie et donne la borne {nom_cote} de l'encadrement obtenu, "
+                      f"à 0,001 près.")
+            corr = ("**Trois étapes** (on garde la moitié où f change de signe). " + " ; ".join(lignes)
+                    + f". Borne {nom_cote} : **{_fr_court(rep, 4)}**.")
+            tol, dec = 0.0005, 3
+        else:
+            largeur = random.choice([1, 2, 4, 10])
+            prec = random.choice([0.1, 0.01, 0.001])
+            rep = math.ceil(math.log2(largeur / prec) - 1e-12)
+            ratio = largeur / prec
+            diags = [(ratio, f"Il ne faut pas {fr(ratio, 0)} étapes : chaque étape DIVISE la largeur par 2, on cherche "
+                             f"2ⁿ ≥ {fr(ratio, 0)}."),
+                     (rep - 1, f"Avec {rep - 1} étapes, la largeur vaut {largeur}/{2 ** (rep - 1)} ≈ "
+                               f"{_fr_court(round(largeur / 2 ** (rep - 1) + 1e-12, 3), 3)}, encore plus "
+                               f"grande que {_fr_court(prec, 3)}."),
+                     (math.ceil(math.log10(ratio) - 1e-12), f"Tu as divisé la largeur par 10 à chaque étape "
+                                                            f"(10ⁿ ≥ {fr(ratio, 0)}). Une étape de dichotomie ne "
+                                                            f"divise la largeur que par 2 : il faut 2ⁿ ≥ "
+                                                            f"{fr(ratio, 0)}.")]
+            enonce = (f"On encadre une solution par dichotomie en partant d'un intervalle de largeur {largeur}. "
+                      f"Combien d'étapes faut-il, au minimum, pour que la largeur soit inférieure ou égale à "
+                      f"{_fr_court(prec, 3)} ?")
+            corr = (f"**Largeur après n étapes : {largeur}/2ⁿ.** Il faut 2ⁿ ≥ {largeur}/{_fr_court(prec, 3)} = "
+                    f"{fr(ratio, 0)} : 2{str(rep - 1).translate(sup)} = {fr(2 ** (rep - 1))} ne suffit pas, "
+                    f"2{str(rep).translate(sup)} = {fr(2 ** rep)} suffit. "
+                    f"**{rep} étapes**.")
+            tol, dec = 0.01, 0
+        vals = [v for v, _ in diags]
+        if all(abs(v - rep) > 3 * tol for v in vals) and \
+                all(abs(vals[i] - vals[j]) > 3 * tol for i in range(len(vals)) for j in range(i + 1, len(vals))):
+            break
+    return {
+        "titre": "Dichotomie",
+        "enonce": enonce,
+        "rep": rep, "tol": tol, "unite": "", "decimales": dec,
+        "diag": [_diag(v, m_) for v, m_ in diags],
+        "corr": [corr],
+        "indice": "Milieu m = (a + b)/2 ; si f(a) et f(m) sont de signes opposés, b ← m, sinon a ← m. Après n "
+                  "étapes, la largeur est divisée par 2ⁿ.",
+    }
+
+
 def decimales_affichage(tol):
     """Nombre de décimales pour afficher la réponse d'un générateur : assez pour que la valeur
     AFFICHÉE soit acceptée par la tolérance (10⁻ᵈ ≤ tol, donc erreur d'arrondi ≤ tol/2), et au
@@ -60857,7 +61435,8 @@ def fabriquer_exo(famille=None):
                                   gen_constantes_ci, gen_solution_particuliere,
                                   gen_periode_frequence, gen_primitive_trig,
                                   gen_aire_entre_courbes, gen_chasles_linearite,
-                                  gen_derivee_puissance, gen_asymptote_oblique],
+                                  gen_derivee_puissance, gen_asymptote_oblique,
+                                  gen_nombre_solutions, gen_dichotomie],
     }
     if famille and famille in catalogue:
         pool = catalogue[famille]
@@ -65426,6 +66005,101 @@ ATELIERS = [
         "a_retenir": "À retenir : si f(x) = ax + b + r(x) avec r(x) → 0, la droite y = ax + b est asymptote oblique ; "
                      "le signe de r(x) donne la position ; l'écart f(x) − (ax + b) mesure ce qui disparaît à "
                      "l'infini (ici, le coût de lancement réparti sur le lot).",
+    },
+    {
+        "id": "at155",
+        "chapitre": "Bloc 17",
+        "titre": "Réservoir en forme de capsule : quel rayon pour 50 litres ?",
+        "theme": "Fonctions d'une variable réelle",
+        "fiche": "17.11",
+        "vocabulaire": [
+            ("capsule", "un cylindre fermé à chaque bout par une demi-sphère : forme courante des réservoirs sous "
+             "pression, sans angle où la paroi fatiguerait."),
+            ("dichotomie", "encadrer une solution en coupant l'intervalle en deux à chaque étape et en gardant la "
+             "moitié où f − k change de signe."),
+            ("strictement croissante", "qui monte toujours : une telle fonction atteint chaque valeur au plus une "
+             "fois."),
+        ],
+        "enonce": "Un réservoir d'air comprimé a la forme d'une capsule : un cylindre de 60 cm de long, de rayon r, "
+                  "fermé par deux demi-sphères de même rayon. Son volume (cm³) vaut V(r) = 60πr² + (4/3)πr³. Le "
+                  "cahier des charges impose 50 litres, soit V(r) = 50 000 cm³. Aucune formule simple ne donne r : "
+                  "on compte les solutions, puis on encadre r par dichotomie, en partant de [10 ; 20].",
+        "etapes": [
+            {"type": "qcm", "label": "Combien de solutions ?",
+             "question": "V′(r) = 120πr + 4πr² est positive pour r > 0, V(0) = 0 et V tend vers +∞. Combien "
+                         "l'équation V(r) = 50 000 a-t-elle de solutions pour r > 0 ?",
+             "options": ["Deux, comme pour le bac plié",
+                         "Aucune, faute de formule pour la calculer",
+                         "Une seule, car V est strictement croissante"],
+             "bonne": 2,
+             "diagnostics": {0: "Le bac plié avait un maximum (V montait puis descendait). Ici V ne fait que "
+                                "monter : elle ne peut atteindre 50 000 qu'une fois.",
+                             1: "Pas de formule ne veut pas dire pas de solution : V passe de 0 à +∞ sans saut, elle "
+                                "atteint 50 000, et une seule fois puisqu'elle ne fait que monter."}},
+            {"type": "numerique", "label": "Volume pour r = 10 cm (en cm³, à 15 près)", "unite": "cm³",
+             "attendu": 60 * math.pi * 100 + 4 / 3 * math.pi * 1000, "tol": 15,
+             "consigne": "V(10) = 60π × 10² + (4/3)π × 10³ (touche π de la calculatrice).",
+             "indice": "18 849,6 + 4 188,8.",
+             "pieges": [(60 * math.pi * 100, "C'est le cylindre seul : il manque les deux demi-sphères, "
+                                             "(4/3)π × 10³."),
+                        (4 / 3 * math.pi * 1000, "C'est la sphère seule : il manque le cylindre, 60π × 10².")]},
+            {"type": "numerique", "label": "Borne gauche de l'encadrement après 3 étapes (en cm)", "unite": "cm",
+             "attendu": 13.75, "tol": 0.001,
+             "consigne": "Départ [10 ; 20] : V(10) < 50 000 < V(20). Étape 1 : m = 15, V(15) ≈ 56 549. Étape 2 : "
+                         "m = 12,5, V(12,5) ≈ 37 634. Étape 3 : m = 13,75, V(13,75) ≈ 46 527. Donne la borne gauche "
+                         "de l'intervalle obtenu.",
+             "indice": "À chaque étape, on garde la moitié dont les bouts encadrent 50 000.",
+             "pieges": [(12.5, "C'est la borne gauche après 2 étapes : V(13,75) < 50 000, donc a devient 13,75."),
+                        (15, "C'est la borne droite : l'intervalle est [13,75 ; 15]."),
+                        (17.5, "V(15) > 50 000 : la solution est entre 10 et 15, on garde la moitié gauche à "
+                               "l'étape 1.")]},
+            {"type": "numerique", "label": "Nombre d'étapes pour une largeur de 0,1 cm au plus, depuis [10 ; 20]",
+             "unite": "étapes", "attendu": 7, "tol": 0.01,
+             "consigne": "Largeur après n étapes : 10/2ⁿ. Il faut 10/2ⁿ ≤ 0,1.",
+             "indice": "2ⁿ ≥ 100 : essaie 2⁶ et 2⁷.",
+             "pieges": [(100, "Chaque étape divise la largeur par 2 : il faut 2ⁿ ≥ 100, pas 100 étapes."),
+                        (6, "2⁶ = 64 < 100 : après 6 étapes, la largeur vaut 10/64 ≈ 0,16 cm, trop grande."),
+                        (2, "Ce n'est pas le nombre de décimales : chaque étape ne divise la largeur que par 2.")]},
+            {"type": "numerique", "label": "Rayon du réservoir, à 0,1 cm près", "unite": "cm",
+             "attendu": 14.2, "tol": 0.05,
+             "consigne": "En poursuivant la dichotomie (ou avec la fonction Python du cours), on obtient "
+                         "14,1406 < r < 14,2188 après 7 étapes : largeur inférieure à 0,1, mais les deux bornes "
+                         "donnent 14,1 et 14,2, elles ne tranchent pas. Une étape de plus : m = 14,1797, "
+                         "V(14,1797) < 50 000, donc 14,1797 < r < 14,2188 : les deux bornes s'arrondissent à la "
+                         "même valeur. Donne r arrondi à 0,1 cm.",
+             "indice": "Après 8 étapes, les deux bornes de l'encadrement s'arrondissent à la même valeur.",
+             "pieges": [(math.sqrt(50000 / (60 * math.pi)), "Tu as oublié les demi-sphères : 60πr² = 50 000 donne "
+                                                            "r ≈ 16,3 cm, un réservoir trop gros."),
+                        ((50000 * 3 / (4 * math.pi)) ** (1 / 3), "Tu as oublié le cylindre : (4/3)πr³ = 50 000 donne "
+                                                                 "r ≈ 22,9 cm."),
+                        (15, "15 cm est le premier milieu : V(15) ≈ 56 549 dépasse déjà 50 000.")]},
+            {"type": "qcm", "label": "Pourquoi un algorithme ?",
+             "question": "Pourquoi encadre-t-on r par dichotomie au lieu de le calculer par une formule ?",
+             "options": ["Parce que la dichotomie donne la valeur exacte de r",
+                         "Parce que 60πr² + (4/3)πr³ = 50 000 est de degré 3, sans formule simple",
+                         "Parce que V n'est pas continue"],
+             "bonne": 1,
+             "diagnostics": {0: "La dichotomie donne un encadrement, aussi fin qu'on veut, mais jamais la valeur "
+                                "exacte : c'est une valeur approchée.",
+                             2: "V est continue (et même dérivable) : c'est justement ce qui garantit que la "
+                                "solution existe et que la dichotomie la trouve."}},
+        ],
+        "corrige": {
+            "enonce": "V(r) = 60πr² + (4/3)πr³ = 50 000 cm³, r > 0, dichotomie depuis [10 ; 20].",
+            "regle": "**V strictement croissante de 0 à +∞ : une seule solution. Dichotomie : on garde la moitié "
+                     "où V − 50 000 change de signe ; largeur 10/2ⁿ après n étapes.**",
+            "conversions": "50 L = 50 dm³ = 50 000 cm³ (1 L = 1 000 cm³).",
+            "remplacement": "V(10) = 18 849,6 + 4 188,8 ; m = 15, 12,5, 13,75 (on garde la moitié où V − 50 000 change "
+                            "de signe) ; 10/2ⁿ ≤ 0,1",
+            "calcul": "V(10) ≈ **23 038 cm³** ; V(20) ≈ 108 909 cm³\n\n"
+                      "[10 ; 20] → [10 ; 15] → [12,5 ; 15] → **[13,75 ; 15]** après 3 étapes\n\n"
+                      "2⁷ = 128 ≥ 100 : **7 étapes** pour 0,1 cm ; en poursuivant, **r ≈ 14,2 cm**",
+            "verification": "**Contrôle de cohérence** : V(14,2) = 60π × 201,64 + (4/3)π × 2 863,3 ≈ 38 008 + 11 994 "
+                            "= 50 002 cm³, soit 50,0 L ✓.",
+        },
+        "a_retenir": "À retenir : d'abord COMBIEN de solutions (tableau de variations : une fonction strictement "
+                     "croissante atteint chaque valeur une seule fois), puis OÙ (dichotomie : on garde la moitié où "
+                     "f − k change de signe ; largeur divisée par 2 à chaque étape).",
     },
     {
         "id": "at29",
@@ -73337,16 +74011,16 @@ MATIERES_PROGRAMME = [
          "Trigonométrie du triangle, volumes, repérage d'un point, équation d'un cercle et "
          "d'une droite.",
          [(7, ["7.1", "7.4"])]),
-        ("Analyse (évalué)", "Incomplet (à enrichir)",
+        ("Analyse (évalué)", "Complet",
          "Fonctions, dérivées, fonctions exponentielle et logarithme, calcul intégral, valeur "
          "moyenne, extremums locaux, équations différentielles du premier ordre (deux cas "
          "traités, et méthode d'Euler), nombres complexes (forme algébrique, racines d'une "
          "équation du second degré quand Δ < 0), équations différentielles du second ordre (fiche "
          "18.19), courbes, dérivées et primitives de sin et cos (fiche 17.9), propriétés de l'intégrale "
          "et aire entre deux courbes (fiche 17.12, méthodes approchées en « pour aller plus loin »), "
-         "fonction racine carrée, dérivée de uⁿ et asymptote oblique (fiche 17.10). Non traités : "
-         "nombre de solutions de f(x) = k et valeur approchée d'une racine (algorithme).",
-         [(7, ["7.2"]), (17, ["17.1", "17.7", "17.9", "17.2", "17.12", "17.4", "17.10", "17.5"]),
+         "fonction racine carrée, dérivée de uⁿ et asymptote oblique (fiche 17.10), nombre de solutions de "
+         "f(x) = k et valeur approchée d'une racine par dichotomie (fiche 17.11).",
+         [(7, ["7.2"]), (17, ["17.1", "17.7", "17.9", "17.2", "17.12", "17.4", "17.10", "17.11", "17.5"]),
           (18, ["18.4", "18.8", "18.12", "18.18", "18.19"])]),
         ("Hors épreuve : calcul matriciel, Bézier, droites et plans", "Complet",
          "Programme complémentaire non évalué (matrices, courbes de Bézier) et "
@@ -73744,9 +74418,7 @@ elif PAGE == PAGE_MATHS:
         'inférentielle, configurations géométriques, calcul vectoriel. S\'y ajoutent, '
         '<b>hors épreuve</b>, le programme complémentaire non évalué (calcul matriciel, courbes '
         'de Bézier : fiches 19.1 à 19.4) et une fiche d\'approfondissement (19.6, droites et '
-        'plans dans l\'espace), toutes marquées « hors épreuve ». Attention : une notion évaluée sur les '
-        'fonctions n\'est pas encore traitée ici (nombre de solutions de f(x) = k et valeur '
-        'approchée d\'une racine) — voir le tableau de bord. Ce sont les mêmes '
+        'plans dans l\'espace), toutes marquées « hors épreuve ». Ce sont les mêmes '
         'fiches que dans '
         '« Cours », réunies ici pour ne pas les chercher au milieu des chapitres '
         'techniques.</div>',
@@ -73757,7 +74429,9 @@ elif PAGE == PAGE_MATHS:
             "**Ne lis pas les blocs dans l'ordre 7 → 17 → 18 → 19.** Ils sont rangés par "
             "module officiel, pas par difficulté. Voici un ordre qui monte en douceur :\n\n"
             "1. **17.0 — Lire un schéma et un tableau** (la clé de lecture de tout le reste)\n"
-            "2. **7.1** (trigonométrie/vecteurs) et **17.1** (étudier une fonction)\n"
+            "2. **7.1** (trigonométrie/vecteurs) et **17.1** (étudier une fonction), puis **17.4**, **17.7**, "
+            "**17.10** et **17.11** (compléments d'étude de fonction : extremums, exp et ln, racine "
+            "carrée et asymptote oblique, équation f(x) = k)\n"
             "3. **18.1** (probabilités simples) puis **17.2** et **17.12** (calcul intégral : primitives, puis "
             "aire entre deux courbes)\n"
             "4. **7.4/7.5** (cercle, droite, barycentre) puis **18.2** (loi binomiale)\n"

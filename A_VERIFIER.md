@@ -31,8 +31,9 @@ Plan complémentaire « Analyse » (validé le 2026-09-28, pour les notions du r
 couvrait pas ; ordre d'écriture) : 1. ✅ 17.9 trigonométrie (courbes, dérivées et primitives de sin et cos) —
 2. ✅ 17.12 calcul intégral (Chasles, linéarité, positivité, aire entre deux courbes ; méthodes approchées en
 « pour aller plus loin ») — 3. ✅ 17.10 étude de fonction (racine carrée, dérivée de uⁿ, asymptote oblique) —
-4. 17.11 équation f(x) = k (nombre de solutions, dichotomie). Quand les quatre seront faites : ligne « Analyse »
-du tableau de bord à « Complet », avertissement de la page Maths retiré.
+4. ✅ 17.11 équation f(x) = k (nombre de solutions, dichotomie). **Plan complémentaire terminé (4/4)** : ligne « Analyse » du
+tableau de bord à « Complet », avertissement de la page Maths retiré. Aucun item évalué des modules
+Fonctions, Calcul intégral et Équations différentielles ne reste sans fiche (bilan de la section 17.11).
 
 ### 17.7 — Fonctions exponentielle et logarithme népérien (faite le 2026-09-25)
 
@@ -170,6 +171,33 @@ du tableau de bord à « Complet », avertissement de la page Maths retiré.
   at145 et générateurs non cliqués dans l'interface (la fiche s'ouvre sans erreur dans un
   AppTest ; outil d'audit : 0 défaut).
 - ✅ Interface vérifiée dans un vrai navigateur le 2026-09-27 : atelier at145 (pièges, bonnes valeurs, QCM, corrigé), gen_ic_proportion, gen_taille_proportion, figures proportion_en_cloche, ic_proportion_simulation regardées dans l'app (voir « Dette d'interface 17.7 à 18.13 »).
+
+### 17.11 — Équation f(x) = k : nombre de solutions et dichotomie (faite le 2026-09-29)
+
+- Référentiel (annexe I, Fonctions) : « exploiter le tableau de variation pour obtenir le nombre de solutions
+  d'une équation f(x) = k » et « mettre en œuvre un procédé de recherche d'une valeur approchée d'une racine »
+  (le commentaire cite balayage, dichotomie, Newton et demande au moins un algorithme : dichotomie en langage
+  naturel et en Python, balayage et Newton cités). Dernières capacités évaluées manquantes.
+- Placée après la 17.10. D'abord COMBIEN (lecture du tableau, théorème des valeurs intermédiaires en
+  filigrane), puis OÙ (dichotomie). Figures `nombre_solutions` (x³ − 3x² + 2, fonction de la 17.4, droites
+  k = 5, 2, 0, −3) et `dichotomie_etapes` ; cas industriel : bac plié, x(30 − 2x)² = 1 500, deux cotes (2,34 et
+  8,26 cm) ; atelier at155 : réservoir en capsule de 50 L, rayon ≈ 14,2 cm ; générateurs `gen_nombre_solutions`
+  et `gen_dichotomie` ; 10 questions.
+- Règles fixées après relecture :
+  - nombre de solutions : sur chaque intervalle OUVERT où f est strictement monotone, une solution si k est
+    STRICTEMENT entre les valeurs aux bouts, plus 1 par extremum où f vaut exactement k (« k entre les
+    valeurs aux bouts » donnait 1 ou 3 pour k = 2, au lieu de 2) ;
+  - dichotomie : test du CHANGEMENT DE SIGNE, (f(a) − k) × (f(m) − k) < 0 → b ← m, sinon a ← m. Le
+    raccourci « f(m) − k > 0 → a ← m » ne marche que pour une fonction décroissante et perd la solution pour
+    une croissante (exécuté : [2 ; 2,001] pour x³ − 3x² + 2 depuis [2 ; 3]). Le premier jet du corrigé de
+    l'exercice 4 affirmait l'inverse : erreur de l'auteur, trouvée par les deux relecteurs.
+- Trouvé par l'audit : des « < » bruts dans la figure `dichotomie_etapes` (image vide), corrigés en &lt;.
+- Bilan final du référentiel (relecteur justesse) : chaque contenu et capacité évalués des modules
+  Fonctions, Calcul intégral et Équations différentielles a sa fiche. Deux notions couvertes mais sans
+  exemple travaillé, à enrichir un jour si besoin (compléments optionnels, pas des trous) :
+  - primitives de u′uⁿ avec n entier négatif (couvertes par la formule « n ≠ −1 » de la 17.2) ;
+  - limites et opérations : pas de tableau des opérations ni des formes indéterminées (la règle du terme de
+    plus haut degré est appliquée en 17.1 et 17.10).
 
 ### 17.10 — Étude de fonction : racine carrée, dérivée de uⁿ, asymptote oblique (faite le 2026-09-29)
 
