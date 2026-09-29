@@ -74334,8 +74334,15 @@ elif PAGE == PAGE_COURS:
         blocs_filtres = [b for b in BLOCS if palier_du_bloc(b) == _n_choisi]
 
     noms_blocs = [b["titre"] for b in blocs_filtres]
-    _idx_bloc = noms_blocs.index(_saut[0]) if _saut else 0
-    choix_bloc = st.selectbox("Bloc", noms_blocs, index=_idx_bloc)
+    # Listes à clé fixe : sans clé, l'index calculé pour un saut (« Aller directement à une fiche »)
+    # changeait l'identité du widget à l'exécution suivante, et la moindre interaction sur la fiche
+    # (curseur, bouton) ramenait à la première fiche du premier bloc (corrigé le 2026-09-29). Même
+    # principe que les autres listes à clé : on écrit la valeur voulue AVANT de créer le widget.
+    if _saut and _saut[0] in noms_blocs:
+        st.session_state["_bloc_cours"] = _saut[0]
+    if st.session_state.get("_bloc_cours") not in noms_blocs:
+        st.session_state["_bloc_cours"] = noms_blocs[0]
+    choix_bloc = st.selectbox("Bloc", noms_blocs, key="_bloc_cours")
     bloc = blocs_filtres[noms_blocs.index(choix_bloc)]
     st.caption(f"{PALIERS[palier_du_bloc(bloc)]['icone']} Palier {palier_du_bloc(bloc)} — "
                f"{PALIERS[palier_du_bloc(bloc)]['nom']}")
@@ -74352,11 +74359,13 @@ elif PAGE == PAGE_COURS:
         fiche_id = choix_fiche
     else:
         noms_fiches = [f"Fiche {f['id']} — {f['titre']}" for f in fiches_list]
-        _idx_fiche = 0
         if _saut:
-            _idx_fiche = next((k for k, f in enumerate(fiches_list)
-                               if f.get("id") == _saut[1]), 0)
-        choix_fiche = st.selectbox("Fiche", noms_fiches, index=_idx_fiche)
+            _voulue = next((n for n, f in zip(noms_fiches, fiches_list) if f.get("id") == _saut[1]), None)
+            if _voulue:
+                st.session_state["_fiche_cours"] = _voulue
+        if st.session_state.get("_fiche_cours") not in noms_fiches:
+            st.session_state["_fiche_cours"] = noms_fiches[0]
+        choix_fiche = st.selectbox("Fiche", noms_fiches, key="_fiche_cours")
         fiche = fiches_list[noms_fiches.index(choix_fiche)]
         fiche_id = fiche['id']
 
