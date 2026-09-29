@@ -6696,6 +6696,164 @@ def lire_sinusoide():
     return _svg("".join(p_), 760, ycad + 106)
 
 
+def _zone_entre(X, Y, haut, bas, a, b, couleur, opacite=0.25, n=120):
+    """Polygone rempli entre deux courbes y = haut(x) et y = bas(x), de x = a à x = b."""
+    pts = [(X(a + (b - a) * i / n), Y(haut(a + (b - a) * i / n))) for i in range(n + 1)]
+    pts += [(X(b - (b - a) * i / n), Y(bas(b - (b - a) * i / n))) for i in range(n + 1)]
+    return (f"<polygon points='{' '.join(f'{x:.1f},{y:.1f}' for x, y in pts)}' fill='{couleur}' "
+            f"fill-opacity='{opacite}' stroke='none'/>")
+
+
+def _courbe(X, Y, f, a, b, couleur, largeur=2.4, n=200):
+    pts = " ".join(f"{X(a + (b - a) * i / n):.1f},{Y(f(a + (b - a) * i / n)):.1f}" for i in range(n + 1))
+    return f"<polyline points='{pts}' fill='none' stroke='{couleur}' stroke-width='{largeur}'/>"
+
+
+def _axes(X, Y, xmax, ymin, ymax, graduations_x, graduations_y=()):
+    out = [f"<line x1='{X(0)}' y1='{Y(0)}' x2='{X(xmax) + 10}' y2='{Y(0)}' stroke='{FIN}' stroke-width='1.4'/>",
+           f"<line x1='{X(0)}' y1='{Y(ymin)}' x2='{X(0)}' y2='{Y(ymax)}' stroke='{FIN}' stroke-width='1.4'/>",
+           _txt(X(xmax) + 14, Y(0) + 4, "x", 11, FIN)]
+    for v in graduations_x:
+        out.append(f"<line x1='{X(v):.1f}' y1='{Y(0) - 3}' x2='{X(v):.1f}' y2='{Y(0) + 3}' stroke='{FIN}'/>")
+        out.append(_txt(X(v), Y(0) + 16, fr(v, 0) if v == int(v) else fr(v, 1), 11, FIN, "middle"))
+    for v in graduations_y:
+        out.append(f"<line x1='{X(0) - 3}' y1='{Y(v):.1f}' x2='{X(0) + 3}' y2='{Y(v):.1f}' stroke='{FIN}'/>")
+        out.append(_txt(X(0) - 6, Y(v) + 4, fr(v, 0), 11, FIN, "end"))
+    return out
+
+
+def aire_entre_courbes():
+    x0, y0, kx, ky = 90, 320, 150, 22
+    X = lambda x: x0 + kx * x  # noqa: E731
+    Y = lambda v: y0 - ky * v  # noqa: E731
+    g = lambda x: 6 * x - x * x  # noqa: E731
+    f = lambda x: x * x  # noqa: E731
+    p_ = [_txt(40, 24, "Aire entre deux courbes : on intègre la courbe du HAUT moins la courbe du BAS.", 12, TRAIT,
+               "start", True),
+          _txt(40, 40, "Entre x = 0 et x = 3, g(x) = 6x − x² est au-dessus de f(x) = x² ; les bornes sont les points "
+               "où g = f.", 11, FIN)]
+    p_.append(_zone_entre(X, Y, f, lambda x: 0, 0, 3, FIN, 0.16))
+    p_.append(_zone_entre(X, Y, g, f, 0, 3, ALESAGE))
+    p_ += _axes(X, Y, 3.4, -0.3, 11.8, (1, 2, 3), (3, 6, 9))
+    p_.append(_txt(X(2.45), Y(1.6), "sous f : 9, à retrancher", 11, TRAIT, "middle", True))
+    p_.append(_txt(X(2.3), Y(6.9), "aire cherchée : 18 − 9 = 9", 11, ALESAGE, "middle", True))
+    p_.append(_courbe(X, Y, g, 0, 3.4, ALESAGE))
+    p_.append(_courbe(X, Y, f, 0, 3.4, ARBRE))
+    p_.append(_txt(X(0.9), Y(7.4), "courbe du haut :", 11, ALESAGE, "end", True))
+    p_.append(_txt(X(0.9), Y(7.4) + 14, "g(x) = 6x − x²", 11, ALESAGE, "end", True))
+    p_.append(_txt(X(3.12), Y(6.2), "courbe du bas :", 11, ARBRE, "start", True))
+    p_.append(_txt(X(3.12), Y(6.2) + 14, "f(x) = x²", 11, ARBRE, "start", True))
+    # bande verticale : la hauteur g(x) − f(x)
+    p_.append(f"<line x1='{X(1.5)}' y1='{Y(2.25):.1f}' x2='{X(1.5)}' y2='{Y(6.75):.1f}' stroke='{ALERTE}' "
+              f"stroke-width='2.2'/>")
+    p_.append(_txt(X(1.5) + 6, Y(4.5), "hauteur", 11, ALERTE, "start", True))
+    p_.append(_txt(X(1.5) + 6, Y(4.5) + 14, "g(x) − f(x)", 11, ALERTE, "start", True))
+    for xa, ya in ((0, 0), (3, 9)):
+        p_.append(f"<circle cx='{X(xa)}' cy='{Y(ya)}' r='4.5' fill='{OK}'/>")
+    p_.append(_txt(X(0) + 6, Y(0) + 32, "g = f en x = 0", 11, OK, "start", True))
+    p_.append(_txt(X(3) + 18, Y(9) + 22, "g = f en x = 3", 11, OK, "start", True))
+    ycad = y0 + 44
+    p_.append(f"<rect x='40' y='{ycad}' width='680' height='72' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p_.append(_txt(56, ycad + 22, "Aire = ∫ de 0 à 3 de (g(x) − f(x)) dx = ∫ de 0 à 3 de (6x − 2x²) dx = [3x² − 2x³/3] "
+                   "de 0 à 3 = 27 − 18 = 9.", 12, TRAIT, "start", True))
+    p_.append(_txt(56, ycad + 42, "Autre chemin : aire sous g (bleu + gris) = 18 ; aire sous f (grisée) = 9 ; entre les deux : "
+                   "18 − 9 = 9.", 12, TRAIT, "start"))
+    p_.append(_txt(56, ycad + 62, "Toujours : courbe du haut moins courbe du bas, entre les deux points où elles se "
+                   "coupent.", 12, TRAIT, "start"))
+    return _svg("".join(p_), 760, ycad + 86)
+
+
+def courbes_qui_se_croisent():
+    x0, y0, kx, ky = 90, 300, 220, 55
+    X = lambda x: x0 + kx * x  # noqa: E731
+    Y = lambda v: y0 - ky * v  # noqa: E731
+    g = lambda x: x  # noqa: E731
+    f = lambda x: x * x  # noqa: E731
+    p_ = [_txt(40, 24, "Deux courbes qui se croisent : la courbe du haut change en route.", 12, TRAIT, "start", True),
+          _txt(40, 40, "y = x et y = x² se croisent en x = 1 : on coupe l'intégrale à cet endroit (relation de Chasles).",
+               11, FIN)]
+    p_.append(_zone_entre(X, Y, g, f, 0, 1, OK, 0.3))
+    p_.append(_zone_entre(X, Y, f, g, 1, 2, ALERTE, 0.22))
+    p_ += _axes(X, Y, 2.1, -0.2, 4.2, (0.5, 1, 1.5, 2), (1, 2, 3, 4))
+    p_.append(_courbe(X, Y, g, 0, 2.1, ALESAGE))
+    p_.append(_courbe(X, Y, f, 0, 2.05, ARBRE))
+    p_.append(_txt(X(2.1) + 4, Y(2.1) + 4, "y = x", 11, ALESAGE, "start", True))
+    p_.append(_txt(X(1.95) - 8, Y(3.8), "y = x²", 11, ARBRE, "end", True))
+    p_.append(f"<circle cx='{X(1)}' cy='{Y(1)}' r='4.5' fill='{TRAIT}'/>")
+    p_.append(_txt(X(1) + 10, Y(1) + 20, "croisement en x = 1", 11, TRAIT, "start", True))
+    p_.append(_txt(X(0.45), Y(1.3), "de 0 à 1 :", 11, OK, "middle", True))
+    p_.append(_txt(X(0.45), Y(1.3) + 14, "x au-dessus de x²", 11, OK, "middle", True))
+    p_.append(_txt(X(1.78), Y(2.35), "de 1 à 2 :", 11, ALERTE, "middle", True))
+    p_.append(_txt(X(1.78), Y(2.35) + 13, "x² au-dessus de x", 11, ALERTE, "middle", True))
+    ycad = y0 + 34
+    p_.append(f"<rect x='40' y='{ycad}' width='680' height='52' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p_.append(_txt(56, ycad + 22, "Faux : ∫ de 0 à 2 de (x − x²) dx = 2 − 8/3 = −2/3 (les deux morceaux se compensent "
+                   "en partie).", 12, TRAIT, "start", True))
+    p_.append(_txt(56, ycad + 42, "Juste : ∫ de 0 à 1 de (x − x²) dx + ∫ de 1 à 2 de (x² − x) dx = 1/6 + 5/6 = 1.", 12,
+                   TRAIT, "start"))
+    return _svg("".join(p_), 760, ycad + 66)
+
+
+def chasles_integrale():
+    x0, y0, kx, ky = 90, 280, 100, 45
+    X = lambda x: x0 + kx * x  # noqa: E731
+    Y = lambda v: y0 - ky * v  # noqa: E731
+    f1 = lambda x: x * x  # noqa: E731
+    f2 = lambda x: 4  # noqa: E731
+    zero = lambda x: 0  # noqa: E731
+    p_ = [_txt(40, 24, "Relation de Chasles : un profil en deux morceaux se calcule en deux intégrales qui "
+               "s'additionnent.", 12, TRAIT, "start", True),
+          _txt(40, 40, "Profil d'un congé puis d'un plat : y = x² de 0 à 2, puis y = 4 de 2 à 5 (mm).", 11, FIN)]
+    p_.append(_zone_entre(X, Y, f1, zero, 0, 2, ARBRE, 0.3))
+    p_.append(_zone_entre(X, Y, f2, zero, 2, 5, ALESAGE, 0.22))
+    p_ += _axes(X, Y, 5.3, -0.2, 5, (1, 2, 3, 4, 5), (2, 4))
+    p_.append(_courbe(X, Y, f1, 0, 2, TRAIT))
+    p_.append(_courbe(X, Y, f2, 2, 5, TRAIT))
+    p_.append(f"<line x1='{X(2)}' y1='{Y(0)}' x2='{X(2)}' y2='{Y(4)}' stroke='{FIN}' stroke-dasharray='4 4'/>")
+    p_.append(_txt(X(1.45), Y(0.62), "∫ de 0 à 2 : 8/3", 11, ARBRE, "middle", True))
+    p_.append(_txt(X(1.45), Y(0.62) + 13, "≈ 2,67", 11, ARBRE, "middle", True))
+    p_.append(_txt(X(3.5), Y(2.2), "∫ de 2 à 5 de 4 dx", 11, ALESAGE, "middle", True))
+    p_.append(_txt(X(3.5), Y(2.2) + 14, "= 4 × 3 = 12", 11, ALESAGE, "middle", True))
+    p_.append(_txt(X(2), Y(4) - 10, "la formule change en x = 2", 11, FIN, "middle"))
+    ycad = y0 + 34
+    p_.append(f"<rect x='40' y='{ycad}' width='680' height='52' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p_.append(_txt(56, ycad + 22, "∫ de 0 à 5 = ∫ de 0 à 2 + ∫ de 2 à 5 = 8/3 + 12 = 44/3 ≈ 14,67 mm².", 12, TRAIT,
+                   "start", True))
+    p_.append(_txt(56, ycad + 42, "On coupe l'intervalle là où la formule du profil change, et on additionne les "
+                   "morceaux.", 12, TRAIT, "start"))
+    return _svg("".join(p_), 760, ycad + 66)
+
+
+def methode_trapezes():
+    x0, y0, kx, ky = 90, 290, 80, 24
+    X = lambda x: x0 + kx * x  # noqa: E731
+    Y = lambda v: y0 - ky * v  # noqa: E731
+    f = lambda x: 6 * x - x * x  # noqa: E731
+    p_ = [_txt(40, 24, "Pour aller plus loin (non exigible) : la méthode des trapèzes.", 12, TRAIT, "start", True),
+          _txt(40, 40, "On remplace la courbe par des segments entre des points mesurés tous les h = 1 mm, et on "
+               "additionne les trapèzes.", 11, FIN)]
+    for k in range(6):
+        a, b = k, k + 1
+        p_.append(f"<polygon points='{X(a)},{Y(0)} {X(a)},{Y(f(a))} {X(b)},{Y(f(b))} {X(b)},{Y(0)}' "
+                  f"fill='{ARBRE}' fill-opacity='{0.18 if k % 2 else 0.32}' stroke='{ARBRE}' stroke-width='1'/>")
+    p_ += _axes(X, Y, 6.3, -0.3, 10, (0, 1, 2, 3, 4, 5, 6), ())
+    p_.append(_courbe(X, Y, f, 0, 6, ALESAGE))
+    for k in range(7):
+        p_.append(f"<circle cx='{X(k)}' cy='{Y(f(k))}' r='3.5' fill='{ALERTE}'/>")
+        p_.append(_txt(X(k) + (9 if k == 0 else -9 if k == 6 else 0), Y(f(k)) - 9, str(f(k)), 11, ALERTE,
+                       "middle", True))
+    p_.append(_txt(X(6) + 16, Y(6), "courbe : y = 6x − x²", 11, ALESAGE, "start", True))
+    p_.append(_txt(X(6) + 16, Y(6) + 16, "trapèzes : segments", 11, ARBRE, "start", True))
+    p_.append(_txt(X(6) + 16, Y(6) + 30, "entre points mesurés", 11, ARBRE, "start", True))
+    ycad = y0 + 34
+    p_.append(f"<rect x='40' y='{ycad}' width='680' height='52' rx='6' fill='{FOND}' stroke='{FIN}' stroke-width='1'/>")
+    p_.append(_txt(56, ycad + 22, "Somme des trapèzes : 1 × (0/2 + 5 + 8 + 9 + 8 + 5 + 0/2) = 35 ; valeur exacte "
+                   "∫ de 0 à 6 = 36.", 12, TRAIT, "start", True))
+    p_.append(_txt(56, ycad + 42, "Écart 1 (2,8 %) : les segments passent un peu sous la courbe. Avec un pas de 0,5, "
+                   "on trouve 35,75.", 12, TRAIT, "start"))
+    return _svg("".join(p_), 760, ycad + 66)
+
+
 def extremums_polynome():
     p = [_txt(40, 24, "f(x) = x³ − 3x² + 2 : un maximum local puis un minimum local.",
               12, TRAIT, "start", True)]
@@ -7101,6 +7259,10 @@ FIGURES = {
     "sin_cos_courbes": ("Les courbes de sin et cos : entre −1 et 1, période 2π, décalées d'un quart de période", sin_cos_courbes),
     "parametres_sinusoide": ("y = A cos(ωt + φ) : A étire en hauteur, ω resserre en largeur, φ fait glisser la courbe", parametres_sinusoide),
     "lire_sinusoide": ("Lire A, T, ω et φ sur le tracé d'une vibration", lire_sinusoide),
+    "aire_entre_courbes": ("Aire entre deux courbes : on intègre la courbe du haut moins la courbe du bas", aire_entre_courbes),
+    "courbes_qui_se_croisent": ("Deux courbes qui se croisent : on coupe l'intégrale au croisement", courbes_qui_se_croisent),
+    "chasles_integrale": ("Relation de Chasles : un profil en deux morceaux, deux intégrales qui s'additionnent", chasles_integrale),
+    "methode_trapezes": ("Pour aller plus loin : la méthode des trapèzes sur des points mesurés", methode_trapezes),
     "nuage_moindres_carres": ("Le point moyen G, la droite des moindres carrés et les écarts", nuage_moindres_carres),
     "linearisation_ln": ("Linéariser une décharge avec z = ln u", linearisation_ln),
     "histogramme_vers_densite": ("1 000 attentes simulées : un histogramme plat, la densité 0,1", histogramme_vers_densite),
@@ -10760,6 +10922,69 @@ QUIZ["Mathématiques BTS CPI (examen)"] = [
       "La relation sin′ = cos (et donc toutes les dérivées et primitives de la fiche), comme T = 2π/ω, "
       "n'est vraie qu'avec des angles en radians (t en s, ω en rad/s). Près de 0, sin 0,01 ≈ 0,01 en "
       "radians, mais sin 0,01° ≈ 0,000 17 : en degrés, la pente n'est plus 1.", "Base"),
+
+    q("On sait que ∫ de 0 à 2 de f(x) dx = 3 et ∫ de 2 à 5 de f(x) dx = 4. Que vaut ∫ de 0 à 5 de f(x) dx ?",
+      ["12, le produit des deux intégrales", "7, la somme des deux intégrales",
+       "1, la différence des deux intégrales", "On ne peut pas savoir sans la formule de f"], 1,
+      "Relation de Chasles : ∫ de 0 à 5 = ∫ de 0 à 2 + ∫ de 2 à 5 = 3 + 4 = 7. On découpe l'intervalle et on "
+      "additionne les morceaux, sans avoir besoin de la formule de f.", "Base"),
+
+    q("On sait que ∫ de 0 à 5 de f(x) dx = 7. Que vaut ∫ de 5 à 0 de f(x) dx ?",
+      ["7, l'ordre des bornes ne compte pas", "0, car on revient au point de départ", "−7, le signe change",
+       "1/7, l'inverse de l'intégrale"], 2,
+      "Inverser les bornes change le signe : ∫ de 5 à 0 = F(0) − F(5) = −(F(5) − F(0)) = −7. C'est ∫ de a à a "
+      "(largeur nulle) qui vaut 0.", "Base"),
+
+    q("On sait que ∫ de 1 à 3 de f(x) dx = 4. Que vaut ∫ de 1 à 3 de 3f(x) dx ?",
+      ["12, trois fois l'intégrale", "7, l'intégrale plus 3", "4, la constante ne change rien",
+       "64, l'intégrale au cube"], 0,
+      "Linéarité : la constante sort de l'intégrale, ∫ 3f = 3 × ∫ f = 3 × 4 = 12. Multiplier toutes les "
+      "hauteurs par 3 multiplie l'aire par 3.", "Base"),
+
+    q("Laquelle de ces égalités est FAUSSE en général ?",
+      ["∫ de a à c de f = ∫ de a à b de f + ∫ de b à c de f",
+       "∫ de a à b de (f + g) = ∫ de a à b de f + ∫ de a à b de g",
+       "∫ de a à b de 5f = 5 × ∫ de a à b de f",
+       "∫ de a à b de (f × g) = ∫ de a à b de f × ∫ de a à b de g"], 3,
+      "Il n'y a pas de règle pour un produit. Contre-exemple : ∫ de 0 à 1 de x × x dx = 1/3, alors que "
+      "(∫ de 0 à 1 de x dx)² = 1/4. Les trois autres sont Chasles et la linéarité.", "Intermédiaire"),
+
+    q("Un calcul d'aire entre deux courbes donne −9 mm². Que conclure ?",
+      ["La zone est sous l'axe des x : son aire vaut bien −9 mm²",
+       "Le calcul est faux : on a sans doute retranché dans le mauvais ordre",
+       "Le calcul est juste : il suffit d'arrondir à 0 mm²",
+       "Il faut diviser par la largeur de l'intervalle"], 1,
+      "Une aire est toujours positive (positivité de l'intégrale). Un résultat négatif signale presque "
+      "toujours la courbe du bas prise pour celle du haut, ou des bornes inversées : l'aire vaut 9 mm².",
+      "Intermédiaire"),
+
+    q("g est au-dessus de f sur [a ; b]. Comment calcule-t-on l'aire comprise entre les deux courbes ?",
+      ["∫ de a à b de (g(x) − f(x)) dx", "∫ de a à b de (f(x) − g(x)) dx",
+       "∫ de a à b de g(x) dx + ∫ de a à b de f(x) dx", "∫ de a à b de g(x) dx × ∫ de a à b de f(x) dx"], 0,
+      "On intègre la hauteur de la bande entre les courbes, g(x) − f(x) : la courbe du haut moins la courbe "
+      "du bas. L'ordre inverse donne l'opposé de l'aire.", "Base"),
+
+    q("Entre quelles bornes calcule-t-on l'aire du domaine compris entre y = 6x − x² et y = x² ?",
+      ["Entre x = 0 et x = 6", "Entre x = 0 et x = 2", "Entre x = 0 et x = 3", "Entre x = −3 et x = 3"], 2,
+      "Les bornes sont les abscisses où les courbes se coupent : 6x − x² = x² donne 2x(3 − x) = 0, soit x = 0 "
+      "et x = 3. x = 6 est le point où y = 6x − x² recoupe l'axe, pas l'autre courbe.", "Intermédiaire"),
+
+    q("Sur [0 ; 2], y = x et y = x² se croisent en x = 1. Pourquoi ∫ de 0 à 2 de (x − x²) dx ne donne-t-il pas "
+      "l'aire entre les deux courbes ?",
+      ["Parce qu'une intégrale ne peut pas calculer l'aire d'une parabole",
+       "Parce que les bornes doivent toujours commencer en x = 1",
+       "Parce qu'il faudrait multiplier le résultat par 2",
+       "Parce que la courbe du haut change en x = 1 : il faut couper l'intégrale"], 3,
+      "De 0 à 1, x est au-dessus de x² ; de 1 à 2, c'est l'inverse. D'un seul tenant, les deux morceaux se "
+      "compensent (−2/3). On coupe en x = 1 (Chasles) : 1/6 + 5/6 = 1.", "Piège"),
+
+    q("Sur [0 ; 1], on a x² ≤ x. Que peut-on dire de ∫ de 0 à 1 de x² dx, sans la calculer ?",
+      ["Elle est supérieure ou égale à 1/2",
+       "Elle est inférieure ou égale à ∫ de 0 à 1 de x dx, soit 1/2",
+       "Elle est négative, car x² est plus petit que x",
+       "Rien : il faut d'abord trouver une primitive"], 1,
+      "Positivité : si f ≤ g sur [a ; b], alors ∫ f ≤ ∫ g. Donc ∫ de 0 à 1 de x² dx ≤ 1/2, et elle est "
+      "positive car x² ≥ 0. Elle vaut 1/3, bien entre 0 et 1/2.", "Intermédiaire"),
 ]
 
 QUIZ["Mathématiques BTS CPI — probabilités et équations différentielles"] = [
@@ -45889,7 +46114,7 @@ ici.
 BLOC_17 = {
     "id": 17,
     "titre": "Bloc 17 — Mathématiques BTS CPI : programme d'examen",
-    "resume": "Complète le bloc 7 pour l'épreuve de mathématiques : étude de fonctions rationnelles et polynomiales, calcul intégral par primitives, statistique à une variable, fonctions exponentielle et logarithme (fiche 17.7, à lire juste après 17.1), courbes, dérivées et primitives de sin et cos (fiche 17.9, après 17.7), statistique à deux variables (fiche 17.8 : ajustement affine, corrélation).",
+    "resume": "Complète le bloc 7 pour l'épreuve de mathématiques : étude de fonctions rationnelles et polynomiales, calcul intégral par primitives, statistique à une variable, fonctions exponentielle et logarithme (fiche 17.7, à lire juste après 17.1), courbes, dérivées et primitives de sin et cos (fiche 17.9, après 17.7), propriétés de l'intégrale et aire entre deux courbes (fiche 17.12, après 17.2), statistique à deux variables (fiche 17.8 : ajustement affine, corrélation).",
     "fiches": [
         {
             "id": "17.0",
@@ -47376,6 +47601,309 @@ m = 0,833 × 1,05 = **0,875 g**
 par étape, en volume puis en masse — exactement la même logique que le calcul de masse par
 multiplication simple (fiche 7.1, question 3), sauf que la section n'est plus un rectangle
 mais une forme courbe, ce qui impose l'intégrale.
+""",
+        },
+        {
+            "id": "17.12",
+            "titre": "Calcul intégral : propriétés de l'intégrale et aire entre deux courbes",
+            "duree": "4 h",
+            "cours": """
+
+### 1. Pourquoi : une section est souvent comprise entre deux contours
+
+La fiche 17.2 calcule l'aire **sous** une courbe : ∫ de a à b de f(x) dx = F(b) − F(a), avec f positive. En
+atelier, la surface qui compte est souvent comprise **entre deux contours** : la matière à enlever entre le
+brut et la pièce finie, la section d'un joint entre son profil extérieur et son profil intérieur, la paroi
+d'un profilé creux. Pour la calculer, il faut savoir **découper**, **combiner** et **contrôler** des
+intégrales : ce sont les trois propriétés de l'intégrale (relation de Chasles, linéarité, positivité). Cette
+fiche s'appuie sur la 17.2 : primitives et F(b) − F(a) ne sont pas repris.
+
+### 2. La relation de Chasles : découper l'intervalle
+
+> **∫ de a à c de f(x) dx = ∫ de a à b de f(x) dx + ∫ de b à c de f(x) dx**
+
+**Le sens.** Pour un profil au-dessus de l'axe, l'aire de a à c, c'est l'aire de a à b plus l'aire de b à
+c : on découpe le profil en deux morceaux et on additionne (la relation reste vraie pour toute fonction, même
+quand l'intégrale n'est plus une aire, § 4). C'est le même nom que la relation de Chasles des vecteurs (fiche 7.5) : aller de a
+à c, c'est aller de a à b, puis de b à c.
+
+**À quoi ça sert.** Un profil réel change souvent de formule en route : un congé arrondi puis un plat, une
+rampe puis un palier. Chasles dit qu'on coupe là où la formule change.
+
+[[FIG:chasles_integrale]]
+
+**Exemple.** Le profil vaut y = x² de 0 à 2 (le congé), puis y = 4 de 2 à 5 (le plat), en mm.
+∫ de 0 à 2 de x² dx = [x³/3] de 0 à 2 = 8/3 ; ∫ de 2 à 5 de 4 dx = 4 × 3 = 12. Aire totale : 8/3 + 12 = 44/3 ≈
+**14,67 mm²**.
+
+**Deux conséquences à connaître :**
+- **∫ de a à a de f(x) dx = 0** : un intervalle de largeur nulle ne porte aucune aire ;
+- **∫ de b à a de f(x) dx = −∫ de a à b de f(x) dx** : parcourir l'intervalle à l'envers change le signe.
+  Avec Chasles : ∫ de a à b + ∫ de b à a = ∫ de a à a = 0. C'est comme pour les vecteurs : AB + BA = AA = 0,
+  faire un aller-retour, c'est ne pas bouger. C'est pour cela que l'ordre des bornes compte (fiche 17.2,
+  erreur 2).
+
+### 3. La linéarité : combiner des fonctions
+
+> **∫ de a à b de (f(x) + g(x)) dx = ∫ de a à b de f(x) dx + ∫ de a à b de g(x) dx**
+> **∫ de a à b de k × f(x) dx = k × ∫ de a à b de f(x) dx** (k constante)
+
+Le mot « linéarité » veut dire que l'intégrale respecte les sommes et les multiplications par un nombre.
+
+**Le sens.**
+- **La constante sort** : si on multiplie toutes les hauteurs d'un profil par k, l'aire est multipliée par
+  k. La came de la fiche 17.2 (h(x) = 6x − x², aire 36 mm²) agrandie de 1,5 en hauteur a une aire de
+  1,5 × 36 = 54 mm², sans refaire de primitive.
+- **La somme se sépare** : empiler deux hauteurs, c'est additionner les deux aires. Exemple : on pose la
+  came de la 17.2 sur une semelle plate de 2 mm d'épaisseur ; la hauteur devient h(x) + 2, et l'aire vaut
+  36 + 2 × 6 = **48 mm²** : l'aire de la came plus celle de la semelle (rectangle 6 × 2), sans nouvelle
+  primitive.
+
+**À quoi ça sert.** C'est ce qui permet d'intégrer un polynôme terme à terme, comme on l'a fait en 17.2 sans
+le dire : ∫ de 0 à 2 de (3x² + 2x) dx = 3 × ∫ de 0 à 2 de x² dx + 2 × ∫ de 0 à 2 de x dx = 3 × 8/3 + 2 × 2 =
+**12**. Et c'est la clé de l'aire entre deux courbes (§ 5) : ∫ (g − f) = ∫ g − ∫ f.
+
+**Attention : ça ne marche pas pour un produit.** ∫ de 0 à 1 de x × x dx = 1/3, alors que
+(∫ de 0 à 1 de x dx) × (∫ de 0 à 1 de x dx) = 1/2 × 1/2 = 1/4. On n'intègre jamais un produit facteur par
+facteur.
+
+### 4. La positivité : contrôler un résultat
+
+> **Si f(x) ≥ 0 sur [a ; b] (avec a ≤ b), alors ∫ de a à b de f(x) dx ≥ 0.**
+> Conséquence : **si f(x) ≤ g(x) sur [a ; b], alors ∫ de a à b de f(x) dx ≤ ∫ de a à b de g(x) dx.**
+
+*La condition a ≤ b : avec des bornes à l'envers, le signe change (§ 2). Pourquoi la conséquence : si f ≤ g,
+l'écart g − f est positif ou nul ; par la positivité, ∫ (g − f) ≥ 0 ; par la linéarité, ∫ (g − f) = ∫ g − ∫ f ;
+donc ∫ g − ∫ f ≥ 0. En image : si la pièce finie est partout sous le brut, sa section est plus petite que
+celle du brut. Cette quantité ∫ (g − f) sera justement l'aire entre les deux courbes (§ 5).*
+
+**Le sens.** Une aire ne peut pas être négative. Si on intègre une fonction positive, de gauche à droite, et
+qu'on trouve un nombre négatif, **le calcul est faux** : c'est le contrôle de bon sens le plus rapide qui
+soit.
+
+**À quoi ça sert.**
+- **Détecter une erreur** : une aire de −9 mm² signale presque toujours une soustraction à l'envers (bornes
+  inversées, ou courbe du bas prise pour celle du haut).
+- **Encadrer sans calculer** : sur [0 ; 1], x² ≤ x, donc ∫ de 0 à 1 de x² dx ≤ ∫ de 0 à 1 de x dx = 1/2. On
+  sait avant tout calcul que le résultat est entre 0 et 1/2 (il vaut 1/3 ✓).
+
+**Le revers : quand f change de signe, l'intégrale n'est plus l'aire.** Les parties sous l'axe comptent
+négativement et se retranchent (c'est pour cela que ∫ de 0 à 2π de sin t dt = 0, fiche 17.9). Exemple :
+f(x) = x² − 4 sur [0 ; 3] est négative de 0 à 2, positive de 2 à 3.
+- ∫ de 0 à 3 de (x² − 4) dx = [x³/3 − 4x] de 0 à 3 = 9 − 12 = **−3** : ce n'est pas une aire ;
+- l'aire géométrique se calcule en coupant en x = 2 (Chasles), chaque morceau pris positif :
+  ∫ de 0 à 2 de (4 − x²) dx + ∫ de 2 à 3 de (x² − 4) dx = 16/3 + 7/3 = 23/3 ≈ **7,67**.
+
+C'est un cas particulier de l'aire entre deux courbes (§ 5) où l'une des deux est l'axe, la fonction nulle
+y = 0 : sous l'axe, l'axe est la courbe du haut, et l'aire vaut ∫ (0 − f) = −∫ f.
+
+### 5. Le cœur de la fiche : l'aire entre deux courbes
+
+On cherche l'aire de la zone (le « domaine ») comprise entre deux courbes, **g au-dessus**, **f en dessous**,
+pour x allant de a à b.
+
+> **Si f(x) ≤ g(x) sur [a ; b] : Aire = ∫ de a à b de (g(x) − f(x)) dx** — la courbe du **haut** moins la
+> courbe du **bas**.
+
+**D'où ça vient.** Imagine qu'on découpe la zone en fines lamelles verticales, comme des relevés au palpeur
+tous les dixièmes de mm. Chaque lamelle va de la courbe du bas à la courbe du haut : sa hauteur vaut
+g(x) − f(x). On additionne ces lamelles exactement comme h(x) dans la fiche 17.2 : c'est ∫ (g − f). Par la
+linéarité, c'est aussi l'aire sous g moins l'aire sous f (la zone grisée de la figure, à retrancher).
+
+[[FIG:aire_entre_courbes]]
+
+**La méthode en quatre gestes :**
+1. **Les points de rencontre, toujours** : on résout g(x) = f(x), **même si l'énoncé donne les bornes**.
+   - Si l'énoncé ne donne pas les bornes, ce sont ces solutions.
+   - Si l'énoncé donne [a ; b] et qu'une solution tombe **strictement entre a et b**, les courbes se croisent
+     là : on coupera l'intégrale à cet endroit (Chasles). Exemple : sur [0 ; 4], x² = 3x donne x = 0 ou x = 3 ;
+     3 est entre 0 et 4, on coupe en x = 3 (ce cas est détaillé plus bas, « Et si les courbes se
+     croisent »).
+2. **La courbe du haut** : on teste une valeur dans chaque morceau (ou on lit le graphique) ; celle qui donne
+   la plus grande valeur est au-dessus. Une seule valeur par morceau suffit : entre deux points de rencontre
+   consécutifs, les courbes ne peuvent pas changer de place sans se croiser.
+3. **L'intégrale** : ∫ de a à b de (haut − bas) dx, avec une primitive de la différence.
+4. **Le contrôle** : le résultat doit être **positif** (§ 4), et plus petit que le **rectangle de
+   contrôle** : largeur b − a, hauteur = la plus grande épaisseur haut − bas (chaque lamelle est au plus
+   aussi haute que cette épaisseur : toutes ensemble, elles tiennent dans le rectangle). Quand cette épaisseur est une
+   arche de parabole qui s'annule aux deux bornes, l'aire vaut exactement les **2/3** du rectangle : c'est
+   déjà le cas de la came de la 17.2 (36 mm² dans 6 × 9 = 54 mm², soit 2/3). D'où un contrôle express.
+
+**Exemple (la figure).** g(x) = 6x − x² et f(x) = x².
+1. Bornes : 6x − x² = x² donne 6x − 2x² = 0, soit 2x(3 − x) = 0 : **x = 0 et x = 3**.
+2. Courbe du haut : en x = 1, g(1) = 5 et f(1) = 1 : **g est au-dessus**.
+3. Aire = ∫ de 0 à 3 de (6x − 2x²) dx = [3x² − 2x³/3] de 0 à 3 = 27 − 18 = **9**. Autre chemin (linéarité) :
+   ∫ de 0 à 3 de g = 18, ∫ de 0 à 3 de f = 9, et 18 − 9 = 9 ✓.
+4. Contrôle : 9 > 0 ✓ ; l'épaisseur 6x − 2x² s'annule en 0 et en 3, et une arche de parabole culmine au
+   milieu de ses deux zéros, donc en x = 1,5, où elle vaut 6,75 − 2,25 = 4,5 ;
+   rectangle de contrôle 3 × 4,5 = 13,5, et 9/13,5 = 2/3 ✓ (une arche de parabole).
+
+**Les deux pièges classiques :**
+- **Oublier de retrancher** : ∫ de 0 à 3 de g(x) dx = 18, c'est l'aire sous g jusqu'à l'axe, pas entre les
+  deux courbes.
+- **Se tromper de courbe du haut** : ∫ de 0 à 3 de (f − g) dx = −9. Le signe moins le trahit (§ 4).
+
+Deux cas particuliers, pour finir.
+
+**Et si une courbe passe sous l'axe ?** La formule ne change pas : seule compte la différence g(x) − f(x).
+Au § 4, on intégrait une courbe seule, qui pouvait devenir négative ; ici, on intègre un **écart** g − f, qui
+reste positif tant que g est au-dessus, même si les deux courbes sont sous l'axe. Si on monte les deux
+courbes de 10 mm, l'écart entre elles, donc l'aire, reste le même. Exemple : g(x) = 1 − x² et f(x) = x² − 1
+sur [−1 ; 1] : ∫ g = 4/3 et ∫ f = −4/3 (f est sous l'axe), donc Aire = 4/3 − (−4/3) = **8/3** : retrancher
+une intégrale négative revient à l'ajouter.
+
+**Et si les courbes se croisent entre a et b ?** La courbe du haut change en route : on coupe au point de
+croisement (Chasles) et on prend, sur chaque morceau, haut moins bas.
+
+[[FIG:courbes_qui_se_croisent]]
+
+Sur [0 ; 2], y = x et y = x² se croisent en x = 1 (x = x² donne x = 0 ou x = 1). De 0 à 1, x est au-dessus ;
+de 1 à 2, x² est au-dessus. Aire = ∫ de 0 à 1 de (x − x²) dx + ∫ de 1 à 2 de (x² − x) dx = 1/6 + 5/6 = **1**. Un
+seul calcul de 0 à 2 donnerait ∫ de 0 à 2 de (x − x²) dx = −2/3 : faux, les morceaux se compensent. D'un seul
+tenant, le morceau vert compte +1/6, mais le morceau rouge compte −5/6 (on y fait bas − haut) : 1/6 − 5/6 =
+−4/6 = −2/3.
+
+### 6. Pour aller plus loin (non exigible) : les méthodes approchées
+
+*Ce paragraphe n'est pas une capacité exigée : le programme demande seulement de t'avoir montré ces
+méthodes. On ne te demandera pas de les retrouver seul, mais un sujet peut te faire lire ou compléter un petit
+algorithme comme celui ci-dessous.*
+
+Quand on n'a pas de formule, seulement des **points mesurés** (un profil relevé au palpeur tous les 1 mm, une
+courbe de capteur), on ne peut pas chercher de primitive. On remplace alors la courbe par des segments entre
+les points mesurés et on additionne les aires des **trapèzes** obtenus (l'aire d'un trapèze a servi dès la
+fiche 7.2) :
+
+> **Aire ≈ h × (y₀/2 + y₁ + y₂ + … + yₙ₋₁ + yₙ/2)**, avec h le pas entre deux mesures.
+
+*D'où viennent les /2 : chaque trapèze a pour aire h × (hauteur gauche + hauteur droite)/2. Un point intérieur
+sert de côté à deux trapèzes : il compte deux fois une moitié, donc une fois en tout. Les deux extrémités ne
+servent qu'à un trapèze : elles gardent leur moitié.*
+
+[[FIG:methode_trapezes]]
+
+Sur le profil y = 6x − x² mesuré tous les h = 1 mm (hauteurs 0, 5, 8, 9, 8, 5, 0), on trouve
+1 × (0/2 + 5 + 8 + 9 + 8 + 5 + 0/2) = **35** mm², pour une valeur exacte de 36 mm². Avec un pas de 0,5 mm, on trouve
+35,75 : plus le pas est fin, plus l'approximation est bonne. C'est ce que font un tableur ou un logiciel de
+métrologie, avec un petit algorithme (« ← » se lit « prend la valeur ») :
+
+```
+h ← (b − a)/n
+S ← (f(a) + f(b))/2
+pour k allant de 1 à n − 1 : S ← S + f(a + k × h)
+aire ≈ h × S
+```
+
+Il existe d'autres méthodes du même esprit : le **point-milieu** (des rectangles dont la hauteur est prise au
+milieu de chaque pas) et **Monte-Carlo** (on tire des points au hasard dans un rectangle, on compte la
+proportion p de points qui tombent sous la courbe, et l'aire vaut environ p × aire du rectangle).
+
+### 7. Les erreurs classiques et à retenir
+
+**Erreurs classiques :**
+1. **Oublier de retrancher la courbe du bas** : ∫ g seul donne l'aire jusqu'à l'axe, pas entre les courbes.
+2. **Prendre la courbe du bas pour celle du haut** : on obtient l'opposé de l'aire, un nombre négatif.
+3. **Ne pas couper quand les courbes se croisent** : les morceaux se compensent et le résultat est trop
+   petit, parfois nul.
+4. **Oublier de chercher les bornes** : ce sont les solutions de g(x) = f(x) quand l'énoncé ne les donne pas.
+5. **Intégrer un produit facteur par facteur** : ∫ (f × g) n'est pas ∫ f × ∫ g.
+6. **Accepter une aire négative** : c'est toujours le signe d'une erreur.
+
+**À retenir :**
+- **Chasles** : ∫ de a à c = ∫ de a à b + ∫ de b à c ; ∫ de b à a = −∫ de a à b ; on coupe là où la formule
+  change.
+- **Linéarité** : ∫ (f + g) = ∫ f + ∫ g ; ∫ k f = k ∫ f (pas de règle pour un produit).
+- **Positivité** : f ≥ 0 et a ≤ b donnent ∫ ≥ 0 ; f ≤ g donne ∫ f ≤ ∫ g. Une aire négative signale une erreur.
+- **Aire entre deux courbes** = ∫ de a à b de (haut − bas) dx ; toujours résoudre g = f : bornes, ou
+  croisement où couper ; contrôle : positive, environ 2/3 du rectangle de contrôle pour une arche de
+  parabole.
+""",
+            "formules": """
+
+**Chasles** — ∫ de a à c = ∫ de a à b + ∫ de b à c · ∫ de a à a = 0 · ∫ de b à a = −∫ de a à b
+
+**Linéarité** — ∫ (f + g) = ∫ f + ∫ g · ∫ k f = k ∫ f · ∫ (f × g) ≠ ∫ f × ∫ g
+
+**Positivité** — f ≥ 0 sur [a ; b] (a ≤ b) ⟹ ∫ de a à b de f ≥ 0 · f ≤ g ⟹ ∫ f ≤ ∫ g
+
+**Aire entre deux courbes** (f ≤ g sur [a ; b]) — Aire = ∫ de a à b de (g(x) − f(x)) dx · bornes : g(x) = f(x)
+· si les courbes se croisent en c : couper en c
+
+**Pour aller plus loin (non exigible)** — trapèzes : Aire ≈ h × (y₀/2 + y₁ + … + yₙ₋₁ + yₙ/2)
+
+        """,
+            "exemple": """
+**Cas industriel — Usiner une gorge : combien de matière enlever ?**
+
+Une plaque en aluminium a une face plane à la hauteur y = 10 mm. On y usine une gorge de 6 mm de large, dont
+le fond suit le profil f(x) = x²/2 − 3x + 10 (x et y en mm, x de 0 à 6). La gorge court sur **120 mm** de
+long. Le bureau des méthodes veut le volume de copeaux, leur masse (aluminium : 2,7 g/cm³) et le temps
+d'ébauche avec une fraise qui enlève **3 cm³ par minute**.
+
+**Étape 1 — Les bornes et la courbe du haut.** Le brut (y = 10) et le fond de gorge se rejoignent quand
+x²/2 − 3x + 10 = 10, soit x(x/2 − 3) = 0 : **x = 0 et x = 6**, les deux bords de la gorge. Au milieu, en
+x = 3 : f(3) = 4,5 − 9 + 10 = 5,5 < 10. Le brut est **au-dessus** : la gorge a 10 − 5,5 = 4,5 mm de profondeur.
+
+**Étape 2 — La hauteur de matière à enlever.** À l'abscisse x : 10 − f(x) = 10 − x²/2 + 3x − 10 = 3x − x²/2.
+
+**Étape 3 — La section de la gorge.** Aire = ∫ de 0 à 6 de (3x − x²/2) dx = [3x²/2 − x³/6] de 0 à 6 =
+54 − 36 = **18 mm²**. *Autre chemin, par la linéarité : ∫ de 0 à 6 de 10 dx − ∫ de 0 à 6 de f(x) dx = 60 − 42 =
+18 ✓.*
+
+**Étape 4 — Contrôle.** 18 > 0 ✓. Le rectangle de contrôle (largeur 6, profondeur maximale 4,5) vaut
+6 × 4,5 = 27 mm² ; la gorge, dont l'épaisseur 3x − x²/2 est une arche de parabole, en occupe les deux tiers
+(18/27 = 0,667), comme la came de la fiche 17.2 ✓.
+
+**Étape 5 — Volume, masse, temps.** Volume = 18 × 120 = **2 160 mm³ = 2,16 cm³**. Masse de copeaux :
+2,16 × 2,7 ≈ **5,8 g**. Temps d'ébauche : 2,16/3 = 0,72 min ≈ **43 s**.
+
+**Ce que le calcul apprend.** La section se lit **entre deux contours** : le brut et la pièce finie. Oublier
+de retrancher (∫ de 0 à 6 de 10 dx = 60 mm²) aurait fait croire à 7 200 mm³ de copeaux, plus de trois fois
+trop : un temps de cycle et un devis faux. Le même calcul donne la matière à **ajouter** (un cordon de
+soudure, un rechargement) : la section comprise entre la pièce et le profil visé.
+""",
+            "exercice": """
+**1.** On sait que ∫ de 0 à 1 de f(x) dx = 2 et ∫ de 1 à 4 de f(x) dx = 5. Calcule ∫ de 0 à 4 de f(x) dx, puis
+∫ de 4 à 1 de f(x) dx.
+
+**2.** On sait que ∫ de 0 à 2 de f(x) dx = 3 et ∫ de 0 à 2 de g(x) dx = 5. Calcule ∫ de 0 à 2 de (2f(x) − g(x)) dx,
+puis ∫ de 0 à 2 de (f(x) + 4) dx.
+
+**3.** Un élève annonce ∫ de 0 à 3 de (x² + 1) dx = −12. Sans refaire le calcul, explique pourquoi c'est
+forcément faux. Puis calcule la bonne valeur.
+
+**4.** Calcule l'aire du domaine compris entre la courbe y = 5 − x² et la droite y = 1.
+
+**5.** Sur [0 ; 3], on considère y = x² et y = 2x. Un élève calcule ∫ de 0 à 3 de (2x − x²) dx et trouve 0.
+Explique pourquoi ce n'est pas l'aire entre les deux courbes, puis calcule cette aire.
+
+**6.** La section d'une pièce (cotes en cm) est la zone comprise entre la droite y = x + 2 et la parabole
+y = x². Trouve les bornes, puis l'aire de la section.
+""",
+            "corrige": """
+**1.** Chasles : ∫ de 0 à 4 = ∫ de 0 à 1 + ∫ de 1 à 4 = 2 + 5 = **7**. Bornes inversées :
+∫ de 4 à 1 = −∫ de 1 à 4 = **−5**.
+
+**2.** Linéarité : ∫ (2f − g) = 2 × 3 − 5 = **1**. ∫ (f + 4) = ∫ f + ∫ 4 = 3 + 4 × 2 = **11** (la constante 4
+s'intègre sur un intervalle de largeur 2).
+
+**3.** Sur [0 ; 3], x² + 1 est toujours positive et les bornes sont dans l'ordre : l'intégrale est positive
+(positivité). −12 est donc faux, sans doute une soustraction à l'envers. Bonne valeur :
+[x³/3 + x] de 0 à 3 = 9 + 3 = **12**.
+
+**4.** Bornes : 5 − x² = 1 donne x² = 4, **x = −2 et x = 2**. Courbe du haut : en x = 0, 5 − 0 = 5 > 1, la
+parabole est au-dessus. Aire = ∫ de −2 à 2 de (5 − x² − 1) dx = ∫ de −2 à 2 de (4 − x²) dx =
+[4x − x³/3] de −2 à 2 = (8 − 8/3) − (−8 + 8/3) = 32/3 ≈ **10,67**. Contrôle : rectangle de contrôle 4 × 4 = 16 (largeur 4,
+épaisseur maximale 4 en x = 0), et 10,67/16 = 2/3 ✓.
+
+**5.** Les courbes se croisent dans l'intervalle : x² = 2x donne x = 0 ou x = 2. De 0 à 2, 2x est au-dessus ; de
+2 à 3, x² est au-dessus. Le calcul d'un seul tenant fait se compenser les deux morceaux (4/3 − 4/3 = 0). Aire =
+∫ de 0 à 2 de (2x − x²) dx + ∫ de 2 à 3 de (x² − 2x) dx = (4 − 8/3) + ((9 − 9) − (8/3 − 4)) = 4/3 + 4/3 = 8/3 ≈
+**2,67**.
+
+**6.** Bornes : x² = x + 2 donne x² − x − 2 = 0, Δ = 1 + 8 = 9, **x = −1 et x = 2**. Courbe du haut : en x = 0,
+0 + 2 = 2 > 0, la droite est au-dessus. Aire = ∫ de −1 à 2 de (x + 2 − x²) dx = [x²/2 + 2x − x³/3] de −1 à 2 =
+(2 + 4 − 8/3) − (1/2 − 2 + 1/3) = 10/3 + 7/6 = 27/6 = **4,5 cm²**.
 """,
         },
         {
@@ -56497,6 +57025,21 @@ _mth("17.2", "Calculer une aire par primitive et intégrale définie", [
 ], "∫ de 0 à 3 de (x²−2x+3) dx : F(x) = x³/3 − x² + 3x, vérifiée par "
    "F'(x) = x²−2x+3 = f(x). F(3) − F(0) = 9 − 0 = 9.")
 
+_mth("17.12", "Calculer l'aire entre deux courbes", [
+    "**Résoudre g(x) = f(x), toujours** : sans bornes données, les solutions sont les bornes ; avec des bornes "
+    "données, une solution strictement entre elles est un croisement, où l'on coupera l'intégrale (Chasles).",
+    "**Trouver la courbe du haut** : tester une valeur dans chaque morceau ; celle qui donne la plus grande "
+    "valeur est au-dessus (entre deux points de rencontre, les courbes ne changent pas de place).",
+    "**Intégrer la hauteur** : Aire = ∫ de a à b de (haut − bas) dx, avec une primitive de la différence "
+    "(fiche 17.2).",
+    "**Contrôler** : l'aire doit être positive (positivité) et plus petite que le rectangle de contrôle "
+    "(largeur × plus grande épaisseur haut − bas) ; quand l'épaisseur est une arche de parabole qui s'annule "
+    "aux deux bornes, elle en vaut exactement les 2/3. Un "
+    "résultat négatif signale une soustraction à l'envers.",
+    "**Exploiter** : aire × longueur = volume de la section extrudée ; volume × masse volumique = masse.",
+], "g(x) = 6x − x² et f(x) = x² : 6x − x² = x² donne x = 0 et x = 3 ; g(1) = 5 > f(1) = 1 ; "
+       "Aire = ∫ de 0 à 3 de (6x − 2x²) dx = 27 − 18 = 9.")
+
 _mth("17.3", "Calculer médiane, quartiles et écart interquartile", [
     "**Trier la série par ordre croissant AVANT tout calcul** — l'ordre "
     "brut des mesures n'a rien à voir avec l'ordre statistique.",
@@ -59501,6 +60044,157 @@ def gen_primitive_trig():
     }
 
 
+def gen_aire_entre_courbes():
+    """Aire entre deux courbes dont les points d'intersection sont donnés : parabole et droite, ou deux
+    paraboles. Les deux courbes sont présentées dans un ordre tiré au hasard : il faut trouver celle du haut.
+    Erreurs visées : oublier de retrancher, soustraire à l'envers, additionner les aires, ne prendre qu'une
+    moitié."""
+    from fractions import Fraction
+    while True:
+        cas = random.choice(["droite", "paraboles"])
+        if cas == "droite":
+            p = random.choice([3, 4, 5, 6, 7, 8])
+            q = random.choice([1, 2, 3, 4])
+            d = p - q
+            if d < 2:
+                continue
+            haut, bas = _termes([(p, "x"), (-1, "x²")]), _termes([(q, "x")])
+            f_haut, f_bas = (lambda x: p * x - x * x), (lambda x: q * x)
+            a_, b_ = 0, d
+            rep = d ** 3 / 6
+            int_haut, int_bas = p * d * d / 2 - d ** 3 / 3, q * d * d / 2
+            diff = _termes([(d, "x"), (-1, "x²")])
+            prim = f"{_coef(d / 2, 'x²')} − x³/3"
+            Fb, Fa = d ** 3 / 6, 0
+            Fb_q, Fa_q = Fraction(d ** 3, 6), Fraction(0)
+            dev = _termes([(p, "x"), (-1, "x²"), (-q, "x")])
+            xt = 1
+            demi = None
+        else:
+            m = random.choice([1, 2, 3])
+            ka, kb = random.choice([1, 2, 3]), random.choice([1, 2, 3])
+            haut = _termes([(ka * m * m, ""), (-ka, "x²")])
+            bas = _termes([(kb, "x²"), (-kb * m * m, "")])
+            f_haut, f_bas = (lambda x: ka * (m * m - x * x)), (lambda x: kb * (x * x - m * m))
+            a_, b_ = -m, m
+            rep = (ka + kb) * 4 * m ** 3 / 3
+            int_haut, int_bas = ka * 4 * m ** 3 / 3, -kb * 4 * m ** 3 / 3
+            s = ka + kb
+            diff = _termes([(s * m * m, ""), (-s, "x²")])
+            prim = f"{s * m * m}x − {s}x³/3" if s % 3 else f"{s * m * m}x − {_coef(s // 3, 'x³')}"
+            Fb, Fa = 2 * s * m ** 3 / 3, -2 * s * m ** 3 / 3
+            Fb_q, Fa_q = Fraction(2 * s * m ** 3, 3), Fraction(-2 * s * m ** 3, 3)
+            dev = _termes([(ka * m * m, ""), (-ka, "x²"), (-kb, "x²"), (kb * m * m, "")])
+            xt = 0
+            demi = rep / 2
+        diags = [(int_haut, "Il manque la courbe du bas : ∫ de la courbe du haut seule donne l'aire jusqu'à "
+                            "l'axe, pas entre les deux courbes. On intègre (haut − bas)."),
+                 (-rep, "Le résultat est négatif : tu as pris la courbe du bas pour celle du haut. Une aire est "
+                        "toujours positive : haut − bas."),
+                 (int_haut + int_bas, "Tu as additionné les deux intégrales : l'aire entre les courbes est "
+                                      "∫ (haut − bas), on retranche.")]
+        if demi is not None:
+            diags.append((demi, f"Tu n'as intégré que de 0 à {m} : les bornes sont x = −{m} et x = {m}."))
+        vals = [v for v, _ in diags]
+        if all(abs(v - rep) > 0.05 for v in vals) and                 all(abs(vals[i] - vals[j]) > 0.05 for i in range(len(vals)) for j in range(i + 1, len(vals))):
+            break
+    courbes = [haut, bas]
+    random.shuffle(courbes)
+
+    def exact(q):
+        """Valeur exacte : entier, ou fraction suivie de sa valeur approchée (« 10/3 ≈ 3,33 »)."""
+        if q.denominator == 1:
+            return _fr_court(q.numerator)
+        signe = "−" if q < 0 else ""
+        return f"{signe}{abs(q.numerator)}/{q.denominator} ≈ {fr(float(q), 2).replace('-', '−')}"
+    return {
+        "titre": "Aire entre deux courbes",
+        "enonce": (f"Les courbes y = {courbes[0]} et y = {courbes[1]} se coupent en x = {_fr_court(a_)} et "
+                   f"x = {_fr_court(b_)}. Calcule l'aire du domaine compris entre elles, à 0,01 près."),
+        "rep": rep, "tol": 0.01, "unite": "",
+        "diag": [_diag(v, m_) for v, m_ in diags],
+        "corr": [f"**Courbe du haut.** En x = {xt} (entre les bornes) : y = {haut} vaut {_fr_court(f_haut(xt))}, "
+                 f"y = {bas} vaut {_fr_court(f_bas(xt))}. La courbe du haut est y = {haut}.",
+                 f"**Hauteur.** ({haut}) − ({bas}) = {dev} = {diff} (le signe moins change le signe de "
+                 f"chaque terme de la courbe du bas).",
+                 f"**Intégrale.** Une primitive est F(x) = {prim}. F({_fr_court(b_)}) = {exact(Fb_q)} ; "
+                 f"F({_fr_court(a_)}) = {exact(Fa_q)}. Aire = ∫ de {_fr_court(a_)} à {_fr_court(b_)} de ({diff}) dx "
+                 f"= F({_fr_court(b_)}) − F({_fr_court(a_)}) = "
+                 + (f"{exact(Fb_q - Fa_q).split(' ≈')[0]} ≈ **{fr(rep, 2)}**" if (Fb_q - Fa_q).denominator != 1
+                    else f"**{fr(rep, 2)}**")
+                 + " (positive ✓)."],
+        "indice": "Teste une valeur entre les bornes pour trouver la courbe du haut, puis intègre (haut − bas).",
+    }
+
+
+def gen_chasles_linearite():
+    """Relation de Chasles et linéarité à partir d'intégrales connues.
+    Erreurs visées : oublier le changement de signe quand on inverse les bornes, oublier un morceau,
+    oublier un coefficient."""
+    while True:
+        a = random.choice([0, 1, 2])
+        b = a + random.choice([1, 2, 3])
+        c = b + random.choice([1, 2, 3])
+        i1, i2, j = [random.choice([-4, -3, -2, 2, 3, 4, 5, 6, 7, 8]) for _ in range(3)]
+        cas = random.choice(["somme", "inverse", "difference", "lineaire"])
+        donnees = f"∫ de {a} à {b} de f(x) dx = {_fr_court(i1)} et ∫ de {b} à {c} de f(x) dx = {_fr_court(i2)}"
+        if cas == "somme":
+            question = f"Calcule ∫ de {a} à {c} de f(x) dx."
+            rep = i1 + i2
+            diags = [(i1 - i2, "Chasles additionne les deux morceaux : ∫ de a à c = ∫ de a à b + ∫ de b à c."),
+                     (i1 * i2, "On additionne les morceaux, on ne les multiplie pas.")]
+            calc = f"Chasles : ∫ de {a} à {c} = {_fr_court(i1)} + {_terme(i2)} = **{_fr_court(rep)}**."
+        elif cas == "inverse":
+            question = f"Calcule ∫ de {c} à {a} de f(x) dx."
+            rep = -(i1 + i2)
+            diags = [(i1 + i2, "Les bornes sont inversées (de c vers a) : le signe change, ∫ de c à a = "
+                               "−∫ de a à c."),
+                     (-i1 + i2, "Le signe change pour toute l'intégrale : −(∫ de a à b + ∫ de b à c).")]
+            calc = (f"Chasles : ∫ de {a} à {c} = {_fr_court(i1)} + {_terme(i2)} = {_fr_court(i1 + i2)} ; "
+                    f"bornes inversées : ∫ de {c} à {a} = **{_fr_court(rep)}**.")
+        elif cas == "difference":
+            s = i1 + i2
+            donnees = f"∫ de {a} à {c} de f(x) dx = {_fr_court(s)} et ∫ de {a} à {b} de f(x) dx = {_fr_court(i1)}"
+            question = f"Calcule ∫ de {b} à {c} de f(x) dx."
+            rep = i2
+            diags = [(s + i1, "Chasles : ∫ de a à c = ∫ de a à b + ∫ de b à c, donc ∫ de b à c = ∫ de a à c − "
+                              "∫ de a à b : on retranche."),
+                     (i1 - s, "Ordre de la soustraction : ∫ de b à c = ∫ de a à c − ∫ de a à b.")]
+            calc = (f"Chasles : ∫ de {a} à {c} = ∫ de {a} à {b} + ∫ de {b} à {c}, donc ∫ de {b} à {c} = "
+                    f"{_fr_court(s)} − {_terme(i1)} = **{_fr_court(rep)}**.")
+        else:
+            k = random.choice([2, 3, -2])
+            ell = random.choice([2, 3, -1])
+            donnees += f", et ∫ de {a} à {c} de g(x) dx = {_fr_court(j)}"
+            expr = _termes([(k, "f(x)"), (ell, "g(x)")])
+            question = f"Calcule ∫ de {a} à {c} de ({expr}) dx."
+            rep = k * (i1 + i2) + ell * j
+            diags = [(k * i1 + ell * j, f"Il manque le morceau de {b} à {c} : sur [{a} ; {c}], ∫ f = "
+                                        f"∫ de {a} à {b} + ∫ de {b} à {c} (Chasles)."),
+                     (k * (i1 + i2) + j, f"Le coefficient {_fr_court(ell)} de g sort aussi de l'intégrale : "
+                                         f"∫ ({_coef(ell, 'g')}) = {_fr_court(ell)} × ∫ g."),
+                     ((i1 + i2) + ell * j, f"Le coefficient {_fr_court(k)} de f sort aussi de l'intégrale : "
+                                           f"∫ ({_coef(k, 'f')}) = {_fr_court(k)} × ∫ f.")]
+            second = (f" + {ell} × {_terme(j)}" if ell > 0 else
+                      f" − {_terme(j)}" if ell == -1 else f" − {-ell} × {_terme(j)}")
+            calc = (f"Chasles : ∫ de {a} à {c} de f = {_fr_court(i1)} + {_terme(i2)} = {_fr_court(i1 + i2)}. "
+                    f"Linéarité : ∫ ({expr}) = {_fr_court(k)} × {_terme(i1 + i2)}{second} = "
+                    f"**{_fr_court(rep)}**.")
+        vals = [v for v, _ in diags]
+        if rep != 0 and all(abs(v - rep) > 0.5 for v in vals) and \
+                all(abs(vals[i] - vals[j_]) > 0.5 for i in range(len(vals)) for j_ in range(i + 1, len(vals))):
+            break
+    return {
+        "titre": "Chasles et linéarité",
+        "enonce": f"On sait que {donnees}. {question}",
+        "rep": rep, "tol": 0.01, "unite": "", "decimales": 0,
+        "diag": [_diag(v, m_) for v, m_ in diags],
+        "corr": [f"**Propriétés de l'intégrale.** {calc}"],
+        "indice": "Chasles : ∫ de a à c = ∫ de a à b + ∫ de b à c ; inverser les bornes change le signe ; "
+                  "linéarité : ∫ (2f + 3g) = 2 ∫ f + 3 ∫ g.",
+    }
+
+
 def decimales_affichage(tol):
     """Nombre de décimales pour afficher la réponse d'un générateur : assez pour que la valeur
     AFFICHÉE soit acceptée par la tolérance (10⁻ᵈ ≤ tol, donc erreur d'arrondi ≤ tol/2), et au
@@ -59601,7 +60295,8 @@ def fabriquer_exo(famille=None):
                                   gen_proba_poisson, gen_parametre_poisson,
                                   gen_calcul_complexe, gen_racines_complexes,
                                   gen_constantes_ci, gen_solution_particuliere,
-                                  gen_periode_frequence, gen_primitive_trig],
+                                  gen_periode_frequence, gen_primitive_trig,
+                                  gen_aire_entre_courbes, gen_chasles_linearite],
     }
     if famille and famille in catalogue:
         pool = catalogue[famille]
@@ -63962,6 +64657,115 @@ ATELIERS = [
         "a_retenir": "À retenir : sur un tracé, A = demi-écart crête-creux, T = temps entre deux crêtes, ω = 2π/T, "
                      "φ = −ω t₀, avec t₀ l'instant du maximum le plus proche de t = 0 (négatif si ce maximum arrive après 0). En dérivant, ω sort : "
                      "vitesse maximale A ω, accélération maximale A ω².",
+    },
+    {
+        "id": "at153",
+        "chapitre": "Bloc 17",
+        "titre": "Section d'un patin de guidage en lentille : l'aire entre deux arcs",
+        "theme": "Calcul intégral",
+        "fiche": "17.12",
+        "vocabulaire": [
+            ("aire entre deux courbes", "l'aire comprise entre une courbe du haut g et une courbe du bas f : "
+             "∫ de a à b de (g(x) − f(x)) dx."),
+            ("bornes", "ici, les abscisses où les deux courbes se coupent (solutions de g(x) = f(x)) ; quand "
+             "l'énoncé impose d'autres bornes, une solution située entre elles est un croisement où l'on coupe."),
+            ("positivité", "une aire est toujours positive : un résultat négatif signale une soustraction à "
+             "l'envers."),
+        ],
+        "enonce": "Un patin de guidage en PTFE a une section en forme de lentille, comprise entre deux arcs "
+                  "paraboliques : y = 10 − x²/4 et y = x²/4 + 2 (x et y en mm). Vue en coupe, elle ressemble à une "
+                  "lentille de loupe posée à plat : les deux arcs se rejoignent aux deux pointes ; au centre, "
+                  "l'arc du haut culmine à 10 mm et celui du bas descend à 2 mm. Le patin est extrudé sur 25 mm "
+                  "de long ; le PTFE a une masse volumique de 2,2 g/cm³. On veut l'aire de la section, puis le "
+                  "volume et la masse du patin.",
+        "etapes": [
+            {"type": "numerique", "label": "Abscisse positive du point où les deux arcs se coupent (en mm)",
+             "unite": "mm", "attendu": 4, "tol": 0.01,
+             "consigne": "Résous 10 − x²/4 = x²/4 + 2.",
+             "indice": "On regroupe : 8 = x²/2, donc x² = 16.",
+             "pieges": [(16, "16 est x² : il reste à prendre la racine carrée."),
+                        (8, "x²/2 = 8 donne x² = 16, pas x = 8 : il faut multiplier par 2, puis prendre la "
+                            "racine carrée."),
+                        (math.sqrt(32), "x²/4 + x²/4 = x²/2 : tu n'as compté qu'un seul x²/4 en regroupant.")]},
+            {"type": "qcm", "label": "La courbe du haut",
+             "question": "Entre x = −4 et x = 4, quelle courbe est au-dessus de l'autre ?",
+             "options": ["y = x²/4 + 2, car le coefficient de x² est positif",
+                         "Aucune : elles se croisent au milieu, en x = 0",
+                         "y = 10 − x²/4, car en x = 0 elle vaut 10 contre 2"],
+             "bonne": 2,
+             "diagnostics": {0: "Le signe du coefficient de x² dit si l'arc est tourné vers le haut ou vers le "
+                                "bas, pas lequel est au-dessus. On teste une valeur : en x = 0, 10 contre 2.",
+                             1: "Elles ne se coupent qu'en x = −4 et x = 4. En x = 0, l'une vaut 10 et l'autre 2 : "
+                                "elles sont bien séparées."}},
+            {"type": "numerique", "label": "Épaisseur de la lentille au centre, en x = 0 (en mm)", "unite": "mm",
+             "attendu": 8, "tol": 0.01,
+             "consigne": "Hauteur de la bande en x = 0 : courbe du haut moins courbe du bas.",
+             "indice": "10 − 2.",
+             "pieges": [(12, "On retranche la courbe du bas : 10 − 2, pas 10 + 2."),
+                        (-8, "Courbe du haut moins courbe du bas : 10 − 2.")]},
+            {"type": "numerique", "label": "Aire de la section (en mm², à 0,05 près)", "unite": "mm²",
+             "attendu": 128 / 3, "tol": 0.05,
+             "consigne": "Aire = ∫ de −4 à 4 de ((10 − x²/4) − (x²/4 + 2)) dx = ∫ de −4 à 4 de (8 − x²/2) dx.",
+             "indice": "Une primitive de 8 − x²/2 est 8x − x³/6 ; calcule F(4) − F(−4). Attention à F(−4) : "
+                       "(−4)³ = −64, donc −(−64)/6 = +64/6. Garde F(4) = 64/3 en fraction jusqu'au bout. Astuce : la lentille est symétrique, F(−4) = −F(4), "
+                       "donc Aire = 2 × F(4).",
+             "pieges": [(208 / 3, "C'est l'aire sous l'arc du haut seul : il faut retrancher l'arc du bas, "
+                                  "∫ (haut − bas)."),
+                        (-128 / 3, "Une aire est positive : tu as retranché dans le mauvais ordre."),
+                        (64 / 3, "Tu n'as intégré que de 0 à 4 : les bornes sont −4 et 4 (la lentille est "
+                                 "symétrique, il faut doubler)."),
+                        (80 / 3, "C'est l'aire sous l'arc du bas seul : l'aire de la lentille est entre les deux "
+                                 "arcs."),
+                        (224 / 3, "Les parenthèses : −(x²/4 + 2) = −x²/4 − 2, la hauteur est 8 − x²/2, pas "
+                                  "12 − x²/2."),
+                        (0, "F(−4) = −64/3, et on la retranche : F(4) − F(−4) = 64/3 − (−64/3) = 64/3 + 64/3 = 128/3. "
+                            "Retrancher un nombre négatif revient à l'ajouter.")]},
+            {"type": "numerique", "label": "Volume du patin (en mm³, à 5 près)", "unite": "mm³",
+             "attendu": 128 / 3 * 25, "tol": 5,
+             "depend_de": {"etape": 4, "formule": lambda v: v * 25},
+             "consigne": "Volume = aire de la section × longueur d'extrusion (25 mm).",
+             "indice": "42,67 × 25.",
+             "pieges": [(128 / 3 * 25 / 1000, "La question demande des mm³ : ne convertis pas encore en cm³."),
+                        (128 / 3 / 25, "On multiplie l'aire par la longueur, on ne divise pas.")]},
+            {"type": "numerique", "label": "Masse du patin (en g, à 0,01 près)", "unite": "g",
+             "attendu": 128 / 3 * 25 / 1000 * 2.2, "tol": 0.01,
+             "depend_de": {"etape": 5, "formule": lambda v: v / 1000 * 2.2},
+             "consigne": "Convertis le volume en cm³ (1 cm³ = 1 000 mm³), puis multiplie par 2,2 g/cm³.",
+             "indice": "1 066,7 mm³ = 1,0667 cm³.",
+             "pieges": [(128 / 3 * 25 * 2.2, "La masse volumique est en g/cm³ : convertis d'abord le volume "
+                                             "en cm³ (÷ 1 000)."),
+                        (128 / 3 * 25 / 1000 / 2.2, "Masse = volume × masse volumique : on multiplie par 2,2.")]},
+            {"type": "qcm", "label": "Contrôler un résultat",
+             "question": "Un collègue annonce une section de −42,67 mm². Que lui répondre ?",
+             "options": ["C'est juste : la lentille est en partie sous l'axe des x",
+                         "C'est faux : une aire est positive, il a retranché dans le mauvais ordre",
+                         "C'est juste : il suffit de garder la valeur telle quelle"],
+             "bonne": 1,
+             "diagnostics": {0: "Toute la lentille est au-dessus de l'axe (y ≥ 2 partout), et de toute façon "
+                                "une aire ne peut pas être négative : haut − bas donne +42,67.",
+                             2: "Une aire négative n'a pas de sens physique : c'est le signe d'une soustraction "
+                                "à l'envers (bas − haut)."}},
+        ],
+        "corrige": {
+            "enonce": "Section entre y = 10 − x²/4 et y = x²/4 + 2 (mm) ; extrusion 25 mm ; PTFE 2,2 g/cm³.",
+            "regle": "**Aire = ∫ de a à b de (haut − bas) dx, bornes = points où les courbes se coupent ; "
+                     "volume = aire × longueur ; masse = volume × masse volumique.**",
+            "conversions": "Aire en mm², volume en mm³ ; 1 cm³ = 1 000 mm³ pour utiliser la masse volumique "
+                           "en g/cm³.",
+            "remplacement": "10 − x²/4 = x²/4 + 2 ; haut − bas = 8 − x²/2 ; F(x) = 8x − x³/6 ; F(4) − F(−4) ; "
+                            "× 25 ; ÷ 1 000 × 2,2",
+            "calcul": "x² = 16, bornes **x = −4 et x = 4** ; en x = 0 : 10 > 2, l'arc y = 10 − x²/4 est au-dessus"
+                      "\n\nF(4) = 8 × 4 − 4³/6 = 32 − 64/6 = 32 − 32/3 = 64/3 ; F(−4) = 8 × (−4) − (−64)/6 = −32 + 32/3 = "
+                      "−64/3 ; Aire = F(4) − F(−4) = 128/3 ≈ **42,67 mm²**\n\n"
+                      "Volume = 42,67 × 25 ≈ **1 067 mm³** = 1,067 cm³ ; masse = 1,067 × 2,2 ≈ **2,35 g**",
+            "verification": "**Contrôle de cohérence** : aire positive ✓ ; rectangle de contrôle 8 × 8 = 64 mm² (largeur 8, épaisseur maximale 8), "
+                            "et la lentille en occupe les deux tiers (42,67/64 = 0,667) : la hauteur 8 − x²/2 est "
+                            "une arche de parabole qui s'annule aux deux bornes −4 et 4, comme la came de la fiche "
+                            "17.2 ✓.",
+        },
+        "a_retenir": "À retenir : l'aire entre deux courbes est ∫ de a à b de (haut − bas) dx ; les bornes sont "
+                     "les points où les courbes se coupent ; on teste une valeur pour trouver la courbe du haut ; "
+                     "une aire négative signale une soustraction à l'envers.",
     },
     {
         "id": "at29",
@@ -71878,11 +72682,11 @@ MATIERES_PROGRAMME = [
          "moyenne, extremums locaux, équations différentielles du premier ordre (deux cas "
          "traités, et méthode d'Euler), nombres complexes (forme algébrique, racines d'une "
          "équation du second degré quand Δ < 0), équations différentielles du second ordre (fiche "
-         "18.19), courbes, dérivées et primitives de sin et cos (fiche 17.9). Non traités : asymptote "
-         "oblique ; nombre de solutions de f(x) = k et valeur approchée d'une racine (algorithme) ; "
-         "dérivée de uⁿ ; fonction racine carrée ; propriétés de l'intégrale (Chasles, linéarité, "
-         "positivité) ; aire entre deux courbes ; méthodes approchées d'intégration.",
-         [(7, ["7.2"]), (17, ["17.1", "17.7", "17.9", "17.2", "17.4", "17.5"]),
+         "18.19), courbes, dérivées et primitives de sin et cos (fiche 17.9), propriétés de l'intégrale "
+         "et aire entre deux courbes (fiche 17.12, méthodes approchées en « pour aller plus loin »). "
+         "Non traités : asymptote oblique ; nombre de solutions de f(x) = k et valeur approchée "
+         "d'une racine (algorithme) ; dérivée de uⁿ ; fonction racine carrée.",
+         [(7, ["7.2"]), (17, ["17.1", "17.7", "17.9", "17.2", "17.12", "17.4", "17.5"]),
           (18, ["18.4", "18.8", "18.12", "18.18", "18.19"])]),
         ("Hors épreuve : calcul matriciel, Bézier, droites et plans", "Complet",
          "Programme complémentaire non évalué (matrices, courbes de Bézier) et "
@@ -72280,9 +73084,9 @@ elif PAGE == PAGE_MATHS:
         'inférentielle, configurations géométriques, calcul vectoriel. S\'y ajoutent, '
         '<b>hors épreuve</b>, le programme complémentaire non évalué (calcul matriciel, courbes '
         'de Bézier : fiches 19.1 à 19.4) et une fiche d\'approfondissement (19.6, droites et '
-        'plans dans l\'espace), toutes marquées « hors épreuve ». Attention : quelques notions évaluées de fonctions et de '
-        'calcul intégral ne sont pas encore traitées ici (asymptote oblique, fonction racine carrée, '
-        'propriétés de l\'intégrale, aire entre deux courbes…) — voir le tableau de bord. Ce sont les mêmes '
+        'plans dans l\'espace), toutes marquées « hors épreuve ». Attention : quelques notions évaluées sur les '
+        'fonctions ne sont pas encore traitées ici (asymptote oblique, fonction racine carrée, '
+        'dérivée de uⁿ, nombre de solutions de f(x) = k…) — voir le tableau de bord. Ce sont les mêmes '
         'fiches que dans '
         '« Cours », réunies ici pour ne pas les chercher au milieu des chapitres '
         'techniques.</div>',
@@ -72294,7 +73098,8 @@ elif PAGE == PAGE_MATHS:
             "module officiel, pas par difficulté. Voici un ordre qui monte en douceur :\n\n"
             "1. **17.0 — Lire un schéma et un tableau** (la clé de lecture de tout le reste)\n"
             "2. **7.1** (trigonométrie/vecteurs) et **17.1** (étudier une fonction)\n"
-            "3. **18.1** (probabilités simples) puis **17.2** (calcul intégral)\n"
+            "3. **18.1** (probabilités simples) puis **17.2** et **17.12** (calcul intégral : primitives, puis "
+            "aire entre deux courbes)\n"
             "4. **7.4/7.5** (cercle, droite, barycentre) puis **18.2** (loi binomiale)\n"
             "5. **17.3/17.6** (statistiques) puis **19.5** (produit scalaire et produit "
             "vectoriel, la suite directe de 7.5)\n"

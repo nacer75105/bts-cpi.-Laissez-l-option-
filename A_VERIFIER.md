@@ -29,7 +29,7 @@ complexes (forme algébrique, Δ < 0) — 13. ✅ 18.19 équations différentiel
 
 Plan complémentaire « Analyse » (validé le 2026-09-28, pour les notions du référentiel que le plan des 13 ne
 couvrait pas ; ordre d'écriture) : 1. ✅ 17.9 trigonométrie (courbes, dérivées et primitives de sin et cos) —
-2. 17.12 calcul intégral (Chasles, linéarité, positivité, aire entre deux courbes ; méthodes approchées en
+2. ✅ 17.12 calcul intégral (Chasles, linéarité, positivité, aire entre deux courbes ; méthodes approchées en
 « pour aller plus loin ») — 3. 17.10 étude de fonction (racine carrée, dérivée de uⁿ, asymptote oblique) —
 4. 17.11 équation f(x) = k (nombre de solutions, dichotomie). Quand les quatre seront faites : ligne « Analyse »
 du tableau de bord à « Complet », avertissement de la page Maths retiré.
@@ -170,6 +170,32 @@ du tableau de bord à « Complet », avertissement de la page Maths retiré.
   at145 et générateurs non cliqués dans l'interface (la fiche s'ouvre sans erreur dans un
   AppTest ; outil d'audit : 0 défaut).
 - ✅ Interface vérifiée dans un vrai navigateur le 2026-09-27 : atelier at145 (pièges, bonnes valeurs, QCM, corrigé), gen_ic_proportion, gen_taille_proportion, figures proportion_en_cloche, ic_proportion_simulation regardées dans l'app (voir « Dette d'interface 17.7 à 18.13 »).
+
+### 17.12 — Calcul intégral : propriétés de l'intégrale et aire entre deux courbes (faite le 2026-09-29)
+
+- Référentiel (annexe I, Calcul intégral) : propriétés de l'intégrale (relation de Chasles, linéarité,
+  positivité), aire du domaine {a ≤ x ≤ b, f(x) ≤ y ≤ g(x)} (capacité attendue, y compris le cas où f ou g
+  est la fonction nulle) ; méthodes approchées (point-milieu, trapèzes, Monte-Carlo) citées dans les
+  commentaires : traitées au § 6 comme « pas une capacité exigée, mais un sujet peut faire lire ou compléter
+  un algorithme ».
+- Placée juste après la 17.2, qu'elle complète sans la reprendre. Figures `chasles_integrale`,
+  `aire_entre_courbes` (zone sous f grisée « à retrancher »), `courbes_qui_se_croisent`, `methode_trapezes` ;
+  atelier at153 (patin de guidage en lentille entre deux arcs, sans figure) ; générateurs
+  `gen_aire_entre_courbes` (courbes données dans un ordre aléatoire, corrigé en fractions exactes) et
+  `gen_chasles_linearite` ; 9 questions (bonne réponse en positions 1, 2, 0, 3, 1, 0, 2, 3, 1).
+- Méthode en quatre gestes : résoudre g = f TOUJOURS (bornes, ou croisement où couper), une valeur test par
+  morceau, ∫ (haut − bas), contrôle (positive ; « rectangle de contrôle » = largeur × plus grande
+  épaisseur, l'aire en vaut exactement 2/3 quand l'épaisseur est une arche de parabole nulle aux bornes).
+- Deux tours de relecture. 1ᵉʳ tour : 3 bloquants, dont un corrigé d'atelier dont les lignes se collaient
+  (antislash suivi d'un vrai retour à la ligne, continuation Python, invisible pour l'audit : contrôle
+  CONTINUATION ajouté, commit séparé f9ff112), l'avertissement de la page Maths qui annonçait à tort du
+  calcul intégral manquant, et une méthode qui ne disait pas comment repérer un croisement quand les
+  bornes sont données. 2ᵉ tour : 0 bloquant, 14 retouches (corrigé du générateur en fractions exactes :
+  « 3,33 − (−3,33) = 6,67 » affiché faux dans 16 % des tirages…).
+- Hors fiche, commits séparés : « 26 fiches » du parcours « Avant de commencer » (8e0ea98), signe moins de la
+  ligne « Réponse » (b47ad3a).
+- Inventaires : ligne « Analyse » du tableau de bord (17.12 ajoutée, calcul intégral complet), résumé du bloc
+  17, avertissement de la page Maths (plus que des notions sur les fonctions), étape 3 du parcours.
 
 ### 17.9 — Trigonométrie : courbes, dérivées et primitives de sin et cos (faite le 2026-09-28)
 
