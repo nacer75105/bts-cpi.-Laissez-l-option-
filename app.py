@@ -17938,13 +17938,17 @@ en ±, à sécurité d'assemblage identique. Encore un gain gratuit.
 
 $$ \\text{Battement radial} = 2 \\times e \\quad (\\text{e = excentricité de l'axe}) $$
 
-**Relation forme / dimension (principe de l'enveloppe, symbole Ⓔ)**
+**Relation forme / dimension : indépendance par défaut, enveloppe Ⓔ sur demande**
+
+Par défaut, la tolérance dimensionnelle **ne limite pas** le défaut de forme (**principe
+d'indépendance**, ISO 8015) : la dimension et la forme se vérifient séparément. C'est seulement
+si l'on ajoute le symbole **Ⓔ** après la cote (**exigence de l'enveloppe**, ISO 14405-1) que
 
 $$ \\text{défaut de forme} \\le IT_{dimensionnel} $$
 
-Sans indication contraire, le défaut de forme est **implicitement limité par l'IT dimensionnel**
-(principe de l'enveloppe, norme ISO 14405). On ne spécifie une tolérance de forme explicite que
-si l'on veut la rendre **plus serrée** que l'IT.
+car la surface doit alors tenir dans l'enveloppe de forme parfaite à la dimension au maximum de
+matière (le défaut de forme n'atteint l'IT que si la pièce est au minimum de matière). Sans Ⓔ,
+une exigence de forme fonctionnelle doit être spécifiée explicitement.
 """,
             "exemple": """
 **Cas industriel — Bride de fixation d'un vérin sur bâti**
@@ -30204,8 +30208,21 @@ et le roulement chauffe.
 > **La cotation dimensionnelle dit COMBIEN ça mesure. Elle ne dit rien sur la FORME ni sur la
 > POSITION.**
 
-Il faut donc un second langage. C'est le **tolérancement géométrique**, ou **GPS** (spécification
-géométrique des produits).
+Cette règle porte un nom : le **principe d'indépendance** (norme ISO 8015). Par défaut, la
+tolérance de dimension et les tolérances géométriques se vérifient **séparément** : la cote ne
+limite pas la forme, sauf si le dessin le demande par un symbole particulier. C'est pour cela que
+l'arbre cintré du début passe le contrôle au micromètre.
+
+Pour qu'une cote limite aussi la forme, on ajoute le symbole **Ⓔ** après sa tolérance, par
+exemple **Ø30 h7 Ⓔ** (arbre entre 29,979 et 30,000 mm) : c'est l'**exigence de l'enveloppe**
+(ISO 14405-1). Imaginez une bague de contrôle parfaite, alésée à 30,000 mm : l'arbre doit y entrer
+sur toute sa longueur, et chaque diamètre mesuré doit rester au-dessus de 29,979 mm. L'arbre
+cintré, qui mesure 30 à chaque endroit mais coince dans la bague, serait refusé **au contrôle**,
+et non plus au montage.
+
+Mais Ⓔ ne règle que la forme d'**une** surface. Il ne dit rien de l'orientation d'une face par
+rapport à une autre, ni de la position d'un trou. Pour cela, il faut un second langage : le
+**tolérancement géométrique**, ou **GPS** (spécification géométrique des produits).
 
 ### 2. Ce qu'est vraiment une tolérance géométrique
 
