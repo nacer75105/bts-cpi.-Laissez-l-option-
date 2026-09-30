@@ -1,0 +1,1225 @@
+Ce niveau englobe de fait les trois niveaux
+précédents.
+
+BTS Conception des Produits Industriels - Page 28 / 103
+S1 - DEMARCHE DE CONCEPTION ET GESTION DE PROJET
+
+S1.1 - Ingénierie système et analyse fonctionnelle
+
+Si l'analyse fonctionnelle reste un outil utilisé par les techniciens de bureau d'étude de produits mécaniques, elle doit
+être complétée par une approche plus globale utile à la conception des systèmes pluri techniques complexes,
+comme l'Ingénierie Systèmes, relevant de la responsabilité des ingénieurs chefs de projets. Au niveau du BTS CPI,
+l'approche de l'Ingénierie Système passe par la compréhension et l'exploitation de diagrammes SysML (Systems
+Modeling Language) qui servent à décrire les systèmes complexes associés aux études mécaniques attendues.
+
+Savoirs, Connaissances                                        Niveaux taxo-  Limites de connaissances
+                                                                nomiques
+(concepts, notions, méthodes)
+                                                              1 2 3 4
+
+S1.1.1 - Approche globale                                                    Les diagrammes SysML sont une don-
+                                                                             née d'entrée de l'étude fonctionnelle. Ils
+- Définition de l'ingénierie système et de l'analyse                         permettent de situer la frontière de
+    fonctionnelle.                                                           l'étude dans un contexte pluri technolo-
+                                                                             gique.
+- Langage de description SysML, types de diagrammes et
+    leur utilisation.                                                        On se limitera à la lecture et la compré-
+                                                                             hension des diagrammes SysML.
+- Outils de l'analyse fonctionnelle :
+     - Méthode APTE, NF X50-151, etc...                                              - diagramme des exigences ;
+                                                                                     - diagramme des cas
+
+                                                                                         d'utilisation ;
+                                                                                     - diagramme de définition de
+
+                                                                                         bloc ;
+                                                                                     - diagramme de bloc interne ;
+                                                                                     - diagramme d'état transition ;
+                                                                                     - diagramme de séquences.
+
+S1.1.2 - Approche métier : description externe                               Pour le cycle de vie, il s'agit pour
+                                                                             chaque étape de la vie du produit de
+- Besoin à satisfaire par l'utilisateur.                                     dégager les contraintes à prendre en
+- Cycle de vie du produit : éco conception.                                  compte afin de réduire les impacts envi-
+- Expression fonctionnelle du besoin.                                        ronnementaux (à partir par exemple de
+- Frontière d'une étude.                                                     la roue d'éco conception de Brezet).
+- Fonctions de service (usage, estime), contraintes (design,                 Pour caractériser les fonctions de ser-
+                                                                             vice, à défaut d'indications imposées par
+    ergonomie...) : outils de recherche et de description                    le cahier des charges initial, on s'ap-
+    associés.                                                                puiera sur les exigences des normes en
+- Cahier des charges fonctionnel : caractéristiques des                      vigueur et les compétences d'un spécia-
+    fonctions de service (critères, niveaux et flexibilité).                 liste (contribution d'un designer, règles
+                                                                             d'ergonomie, environnement particu-
+                                                                             lier...).
+
+S1.1.3 - Approche métier : description interne                               La description interne du système doit
+                                                                             être menée en intégrant, si ces élé-
+- Déclinaison des fonctions de service en fonctions                          ments existent, les données de
+    techniques : outil FAST.                                                 l'ingénierie système par l'utilisation des
+                                                                             diagrammes SysML.
+- Nature et flux des éléments transformés par le produit :                   Il s'agit de décoder ou modifier ces diffé-
+    matière, énergie, information.                                           rents diagrammes SysML ou les repré-
+                                                                             sentations issues de l'analyse fonction-
+                                                                             nelle.
+                                                                             Il peut s'agir :
+                                                                             - de diagrammes qui décrivent la
+
+                                                                                  structure interne du produit étudié ;
+                                                                             - de diagrammes qui situent le produit
+
+                                                                                  étudié à l'intérieur d'un système plu-
+                                                                                  ri technologique plus vaste.
+
+BTS Conception des Produits Industriels - Page 29 / 103
+S1.2 - Organisation de l'entreprise industrielle
+
+L'acquisition de ces connaissances peut avantageusement se faire à l'occasion des périodes d'activité en entreprise
+ou de stage industriel pour permettre à l'étudiant de situer son action au sein de l'entreprise et de visualiser
+l'organisation collaborative des différents services dans le déroulement des projets.
+
+Savoirs, Connaissances                                          Niveaux taxo-     Limites de connaissances
+                                                                  nomiques
+(concepts, notions, méthodes)
+                                                                1 2 3 4
+
+- Organisation administrative et commerciale.                                  Il s'agit ici de créer la culture minimale
+- Organisation des études, recherche et développement.                         de la connaissance des organisations et
+- Structure d'un système de production :                                       des fonctions principales rencontrées
+                                                                               dans une entreprise industrielle de con-
+        - méthodes et préparations,                                            ception et de réalisation de produits
+        - achats,                                                              industriels.
+        - sous-traitance et co-traitance,                                      Cette approche permet aussi de justifier
+        - gestion de production,                                               les travaux collaboratifs entre spécia-
+        - gestion des stocks,                                                  listes de conception et de réalisation
+        - maintenance des moyens de production,                                destinés à optimiser un produit.
+        - service qualité,
+        - service après vente.
+- Réglementation du travail :
+        - cadre de vie,
+        - comité d'hygiène, sécurité et conditions de travail,
+        - comité d'entreprise,
+        - représentativité des personnels, formation des
+
+            personnels.
+
+                                                                               .
+
+BTS Conception des Produits Industriels - Page 30 / 103
+S1.3 - Compétitivité des produits industriels
+
+L'acquisition des connaissances et compétences associées à la compétitivité des produits industriels s'inscrit dans la
+continuité de ces enseignements tels qu'ils sont proposés en STI2D. Ils se font essentiellement lors d'études de cas
+concrètes, de mini projets et des projets.
+
+Savoirs, Connaissances                                              Niveaux taxo-  Limites de connaissances
+                                                                      nomiques
+(concepts, notions, méthodes)
+                                                                    1 2 3 4
+
+S1.3.1 - Méthodes et outils de compétitivité                                       La notion de propriété industrielle doit être illus-
+                                                                                   trée d'exemples et notamment donner lieu à des
+- Le marché, la concurrence.                                                       activités de recherches de brevets dans des
+- Propriété industrielle : recherche d'antériorité, les brevets.                   bases de données distantes (site de l'Institut
+- Qualité du produit : certification ISO, standardisation,                         National de la Propriété Industrielle par
+                                                                                   exemple).
+    Normalisation.
+- Planification du projet, diagramme de GANTT, diagramme                           L'ensemble des données sera intégré dans un
+                                                                                   PDM (Product Data Management) voire un PLM
+    de PERT                                                                        (Product LifeCycle management) si disponible
+- Capitalisation des acquis, traçabilité des études
+
+S1.3.2 - Créativité et outils de recherche de solutions
+
+- Méthodes de créativité (TRIZ, ASIT, ...) :                                       Ces méthodes sont privilégiées pour la re-
+        - notion de contradiction,                                                 cherche de principes de solutions.
+        - reformulation d'un problème contraint,                                   Avec l'aide de son professeur et d'une guidance
+        - recherche d'un principe de solution à un problème                        détaillée, l'étudiant est mis en situation
+            contraint, résolution d'une contradiction,                             d'application d'une méthode. La maitrise de ces
+        - décodage d'un principe de solution, recherche de                         méthodes ne peut pas être exigée.
+            solutions techniques.
+
+- Autres outils de recherches :
+        - brainstormings,
+        - analogies,
+        - inversions, ...
+
+S1.3.3 - Analyse de la valeur                                                      La maitrise de ces outils ne peut pas être exigée.
+                                                                                   Avec l'aide de son professeur et d'une guidance
+- Définition de la valeur d'un produit : rapport entre                             détaillée, ou de toute autre aide méthodologique,
+    satisfaction d'une fonction d'un produit, coût associé et                      ces outils seront mis en place dans le cadre
+    notions de CCO (conception pour un cout objectif)                              d'études de cas industrielles (adaptées voire
+                                                                                   simplifiées) de reconception ou d'optimisation de
+- Outils de l'analyse de la valeur :                                               produits existants.
+        - outils de classification et de hiérarchisation : tableau
+            de pondération, diagramme de hiérarchisation,
+            diagramme de PARETO ;
+        - outils issus de la méthode APTE qui permettent
+            d'analyser et d'évaluer une solution en vue de son
+            optimisation - bloc diagramme - bloc diagramme
+            idéal - tableau d'analyse fonctionnelle
+        - outils d'analyse des défaillances : Diagramme
+            d'ISHIKAWA, AMDEC produit, arbre de défaillance.
+
+S1.4 - Développement durable et éco conception
+
+L'acquisition des connaissances et compétences associées au développement durable et à l'éco conception est un
+approfondissement des enseignements proposés en STI2D. Elle développe simultanément la prise en compte de
+toutes les formes de contraintes du développement durable. L'éco conception n'est pas une démarche nouvelle à
+enseigner, mais la déclinaison des démarches de conception classiques prenant systématiquement en compte les
+données et les contraintes du développement durable. Elle doit donc devenir le mode de conception habituel des
+techniciens de bureau d'étude.
+
+Savoirs, Connaissances                                              Niveaux taxo-  Limites de connaissances
+                                                                      nomiques
+(concepts, notions, méthodes)
+                                                                    1 2 3 4
+
+S1.4.1 - Contexte du développement durable
+
+BTS Conception des Produits Industriels - Page 31 / 103
+- Piliers du développement durable : dimension mondiale                        Savoir replacer l'éco conception dans le contexte
+    environnementale, sociétale, et économique ; enjeux pour                   mondial de développement durable.
+    l'entreprise et la transition énergétique.                                 Connaître les différents impacts environnemen-
+                                                                               taux dans le cycle de vie d'un produit.
+- Contraintes environnementales.
+- Cycle de vie d'un produit, notion d'unité fonctionnelle.                     Connaissances des organismes ressources au
+- Caractérisation des impacts environnementaux :                               service de l'éco-conception des produits.
+
+        - épuisements des ressources,                                          Prise en compte des contraintes environnemen-
+        - effets nocifs sur le climat, l'atmosphère,                           tales dans l'établissement du cahier des charges
+        - pollution (air, eau), toxicité,                                      fonctionnel du produit.
+        - production de déchets.                                               Conduite d'outils d'éco conception en distinguant
+                                                                               les approches qualitatives et quantitatives vis à
+S1.4.2 - Normalisation et réglementation                                       vis des critères environnementaux, sélectives ou
+                                                                               complètes vis à vis des étapes du cycle de vie
+- Approches environnementales et normalisation :                               considérées.
+        - approche site : « Management environnemental »                       L'utilisation de logiciels d'éco conception est à
+            (ISO 14001),                                                       privilégier avec :
+        - approche produit : « Intégration des aspects
+            environnementaux dans la conception et le                               - une approche globale qualitative,
+            développement des produits » (normes ISO).                              - une approche comparative de solutions
+
+- Eco certification des produits                                                         techniques envisageables semi-
+- Organismes ressources dans l'éco conception (ADEME,                                    quantitative.
+
+    CETIM, ...)
+
+S1.4.3 - Méthodes et outils d'éco conception
+
+- Intégration des contraintes environnementales dans le
+    cahier des charges.
+
+- Approches méthodologiques :
+        - multi-étapes du cycle de vie du produit,
+        - multicritères environnementaux,
+        - multi-acteurs (travail collaboratif des différents
+            services de l'entreprise).
+
+- Outils :
+        - évaluation du cycle de vie du produit (roue d'éco
+            conception, déclinaison simplifiée de la norme ISO
+            14040,...),
+        - listes et procédures de contrôle (check-list, ...),
+        - base de données et outils de mesure des impacts,
+        - matrices de choix, d'évaluation,
+        - outils logiciels d'éco conception.
+
+S2 - CHAINE NUMERIQUE
+
+S2.1 - Concept de « chaîne numérique »
+
+La chaîne numérique est au coeur de la formation des techniciens de bureau d'étude et devient l'outil qui permet de
+concrétiser toutes les étapes de la conception de la réalisation et même de la mise en oeuvre, de la maintenance et
+de la fin de vie d'un produit. L'utilisation de cette chaîne numérique s'intègre naturellement dans un contexte numé-
+rique global permettant de créer, d'échanger, de stocker et de protéger toutes les informations numériques relatives à
+un projet, tel que les systèmes PDM (Product Data Management) ou PLM (Product Lifecycle Management).
+
+Savoirs, Connaissances                                          Niveaux taxo-  Limites de connaissances
+                                                                  nomiques
+(concepts, notions, méthodes)
+                                                                1 2 3 4
+
+- Définition des maillons de « la chaîne numérique » :                         Intégration de l'outil informatique de gestion des
+        - maquette numérique,                                                  fichiers dans une démarche de projet collaboratif
+        - prototypage,                                                         et concourant.
+        - simulations,
+        - outillage,
+        - production,
+        - qualification,
+        - boucle d'optimisation.
+
+BTS Conception des Produits Industriels - Page 32 / 103
+- Gestion de la vie de la chaine numérique via un PDM :
+        - livrables (fichiers exigés au regard du CDC),
+        - plannings : Gantt,
+        - suivi et archivage des documents (révisions,
+            historique), processus de validation,
+        - import/export de fichiers (formats, précisions,
+            continuité de la chaîne),
+        - droits des intervenants, liens entre données...
+
+S2.2 - Simulation
+
+Les simulations numériques sont intimement liées au processus de création et d'optimisation d'un produit industriel.
+Elles permettent d'optimiser le comportement et de vérifier les performances d'un système mécanique comme
+d'associer très tôt dans le cycle de conception les contraintes de la réalisation, comme cela est demandé dans le
+travail collaboratif d'optimisation de produit.
+Chaque simulation respecte un processus de modélisation, de traitement, d'interprétation et de comparaison au réel
+lorsque cela est possible qu'il convient d'identifier afin que si les étudiants découvrent la puissance des outils, ils
+puissent en mesurer aussi leurs limites.
+
+Savoirs, Connaissances                                         Niveaux taxo-  Limites de connaissances
+                                                                 nomiques
+(concepts, notions, méthodes)
+                                                               1 2 3 4
+
+- Types de logiciels de simulation :                                          En dehors de cas simples et/ou guidés,
+        - simulation mécanique : comportements statique,                      l'assistance d'un spécialiste est proposée pour la
+            cinématique, dynamique,                                           modélisation et l'exploitation de systèmes plus
+        - calcul de structures des modèles poutre et                          élaborés.
+            volumique,                                                        Les simulations de modèles surfaciques ne sont
+        - simulation de procédés,                                             pas exigées.
+        - simulation d'ergonomie, réalité virtuelle.                          Sont concernés par exemple les modules métiers
+                                                                              de « préconception » accessibles traitant du
+- Données et paramètres associés aux simulations.                             moulage, thermoformage, ... afin de visualiser les
+- Résultats exploitables :                                                    défauts éventuels des pièces et agir en consé-
+                                                                              quence.
+        - textes,                                                             Dans les domaines qui ne font pas partie du
+        - courbes,                                                            coeur de métier, on se limitera à l'identification
+        - cartographies, ...                                                  des principaux types de données influentes et
+                                                                              des paramètres de simulation.
+
+S2.3 - Outils de conception et représentation numériques
+
+Si la maîtrise des fonctionnalités des outils de CAO 3D est une compétence majeure du métier de technicien BE, elle
+doit être associée à une maîtrise méthodologique qui permettra au technicien de choisir la méthode la mieux adaptée
+à son problème ou à une étape de la conception. L'apprentissage des outils de CAO doit intégrer cette double di-
+mension.
+
+Savoirs, Connaissances                                         Niveaux taxo-  Limites de connaissances
+                                                                 nomiques
+(concepts, notions, méthodes)
+                                                               1 2 3 4
+
+S2.3.1 - Modeleurs volumiques paramétriques                                   Le mode de modélisation sera approprié à la
+                                                                              typologie des pièces.
+- Structuration des modèles : arbres de construction de pièce                 La maîtrise des exigences de modélisation des
+    et arbre d'assemblage.                                                    surfaces complexes est exclue sans l'aide d'un
+                                                                              spécialiste (exemple : domaine de la carrosserie,
+- Mode de modélisation : surfacique, volumique.                               ...).
+- Fonctions logicielles de conception.                                        Le paramétrage s'applique principalement à la
+- Propriétés de nomenclature associées aux pièces                             géométrie du modèle.
+                                                                              La robustesse sera favorisée par l'organisation
+    (désignation, matériaux, ...).                                            rationnelle des fonctions de conception. Elle sera
+- Paramétrage et robustesse du modèle.                                        évaluée principalement par la capacité du mo-
+                                                                              dèle à accepter aisément la modification d'un
+                                                                              paramètre fonctionnel qui peut, par exemple, être
+                                                                              amené à évoluer suite à la réalisation de proto-
+                                                                              types.
+
+                   BTS Conception des Produits Industriels - Page 33 / 103
+S2.3.2 - Méthodes de conception                                                 La méthode de conception doit être adaptée au
+                                                                                résultat souhaité : simulation dynamique, résis-
+- Méthodes de conception :                                                      tance des matériaux, conception détaillée, ...
+        - dans l'assemblage,
+        - par pièce,                                                            Gestion du paramétrage d'un modèle de pièce
+        - par surfaces fonctionnelles,                                          par tableau de valeurs. Si la situation s'y prête le
+        - squelette géométrique de pièce, d'assemblage,                         pilotage de la CAO via des macros peut être
+            esquisse pilotante,                                                 employé mais dans ce cas le développement par
+        - conception hors ou en contexte d'assemblage (liens                    l'étudiant ne pourra être exigé.
+            de référence ou paramétrage entre pièces).
+                                                                                L'utilisation ponctuelle de modeleurs implicites
+- Fonctionnalité logiciel/tableur :                                             (sans historique...) est possible lorsque la straté-
+        - associations modeleur/tableur,                                        gie de conception s'y prête (par exemple en
+        - conception orientée famille de pièces/d'assemblages.                  l'absence de robustesse d'un modèle fourni), tout
+                                                                                comme la retro conception par numérisation sans
+- Outils spécifiques pour le technicien :                                       contact 3D.
+        - bibliothèques d'éléments standard et de données
+            techniques (locales ou à distance),                                 L'accent est mis sur l'obtention progressive et
+        - modules métiers : conception de structure mécano-                     méthodique des modèles de produits dans le
+            soudées, de moule, de tôlerie, récupération de                      cadre de la chaîne numérique et en réponse à un
+            design...                                                           cahier des charges fonctionnel.
+        - notions de retro conception, autres types de
+            modeleurs, ...                                                      Application à tout type de produits : biens de
+                                                                                consommation, machines spéciales, prototypes,
+- Application à la conception des produits :                                    outillages, ...
+        - conception préliminaire, de la mise en place de                       Utilisation du prototypage dans un but de valida-
+            l'environnement à la conception fonctionnelle                       tion de solutions techniques (boucle
+            générale du produit ;                                               d'optimisation).
+        - conception détaillée, intégration des formes en
+            adéquation avec les choix de matériaux et procédés.
+
+S2.3.3 - Relation au système de production
+- Réalisation :
+
+        - fonctionnalités des machines et dispositifs de
+            prototypage des solutions techniques associés à la
+            chaîne numérique.
+
+- Contrôle :
+        - fonctionnalités des moyens de mesure
+            tridimensionnelle associés à la chaîne numérique.
+
+S2.4 - Représentations graphiques dérivées des maquettes numériques
+
+Les savoir-faire associés à ces représentations ne font pas l'objet d'enseignements spécifiques mais sont toujours
+contextualisés et mobilisés à l'occasion des rapports, compte-rendu et production de dossiers techniques.
+
+Savoirs, Connaissances                                           Niveaux taxo-  Limites de connaissances
+                                                                   nomiques
+(concepts, notions, méthodes)
+                                                                 1 2 3 4
+
+- Fonctionnalités logicielles relatives à la production de
+    documents techniques :
+        - configurations graphiques visuelles (propriétés de
+            couleurs, transparence) et de positions, coupe et
+            écorchés 3D,
+        - édition de nomenclatures et éclatés,
+        - rendus réalistes, animations.
+
+BTS Conception des Produits Industriels - Page 34 / 103
+- Fonctionnalités logicielles relatives à la mise en plan selon
+    les normes de représentations du dessin technique :
+        - vues en projection, sections et coupes,
+        - mises en plan conformes aux normes de
+            représentation du dessin technique : dessin
+            d'ensemble, dessin de définition.
+
+- Mise en plan comportant les spécifications fonctionnelles
+    selon la norme.
+
+- Décodage d'une mise en plan.
+
+S3 - COMPORTEMENT DES SYSTÈMES MÉCANIQUES
+
+S3.1 - Chaîne d'énergie
+
+Le programme s'attache à aborder le concept d'énergie comme étant une grandeur physique caractérisant l'état d'un
+système et comme étant transformée tout au long d'une chaîne d'énergie.
+Dans son activité professionnelle, le titulaire du BTS CPI est confronté au dimensionnement des chaînes d'énergie,
+en particulier lors de la motorisation électrique des systèmes étudiés. Cette consommation électrique représente 75%
+de l'énergie consommée dans l'industrie. Sachant qu'il est possible d'économiser 30% de cette énergie par
+l'amélioration du rendement, un dimensionnement correct associé à des dispositifs de régulation optimisés, le titulaire
+du BTS CPI participe donc à l'éco-conception des systèmes en intégrant ces données dans ses propositions de con-
+ception des systèmes.
+
+Savoirs, Connaissances                                           Niveaux taxo-  Limites de connaissances
+                                                                   nomiques
+(concepts, notions, méthodes)
+                                                                 1 2 3 4
+
+S3.1.1 - Analogie Mécanique-Électrique-Hydraulique
+
+- Formes d'énergie, grandeurs énergétiques et unités :                          Les différentes formes de l'énergie rencontrées :
+        - énergie et travail,                                                   cinétique, potentielle gravitaire et élastique, électrique
+        - puissance,                                                            (seulement les puissances actives), hydraulique,...
+        - analogie de puissance mécanique, électrique et hy-
+        draulique : produit d'une grandeur d'effort (force,                     Identification des paramètres influant sur les perfor-
+        couple, tension, pression, ...) par une grandeur de                     mances énergétiques.
+        flux (vitesse, vitesse angulaire, intensité de courant,
+        débit, ...),                                                            Travail, puissance et théorème de l'énergie cinétique
+        - équations aux dimensions,                                             dans des cas de mouvements simples (translation
+        - diagramme de description des flux d'énergie d'un                      rectiligne et rotation autour d'un axe fixe).
+        système.
+                                                                                Il s'agit ici d'aborder et de maîtriser :
+- Gestion des flux d'énergie :                                                  · le principe de fonctionnement,
+       - théorème de l'énergie cinétique,                                       · la constitution,
+       - principe de conservation de l'énergie,                                 · la réversibilité,
+       - rendement global et partiel (d'un actionneur, d'un                     · le rendement.
+          mécanisme, d'une chaîne d'énergie),
+       - régime nominal, point de fonctionnement,                               Il est attendu un bilan de puissances, l'identification et
+       - réversibilité d'un actionneur, d'une chaîne de                         la caractérisation mécanique par l'association à la
+          transmission,                                                         charge d'une courbe de couple résistant en fonction
+       - efficacité énergétique,                                                de la vitesse :
+       - régime nominal ...,
+
+S3.1.2 - Composants de conversion d'énergie et de
+commande
+
+- Grandeurs caractéristiques d'entrée et de sortie.
+- Espace de fonctionnement et point de fonctionnement
+
+    pour un régime donné.
+- Chaîne d'alimentation et de distribution associée.
+- Conditions d'implantation et de mise en oeuvre.
+- Convertisseurs électriques :
+
+        - moteur à courant continu,
+
+                         BTS Conception des Produits Industriels - Page 35 / 103
+        - moteur « brushless »,                                    - couple résistant constant,
+        - moteur synchrone,                                        - couple résistant quadratique,
+        - moteur asynchrone,                                       - couple résistant hyperbolique,
+        - moteur « pas à pas ».                                    - couple résistant linéaire.
+- Convertisseurs hydrauliques :
+        - vérins,                                                  Les technologies de variation de vitesse seront trai-
+        - moteurs.                                                 tées par l'étude de solutions constructives proposées
+        - pompes                                                   par les principaux fabricants de matériels.
+
+S3.1.3 - Méthodes de dimensionnement d'une motori-                 La simplification de la chaîne d'énergie sera recher-
+sation                                                             chée et on s'attachera à démontrer la pertinence de
+                                                                   l'emploi d'un réducteur de vitesse au regard du choix
+- Choix d'un profil de commande (accélération continue             de solutions intégrées proposées par les construc-
+    ou discontinue) :                                              teurs.
+        - avantages/inconvénients,                                 La recherche du rendement maximum d'une chaîne
+        - graphes associés.                                        d'énergie, associée à des choix technologiques pre-
+                                                                   nant en compte la diminution de la consommation au
+- Lois de vitesses et d'accélération.                              quotidien, sera illustrée par des études de cas con-
+- Critères de choix du rapport de réduction :                      duisant à différencier les applications à vitesse cons-
+                                                                   tante des applications à vitesse variable.
+        - cinématique,                                             Une attention particulière sera portée à l'impact de
+        - dynamique.                                               l'évolution normative relative à l'élévation des niveaux
+- Rendement.                                                       de rendement des moteurs électriques IE1 à IE4.
+
+S3.2 - Etude des comportements mécaniques des pièces et des systèmes
+
+Le titulaire du BTS CPI, confronté au dimensionnement de systèmes techniques, doit être capable de proposer des
+modélisations de problèmes pour des cas simples puis de conduire les simulations d'étude de comportement méca-
+nique correspondantes. Dans les autres cas, il est capable de dialoguer avec un spécialiste à qui il confie les modéli-
+sations.
+En autonomie, le titulaire du BTS CPI interprète les résultats des simulations afin d'en tirer les conséquences sur les
+conceptions qu'il propose.
+
+Savoirs, Connaissances                                             Niveaux taxo-  Limites de connaissances
+                                                                     nomiques
+(concepts, notions, méthodes)
+                                                                   1 2 3 4
+
+S3.2.1 - Modélisation des mécanismes
+
+- Cinématique des liaisons mécaniques :                                           Les notions seront abordées sans l'utilisation de
+        - nature du contact (ponctuel, linéique, surfacique),                     la résolution torsorielle.
+        - repère local, degré de liberté,                                         Par contre, la description torsorielle des actions
+        - modèle des liaisons mécaniques élémentaires,                            mécaniques transmissibles dans les liaisons est
+        - modélisation des liaisons technologiques en liaisons                    utilisée.
+            cinématiques (avec prise en compte des jeux,
+            mobilités de faible amplitude, rigidité, frottement).                 La recherche du degré d'hyperstaticité devra
+                                                                                  permettre d'identifier les contacts surabondants
+- Chaînes de liaisons :                                                           afin de pouvoir en tirer des conséquences quant
+        - classe d'équivalence cinématique,                                       à leur positionnement géométrique relatif et leur
+        - graphe des liaisons,                                                    cotation pour les cas suivants :
+        - schéma cinématique (minimal ou architectural).                          - liaison glissière équivalente,
+                                                                                  - liaison pivot équivalente,
+- Associations de pièces et de liaisons :                                         - liaison ponctuelle équivalente.
+        - liaison équivalente à une association de deux à trois
+            liaisons en parallèle ou en série,
+        - comportement des mécanismes (degré de mobilité,
+            degré d'hyperstaticité, isostaticité).
+        - adaptation et évolution du modèle numérique prenant
+            en compte les problèmes techniques à résoudre.
+
+S3.2.2 - Mouvements relatifs entre solides dans le cas                            Cinématique d'un solide en mouvement de rota-
+d'une translation ou d'une rotation autour d'un axe fixe                          tion ou de translation par rapport à un repère fixe
+                                                                                  donné : position, trajectoire, vitesse, accélération,
+- Notion de référentiel et de repère.                                             champ des vecteurs-vitesse (translation ou rota-
+- Nature et définition des mouvements : rotation, translation.                    tion autour d'un axe fixe).
+- Trajectoires des points du solide.                                              Représentation graphique et analytique des
+
+BTS Conception des Produits Industriels - Page 36 / 103
+- Vecteurs position, vitesse et accélération.                       positions, vitesses et accélération dans les cas
+- Champ des vecteurs vitesse.                                       de mouvements uniformes ou uniformément
+                                                                    variés.
+S3.2.3 - Mouvements plans
+                                                                    Représentation graphique dans les cas simples
+- Équiprojectivité du champ des vecteurs vitesse.                   (dont la vérification des interférences entre
+- CIR et distribution du champ des vecteurs vitesse.                pièces au sein d'un mécanisme).
+- Composition des vitesses :
+                                                                    Sauf pour les cas plans simples, la détermination
+        - loi de composition,                                       de lois d'entrée sortie s'effectuera à l'aide d'un
+        - traduction graphique pour des systèmes plans,             logiciel de simulation.
+        - applications au glissement et au roulement.
+- Chaines cinématiques :                                            Représentation des actions mécaniques sous
+        - tracé des trajectoires et positions d'un mécanisme,       forme torsorielle en vue de renseigner une simu-
+        - notion d'enveloppe de pièce au cours d'un                 lation numérique.
+
+            mouvement,                                              Résolution graphique dans les cas de solides
+        - lois d'entrée sortie.                                     soumis à 2, ou 3 actions modélisées par des
+S3.2.4 - Modélisation des actions mécaniques                        glisseurs de supports non parallèles.
+                                                                    Résolution analytique dans les cas simples plans
+- Action mécanique de contact et à distance :                       Les autres cas seront étudiés avec une assis-
+        - modèles de représentation d'une action mécanique          tance informatique.
+            (force et résultante de forces, moment et moment
+            résultant, cas particuliers des couples et glisseurs),  L'appropriation des composantes de la matrice
+        - représentation graphique et analytique des vecteurs       d'inertie sera effectuée sur des cas simples :
+            force et moment, moment scalaire,                       symétrie, diagonalisation, etc.
+        - notion de torseur,                                        Les démonstrations seront réalisées par la mise
+        - principe des actions mutuelles.                           en oeuvre de modeleurs volumiques.
+                                                                    Analytiquement, calcul du centre de gravité pour
+- Contact entre pièces :                                            deux ou trois volumes simples par le barycentre.
+        - nature géométrique du contact,                            Calcul du moment d'inertie d'un volume simple
+        - frottement et adhérence : lois de Coulomb,                par le théorème de Huygens.
+        - pression de contact et matage :                           A l'aide des logiciels de CAO pour des volumes
+                  o cas ponctuels et linéiques simples : modèle     simples et complexes ou des recherches d'inertie
+                       de Hertz,                                    autour d'axes quelconques.
+                  o cas surfaciques simples.                        Principe fondamental de la dynamique, limité aux
+                                                                    mouvements de translation rectiligne ou de rota-
+S3.2.5 - Comportement mécanique des pièces et des sys-
+tèmes
+
+- Isolement d'une pièce ou d'un système de solides :
+        - graphe des actions mécaniques,
+        - ordonnancement des isolements,
+        - frontière, actions intérieures et extérieures.
+
+- Equilibre statique des solides, principe fondamental de la
+    statique : énoncé du principe en vue d'une résolution :
+        - analytique,
+        - graphique.
+
+- Caractéristiques géométriques et cinétiques d'un solide
+    influant son comportement dynamique : centre de gravité,
+    masse, matrice d'inertie.
+
+- Principe fondamental de la dynamique :
+        - énoncé du principe,
+        - équilibrage statique et dynamique d'un solide en
+
+BTS Conception des Produits Industriels - Page 37 / 103
+            rotation : approche expérimentale et logicielle,        tion autour d'un axe fixe (exploitation logicielle
+            vibrations : approche expérimentale et logicielle,      pour les autres cas).
+            notion de fréquences propres (systèmes discrets et
+            continus).                                              Application à la détermination analytique des
+                                                                    efforts de cohésion dans les cas plans sans
+S3.2.6 - Résistance des matériaux                                   utilisation du torseur autre que l'écriture synthé-
+                                                                    tique finale des efforts de cohésion dans une
+- Hypothèses de la résistance des matériaux :                       section droite (pour l'alimentation ou
+        - modèle poutre,                                            l'interprétation d'un résultat logiciel). Exploitation
+        - hypothèses sur les matériaux,                             logicielle pour les cas spatiaux.
+        - hypothèses de Navier-Bernoulli et Barré de St
+            Venant.                                                 La détermination des moments quadratiques ne
+                                                                    s'effectuera que pour les formes simples en
+- Efforts de cohésion dans une section droite. Diagrammes           utilisant des formulaires.
+    d'effort normal, tranchant, moments de torsion et de flexion.   Les démonstrations seront réalisées par la mise
+                                                                    en oeuvre de modeleurs volumiques.
+- Relation contrainte-déformation, loi de Hooke
+- Sollicitations simples (traction/compression, torsion des         Etude de flambement limitée à l'exploitation
+                                                                    d'abaques ou de formules constructeurs.
+    sections circulaires, flexion, cisaillement) :
+        - contraintes normales, tangentielles,                      Les cas traités doivent rester simples.
+        - identification des paramètres géométriques d'un           La discrétisation en termes de taille et de type de
+            solide influant son comportement : influence de         maillage du problème est donnée.
+            l'orientation des sections, aires, moments              L'étude et la validation des cas simples (par
+            quadratiques.                                           utilisation d'un modèle poutre) s'appuient sur
+        - déformation,                                              l'exploitation de formulaires ou des logiciels de
+        - condition de résistance (coefficient de sécurité, limite  simulation.
+            élastique, limite de fatigue...).
+        - notion de flambement.                                     L'étude et la validation des cas ne relevant pas
+                                                                    d'un modèle poutre simple se feront par
+- Sollicitations composées:                                         l'exploitation de résultats de simulation et/ou par
+        - principe de superposition                                 la mise en oeuvre d'un logiciel volumique inté-
+        - flexion-traction/compression et flexion-torsion           grant un module d'élément finis pour les pièces
+            d'arbres de section circulaire                          ne relevant pas du modèle poutre.
+        - contrainte équivalente : Tresca et Von-Mises,
+        - critères de choix des contraintes équivalentes en lien    Dynamique des fluides : seulement pour les
+            avec le matériau.                                       fluides Newtoniens.
+
+ - Notions d'élasticité :                                           Pertes de charges régulières par application de
+     - Maillage (forme et taille)                                   la loi de Poiseuille ou l'utilisation de l'abaque de
+     - Conditions aux limites                                       Moody.
+     - Critère de Von Mises
+     - Déplacements et déformations                                 Pertes de charges singulières par utilisation
+                                                                    d'abaques ou de simulations numériques.
+S3.2.7 - Mécanique des fluides
+                                                                    L'étude du point de fonctionnement d'un circuit
+- Statique des fluides :                                            hydraulique est à rapprocher des savoirs asso-
+        - loi de l'hydrostatique,                                   ciés au chapitre 3.1.1 et l'utilisation de logiciels
+        - théorème de Pascal,                                       de simulation pour les cas complexes est re-
+        - théorème d'Archimède (étude de la stabilité par           commandée.
+            recherche du métacentre de poussée).
+
+- Dynamique des fluides :
+        - conservation de la masse : équation de continuité,
+        - théorème de Bernoulli,
+        - nombre de Reynolds : régimes laminaires ou
+            turbulents,
+        - pertes de charges régulières et singulières,
+        - étude du point de fonctionnement d'un circuit
+            hydraulique.
+
+S4 - MATERIAUX ET TRAITEMENTS
+S4.1 - Structure et caractéristiques des matériaux:
+
+                                               BTS Conception des Produits Industriels - Page 38 / 103
+Il ne s'agit pas de proposer un apprentissage systématique des désignations et des caractéristiques de tous les ma-
+tériaux mais d'amener les étudiants à identifier les éléments importants et les caractéristiques principales des fa-
+milles de matériaux les plus employées (les aciers et fontes, les alliages d'aluminium et de cuivre, certains plas-
+tiques) et de rechercher le matériau adapté dans une base de données. L'accent sera mis sur les ordres de gran-
+deur, les unités ainsi que les comparaisons entre matériaux.
+
+                  Savoirs, Connaissances                        Niveaux taxo-  Limites de connaissances
+                                                                  nomiques
+                      (concepts, notions, méthodes)
+                                                                1 2 3 4
+- Désignations normalisées et commerciales des matériaux.
+- Procédés de première transformation et matières                              L'approche de la structure micrographique de la
+                                                                               matière (métallographique, structure atomique et
+    premières.                                                                 moléculaire) n'est pas abordée mais est traitée
+- Caractéristiques mécaniques :                                                dans le cours de Physique et Chimie.
+                                                                               On se limitera aux grandes familles de matériaux
+        - modules d'élasticité de Young et de Coulomb,                         suivantes :
+        - coefficient de Poisson,
+        - résilience,                                                                 - matériaux et alliages métalliques,
+        - dureté,                                                                     - polymères,
+        - limite élastique,                                                           - composites,
+        - limite de fatigue.                                                          - céramiques.
+- Caractéristiques physico-chimiques : masse volumique,
+    conductibilité, résistance à la corrosion, formabilité,
+    coulabilité, soudabilité.
+- Eléments d'addition et leur influence sur les propriétés.
+- Essais mécaniques :
+       - essai de traction uni axial,
+       - essai de flexion,
+       - essai de dureté,
+       - essai de résilience,
+       - essai de fatigue.
+
+S4.2 - Domaines d'utilisation et traitements des matériaux :
+
+Les transformations physiques et chimiques des divers traitements de transformation et d'amélioration des caracté-
+ristiques des matériaux ne sont pas traitées dans ce chapitre mais sont abordées dans le cours de Physique et Chi-
+mie.
+
+Savoirs, Connaissances                                          Niveaux taxo-  Limites de connaissances
+                                                                  nomiques
+(concepts, notions, méthodes)
+                                                                1 2 3 4
+
+- Domaines d'utilisation et tendances d'évolution (technologie                 On se limitera aux résultats obtenus : améliora-
+    des poudres, ajout de matière...).                                         tions des performances, défauts induits, limites
+                                                                               d'utilisations, conséquences économiques.
+- Principes, effets et exigences des principaux traitements
+    thermiques des aciers :                                                    On se limitera à des études de cas permettant de
+        - trempe,                                                              comparer des coûts
+        - revenu,
+        - recuit.
+
+- Principes, limites et performances des traitements de
+    surface :
+        - par revêtements et dépôts,
+        - par conversion,
+        - par diffusion.
+
+- Principes, limites et performances des traitements
+    mécaniques :
+        - grenaillage,
+        - galetage,
+        - brunissage,
+        - sablage, ...
+
+- Pour tous ces traitements, incidence sur les procédés de
+    transformation et d'assemblage ultérieurs.
+
+- Notions sur les coûts.
+
+BTS Conception des Produits Industriels - Page 39 / 103
+S4.3 - Interaction fonction matériau-géométrie-procédé-coût
+
+Il ne s'agit pas ici d'exiger un haut niveau d'optimisation mais de sensibiliser les étudiants au choix de matériau en
+prenant en compte l'ensemble des contraintes fonctionnelles d'une pièce. Pour l'apprentissage de ces méthodes, on
+s'appuiera sur des exemples simples faisant intervenir un nombre réduit de critères dont on aura justifié le choix avec
+les étudiants.
+Ces savoirs sont directement liés à ceux du chapitre S712 : Optimisation du choix des procédés de réalisation
+
+Savoirs, Connaissances                                           Niveaux taxo-  Limites de connaissances
+                                                                   nomiques
+(concepts, notions, méthodes)
+                                                                 1 2 3 4
+
+- Liens entre fonction technique, spécifications, procédé et                    On se limitera à l'utilisation de critères simples,
+    matériau.                                                                   pertinents par rapport à l'optimisation recher-
+                                                                                chée.
+- Optimisation du choix « matériau, géométrie, coût » à l'aide
+    d'un logiciel adapté connecté à une base de données :
+        - choix des critères d'optimisation,
+        - méthodes d'optimisation par lecture de graphes des
+            critères de choix.
+
+S5 - TECHNOLOGIE DES MECANISMES
+
+Les savoirs et connaissances relatifs à ces solutions constructives seront traités en liaison avec l'étude des chaînes
+d'énergie (voir S3.1 - Chaîne d'énergie), l'objectif étant d'apporter une culture des constituants de transmission de
+puissance.
+Lorsque la complexité le permet, on pourra s'intéresser aux :
+- Conditions d'installation et de bon fonctionnement.
+- Pré dimensionnement et/ou validation du choix à l'aide de bases de données de constructeurs ou de logiciels
+
+    spécialisés.
+- Données technico-économiques comparatives (prix du composant, coûts d'installation, de maintenance, etc...).
+
+S5.1 - Solutions constructives associées aux liaisons
+
+Savoirs, Connaissances                                           Niveaux taxo-  Limites de connaissances
+                                                                   nomiques
+(concepts, notions, méthodes)
+                                                                 1 2 3 4
+
+- Nature des liaisons obtenues.                                                 Pour les solutions constructives suivantes :
+- Solutions classiques avec éléments standard éventuels.                        - assemblage démontable,
+- Conditions et surfaces fonctionnelles (mise en position,                      - assemblage permanent,
+                                                                                - guidage en rotation par glissement,
+    maintien en position), influence sur la précision, la tenue                 - guidage en rotation par éléments roulants,
+    aux efforts, la rigidité, ...                                               - guidage en translation par glissement,
+- Lubrification éventuelle.                                                     - guidage en translation par éléments roulants,
+- Étanchéité éventuelle.                                                        - liaison rotule,
+- Pré dimensionnement et/ou validation du choix à l'aide de                     - liaison hélicoïdale
+    bases de données de constructeurs et de logiciels
+    spécialisés.
+- Données technico-économiques comparatives (prix du
+    composant, coûts d'installation, de maintenance, etc...)
+
+S5.2 - Eléments de transmission de puissance                     Niveaux taxo-  Limites de connaissances
+                                                                   nomiques
+                  Savoirs, Connaissances
+                                                                 1 2 3 4
+                      (concepts, notions, méthodes)
+                                                                                Pour les solutions constructives suivantes :
+  Comportement cinématique de la transmission : loi                             Transmissions sans transformation de mouve-
+      d'entrée-sortie, réversibilité.                                           ment :
+                                                                                - sans modification de la vitesse angulaire :
+  Puissance d'entrée et de sortie, rendement.
+                                                                                        - accouplements d'arbres,
+                                                                                        - embrayages et coupleurs,
+                                                                                        - limiteurs de couple,
+                                                                                        - freins.
+                                                                                - avec modification de la vitesse angulaire :
+                                                                                        - poulies courroie,
+
+BTS Conception des Produits Industriels - Page 40 / 103
+                                                                                      - chaînes,
+                                                                                      - engrenages (trains simples et
+
+                                                                                          épicycloïdaux),
+                                                                                      - applications aux réducteurs et boîtes
+
+                                                                                          de vitesse.
+
+                                                                              Transmissions avec transformation de mouve-
+                                                                              ment :
+
+                                                                                      - systèmes vis écrou (à glissement et à
+                                                                                          roulement),
+
+                                                                                      - systèmes à cames simples,
+                                                                                      - systèmes articulés plans.
+
+S5.3 - Eléments de conversion d'énergie
+
+L'objectif est de donner une culture relative aux différentes technologies d'actionneurs et de leurs principales carac-
+téristiques (vitesse nominale, couple de démarrage, puissance nominale).
+
+Savoirs, Connaissances                                         Niveaux taxo-  Limites de connaissances
+                                                                 nomiques
+(concepts, notions, méthodes)
+                                                               1 2 3 4
+
+- Grandeurs caractéristiques d'entrée et de sortie.                           Pour les solutions constructives suivantes :
+- Espace de fonctionnement et point de fonctionnement pour                    convertisseurs électriques :
+
+    un régime donné.                                                                  - moteur à courant continu,
+- Chaîne d'alimentation et de distribution associée.                                  - moteur « brushless »,
+                                                                                      - moteur synchrone,
+                                                                                      - moteur asynchrone,
+                                                                                      - moteur « pas à pas ».
+                                                                              Convertisseurs hydrauliques et pneumatiques :
+                                                                                      - vérins,
+                                                                                      - moteurs,
+                                                                                      - pompes, compresseurs
+                                                                                      - transmissions hydrostatiques.
+                                                                              L'approche des chaînes d'alimentation et de
+                                                                              distribution reste fonctionnelle et descriptive à
+                                                                              partir de systèmes commercialisés.
+
+S5.4 - Capteurs
+
+L'étude des capteurs a pour objectif de faciliter le dialogue avec un spécialiste de l'automatique lorsque cela est né-
+cessaire et aide le technicien de bureau d'études à participer à leur choix et à prévoir leur implantation dans un sys-
+tème.
+
+Savoirs, Connaissances                                         Niveaux taxo-  Limites de connaissances
+                                                                 nomiques
+(concepts, notions, méthodes)
+                                                               1 2 3 4
+
+- Rôle et nature d'un capteur.                                                La connaissance des différents types de cap-
+- Typologie.                                                                  teurs ainsi que de leurs caractéristiques seront
+- Nature et grandeurs caractéristiques d'entrée et de sortie.                 complétées par leur utilisation en vue de relevés
+                                                                              lors d'expérimentations sur des systèmes méca-
+                                                                              niques réels.
+
+S5.5 - Recherche documentaire
+
+La recherche documentaire est une compétence importante du technicien de bureau d'étude, qui doit être capable de
+rechercher une information selon des modalités variées comme de participer au système de classement, d'archivage
+
+                                               BTS Conception des Produits Industriels - Page 41 / 103
+et de vieille technologique existant.                          Niveaux taxo-  Limites de connaissances
+                                                                 nomiques
+                  Savoirs, Connaissances
+                                                               1 2 3 4
+                      (concepts, notions, méthodes)
+                                                                              Le recherche documentaire doit se faire sur tous
+- Classification, mots-clés, indexage.                                        les moyens disponibles, documents papier,
+- Bases de données numériques, normes d'indexage et de                        bases de données numériques en ligne, applica-
+                                                                              tions informatiques d'aide au choix, etc.
+    recherche.
+- Recherche et comparaison par critère (mono critère ou
+
+    multi-critères).
+- Synthèse des résultats (liste hiérarchisée, tableaux
+
+    comparatifs, graphes d'aide au choix).
+
+S6 - SPECIFICATIONS ET PROCESSUS DE CONTROLE
+
+S6.1 - Spécification des produits.
+
+L'approche de la spécification dimensionnelle et géométrique des produits s'appuie sur l'analyse du fonctionnement
+attendu d'un produit pour aboutir, par l'utilisation d'une méthodologie de cotation structurée, à l'identification de con-
+ditions fonctionnelles et à une cotation de définition des différentes pièces d'un mécanisme respectant la norme ISO
+en vigueur.
+
+Savoirs, Connaissances                                         Niveaux taxo-  Limites de connaissances
+                                                                 nomiques
+(concepts, notions, méthodes)
+                                                               1 2 3 4
+
+S6.1.1 - Défauts des surfaces réelles                                         L'analyse de données métrologiques de pièces
+                                                                              existantes est recommandée.
+- Caractéristiques des surfaces réelles et identification des                 L'utilisation de dispositifs didactiques amplifiant
+    défauts dimensionnels, géométriques et micro-                             les défauts est recommandée.
+    géométriques.
+
+S6.1.2 - Types de tolérances et de spécifications:                            La détermination quantitative des intervalles de
+                                                                              tolérances, dimensionnels ou géométrique, n'est
+- Tolérancement dimensionnel.                                                 attendue que sur des cas simples de type plan.
+- Tolérancement par zones.                                                    Dans les autres cas, on se contentera d'une
+- Tolérancement par gabarits.                                                 approche qualitative de la spécification.
+- Tolérances générales.
+- Spécifications géométriques :
+
+        - forme,
+        - orientation,
+        - position,
+        - battement.
+- Eléments spécifiés.
+- Eléments de référence et références spécifiées.
+- Tolérances projetées.
+- Interdépendance dimensions/géométrie :
+        - exigence d'enveloppe,
+        - exigence du maximum de matière,
+        - exigence du minimum de matière.
+- Conditions d'état libre.
+- Spécifications d'état de surface.
+
+6.1.3 - Démarche de détermination des spécifications d'un                     Voir commentaire précédent
+produit :
+
+- Inventaire des fonctions mécaniques auxquelles participe la
+    pièce.
+
+- Identification des surfaces fonctionnelles (ou groupes de
+    surfaces fonctionnelles) associées.
+
+- Analyse et quantification éventuelle des conditions de
+    fonctionnement et de montage (jeux, ajustements, chaîne
+    géométrique des contacts, ...).
+
+- Traduction en spécifications :
+
+BTS Conception des Produits Industriels - Page 42 / 103
+        - dimensionnelles,
+        - géométriques,
+        - d'états de surface.
+
+6.1.4 - Relation entre métrologie et tolérancement norma-
+lisé
+
+- Matrice GPS.
+- Référentiels de mesure.
+- Notion d'extraction et critères d'association.
+- Relation « zone de tolérance » et grandeur mesurée.
+
+S6.2 - Processus de contrôle                                     Niveaux taxo-  Limites de connaissances
+                                                                   nomiques
+                  Savoirs, Connaissances
+                                                                 1 2 3 4
+                      (concepts, notions, méthodes)
+
+S6.2.1 - Instruments, outillages et protocoles de contrôle
+
+- Dispersions et erreurs de mesurage.                                           Ces concepts seront abordés sur des cas
+- Identification, estimation et causes des erreurs de :                         simples, en lien avec les contraintes de réalisa-
+                                                                                tion et de métrologie.
+        - justesse,
+        - répétabilité,
+        - reproductibilité.
+- Caractéristiques et technologie des instruments de contrôle.
+
+S7 - TECHNOLOGIE DES PROCEDES
+
+S7.1 - Interaction conception industrialisation, optimisation de la relation produit-
+matériau-procédé
+
+L'approche des procédés s'appuie sur l'identification des principes de transformation utilisés et sur les caractéris-
+tiques des familles de matériaux transformés.
+Elle permet d'associer aux procédés les principales caractéristiques des pièces obtenues (qualités et défauts, dimen-
+sions, précision, impacts environnementaux, coûts).
+
+Savoirs, Connaissances                                           Niveaux taxo-  Limites de connaissances
+                                                                   nomiques
+(concepts, notions, méthodes)
+                                                                 1 2 3 4
+
+S7.1.1 : Procédés d'obtention :
+
+- Procédés primaires relatifs à l'obtention de pièces brutes                    Approche qualitative, identifiant des ordres de
+    exigeant éventuellement des transformations ultérieures. La                 grandeur significatifs des principales caractéris-
+    matière d'oeuvre entrante est sous une forme primaire ou                    tiques permettant des analyses multi critères.
+    composée de produits standards (laminés, profilés...) :
+        - mise en forme par fonderie (au sable, sous vide, par
+            injection),
+        - mise en forme par moulage (injection, compression,
+            soufflage, extrusion),
+        - mise en forme par déformation (roulage, forgeage,
+            estampage, découpe),
+        - méthodes des poudres (compression, coulée,
+            injection),
+        - mise en oeuvre des composites,
+        - procédés additifs,
+        - usinages non conventionnels (électroérosion,
+            découpe au jet d'eau, découpe laser).
+
+- Procédés secondaires permettant l'obtention de pièces
+    finies à partir d'éléments bruts issus d'une transformation
+    par un procédé primaire :
+        - usinage (tournage, perçage, fraisage...),
+        - procédés primaires utilisés en tant que procédé
+
+BTS Conception des Produits Industriels - Page 43 / 103
+            secondaire (surmoulage, découpe, électro-           Optimiser la conception d'un produit en intégrant
+            enfonçage).                                         les exigences ou les propositions d'un spécialiste
+- Procédés tertiaires de finition, d'assemblage et/ou           du procédé.
+    d'amélioration des caractéristiques physiques permettant
+    l'obtention de pièces finies :                              L'analyse multi critères sera pratiquée sur des
+        - traitements thermiques,                               études de cas en mettant en évidence une ou
+        - soudage et brasage,                                   plusieurs des relations proposées.
+        - collage,
+        - fixation mécanique,                                   En lien avec le savoir S43
+        - soudage mécanique (par friction, par ultrasons),
+        - peintures et marquages,
+        - polissage et texturation (gravure laser, attaque
+            chimique),
+        - anodisation et chromage,
+        - métallisation, galvanisation.
+
+S7.1.2 - Optimisation du choix des procédés de réalisation
+selon les critères suivants :
+
+- Forme et état de la matière d'oeuvre entrante utilisable
+    (profilés, plats, lingots, poudres, liquide).
+
+- Caractéristiques physiques :
+        - tolérance, rugosité,
+        - modification des propriétés mécaniques des
+            matériaux,
+        - géométries réalisables et règles de conception
+            associées.
+
+- Caractéristiques environnementales et économiques :
+        - impact environnemental (déchets, consommables,
+            effluents, bilan carbone, etc.) associés à la
+            réalisation,
+        - coût de la matière d'oeuvre,
+        - coût de l'équipement (machine),
+        - coût de l'outillage,
+        - coût de la main d'oeuvre (durée de préparation de la
+            mise en oeuvre, quantités d'opérateurs
+            nécessaires...).
+
+- Productivité :
+        - production unitaire, petite série, grande série,
+        - disponibilités et délais de réalisation.
+
+S7.1.3 - Relations caractéristiques de l'optimisation de la
+relation produit - matériau - procédé
+
+- Relations fonctions - pièce - matériau - procédé : approche
+    multi critères, caractéristiques influentes, ordres de
+    grandeur associés.
+
+- Relations entre formes caractéristiques d'une pièce et
+    procédés.
+
+- Relations entre caractéristiques de mise en forme d'un
+    matériau et procédés associés.
+
+- Relations entre formes, dimensions, précision d'une surface
+    et outillages associés à un procédé.
+
+- Relation matériau-procédé-précision obtenue.
+- Relation entre aspect (visuel, toucher, estime) d'une forme
+
+    - matériau - procédé.
+- Relation coût de fabrication d'une pièce et type de
+
+    transformation (primaire, secondaire, tertiaire).
+- Relation densité matériau - volume pièce - coût matière.
+- Relations - complexité des formes d'une pièce - procédé -
+
+    coût.
+
+S7.1.4 - Méthodes de choix et procédures associées à la
+relation produit - matériau - procédé.
+
+BTS Conception des Produits Industriels - Page 44 / 103
+- Procédure de choix d'un matériau relatif à un procédé et à
+    un produit.
+
+- Procédure de choix d'un procédé relatif à un matériau et à
+    un produit.
+
+S7.1.5 - Optimisation d'un produit réalisé selon un procé-
+dé et un processus donné.
+
+- Adaptation des formes et dimensions d'une pièce aux
+    produits semi-finis standard.
+
+- Adaptation de la nuance d'un matériau d'une pièce aux
+    matières d'oeuvre standard.
+
+- Adaptation du matériau et du procédé de réalisation associé
+    aux normes environnementales en vigueur.
+
+- Adaptation des formes, dimensions et précisions d'une
+    pièce aux standard de réalisation disponibles (types de
+    machines, géométrie, capabilité machine, ...).
+
+S7.2 - Création de prototypes de pièces et de mécanismes
+
+Le terme générique « prototype » désigne la réalisation d'une maquette physique, à une échelle donnée, d'un méca-
+nisme ou d'une pièce unique, permettant de valider des caractéristiques attendues.
+
+Savoirs, Connaissances                                         Niveaux taxo-  Limites de connaissances
+                                                                 nomiques
+(concepts, notions, méthodes)
+                                                               1 2 3 4
+
+S7.2.1 - Finalités et méthodologie du prototypage                             Pour le prototypage de systèmes cinématiques,
+                                                                              les éventuelles mesures de positions, vitesses et
+- Protocoles expérimentaux :                                                  accélérations peuvent être envisagées à l'aide de
+        - buts, objectifs, hypothèses ;                                       dispositifs vidéos mais dans ce cas les procé-
+        - protocole expérimental : étapes, etc ;                              dures d'interpolation ne seront pas demandées
+        - modes opératoires de chaque étape ;                                 aux élèves.
+        - analyse des résultats.                                              Globalement, en ce qui concerne les acquisitions
+                                                                              de données, on considérera que le filtrage des
+- Protocoles de mesures :                                                     informations ne sera pas demandé aux élèves
+        - mesure de position, de vitesse, d'accélération ;                    mais qu'il peut faire l'objet d'une collaboration
+        - mesure de force, de résistance mécanique, de                        avec un spécialiste.
+            rigidité, de dureté,de déformation ;
+        - mesures de caractéristiques physiques.
+
+S7.2.2 - Domaines d'utilisation des prototypes
+
+- Vérification de l'ergonomie et de l'esthétique.
+- Vérification de contraintes fonctionnelles.
+- Vérification de caractéristiques attendues.
+- Vérification de caractéristiques attendues et du procédé
+
+    retenu (bonne matière).
+
+S7.2.3 - Préparations CAO liées au prototypage
+
+- Analyse de formes et fonctionnalités logicielles associées.
+- Utilisation des modules logiciels spécifiques de mise en
+
+    forme.
+- Paramétrage des fichiers de prototypage.
+- Numérisation et reconstruction d'un modèle réel (scanner
+
+    3D).
+
+BTS Conception des Produits Industriels - Page 45 / 103
+                             BTS CPI : Relations principales entre les compétences et les savoirs
+
+       COMPÉTENCES BTS CPI                                                 C1 C2 C3 C4 C5 C6 C7 C8 C9 C10 C11 C12 C13 C14
+
+S1- DÉMARCHE DE CONCEPTION ET GESTION DE PROJET
+
+S1.1 Ingénierie système et analyse fonctionnelle                                 X     X                 X          X
+
+S1.2 Organisation de l'entreprise industrielle                             X     X     X                            X
+
+S1.3 Compétitivité des produits industriels                                X     X X X                   X          X
+
+S1.4 Développement durable et éco conception                               X X X X X                     X          X
+
+S2- CHAINE NUMÉRIQUE
+
+S2.1   Concept de « chaîne numérique »                                                       X
+S2.2   Simulation
+S2.3   Outils de conception et de représentation numériques                                  X              X
+S2.4   Représentations graphiques dérivées des maquettes numériques
+                                                                                             X                            X
+
+                                                                                             X                            X
+
+S3- COMPORTEMENT DES SYSTÈMES MÉCANIQUES
+
+S3.1 Chaîne d'énergie                                                                                       X
+
+S3.2 Etude des comportements mécaniques des pièces et des sys- tèmes X
+
+S3.21 Modélisation des mécanismes                                                                           X
+
+S3.22 Mouvements relatifs entre solides, translation et rotation                                            X
+
+S3.23 Mouvements plans                                                                                      X
+
+S3.24 Modélisation des actions mécaniques                                                                   X
+
+S3.25 Comportement mécanique des pièces et des systèmes                                                     X
+
+S3.26 Résistance des matériaux                                                                              X
+
+S3.27 Mécanique des fluides                                                                                 X
+
+S4- MATÉRIAUX ET TRAITEMENTS
+
+  S4.1 Structure et caractéristiques des matériaux                                                          X       X
+  S4.2 Domaine d'utilisation des matériaux et leurs traitements
+  S4.3 Interaction fonction / matériau - géométrie - procédé - coût                                                 X
+S5- TECHNOLOGIE DES MÉCANISMES
+                                                                              X     X                               X
+
+S5.1 Solutions constructives associées aux mécanismes                         X                          X X
+                                                                                                         X X
+S5.2 Eléments de transmission de puissance                                    X                          X X
+                                                                                                         X X
+S5.3 Eléments de conversion d'énergie                                         X                          X X
+
+S5.4 Capteurs                                                                 X
+
+S5.5 Recherche documentaire                                                   X
+
+S6- SPÉCIFICATION ET PROCESSUS DE CONTRÔLE
+
+  S6.1 Spécification des produits                                                         X                    X
+  S6.2 Processus de contrôle
+S7- TECHNOLOGIE DES PROCÉDÉS                                                              X                    X
+
+S7.1   Interaction fonction / matériau - géométrie - procédé - coût              X X X X                       X X
+S7.11                                                                            X
+S7.12  Procédés d'obtention                                                      X                             X X
+S7.13                                                                            X
+S7.14  Optimisation du choix du procédé                                          X                             X X
+S7.15  Relations caractéristiques de optimisation produit-matériau-              X
+S7.2   procédé                                                                   X                             X X
+       Méthodes de choix et procédures associées à la relation PMP
+       Optimisation d'un produit réalisé selon un procédé et un processus                                      X X
+       donné
+       Création de prototypes de pièces et de mécanismes                                                       X X
+
+                                                                                                               X X     X
+
+                                                BTS Conception des Produits Industriels - Page 46 / 103
