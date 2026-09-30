@@ -15611,6 +15611,9 @@ solution ne permet de comparer que des prix.*
 
 C'est le premier outil, et le plus simple. Trois questions, dans cet ordre :
 
+1. **À qui le produit rend-il service ?** → l'utilisateur, celui qui a le problème ;
+2. **Sur quoi agit-il ?** → la matière d'œuvre ;
+3. **Dans quel but ?** → sa raison d'être.
 
 La réponse à la troisième question — le but — s'appelle la **fonction globale** du produit. C'est
 la phrase qu'on écrira tout en haut du cahier des charges.
@@ -15634,27 +15637,32 @@ est robuste, le projet a un sens.*
 
 ### 4. Les erreurs classiques
 
-1. **Écrire une solution à la place d'une fonction.** Dès qu'un nom de composant apparaît dans le
-   cahier des charges, c'est perdu.
-2. **Oublier de chiffrer.** « Léger », « silencieux », « robuste » ne veulent rien dire.
-3. **Confondre FP et FC** : une fonction qui ne relie le produit qu'à un seul EME est forcément
-   une contrainte.
-4. **Se tromper d'utilisateur** : le service est rendu à celui qui a le problème et qui paie.
-5. **Oublier la méthode de mesure** : l'exigence devient invérifiable, donc source de litige.
-6. **Sauter la phase d'analyse** pour ouvrir la CAO : c'est l'erreur du cas de la fiche 9.1, qui
-   coûte cinq semaines de projet.
-7. **Ne pas classer les flexibilités** : impossible de négocier quand le projet dérape.
-
+1. **Prendre la demande du client pour son besoin** : l'équerre était sa solution ; son besoin
+   était de tenir un capteur face aux bouteilles. Une question suffit : « pour faire quoi ? »
+2. **Écrire une solution à la place d'une fonction** : « utiliser une clavette » au lieu de
+   « transmettre un couple de 12 N·m ».
+3. **Glisser un composant, une marque, une matière ou une dimension** dans une fonction : elle
+   n'est plus neutre technologiquement.
+4. **Se tromper d'utilisateur** : le service est rendu à celui qui a le problème (le propriétaire),
+   pas à la matière d'œuvre (le chat).
+5. **Ne pas valider le besoin** : sans les **trois questions de validation** (pourquoi ce besoin
+   existe-t-il ? qu'est-ce qui le ferait disparaître ? est-ce probable ?), on peut concevoir un
+   produit qui n'aura plus d'utilité dans deux ans.
 
 ### 5. À retenir
 
-- On écrit ce que le produit doit **faire**, jamais **comment** il le fera.
-- Une fonction = **verbe à l'infinitif + complément**, sans aucun composant.
-- **Bête à cornes** : à qui, sur quoi, dans quel but. Le service va à celui qui a le problème.
-- **Pieuvre** : FP relie **deux** EME à travers le produit, FC en relie **un seul**.
-- Chaque fonction : **critère, niveau chiffré, flexibilité F0 à F3**.
-- **FAST** : pourquoi à gauche, comment à droite — le composant n'apparaît qu'à la fin.
-- Le CdCF est **contractuel**, et c'est lui qui servira à valider le produit.
+- On écrit ce que le produit doit **faire** (la fonction), jamais **comment** il le fera (la
+  solution).
+- Une fonction = **verbe à l'infinitif + complément**, sans composant, marque, matière ni dimension
+  imposée.
+- Un cahier des charges **neutre technologiquement** permet de comparer des solutions, pas
+  seulement des prix.
+- **Bête à cornes** : à qui rend-il service ? sur quoi agit-il ? dans quel but ? — le but est la
+  **fonction globale**.
+- Le service va à **celui qui a le problème**, pas à la **matière d'œuvre**, celle sur qui le
+  produit agit (le chat du distributeur de croquettes).
+- Valider le besoin (trois autres questions) : **pourquoi existe-t-il ? qu'est-ce qui le ferait
+  disparaître ? est-ce probable ?**
 """,
             "formules": """
 **La distinction fondatrice** — le **besoin** est ce que l'utilisateur veut obtenir ·
@@ -15808,27 +15816,25 @@ recyclage en fin de vie.
 
 ### 2. Les erreurs classiques
 
-1. **Écrire une solution à la place d'une fonction.** Dès qu'un nom de composant apparaît dans le
-   cahier des charges, c'est perdu.
-2. **Oublier de chiffrer.** « Léger », « silencieux », « robuste » ne veulent rien dire.
-3. **Confondre FP et FC** : une fonction qui ne relie le produit qu'à un seul EME est forcément
-   une contrainte.
-4. **Se tromper d'utilisateur** : le service est rendu à celui qui a le problème et qui paie.
-5. **Oublier la méthode de mesure** : l'exigence devient invérifiable, donc source de litige.
-6. **Sauter la phase d'analyse** pour ouvrir la CAO : c'est l'erreur du cas de la fiche 9.1, qui
-   coûte cinq semaines de projet.
-7. **Ne pas classer les flexibilités** : impossible de négocier quand le projet dérape.
-
+1. **Confondre FP et FC** : une fonction qui ne relie le produit qu'à **un seul** EME est une
+   contrainte (« résister aux copeaux »).
+2. **Écrire une FP qui ne traverse pas le produit** : « permettre à l'opérateur de serrer la
+   pièce » relie deux EME (l'opérateur et la pièce) par l'intermédiaire du produit — sans lui, le
+   lien n'existe pas. C'est ce qui en fait une FP.
+3. **Trouver six FP** : c'est presque sûrement que les EME sont mal identifiés. Un produit a en
+   général une ou deux FP.
+4. **Oublier des EME** : sans la liste type, des contraintes passent à la trappe — souvent la
+   maintenance, les normes ou la fin de vie.
 
 ### 3. À retenir
 
-- On écrit ce que le produit doit **faire**, jamais **comment** il le fera.
-- Une fonction = **verbe à l'infinitif + complément**, sans aucun composant.
-- **Bête à cornes** : à qui, sur quoi, dans quel but. Le service va à celui qui a le problème.
-- **Pieuvre** : FP relie **deux** EME à travers le produit, FC en relie **un seul**.
-- Chaque fonction : **critère, niveau chiffré, flexibilité F0 à F3**.
-- **FAST** : pourquoi à gauche, comment à droite — le composant n'apparaît qu'à la fin.
-- Le CdCF est **contractuel**, et c'est lui qui servira à valider le produit.
+- La bête à cornes donne **une** fonction ; la **pieuvre** les trouve **toutes**.
+- Le produit au centre, les **éléments du milieu extérieur** (EME) autour.
+- **FP** : relie **deux** EME en traversant le produit — c'est sa raison d'être.
+- **FC** : relie le produit à **un seul** EME — une obligation subie.
+- En général une ou deux FP, et **beaucoup de FC**.
+- Pour ne rien oublier, la **même liste type** : utilisateur, matière d'œuvre, énergie, support,
+  ambiance, maintenance, normes et sécurité, budget, esthétique, fin de vie.
 """,
             "formules": """
 **Principe** — on place le produit au centre, les **éléments du milieu extérieur** autour,
@@ -15954,6 +15960,10 @@ un moyen technique ? Si oui, c'est une solution déguisée.
 Une fonction non chiffrée ne sert à rien. « Le carter doit être solide » n'est ni vérifiable, ni
 contestable, ni utile à un fournisseur.
 
+On caractérise donc chaque fonction par trois éléments : le **critère**, ce qu'on mesure (une
+masse, une durée, un bruit en décibels) ; le **niveau**, la valeur chiffrée à atteindre, avec son
+unité (moins de 2 kg ; résister sans se déformer à un choc de 5 J, soit une masse de 500 g lâchée
+d'un mètre) ; la **flexibilité**, à quel point ce niveau est négociable.
 
 **La classe de flexibilité** dit à quel point l'exigence est négociable :
 
@@ -16003,27 +16013,24 @@ argument chiffré au lieu d'un avis.
 
 ### 3. Les erreurs classiques
 
-1. **Écrire une solution à la place d'une fonction.** Dès qu'un nom de composant apparaît dans le
-   cahier des charges, c'est perdu.
-2. **Oublier de chiffrer.** « Léger », « silencieux », « robuste » ne veulent rien dire.
-3. **Confondre FP et FC** : une fonction qui ne relie le produit qu'à un seul EME est forcément
-   une contrainte.
-4. **Se tromper d'utilisateur** : le service est rendu à celui qui a le problème et qui paie.
-5. **Oublier la méthode de mesure** : l'exigence devient invérifiable, donc source de litige.
-6. **Sauter la phase d'analyse** pour ouvrir la CAO : c'est l'erreur du cas de la fiche 9.1, qui
-   coûte cinq semaines de projet.
-7. **Ne pas classer les flexibilités** : impossible de négocier quand le projet dérape.
-
+1. **Oublier de chiffrer** : « solide », « léger », « facile à nettoyer » ne sont ni vérifiables, ni
+   contestables.
+2. **Donner un niveau sans critère**, ou un critère sans niveau : le critère dit **ce qu'on
+   mesure**, le niveau dit **combien**.
+3. **Ne pas classer les flexibilités** : quand le projet dérape, on ne sait plus sur quoi céder.
+4. **Tout classer en F0** : si tout est impératif, la flexibilité ne sert plus à arbitrer.
+5. **Arbitrer au ressenti**, sans tri croisé : c'est la fonction la plus visible qui gagne, pas la
+   plus importante.
 
 ### 4. À retenir
 
-- On écrit ce que le produit doit **faire**, jamais **comment** il le fera.
-- Une fonction = **verbe à l'infinitif + complément**, sans aucun composant.
-- **Bête à cornes** : à qui, sur quoi, dans quel but. Le service va à celui qui a le problème.
-- **Pieuvre** : FP relie **deux** EME à travers le produit, FC en relie **un seul**.
-- Chaque fonction : **critère, niveau chiffré, flexibilité F0 à F3**.
-- **FAST** : pourquoi à gauche, comment à droite — le composant n'apparaît qu'à la fin.
-- Le CdCF est **contractuel**, et c'est lui qui servira à valider le produit.
+- Chaque fonction : **critère** (ce qu'on mesure) ; **niveau** (la valeur chiffrée) ;
+  **flexibilité** F0 à F3.
+- **F0** impératif (sécurité, interface avec l'existant, norme) ; F1 peu négociable ; F2
+  négociable ; **F3** simple souhait.
+- Ce tableau **sert à valider** le produit à la fin : on mesure, on coche.
+- **Tri croisé** : comparer deux à deux, poids 1 à 3, additionner, passer en **pourcentage**.
+- n fonctions → **n(n − 1)/2 comparaisons**.
 """,
             "formules": """
 **Caractériser une fonction — trois éléments obligatoires** —
@@ -16181,27 +16188,24 @@ avez fait un choix, et donc de pouvoir le discuter. C'est ce que cherche un jury
 
 ### 2. Les erreurs classiques
 
-1. **Écrire une solution à la place d'une fonction.** Dès qu'un nom de composant apparaît dans le
-   cahier des charges, c'est perdu.
-2. **Oublier de chiffrer.** « Léger », « silencieux », « robuste » ne veulent rien dire.
-3. **Confondre FP et FC** : une fonction qui ne relie le produit qu'à un seul EME est forcément
-   une contrainte.
-4. **Se tromper d'utilisateur** : le service est rendu à celui qui a le problème et qui paie.
-5. **Oublier la méthode de mesure** : l'exigence devient invérifiable, donc source de litige.
-6. **Sauter la phase d'analyse** pour ouvrir la CAO : c'est l'erreur du cas de la fiche 9.1, qui
-   coûte cinq semaines de projet.
-7. **Ne pas classer les flexibilités** : impossible de négocier quand le projet dérape.
-
+1. **Écrire « roulement à billes » dès la première colonne** au lieu de « guider l'arbre en
+   rotation » : le FAST est faux, et l'étape où l'on aurait pu trouver mieux est sautée.
+2. **Inverser le sens de lecture** : POURQUOI remonte vers la gauche (le besoin), COMMENT descend
+   vers la droite (la solution).
+3. **Mettre à la suite des fonctions simultanées** : les fonctions à assurer en même temps
+   (QUAND ?) se placent en branches verticales.
+4. **Commencer par le FAST** : on ne cherche des solutions qu'une fois les fonctions écrites et
+   chiffrées.
+5. **Soigner le dessin plutôt que les choix** : un FAST sert à montrer **où** un choix a été fait,
+   pour pouvoir le discuter.
 
 ### 3. À retenir
 
-- On écrit ce que le produit doit **faire**, jamais **comment** il le fera.
-- Une fonction = **verbe à l'infinitif + complément**, sans aucun composant.
-- **Bête à cornes** : à qui, sur quoi, dans quel but. Le service va à celui qui a le problème.
-- **Pieuvre** : FP relie **deux** EME à travers le produit, FC en relie **un seul**.
-- Chaque fonction : **critère, niveau chiffré, flexibilité F0 à F3**.
-- **FAST** : pourquoi à gauche, comment à droite — le composant n'apparaît qu'à la fin.
-- Le CdCF est **contractuel**, et c'est lui qui servira à valider le produit.
+- On ne cherche des solutions **qu'après** avoir écrit et chiffré les fonctions.
+- Lecture : **POURQUOI ?** vers la gauche (le besoin) ; **COMMENT ?** vers la droite (la
+  solution) ; **QUAND ?** en branches verticales.
+- Le **composant réel n'apparaît qu'à l'extrémité droite**.
+- Un FAST rend visible **où** vous avez fait un choix — c'est ce que cherche un jury.
 """,
             "formules": """
 **Ce que fait le FAST** — il passe des **fonctions** (le quoi) aux **solutions techniques**
@@ -16628,27 +16632,27 @@ d'accord sur le résultat — parce qu'elles ne mesurent pas de la même façon.
 
 ### 5. Les erreurs classiques
 
-1. **Écrire une solution à la place d'une fonction.** Dès qu'un nom de composant apparaît dans le
-   cahier des charges, c'est perdu.
-2. **Oublier de chiffrer.** « Léger », « silencieux », « robuste » ne veulent rien dire.
-3. **Confondre FP et FC** : une fonction qui ne relie le produit qu'à un seul EME est forcément
-   une contrainte.
-4. **Se tromper d'utilisateur** : le service est rendu à celui qui a le problème et qui paie.
-5. **Oublier la méthode de mesure** : l'exigence devient invérifiable, donc source de litige.
-6. **Sauter la phase d'analyse** pour ouvrir la CAO : c'est l'erreur du cas de la fiche 9.1, qui
-   coûte cinq semaines de projet.
-7. **Ne pas classer les flexibilités** : impossible de négocier quand le projet dérape.
-
+1. **Imposer une solution** : une technologie, une matière ou une forme imposée sans être une
+   contrainte réellement subie, c'est une solution déguisée en exigence.
+2. **Ne pas justifier une contrainte imposée** : « fixation par 4 vis M8 » doit dire pourquoi
+   (reprendre les trous du bâti existant). Sinon, le fournisseur la prend pour une solution
+   imposée et la conteste.
+3. **Oublier les modalités de validation** : une exigence sans méthode de mesure devient une source
+   de litige (« moins de 65 dB » — à quelle distance, à quelle vitesse, avec quel appareil ?).
+4. **Oublier qui mesure et quand** : le fournisseur, le client ou un tiers ; à la conception, à la
+   recette (la réception du produit par le client) ou en série.
+5. **Laisser une fonction sans critère, niveau et flexibilité** : c'est la partie 4, la partie
+   contractuelle.
 
 ### 6. À retenir
 
-- On écrit ce que le produit doit **faire**, jamais **comment** il le fera.
-- Une fonction = **verbe à l'infinitif + complément**, sans aucun composant.
-- **Bête à cornes** : à qui, sur quoi, dans quel but. Le service va à celui qui a le problème.
-- **Pieuvre** : FP relie **deux** EME à travers le produit, FC en relie **un seul**.
-- Chaque fonction : **critère, niveau chiffré, flexibilité F0 à F3**.
-- **FAST** : pourquoi à gauche, comment à droite — le composant n'apparaît qu'à la fin.
-- Le CdCF est **contractuel**, et c'est lui qui servira à valider le produit.
+- Le CdCF est **contractuel** : il engage les deux parties et sert à valider le produit.
+- Sept parties : présentation ; besoin (bête à cornes) ; milieu extérieur (pieuvre) ; **fonctions
+  caractérisées** ; hiérarchisation ; contraintes ; **modalités de validation**.
+- **La partie 4, les fonctions caractérisées, est le cœur du document.**
+- Un CdCF décrit ce que le produit doit **FAIRE**, jamais ce qu'il doit **ÊTRE**.
+- Le test : **cette ligne laisse-t-elle au moins deux solutions possibles ?**
+- Validation, pour chaque fonction : **comment**, **qui**, **quand**.
 """,
             "formules": """
 **Les 7 parties d'un CDCF** — présentation · besoin (bête à cornes) · milieu extérieur
