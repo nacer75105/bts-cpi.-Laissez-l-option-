@@ -808,3 +808,43 @@ Cité en exemple dans les commentaires (non exigible) :
   aucune source dans le dépôt).
 - ✅ Interface vérifiée dans un vrai navigateur le 2026-09-27 : atelier at141 (pièges, bonnes valeurs, QCM, corrigé), gen_proba_uniforme, figures histogramme_vers_densite, aire_uniforme regardées dans l'app (voir « Dette d'interface 17.7 à 18.13 »).
 
+
+## Mécanique et CAO (blocs 0 à 6, 9, 12 à 15) — relecture lancée le 2026-09-30
+
+Relecteurs : `relecteur-bts-meca` (justesse, calculs refaits en Python, normes ISO GPS, savoirs
+S1 à S7 du référentiel dans `.claude/referentiels/bts-cpi-meca/`) et `prof-pedagogue`.
+Attention : les fiches 2.1 à 2.3, 3.1 à 3.3 et 4.1 à 4.3 sont surchargées au chargement par
+`FICHES[...]` (fonction `appliquer`) ; le texte des `BLOC_*` correspondant n'est pas affiché.
+
+### Correctifs du 2026-09-30 (erreurs en ligne)
+
+Indépendance ISO 8015 / enveloppe Ⓔ (2.3) ; blocs « Erreurs / À retenir » recopiés sur 16
+fiches (1.1-1.4, 1.6, 6.1-6.11) ; 15 renvois « fiche 6.x » d'avant le découpage du bloc 6 (et
+5.2 → 5.5) ; Ra 3,2 d'une portée brute de tournage ; remplissage de graisse 30 à 50 % ; tri
+croisé 1.3 (total impossible) ; modèle d'un roulement à billes seul = rotule (6.1, 6.3, at80) ;
+arc-boutement 6.8 (condition L > 2 f a, la force n'intervient pas). Commits « fix: » séparés.
+
+### Améliorations relevées, non traitées (à reprendre au fil des fiches concernées)
+
+- 6.9 : « M8 8.8, ≈ 25 N·m pour ≈ 15 000 N » ne vaut qu'avec C = 0,2 × F × d ; avec la VDI 2230
+  (μ = 0,12) on trouve ≈ 18 kN (78 % de Re). Écrire « 15 000 à 18 000 N ».
+- 6.5 : durée du fluage d'une bague variable selon l'onglet (« dizaines d'heures », « semaines »,
+  « semaines à mois ») ; corrigé « deux bagues serrées : impossible à assembler » exagéré.
+- 6.4 : les formules découpent les trois familles autrement que le cours (contact direct / palier
+  lisse / roulement contre contact direct ou palier lisse / roulement / film fluide) ; le cours
+  (« il faut donc un second roulement opposé ») ne mentionne pas le cas d'un seul oblique associé
+  à un gorge profonde, pourtant retenu dans le cas industriel.
+- 6.11 : le cas industriel traite un montage de poulie, qui relève plutôt de la 6.10.
+- Rugosité : la figure etats_surface_cout met Ra 3,2 pour le « fraisage de finition », le quiz
+  classe Ra 1,6 en finition ; « Ra 6,3 ou brut de tournage » (5.13, atelier) peut se lire comme
+  une équivalence ; portée de joint à lèvres : préciser « Ra 0,2 à 0,8, rectifié en plongée ».
+- 2.3 (texte affiché) : Ⓔ ne s'applique qu'à un élément de taille (cylindre, deux plans
+  parallèles) ; les plans ASME appliquent l'enveloppe par défaut (Rule #1) — à signaler pour la
+  lecture de plans étrangers.
+- 1.3 : « F3 » écrit « simple souhait » dans le cours et autrement dans les formules : harmoniser.
+- 2.1 et 5.3 : listes « À retenir » semblables à 76 % (ISO 286) — pas identiques, à vérifier que
+  chacune reste propre à sa fiche.
+- Renvois : 711 renvois « fiche X.Y » dans app.py ; seuls ceux vers 6.x ont été contrôlés un par
+  un. Un contrôle systématique (voire un contrôle automatique dans l'audit) reste à faire.
+- 6.8 : le repère L ≥ 1,5 à 2 × a est une marge de conception (sûr jusqu'à f = 0,75), pas une
+  valeur normalisée ; source bibliographique à trouver si possible.
