@@ -25429,8 +25429,8 @@ avez reproduit exactement le montage hyperstatique de la fiche 6.3.
             "duree": '4 h',
             "cours": """### 1. Lubrification et étanchéité
 
-**Graisse** : simple, reste en place, protège de la pollution. On remplit **un tiers du volume
-libre**, jamais plus. Trop de graisse est brassée en permanence par les billes : elle s'échauffe,
+**Graisse** : simple, reste en place, protège de la pollution. On remplit **entre un tiers et la
+moitié du volume libre** (30 à 50 %), jamais plein. Trop de graisse est brassée en permanence par les billes : elle s'échauffe,
 se dégrade, et fait chauffer le roulement — exactement comme un manque de graisse.
 
 **Huile** : nécessaire à haute vitesse, et quand il faut **évacuer la chaleur** (réducteurs par
@@ -25439,7 +25439,7 @@ barbotage).
 **Étanchéité** : joint à lèvres (portée **Ra 0,8**, lèvre orientée vers l'intérieur pour retenir
 l'huile), déflecteur, chicane, ou roulement **2RS** pour les cas simples et sans entretien.
 
-*Une portée brute de tournage à Ra 6,3 abrase la lèvre en quelques heures : le joint fuit et la
+*Une portée brute de tournage à Ra 3,2 abrase la lèvre en quelques heures : le joint fuit et la
 panne semble inexplicable.*
 
 [[FIG:tribologie]]
@@ -56913,8 +56913,8 @@ _mth("6.7", "Choisir la lubrification et l'étanchéité adaptées", [
     "déflecteur, chicane).",
     "**Choisir graisse ou huile** : graisse pour une vitesse modérée et une "
     "étanchéité simple, huile quand il faut évacuer la chaleur à haute vitesse.",
-    "**Remplir un roulement au tiers du volume libre**, jamais plus — trop de "
-    "graisse chauffe autant qu'un manque de graisse.",
+    "**Remplir un roulement entre un tiers et la moitié du volume libre** (30 à "
+    "50 %), jamais plein — trop de graisse chauffe autant qu'un manque de graisse.",
     "**Soigner la portée sous un joint à lèvres** : Ra 0,8 rectifié, lèvre orientée "
     "vers l'intérieur pour retenir le lubrifiant.",
 ], "Réducteur avec arbre de sortie traversant, en atelier poussiéreux : étanchéité "
