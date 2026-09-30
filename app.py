@@ -24326,25 +24326,27 @@ librement : **1 ddl**.
 
 ### 3. Les erreurs classiques
 
-1. **Faire apparaître la visserie** sur le schéma : elle fait partie d'une classe d'équivalence.
-2. **Confondre pivot et pivot glissant** : si la pièce peut aussi coulisser, ce n'est pas un pivot.
-3. **Compter 2 ddl pour l'hélicoïdale** : c'est 1, les deux mouvements sont liés.
-4. **Oublier de vérifier les ddl restants** : ils doivent correspondre aux mouvements réels du
-   mécanisme.
-5. **Bloquer deux fois le même mouvement** sans s'en rendre compte : c'est de l'hyperstatisme subi.
-6. **Poser une pièce sur quatre points** au lieu de trois.
-7. **Dessiner des formes** sur un schéma cinématique : il ne montre que des liaisons.
-
+1. **Compter 2 ddl pour l'hélicoïdale** : la rotation et la translation sont liées par le pas —
+   tourner d'un tour, c'est avancer d'un pas. C'est **1 ddl**.
+2. **Confondre pivot et pivot glissant** : si la pièce peut aussi coulisser le long de l'axe, c'est
+   un pivot glissant (2 ddl), pas un pivot.
+3. **Nommer une liaison d'après la forme des pièces** : un arbre dans un alésage est un pivot s'il
+   est arrêté par un épaulement et un anneau élastique, mais un pivot glissant s'il peut
+   coulisser. Même forme, liaisons différentes : on nomme une liaison par **ce qui reste
+   possible**.
+4. **Confondre ddl restants et ddl supprimés** : un pivot **garde** 1 ddl, donc il en **supprime** 5.
+   Les deux comptes font toujours 6.
+5. **Prendre un appui plan pour un encastrement** : une pièce posée sur un marbre garde 3 ddl — elle
+   peut glisser dans deux directions et tourner sur la table.
 
 ### 4. À retenir
 
-- **6 ddl** : 3 translations + 3 rotations. Nommer une liaison, c'est compter ce qui reste.
-- Encastrement 0 · pivot 1 · glissière 1 · **hélicoïdale 1** · pivot glissant 2 · rotule 3.
-- Méthode : **classes d'équivalence → graphe → schéma**. La visserie n'apparaît jamais.
-- **Isostatique** = chaque mouvement supprimé une seule fois. L'hyperstatisme se paie en
-  tolérances et en déformations.
-- Mise en position : **règle 3-2-1**, qui correspond aux références A, B, C des plans.
-- Contrôle final : les mouvements restants doivent être exactement ceux du mécanisme réel.
+- Un solide libre : **6 ddl** (3 translations + 3 rotations) ; ddl supprimés + ddl restants = 6.
+- Une liaison se nomme par **ce qui reste possible**, pas par la forme des pièces.
+- Encastrement 0 ; pivot 1 ; glissière 1 ; **hélicoïdale 1** ; pivot glissant 2 ; rotule 3 ;
+  appui plan 3 ; linéaire annulaire 4 ; ponctuelle 5.
+- Le schéma cinématique montre les **mouvements**, pas les formes : il sert à comprendre,
+  communiquer, vérifier un assemblage 3D et repérer l'hyperstatisme.
 """,
             "formules": """
 **Degrés de liberté** — une pièce libre dans l'espace : **3 translations + 3 rotations = 6 ddl**
@@ -24476,25 +24478,27 @@ apparaître les boucles.
 
 ### 2. Les erreurs classiques
 
-1. **Faire apparaître la visserie** sur le schéma : elle fait partie d'une classe d'équivalence.
-2. **Confondre pivot et pivot glissant** : si la pièce peut aussi coulisser, ce n'est pas un pivot.
-3. **Compter 2 ddl pour l'hélicoïdale** : c'est 1, les deux mouvements sont liés.
-4. **Oublier de vérifier les ddl restants** : ils doivent correspondre aux mouvements réels du
-   mécanisme.
-5. **Bloquer deux fois le même mouvement** sans s'en rendre compte : c'est de l'hyperstatisme subi.
-6. **Poser une pièce sur quatre points** au lieu de trois.
-7. **Dessiner des formes** sur un schéma cinématique : il ne montre que des liaisons.
-
+1. **Dessiner les vis sur le schéma** : la vis qui serre le couvercle sur le carter ne bouge pas
+   par rapport à eux. Elle fait partie de la classe « carter », et elle n'apparaît pas.
+2. **Séparer deux pièces qui bougent toujours ensemble** : le seul critère d'une classe
+   d'équivalence est l'**absence de mouvement relatif**.
+3. **Sauter le graphe des liaisons** : c'est lui qui évite d'oublier une liaison et qui fait
+   apparaître les boucles (un chemin qui part d'une classe et y revient par d'autres liaisons —
+   c'est là que se cache souvent l'hyperstatisme).
+4. **Placer les liaisons au hasard** : le schéma respecte la **position relative réelle** des
+   liaisons et leurs axes.
+5. **Dessiner des formes** : un schéma cinématique n'utilise que les symboles normalisés.
+6. **Ne pas contrôler le résultat** : le schéma doit reproduire les mouvements du mécanisme réel,
+   ni plus, ni moins.
 
 ### 3. À retenir
 
-- **6 ddl** : 3 translations + 3 rotations. Nommer une liaison, c'est compter ce qui reste.
-- Encastrement 0 · pivot 1 · glissière 1 · **hélicoïdale 1** · pivot glissant 2 · rotule 3.
-- Méthode : **classes d'équivalence → graphe → schéma**. La visserie n'apparaît jamais.
-- **Isostatique** = chaque mouvement supprimé une seule fois. L'hyperstatisme se paie en
-  tolérances et en déformations.
-- Mise en position : **règle 3-2-1**, qui correspond aux références A, B, C des plans.
-- Contrôle final : les mouvements restants doivent être exactement ceux du mécanisme réel.
+- Méthode en trois temps : **classes d'équivalence → graphe des liaisons → schéma**.
+- Même classe = **aucun mouvement relatif** : ce qui est vissé, collé, serré ou emmanché ne forme
+  qu'une seule pièce — la visserie n'apparaît donc jamais.
+- Graphe : un cercle par classe, un trait par liaison, avec son **nom** et son **axe**.
+- Schéma : symboles normalisés, **position relative réelle**, repère, classes numérotées.
+- Contrôle final : **ni plus, ni moins** de mouvements que le mécanisme réel.
 """,
             "formules": """
 **La méthode en trois temps** — 1. identifier les **classes d'équivalence** (les groupes de
@@ -24680,25 +24684,30 @@ parlent alors le même langage.
 
 ### 3. Les erreurs classiques
 
-1. **Faire apparaître la visserie** sur le schéma : elle fait partie d'une classe d'équivalence.
-2. **Confondre pivot et pivot glissant** : si la pièce peut aussi coulisser, ce n'est pas un pivot.
-3. **Compter 2 ddl pour l'hélicoïdale** : c'est 1, les deux mouvements sont liés.
-4. **Oublier de vérifier les ddl restants** : ils doivent correspondre aux mouvements réels du
-   mécanisme.
-5. **Bloquer deux fois le même mouvement** sans s'en rendre compte : c'est de l'hyperstatisme subi.
-6. **Poser une pièce sur quatre points** au lieu de trois.
-7. **Dessiner des formes** sur un schéma cinématique : il ne montre que des liaisons.
-
+1. **Bloquer deux fois le même mouvement sans le voir** : c'est de l'hyperstatisme subi, payé en
+   tolérances serrées, en efforts internes et en grippage à chaud.
+2. **Poser une pièce sur quatre points** au lieu de trois : elle repose sur trois d'entre eux,
+   jamais les mêmes d'une pièce à l'autre — et les cotes usinées changent d'une pièce à l'autre.
+3. **Croire que l'hyperstatisme est interdit** : il est parfois voulu pour la rigidité (bâti de
+   machine-outil) — à condition d'être choisi et assumé.
+4. **Bloquer axialement les deux paliers d'un arbre** : la dilatation n'est plus absorbée
+   (fiche 6.6).
+5. **Choisir les références A, B, C sans lien avec la mise en position** : le contrôleur pose la
+   pièce sur une autre face que celle de l'usineur. Il mesure autre chose, et une pièce bonne peut
+   être refusée (ou l'inverse).
 
 ### 4. À retenir
 
-- **6 ddl** : 3 translations + 3 rotations. Nommer une liaison, c'est compter ce qui reste.
-- Encastrement 0 · pivot 1 · glissière 1 · **hélicoïdale 1** · pivot glissant 2 · rotule 3.
-- Méthode : **classes d'équivalence → graphe → schéma**. La visserie n'apparaît jamais.
-- **Isostatique** = chaque mouvement supprimé une seule fois. L'hyperstatisme se paie en
-  tolérances et en déformations.
-- Mise en position : **règle 3-2-1**, qui correspond aux références A, B, C des plans.
-- Contrôle final : les mouvements restants doivent être exactement ceux du mécanisme réel.
+- **Isostatique** : chaque mouvement supprimé **une seule fois** ; **hyperstatique** : un mouvement
+  supprimé plusieurs fois.
+- L'hyperstatisme se paie en **tolérances**, en **efforts internes** et en **dilatation non
+  absorbée** : il doit être choisi, jamais subi.
+- Parade : une liaison à **moins de contacts** (palier libre, roulement à rotule, appui ponctuel au
+  lieu d'un appui plan).
+- Mise en position : **règle 3-2-1** — 3 points sur la face principale, 2 sur la face latérale, 1
+  sur la dernière : six points pour six ddl.
+- Trois points et pas quatre : **un plan est défini par trois points**.
+- Les faces du 3-2-1 = les **références A, B, C** du cadre GPS, dans cet ordre (fiche 2.3).
 """,
             "formules": """
 **Isostatique** — chaque mouvement bloqué **une seule fois** · montage sans contrainte interne,
@@ -24865,27 +24874,34 @@ opposé, monté en **X** ou en **O** — le montage en O donnant un meilleur app
 
 ### 3. Les erreurs classiques
 
-1. **Inverser la règle des charges** : la bague tournante montée glissante flue et détruit sa
-   portée.
-2. **Bloquer axialement les deux paliers** : précontrainte, échauffement, grippage.
-3. **Frapper sur la bague opposée** au montage : brinelling, panne différée.
-4. **Portée d'arbre brute** sous un joint à lèvres : fuite en quelques heures.
-5. **Trop de graisse** : échauffement.
-6. **Roulement à contact oblique ou conique monté seul.**
-7. **Congé d'épaulement trop grand** : la bague porte sur l'arrondi.
-8. **Oublier la place pour l'extracteur** : le démontage détruit la pièce.
-
-[[FIG:isostatique_hyperstatique]]
+1. **Choisir le roulement sur le seul diamètre d'arbre** : le diamètre donne la **taille**, la
+   direction de la charge donne le **type** (cas du ventilateur à arbre vertical).
+2. **Laisser un roulement à gorge profonde sous une forte charge axiale permanente** : il accepte
+   une poussée dans l'axe de l'arbre (charge axiale), mais modérée — il faut un contact oblique ou
+   un conique.
+3. **Monter un contact oblique ou un conique sans rien pour reprendre l'axial dans l'autre sens** :
+   seul, il se décharge et se démonte. On le monte par paire, en X ou en O — ou, si la charge
+   axiale est toujours dans le même sens (poids d'un rotor vertical), avec un second roulement qui
+   tient l'arbre dans l'autre sens.
+4. **Mettre un roulement par réflexe** : pour un mouvement lent, alternatif ou en milieu sale, un
+   palier lisse est meilleur, et moins cher.
+5. **Compter sur une butée pour guider** : elle ne reprend que la charge axiale, elle ne guide pas.
+6. **Mettre des rouleaux sur un arbre long ou un carter peu précis** : les rouleaux supportent mal
+   que l'arbre soit un peu de travers, et ils s'usent sur un bord. Dans ce cas, on prend un
+   **roulement à rotule**, fait justement pour accepter ce désalignement.
 
 ### 4. À retenir
 
-- Par défaut : **roulement à billes à gorge profonde**.
-- **Charge tournante par rapport à la bague → SERRÉE. Charge fixe → GLISSANTE.**
-- Cas courant : **arbre k6, alésage H7**. Cas inverse (moyeu tournant) : **alésage M7, arbre h6**.
-- **Un seul palier fixe par arbre** — la dilatation atteint le demi-millimètre sur 800 mm.
-- Graisse : **un tiers** du volume libre. Joint à lèvres : portée **Ra 0,8**, lèvre vers
-  l'intérieur.
-- Rayon d'épaulement **< rayon de la bague** · l'effort de montage passe par la bague emmanchée.
+- Trois familles : **contact direct ou palier lisse** (lent, alternatif, milieu sale) ;
+  **roulement** (rendement, vitesse, précision) ; **film fluide** (très grandes vitesses et charges).
+- Pour choisir la famille, on croise la **vitesse** et la **propreté du milieu**.
+- Par défaut : **roulement à billes à gorge profonde** ; on n'en change que si une contrainte
+  l'impose.
+- Le **diamètre** fixe la taille, la **direction de la charge** fixe le type.
+- Contact oblique et coniques : charge axiale dans **un seul sens** → **par paire, en X ou en O**
+  (le O pour un porte-à-faux), ou avec un second roulement qui tient l'autre sens.
+- Rouleaux : **plus de charge**, mais **moins de désalignement** que les billes ; désalignement →
+  **rotule**.
 """,
             "formules": """
 **Trois familles** — **contact direct** (arbre dans un alésage) : lent, peu chargé, bon marché ·
@@ -25036,26 +25052,26 @@ bague voit la charge tourner autour d'elle ?***
 
 ### 2. Les erreurs classiques
 
-1. **Inverser la règle des charges** : la bague tournante montée glissante flue et détruit sa
-   portée.
-2. **Bloquer axialement les deux paliers** : précontrainte, échauffement, grippage.
-3. **Frapper sur la bague opposée** au montage : brinelling, panne différée.
-4. **Portée d'arbre brute** sous un joint à lèvres : fuite en quelques heures.
-5. **Trop de graisse** : échauffement.
-6. **Roulement à contact oblique ou conique monté seul.**
-7. **Congé d'épaulement trop grand** : la bague porte sur l'arrondi.
-8. **Oublier la place pour l'extracteur** : le démontage détruit la pièce.
-
+1. **Inverser la règle des charges** : la bague qui voit la charge tourner, montée glissante, flue ;
+   la portée est matée et le montage se détruit en quelques dizaines d'heures.
+2. **Raisonner sur « ce qui tourne » au lieu de « ce qui tourne par rapport à la charge »** : sur
+   un tambour de convoyeur, l'axe est fixe et c'est le moyeu qui tourne → c'est la bague
+   **extérieure** qu'on serre.
+3. **Garder k6 / H7 par habitude sur un moyeu tournant** : le cas inverse demande un alésage
+   **M7** (ou N7) et un arbre **h6**.
+4. **Serrer aussi la bague fixe par rapport à la charge** : rien ne l'exige, et sur le palier
+   libre elle doit pouvoir coulisser pour laisser l'arbre se dilater (fiche 6.6).
 
 ### 3. À retenir
 
-- Par défaut : **roulement à billes à gorge profonde**.
-- **Charge tournante par rapport à la bague → SERRÉE. Charge fixe → GLISSANTE.**
-- Cas courant : **arbre k6, alésage H7**. Cas inverse (moyeu tournant) : **alésage M7, arbre h6**.
-- **Un seul palier fixe par arbre** — la dilatation atteint le demi-millimètre sur 800 mm.
-- Graisse : **un tiers** du volume libre. Joint à lèvres : portée **Ra 0,8**, lèvre vers
-  l'intérieur.
-- Rayon d'épaulement **< rayon de la bague** · l'effort de montage passe par la bague emmanchée.
+- **La bague qui tourne PAR RAPPORT À LA CHARGE → SERRÉE ; la bague fixe par rapport à la charge →
+  GLISSANTE.**
+- La question à se poser : **quelle bague voit la charge tourner autour d'elle ?**
+- Arbre tournant, charge fixe (réducteur, pompe, ventilateur) : **arbre k6** (ou m6), **alésage
+  H7**.
+- Moyeu tournant, charge fixe (tambour de convoyeur, roue folle, poulie libre) : **alésage M7** (ou
+  N7), **arbre h6**.
+- Une bague glissante sous charge tournante **flue** : portée matée, jeu, destruction du montage.
 """,
             "formules": """
 **La règle des charges** — la bague qui voit la charge **tourner autour d'elle** doit être
@@ -25260,26 +25276,32 @@ griffes, et parfois des trous de dégagement dans l'épaulement.
 
 ### 4. Les erreurs classiques
 
-1. **Inverser la règle des charges** : la bague tournante montée glissante flue et détruit sa
-   portée.
-2. **Bloquer axialement les deux paliers** : précontrainte, échauffement, grippage.
-3. **Frapper sur la bague opposée** au montage : brinelling, panne différée.
-4. **Portée d'arbre brute** sous un joint à lèvres : fuite en quelques heures.
-5. **Trop de graisse** : échauffement.
-6. **Roulement à contact oblique ou conique monté seul.**
-7. **Congé d'épaulement trop grand** : la bague porte sur l'arrondi.
-8. **Oublier la place pour l'extracteur** : le démontage détruit la pièce.
-
+1. **Bloquer axialement les deux paliers** : l'allongement de l'arbre chaud (0,36 mm sur 600 mm
+   pour 50 °C) devient un effort axial permanent sur les roulements.
+2. **Faire coulisser la bague serrée sur l'arbre** au lieu de la bague extérieure (cas courant :
+   arbre tournant, bague intérieure serrée) : c'est la portée de l'arbre qui est détruite.
+3. **Faire un congé d'épaulement plus grand que l'arrondi d'arête de la bague** (valeur r min du
+   catalogue) : la bague s'appuie sur le congé au lieu de la face, elle se monte de travers, et sa
+   position axiale est fausse.
+4. **Frapper sur la bague opposée** au montage : l'effort passe par les billes, c'est le
+   brinelling — une panne différée, invisible au montage.
+5. **Oublier le chanfrein d'introduction** avant la portée de joint : la lèvre est coupée au
+   montage.
+6. **Oublier la place pour l'extracteur** : le démontage détruit la pièce.
+7. **Ne contrôler le montage qu'à froid** : un défaut de dilatation n'apparaît qu'en
+   fonctionnement.
 
 ### 5. À retenir
 
-- Par défaut : **roulement à billes à gorge profonde**.
-- **Charge tournante par rapport à la bague → SERRÉE. Charge fixe → GLISSANTE.**
-- Cas courant : **arbre k6, alésage H7**. Cas inverse (moyeu tournant) : **alésage M7, arbre h6**.
-- **Un seul palier fixe par arbre** — la dilatation atteint le demi-millimètre sur 800 mm.
-- Graisse : **un tiers** du volume libre. Joint à lèvres : portée **Ra 0,8**, lèvre vers
-  l'intérieur.
-- Rayon d'épaulement **< rayon de la bague** · l'effort de montage passe par la bague emmanchée.
+- **Un seul palier fixe par arbre**, l'autre libre : ΔL = L × α × ΔT, soit **0,36 mm pour 600 mm**
+  d'acier chauffé de 50 °C — bien plus que le jeu interne d'un roulement, qui se compte en
+  centièmes.
+- Le palier libre : c'est la **bague extérieure** qui coulisse dans son logement, jamais la bague
+  serrée sur l'arbre.
+- Un montage = **cinq décisions** : bague serrée ; palier fixe ; arrêts axiaux ; lubrification ;
+  étanchéité.
+- Congé d'épaulement **plus petit que l'arrondi d'arête de la bague** (r min du catalogue).
+- L'effort de montage passe **par la bague qu'on emmanche**.
 """,
             "formules": """
 **Le principe** — sur deux paliers : **un seul** tient l'arbre axialement (palier **fixe**),
@@ -25432,26 +25454,30 @@ avec un **chanfrein d'introduction** pour ne pas couper la lèvre au montage.
 
 ### 3. Les erreurs classiques
 
-1. **Inverser la règle des charges** : la bague tournante montée glissante flue et détruit sa
-   portée.
-2. **Bloquer axialement les deux paliers** : précontrainte, échauffement, grippage.
-3. **Frapper sur la bague opposée** au montage : brinelling, panne différée.
-4. **Portée d'arbre brute** sous un joint à lèvres : fuite en quelques heures.
-5. **Trop de graisse** : échauffement.
-6. **Roulement à contact oblique ou conique monté seul.**
-7. **Congé d'épaulement trop grand** : la bague porte sur l'arrondi.
-8. **Oublier la place pour l'extracteur** : le démontage détruit la pièce.
-
+1. **Trop de graisse** : brassée en permanence par les billes, elle chauffe et se dégrade — le
+   roulement grippe comme s'il en manquait.
+2. **Laisser une portée de joint brute de tournage** (Ra 3,2) : la lèvre est abrasée en quelques
+   heures.
+3. **Laisser des stries hélicoïdales sur la portée** : elles agissent comme une vis et pompent
+   l'huile vers l'extérieur.
+4. **Oublier le chanfrein d'introduction** : la lèvre est coupée au montage.
+5. **Monter la lèvre à l'envers** : elle doit être tournée vers l'intérieur, côté huile.
+6. **Écraser un joint torique à fond** : au-delà de 15 à 30 % de compression, il se déforme
+   définitivement (il flue) et perd son élasticité.
+7. **Compter sur un joint à lèvres seul en milieu très poussiéreux** : sans déflecteur ou
+   labyrinthe en amont, il est abrasé.
 
 ### 4. À retenir
 
-- Par défaut : **roulement à billes à gorge profonde**.
-- **Charge tournante par rapport à la bague → SERRÉE. Charge fixe → GLISSANTE.**
-- Cas courant : **arbre k6, alésage H7**. Cas inverse (moyeu tournant) : **alésage M7, arbre h6**.
-- **Un seul palier fixe par arbre** — la dilatation atteint le demi-millimètre sur 800 mm.
-- Graisse : **un tiers** du volume libre. Joint à lèvres : portée **Ra 0,8**, lèvre vers
-  l'intérieur.
-- Rayon d'épaulement **< rayon de la bague** · l'effort de montage passe par la bague emmanchée.
+- Graisse : **entre un tiers et la moitié du volume libre** (30 à 50 %), **jamais plein** ; huile :
+  **haute vitesse** et **évacuation de la chaleur**.
+- **Statique** (pièces immobiles) : joint plat, joint torique **comprimé de 15 à 30 %**, pâte à
+  joint.
+- **Dynamique** (une pièce bouge) : joint à lèvres pour un arbre, racleur pour une tige de vérin,
+  chicane ou déflecteur sans contact.
+- Portée de joint à lèvres : **Ra 0,8 rectifié**, **sans strie hélicoïdale**, **chanfrein
+  d'introduction**, lèvre **côté huile**.
+- Milieu pollué : déflecteur ou labyrinthe **en amont**, pour protéger le joint.
 """,
             "formules": """
 **Lubrification** — **graisse** : simple, étanche par elle-même, vitesses modérées ·
@@ -25802,27 +25828,30 @@ Une 8.8 : Rm = 800 MPa, Re = 640 MPa. Une 10.9 : Rm = 1 000, Re = 900.
 
 ### 2. Les erreurs classiques
 
-1. **Guidage trop court** par rapport à la course : arc-boutement garanti.
-2. **Compter sur la clavette pour tenir axialement**, ou pour centrer.
-3. **Remplacer une clavette par une plus courte** : matage des rainures.
-4. **Serrer au jugé** au lieu d'utiliser la clé dynamométrique.
-5. **Croire qu'une rondelle plate freine.**
-6. **Oublier que la tension de courroie charge les paliers** — parfois plus que le couple.
-7. **Monter deux roues de modules différents** : elles ne peuvent pas engrener.
-8. **Écraser un joint torique à fond** : il flue et l'étanchéité disparaît.
-
+1. **Croire que les vis travaillent en cisaillement** : c'est la précharge et l'adhérence entre les
+   pièces qui transmettent l'effort — la preuve : les trous de passage ont du jeu.
+2. **Serrer au jugé** : la précharge varie alors du simple au triple. On serre à la clé
+   dynamométrique, au couple de la classe.
+3. **Croire qu'une rondelle plate freine** : elle répartit la pression sous la tête, c'est tout.
+4. **Compter sur un freinage pour remplacer la précharge** : un frein empêche le desserrage, il ne
+   tient pas l'assemblage.
+5. **Visser directement dans un taraudage en aluminium souvent démonté** : un goujon préserve le
+   taraudage fragile.
+6. **Lire Rm à la place de Re** : une 8.8 a Rm = 800 MPa, mais **Re = 8 × 8 × 10 = 640 MPa**.
 
 ### 3. À retenir
 
-- Longueur de guidage ≈ **1,5 à 2 × la course**, sinon arc-boutement.
-- C'est la **précharge** et l'adhérence qui tiennent un assemblage vissé, pas le cisaillement des
-  vis.
-- Classe **8.8 → Re = 640 MPa** · **10.9 → Re = 900 MPa**.
-- **Clavette = couple · ajustement = centrage · épaulement = arrêt axial.** Trois fonctions, trois
-  éléments.
-- Une clavette travaille au **matage sur les flancs** : on l'allonge, on ne la grossit pas.
-- **d = m Z** · **a = m (Z1+Z2)/2** · même module obligatoire · Z ≥ 17.
-- Joint dynamique : portée **Ra 0,8** et chanfrein d'introduction.
+- Une vis serrée est une vis **tendue** : la **précharge** plaque les pièces, l'**adhérence**
+  transmet l'effort.
+- Desserrage sous vibrations = **précharge perdue**, pas une vis qui « se dévisse ».
+- Classe a.b : **Rm = a × 100** ; **Re = a × b × 10** (en MPa). Exemples : 8.8 → **800 / 640 MPa** ;
+  10.9 → **1 000 / 900 MPa**.
+- Serrage à la **clé dynamométrique** ; repère : M8 en 8.8, **≈ 25 N·m** pour **≈ 15 000 N** de
+  précharge.
+- **Boulon** si accès des deux côtés ; **vis** si un seul ; **goujon** dans l'aluminium ou pour
+  des démontages fréquents.
+- Freinage **par obstacle** (goupille, fil frein, arrêtoir) ou **par adhérence** (écrou
+  autofreiné, frein filet) : il complète la précharge, il ne la remplace pas.
 """,
             "formules": """
 **Le principe** — une vis serrée est une vis **TENDUE** : c'est la **précharge** qui tient
@@ -25977,27 +26006,29 @@ finit par la casser.
 
 ### 2. Les erreurs classiques
 
-1. **Guidage trop court** par rapport à la course : arc-boutement garanti.
-2. **Compter sur la clavette pour tenir axialement**, ou pour centrer.
-3. **Remplacer une clavette par une plus courte** : matage des rainures.
-4. **Serrer au jugé** au lieu d'utiliser la clé dynamométrique.
-5. **Croire qu'une rondelle plate freine.**
-6. **Oublier que la tension de courroie charge les paliers** — parfois plus que le couple.
-7. **Monter deux roues de modules différents** : elles ne peuvent pas engrener.
-8. **Écraser un joint torique à fond** : il flue et l'étanchéité disparaît.
-
+1. **Compter sur la clavette pour tenir le moyeu axialement** : l'arrêt axial vient d'un épaulement,
+   d'un anneau élastique, d'un écrou ou d'une vis de bout d'arbre.
+2. **Compter sur la clavette pour centrer** : le centrage vient de l'**ajustement** (H7/j6,
+   H7/k6…).
+3. **Remplacer une clavette par une plus courte** : la pression de matage monte, les rainures se
+   matent, du jeu apparaît, puis la clavette casse.
+4. **Faire porter la clavette en fond de rainure** : elle doit être sans jeu sur les flancs et avec
+   jeu en fond, sinon elle soulève le moyeu et le décentre.
+5. **Dimensionner la clavette au seul cisaillement** : elle travaille d'abord au **matage** sur ses
+   flancs.
+6. **Oublier que la rainure affaiblit l'arbre** : concentration de contrainte, à vérifier en
+   torsion (fiche 4.2).
 
 ### 3. À retenir
 
-- Longueur de guidage ≈ **1,5 à 2 × la course**, sinon arc-boutement.
-- C'est la **précharge** et l'adhérence qui tiennent un assemblage vissé, pas le cisaillement des
-  vis.
-- Classe **8.8 → Re = 640 MPa** · **10.9 → Re = 900 MPa**.
-- **Clavette = couple · ajustement = centrage · épaulement = arrêt axial.** Trois fonctions, trois
-  éléments.
-- Une clavette travaille au **matage sur les flancs** : on l'allonge, on ne la grossit pas.
-- **d = m Z** · **a = m (Z1+Z2)/2** · même module obligatoire · Z ≥ 17.
-- Joint dynamique : portée **Ra 0,8** et chanfrein d'introduction.
+- **Clavette = couple ; ajustement = centrage ; épaulement, anneau ou écrou = arrêt axial.** Trois
+  fonctions, trois éléments.
+- Clavette : **sans jeu sur les flancs**, **avec jeu en fond de rainure**.
+- Matage : **p = 2 Mt / (d × h' × L)** (h' : hauteur de clavette en contact, L : longueur) → pour
+  baisser la pression, on **allonge** la clavette, on ne la grossit pas.
+- Couple modéré : clavette ; couple élevé ou coulissement : **cannelures** ; sans rainure :
+  **frettage** ; couple faible, fusible : **goupille**.
+- Une rainure de clavette **affaiblit l'arbre** en torsion.
 """,
             "formules": """
 **La répartition des rôles, jamais confondue** —
@@ -26156,27 +26187,28 @@ roulements.
 
 ### 2. Les erreurs classiques
 
-1. **Guidage trop court** par rapport à la course : arc-boutement garanti.
-2. **Compter sur la clavette pour tenir axialement**, ou pour centrer.
-3. **Remplacer une clavette par une plus courte** : matage des rainures.
-4. **Serrer au jugé** au lieu d'utiliser la clé dynamométrique.
-5. **Croire qu'une rondelle plate freine.**
-6. **Oublier que la tension de courroie charge les paliers** — parfois plus que le couple.
-7. **Monter deux roues de modules différents** : elles ne peuvent pas engrener.
-8. **Écraser un joint torique à fond** : il flue et l'étanchéité disparaît.
-
+1. **Monter deux roues de modules différents** : elles ne peuvent pas engrener.
+2. **Descendre sous 17 dents environ** : l'outil de taillage entame le pied de la dent
+   (interférence).
+3. **Additionner les rendements** d'une chaîne de transmission : ils se **multiplient**.
+4. **Croire que le couple se conserve** : c'est la puissance qui se conserve (au rendement près) ;
+   diviser la vitesse par 5 multiplie le couple par 5.
+5. **Oublier que la tension de courroie charge les paliers** : deux à trois fois l'effort utile —
+   c'est parfois elle, et non le couple, qui dimensionne les roulements.
+6. **Choisir une roue et vis sans fin sans regarder le rendement** : 0,5 à 0,8, donc de la chaleur
+   à évacuer.
 
 ### 3. À retenir
 
-- Longueur de guidage ≈ **1,5 à 2 × la course**, sinon arc-boutement.
-- C'est la **précharge** et l'adhérence qui tiennent un assemblage vissé, pas le cisaillement des
-  vis.
-- Classe **8.8 → Re = 640 MPa** · **10.9 → Re = 900 MPa**.
-- **Clavette = couple · ajustement = centrage · épaulement = arrêt axial.** Trois fonctions, trois
-  éléments.
-- Une clavette travaille au **matage sur les flancs** : on l'allonge, on ne la grossit pas.
-- **d = m Z** · **a = m (Z1+Z2)/2** · même module obligatoire · Z ≥ 17.
-- Joint dynamique : portée **Ra 0,8** et chanfrein d'introduction.
+- **P = C × ω**, avec ω = 2πN/60 : la puissance se conserve au rendement près, couple et vitesse
+  varient **en sens inverse**.
+- **r = N sortie / N entrée = Z menante / Z menée** ; pour un train, on **multiplie** les rapports.
+- Diamètres : **d = m × Z** ; **da = d + 2m** (tête) ; **df = d − 2,5m** (pied) ; entraxe
+  **a = m (Z1 + Z2) / 2**.
+- **Même module obligatoire** ; **Z ≥ 17** dents environ.
+- Rendements : engrenage 0,97 par étage ; chaîne 0,96 ; courroie 0,95 ; roue et vis 0,5 à 0,8 —
+  ils se **multiplient**.
+- Courroie : silencieuse, amortit, **patine si blocage** — mais sa **tension charge les paliers**.
 """,
             "formules": """
 **La relation de base** — **P = C × ω** · ω = 2πN/60 (rad/s, N en tr/min)
