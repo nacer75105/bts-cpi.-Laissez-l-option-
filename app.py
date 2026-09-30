@@ -24370,19 +24370,25 @@ pivot glissant 1 rotation + 1 translation · rotule 3 rotations · appui plan 2 
 ### Cas industriel — La liaison qu'on croit connaître
 
 Sur un plan d'ensemble, un arbre monté sur deux roulements à billes est presque toujours décrit
-comme un **pivot** : une seule rotation possible.
+comme un **pivot** : une seule rotation possible. C'est vrai pour l'**ensemble**. Mais que fait
+**chaque** roulement ?
 
-**Ce que le comptage révèle.** Un roulement à billes à gorge profonde bloque, à lui seul, les
-trois translations et deux rotations : il laisse **1 ddl**. En monter **deux** sur le même arbre
-revient donc à bloquer deux fois les mêmes mouvements.
+**Ce que le comptage révèle.** Un roulement à billes à gorge profonde est étroit : il laisse
+l'arbre s'incliner très légèrement dans sa bague (quelques minutes d'angle). Seul, il ne se
+comporte donc pas comme un pivot, mais comme une **rotule** s'il est arrêté axialement (3
+translations bloquées), ou comme une **linéaire annulaire** si sa bague peut coulisser (2
+translations bloquées). C'est la **paire** de roulements, écartés sur l'arbre, qui empêche
+l'arbre de s'incliner et réalise le pivot.
 
-**La conséquence.** La liaison obtenue est bien un pivot du point de vue de l'utilisateur — une
-seule rotation — mais elle est **hyperstatique** : le moindre défaut d'alignement entre les deux
-paliers se traduit par des efforts internes que rien n'absorbe.
+**La conséquence.** Deux roulements arrêtés axialement, ce sont deux rotules : 3 + 3 = 6 ddl
+supprimés, alors qu'un arbre qui doit tourner n'en a que 5 à bloquer (6, moins la rotation qu'on
+veut garder). Un ddl est bloqué deux fois — la **translation axiale** : le montage est
+**hyperstatique**. Le moindre écart de longueur entre l'arbre et le carter, ou l'allongement de
+l'arbre qui chauffe, charge alors les deux roulements axialement.
 
-**C'est exactement pourquoi** le montage réel n'utilise jamais deux paliers strictement
-identiques, mais un **palier fixe et un palier libre** (fiche 6.6) : le second laisse une
-translation, ce qui rétablit l'isostatisme sans changer la fonction.
+**C'est exactement pourquoi** le montage réel associe un **palier fixe** (rotule) et un **palier
+libre** (linéaire annulaire, fiche 6.6) : 3 + 2 = 5 ddl supprimés pour 5 à bloquer. Le montage
+devient isostatique, sans changer la fonction.
 """,
             "exercice": """
 ### Exercice — Compter les degrés de liberté
@@ -24732,28 +24738,30 @@ défauts : impose des tolérances serrées
 la référence A du cadre GPS (fiche 5.5) = la mise en position du montage d'usinage
 """,
             "exemple": """
-### Cas industriel — Deux paliers alignés qui ne le sont jamais
+### Cas industriel — Deux paliers qui se disputent l'arbre
 
-**Le symptôme.** Un arbre monté sur deux paliers à billes chauffe anormalement et les roulements
-se détruisent en quelques centaines d'heures, alors que le calcul de durée de vie annonçait
-plusieurs années.
+**Le symptôme.** Un arbre monté sur deux roulements à billes, tous deux arrêtés axialement entre
+un épaulement et un anneau élastique, chauffe anormalement ; les roulements se détruisent en
+quelques centaines d'heures, alors que le calcul de durée de vie annonçait plusieurs années.
 
-**L'analyse.** Chaque roulement à billes bloque à lui seul les trois translations et deux
-rotations. En monter deux revient à bloquer **deux fois** les mêmes mouvements : le montage est
-**hyperstatique**.
+**L'analyse.** Chaque roulement, étroit, se modélise par une **rotule** : il bloque les trois
+translations et laisse l'arbre s'incliner légèrement. Deux rotules : 3 + 3 = **6 ddl supprimés**,
+alors qu'un arbre qui doit tourner n'en a que **5** à bloquer. Un mouvement est bloqué deux fois :
+la **translation axiale**, tenue par les deux paliers à la fois. Le montage est **hyperstatique**.
 
-Tant que les deux alésages sont parfaitement coaxiaux, tout va bien. Mais un défaut de
-coaxialité de quelques centièmes — parfaitement normal en usinage courant — force l'arbre à se
-déformer entre les deux paliers. Les roulements encaissent en permanence un effort que rien
-n'avait prévu.
+Tant que la distance entre les épaulements de l'arbre est exactement celle entre les logements du
+carter, tout va bien. Mais un écart de quelques centièmes — parfaitement normal en usinage
+courant — ou l'allongement de l'arbre qui chauffe précharge les deux roulements l'un contre
+l'autre. Ils encaissent en permanence un effort axial que rien n'avait prévu.
 
-**La correction.** Rendre le montage isostatique en libérant une translation : **un palier fixe**
-(qui tient axialement) et **un palier libre** (qui laisse l'arbre coulisser). Le défaut
-d'alignement et la dilatation thermique sont alors absorbés sans effort parasite.
+**La correction.** Rendre le montage isostatique en libérant la translation axiale d'un côté :
+**un palier fixe** (rotule, qui tient axialement) et **un palier libre** (linéaire annulaire, dont
+la bague coulisse). 3 + 2 = 5 ddl supprimés pour 5 à bloquer : les écarts de longueur et la
+dilatation sont absorbés sans effort parasite.
 
 **Ce que le cas apprend.** L'hyperstatisme n'est pas une faute en soi — il est parfois recherché
-pour la rigidité. Mais il **impose alors des tolérances serrées et coûteuses**. Le choix est
-économique autant que technique.
+pour la rigidité. Mais il **impose alors des tolérances serrées et coûteuses**, ici sur les
+longueurs. Le choix est économique autant que technique.
 """,
             "exercice": """
 ### Exercice — Diagnostiquer un montage
@@ -24761,9 +24769,11 @@ pour la rigidité. Mais il **impose alors des tolérances serrées et coûteuses
 Un arbre est monté sur **deux roulements à billes à gorge profonde**, tous deux serrés
 axialement entre un épaulement et un anneau élastique.
 
-**1.** Combien de ddl un roulement à billes supprime-t-il à lui seul ? Combien laisse-t-il ?
+**1.** Un roulement à billes arrêté axialement se modélise par quelle liaison ? Combien de ddl
+supprime-t-il ?
 
-**2.** Le montage décrit est-il isostatique ou hyperstatique ? Justifiez par le comptage.
+**2.** Combien de ddl faut-il bloquer pour que l'arbre ne puisse que tourner ? Le montage décrit
+est-il isostatique ou hyperstatique ? Quel mouvement est bloqué deux fois ?
 
 **3.** Citez deux conséquences concrètes de ce choix sur le fonctionnement réel.
 
@@ -24777,48 +24787,57 @@ surfaces choisissez-vous, et dans quel ordre ?
 
 #### 1. Ce que dit l'énoncé
 
-Deux roulements **identiques**, tous deux **bloqués axialement**. Ces deux mots suffisent au
-diagnostic : si les deux tiennent axialement, la même translation est bloquée deux fois.
+Deux roulements **identiques**, tous deux **arrêtés axialement**. Ces deux mots suffisent au
+diagnostic : si les deux tiennent l'arbre axialement, la translation axiale est bloquée deux fois.
 
 #### 2. Quelle règle, et pourquoi
 
-**Un mouvement bloqué plusieurs fois = hyperstatique.**
+**On compare deux nombres :**
+- les **ddl supprimés** par les liaisons, additionnés ;
+- les **ddl à bloquer** : 6, moins les mouvements qu'on veut garder.
+
+S'ils sont égaux, le montage est **isostatique**. S'il y a plus de ddl supprimés que de ddl à
+bloquer, il est **hyperstatique**, et l'écart dit combien de mouvements sont bloqués deux fois.
 
 L'hyperstatisme apporte de la rigidité, mais il **transforme tout défaut géométrique en effort
-interne** : la pièce ne peut plus s'adapter, elle se déforme.
+interne** : la pièce ne peut plus s'adapter, elle force.
 
 #### 3. Les conversions
 
-Aucune conversion. **Le comptage se fait mouvement par mouvement** : on liste les 6 ddl, et on
-regarde combien de fois chacun est bloqué.
+Aucune conversion. **Le seul travail est de choisir le bon modèle** pour chaque roulement. Un
+roulement à billes est **étroit** : il laisse l'arbre s'incliner légèrement (quelques minutes
+d'angle). Seul, ce n'est donc pas un pivot :
+- arrêté axialement → **rotule** : 3 translations bloquées ;
+- bague libre de coulisser → **linéaire annulaire** : 2 translations bloquées.
+
+C'est la **paire** de roulements, écartés sur l'arbre, qui empêche l'arbre de s'incliner.
 
 #### 4. Le remplacement
 
-Un roulement à billes : supprime 5 ddl (3 translations + 2 rotations), laisse **1 rotation**.
+ddl supprimés = 3 (rotule) + 3 (rotule) = 6
 
-Deux roulements identiques :
-- rotation axiale : bloquée **0 fois** ✅
-- translation axiale : bloquée **2 fois** ❌
-- les autres : bloqués **2 fois** ❌
+ddl à bloquer = 6 − 1 (la rotation de l'arbre, qu'on veut garder) = 5
 
 #### 5. Le calcul
 
-**1.** Un roulement à billes à gorge profonde supprime **5 ddl** (les 3 translations et 2
-rotations) et laisse **1 ddl** : la rotation autour de son axe.
+**1.** Un roulement à billes arrêté axialement se modélise par une **rotule** : il supprime
+**3 ddl** (les trois translations) et laisse les trois rotations. L'inclinaison permise n'est que
+de quelques minutes d'angle, mais c'est elle qui décide du modèle.
 
-**2.** **Hyperstatique.** Deux roulements supprimant chacun 5 ddl donnent 10 ddl supprimés pour
-une pièce qui n'en compte que 6 — plusieurs mouvements sont donc bloqués deux fois, en
-particulier la **translation axiale**, puisque les deux sont serrés.
+**2.** Il faut bloquer **5 ddl** pour que l'arbre ne puisse que tourner. Les deux rotules en
+suppriment **6** : 6 − 5 = **1 ddl bloqué deux fois**. Le montage est **hyperstatique**, et ce
+ddl est la **translation axiale** : les deux roulements tiennent l'arbre axialement en même temps.
 
 **3.** Deux conséquences concrètes :
-- le moindre **défaut de coaxialité** entre les deux alésages force l'arbre à se déformer, et les
-  roulements encaissent un effort permanent ;
+- le moindre **écart de longueur** entre les épaulements de l'arbre et les logements du carter
+  (quelques centièmes) précharge les deux roulements l'un contre l'autre ;
 - la **dilatation thermique** de l'arbre en fonctionnement ne peut pas être absorbée : l'arbre
   pousse sur les deux paliers en même temps.
 
 **4.** Libérer la **translation axiale sur un des deux paliers** : c'est le montage **palier fixe
 / palier libre** (fiche 6.6). Le palier libre laisse la bague extérieure coulisser dans son
-logement. La fonction — faire tourner l'arbre — est strictement identique.
+logement : il devient une linéaire annulaire. 3 + 2 = **5 ddl supprimés pour 5 à bloquer** : le
+montage est isostatique. La fonction — faire tourner l'arbre — est strictement identique.
 
 **5.** Règle 3-2-1 sur une pièce prismatique :
 - **3 points** sur la plus grande face plane usinée : c'est l'appui principal, il supprime 1
@@ -57096,17 +57115,20 @@ _mth("6.1", "Compter les degrés de liberté d'une liaison", [
    "liaison glissière.")
 
 _mth("6.3", "Diagnostiquer un montage isostatique ou hyperstatique", [
-    "**Compter les ddl supprimés par chaque liaison du montage.**",
-    "**Comparer ce total au nombre de ddl réellement à bloquer** — généralement 6 "
-    "pour une pièce isolée dans l'espace.",
-    "**Isostatique si les deux nombres coïncident exactement** ; **hyperstatique "
-    "si des liaisons se \"disputent\" un même mouvement.**",
+    "**Choisir le modèle de chaque liaison** : un roulement à billes seul, étroit, "
+    "est une rotule s'il est arrêté axialement, une linéaire annulaire si sa bague "
+    "coulisse.",
+    "**Additionner les ddl supprimés** par les liaisons qui relient la pièce au bâti.",
+    "**Compter les ddl à bloquer** : 6, moins les mouvements qu'on veut garder (5 "
+    "pour un arbre qui doit tourner).",
+    "**Isostatique si les deux nombres sont égaux** ; **hyperstatique s'il y a plus "
+    "de ddl supprimés** — l'écart donne le nombre de mouvements bloqués deux fois.",
     "**Un montage hyperstatique n'est pas toujours une erreur**, mais il devient "
     "sensible aux défauts de fabrication et à la dilatation thermique — à savoir "
     "avant de le choisir, pas après coup.",
-], "Deux roulements à billes à gorge profonde, tous deux serrés axialement des "
-   "deux côtés : chaque roulement supprime 5 ddl, soit 10 au total pour 6 à "
-   "bloquer — le montage est hyperstatique.")
+], "Deux roulements à billes, tous deux arrêtés axialement : deux rotules, 3 + 3 "
+   "= 6 ddl supprimés pour 5 à bloquer — un de trop, la translation axiale : "
+   "hyperstatique. Palier fixe + palier libre : 3 + 2 = 5, isostatique.")
 
 _mth("10.3", "Structurer une présentation orale technique en anglais", [
     "**Suivre un plan fixe en cinq points** : what it is → what it's made of → how "
@@ -69516,9 +69538,14 @@ ATELIERS = [
         "figure": "isostatique_hyperstatique",
         "vocabulaire": [
             ("Isostatique",
-             "un montage où le nombre de ddl supprimés correspond exactement au nombre de "
-             "ddl à bloquer — ni plus, ni moins. Aucune liaison ne se \"dispute\" un même "
-             "mouvement avec une autre."),
+             "un montage où le nombre de ddl supprimés est égal au nombre de ddl à bloquer "
+             "(6, moins les mouvements qu'on veut garder) — ni plus, ni moins. Aucune "
+             "liaison ne se \"dispute\" un même mouvement avec une autre."),
+            ("Modèle d'un roulement à billes",
+             "étroit, il laisse l'arbre s'incliner de quelques minutes d'angle : seul, "
+             "c'est une rotule s'il est arrêté axialement (3 ddl supprimés), une linéaire "
+             "annulaire si sa bague coulisse (2 ddl). C'est la paire de roulements qui "
+             "fait le pivot."),
             ("Hyperstatique",
              "un montage où un même mouvement est bloqué PLUSIEURS fois par des liaisons "
              "différentes. Le mécanisme fonctionne souvent quand même, mais devient sensible "
@@ -69533,49 +69560,60 @@ ATELIERS = [
                   "deux serrés axialement entre un épaulement et un anneau élastique.",
         "etapes": [
             {"type": "numerique", "label": "ddl supprimés par les deux roulements",
-             "unite": "ddl", "attendu": 10, "tol": 0.1,
-             "consigne": "Un roulement à billes supprime 5 ddl à lui seul. Combien de ddl "
-                        "sont supprimés en tout par les DEUX roulements (sans tenir "
-                        "compte du fait qu'une pièce n'a que 6 ddl à supprimer) ?",
-             "indice": "2 roulements × 5 ddl chacun.",
-             "pieges": [(5, "5 est le compte pour UN SEUL roulement — la question porte "
-                            "sur les deux montés ensemble.")],
-             "aide": "2 × 5 = 10."},
+             "unite": "ddl", "attendu": 6, "tol": 0.1,
+             "consigne": "Chaque roulement à billes, étroit et arrêté axialement, se "
+                        "modélise par une rotule (3 translations bloquées). Combien de ddl "
+                        "les DEUX roulements suppriment-ils en tout ?",
+             "indice": "2 rotules × 3 ddl chacune.",
+             "pieges": [(10, "10 vient du modèle « pivot » (5 ddl par roulement) : un "
+                             "roulement à billes seul, étroit, laisse l'arbre s'incliner "
+                             "légèrement — c'est une rotule, 3 ddl."),
+                        (3, "3 est le compte d'UN SEUL roulement — la question porte sur "
+                            "les deux montés ensemble.")],
+             "aide": "2 × 3 = 6."},
+            {"type": "numerique", "label": "ddl à bloquer",
+             "unite": "ddl", "attendu": 5, "tol": 0.1,
+             "consigne": "L'arbre doit pouvoir tourner. Combien de ddl faut-il bloquer ?",
+             "indice": "6 ddl, moins la rotation qu'on veut garder.",
+             "pieges": [(6, "6, ce serait bloquer aussi la rotation : l'arbre ne tournerait "
+                            "plus.")],
+             "aide": "6 − 1 = 5."},
             {"type": "qcm", "label": "Isostatique ou hyperstatique ?",
-             "question": "Une pièce n'a que 6 ddl à supprimer, mais le montage en "
-                        "supprime 10. Que peut-on en conclure ?",
-             "options": ["Le montage est hyperstatique : la translation axiale est "
-                        "bloquée deux fois",
-                        "Le montage est isostatique : c'est normal d'avoir plus de "
-                        "sécurité",
-                        "C'est impossible, il y a une erreur de conception"], "bonne": 0,
-             "indice": "10 ddl supprimés pour 6 à bloquer signifie qu'au moins un "
-                       "mouvement est bloqué plus d'une fois.",
-             "diagnostics": {1: "Ce n'est pas une question de « sécurité » : bloquer un "
-                                 "mouvement plusieurs fois crée des efforts internes non "
-                                 "désirés, ce n'est pas un choix neutre.",
-                              2: "Ce montage existe et fonctionne réellement — c'est un "
-                                 "choix hyperstatique fréquent, pas une erreur, mais il "
-                                 "faut alors en assumer les conséquences (tolérances "
-                                 "serrées)."}},
+             "question": "Les deux roulements suppriment 6 ddl, alors qu'il n'y en a que 5 "
+                        "à bloquer. Que peut-on en conclure ?",
+             "options": ["Isostatique : un ddl de plus, c'est une marge de sécurité",
+                        "Hyperstatique : un ddl est bloqué deux fois, la translation "
+                        "axiale",
+                        "Hyperstatique : la rotation de l'arbre est bloquée"], "bonne": 1,
+             "indice": "Un ddl est supprimé de trop : lequel est tenu par les deux "
+                       "roulements à la fois ?",
+             "diagnostics": {0: "Ce n'est pas une marge : bloquer un mouvement deux fois "
+                                 "crée des efforts internes (écart de longueur, "
+                                 "dilatation), ce n'est pas un choix neutre.",
+                              2: "Aucune rotule ne bloque la rotation : l'arbre tourne. Le "
+                                 "ddl en trop est celui que les deux roulements tiennent "
+                                 "en même temps : la translation axiale."}},
         ],
         "corrige": {
-            "enonce": "Arbre sur deux roulements à billes, tous deux bloqués "
+            "enonce": "Arbre sur deux roulements à billes, tous deux arrêtés "
                       "axialement.",
-            "regle": "**Isostatique = chaque mouvement supprimé une seule fois. "
-                    "Hyperstatique = au moins un mouvement supprimé plusieurs fois — ici "
-                    "la translation axiale, bloquée par les deux roulements à la fois.**",
-            "conversions": "Sans objet.",
-            "remplacement": "2 roulements × 5 ddl = 10 ddl supprimés, pour 6 ddl "
-                            "réellement disponibles.",
-            "calcul": "ddl supprimés en tout : **10**. Diagnostic : **hyperstatique** "
-                     "(la translation axiale est bloquée deux fois).",
-            "verification": "La correction classique — palier fixe + palier libre — "
-                            "ramène le montage à l'isostatisme en libérant la translation "
+            "regle": "**On compare les ddl supprimés aux ddl à bloquer (6, moins les "
+                    "mouvements qu'on garde). Égaux : isostatique. Plus de ddl supprimés : "
+                    "hyperstatique, et l'écart donne le nombre de mouvements bloqués deux "
+                    "fois.**",
+            "conversions": "Sans objet — mais un roulement à billes seul se modélise par "
+                           "une rotule, pas par un pivot.",
+            "remplacement": "ddl supprimés = 3 + 3 = 6 ; ddl à bloquer = 6 − 1 = 5.",
+            "calcul": "6 − 5 = **1 ddl bloqué deux fois** : la translation axiale. "
+                     "Diagnostic : **hyperstatique**.",
+            "verification": "La correction classique — palier fixe (rotule) + palier "
+                            "libre (linéaire annulaire) — donne 3 + 2 = 5 ddl supprimés "
+                            "pour 5 à bloquer : isostatique, en libérant la translation "
                             "axiale sur un seul des deux paliers.",
         },
-        "a_retenir": "À retenir : additionner les ddl supprimés par chaque liaison et "
-                     "comparer à 6 est le test rapide pour repérer un hyperstatisme.",
+        "a_retenir": "À retenir : ddl supprimés comparés à 6 moins les mouvements voulus — "
+                     "c'est le test rapide pour repérer un hyperstatisme, à condition de "
+                     "modéliser un roulement seul par une rotule.",
     },
     {
         "id": "at81",
