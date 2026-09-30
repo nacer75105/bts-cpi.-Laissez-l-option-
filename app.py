@@ -16004,7 +16004,8 @@ la plus visible qui gagne, pas la plus importante.
 4. **Additionner les points** de chaque fonction, puis calculer son **pourcentage** du total.
 
 **Application immédiate.** Sur quatre fonctions comparées deux à deux, il y a 6 comparaisons
-(4×3/2). Si FP1 obtient 9 points sur un total de 24, elle pèse 9/24 = **37,5 %** du besoin.
+(4×3/2), notées chacune au plus 3 points : le total ne peut donc pas dépasser 6 × 3 = **18
+points**. Si FP1 obtient 6 points sur un total de 16, elle pèse 6/16 = **37,5 %** du besoin.
 
 **Ce que ça change concrètement :** quand il faudra arbitrer entre deux exigences
 contradictoires — la légèreté contre la rigidité, par exemple — le pourcentage donne un
@@ -16088,7 +16089,7 @@ Un cahier des charges de support d'écran d'atelier contient ces quatre fonction
 **3.** Combien de comparaisons deux à deux le tri croisé de ces quatre fonctions demande-t-il ?
 Donnez le calcul.
 
-**4.** À l'issue du tri croisé, FP1 obtient 9 points, FC1 6, FC2 5, FC3 4. Calculez le poids de
+**4.** À l'issue du tri croisé, FP1 obtient 6 points, FC1 5, FC2 3, FC3 2. Calculez le poids de
 chaque fonction en pourcentage.
 
 **5.** Le budget impose de sacrifier partiellement une fonction. Laquelle, et sur quel argument ?
@@ -16121,7 +16122,7 @@ pourcentage = points de la fonction / **total des points** × 100
 
 nombre de comparaisons = 4 × 3 / 2
 
-total des points = 9 + 6 + 5 + 4
+total des points = 6 + 5 + 3 + 2
 
 #### 5. Le calcul
 
@@ -16137,24 +16138,28 @@ total des points = 9 + 6 + 5 + 4
 
 **3.** n(n−1)/2 = 4 × 3 / 2 = **6 comparaisons**.
 
-**4.** Total = 9 + 6 + 5 + 4 = **24 points**
+**4.** Total = 6 + 5 + 3 + 2 = **16 points**
 
 | Fonction | Points | Poids |
 |---|---|---|
-| FP1 | 9 | **37,5 %** |
-| FC1 | 6 | **25,0 %** |
-| FC2 | 5 | **20,8 %** |
-| FC3 | 4 | **16,7 %** |
+| FP1 | 6 | **37,5 %** |
+| FC1 | 5 | **31,25 %** |
+| FC2 | 3 | **18,75 %** |
+| FC3 | 2 | **12,5 %** |
 
-**5.** **FC3** (16,7 %), la fonction la moins pondérée, et dont la flexibilité était déjà **F2**.
+**5.** **FC3** (12,5 %), la fonction la moins pondérée, et dont la flexibilité était déjà **F2**.
 L'argument n'est pas un avis : c'est le **croisement du poids le plus faible et de la
 flexibilité la plus grande**. Sacrifier FP1, à 37,5 % et F0, reviendrait à livrer un produit qui
 ne rend plus le service attendu.
 
 #### 6. La vérification
 
-**Contrôle de la somme** : 37,5 + 25,0 + 20,8 + 16,7 = **100 %**. Si le total ne fait pas 100,
+**Contrôle de la somme** : 37,5 + 31,25 + 18,75 + 12,5 = **100 %**. Si le total ne fait pas 100,
 il y a une erreur de division.
+
+**Contrôle du total des points** : 6 comparaisons notées au plus 3 points chacune donnent au plus
+6 × 3 = **18 points**. Ici 16 ≤ 18 : le tableau est plausible. Un total supérieur à 18 trahit une
+erreur de report.
 
 **Contrôle de cohérence** : la fonction principale doit normalement sortir en tête du tri croisé.
 Si une fonction contrainte pesait plus que la FP, il faudrait se demander si la FP a été bien
