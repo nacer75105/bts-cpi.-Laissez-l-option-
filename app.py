@@ -15190,8 +15190,8 @@ c'est choisir lesquels de ces six mouvements on autorise et lesquels on supprime
 ### 4. Pour aller plus loin
 
 Cette fiche reste au niveau du vocabulaire. Le détail (symboles normalisés, schémas cinématiques,
-transmission du couple) est traité en fiche 6.1 (le concept de liaison et les degrés de liberté)
-et 6.3 (isostatisme, hyperstatisme et mise en position).
+transmission du couple) est traité dans les fiches 6.1 (liaisons et degrés de liberté), 6.2
+(schéma cinématique), 6.3 (isostatisme et mise en position) et 6.10-6.11 (transmission du couple).
 
 ### 5. À retenir
 
@@ -15596,7 +15596,7 @@ nom de composant, aucune marque, aucun matériau, aucune dimension imposée.
 
 **Pourquoi c'est si important.** En écrivant la solution dans le cahier des charges, on s'interdit
 d'en trouver une meilleure. « Transmettre un couple » laisse ouvertes la clavette, les cannelures,
-le frettage, la goupille, l'emmanchement serré (fiche 6.3). « Utiliser une clavette » ferme la
+le frettage, la goupille, l'emmanchement serré (fiche 6.10). « Utiliser une clavette » ferme la
 porte avant même d'avoir cherché.
 
 On dit qu'un cahier des charges bien écrit est **neutre technologiquement**.
@@ -21246,7 +21246,7 @@ La cotation en chaîne n'est acceptable que si c'est **l'écart entre deux élé
 compte, et non leur position absolue.
 
 **Le lien avec le reste :** la surface de référence du plan est la même que la **référence A**
-d'un cadre GPS (fiche 5.6) et que la face principale de la règle **3-2-1** (fiche 5.11).
+d'un cadre GPS (fiche 5.5) et que la face principale de la règle **3-2-1** (fiche 5.11).
 
 ### 5. Toutes les cotes ne se valent pas
 
@@ -29330,7 +29330,7 @@ Pressions admissibles indicatives : acier sur acier **80 à 150 MPa** · acier s
 **Ce que le matage change en conception.** Pour réduire une pression de matage, on cherche de la
 **surface de contact** — donc on épaissit la joue ou on allonge la portée — plutôt que d'augmenter
 le diamètre de l'axe. C'est exactement pour cette raison qu'on allonge une clavette au lieu de la
-grossir (fiche 6.3).
+grossir (fiche 6.10).
 
 ### 6. La torsion : quand la pièce est tordue
 
@@ -30189,7 +30189,7 @@ L'inverse existe aussi : refroidir l'arbre à l'azote liquide.*
 4. **Choisir un serrage sans prévoir le moyen de montage** : une presse, un four, un extracteur
    pour le démontage.
 5. **Utiliser un ajustement avec jeu pour une bague de roulement** : elle fluera et matera sa
-   portée en quelques dizaines d'heures (fiche 6.2).
+   portée en quelques dizaines d'heures (fiche 6.5).
 6. **Prendre H7/p6 « pour être sûr que ça tienne »** sur une pièce qu'il faudra démonter.
 7. **Oublier que les deux pièces doivent être contrôlées** : un ajustement suppose que chacune
    respecte sa propre fourchette.
@@ -30317,7 +30317,7 @@ fonderie.
 
 **L'ordre des références.** Quand plusieurs lettres apparaissent (A puis B puis C), **l'ordre
 compte** : A est posée en premier sur le marbre, B bloque ensuite, C oriente. C'est exactement la
-règle **3-2-1** de la fiche 6.1. Inverser A et B, c'est mesurer autre chose.
+règle **3-2-1** de la fiche 6.3. Inverser A et B, c'est mesurer autre chose.
 
 ### 5. Choisir la bonne exigence : trois cas concrets
 
@@ -33106,7 +33106,7 @@ que de les additionner — chaque perte s'ajoute au trajet, elle ne se compense 
 ### 3. La dilatation thermique : pourquoi une pièce change de taille avec la température
 
 Presque tous les matériaux **s'allongent quand ils chauffent**, et se rétractent quand ils
-refroidissent. C'est un phénomène qu'on a déjà rencontré en fiche 6.2 pour expliquer pourquoi
+refroidissent. C'est un phénomène qu'on a déjà rencontré en fiche 6.6 pour expliquer pourquoi
 un arbre a besoin d'un palier libre.
 
 > **ΔL = L × α × ΔT**
@@ -34055,7 +34055,7 @@ un procédé de fabrication** et d'intervenir avant l'apparition de pièces non 
 Une pièce mesurée à froid n'a pas exactement la même dimension en fonctionnement — un moteur qui
 chauffe, un roulement qui s'échauffe, un boîtier au soleil. Ignorer la dilatation, c'est risquer
 un jeu qui se referme (grippage) ou s'ouvre trop (vibrations, usure). C'est directement lié à la
-règle du palier libre déjà vue en RDM (fiche 6.4) : **si on ne laissait pas un axe se dilater
+règle du palier libre déjà vue en technologie (fiche 6.6) : **si on ne laissait pas un axe se dilater
 librement d'un côté, il se déformerait ou casserait.**
 
 ### 2. La formule
@@ -35960,7 +35960,7 @@ serait alors sur-contraint, exactement comme une esquisse sur-contrainte (fiche 
 
 *Ne posez pas la clavette en position dans l'assemblage pour l'instant — elle transmettrait le
 couple, mais ce n'est pas elle qui doit fixer les degrés de liberté du montage : c'est
-l'ajustement qui centre (fiche 6.3).*
+l'ajustement qui centre (fiche 6.10).*
 
 ### 6. Ce qu'il faut retenir de ces trois pièces
 
@@ -36730,7 +36730,7 @@ sur la mauvaise valeur.*
 - **shaft tolerance: k6** → l'**arbre** sur lequel on monte le roulement doit être en **k6** ;
 - **housing bore tolerance: H7** → l'**alésage du logement** (dans le carter) doit être en H7.
 
-*C'est exactement la règle des charges de la fiche 6.2 — arbre tournant en k6, alésage en H7 —
+*C'est exactement la règle des charges de la fiche 6.5 — arbre tournant en k6, alésage en H7 —
 donnée directement par le fabricant, dans sa langue.*
 
 ### 4. Le vocabulaire de la fabrication et des procédés
@@ -38472,7 +38472,7 @@ matière sur une planche, inclinez-la. Ils commencent à glisser au même angle.
 ### 8. Là où le frottement décide de la conception
 
 - **Un assemblage vissé** tient par adhérence entre les pièces serrées, pas par le cisaillement
-  des vis (fiche 6.3). C'est le coefficient de frottement des surfaces qui fixe l'effort
+  des vis (fiche 6.9). C'est le coefficient de frottement des surfaces qui fixe l'effort
   transmissible.
 - **Un frein** exploite le frottement : couple de freinage = f × N × rayon.
 - **Un système vis-écrou** est **irréversible** quand l'angle d'hélice est inférieur à φ : la
@@ -39719,7 +39719,7 @@ usinée en 5 reprises coûte bien plus cher que la même pièce en 2 reprises.
 faces au lieu de cinq, c'est une décision qui se prend en dessinant la pièce.*
 
 **Règle 5 — Isostatisme.** À chaque reprise, la pièce est posée selon la règle **3-2-1** vue en
-fiche 6.1 : 3 points sur la face principale, 2 sur une face latérale, 1 sur la dernière. Ni plus,
+fiche 6.3 : 3 points sur la face principale, 2 sur une face latérale, 1 sur la dernière. Ni plus,
 ni moins. Un quatrième point sur la face principale fait basculer la pièce.
 
 ### 6. La commande numérique
@@ -40021,7 +40021,7 @@ rectification est maintenue**, et le temps de cycle final s'établit à **9,5 mi
     "cours": """
 ### 1. La question à laquelle cette fiche répond
 
-En fiche 6.3, vous avez appris les formules d'un engrenage : d = m × Z, l'entraxe, le rapport de
+En fiche 6.11, vous avez appris les formules d'un engrenage : d = m × Z, l'entraxe, le rapport de
 transmission. Mais il manquait l'essentiel : **d'où vient le module ?** Jusqu'ici, il tombait du
 ciel — « on prend m = 2 ».
 
@@ -41325,7 +41325,7 @@ rendement global qui passe de 0,72 à 0,85 réduit la consommation de 15 % penda
 la machine.
 
 **Allonger la durée de vie** — une pièce d'usure remplaçable vaut mieux qu'un ensemble à jeter. Un
-roulement correctement monté (fiche 6.2) dure dix ans au lieu de six mois.
+roulement correctement monté (fiches 6.5 et 6.6) dure dix ans au lieu de six mois.
 
 **Permettre la réparation** — accès aux organes, visserie standard, pièces disponibles. Une
 machine impossible à réparer est une machine à jeter.
@@ -43152,7 +43152,7 @@ pression.*
 3. **Vérifier p sans vérifier pV** : c'est l'échauffement qui tue un palier lisse, pas la
    pression seule.
 4. **Choisir une huile trop fluide** pour une charge élevée à faible vitesse.
-5. **Trop graisser** un roulement (fiche 6.2) : il chauffe autant que s'il en manquait.
+5. **Trop graisser** un roulement (fiche 6.7) : il chauffe autant que s'il en manquait.
 6. **Polir excessivement** une portée : sous Ra 0,1, le lubrifiant ne se maintient plus.
 7. **Oublier l'accès au graisseur** : la maintenance ne sera pas faite.
 8. **Négliger le démarrage** : c'est là que se produit l'essentiel de l'usure d'un palier
@@ -44557,7 +44557,7 @@ Si vous voulez pousser l'exercice, voici trois questions supplémentaires que po
 sujet plus long :
 
 1. **Dimensionner la vis de fixation** du corps de vérin sur le bâti, en tenant compte de la
-   précharge (fiche 6.3).
+   précharge (fiche 6.9).
 2. **Écrire le GRAFCET** du poste complet : bridage, vissage, desserrage, avec les comptes rendus
    de capteurs (fiche 12.7).
 3. **Calculer le temps de cycle** réel et vérifier qu'on tient les 240 pièces/heure, en tenant
@@ -45069,7 +45069,7 @@ Trois questions qu'un sujet de deuxième année ajouterait :
 1. **Calculer la durée de vie L₁₀ des roulements** à partir du catalogue, et vérifier qu'elle
    dépasse les 20 000 heures demandées.
 2. **Dimensionner la clavette** : longueur nécessaire pour que la pression de matage reste sous
-   100 MPa (fiche 6.3).
+   100 MPa (fiche 6.10).
 3. **Vérifier l'échauffement du carter** : 120 W dissipés, quelle surface d'échange faut-il
    (fiche 8.2) ?
 """
