@@ -3278,12 +3278,19 @@ def arc_boutement():
                      f"<animateTransform attributeName='transform' type='translate' "
                      f"values='0,0; 30,0; 0,0' dur='2.4s' repeatCount='indefinite'/></rect>")
         p.append(f"<line x1='{x0 + 50}' y1='205' x2='{x0 + 50 + Lg}' y2='205' stroke='{couleur}' stroke-width='1.4'/>")
-        p.append(_txt(x0 + 50 + Lg / 2, 220, "longueur de guidage", 9, couleur, "middle"))
-        # effort excentre
-        p.append(f"<line x1='{x0 + 250}' y1='156' x2='{x0 + 200}' y2='156' stroke='{ARBRE}' stroke-width='2.4' marker-end='url(#z1)'/>")
+        p.append(_txt(x0 + 50 + Lg / 2, 220, "L (longueur de guidage)", 9, couleur, "middle"))
+        # effort excentre : appliqué par une poignée au-dessus du rail, à la distance a de l'axe
+        xb = x0 + 50 + Lg
+        p.append(f"<line x1='{xb}' y1='132' x2='{xb}' y2='100' stroke='{ARBRE}' stroke-width='2'/>")
+        p.append(f"<line x1='{xb + 60}' y1='100' x2='{xb + 4}' y2='100' stroke='{ARBRE}' stroke-width='2.4' marker-end='url(#z1)'/>")
+        xa = x0 + 288  # cote a, à droite du rail
+        p.append(f"<line x1='{xb}' y1='100' x2='{xa + 4}' y2='100' stroke='{FIN}' stroke-width='1' stroke-dasharray='3 3'/>")
+        p.append(f"<line x1='{x0 + 275}' y1='156' x2='{xa + 4}' y2='156' stroke='{FIN}' stroke-width='1' stroke-dasharray='3 3'/>")
+        p.append(f"<line x1='{xa}' y1='100' x2='{xa}' y2='156' stroke='{FIN}' stroke-width='1.2'/>")
+        p.append(_txt(xa - 4, 132, "a", 13, FIN, "end", True))
         p.append("<defs><marker id='z1' markerWidth='9' markerHeight='9' refX='8' refY='4.5' orient='auto'>"
                  f"<path d='M0,0 L9,4.5 L0,9 z' fill='{ARBRE}'/></marker></defs>")
-        p.append(_txt(x0 + 255, 148, "F", 12, ARBRE, "start", True))
+        p.append(_txt(xb + 34, 92, "F", 12, ARBRE, "middle", True))
         if Lg == 60:
             p.append(f"<circle cx='{x0 + 52}' cy='134' r='6' fill='{ALERTE}' opacity='0.6'>"
                      f"<animate attributeName='r' values='6;9;6' dur='1.4s' repeatCount='indefinite'/></circle>")
@@ -3294,8 +3301,8 @@ def arc_boutement():
             p.append(_txt(x0 + 152, 246, "l'effort se répartit sur la longueur", 10, OK, "middle", True))
         p.append(_txt(x0 + 152, 262, verdict, 11, couleur, "middle", True))
     p.append(f"<rect x='40' y='288' width='680' height='68' fill='#f0fdf4' stroke='{OK}' rx='6'/>")
-    p.append(_txt(56, 311, "Règle : longueur de guidage ≈ 1,5 à 2 fois la course.", 12, TRAIT, "start", True))
-    p.append(_txt(56, 331, "Un guidage trop court se coince quel que soit le soin d'usinage : c'est une question", 12, FIN))
+    p.append(_txt(56, 311, "Pas d'arc-boutement si L > 2 f a (a : porte-à-faux, f : frottement). Repère : L ≥ 1,5 à 2 × a.", 12, TRAIT, "start", True))
+    p.append(_txt(56, 331, "La force F n'y figure pas : pousser plus fort ne débloque jamais. C'est une question", 12, FIN))
     p.append(_txt(56, 349, "de géométrie et de frottement, pas de précision.", 12, FIN))
     return _svg("".join(p), 760, 375)
 
@@ -25637,15 +25644,30 @@ un — et éviter qu'elle **se coince**.
 [[FIG:arc_boutement]]
 
 **L'arc-boutement, c'est ce qui se passe quand un tiroir se bloque parce qu'on tire d'un seul
-côté.** L'effort excentré fait pivoter le chariot ; il vient toucher le rail en deux points
-opposés, et le frottement de ces deux contacts s'oppose au mouvement. Plus on pousse, plus ça
-serre : la situation s'auto-aggrave.
+côté.** L'effort excentré fait pivoter le chariot dans son jeu ; il vient toucher le rail en deux
+points opposés, et le frottement de ces deux contacts s'oppose au mouvement. Plus on pousse, plus
+ces contacts serrent — **exactement dans la même proportion** : pousser plus fort ne débloque
+jamais.
 
-**La règle géométrique :**
+**D'où vient la règle.** Appelons **L** la longueur de guidage, **a** le **porte-à-faux** — la
+distance entre la ligne d'action de l'effort F et l'axe du guidage, comme la longueur d'un
+plongeoir : plus elle est grande, plus ça fait levier — et **f** le coefficient de frottement.
 
-> **Longueur de guidage ≈ 1,5 à 2 fois la course**
-> ou, plus précisément : au moins **le double de la distance** entre le point d'application de
-> l'effort et l'axe du guidage.
+- L'effort excentré fait tourner le coulisseau ; les deux contacts s'y opposent par deux
+  réactions N, distantes de L. L'équilibre des moments donne **N × L = F × a**, donc
+  **N = F × a / L**.
+- Chaque contact freine de f × N : frottement total **2 f N = 2 f F a / L**.
+- Le coulisseau se bloque si ce frottement atteint l'effort : 2 f F a / L ≥ F. **F se simplifie** :
+  la force n'intervient pas.
+
+> **Pas d'arc-boutement si L > 2 f a**
+>
+> Repère de conception : **L ≥ 1,5 à 2 × a**, qui reste sûr même sur un guidage sec et encrassé
+> (il couvre f jusqu'à 0,75).
+
+*Exemple : a = 120 mm. Guidage graissé, f ≈ 0,15 : le seuil vaut 2 × 0,15 × 120 = 36 mm. Le même
+guidage sec et encrassé, f ≈ 0,4 : 96 mm. Le frottement réel varie avec l'entretien : c'est pour
+cela que le repère garde une large marge.*
 
 **Ce qu'il faut bien comprendre :** un guidage trop court se coince **quel que soit le soin
 apporté à l'usinage**. Ce n'est pas un problème de précision, c'est un problème de géométrie et de
@@ -25663,37 +25685,40 @@ frottement. Aucune rectification ne rattrapera une longueur insuffisante.
 
 ### 2. Les erreurs classiques
 
-1. **Guidage trop court** par rapport à la course : arc-boutement garanti.
-2. **Compter sur la clavette pour tenir axialement**, ou pour centrer.
-3. **Remplacer une clavette par une plus courte** : matage des rainures.
-4. **Serrer au jugé** au lieu d'utiliser la clé dynamométrique.
-5. **Croire qu'une rondelle plate freine.**
-6. **Oublier que la tension de courroie charge les paliers** — parfois plus que le couple.
-7. **Monter deux roues de modules différents** : elles ne peuvent pas engrener.
-8. **Écraser un joint torique à fond** : il flue et l'étanchéité disparaît.
-
+1. **Guidage trop court par rapport au porte-à-faux** : le coulisseau se met en biais, porte par
+   deux coins opposés, et se coince dès que L ≤ 2 f a.
+2. **Pousser plus fort pour débloquer** : le frottement aux deux coins croît exactement comme
+   l'effort appliqué — la force se simplifie, elle ne débloque jamais.
+3. **Chercher un défaut de fabrication** : l'arc-boutement est un problème de géométrie et de
+   frottement ; aucune rectification ne rattrape une longueur de guidage insuffisante.
+4. **Tirer loin de l'axe du guidage** (poignée dans un coin) : on augmente le porte-à-faux a, donc
+   le seuil 2 f a.
+5. **Compter sur le graissage seul** : il abaisse f, mais f remonte avec l'usure et la saleté ; la
+   géométrie doit suffire.
 
 ### 3. À retenir
 
-- Longueur de guidage ≈ **1,5 à 2 × la course**, sinon arc-boutement.
-- C'est la **précharge** et l'adhérence qui tiennent un assemblage vissé, pas le cisaillement des
-  vis.
-- Classe **8.8 → Re = 640 MPa** · **10.9 → Re = 900 MPa**.
-- **Clavette = couple · ajustement = centrage · épaulement = arrêt axial.** Trois fonctions, trois
-  éléments.
-- Une clavette travaille au **matage sur les flancs** : on l'allonge, on ne la grossit pas.
-- **d = m Z** · **a = m (Z1+Z2)/2** · même module obligatoire · Z ≥ 17.
-- Joint dynamique : portée **Ra 0,8** et chanfrein d'introduction.
+- **Arc-boutement** : un effort tiré loin de l'axe met le coulisseau en biais, comme un tiroir
+  qu'on tire par une poignée placée dans un coin.
+- Condition physique : **pas d'arc-boutement si L > 2 f a** — la force n'y figure pas.
+- Repère de conception : **L ≥ 1,5 à 2 × a**, sûr jusqu'à f = 0,75.
+- Trois corrections, par efficacité : **allonger le guidage** ; **rapprocher l'effort de l'axe** ;
+  **réduire le frottement** (galets, patins, douilles à billes).
+- Du plus simple au plus performant : glissière prismatique ; arbre et douille lisse ; douille à
+  billes ; **rail à patins à billes** (standard industriel) ; galets pour les grandes courses.
 """,
             "formules": """
-**Arc-boutement** — le coulisseau se coince au lieu de glisser, quel que soit l'effort appliqué
+**Arc-boutement** — le coulisseau se coince **quelle que soit la force** appliquée : elle se
+simplifie dans la condition
 
-**La règle du rapport L/D** — guidage **court** poussé loin de son axe → il se coince ·
-il faut un guidage **long** par rapport au porte-à-faux · repère usuel : **L ≥ 1,5 à 2 × le
-porte-à-faux**
+**Condition physique** — pas d'arc-boutement si **L > 2 f a** · L : longueur de guidage ·
+a : porte-à-faux (distance entre l'effort et l'axe du guidage) · f : coefficient de frottement
 
-**Ce qui aggrave** — un effort appliqué **loin** de l'axe de guidage · un **jeu** important ·
-un **coefficient de frottement** élevé
+**Repère de conception** — **L ≥ 1,5 à 2 × a** : sûr même sur un guidage sec et encrassé
+(f jusqu'à 0,75)
+
+**Ce qui aggrave** — un effort appliqué **loin** de l'axe du guidage (a grand) · un **frottement**
+élevé (guidage sec, encrassé)
 
 **Solutions** — allonger le guidage · rapprocher le point d'application de l'effort ·
 réduire le frottement (galets, patins, douilles à billes)
@@ -25710,8 +25735,9 @@ l'effort est appliqué loin de l'axe de guidage, il crée un moment qui met le c
 dans ses glissières. Les deux coins opposés viennent porter, et la force de frottement qui en
 résulte **croît proportionnellement à l'effort appliqué**.
 
-C'est ce qui rend le phénomène si déroutant : **plus on tire fort, plus ça bloque**. Augmenter
-la force ne résout jamais un arc-boutement.
+C'est ce qui rend le phénomène si déroutant : **tirer plus fort ne sert à rien**, le frottement
+augmente exactement dans la même proportion. Augmenter la force ne résout jamais un
+arc-boutement.
 
 **Les trois corrections possibles**, par ordre d'efficacité :
 
@@ -25719,7 +25745,7 @@ la force ne résout jamais un arc-boutement.
 |---|---|
 | **allonger le guidage** | augmente le rapport L/porte-à-faux — la plus efficace |
 | **rapprocher le point de traction** de l'axe | réduit le moment qui met en biais |
-| **réduire le frottement** (galets) | repousse le seuil, sans supprimer la cause |
+| **réduire le frottement** (galets) | abaisse le seuil 2 f a — efficace, mais le frottement remonte avec l'usure et la saleté |
 
 **Ce que le cas apprend.** Un même mécanisme peut fonctionner ou se bloquer **selon l'endroit où
 on applique l'effort** — sans qu'aucune pièce ne soit défectueuse. C'est un problème de
@@ -25728,82 +25754,89 @@ conception, pas de fabrication.
             "exercice": """
 ### Exercice — Diagnostiquer un blocage
 
-Un coulisseau est guidé sur une glissière de **longueur L = 80 mm**. L'effort de manœuvre est
-appliqué à **120 mm** de l'axe de la glissière. Le coulisseau se bloque dès qu'on pousse un peu
-fort.
+Un coulisseau est guidé sur une glissière de **longueur L = 80 mm**. L'effort de manœuvre,
+parallèle à la glissière, est appliqué par une poignée située à **a = 120 mm** de l'axe du
+guidage. La glissière est sèche et encrassée : **f ≈ 0,4**. Poussé par la poignée, le coulisseau
+se bloque, **quelle que soit la force** ; poussé dans l'axe, il coulisse.
 
 **1.** Comment s'appelle ce phénomène ? Décrivez ce qui se passe géométriquement.
 
-**2.** Pourquoi augmenter la force de poussée aggrave-t-il le problème au lieu de le résoudre ?
+**2.** Montrez, par l'équilibre du coulisseau, que pousser plus fort ne peut pas le débloquer.
 
-**3.** Calculez le rapport actuel entre la longueur de guidage et le porte-à-faux. Comparez au
-repère usuel.
+**3.** Calculez le seuil 2 f a et concluez.
 
-**4.** Quelle longueur de guidage faudrait-il pour respecter ce repère ?
+**4.** Après nettoyage et graissage, f ≈ 0,15. Le coulisseau se bloque-t-il encore ? Pourquoi ne
+pas s'en contenter ?
 
-**5.** Citez deux autres solutions si l'on ne peut pas allonger la glissière.
+**5.** Quelle longueur de guidage le repère de conception demande-t-il ? Jusqu'à quel coefficient
+de frottement reste-t-elle sûre ?
+
+**6.** Citez deux autres solutions si l'on ne peut pas allonger la glissière.
 """,
             "corrige": """
 ### Corrigé, en six temps
 
 #### 1. Ce que dit l'énoncé
 
-Deux longueurs à comparer : le **guidage** (80 mm) et le **porte-à-faux** (120 mm). Le fait que
-le blocage apparaisse « dès qu'on pousse fort » est le signe caractéristique de
-l'arc-boutement — un défaut de fabrication donnerait un blocage constant.
+Trois données : L = 80 mm, a = 120 mm, f ≈ 0,4. Et un indice décisif : le coulisseau bloque quand
+on pousse **loin de l'axe**, pas quand on pousse **dans l'axe** — et la force n'y change rien.
+C'est la signature de l'arc-boutement : un défaut de fabrication (coulisseau trop serré, rail
+tordu) freinerait aussi quand on pousse dans l'axe.
 
 #### 2. Quelle règle, et pourquoi
 
-**L'arc-boutement est un phénomène géométrique, pas un problème d'effort.**
+L'effort excentré fait pivoter le coulisseau dans son jeu : il porte par deux coins opposés,
+distants de L. L'équilibre des moments donne **N × L = F × a**. Chaque coin freine de f × N. Le
+coulisseau se bloque si 2 f N ≥ F, soit 2 f F a / L ≥ F : **F se simplifie**.
 
-Quand l'effort est appliqué loin de l'axe, il crée un moment qui met le coulisseau **en biais**.
-Les coins opposés portent, et la force de frottement produite est **proportionnelle à l'effort
-appliqué** — d'où le repère de conception :
-
-> **longueur de guidage ≥ 1,5 à 2 × le porte-à-faux**
+> **Pas d'arc-boutement si L > 2 f a** · repère de conception : **L ≥ 1,5 à 2 × a**
 
 #### 3. Les conversions
 
-Aucune conversion d'unité : les deux longueurs sont déjà en millimètres. **Le calcul est un
-simple rapport**, sans dimension.
+Aucune : L et a sont en millimètres, f est sans unité. Le seuil 2 f a sort en millimètres,
+directement comparable à L.
 
 #### 4. Le remplacement
 
-rapport actuel = L / porte-à-faux = 80 / 120
+N = F × a / L = F × 120 / 80
 
-longueur nécessaire = porte-à-faux × 1,5 = 120 × 1,5 (au minimum)
+seuil, glissière sèche = 2 × 0,4 × 120 · seuil, glissière graissée = 2 × 0,15 × 120
+
+repère = 1,5 × 120 et 2 × 120
 
 #### 5. Le calcul
 
 **1.** C'est l'**arc-boutement**. L'effort appliqué loin de l'axe crée un moment qui fait pivoter
-légèrement le coulisseau dans son jeu : il se met en biais et vient porter par deux coins
-opposés, ce qui le coince.
+légèrement le coulisseau dans son jeu : il se met en biais et porte par deux coins opposés, dont
+le frottement s'oppose au mouvement.
 
-**2.** Parce que la force de frottement au niveau des deux coins est **proportionnelle à l'effort
-appliqué**. Pousser deux fois plus fort double aussi la force qui bloque : le rapport ne change
-pas, et le coulisseau reste coincé. **Augmenter la force ne résout jamais un arc-boutement.**
+**2.** N = F × 120 / 80 = **1,5 F**. Frottement total : 2 × 0,4 × 1,5 F = **1,2 F**. Il dépasse
+l'effort F, **quel que soit F** : si l'on double F, le frottement double aussi. Pousser plus fort
+ne débloque jamais.
 
-**3.** rapport = 80 / 120 = **0,67**. Le repère usuel demande **au moins 1,5**. On est donc à
-moins de la moitié de ce qu'il faudrait — le blocage était prévisible dès la conception.
+**3.** 2 f a = 2 × 0,4 × 120 = **96 mm**. L = 80 mm < 96 mm : **il se bloque**.
 
-**4.** L ≥ 1,5 × 120 = **180 mm** au minimum, et **240 mm** pour respecter le rapport de 2. Il
-faudrait donc plus que doubler la longueur de guidage actuelle.
+**4.** 2 × 0,15 × 120 = **36 mm** < 80 mm : il **coulisse**. Mais le frottement remonte dès que la
+glissière s'encrasse ou sèche : la conception ne doit pas dépendre de l'entretien.
 
-**5.** Deux autres solutions :
-- **rapprocher le point d'application de l'effort** de l'axe de la glissière : cela réduit
-  directement le porte-à-faux, donc le moment ;
-- **réduire le coefficient de frottement** (galets, patins, douilles à billes) : cela repousse le
-  seuil de blocage, sans supprimer la cause géométrique.
+**5.** L ≥ 1,5 × 120 = **180 mm** au minimum, **240 mm** pour un rapport de 2. Avec L = 180 mm, le
+coulisseau reste libre tant que 2 × f × 120 < 180, soit **f < 0,75** — bien au-delà d'un guidage
+sec et encrassé.
+
+**6.** Deux autres solutions :
+- **rapprocher le point d'application de l'effort** de l'axe du guidage : a diminue, et le seuil
+  2 f a avec lui ;
+- **réduire durablement le frottement** (galets, patins, douilles à billes) : avec un f de l'ordre
+  du centième, le seuil tombe à quelques millimètres.
 
 #### 6. La vérification
 
-**Le contrôle par le rapport** : 0,67 contre 1,5 attendu — l'écart est tel qu'il n'y a pas de
-doute sur le diagnostic. Si le rapport avait été de 1,4, on aurait pu hésiter entre
-l'arc-boutement et une autre cause (jeu excessif, désalignement).
+**Contrôle par le calcul de la question 2** : frottement 1,2 F > F, cohérent avec L < 2 f a
+(80 < 96). Au seuil exact L = 2 f a, on trouverait un frottement égal à F.
 
-**Le contrôle de bon sens** : le mécanisme fonctionne quand on pousse dans l'axe et bloque quand
-on pousse au coin. Une pièce défectueuse bloquerait dans les deux cas — **c'est bien la
-géométrie du montage qui est en cause**, pas la fabrication.
+**Contrôle de bon sens** : poussé dans l'axe, a = 0 et le seuil vaut 0 : le coulisseau glisse.
+C'est exactement ce qu'on observe — **c'est bien la géométrie du montage qui est en cause**, pas
+la fabrication.
 """,
         },
         {
@@ -56945,16 +56978,17 @@ _mth("6.7", "Choisir la lubrification et l'étanchéité adaptées", [
    "dynamique par joint à lèvres, sur une portée rectifiée Ra 0,8.")
 
 _mth("6.8", "Diagnostiquer un risque d'arc-boutement", [
-    "**Repérer la longueur de guidage** et **le porte-à-faux** (la distance jusqu'au "
-    "point où l'effort est appliqué).",
-    "**Calculer le rapport guidage / porte-à-faux**.",
-    "**Un rapport trop faible** (guidage court, porte-à-faux long) **signe un risque "
-    "de blocage géométrique**, indépendant de tout jeu de fabrication.",
-    "**Corriger en allongeant le guidage**, ou en rapprochant le point d'application "
-    "de l'effort de la zone guidée.",
-], "Coulisseau guidé sur 80 mm, effort appliqué à 120 mm de porte-à-faux : rapport "
-   "0,67, en dessous du repère minimum recommandé — le coulisseau coincera dès qu'on "
-   "pousse un peu fort.")
+    "**Repérer la longueur de guidage L** et **le porte-à-faux a** (la distance entre "
+    "la ligne d'action de l'effort et l'axe du guidage).",
+    "**Estimer le coefficient de frottement f** : de l'ordre de 0,15 pour un guidage "
+    "graissé, 0,4 et plus pour un guidage sec et encrassé.",
+    "**Comparer L au seuil 2 f a** : si L ≤ 2 f a, le coulisseau se bloque **quelle "
+    "que soit la force** — elle n'intervient pas dans la condition.",
+    "**En conception, viser L ≥ 1,5 à 2 × a**, sûr jusqu'à f = 0,75 ; sinon allonger "
+    "le guidage, rapprocher l'effort de l'axe ou réduire le frottement.",
+], "Coulisseau guidé sur 80 mm, effort à 120 mm de l'axe, glissière sèche (f ≈ 0,4) : "
+   "seuil 2 × 0,4 × 120 = 96 mm, plus que 80 mm — il se bloque quelle que soit la "
+   "force. Repère de conception : au moins 180 mm.")
 
 _mth("6.9", "Vérifier la tenue d'un assemblage vissé", [
     "**Identifier la classe de qualité de la vis** (ex. 8.8), et en déduire Re et "
@@ -69931,66 +69965,71 @@ ATELIERS = [
              "un blocage par déséquilibre géométrique : la pièce guidée coince dans son "
              "logement, non pas parce qu'elle est trop serrée, mais parce que l'effort est "
              "appliqué trop loin de la zone de guidage."),
-            ("Porte-à-faux",
-             "la distance entre la zone de guidage et le point où l'effort est appliqué. Plus "
-             "elle est grande, plus le risque d'arc-boutement augmente."),
-            ("Rapport guidage / porte-à-faux",
-             "le repère qui prédit le risque : longueur de guidage divisée par le "
-             "porte-à-faux. Un rapport trop faible (guidage court, porte-à-faux long) coince "
-             "presque à coup sûr."),
+            ("Porte-à-faux (a)",
+             "la distance entre la ligne d'action de l'effort et l'axe du guidage. Plus "
+             "elle est grande, plus l'effort fait levier et met le coulisseau en biais."),
+            ("Condition de non-arc-boutement",
+             "L > 2 f a (L : longueur de guidage, f : coefficient de frottement). La force "
+             "appliquée n'y figure pas : pousser plus fort ne débloque jamais."),
         ],
         "enonce": "Un coulisseau est guidé sur une glissière de longueur L = 80 mm. "
-                  "L'effort de manœuvre est appliqué à 120 mm de l'axe de la glissière "
-                  "(porte-à-faux). Il se bloque dès qu'on pousse un peu fort.",
+                  "L'effort de manœuvre, parallèle à la glissière, est appliqué à a = 120 mm "
+                  "de l'axe du guidage (porte-à-faux). La glissière est sèche et encrassée : "
+                  "f ≈ 0,4. Poussé par la poignée, il se bloque quelle que soit la force ; "
+                  "poussé dans l'axe, il coulisse.",
         "etapes": [
-            {"type": "numerique", "label": "Rapport guidage / porte-à-faux",
-             "unite": "sans unité", "attendu": 0.67, "tol": 0.02,
-             "consigne": "Calcule le rapport L / porte-à-faux = 80 / 120.",
-             "indice": "80 divisé par 120.",
-             "pieges": [(1.5, "1,5 est le repère MINIMUM attendu, pas le rapport actuel "
-                              "de ce coulisseau — c'est justement parce que le rapport "
-                              "réel en est très loin qu'il se bloque.")],
-             "aide": "80 / 120 ≈ 0,67."},
+            {"type": "numerique", "label": "Seuil d'arc-boutement 2 f a",
+             "unite": "mm", "attendu": 96, "tol": 1,
+             "consigne": "Calcule le seuil 2 × f × a, avec f = 0,4 et a = 120 mm.",
+             "indice": "2 × 0,4 × 120.",
+             "pieges": [(48, "48 mm oublie le facteur 2 : il y a DEUX contacts qui "
+                             "freinent, chacun de f × N."),
+                        (240, "240 mm oublie le coefficient de frottement f : le seuil "
+                              "est 2 × f × a, pas 2 × a.")],
+             "aide": "2 × 0,4 × 120 = 96 mm."},
             {"type": "qcm", "label": "Diagnostic",
-             "question": "Le repère usuel demande un rapport d'au moins 1,5. Que "
-                        "conclure ?",
-             "options": ["Le guidage est bien trop court : le blocage était prévisible "
-                        "dès la conception",
-                        "Le rapport est correct, le problème vient d'ailleurs "
-                        "(pollution, jeu)"], "bonne": 0,
-             "indice": "0,67 est très inférieur à 1,5 — l'écart est trop grand pour "
-                       "hésiter sur le diagnostic.",
-             "diagnostics": {1: "L'écart entre 0,67 et 1,5 attendu est trop important "
-                                 "pour chercher une autre cause — c'est bien un problème "
-                                 "de géométrie de conception."}},
-            {"type": "numerique", "label": "Longueur de guidage minimale nécessaire",
+             "question": "L = 80 mm et le seuil 2 f a vaut 96 mm. Que conclure ?",
+             "options": ["Il coulisse si l'on pousse assez fort",
+                        "Il coulisse : un rapport L / a de 0,67 suffit",
+                        "Il se bloque, quelle que soit la force : L = 80 mm est sous le "
+                        "seuil de 96 mm"], "bonne": 2,
+             "indice": "Comparer L au seuil : la force ne figure pas dans la condition "
+                       "L > 2 f a.",
+             "diagnostics": {0: "La force se simplifie : le frottement des deux coins "
+                                 "augmente exactement comme l'effort. Pousser plus fort ne "
+                                 "débloque jamais un arc-boutement.",
+                              1: "Le rapport L / a seul ne suffit pas : c'est L comparé à "
+                                 "2 f a qui décide. Ici 80 mm < 96 mm, il se bloque."}},
+            {"type": "numerique", "label": "Longueur de guidage selon le repère de conception",
              "unite": "mm", "attendu": 180, "tol": 2,
-             "consigne": "Pour respecter le repère minimal de 1,5 × le porte-à-faux, "
-                        "quelle longueur de guidage faut-il au moins ?",
+             "consigne": "Le repère de conception demande L ≥ 1,5 × a. Quelle longueur de "
+                        "guidage faut-il au moins ?",
              "indice": "1,5 × 120.",
-             "pieges": [(53, "53 mm inverserait le calcul (120 / 1,5 au lieu de "
-                             "120 × 1,5) — il faut une longueur PLUS grande que le "
-                             "porte-à-faux, pas plus petite.")],
+             "pieges": [(96, "96 mm est le seuil physique pour f = 0,4, sans aucune marge : "
+                             "si la glissière s'encrasse davantage, il se bloque de "
+                             "nouveau. Le repère 1,5 × a garde une marge (sûr jusqu'à "
+                             "f = 0,75)."),
+                        (80, "80 mm, c'est la longueur actuelle — celle qui se bloque.")],
              "aide": "1,5 × 120 = 180 mm au minimum."},
         ],
         "corrige": {
-            "enonce": "Coulisseau : guidage 80 mm, porte-à-faux 120 mm, se bloque à "
-                      "l'effort.",
-            "regle": "**Longueur de guidage ≥ 1,5 à 2 × le porte-à-faux, sinon "
-                    "arc-boutement — un phénomène purement géométrique qu'aucune "
-                    "précision d'usinage ne peut corriger.**",
-            "conversions": "Sans objet.",
-            "remplacement": "Rapport actuel = 80/120. Longueur minimale = 120 × 1,5.",
-            "calcul": "Rapport actuel : **0,67**, très inférieur au minimum. Longueur "
-                     "minimale : **180 mm** (240 mm pour respecter le rapport de 2).",
-            "verification": "Pousser plus fort aggrave le blocage au lieu de le "
-                            "résoudre — signature caractéristique de l'arc-boutement, "
-                            "à distinguer d'un défaut de fabrication qui bloquerait de "
-                            "façon constante.",
+            "enonce": "Coulisseau : guidage L = 80 mm, porte-à-faux a = 120 mm, f ≈ 0,4 ; "
+                      "se bloque quand on pousse par la poignée, quelle que soit la force.",
+            "regle": "**Pas d'arc-boutement si L > 2 f a** : équilibre N × L = F × a, "
+                    "frottement 2 f N ≥ F au blocage — la force F se simplifie. Repère de "
+                    "conception : **L ≥ 1,5 à 2 × a**.",
+            "conversions": "Sans objet : L et a en mm, f sans unité.",
+            "remplacement": "Seuil = 2 × 0,4 × 120. Longueur du repère = 1,5 × 120.",
+            "calcul": "Seuil : **96 mm** > L = 80 mm, **il se bloque**. Longueur du repère : "
+                     "**180 mm** (240 mm pour un rapport de 2).",
+            "verification": "Poussé dans l'axe, a = 0 : le seuil est nul et le coulisseau "
+                            "glisse — c'est bien la géométrie qui est en cause. Graissé "
+                            "(f ≈ 0,15), le seuil tombe à 36 mm et il coulisse aussi, mais "
+                            "la conception ne doit pas dépendre de l'entretien.",
         },
-        "a_retenir": "À retenir : un guidage trop court se coince quel que soit le soin "
-                     "apporté à l'usinage — augmenter la force ne résout jamais un "
-                     "arc-boutement, il faut changer la géométrie.",
+        "a_retenir": "À retenir : l'arc-boutement ne dépend pas de la force — pas de blocage "
+                     "si L > 2 f a. En conception, on vise L ≥ 1,5 à 2 × a pour ne pas "
+                     "dépendre du frottement réel.",
     },
     {
         "id": "at86",
