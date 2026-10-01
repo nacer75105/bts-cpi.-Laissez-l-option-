@@ -5,18 +5,18 @@ BTS CPI — APPLICATION COMPLÈTE EN UN SEUL FICHIER
 Conception de Produits Industriels — 1re année
 ================================================================================
 
-Ce fichier regroupe TOUT : l'application, les 169 fiches de cours, les
-192 schémas (dont 153 animés en SMIL), les 521 questions de quiz, les tables
+Ce fichier regroupe TOUT : l'application, les 170 fiches de cours, les
+199 schémas (dont 160 animés en SMIL), les 529 questions de quiz, les tables
 ISO 286 et la base de matériaux. Il n'y a donc qu'un seul fichier à
 envoyer sur GitHub.
 
 Lancement :  streamlit run app.py
 
 Où trouver quoi dans ce fichier :
-  1. FIGURES       — les 192 schémas dessinés par le code (dont 153 animés) (dict clé -> fonction)
+  1. FIGURES       — les 199 schémas dessinés par le code (dont 160 animés) (dict clé -> fonction)
   2. iso286         — les tables de tolérances et le calcul d'ajustement
   3. materiaux      — la base de matériaux et les calculs de RDM
-  4. QUIZ           — les 521 questions, réparties en 43 catégories
+  4. QUIZ           — les 529 questions, réparties en 44 catégories
   5. BLOC_0 à BLOC_6 — les fiches des blocs fondamentaux (analyse fonctionnelle,
      tolérancement, matériaux, RDM, CAO, liaisons)
   6. BLOC_7 à BLOC_19 — mathématiques, physique-chimie, méthodologie de projet,
@@ -3580,6 +3580,282 @@ def composition_vitesses_pont():
     p.append(f"<rect x='40' y='330' width='360' height='30' rx='6' fill='{FOND}' stroke='{FIN}'/>")
     p.append(_txt(52, 350, "0 : sol · 2 : pont · 3 : chariot et sa charge", 11, TRAIT))
     return _svg("".join(p), 760, 372)
+
+
+# ===========================================================================
+# 72c. STATIQUE GRAPHIQUE — torseur, isolement, graphe des actions, 2 et 3 forces
+#      (fiche 6.16)
+# ===========================================================================
+
+def _k_apparait(debut, fin=None, duree=10):
+    """Animation par étapes : estompé avant `debut` (s), plein ensuite, sur un cycle (l'image fixe reste lisible)."""
+    a = debut / duree
+    b = min(a + 0.04, 0.97)
+    return (f"<animate attributeName='opacity' values='0.35;0.35;1;1' keyTimes='0;{a:.3f};{b:.3f};1' "
+            f"dur='{duree}s' repeatCount='indefinite'/>")
+
+
+def torseur_glisseur_couple():
+    p = [_k_defs(), _txt(40, 24, "Trois façons dont une pièce peut agir sur une autre", 13, TRAIT, "start", True)]
+    cadres = ((30, "UNE FORCE (glisseur)", ALESAGE), (275, "UN COUPLE", ARBRE), (520, "LE CAS GÉNÉRAL (torseur)", OK))
+    for x0, titre, c in cadres:
+        p.append(f"<rect x='{x0}' y='40' width='225' height='230' rx='8' fill='#ffffff' stroke='{c}' stroke-width='2'/>")
+        p.append(_txt(x0 + 112, 62, titre, 12, c, "middle", True))
+    # glisseur : une flèche sur sa droite d'action
+    p.append(f"<line x1='50' y1='215' x2='235' y2='95' stroke='{FIN}' stroke-width='1' stroke-dasharray='5 4'/>")
+    p.append(f"<circle cx='110' cy='176' r='4' fill='{TRAIT}'/>")
+    p.append(f"<g>{_k_fl(110, 176, 175, 134, ALESAGE, 'kb', 3)}"
+             "<animate attributeName='opacity' values='1;0.4;1' dur='2s' repeatCount='indefinite'/></g>")
+    p.append(_txt(160, 168, "F", 13, ALESAGE, "start", True))
+    p.append(_txt(225, 112, "droite d'action", 10, FIN, "end"))
+    p.append(_txt(142, 238, "moment nul en tout point", 11, TRAIT, "middle"))
+    p.append(_txt(142, 254, "de sa droite d'action", 11, TRAIT, "middle"))
+    # couple : deux forces opposées, parallèles, décalées
+    p.append(f"<line x1='330' y1='160' x2='450' y2='160' stroke='{TRAIT}' stroke-width='6' stroke-linecap='round'>"
+             "<animateTransform attributeName='transform' type='rotate' values='0 390 160; -12 390 160; 0 390 160' "
+             "dur='2.4s' repeatCount='indefinite'/></line>")
+    p.append(_k_fl(335, 160, 335, 105, ARBRE, "ko", 3))
+    p.append(_k_fl(445, 160, 445, 215, ARBRE, "ko", 3))
+    p.append(_txt(328, 112, "F", 12, ARBRE, "end", True))
+    p.append(_txt(453, 212, "−F", 12, ARBRE, "start", True))
+    p.append(_txt(387, 238, "somme des forces nulle,", 11, TRAIT, "middle"))
+    p.append(_txt(387, 254, "il fait seulement tourner", 11, TRAIT, "middle"))
+    # torseur : une force + un moment en un point
+    p.append(f"<circle cx='590' cy='170' r='4' fill='{TRAIT}'/>")
+    p.append(_txt(582, 190, "A", 12, TRAIT, "end", True))
+    p.append(_k_fl(590, 170, 680, 120, OK, "kg", 3))
+    p.append(_txt(686, 118, "R", 13, OK, "start", True))
+    p.append(f"<path d='M 620 200 A 34 34 0 1 1 610 140' fill='none' stroke='{OK}' stroke-width='2.4' marker-end='url(#kg)'/>")
+    p.append(_txt(646, 210, "M(A)", 12, OK, "start", True))
+    p.append(_txt(632, 238, "{ R ; M(A) } : une force", 11, TRAIT, "middle"))
+    p.append(_txt(632, 254, "et un moment, en un point", 11, TRAIT, "middle"))
+    p.append(f"<rect x='30' y='284' width='715' height='52' rx='6' fill='{FOND}' stroke='{FIN}'/>")
+    p.append(_txt(46, 306, "La méthode graphique ne traite que des FORCES (glisseurs) : chacune se dessine par une flèche sur", 12, TRAIT, "start", True))
+    p.append(_txt(46, 326, "sa droite d'action. Un couple ou un encastrement (force + moment) relève de la méthode analytique (12.1).", 12, FIN))
+    return _svg("".join(p), 775, 350)
+
+
+def isolement_potence():
+    p = [_k_defs(), _txt(40, 24, "Isoler, c'est découper : tout ce qui traverse la frontière devient une force", 13, TRAIT, "start", True)]
+    # mécanisme complet à gauche (1 m = 150 px)
+    k, ax, ay = 150, 80, 190
+    p.append(f"<rect x='{ax - 22}' y='40' width='16' height='230' fill='#cbd5e1'/>")
+    for i in range(9):
+        p.append(f"<line x1='{ax - 22}' y1='{50 + 25 * i}' x2='{ax - 6}' y2='{40 + 25 * i}' stroke='{FIN}'/>")
+    bx, dx, cy = ax + 1.2 * k, ax + 0.8 * k, ay - 0.6 * k
+    p.append(f"<line x1='{ax}' y1='{ay}' x2='{bx}' y2='{ay}' stroke='{TRAIT}' stroke-width='7' stroke-linecap='round'/>")
+    p.append(f"<line x1='{ax}' y1='{cy}' x2='{dx}' y2='{ay}' stroke='{ALESAGE}' stroke-width='3'/>")
+    for x, y, n in ((ax, ay, "A"), (dx, ay, "D"), (ax, cy, "C"), (bx, ay, "B")):
+        p.append(f"<circle cx='{x}' cy='{y}' r='5' fill='#ffffff' stroke='{TRAIT}' stroke-width='2'/>")
+        p.append(_txt(x + 8, y - 8, n, 12, TRAIT, "start", True))
+    p.append(f"<line x1='{bx}' y1='{ay}' x2='{bx}' y2='{ay + 40}' stroke='{FIN}' stroke-width='1.5'/>")
+    p.append(f"<rect x='{bx - 16}' y='{ay + 40}' width='32' height='26' fill='#e2e8f0' stroke='{TRAIT}'/>")
+    p.append(_txt(bx, ay + 82, "charge 600 N", 10, TRAIT, "middle"))
+    p.append(_txt(ax + 50, cy + 30, "hauban (2)", 10, ALESAGE))
+    p.append(_txt(ax + 100, ay + 22, "bras (1)", 10, TRAIT))
+    p.append(_txt(ax - 14, 286, "mur (0)", 10, FIN, "middle"))
+    # frontière autour du bras seul, à droite
+    x0, y0 = 400, 170
+    p.append(f"<rect x='{x0 - 30}' y='{y0 - 40}' width='{1.2 * k + 60:.0f}' height='80' rx='14' fill='none' stroke='{ALERTE}' "
+             "stroke-width='2' stroke-dasharray='8 5'><animate attributeName='stroke-dashoffset' values='0;26' dur='1.5s' "
+             "repeatCount='indefinite'/></rect>")
+    p.append(_txt(x0 + 80, y0 - 48, "frontière : le bras (1) seul", 11, ALERTE, "start", True))
+    p.append(f"<line x1='{x0}' y1='{y0}' x2='{x0 + 1.2 * k}' y2='{y0}' stroke='{TRAIT}' stroke-width='7' stroke-linecap='round'/>")
+    xd, xb = x0 + 0.8 * k, x0 + 1.2 * k
+    for x, n in ((x0, "A"), (xd, "D"), (xb, "B")):
+        p.append(f"<circle cx='{x}' cy='{y0}' r='5' fill='#ffffff' stroke='{TRAIT}' stroke-width='2'/>")
+        p.append(_txt(x, y0 + 26, n, 12, TRAIT, "middle", True))
+    p.append(_k_fl(xb, y0, xb, y0 + 70, ARBRE, "ko", 3))
+    p.append(_txt(xb + 8, y0 + 66, "F (charge → 1)", 11, ARBRE, "start", True))
+    p.append(_k_fl(xd, y0, xd - 64, y0 - 48, ALESAGE, "kb", 3))
+    p.append(_txt(xd - 70, y0 - 64, "D(2 → 1), le long du hauban", 11, ALESAGE, "end", True))
+    p.append(f"<circle cx='{x0}' cy='{y0}' r='16' fill='none' stroke='{OK}' stroke-width='2' stroke-dasharray='4 3'/>")
+    p.append(_txt(x0 - 22, y0 + 6, "?", 16, OK, "end", True))
+    p.append(_txt(x0 - 8, y0 + 58, "A(0 → 1) : direction inconnue", 11, OK, "middle", True))
+    p.append(f"<rect x='40' y='300' width='700' height='54' rx='6' fill='#fef2f2' stroke='{ALERTE}'/>")
+    p.append(_txt(56, 322, "Bilan du bras : 3 actions EXTÉRIEURES (charge, hauban, mur), et rien d'autre. Chaque flèche dit", 12, TRAIT, "start", True))
+    p.append(_txt(56, 342, "QUI agit sur QUI : D(2 → 1) est l'action du hauban SUR le bras. Le poids du bras est ici négligé.", 12, FIN))
+    return _svg("".join(p), 760, 368)
+
+
+def graphe_actions_potence():
+    p = [_k_defs(), _txt(40, 24, "Le graphe des actions : qui touche qui, et dans quel ordre isoler", 13, TRAIT, "start", True)]
+    n0, n1, n2 = (150, 190), (420, 110), (420, 280)
+    for (a, b, lab, xl, yl) in ((n0, n1, "pivot en A", 270, 132), (n0, n2, "pivot en C", 270, 262), (n1, n2, "pivot en D", 432, 200)):
+        p.append(f"<line x1='{a[0]}' y1='{a[1]}' x2='{b[0]}' y2='{b[1]}' stroke='{FIN}' stroke-width='2'/>")
+        p.append(_txt(xl, yl, lab, 11, TRAIT, "middle"))
+    for (x, y), num, nom, c in ((n0, "0", "mur", FIN), (n1, "1", "bras", TRAIT), (n2, "2", "hauban", ALESAGE)):
+        p.append(f"<circle cx='{x}' cy='{y}' r='34' fill='#ffffff' stroke='{c}' stroke-width='2.5'/>")
+        p.append(_txt(x, y - 2, num, 18, c, "middle", True))
+        p.append(_txt(x, y + 16, nom, 10, c, "middle"))
+    p.append(_k_fl(560, 110, 458, 110, ARBRE, "ko", 3))
+    p.append(_txt(566, 114, "charge F en B", 11, ARBRE, "start", True))
+    # ordre des isolements
+    p.append(f"<rect x='520' y='160' width='220' height='150' rx='6' fill='#ffffff' stroke='{OK}' stroke-width='1.6'/>")
+    lignes = [("Ordre des isolements :", True, TRAIT),
+              ("① le hauban (2) : 2 actions", False, ALESAGE), ("   seulement (en C et en D)", False, ALESAGE),
+              ("   → elles sont portées par CD", False, ALESAGE),
+              ("② le bras (1) : 3 actions,", False, TRAIT), ("   dont une connue (F) et une", False, TRAIT),
+              ("   de direction connue (CD)", False, TRAIT)]
+    for i, (t, g, c) in enumerate(lignes):
+        p.append(_txt(532, 182 + 18 * i, t, 11, c, "start", g))
+    p.append(f"<circle cx='420' cy='280' r='40' fill='none' stroke='{OK}' stroke-width='2'>"
+             "<animate attributeName='r' values='38;46;38' dur='2s' repeatCount='indefinite'/></circle>")
+    p.append(f"<rect x='40' y='326' width='700' height='34' rx='6' fill='{FOND}' stroke='{FIN}'/>")
+    p.append(_txt(56, 348, "Un trait = une liaison = deux actions mutuelles : 2 sur 1 et 1 sur 2, égales et opposées.", 12, TRAIT))
+    return _svg("".join(p), 760, 372)
+
+
+def deux_forces_bielle():
+    p = [_k_defs(), _txt(40, 24, "Solide soumis à 2 forces : même droite, sens opposés, même intensité", 13, TRAIT, "start", True)]
+    for x0, titre in ((30, "UN HAUBAN, UN VÉRIN"), (395, "UNE BIELLE COUDÉE")):
+        p.append(f"<rect x='{x0}' y='40' width='335' height='220' rx='8' fill='#ffffff' stroke='{ALESAGE}' stroke-width='2'/>")
+        p.append(_txt(x0 + 167, 62, titre, 12, ALESAGE, "middle", True))
+    # hauban droit
+    c, d = (90, 205), (300, 100)
+    p.append(f"<line x1='{c[0]}' y1='{c[1]}' x2='{d[0]}' y2='{d[1]}' stroke='{TRAIT}' stroke-width='5' stroke-linecap='round'/>")
+    for (x, y), n in ((c, "C"), (d, "D")):
+        p.append(f"<circle cx='{x}' cy='{y}' r='6' fill='#ffffff' stroke='{TRAIT}' stroke-width='2'/>")
+        p.append(_txt(x + 10, y + 18, n, 12, TRAIT, "start", True))
+    ux, uy = (d[0] - c[0]) / math.hypot(d[0] - c[0], d[1] - c[1]), (d[1] - c[1]) / math.hypot(d[0] - c[0], d[1] - c[1])
+    p.append(f"<g>{_k_fl(c[0], c[1], c[0] - 36 * ux, c[1] - 36 * uy, ARBRE, 'ko', 3)}{_k_fl(d[0], d[1], d[0] + 36 * ux, d[1] + 36 * uy, ARBRE, 'ko', 3)}"
+             "<animate attributeName='opacity' values='1;0.35;1' dur='2s' repeatCount='indefinite'/></g>")
+    p.append(_txt(250, 236, "tendu : les deux flèches « tirent »", 11, TRAIT, "middle"))
+    # bielle coudée : la droite d'action joint les centres, pas l'axe de la pièce
+    e, f, k_ = (450, 210), (690, 120), (560, 90)
+    p.append(f"<polyline points='{e[0]},{e[1]} {k_[0]},{k_[1]} {f[0]},{f[1]}' fill='none' stroke='{TRAIT}' stroke-width='5' stroke-linejoin='round'/>")
+    p.append(f"<line x1='{e[0]}' y1='{e[1]}' x2='{f[0]}' y2='{f[1]}' stroke='{ALERTE}' stroke-width='1.6' stroke-dasharray='6 4'>"
+             "<animate attributeName='stroke-dashoffset' values='0;20' dur='1s' repeatCount='indefinite'/></line>")
+    ln = math.hypot(f[0] - e[0], f[1] - e[1])
+    vx, vy = (f[0] - e[0]) / ln, (f[1] - e[1]) / ln
+    p.append(_k_fl(e[0], e[1], e[0] + 55 * vx, e[1] + 55 * vy, ARBRE, "ko", 3))
+    p.append(_k_fl(f[0], f[1], f[0] - 55 * vx, f[1] - 55 * vy, ARBRE, "ko", 3))
+    for (x, y), n in ((e, "E"), (f, "K")):
+        p.append(f"<circle cx='{x}' cy='{y}' r='6' fill='#ffffff' stroke='{TRAIT}' stroke-width='2'/>")
+        p.append(_txt(x, y + 22, n, 12, TRAIT, "middle", True))
+    p.append(_txt(562, 236, "comprimée : les forces sont sur EK,", 11, ALERTE, "middle", True))
+    p.append(_txt(562, 252, "pas le long des bras de la pièce", 11, ALERTE, "middle", True))
+    p.append(f"<rect x='30' y='274' width='700' height='54' rx='6' fill='{FOND}' stroke='{FIN}'/>")
+    p.append(_txt(46, 296, "Pourquoi : si les deux forces n'étaient pas sur la même droite, elles formeraient un couple et feraient", 12, TRAIT, "start", True))
+    p.append(_txt(46, 316, "tourner la pièce. Conditions : aucune autre action (poids négligé), deux liaisons pivot sans frottement.", 12, FIN))
+    return _svg("".join(p), 760, 342)
+
+
+def trois_forces_potence():
+    """Potence à hauban : concours des trois droites d'action puis triangle des forces, à l'échelle."""
+    k, ax, ay = 200, 90, 168
+    bx, dx, cyy = ax + 1.2 * k, ax + 0.8 * k, ay - 0.6 * k
+    ix, iy = bx, ay + 0.3 * k
+    p = [_k_defs(), _txt(30, 24, "Solide soumis à 3 forces : elles concourent en I, et leur triangle se ferme", 13, TRAIT, "start", True)]
+    p.append(f"<rect x='{ax - 18}' y='36' width='12' height='252' fill='#cbd5e1'/>")
+    p.append(f"<line x1='{ax}' y1='{ay}' x2='{bx}' y2='{ay}' stroke='{TRAIT}' stroke-width='7' stroke-linecap='round'/>")
+    p.append(f"<line x1='{ax}' y1='{cyy}' x2='{dx}' y2='{ay}' stroke='{ALESAGE}' stroke-width='3'/>")
+    for x, y, n, dxl, dyl in ((ax, ay, "A", -6, 22), (dx, ay, "D", 4, -10), (ax, cyy, "C", 10, -4), (bx, ay, "B", 8, -10)):
+        p.append(f"<circle cx='{x}' cy='{y}' r='5' fill='#ffffff' stroke='{TRAIT}' stroke-width='2'/>")
+        p.append(_txt(x + dxl, y + dyl, n, 12, TRAIT, "start", True))
+    p.append(_k_fl(bx, ay, bx, ay + 48, ARBRE, "ko", 3))
+    p.append(_txt(bx + 8, ay + 40, "F = 600 N", 11, ARBRE, "start", True))
+    # étape 1 : droite de F ; étape 2 : droite du hauban ; étape 3 : I ; étape 4 : droite AI
+    p.append(f"<line x1='{bx}' y1='{ay - 30}' x2='{bx}' y2='{iy + 22}' stroke='{ARBRE}' stroke-width='1.2' stroke-dasharray='5 4'>{_k_apparait(1)}</line>")
+    p.append(f"<line x1='{ax}' y1='{cyy}' x2='{ix + 24}' y2='{iy + 18}' stroke='{ALESAGE}' stroke-width='1.2' stroke-dasharray='5 4'>{_k_apparait(2.5)}</line>")
+    p.append(f"<g>{_k_apparait(4)}<circle cx='{ix}' cy='{iy}' r='7' fill='{ALERTE}'/>"
+             f"{_txt(ix + 12, iy + 5, 'I', 13, ALERTE, 'start', True)}</g>")
+    p.append(f"<line x1='{ax}' y1='{ay}' x2='{ix + 20}' y2='{iy + 5}' stroke='{OK}' stroke-width='1.6' stroke-dasharray='5 4'>{_k_apparait(5.5)}</line>")
+    p.append(f"<g>{_k_apparait(5.5)}{_txt(ax + 10, ay + 72, 'A passe aussi par I', 11, OK, 'start', True)}</g>")
+    p.append(_txt(ax + 4, 296, "1 m = 200 mm sur le tracé", 10, FIN))
+    # triangle des forces : 1000 N = 120 px
+    e = 0.12
+    x0, y0 = 610, 112
+    f_ = (x0, y0 + 600 * e)
+    t_ = (f_[0] - 1200 * e, f_[1] - 900 * e)
+    p.append(f"<rect x='430' y='36' width='315' height='262' rx='8' fill='#ffffff' stroke='{OK}' stroke-width='1.6'/>")
+    p.append(_txt(442, 56, "Triangle des forces (1 000 N = 120 mm)", 11, OK, "start", True))
+    p.append(f"<g>{_k_apparait(6.5)}{_k_fl(x0, y0, f_[0], f_[1], ARBRE, 'ko', 3)}"
+             f"{_txt(x0 + 8, (y0 + f_[1]) / 2, 'F (connue)', 11, ARBRE, 'start', True)}</g>")
+    p.append(f"<g>{_k_apparait(7.5)}{_k_fl(f_[0], f_[1], t_[0], t_[1], ALESAGE, 'kb', 3)}"
+             f"{_txt((f_[0] + t_[0]) / 2 - 8, (f_[1] + t_[1]) / 2 + 26, '// hauban', 11, ALESAGE, 'end', True)}</g>")
+    p.append(f"<g>{_k_apparait(8.5)}{_k_fl(t_[0], t_[1], x0, y0, OK, 'kg', 3)}"
+             f"{_txt((t_[0] + x0) / 2 - 4, (t_[1] + y0) / 2 - 8, '// AI', 11, OK, 'end', True)}</g>")
+    p.append(f"<g>{_k_apparait(9)}{_txt(442, 220, 'Mesuré : D(2→1) = 180 mm → 1 500 N', 11, ALESAGE, 'start', True)}"
+             f"{_txt(442, 240, '            A(0→1) = 148 mm → 1 237 N', 11, OK, 'start', True)}"
+             f"{_txt(442, 266, 'Les flèches se suivent bout à bout', 11, TRAIT)}"
+             f"{_txt(442, 282, 'et reviennent au départ : somme nulle.', 11, TRAIT)}</g>")
+    p.append(f"<rect x='30' y='304' width='715' height='52' rx='6' fill='{FOND}' stroke='{FIN}'/>")
+    p.append(_txt(46, 326, "① droite de F  ② droite du hauban (isolé avant)  ③ leur point de concours I  ④ A passe par I", 12, TRAIT, "start", True))
+    p.append(_txt(46, 346, "⑤ triangle : F à l'échelle, puis des parallèles aux deux directions trouvées ; on mesure.", 12, FIN))
+    return _svg("".join(p), 775, 370)
+
+
+def bridage_levier():
+    """Levier de bridage actionné par un vérin (géométrie de l'exercice, sans la solution)."""
+    k, ox, oy = 1.5, 300, 150
+    ax, ay = ox, oy + 60 * k
+    bx, by = ox + 120 * k, oy - 20 * k
+    p = [_k_defs(), _txt(40, 24, "Levier de bridage : le vérin tire, le levier presse la pièce", 13, TRAIT, "start", True)]
+    # bâti, pivot O
+    p.append(f"<rect x='{ox - 22}' y='{oy - 8}' width='44' height='16' fill='#cbd5e1'/>")
+    p.append(_txt(ox - 30, oy - 14, "bâti (0)", 10, FIN, "end"))
+    # pièce bridée
+    p.append(f"<rect x='{bx - 50}' y='{by}' width='110' height='70' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='1.6'/>")
+    p.append(_txt(bx + 5, by + 44, "pièce (3)", 11, TRAIT, "middle"))
+    p.append(f"<rect x='{bx - 60}' y='{by + 70}' width='130' height='10' fill='#cbd5e1'/>")
+    # levier coudé A-O-B
+    p.append(f"<polyline points='{ax},{ay} {ox},{oy} {bx},{by}' fill='none' stroke='{TRAIT}' stroke-width='9' stroke-linejoin='round' stroke-linecap='round'>"
+             f"<animateTransform attributeName='transform' type='rotate' values='0 {ox} {oy}; -2 {ox} {oy}; 0 {ox} {oy}' dur='2s' repeatCount='indefinite'/></polyline>")
+    p.append(_txt(ox + 90, oy + 22, "levier (1)", 11, TRAIT, "middle", True))
+    # vérin horizontal
+    p.append(f"<rect x='90' y='{ay - 14}' width='120' height='28' rx='4' fill='#e2e8f0' stroke='{ALESAGE}' stroke-width='2'/>")
+    p.append(f"<line x1='210' y1='{ay}' x2='{ax}' y2='{ay}' stroke='{ALESAGE}' stroke-width='5'/>")
+    p.append(f"<circle cx='80' cy='{ay}' r='6' fill='#ffffff' stroke='{TRAIT}' stroke-width='2'/>")
+    p.append(_txt(150, ay + 32, "vérin (2) : tire avec 750 N", 11, ALESAGE, "middle", True))
+    p.append(f"<rect x='62' y='{ay - 16}' width='8' height='32' fill='#cbd5e1'/>")
+    p.append(_txt(58, ay + 4, "bâti", 10, FIN, "end"))
+    for x, y, n, dxl, dyl in ((ox, oy, "O", -14, -10), (ax, ay, "A", 10, 20), (bx, by, "B", 8, -10), (80, ay, "E", -4, -12)):
+        p.append(f"<circle cx='{x}' cy='{y}' r='5' fill='#ffffff' stroke='{TRAIT}' stroke-width='2'/>")
+        p.append(_txt(x + dxl, y + dyl, n, 12, TRAIT, "start", True))
+    # cotes
+    p.append(f"<line x1='{ox - 40}' y1='{oy}' x2='{ox - 40}' y2='{ay}' stroke='{FIN}' stroke-width='1'/>")
+    p.append(_txt(ox - 46, (oy + ay) / 2 + 4, "60", 11, FIN, "end"))
+    p.append(f"<line x1='{ox}' y1='{oy - 60}' x2='{bx}' y2='{oy - 60}' stroke='{FIN}' stroke-width='1'/>")
+    for xx in (ox, bx):
+        p.append(f"<line x1='{xx}' y1='{oy - 66}' x2='{xx}' y2='{oy - 54}' stroke='{FIN}' stroke-width='1'/>")
+    p.append(_txt((ox + bx) / 2, oy - 66, "120", 11, FIN, "middle"))
+    p.append(f"<line x1='{bx + 70}' y1='{oy}' x2='{bx + 70}' y2='{by}' stroke='{FIN}' stroke-width='1'/>")
+    p.append(_txt(bx + 76, (oy + by) / 2 + 4, "20", 11, FIN))
+    p.append(f"<rect x='40' y='{ay + 50}' width='700' height='34' rx='6' fill='{FOND}' stroke='{FIN}'/>")
+    p.append(_txt(56, ay + 72, "Cotes en mm. Contact en B sans frottement : l'action de la pièce sur le levier est verticale. Poids négligés.", 12, TRAIT))
+    return _svg("".join(p), 760, int(ay + 98))
+
+
+def echelle_mur():
+    """Échelle de maintenance contre un mur lisse : géométrie et forces connues (pour l'atelier)."""
+    k, mx, sy = 100, 120, 320
+    a, b, g = (mx + 1.8 * k, sy), (mx, sy - 2.4 * k), (mx + 0.9 * k, sy - 1.2 * k)
+    p = [_k_defs(), _txt(40, 24, "Échelle d'accès appuyée contre une machine : trois actions", 13, TRAIT, "start", True)]
+    p.append(f"<rect x='{mx - 16}' y='50' width='16' height='{sy - 50}' fill='#cbd5e1'/>")
+    p.append(_txt(mx - 20, 46, "paroi lisse", 10, FIN, "start"))
+    p.append(f"<line x1='60' y1='{sy}' x2='420' y2='{sy}' stroke='{TRAIT}' stroke-width='2'/>")
+    p.append(_txt(400, sy + 18, "sol", 10, FIN, "end"))
+    p.append(f"<line x1='{a[0]}' y1='{a[1]}' x2='{b[0]}' y2='{b[1]}' stroke='{TRAIT}' stroke-width='7' stroke-linecap='round'/>")
+    for (x, y), n, dxl, dyl in ((a, "A", 8, 18), (b, "B", 8, -8), (g, "G", 10, 4)):
+        p.append(f"<circle cx='{x}' cy='{y}' r='5' fill='#ffffff' stroke='{TRAIT}' stroke-width='2'/>")
+        p.append(_txt(x + dxl, y + dyl, n, 12, TRAIT, "start", True))
+    p.append(_k_fl(g[0], g[1], g[0], g[1] + 70, ARBRE, "ko", 3))
+    p.append(_txt(g[0] - 6, g[1] + 66, "P (poids)", 11, ARBRE, "end", True))
+    p.append(f"<g>{_k_fl(b[0], b[1], b[0] + 60, b[1], ALESAGE, 'kb', 3)}"
+             "<animate attributeName='opacity' values='1;0.4;1' dur='2s' repeatCount='indefinite'/></g>")
+    p.append(_txt(b[0] + 64, b[1] + 4, "B(paroi → échelle) ⊥ paroi", 11, ALESAGE, "start", True))
+    p.append(f"<line x1='{a[0]}' y1='{a[1]}' x2='{a[0] - 30}' y2='{a[1] - 60}' stroke='{OK}' stroke-width='3' stroke-dasharray='6 4' marker-end='url(#kg)'/>")
+    p.append(_txt(a[0] + 6, a[1] - 50, "A(sol → échelle) : ?", 11, OK, "start", True))
+    p.append(f"<line x1='{mx}' y1='{sy + 30}' x2='{a[0]}' y2='{sy + 30}' stroke='{FIN}'/>")
+    p.append(_txt((mx + a[0]) / 2, sy + 46, "1,80 m", 11, FIN, "middle"))
+    p.append(f"<line x1='{mx + 26}' y1='{b[1]}' x2='{mx + 26}' y2='{sy}' stroke='{FIN}'/>")
+    p.append(_txt(mx + 32, (b[1] + sy) / 2 + 30, "2,40 m", 11, FIN))
+    p.append(f"<rect x='440' y='60' width='300' height='160' rx='6' fill='#ffffff' stroke='{FIN}'/>")
+    for i, t in enumerate(["Échelle de 3 m, 15 kg, poids en G", "(au milieu). Paroi lisse : pas de", "frottement en B. Au sol, en A,",
+                           "le frottement empêche le glissement.", "", "Question : quel coefficient", "d'adhérence faut-il au minimum en A ?"]):
+        p.append(_txt(454, 84 + 19 * i, t, 12, TRAIT, "start", i >= 5))
+    return _svg("".join(p), 760, sy + 62)
 
 
 # ===========================================================================
@@ -7839,6 +8115,13 @@ FIGURES = {
     "cir_construction": ("Le centre instantané de rotation (CIR) d'une bielle", cir_construction),
     "roulement_sans_glissement": ("Roulement sans glissement : V = 0 au contact", roulement_sans_glissement),
     "composition_vitesses_pont": ("Composition des vitesses sur un pont roulant", composition_vitesses_pont),
+    "torseur_glisseur_couple": ("Force, couple, torseur : trois façons d'agir", torseur_glisseur_couple),
+    "isolement_potence": ("Isoler le bras d'une potence : le bilan des actions", isolement_potence),
+    "graphe_actions_potence": ("Le graphe des actions et l'ordre des isolements", graphe_actions_potence),
+    "deux_forces_bielle": ("Solide soumis à deux forces : la droite qui joint les articulations", deux_forces_bielle),
+    "trois_forces_potence": ("Solide soumis à trois forces : concours et triangle des forces", trois_forces_potence),
+    "bridage_levier": ("Levier de bridage actionné par un vérin", bridage_levier),
+    "echelle_mur": ("Échelle appuyée contre une paroi lisse", echelle_mur),
     "caracteriser_fonction": ("Critère, niveau, flexibilité", caracteriser_fonction),
     "lire_plan_methode": ("Lire un plan inconnu en six étapes", lire_plan_methode),
     "cotation_reference": ("Coter en chaîne ou depuis une référence", cotation_reference),
@@ -8348,6 +8631,55 @@ def dyn_bielle_manivelle(theta=60.0):
     return _svg("".join(p), 760, 470)
 
 
+def dyn_potence_hauban(h=0.6):
+    """Potence : bras 1,2 m, hauban attaché au bras à 0,8 m du mur et au mur à la hauteur h ; charge 600 N."""
+    L, d, F = 1.2, 0.8, 600.0
+    T = F * L * math.sqrt(d * d + h * h) / (d * h)
+    tx, ty = -T * d / math.sqrt(d * d + h * h), T * h / math.sqrt(d * d + h * h)
+    axr, ayr = -tx, F - ty           # réaction du mur sur le bras en A
+    an = math.hypot(axr, ayr)
+    iy = h - h * L / d               # ordonnée du point de concours (m), sous le bras
+    k, ox, oy = 170, 70, 190
+    X = lambda x: ox + k * x  # noqa: E731
+    Y = lambda y: oy - k * y  # noqa: E731
+    p = [_k_defs(), _txt(30, 24, f"Hauban attaché au mur à h = {_fr_court(h, 2)} m", 13, TRAIT, "start", True),
+         _txt(420, 24, "bras 1,2 m, hauban fixé à 0,8 m, charge 600 N", 12, FIN)]
+    p.append(f"<rect x='{ox - 14}' y='30' width='10' height='300' fill='#cbd5e1'/>")
+    p.append(f"<line x1='{X(0)}' y1='{Y(0)}' x2='{X(L)}' y2='{Y(0)}' stroke='{TRAIT}' stroke-width='7' stroke-linecap='round'/>")
+    p.append(f"<line x1='{X(0)}' y1='{Y(h)}' x2='{X(d)}' y2='{Y(0)}' stroke='{ALESAGE}' stroke-width='3'/>")
+    p.append(_k_fl(X(L), Y(0), X(L), Y(0) + 40, ARBRE, "ko", 3))
+    if Y(iy) < 330:
+        p.append(f"<line x1='{X(L)}' y1='{Y(0)}' x2='{X(L)}' y2='{Y(iy)}' stroke='{ARBRE}' stroke-width='1' stroke-dasharray='5 4'/>")
+        p.append(f"<line x1='{X(d)}' y1='{Y(0)}' x2='{X(L)}' y2='{Y(iy)}' stroke='{ALESAGE}' stroke-width='1' stroke-dasharray='5 4'/>")
+        p.append(f"<line x1='{X(0)}' y1='{Y(0)}' x2='{X(L)}' y2='{Y(iy)}' stroke='{OK}' stroke-width='1.2' stroke-dasharray='5 4'/>")
+        p.append(f"<circle cx='{X(L)}' cy='{Y(iy):.1f}' r='6' fill='{ALERTE}'/>")
+        p.append(_txt(X(L) - 12, Y(iy) + 4, "I", 12, ALERTE, "end", True))
+    else:
+        p.append(_txt(X(L) + 10, 320, f"I hors cadre ({_fr_court(-iy, 2)} m sous le bras)", 10, ALERTE))
+    for x, y, n in ((0, 0, "A"), (d, 0, "D"), (0, h, "C"), (L, 0, "B")):
+        p.append(f"<circle cx='{X(x)}' cy='{Y(y):.1f}' r='4.5' fill='#ffffff' stroke='{TRAIT}' stroke-width='2'/>")
+        p.append(_txt(X(x) + 7, Y(y) - 7, n, 11, TRAIT, "start", True))
+    # triangle à l'échelle variable pour rester dans le cadre
+    tri_max = max(F, abs(tx), abs(ty), abs(axr), abs(ayr), T, an)
+    e = 140 / max(tri_max, 1)
+    pts = [(0.0, 0.0), (0.0, F * e), (tx * e, F * e - ty * e)]
+    cx_ = (min(q[0] for q in pts) + max(q[0] for q in pts)) / 2
+    cy_ = (min(q[1] for q in pts) + max(q[1] for q in pts)) / 2
+    x0, y0 = 588 - cx_, 140 - cy_
+    f_ = (x0, y0 + F * e)
+    t_ = (f_[0] + tx * e, f_[1] - ty * e)
+    p.append(f"<rect x='430' y='36' width='315' height='250' rx='8' fill='#ffffff' stroke='{OK}' stroke-width='1.6'/>")
+    p.append(_txt(442, 56, "Triangle des forces", 11, OK, "start", True))
+    p.append(_k_fl(x0, y0, f_[0], f_[1], ARBRE, "ko", 3))
+    p.append(_k_fl(f_[0], f_[1], t_[0], t_[1], ALESAGE, "kb", 3))
+    p.append(_k_fl(t_[0], t_[1], x0, y0, OK, "kg", 3))
+    p.append(_txt(442, 234, f"Hauban : D(2→1) = {_fr_court(T, 0)} N", 12, ALESAGE, "start", True))
+    p.append(_txt(442, 254, f"Mur : A(0→1) = {_fr_court(an, 0)} N", 12, OK, "start", True))
+    p.append(_txt(442, 274, f"(le hauban tire {_fr_court(T / F, 1)} fois la charge)", 11, FIN))
+    p.append(_txt(30, 352, "Plus le hauban est attaché bas, plus il est couché : il doit tirer bien plus fort pour tenir la même charge.", 11, FIN))
+    return _svg("".join(p), 775, 366)
+
+
 # Figures à curseurs, insérées dans un texte de fiche par le repère [[DYN:cle]].
 # cle -> (titre, fonction, paramètres). Chaque paramètre est un curseur : plage (min, max, défaut, pas)
 # ou liste de choix (étiquette, valeur). La fonction s'appelle aussi SANS argument (valeurs par défaut) :
@@ -8370,6 +8702,10 @@ DYNAMIQUES = {
         "Tourne la manivelle : le CIR de la bielle se déplace, la vitesse du piston varie",
         dyn_bielle_manivelle,
         [{"nom": "theta", "label": "Angle de manivelle θ (°)", "min": 0.0, "max": 360.0, "defaut": 60.0, "pas": 15.0}]),
+    "potence_hauban_curseur": (
+        "Déplace l'attache du hauban sur le mur : le point I et le triangle des forces suivent",
+        dyn_potence_hauban,
+        [{"nom": "h", "label": "Hauteur d'attache du hauban h (m)", "min": 0.3, "max": 1.2, "defaut": 0.6, "pas": 0.15}]),
 }
 
 
@@ -9998,6 +10334,97 @@ QUIZ["Cinématique du solide"] = [
       "pour L = 4 r). À 90°, la bielle est en translation instantanée : V(piston) = V(A), déjà un"
       " peu en dessous du maximum.",
       "Avancé"),
+]
+
+QUIZ["Statique graphique"] = [
+    q("Un hauban est articulé à ses deux extrémités C et D et ne porte rien d'autre (poids "
+      "négligé). Quelle est la droite d'action de l'effort qu'il transmet ?",
+      ["La verticale passant par son milieu",
+       "La droite CD",
+       "La perpendiculaire au hauban",
+       "On ne peut pas savoir sans calcul"], 1,
+      "Solide soumis à 2 forces : elles ont la même droite d'action, celle qui joint les deux "
+      "articulations. Ici, la droite CD. On le sait sans aucun calcul : c'est pourquoi on isole "
+      "ce type de pièce en premier.",
+      "Base"),
+
+    q("Pour un solide en équilibre soumis à trois forces non parallèles, laquelle de ces "
+      "affirmations est vraie ?",
+      ["Les trois forces ont la même intensité",
+       "Les trois forces sont perpendiculaires entre elles",
+       "Deux des forces sont forcément opposées",
+       "Leurs droites d'action passent par un même point"], 3,
+      "Trois forces non parallèles en équilibre sont concourantes : leurs droites d'action "
+      "passent par un même point I. Et mises bout à bout, elles forment un triangle fermé. Leurs "
+      "intensités, elles, peuvent être toutes différentes.",
+      "Base"),
+
+    q("La pièce 1 appuie sur la pièce 2 avec une force de 400 N. Que vaut l'action de la pièce 2 "
+      "sur la pièce 1 ?",
+      ["400 N, sur la même droite, de sens contraire",
+       "0 N : c'est la pièce 1 qui pousse",
+       "800 N",
+       "Elle dépend de la masse de la pièce 2"], 0,
+      "Principe des actions mutuelles : A(2→1) = −A(1→2), même droite, même intensité, sens "
+      "contraire. Attention : ces deux actions agissent sur deux pièces différentes, elles ne "
+      "s'annulent jamais dans un même bilan.",
+      "Base"),
+
+    q("On isole ensemble deux pièces A et B qui se touchent. Que devient l'action de A sur B dans"
+      " le bilan ?",
+      ["On la compte une fois",
+       "On la compte deux fois, avec celle de B sur A",
+       "Elle n'apparaît pas : c'est une action intérieure",
+       "On la remplace par le poids de B"], 2,
+      "A et B sont du même côté de la frontière : leurs actions mutuelles sont intérieures au "
+      "système isolé et s'annulent deux à deux. Le bilan ne contient que les actions venant de "
+      "l'extérieur.",
+      "Piège"),
+
+    q("Une biellette coudée (en forme de L) est articulée à ses deux bouts E et K, sans autre "
+      "action. Où se trouve la droite d'action de l'effort qu'elle transmet ?",
+      ["Le long de la première branche du L",
+       "Le long de la seconde branche du L",
+       "Perpendiculaire à la droite EK",
+       "Sur la droite EK qui joint les deux articulations"], 3,
+      "Solide soumis à 2 forces : la droite d'action joint les centres des deux articulations "
+      "(EK), quelle que soit la forme de la pièce. Dessiner la force le long d'une branche est "
+      "l'erreur classique.",
+      "Piège"),
+
+    q("Une poutre posée sur deux appuis porte une charge verticale ; les deux réactions sont "
+      "verticales. Peut-on la résoudre par le concours des droites d'action ?",
+      ["Oui, comme toute pièce à 3 forces",
+       "Non : les trois forces sont parallèles, leurs droites ne se coupent pas ; on calcule",
+       "Oui, en prenant I au milieu de la poutre",
+       "Non, car il y a 4 inconnues"], 1,
+      "Le concours ne s'applique qu'à des forces non parallèles. Pour des forces parallèles, il "
+      "n'y a pas de point I : on écrit ΣF = 0 et ΣM = 0 (fiche 12.1). Le problème reste soluble "
+      "(2 inconnues).",
+      "Intermédiaire"),
+
+    q("Sur une potence, on abaisse le point d'attache du hauban sur le mur, sans changer la "
+      "charge. Que devient l'effort dans le hauban ?",
+      ["Il ne change pas : la charge est la même",
+       "Il diminue, car le hauban est plus court",
+       "Il augmente, car le hauban est plus couché : son bras de levier en A diminue",
+       "Il s'annule"], 2,
+      "Moments en A : T × (distance de A à la droite du hauban) = F × L. En couchant le hauban, "
+      "cette distance diminue, donc T augmente. Au tracé : le point de concours remonte vers le "
+      "bras, les deux directions inconnues deviennent presque parallèles et le triangle "
+      "s'allonge.",
+      "Intermédiaire"),
+
+    q("Un vérin tire horizontalement un levier avec 750 N ; sa droite d'action passe à 60 mm de "
+      "l'axe O. La pièce réagit verticalement, à 120 mm de O mesurés horizontalement. Quelle est "
+      "la force de bridage ?",
+      ["375 N",
+       "750 N",
+       "1 500 N",
+       "839 N"], 0,
+      "Moments en O : N × 120 = 750 × 60, donc N = 375 N. Deux fois plus loin, deux fois moins "
+      "d'effort. 839 N est l'effort sur l'axe O (√(750² + 375²)), pas l'effort de bridage.",
+      "Calcul"),
 ]
 
 QUIZ["Statique et frottement"] = [
@@ -27923,6 +28350,369 @@ lentement (1,61 rad/s) que la manivelle (12,6 rad/s) : elle ne fait que basculer
 
 **Galet (Q6)** : le petit galet tourne 6 fois plus vite que le grand plateau (90 / 15 = 6) : c'est bien
 un réducteur, cohérent avec un moteur rapide et une scie lente.
+""",
+        },
+        {
+            "id": '6.16',
+            "titre": 'Statique graphique : isoler, actions mutuelles, 2 et 3 forces',
+            "duree": '6 h',
+            "cours": """### 1. Pourquoi cette fiche
+
+Une potence porte une charge : quel effort passe dans le hauban ? Quel effort reprend l'axe qui la tient
+au mur ? Un vérin bride une pièce : avec quelle force la pièce est-elle serrée ? Ces efforts servent
+ensuite à tout : choisir un vérin, dimensionner un axe au cisaillement (fiche 4.2), vérifier une soudure.
+
+La fiche 12.1 répond par le **calcul** (ΣFx = 0, ΣFy = 0, ΣM = 0). Cette fiche répond au **même**
+problème par le **tracé** : une règle, un rapporteur, une échelle. C'est la méthode du programme pour les
+pièces soumises à **2 ou 3 forces** non parallèles. Elle est rapide, elle se vérifie à l'œil, et elle sert
+de contrôle au calcul (et réciproquement).
+
+Mais avant de tracer quoi que ce soit, il faut savoir **sur quelle pièce** on travaille et **quelles
+actions** agissent sur elle. C'est là que se commettent presque toutes les erreurs.
+
+### 2. Modéliser une action mécanique : force, couple, torseur
+
+[[FIG:torseur_glisseur_couple]]
+
+Quand une pièce agit sur une autre, son action se résume toujours à deux choses :
+
+- une **force résultante R** (elle tend à faire avancer la pièce) ;
+- un **moment M**, calculé en un point (il tend à la faire tourner autour de ce point).
+
+La paire { R ; M(A) } s'appelle le **torseur** de l'action, écrit au point A. C'est seulement une façon
+rangée de noter « la force, et ce qu'elle fait tourner autour de A ». Le moment dépend du point choisi :
+100 N au bout d'une clé de 0,25 m donnent 100 × 0,25 = 25 N·m autour de l'écrou, mais un moment nul
+autour d'un point situé sur la droite d'action de la force. La force R, elle, reste la même.
+
+**La droite d'action**, c'est la flèche prolongée des deux côtés, à l'infini. Pensez à une élingue qui
+soulève une charge : que vous la saisissiez 10 cm plus haut ou plus bas, l'effort est le même. Une force
+peut **glisser le long de sa droite d'action** sans rien changer à l'équilibre : son moment autour de
+n'importe quel point reste le même (même intensité, même distance à la droite). D'où le nom de
+**glisseur**. C'est ce droit de glisser qui permettra, au §6, de faire coulisser deux forces jusqu'à
+leur point de croisement.
+
+Deux cas particuliers reviennent sans cesse :
+
+| Cas | Ce qui reste | Exemple | Se dessine |
+|---|---|---|---|
+| **glisseur** (une force) | R, sur une droite d'action ; moment **nul** en tout point de cette droite | l'action d'un axe de pivot, d'un câble, d'un contact ponctuel | une flèche sur sa droite |
+| **couple** | R = 0 ; même moment partout | deux mains sur un volant, un moteur sur son arbre | ne se dessine pas par une flèche |
+
+**La méthode graphique ne manipule que des glisseurs** : chaque action est une flèche, posée sur sa
+droite d'action. Un encastrement (une force **et** un moment) ou un couple relèvent du calcul (12.1).
+
+**Ce que chaque liaison transmet**, dans un problème plan, sans frottement (liaisons de la fiche 6.1) :
+
+| Liaison | Action transmise | Ce qu'on sait d'avance |
+|---|---|---|
+| contact ponctuel (appui simple, galet) | une force **perpendiculaire** aux surfaces en contact (normale au contact) | sa **direction** |
+| pivot (axe, articulation) | une force qui **passe par le centre** de l'axe | son **point**, pas sa direction |
+| encastrement, glissière | une force **et** un moment | — (analytique) |
+
+*Pourquoi on ignore la direction d'un pivot : l'axe tourne librement dans son alésage et peut appuyer
+n'importe où sur son pourtour, comme le gond d'une porte, tiré vers le haut, poussé vers le bas ou de
+côté selon la façon dont on pousse la porte. Seule certitude : la force passe par le centre de l'axe. Sa
+direction dépend des autres forces ; c'est le tracé qui la trouvera.*
+
+### 3. Les actions mutuelles
+
+> **Si la pièce 1 agit sur la pièce 2, la pièce 2 agit sur la pièce 1 avec une action opposée** :
+> même droite d'action, même intensité, sens contraire. On écrit A(2→1) = −A(1→2).
+
+*Image : appuyez la main sur un mur. Vous poussez le mur ; le mur vous repousse exactement autant, que vous
+poussiez doucement ou fort.*
+
+**Le piège** : ces deux actions agissent sur **deux pièces différentes**. Elles ne se « compensent » donc
+jamais dans un même bilan. Quand on isole la pièce 1, on ne compte que A(2→1) ; A(1→2) appartient au
+bilan de la pièce 2. D'où la notation : **la flèche dit toujours QUI agit SUR QUI**.
+
+### 4. Isoler : ce qu'on isole, ce qui agit dessus
+
+[[FIG:isolement_potence]]
+
+**Isoler** une pièce (ou un groupe de pièces), c'est tracer autour d'elle une **frontière** fermée, puis
+dresser la liste de **toutes** les actions qui viennent de l'**extérieur** :
+
+1. **les actions de contact** : une par liaison que la frontière coupe (chaque pièce touchée agit sur
+   la pièce isolée) ;
+2. **les actions à distance** : le poids, s'il n'est pas négligeable.
+
+Ce qui se passe **à l'intérieur** de la frontière n'apparaît pas. Si vous isolez ensemble le bras et le
+hauban, le hauban tire sur le bras et le bras tire sur le hauban : les deux forces sont alors **dans le
+même sac** et, vues de l'extérieur, elles s'annulent — comme deux passagers qui se poussent dans une
+voiture sans la faire avancer. Ce n'est pas contraire au §3 : là, on isolait **une seule** pièce, et une
+seule des deux actions était dans le bilan.
+
+**Le geste qui évite les oublis** : faites le tour de la frontière avec le doigt. À chaque endroit où elle
+coupe une liaison, une action. Puis demandez-vous : « et à distance ? » (le poids). Rien d'autre.
+
+**Le graphe des actions** résume tout le mécanisme : une bulle par pièce (ou groupe de pièces qui bougent
+ensemble), un trait par liaison, une flèche pour chaque action extérieure (charge, poids).
+
+[[FIG:graphe_actions_potence]]
+
+### 5. Solide soumis à 2 forces
+
+[[FIG:deux_forces_bielle]]
+
+> **Si un solide en équilibre n'est soumis qu'à deux forces, elles ont la même droite d'action, sont
+> opposées et ont la même intensité.**
+
+Pourquoi la **même droite** ? Deux forces opposées mais décalées formeraient un couple : la pièce
+tournerait. Pour qu'elle reste immobile, elles doivent être alignées.
+
+**Les pièces concernées** : un hauban, un tirant, une biellette, un vérin (articulé à ses deux bouts,
+poids négligé). Pour un pivot à chaque bout, la force passe par le centre de chaque axe : **la droite
+d'action est la droite qui joint les deux centres**. Même si la pièce est coudée : c'est la droite des
+centres qui compte, pas la forme de la pièce.
+
+Attention : « articulé aux deux bouts » ne suffit pas, il faut **rien d'autre**. Le bras de la potence
+est articulé en A et en D, mais il porte la charge en B : 3 forces, pas 2. Un hauban qui porterait une
+lampe en son milieu ne serait plus une pièce à 2 forces non plus. Un **vérin** compte pour **une** pièce
+(corps, tige et huile) : la pression de l'huile est une action intérieure, absente du bilan.
+
+Résultat précieux : on ne connaît pas encore l'intensité, mais on connaît **la direction**. C'est elle
+qu'on réutilise à l'isolement suivant.
+
+### 6. Solide soumis à 3 forces non parallèles
+
+> **Si un solide en équilibre est soumis à trois forces non parallèles :**
+> 1. **leurs droites d'action concourent** (passent par un même point I) ;
+> 2. **leur somme est nulle** : mises bout à bout, elles forment un **triangle fermé**.
+
+Pourquoi le point commun ? Prenez les moments au point I où se croisent deux des droites : ces deux
+forces y ont un moment nul. Il ne reste que la troisième ; pour que la pièce ne tourne pas, son moment
+en I doit être nul aussi, donc elle passe par I. Le triangle fermé, c'est ΣF = 0 dessiné (relation de
+Chasles, fiche 7.5 : on met les flèches bout à bout et on revient au départ).
+
+**Quand le tracé marche-t-il ?** Une force plane, c'est trois renseignements : son point, sa direction,
+son intensité. Le tracé à 3 forces ne sait trouver que **deux** inconnues à la fois de plus que ce qu'on
+sait déjà — comme les trois équations de la fiche 12.1. Il faut donc, sur les trois forces :
+
+- **une entièrement connue** (la charge) ;
+- **une dont on connaît la direction** (elle vient d'une pièce à 2 forces, ou d'un contact sans
+  frottement) ;
+- **une dont on ne connaît que le point** (un pivot).
+
+Si deux forces n'ont que leur point de connu, on n'a qu'une seule droite : pas de croisement, pas de I.
+C'est exactement ce qui arrive si l'on isole le bras avant le hauban.
+
+[[FIG:trois_forces_potence]]
+
+**La méthode, sur la potence à hauban.** Bras AB de 1,2 m, articulé au mur en A. Hauban articulé au bras
+en D (à 0,8 m du mur) et au mur en C (0,6 m au-dessus de A). Charge F = 600 N suspendue en B. Poids
+négligés.
+
+1. **Ordre des isolements.** Le hauban (2) n'est soumis qu'à deux forces (en C et en D) : on l'isole en
+   premier. Son action sur le bras est portée par **la droite CD**. Direction connue.
+2. **Isoler le bras (1).** Trois actions : F en B (connue entièrement), D(2→1) (direction CD connue),
+   A(0→1) (seul son point est connu).
+3. **Concours.** Tracer la droite de F (verticale en B) et la droite CD prolongée. CD descend de 0,6 m
+   sur les 0,8 m qui séparent le mur de D, soit 0,75 m par mètre ; de D à B il reste 0,4 m, donc elle
+   descend encore de 0,4 × 0,75 = 0,3 m : les deux droites se coupent en **I, 0,3 m sous B**. A(0→1)
+   passe par A **et** par I : sa direction est trouvée.
+4. **Triangle, tracé à part.** Le triangle se dessine **à côté** du schéma de la pièce : il ne garde des
+   forces que leur direction et leur longueur, pas leur point d'application — c'est pourquoi on y
+   reporte des **parallèles** aux droites trouvées. Image : trois élingues accrochées au même anneau ;
+   l'anneau ne bouge pas, donc les trois tensions mises bout à bout reviennent au point de départ.
+   Choisir une échelle pour que la plus grande force tienne sur 10 à 15 cm (ici 1 000 N = 120 mm).
+   Tracer F (72 mm vers le bas). Par son bout, une parallèle à CD ; par son origine, une parallèle à AI.
+   Leur croisement ferme le triangle.
+5. **Mesurer et convertir.** Côté hauban : 180 mm, soit **D(2→1) = 1 500 N**. Côté mur : 148 mm, soit
+   **A(0→1) = 1 237 N**. Sa pente est celle de AI : 0,3 m sur 1,2 m, tan α = 0,25, soit **14° sous
+   l'horizontale** (ou au rapporteur sur le tracé).
+6. **Les sens.** Partez de F, dont le sens est connu, et faites le tour du triangle comme un circuit,
+   **sans rebrousser chemin** : chaque flèche part de la pointe de la précédente. Celle du hauban va vers
+   C : le hauban **tire** sur le bras, il est tendu. Ce qui est cohérent : un câble ne sait que tirer.
+
+*Le hauban porte 2,5 fois la charge : c'est fréquent, et c'est justement ce que le tracé permet de voir
+avant de choisir le câble.*
+
+**Contrôle par le calcul (fiche 12.1)** : moments en A, où passe l'inconnue du mur. Le bras de levier
+du hauban est la **distance perpendiculaire** de A à la droite CD — la hauteur du triangle rectangle ACD
+issue de A. L'aire de ce triangle s'écrit de deux façons : (AD × AC) / 2, ou (CD × bras) / 2 ; d'où
+**bras = AD × AC / CD**. Ici CD = √(0,8² + 0,6²) = 1,0 m, donc bras = 0,8 × 0,6 / 1,0 = 0,48 m (et non
+AD = 0,8 m : le hauban ne tire pas perpendiculairement au bras). Donc D × 0,48 = 600 × 1,2, et
+**D = 1 500 N**. Même résultat : les deux méthodes résolvent le même problème.
+
+[[DYN:potence_hauban_curseur]]
+
+### 7. Quand la méthode graphique ne s'applique pas
+
+- **Forces parallèles** (une poutre posée sur deux appuis, chargée verticalement, comme l'exemple de la
+  fiche 12.1) : les droites ne se coupent pas, il n'y a pas de point I. On calcule.
+- **Plus de trois forces**, ou une action qui contient un **moment** (encastrement) : on calcule (12.1),
+  ou on remplace d'abord plusieurs forces connues (par exemple le poids d'une pièce et une charge) par
+  leur somme tracée à l'échelle.
+- **Pour aller plus loin — contact avec frottement** : la force n'est plus perpendiculaire au contact.
+  Image : un patin sur un plan qu'on incline peu à peu ; tant qu'il tient, la réaction du plan peut
+  pencher au plus de φ par rapport à la perpendiculaire (tan φ = f, fiche 12.1). Au-delà, il glisse.
+
+### 8. Les erreurs classiques
+
+1. **Oublier une action** : faire le tour de la frontière, une action par liaison coupée, plus le poids.
+2. **Compter une action intérieure** : deux pièces isolées ensemble ne s'ajoutent pas leurs actions
+   mutuelles.
+3. **Mettre les deux actions mutuelles dans le même bilan** : A(1→2) et A(2→1) agissent sur deux pièces
+   différentes.
+4. **Se tromper de sens** : écrire QUI agit SUR QUI ; le sens se lit à la fin, sur le triangle fermé.
+5. **Dessiner la force d'une bielle coudée le long de la pièce** : elle est sur la droite qui joint les
+   centres des deux articulations.
+6. **Commencer par la pièce à 3 forces** : isolé en premier, le bras a deux actions dont on ne connaît
+   que le point (A et D) — une seule droite tracée, donc pas de point I. Le hauban, isolé avant,
+   transforme « point D connu » en « direction CD connue ».
+7. **Appliquer le concours à des forces parallèles** : pas de point I ; on passe au calcul.
+
+### 9. À retenir
+
+- Une action = un **torseur** { R ; M(A) } ; une **force seule** est un glisseur, un **couple** n'a pas
+  de résultante. Le graphique ne traite que des forces.
+- **Actions mutuelles** : A(2→1) = −A(1→2), sur deux pièces différentes.
+- **Isoler** : une frontière, une action par liaison coupée, plus le poids. Le **graphe des actions**
+  donne l'ordre : **d'abord les pièces à 2 forces**.
+- **2 forces** : même droite (celle qui joint les deux articulations), opposées, même intensité.
+- **3 forces non parallèles** : **concourantes en I**, et **triangle fermé**. Une connue entièrement, une
+  de direction connue, une de point connu : le tracé donne tout.
+- Le graphique et le calcul (12.1) résolvent **le même** problème : l'un contrôle l'autre.
+""",
+            "formules": """
+**Torseur d'une action** — { R ; M(A) } : force résultante et moment en A · glisseur : moment nul sur la
+droite d'action · couple : R = 0
+
+**Actions mutuelles** — A(2→1) = −A(1→2) : même droite, même intensité, sens contraires
+
+**Liaisons (plan, sans frottement)** — contact ponctuel : force ⊥ au contact · pivot : force passant par
+le centre · encastrement : force + moment
+
+**Solide soumis à 2 forces** — même droite d'action (celle des deux articulations), opposées, même
+intensité
+
+**Solide soumis à 3 forces non parallèles** — droites d'action concourantes en I · triangle des forces
+fermé (ΣF = 0)
+
+**Ordre des isolements** — d'abord les pièces à 2 forces (bielles, haubans, vérins), puis les pièces à 3
+forces
+
+**Contrôle analytique (12.1)** — ΣM = 0 au point où passe l'inconnue de direction inconnue
+""",
+            "exemple": """
+### Cas industriel — Le hauban qui s'est allongé
+
+**Le symptôme.** Une potence d'atelier (bras de 1,2 m, charge maxi 600 N) est livrée avec un hauban en
+câble. Pour dégager une armoire électrique, le monteur fixe le haut du hauban **plus bas** sur le mur :
+0,3 m au-dessus de l'articulation au lieu de 0,6 m. Trois semaines plus tard, une cosse a glissé sur le
+câble et le bras s'est mis à pencher.
+
+**L'analyse, au tracé.** Le hauban est soumis à 2 forces : son action est portée par la droite CD. En
+abaissant C, on **couche** cette droite. Le point de concours I avec la verticale de la charge **remonte
+vers le bras** (de 0,30 m à 0,15 m sous B) : la droite AI se couche presque à l'horizontale, les deux
+directions inconnues deviennent presque parallèles, le triangle des forces s'allonge, et le côté
+« hauban » grandit.
+
+**Les chiffres** (même tracé, ou moments en A) :
+
+| Attache C | Bras de levier du hauban en A | Effort dans le hauban |
+|---|---|---|
+| 0,6 m (d'origine) | 0,48 m | **1 500 N** |
+| 0,3 m (modifiée) | 0,28 m | **2 563 N** |
+
+L'effort a augmenté de **70 %** (× 1,7). Le câble et ses cosses avaient été choisis pour 1 500 N avec un
+coefficient de sécurité ; à 2 563 N, ce coefficient est divisé par 1,7. Et l'articulation A n'est pas
+épargnée : son effort passe de 1 237 N à 2 419 N.
+
+**Les corrections**, par ordre d'efficacité :
+
+| Action | Effet |
+|---|---|
+| **remonter l'attache** (déplacer l'armoire, ou une platine décalée) | on retrouve 1 500 N |
+| attacher le hauban plus loin sur le bras (D vers B) | gain faible tant que C reste bas : 2 506 N avec D à 1,0 m, car le bras de levier reste limité par la hauteur AC |
+| redimensionner câble et cosses pour 2 600 N | on garde le défaut de conception, à un coût |
+
+**Ce que le cas apprend.** Un changement de géométrie qui « ne touche pas aux pièces » peut multiplier
+les efforts. Le tracé des 3 forces le montre en deux minutes, avant le montage.
+""",
+            "exercice": """
+### Exercice — Le levier de bridage
+
+[[FIG:bridage_levier]]
+
+Un levier coudé (1) est articulé sur le bâti (0) en O. Un vérin (2), articulé au bâti en E et au levier
+en A (E est sur l'horizontale de A), **tire** avec **750 N**. Le levier presse la pièce (3) en B ; le contact en B est
+sans frottement, donc vertical. Cotes : A est 60 mm sous O ; B est 120 mm à droite de O et 20 mm
+au-dessus. Poids négligés.
+
+**1.** Dessinez le graphe des actions (bâti 0, levier 1, vérin 2, pièce 3).
+
+**2.** Quelle pièce isolez-vous en premier ? Que vous apprend-elle ?
+
+**3.** Isolez le levier : faites le bilan des actions extérieures. Pour chacune, dites ce qui est connu
+(point, direction, intensité).
+
+**4.** Trouvez le point de concours I et la direction de l'action du bâti en O.
+
+**5.** Tracez le triangle des forces (échelle conseillée : 100 N = 10 mm) et déduisez l'effort en B et
+l'effort en O. Vérifiez l'effort en B par les moments en O (fiche 12.1).
+
+**6.** Avec quelle force, et dans quel sens, le levier presse-t-il la pièce ?
+""",
+            "corrige": """
+### Corrigé, en six temps
+
+#### 1. Ce que dit l'énoncé
+
+Un mécanisme plan de quatre pièces. Le vérin est articulé à ses deux bouts et ne porte rien d'autre :
+c'est une pièce à 2 forces. Le levier reçoit trois actions : vérin, pièce, bâti. On connaît l'effort du
+vérin ; on cherche l'effort de bridage en B et l'effort sur l'axe O.
+
+#### 2. Quelle règle, et pourquoi
+
+> **2 forces** : même droite d'action, celle des deux articulations. **3 forces non parallèles** :
+> concourantes en I, triangle fermé. **Actions mutuelles** : A(1→3) = −A(3→1).
+
+#### 3. Les conversions
+
+Aucune pour le tracé : les longueurs en mm, les forces en N, l'échelle des forces fixée (100 N = 10 mm).
+Pour le contrôle par les moments, les mm suffisent aussi (N·mm des deux côtés).
+
+#### 4. Le remplacement
+
+Repère : origine en O, x vers la droite, y vers le haut, en mm. Droite du vérin : y = −60. Droite de
+B(3→1) : x = 120. Triangle à 100 N = 10 mm : 75 mm pour le vérin. Moments en O : N × 120 = 750 × 60.
+
+#### 5. Le calcul
+
+**1.** Bulles 0, 1, 2, 3 ; traits : 0–1 (pivot O), 0–2 (pivot E), 2–1 (pivot A), 1–3 (contact B), 3–0
+(appui de la pièce sur la table). Quatre bulles, cinq traits ; aucune action à distance (poids négligés).
+
+**2.** Le **vérin (2)** : deux actions seulement, en E et en A. Elles sont portées par **EA, horizontale**.
+On sait donc que A(2→1) est horizontale ; l'énoncé donne son intensité, 750 N, et « tire » donne son
+sens : vers la gauche, vers E.
+
+**3.** Trois actions sur le levier :
+- **A(2→1)** : en A, horizontale, vers la gauche, 750 N — **entièrement connue** ;
+- **B(3→1)** : en B, verticale (contact sans frottement) — **direction connue**, intensité inconnue ;
+- **O(0→1)** : en O (pivot) — **point connu** seulement.
+
+**4.** L'horizontale du vérin (y = −60) et la verticale de B (x = 120) se coupent en **I = (120 ; −60)
+mm**. O(0→1) passe par O et I : direction OI, qui descend de 60 mm pour 120 mm vers la droite, soit
+**26,6° sous l'horizontale** (tan α = 60 / 120 = 0,5).
+
+**5.** Le triangle a un angle droit : 750 N horizontal, B vertical. Son troisième côté est parallèle à
+OI, qui descend de 60 mm pour 120 mm ; dans le triangle, on retrouve le même rapport : côté vertical /
+côté horizontal = 60 / 120 = 1/2. Au tracé : 75 mm horizontalement, puis on monte jusqu'à couper la
+parallèle à OI, et on mesure 37,5 mm. Donc **B(3→1) = 375 N**, vers le haut ; **O(0→1) = 839 N** (84 mm),
+vers la droite et vers le bas. Contrôle : moments en O, N × 120 = 750 × 60, donc **N = 375 N**.
+
+**6.** Actions mutuelles : la pièce pousse le levier vers le haut avec 375 N, donc **le levier presse la
+pièce vers le bas avec 375 N**. C'est l'effort de bridage.
+
+#### 6. La vérification
+
+**Bon sens** : le vérin agit à 60 mm de O, la pièce à 120 mm : deux fois plus loin, donc deux fois moins
+d'effort. 375 N = 750 / 2 : cohérent. **Triangle** : 750 et 375 sont les deux côtés de l'angle droit ;
+√(750² + 375²) = 839 N, l'effort sur l'axe. C'est lui qui sert à dimensionner l'axe O au cisaillement.
+**Piège évité** : l'effort sur l'axe (839 N) est plus grand que l'effort du vérin. On ne le devine pas
+sans faire le bilan.
 """,
         },
     ],
@@ -57931,6 +58721,21 @@ _mth("6.15", "Trouver une vitesse inconnue dans un mécanisme plan", [
    "CIR : IA = 312,4 mm, IB = 305,2 mm, donc V(B) = 1,257 × 305,2 / 312,4 = 1,23 m/s. Équiprojectivité : "
    "1,20 / cos 12,5° = 1,23 m/s — les deux concordent.")
 
+_mth("6.16", "Résoudre graphiquement un mécanisme plan", [
+    "**Dessiner le graphe des actions** : une bulle par pièce, un trait par liaison, une flèche par "
+    "action extérieure (charge, poids).",
+    "**Isoler d'abord les pièces à 2 forces** (hauban, biellette, vérin articulé aux deux bouts) : "
+    "leur action est portée par la droite qui joint les deux articulations.",
+    "**Isoler la pièce à 3 forces** : faire le tour de la frontière, une action par liaison coupée, "
+    "plus le poids. Noter pour chacune : connue, direction connue, ou point connu.",
+    "**Concours** : prolonger les deux droites connues jusqu'à leur point I ; la troisième force passe "
+    "par son point d'application et par I.",
+    "**Triangle des forces** à l'échelle : la force connue, puis les parallèles aux deux directions ; "
+    "mesurer, convertir, lire les sens bout à bout. Contrôler par les moments (12.1).",
+], "Potence : hauban CD (2 forces) → direction CD. Bras : F = 600 N en B, droite CD, pivot A. "
+   "I à 0,3 m sous B, A passe par I. Triangle à 1 000 N = 120 mm : hauban 180 mm = 1 500 N, "
+   "mur 148 mm = 1 237 N. Moments en A : D × 0,48 = 600 × 1,2, D = 1 500 N.")
+
 _mth("6.9", "Vérifier la tenue d'un assemblage vissé", [
     "**Identifier la classe de qualité de la vis** (ex. 8.8), et en déduire Re et "
     "Rm : 1ᵉʳ chiffre × 100 = Rm, produit des deux chiffres × 10 = Re.",
@@ -60412,6 +61217,55 @@ def gen_bielle_manivelle():
     }
 
 
+def gen_potence_hauban():
+    """Effort dans le hauban d'une potence : pièce à 2 forces, puis 3 forces (moments en A)."""
+    L = random.choice([1.0, 1.2, 1.5, 2.0])
+    d = round(L * random.choice([0.5, 0.6, 0.75]), 2)
+    # AC = AD rendrait identiques les deux erreurs de bras de levier ; AC = AB ferait retomber
+    # l'erreur « bras de levier AC » sur la charge elle-même : on écarte les deux cas
+    h = random.choice([x for x in (0.4, 0.5, 0.6, 0.75, 0.9, 1.0) if abs(x - d) > 0.05 and abs(x - L) > 0.05])
+    F = random.choice([400, 500, 600, 800, 900, 1200, 1500])
+    cd = math.hypot(d, h)
+    bras = d * h / cd
+    T = F * L / bras
+    return {
+        "titre": "Statique — effort dans le hauban d'une potence",
+        "enonce": (f"Une potence : bras de **{fr(L, 2)} m** articulé au mur en A, charge **{F} N** au bout B. "
+                   f"Le hauban est articulé au bras en D, à **{fr(d, 2)} m** du mur, et au mur en C, "
+                   f"**{fr(h, 2)} m** au-dessus de A. Poids négligés. Quel effort le hauban exerce-t-il, "
+                   "en N ?"),
+        "rep": round(T, 1), "tol": max(2.0, T * 0.02), "unite": "N",
+        "diag": [
+            _diag(round(F * L / d, 1),
+                  "Tu as pris AD comme bras de levier (ou donné la seule composante verticale de "
+                  "l'effort). Le bras de levier du hauban est la distance de A à la DROITE CD, plus "
+                  "courte : AD × AC / CD."),
+            _diag(round(F * L / h, 1),
+                  "Tu as pris AC comme bras de levier (ou donné la seule composante horizontale de "
+                  "l'effort). Le bras de levier est la distance de A à la droite CD : AD × AC / CD."),
+            _diag(float(F),
+                  "C'est la charge. Le hauban, incliné et attaché avant le bout du bras, tire bien plus "
+                  "fort qu'elle."),
+        ],
+        "corr": [
+            f"**Ce que dit l'énoncé.** Un bras de {fr(L, 2)} m, une charge de {F} N au bout, un hauban de "
+            f"D ({fr(d, 2)} m) à C ({fr(h, 2)} m). On cherche l'effort dans le hauban.",
+            "**L'ordre des isolements.** Le hauban n'est soumis qu'à deux forces : son action sur le bras "
+            "est portée par la droite CD. Le bras, lui, reçoit trois forces : la charge, le hauban, le mur.",
+            f"**Le bras de levier.** Moments en A, où passe l'action inconnue du mur. La distance de A à la "
+            f"droite CD vaut AD × AC / CD = {fr(d, 2)} × {fr(h, 2)} / {fr(cd, 3)} = {fr(bras, 3)} m.",
+            f"**L'équilibre des moments.** T × {fr(bras, 3)} = {F} × {fr(L, 2)}, donc T = {fr(T, 1)} N.",
+            f"**Au tracé.** La droite CD prolongée coupe la verticale de B à {fr(h * (L - d) / d, 3)} m sous "
+            "le bras : c'est I, par où passe aussi l'action du mur. Le triangle des forces fermé donne la "
+            "même valeur.",
+            f"**Je vérifie.** Le hauban tire {fr(T / F, 2)} fois la charge : plus il est couché (C bas) ou "
+            "attaché près du mur (D petit), plus ce rapport grandit.",
+        ],
+        "indice": "Moments en A : T × (distance de A à la droite CD) = F × L, avec cette distance = AD × AC / CD "
+                  "(garde 3 décimales).",
+    }
+
+
 def gen_masse_piece():
     """Masse d'une pièce simple, à partir de la masse volumique du matériau.
 
@@ -62746,6 +63600,7 @@ def fabriquer_exo(famille=None):
         "Résistance des matériaux": [gen_traction_sigma, gen_traction_diametre, gen_flexion_mf],
         "Transmission de puissance": [gen_couple_puissance],
         "Cinématique": [gen_bielle_manivelle],
+        "Statique": [gen_potence_hauban],
         "Matériaux et masses": [gen_masse_piece],
         "Unités et conversions": [gen_unites],
         "Mathématiques BTS CPI": [gen_signe_affine, gen_discriminant, gen_proba_binomiale,
@@ -62778,7 +63633,8 @@ def fabriquer_exo(famille=None):
 
 
 FAMILLES_ENTRAINEMENT = ["Mélange", "Ajustements ISO", "Résistance des matériaux",
-                          "Transmission de puissance", "Cinématique", "Matériaux et masses",
+                          "Transmission de puissance", "Cinématique", "Statique",
+                          "Matériaux et masses",
                           "Unités et conversions", "Mathématiques BTS CPI"]
 
 
@@ -74841,6 +75697,212 @@ ATELIERS = [
                      "c'est son CIR. « Sans glissement » est une hypothèse : quand l'adhérence "
                      "manque, ω R n'est plus la vitesse du véhicule.",
     },
+    {
+        "id": "at158",
+        "chapitre": "Bloc 6",
+        "titre": "Potence d'atelier : l'ordre des isolements et l'effort dans le hauban",
+        "theme": "Statique",
+        "fiche": "6.16",
+        "figure": "graphe_actions_potence",
+        "vocabulaire": [
+            ("Hauban",
+             "le câble ou la barre qui retient le bout d'un bras en le reliant au mur. Il ne sait que "
+             "tirer."),
+            ("Isoler",
+             "tracer une frontière autour d'une pièce et faire la liste de toutes les actions qui "
+             "viennent de l'extérieur : une par liaison coupée, plus le poids."),
+            ("Point de concours",
+             "le point où se croisent les droites d'action de trois forces qui se font équilibre."),
+        ],
+        "enonce": "Une potence porte un palan : bras AB de 1,5 m articulé au mur en A, charge F = 900 N en "
+                  "B. Le hauban est articulé au bras en D, à 1,0 m du mur, et au mur en C, 0,75 m "
+                  "au-dessus de A. Poids du bras et du hauban négligés. (La figure montre le graphe des "
+                  "actions d'une potence du même type.)",
+        "etapes": [
+            {"type": "qcm", "label": "Par quoi commencer ?",
+             "question": "Quelle pièce faut-il isoler en premier ?",
+             "options": ["Le bras, puisque c'est lui qui porte la charge",
+                         "Le hauban : il n'est soumis qu'à deux forces, ce qui donne une direction",
+                         "Le mur, puisqu'il est fixe"], "bonne": 1,
+             "indice": "Cherchez la pièce qui a le moins d'actions : elle donne une information "
+                       "sans calcul.",
+             "diagnostics": {0: "Isolé maintenant, le bras a trois actions dont deux de direction "
+                                 "inconnue : c'est insoluble au tracé. Le hauban (2 forces) donne "
+                                 "d'abord la direction CD.",
+                             2: "Le mur est le bâti : on ne l'isole pas, c'est lui qui agit sur les "
+                                "autres pièces."}},
+            {"type": "qcm", "label": "La direction du hauban",
+             "question": "Le hauban isolé : quelle est la droite d'action de l'effort qu'il exerce "
+                         "sur le bras ?",
+             "options": ["La verticale passant par D",
+                         "La perpendiculaire au bras en D",
+                         "La droite CD, qui joint ses deux articulations"], "bonne": 2,
+             "indice": "Solide soumis à 2 forces : même droite d'action pour les deux.",
+             "diagnostics": {0: "La verticale, c'est la direction de la charge, pas du hauban.",
+                             1: "Le hauban n'est pas perpendiculaire au bras : sa force suit la "
+                                "droite qui joint C et D."}},
+            {"type": "numerique", "label": "Point de concours",
+             "unite": "m", "attendu": 0.375, "tol": 0.01,
+             "consigne": "La droite CD prolongée coupe la verticale de B en I. À quelle distance sous "
+                         "le bras se trouve I ? (CD descend de 0,75 m sur 1,0 m.)",
+             "indice": "De D à B, il reste 0,5 m. La droite CD descend de 0,75 m par mètre : sur 0,5 m "
+                       "elle descend encore de 0,375 m.",
+             "pieges": [(0.75, "0,75 m, c'est la hauteur de C au-dessus de A. I est sous le bras, sur "
+                               "la verticale de B : il faut prolonger CD au-delà de D.")],
+             "aide": "0,75 × 0,5 / 1,0 = 0,375 m sous B."},
+            {"type": "numerique", "label": "Effort dans le hauban",
+             "unite": "N", "attendu": 2250, "tol": 20,
+             "consigne": "Contrôle par les moments en A (fiche 12.1). Le bras de levier du hauban en A "
+                         "est la distance de A à la droite CD : AD × AC / CD = 1,0 × 0,75 / 1,25 = 0,6 m. "
+                         "Calcule l'effort D dans le hauban.",
+             "indice": "D × 0,6 = 900 × 1,5.",
+             "pieges": [(1350, "1 350 N : tu as pris 1,0 m (la distance AD) comme bras de levier. Le "
+                               "bras de levier est la distance de A à la DROITE CD : 0,6 m."),
+                        (1800, "1 800 N : tu as pris 0,75 m (la hauteur AC) comme bras de levier. Le "
+                               "bras de levier est la distance de A à la droite CD : AD × AC / CD = 0,6 m."),
+                        (900, "900 N, c'est la charge. Le hauban, très incliné, tire bien plus fort.")],
+             "aide": "D = 900 × 1,5 / 0,6 = 2 250 N."},
+            {"type": "numerique", "label": "Effort sur l'articulation A",
+             "unite": "N", "attendu": 1855.4, "tol": 20,
+             "consigne": "La droite CD fait 1,25 m pour 1,0 m d'horizontale et 0,75 m de verticale : "
+                         "l'effort du hauban se décompose dans les mêmes proportions, 2 250 × 1,0 / 1,25 "
+                         "= 1 800 N horizontalement (vers le mur) et 2 250 × 0,75 / 1,25 = 1 350 N "
+                         "verticalement (vers le haut). Calcule l'intensité de l'effort du mur sur le "
+                         "bras en A.",
+             "indice": "Le mur compense le reste. Horizontalement : 1 800 N, vers l'extérieur. "
+                       "Verticalement : la charge tire 900 N vers le bas, le hauban 1 350 N vers le "
+                       "haut ; il y a 450 N de trop vers le haut, donc le mur retient le bras vers le "
+                       "bas avec 450 N. Intensité : √(1 800² + 450²).",
+             "pieges": [(2250, "2 250 N, c'est le hauban. Le mur reprend une autre force : celle qui "
+                               "ferme le triangle."),
+                        (1800, "1 800 N, c'est seulement la composante horizontale. Il manque les "
+                               "450 N verticaux.")],
+             "aide": "√(1 800² + 450²) = 1 855,4 N, environ 1 855 N."},
+            {"type": "qcm", "label": "Actions mutuelles",
+             "question": "Le hauban tire le bras vers C. Que fait le bras sur le hauban ?",
+             "options": ["Il tire le hauban en D, sur la même droite CD, dans le sens de C vers D "
+                         "(vers le bas, en s'éloignant du mur), avec la même intensité : 2 250 N",
+                         "Rien : c'est le mur qui retient le hauban",
+                         "Il le pousse vers C"], "bonne": 0,
+             "indice": "A(1→2) = −A(2→1).",
+             "diagnostics": {1: "Le mur agit en C ; le bras agit en D. Les deux existent : ce sont les "
+                                 "deux forces du hauban, opposées, qui le tendent.",
+                             2: "Pousser vers C serait le même sens que l'action du hauban sur le "
+                                "bras : les actions mutuelles sont de sens contraires."}},
+        ],
+        "corrige": {
+            "enonce": "Potence : bras 1,5 m, charge 900 N en B, hauban de D (1,0 m) à C (0,75 m au-dessus "
+                      "de A).",
+            "regle": "**D'abord la pièce à 2 forces** (hauban) : direction CD. **Bras à 3 forces** : "
+                    "concours en I, triangle fermé ; contrôle par **ΣM(A) = 0**.",
+            "conversions": "Sans objet : longueurs en m, forces en N. CD = √(1,0² + 0,75²) = 1,25 m.",
+            "remplacement": "I : 0,75 × 0,5 / 1,0 sous B. Bras de levier : 1,0 × 0,75 / 1,25. "
+                            "D × 0,6 = 900 × 1,5. A = √(1 800² + 450²).",
+            "calcul": "I à **0,375 m** sous B ; **D = 2 250 N** ; **A = 1 855 N**.",
+            "verification": "Le hauban tire 2,5 fois la charge, comme sur la potence de la fiche "
+                            "(même rapport de géométrie). Composantes de D : 1 350 / 1 800 = 0,75 / 1,0, "
+                            "la pente de CD : la force est bien parallèle à CD.",
+        },
+        "a_retenir": "À retenir : on isole d'abord la pièce à 2 forces, qui donne une direction ; "
+                     "ensuite seulement la pièce à 3 forces, par le concours et le triangle.",
+    },
+    {
+        "id": "at159",
+        "chapitre": "Bloc 6",
+        "titre": "Échelle contre une machine : faut-il craindre qu'elle glisse ?",
+        "theme": "Statique",
+        "fiche": "6.16",
+        "figure": "echelle_mur",
+        "vocabulaire": [
+            ("Paroi lisse",
+             "une surface sans frottement : elle ne peut pousser que perpendiculairement à elle-même."),
+            ("Coefficient d'adhérence f",
+             "le rapport maximal entre l'effort tangent et l'effort normal au contact avant glissement "
+             "(fiche 12.1)."),
+            ("Actions mutuelles",
+             "l'action de A sur B et celle de B sur A : même droite, même intensité, sens contraires."),
+        ],
+        "enonce": "Une échelle de 3 m et de 15 kg est appuyée contre la paroi lisse d'une machine. Son "
+                  "pied A est à 1,80 m de la paroi, son sommet B à 2,40 m de haut ; son poids s'applique "
+                  "en G, au milieu. On cherche les efforts en A et en B, et l'adhérence nécessaire au "
+                  "sol.",
+        "etapes": [
+            {"type": "numerique", "label": "Poids de l'échelle",
+             "unite": "N", "attendu": 147.15, "tol": 1.5,
+             "consigne": "Calcule le poids P de l'échelle (g = 9,81 m/s²).",
+             "indice": "P = m × g.",
+             "pieges": [(15, "15, c'est la masse en kg. Le poids est une force : P = m × g, en N.")],
+             "aide": "P = 15 × 9,81 = 147,15 N."},
+            {"type": "qcm", "label": "L'action de la paroi",
+             "question": "Quelle est la direction de l'action de la paroi lisse sur l'échelle, en B ?",
+             "options": ["Le long de l'échelle",
+                         "Verticale, vers le haut",
+                         "Horizontale, perpendiculaire à la paroi"], "bonne": 2,
+             "indice": "Sans frottement, un contact ne pousse que perpendiculairement à la surface.",
+             "diagnostics": {0: "L'échelle n'est pas une pièce à 2 forces : elle en reçoit trois "
+                                 "(poids, paroi, sol). Au contact lisse, la force est ⊥ à la paroi.",
+                             1: "Une paroi lisse ne peut pas retenir verticalement : il faudrait du "
+                                "frottement. Sa force est horizontale."}},
+            {"type": "numerique", "label": "Point de concours",
+             "unite": "m", "attendu": 0.9, "tol": 0.02,
+             "consigne": "La verticale du poids (par G) et l'horizontale de la paroi (par B) se coupent "
+                         "en I. À quelle distance horizontale de la paroi se trouve I ?",
+             "indice": "G est au milieu de l'échelle : à mi-distance entre la paroi et le pied.",
+             "pieges": [(1.8, "1,80 m, c'est le pied A. I est sur la verticale de G, au milieu.")],
+             "aide": "I est à 0,90 m de la paroi, à 2,40 m de haut."},
+            {"type": "numerique", "label": "Effort de la paroi en B",
+             "unite": "N", "attendu": 55.18, "tol": 0.6,
+             "consigne": "L'action du sol en A passe par A et par I. De A (à 1,80 m de la paroi) à I "
+                         "(à 0,90 m), il y a 0,90 m horizontalement, pour 2,40 m de haut : c'est sa "
+                         "pente. Dans le triangle fermé, sa composante verticale équilibre P et sa "
+                         "composante horizontale équilibre B, dans le même rapport. Calcule B.",
+             "indice": "B / P = 0,90 / 2,40.",
+             "depend_de": {"etape": 1, "formule": lambda v: v * 0.90 / 2.40},
+             "pieges": [(392.4, "392 N : rapport inversé. La force du sol est presque verticale "
+                                "(2,40 vers le haut pour 0,90 de côté) : sa part horizontale est la "
+                                "plus petite."),
+                        (110.4, "110 N : tu as pris 1,80 m (le pied) au lieu de 0,90 m (le point I).")],
+             "aide": "B = 147,15 × 0,90 / 2,40 = 55,2 N."},
+            {"type": "numerique", "label": "Adhérence minimale au sol",
+             "unite": "sans unité", "attendu": 0.375, "tol": 0.01,
+             "consigne": "Au sol, l'effort horizontal (55,2 N) doit être tenu par l'adhérence, avec un "
+                         "effort normal de 147,15 N. Quel coefficient f faut-il au minimum ?",
+             "indice": "f ≥ effort tangent / effort normal.",
+             "pieges": [(2.667, "2,67 : rapport inversé. f = tangent / normal = 55,2 / 147,15.")],
+             "aide": "f ≥ 55,2 / 147,15 = 0,375."},
+            {"type": "qcm", "label": "Actions mutuelles",
+             "question": "Quelle action l'échelle exerce-t-elle sur la machine ?",
+             "options": ["55,2 N horizontalement, vers la machine",
+                         "147,15 N verticalement, vers le bas",
+                         "Aucune : la paroi est lisse"], "bonne": 0,
+             "indice": "A(échelle → paroi) = −A(paroi → échelle).",
+             "diagnostics": {1: "Le poids va au sol, pas à la paroi : une paroi lisse ne reçoit "
+                                 "qu'une force perpendiculaire à elle.",
+                             2: "Lisse veut dire sans frottement, pas sans contact : la poussée "
+                                "perpendiculaire existe, 55,2 N."}},
+        ],
+        "corrige": {
+            "enonce": "Échelle 15 kg, pied à 1,80 m, sommet à 2,40 m contre une paroi lisse, poids au "
+                      "milieu.",
+            "regle": "**3 forces non parallèles** : concours en I, triangle fermé. Paroi lisse : force "
+                    "**⊥ à la paroi**. Adhérence : **f ≥ T / N** (fiche 12.1).",
+            "conversions": "P = 15 × 9,81 = 147,15 N.",
+            "remplacement": "I = (0,90 ; 2,40). Direction de A : 0,90 de côté pour 2,40 de haut. "
+                            "B = 147,15 × 0,90 / 2,40. f = 55,2 / 147,15.",
+            "calcul": "**P = 147,15 N** ; **B = 55,2 N** ; effort au sol **157,2 N** ; **f ≥ 0,375**.",
+            "verification": "Moments en A (12.1) : B × 2,40 = P × 0,90, B = 55,2 N, même valeur. "
+                            "Échelle seule, il faut f ≥ 0,375 ; le coefficient réel du contact pied/sol est une "
+                            "donnée de l'énoncé (ou du fabricant des patins), à comparer à ce seuil. "
+                            "Mais une personne qui monte déplace le "
+                            "centre de gravité de l'ensemble vers le haut, donc vers la paroi : I se "
+                            "rapproche de la paroi et s'éloigne de la verticale du pied, la force du sol "
+                            "penche davantage et l'effort horizontal grandit. Avec 80 kg aux 9/10 de "
+                            "l'échelle, il faut f ≥ 0,63 : le pied glisse. Cette échelle est d'ailleurs "
+                            "mal posée : avec la règle du 1/4, son pied serait à 0,60 m de la paroi.",
+        },
+        "a_retenir": "À retenir : une paroi lisse pousse perpendiculairement à elle-même ; le sol fait "
+                     "le reste, et c'est son adhérence qui décide si l'échelle tient.",
+    },
 ]
 
 
@@ -75502,8 +76564,9 @@ MATIERES_PROGRAMME = [
         ("Cinématique et Statique", "Complet",
          "Degrés de liberté, schéma cinématique, isostatisme, cinématique du solide (vitesses, "
          "équiprojectivité, CIR, roulement sans glissement, loi entrée-sortie), "
-         "équilibre/appuis/frottement — répartie sur six fiches distinctes plutôt qu'une seule.",
-         [("bloc6", ["6.1", "6.2", "6.3", "6.15"]), (8, ["8.1"]), (12, ["12.1"]), (15, ["15.3"])]),
+         "équilibre/appuis/frottement, statique graphique (isolement, graphe des actions, 2 et 3 "
+         "forces) — répartie sur sept fiches distinctes plutôt qu'une seule.",
+         [("bloc6", ["6.1", "6.2", "6.3", "6.15", "6.16"]), (8, ["8.1"]), (12, ["12.1"]), (15, ["15.3"])]),
         ("RDM & Dimensionnement", "Complet",
          "Traction/compression (10 h), cisaillement/torsion (8 h), flexion (12 h) — 30 h de "
          "cours cumulées, plus flambement, dimensionnement d'engrenage et 23 études de cas "

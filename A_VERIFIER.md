@@ -892,3 +892,50 @@ arc-boutement 6.8 (condition L > 2 f a, la force n'intervient pas). Commits « f
   valeur, les QCM, corrigé dévoilé) ; quiz « Cinématique du solide », 8 questions répondues avec
   explication ; Entraînement, famille « Cinématique » : exercice de gen_bielle_manivelle, réponse calculée
   depuis l'énoncé acceptée ; aucune erreur dans la console.
+
+### 6.16 — Statique graphique : isoler, actions mutuelles, 2 et 3 forces (faite le 2026-10-01)
+
+- Référentiel S3.2.4 et S3.2.5 : notion de torseur, glisseur et couple, principe des actions mutuelles ;
+  isolement, graphe des actions, ordonnancement des isolements, frontière, actions intérieures et
+  extérieures ; PFS en résolution graphique. Limite respectée : « résolution graphique des solides soumis
+  à 2 ou 3 actions modélisées par des glisseurs de supports non parallèles » ; forces parallèles,
+  encastrement et plus de 3 forces renvoyés au calcul (12.1). Frottement (direction limite φ) en « pour
+  aller plus loin » seulement.
+- Placée EN FIN de bloc 6, après la 6.15 : cinématique (S3.2.2-3) puis statique (S3.2.4-5) se suivent ;
+  id 6.16 sans renumérotation. Ligne « Cinématique et Statique » de la carte du programme mise à jour
+  (sept fiches). La 12.1 (méthode analytique) n'est pas réécrite : la 6.16 y renvoie pour le contrôle par
+  les moments et pour les cas non graphiques (poutre à charges parallèles).
+- Contenu : sept figures (torseur_glisseur_couple, isolement_potence, graphe_actions_potence,
+  deux_forces_bielle, trois_forces_potence — construction pas à pas, estompée puis pleine pour rester
+  lisible figée —, bridage_levier, echelle_mur) et une figure à curseur (potence_hauban_curseur : I, le
+  triangle et les efforts suivent la hauteur d'attache du hauban) ; méthode ; ateliers at158 (potence :
+  ordre des isolements, point de concours, effort dans le hauban, effort en A, actions mutuelles) et at159
+  (échelle contre une paroi lisse, adhérence minimale, depend_de sur le poids) ; générateur
+  gen_potence_hauban (famille « Statique », ajoutée au catalogue ET au menu « Thème » de l'Entraînement) ;
+  8 questions dans la nouvelle catégorie « Statique graphique » (bonne réponse en positions 1, 3, 0, 2, 3,
+  1, 2, 0).
+- Choix validés par l'auteur : la condition du tracé à 3 forces énoncée AVANT l'exemple (une force connue,
+  une de direction connue, une de point connu) ; le triangle tracé à part, à l'échelle, avec des
+  parallèles ; « qui agit sur qui » et le tour de la frontière au doigt contre l'oubli d'une force ; la
+  12.1 comme contrôle, pas réintroduite. Aucune référence réglementaire non vérifiable (la directive
+  Machines proposée en relecture, citée de mémoire, n'a pas été reprise : la perte de marge est chiffrée,
+  coefficient ÷ 1,7) ; aucun coefficient de frottement non sourcé (« donnée de l'énoncé »).
+- Relecture (relecteur-bts-meca + prof-pedagogue) avant insertion. Mécanique : ~45 valeurs recalculées,
+  4 bloquants corrigés — le point de concours I REMONTE vers le bras quand on abaisse l'attache du hauban
+  (de 0,30 à 0,15 m sous B ; le texte du cas industriel et l'explication du quiz n°7 disaient l'inverse
+  de la figure à curseur) ; at158, la « bonne » réponse sur les actions mutuelles disait « vers B » au lieu
+  de « le long de CD » ; at159, I se rapproche de la paroi quand une personne monte (signalé aussi par
+  prof-pedagogue) ; arrondi 1 855,4 → 1 855. Pédagogie : 6 points de priorité 1 (droite d'action et droit
+  de faire glisser une force, triangle tracé à part, condition du tracé avant l'exemple, contradiction
+  apparente entre actions mutuelles et actions intérieures, I et l'angle de 14° construits, bras de levier
+  AD × AC / CD démontré par l'aire du triangle).
+- Générateur : deux tirages à écarter trouvés au test (AC = AD rend identiques les deux erreurs de bras de
+  levier ; AC = AB fait retomber l'erreur « bras AC » sur la charge) ; tolérance 2 % pour accepter un bras
+  de levier arrondi à 2 décimales (0 refus sur les 420 combinaisons, contre 8 % à 1 %).
+- ✅ Vérifié le 2026-10-01 dans un vrai navigateur (Chrome headless piloté par Selenium, captures), 54
+  contrôles OK du premier coup : 6.16 en dernière position du bloc 6, juste après la 6.15 ; six onglets
+  remplis ; les 5 figures du cours, la figure à curseur et celle de l'exercice chargées ; curseur à
+  h = 0,3 m (hauban 2 563 N) et 1,05 m (1 131 N), figure redessinée ; at158 et at159 en entier (un piège
+  par atelier avec son diagnostic, chaque bonne valeur, les QCM, corrigé dévoilé) ; quiz « Statique
+  graphique », 8 questions avec explication ; Entraînement, thème « Statique » présent dans le menu,
+  réponse calculée depuis l'énoncé acceptée ; aucune erreur dans la console.
