@@ -140,6 +140,14 @@ Un générateur défectueux compte pour UN défaut (le nombre de tirages touché
               les relecteurs le 2026-09-28, invisible pour SAUT (la chaîne ne contient plus
               d'antislash une fois lue). Remède : écrire un seul antislash suivi de n (\\n), sur
               une seule ligne source.
+
+8. COMPTEURS (outils/compteurs.py, exécution de la partie données de app.py)
+---------------------------------------------------------------------------
+  COMPTEUR    un nombre du README ou de l'en-tête de app.py (fiches, blocs, questions,
+              catégories, schémas, schémas animés, matériaux) ne correspond plus au contenu
+              réel, ou sa phrase a été reformulée et n'est plus reconnue. Cas réel : « 143
+              schémas, tous animés » pour 187 schémas dont une partie seulement animée (relevé
+              le 2026-10-01). Remède : python outils/compteurs.py --ecrire.
 """
 import ast
 import io
@@ -659,6 +667,10 @@ def main():
     n += verifier_figures(src)
     print()
     n += verifier_continuations(src)
+    print()
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    from compteurs import verifier_compteurs
+    n += verifier_compteurs()
     print(f"\nTotal : {n} défaut(s).")
     return n
 

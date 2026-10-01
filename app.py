@@ -5,18 +5,18 @@ BTS CPI — APPLICATION COMPLÈTE EN UN SEUL FICHIER
 Conception de Produits Industriels — 1re année
 ================================================================================
 
-Ce fichier regroupe TOUT : l'application, les 150 fiches de cours, les
-143 schémas (tous animés en SMIL), les 363 questions de quiz, les tables
+Ce fichier regroupe TOUT : l'application, les 169 fiches de cours, les
+192 schémas (dont 153 animés en SMIL), les 521 questions de quiz, les tables
 ISO 286 et la base de matériaux. Il n'y a donc qu'un seul fichier à
 envoyer sur GitHub.
 
 Lancement :  streamlit run app.py
 
 Où trouver quoi dans ce fichier :
-  1. FIGURES       — les 143 schémas animés dessinés par le code (dict clé -> fonction)
+  1. FIGURES       — les 192 schémas dessinés par le code (dont 153 animés) (dict clé -> fonction)
   2. iso286         — les tables de tolérances et le calcul d'ajustement
   3. materiaux      — la base de matériaux et les calculs de RDM
-  4. QUIZ           — les 363 questions, réparties en 42 catégories
+  4. QUIZ           — les 521 questions, réparties en 43 catégories
   5. BLOC_0 à BLOC_6 — les fiches des blocs fondamentaux (analyse fonctionnelle,
      tolérancement, matériaux, RDM, CAO, liaisons)
   6. BLOC_7 à BLOC_19 — mathématiques, physique-chimie, méthodologie de projet,
