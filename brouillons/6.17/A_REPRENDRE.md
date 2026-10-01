@@ -1,9 +1,9 @@
-# Fiche 6.17 — brouillon en attente de validation (sauvegardé le 2026-10-01)
+# Fiche 6.17 — brouillon (sauvegardé le 2026-10-01) — INSÉRÉE dans app.py le 2026-10-02
 
 **Titre :** Modéliser les liaisons : torseur transmissible, liaisons équivalentes, hyperstatisme
 **Référentiel :** S3.2.1 (savoirs techniques CPI 2016, `.claude/referentiels/bts-cpi-meca/`, lignes ~489-510)
-**État :** brouillon relu (relecteur-bts-meca + prof-pedagogue), corrections intégrées. **Rien n'est
-inséré dans app.py.** Copie de sauvegarde commitée le 2026-10-02 (commit « wip: brouillon fiche 6.17
+**État :** validée par l'auteur (seuil long/court : sans chiffre) et **insérée dans app.py** le 2026-10-02 par
+`inserer17.py` ; ce dossier reste comme trace du brouillon relu. Copie de sauvegarde commitée le 2026-10-02 (commit « wip: brouillon fiche 6.17
 liaisons ») ; les chemins des scripts sont relatifs au dépôt.
 
 ## Fichiers

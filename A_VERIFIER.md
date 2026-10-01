@@ -939,3 +939,52 @@ arc-boutement 6.8 (condition L > 2 f a, la force n'intervient pas). Commits « f
   par atelier avec son diagnostic, chaque bonne valeur, les QCM, corrigé dévoilé) ; quiz « Statique
   graphique », 8 questions avec explication ; Entraînement, thème « Statique » présent dans le menu,
   réponse calculée depuis l'énoncé acceptée ; aucune erreur dans la console.
+
+### 6.17 — Modéliser les liaisons : torseur transmissible, liaisons équivalentes, hyperstatisme (faite le 2026-10-02)
+
+- Référentiel S3.2.1 : nature du contact (ponctuel, linéique, surfacique), repère local, modèle des
+  liaisons et des liaisons technologiques (jeux, faible amplitude), description torsorielle des actions
+  transmissibles (SANS résolution torsorielle : on ne fait jamais résoudre un système de torseurs),
+  liaisons équivalentes en série et en parallèle, mobilité, hyperstatisme, isostatisme ; contacts
+  surabondants et leurs conséquences sur la position relative et la cotation pour les trois cas imposés :
+  pivot, glissière et ponctuelle équivalentes.
+- Placée EN FIN de bloc 6, après la 6.16 (id 6.17, sans renumérotation) : dans l'ordre du référentiel elle
+  viendrait avant la cinématique, mais un saut de numéro à l'affichage a été écarté ; en fin de bloc, le
+  torseur transmissible prolonge le tableau des liaisons de la 6.16. 6.1 et 6.3 citées, pas reprises.
+  Ligne « Cinématique et Statique » de la carte du programme mise à jour (huit fiches).
+- Contenu : cinq figures (contacts_nature, torseur_complementaire, liaisons_serie_parallele,
+  glissiere_deux_colonnes avec vue de dessus, broche_paliers) et une figure à deux listes de choix
+  (arbre_deux_paliers_choix : palier A et palier B parmi rotule, linéaire annulaire, pivot glissant,
+  pivot ; Ns, m, h et les conditions géométriques se recalculent) ; méthode ; ateliers at160 (presse à deux
+  colonnes, h = 3, puis colonne + galet bombé, h = 0) et at161 (patin à rotule en série, ponctuelle
+  équivalente, mobilité interne) ; générateur gen_hyperstatisme_paliers (famille « Liaisons », catalogue ET
+  menu « Thème ») ; 8 questions dans la nouvelle catégorie « Modélisation des liaisons » (bonne réponse en
+  positions 2, 0, 3, 1, 1, 3, 0, 2).
+- Choix validés par l'auteur : **aucun seuil numérique long/court pour les alésages** (« long devant son
+  diamètre → pivot glissant, court → linéaire annulaire ») — le repère « L ≥ 1,5 Ø / L ≤ 0,8 Ø » proposé en
+  relecture n'a pas de source vérifiée ; l'exercice et le quiz prennent L = 2 Ø, cas sans ambiguïté. Même
+  règle que pour la directive Machines (6.16) et le coefficient de frottement : jamais de chiffre non
+  sourcé.
+- Vérification de fond : tous les h recalculés par une méthode indépendante (rang du système statique ou
+  cinématique, h = Ns − rang), pas par la formule de la fiche — arbre sur deux paliers (16 combinaisons,
+  h = 0 à 5 ; règle « 1 par double arrêt axial + 2 par bague longue » vérifiée sur les 16), deux colonnes
+  h = 3, colonne + ponctuelle h = 0 (normale ⊥ au plan colonne–galet ; radiale : m = 2, h = 1), broche à
+  deux bagues longues + butée h = 4 (h = 6 si l'épaulement était un appui plan), patin à rotule = 5 ddl +
+  1 mobilité interne, poutre de la 12.1 sur deux articulations h = 1 (plan).
+- Relecture (relecteur-bts-meca + prof-pedagogue) avant insertion, 7 bloquants corrigés : cas industriel
+  « bagues courtes + une butée » h = 0 et non 1 ; figure des deux colonnes avec un galet dont la normale
+  passait par l'axe de la colonne (il n'arrêtait rien) → vue de dessus ; at160 « galet bombé » (ponctuelle)
+  et non galet cylindrique (contact linéique, h = 1) ; conclusion du générateur construite selon le tirage
+  (elle citait des conditions inexistantes dans 9 tirages sur 12) ; titre de la figure série/parallèle qui
+  contredisait son piège ; dans le plan, une glissière transmet une force de position inconnue (et non
+  « pas un glisseur ») ; distracteur du quiz n°7 défendable. Pédagogie : tabouret / table à quatre pieds,
+  « + m » montré sur l'équation 0 = 0, bâti non isolé expliqué, lien inconnue en trop ↔ cote à tenir,
+  compter m « l'étau à la main », coaxialité = 2 décalages + 2 inclinaisons.
+- Brouillon conservé dans brouillons/6.17/ (copie « wip » a8142c0, script d'insertion inserer17.py).
+- ✅ Vérifié le 2026-10-02 dans un vrai navigateur (Chrome headless piloté par Selenium, captures), 53
+  contrôles OK du premier coup : 6.17 en dernière position du bloc 6, juste après la 6.16 ; six onglets
+  remplis ; les figures du cours et celle de l'exercice chargées ; figure à deux listes de choix : palier B
+  → pivot (h = 8 − 6 + 1 = 3 affiché), palier A → pivot glissant (h = 9 − 6 + 1 = 4) ; at160 et at161 en
+  entier (un piège par atelier avec son diagnostic, chaque bonne valeur, les QCM, corrigé dévoilé) ; quiz
+  « Modélisation des liaisons », 8 questions avec explication ; Entraînement : « Liaisons » présent dans le
+  menu Thème, réponse h calculée depuis l'énoncé acceptée ; aucune erreur dans la console.

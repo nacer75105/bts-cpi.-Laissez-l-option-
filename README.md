@@ -4,8 +4,8 @@ Application Streamlit destinée à un étudiant de BTS Conception de Produits In
 Elle regroupe le cours du référentiel, des quiz, des exercices générés à la volée et les
 calculateurs utilisés en bureau d'études.
 
-**170 fiches de cours** réparties en 31 blocs (des modules débutants 0A-0L jusqu'au bloc 19) ·
-**529 questions de quiz** · **199 schémas dessinés par le code, dont 160 animés** · **33 nuances de
+**171 fiches de cours** réparties en 31 blocs (des modules débutants 0A-0L jusqu'au bloc 19) ·
+**537 questions de quiz** · **204 schémas dessinés par le code, dont 165 animés** · **33 nuances de
 matériaux** · tables ISO 286 complètes (0 à 500 mm) · calculateurs RDM.
 
 *Ces compteurs ne s'écrivent pas à la main : `python outils/compteurs.py --ecrire` les recalcule à partir
@@ -30,9 +30,9 @@ générale et expression, économie-gestion.
 | Page | Ce qu'on y fait |
 |---|---|
 | **Tableau de bord** | progression, blocs, réflexes méthodologiques |
-| **Cours** | les 170 fiches, par matière (voir plus bas) |
+| **Cours** | les 171 fiches, par matière (voir plus bas) |
 | **Mathématiques / Physique-Chimie / Anglais technique / Culture générale / Économie-gestion** | vue filtrée du cours par matière |
-| **Quiz interactif** | 529 questions, correction immédiate et explication |
+| **Quiz interactif** | 537 questions, correction immédiate et explication |
 | **Exercices guidés** | des exercices résolus pas à pas, avec auto-évaluation |
 | **Ateliers guidés** | des mises en situation pratiques, rattachées aux fiches |
 | **Schémas interactifs** | cinq schémas à curseurs (ajustements, flexion, IT, roulements, engrenages) |
