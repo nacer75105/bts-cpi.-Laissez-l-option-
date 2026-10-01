@@ -848,3 +848,47 @@ arc-boutement 6.8 (condition L > 2 f a, la force n'intervient pas). Commits « f
   un. Un contrôle systématique (voire un contrôle automatique dans l'audit) reste à faire.
 - 6.8 : le repère L ≥ 1,5 à 2 × a est une marge de conception (sûr jusqu'à f = 0,75), pas une
   valeur normalisée ; source bibliographique à trouver si possible.
+
+### 6.15 — Cinématique du solide : vitesses, CIR et loi entrée-sortie (faite le 2026-10-01)
+
+- Référentiel S3.2.2 et S3.2.3 (savoirs techniques CPI 2016) : référentiel et repère, translation et
+  rotation autour d'un axe fixe (position, vitesse, accélération ; mouvements uniformes ou uniformément
+  variés), champ des vitesses, équiprojectivité, CIR, composition des vitesses (glissement, roulement),
+  trajectoires, enveloppe, lois entrée-sortie (analytiques pour les cas plans simples seulement, logiciel
+  au-delà). Aucun torseur cinématique (limite de S3.2.1). Non exigible, présenté comme lecture de figure :
+  la vitesse maximale du piston (1,30 m/s vers 77°) et la courbe V(B)(θ).
+- Placée EN FIN de bloc 6 (après la 6.14), id 6.15 sans renumérotation (progression.json, renvois) : un
+  « 6.3, 6.15, 6.4 » à l'affichage aurait dérouté l'élève. Ligne « Cinématique et Statique » de la carte
+  du programme mise à jour (six fiches).
+- Contenu : cinq figures (champ_vitesses_solide, equiprojectivite_bielle, cir_construction,
+  roulement_sans_glissement, composition_vitesses_pont) et une figure à curseur (bielle_manivelle_curseur :
+  CIR qui se déplace, V(A), V(B), contrôle V(A) × IB / IA, courbe de la loi entrée-sortie) ; méthode ;
+  ateliers at156 (compresseur, vitesse du piston par le CIR, deux QCM pour construire I, depend_de sur les
+  deux étapes enchaînées) et at157 (roue d'AGV, puis la même roue qui patine) ; générateur
+  gen_bielle_manivelle (famille « Cinématique » de l'Entraînement, IA/IB arrondis au mm et réponse
+  calculée depuis ces valeurs) ; 8 questions dans la nouvelle catégorie « Cinématique du solide » (bonne
+  réponse en positions 2, 0, 3, 1, 2, 0, 3, 1).
+- Choix validés par l'auteur : le CIR défini comme le point de vitesse NULLE (deux sens : le CIR est
+  immobile ; un point immobile est le CIR), ce qui sert ensuite au point mort et à la roue ; le 0 au
+  contact du roulement sans glissement DÉMONTRÉ par la composition (V − ω R en bas, V au centre, V + ω R
+  en haut), pas affirmé ; l'équiprojectivité montrée comme un geste (équerre, compas : ombre AH reportée
+  en BK), le calcul par cosinus restant une vérification facultative.
+- Relecture (relecteur-bts-meca + prof-pedagogue) avant insertion. Mécanique : ~60 valeurs recalculées en
+  Python, 3 bloquants corrigés — la bonne réponse du quiz n°8 (« maximale un peu avant que la manivelle
+  soit perpendiculaire à la bielle ») était fausse : le maximum vient APRÈS cette position (76,7° contre
+  76,0° pour L = 4 r) et AVANT 90° ; trois opérations affichées qui ne redonnaient pas le résultat écrit
+  (1,26 / 0,312 ≠ 4,02 → 1,257 / 0,3124) ; format des registres. Pédagogie : 6 points de priorité 1, dont
+  les trois choix ci-dessus.
+- Trouvé en préparant le parcours : la famille « Cinématique » était dans le catalogue de fabriquer_exo
+  mais pas dans FAMILLES_ENTRAINEMENT (liste du menu « Thème ») — le générateur n'aurait été tiré que par
+  « Mélange ». Les deux listes sont séparées : l'audit ne le voit pas.
+- Audit : code 0 (156 ateliers, 45 générateurs × 2 000 tirages, 192 figures + 3 à curseurs). Information :
+  at157 étape 5, ± 0,008 sur 0,14 m/s (6 %), voulu : les pièges sont à 0 et 1,34.
+- ✅ Vérifié le 2026-10-01 dans un vrai navigateur (Chrome headless piloté par Selenium, captures d'écran),
+  49 contrôles OK sur la vraie appli : 6.15 en dernière position du bloc 6 ; les six onglets remplis (corrigé
+  déroulé par « Tout afficher ») ; les 5 figures et la figure à curseur chargées ; curseur déplacé à 90°
+  (translation instantanée, V(B) = V(A)), 180° (point mort) et 120° (CIR dessiné), figure redessinée à
+  chaque fois ; at156 et at157 en entier (un piège par atelier avec son diagnostic, puis chaque bonne
+  valeur, les QCM, corrigé dévoilé) ; quiz « Cinématique du solide », 8 questions répondues avec
+  explication ; Entraînement, famille « Cinématique » : exercice de gen_bielle_manivelle, réponse calculée
+  depuis l'énoncé acceptée ; aucune erreur dans la console.

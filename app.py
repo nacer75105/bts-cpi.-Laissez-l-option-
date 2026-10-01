@@ -3308,6 +3308,281 @@ def arc_boutement():
 
 
 # ===========================================================================
+# 72b. CINÉMATIQUE DU SOLIDE — champ des vitesses, équiprojectivité, CIR,
+#      roulement sans glissement, composition des vitesses (fiche 6.15)
+# ===========================================================================
+
+def _k_defs():
+    """Pointes de flèche, une par couleur (un marqueur SVG ne prend pas la couleur du trait)."""
+    m = []
+    for nom, c in (("kb", ALESAGE), ("ko", ARBRE), ("kg", OK), ("kr", ALERTE), ("kk", TRAIT)):
+        m.append(f"<marker id='{nom}' markerWidth='9' markerHeight='9' refX='8' refY='4.5' orient='auto'>"
+                 f"<path d='M0,0 L9,4.5 L0,9 z' fill='{c}'/></marker>")
+    return "<defs>" + "".join(m) + "</defs>"
+
+
+def _k_fl(x1, y1, x2, y2, couleur, pointe, larg=2.4):
+    return (f"<line x1='{x1:.1f}' y1='{y1:.1f}' x2='{x2:.1f}' y2='{y2:.1f}' stroke='{couleur}' "
+            f"stroke-width='{larg}' marker-end='url(#{pointe})'/>")
+
+
+def champ_vitesses_solide():
+    p = [_k_defs(), _txt(40, 24, "Les deux mouvements de base : comment les vitesses se répartissent", 13, TRAIT, "start", True)]
+    # --- translation
+    p.append(f"<rect x='30' y='40' width='330' height='250' rx='8' fill='#ffffff' stroke='{ALESAGE}' stroke-width='2'/>")
+    p.append(_txt(195, 62, "TRANSLATION", 12, ALESAGE, "middle", True))
+    p.append("<g><animateTransform attributeName='transform' type='translate' values='0,0; 22,0; 0,0' "
+             "dur='2.4s' repeatCount='indefinite'/>")
+    p.append(f"<rect x='70' y='110' width='150' height='110' rx='6' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='1.6'/>")
+    for (x, y, n) in ((90, 130, "A"), (190, 150, "B"), (120, 200, "C")):
+        p.append(f"<circle cx='{x}' cy='{y}' r='4' fill='{TRAIT}'/>")
+        p.append(_txt(x - 8, y - 6, n, 12, TRAIT, "end", True))
+        p.append(_k_fl(x, y, x + 80, y, ALESAGE, "kb"))
+    p.append("</g>")
+    p.append(_txt(195, 250, "même vecteur vitesse en tout point :", 11, TRAIT, "middle"))
+    p.append(_txt(195, 268, "V(A) = V(B) = V(C)", 12, ALESAGE, "middle", True))
+    # --- rotation autour d'un axe fixe
+    ox, oy = 440, 200
+    p.append(f"<rect x='390' y='40' width='340' height='250' rx='8' fill='#ffffff' stroke='{ARBRE}' stroke-width='2'/>")
+    p.append(_txt(560, 62, "ROTATION AUTOUR D'UN AXE FIXE", 12, ARBRE, "middle", True))
+    p.append(f"<g><animateTransform attributeName='transform' type='rotate' values='0 {ox} {oy}; -8 {ox} {oy}; 0 {ox} {oy}' "
+             "dur='2.4s' repeatCount='indefinite'/>")
+    p.append(f"<rect x='{ox}' y='{oy - 7}' width='250' height='14' rx='7' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='1.6'/>")
+    for d, n in ((70, "A"), (140, "B"), (210, "C")):
+        h = d * 0.55
+        p.append(f"<circle cx='{ox + d}' cy='{oy}' r='4' fill='{TRAIT}'/>")
+        p.append(_txt(ox + d + 6, oy + 22, n, 12, TRAIT, "start", True))
+        p.append(_k_fl(ox + d, oy, ox + d, oy - h, ARBRE, "ko"))
+    p.append(f"<line x1='{ox}' y1='{oy}' x2='{ox + 225}' y2='{oy - 225 * 0.55:.1f}' stroke='{FIN}' "
+             "stroke-width='1.2' stroke-dasharray='4 4'/>")
+    p.append("</g>")
+    p.append(f"<circle cx='{ox}' cy='{oy}' r='7' fill='#ffffff' stroke='{TRAIT}' stroke-width='2'/>")
+    p.append(_txt(ox - 4, oy + 26, "O (axe fixe)", 11, TRAIT, "middle"))
+    p.append(_txt(560, 250, "V = ω × R : perpendiculaire au rayon,", 11, TRAIT, "middle"))
+    p.append(_txt(560, 268, "proportionnelle à la distance à l'axe", 12, ARBRE, "middle", True))
+    p.append(f"<rect x='30' y='304' width='700' height='56' rx='6' fill='{FOND}' stroke='{FIN}'/>")
+    p.append(_txt(46, 326, "Translation : tous les points font le même trajet, décalé (droites ou cercles identiques) ; flèches identiques.", 12, TRAIT))
+    p.append(_txt(46, 346, "Rotation : sur un même rayon, les pointes des flèches s'alignent sur une droite passant par l'axe (pointillé).", 12, TRAIT))
+    return _svg("".join(p), 760, 375)
+
+
+def equiprojectivite_bielle():
+    """Bielle-manivelle r = 40, L = 160 à θ = 60° ; échelle 1,3 px/mm ; 1 m/s = 71,6 px."""
+    k, ox, oy = 1.3, 100, 240
+    th = math.radians(60)
+    ax, ay = ox + k * 40 * math.cos(th), oy - k * 40 * math.sin(th)
+    xb = 40 * math.cos(th) + math.sqrt(160 ** 2 - (40 * math.sin(th)) ** 2)
+    bx, by = ox + k * xb, oy
+    e = 90 / 1.2566  # px par m/s
+    va = (-math.sin(th) * 1.2566 * e, -math.cos(th) * 1.2566 * e)
+    ux, uy = (bx - ax), (by - ay)
+    n = math.hypot(ux, uy); ux, uy = ux / n, uy / n
+    pa = va[0] * ux + va[1] * uy                     # projection de V(A) sur AB (px, négative)
+    vb = pa / ux                                     # V(B) porté par l'axe x
+    p = [_k_defs(), _txt(40, 24, "Équiprojectivité : V(A) et V(B) ont la même projection sur la droite (AB)", 13, TRAIT, "start", True)]
+    p.append(f"<line x1='{ax + (pa - 30) * ux:.1f}' y1='{ay + (pa - 30) * uy:.1f}' x2='{bx + 40 * ux:.1f}' y2='{by + 40 * uy:.1f}' "
+             f"stroke='{FIN}' stroke-width='1' stroke-dasharray='5 4'/>")
+    # glissière du piston
+    p.append(f"<rect x='{bx - 40:.1f}' y='{oy - 20}' width='130' height='6' fill='#cbd5e1'/>")
+    p.append(f"<rect x='{bx - 40:.1f}' y='{oy + 14}' width='130' height='6' fill='#cbd5e1'/>")
+    p.append(_txt(bx + 25, oy + 36, "glissière : V(B) horizontale", 10, FIN, "middle"))
+    # manivelle, bielle
+    p.append(f"<line x1='{ox}' y1='{oy}' x2='{ax:.1f}' y2='{ay:.1f}' stroke='{TRAIT}' stroke-width='5' stroke-linecap='round'/>")
+    p.append(f"<line x1='{ax:.1f}' y1='{ay:.1f}' x2='{bx:.1f}' y2='{by:.1f}' stroke='{TRAIT}' stroke-width='4' stroke-linecap='round'/>")
+    p.append(f"<rect x='{bx - 16:.1f}' y='{by - 13}' width='32' height='26' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='1.5'/>")
+    for (x, y, t, dx) in ((ox, oy, "O", -12), (ax, ay, "A", 12), (bx, by, "B", 0)):
+        p.append(f"<circle cx='{x:.1f}' cy='{y:.1f}' r='4.5' fill='#ffffff' stroke='{TRAIT}' stroke-width='2'/>")
+    p.append(_txt(ox - 10, oy + 20, "O", 12, TRAIT, "middle", True))
+    p.append(_txt(ax + 12, ay - 4, "A", 12, TRAIT, "start", True))
+    p.append(_txt(bx, by - 20, "B", 12, TRAIT, "middle", True))
+    p.append(_txt(ox + 24, oy - 6, "manivelle", 10, FIN))
+    p.append(_txt((ax + bx) / 2 - 10, (ay + by) / 2 - 12, "bielle : droite (AB)", 10, FIN, "middle"))
+    # vitesses
+    p.append(_k_fl(ax, ay, ax + va[0], ay + va[1], ALESAGE, "kb"))
+    p.append(_txt(ax + va[0] - 4, ay + va[1] - 6, "V(A) connue", 11, ALESAGE, "middle", True))
+    p.append(_k_fl(bx, by, bx + vb, by, ARBRE, "ko"))
+    p.append(_txt(bx + vb - 6, by + 5, "V(B) cherchée", 11, ARBRE, "end", True))
+    # pieds des projections et segments égaux
+    fa = (ax + pa * ux, ay + pa * uy)
+    fb = (bx + pa * ux, by + pa * uy)
+    p.append(f"<line x1='{ax + va[0]:.1f}' y1='{ay + va[1]:.1f}' x2='{fa[0]:.1f}' y2='{fa[1]:.1f}' stroke='{ALESAGE}' stroke-width='1' stroke-dasharray='3 3'/>")
+    p.append(f"<line x1='{bx + vb:.1f}' y1='{by:.1f}' x2='{fb[0]:.1f}' y2='{fb[1]:.1f}' stroke='{ARBRE}' stroke-width='1' stroke-dasharray='3 3'/>")
+    for (x, y), (xx, yy) in (((ax, ay), fa), ((bx, by), fb)):
+        p.append(f"<line x1='{x:.1f}' y1='{y:.1f}' x2='{xx:.1f}' y2='{yy:.1f}' stroke='{OK}' stroke-width='6' stroke-linecap='round' opacity='0.8'>"
+                 "<animate attributeName='opacity' values='0.8;0.25;0.8' dur='1.6s' repeatCount='indefinite'/></line>")
+    p.append(_txt(ox - 30, oy + 50, "ω = 31,4 rad/s (sens trigonométrique)", 10, TRAIT))
+    # cadre méthode
+    x0 = 470
+    p.append(f"<rect x='{x0}' y='44' width='270' height='246' rx='6' fill='#ffffff' stroke='{OK}' stroke-width='1.6'/>")
+    lignes = [("La méthode, en 4 traits :", True, TRAIT),
+              ("1. tracer V(A), connue (⊥ OA)", False, TRAIT),
+              ("2. tracer la droite (AB)", False, TRAIT),
+              ("3. projeter V(A) sur (AB) :", False, TRAIT),
+              ("    segment vert, reporté en B", False, TRAIT),
+              ("4. remonter ⊥ à (AB) jusqu'à la", False, TRAIT),
+              ("    direction connue de V(B)", False, TRAIT),
+              ("En vert : les deux projections, égales.", True, OK),
+              ("Pourquoi : la bielle ne s'allonge pas,", True, TRAIT),
+              ("A et B ne peuvent ni se rapprocher", False, TRAIT),
+              ("ni s'éloigner l'un de l'autre.", False, TRAIT)]
+    for i, (t, g, c) in enumerate(lignes):
+        p.append(_txt(x0 + 14, 68 + 20 * i, t, 12, c, "start", g))
+    p.append(f"<rect x='40' y='302' width='700' height='52' rx='6' fill='#f0fdf4' stroke='{OK}'/>")
+    p.append(_txt(56, 324, "Ici : projection 1,20 m/s sur (AB) → V(B) = 1,20 / cos 12,5° = 1,23 m/s (V(A) = 1,26 m/s).", 12, TRAIT, "start", True))
+    p.append(_txt(56, 344, "Il faut connaître V(A) entièrement et la seule DIRECTION de V(B) : c'est le cas du piston guidé.", 12, FIN))
+    return _svg("".join(p), 760, 370)
+
+
+def cir_construction():
+    """Même bielle-manivelle à θ = 60°, échelle 0,9 px/mm, pour faire tenir le CIR dans le cadre."""
+    k, ox, oy = 0.9, 90, 335
+    th = math.radians(60)
+    ax, ay = ox + k * 20, oy - k * 40 * math.sin(th)
+    xb = 20 + math.sqrt(160 ** 2 - (40 * math.sin(th)) ** 2)
+    bx, by = ox + k * xb, oy
+    ix, iy = bx, oy - k * xb * math.tan(th)
+    mx, my = ax + 0.7 * (bx - ax), ay + 0.7 * (by - ay)
+    ia = math.hypot(ax - ix, ay - iy)
+    s = 70 / ia  # vitesse (px) par px de distance à I : V(A) = 70 px
+    p = [_k_defs(), _txt(40, 24, "Le CIR : à cet instant, la bielle tourne autour de I", 13, TRAIT, "start", True)]
+    # perpendiculaires aux vitesses
+    p.append(f"<line x1='{ox:.1f}' y1='{oy:.1f}' x2='{ix:.1f}' y2='{iy:.1f}' stroke='{ALESAGE}' stroke-width='1.2' stroke-dasharray='6 4'/>")
+    p.append(f"<line x1='{bx:.1f}' y1='{by + 10:.1f}' x2='{ix:.1f}' y2='{iy:.1f}' stroke='{ARBRE}' stroke-width='1.2' stroke-dasharray='6 4'/>")
+    p.append(f"<line x1='{mx:.1f}' y1='{my:.1f}' x2='{ix:.1f}' y2='{iy:.1f}' stroke='{FIN}' stroke-width='1' stroke-dasharray='2 4'/>")
+    p.append(_txt(ox + 30, 200, "⊥ à V(A) : la droite (OA)", 10, ALESAGE, "start"))
+    p.append(_txt(bx + 8, 180, "⊥ à V(B) en B", 10, ARBRE, "start"))
+    # glissière, mécanisme
+    p.append(f"<rect x='{bx - 40:.1f}' y='{oy - 17}' width='110' height='5' fill='#cbd5e1'/>")
+    p.append(f"<rect x='{bx - 40:.1f}' y='{oy + 12}' width='110' height='5' fill='#cbd5e1'/>")
+    p.append(f"<line x1='{ox}' y1='{oy}' x2='{ax:.1f}' y2='{ay:.1f}' stroke='{TRAIT}' stroke-width='5' stroke-linecap='round'/>")
+    p.append(f"<g><animateTransform attributeName='transform' type='rotate' "
+             f"values='0 {ix:.1f} {iy:.1f}; 2.5 {ix:.1f} {iy:.1f}; 0 {ix:.1f} {iy:.1f}' dur='2s' repeatCount='indefinite'/>")
+    p.append(f"<line x1='{ax:.1f}' y1='{ay:.1f}' x2='{bx:.1f}' y2='{by:.1f}' stroke='{TRAIT}' stroke-width='4' stroke-linecap='round'/>")
+    p.append("</g>")
+    p.append(f"<rect x='{bx - 14:.1f}' y='{by - 11}' width='28' height='22' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='1.5'/>")
+    for x, y in ((ox, oy), (ax, ay), (bx, by), (mx, my)):
+        p.append(f"<circle cx='{x:.1f}' cy='{y:.1f}' r='4' fill='#ffffff' stroke='{TRAIT}' stroke-width='2'/>")
+    p.append(_txt(ox - 10, oy + 18, "O", 12, TRAIT, "middle", True))
+    p.append(_txt(ax - 10, ay - 4, "A", 12, TRAIT, "end", True))
+    p.append(_txt(bx + 4, by + 30, "B", 12, TRAIT, "middle", True))
+    p.append(_txt(mx - 4, my + 22, "M", 12, TRAIT, "middle", True))
+    # vitesses ⊥ au rayon issu de I, proportionnelles à la distance à I
+    for (x, y, c, pt, lab) in ((ax, ay, ALESAGE, "kb", "V(A)"), (bx, by, ARBRE, "ko", "V(B)"), (mx, my, OK, "kg", "V(M)")):
+        dx, dy = x - ix, y - iy
+        vx, vy = -dy * s, dx * s  # rotation de +90° dans le repère écran
+        if vx > 0:
+            vx, vy = -vx, -vy
+        p.append(_k_fl(x, y, x + vx, y + vy, c, pt))
+        p.append(_txt(x + vx - 6, y + vy + (16 if lab != "V(A)" else -6), lab, 11, c, "end", True))
+    # CIR
+    p.append(f"<circle cx='{ix:.1f}' cy='{iy:.1f}' r='7' fill='{ALERTE}' opacity='0.8'>"
+             "<animate attributeName='r' values='6;10;6' dur='2s' repeatCount='indefinite'/></circle>")
+    p.append(_txt(ix + 14, iy + 5, "I : CIR de la bielle", 12, ALERTE, "start", True))
+    x0 = 420
+    p.append(f"<rect x='{x0}' y='50' width='320' height='300' rx='6' fill='#ffffff' stroke='{ALERTE}' stroke-width='1.6'/>")
+    lignes = [("Trouver I :", True, TRAIT),
+              ("la vitesse d'un point est toujours ⊥", False, TRAIT),
+              ("au rayon qui le relie à I. Donc I est à", False, TRAIT),
+              ("l'intersection des perpendiculaires", False, TRAIT),
+              ("à V(A) (en A) et à V(B) (en B).", False, TRAIT),
+              ("S'en servir :", True, TRAIT),
+              ("ω(bielle) = V(A) / IA", False, ALESAGE),
+              ("V(B) = ω(bielle) × IB = V(A) × IB / IA", False, ARBRE),
+              ("et pour tout point M : V(M) ⊥ IM,", False, OK),
+              ("de valeur ω × IM.", False, OK),
+              ("Ici : IA = 312,4 mm, IB = 305,2 mm", True, TRAIT),
+              ("ω(bielle) = 1,257 / 0,3124 = 4,02 rad/s", False, TRAIT),
+              ("V(B) = 4,02 × 0,3052 = 1,23 m/s", True, ARBRE)]
+    for i, (t, g, c) in enumerate(lignes):
+        p.append(_txt(x0 + 14, 74 + 21 * i, t, 12, c, "start", g))
+    return _svg("".join(p), 760, 370)
+
+
+def roulement_sans_glissement():
+    cx, cy, R = 150, 200, 90
+    p = [_k_defs(), _txt(40, 24, "Roulement sans glissement : le point de contact a une vitesse NULLE", 13, TRAIT, "start", True)]
+    p.append(f"<line x1='30' y1='{cy + R}' x2='400' y2='{cy + R}' stroke='{TRAIT}' stroke-width='2'/>")
+    for i in range(12):
+        x = 40 + 30 * i
+        p.append(f"<line x1='{x}' y1='{cy + R}' x2='{x - 10}' y2='{cy + R + 10}' stroke='{FIN}' stroke-width='1'/>")
+    p.append(_txt(390, cy + R + 26, "sol (fixe)", 10, FIN, "end"))
+    # roue qui roule : translation du groupe + rotation de la roue (angle = distance / R)
+    d = 70
+    ang = math.degrees(d / R)
+    p.append(f"<g><animateTransform attributeName='transform' type='translate' values='0,0; {d},0' dur='2.5s' repeatCount='indefinite'/>")
+    p.append(f"<g><animateTransform attributeName='transform' type='rotate' values='0 {cx} {cy}; {ang:.1f} {cx} {cy}' dur='2.5s' repeatCount='indefinite'/>")
+    p.append(f"<circle cx='{cx}' cy='{cy}' r='{R}' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='2.5'/>")
+    for a in range(0, 360, 60):
+        r_ = math.radians(a)
+        p.append(f"<line x1='{cx}' y1='{cy}' x2='{cx + R * math.cos(r_):.1f}' y2='{cy + R * math.sin(r_):.1f}' stroke='{FIN}' stroke-width='1.5'/>")
+    p.append("</g>")
+    p.append(_k_fl(cx, cy, cx + 60, cy, ALESAGE, "kb"))
+    p.append(_k_fl(cx, cy - R, cx + 120, cy - R, ARBRE, "ko"))
+    p.append(f"<line x1='{cx}' y1='{cy + R}' x2='{cx + 127.8}' y2='{cy - R - 11.7:.1f}' stroke='{FIN}' stroke-width='1' stroke-dasharray='4 4'/>")
+    p.append(f"<circle cx='{cx}' cy='{cy + R}' r='6' fill='{ALERTE}'/>")
+    p.append(f"<circle cx='{cx}' cy='{cy}' r='4' fill='{TRAIT}'/>")
+    p.append(_txt(cx - 8, cy - 8, "O", 12, TRAIT, "end", True))
+    p.append(_txt(cx + 64, cy - 8, "V(O) = ω R", 11, ALESAGE, "start", True))
+    p.append(_txt(cx + 20, cy - R - 10, "V(T) = 2 ω R (point haut)", 11, ARBRE, "start", True))
+    p.append(_txt(cx - 10, cy + R + 26, "I : V(I) = 0", 12, ALERTE, "end", True))
+    p.append("</g>")
+    p.append(_txt(215, 70, "la roue avance →", 10, FIN))
+    # à droite : deux galets
+    x0 = 440
+    p.append(f"<rect x='{x0}' y='44' width='300' height='250' rx='6' fill='#ffffff' stroke='{OK}' stroke-width='1.6'/>")
+    p.append(_txt(x0 + 150, 66, "Deux galets sans glissement", 12, OK, "middle", True))
+    c1, c2, r1, r2, yc = x0 + 80, x0 + 80 + 30 + 62, 30, 62, 200
+    p.append(f"<circle cx='{c1}' cy='{yc}' r='{r1}' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='2'/>")
+    p.append(f"<circle cx='{c2}' cy='{yc}' r='{r2}' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='2'/>")
+    for c, r, sens, dur in ((c1, r1, "0", "1.2s"), (c2, r2, "1", "2.8s")):
+        a = "-360" if sens == "1" else "360"
+        p.append(f"<line x1='{c}' y1='{yc}' x2='{c}' y2='{yc - r}' stroke='{FIN}' stroke-width='2'>"
+                 f"<animateTransform attributeName='transform' type='rotate' values='0 {c} {yc}; {a} {c} {yc}' dur='{dur}' repeatCount='indefinite'/></line>")
+    p.append(f"<circle cx='{c1 + r1}' cy='{yc}' r='5' fill='{ALERTE}'/>")
+    p.append(_txt(c1, yc + r1 + 18, "1 : R₁", 11, TRAIT, "middle", True))
+    p.append(_txt(c2, yc + r2 + 18, "2 : R₂", 11, TRAIT, "middle", True))
+    p.append(_txt(x0 + 150, 96, "au contact : V(I, 1) = V(I, 2)", 11, TRAIT, "middle"))
+    p.append(_txt(x0 + 150, 115, "ω₁ R₁ = ω₂ R₂", 13, OK, "middle", True))
+    p.append(f"<rect x='40' y='306' width='700' height='54' rx='6' fill='#fef2f2' stroke='{ALERTE}'/>")
+    p.append(_txt(56, 328, "Piège : la roue avance, mais son point de contact est immobile À CET INSTANT. I est le CIR de la roue :", 12, TRAIT, "start", True))
+    p.append(_txt(56, 348, "les vitesses croissent de 0 (en I) à ω R (au centre) puis 2 ω R (en haut) — le pointillé.", 12, FIN))
+    return _svg("".join(p), 760, 375)
+
+
+def composition_vitesses_pont():
+    p = [_k_defs(), _txt(40, 24, "Composition des vitesses : un pont roulant, vu de dessus", 13, TRAIT, "start", True)]
+    # rails
+    for y in (70, 300):
+        p.append(f"<rect x='40' y='{y - 5}' width='340' height='10' fill='#cbd5e1' stroke='{TRAIT}' stroke-width='1'/>")
+    p.append(_txt(44, 58, "rail (sol, fixe)", 10, FIN))
+    # pont + chariot
+    p.append("<g><animateTransform attributeName='transform' type='translate' values='0,0; 50,0' dur='3s' repeatCount='indefinite'/>")
+    p.append(f"<rect x='140' y='62' width='26' height='246' fill='#e2e8f0' stroke='{ALESAGE}' stroke-width='2'/>")
+    p.append(_txt(176, 290, "pont (2)", 11, ALESAGE, "start", True))
+    p.append(f"<rect x='132' y='200' width='42' height='30' rx='4' fill='#ffffff' stroke='{ARBRE}' stroke-width='2'>"
+             "<animateTransform attributeName='transform' type='translate' values='0,0; 0,-120' dur='3s' repeatCount='indefinite'/></rect>")
+    p.append("</g>")
+    p.append(f"<line x1='153' y1='215' x2='203' y2='95' stroke='{OK}' stroke-width='1.6' stroke-dasharray='5 4'/>")
+    p.append(_txt(214, 100, "trajectoire de la charge (3)", 10, OK, "start", True))
+    p.append(_txt(200, 222, "chariot + charge (3)", 11, ARBRE, "start", True))
+    # triangle des vitesses, 100 px pour 1 m/s
+    x0, y0 = 500, 290
+    p.append(f"<rect x='420' y='44' width='320' height='300' rx='6' fill='#ffffff' stroke='{OK}' stroke-width='1.6'/>")
+    p.append(_k_fl(x0, y0, x0 + 50, y0, ALESAGE, "kb"))
+    p.append(_k_fl(x0 + 50, y0, x0 + 50, y0 - 120, ARBRE, "ko"))
+    p.append(_k_fl(x0, y0, x0 + 50, y0 - 120, OK, "kg", 3))
+    p.append(_txt(x0 + 25, y0 + 20, "V(2/0) = 0,5", 11, ALESAGE, "middle", True))
+    p.append(_txt(x0 + 58, y0 - 60, "V(3/2) = 1,2", 11, ARBRE, "start", True))
+    p.append(_txt(x0 + 4, y0 - 70, "V(3/0) = 1,3 m/s", 12, OK, "end", True))
+    p.append(_txt(580, 70, "V(3/0) = V(3/2) + V(2/0)", 13, TRAIT, "middle", True))
+    p.append(_txt(580, 92, "(somme de VECTEURS, bout à bout)", 11, FIN, "middle"))
+    p.append(_txt(580, 116, "√(0,5² + 1,2²) = 1,3 m/s", 12, OK, "middle", True))
+    p.append(f"<rect x='40' y='330' width='360' height='30' rx='6' fill='{FOND}' stroke='{FIN}'/>")
+    p.append(_txt(52, 350, "0 : sol · 2 : pont · 3 : chariot et sa charge", 11, TRAIT))
+    return _svg("".join(p), 760, 372)
+
+
+# ===========================================================================
 # 73. CARACTÉRISER UNE FONCTION : CRITÈRE, NIVEAU, FLEXIBILITÉ
 # ===========================================================================
 
@@ -7559,6 +7834,11 @@ FIGURES = {
     "montage_arbre_complet": ("Les cinq décisions d'un montage de roulements", montage_arbre_complet),
     "precharge_vissage": ("Ce qui tient vraiment un assemblage vissé", precharge_vissage),
     "arc_boutement": ("L'arc-boutement d'un guidage", arc_boutement),
+    "champ_vitesses_solide": ("Translation ou rotation : la répartition des vitesses", champ_vitesses_solide),
+    "equiprojectivite_bielle": ("Équiprojectivité : même projection sur (AB)", equiprojectivite_bielle),
+    "cir_construction": ("Le centre instantané de rotation (CIR) d'une bielle", cir_construction),
+    "roulement_sans_glissement": ("Roulement sans glissement : V = 0 au contact", roulement_sans_glissement),
+    "composition_vitesses_pont": ("Composition des vitesses sur un pont roulant", composition_vitesses_pont),
     "caracteriser_fonction": ("Critère, niveau, flexibilité", caracteriser_fonction),
     "lire_plan_methode": ("Lire un plan inconnu en six étapes", lire_plan_methode),
     "cotation_reference": ("Coter en chaîne ou depuis une référence", cotation_reference),
@@ -7985,6 +8265,89 @@ def dyn_droite_k(k=0.0):
     return _svg("".join(p_), 760, ycad + 66)
 
 
+def dyn_bielle_manivelle(theta=60.0):
+    """Bielle-manivelle r = 40 mm, L = 160 mm, 300 tr/min : CIR de la bielle, V(A), V(B), loi entrée-sortie."""
+    r, L, w = 40.0, 160.0, 2 * math.pi * 300 / 60
+    k, ox, oy = 0.7, 110, 245
+    th = math.radians(theta)
+    s, c = math.sin(th), math.cos(th)
+    rac = math.sqrt(L * L - (r * s) ** 2)
+    xb = r * c + rac
+    va = w * r / 1000                                   # m/s
+    vb = -r * w * s * (1 + r * c / rac) / 1000          # m/s, algébrique (x vers la droite)
+    ax, ay = ox + k * r * c, oy - k * r * s
+    bx, by = ox + k * xb, oy
+    e = 55  # px par m/s
+    p = [_k_defs(), _txt(30, 24, f"Manivelle à θ = {theta:.0f}°", 13, TRAIT, "start", True),
+         _txt(400, 24, "r = 40 mm, L = 160 mm, 300 tr/min", 12, FIN)]
+    # CIR
+    if abs(c) < 1e-9:
+        cir_txt = ["I à l'infini : (OA) et la perpendiculaire", "en B sont parallèles → translation", "instantanée : V(B) = V(A)."]
+        ia = ib = None
+    elif abs(s) < 1e-9:
+        cir_txt = ["Point mort : I est en B,", "V(B) = 0. Le piston s'arrête", "et repart dans l'autre sens."]
+        ia, ib = L, 0.0
+        p.append(f"<circle cx='{bx:.1f}' cy='{by:.1f}' r='9' fill='{ALERTE}' opacity='0.5'/>")
+    else:
+        iy_mm = xb * math.tan(th)
+        ia = math.hypot(xb - r * c, iy_mm - r * s)
+        ib = abs(iy_mm)
+        ix, iy = bx, oy - k * iy_mm
+        if 24 <= iy <= 440:
+            p.append(f"<line x1='{ox}' y1='{oy}' x2='{ix:.1f}' y2='{iy:.1f}' stroke='{ALESAGE}' stroke-width='1' stroke-dasharray='6 4'/>")
+            p.append(f"<line x1='{bx:.1f}' y1='{by:.1f}' x2='{ix:.1f}' y2='{iy:.1f}' stroke='{ARBRE}' stroke-width='1' stroke-dasharray='6 4'/>")
+            p.append(f"<circle cx='{ix:.1f}' cy='{iy:.1f}' r='7' fill='{ALERTE}'/>")
+            p.append(_txt(ix + 12, iy + 5, "I (CIR)", 12, ALERTE, "start", True))
+            cir_txt = [f"IA = {_fr_court(ia, 1)} mm, IB = {_fr_court(ib, 1)} mm", "(mesurés sur le tracé)", ""]
+        else:
+            cir_txt = [f"I hors du cadre, à {_fr_court(ib, 0)} mm de B :", "(OA) est presque verticale.",
+                       f"IA = {_fr_court(ia, 1)} mm, IB = {_fr_court(ib, 1)} mm"]
+    p.append(f"<rect x='{ox - 30}' y='{oy - 14}' width='{k * 200 + 70:.0f}' height='4' fill='#cbd5e1'/>")
+    p.append(f"<rect x='{ox - 30}' y='{oy + 10}' width='{k * 200 + 70:.0f}' height='4' fill='#cbd5e1'/>")
+    p.append(f"<circle cx='{ox}' cy='{oy}' r='{k * r:.1f}' fill='none' stroke='{FIN}' stroke-width='1' stroke-dasharray='3 3'/>")
+    p.append(f"<line x1='{ox}' y1='{oy}' x2='{ax:.1f}' y2='{ay:.1f}' stroke='{TRAIT}' stroke-width='5' stroke-linecap='round'/>")
+    p.append(f"<line x1='{ax:.1f}' y1='{ay:.1f}' x2='{bx:.1f}' y2='{by:.1f}' stroke='{TRAIT}' stroke-width='4' stroke-linecap='round'/>")
+    p.append(f"<rect x='{bx - 12:.1f}' y='{by - 9}' width='24' height='18' fill='#e2e8f0' stroke='{TRAIT}' stroke-width='1.5'/>")
+    for x, y, t in ((ox, oy, "O"), (ax, ay, "A"), (bx, by, "B")):
+        p.append(f"<circle cx='{x:.1f}' cy='{y:.1f}' r='3.5' fill='#ffffff' stroke='{TRAIT}' stroke-width='2'/>")
+    p.append(_txt(ox - 8, oy + 22, "O", 11, TRAIT, "middle", True))
+    p.append(_txt(ax - 8, ay - 6 if s >= 0 else ay + 16, "A", 11, TRAIT, "end", True))
+    p.append(_txt(bx, by + 26, "B", 11, TRAIT, "middle", True))
+    p.append(_k_fl(ax, ay, ax - s * va * e, ay - c * va * e, ALESAGE, "kb"))
+    if abs(vb) > 1e-6:
+        p.append(_k_fl(bx, by, bx + vb * e, by, ARBRE, "ko"))
+    # panneau de valeurs
+    x0 = 400
+    p.append(f"<rect x='{x0}' y='40' width='340' height='176' rx='6' fill='#ffffff' stroke='{FIN}'/>")
+    vals = [(f"ω = 2π × 300 / 60 = 31,4 rad/s", TRAIT, False),
+            (f"V(A) = ω r = {_fr_court(va, 3)} m/s (constante)", ALESAGE, True),
+            (f"position du piston : OB = {_fr_court(xb, 1)} mm", TRAIT, False)]
+    vals += [(t, TRAIT, False) for t in cir_txt if t]
+    vals.append((f"V(B) = {_fr_court(abs(vb), 3)} m/s " + ("(vers O)" if vb < -1e-6 else "(s'éloigne de O)" if vb > 1e-6 else ""), ARBRE, True))
+    if ia and ib is not None and abs(c) > 1e-9 and abs(s) > 1e-9:
+        vals.append((f"contrôle : V(A) × IB / IA = {_fr_court(va * ib / ia, 3)} m/s", OK, False))
+    for i, (t, col, g) in enumerate(vals):
+        p.append(_txt(x0 + 12, 62 + 21 * i, t, 12, col, "start", g))
+    # loi entrée-sortie : V(B) algébrique en fonction de θ
+    gx, gy, gw, gh = 430, 330, 300, 90
+    p.append(_txt(x0, 246, "Loi entrée-sortie : V(B) (m/s) selon θ", 12, TRAIT, "start", True))
+    p.append(f"<line x1='{gx}' y1='{gy}' x2='{gx + gw}' y2='{gy}' stroke='{FIN}'/>")
+    p.append(f"<line x1='{gx}' y1='{gy - gh / 1.5:.0f}' x2='{gx}' y2='{gy + gh / 1.5:.0f}' stroke='{FIN}'/>")
+    for deg in (90, 180, 270, 360):
+        p.append(_txt(gx + gw * deg / 360, gy + 14, f"{deg}°", 9, FIN, "middle"))
+    p.append(_txt(gx - 4, gy - 44, "+1,3", 9, FIN, "end"))
+    p.append(_txt(gx - 4, gy + 50, "−1,3", 9, FIN, "end"))
+    pts = []
+    for i in range(181):
+        t = math.radians(2 * i)
+        v = -r * w * math.sin(t) * (1 + r * math.cos(t) / math.sqrt(L * L - (r * math.sin(t)) ** 2)) / 1000
+        pts.append(f"{gx + gw * i / 180:.1f},{gy - v * 34:.1f}")
+    p.append(f"<polyline points='{' '.join(pts)}' fill='none' stroke='{ARBRE}' stroke-width='2'/>")
+    p.append(f"<circle cx='{gx + gw * (theta % 360) / 360:.1f}' cy='{gy - vb * 34:.1f}' r='5' fill='{ALERTE}'/>")
+    p.append(_txt(30, 458, "Courbe non symétrique : le maximum (1,30 m/s) arrive vers θ ≈ 77°, pas à 90°.", 11, FIN))
+    return _svg("".join(p), 760, 470)
+
+
 # Figures à curseurs, insérées dans un texte de fiche par le repère [[DYN:cle]].
 # cle -> (titre, fonction, paramètres). Chaque paramètre est un curseur : plage (min, max, défaut, pas)
 # ou liste de choix (étiquette, valeur). La fonction s'appelle aussi SANS argument (valeurs par défaut) :
@@ -8003,6 +8366,10 @@ DYNAMIQUES = {
         "Déplace la droite y = k par crans : à chaque hauteur, compte les points rouges",
         dyn_droite_k,
         [{"nom": "k", "label": "Hauteur k de la droite y = k", "min": -4.0, "max": 5.0, "defaut": 0.0, "pas": 0.5}]),
+    "bielle_manivelle_curseur": (
+        "Tourne la manivelle : le CIR de la bielle se déplace, la vitesse du piston varie",
+        dyn_bielle_manivelle,
+        [{"nom": "theta", "label": "Angle de manivelle θ (°)", "min": 0.0, "max": 360.0, "defaut": 60.0, "pas": 15.0}]),
 }
 
 
@@ -9540,6 +9907,98 @@ CATEGORIES = list(QUIZ.keys())
 # ===========================================================================
 # COMPLÉMENT 2 — questions sur les blocs 12 et 13
 # ===========================================================================
+
+QUIZ["Cinématique du solide"] = [
+    q("Une roue de rayon R roule sans glisser sur le sol ; son centre avance à la vitesse V. "
+      "Quelle est la vitesse, par rapport au sol, du point de la roue en contact avec le sol ?",
+      ["V",
+       "2 V",
+       "0",
+       "V / 2"], 2,
+      "Sans glissement, le point de contact est immobile à cet instant : c'est le CIR de la roue."
+      " Le centre va à V = ω R, le point haut à 2 V. C'est le piège classique : la roue avance, "
+      "mais elle se pose sur le sol sans frotter.",
+      "Piège"),
+
+    q("La nacelle d'une grande roue reste toujours horizontale. Quel est son mouvement par "
+      "rapport au sol ?",
+      ["Une translation circulaire",
+       "Une rotation autour de l'axe de la grande roue",
+       "Un mouvement plan quelconque",
+       "Une translation rectiligne"], 0,
+      "Un segment tracé sur la nacelle reste parallèle à lui-même : c'est une translation. Ses "
+      "points décrivent des cercles (de même rayon, de centres différents) : elle est circulaire."
+      " Tous ses points ont la même vitesse à chaque instant.",
+      "Intermédiaire"),
+
+    q("Le principe d'équiprojectivité dit que, pour deux points A et B d'un même solide :",
+      ["V(A) et V(B) ont la même norme",
+       "V(A) et V(B) sont parallèles",
+       "V(A) et V(B) sont perpendiculaires à (AB)",
+       "V(A) et V(B) ont la même projection sur la droite (AB)"], 3,
+      "Le solide est indéformable : A et B ne peuvent ni se rapprocher ni s'éloigner. Leurs "
+      "vitesses ont donc la même composante le long de (AB). Leurs normes, elles, peuvent être "
+      "différentes.",
+      "Base"),
+
+    q("Comment trouve-t-on le centre instantané de rotation (CIR) d'une pièce en mouvement plan ?",
+      ["C'est toujours le centre de gravité de la pièce",
+       "À l'intersection des perpendiculaires aux vitesses de deux de ses points",
+       "À l'intersection des supports des vitesses de deux de ses points",
+       "C'est toujours l'articulation la plus proche du bâti"], 1,
+      "Chaque vitesse est perpendiculaire au rayon qui la relie au CIR : on trace les "
+      "perpendiculaires aux vitesses connues (au moins leurs directions) et on prend leur "
+      "intersection. Le CIR peut être hors de la pièce.",
+      "Base"),
+
+    q("Bielle-manivelle, manivelle perpendiculaire à l'axe du piston (θ = 90°). V(A) = 2 m/s au "
+      "bout de la manivelle. Que vaut la vitesse du piston ?",
+      ["0 m/s",
+       "1 m/s",
+       "2 m/s",
+       "On ne peut pas conclure sans la longueur de la bielle"], 2,
+      "À θ = 90°, V(A) et V(B) sont toutes deux parallèles à l'axe du piston : leurs "
+      "perpendiculaires sont parallèles, le CIR est à l'infini. La bielle est en translation "
+      "instantanée : V(B) = V(A) = 2 m/s, quelle que soit sa longueur.",
+      "Intermédiaire"),
+
+    q("Un pont roulant avance à 0,8 m/s ; son chariot se déplace sur le pont, "
+      "perpendiculairement, à 0,6 m/s. Quelle est la vitesse de la charge par rapport au sol ?",
+      ["1,0 m/s",
+       "1,4 m/s",
+       "0,2 m/s",
+       "0,48 m/s"], 0,
+      "Composition des vitesses : V(charge/sol) = V(charge/pont) + V(pont/sol), somme de "
+      "VECTEURS. Ils sont perpendiculaires : √(0,8² + 0,6²) = 1,0 m/s. 1,4 m/s serait l'addition "
+      "des nombres, valable seulement si les deux mouvements étaient dans le même sens.",
+      "Calcul"),
+
+    q("Deux galets de friction roulent sans glisser l'un sur l'autre. Le galet moteur (R₁ = 20 "
+      "mm) tourne à 1 500 tr/min. Le galet récepteur a un rayon R₂ = 100 mm. À quelle vitesse "
+      "tourne-t-il ?",
+      ["7 500 tr/min",
+       "1 500 tr/min",
+       "150 tr/min",
+       "300 tr/min"], 3,
+      "Au contact, pas de glissement : les deux points ont la même vitesse, ω₁ R₁ = ω₂ R₂. N₂ = 1"
+      " 500 × 20 / 100 = 300 tr/min. Le grand galet tourne moins vite : c'est un réducteur.",
+      "Calcul"),
+
+    q("Dans un moteur, la manivelle tourne à 3 000 tr/min à vitesse constante. Que peut-on dire "
+      "de la vitesse du piston ?",
+      ["Elle est constante, comme celle de la manivelle",
+       "Elle varie : nulle aux points morts, maximale un peu avant que la manivelle soit "
+       "perpendiculaire à l'axe du piston",
+       "Elle est maximale aux points morts",
+       "Elle varie, et est maximale exactement quand la manivelle est perpendiculaire à l'axe"
+       " du piston"], 1,
+      "La loi entrée-sortie d'un bielle-manivelle n'est pas linéaire. Le piston s'arrête aux "
+      "points morts (le CIR de la bielle est alors en B) ; sa vitesse maximale arrive quand "
+      "manivelle et bielle sont à peu près perpendiculaires, soit θ un peu inférieur à 90° (77° "
+      "pour L = 4 r). À 90°, la bielle est en translation instantanée : V(piston) = V(A), déjà un"
+      " peu en dessous du maximum.",
+      "Avancé"),
+]
 
 QUIZ["Statique et frottement"] = [
     q("Une poutre repose sur une articulation et un appui simple. Combien d'inconnues ?",
@@ -26998,6 +27457,472 @@ Sans objet : cet exercice évalue un raisonnement de choix, pas un calcul.
 être défait un jour ? » et « les deux pièces sont-elles du même matériau, soudable ? ». Ces deux
 questions, posées dans cet ordre, éliminent presque toujours trois des quatre solutions
 d'emblée.
+""",
+        },
+        {
+            "id": '6.15',
+            "titre": 'Cinématique du solide : vitesses, CIR et loi entrée-sortie',
+            "duree": '6 h',
+            "cours": """### 1. Pourquoi cette fiche
+
+Le schéma cinématique (fiche 6.2) dit **quels** mouvements sont possibles. Cette fiche dit **à quelle
+vitesse** ils se font. C'est la question que pose tout mécanisme de transmission : le moteur tourne à
+1 500 tr/min, à quelle vitesse avance le piston, le chariot, la lame ? Et est-ce que la bielle, en
+tournant, ne va pas taper dans le carter ?
+
+Deux outils graphiques répondent à ces questions sans aucun calcul lourd : l'**équiprojectivité** et
+le **centre instantané de rotation (CIR)**. Ce sont les outils du programme. Ils demandent une règle,
+une équerre et un tracé à l'échelle.
+
+### 2. Référentiel : une vitesse, c'est toujours « par rapport à quelque chose »
+
+Assis dans un train, votre voisin est **immobile par rapport au train** et roule à 300 km/h **par
+rapport au quai**. Les deux sont vrais. En mécanique, on écrit donc toujours par rapport à quoi on
+mesure :
+
+> **V(A ∈ 2/1)** se lit « vitesse du point A, appartenant à la pièce 2, **par rapport à la pièce 1** ».
+> Le signe ∈ veut dire « qui fait partie de ».
+
+La pièce de référence est le plus souvent le **bâti** (la pièce fixe, numérotée 0). Chaque numéro désigne
+un **groupe de pièces qui bougent ensemble** — ce que la fiche 6.2 appelle une classe d'équivalence.
+
+### 3. Les deux mouvements de base
+
+[[FIG:champ_vitesses_solide]]
+
+**La translation.** Le solide se déplace **sans tourner** : tous ses points ont, à chaque instant,
+**le même vecteur vitesse**. Un segment tracé sur le solide reste parallèle à lui-même. Les trajectoires
+peuvent être des droites (**translation rectiligne** : un chariot sur rail) ou des cercles (**translation
+circulaire** : la nacelle d'une grande roue, qui reste horizontale ; la plateforme d'un parallélogramme
+déformable).
+
+**La rotation autour d'un axe fixe.** Tous les points décrivent des cercles centrés sur l'axe. La
+vitesse d'un point est :
+
+- **perpendiculaire au rayon** (tangente au cercle) ;
+- **proportionnelle à sa distance à l'axe** : **V = ω × R**, avec ω en rad/s, R en m, V en m/s.
+
+Sur la figure, pour des points pris sur un **même rayon**, les pointes des flèches s'alignent sur une
+droite qui passe par l'axe : c'est la signature d'une rotation. On s'en sert pour lire une vitesse sur un
+tracé : si la flèche de A, à 70 mm de l'axe, représente 2 m/s, la flèche de B, à 140 mm, mesure le
+double, soit 4 m/s. C'est une règle de trois, faite à la règle.
+
+**Les accélérations, dans deux cas simples.** Pourquoi s'en soucier dans une fiche sur les vitesses ?
+Parce que ce sont les accélérations qui créent les efforts dans les pièces et les paliers (F = m a).
+
+- **uniforme** = vitesse constante (le régulateur de vitesse d'une voiture) ;
+- **uniformément varié** = la vitesse augmente ou diminue **du même montant chaque seconde**.
+
+En rotation, les lettres changent mais les formules sont les mêmes : θ (l'angle, en rad) joue le rôle
+de x, ω celui de V, et **α** (alpha, l'**accélération angulaire** en rad/s² : de combien ω augmente
+chaque seconde) celui de a.
+
+| | Translation rectiligne | Rotation autour d'un axe fixe |
+|---|---|---|
+| uniforme | x = V t + x₀ | θ = ω t + θ₀ |
+| uniformément varié (vitesse) | V = a t + V₀ | ω = α t + ω₀ |
+| uniformément varié (position) | x = ½ a t² + V₀ t + x₀ | θ = ½ α t² + ω₀ t + θ₀ |
+
+En rotation, un point à la distance R a deux accélérations : **tangentielle aₜ = R α** (s'il
+accélère) et **normale aₙ = R ω² = V² / R**, dirigée **vers l'axe** — même à vitesse constante,
+puisque la direction de la vitesse change sans arrêt. Image : pour faire tourner une pierre au bout
+d'une ficelle, la ficelle doit tirer la pierre vers votre main en permanence ; ce tirage vers le
+centre, c'est aₙ.
+
+*Exemple : un chariot de convoyeur passe de 0 à 0,6 m/s en 0,5 s. a = 0,6 / 0,5 = **1,2 m/s²** ; il
+parcourt x = ½ × 1,2 × 0,5² = **0,15 m** pendant la mise en vitesse. Autre exemple : une poulie de
+rayon 100 mm à 1 500 tr/min, ω = 157 rad/s : son bord subit aₙ = 0,1 × 157² ≈ **2 470 m/s²**, environ
+250 fois la pesanteur. Un balourd de 10 g sur ce bord doit être retenu par une force de
+0,010 × 2 470 ≈ 25 N, qui tourne avec la poulie et secoue les paliers 25 fois par seconde : c'est
+pour cela qu'une poulie mal équilibrée vibre.*
+
+### 4. Le mouvement plan : ni l'un, ni l'autre
+
+Une **bielle** de moteur ou de compresseur n'est ni en translation (elle bascule), ni en rotation
+autour d'un axe fixe (ses extrémités décrivent l'une un cercle, l'autre une droite). C'est un
+**mouvement plan** : posez une règle à plat sur la table, faites-la glisser **et** tourner en même
+temps sans jamais la soulever — c'est un mélange de translation et de rotation. C'est le cas de la
+plupart des pièces de mécanismes que vous dessinerez : bielles, basculeurs, leviers, bras de pince.
+
+On ne peut plus écrire V = ω R directement : il n'y a pas d'axe fixe. Deux outils prennent le relais.
+Dans les sections 5 et 6, toutes les vitesses sont prises **par rapport au bâti 0** ; pour alléger, on
+écrit V(A) au lieu de V(A ∈ bielle/0).
+
+### 5. L'équiprojectivité
+
+[[FIG:equiprojectivite_bielle]]
+
+**Projeter, concrètement.** Posez l'équerre le long de la droite (AB). Faites-la glisser jusqu'à ce
+que son autre bord touche la pointe de la flèche V(A), et tracez ce petit trait perpendiculaire : il
+coupe (AB) en un point H. Le segment AH est la **projection** de V(A) sur (AB) — « l'ombre » de la
+flèche sur la droite quand la lumière arrive à angle droit. Elle mesure la part de la vitesse de A qui
+pousse (ou tire) **le long de la bielle**.
+
+> **Pour deux points A et B d'un même solide, V(A) et V(B) ont la même projection sur la droite (AB).**
+
+**D'où ça vient.** Le solide est indéformable : la distance AB ne change jamais. Si la projection de
+V(A) sur (AB) était plus grande que celle de V(B), A « rattraperait » B et la bielle raccourcirait.
+Impossible. Les deux projections sont donc égales, **en longueur et en sens**.
+
+**Quand l'utiliser.** Quand on connaît **complètement** la vitesse d'un point (A, au bout de la
+manivelle : V(A) = ω r, perpendiculaire à OA) et **seulement la direction** de celle d'un autre (B,
+guidé par la glissière : horizontale).
+
+**La méthode, en quatre traits :**
+
+1. Tracer V(A) à l'échelle (par exemple 1 m/s = 50 mm).
+2. Tracer la droite (AB).
+3. Du bout de la flèche V(A), abaisser à l'équerre la perpendiculaire à (AB) : on obtient AH (l'ombre
+   de V(A)). Prendre AH au compas et le reporter sur (AB) à partir de B, **dans le même sens** : on
+   obtient le point K.
+4. De K, tracer à l'équerre la perpendiculaire à (AB). Là où elle coupe la direction connue de V(B)
+   (l'horizontale passant par B), c'est la pointe de V(B). On la mesure et on convertit avec l'échelle.
+
+**Exemple chiffré.** Bielle-manivelle : manivelle r = OA = 40 mm, bielle L = AB = 160 mm, N = 300 tr/min,
+manivelle à θ = 60°.
+
+- ω = 2π × 300 / 60 = **31,4 rad/s** ; V(A) = ω × r = 31,4 × 0,040 = **1,26 m/s**.
+- **Par le tracé** : à l'échelle 1 m/s = 50 mm, V(A) est une flèche de 63 mm. Son ombre sur (AB) mesure
+  60 mm, soit 1,20 m/s. En finissant la construction, la flèche V(B) mesure 61,5 mm : **V(B) = 1,23 m/s**.
+- **Pour vérifier par le calcul** (facultatif) : l'ombre d'une flèche de longueur V sur une droite qui
+  fait un angle α avec elle vaut V × cos α (le côté adjacent d'un triangle rectangle).
+  - Inclinaison β de la bielle : A est à la hauteur r sin θ = 40 × sin 60° = 34,6 mm, qui vaut aussi
+    L sin β ; donc sin β = 34,6 / 160 et **β = 12,5°**.
+  - V(A) est perpendiculaire à OA : elle fait 90° − 60° − 12,5° = 17,5° avec (AB). Ombre :
+    1,257 × cos 17,5° = **1,20 m/s**.
+  - V(B) est horizontale, elle fait 12,5° avec (AB) : V(B) × cos 12,5° = 1,20, d'où **V(B) = 1,23 m/s**.
+
+*Ce 1,23 m/s est proche de 1,26 m/s, mais pas égal : V(B) = V(A) n'arrive qu'à une position
+particulière (section 6).*
+
+### 6. Le centre instantané de rotation (CIR)
+
+[[FIG:cir_construction]]
+
+**Une image.** Collez la bielle sur une grande feuille de calque qui la prolonge dans toutes les
+directions, et figez le mouvement à un instant donné. Il existe presque toujours sur ce calque un
+point, souvent en dehors de la bielle, où l'on pourrait planter une punaise : pendant un très court
+instant, la bielle pivote autour de cette punaise comme une porte autour de ses gonds. Ce point, c'est
+I, le **centre instantané de rotation**. Un instant plus tard, il faut déplacer la punaise : I change
+de place en permanence — d'où le mot « instantané ». Mais à chaque instant, la règle V = ω × R
+redevient vraie, avec R mesuré **depuis I**.
+
+**Sa propriété clé : à cet instant, I est immobile.** Un point situé sur l'axe de rotation ne tourne
+pas : sa distance à l'axe vaut 0, donc V = ω × 0 = 0. Retenez les deux sens :
+
+- le CIR a une vitesse nulle ;
+- si un point du solide a une vitesse nulle à cet instant, **c'est lui le CIR**.
+
+Cela servira pour le point mort du piston, puis pour la roue qui roule (section 8).
+
+**Le trouver.** Rappelez-vous la rotation autour d'un axe fixe (section 3) : la vitesse d'un point est
+perpendiculaire au rayon. Autour de I, c'est pareil : I est quelque part sur la perpendiculaire à V(A)
+menée par A, et aussi sur la perpendiculaire à V(B) menée par B. Il est donc **au croisement de ces
+deux droites**.
+
+- En A : V(A) est perpendiculaire à OA, car la manivelle tourne autour de O. La perpendiculaire à V(A)
+  en A est donc la droite (OA) elle-même : il suffit de **prolonger la manivelle** au-delà de A.
+- En B : V(B) est horizontale (glissière). Sa perpendiculaire est la **verticale passant par B**.
+- Le croisement du prolongement de (OA) et de la verticale en B, c'est I.
+
+**S'en servir.**
+
+> **ω(bielle) = V(A) / IA** puis **V(B) = ω(bielle) × IB**, soit **V(B) = V(A) × IB / IA**.
+>
+> Et pour n'importe quel point M de la bielle : V(M) est **perpendiculaire à IM**, de valeur ω × IM.
+
+**Même exemple à θ = 60°.** Sur le tracé : IA = 312,4 mm, IB = 305,2 mm.
+ω(bielle) = 1,257 / 0,3124 = **4,02 rad/s** ; V(B) = 4,02 × 0,3052 = **1,23 m/s** — le même résultat que
+par l'équiprojectivité, ce qui est un bon contrôle.
+
+*Ne soyez pas surpris : IA (312 mm) est presque le double de la bielle (160 mm). I est un point du
+« calque », loin de la pièce. Ces distances se mesurent sur le tracé et se convertissent avec l'échelle
+des longueurs.*
+
+**Trois cas particuliers à reconnaître :**
+
+- **Les deux perpendiculaires sont parallèles** (manivelle à θ = 90° ou 270°) : I est « à l'infini ».
+  Tourner autour d'un point très, très loin, c'est avancer presque en ligne droite — comme l'horizon
+  paraît plat alors que la Terre est ronde. Pendant cet instant, la bielle se comporte comme un chariot :
+  elle est en **translation instantanée**, et **V(B) = V(A)**.
+- **Une vitesse est nulle** (piston au point mort, θ = 0° ou 180°) : ce point **est** le CIR (propriété
+  clé ci-dessus). V(B) = 0 : le piston s'arrête et repart dans l'autre sens.
+- **I tombe hors de la pièce**, parfois loin : c'est normal. Si I sort de la feuille, on préfère
+  l'équiprojectivité.
+
+**À ne pas confondre :** ω(bielle) = 4,02 rad/s, ce n'est **pas** la vitesse de rotation de la
+manivelle (31,4 rad/s). Chaque pièce a la sienne.
+
+### 7. La composition des vitesses
+
+[[FIG:composition_vitesses_pont]]
+
+Quand un mouvement se fait **sur** une pièce qui bouge elle-même, les vitesses s'ajoutent — comme
+**vecteurs**, pas comme nombres :
+
+> **V(A ∈ 3/0) = V(A ∈ 3/2) + V(A ∈ 2/0)**
+
+(l'indice « 2 » s'intercale : 3 par rapport à 2, puis 2 par rapport à 0.)
+
+*Exemple : un pont roulant avance sur ses rails à 0,5 m/s ; le chariot se déplace sur le pont, à angle
+droit, à 1,2 m/s. La charge, vue du sol, va à √(0,5² + 1,2²) = **1,3 m/s**, en diagonale — pas à
+1,7 m/s.*
+
+**Application directe : le glissement.** Au point de contact I entre deux pièces 1 et 2, la vitesse
+**V(I ∈ 2/1)** est la **vitesse de glissement**. Pourquoi ? Placez-vous sur la pièce 1, comme si elle
+était immobile, et regardez le point de la pièce 2 qui la touche. S'il bouge par rapport à vous, il
+frotte : c'est une gomme qu'on traîne sur le papier (usure, échauffement). S'il ne bouge pas, il se
+pose puis repart : c'est un tampon qu'on roule.
+
+### 8. Le roulement sans glissement : le piège classique
+
+[[FIG:roulement_sans_glissement]]
+
+> **Roulement sans glissement ⟺ V(I ∈ 2/1) = 0 au point de contact I.**
+
+(ici 2 = la roue, 1 = le sol.) Pour une roue qui roule sur le sol, le point de la roue qui touche le
+sol **a une vitesse nulle**, à cet instant, alors que la roue avance. Pourquoi ? Décomposez le
+mouvement de la roue en deux, comme au pont roulant :
+
+1. tout le moyeu avance avec le véhicule, à **V** vers l'avant ;
+2. la roue tourne autour du moyeu : chaque point de la jante a **en plus ω R**, tangent au cercle.
+
+Additionnez les deux flèches :
+
+- **en bas**, la rotation donne ω R **vers l'arrière**. Sans glissement, V = ω R, donc V − ω R = **0** ;
+- **au centre**, la rotation n'ajoute rien : il reste **V = ω R** — c'est la vitesse du véhicule ;
+- **en haut**, la rotation donne ω R **vers l'avant** : V + ω R = **2 ω R**.
+
+Vous le vivez en marchant : pendant un pas, la semelle posée au sol ne bouge pas alors que vous
+avancez. La roue fait pareil, sa « semelle » change à chaque instant. Et comme le point de contact a
+une vitesse nulle, **c'est le CIR de la roue** (section 6) : les vitesses sont proportionnelles à la
+distance à I — 0 au sol, ω R au centre (à R de I), 2 ω R en haut (à 2R de I).
+
+*Exemple : roue d'AGV Ø 160 mm, chariot à 1,2 m/s. ω = V / R = 1,2 / 0,080 = **15 rad/s**, soit
+N = 15 × 60 / 2π ≈ **143 tr/min**. Le haut de la roue va à 2,4 m/s, le point de contact à 0.*
+
+**Deux roues en contact** (galets de friction, et cercles primitifs de deux engrenages) : si elles ne
+glissent pas, les deux points en contact ont la même vitesse par rapport au bâti. D'où :
+
+> **ω₁ × R₁ = ω₂ × R₂**, soit **ω₂ / ω₁ = R₁ / R₂**
+
+C'est l'origine du rapport de transmission des engrenages (fiche 6.11) : ω₂ / ω₁ = Z₁ / Z₂, puisque le
+rayon primitif est proportionnel au nombre de dents.
+
+**Quand ça glisse** (galet trop peu pressé, surface grasse) : V(I ∈ roue/sol) n'est plus nulle, la
+vitesse du véhicule n'est plus ω R, et tout calcul qui supposait le contraire est faux — distance
+parcourue, vitesse mesurée par un codeur sur la roue, rapport de transmission.
+
+### 9. Chaîne cinématique et loi entrée-sortie
+
+[[DYN:bielle_manivelle_curseur]]
+
+La **loi entrée-sortie** d'un mécanisme relie le mouvement de sortie à celui d'entrée. Les trois
+premières sont à connaître ; la bielle-manivelle est à savoir **retrouver** par le triangle OAB :
+
+| Mécanisme | Loi entrée-sortie | Linéaire ? |
+|---|---|---|
+| engrenage, galets sans glissement | ω₂ = ω₁ × R₁ / R₂ | oui |
+| pignon-crémaillère | V = ω × R (R : rayon primitif) | oui |
+| vis-écrou | V = p × N / 60 (V en mm/s, N en tr/min, p : pas de l'hélice) | oui |
+| bielle-manivelle | x(B) = r cos θ + √(L² − r² sin² θ) | **non** |
+
+*Linéaire* : la sortie suit l'entrée « au pas » — si l'entrée va deux fois plus vite, la sortie aussi,
+et à vitesse d'entrée constante, la sortie est constante. *Vis-écrou* : un tour de vis fait avancer
+l'écrou d'un pas p (pour une vis à plusieurs filets, p est le pas de l'hélice = pas × nombre de
+filets) ; N tours par minute donnent p × N mm par minute, divisés par 60 pour avoir des mm/s.
+
+**D'où vient la formule de la bielle-manivelle ?** Découpez OB en deux morceaux horizontaux :
+
+- de O jusqu'à l'aplomb de A : c'est l'ombre de la manivelle sur l'axe, **r cos θ** ;
+- de l'aplomb de A jusqu'à B : la bielle L est l'hypoténuse d'un triangle rectangle de hauteur r sin θ ;
+  par Pythagore, ce morceau vaut **√(L² − (r sin θ)²)**.
+
+**La bielle-manivelle est non linéaire.** Manivelle à vitesse constante, le piston ne va pas à vitesse
+constante : il s'arrête aux deux points morts (θ = 0° et 180°), et sa vitesse maximale (1,30 m/s dans
+l'exemple, un peu plus que V(A)) arrive vers θ ≈ 77°, pas à 90°. Pourquoi ? Le piston va le plus vite à
+peu près quand la manivelle pousse la bielle « dans son axe », c'est-à-dire quand manivelle et bielle
+forment un angle droit (ici θ ≈ 76°) — et comme la bielle est inclinée, cela arrive avant 90°. Faites
+tourner la manivelle sur la figure : la course vaut 2 r = 80 mm, et le CIR de la bielle se déplace à
+chaque position.
+
+**Trajectoires et enveloppe.** En traçant la position des pièces pour plusieurs angles successifs
+(tous les 15°, comme une photo au stroboscope), on obtient la trajectoire de chaque point, et
+l'**enveloppe** : la zone balayée par la pièce pendant le mouvement — comme la zone propre qu'un
+essuie-glace laisse sur le pare-brise. C'est ce tracé qui permet de **vérifier qu'aucune pièce n'en percute une autre**, et de
+dimensionner un carter ou une protection.
+
+**Le rôle du logiciel.** Au-delà des cas plans simples, la loi entrée-sortie se détermine avec un
+logiciel de simulation (étude de mouvement du modeleur 3D) : il trace la courbe et signale les
+interférences. Votre rôle est de **savoir vérifier** son résultat sur une ou deux positions, avec les
+outils de cette fiche.
+
+### 10. Les erreurs classiques
+
+1. **Donner une vitesse sans dire par rapport à quoi** : V(A ∈ 2/0) et V(A ∈ 2/1) sont deux choses
+   différentes.
+2. **Croire que le point de contact d'une roue qui roule avance à la vitesse du véhicule** : sans
+   glissement, sa vitesse est **nulle**.
+3. **Écrire V(B) = V(A) pour une bielle** : c'est vrai seulement en translation instantanée (θ = 90°
+   ou 270° pour la bielle-manivelle).
+4. **Additionner des vitesses comme des nombres** : 0,5 + 1,2 = 1,7, alors que la charge du pont
+   roulant va à 1,3 m/s. On additionne des **vecteurs**.
+5. **Prendre la vitesse de rotation de la manivelle pour celle de la bielle** : chaque pièce a son ω.
+6. **Mesurer les rayons depuis le mauvais point** : avec le CIR, R se mesure depuis **I**, pas depuis
+   O ni depuis le centre de la pièce.
+7. **Oublier le facteur 2π / 60** entre tr/min et rad/s, ou prendre le diamètre pour le rayon.
+
+### 11. À retenir
+
+- Une vitesse se donne **toujours par rapport à une pièce** : V(A ∈ 2/1).
+- Translation : **même vitesse en tout point**. Rotation autour d'un axe fixe : **V = ω R**,
+  perpendiculaire au rayon.
+- **Équiprojectivité** : V(A) et V(B) ont la même projection sur (AB) — il faut V(A) complète et la
+  direction de V(B).
+- **CIR** : intersection des perpendiculaires aux vitesses ; puis **V(M) = ω × IM**, ⊥ à IM.
+- **Composition** : V(3/0) = V(3/2) + V(2/0), en **vecteurs**.
+- **Roulement sans glissement : V = 0 au point de contact** ; roue : 0 au sol, ω R au centre, 2 ω R en
+  haut. Deux roues : **ω₁ R₁ = ω₂ R₂**.
+- Bielle-manivelle : loi **non linéaire**, V(B) = 0 aux points morts, V(B) = V(A) à θ = 90° et 270°.
+""",
+            "formules": """
+**Repère des vitesses** — V(A ∈ 2/1) : point A de la pièce 2, par rapport à la pièce 1
+
+**Rotation autour d'un axe fixe** — ω = 2π N / 60 (rad/s, N en tr/min) · **V = ω × R**,
+perpendiculaire au rayon · aₜ = R α · aₙ = R ω² = V² / R
+
+**Mouvements uniformément variés** — V = a t + V₀ ; x = ½ a t² + V₀ t + x₀ ;
+ω = α t + ω₀ ; θ = ½ α t² + ω₀ t + θ₀ (α : accélération angulaire, rad/s²)
+
+**Équiprojectivité** — projection de V(A) sur (AB) = projection de V(B) sur (AB)
+
+**CIR** — I à l'intersection des perpendiculaires aux vitesses · ω = V(A) / IA ·
+V(M) = ω × IM, ⊥ à IM · perpendiculaires parallèles : translation instantanée
+
+**Composition** — V(A ∈ 3/0) = V(A ∈ 3/2) + V(A ∈ 2/0), somme **vectorielle**
+
+**Roulement sans glissement** — V(I ∈ 2/1) = 0 · roue : V(centre) = ω R, point haut 2 ω R ·
+deux roues : ω₁ R₁ = ω₂ R₂
+
+**Lois entrée-sortie** — vis-écrou : V = p × N / 60 (p : pas de l'hélice) · pignon-crémaillère : V = ω R ·
+bielle-manivelle : x = r cos θ + √(L² − r² sin² θ), course 2 r
+""",
+            "exemple": """
+### Cas industriel — Le dérouleur qui livre du film trop court
+
+**Le symptôme.** Sur une ligne d'emballage, un galet d'entraînement caoutchouté, de rayon 40 mm,
+presse le film contre un rouleau libre et le fait avancer. Le programme de l'automate compte les tours
+du galet : 1 tour = 2π × 40 = 251 mm de film. Les sachets sortent pourtant **3 % trop courts**.
+
+**L'analyse.** Le calcul « 1 tour = 251 mm » suppose un **roulement sans glissement** au contact
+galet-film : V(I ∈ galet/film) = 0. Avec un effort de pression insuffisant et un galet lustré, le galet
+**patine** : il tourne plus vite que le film n'avance. Une vitesse de glissement apparaît au contact, et
+l'automate compte des tours qui ne se transforment pas en film.
+
+**Les chiffres.** Galet à 120 tr/min : ω = 12,6 rad/s, ω R = 0,503 m/s. Le film mesuré avance à
+0,488 m/s. Vitesse de glissement au contact : 0,503 − 0,488 = **0,015 m/s**, soit 3 %.
+
+**Les corrections**, par ordre d'efficacité :
+
+| Action | Effet |
+|---|---|
+| **mesurer le film lui-même** (roue codeuse libre, ou repère imprimé lu par une cellule) | on ne dépend plus de l'hypothèse de non-glissement |
+| **augmenter l'effort de pression** du galet, par ressort réglable | rétablit l'adhérence |
+| **remplacer le galet lustré** | rend au caoutchouc son coefficient d'adhérence |
+
+**Ce que le cas apprend.** « Sans glissement » n'est pas une propriété du mécanisme : c'est une
+**hypothèse**, valable tant que l'adhérence suffit. Quand un calcul de vitesse repose sur elle, il faut
+savoir ce qui la garantit, ou mesurer directement la grandeur utile.
+""",
+            "exercice": """
+### Exercice — La scie alternative d'une machine de découpe
+
+La lame d'une scie alternative est poussée par un système bielle-manivelle. Manivelle OA = r = 30 mm,
+bielle AB = L = 120 mm, la lame est solidaire du coulisseau B, guidé horizontalement dans l'axe de O.
+La manivelle tourne à **N = 120 tr/min**, dans le sens trigonométrique. θ est l'angle entre OB et OA :
+θ = 0° quand A est sur l'axe, du côté de B.
+
+**1.** Calculez la vitesse angulaire de la manivelle, puis la vitesse V(A) du point A (en m/s).
+Quelle est sa direction ?
+
+**2.** Quelle est la course de la lame ?
+
+**3.** Manivelle à θ = 0° : que vaut V(B) ? Justifiez avec le CIR.
+
+**4.** Manivelle à θ = 90° : que vaut V(B) ? Justifiez.
+
+**5.** Manivelle à θ = 60°. Construisez le CIR I de la bielle. Sur le tracé, on mesure IA = 234 mm et
+IB = 229 mm. Calculez la vitesse angulaire de la bielle, puis V(B).
+
+**6.** La manivelle est entraînée par un galet de friction de rayon R₁ = 15 mm, qui roule sans glisser
+sur un plateau de rayon R₂ = 90 mm solidaire de la manivelle. À quelle vitesse (tr/min) doit tourner
+le moteur du galet ?
+""",
+            "corrige": """
+### Corrigé, en six temps
+
+#### 1. Ce que dit l'énoncé
+
+Un bielle-manivelle classique : la manivelle tourne à vitesse constante, la bielle est en mouvement
+plan, le coulisseau en translation. On connaît complètement V(A) et seulement la direction de V(B)
+(horizontale). En amont, une transmission par galet de friction, sans glissement.
+
+#### 2. Quelle règle, et pourquoi
+
+> **V(A) = ω r**, ⊥ à OA (rotation autour d'un axe fixe). **CIR** de la bielle : intersection de (OA)
+> et de la perpendiculaire à la glissière en B ; **V(B) = V(A) × IB / IA**. Galets sans glissement :
+> **ω₁ R₁ = ω₂ R₂**.
+
+#### 3. Les conversions
+
+N = 120 tr/min → ω = 2π × 120 / 60. Les longueurs passent en mètres : r = 0,030 m, IA = 0,234 m,
+IB = 0,229 m. Pour la question 6, le rapport R₂ / R₁ est sans unité : on peut rester en tr/min.
+
+#### 4. Le remplacement
+
+**1.** ω = 2π × 120 / 60 ; V(A) = ω × 0,030.
+
+**2.** course = 2 × r = 2 × 30.
+
+**3.** I = B, donc IB = 0 → V(B) = ω(bielle) × 0.
+
+**4.** I à l'infini → V(B) = V(A).
+
+**5.** ω(bielle) = V(A) / 0,234 ; V(B) = ω(bielle) × 0,229.
+
+**6.** N₁ = N₂ × R₂ / R₁ = 120 × 90 / 15.
+
+#### 5. Le calcul
+
+**1.** ω = **12,6 rad/s** ; V(A) = 12,57 × 0,030 = **0,377 m/s**, perpendiculaire à OA (tangente au
+cercle décrit par A).
+
+**2.** Course = 2 r = **60 mm** (de 150 mm à 90 mm de O).
+
+**3.** À θ = 0°, V(A) est verticale, donc sa perpendiculaire en A est l'axe horizontal (OA) — qui passe
+par B. Les deux perpendiculaires se coupent en B : **I = B**, et V(B) = ω(bielle) × IB = **0**. C'est
+un **point mort** : la lame s'arrête et repart dans l'autre sens.
+
+**4.** À θ = 90°, V(A) est horizontale, comme V(B) : les deux perpendiculaires sont parallèles, I est à
+l'infini. La bielle est en **translation instantanée** : **V(B) = V(A) = 0,377 m/s**.
+
+**5.** ω(bielle) = 0,377 / 0,234 = **1,61 rad/s** ; V(B) = 1,61 × 0,229 = **0,369 m/s**.
+
+**6.** N₁ = 120 × 90 / 15 = **720 tr/min**.
+
+#### 6. La vérification
+
+**Par l'équiprojectivité (Q5)** : la bielle est inclinée de β = arcsin(30 × sin 60° / 120) = 12,5°. La
+projection de V(A) sur (AB) vaut 0,377 × cos(90° − 60° − 12,5°) = 0,377 × cos 17,5° = 0,360 m/s ; donc
+V(B) = 0,360 / cos 12,5° = **0,369 m/s**. Même résultat par deux méthodes indépendantes.
+
+**Bon sens** : V(B) est nulle à 0°, un peu inférieure à V(A) à 60° (0,369 contre 0,377 m/s), égale à
+90° — et même légèrement supérieure entre 65° et 90° (maximum 0,389 m/s vers 77°, voir section 9).
+Cohérent avec une lame qui accélère en quittant le point mort. Et la bielle tourne bien plus
+lentement (1,61 rad/s) que la manivelle (12,6 rad/s) : elle ne fait que basculer.
+
+**Galet (Q6)** : le petit galet tourne 6 fois plus vite que le grand plateau (90 / 15 = 6) : c'est bien
+un réducteur, cohérent avec un moteur rapide et une scie lente.
 """,
         },
     ],
@@ -56990,6 +57915,22 @@ _mth("6.8", "Diagnostiquer un risque d'arc-boutement", [
    "seuil 2 × 0,4 × 120 = 96 mm, plus que 80 mm — il se bloque quelle que soit la "
    "force. Repère de conception : au moins 180 mm.")
 
+_mth("6.15", "Trouver une vitesse inconnue dans un mécanisme plan", [
+    "**Repérer les pièces et leur mouvement par rapport au bâti** : rotation autour d'un axe fixe "
+    "(manivelle), translation (coulisseau), mouvement plan (bielle).",
+    "**Calculer la vitesse connue** sur une pièce en rotation : ω = 2πN/60, puis V = ω R, "
+    "perpendiculaire au rayon.",
+    "**Choisir l'outil** : dans les deux cas il faut V(A) complète et la direction de V(B). "
+    "CIR (intersection des perpendiculaires) si l'on veut aussi ω de la pièce ou la vitesse "
+    "d'autres points ; équiprojectivité si le CIR sort de la feuille.",
+    "**Tracer à l'échelle** (longueurs et vitesses), mesurer, convertir. Avec le CIR : "
+    "V(B) = V(A) × IB / IA, les distances mesurées depuis I.",
+    "**Contrôler par l'autre outil**, et reconnaître les cas particuliers : point mort (V = 0), "
+    "translation instantanée (V(B) = V(A)), point de contact sans glissement (V = 0).",
+], "Bielle-manivelle r = 40 mm, L = 160 mm, 300 tr/min, θ = 60° : V(A) = 31,4 × 0,040 = 1,26 m/s. "
+   "CIR : IA = 312,4 mm, IB = 305,2 mm, donc V(B) = 1,257 × 305,2 / 312,4 = 1,23 m/s. Équiprojectivité : "
+   "1,20 / cos 12,5° = 1,23 m/s — les deux concordent.")
+
 _mth("6.9", "Vérifier la tenue d'un assemblage vissé", [
     "**Identifier la classe de qualité de la vis** (ex. 8.8), et en déduire Re et "
     "Rm : 1ᵉʳ chiffre × 100 = Rm, produit des deux chiffres × 10 = Re.",
@@ -59412,6 +60353,65 @@ def gen_couple_puissance():
     }
 
 
+def gen_bielle_manivelle():
+    """Vitesse du piston d'un bielle-manivelle par le CIR de la bielle (IA et IB lus sur le tracé)."""
+    r = random.choice([20, 25, 30, 40, 50])
+    L = r * random.choice([3, 4, 5])
+    N = random.choice([300, 600, 900, 1200, 1500])
+    theta = random.choice([30, 45, 120, 135, 150])
+    t = math.radians(theta)
+    xb = r * math.cos(t) + math.sqrt(L ** 2 - (r * math.sin(t)) ** 2)
+    ia = round(math.hypot(xb - r * math.cos(t), xb * math.tan(t) - r * math.sin(t)))
+    ib = round(abs(xb * math.tan(t)))
+    w = 2 * math.pi * N / 60
+    va = w * r / 1000
+    wb = va / (ia / 1000)
+    vb = va * ib / ia
+    machine = random.choice(["un compresseur", "une scie alternative", "une presse à poinçonner",
+                             "une pompe à piston"])
+    return {
+        "titre": "Cinématique — vitesse d'un piston par le CIR",
+        "enonce": (f"Le bielle-manivelle d'**{machine}** : manivelle OA = **{r} mm**, bielle "
+                   f"AB = **{L} mm**, **{N} tr/min**, manivelle à θ = **{theta}°**. Sur le tracé, "
+                   f"le CIR I de la bielle donne **IA = {ia} mm** et **IB = {ib} mm**. Quelle est "
+                   "la vitesse du piston B, en m/s ?"),
+        "rep": round(vb, 3), "tol": max(0.01, vb * 0.015), "unite": "m/s",
+        "diag": [
+            _diag(round(va, 3),
+                  "C'est la vitesse de A, au bout de la manivelle. Le piston n'a la même vitesse "
+                  "que A qu'en translation instantanée (θ = 90° ou 270°) : ici il faut passer par "
+                  "le CIR, V(B) = V(A) × IB / IA."),
+            _diag(round(va * ia / ib, 3),
+                  "Rapport inversé : V(B) = V(A) × IB / IA. B est plus près du CIR que A, il va "
+                  "moins vite."),
+            _diag(round(w * ib / 1000, 3),
+                  "Tu as pris la vitesse angulaire de la MANIVELLE. La bielle a la sienne : "
+                  "ω(bielle) = V(A) / IA, bien plus faible."),
+            _diag(round(vb * 1000, 1),
+                  "Ton résultat est en mm/s. Convertis les longueurs en mètres : la question "
+                  "demande des m/s."),
+        ],
+        "corr": [
+            f"**Ce que dit l'énoncé.** Une manivelle de {r} mm à {N} tr/min, à θ = {theta}°. La "
+            "bielle est en mouvement plan ; son CIR I est donné par le tracé. On cherche la vitesse "
+            "du piston.",
+            "**La règle.** Autour de son CIR, la bielle tourne comme autour d'un axe, à cet instant : "
+            "V = ω(bielle) × (distance à I). Donc V(B) = V(A) × IB / IA.",
+            f"**Étape 1 — la vitesse de A.** ω = 2π × {N} / 60 = {fr(w, 2)} rad/s, puis "
+            f"V(A) = ω × r = {fr(w, 2)} × {fr(r / 1000, 3)} = {fr(va, 3)} m/s.",
+            f"**Étape 2 — la vitesse angulaire de la bielle.** ω(bielle) = V(A) / IA = "
+            f"{fr(va, 3)} / {fr(ia / 1000, 3)} = {fr(wb, 2)} rad/s.",
+            f"**Étape 3 — la vitesse du piston.** V(B) = ω(bielle) × IB = {fr(wb, 2)} × "
+            f"{fr(ib / 1000, 3)} = {fr(vb, 3)} m/s.",
+            "**Je vérifie.** "
+            + ("IB est plus petit que IA : le piston va moins vite que A, c'est cohérent. "
+               if ib < ia else "IB est plus grand que IA : le piston va plus vite que A. ")
+            + "Et ω(bielle) est bien plus faible que ω : la bielle ne fait que basculer.",
+        ],
+        "indice": "V(B) = V(A) × IB / IA, avec V(A) = ω r et ω = 2πN/60.",
+    }
+
+
 def gen_masse_piece():
     """Masse d'une pièce simple, à partir de la masse volumique du matériau.
 
@@ -61745,6 +62745,7 @@ def fabriquer_exo(famille=None):
         "Ajustements ISO": [gen_iso_jeu, gen_iso_it],
         "Résistance des matériaux": [gen_traction_sigma, gen_traction_diametre, gen_flexion_mf],
         "Transmission de puissance": [gen_couple_puissance],
+        "Cinématique": [gen_bielle_manivelle],
         "Matériaux et masses": [gen_masse_piece],
         "Unités et conversions": [gen_unites],
         "Mathématiques BTS CPI": [gen_signe_affine, gen_discriminant, gen_proba_binomiale,
@@ -61777,7 +62778,7 @@ def fabriquer_exo(famille=None):
 
 
 FAMILLES_ENTRAINEMENT = ["Mélange", "Ajustements ISO", "Résistance des matériaux",
-                          "Transmission de puissance", "Matériaux et masses",
+                          "Transmission de puissance", "Cinématique", "Matériaux et masses",
                           "Unités et conversions", "Mathématiques BTS CPI"]
 
 
@@ -73643,6 +74644,203 @@ ATELIERS = [
                      "les tester systématiquement à la relecture élimine la majorité "
                      "des fautes, sans avoir besoin de refaire toute sa grammaire.",
     },
+    {
+        "id": "at156",
+        "chapitre": "Bloc 6",
+        "titre": "Compresseur : la vitesse du piston par le CIR de la bielle",
+        "theme": "Cinématique",
+        "fiche": "6.15",
+        "figure": "cir_construction",
+        "vocabulaire": [
+            ("CIR (centre instantané de rotation)",
+             "le point autour duquel une pièce en mouvement plan tourne à un instant donné. Il est à "
+             "l'intersection des perpendiculaires aux vitesses de deux de ses points."),
+            ("Bielle",
+             "la pièce qui relie la manivelle (en rotation) au piston (en translation). Elle est en "
+             "mouvement plan : elle bascule en même temps qu'elle avance."),
+            ("Point mort",
+             "position où le piston s'arrête pour repartir dans l'autre sens (manivelle alignée avec "
+             "la bielle) : sa vitesse y est nulle."),
+        ],
+        "enonce": "Un compresseur monocylindre : manivelle OA = r = 25 mm, bielle AB = L = 100 mm, "
+                  "piston B guidé dans l'axe de O. Le vilebrequin tourne à N = 1 500 tr/min. On "
+                  "étudie la position θ = 45°. Sur le tracé à l'échelle, le CIR I de la bielle est à "
+                  "l'intersection de (OA) et de la perpendiculaire au cylindre en B ; on y mesure "
+                  "IA = 139 mm et IB = 116 mm. (La figure montre la même construction sur une autre "
+                  "bielle-manivelle.)",
+        "etapes": [
+            {"type": "numerique", "label": "Vitesse angulaire du vilebrequin",
+             "unite": "rad/s", "attendu": 157.08, "tol": 0.5,
+             "consigne": "Convertis 1 500 tr/min en rad/s.",
+             "indice": "ω = 2π × N / 60.",
+             "pieges": [(25, "25, ce sont des tours par seconde (1 500 / 60), pas des radians par "
+                             "seconde : il manque le facteur 2π."),
+                        (9424.8, "9 425 : tu as multiplié par 2π sans diviser par 60. N est en tours "
+                                 "par MINUTE.")],
+             "aide": "ω = 2π × 1 500 / 60 = 157,1 rad/s."},
+            {"type": "numerique", "label": "Vitesse du point A",
+             "unite": "m/s", "attendu": 3.927, "tol": 0.02,
+             "consigne": "Calcule V(A), en m/s, avec r = 25 mm.",
+             "indice": "V = ω × r, avec r en mètres.",
+             "pieges": [(7.854, "7,85 m/s : tu as pris 50 mm, le diamètre du cercle décrit par A, "
+                                "au lieu du rayon r = 25 mm."),
+                        (3927, "3 927, c'est en mm/s : r doit être en mètres (0,025 m).")],
+             "aide": "V(A) = 157,1 × 0,025 = 3,93 m/s."},
+            {"type": "qcm", "label": "Où est le CIR ?",
+             "question": "Pourquoi le CIR de la bielle est-il sur la droite (OA) ?",
+             "options": ["Parce que la bielle tourne autour de O, comme la manivelle",
+                         "Parce que V(A) est perpendiculaire à OA : la perpendiculaire à V(A) en A "
+                         "est la droite (OA) elle-même",
+                         "Parce que le CIR est toujours au milieu de la bielle"], "bonne": 1,
+             "indice": "Le CIR est sur la perpendiculaire à chaque vitesse, menée par le point.",
+             "diagnostics": {0: "La bielle ne tourne pas autour de O : seule la manivelle le fait. "
+                                 "Le CIR de la bielle est ailleurs (ici, à 139 mm de A).",
+                             2: "Le CIR n'a aucune raison d'être sur la bielle : il est à "
+                                "l'intersection des perpendiculaires aux vitesses, souvent hors de "
+                                "la pièce."}},
+            {"type": "qcm", "label": "L'autre droite du CIR",
+             "question": "Sur quelle droite passant par B se trouve aussi le CIR ?",
+             "options": ["L'axe du cylindre",
+                         "La bielle (AB)",
+                         "La perpendiculaire à l'axe du cylindre, menée par B"], "bonne": 2,
+             "indice": "V(B) est portée par l'axe du cylindre ; le CIR est sur sa perpendiculaire.",
+             "diagnostics": {0: "L'axe du cylindre, c'est la direction de V(B), pas sa "
+                                 "perpendiculaire. Le CIR est sur la perpendiculaire à la vitesse.",
+                             1: "Si le CIR était sur (AB), V(A) et V(B) seraient toutes deux "
+                                "perpendiculaires à la bielle : ce n'est pas le cas de V(B), "
+                                "horizontale."}},
+            {"type": "numerique", "label": "Vitesse angulaire de la bielle",
+             "unite": "rad/s", "attendu": 28.25, "tol": 0.4,
+             "consigne": "Calcule ω(bielle) = V(A) / IA, avec IA = 139 mm.",
+             "indice": "IA en mètres : 0,139 m.",
+             "depend_de": {"etape": 2, "formule": lambda v: v / 0.139},
+             "pieges": [(157.08, "157 rad/s, c'est la manivelle. La bielle a sa propre vitesse de "
+                                 "rotation, bien plus faible : elle ne fait que basculer."),
+                        (33.85, "33,9 : tu as divisé par IB (0,116 m). ω(bielle) = V(A) / IA, "
+                                "la distance de A au CIR.")],
+             "aide": "ω(bielle) = 3,93 / 0,139 = 28,3 rad/s."},
+            {"type": "numerique", "label": "Vitesse du piston",
+             "unite": "m/s", "attendu": 3.277, "tol": 0.05,
+             "consigne": "Calcule V(B) = ω(bielle) × IB, avec IB = 116 mm.",
+             "indice": "V(B) = V(A) × IB / IA.",
+             "depend_de": {"etape": 5, "formule": lambda v: v * 0.116},
+             "pieges": [(3.927, "3,93 m/s, c'est V(A). V(B) = V(A) seulement quand la bielle est en "
+                                "translation instantanée (θ = 90°), pas à 45°."),
+                        (4.706, "4,71 m/s : rapport inversé. V(B) = V(A) × IB / IA : B est plus "
+                                "près du CIR que A, il va moins vite.")],
+             "aide": "V(B) = 28,25 × 0,116 = 3,28 m/s."},
+        ],
+        "corrige": {
+            "enonce": "Compresseur r = 25 mm, L = 100 mm, 1 500 tr/min, θ = 45° ; sur le tracé "
+                      "IA = 139 mm, IB = 116 mm.",
+            "regle": "**V(A) = ω r**, ⊥ à OA. **CIR** de la bielle : intersection de (OA) et de la "
+                    "perpendiculaire au cylindre en B. **ω(bielle) = V(A) / IA**, "
+                    "**V(B) = ω(bielle) × IB**.",
+            "conversions": "ω = 2π × 1 500 / 60 = 157,1 rad/s ; r = 0,025 m ; IA = 0,139 m ; "
+                           "IB = 0,116 m.",
+            "remplacement": "V(A) = 157,1 × 0,025 ; ω(bielle) = 3,927 / 0,139 ; "
+                            "V(B) = 28,25 × 0,116.",
+            "calcul": "V(A) = **3,93 m/s** ; ω(bielle) = **28,3 rad/s** ; V(B) = **3,28 m/s**.",
+            "verification": "Par l'équiprojectivité : la bielle est inclinée de "
+                            "arcsin(25 sin 45° / 100) = 10,2° ; projection de V(A) sur (AB) : "
+                            "3,927 × cos(90° − 45° − 10,2°) = 3,225 m/s ; V(B) = 3,225 / cos 10,2° = "
+                            "3,28 m/s. Même valeur. Bon sens : à 45°, le piston va moins vite "
+                            "que A (il ne l'égale qu'à 90°, après l'avoir un peu dépassée vers "
+                            "77°).",
+        },
+        "a_retenir": "À retenir : avec le CIR, tout redevient V = ω × R — à condition de mesurer R "
+                     "depuis I, et de prendre le ω de la bielle, pas celui de la manivelle.",
+    },
+    {
+        "id": "at157",
+        "chapitre": "Bloc 6",
+        "titre": "Roue d'AGV : roulement sans glissement, et quand ça patine",
+        "theme": "Cinématique",
+        "fiche": "6.15",
+        "figure": "roulement_sans_glissement",
+        "vocabulaire": [
+            ("AGV",
+             "véhicule à guidage automatique (Automated Guided Vehicle), guidé par fil, bande, laser "
+             "ou caméra, qui transporte les pièces entre les postes d'un atelier sur des roues "
+             "motorisées."),
+            ("Roulement sans glissement",
+             "la roue ne frotte pas sur le sol : au point de contact, la vitesse de la roue par "
+             "rapport au sol est nulle."),
+            ("Vitesse de glissement",
+             "la vitesse relative des deux surfaces au point de contact. Nulle sans glissement ; "
+             "non nulle quand la roue patine."),
+        ],
+        "enonce": "Un AGV roule à V = 1,2 m/s sur des roues motrices de diamètre 160 mm. On suppose "
+                  "d'abord que les roues roulent sans glisser sur le sol.",
+        "etapes": [
+            {"type": "numerique", "label": "Vitesse angulaire d'une roue",
+             "unite": "rad/s", "attendu": 15, "tol": 0.1,
+             "consigne": "Calcule ω = V / R.",
+             "indice": "R est le rayon : 80 mm = 0,080 m.",
+             "pieges": [(7.5, "7,5 rad/s : tu as divisé par le diamètre (0,16 m), pas par le rayon."),
+                        (0.015, "0,015 : le rayon doit être en mètres (0,080 m), pas en mm.")],
+             "aide": "ω = 1,2 / 0,080 = 15 rad/s."},
+            {"type": "numerique", "label": "Fréquence de rotation de la roue",
+             "unite": "tr/min", "attendu": 143.2, "tol": 1,
+             "consigne": "Convertis ω en tr/min.",
+             "indice": "N = ω × 60 / 2π.",
+             "pieges": [(900, "900 : tu as multiplié par 60 sans diviser par 2π."),
+                        (2.39, "2,39, ce sont des tours par SECONDE : multiplie par 60.")],
+             "aide": "N = 15 × 60 / 2π ≈ 143 tr/min."},
+            {"type": "qcm", "label": "Le point de contact",
+             "question": "Quelle est, à l'instant considéré, la vitesse par rapport au sol du point "
+                         "de la roue qui touche le sol ?",
+             "options": ["1,2 m/s, la vitesse de l'AGV",
+                         "2,4 m/s, puisque la roue tourne et avance",
+                         "0 m/s : sans glissement, le point de contact est immobile"], "bonne": 2,
+             "indice": "Roulement sans glissement : V(I ∈ roue/sol) = 0.",
+             "diagnostics": {0: "1,2 m/s, c'est la vitesse du CENTRE de la roue. Le point de contact, "
+                                 "lui, est immobile à cet instant : la roue se pose sur le sol.",
+                             1: "2,4 m/s, c'est le point HAUT de la roue (2 ω R). Au contact, la "
+                                "rotation et l'avance se compensent exactement : vitesse nulle."}},
+            {"type": "numerique", "label": "Vitesse du point haut de la roue",
+             "unite": "m/s", "attendu": 2.4, "tol": 0.02,
+             "consigne": "Le point de contact est le CIR de la roue. Calcule la vitesse du point le "
+                         "plus haut, à 160 mm de ce CIR.",
+             "indice": "V = ω × (distance au CIR) = 15 × 0,160.",
+             "pieges": [(1.2, "1,2 m/s, c'est le centre, à 80 mm du CIR. Le point haut est deux fois "
+                              "plus loin du CIR : il va deux fois plus vite.")],
+             "aide": "V = 15 × 0,160 = 2,4 m/s."},
+            {"type": "numerique", "label": "Vitesse de glissement quand la roue patine",
+             "unite": "m/s", "attendu": 0.140, "tol": 0.008,
+             "consigne": "Sur un sol gras, le codeur du moteur indique 160 tr/min pour la roue, mais "
+                         "l'AGV n'avance qu'à 1,2 m/s. Calcule la vitesse de glissement au contact : "
+                         "ω R − V.",
+             "indice": "Au contact, la rotation donne ω R vers l'arrière et l'avance V vers l'avant "
+                       "(fiche, section 8) : ce qui ne se compense pas, ω R − V, c'est le glissement. "
+                       "ω = 2π × 160 / 60 = 16,76 rad/s.",
+             "pieges": [(1.340, "1,34 m/s, c'est ω R seul : il faut retirer la vitesse réelle de "
+                                "l'AGV (1,2 m/s). Ce qui reste, c'est le glissement."),
+                        (0, "0, c'est le cas SANS glissement. Ici la roue tourne plus vite que "
+                            "l'AGV n'avance : elle patine.")],
+             "aide": "16,76 × 0,080 − 1,2 = 1,340 − 1,2 = 0,14 m/s."},
+        ],
+        "corrige": {
+            "enonce": "AGV à 1,2 m/s, roues Ø 160 mm ; sans glissement, puis sur sol gras avec la "
+                      "roue à 160 tr/min.",
+            "regle": "**Roulement sans glissement : V(I ∈ roue/sol) = 0**, I est le CIR de la roue. "
+                    "Donc V(centre) = ω R, V(point haut) = 2 ω R. Avec glissement, la vitesse de "
+                    "glissement au contact vaut ω R − V.",
+            "conversions": "R = 80 mm = 0,080 m ; N = ω × 60 / 2π ; 160 tr/min = 16,76 rad/s.",
+            "remplacement": "ω = 1,2 / 0,080 ; N = 15 × 60 / 2π ; V(haut) = 15 × 0,160 ; "
+                            "glissement = 16,76 × 0,080 − 1,2.",
+            "calcul": "ω = **15 rad/s**, N ≈ **143 tr/min**, V(contact) = **0**, "
+                     "V(haut) = **2,4 m/s**, glissement = **0,14 m/s**.",
+            "verification": "Sans glissement, les vitesses croissent linéairement depuis le sol : 0, "
+                            "1,2 puis 2,4 m/s à 0, 80 et 160 mm du contact. Avec patinage, un "
+                            "calcul de position fondé sur les tours de roue surestime la distance de "
+                            "0,14 / 1,2 ≈ 12 % : c'est pourquoi les AGV recalent leur position sur "
+                            "des repères au sol.",
+        },
+        "a_retenir": "À retenir : sans glissement, le point de contact d'une roue est immobile — "
+                     "c'est son CIR. « Sans glissement » est une hypothèse : quand l'adhérence "
+                     "manque, ω R n'est plus la vitesse du véhicule.",
+    },
 ]
 
 
@@ -74302,9 +75500,10 @@ MATIERES_PROGRAMME = [
                      "5.11", "5.12", "5.13", "5.14"]),
           (9, ["9.2", "9.4"])]),
         ("Cinématique et Statique", "Complet",
-         "Degrés de liberté, schéma cinématique, isostatisme, équilibre/appuis/frottement — "
-         "répartie sur cinq fiches distinctes plutôt qu'une seule.",
-         [("bloc6", ["6.1", "6.2", "6.3"]), (8, ["8.1"]), (12, ["12.1"]), (15, ["15.3"])]),
+         "Degrés de liberté, schéma cinématique, isostatisme, cinématique du solide (vitesses, "
+         "équiprojectivité, CIR, roulement sans glissement, loi entrée-sortie), "
+         "équilibre/appuis/frottement — répartie sur six fiches distinctes plutôt qu'une seule.",
+         [("bloc6", ["6.1", "6.2", "6.3", "6.15"]), (8, ["8.1"]), (12, ["12.1"]), (15, ["15.3"])]),
         ("RDM & Dimensionnement", "Complet",
          "Traction/compression (10 h), cisaillement/torsion (8 h), flexion (12 h) — 30 h de "
          "cours cumulées, plus flambement, dimensionnement d'engrenage et 23 études de cas "
