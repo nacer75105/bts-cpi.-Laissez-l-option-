@@ -1050,3 +1050,37 @@ arc-boutement 6.8 (condition L > 2 f a, la force n'intervient pas). Commits « f
   des frottements supposés) ; deux C différents pour le même 6205 (10.1 / 6.19) → 10.1 alignée.
   Couple de serrage noté Cs (C est la charge dynamique de base) ; générateur limité à des charges
   réalistes (plus de durées de plusieurs siècles).
+
+### 2.4 — GPS, compléments : maximum de matière, zone projetée, état libre, références (faite le 2026-10-02)
+
+- Référentiel S6.1.2 : références spécifiées, tolérances projetées, exigences du maximum et du minimum
+  de matière, conditions d'état libre (quantitatif seulement sur cas simples : bonus d'un trou, taille
+  virtuelle ; Ⓟ, Ⓕ, Ⓛ, cibles en qualitatif). Placée EN FIN de bloc 2, après la 2.3 (id 2.4). Générateur
+  gen_bonus_mmr dans la famille existante « Ajustements ISO ». Le bloc 2 n'a pas de ligne dans la carte du
+  programme (MATIERES_PROGRAMME) : rien ajouté.
+- Sources : trous de passage ISO 273 série moyenne (M6 6,6 ; M8 9 ; M10 11 ; M12 13,5 ; H13) ; IT lus
+  dans TABLE_IT (ISO 286) et revérifiés : IT13 = 220 µm (6-10), 270 µm (10-18) ; IT12 (10-18) = 180 µm ;
+  0,43 mm = IT14 (10-18). Normes citées : ISO 8015 (indépendance, pièce rigide), ISO 2692 (Ⓜ, Ⓛ),
+  ISO 1101 (Ⓟ), ISO 10579 (pièces non rigides, mention ISO 10579-NR, Ⓕ), ISO 5459 (références).
+  Attributions de mémoire (relecteur et auteur), textes des normes NON consultés. Doute du relecteur sur
+  l'écriture exacte de Ⓟ : on écrit « Ⓟ suivi de la longueur de projection (ex. ⊥ Ø0,1 Ⓟ 40 A) », sans
+  le mot « encadrée ».
+- Relecture : 4 bloquants techniques corrigés (Ⓟ et Ⓕ présentés à tort comme des exceptions à
+  l'indépendance ; Ⓕ : défaut = état libre, l'état maintenu n'existe que sur un plan marqué
+  ISO 10579-NR ; perpendicularité sans référence → ⊥ Ø0,1 Ⓟ 40 A ; Ⓛ présenté comme une sécurité en plus
+  → même paroi, bonus aux trous plus petits). 7 bloquants pédagogiques corrigés (figure du bonus à une
+  seule échelle, gain de diamètre = gain de zone, origine du Ø0,4, construction de D − 2e, rayon/diamètre
+  avant le premier exemple, pas de 2e pour une orientation, raccord avec la 2.3).
+- Six retouches validées par l'auteur sur le contenu existant :
+  1. 2.3, bride : « Ø11,43, IT13 → Ø0,83, plus du double » → Ø11,27 → Ø0,67 (près de 70 % de plus) ;
+     « rendement 82 % → 99 % » (non sourcé) retiré.
+  2. at122 SUPPRIMÉ (même erreur d'IT ; at166 couvre le même objectif).
+  3. 2.3, exercice : Ⓜ sur des alésages H7 de colonnes de guidage (un centrage) → trous de passage
+     Ø12 H12 (12,000 à 12,180) pour vis M10, système A B C (C = chant usiné) pour que Δy et la zone carrée
+     aient un sens. NB : ISO 273 donne Ø12 en série large avec H14 ; H12 est un choix de l'énoncé.
+  4. 2.3, bride : ⊥ Ø0,05 A (encart « avant ») → Ø0,03 A, comme le tableau du cas.
+  5. Surface brute : « jamais » → « seulement pour les premières opérations, par des cibles de
+     référence (fiche 2.4) », en 2.3 (cours, erreur n°3) et en 5.5 (cours, erreur n°3, formules).
+     Non touchés, hors périmètre : 5.2 (erreur « coter depuis une surface brute ») et la figure
+     gamme_usinage, qui parlent de la référence d'usinage d'une surface finie.
+  6. 2.3, « À retenir » et cas de la bride : renvoi « développé en fiche 2.4 ».
