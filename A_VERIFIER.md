@@ -988,3 +988,37 @@ arc-boutement 6.8 (condition L > 2 f a, la force n'intervient pas). Commits « f
   entier (un piège par atelier avec son diagnostic, chaque bonne valeur, les QCM, corrigé dévoilé) ; quiz
   « Modélisation des liaisons », 8 questions avec explication ; Entraînement : « Liaisons » présent dans le
   menu Thème, réponse h calculée depuis l'énoncé acceptée ; aucune erreur dans la console.
+
+### 6.18 — Mécanismes de transmission : accoupler, débrayer, limiter, freiner, transformer (faite le 2026-10-02)
+
+- Référentiel S5.2 : loi d'entrée-sortie, réversibilité, puissance et rendement ; accouplements,
+  embrayages et coupleurs, limiteurs de couple, freins ; poulies-courroie et chaînes (les engrenages
+  restent en 6.11, 6.13, 12.5) ; vis-écrou à glissement et à roulement, cames simples, systèmes articulés
+  plans. La bielle-manivelle est traitée comme MÉCANISME (fonction, course 2r, points morts) avec renvoi à
+  la 6.15 pour sa cinématique, non refaite.
+- Placée EN FIN de bloc 6, après la 6.17 (id 6.18, sans renumérotation). Générateur gen_vis_ecrou ajouté
+  à la famille existante « Transmission de puissance » (déjà au menu « Thème »). Carte du programme : la
+  6.18 rejoint la ligne « Dynamique et Énergétique » (pas de ligne « transmission »).
+- Contenu : six figures (chaine_transmission, accouplement_defauts, embrayage_limiteur_frein,
+  vis_un_deux_filets, came_excentrique, courroies_chaines) et une figure à quatre curseurs
+  (vis_ecrou_curseurs : pas, filets, vitesse, frottement → v, α, φ, réversibilité) ; méthode ; ateliers
+  at162 (axe vertical, vis Tr 20 × 8 (P4), irréversible de justesse) et at163 (réglage d'un limiteur de
+  couple à friction) ; 8 questions dans la nouvelle catégorie « Mécanismes de transmission ».
+- Loi vis-écrou vérifiée : v = ph × N avec ph = pas apparent × nombre de filets (Tr 20 × 8 (P4) : 2 filets,
+  ph = 8 mm ; 300 tr/min → 40 mm/s ; avec le pas apparent seul, 20 mm/s). Irréversibilité α ≤ φ, signalée
+  comme modèle simplifié (filet carré) ; d2 = d − 0,5 P.
+- Aucune valeur non sourcée présentée comme donnée : f, rendements de l'exercice et de l'atelier posés
+  comme données d'énoncé ; rendement d'une vis à billes « de l'ordre de 0,9, valeur de catalogue
+  constructeur ». Les couples diamètre/pas des vis trapézoïdales n'étant confirmés que de mémoire en
+  relecture, le générateur n'associe un diamètre qu'à la vis du cours (Tr 20 au pas de 4) et écrit sinon
+  « vis trapézoïdale à n filets, de pas apparent P mm » ; la figure à curseurs est un « exemple de
+  calcul », pas de 2 à 5 mm.
+- Relecture (relecteur-bts-meca + prof-pedagogue) avant insertion : 1 bloquant corrigé — renvoi faux vers
+  la 13.3 pour le rendement de la vis à billes (la 13.3 n'en donne aucun). Améliorations reprises : frein
+  côté moteur → la courroie devient un maillon de sécurité (frein côté vis ou surveillance de rupture) ;
+  « Rm » (déjà la résistance à la rupture dans l'appli) renommé rmoy ; rapport r = N2/N1 comme en 6.11 ;
+  pièges at162 (diamètre nominal, calculatrice en radians) ; énoncé at162 sur un axe vertical ; doublon
+  quiz/atelier supprimé ; figures recalées (came en phase avec sa loi de levée, pente des filets).
+  Pédagogie : angle de frottement construit (caisse sur une planche), hélice déroulée en rampe, cric à
+  vis, à quoi sert un embrayage (voiture, presse à volant), genouillère (pince-étau), couple par la
+  puissance, désignation Tr décodée.
