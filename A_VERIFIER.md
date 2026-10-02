@@ -1022,3 +1022,31 @@ arc-boutement 6.8 (condition L > 2 f a, la force n'intervient pas). Commits « f
   Pédagogie : angle de frottement construit (caisse sur une planche), hélice déroulée en rampe, cric à
   vis, à quoi sert un embrayage (voiture, presse à volant), genouillère (pince-étau), couple par la
   puissance, désignation Tr décodée.
+
+### 6.19 — Dimensionner un roulement (L10) et serrer une vis à la bonne précharge (faite le 2026-10-02)
+
+- Référentiel S5.1 : solutions constructives (rotule, hélicoïdale, guidage par éléments roulants) et
+  pré-dimensionnement à l'aide des bases de données des constructeurs. Durée corrigée et torsion de
+  serrage (VDI 2230) : mentionnées comme approfondissement, jamais calculées.
+- Placée EN FIN de bloc 6, après la 6.18 (id 6.19, sans renumérotation). Générateur gen_duree_roulement
+  dans une nouvelle famille « Roulements » (catalogue ET menu « Thème »). Carte du programme : ligne
+  « RDM & Dimensionnement ». Quatre retouches validées par l'auteur : 6.5, 11.1 et 14.2 renvoyaient le
+  calcul de L10 « en deuxième année » → renvoi vers la 6.19 ; 10.1 donnait C = 14,0 kN pour un 6205,
+  sans source, contre 14,8 kN chez SKF en 6.19 → C et C0 alignés sur SKF (une donnée de catalogue est
+  la même partout), la vitesse limite de l'extrait marquée comme valeur d'exemple.
+- Sources des chiffres : SKF 6205, C = 14,8 kN, C0 = 7,8 kN (fiche produit skf.com, recoupée chez un
+  distributeur) ; SKF NU 205 ECP, C = 32,5 kN, C0 = 27 kN (fiche « Generated from www.skf.com on
+  2022-12-05 » ; un revendeur affichait ≈ 28,6 kN, génération antérieure) ; sections résistantes
+  ISO 898-1 (M8 36,6, M10 58,0, M12 84,3 mm²) ; définition de C et exposants : ISO 281. Charges,
+  vitesses, précharge visée, X et Y : données d'énoncé. Cs ≈ 0,2 × d × F0 présenté comme ORDRE DE
+  GRANDEUR (dépend du frottement).
+- Points d'examen vérifiés : n = 3 (billes), 10/3 (rouleaux) ; conversion millions de tours → heures
+  montrée pas à pas (L10 × 10⁶ ÷ 60 N tours par heure) ; pièges ciblés (mauvais exposant, oubli du 60,
+  parenthèses de 10/3 à la calculatrice).
+- Relecture (relecteur-bts-meca + prof-pedagogue), 3 bloquants corrigés : cas industriel incohérent (à
+  la charge de conception, le calcul donnait déjà la durée observée) → refait : conception 1,2 kN ≈
+  20 800 h (3,6 ans), balourd réel 2 kN ≈ 4 500 h (9 mois), facteur 4,6 ; « 67 % de Re » ne comptait que
+  la traction → la torsion de serrage s'ajoute, dit SANS pourcentage (ceux du relecteur reposaient sur
+  des frottements supposés) ; deux C différents pour le même 6205 (10.1 / 6.19) → 10.1 alignée.
+  Couple de serrage noté Cs (C est la charge dynamique de base) ; générateur limité à des charges
+  réalistes (plus de durées de plusieurs siècles).
