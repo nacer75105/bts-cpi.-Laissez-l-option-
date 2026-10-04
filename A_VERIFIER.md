@@ -1084,3 +1084,35 @@ arc-boutement 6.8 (condition L > 2 f a, la force n'intervient pas). Commits « f
      Non touchés, hors périmètre : 5.2 (erreur « coter depuis une surface brute ») et la figure
      gamme_usinage, qui parlent de la référence d'usinage d'une surface finie.
   6. 2.3, « À retenir » et cas de la bride : renvoi « développé en fiche 2.4 ».
+
+### 6.20 — Chaîne d'énergie et motorisation : effort × flux, point de fonctionnement, rendement (faite le 2026-10-03)
+
+- Référentiel S3.1 (analogie mécanique-électrique-hydraulique, TEC en translation et rotation, rendements,
+  point de fonctionnement, couples résistants, IE1 à IE4, réversibilité d'un actionneur) et S5.3 (pompes,
+  moteurs hydrauliques, transmissions hydrostatiques). Placée EN FIN de bloc 6, après la 6.19 (id 6.20).
+  Générateurs gen_point_fonctionnement et gen_pompe_hydraulique dans une nouvelle famille « Motorisation »
+  (catalogue ET menu « Thème »). Carte du programme : ligne « Dynamique et Énergétique ». Complète 8.2,
+  8.5 et 13.3 (familles de moteurs, démarrage, inertie ramenée, profil de commande) par renvois.
+- Sources : IEC 60034-30-1:2014, tableau des rendements minimaux à 50 Hz (note technique ABB 9AKK107319
+  EN 05-2018, texte extrait du PDF) — 4 pôles : 4 kW 83,1 / 86,6 / 88,6 / 91,1 % ; 11 kW 87,6 / 89,8 /
+  91,4 / 93,3 %. Règlement (UE) 2019/1781 modifié par 2021/341 (synthèse ABB « MEPS UE », texte EUR-Lex
+  non téléchargeable) : IE3 depuis le 1er juillet 2021 de 0,75 à 1 000 kW (2 à 8 pôles), IE4 depuis le
+  1er juillet 2023 pour les 2, 4 et 6 pôles de 75 à 200 kW (sauf exceptions). « 75 % » et « 30 % » :
+  cités mot pour mot du référentiel (S3.1). ns = 60 f / p : physique. Tout le reste : données d'énoncé.
+  Refusé : « cos φ entre 0,8 et 0,9 » proposé par un relecteur (non sourcé).
+- Relecture : 2 bloquants techniques corrigés (« absorbe au moins » → « au plus » : un rendement minimal
+  donne une puissance absorbée maximale ; W × h écrit en kWh → (kW) × h). 5 bloquants pédagogiques corrigés
+  (fil effort × flux repris dans TEC, point de fonctionnement, rendement moteur, pompes, cas industriel ;
+  formules de pompe construites par « effort × flux se conserve » + règle « donne × η, demande ÷ η » ;
+  point de fonctionnement relié au TEC ; choix du moteur en quatre questions ; le 60 de la droite moteur
+  explicité comme ns − nn). Modèle linéaire limité explicitement à la partie utile.
+- Trois retouches validées par l'auteur sur le contenu existant :
+  1. 8.11 : « N = 60 f / p » présenté comme la vitesse du moteur → ns, vitesse de SYNCHRONISME ; le moteur
+     tourne un peu en dessous (glissement). Cours, exemple, à retenir, formules, corrigé et méthode alignés.
+  2. 8.11 : « cos φ souvent 0,8 à 0,9 » (non sourcé) retiré ; par cohérence, la même affirmation retirée
+     de la 8.3 (« typiquement entre 0,8 et 0,9 ») et du commentaire de la figure plaque_moteur.
+  3. Figure plaque_moteur et exercice de la 8.3 : 8,3 A → 7,9 A, soit P absorbée 4 488 W et η ≈ 0,89,
+     conforme au seuil IE3 de 88,6 % (4 kW, 4 pôles) ; la phrase non sourcée « un moteur de cette taille a
+     un rendement de 0,85 à 0,90 » remplacée par la référence IEC 60034-30-1.
+  Non touché, hors périmètre : 8.11 « appel de courant 5 à 8 × In » en démarrage direct (non sourcé, à
+  revoir).
