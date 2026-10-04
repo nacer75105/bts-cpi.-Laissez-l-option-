@@ -20849,7 +20849,7 @@ $$ \\text{Battement radial} = 2 \\times e \\quad (\\text{e = excentricité de l'
 
 Par défaut, la tolérance dimensionnelle **ne limite pas** le défaut de forme (**principe
 d'indépendance**, ISO 8015) : la dimension et la forme se vérifient séparément. C'est seulement
-si l'on ajoute le symbole **Ⓔ** après la cote (**exigence de l'enveloppe**, ISO 14405-1) que
+si l'on ajoute le symbole **Ⓔ** après la cote (**exigence de l'enveloppe**, selon la norme de cotation GPS en vigueur) que
 
 $$ \\text{défaut de forme} \\le IT_{dimensionnel} $$
 
@@ -36271,7 +36271,7 @@ l'arbre cintré du début passe le contrôle au micromètre.
 
 Pour qu'une cote limite aussi la forme, on ajoute le symbole **Ⓔ** après sa tolérance, par
 exemple **Ø30 h7 Ⓔ** (arbre entre 29,979 et 30,000 mm) : c'est l'**exigence de l'enveloppe**
-(ISO 14405-1). Imaginez une bague de contrôle parfaite, alésée à 30,000 mm : l'arbre doit y entrer
+(selon la norme de cotation GPS en vigueur). Imaginez une bague de contrôle parfaite, alésée à 30,000 mm : l'arbre doit y entrer
 sur toute sa longueur, et chaque diamètre mesuré doit rester au-dessus de 29,979 mm. L'arbre
 cintré, qui mesure 30 à chaque endroit mais coince dans la bague, serait refusé **au contrôle**,
 et non plus au montage.

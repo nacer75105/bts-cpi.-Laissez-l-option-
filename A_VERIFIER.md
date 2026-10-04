@@ -1141,3 +1141,31 @@ arc-boutement 6.8 (condition L > 2 f a, la force n'intervient pas). Commits « f
   imagée ; lien PFD × vitesse = TEC démontré et utile ; couple dessiné sur la figure d'équilibrage ; force
   du câble sur le tambour dessinée). Vérification du treuil à v = 0,8 m/s (à 1 m/s, les puissances
   coïncidaient numériquement avec les énergies cinétiques : piège évité).
+
+### Vérification des numéros de normes cités de mémoire (2.3, 2.4, 6.19) — faite le 2026-10-04
+
+Règle de l'auteur : un numéro de norme n'est gardé que s'il est vérifié sur une source officielle (ISO ou
+organisme de normalisation reconnu) — bon numéro, bon titre, bon objet. Sinon, formulation sans numéro.
+
+- CONFIRMÉES, numéro gardé :
+  - ISO 8015 (GPS — Fondamentaux — Concepts, principes et règles) : principe d'indépendance et principe de
+    la pièce rigide (iso.org OBP, SIS, AFNOR, extrait iTeh).
+  - ISO 2692 (GPS — Tolérancement géométrique — MMR, LMR, RPR) : Ⓜ et Ⓛ ; l'indépendance ne s'applique
+    plus quand ils sont utilisés (iso.org, BSI).
+  - ISO 1101 (GPS — Tolérancement géométrique — forme, orientation, position, battement) : éléments
+    tolérancés projetés (extrait officiel via SIS).
+  - ISO 10579 (GPS — Cotation et tolérancement — Pièces non rigides) et la mention « ISO 10579-NR » « in or
+    near the title block », état contraint sauf symbole Ⓕ : confirmé MOT POUR MOT sur l'extrait officiel
+    (iTeh). NB : l'ISO annonce son remplacement futur par ISO 25935 (en projet).
+  - ISO 5459 (GPS — Tolérancement géométrique — Références et systèmes de références), cibles de
+    référence et références communes (iso.org, SIS, BSI). Citée sans année (l'édition 2011 est remplacée
+    par ISO 5459:2024).
+  - ISO 281 (Roulements — Charges dynamiques de base et durée nominale) : charge dynamique de base pour
+    un million de tours, durée nominale à 90 % de fiabilité (extrait officiel iTeh) ; L10 = (C/P)^p avec
+    p = 3 (billes) et 10/3 (rouleaux), issu de la recommandation ISO R281 puis d'ISO 281 (SKF Evolution).
+  - ISO 21940-11 (équilibrage, fiche 6.21) : déjà vérifiée.
+- REFORMULÉE, numéro retiré :
+  - ISO 14405-1 pour l'exigence de l'enveloppe Ⓔ : le titre de la norme est confirmé (« Dimensional
+    tolerancing — Part 1: Linear sizes »), mais le rattachement de Ⓔ à cette norme n'a été trouvé que sur
+    des sources secondaires (sites de formation, éditeurs de logiciels), pas sur un extrait officiel.
+    → « selon la norme de cotation GPS en vigueur » (fiche 2.3 affichée, et formules d'origine du bloc 2).
