@@ -1116,3 +1116,28 @@ arc-boutement 6.8 (condition L > 2 f a, la force n'intervient pas). Commits « f
      un rendement de 0,85 à 0,90 » remplacée par la référence IEC 60034-30-1.
   Non touché, hors périmètre : 8.11 « appel de courant 5 à 8 × In » en démarrage direct (non sourcé, à
   revoir).
+
+### 6.21 — Masse, centre de gravité, inertie, PFD et équilibrage d'une pièce tournante (faite le 2026-10-04)
+
+- Référentiel S3.2.5 : centre de gravité et masse (barycentre de 2-3 volumes simples, trou en masse
+  négative), moment d'inertie d'un volume simple par Huygens, matrice d'inertie (lecture, symétries, axes
+  principaux — jamais calculée à la main), PFD limité à la translation rectiligne et à la rotation autour
+  d'un axe fixe, équilibrage statique et dynamique (approche d'ordre de grandeur ; l'équilibrage se fait à
+  l'équilibreuse ou au logiciel). Placée EN FIN de bloc 6, après la 6.20 (id 6.21). Générateurs
+  gen_force_balourd et gen_cdg_arbre dans une nouvelle famille « Dynamique » (catalogue ET menu « Thème »).
+  Carte du programme : ligne « Dynamique et Énergétique ». Complète 8.1 (F = m a, Mt = I α, disque), 7.5
+  (barycentre), 6.20 (TEC) et 13.5 (fréquences propres) par renvois.
+- Sources : ρ acier 7 850 kg/m³ (table MATERIAUX de l'appli) ; formules classiques des solides homogènes
+  (disque ½ m R², tube ½ m (R² + r²), anneau m R², barre m L²/12, masse ponctuelle m d²) et Huygens ;
+  g = 9,81 m/s². Tout le reste : données d'énoncé. ISO 21940-11:2016 (« Mechanical vibration — Rotor
+  balancing — Part 11: Procedures and tolerances for rotors with rigid behaviour ») VÉRIFIÉE sur l'extrait
+  officiel publié (standards.iteh.ai) : annule et remplace ISO 1940-1:2003 ; balourd résiduel admissible
+  en g·mm ; classe de qualité G, masse du rotor, vitesse de service. Citée SANS aucune valeur chiffrée.
+- Relecture : 5 bloquants techniques corrigés (sens du couple moteur sur la figure du treuil ; « axe
+  principal = axe de rotation » insuffisant → axe principal CENTRAL, passant par G ; « balourd » employé
+  pour la force → balourd U = mb r, force de balourd mb r ω² ; renvoi faux 8.1 → 7.5 pour le barycentre ;
+  tolérance aberrante de gen_force_balourd sur les petites forces). 5 bloquants pédagogiques corrigés
+  (balourd dynamique expliqué physiquement — couteaux, manche à balai, deux plans ; matrice d'inertie
+  imagée ; lien PFD × vitesse = TEC démontré et utile ; couple dessiné sur la figure d'équilibrage ; force
+  du câble sur le tambour dessinée). Vérification du treuil à v = 0,8 m/s (à 1 m/s, les puissances
+  coïncidaient numériquement avec les énergies cinétiques : piège évité).
