@@ -1169,3 +1169,32 @@ organisme de normalisation reconnu) — bon numéro, bon titre, bon objet. Sinon
     tolerancing — Part 1: Linear sizes »), mais le rattachement de Ⓔ à cette norme n'a été trouvé que sur
     des sources secondaires (sites de formation, éditeurs de logiciels), pas sur un extrait officiel.
     → « selon la norme de cotation GPS en vigueur » (fiche 2.3 affichée, et formules d'origine du bloc 2).
+
+### 6.22 — Statique des fluides : hydrostatique, théorème de Pascal, poussée d'Archimède, effort sur une paroi (faite le 2026-10-05)
+
+- Référentiel S3.2.7 : loi de l'hydrostatique, théorème de Pascal, théorème d'Archimède (stabilité par
+  recherche du métacentre). Placée EN FIN de bloc 6, après la 6.21 (id 6.22). Générateurs
+  gen_presse_hydraulique et gen_poussee_archimede dans une nouvelle famille « Statique des fluides »
+  (catalogue ET menu « Thème »). Carte du programme : ligne « Mécanique des fluides » (qui ne comptait que
+  8.2 et 8.9). Complète 8.2 (p = F/S, vérin), 8.9 (dynamique des fluides), 6.20 (pompes, effort × flux) et
+  6.18 (vis-écrou).
+- Sources : eau 1 000 kg/m³ (valeur arrondie d'usage, validée par l'auteur) ; acier 7 850 et aluminium
+  2 700 kg/m³ (table MATERIAUX) ; g = 9,81 m/s² ; 1 bar = 10⁵ Pa (définition). Huile : 850 kg/m³ en donnée
+  d'énoncé, alignée sur la fiche 8.9. Tout le reste : données d'énoncé.
+- Relecture : 6 bloquants techniques corrigés (« effort sur le fond = poids du liquide » restreint aux
+  parois verticales, la fiche se contredisait avec les vases communicants ; « la pompe impose la pression »
+  → la pompe impose le débit, la charge fixe la pression, comme en 6.20 ; quiz « quelques millièmes » →
+  moins d'un millième ; figure d'Archimède à deux échelles et flotteur dessiné immergé à 79 % au lieu de
+  20 % ; figure de la paroi avec les pressions dans le mauvais sens ; effet de l'air dans le cas industriel
+  mal expliqué). 4 bloquants pédagogiques corrigés (pourquoi le rapport des surfaces et le carré des
+  diamètres ; figure d'Archimède contraire au texte ; flèches de la paroi ; métacentre construit et
+  dessiné, avec CM = I / V sur un ponton). Erreur trouvée par l'auteur du brouillon avant relecture : la
+  position du centre de poussée dans la figure de stabilité contredisait la physique (corrigée).
+
+### Valeur non sourcée tracée pour un passage ultérieur (relevée le 2026-10-05, non corrigée)
+
+- 8.2, § « La pression : une force répartie sur une surface » : « la pression du réseau (souvent 6 bars)
+  multipliée par la section du piston donne l'effort disponible ». Valeur typique d'un réseau pneumatique,
+  non sourcée. À sourcer ou à présenter comme donnée d'énoncé lors d'un passage dédié aux valeurs non
+  sourcées (avec, déjà relevé : 8.11 « appel de courant 5 à 8 × In » ; 13.3 « frottements 5 à 15 % » et
+  « rendement 0,9 » du brushless ; 13.5 « écart d'au moins 20 % » à la fréquence propre).
