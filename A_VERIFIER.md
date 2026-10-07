@@ -1252,3 +1252,31 @@ organisme de normalisation reconnu) — bon numéro, bon titre, bon objet. Sinon
   pédagogiques corrigés (tableau de choix forme/matériau → procédé ; formule de la flèche construite en trois
   étapes et dessinée ; f_max distinct de f ; seuil de rentabilité démontré par l'égalité des coûts). Une
   valeur d'atelier corrigée avant relecture (flèche à 24 facettes : 0,342 et non 0,341 mm).
+
+### 1.9 — Lire un diagramme SysML : exigences, blocs, cas d'utilisation, séquence, états (faite le 2026-10-07)
+
+- Référentiel S1.1.1 (« lecture et compréhension des diagrammes SysML » : exigences, cas d'utilisation,
+  définition de bloc, bloc interne, état-transition, séquences) et S1.1.3 (« décoder ou modifier ces
+  différents diagrammes ») : la fiche reste au niveau lecture, mais ne prétend plus qu'on ne modifie jamais
+  un diagramme. Placée EN FIN de bloc 1, après la 1.8 (id 1.9). Pas de générateur (fiche de lecture). Quiz :
+  nouvelle catégorie « SysML en lecture » (8 questions). Ateliers at178 (req, bdd) et at179 (ibd, sd, stm).
+  Carte du programme : ligne « Analyse fonctionnelle » ; résumé du bloc 1 complété.
+- Fiche 1.5 (SADT) : nouveau champ « hors_referentiel », affiché « 📌 Hors référentiel 2016 », distinct de
+  « hors_epreuve » (au programme mais non évalué). Vérifié : « SADT », « actigramme » et « IDEF » ne figurent
+  nulle part dans les 103 pages du référentiel 2016. Écrit « ne figure pas » et non « ne figure plus » : un
+  référentiel antérieur qui l'aurait cité n'a pas été contrôlé.
+- Sources : notation contrôlée sur la spécification OMG SysML 1.6 (formal/19-11-01) — en-tête de cadre,
+  abréviations (9 types, 6 au programme), exigence id/text, relations et leur sens, losange noir, item flow à
+  pointe noire, ports. NON relu dans le texte extrait (dessins dans les tableaux, ou règle UML 2.5) : cercle à
+  croix de la contenance, pointe ouverte des dépendances, notation acteur/ellipse/«include», ligne de vie en
+  pointillé, état arrondi et disque initial, syntaxe « événement [garde] / effet ». Le portail et ses valeurs
+  (20 s, 30 m, 4 m, 0,2 m/s) sont un exemple pédagogique (données d'énoncé).
+- Relecture : 7 bloquants techniques corrigés (« jamais à en dessiner un » contraire à S1.1.3 ; renvoi
+  critère/niveau vers la 1.4 au lieu de 1.3/1.6 ; «include» de la figure partant de « Fermer » alors que le
+  cours disait « Ouvrir » ; fin de course émise par le moteur ; pointes pleines sur «satisfy»/«include»,
+  contraires à la règle « pointe noire = flux » ; télécommande dans le bdd mais extérieure dans l'ibd ; atelier
+  citant une étiquette de transition absente de la figure). 5 bloquants pédagogiques corrigés (garde
+  tautologique « [portail fermé] » remplacée par « [aucun obstacle] » ; collision moteur/Motoréducteur et
+  image bloc = référence / partie = exemplaire ; diagrammes qui ne se croisaient pas — réseau, capteurs ;
+  libellés permanents sur la figure comportement). Refusé (non sourcé) : « le SADT reste courant dans les
+  dossiers industriels ».
