@@ -1229,3 +1229,26 @@ organisme de normalisation reconnu) — bon numéro, bon titre, bon objet. Sinon
   1. 3.1 : résilience « J/cm² » (ancienne KCV) → « J (énergie KV, essai Charpy) », dans le cours affiché,
      les formules, et la version d'origine non affichée (alignée par cohérence).
   2. Renvois fatigue de la 3.1 et de la 4.1 : ajout de la fiche 3.5, fiche de référence sur la fatigue.
+
+### 13.7 — Procédés, compléments : extrusion, soufflage, thermoformage, poudres et MIM, assemblages sans fusion, STL (faite le 2026-10-07)
+
+- Référentiel S7.1.1 (moulage par compression, soufflage, extrusion ; méthodes des poudres par compression et
+  injection ; soudage et brasage ; soudage mécanique par friction et par ultrasons ; approche qualitative) et
+  S7.2.3 (paramétrage des fichiers de prototypage, numérisation et reconstruction par scanner 3D), plus
+  S7.1.2 (choix du procédé : seuil de rentabilité). Thermoformage et FSW signalés comme compléments. Non
+  traité : la « coulée » des méthodes des poudres. Placée EN FIN de bloc 13, après la 13.6 (id 13.7).
+  Générateurs gen_seuil_rentabilite et gen_facettes_stl dans une nouvelle famille « Procédés » (catalogue
+  ET menu « Thème »). Carte du programme : ligne « Procédés de fabrication et contraintes ». Complète 12.3,
+  12.4, 13.1, 13.2, 9.7, 13.6 par renvois.
+- Sources : AUCUNE valeur de procédé (température, pression, tolérance, cadence) — approche qualitative, comme
+  le référentiel ; flèche f = R (1 − cos(π/n)), relation géométrique démontrée ; coûts d'outillage et coûts
+  unitaires : données d'énoncé. Refusés (non vérifiés) : seuil de 450 °C entre brasage tendre et fort
+  (ISO 857-2 citée de mémoire par un relecteur), numéros de séries d'alliages d'aluminium, format 3MF.
+- Relecture : 7 bloquants techniques corrigés (renvoi faux à la 13.1 pour le SMC — la 13.1 n'en parle pas ;
+  « assembler sans fondre les pièces » faux pour les ultrasons ; « aluminium difficile à souder à l'arc »
+  contraire à la 12.3 ; renvoi du soudage à l'arc vers la 13.2 au lieu de la 12.3 ; cas industriel :
+  justification du bouchon fausse et bride « très découpée » envoyée en MIM contre la grille ; générateur
+  qui affichait un seuil en pièces avec décimales sous une question « à partir de combien »). 4 bloquants
+  pédagogiques corrigés (tableau de choix forme/matériau → procédé ; formule de la flèche construite en trois
+  étapes et dessinée ; f_max distinct de f ; seuil de rentabilité démontré par l'égalité des coûts). Une
+  valeur d'atelier corrigée avant relecture (flèche à 24 facettes : 0,342 et non 0,341 mm).
