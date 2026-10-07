@@ -1198,3 +1198,34 @@ organisme de normalisation reconnu) — bon numéro, bon titre, bon objet. Sinon
   non sourcée. À sourcer ou à présenter comme donnée d'énoncé lors d'un passage dédié aux valeurs non
   sourcées (avec, déjà relevé : 8.11 « appel de courant 5 à 8 × In » ; 13.3 « frottements 5 à 15 % » et
   « rendement 0,9 » du brushless ; 13.5 « écart d'au moins 20 % » à la fréquence propre).
+
+### 3.5 — Essais et compléments : fatigue, résilience, flexion, céramiques, grenaillage, coûts (faite le 2026-10-07)
+
+- Référentiel S4.1 (résilience, dureté, limite de fatigue ; essais de flexion, de dureté, de résilience, de
+  fatigue ; céramiques) et S4.2 (grenaillage, galetage, brunissage, sablage ; défauts induits ; incidence
+  sur les procédés ultérieurs ; notions de coûts). Placée EN FIN de bloc 3, après la 3.4 (id 3.5).
+  Générateurs gen_charpy_energie et gen_flexion_3points dans la famille existante « Matériaux et masses ».
+  Carte du programme : ligne « Choix des matériaux ». Complète 3.1 (traction), 3.2 (désignation), 3.3
+  (traitements), 4.1 (Kt), 4.3 (flexion).
+- Sources : Re, Rm, ρ de la table MATERIAUX ; ISO 148-1 (essai Charpy) vérifiée sur iso.org et BSI ;
+  EN 10025-2 : l'extrait officiel confirme les qualités JR, J0, J2, K2 (« diffèrent par leur énergie de
+  rupture ») et l'exemple J0 = 27 J à 0 °C — SEUL J0 est sourcé officiellement ; JR (+20 °C) et J2 (−20 °C)
+  sont des valeurs de désignation d'usage courant, confirmées par des sources de fournisseurs et déjà
+  présentes en fiche 3.2, gardées avec l'accord de l'auteur. Limites d'endurance, Kt, prix au kilo,
+  dimensions, efforts : données d'énoncé. Le champ « prix » de la table MATERIAUX n'a aucune source
+  enregistrée (et n'est pas affiché) : NON utilisé, prix en données d'énoncé. Aucun gain chiffré de
+  traitement de surface. Refusés (non sourcés) : « rupture vers 10⁵–10⁶ cycles », « nombre de cycles de
+  vol limité des avions ».
+- Relecture : 7 bloquants techniques corrigés (unité de la résilience, incohérente avec la 3.1 ; « angle
+  vif » avec Kt = 2,5 contraire au tableau de la 4.1, qui donne 3 à 5 → « petit rayon » ; fontes et
+  composites présentés à tort comme impossibles à essayer en traction ; règle de fatigue sans son domaine
+  de validité (contrainte purement alternée) ; « la pièce s'use de l'intérieur » contraire à l'amorçage en
+  surface ; bonne réponse d'atelier contenant une affirmation fausse sur la température d'essai ; un coût
+  mal arrondi). 7 bloquants pédagogiques corrigés (pourquoi physique de la fatigue — trombone, grains qui
+  glissent ; pic de contrainte en statique et en fatigue ; amplitude, contrainte alternée, échelle
+  logarithmique ; Kf ; coefficient de sécurité ; transition ductile-fragile concrète ; figure Charpy).
+  Données des ateliers rendues différentes de celles du cours ; paragraphe sur l'essai de dureté ajouté.
+- Deux retouches validées par l'auteur sur le contenu existant :
+  1. 3.1 : résilience « J/cm² » (ancienne KCV) → « J (énergie KV, essai Charpy) », dans le cours affiché,
+     les formules, et la version d'origine non affichée (alignée par cohérence).
+  2. Renvois fatigue de la 3.1 et de la 4.1 : ajout de la fiche 3.5, fiche de référence sur la fatigue.
