@@ -1198,6 +1198,11 @@ organisme de normalisation reconnu) — bon numéro, bon titre, bon objet. Sinon
   non sourcée. À sourcer ou à présenter comme donnée d'énoncé lors d'un passage dédié aux valeurs non
   sourcées (avec, déjà relevé : 8.11 « appel de courant 5 à 8 × In » ; 13.3 « frottements 5 à 15 % » et
   « rendement 0,9 » du brushless ; 13.5 « écart d'au moins 20 % » à la fréquence propre).
+- Kt (relevé le 2026-10-08 lors de la fiche 12.9, non corrigé) : figure concentration_contrainte
+  (app.py ~1222) « Le coefficient Kt vaut couramment 2 à 3, et jusqu'à 5 sur une arête vive » ; fiche 4.1
+  (texte ~36442 « Kt vaut 2 à 3 pour un épaulement mal raccordé, jusqu'à 5 pour une arête vive » et
+  formules ~37952 « congé r/d = 0,2 → 1,3 · r/d = 0,1 → 1,7 · arête vive → 3 à 5 · trou → 2 à 3 »). Valeurs
+  sans abaque cité : à sourcer (abaque de Kt d'un ouvrage de référence) ou à présenter comme données d'énoncé.
 
 ### 3.5 — Essais et compléments : fatigue, résilience, flexion, céramiques, grenaillage, coûts (faite le 2026-10-07)
 
@@ -1280,3 +1285,31 @@ organisme de normalisation reconnu) — bon numéro, bon titre, bon objet. Sinon
   image bloc = référence / partie = exemplaire ; diagrammes qui ne se croisaient pas — réseau, capteurs ;
   libellés permanents sur la figure comportement). Refusé (non sourcé) : « le SADT reste courant dans les
   dossiers industriels ».
+
+### 12.9 — Simulation numérique et chaîne numérique : lire et critiquer un calcul, gérer les données (faite le 2026-10-08)
+
+- Référentiel S2.1 (maillons de la chaîne numérique ; PDM : livrables, Gantt, révisions, historique,
+  validation, import/export, droits ; PLM), S2.2 (types de simulation, données et paramètres, résultats :
+  textes, courbes, cartographies ; comparaison au réel ; surfacique non exigé) et S3.2.6 « notions
+  d'élasticité » (maillage, conditions aux limites, Von Mises, déplacements et déformations ; maillage
+  DONNÉ). Niveau écrit fidèlement : cas simples modélisés et conduits par le technicien, cas complexes
+  confiés à un spécialiste, interprétation toujours en autonomie ; la fiche se concentre sur la lecture
+  critique. Placée EN FIN de bloc 12, après la 12.8 (id 12.9). Générateurs gen_securite_simulation et
+  gen_ordre_grandeur_simulation dans la famille existante « Résistance des matériaux ». Quiz : nouvelle
+  catégorie « Simulation et chaîne numérique » (8 questions). Ateliers at180, at181 (at180 étape 3 :
+  depend_de). Carte du programme : ligne « RDM & Dimensionnement ».
+- Sources : singularité d'angle rentrant vif (M. L. Williams, J. Appl. Mech. 19, 1952, p. 526-528, DOI
+  10.1115/1.4010553 vérifié) ; STEP = ISO 10303 (NIST) ; Re S235/S355 (désignation, fiche 3.2) ; E = 210 000
+  MPa (table MATERIAUX) ; Von Mises et Rpe (12.2), Kt (4.1), fatigue (3.5), I/v (4.3), STL (12.4, 13.7).
+  Tous les résultats de simulation (150, 380, 520, 700, 170, 174, 175, 165, 610, 830 MPa) et les coefficients
+  exigés sont des données d'énoncé. La suite 380 → 520 → 700 suit la pente de Williams pour un angle de 270°
+  (facteur ≈ 1,37 par division de la maille par 2), vérifié par le relecteur. Aucun seuil d'écart chiffré
+  entre simulation et calcul à la main (refusé : « quelques pour cent normal », non sourcé).
+- Relecture : 8 bloquants techniques corrigés (appuis trop étendus : la flèche est sous-estimée mais les
+  contraintes sont FAUSSÉES, pas seulement sous-estimées — vérifié par un petit modèle éléments finis du
+  relecteur, pic artificiel au bord de la zone bloquée ; at181 contradictoire ; carte de Von Mises uniforme
+  dans l'épaisseur alors que σ = M y / I ; repères « élément »/« nœud » hors pièce ; niveau du référentiel
+  incomplet ; Gantt et PLM absents ; arrondi 235/156 ; lieu de lecture de la valeur de l'exercice non
+  défini). 5 bloquants pédagogiques corrigés (seuil d'écart contradictoire ; main contre simulation jamais
+  tranché → encadré ; question 4 de l'exercice qui menait à accepter à tort → valeur de simulation 165 MPa et
+  question « laquelle retiens-tu » ; figure « trop rigide » montrant une autre pièce ; repères de maillage).
