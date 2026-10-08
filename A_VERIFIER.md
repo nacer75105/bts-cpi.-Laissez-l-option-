@@ -1191,18 +1191,42 @@ organisme de normalisation reconnu) — bon numéro, bon titre, bon objet. Sinon
   dessiné, avec CM = I / V sur un ponton). Erreur trouvée par l'auteur du brouillon avant relecture : la
   position du centre de poussée dans la figure de stabilité contredisait la physique (corrigée).
 
-### Valeur non sourcée tracée pour un passage ultérieur (relevée le 2026-10-05, non corrigée)
+### Passage groupé des valeurs non sourcées (fait le 2026-10-08)
 
-- 8.2, § « La pression : une force répartie sur une surface » : « la pression du réseau (souvent 6 bars)
-  multipliée par la section du piston donne l'effort disponible ». Valeur typique d'un réseau pneumatique,
-  non sourcée. À sourcer ou à présenter comme donnée d'énoncé lors d'un passage dédié aux valeurs non
-  sourcées (avec, déjà relevé : 8.11 « appel de courant 5 à 8 × In » ; 13.3 « frottements 5 à 15 % » et
-  « rendement 0,9 » du brushless ; 13.5 « écart d'au moins 20 % » à la fréquence propre).
-- Kt (relevé le 2026-10-08 lors de la fiche 12.9, non corrigé) : figure concentration_contrainte
-  (app.py ~1222) « Le coefficient Kt vaut couramment 2 à 3, et jusqu'à 5 sur une arête vive » ; fiche 4.1
-  (texte ~36442 « Kt vaut 2 à 3 pour un épaulement mal raccordé, jusqu'à 5 pour une arête vive » et
-  formules ~37952 « congé r/d = 0,2 → 1,3 · r/d = 0,1 → 1,7 · arête vive → 3 à 5 · trou → 2 à 3 »). Valeurs
-  sans abaque cité : à sourcer (abaque de Kt d'un ouvrage de référence) ou à présenter comme données d'énoncé.
+Relevées les 2026-10-05 et 2026-10-08, traitées en une passe. Audit `verifier_tolerances_ateliers.py` : code 0.
+
+- 8.2 « souvent 6 bars » → SOURCÉE : ATEE/ADEME, *Guide de l'air comprimé*, 2013 (ISBN 2-908131-40-4),
+  « niveau de pression moyen de 6 à 7 bar ». Phrase réécrite avec la référence.
+- 8.11 « 5 à 8 × In » → SOURCÉE : Schneider Electric, *Electrical installation guide* 2015, chap. N § 5,
+  fig. N62 (« Id = 5 to 8 In »). Même tableau, d'après la fig. N63 : démarreur progressif 2 à 4 → 3 à 5 × In,
+  variateur 1 à 1,5 → ≈ 1,5 × In. Référence ajoutée sous le tableau.
+- 13.3 « frottements 5 à 15 % » → REFORMULÉE : chiffre retiré ; mesurés ou donnés par le constructeur, donnés
+  par l'énoncé en exercice (3 N·m dans les exemples).
+- 13.3 « rendement 0,9 » du brushless → REFORMULÉE : « meilleur rendement que l'asynchrone (aucun courant à
+  induire dans le rotor) ».
+- 13.5 « écart d'au moins 20 % » → REFORMULÉE : aucune source ne fixe 20 % ; incohérent avec les seuils
+  1,3 / 0,7 utilisés par tous les calculs. Devenue « règle des ±30 % » (fiche, quiz, ateliers, glossaire),
+  présentée comme marge de bureau d'études et non comme norme, justifiée par 1/|1 − (f exc/f propre)²|
+  (≈ 2,5 à 1,3 × f exc, < 1 à 0,7 × f exc). Aucun résultat numérique changé.
+- 13.5 « amplification 10 à 50 » → CORRIGÉE (incohérence interne) : avec les taux d'amortissement du
+  formulaire, Q = 1/(2ζ) donne 100 à 500 pour l'acier seul, 25 à 50 en fonte, 3 à 10 en polymère. Texte,
+  « à retenir », erreur classique n° 6, § fonte et atelier alignés ; les pourcentages sont désormais
+  présentés partout comme des taux ζ (le § fonte parlait d'« énergie dissipée par cycle », qui vaut 4πζ).
+  Formulaire : ajout de Q = 1/(2ζ).
+- Kt → SOURCÉS : *Shigley's Mechanical Engineering Design*, 10ᵉ éd. (Budynas et Nisbett, McGraw-Hill,
+  2015, ISBN 978-0-07-339820-4), table 7-1, p. 365, lue sur le livre : épaulement presque vif (r/d = 0,02)
+  2,7 flexion / 2,2 torsion / 3,0 traction ; bien congé (r/d = 0,1) 1,7 / 1,5 / 1,9 ; gorge de circlips
+  5,0 / 3,0 / 5,0 ; rainure fraise en bout 2,14 / 3,0. Estimations de premier jet, ce que le texte précise.
+  - figure concentration_contrainte et texte 4.1 : « 2 à 3, jusqu'à 5 » remplacé par ces valeurs ;
+  - tableau 4.1 en deux colonnes flexion / traction ; lignes r/d = 0,2 (1,3 ; Roark 8ᵉ éd. recalculé donne
+    1,36 à 1,45), « trou 2 à 3 » et « fond de filet 3 à 5 » retirées (absentes de la table 7-1) ;
+  - exemple du tirant refait : Kt 3,0 → 132 MPa ; congé r/d = 0,1, Kt 1,9 → 83 MPa (Ø16) et 53 MPa (Ø20),
+    toujours > 47 ; décision Ø24 + congé r = 2,4 → 37 MPa (79 %) ;
+  - tableau torsion (fiche fatigue/arbres) aligné sur la table 7-1 ; corrigé de l'exercice 5 (« vers 1,9 ») ;
+  - glossaire d'atelier et § fatigue : « 2 à 3 pour un trou » remplacé par « 1,7 à 3 pour un épaulement
+    selon son congé, ≈ 5 pour une gorge de circlips » (Shigley).
+- Non touché, cohérent : cas du levier (Kt 2,5 à 3 vif, ≈ 1,5 avec R4, données du cas) ; Kt de la 3.5
+  et des ateliers donnés en énoncé (2,4 ; 2,5 ; 1,6 ; 1,8).
 
 ### 3.5 — Essais et compléments : fatigue, résilience, flexion, céramiques, grenaillage, coûts (faite le 2026-10-07)
 

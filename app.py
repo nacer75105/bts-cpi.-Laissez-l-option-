@@ -1219,8 +1219,8 @@ def concentration_contrainte():
     p.append(_txt(563, 78, "entaille", 10, ALERTE, "middle", True))
     p.append(_txt(560, 175, "les lignes se resserrent : la contrainte locale explose", 11, ALERTE, "middle"))
     p.append(f"<rect x='40' y='200' width='680' height='118' fill='#fff7ed' stroke='{ARBRE}' rx='6'/>")
-    p.append(_txt(56, 224, "σ réelle = Kt × σ calculée. Le coefficient Kt vaut couramment 2 à 3, et jusqu'à 5", 12, TRAIT, "start", True))
-    p.append(_txt(56, 242, "sur une arête vive.", 12, TRAIT))
+    p.append(_txt(56, 224, "σ réelle = Kt × σ calculée. Kt ≈ 1,7 avec un bon congé, ≈ 2,7 avec un angle presque", 12, TRAIT, "start", True))
+    p.append(_txt(56, 242, "vif (épaulement d'arbre en flexion, Shigley 10e éd., table 7-1).", 12, TRAIT))
     p.append(_txt(56, 268, "Concrètement : une pièce calculée « largement suffisante » casse quand même,", 11, FIN))
     p.append(_txt(56, 286, "toujours au même endroit — gorge, épaulement, angle rentrant, trou, filetage.", 11, FIN))
     p.append(_txt(56, 310, "La parade est gratuite : un congé de raccordement au lieu d'un angle vif.", 12, OK, "start", True))
@@ -14295,7 +14295,7 @@ QUIZ["Motorisation, tribologie et vibrations"] = [
     q("Un carter vibre. Sa fréquence propre est 49 Hz, le ventilateur tourne à 2 850 tr/min. "
       "Diagnostic ?",
       ["Aucun rapport", "Résonance : l'excitation est à 47,5 Hz", "Balourd", "Défaut de roulement"], 1,
-      "f = N/60 = 47,5 Hz, soit 3 % de la fréquence propre — alors qu'il faut au moins 20 % "
+      "f = N/60 = 47,5 Hz, soit 3 % de la fréquence propre — alors qu'il faut au moins 30 % "
       "d'écart. Le carter est en résonance : l'amplitude est multipliée par dix ou plus.", "Calcul"),
 
     q("Une équerre vibre et casse. On l'épaissit de 3 à 5 mm. Résultat probable ?",
@@ -25241,8 +25241,8 @@ $$ \\sigma_{max} = K_t \\times \\sigma_{nominale} $$
 
 [[FIG:concentration_contrainte]]
 
-$K_t$ vaut typiquement **2 à 3** pour un trou circulaire, et peut dépasser **5** pour une gorge à
-angle vif. **En statique sur un matériau ductile, on peut souvent négliger $K_t$** (la plastification
+$K_t$ vaut typiquement **1,7 à 3** pour un épaulement selon son congé, et **5** pour une gorge de
+circlips (Shigley's Mechanical Engineering Design, 10ᵉ éd., table 7-1). **En statique sur un matériau ductile, on peut souvent négliger $K_t$** (la plastification
 locale redistribue les contraintes). **En fatigue, jamais** : c'est là que les fissures s'amorcent.
 
 *Règle de conception : mettre un rayon partout où c'est possible. Un R2 au lieu d'un angle vif
@@ -25593,12 +25593,14 @@ $$ \\text{avec} \\quad \\omega = \\frac{2\\pi N}{60} \\quad (N \\text{ en tr/min
 
 Les gorges, rainures de clavette et épaulements sont **particulièrement pénalisants en torsion** :
 
-| Détail | $K_t$ en torsion |
+| Détail | $K_{ts}$ en torsion |
 |---|---|
-| Rainure de clavette (fond arrondi) | 1,6 à 2,0 |
-| Rainure de clavette (fond vif) | 2,5 à 3,5 |
-| Épaulement $r/d = 0,05$ | ≈ 1,8 |
-| Épaulement $r/d = 0,2$ | ≈ 1,2 |
+| Rainure de clavette usinée à la fraise en bout ($r/d = 0,02$) | 3,0 |
+| Gorge de circlips | 3,0 |
+| Épaulement presque vif ($r/d = 0,02$) | 2,2 |
+| Épaulement bien congé ($r/d = 0,1$) | 1,5 |
+
+*Estimations de premier jet : Shigley's Mechanical Engineering Design, 10ᵉ éd., table 7-1, p. 365.*
 
 **Règle de conception :** toujours prévoir un **congé de raccordement généreux** aux épaulements
 d'arbre ($r \\ge 0,1 d$ si possible), et proscrire les fonds de rainure à angle vif.
@@ -36439,7 +36441,8 @@ On l'exprime par un **coefficient de concentration Kt** :
 
 > **σ réelle = Kt × σ calculée**
 
-Kt vaut 2 à 3 pour un épaulement mal raccordé, jusqu'à 5 pour une arête vive. La parade ne coûte
+Pour un épaulement d'arbre, Kt vaut environ 3 si l'angle est presque vif, et tombe vers 2 avec un
+congé de rayon égal au dixième du diamètre (ordres de grandeur du tableau plus bas). La parade ne coûte
 rien : **un congé de raccordement au lieu d'un angle**. Plus le rayon est grand, plus Kt est petit.
 
 C'est aussi pour cette raison qu'en fatigue — une pièce qui tourne, qui vibre — on soigne
@@ -37335,7 +37338,7 @@ une fissure s'amorce à cet endroit précis.
 
 **Conclusion :** la pièce est correcte « en moyenne » et défaillante à l'épaulement. La parade
 ne coûte rien : **remplacer l'arête vive par un congé de raccordement généreux**, ce qui fait
-tomber Kt vers 1,5.
+tomber Kt vers 1,9 avec un congé de rayon d/10 (Shigley 10ᵉ éd., table 7-1).
 """
 
 FICHES["4.2"]["exercice_avant"] = """
@@ -37825,18 +37828,19 @@ On l'exprime par le **coefficient de concentration de contrainte Kt** :
 
 > **σ réelle = Kt × σ calculée**
 
-| Configuration | Kt approximatif |
-|---|---|
-| épaulement bien congé (r/d = 0,2) | 1,3 |
-| épaulement congé moyen (r/d = 0,1) | 1,7 |
-| épaulement à arête vive | 3 à 5 |
-| trou transversal dans une barre | 2 à 3 |
-| gorge de circlips | 2 à 4 |
-| fond de filet | 3 à 5 |
+| Configuration (arbre) | Kt en flexion | Kt en traction |
+|---|---|---|
+| épaulement presque vif (r/d = 0,02) | 2,7 | 3,0 |
+| épaulement bien congé (r/d = 0,1) | 1,7 | 1,9 |
+| gorge de circlips | 5,0 | 5,0 |
+
+*Source : Shigley's Mechanical Engineering Design, 10ᵉ éd. (Budynas et Nisbett, McGraw-Hill,
+2015), table 7-1, p. 365. Ce sont des estimations de premier jet : une fois les diamètres connus,
+on lit la valeur exacte sur l'abaque (elle dépend aussi du rapport D/d).*
 
 **La parade est gratuite : un congé au lieu d'un angle.** Plus le rayon est grand, plus Kt tombe.
-Passer d'une arête vive à un congé de r = 0,2 d divise la contrainte locale par trois — sans
-ajouter un gramme de matière.
+Passer d'un angle presque vif à un congé de r = 0,1 d fait baisser la contrainte locale d'environ
+40 % (3,0 → 1,9 en traction) — sans ajouter un gramme de matière.
 
 *Et c'est encore plus important en fatigue : une pièce qui tourne ou qui vibre casse toujours à
 l'endroit où Kt est maximal. La méthode est en fiche 3.5 ; les cas des fiches 12.5 et 13.5 le montrent.*
@@ -37893,10 +37897,10 @@ Rpe = Re / s = 235 / 5 = **47 MPa**
 
 **Étape 6 — La vérification qu'on oublie**
 
-À l'épaulement à arête vive, Kt ≈ 3,5 :
-σ réelle = 3,5 × 43,9 = **154 MPa**
+À l'épaulement à arête vive (traction, angle presque vif), Kt ≈ 3,0 :
+σ réelle = 3,0 × 43,9 = **132 MPa**
 
-154 ≫ 47 → **la pièce est en réalité très insuffisante à cet endroit**. Elle plastifiera au droit
+132 ≫ 47 → **la pièce est en réalité très insuffisante à cet endroit**. Elle plastifiera au droit
 de l'épaulement, et sous charge variable elle finira par rompre.
 
 **Étape 7 — L'allongement, par curiosité utile**
@@ -37910,11 +37914,13 @@ une erreur de position.
 
 | Correction | Effet |
 |---|---|
-| **congé r = 3 mm** à l'épaulement (r/d ≈ 0,2) | Kt tombe de 3,5 à 1,3 → σ réelle = 57 MPa |
-| **passer en Ø20** | σ nominale = 28 MPa, et avec Kt = 1,3 → 36,5 MPa ✅ |
-| changer de nuance (S355) | Rpe = 71 MPa, mais le problème de Kt demeure |
+| **congé r = 1,6 mm** à l'épaulement (r/d = 0,1) | Kt tombe de 3,0 à 1,9 → σ réelle = 83 MPa, encore > 47 |
+| **passer en Ø20**, congé r = 2 mm | σ nominale = 28,1 MPa, × 1,9 → 53 MPa, encore > 47 |
+| **passer en Ø24**, congé r = 2,4 mm | σ nominale = 19,5 MPa, × 1,9 → 37 MPa ✅ (79 % de l'admissible) |
+| changer de nuance (S355) | Rpe = 71 MPa, mais le problème de Kt demeure (83 MPa au Ø16) |
 
-**Décision : congé r = 3 et Ø20.** On traite la cause (la concentration) **et** on rétablit une
+**Décision : Ø24 avec un congé r = 2,4 mm.** Le Ø22 passerait tout juste (44 MPa, 94 %) : on
+retomberait sur la marge trop faible du départ. On traite la cause (la concentration) **et** on rétablit une
 marge saine.
 
 ### 11. Les erreurs classiques
@@ -37949,7 +37955,7 @@ FICHES["4.1"]["formules"] = """
 5 à 8 (chocs, charge variable) · 8 à 12 (levage de personnes)
 
 **Concentration de contrainte** — σ réelle = Kt × σ calculée
-Kt : congé r/d = 0,2 → 1,3 · r/d = 0,1 → 1,7 · arête vive → 3 à 5 · trou → 2 à 3
+Kt épaulement (flexion / traction, Shigley 10ᵉ éd. table 7-1) : presque vif r/d = 0,02 → 2,7 / 3,0 · congé r/d = 0,1 → 1,7 / 1,9 · gorge de circlips → 5 / 5
 
 **Poids** — P = m × g, g = 9,81 m/s² · contrôle rapide : 10 N par kg
 
@@ -41895,8 +41901,9 @@ vérin :
 
 > **F = p × S**
 
-*C'est le calcul déjà vu dans l'étude de cas du bloc 14 : la pression du réseau (souvent 6
-bars) multipliée par la section du piston donne l'effort disponible.*
+*C'est le calcul déjà vu dans l'étude de cas du bloc 14 : la pression du réseau multipliée par la section du piston donne l'effort disponible.
+Un réseau d'atelier tourne en général autour de 6 à 7 bars (ATEE, *Guide de l'air comprimé*,
+2013) : c'est pourquoi les exercices prennent 6 bars.*
 
 [[FIG:effort_verin]]
 
@@ -43617,8 +43624,11 @@ temps que le rotor prenne de la vitesse.
 |---|---|---|---|
 | Démarrage direct | $5$ à $8 × I_n$ | Couple plein, immédiat | Simple, peu coûteux |
 | Étoile-triangle | $≈ 1/3$ du courant direct | $≈ 1/3$ du couple direct | Modérée |
-| Démarreur progressif (soft starter) | $2$ à $4 × I_n$, réglable | Progressif, réglable | Modérée à élevée |
-| Variateur de fréquence | $≈ 1$ à $1{,}5 × I_n$ | Contrôlé en continu | Élevée, coût le plus haut |
+| Démarreur progressif (soft starter) | $3$ à $5 × I_n$, réglable | Progressif, réglable | Modérée à élevée |
+| Variateur de fréquence | $≈ 1{,}5 × I_n$ | Contrôlé en continu | Élevée, coût le plus haut |
+
+*Ordres de grandeur du guide Schneider Electric (Electrical installation guide 2015, fig. N62 et
+N63) ; la valeur exacte pour un moteur donné se lit dans son catalogue (rapport Id/In).*
 
 **Le principe du démarrage étoile-triangle** : on démarre le moteur couplé en étoile (tension
 réduite, courant réduit, couple réduit) puis, une fois lancé, on bascule en triangle (tension
@@ -51700,7 +51710,7 @@ montrait déjà le cas du convoyeur en fiche 8.1. Cette fiche donne la méthode 
 | **asynchrone triphasé** | robuste, économique, sans entretien | vitesse peu réglable sans variateur | ventilateurs, pompes, convoyeurs |
 | **asynchrone + variateur** | vitesse réglable, rampes douces | chauffe à basse vitesse (ventilation) | machines à vitesse variable |
 | **courant continu** | couple facile à piloter, simple à commander | balais à remplacer, entretien | petites machines, ancien matériel |
-| **brushless (BLDC/synchrone)** | fort couple, compact, rendement 0,9 | électronique obligatoire, coût | robotique, axes dynamiques |
+| **brushless (BLDC/synchrone)** | fort couple, compact, meilleur rendement que l'asynchrone (aucun courant à induire dans le rotor) | électronique obligatoire, coût | robotique, axes dynamiques |
 | **pas à pas** | positionnement sans capteur, économique | **perd le pas s'il est surchargé** | imprimantes 3D, petits axes |
 | **servomoteur** | position et vitesse précises, avec retour codeur | le plus cher | machines-outils, robots |
 
@@ -51720,7 +51730,8 @@ l'erreur classique.
 > **C moteur = C charge + C frottements + C accélération + C pertes**
 
 **1. Le couple de charge** — l'effort utile : soulever, couper, entraîner.
-**2. Les frottements** — guidages, joints, engrenages. Souvent 5 à 15 % du total.
+**2. Les frottements** — guidages, joints, engrenages. Ils se mesurent sur la machine ou se lisent
+dans les données du constructeur : dans un exercice, ils sont donnés par l'énoncé.
 **3. Le couple d'accélération** — c'est celui qu'on oublie, et il domine souvent au démarrage :
 
 > **C accélération = J total × α**, avec α = accélération angulaire (rad/s²)
@@ -52549,11 +52560,16 @@ un choc à chaque passage de dent.
 > **Quand la fréquence d'excitation approche la fréquence propre, l'amplitude s'amplifie
 > énormément.**
 
-Le facteur d'amplification peut atteindre **10 à 50** sur une structure peu amortie. Une force de
-10 N produit alors le même déplacement qu'une force de 300 N appliquée lentement.
+À la résonance exacte, le facteur d'amplification vaut **Q = 1 / (2 ζ)**, où ζ est le taux
+d'amortissement (§ 6). Avec les taux du formulaire : **100 à 500** pour une pièce en acier seule
+(ζ = 0,1 à 0,5 %), 25 à 50 en fonte grise (ζ = 1 à 2 %), 3 à 10 pour un polymère (ζ = 5 à 15 %).
+Une force de 10 N appliquée à la résonance déplace alors une pièce en acier autant qu'une force
+de 1 000 à 5 000 N appliquée lentement. Un assemblage réel amortit davantage que le matériau seul
+(frottements dans les liaisons, § 6), donc Q y est plus faible — mais il reste couramment de
+plusieurs dizaines.
 
 C'est ainsi qu'une pièce parfaitement calculée en statique se fissure en quelques semaines : **elle
-ne subit pas la force qu'on a calculée**, mais dix fois cette force, des millions de fois.
+ne subit pas la force qu'on a calculée**, mais des dizaines de fois cette force, des millions de fois.
 
 **Le calcul de l'excitation d'un rotor**, à savoir faire :
 
@@ -52567,11 +52583,15 @@ propre voisine de 24 Hz, la machine sera inutilisable.
 fréquence de rotation. Il faut donc vérifier **plusieurs fréquences**, pas seulement celle de
 rotation.
 
-### 4. La règle des ±20 %
+### 4. La règle des ±30 %
 
-C'est le critère pratique à retenir, celui qu'on applique en conception :
+C'est le critère pratique à retenir, celui qu'on applique en conception. Ce n'est pas une
+norme : c'est une marge de bureau d'études, que les cahiers des charges ou les normes propres à
+certaines machines peuvent fixer autrement. Elle se justifie par le calcul : sans amortissement,
+l'amplitude est multipliée par 1 / |1 − (f excitation / f propre)²|, soit environ 2,5 quand
+f propre = 1,3 × f excitation, et moins de 1 quand f propre = 0,7 × f excitation.
 
-> **La fréquence propre doit s'écarter d'au moins 20 % de toute fréquence d'excitation.**
+> **La fréquence propre doit s'écarter d'au moins 30 % de toute fréquence d'excitation.**
 
 En pratique, on cherche :
 
@@ -52654,7 +52674,7 @@ f = N / 60 = 2 850 / 60 = **47,5 Hz**
 
 f propre / f excitation = 49 / 47,5 = **1,03**
 
-On est à **3 % de la résonance**, alors qu'il faudrait au moins 20 %. Le diagnostic est immédiat :
+On est à **3 % de la résonance**, alors qu'il faudrait au moins 30 %. Le diagnostic est immédiat :
 le carter est en résonance avec le ventilateur.
 
 **Étape 3 — Les solutions possibles**
@@ -52689,8 +52709,8 @@ C'est pourquoi on ne renforce jamais au hasard : **on calcule ou on mesure d'abo
 4. **Faire tourner une machine à sa vitesse critique**, ou s'y arrêter au ralenti.
 5. **Confondre amortissement et raideur** : la fonte n'est pas plus raide que l'acier, elle
    amortit mieux.
-6. **Dimensionner en statique** une pièce qui vibre : la contrainte réelle peut être dix fois
-   celle calculée.
+6. **Dimensionner en statique** une pièce qui vibre : la contrainte réelle peut être des dizaines
+   de fois celle calculée (27 fois dans le cas ci-dessous).
 7. **Souder un renfort d'un seul tenant** là où un assemblage boulonné aurait mieux amorti.
 
 ### 10. À retenir
@@ -52698,7 +52718,8 @@ C'est pourquoi on ne renforce jamais au hasard : **on calcule ou on mesure d'abo
 - **f propre = (1/2π) √(k/m)** — elle ne dépend que de la raideur et de la masse.
 - **f excitation d'un rotor = N / 60** (Hz), plus les harmoniques (engrènement, balourd).
 - **Règle des ±20 %** : f propre ≥ 1,3 f excitation, ou ≤ 0,7.
-- En résonance, l'amplification atteint 10 à 50 : la pièce subit dix fois la force calculée.
+- En résonance, l'amplification vaut Q = 1/(2ζ) : 100 à 500 pour de l'acier seul (ζ = 0,1 à 0,5 %),
+  moins dans un assemblage réel, qui amortit davantage.
 - Vitesse critique d'arbre : rester sous 0,7 N critique ou au-dessus de 1,3.
 - Isolation sur plots : efficace seulement si **f excitation ≥ 1,4 × f propre du montage**.
 - La **fonte amortit**, l'acier non — d'où les bâtis de machines-outils.
@@ -52718,7 +52739,9 @@ engrènement : f × Z · balourd : f · désalignement : 2f
 
 **Isolation sur plots** — f propre ≈ 5 / √(enfoncement en cm) · efficace si f exc ≥ 1,4 f propre
 
-**Amortissement des matériaux** — acier 0,1 à 0,5 % · fonte grise 1 à 2 % · polymères 5 à 15 %
+**Amortissement des matériaux (taux ζ)** — acier 0,1 à 0,5 % · fonte grise 1 à 2 % · polymères 5 à 15 %
+
+**Amplification à la résonance** — Q = 1 / (2 ζ)
 """,
     "exercice": """
 ### Exercice d'échauffement — Éviter la résonance
@@ -52730,7 +52753,7 @@ Un support porte un moteur tournant à **1 750 tr/min**. Sa fréquence propre ca
 
 **2.** Calcule l'écart. Le support est-il correctement dimensionné ?
 
-**3.** On veut raidir le support pour atteindre la règle des 20 %. Quelle fréquence propre
+**3.** On veut raidir le support pour atteindre la règle des 30 %. Quelle fréquence propre
 minimale faut-il viser ?
 
 **4.** Le moteur entraîne un pignon de **24 dents**. Quelle est la fréquence d'engrènement ?
@@ -52763,7 +52786,7 @@ f = N / 60 = 1 750 / 60 = **29,2 Hz**
 
 f propre / f excitation = 31 / 29,2 = **1,06**
 
-On est à **6 % de la résonance**, alors qu'il faut au moins 20 %. **Le support est mal
+On est à **6 % de la résonance**, alors qu'il faut au moins 30 %. **Le support est mal
 dimensionné** : il vibrera fortement et transmettra ce bruit à toute la structure.
 
 **3. La fréquence propre à viser**
@@ -52832,8 +52855,9 @@ portée entre paliers plus courte, ou palier intermédiaire.*
 Parce qu'on ne cherche **pas la résistance** — un bâti n'est jamais près de sa limite élastique —
 mais **l'amortissement**.
 
-La fonte grise, grâce à ses lamelles de graphite, dissipe **1 à 2 %** de l'énergie vibratoire à
-chaque cycle, contre **0,1 à 0,5 %** pour l'acier : elle amortit trois à dix fois mieux.
+La fonte grise, grâce à ses lamelles de graphite, a un taux d'amortissement de **1 à 2 %**,
+contre **0,1 à 0,5 %** pour l'acier : elle amortit de 2 à 20 fois mieux, et sa résonance est
+d'autant moins violente (Q = 1/(2ζ) : 25 à 50 au lieu de 100 à 500).
 
 Conséquence concrète en usinage : les vibrations d'outil s'éteignent vite, l'état de surface est
 meilleur, et les outils durent plus longtemps.
@@ -66358,7 +66382,7 @@ _mth("13.5", "Vérifier qu'une structure ne va pas entrer en résonance", [
     "**Estimer la fréquence propre de la structure** : f = (1/2π) × √(k/m).",
     "**Comparer chaque fréquence d'excitation à la fréquence propre**, une par une — "
     "ne vérifier que la rotation ne suffit jamais.",
-    "**Appliquer la règle des ±20 %** : f propre doit rester ≥ 1,3 × ou ≤ 0,7 × "
+    "**Appliquer la règle des ±30 %** : f propre doit rester ≥ 1,3 × ou ≤ 0,7 × "
     "chaque fréquence d'excitation.",
     "**Si le risque existe**, agir sur k ou m pour décaler la fréquence propre, ou "
     "ajouter de l'amortissement plutôt que de viser un décalage exact et fragile.",
@@ -72747,14 +72771,14 @@ EXERCICES_GUIDES = [
              "tol": 0.02, "formule": "f = N / 60"},
         ],
         "conclusion": {
-            "question": "Le support respecte-t-il la règle des ±20 % d'écart avec l'excitation ?",
+            "question": "Le support respecte-t-il la règle des ±30 % d'écart avec l'excitation ?",
             "options": ["Non : l'écart n'est que de 4 %, risque de résonance",
                        "Oui, l'écart est largement suffisant"],
             "bonne": 0,
             "explication": "f propre / f excitation = 25,16 / 24,17 = 1,04, alors qu'il faut au "
                            "moins 1,3 (ou au plus 0,7). L'écart n'est que de 4 % : ce support "
-                           "entrera en résonance, avec une amplification pouvant atteindre 10 à "
-                           "50 fois l'effort statique.",
+                           "entrera en résonance, avec une amplification Q = 1/(2ζ) qui peut "
+                           "dépasser 100 pour un support en acier peu amorti.",
         },
     },
     {
@@ -81057,7 +81081,8 @@ ATELIERS = [
              "calculée sur la section pleine."),
             ("Kt (coefficient de concentration de contrainte)",
              "le facteur multiplicateur : σ_réelle = σ_nominale × Kt. Il vaut typiquement "
-             "2 à 3 pour un trou, et peut dépasser 5 pour une gorge à angle vif."),
+             "1,7 à 3 pour un épaulement d'arbre selon son congé, et environ 5 pour une "
+             "gorge de circlips (Shigley 10ᵉ éd., table 7-1)."),
             ("Congé",
              "un arrondi qui remplace un angle vif — le geste de conception le plus simple "
              "et le plus efficace pour réduire Kt, et donc éviter l'amorçage de fissure en "
@@ -83599,7 +83624,7 @@ ATELIERS = [
              "basse."),
             ("fréquence d'excitation", "la fréquence à laquelle une machine sollicite sa "
              "structure — f (Hz) = N (tr/min) / 60 pour un balourd de rotation."),
-            ("règle des ±20 %", "la fréquence propre doit s'écarter d'au moins 20 % de "
+            ("règle des ±30 %", "la fréquence propre doit s'écarter d'au moins 30 % de "
              "toute fréquence d'excitation : f propre ≥ 1,3×f excitation, ou ≤ 0,7×f "
              "excitation."),
         ],
@@ -83628,9 +83653,9 @@ ATELIERS = [
              "bonne": 0,
              "indice": "Compare 35 Hz au seuil f propre ≥ 1,3 × f excitation.",
              "diagnostics": {1: "35 Hz dépasse bien le seuil de 31,4 Hz calculé avec la "
-                                 "règle des 20 % — la structure est donc \"raide\" par "
+                                 "règle des 30 % — la structure est donc \"raide\" par "
                                  "rapport à cette excitation, ce qui est sûr.",
-                              2: "La règle des ±20 % se vérifie directement à partir des "
+                              2: "La règle des ±30 % se vérifie directement à partir des "
                                  "deux fréquences données, sans avoir besoin de la masse "
                                  "séparément."}},
         ],
