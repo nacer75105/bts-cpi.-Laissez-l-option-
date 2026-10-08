@@ -72120,8 +72120,15 @@ def page_entrainement():
                                             "serie": 0, "faits": 0, "reussis": 0,
                                             "essais": 0, "fini": False})
 
-    famille = st.selectbox("Thème", FAMILLES_ENTRAINEMENT,
-                           index=FAMILLES_ENTRAINEMENT.index(E["famille"]))
+    # Pills plutôt que selectbox : les 15 thèmes restent tous visibles (la liste
+    # déroulante n'en montrait que ~11). Désélectionner ramène à « Mélange ».
+    def _pill_vide_vers_melange():
+        if st.session_state.get("ent_famille_pill") is None:
+            st.session_state["ent_famille_pill"] = "Mélange"
+
+    st.session_state.setdefault("ent_famille_pill", E["famille"])
+    famille = st.pills("Thème", FAMILLES_ENTRAINEMENT, selection_mode="single",
+                       key="ent_famille_pill", on_change=_pill_vide_vers_melange) or "Mélange"
     if famille != E["famille"]:
         E.update({"famille": famille, "exo": None, "essais": 0, "fini": False})
 
