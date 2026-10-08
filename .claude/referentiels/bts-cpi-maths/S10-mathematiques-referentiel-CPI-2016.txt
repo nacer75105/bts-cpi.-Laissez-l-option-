@@ -1,0 +1,74 @@
+S10 - MATHEMATIQUES
+
+L'enseignement des mathématiques dans les sections de techniciens supérieur de Conception de produits indus-
+triels se réfère aux dispositions figurant aux annexes I et II de l'arrêté du 4 juin 2013 fixant les objectifs, les conte-
+nus de l'enseignement et le référentiel des capacités du domaine des mathématiques pour les brevets de techni-
+cien supérieur.
+
+Les dispositions de cet arrêté sont précisées pour ce BTS de la façon suivante.
+
+I - Lignes directrices
+
+Objectifs spécifiques à la section
+L'étude de phénomènes continus issus des sciences physiques et de la technologie constitue un des objectifs es-
+sentiels de la formation des techniciens supérieurs en productique mécanique. Ils sont décrits mathématiquement
+par des fonctions obtenues le plus souvent comme solutions d'équations différentielles.
+Une vision géométrique des problèmes doit imprégner l'ensemble de l'enseignement car les méthodes de la géo-
+métrie jouent un rôle capital en analyse et dans leurs domaines d'intervention : apports du langage géométrique et
+des modes de représentation.
+Enfin la connaissance de quelques méthodes statistiques pour contrôler la qualité d'une fabrication est indispen-
+sable dans cette formation.
+
+Organisation des contenus
+C'est en fonction de ces objectifs que l'enseignement des mathématiques est conçu ; il peut s'organiser autour de
+cinq pôles :
+- une étude des fonctions usuelles, c'est-à-dire exponentielles, puissances et logarithme dont la maîtrise est né-
+cessaire à ce niveau ;
+- la résolution d'équations différentielles dont on a voulu marquer l'importance, en relation avec les problèmes
+d'évolution ;
+- la résolution de problèmes géométriques rencontrés dans les divers enseignements, y compris en conception
+assistée par ordinateur ;
+- une initiation au calcul des probabilités, suivie de notions de statistique inférentielle débouchant sur la construc-
+tion des tests statistiques les plus simples utilisés en contrôle de qualité ;
+- une valorisation des aspects numériques et graphiques pour l'ensemble du programme, une initiation à quelques
+méthodes élémentaires de l'analyse numérique et l'utilisation à cet effet des moyens informatiques appropriés :
+calculatrice programmable à écran graphique, ordinateur muni d'un tableur, de logiciels de calcul formel, de géo-
+métrie ou d'application (modélisation, simulation,...).
+
+Organisation des études
+En première et en deuxième année, l'horaire hebdomadaire est de 2 heures en classe entière (dont une demi-
+heure en co-intervention) + 1 heure de travaux dirigés.
+
+II - Programme
+Le programme de mathématiques est constitué des modules suivants :
+
+Fonctions d'une variable réelle, à l'exception des paragraphes « Approximation locale d'une fonction » et
+« Courbes paramétrées ».
+
+Calcul intégral, à l'exception du paragraphe « Formule d'intégration par parties ».
+
+Équations différentielles.
+
+Statistique descriptive.
+
+                                               BTS Conception des Produits Industriels - Page 48 / 103
+Probabilités 1.
+
+Probabilités 2, à l'exception du paragraphe « Exemples de processus aléatoires ».
+
+Statistique inférentielle
+
+Configurations géométriques.
+
+Calcul vectoriel.
+
+III - Programme complémentaire
+Le programme complémentaire ne fait pas l'objet d'une évaluation et peut être enseigné durant les heures
+d'accompagnement personnalisé de deuxième année.
+Cet apport est un approfondissement qui peut être utile aux étudiants souhaitant des compléments spécifiques de
+modélisation géométrique et de calcul matriciel.
+
+Modélisation géométrique
+
+Calcul matriciel
+

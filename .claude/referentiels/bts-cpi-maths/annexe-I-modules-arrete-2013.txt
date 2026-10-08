@@ -1,0 +1,2232 @@
+                                  ANNEXE I :
+                PROGRAMME DE MATHÉMATIQUES
+
+Pour chaque spécialité de brevet de technicien supérieur, le programme de mathématiques comporte,
+d'une part un exposé des objectifs, d'autre part des modules de programmes choisis dans la liste ci-
+jointe en fonction des besoins spécifiques de la section considérée. Ces modules, qui s'appuient sur les
+programmes du lycée, sont conçus de façon à favoriser l'accueil de tous les bacheliers, en particulier
+des bacheliers professionnels et technologiques.
+
+I. Lignes directrices
+
+1. Objectifs généraux
+
+L'enseignement des mathématiques doit fournir les outils nécessaires pour permettre aux élèves de
+suivre avec profit d'autres enseignements utilisant des savoir-faire mathématiques.
+Il doit aussi contribuer au développement de la formation scientifique, grâce à l'exploitation de toute la
+richesse de la démarche mathématique : mathématisation d'un problème (modélisation), mise en oeuvre
+d'outils théoriques pour résoudre ce problème, analyse de la pertinence des résultats obtenus au regard
+du problème posé.
+Il doit enfin contribuer au développement des capacités personnelles et relationnelles : acquisition de
+méthodes de travail, maîtrise des moyens d'expression écrite et orale ainsi que des méthodes de
+représentation (graphiques, schémas, croquis à main levée, organisation de données statistiques,...),
+avec ou sans intervention des outils informatiques. Les moyens de documentation, qui contribuent à un
+développement des capacités d'autonomie, sont à faire utiliser (documents écrits réalisés par les
+enseignants, livres, revues, tables, formulaires, supports informatiques de toute nature, Internet,...).
+
+Ces trois objectifs permettent de déterminer pour un technicien supérieur les capacités et compétences
+mises en jeu en mathématiques.
+
+On a veillé à articuler l'impératif d'une formation axée sur l'entrée dans la vie professionnelle et le
+développement des capacités d'adaptation à l'évolution scientifique et technique, permettant la
+poursuite éventuelle d'études.
+
+2. Objectifs spécifiques à la section
+
+Pour chaque spécialité, les objectifs spécifiques, qui déterminent les champs de problèmes qu'un
+technicien supérieur doit être capable de résoudre sont précisés par le règlement du BTS considéré.
+
+3. Organisation des contenus
+
+C'est en fonction de ces objectifs généraux et spécifiques que l'enseignement des mathématiques est
+conçu pour chaque spécialité de brevet de technicien supérieur ; il peut s'organiser autour :
+
+   - de quelques pôles significatifs de la spécialité, précisés par le règlement du BTS considéré ;
+   - pour l'ensemble du programme, d'une valorisation des aspects numériques et graphiques, d'une
+   initiation à quelques méthodes élémentaires de l'analyse numérique et de l'utilisation pour tout cela
+   des moyens informatiques appropriés (calculatrice, ordinateur).
+
+4. Présentation du texte du programme
+
+Pour chaque spécialité de BTS, le programme est constitué de plusieurs modules, chacun comportant
+deux parties : un bandeau et un texte présenté sous forme d'un tableau en trois colonnes.
+
+                                                        4
+Généralement, le bandeau précise les objectifs essentiels du module et délimite le cadre du texte du
+tableau.
+Dans la première colonne du tableau figurent les contenus : il s'agit de l'énoncé des notions et
+résultats de base que l'étudiant doit connaître et savoir utiliser.
+La deuxième colonne est celle des capacités attendues : elle liste ce que l'étudiant doit savoir faire,
+sous forme de verbes d'action, de façon à faciliter l'évaluation ; il peut s'agir d'appliquer des
+techniques classiques et bien délimitées, d'exploiter des méthodes s'appliquant à un champ de
+problèmes, ou d'utiliser des outils logiciels.
+La troisième colonne contient des commentaires précisant le sens ou les limites à donner à certaines
+questions du programme ; pour éviter toute ambiguïté sur celles-ci, il est indiqué que certains éléments
+ou certaines notions sont « hors programme » (ce qui signifie qu'ils n'ont pas à être abordés au niveau
+considéré) ou qu'à leur sujet « aucune difficulté théorique ne sera soulevée ». La mention « admis »
+signifie que la démonstration du résultat visé est en dehors des objectifs du programme. Pour limiter
+un niveau d'approfondissement, il peut être indiqué en commentaire, dans la colonne de droite, que
+« tout excès de technicité est exclu » ou que des « indications doivent être fournies » aux étudiants, ou
+encore qu'il faut se limiter à des « exemples simples ».
+Le symbole  introduit des thèmes d'ouverture interdisciplinaire où le programme de mathématiques
+peut interagir avec les enseignements scientifiques, technologiques ou professionnels. Les professeurs
+de mathématiques doivent régulièrement accéder aux laboratoires afin de favoriser l'établissement de
+liens forts entre la formation mathématique et les formations dispensées dans les enseignements
+scientifiques et technologiques. Cet accès permet de :
+
+   - prendre appui sur les situations expérimentales rencontrées dans ces enseignements ;
+   - connaître les logiciels utilisés et l'exploitation qui peut en être faite pour illustrer les concepts
+   mathématiques ;
+   - prendre en compte les besoins mathématiques des autres disciplines.
+
+5. Organisation des études
+
+L'horaire de mathématiques pour chacune des deux années de la formation considérée est indiqué par
+le règlement du BTS considéré.
+
+Les étudiants ont acquis dans les classes antérieures un bagage qu'on aura soin d'exploiter en tenant
+compte de la diversité des parcours scolaires. Il importe en particulier de prévoir en début d'année un
+accompagnement des bacheliers professionnels de façon à faciliter la transition vers les études
+supérieures.
+Dans la continuité des programmes du lycée, la résolution de problème doit être mise au coeur de
+l'activité mathématique des étudiants.
+Le professeur dispose en général de séances de travaux dirigés nécessaires pour affermir les
+connaissances des élèves par un entraînement méthodique et réfléchi à la faveur d'activités de synthèse
+disciplinaires et interdisciplinaires.
+Réguliers et de nature variée, les travaux hors du temps scolaire contribuent à la formation des
+étudiants et sont absolument essentiels à leur progression. Ils sont conçus de façon à prendre en
+compte la diversité et l'hétérogénéité de leurs acquis.
+Le cours proprement dit doit être bref. Une part très importante du temps de travail doit être consacrée
+à la mise en activité des étudiants, sous forme de travaux dirigés ou pratiques, mettant en oeuvre les
+contenus du programme.
+Le professeur de mathématiques pourra admettre certains résultats ; il s'attachera avant tout à faire
+acquérir aux élèves un noyau de connaissances solides, en particulier celles qui sont directement
+utilisées dans les autres enseignements scientifiques, techniques et professionnelles, ainsi qu'à
+développer la capacité à les mobiliser pour résoudre des problèmes issus de secteurs variés des
+mathématiques et des autres disciplines.
+
+                                                        5
+6. Place des outils logiciels
+
+Les outils logiciels fournissent un ensemble de ressources particulièrement utiles pour l'enseignement
+des mathématiques en sections de techniciens supérieurs, où ils peuvent intervenir de façon très
+efficace dans la réalisation des objectifs de cet enseignement :
+
+   - en fournissant rapidement des résultats, dans les domaines du calcul (y compris à l'aide d'un
+   logiciel de calcul formel), des représentations graphiques et pour les applications à d'autres
+   disciplines ;
+   - en contribuant par leur intervention au développement de la formation scientifique, à différents
+   moments de la démarche mathématique, lors de la résolution de certains problèmes, de la
+   reconnaissance de l'adéquation de modèles avec les observations ou de la réalisation d'une
+   synthèse sur certains concepts ;
+   - en favorisant le développement des capacités personnelles et relationnelles, notamment la
+   maîtrise des moyens d'expression écrite et des méthodes de représentation, ainsi que l'autonomie
+   dans la recherche documentaire intégrant l'usage d'Internet.
+
+Pour l'ensemble des spécialités de brevet de technicien supérieur, le travail effectué soit à l'aide de la
+calculatrice programmable à écran graphique de chaque étudiant, soit sur un ordinateur muni d'un
+tableur, de logiciels de calcul formel, de logiciels de géométrie ou de logiciels d'application
+(modélisation, simulation,...) permet de centrer l'activité mathématique sur l'essentiel : identifier un
+problème, expérimenter sur des exemples, conjecturer un résultat, bâtir une argumentation, mettre en
+forme une démonstration, contrôler les résultats obtenus et analyser leur pertinence en fonction du
+problème posé.
+De plus, pour les spécialités où l'informatique joue un rôle particulièrement important, une approche
+de quelques modèles mathématiques intervenant dans la conception et l'utilisation de ces technologies
+est de nature à favoriser l'unité de la formation.
+
+Ces apports des outils logiciels doivent s'intégrer dans la mise en oeuvre des textes définissant le
+programme de mathématiques, en veillant à distinguer les objectifs de formation et les exigences lors
+des évaluations.
+
+7. Articulation avec les épreuves du BTS
+
+En ce qui concerne les épreuves du BTS, il est précisé que les étudiants doivent connaître l'énoncé et
+la portée des résultats figurant au programme, mais que la démonstration de ces résultats n'est pas
+exigible. En outre, pour les rubriques du programme figurant sous la forme « Exemples de », seule la
+mise en oeuvre des méthodes explicites dans l'énoncé de l'épreuve est exigible et aucune connaissance
+spécifique préalable n'est requise.
+
+L'emploi des calculatrices est défini par la réglementation en vigueur spécifique aux examens et
+concours relevant du ministère de l'éducation nationale. Dans ce cadre, les étudiants doivent savoir
+utiliser une calculatrice programmable à écran graphique dans les situations liées au programme de la
+spécialité considérée. Cet emploi combine les capacités suivantes, qui constituent un savoir-faire de
+base et sont seules exigibles :
+
+   - savoir effectuer les opérations arithmétiques sur les nombres et savoir comparer des nombres ;
+   - savoir utiliser les touches des fonctions et lois de probabilités qui figurent au programme de la
+   spécialité considérée et savoir programmer le calcul des valeurs d'une fonction d'une variable
+   permis par ces touches ;
+   - savoir afficher à l'écran la courbe représentative d'une fonction ;
+   - savoir programmer une séquence, une instruction conditionnelle ou itérative comportant
+   éventuellement un test d'arrêt.
+
+L'usage des calculatrices, y compris celles possédant un logiciel de calcul formel, d'autres moyens de
+calcul (tables numériques, abaques,...), des instruments de dessin est autorisé aux épreuves de
+
+                                                        6
+mathématiques du BTS, dans le cadre de la réglementation en vigueur pour les examens et concours
+de l'éducation nationale ; ce point doit être précisé en tête des sujets.
+
+II Programme
+
+Modules d'analyse
+   - Suites numériques
+   - Fonctions d'une variable réelle
+   - Fonctions d'une variable réelle et modélisation du signal
+   - Calcul intégral
+   - Équations différentielles
+   - Séries de Fourier
+   - Transformation de Laplace
+   - Transformation en z
+
+Modules de statistique et probabilités
+   - Statistique descriptive
+   - Probabilités 1
+   - Probabilités 2
+   - Statistique inférentielle
+   - Fiabilité
+   - Plans d'expérience
+
+Modules d'algèbre et géométrie
+   - Configurations géométriques
+   - Calcul vectoriel
+   - Représentations de l'espace
+   - Modélisation géométrique
+   - Nombres complexes
+   - Calcul matriciel
+   - Arithmétique
+   - Algèbres de Boole
+   - Éléments de la théorie des ensembles
+   - Graphes et ordonnancement
+   - Algorithmique appliquée
+
+                                                        7
+ LES MODULES DE MATHÉMATIQUES EN
+SECTIONS DE TECHNICIENS SUPÉRIEURS
+
+                                   8
+                              SUITES NUMÉRIQUES
+
+Les suites sont un outil indispensable pour l'étude des phénomènes discrets, et c'est à ce titre qu'elles
+font l'objet d'une initiation. Aucune difficulté théorique ne doit être soulevée à leur propos. Le
+programme se place dans le cadre des suites définies pour tout entier naturel ou pour tout entier naturel
+non nul.
+
+         CONTENUS             CAPACITÉS ATTENDUES                    COMMENTAIRES
+Mode de génération d'une
+suite et comportement         · Calculer une liste de termes ou un   On privilégie les situations issues
+global                                                               de la vie économique et sociale ou
+Exemples de génération        terme de rang donné d'une suite à      de la technologie pouvant être
+d'une suite.                  l'aide d'un logiciel, d'une            modélisées à l'aide de suites.
+                              calculatrice ou d'un algorithme.
+Suites croissantes, suites
+décroissantes.                                                       On se limite à une approche
+                                                                     graphique.
+Suites arithmétiques et
+géométriques                  · Réaliser et exploiter, à l'aide
+
+                              d'une calculatrice ou d'un logiciel,
+                              une représentation graphique des
+                              termes d'une suite.
+
+Expression du terme général.  · Écrire le terme général d'une        Une expression de la somme de n
+                                                                     termes consécutifs d'une suite
+Limite d'une suite            suite arithmétique ou géométrique      arithmétique ou géométrique est
+Limite d'une suite            définie par son premier terme et sa    donnée si nécessaire.
+géométrique                   raison.
+                                                                     On approche expérimentalement la
+                              · Calculer avec la calculatrice ou le  notion de limite en utilisant les
+                                                                     outils logiciels et en programmant
+                              tableur la somme de n termes           des algorithmes.
+                              consécutifs (ou des n premiers
+                              termes) d'une suite arithmétique ou    Selon les besoins, on peut résoudre
+                              géométrique.                           un problème de comparaison
+                                                                     d'évolutions et de seuils pour des
+                              · Étant donné une suite                situations ne relevant pas d'une
+                                                                     modélisation par une suite
+                              géométrique (un), utiliser un tableur  géométrique.
+                              ou un algorithme pour déterminer,
+                              lorsque cela est possible :
+                              - un seuil à partir duquel
+                              un  a, a étant un réel donné ;
+                              - un seuil à partir duquel
+                               un  10- p , p étant un entier
+                              naturel donné.
+
+                              9
+              FONCTIONS D'UNE VARIABLE RÉELLE
+
+On se place dans le cadre des fonctions à valeurs réelles, définies sur un intervalle ou une réunion
+d'intervalles de R, qui servent à modéliser des phénomènes continus. Les étudiants doivent savoir
+traiter les situations issues des disciplines techniques et scientifiques qui se prêtent à une telle
+modélisation. Pour aider les étudiants à faire le lien avec ces autres disciplines, il est indispensable
+d'employer régulièrement des notations variées sur les fonctions et de diversifier les modes de
+présentation d'une fonction : fonction donnée par une courbe, par un tableau de valeurs ou définie par
+une formule et un ensemble de définition.
+
+Le but de ce module est double :
+- consolider les acquis sur les fonctions en tenant compte, notamment sur les limites, des programmes
+de mathématiques suivis antérieurement par les étudiants ;
+- apporter des compléments sur les fonctions d'une variable réelle, qui peuvent être utiles pour aborder
+de nouveaux concepts.
+Tout particulièrement dans ce module, on utilise largement les moyens informatiques (calculatrice,
+ordinateur), qui permettent notamment de faciliter la compréhension d'un concept en l'illustrant
+graphiquement et numériquement, sans être limité par d'éventuelles difficultés techniques.
+
+          CONTENUS             CAPACITÉS ATTENDUES                           COMMENTAIRES
+Fonctions de référence
+                                                                    En fonction des besoins, on met
+Fonctions affines.             · Représenter une fonction de        l'accent sur les fonctions de
+Fonctions polynômes                                                 référence les plus utiles.
+de degré 2.                    référence et exploiter cette courbe
+Fonctions logarithme népérien  pour retrouver des propriétés de la  En cas de besoin lié à la spécialité,
+et exponentielle de base e.    fonction.                            on peut être amené à étudier l'une ou
+Fonction racine carrée.                                             l'autre des fonctions suivantes :
+Fonctions sinus et cosinus.                                         - la fonction logarithme décimal ;
+                                                                    - des cas particuliers de fonctions
+Dérivation                                                          puissances t  t  avec R ou
+                                                                    exponentielles de base a avec
+Dérivée des fonctions de       · Calculer la dérivée d'une          a]0, +[.
+référence.
+                               fonction :                           On privilégie des exemples de
+Dérivée d'une somme, d'un      - à la main dans les cas simples ;   fonctions issues de problématiques
+produit et d'un quotient.      - à l'aide d'un logiciel de calcul   abordées dans les autres disciplines.
+                               formel dans tous les cas.
+Dérivée de fonctions de la                                          Il s'agit de compléter et
+forme : x  un(x) avec n        · Étudier les variations d'une       d'approfondir les connaissances
+entier naturel non nul,                                             antérieures sur la dérivation. En
+x  ln(u(x)) et x  eu(x) .      fonction simple.                     particulier, il est important de
+                                                                    rappeler et de travailler
+                                                                    l'interprétation graphique du nombre
+                                                                    dérivé.
+
+                               10
+                                 · Exploiter le tableau de variation    Les solutions d'une équation du type
+                                                                         f (x) = k sont déterminées :
+                                 d'une fonction f pour obtenir :
+                                 - un éventuel extremum de f ;          - explicitement dans les cas
+                                 - le signe de f ;                      simples ;
+                                 - le nombre de solutions d'une         - de façon approchée sinon.
+                                 équation du type f (x) = k .
+
+                                 · Mettre en oeuvre un procédé de       On étudie alors, sur des exemples,
+                                                                        des méthodes classiques d'obtention
+                                 recherche d'une valeur approchée       de ces solutions : balayage,
+                                 d'une racine.                          dichotomie, méthode de Newton par
+                                                                        exemple. C'est notamment
+                                                                        l'occasion de développer au moins
+                                                                        un algorithme et d'utiliser des
+                                                                        logiciels.
+
+Limites de fonctions
+
+Asymptotes parallèles aux        · Interpréter une représentation       La diversité des programmes du
+axes :                                                                  lycée doit particulièrement inciter à
+-limite finie d'une fonction à   graphique en termes de limite.         veiller aux connaissances sur les
+l'infini ;                                                              limites acquises antérieurement ou
+- limite infinie d'une fonction  · Interpréter graphiquement une        non par les étudiants.
+en un point.
+                                 limite en termes d'asymptote.
+
+Limite infinie d'une fonction à  · Déterminer la limite d'une           Toute étude de branche infinie,
+l'infini. Cas d'une asymptote                                           notamment la mise en évidence
+oblique.                         fonction simple.                       d'asymptote, doit comporter des
+Limites et opérations.                                                  indications sur la méthode à suivre.
+                                 · Déterminer des limites pour des
+Approximation locale d'une                                              On se limite aux fonctions déduites
+fonction                         fonctions de la forme :                des fonctions de référence par
+                                 x  un(x) , nentier naturel non nul ;   addition, multiplication ou passage à
+                                 x  ln(u(x)) ;                          l'inverse et on évite tout excès de
+                                 x  eu (x) .                            technicité.
+
+Développement limité en 0        · Déterminer, à l'aide d'un logiciel,  On introduit graphiquement la notion
+d'une fonction.                                                         de développement limité en 0 d'une
+                                 un développement limité en 0 et à un   fonction f en s'appuyant sur
+Développement limité en 0 et     ordre donné d'une fonction.            l'exemple de la fonction
+tangente à la courbe                                                    exponentielle sans soulever de
+représentative d'une fonction.   · Exploiter un développement limité    difficulté théorique.
+
+                                 pour donner l'équation réduite de la   L'utilisation et l'interprétation des
+                                 tangente et préciser sa position par   développements limités trouvés
+                                 rapport à la courbe représentative de  doivent être privilégiées.
+                                 la fonction.
+
+                                 11
+Courbes paramétrées           · Déterminer un vecteur directeur de   L'étude de ces quelques exemples a
+                                                                     pour objectif de familiariser les
+Exemples de courbes           la tangente en un point où le vecteur  étudiants avec le rôle du paramètre,
+paramétrées définies par des  dérivé n'est pas nul.                  la notion de courbe paramétrée et de
+fonctions polynomiales.                                              variations conjointes.
+                              · Tracer une courbe à partir des
+                                                                     On se limite à quelques exemples où
+                              variations conjointes.                 les fonctions polynômes sont de
+                                                                     degré inférieur ou égal à deux.
+
+                                                                      Trajectoire d'un solide, design.
+
+                              12
+              FONCTIONS D'UNE VARIABLE RÉELLE
+                    ET MODÉLISATION DU SIGNAL
+
+Le module « fonction d'une variable réelle et traitement du signal » vient en complément du module
+« fonctions d'une variable réelle » dont les objectifs restent valables. Il convient donc d'articuler les
+contenus de ces deux modules.
+Ce module est à traiter en relation étroite avec les situations rencontrées dans les enseignements
+technologiques.
+
+          CONTENUS              CAPACITÉS ATTENDUES                   COMMENTAIRES
+Fonctions de référence
+
+Fonctions tangente et           · Représenter une fonction de
+arctangente.
+                                référence.
+
+Compléments sur les
+fonctions
+
+Fonction paire, fonction        · Exploiter la représentation         Le champ des fonctions étudiées se
+impaire, fonction périodique :                                        limite aux fonctions de la forme
+- définition ;                  graphique d'une fonction pour en      x  f (ax + b) et aux fonctions qui
+- interprétation graphique.     déterminer des propriétés de          se déduisent de façon simple des
+                                périodicité et parité.                fonctions de référence par opérations
+Calculs de dérivées :                                                 algébriques.
+- dérivée de x  tan x et        · Représenter graphiquement une
+x  arctan x ;                                                         On privilégie des exemples de
+- dérivée de                    fonction simple ayant des propriétés  fonctions issues de problématiques
+                                de parité ou de périodicité.          abordées dans les autres disciplines.
+t  cos(t + )et                                                        On étudie les limites d'une fonction
+t  sin(t + ),  et  étant        · Étudier les variations d'une        de la forme x  arctan(u(x)) sur des
+                                                                      exemples.
+réels ;                         fonction simple.
+- dérivée d'une fonction de la                                        Aucun résultat théorique sur la
+forme x  arctan (u(x)).         · Déterminer la décomposition en      décomposition en éléments simples
+Fonctions rationnelles :                                              n'est au programme : la forme de la
+décomposition en éléments       éléments simples d'une fonction       décomposition doit être indiquée.
+simples.                        rationnelle :                         On prépare ainsi la recherche
+                                - à la main dans les cas simples ;    d'originaux dans le cadre de la
+                                - à l'aide d'un logiciel de calcul    transformation de Laplace.
+                                formel dans tous les cas.
+
+                                13
+Approximation globale               Sur des exemples variés et à l'aide
+d'une fonction sur un               d'outils informatiques, on aborde
+intervalle                          expérimentalement la notion
+                                    d'approximation globale d'une
+Approche de la notion à partir      fonction. On prépare ainsi la notion
+d'exemples.                         de développement en série d'une
+                                    fonction. Avec la fonction
+                                    exponentielle, on illustre la diversité
+                                    des approximations possibles d'une
+                                    même fonction.
+
+                                14
+                                CALCUL INTÉGRAL
+
+Le programme se place dans le cadre de fonctions à valeurs réelles définies sur un intervalle ou une
+réunion d'intervalles de R. La diversité des programmes du lycée doit particulièrement inciter à veiller
+aux connaissances sur les primitives et les intégrales acquises antérieurement ou non par les étudiants.
+
+L'accent est mis sur la diversité des approches numérique, graphique et algorithmique, lesquelles
+contribuent à l'appropriation du concept d'intégrale.
+
+         CONTENUS               CAPACITÉS ATTENDUES                         COMMENTAIRES
+Primitives
+
+Primitives de fonctions de      · Déterminer des primitives d'une
+référence, opérations
+algébriques.                    fonction :
+                                - à la main dans les cas simples ;
+                                - à l'aide d'un logiciel de calcul
+                                formel dans tous les cas.
+
+                                · Déterminer les primitives d'une           Pour les primitives de u , on se
+                                                                                                      u
+                                fonction de la forme u 'un (n entier
+                                relatif, différent de - 1), u ' et u 'eu .  limite au cas où u est strictement
+                                                                            positive.
+                                                            u
+
+Complément : primitives de
+
+t  cos (t + ) et
+t  sin(t + ) ,  et 
+
+étant réels.
+
+Intégration
+
+Calcul intégral :               · Déterminer une intégrale :
+
+ b f (x) dx = F(b) - F(a)       - à la main dans les cas simples ;
+   a                            - à l'aide d'un logiciel de calcul
+                                formel dans tous les cas.
+où F est une primitive de f .
+
+Propriétés de l'intégrale :
+relation de Chasles, linéarité
+et positivité.
+
+Calcul d'aires.                 · Déterminer l'aire du domaine              On étudie le cas où f (resp. g) est la
+                                                                            fonction nulle.
+                                défini par :
+                                {M(x, y), a  x  b et f(x)  y  g(x)}         On familiarise les étudiants avec
+                                où f et g sont deux fonctions telles        quelques exemples de mise en
+                                que pour tout réel x de [a, b],             oeuvre d'algorithmes liés à des
+                                f(x)  g(x).                                 méthodes élémentaires
+                                                                            d'approximation d'une intégrale
+                                                                            (point-milieu, trapèzes, Monte-
+                                                                            Carlo).
+
+                                15
+Valeur moyenne d'une          · Déterminer et interpréter la valeur  Cette notion est illustrée par des
+fonction sur un intervalle :                                         exemples issus des disciplines
+définition, interprétation    moyenne d'une fonction sur un          professionnelles.
+géométrique.                  intervalle.
+                                                                      Valeur moyenne, valeur efficace
+Formule d'intégration par     · Calculer une intégrale par           dans un transfert énergétique ; centre
+parties.                                                             d'inertie, moment d'inertie.
+                              intégration par parties.
+
+                              16
+ÉQUATIONS DIFFÉRENTIELLES
+
+On s'attache à relier les exemples étudiés avec les enseignements scientifiques et technologiques, en
+montrant l'importance de l'étude de phénomènes continus définis par une loi d'évolution et une
+condition initiale.
+L'utilisation des outils logiciels est sollicitée ; elle a pour finalités :
+- de mettre en évidence, expérimentalement, la signification ou l'importance de certains paramètres ou
+phénomènes ;
+- de dépasser la seule détermination des solutions d'une équation différentielle en donnant la
+possibilité de visualiser des familles de courbes représentatives de ces solutions ;
+- de permettre, avec l'aide du calcul formel, de donner une expression des solutions dans certains cas
+complexes.
+Si, dans ce module, on développe plus particulièrement deux types d'équations différentielles, on est
+également attentif à donner une vision plus large de ces notions en présentant des équations
+différentielles dont on ne peut donner qu'une solution approchée tout en faisant saisir des principes
+généraux comme la notion de famille de solutions.
+On introduit les nombres complexes et les résolutions d'équations du second degré à coefficients réels
+pour disposer de l'équation caractéristique d'une équation différentielle linéaire du second ordre.
+
+        CONTENUS             CAPACITÉS ATTENDUES                         COMMENTAIRES
+
+Équations linéaires du                                           En lien avec les autres disciplines,
+premier ordre                                                    on habitue les étudiants à
+Équation différentielle                                          différentes écritures :
+ay+by = c(t) où a, b sont                                        variable, fonction,
+des constantes réelles et c                                      notation différentielle.
+une fonction continue à
+valeurs réelles.             · Représenter à l'aide d'un         On présente sur un exemple la
+                                                                 résolution approchée d'une
+                             logiciel la famille des courbes     équation différentielle par la
+                             représentatives des solutions       méthode d'Euler.
+                             d'une équation différentielle.
+
+                             · Résoudre une équation             Les indications permettant
+                                                                 d'obtenir une solution particulière
+                             différentielle du premier ordre :   sont données.
+                             - à la main dans les cas simples ;
+                             - à l'aide d'un logiciel de calcul  En liaison avec les autres
+                             formel dans tous les cas.           disciplines, on peut étudier des
+                                                                 exemples simples de résolution
+                             · Déterminer la solution vérifiant  d'équations différentielles non
+                                                                 linéaires, du premier ordre à
+                             une condition initiale donnée :     variables séparables, par exemple
+                             - à la main dans les cas simples ;  en mécanique ou en cinétique
+                             - à l'aide d'un logiciel de calcul  chimique, mais ce n'est pas un
+                             formel dans tous les cas.           attendu du programme.
+
+                                                                  Loi de refroidissement,
+                                                                 cinétique chimique.
+
+                             17
+Nombres complexes
+
+Forme algébrique d'un                                              On se limite à l'écriture
+nombre complexe : somme,                                           algébrique des nombres
+produit, conjugué.                                                 complexes.
+
+Équation du second degré à     · Résoudre une équation du
+coefficients réels.
+                               second degré à coefficients réels.
+Équations linéaires du
+second ordre à coefficients
+réels constants
+
+Équation différentielle        · Représenter à l'aide d'un         La fonction d est une fonction
+ay+by+cy = d(t) où a, b et                                         polynôme ou du type :
+c sont des constantes réelles  logiciel la famille des courbes
+et d une fonction continue à   représentatives des solutions       t  et ;
+valeurs réelles.               d'une équation différentielle.      t  cos(t + ) ;
+                                                                   t  sin(t + ) .
+
+                               · Résoudre une équation
+
+                               différentielle du second ordre :
+                               - à la main dans les cas simples ;
+                               - à l'aide d'un logiciel de calcul
+                               formel dans tous les cas.
+
+                               · Déterminer la solution vérifiant  Les indications permettant
+                                                                   d'obtenir une solution particulière
+                               des conditions initiales données :  sont données.
+                               - à la main dans les cas simples ;
+                               - à l'aide d'un logiciel de calcul   Résistance des matériaux,
+                               formel dans tous les cas.           circuit électronique.
+
+                               18
+                   SÉRIES DE FOURIER
+
+Le but de ce module est d'étudier et exploiter la décomposition de signaux périodiques en séries de
+Fourier. Ce module est à mener en liaison étroite avec les enseignements des autres disciplines : les
+séries de Fourier sont un outil indispensable pour l'étude des phénomènes vibratoires en électricité, en
+optique et en mécanique.
+
+             CONTENUS               CAPACITÉS ATTENDUES             COMMENTAIRES
+Exemples de séries numériques
+
+Séries géométriques : convergence,  · Reconnaître une série         L'étude de ces deux exemples a
+somme.                                                              pour objectifs :
+                                    géométrique et connaître la     - de familiariser les étudiants
+                                    condition de convergence.       avec les «sommes infinies» et
+                                                                    la notation  ;
+Séries de Riemann : convergence.                                    - d'introduire la notion de
+                                                                    convergence et de somme
+                                    · Connaître la condition de     d'une série numérique.
+                                                                    Toute théorie générale sur les
+                                    convergence d'une série de      séries numériques est exclue.
+                                    Riemann.
+                                                                    L'outil informatique est utilisé
+                                                                    pour conjecturer les résultats
+                                                                    concernant les séries de
+                                                                    Riemann. Ces résultats sont
+                                                                    admis.
+
+Séries de Fourier
+
+Série de Fourier associée à une     · Représenter graphiquement     En liaison avec les autres
+fonction T-périodique continue par                                  disciplines, on met en valeur le
+morceaux sur R :                    une fonction T-périodique       lien entre la notion de série de
+                                    continue par morceaux sur R.    Fourier et l'étude des signaux :
+a0 + (an cos(nt ) + bn sin(nt )).                                   composantes d'un signal dans
+        n 1                                                         une fréquence donnée,
+                                                                    reconstitution du signal à partir
+                                                                    de ses composantes, spectre.
+
+                                    · Exploiter la représentation   On montre l'intérêt d'exploiter,
+                                                                    dans le calcul intégral, les
+                                    graphique d'une fonction        propriétés des fonctions
+                                    T-périodique affine par         périodiques, des fonctions
+                                    morceaux pour en                paires et des fonctions
+                                    déterminer :                    impaires.
+                                    - la périodicité ;
+                                    - la parité ;                   En complément, on traite à la
+                                    - une expression sur une        main un exemple de calculs de
+                                    période ou une demi-période.    coefficients de Fourier d'une
+                                                                    fonction associée à un signal
+                                    · Calculer les coefficients de  rampe pour faire comprendre
+                                                                    les résultats fournis par les
+                                    Fourier d'une fonction :        logiciels dans d'autres
+                                    - à la main dans le cas d'un
+                                    signal en créneau ;
+                                    - à l'aide d'un logiciel de
+                                    calcul formel dans tous les
+                                    cas.
+
+                                    19
+Cas d'une fonction paire, impaire.                                 disciplines. C'est l'occasion de
+                                                                   réinvestir les techniques de
+Convergence d'une série de          · Représenter à l'aide d'un    calcul intégral.
+Fourier lorsque f est de classe C1
+par morceaux sur R (conditions de   logiciel une somme partielle   En liaison avec les méthodes
+Dirichlet).                         d'une série de Fourier et la   vues dans les autres disciplines,
+                                    comparer à la fonction         on montre qu'il peut être utile
+                                    associée au signal étudié.     de se ramener à des fonctions
+                                                                   paires ou impaires.
+                                    · Savoir identifier parmi      L'utilisation de l'outil
+                                                                   informatique permet de
+                                    plusieurs développements       visualiser graphiquement la
+                                    proposés celui correspondant   convergence de la série de
+                                    à une fonction donnée.         Fourier.
+
+Formule de Parseval                 · Calculer et comparer :       Aucune difficulté ne doit être
+                                                                   soulevée sur la convergence
+                                    - la valeur exacte de          des séries de Fourier. Dans les
+                                                                   cas étudiés, les conditions de
+                                    1T  T0 f 2(t) dt ;             convergence sont toujours
+                                                                   remplies.
+                                    - une valeur approchée de
+                                                                   On met en relation la formule
+                                    1T  T0 f 2(t) dt à l'aide des  de Parseval et le calcul de la
+                                                                   valeur efficace d'un signal.
+                                    coefficients de Fourier de f.
+                                                                    Analyse harmonique d'un
+                                                                   signal.
+
+                                    20
+                            TRANSFORMATION DE LAPLACE
+
+Dans ce module, on étudie et on exploite la transformation de Laplace en vue de déterminer les solutions
+causales d'une équation différentielle linéaire. Cette présentation est à mener en liaison étroite avec les
+enseignements des autres disciplines où la transformation de Laplace permet d'obtenir la réponse d'un
+système linéaire usuel à un signal d'entrée donné.
+
+          CONTENUS               CAPACITÉS ATTENDUES                   COMMENTAIRES
+
+Transformation
+de Laplace
+
+Transformée de Laplace d'une                                           La théorie générale des intégrales
+fonction causale f.                                                    impropres est hors programme.
+
+Transformée de Laplace des                                             On se limite aux fonctions usuelles
+fonctions causales usuelles.                                           suivantes :
+                                                                       t  U(t) ;
+
+                                                                                 n
+
+                                                                       t  t U(t) ;
+
+                                                                       t  eatU(t) ;
+                                                                       t  sin(t)U (t) et t  cos(t)U (t)
+                                                                       avec U la fonction unité, n un entier
+                                                                       naturel, a et  deux réels.
+
+Propriétés de la transformation  · Représenter graphiquement une       On se limite au cas où les fonctions
+de Laplace :                                                           données ou recherchées sont :
+- linéarité ;                    fonction causale donnée par une       - soit des combinaisons linéaires à
+- effet d'une translation ou     expression.                           coefficients réels de fonctions de la
+d'un changement d'échelle sur                                          forme
+la variable ;                    · Déterminer une expression d'une     t  U (t -  ) et t  tU (t - ) ;
+- effet de la multiplication
+                                 fonction causale dont la              - soit de la forme t  U (t - )ert ;
+par e -at .                      représentation graphique est de type  où  est un nombre réel positif et r
+                                 « créneau » ou « rampe ».             un réel.
+                                                                       Dans les autres cas, le calcul est
+                                 · Déterminer la transformée de        facilité par l'utilisation d'un logiciel.
+
+                                 Laplace d'une fonction causale
+                                 simple, dont les fonctions de type
+                                 « créneau » et « rampe ».
+
+                                 · Déterminer la fonction causale
+
+                                 (original) dont la transformée de
+                                 Laplace est donnée.
+
+Théorème de la valeur                                                  L'exploitation de situations issues
+initiale et théorème de la                                             des autres disciplines permet
+valeur finale.                                                         d'illustrer la pertinence de ce
+                                                                       théorème.
+
+                                 21
+Transformée de Laplace  · Exploiter la transformation de        Pour le second membre, on se limite
+d'une dérivée.                                                  au cas où les fonctions données ou
+                        Laplace pour résoudre une équation      recherchées sont :
+Transformée de Laplace  différentielle linéaire d'ordre 1 ou 2  - soit des combinaisons linéaires à
+d'une primitive.        à coefficients constants.               coefficients réels de fonctions de la
+                                                                forme
+                                                                t  U (t -  ) et t  tU (t - ) ;
+
+                                                                - soit de la forme t  U (t - )ert ;
+                                                                où  est un nombre réel positif et r
+                                                                un réel.
+
+                                                                 Fonction de transfert d'un système
+                                                                linéaire. Application à la stabilité.
+
+                                                                En liaison avec les enseignements
+                                                                d'autres disciplines, on étudie un
+                                                                exemple d'équation différentielle de
+                                                                la forme
+
+                                                                a y '(t) + b y (t) + c  t y (s) ds = f (t)
+                                                                                                  0
+
+                                                                où a, b, c sont des constantes réelles
+                                                                et f une fonction causale.
+
+                        22
+                                  TRANSFORMATION EN Z
+
+Dans ce module, on se propose de familiariser les étudiants aux phénomènes discrets par la présentation de
+quelques signaux discrets et de leur transformation en z, en se limitant à des signaux causaux. Cette
+présentation sera complétée par l'étude de la réponse à des signaux discrets, de filtres numériques régis par une
+équation aux différences linéaires à coefficients constants. Le travail mené permet en particulier de s'interroger
+sur le passage du discret au continu et inversement, variant ainsi les approches des problèmes et les modes de
+résolution.
+
+          CONTENUS                CAPACITÉS ATTENDUES                      COMMENTAIRES
+Transformation en z
+
+Notion de série entière d'une                                              L'étude de ces deux exemples a pour
+variable réelle.                                                           objectifs :
+Développement en série                                                     - de familiariser les étudiants avec les
+                                                                           « sommes infinies » de fonctions et la
+entière des fonctions t  et et                                             notation  ;
+t  1 1 - t .                                                               - d'introduire la notion de rayon de
+                                                                           convergence et de somme d'une série
+                                                                           entière.
+                                                                           Toute théorie générale sur les séries
+                                                                           entières est exclue.
+
+                                                                           L'outil informatique est utilisé pour
+                                                                           visualiser la convergence des sommes
+                                                                           partielles. Les résultats mis en
+                                                                           évidence sont admis.
+                                                                           L'introduction des séries entières a
+                                                                           pour seul but la présentation des
+                                                                           résultats utiles à l'étude de la
+                                                                           transformation en z.
+
+Transformée en z d'un signal      · Déterminer la transformée en z         On se limite aux signaux usuels
+causal.                                                                    suivants :
+Transformée en z des signaux      d'un signal causal à partir des signaux  n1 ;
+causaux usuels.                   causaux usuels.                          n  d (n) où d(0) = 1 et d(n) = 0
+                                                                           sinon ;
+Propriétés de la transformation                                            nn ;
+en z :                                                                     n  n2 ;
+- linéarité ;                                                              n  an avec a réel non nul.
+- effet de la multiplication par
+a n avec a réel non nul ;                                                  On évite tout excès de technicité dans
+- effet d'une translation sur la                                           les calculs. Dans le cadre de la
+variable.                                                                  résolution de problèmes, le calcul est
+                                                                           facilité par l'utilisation d'un logiciel de
+                                                                           calcul formel.
+
+                                  23
+                        · Déterminer le signal causal            Dans la recherche de l'original, pour
+                                                                 obtenir la décomposition en éléments
+                        (original) dont la transformée en z est  simples, on donne des indications sur
+                        donnée.                                  la méthode à utiliser ou si nécessaire,
+                                                                 on utilise un logiciel de calcul formel.
+
+Équations récurrentes.  · Exploiter la transformation en z       On résout des équations de la forme :
+
+                        pour la résolution d'équations           ay(n) + by(n-1) + cy(n-2) = x(n) + x(n-1)
+                        récurrentes.
+                                                                 ou
+
+                                                                 ay(n+2) + by(n+1) + cy(n) = x(n+1) + x(n)
+
+                                                                 où a, b, c, ,  sont des nombres réels,
+                                                                 x un signal causal discret connu et y est
+                                                                 un signal causal discret inconnu.
+
+                                                                 En liaison avec les enseignements
+                                                                 d'autres disciplines, on montre sur un
+                                                                 exemple simple comment une de ces
+                                                                 équations s'interprète en termes de
+                                                                 «dérivation discrète» ou d'«intégration
+                                                                 discrète».
+
+                                                                  Traitement numérique obtenu par
+                                                                 échantillonnage d'un signal
+                                                                 analogique.
+
+                        24
+                          STATISTIQUE DESCRIPTIVE
+
+Il s'agit de consolider et d'approfondir les connaissances acquises les années antérieures. On s'attache,
+d'une part à étudier des situations issues de la technologie, d'autre part à relier cet enseignement à celui
+de l'économie et de la gestion.
+
+L'objectif est de faire réfléchir sur des données réelles, variées et en grand nombre, issues par exemple
+des disciplines professionnelles ou de fichiers mis à disposition sur des sites institutionnels, de
+synthétiser l'information et de proposer des résumés numériques ou graphiques pertinents. L'utilisation
+de logiciels, notamment d'un tableur, et des calculatrices est nécessaire.
+
+        CONTENUS          CAPACITÉS ATTENDUES                  COMMENTAIRES
+Série statistique à une
+variable                  · Utiliser un logiciel ou une        Il s'agit de réactiver les
+                                                               connaissances déjà traitées au
+Série statistique à deux  calculatrice pour résumer et         lycée :
+variables                 représenter des séries statistiques  - méthodes de représentation ;
+Nuage de points ; point   à une variable.                      - caractéristiques de position
+moyen.                                                         (médiane, moyenne) ;
+Ajustement affine par la  · Interpréter les résultats obtenus  - caractéristiques de dispersion
+méthode des moindres                                           (étendue, écart interquartile, écart
+carrés.                   pour une série statistique ou pour   type).
+                          comparer deux séries statistiques.   Aucun cours spécifique n'est donc
+                                                               attendu.
+                          · Choisir des résumés numériques
+                                                               L'utilisation des outils logiciels
+                          ou graphiques adaptés à une          permet de faire réfléchir les
+                          problématique.                       étudiants à la pertinence de
+                                                               regroupements par classes lors du
+                                                               traitement statistique.
+
+                          · Utiliser un logiciel ou une        Pour l'ajustement affine, on
+                                                               distingue liaison entre deux
+                          calculatrice pour représenter une    variables statistiques et relation de
+                          série statistique à deux variables   cause à effet.
+                          et en déterminer un ajustement       Pour la méthode des moindres
+                          affine selon la méthode des          carrés, on observe, à l'aide d'un
+                          moindres carrés.                     logiciel, le caractère minimal de la
+                                                               somme des carrés des écarts.
+                          · Réaliser un ajustement se          On fait observer que l'on crée une
+                                                               dissymétrie entre les deux
+                          ramenant, par un changement de       variables statistiques qui conduit,
+                          variable simple donné, à un          suivant l'utilisation de
+                          ajustement affine.                   l'ajustement, à privilégier l'une
+                                                               des deux droites.
+                          · Utiliser un ajustement pour
+
+                          interpoler ou extrapoler.
+
+                          25
+Coefficient de corrélation      On utilise le coefficient de
+linéaire.                       corrélation linéaire, obtenu à
+                                l'aide d'un logiciel ou d'une
+                                calculatrice, pour comparer la
+                                qualité de deux ajustements.
+
+                                 Contrôle qualité, mesures
+                                physiques sur un système réel,
+                                droite de Henry, étude
+                                économique ou mercatique.
+
+                            26
+                             PROBABILITÉS 1
+
+On réinvestit et on approfondit le travail sur les probabilités mené au lycée, en s'adaptant au parcours
+antérieur des étudiants. L'objectif est que les étudiants sachent traiter quelques problèmes simples
+mettant en oeuvre des probabilités conditionnelles ou des variables aléatoires dont la loi figure au
+programme. Les sciences et techniques industrielles et économiques fournissent un large éventail de
+tels problèmes, que l'on peut étudier en liaison avec d'autres enseignements.
+L'apprentissage doit largement faire appel à l'outil informatique, aussi bien pour la compréhension et
+l'acquisition de concepts par l'expérimentation réalisée à l'aide de simulations, que pour les calculs de
+probabilités.
+
+         CONTENUS            CAPACITÉS ATTENDUES                   COMMENTAIRES
+Conditionnement et
+indépendance                 · Construire un arbre et/ou un        On représente une situation à
+Conditionnement par un                                             l'aide d'un arbre pondéré ou d'un
+événement de probabilité     tableau des probabilités en lien      tableau de probabilités.
+non nulle.                   avec une situation donnée.
+Notation PA(B).
+                             · Exploiter l'arbre et/ou le          Un arbre de probabilités
+Indépendance de deux                                               correctement construit constitue
+événements.                  tableau des probabilités pour         une preuve.
+                             déterminer des probabilités.
+Exemple de loi discrète
+Variable aléatoire associée  · Calculer la probabilité d'un        La formule des probabilités totales
+au nombre de succès dans                                           n'est pas un attendu mais sa mise
+un schéma de Bernoulli.      événement connaissant ses             en oeuvre doit être maîtrisée.
+Loi binomiale.               probabilités conditionnelles
+                             relatives à une partition de
+                             l'univers.
+
+                             · Utiliser ou justifier
+
+                             l'indépendance de deux
+                             événements.
+
+                                                                    Contrôle qualité, fausses
+                                                                   alertes, tests biologiques.
+
+                             · Simuler un schéma de                Aucun développement théorique
+                                                                   n'est attendu à propos de la notion
+                             Bernoulli.                            de variable aléatoire.
+
+                             · Reconnaître et justifier qu'une     On utilise une calculatrice ou un
+                                                                   logiciel pour calculer directement
+                             situation relève de la loi            des probabilités et représenter
+                             binomiale.                            graphiquement la loi binomiale.
+                                                                   La connaissance d'une expression
+                             · Représenter graphiquement la        explicite de la loi binomiale n'est
+                                                                   pas attendue.
+                             loi binomiale à l'aide d'un
+                             logiciel.
+
+                             · Calculer une probabilité dans le
+
+                             cadre de la loi binomiale à l'aide
+                             de la calculatrice ou d'un logiciel.
+
+                             27
+Espérance, variance et écart  · Interpréter l'espérance et l'écart  Les formules donnant l'espérance
+type de la loi binomiale.                                           et l'écart type de la loi binomiale
+                              type d'une loi binomiale dans le      sont admises. On conforte
+                              cadre d'un grand nombre de            expérimentalement ces formules à
+                              répétitions.                          l'aide de simulations de la loi
+                                                                    binomiale.
+Exemples de lois à densité    · Concevoir et exploiter une          Toute théorie générale des lois à
+Loi uniforme sur [a, b].                                            densité est exclue.
+                              simulation dans le cadre d'une loi    Pour les lois étudiées, on
+Espérance, variance et écart  uniforme.                             représente et on exploite la
+type de la loi uniforme.                                            fonction de densité et la fonction
+                              · Interpréter l'espérance et l'écart  de répartition.
+                                                                    La définition de l'espérance et de
+                              type d'une loi uniforme dans le       la variance constituent un
+                              cadre d'un grand nombre de            prolongement dans le cadre
+                              répétitions.                          continu de celles d'une variable
+                                                                    aléatoire discrète.
+Loi normale d'espérance       · Utiliser une calculatrice ou un
+et d'écart type  .                                                  Toute théorie sur les intégrales
+                              tableur pour calculer une             impropres est exclue.
+                              probabilité dans le cadre de la loi   La loi normale est introduite à
+                              normale.                              partir de l'observation, à l'aide
+                                                                    d'un logiciel, du cumul des
+                              · Connaître et interpréter            valeurs obtenues lors de la
+                                                                    répétition à l'identique d'une
+                              graphiquement une valeur              expérience aléatoire dont le
+                              approchée de la probabilité des       résultat suit une loi uniforme.
+                              événements suivants :                 L'utilisation d'une table de la loi
+                                                                    normale centrée réduite n'est pas
+                              { X [ - ,  + ] },                     une nécessité.
+                              { X [ - 2,  + 2] } et
+                              { X [ - 3,  + 3] },                   On s'appuie sur des exemples
+                                                                    issus des autres disciplines.
+                              lorsque X suit la loi normale         On peut simuler la loi normale à
+                              d'espérance µ et d'écart type .       partir de la loi uniforme sur [0, 1].
+
+Approximation d'une loi       · Déterminer les paramètres de la      Maîtrise statistique des
+binomiale par une loi                                               processus.
+normale.                      loi normale approximant une loi       Toute théorie est exclue. On
+                              binomiale donnée.                     illustre cette approximation à
+                                                                    l'aide de l'outil informatique.
+                                                                    Les conditions d'approximation
+                                                                    d'une loi binomiale par une loi
+                                                                    normale ne sont pas exigibles.
+                                                                    Il convient de mettre en évidence
+                                                                    la raison d'être de la correction de
+                                                                    continuité lors de l'approximation
+                                                                    d'une loi binomiale par une loi
+                                                                    normale ; toutes les indications
+                                                                    sont fournies.
+
+                              28
+Espérance et variance des     · Savoir déterminer les paramètres   Toute théorie concernant la notion
+lois de aX + b, X + Y, X - Y                                       de variables aléatoires
+dans le cas où X et Y sont    des lois de aX + b, X + Y et X - Y   indépendantes est exclue.
+des variables aléatoires      dans le cas où X et Y sont des       Les résultats sont conjecturés à
+indépendantes.                variables aléatoires indépendantes.  l'aide de simulations, puis admis.
+
+Théorème de la limite         · Savoir déterminer les paramètres   Le théorème, admis, s'énonce en
+centrée.                                                           termes d'approximation par une
+                              de la loi normale correspondant à    loi normale de la somme de n
+                              une moyenne dans le cadre du         variables indépendantes de même
+                              théorème de la limite centrée.       loi. L'outil informatique permet
+                                                                   une approche expérimentale.
+
+                              29
+                               PROBABILITÉS 2
+
+On approfondit dans ce module la connaissance des lois de probabilités en étudiant la loi exponentielle
+et la loi de Poisson, dans le contexte de processus aléatoires à temps continu. Une initiation aux
+processus aléatoires discrets permet d'élargir le champ d'étude des phénomènes aléatoires. Les
+sciences et techniques industrielles et économiques fournissent de nombreuses situations, que l'on
+peut étudier en liaison avec d'autres enseignements.
+L'apprentissage doit largement faire appel à l'outil informatique, notamment pour la simulation et la
+mise en oeuvre d'algorithmes.
+
+        CONTENUS               CAPACITÉS ATTENDUES                   COMMENTAIRES
+Loi exponentielle
+                               · Exploiter une simulation dans le    On peut simuler la loi
+Espérance, variance et écart                                         exponentielle à partir de la loi
+type de la loi exponentielle.  cadre de la loi exponentielle.        uniforme sur [0, 1].
+Loi de Poisson
+                               · Représenter graphiquement la
+Espérance, variance et écart
+type de la loi de Poisson.     loi exponentielle.
+Approximation d'une loi
+binomiale par une loi de       · Calculer une probabilité dans le
+Poisson.
+                               cadre de la loi exponentielle.
+
+                               · Interpréter l'espérance et l'écart
+
+                               type d'une variable aléatoire
+                               suivant une loi exponentielle.
+
+                                                                      Fiabilité, désintégration
+                                                                     nucléaire.
+
+                               · Représenter graphiquement la        La loi de Poisson est introduite
+                                                                     comme correspondant au nombre
+                               loi de Poisson.                       de réalisations observées, durant
+                                                                     un intervalle de temps de longueur
+                               · Calculer une probabilité dans le    donnée, lorsque le temps d'attente
+                                                                     entre deux réalisations est fourni
+                               cadre de la loi de Poisson à l'aide   par une loi exponentielle.
+                               de la calculatrice ou d'un logiciel.  La connaissance d'une expression
+                                                                     explicite de la loi de Poisson n'est
+                               · Interpréter l'espérance et l'écart  pas attendue.
+
+                               type dans le cadre d'un grand
+                               nombre de répétitions.
+
+                               · Déterminer le paramètre de la       Les conditions d'approximation
+                                                                     d'une loi binomiale par une loi de
+                               loi de Poisson approximant une        Poisson ne sont pas exigibles.
+                               loi binomiale donnée.                 On illustre cette approximation à
+                                                                     l'aide de l'outil informatique.
+
+                                                                      Fiabilité, gestion de stocks ou
+                                                                     de réseaux.
+
+                               30
+Exemples de processus    · Représenter un processus          On étudie des marches aléatoires
+aléatoires                                                   sur un graphe à quelques
+                         aléatoire simple par un graphe      sommets.
+Graphe probabiliste à N  probabiliste.
+sommets.
+                         · Exploiter un graphe probabiliste
+Exemples de chaînes de
+Markov.                  pour calculer la probabilité d'un
+                         parcours donné.
+
+                         · Simuler un processus aléatoire
+
+                         simple.
+
+                         · Exploiter une simulation d'un
+
+                         processus aléatoire pour estimer
+                         une probabilité, une durée
+                         moyenne ou conjecturer un
+                         comportement asymptotique.
+
+                                                              Pertinence d'une page web,
+                                                             gestion d'un réseau, fiabilité,
+                                                             étude génétique de populations,
+                                                             diffusion d'une épidémie.
+
+                         31
+                       STATISTIQUE INFÉRENTIELLE
+
+La statistique inférentielle permet de développer les compétences des étudiants sur les méthodes et les
+raisonnements statistiques permettant d'induire, à partir de faits observés sur un échantillon, des
+propriétés de la population dont il est issu.
+Il s'agit d'approfondir, à partir d'exemples, ce que sont les procédures de décision en univers aléatoire,
+ainsi que leur pertinence, dans la continuité des programmes de lycée. La validité d'une méthode
+statistique est liée à l'adéquation entre la réalité et le modèle la représentant ; aussi les situations
+artificielles sont à éviter et les exemples issus de la vie économique et sociale ou du domaine
+professionnel sont à privilégier, en liaison avec les enseignements d'autres disciplines.
+
+Dans la continuité des programmes de lycée, on approfondit la prise de décision en formalisant la notion
+de test d'hypothèse et en se centrant sur la notion de risques d'erreur.
+
+         CONTENUS                CAPACITÉS ATTENDUES                     COMMENTAIRES
+Estimation ponctuelle
+
+Estimation ponctuelle d'un       · Estimer ponctuellement une            La simulation d'échantillons permet
+paramètre.                                                               de sensibiliser au choix de
+                                 proportion, une moyenne ou un           l'estimation de l'écart type de la
+                                 écart type d'une population à l'aide    population.
+                                 de la calculatrice ou d'un logiciel, à
+                                 partir d'un échantillon.
+
+Tests d'hypothèse
+
+Tests bilatéraux et unilatéraux  · Déterminer la région de rejet de      On souligne le fait que la décision
+relatifs à :                                                             prise, rejet ou non, dépend des choix
+- une proportion dans le cas     l'hypothèse nulle et énoncer la règle   faits a priori par l'utilisateur : choix
+d'une loi binomiale puis dans    de décision.                            de l'hypothèse nulle, du type de test
+le cas d'une loi binomiale                                               et du seuil de signification. Ces
+approximable par une loi                                                 choix sont fournis à l'étudiant dans
+normale ;                                                                les cas délicats.
+- une moyenne.
+
+Tests bilatéraux et unilatéraux  · Utiliser les tests bilatéraux et
+de comparaison de deux
+proportions ou de deux           unilatéraux relatifs à une proportion
+moyennes dans le cadre de la     ou à une moyenne ainsi qu'à la
+loi normale.                     comparaison de deux proportions ou
+                                 de deux moyennes.
+
+Risques d'erreur de première     · Analyser les risques d'erreur de      On compare, à l'aide d'un
+et de seconde espèce.                                                    algorithme ou de simulations, les
+                                 première et de seconde espèce           différents seuils de signification et
+                                 associés à la prise de décision.        on met en évidence les risques
+                                                                         d'erreur de première et de seconde
+                                                                         espèce.
+                                                                         La notion de puissance d'un test est
+                                                                         abordée.
+
+                                 32
+                                                                     En liaison avec les enseignements
+                                                                     des disciplines professionnelles ou
+                                                                     les situations rencontrées en
+                                                                     entreprise, on peut traiter quelques
+                                                                     exemples d'autres procédures, par
+                                                                     exemple test du khi deux ou test de
+                                                                     Student.
+
+                                                                      Maîtrise statistique des procédés.
+
+Estimation par intervalle de
+confiance
+
+Intervalle de confiance d'une  · Déterminer un intervalle de         On distingue confiance et
+proportion et d'une moyenne.                                         probabilité :
+                               confiance à un niveau de confiance    - avant le tirage d'un échantillon, la
+                               souhaité pour :                       procédure d'obtention de l'intervalle
+                               - une proportion, dans le cas d'une   de confiance a une probabilité de
+                               loi binomiale approximable par une    0,95 ou de 0,99 que cet intervalle
+                               loi normale ;                         contienne le paramètre inconnu ;
+                               - une moyenne, dans le cas d'une      - après le tirage, le paramètre est
+                               loi normale quand l'écart type de la  dans l'intervalle calculé avec une
+                               population est connu ou dans le cas   confiance de 95% ou 99%.
+                               de grands échantillons.
+                                                                     La simulation permet de mieux
+                               · Exploiter un intervalle de          comprendre la notion d'intervalle de
+                                                                     confiance.
+                               confiance.
+                                                                      Incertitude de mesure.
+                               · Déterminer la taille nécessaire
+
+                               d'un échantillon pour estimer une
+                               proportion ou une moyenne avec
+                               une précision donnée.
+
+                               33
+                               FIABILITÉ
+
+Sous l'impulsion notamment du mouvement de la qualité, les méthodes statistiques sont aujourd'hui
+largement utilisées dans les milieux économique, social ou professionnel. Des procédures élaborées
+sont mises en oeuvre dans le domaine de la fiabilité. Des logiciels spécialisés exécutent
+automatiquement les calculs, suivant les normes AFNOR ou ISO.
+
+L'objectif essentiel de ce module, au-delà de l'exécution des algorithmes ou des calculs correspondants,
+est d'amener les étudiants à prendre du recul vis-à-vis des méthodes utilisées. On évite les situations
+artificielles et on privilégie les exemples issus du domaine professionnel, en liaison avec les
+enseignements d'autres disciplines.
+
+        CONTENUS               CAPACITÉS ATTENDUES                            COMMENTAIRES
+Vocabulaire de la fiabilité
+                                                                      La MTBF est définie comme
+Variable aléatoire associée à  · Connaître le vocabulaire de la       l'espérance de la durée de vie.
+la durée de vie.
+                               fiabilité et en effectuer une
+Fonctions de fiabilité et de   traduction mathématique.
+défaillance.
+                               · Représenter des temps de bon
+Taux d'avarie.
+                               fonctionnement à l'aide d'un
+                               logiciel.
+
+Moyenne des temps de bon
+fonctionnement (MTBF).
+
+Loi exponentielle, loi de
+Weibull
+
+                               · À l'aide d'un logiciel, utiliser la  Toutes les indications concernant
+                                                                      le calcul des fréquences
+                               régression linéaire pour ajuster       empiriques (méthode des rangs
+                               une distribution observée à un         bruts, des rangs moyens, des rangs
+                               modèle exponentiel ou de Weibull       médians) sont fournies.
+                               et estimer les paramètres de la loi
+                               correspondante.                        On réinvestit les connaissances sur
+                                                                      l'ajustement en se ramenant, selon
+                                                                      un changement de variable
+                                                                      indiqué, à un ajustement affine.
+                                                                      Le problème de l'adéquation de
+                                                                      données empiriques à un modèle
+                                                                      et des tests correspondants est hors
+                                                                      programme.
+
+                               · Calculer et interpréter des          Les coefficients permettant le
+                                                                      calcul de la MTBF dans le cas de
+                               probabilités de panne et la MTBF       la loi de Weibull sont fournis.
+                               dans le cas d'une loi exponentielle
+                               ou de Weibull.                         L'usage du papier semi-
+                                                                      logarithmique ou du papier de
+                               · Calculer la périodicité d'une        Weibull n'est pas un attendu du
+                                                                      programme.
+                               intervention fondée sur une
+                               fiabilité déterminée.
+
+                               34
+· Simuler une situation dans un  On fournit les formules permettant
+                                 de simuler la loi exponentielle et
+contexte de fiabilité.           la loi de Weibull.
+                                 La simulation permet des
+                                 prévisions de rentabilité ou de
+                                 maintenance au delà du simple
+                                 calcul de la MTBF.
+
+35
+                             PLANS D'EXPÉRIENCE
+
+La technique des plans d'expérience est devenue d'usage courant dans la mise en place des procédés
+industriels. Les enseignements professionnels font souvent référence à la méthode Taguchi.
+En mathématiques, l'objectif de ce module est de montrer aux étudiants la nécessité de planifier les
+expériences et de leur permettre d'appréhender la démarche mise en oeuvre afin d'obtenir une
+estimation optimale des paramètres inconnus, quand les mesures faites ont un caractère aléatoire.
+On montre également l'importance du modèle a priori.
+On évite les situations artificielles et on s'appuie sur des exemples issus du domaine professionnel, en
+liaison avec les enseignements des disciplines correspondantes.
+
+         CONTENUS            CAPACITÉS ATTENDUES                    COMMENTAIRES
+Plan factoriel
+Actions principales,         · Mettre en oeuvre un plan             L'utilisation des méthodes de
+interactions, modèle                                                l'algèbre linéaire est hors
+polynomial.                  d'expérience complet à deux ou à       programme.
+                             trois facteurs, chacun à deux
+Coefficients du modèle.      niveaux.                               En liaison avec les
+                                                                    enseignements des disciplines
+                                                                    professionnelles, si le besoin
+                                                                    apparaît, on peut aborder la
+                                                                    notion de plan fractionnaire.
+
+                             · Calculer l'effet d'un facteur.       On indique la méthode de
+                             · Représenter graphiquement l'effet    construction de la matrice
+                                                                    d'expérience selon l'ordre de
+                             global d'un facteur.                   l'algorithme de Yates : les
+                                                                    coefficients du modèle sont les
+                                                                    effets des facteurs, l'interaction
+                                                                    entre deux facteurs étant un
+                                                                    nouveau facteur.
+
+                                                                    On peut aborder la notion
+                                                                    d'isoréponse et son tracé à l'aide
+                                                                    d'un logiciel informatique.
+
+Estimation des coefficients
+du modèle par un intervalle
+de confiance
+
+                             · Déterminer un intervalle de          Sur des exemples simples, on peut
+                                                                    montrer quelles sont les conditions
+                             confiance de l'effet d'un facteur      pour que l'écart type puisse être
+                             dans une situation relevant de la loi  estimé quand il est inconnu ; on
+                             normale, l'écart type des mesures      peut alors être amené à introduire la
+                             étant connu.                           notion de degré de liberté et à
+                                                                    utiliser la loi de Student.
+
+Test d'hypothèse relatif à
+un coefficient du modèle
+
+                             · Construire un test d'hypothèse
+
+                             relatif à un effet dans une situation
+                             relevant de la loi normale, l'écart
+                             type des mesures étant connu..
+
+                             36
+CONFIGURATIONS GÉOMÉTRIQUES
+
+L'objectif de ce module est double :
+   - renforcer la vision dans l'espace et les acquis sur les configurations géométriques de l'espace en
+   étudiant des objets constitués de solides connus ;
+   - mobiliser les acquis sur les configurations géométriques du plan en étudiant des figures planes
+   extraites des objets précédents ;
+   - sensibiliser les étudiants à différents types de repérage.
+
+On veille tout particulièrement aux connaissances acquises antérieurement ou non par les étudiants en
+géométrie, tant dans le plan que dans l'espace. Les connaissances sont celles abordées en collège, en
+lycée professionnel ainsi qu'en seconde générale et technologique.
+On prend appui sur des problèmes issus des enseignements scientifiques et technologiques. On utilise
+les possibilités offertes par les logiciels de géométrie dynamique. Il est également pertinent de
+connaître les logiciels qui sont utilisés par les disciplines technologiques et l'exploitation qui peut en
+être faite en lien avec le cours de mathématiques.
+
+         CONTENUS                CAPACITÉS ATTENDUES                       COMMENTAIRES
+
+Configurations du plan et      · Lire et interpréter une           On étudie des problèmes portant
+                                                                   sur des objets issus des autres
+de l'espace                    représentation d'un objet           enseignements et constitués des
+                               constitué de solides usuels.        solides usuels suivants : le cube, le
+Exemples de problèmes                                              parallélépipède rectangle, la
+portant sur :                  · Représenter, identifier et        pyramide, le cylindre, le cône et la
+- l'analyse de la forme d'un                                       sphère.
+objet de l'espace (par         étudier la section d'un solide par
+projection ou famille de       un plan dans un cas simple.         On emploie un logiciel de
+sections planes) ;                                                 visualisation et de construction
+- la section d'un solide par   · Isoler, représenter et étudier    afin de favoriser la vision dans
+un plan ;                                                          l'espace des étudiants.
+- la projection sur un plan    une figure plane extraite d'un
+ou sur une droite ;            solide.                             Sur un exemple, on peut aborder
+- l'intersection, le                                               la notion de plan tangent à une
+parallélisme,                  · Utiliser les acquis de géométrie  surface.
+l'orthogonalité ;
+- les surfaces de révolution.  pour :                              On réactive les connaissances de
+                               - calculer la longueur d'un         géométrie plane en s'appuyant sur
+                               segment, la mesure d'un angle en    des figures planes extraites des
+                               degrés, l'aire d'une surface et le  objets de l'espace étudiés.
+                               volume d'un solide ;
+                               - déterminer les effets d'un        Sur un exemple, on peut découvrir
+                               agrandissement ou d'une             la relation d'Al-Kashi ou les
+                               réduction sur les longueurs, les    relations liant les sinus des angles,
+                               aires et les volumes.               les longueurs des côtés et l'aire
+                                                                   d'un triangle.
+
+                                                                    Modélisation volumique.
+
+                               37
+Repérage d'un point          · Utiliser un système de repérage  On s'appuie sur des exemples
+                                                                issus des autres disciplines pour
+Exemples de problèmes        d'un point dans le cadre de la     justifier de la pertinence de
+mettant en oeuvre le         résolution d'un problème.          l'emploi de systèmes de repérage
+repérage d'un point :                                           variés.
+- dans le plan (coordonnées
+cartésiennes, coordonnées                                        Cinématique.
+polaires) ;
+- dans
+l'espace (coordonnées
+cartésiennes, coordonnées
+cylindriques, coordonnées
+sphériques).
+
+                             38
+                             CALCUL VECTORIEL
+
+Le but de ce module est double :
+   - consolider les acquis de calcul vectoriel des années précédentes en tenant compte des
+   connaissances acquises antérieurement ou non par les étudiants ;
+   - apporter des compléments de calcul vectoriel, qui peuvent être utiles pour étudier des situations
+   rencontrées dans les autres enseignements.
+
+On prend appui sur les enseignements scientifiques et technologiques qui fournissent un large éventail
+de problèmes. On utilise les possibilités offertes par les logiciels de géométrie dynamique. Il est
+également pertinent de connaître les logiciels qui sont utilisés par les disciplines technologiques et
+l'exploitation qui peut en être faite en lien avec le cours de mathématiques.
+
+        CONTENUS               CAPACITÉS ATTENDUES                       COMMENTAIRES
+Décomposition d'un
+vecteur dans une base du     · Décomposer un vecteur dans        On ne se limite pas au cadre de la
+plan ou de l'espace                                              géométrie repérée.
+                             une base et exploiter une telle
+Barycentre                   décomposition.                       Vecteur vitesse, force.
+Barycentre de deux points
+pondérés du plan ou de       · Construire le barycentre de       On peut introduire la notion de
+l'espace. Coordonnées dans                                       barycentre en la reliant à
+un repère.                   deux points pondérés.               l'équilibrage de masses ou à la
+                                                                 moyenne pondérée.
+Extension de la notion de    · Utiliser, sur des exemples        Selon les besoins, on étudie des
+barycentre à trois points                                        réductions d'une somme de la
+pondérés.                    simples liés aux enseignements      forme MA + MB avec +0.
+                             technologiques, la notion de        On fait remarquer que le
+Produit scalaire             barycentre partiel.                 barycentre de deux points distincts
+Expressions du produit                                           appartient à la droite définie par
+scalaire :                   · Choisir l'expression du produit   ces deux points.
+- à l'aide d'une projection                                      Sur des exemples issus des
+orthogonale ;                scalaire la plus adaptée en vue de  enseignements technologiques, on
+- à l'aide des normes et     la résolution d'un problème.        met en place le théorème du
+d'un angle ;                                                     barycentre partiel.
+- à l'aide des coordonnées.  · Calculer un angle ou une
+                                                                  Centre d'inertie d'un
+                             longueur à l'aide d'un produit      assemblage de solides.
+                             scalaire.
+                                                                 On exploite des situations issues
+                                                                 des domaines scientifiques et
+                                                                 technologiques.
+
+                                                                 On illustre en situation quelques
+                                                                 propriétés du produit scalaire.
+
+                                                                  Travail, puissance d'une force.
+
+                             39
+Produit vectoriel            · Calculer une aire à l'aide d'un  La découverte du produit
+                                                                vectoriel, de ses propriétés et de
+Orientation de l'espace.     produit vectoriel.                 ses applications est à mener en
+                                                                liaison étroite avec les autres
+Produit vectoriel de deux                                       enseignements.
+vecteurs de l'espace :
+- définition ;                                                  Les notions de vecteur glissant, de
+- calcul des coordonnées                                        torseur et le produit mixte sont
+dans une base orthonormale                                      hors programme.
+directe ;
+- application à l'aire d'un
+triangle et d'un
+parallélogramme.
+
+                                                                 Moment d'une force.
+
+                             40
+REPRÉSENTATION DE L'ESPACE
+
+L'objectif de ce module est de favoriser l'aisance de l'étudiant dans le travail de création, d'analyse et
+de représentation des objets de l'espace et des scènes.
+
+On mobilise, renforce et complète les acquis en géométrie dans l'espace, en veillant tout
+particulièrement aux connaissances acquises antérieurement ou non par les étudiants. Les
+connaissances mises en oeuvre dans ce module sont celles abordées dans les programmes de collège,
+seconde générale et technologique, première et terminale STD2A.
+
+Ce module est à mener en liaison étroite avec les enseignements technologiques qui offrent des
+situations riches et variées à étudier en mathématiques. On met à profit les possibilités offertes par les
+logiciels de géométrie dynamique du plan et de l'espace. Il est également pertinent de connaître les
+logiciels qui sont utilisés dans ces enseignements et l'exploitation qui peut en être faite en lien avec le
+cours de mathématiques.
+
+        CONTENUS              CAPACITÉS ATTENDUES                   COMMENTAIRES
+
+Représentation de l'espace
+en perspective
+
+Exemples de problèmes         · Lire et interpréter une             On étudie des problèmes portant :
+portant sur les codes                                               - sur des objets issus des autres
+perspectifs (perspective      représentation en perspective d'un    enseignements et constitués de
+parallèle, perspective        objet constitué de solides usuels.    solides usuels ;
+centrale) en lien                                                   - sur des scènes composées de
+avec :                        · Représenter un objet ou une         quelques objets et d'espaces vides.
+- l'analyse de la forme d'un                                        Les solides usuels sont : les
+objet de l'espace (par        scène dans un cas simple :            prismes droits, la pyramide, le
+projection ou famille de      - en perspective parallèle ;          cylindre, le cône et la sphère.
+sections planes) ;            - en perspective centrale.            On peut aborder, sur un exemple,
+- la section d'un solide par                                        des solides platoniciens.
+un plan ;                     · Représenter en perspective ou
+- l'intersection, le                                                On s'appuie sur la manipulation
+parallélisme,                 en vraie grandeur, identifier et      de solides et sur l'emploi de
+l'orthogonalité ;             étudier la section d'un solide        logiciels de visualisation et de
+- les surfaces de             usuel par un plan dans un cas         construction. On renforce et
+révolution ;                  simple.                               complète alors les connaissances
+- les coniques (vues comme                                          sur la translation, la rotation, les
+section d'un demi-cône par                                          symétries et l'homothétie dans
+un plan).                                                           l'espace.
+
+                              · Isoler, représenter et étudier une  On réactive les connaissances de
+                                                                    géométrie plane en s'appuyant sur
+                              figure plane extraite d'un solide.    des figures planes extraites des
+                                                                    objets de l'espace étudiés.
+
+Repérage et calcul            · Repérer un point donné de           On fait le lien avec l'affichage des
+vectoriel                                                           coordonnées dans les logiciels de
+Coordonnées d'un point        l'espace.                             conception volumique, ainsi
+dans un repère orthonormal                                          qu'avec le choix d'une couleur
+de l'espace.                                                        dans un logiciel de dessin.
+
+Coordonnées d'un vecteur.
+
+                              41
+Produit scalaire           · Calculer le produit scalaire de  On exploite des situations issues
+Produit scalaire de deux                                      des domaines technologiques et
+vecteurs de l'espace.      deux vecteurs selon deux           artistiques.
+                           méthodes :
+Applications du produit    - analytiquement ;                  Modes de représentation,
+scalaire.                  - à l'aide des normes et d'un      modélisation volumique,
+Équation cartésienne d'un  angle.                             infographie.
+plan. Vecteur normal.
+                           · Calculer des angles ou des
+
+                           longueurs.
+
+                           · Déterminer une équation
+
+                           cartésienne d'un plan défini à
+                           partir d'un point et d'un vecteur
+                           normal.
+
+                           42
+MODÉLISATION GÉOMÉTRIQUE
+
+Parmi les modèles mathématiques qui sont la base de la conception des courbes ou des surfaces en
+C.A.O. et en C.F.A.O. (Conception, Fabrication, Assistées par Ordinateur), le modèle de Bézier et
+celui des B-Splines sont les plus utilisés. L'étude de ces deux modèles, restreinte aux courbes du plan,
+est suffisante pour comprendre leur intérêt dans la conception interactive des formes.
+
+Le modèle des courbes de Bézier est un outil générateur de l'ensemble de la forme désirée tandis que
+le modèle des courbes B-Splines réalise cette forme de manière locale.
+Des présentations différentes, notamment pour les courbes de Bézier, permettront de dévoiler une
+partie de la « boîte noire » de ces modèles. L'appui sur des exemples de courbes de degré 2 ou 3
+permet d'éviter toute complexité calculatoire, sans nuire aux utilisations réelles qui souvent
+concernent le degré 3.
+
+L'objectif principal est la compréhension des liens entre ces modèles et la conception des formes. Il
+convient d'éviter les considérations théoriques hors de cet objectif et le lien entre le modèle des B-
+Splines et celui de Bézier est signalé sans justification.
+
+         CONTENUS          CAPACITÉS ATTENDUES                   COMMENTAIRES
+Courbe de Bézier
+Modèle par vecteurs et      Déterminer un vecteur tangent en     Le lien entre approche par vecteurs
+contraintes.               un point d'une courbe de Bézier.      et contraintes d'une part et par
+                                                                 points de contrôle d'autre part est
+Modèle par points de        Étudier et construire une courbe     explicité sur un exemple.
+contrôle et polynômes de   de Bézier définie par vecteurs et
+Bernstein.                 contraintes.                          En liaison avec les autres
+                                                                 disciplines, il convient d'utiliser les
+Barycentre de deux points   Définir, sous forme paramétrique     outils informatiques pour mettre en
+pondérés.                  une courbe de Bézier à partir des     évidence le rôle des points de
+                           points de contrôle.                   contrôle dans la modification de la
+                                                                 forme de la courbe.
+                            Étudier et construire une courbe
+                           de Bézier définies par des points de  La formule donnant les polynômes
+                           contrôle.                             de Bernstein n'est pas exigible.
+
+                                                                 On limite à quatre le nombre de
+                                                                 points de contrôle.
+
+                                                                 On se limite à des coefficients
+                                                                 compris entre 0 et 1.
+
+                           43
+Construction barycentrique   Construire un point de la courbe   Le lien entre le modèle par points
+d'un point de la courbe.    par barycentres successifs.         de contrôle et le point de vue
+                                                                barycentrique est admis. Cette
+Courbe B-Spline                                                 présentation permet de développer
+Points de contrôle et                                           un nouveau point de vue : tout
+polynômes de Riesenfeld                                         point de la courbe est « attiré » par
+(degré 2 ou 3).                                                 chacun des points de contrôle en
+                                                                proportion du « poids » qui lui est
+                                                                affecté.
+
+                                                                Des algorithmes associés à la
+                                                                construction géométrique par
+                                                                barycentres successifs peuvent être
+                                                                proposés.
+
+                                                                 Conception de formes.
+
+                             Déterminer un polynôme de          La formule donnant les polynômes
+                            Riesenfeld à partir de la formule   de Riesenfeld n'est pas exigible.
+                            donnée.
+                                                                On traite un exemple de forme
+                             Étudier et construire des courbes  réalisée par jonction d'arcs de
+                            B-Splines.                          courbes ; on met en évidence le
+                                                                passage du modèle de Bézier qui
+                                                                déforme globalement l'arc à une
+                                                                utilisation où l'on peut modifier
+                                                                localement chaque arc.
+
+                                                                 Conception de formes.
+
+                            44
+                              NOMBRES COMPLEXES
+
+Les premiers éléments de l'étude des nombres complexes ont été mis en place dans les classes de lycée.
+Les objectifs sont de mettre en oeuvre et de compléter ces acquis, d'une part pour fournir des outils qui
+sont utilisés en électricité, en mécanique et en automatique, d'autre part pour mettre en évidence les
+interprétations géométriques et les interventions des nombres complexes en analyse : représentations
+géométriques associées, résolutions d'équations différentielles.
+
+Il est attendu qu'un étudiant sache effectuer un calcul simple à la main et à la calculatrice dans tous les
+cas.
+
+         CONTENUS             CAPACITÉS ATTENDUES                  COMMENTAIRES
+
+Forme algébrique et
+représentation
+géométrique
+
+Nombres a + ib avec i2 = -1.  · Effectuer des calculs              Il s'agit de réactiver les
+Égalité, conjugué, somme,                                          connaissances déjà traitées au
+produit, quotient.            algébriques avec des nombres         lycée.
+                              complexes, notamment à l'aide
+                              d'une calculatrice.                  Dans les situations issues des
+                                                                   enseignements technologiques, on
+                                                                   emploie la notation a + jb.
+
+Équations du second degré à · Résoudre une équation du
+coefficients réels.           second degré à coefficients réels.
+
+Représentation géométrique.   · Représenter un nombre
+
+                              complexe par un point ou un
+                              vecteur.
+
+Ensemble de points dont       · Déterminer et construire un
+l'affixe a une partie réelle
+ou imaginaire donnée.         ensemble de points dont l'affixe a
+                              une partie réelle ou imaginaire
+Forme trigonométrique,        donnée.
+forme exponentielle
+
+Module d'un nombre            · Passer de la forme                 Il est attendu qu'un étudiant sache
+complexe, arguments d'un                                           effectuer un calcul simple à la
+nombre complexe non nul.      trigonométrique à la forme           main et à la calculatrice dans tous
+                              algébrique et inversement.           les cas.
+Forme exponentielle et
+forme trigonométrique d'un    · Utiliser la forme la plus adaptée
+nombre complexe.
+                              à la résolution d'un problème.
+
+Ensemble de points dont       · Déterminer et construire un        On favorise l'utilisation de
+                                                                   logiciels de géométrie dynamique.
+l'affixe z vérifie z - a = k  ensemble de points dont l'affixe z
+                              vérifie z - a = k ou
+ou arg(z - a) = k , où a      arg(z - a) = k.
+
+désigne un nombre
+complexe et k un nombre
+réel.
+
+                              45
+Transformations           · Représenter, à l'aide d'un          L'intention n'est pas de
+                                                                développer une dextérité sur ce
+Exemples de               logiciel de géométrie dynamique,      sujet mais, à l'aide de la notion
+transformations           l'image d'un point ou d'une partie    mathématique introduite, de
+géométriques d'écritures  de droite par une transformation      donner du sens aux résultats
+complexes suivantes :     géométrique d'écriture complexe       obtenus par le logiciel.
+z  z + b , z  az ,
+z  z et z  1 , où a et b  z  a z + b ou à z  a z + b c z + d .
+
+                  z
+sont des nombres réels.
+
+                                                                 Diagrammes de Nyquist ou
+                                                                Bode en électronique.
+
+                          46
+                              CALCUL MATRICIEL
+
+Ce module consiste en une initiation au langage matriciel, s'appuyant sur l'observation de phénomènes
+issus de la vie courante ou d'exemples concrets. On cherche principalement à introduire un mode de
+représentation facilitant l'étude de tels phénomènes.
+
+On introduit le calcul matriciel sur des matrices d'ordre 2. Les calculs sur des matrices d'ordre 3 ou plus
+sont effectués à l'aide d'une calculatrice ou d'un logiciel.
+
+        CONTENUS              CAPACITÉS ATTENDUES                          COMMENTAIRES
+Matrices
+                                                                   Une matrice est introduite comme
+Égalité de deux matrices.                                          un tableau de nombres réels
+Matrice nulle, matrice                                             permettant de représenter une
+identité.                                                          situation comportant plusieurs
+                                                                   « entrées » et « sorties ».
+Calcul matriciel
+élémentaire :                 · Effectuer des calculs matriciels   Le choix de la définition de
+- addition ;                                                       chaque opération portant sur les
+- multiplication par un       à l'aide d'une calculatrice ou d'un  matrices s'appuie sur
+nombre réel ;                 logiciel, y compris le calcul d'une  l'observation de la signification du
+- multiplication.             puissance d'une matrice.             tableau de nombres ainsi obtenu.
+                                                                   On signale le caractère associatif
+Inverse d'une matrice         · Représenter puis traiter une       mais non commutatif de la
+                                                                   multiplication.
+Définition, existence         situation simple à l'aide d'une
+éventuelle, unicité en cas    écriture matricielle.                On peut notamment étudier des
+d'existence.                                                       exemples de processus discrets,
+                                                                   déterministes ou stochastiques, à
+Commutativité d'une                                                l'aide de suites de matrices.
+matrice inversible et de son
+inverse.                      · Montrer qu'une matrice est
+
+                              l'inverse d'une autre.
+
+                              · Déterminer à l'aide d'une          La notion de déterminant n'est pas
+                                                                   au programme. Aucune condition
+                              calculatrice ou d'un logiciel        d'inversibilité d'une matrice n'est
+                              l'inverse d'une matrice inversible.  à connaître.
+
+                              · Résoudre un système linéaire de    On ne considère que le cas où le
+                                                                   système est de Cramer, sans
+                              n équations à n inconnues à l'aide   qu'aucune justification ne soit
+                              d'une inversion de matrice.          requise.
+
+                                                                    Gestion d'un réseau, matrice
+                                                                   d'inertie et changement de base en
+                                                                   mécanique, processus aléatoires.
+
+                              47
+                                 ARITHMÉTIQUE
+
+Le programme concerne les notions les plus utiles à l'informatique. La numération est indispensable
+aux langages de bas niveau. L'arithmétique modulaire est utile à la cryptographie, aux corrections
+d'erreurs et plus généralement à de nombreux algorithmes.
+
+        CONTENUS                 CAPACITÉS ATTENDUES                   COMMENTAIRES
+Systèmes de numération
+
+Numération en bases 10, 2        · Passer de l'écriture d'un nombre    Les nombres négatifs sont
+et 16 des entiers et des réels.                                        précédés du signe moins (-),
+Conversions entre ces            dans une base à une autre.            quelle que soit la base utilisée.
+bases.
+                                                                       On fait le lien entre le calcul
+                                                                       binaire et le calcul booléen : les
+                                                                       booléens sont alors 1 et 0,
+                                                                       interprétés comme signifiant « il y
+                                                                       en a, ou pas ».
+
+Notions d'arrondi et de          · Arrondir un entier ou un            On se limite à des cas simples en
+précision.                                                             base 10 et en base 2. On ne fait
+                                 réel (par défaut, par excès, au plus  aucune théorie sur les calculs
+                                 près...).                             d'incertitude.
+
+                                 · Se conformer à un nombre de
+
+                                 chiffres significatifs.
+
+Addition, soustraction,          · Calculer à la main :
+multiplication et division
+des entiers naturels.            - des additions en bases 2 et 16 ;
+                                 - des multiplications et des
+Arithmétique modulaire           divisions par une puissance de
+                                 deux, en base 2.
+
+                                                                       On évite tout excès de technicité
+                                                                       en s'efforçant d'utiliser des
+                                                                       présentations concrètes.
+
+Division euclidienne :           · Décomposer un entier naturel en     On se limite aux entiers naturels.
+quotient, reste, existence,
+unicité.                         produit de facteurs premiers et       Aucune technique n'est censée être
+Nombres premiers,                déterminer tous ses diviseurs.        connue.
+décomposition en produit de
+facteurs premiers, entiers       · Mettre en oeuvre un algorithme :
+premiers entre eux, PGCD
+de deux entiers.                 - de recherche de nombres
+                                 premiers ;
+                                 - de décomposition en produit de
+                                 facteurs premiers.
+
+                                 48
+Congruences. Compatibilité  · Mener un calcul de congruence       On montre l'efficacité du langage
+avec l'addition et la                                             des congruences.
+multiplication.             modulo n.
+                                                                  On note que le parcours n'est
+Propriété : modulo n, les   · Parcourir une liste circulaire par  exhaustif que quand la longueur
+multiples de a sont les                                           du saut et la taille de la liste sont
+multiples de PGCD(a, n).    sauts d'amplitude constante           des entiers premiers entre eux.
+
+                            49
+                                 ALGÈBRES DE BOOLE
+
+1. CALCUL DES PROPOSITIONS ET DES PRÉDICATS
+
+L'objectif est d'introduire quelques éléments de logique en liaison avec l'enseignement de
+l'informatique. Il s'agit d'une brève étude destinée à familiariser les étudiants à une pratique
+élémentaire du calcul portant sur des énoncés.
+
+         CONTENUS                CAPACITÉS ATTENDUES              COMMENTAIRES
+Calcul propositionnel
+
+Proposition, valeur de vérité.
+
+Connecteurs logiques :           · Traiter un exemple simple de   On dégage les propriétés
+                                                                  fondamentales des opérations
+- négation (non P , ¬ P , P ) ;  calcul portant sur un énoncé.    introduites, de manière à
+- conjonction                                                     déboucher ensuite sur un exemple
+                                                                  d'algèbre de Boole.
+( P et Q , P  Q ) ;                                               En situation, on aborde les lois de
+- disjonction                                                     Morgan.
+
+( P ou Q , P  Q ) ;                                               On se limite au cas où l'utilisation
+- implication ;                                                   d'une table de vérité ou de
+- équivalence.                                                    propriétés élémentaires du calcul
+                                                                  propositionnel permet de conclure
+Calcul des prédicats             · Utiliser des connecteurs       sans excès de technicité.
+Variable, constante.
+Quantificateurs , .              logiques pour exprimer une       Cette capacité est également mise
+                                 condition.                       en oeuvre en algorithmique.
+Négation de x, p(x) ;
+négation de x, p(x).             · Passer du langage courant au   On se limite à des cas simples de
+                                                                  prédicats portant sur une, deux ou
+                                 langage mathématique et          trois variables.
+                                 inversement.
+                                                                  On met en valeur l'importance de
+                                 · Exprimer, dans un cas simple,  l'ordre dans lequel deux
+                                                                  quantificateurs interviennent.
+                                 la négation d'un prédicat.
+
+                                 50
+2. LANGAGE ENSEMBLISTE
+
+Sans développer une théorie générale des ensembles, l'objectif est de consolider et de prolonger les
+acquis des étudiants sur les ensembles en liaison avec l'enseignement de l'informatique.
+
+        CONTENUS              CAPACITÉS ATTENDUES                COMMENTAIRES
+Langage ensembliste
+
+Ensemble, appartenance,
+inclusion, ensemble vide.
+
+Ensemble P(E) des parties     · Traiter un exemple simple de     On dégage les propriétés
+                                                                 fondamentales des opérations ainsi
+d'un ensemble E.              calcul portant sur des ensembles   introduites, de manière à
+Complémentaire d'une          finis.                             déboucher ensuite sur un exemple
+partie, intersection et                                          d'algèbre de Boole.
+réunion de deux parties.
+                                                                 En situation, on aborde les lois de
+Ensemble des éléments x                                          Morgan.
+d'un ensemble E satisfaisant
+à une proposition p(x).                                          On interprète en termes
+                                                                 ensemblistes l'implication, la
+                                                                 conjonction et la disjonction de
+                                                                 deux propositions, ainsi que la
+                                                                 négation d'une proposition.
+
+3. CALCUL BOOLÉEN
+
+Cette brève étude est à mener en coordination étroite avec l'enseignement de l'informatique. Il convient
+d'introduire la notion d'algèbre de Boole à partir des deux exemples précédents. Il s'agit
+essentiellement d'effectuer des calculs permettant de simplifier des expressions booléennes.
+
+        CONTENUS              CAPACITÉS ATTENDUES                        COMMENTAIRES
+Calcul booléen                                                   On adopte les notations usuelles
+                                                                 a , a + b et ab.
+Algèbre de Boole :            · Mener des calculs portant sur
+- définition ;                                                   On se limite à des cas simples,
+- propriétés des opérations,  des variables booléennes.          comportant au plus trois variables
+lois de Morgan.                                                  booléennes, pour lesquels on peut
+                              · Simplifier une expression        conclure sans excès de technicité.
+
+                              booléenne en utilisant :           On signale l'intérêt des
+                              - un tableau de Karnaugh ;         connecteurs non-ou (nor) et
+                              - les règles de calcul booléen.    non-et (nand), ou exclusif oux
+                                                                 (xor).
+                              · Passer d'une situation donnée à
+
+                              une expression booléenne
+                              correspondante et inversement.
+
+                              51
+ÉLÉMENTS DE LA THÉORIE DES ENSEMBLES
+
+Ce module vient compléter, concernant les ensembles, celui relatif aux algèbres de Boole. Il développe
+les notions de produit cartésien, de relation et d'application en liaison avec les nombreuses utilisations
+qui en sont faites en informatique (codage, tri, compression...).
+
+        CONTENUS               CAPACITÉS ATTENDUES                              COMMENTAIRES
+                                                                        Les exemples utilisés sont choisis
+Éléments de la théorie des   · Déterminer et dénombrer les              principalement en liaison avec
+ensembles                                                               l'enseignement de l'informatique.
+                             éléments du produit cartésien de
+Produit cartésien de deux    deux ensembles finis.                      On généralise au cas du produit
+ensembles :                                                             cartésien de n ensembles finis.
+- définition ;
+- cardinal de E×F dans le
+cas où E et F sont finis.
+
+Relations binaires :         · Traiter un exemple où les                On évite un trop grand
+- définition ;                                                          formalisme.
+- propriétés ;               contraintes se traduisent en termes        On ne s'intéresse qu'aux
+- relations d'équivalence,   de relation d'ordre ou                     utilisations en informatique.
+relations d'ordre.           d'équivalence.
+
+Application f d'un ensemble  · Déterminer l'image ou l'image            On attache plus d'importance à
+E dans un ensemble F :                                                  une caractérisation textuelle qu'à
+- définition ;               réciproque d'une partie finie par          l'énoncé de prédicats.
+- image d'une partie A de    une application.
+E ;                                                                     On souligne l'importance de la
+- image réciproque d'une     · Traiter un exemple où les                notion d'injection pour coder des
+partie B de F.                                                          informations.
+                             contraintes se traduisent en termes
+Injection, surjection,       d'injection, de surjection ou de
+bijection.                   bijection.
+
+Composition d'applications. · Écrire une application sous               On souligne le fait que la
+                                                                        composition d'applications n'est
+                                     forme de composée.                 pas une opération commutative.
+                                                                        On privilégie les situations issues
+                                 · Traiter un exemple de                des autres enseignements.
+
+                                     composition d'applications toutes
+                                     deux soit injectives, soit
+                                     surjectives, soit bijectives.
+
+                             52
+               GRAPHES ET ORDONNANCEMENT
+
+1. GRAPHES
+
+L'objectif est d'introduire et de mettre en oeuvre, dans des situations concrètes très élémentaires et sans
+théorie générale, des algorithmes permettant de résoudre les problèmes figurant dans la colonne
+« Capacités attendues ».
+
+        CONTENUS            CAPACITÉS ATTENDUES                 COMMENTAIRES
+Graphes
+
+Modes de représentation     · Passer d'un mode de               La définition d'un graphe fini
+d'un graphe fini simple                                         simple orienté est limitée à la
+orienté : représentation    représentation à un autre, pour un  donnée d'un ensemble de
+géométrique, tableau des    graphe donné.                       sommets et d'un ensemble d'arcs.
+successeurs ou des
+prédécesseurs, matrice
+d'adjacence booléenne.
+
+Chemin d'un graphe :
+définition , longueur,
+circuit, boucle, chemin
+hamiltonien.
+
+Puissances entières et      · Obtenir et interpréter, pour une  On considère uniquement le cas
+booléennes de la matrice                                        d'un graphe non valué (non
+d'adjacence.                matrice d'adjacence M donnée, les   pondéré). À partir d'exemples très
+                            coefficients :                      élémentaires et sans introduire une
+                            - d'une puissance entière de M ;    théorie générale, on montre
+                            - d'une puissance booléenne de      l'intérêt des méthodes matricielles
+                            M.                                  mettant en oeuvre l'addition et la
+                                                                multiplication booléennes des
+                            · Mettre en oeuvre un algorithme    matrices d'adjacence.
+
+                            permettant d'obtenir les chemins
+                            de longueur p d'un graphe.
+
+Fermeture transitive d'un   · Mettre en oeuvre un algorithme
+graphe.
+                            permettant d'obtenir la fermeture
+                            transitive d'un graphe.
+
+Pour un graphe sans         · Mettre en oeuvre un algorithme    Il convient de savoir déterminer
+circuit : niveau d'un                                           les niveaux, sans qu'aucune
+sommet, niveaux du graphe.  permettant d'obtenir les niveaux    méthode ne soit imposée.
+                            dans un graphe sans circuit.
+
+Arborescence.               · Représenter géométriquement       La notion de connexité étant hors
+                                                                programme, on se limite à la
+                            un graphe en l'ordonnant par        présentation d'exemples simples
+                            niveaux.                            d'arborescences à partir de leur
+                                                                représentation géométrique, sans
+                                                                recherche d'une caractérisation
+                                                                générale.
+
+                            53
+Chemin optimal en             · Mettre en oeuvre un algorithme    On observe l'importance du
+longueur.                                                         résultat : tout sous-chemin d'un
+                              permettant d'obtenir une            chemin optimal est optimal.
+Graphe valué (pondéré) :      optimisation d'un graphe :
+- définition ;                - en longueur ;                     On fait une simple présentation
+- chemin optimal en valeur.                                       des graphes valués, sans théorie
+                              - en valeur (graphe valué).         particulière.
+
+2. ORDONNANCEMENT
+
+L'objectif est double : sensibiliser l'étudiant aux problèmes d'ordonnancement et traiter manuellement
+un algorithme. Aucune justification théorique des algorithmes utilisés n'est au programme. On abordera
+MPM ou PERT. On s'attachera surtout à la compréhension des mécanismes. Et, les cas traités resteront
+suffisamment modestes pour que la rapidité ne soit pas un critère d'évaluation fondamental.
+
+        CONTENUS                CAPACITÉS ATTENDUES                       COMMENTAIRES
+Ordonnancement                                                    On présente quelques cas concrets
+                              · Résoudre un problème              simplifiés et on les interprète.
+Ordonnancement :
+- méthode MPM ou              d'ordonnancement en mettant en      Aucune autre compétence
+méthode PERT, principe de     oeuvre la méthode des potentiels    théorique n'est requise.
+représentation ;              métra (MPM) ou la méthode
+- dates au plus tôt, au plus  PERT, et interpréter les résultats  On se limite à des cas très simples
+tard ;                        obtenus à travers les notions       où l'interprétation ne soulève
+- tâches et chemins           abordées.                           aucune difficulté théorique.
+critiques ;
+- marge totale, libre,        · Reconnaître une contrainte non
+certaine.
+                              incluse dans la modélisation et en
+                              tenir compte lors de
+                              l'interprétation.
+
+                              54
+                    ALGORITHMIQUE APPLIQUÉE
+
+L'objectif de ce module est de construire des algorithmes, et de les programmer dans un langage
+informatique, dans le but de résoudre des problèmes de niveau raisonnable.
+Les thématiques abordées lors de l'étude de ce module sont très ouvertes, mais l'objectif visé, à
+l'intérieur du processus de conception, est ciblé. On veille à ce que les situations proposées soient
+mathématiquement achevées. Alors qu'une solution, peut être décrite de manière très libre, textuelle ou
+graphique, par formules ou symboles, par l'exemple ou de manière inachevée, on s'attache ici à les
+exprimer en utilisant les outils algorithmiques usuels, pour les rendre directement convertibles et
+exécutables sur machine.
+Afin de faciliter la compréhension des mécanismes et la détection d'éventuelles erreurs, il est impératif
+de concrétiser les algorithmes par l'emploi d'un langage de programmation et de conduire l'étudiant à
+réaliser des tests. La tâche inverse, consistant à comprendre un algorithme, présente également un
+grand intérêt pour l'assimilation des mécanismes et lors d'opérations de maintenance.
+Les sujets empruntés à la vie courante peuvent être utilisés à chaque fois qu'ils permettent d'illustrer
+un mécanisme simple avec pertinence. Sinon, on préfère utiliser des sujets dérivés directement
+d'autres modules mathématiques et, avec un certain équilibre, des sujets associés à des thématiques
+informatiques (par exemple : codage, cryptage et décryptage, redondance de sécurité, tri itératif et tri
+récursif, parcours de graphes). Ces sujets peuvent être abordés afin d'illustrer des concepts
+fondamentaux d'algorithmique sans qu'aucune connaissance spécifique ne soit exigible de l'étudiant
+dans ces derniers domaines.
+
+Ce module vise à développer les compétences spécifiques suivantes :
+       - comprendre un algorithme et expliquer ce qu'il fait ;
+       - modifier un algorithme existant pour obtenir un résultat différent ;
+       - concevoir une procédure, un algorithme simple ;
+       - transcrire un algorithme dans un langage informatique ;
+       - s'interroger sur l'efficacité d'un algorithme.
+
+Les contrôles d'exécution constituent le coeur des mécanismes algorithmiques de base. À ce titre, on
+attache un soin tout particulier à leur étude progressive mais détaillée. Leur maîtrise pratique est
+essentielle et les évaluations doivent être centrées sur eux.
+
+Pour l'écriture des algorithmes, une représentation textuelle convenablement indentée avec des
+indicateurs de début et de fin explicites facilite la lecture. Pour aider à la compréhension, il est utile
+également d'indiquer un en-tête composé d'un nom, d'un rôle, de l'indication des données d'entrée et
+de sortie. Des commentaires sont ajoutés, notamment pour préciser le rôle des variables ou fournir des
+indications méthodologiques.
+
+Un algorithme est indépendant de tout langage de programmation ; aussi aucun langage n'est imposé,
+mais il convient de s'assurer qu'il est accepté par le centre d'examen. On privilégie un langage de
+programmation simple d'utilisation et libre d'installation. L'existence d'une communauté d'utilisateurs
+et de bibliothèques facilite le développement.
+
+La présentation linéaire du programme, avec une entrée par les contenus n'indique pas d'ordre dans sa
+mise en oeuvre. Aussi les concepts fondamentaux (algorithme, finitude, modularité, identifiant, type,
+constante, variable, fonction, procédure, expression numérique, expression conditionnelle et plus
+généralement booléenne...) sont acquis par l'usage, sans faire appel à des définitions formelles
+préalables.
+
+                                                       55
+         CONTENUS                 CAPACITÉS ATTENDUES                   COMMENTAIRES
+Types de données
+Types simples :                   · Connaître les modes de codage       Il n'est pas nécessaire de
+entier naturel, entier relatif,                                         connaître la représentation exacte
+réel, booléen.                    et gérer les différences entre        des données en machine,
+                                  données mathématiques et              notamment en ce qui concerne les
+Chaîne de caractères.             informatiques :                       flottants.
+                                  - domaine de valeurs ;
+                                  - représentation exacte ou            On évite de considérer une chaîne
+                                  approchée, précision.                 comme un tableau de caractères.
+
+Tableaux de données :             · Construire un tableau.              On adapte la construction et
+- de type homogène à une ou                                             l'exploitation de ces tableaux aux
+deux dimensions ;                 · Traiter les données d'un            possibilités de l'outil informatique
+- à deux dimensions dans                                                utilisé. Les structures de données
+lequel, soit les lignes soit les  tableau :                             et les objets ne sont pas au
+colonnes, peuvent être de         - accéder à ses différents éléments   programme de mathématiques : ils
+types différents.                 en lecture et en écriture ;           figurent dans ceux des
+                                  - traiter les éléments d'une ligne    enseignements professionnels.
+Procédure et fonction :           ou d'une colonne ;
+- paramètres d'entrée ;           - copier un tableau.                  Sans aborder la programmation
+- valeur(s) retournée(s) par                                            objet, les concepts de modularité
+une fonction ;                    · Gérer les transferts en entrée      et d'interface doivent être connus.
+- variables globales ou
+locales.                          seule, en sortie seule, en entrée et
+                                  sortie.
+
+                                  · Utiliser les variables globales et
+
+                                  locales.
+
+Instructions élémentaires         · Saisir une donnée depuis le         Les fichiers ne sont pas au
+Lecture, écriture.                                                      programme de mathématiques.
+Affectation, affectation          clavier, manipuler les variables et   En standard, la mise en forme des
+récursive.                        afficher sur l'écran.                 affichages est limitée à
+                                                                        l'utilisation de séparateurs et de
+Opérateurs                        · Gérer la chronologie des valeurs    changements de ligne. Sinon, les
+Opérateurs numériques :                                                 outils nécessaires sont fournis et
+addition, soustraction,           contenues dans les variables et       décrits.
+multiplication, division,         produire la trace d'un algorithme.    La gestion des pointeurs n'est pas
+exponentiation, quotient et                                             au programme.
+reste de la division entière,
+signe.                            · Transformer une expression          « Fonctions mathématiques
+Fonctions mathématiques                                                 usuelles » doit être entendu au
+usuelles.                         mathématique en expression            sens informatique et inclure les
+                                  numérique en ligne et                 fonctions d'arrondi, ainsi qu'un
+                                  réciproquement.                       générateur de nombres pseudo-
+                                                                        aléatoires uniforme dans un
+                                                                        intervalle.
+
+                                  56
+Opérateurs de comparaison :                                             On compare soit des valeurs
+=, <> ou !=, <, <=, >, >=.                                              numériques, soit des chaînes de
+                                                                        caractères.
+Opérateurs booléens : non,
+et, ou, oux.                     · Traduire la condition
+
+                                 (éventuellement composée) d'une
+                                 itération (tant que / répéter jusqu'à
+                                 ce que) ou d'une alternative (si)
+                                 sous forme d'expression
+                                 booléenne.
+
+Opérateurs booléens bit à bit. · Appliquer des opérations               On interprète notamment en
+                                                                        termes de masque, de mise à un,
+                                      booléennes sur les bits.          de mise à zéro, de changement
+                                                                        d'état.
+
+Opérateur de chaînes :           · Construire et manipuler des          L'usage d'expressions régulières
+concaténation.                                                          simples est possible, mais l'étude
+Fonctions permettant             chaînes et construire les messages     des expressions régulières est hors
+l'extraction en début, milieu    affichés à l'écran.                    programme.
+ou fin, la recherche d'un
+motif.                           · Gérer les différents types de        D'autres instructions, fonctions ou
+                                                                        procédures peuvent être
+Transtypage                      données et effectuer des               introduites dans l'écriture
+                                 conversions d'un type vers un          d'algorithmes. Les descriptions
+                                 autre.                                 sémantiques et syntaxiques
+                                                                        précises sont alors mises à
+                                                                        disposition de l'étudiant.
+
+Structures de contrôle et        · Mettre en oeuvre ces structures.     Afin d'en maîtriser le
+                                                                        fonctionnement, les structures
+d'exécution.                                                            d'exécution sont elles-mêmes
+Exécution séquentielle.                                                 présentées sous forme
+Exécution à structure                                                   d'algorithmes.
+conditionnelle (si-alors-
+sinon).
+Exécution à structure
+itérative (pour) et (tant que /
+répéter jusqu'à ce que).
+
+Construction des structures      · Gérer une itération en               Le raisonnement par récurrence
+itératives : raisonnement par                                           n'a pas à être évalué pour des
+récurrence, initialisation,      distinguant la préparation,            démonstrations. Il est introduit
+mise à jour itérative, calcul    l'itération elle-même et la mise en    pour servir de base à une
+itératif, mise en forme finale.  forme finale.                          construction des itérations.
+                                                                        Le calcul itératif est souvent
+                                                                        récursif
+
+                                 57
+Symboles  et  ,              · Gérer une somme ou un produit        Généralement la variable affectée
+i=  i=                                                              récursivement est initialisée à
+                             d'un nombre variable d'opérandes       l'élément neutre de l'opération
+traduction algorithmique.    dépendant d'un paramètre.              utilisée, avant d'entrer dans
+                                                                    l'itération.
+
+Structures imbriquées        · Gérer des structures imbriquées.     On traite également des exemples
+                                                                    où les éléments de contrôle des
+                                                                    structures internes dépendent de
+                                                                    ceux des structures externes. Le
+                                                                    nombre d'imbrications n'est pas
+                                                                    limité, sauf pour les itérations en
+                                                                    dépendance, où on se limite à
+                                                                    deux.
+                                                                    On évite les excès de complexité,
+                                                                    ainsi que les constructions ne
+                                                                    correspondant pas à un besoin
+                                                                    concret.
+
+                             · Traiter un produit matriciel.        La formule de calcul des
+                                                                    coefficients d'un produit est
+                                                                    donnée.
+
+Récursivité. Nécessité d'un  · Mettre en oeuvre ou exploiter        On peut traiter des exemples de
+test. Nécessité de cas                                              récursivité terminale, de
+particuliers résolus sans    une fonction ou une procédure          conversion en algorithme non
+appel à la récursivité.      récursive simple.                      récursif, de récursivité non
+Finitude.                                                           terminale.
+                                                                    On ne présente pas de récursivité
+Analyse d'algorithmes                                               mutuelle entre plusieurs
+                                                                    procédures.
+Notions de complexité
+temporelle et spatiale.      · Calculer un nombre minimal ou        Ce paragraphe se veut être une
+                                                                    simple sensibilisation aux notions
+Validation et débogage.      maximal d'opérations                   de complexité, de correction, de
+                             significatives ou la taille globale    recherche d'erreur et de finalité
+                             de données choisies.                   d'un algorithme.
+                                                                    En cas d'évaluation portant sur
+                                                                    l'un de ces thèmes, on apporte
+                                                                    suffisamment d'indications pour
+                                                                    limiter les prérequis.
+
+                                                                    On présente des variantes
+                                                                    produisant les mêmes résultats
+                                                                    avec des complexités très
+                                                                    différentes.
+                                                                    Aucune connaissance théorique
+                                                                    n'est exigible.
+
+                             · Procéder à un suivi de variables     On propose des algorithmes
+                                                                    délibérément erronés dont les
+                             par la production d'une trace ou       défauts sont repérés puis
+                             l'utilisation de jeux d'essai pour le  débogués.
+                             test d'un algorithme et la             Selon le langage choisi, on peut
+                             recherche d'erreur.                    montrer les fonctions permettant
+
+                             58
+                                                                  le suivi de variables, le débogage
+                                                                  pas à pas.
+
+                                                                  Afin de mieux sensibiliser à
+                                                                  certains risques, on peut présenter
+                                                                  des cas d'effets indésirables
+                                                                  (effets de bord, évaluation
+                                                                  partielle lors de calcul
+                                                                  d'expressions booléennes,
+                                                                  débordements ou approximations
+                                                                  numériques, transtypage,
+                                                                  utilisation d'indices hors
+                                                                  domaine,...) et leurs
+                                                                  conséquences spectaculaires.
+                                                                  Aucune théorie n'est au
+                                                                  programme.
+
+Interprétation d'algorithmes. · Savoir reconstituer le rôle d'un  L'ajout d'une ou plusieurs
+                                                                  procédures ou fonctions à un
+                                      algorithme.                 ensemble interdépendant peut
+                                                                  constituer une excellente base.
+                                                                  On se limite à des cas simples.
+
+59
