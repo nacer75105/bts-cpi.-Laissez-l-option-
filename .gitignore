@@ -1,1 +1,5 @@
 progression_part66.json
+
+# Progression locale (données personnelles) et bytecode Python
+progression.json
+__pycache__/
